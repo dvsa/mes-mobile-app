@@ -1,0 +1,7 @@
+.mes-main-content {
+  background: map-get($colors, pageBg);
+}
+
+.phase-banner {
+  @include phase-banner();
+}

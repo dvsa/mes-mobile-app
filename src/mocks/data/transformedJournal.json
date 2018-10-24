@@ -1,0 +1,59 @@
+[
+  {
+    "appId": "384 392 293 22",
+    "candidateId": 100,
+    "candidateName": {
+      "title": "Miss",
+      "firstName": "Chris",
+      "secondName": "Bbb",
+      "thirdName": "Ccc",
+      "lastName": "Nappin"
+    },
+    "checkMarker": false,
+    "details": {
+      "success": false,
+      "route": 8,
+      "showMe": 6,
+      "tellMe": 11
+    },
+    "slotType": "B57mins",
+    "startTime": "__TIME__",
+    "testCentreName": "Example Test Centre"
+  },
+  {
+    "appId": "384 392 293 22",
+    "candidateId": 100,
+    "candidateName": {
+      "title": "Miss",
+      "firstName": "Kamil",
+      "secondName": "Bbb",
+      "thirdName": "Ccc",
+      "lastName": "Zielinski"
+    },
+    "checkMarker": false,
+    "details": {
+      "success": true,
+      "route": 9,
+      "showMe": 3,
+      "tellMe": 8
+    },
+    "slotType": null,
+    "startTime": "__TIME__",
+    "testCentreName": "Example Test Centre"
+  },
+  {
+    "appId": "384 392 293 22",
+    "candidateId": 100,
+    "candidateName": {
+      "title": "Miss",
+      "firstName": "Matthew",
+      "secondName": "Bbb",
+      "thirdName": "Ccc",
+      "lastName": "Murry"
+    },
+    "slotType": "Voc90mins",
+    "checkMarker": false,
+    "startTime": "__TIME__",
+    "testCentreName": "Example Test Centre"
+  }
+]

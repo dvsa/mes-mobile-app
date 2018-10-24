@@ -1,0 +1,29 @@
+<ion-card class="mes-test-summary-section-card" *ngIf="summary && summary.total !== 0 ">
+  <ion-card-header margin-bottom [color]="getFaultTitleColour(summary.title)">
+    {{summary.title}} - {{summary.total}}
+  </ion-card-header>
+  <ion-card-content>
+    <ul class="mes-test-summary-list">
+      <li padding-bottom *ngFor="let fault of summary.faults">
+        {{fault.name}}
+        <span *ngIf="fault.total > 1">({{fault.total}})</span>
+        <span *ngIf="summary.title !== drivingFaultsTitle" float-right (click)="openTextboxModal(fault.name)">
+          <ion-icon [ngClass]="{green: faultNotes[fault.name], dark: !faultNotes[fault.name]}" [name]="faultNotes[fault.name] ? 'checkmark-circle' : 'create'"></ion-icon>
+        </span>
+      </li>
+    </ul>
+  </ion-card-content>
+</ion-card>
+
+<ion-card class="mes-test-summary-section-card" *ngIf="manualSummary">
+  <ion-card-header margin-bottom [color]="manualSummary.color">
+    {{manualSummary.title}}
+  </ion-card-header>
+  <ion-card-content>
+    <ul class="mes-test-summary-list">
+      <li padding-bottom *ngFor="let sentence of manualSummary.sentences">
+        {{sentence}}
+      </li>
+    </ul>
+  </ion-card-content>
+</ion-card>

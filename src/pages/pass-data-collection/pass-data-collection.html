@@ -1,0 +1,52 @@
+<ion-content padding class="mes-main-content">
+  <ion-card class="mes-card">
+    <ion-card-header class="mes-main-card-header--border-bottom mes-breadcrumbs">
+      <span class="mes-header-md mes-breadcrumb-link" navPop>
+        <ion-icon name="arrow-back"></ion-icon>
+        Debrief /
+      </span>
+      <span padding-left class="mes-header-md">Florence Pearson</span>
+      <span float-right>
+        <span class="mes-text-sm">App Ref: 392 382 354 33</span>
+      </span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-4 class="mes-header-md">
+          Provisional licence provided *
+        </ion-col>
+        <ion-col col-3 offset-1 class="mes-header-md">
+          Yes
+          <input #yesInput type="checkbox" name="provisional-yes" class="mes-checkbox" (change)="provisionalInputChanged($event, noInput);">
+        </ion-col>
+        <ion-col col-4 class="mes-header-md">
+          No
+          <input #noInput type="checkbox" name="provisional-no" class="mes-checkbox" (change)="provisionalInputChanged($event, yesInput);">
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4 class="mes-header-md">
+          Pass certificate number *
+        </ion-col>
+        <ion-col col-7 offset-1>
+          <input appInputRestriction="noSpecialChars" required type="text" class="mes-text-input capital-characters" name="pass-certificate-number" autocapitalize="characters">
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4 class="mes-header-md">
+          Survey
+        </ion-col>
+        <ion-col col-3 offset-1 class="mes-header-md">
+          Yes
+          <input name="survey-yes" type="checkbox" required class="mes-checkbox">
+        </ion-col>
+        <ion-col col-4></ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="mes-bottom-card" text-center>
+    <button [navPush]="healthDeclarationPage" class="mes-button-primary">Save</button>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,30 @@
+page-header {
+  .profile-select {
+    border-left: 1px solid map-get($colors, divider);
+  }
+  ion-icon {
+    vertical-align: middle;
+  }
+  .device-locked {
+    background: map-get($colors, deviceLockedOrange);
+    height: 47px;
+    z-index: 99;
+    text-align: center;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    .inner {
+      padding-top: 10px;
+    }
+  }
+  .recording {
+    background: map-get($colors, recording);
+    height: 47px;
+    z-index: 99;
+    text-align: center;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    .inner {
+      padding-top: 10px;
+    }
+  }
+}

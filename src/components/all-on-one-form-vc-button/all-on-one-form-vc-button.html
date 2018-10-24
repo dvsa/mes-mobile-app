@@ -1,0 +1,59 @@
+<div class="form-section">
+  <all-on-one-form-sub-element-button #vCheckButton [isComplete]="isCheckComplete()" sectionsToShow="vehicleCheck" section="vehicleCheck"
+    text="Vehicle Check"></all-on-one-form-sub-element-button>
+</div>
+
+<!-- Vehicle Check Options -->
+<div class="main-content expanded-section flex-none expanded-section-in-column" [ngClass]="{'content-open': vCheckButton.isEnabled}">
+  <ion-row align-items-center no-padding>
+    <ion-col no-padding>
+      <button style="padding-left:0px; padding-right:0px;" class="all-on-one-form-fault-button" (click)="recordHazard('vehicleCheck')">
+        <ion-row no-padding>
+          <ion-col col-1>
+            <span *ngIf="showMe.complete">
+              <ion-icon name="checkmark"></ion-icon>
+            </span>
+          </ion-col>
+          <ion-col col-1>
+            <span *ngIf="isFaultType('showMe', 'fault')" class="fault-badge counter">1</span>
+          </ion-col>
+          <ion-col col-8>
+            <span>Show Me</span>
+          </ion-col>
+          <ion-col col-1>
+            <span *ngIf="isFaultType('showMe', 'serious')" class="serious fault-badge">S</span>
+          </ion-col>
+          <ion-col col-1>
+            <span *ngIf="isFaultType('showMe', 'dangerous')" class="dangerous fault-badge">D</span>
+          </ion-col>
+        </ion-row>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center no-padding>
+    <ion-col no-padding>
+      <button disabled style="padding-left:0px; padding-right:0px;" class="all-on-one-form-fault-button">
+        <ion-row no-padding>
+          <ion-col col-1>
+            <span *ngIf="tellMe.complete">
+              <ion-icon name="checkmark"></ion-icon>
+            </span>
+          </ion-col>
+          <ion-col col-1>
+            <span *ngIf="isFaultType('tellMe', 'fault')" class="fault-badge counter">1</span>
+          </ion-col>
+          <ion-col col-8>
+            <span>Tell Me</span>
+          </ion-col>
+          <ion-col col-1>
+            <span *ngIf="isFaultType('tellMe', 'serious')" class="serious fault-badge">S</span>
+          </ion-col>
+          <ion-col col-1>
+            <span *ngIf="isFaultType('tellMe', 'dangerous')" class="dangerous fault-badge">D</span>
+          </ion-col>
+        </ion-row>
+      </button>
+    </ion-col>
+  </ion-row>
+
+</div>

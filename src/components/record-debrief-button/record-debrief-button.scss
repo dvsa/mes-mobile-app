@@ -1,0 +1,56 @@
+record-debrief-button {
+  .outer-grey-rect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 60px;
+    border-radius: 40px;
+    background-color: #5b5b5b;
+    border: solid 5px #e2e2e2;
+    animation: none;
+    &:disabled {
+      opacity: 0.3;
+    }
+    &.active {
+      animation: pulse 2s infinite;
+      @-webkit-keyframes pulse {
+        0% {
+          -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.4);
+        }
+        70% {
+          -webkit-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+        }
+        100% {
+          -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+        }
+      }
+      @keyframes pulse {
+        0% {
+          -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.4);
+          box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.4);
+        }
+        70% {
+          -moz-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+          box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+        }
+        100% {
+          -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+          box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+        }
+      }
+    }
+  }
+  .inner-red-circle {
+    &:after {
+      content: '\f32d';
+      display: block;
+      font-family: 'Ionicons';
+      width: 22px;
+      height: 22px;
+      color: #fff;
+      font-size: 34px;
+      line-height: 0.7;
+    }
+  }
+}

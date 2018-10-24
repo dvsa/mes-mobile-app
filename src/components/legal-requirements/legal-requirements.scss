@@ -1,0 +1,11 @@
+legal-requirements {
+  button {
+    &.done:before {
+      content: '✔';
+      display: block;
+      position: absolute;
+      top: 30%;
+      left: 15px;
+    }
+  }
+}

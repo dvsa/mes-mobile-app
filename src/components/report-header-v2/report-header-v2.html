@@ -1,0 +1,16 @@
+<ion-toolbar no-padding>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col>
+        <span class="report-header-text" padding-left>Florence Pearson</span>
+      </ion-col>
+      <ion-col col-1>
+        <timer text-center></timer>
+      </ion-col>
+      <ion-col>
+        <totals [options]="options"></totals>
+        <button float-right margin-right ion-button color="dark" id="end-button" (click)="goToTestResultPage()">End</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>

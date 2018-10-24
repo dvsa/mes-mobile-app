@@ -1,0 +1,30 @@
+select-button {
+  button {
+    width: 100%;
+    background-color: map-get($colors, offWhite);
+    border: solid 3px map-get($colors, divider);
+    color: map-get($colors, textGrey);
+    font-size: 18px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &:active {
+      background-color: map-get($colors, divider);
+    }
+    .select-text {
+      text-align: left;
+      float: left;
+    }
+    .black-text {
+      color: black;
+    }
+    .arrow {
+      float: right;
+      color: #747474;
+      padding-left: 2px;
+      background-color: map-get($colors, divider);
+      padding-right: 2px;
+    }
+  }
+}

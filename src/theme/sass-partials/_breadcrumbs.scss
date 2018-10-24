@@ -1,0 +1,13 @@
+.mes-breadcrumbs {
+  .mes-breadcrumb-link {
+    padding: 3px 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.5);
+    background-color: map-get($colors, offWhite);
+    border: solid 1px map-get($colors, divider);
+    color: map-get($colors, textGrey);
+    ion-icon {
+      vertical-align: bottom;
+    }
+  }
+}

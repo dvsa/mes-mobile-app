@@ -1,0 +1,76 @@
+journal-header {
+  ion-col {
+    div span {
+      &:first-child {
+        font-size: 2em;
+        font-weight: 900;
+      }
+      font-size: 1.5em;
+      display: block;
+    }
+    &.yesterday,
+    &.tomorrow {
+      div {
+        width: 75%;
+        background: #eee;
+        color: map-get($map: $colors, $key: lighterGrey);
+        span {
+          &:first-child {
+            font-size: 1.5em;
+            font-weight: 900;
+          }
+          font-size: 1em;
+          display: block;
+        }
+        &:before,
+        &:after {
+          content: ' ';
+          width: 0;
+          height: 0;
+          position: absolute;
+          clear: both;
+        }
+      }
+    }
+    &.yesterday {
+      padding-left: 0;
+      div {
+        padding: 15px 5px 15px 45px;
+        border-radius: 0 15px 15px 0;
+        &:before {
+          border-top: 15px solid transparent;
+          border-right: 15px solid #bfbfbf;
+          border-bottom: 15px solid transparent;
+          left: 7%;
+          top: 33%;
+        }
+        span {
+          padding-left: 10px;
+        }
+      }
+    }
+    &.today {
+      div {
+        text-align: center;
+      }
+    }
+    &.tomorrow {
+      padding-right: 0;
+      div {
+        text-align: right;
+        padding: 15px 45px 15px 5px;
+        border-radius: 15px 0 0 15px;
+        &:after {
+          border-top: 15px solid transparent;
+          border-left: 15px solid #bfbfbf;
+          border-bottom: 15px solid transparent;
+          left: 88%;
+          top: 34%;
+        }
+        span {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+}

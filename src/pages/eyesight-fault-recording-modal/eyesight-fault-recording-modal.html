@@ -1,0 +1,15 @@
+<ion-content padding>
+  <span class="mes-header-md">Eyesight</span>
+  <div class="mes-divider"></div>
+  <p class="mes-text-md">
+    I have presented myself for test and agree that I was unable to read, in good daylight, a motor vehicle registration mark
+    containing the following letters and figures:
+  </p>
+  <div class="signature-pad transparent-background-color">
+    <span class="mes-text-sm">Sign here:</span>
+    <signature-pad [options]="signaturePadOptions"></signature-pad>
+    <button (click)="dismiss()" class="mes-button-danger" id="retry">Cancel</button>
+    <button (click)="markAndDismiss()" class="mes-button-primary" id="continue">Confirm</button>
+    <div class="clearfix"></div>
+  </div>
+</ion-content>

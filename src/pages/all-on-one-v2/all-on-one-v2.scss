@@ -1,0 +1,194 @@
+page-all-on-one-v2 {
+  .form-section {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+  .form-section all-on-one-form-sub-element-hold-no-modal:not(:last-child) > ion-row,
+  .form-section legal-requirements > ion-row:not(:last-child),
+  .form-section-small all-on-one-form-sub-element-hold-no-modal:not(:last-child) > ion-row {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .action-completed all-on-one-form-sub-element-hold-no-modal .fault-badge.counter {
+    left: 32px;
+  }
+  .form-section-small {
+    margin-bottom: 2px;
+    padding-bottom: 3px;
+  }
+  ion-content .button-ios {
+    color: map-get($map: $colors, $key: black);
+    background-color: map-get($map: $colors, $key: white);
+    border: 2px;
+    border-style: solid;
+    border-color: map-get($map: $colors, $key: black);
+    :active {
+      background-color: map-get($map: $colors, $key: black);
+      color: map-get($map: $colors, $key: white);
+    }
+  }
+  .activated {
+    background-color: map-get($map: $colors, $key: black) !important;
+    color: map-get($map: $colors, $key: white) !important;
+  }
+  ion-content {
+    background-color: #f8f8f8 !important;
+    button {
+      height: 44px !important;
+      width: 98%;
+      background-color: map-get($map: $colors, $key: white);
+      color: map-get($map: $colors, $key: black);
+      border: 1px solid rgba(0, 0, 0, 0.35) !important; // border-style: solid !important;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+  }
+  p {
+    font-weight: bold;
+    margin: 0px 0px 1px;
+    font-size: 14px;
+  }
+  .bottom-border {
+    border-bottom: 1px solid darken(map-get($map: $colors, $key: expanderBg), 50);
+  }
+  .sd-buttons-wrapper {
+    .s-button.activated {
+      background-color: lighten(map-get($colors, warn), 30) !important;
+      color: black !important;
+    }
+    .s-button.active {
+      border: 2px solid map-get($colors, warn) !important;
+      color: map-get($colors, warn) !important;
+      background-color: lighten(map-get($colors, warn), 30);
+      font-weight: bold;
+    }
+    .d-button.activated {
+      background-color: lighten(map-get($colors, danger), 35) !important;
+      color: black !important;
+    }
+    .d-button.active {
+      border: 2px solid map-get($colors, danger) !important;
+      color: map-get($colors, danger) !important;
+      background-color: lighten(map-get($colors, danger), 35);
+      font-weight: bold;
+    }
+  }
+  .expanded-section-in-column button:first-child {
+    margin-bottom: 10px;
+  }
+  .intersection {
+    height: 100px;
+    background-color: gray;
+  }
+  .no-margin-bottom {
+    margin-bottom: 0px;
+  }
+  .no-padding-bottom {
+    padding-bottom: 0px;
+  }
+  .expanded-section {
+    background-color: map-get($map: $colors, $key: expanderBg);
+    margin-left: -16px;
+    padding-left: 16px;
+    margin-right: -16px;
+    padding-right: 16px;
+    /* css animation */
+    overflow: hidden;
+    padding: 0 1em;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+    .manoeuvre-header {
+      text-align: left;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      flex-direction: column;
+      font-weight: bold;
+    }
+  }
+  .content-open {
+    max-height: 500px;
+    opacity: 1;
+    padding: 15px 20px;
+    margin: 0 8px 8px 0;
+  } // Ugly workaround for fitting all competencies together with Manoeuvre row
+  .margin-top-minus-20 {
+    margin-top: -20px;
+  }
+  .margin-top-minus-15 {
+    margin-top: -15px;
+  } // This is equivalent to flex: 0 0 auto. It sizes the item according to its width/height properties, but makes it fully inflexible.
+  // This is similar to flex: initial except it is not allowed to shrink, even in an overflow situation.
+  .flex-none {
+    flex: none;
+  }
+  .full-page {
+    height: 100%;
+    overflow: hidden;
+  }
+  .side-paddings {
+    padding: 0 16px;
+  }
+  .scroll {
+    overflow: scroll;
+  }
+  .man-faults {
+    width: 200px;
+    position: relative;
+    top: 95px;
+    left: 33%;
+    opacity: 0.2;
+    &.active {
+      opacity: 1;
+      display: block;
+      transition: all 0.3s ease;
+    }
+    all-on-one-form-sub-element-hold-no-modal {
+      display: inline-block;
+      width: 250px;
+    }
+  }
+  div label input {
+    margin-right: 100px;
+  }
+  body {
+    font-family: sans-serif;
+  }
+  .check-btn {
+    width: 98%;
+    margin: 10px 0;
+    overflow: auto;
+    display: block;
+  }
+  .check-btn label span {
+    background: lighten(map-get($colors, expanderBg), 15);
+    border: 1px solid darken(map-get($colors, expanderBg), 5);
+    text-align: left;
+    padding: 20px 15px;
+    display: block;
+    border-radius: 5px;
+  }
+  .check-btn label input {
+    display: none;
+    position: absolute;
+    top: -20px;
+  }
+  .check-btn input:checked + span {
+    color: map-get($map: $colors, $key: black);
+    background: lighten(map-get($colors, expanderBg), 20);
+    border: 1px solid darken(map-get($colors, expanderBg), 10);
+    position: relative;
+    &:after {
+      content: '✔';
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 15px;
+      font-size: 1em;
+    }
+  }
+}

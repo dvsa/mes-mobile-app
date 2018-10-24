@@ -1,0 +1,23 @@
+weather-selector {
+  textarea {
+    padding: 10px;
+    display: block;
+    border: thick solid map-get($colors, divider);
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+
+  .conditionsList {
+    label {
+      font-size: 1.3em;
+    }
+
+    input[type='checkbox'] {
+      margin: 5px;
+    }
+
+    ion-col.col {
+      padding-right: 40px;
+    }
+  }
+}

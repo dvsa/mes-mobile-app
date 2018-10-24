@@ -1,0 +1,16 @@
+report-header-v2 {
+  #end-button {
+    background-color: map-get($colors, dark);
+    border-radius: 3px;
+    margin-top: 7px;
+  }
+  .report-header-text {
+    line-height: 3.5;
+  }
+  .data-item {
+    line-height: 2;
+  }
+  totals {
+    margin-left: 45px;
+  }
+}

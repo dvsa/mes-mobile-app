@@ -1,0 +1,10 @@
+<ion-card class="mes-test-summary-section-card" [ngClass]="{'hidden': summary.total === 0}">
+    <ion-card-header margin-bottom [color]="getFaultTitleColour(summary.title)">
+        {{summary.title}} - {{summary.total}}
+    </ion-card-header>
+    <ion-card-content>
+        <ul class="mes-test-summary-list">
+            <li *ngFor="let fault of summary.faults">{{fault.name}} <span *ngIf="fault.total > 1">({{fault.total}})</span></li>
+        </ul>
+    </ion-card-content>
+</ion-card>

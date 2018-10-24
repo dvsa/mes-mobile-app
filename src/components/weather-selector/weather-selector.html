@@ -1,0 +1,35 @@
+<!-- Generated template for the WeatherSelectorComponent component -->
+<ion-content padding>
+  <h1>Select weather conditions</h1>
+  <div class="mes-divider"></div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-row *ngFor="let weather of weatherConditions; let i = index; let isOdd=odd" class="conditionsList">
+          <ion-col *ngIf="isOdd">
+            <label for="{{weather.value}}">{{weather.label}}</label>
+            <input float-right type="checkbox" id="{{weather.value}}" (change)="setWeather($event)">
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row *ngFor="let weather of weatherConditions; let i = index; let isEven=even" class="conditionsList">
+          <ion-col *ngIf="isEven">
+            <label for="{{weather.value}}">{{weather.label}}</label>
+            <input float-right type="checkbox" id="{{weather.value}}" (change)="setWeather($event)">
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <label for="otherWeather">Other: </label>
+        <textarea name="other" id="otherWeather" cols="30" rows="10"></textarea>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div>
+    <button ion-button class="mes-button-danger" (click)="cancelWeather()">Cancel</button>
+    <button ion-button float-right class="mes-button-primary" (click)="submitWeather()">Submit</button>
+  </div>
+</ion-content>

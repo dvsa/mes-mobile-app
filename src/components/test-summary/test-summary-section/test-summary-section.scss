@@ -1,0 +1,27 @@
+test-summary-section {
+  .mes-test-summary-section-card {
+    border-radius: 20px;
+    margin-bottom: 25px;
+    ion-card-header {
+      font-weight: 700;
+      font-size: 17px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid map-get($colors, faintDivider);
+    }
+    .mes-test-summary-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0;
+      li {
+        font-size: 13px;
+        font-weight: 900;
+        color: map-get($colors, textDarkerGrey);
+      }
+    }
+  }
+  .hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}

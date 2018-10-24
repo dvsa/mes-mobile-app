@@ -1,0 +1,19 @@
+mes-header {
+  color: #ffff;
+  .toolbar {
+    min-height: 44px;
+  }
+  .toolbar-background {
+    background-color: black;
+  }
+  .heading-small {
+    position: absolute;
+    top: 8px;
+  }
+  p {
+    font-size: smaller;
+  }
+  button {
+    background-color: black;
+  }
+}

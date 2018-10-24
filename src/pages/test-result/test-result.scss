@@ -1,0 +1,21 @@
+page-test-result {
+  .recording-controls {
+    padding: 10px;
+    border-radius: 38.5px;
+    background-color: #f0f0f0;
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    float: left;
+
+    > *:first-child {
+      margin-right: 10px;
+    }
+  }
+
+  .mes-bottom-card {
+    padding: 0px 16px;
+    .mes-button-primary {
+      padding: 20px 35px;
+      float: right;
+    }
+  }
+}

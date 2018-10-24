@@ -1,0 +1,8 @@
+.mes-box-grey {
+  border-radius: 23px;
+  background-color: map-get($colors, mesBoxGrey);
+  padding: 20px;
+  ion-icon[name='alert'] {
+    font-size: 2em;
+  }
+}

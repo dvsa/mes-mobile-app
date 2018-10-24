@@ -1,0 +1,21 @@
+<ion-row align-items-center no-padding (swipe)="openCustomerHammgerConfig()">
+  <ion-col no-padding>
+    <button [disabled]="isDisabled" style="padding-left:0px; padding-right:0px;" class="all-on-one-form-fault-button" (click)="recordHazard(section)"
+      [ngClass]="{'highlight' : isLastFault}">
+      <ion-row no-padding>
+        <ion-col col-1>
+          <span *ngIf="faultCounter" class="fault-badge counter">{{faultCounter}}</span>
+        </ion-col>
+        <ion-col col-9>
+          <span>{{ text }}</span>
+        </ion-col>
+        <ion-col col-1>
+          <span *ngIf="serious" class="serious fault-badge">S</span>
+        </ion-col>
+        <ion-col col-1>
+          <span *ngIf="dangerous" class="dangerous fault-badge">D</span>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-col>
+</ion-row>
