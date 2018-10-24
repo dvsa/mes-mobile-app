@@ -56,6 +56,7 @@ export class DeclarationConsentPage {
 
   clearSignaturePad() {
     this.signaturePad.clear();
+    this.signature = null;
   }
 
   drawStart() {}
