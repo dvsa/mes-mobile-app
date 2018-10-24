@@ -1,0 +1,29 @@
+<ion-header padding>
+  <ion-row class="align-items-center">
+    <ion-col>
+      <span class="mes-header-md">Select question</span>
+    </ion-col>
+    <ion-col class="text-align-right">
+      <button (click)="dismiss()" class="mes-button-danger">Cancel</button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content padding>
+  <ion-row *ngFor="let question of options; let i = index" class="mes-text-md align-items-center mes-bottom-border">
+    <ion-col col-1 no-padding class="mes-grey center-text mes-header-md">
+      {{question.id}}
+    </ion-col>
+    <ion-col col-9 (click)="toggle(i)">
+      <div class="hidden" [class.active]="!question.isExpanded">
+        <span class="mes-header-md">{{question.keyWords}}</span>
+        <br>
+        <span class="counters">Today: {{question.today}} &nbsp;&nbsp; Last 7 days: {{question.last7days}}</span>
+      </div>
+      <div class="hidden" [class.active]="question.isExpanded">{{question.question}}</div>
+    </ion-col>
+    <ion-col col-2 class="checkmark-circle" (click)="select(selectedTellMeQuestionId===question.id ? {} : question)">
+      <ion-icon name="{{selectedTellMeQuestionId===question.id ? 'ios-checkmark-circle' : 'checkmark-circle-outline'}}"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,30 @@
+page-pass-data-collection {
+  ion-card-content {
+    div {
+      padding: 0 0 10px 0;
+      font-weight: bold;
+      font-size: 1.5em;
+      button {
+        bottom: 15px;
+        position: relative;
+      }
+    }
+  }
+  ion-row {
+    height: 50px;
+    align-items: center;
+  }
+
+  .mes-checkbox {
+    margin: 0 0 0 20px;
+    height: 18px;
+    width: 18px;
+  }
+
+  .mes-text-input {
+    background-color: map-get($colors, offWhite);
+    border: solid 3px map-get($colors, divider);
+    width: 100%;
+    height: 36px;
+  }
+}

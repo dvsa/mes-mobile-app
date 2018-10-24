@@ -1,0 +1,21 @@
+all-on-one-form-vc-button {
+  .expanded-section .fault-badge {
+    font-size: 12px;
+    background-color: map-get($colors, dark);
+    padding: 6px;
+    border-radius: 12px;
+    color: map-get($colors, light);
+    &.serious {
+      position: relative;
+      right: 10px;
+      background-color: lighten(map-get($colors, warn), 15);
+      color: map-get($colors, dark);
+    }
+    &.dangerous {
+      position: relative;
+      right: 10px;
+      background-color: lighten(map-get($colors, danger), 15);
+      color: map-get($colors, dark);
+    }
+  }
+}

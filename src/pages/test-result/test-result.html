@@ -1,0 +1,49 @@
+<ion-header>
+    <page-header [isRecording]="isRecording"></page-header>
+</ion-header>
+
+<ion-content padding class="mes-main-content">
+    <ion-card class="mes-card">
+        <ion-card-header class="mes-main-card-header mes-breadcrumbs">
+            <span class="mes-header-md mes-breadcrumb-link" (click)="goBack()">
+                <ion-icon name="arrow-back"></ion-icon>
+                Back to DL25 /
+            </span>
+            <span padding-left class="mes-header-md">Florence Pearson</span>
+        </ion-card-header>
+        <ion-card-content>
+            <test-summary [faultSummaries]="faultSummaries" [testResult]="testResult" [summaryMetadata]="summaryMetadata"></test-summary>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="mes-bottom-card" text-center>
+        <ion-row align-items-center>
+            <ion-col *ngIf="debriefConsent && isCordova">
+
+            </ion-col>
+            <ion-col *ngIf="debriefConsent && isCordova">
+                <div class="recording-controls" align-items-center ion-row>
+                    <record-debrief-button 
+                        *ngIf="!isRecording && !fileLength" 
+                        [isRecording]="isRecording" 
+                        [activeFile]="fileLength" 
+                        (click)="recordAudio();">
+                    </record-debrief-button>
+                    <play-pause-debrief-button 
+                        *ngIf="isRecording || fileLength" 
+                        [clickEventHandler]="togglePlayOrPause" 
+                        [disabled]="playOrPauseDisabled" 
+                        [buttonStatus]="playOrPauseRecording">
+                    </play-pause-debrief-button>
+                    <stop-debrief-destroy-recording-button 
+                        [clickEventHandler]="toggleStopOrDestroy" 
+                        [disabled]="stopOrDesDisabled" 
+                        [buttonStatus]="stopOrDestroyRecording">
+                    </stop-debrief-destroy-recording-button>
+                </div>
+            </ion-col>
+            <ion-col>
+                <button [disabled]="isRecording" [navPush]="getNextPage()" class="mes-button-primary">End debrief</button>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+</ion-content>

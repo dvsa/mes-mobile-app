@@ -1,0 +1,147 @@
+<ion-header>
+  <page-header></page-header>
+</ion-header>
+
+<ion-content padding class="mes-main-content">
+  <form #form="ngForm" (ngSubmit)="gotoDL25(form)" novalidate>
+    <ion-card class="mes-card">
+      <ion-card-header class="mes-breadcrumbs">
+        <span class="mes-header-md mes-breadcrumb-link" navPop>
+          <ion-icon name="arrow-back"></ion-icon>
+          Declaration /
+        </span>
+        <span padding-left class="mes-header-md">Begin Test</span>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-4 class="mes-header-md">
+            Eyesight*
+          </ion-col>
+          <ion-col col-4 class="mes-header-md center-text">
+            Completed
+            <input #isEyesightCompleted="ngModel" name="isEyesightCompleted" [(ngModel)]="preCheck.isEyesightCompleted" type="checkbox"
+              required class="mes-checkbox">
+          </ion-col>
+          <ion-col offset-1 col-3 class="center-text">
+            <button class="mes-header-md eyesight-record-serious-fault-button" (click)="showEyesightFaultRecordingModal()">
+              <span>S</span>
+              <div>
+                <input class="checkbox" type="checkbox" [(ngModel)]="eyeSightSeriousFault" [ngModelOptions]="{standalone: true}">
+              </div>
+            </button>
+          </ion-col>
+        </ion-row>
+        <p [hidden]="isEyesightCompleted.valid || (isEyesightCompleted.pristine && !form.submitted)" class="warning-text">
+          Eyesight is required
+        </p>
+        <div class="mes-divider"></div>
+        <ion-row>
+          <ion-col col-4 class="mes-header-md">
+            Tell me question*
+          </ion-col>
+          <ion-col col-4>
+            <select-button required #tellMeQuestion="ngModel" [(ngModel)]="preCheck.tellMeQuestionId" name="tellMeQuestionId" [onClickEventHandler]="showTellMeOptions"
+              [selectedText]="preCheck.tellMeQuestionId"></select-button>
+          </ion-col>
+          <ion-col col-4 [ngClass]="{'btns-disabled': !preCheck.tellMeQuestionId }">
+            <div class="fault-btn driverFault-btn" [ngClass]="{'active': (vcState$ | async)?.fault}" (click)="setTellMeState('fault', $event)">D/F</div>
+            <div class="fault-btn serious-btn" [ngClass]="{'active': (vcState$ | async)?.serious}" (click)="setTellMeState('serious', $event)">S</div>
+            <div class="fault-btn dangerous-btn" [ngClass]="{'active': (vcState$ | async)?.dangerous}" (click)="setTellMeState('dangerous', $event)">D</div>
+          </ion-col>
+        </ion-row>
+        <p [hidden]="tellMeQuestion.valid || (tellMeQuestion.pristine && !form.submitted)" class="warning-text">
+          Select Tell me question
+        </p>
+        <div class="mes-divider"></div>
+        <ion-row class="height-auto">
+          <ion-col col-4 class="mes-header-md">
+            Accompanied by
+          </ion-col>
+        </ion-row>
+        <ion-row class="center-text">
+          <ion-col col-4 class="mes-header-md">
+            ADI
+            <input type="checkbox" class="mes-checkbox">
+          </ion-col>
+          <ion-col col-4 class="mes-header-md">
+            Sup
+            <input type="checkbox" class="mes-checkbox">
+          </ion-col>
+          <ion-col col-4 class="mes-header-md">
+            Other
+            <input type="checkbox" class="mes-checkbox">
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="mes-card card-top-separator">
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-4 class="mes-header-md">
+            Car registration*
+          </ion-col>
+          <ion-col col-8>
+            <input appInputRestriction="noSpecialChars" required type="text" class="mes-text-input capital-characters" #carRegistration="ngModel"
+              name="carRegistration" [(ngModel)]="preCheck.carRegistration" autocapitalize="characters">
+          </ion-col>
+        </ion-row>
+        <p [hidden]="carRegistration.valid || (carRegistration.pristine && !form.submitted)" class="warning-text">
+          Car registration number is required
+        </p>
+        <div class="mes-divider"></div>
+        <ion-row class="height-auto">
+          <ion-col col-4 class="mes-header-md">
+            Automatic*
+            <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic" [(ngModel)]="preCheck.isAutomatic">
+          </ion-col>
+          <ion-col col-4 class="mes-header-md">
+            Yes
+            <input #yesInput type="checkbox" class="mes-checkbox" (change)="automaticInputChanged($event, noInput);">
+          </ion-col>
+          <ion-col col-4 class="mes-header-md">
+            No
+            <input #noInput type="checkbox" class="mes-checkbox" (change)="automaticInputChanged($event, yesInput);">
+          </ion-col>
+        </ion-row>
+        <p [hidden]="isAutomatic.valid || (isAutomatic.pristine && !form.submitted)" class="warning-text">
+          One option must be selected
+        </p>
+        <div class="mes-divider"></div>
+        <ion-row class="center-text">
+          <ion-col col-6 class="mes-header-md">
+            School car
+            <input type="checkbox" class="mes-checkbox">
+          </ion-col>
+          <ion-col col-6 class="mes-header-md">
+            D/C
+            <input type="checkbox" class="mes-checkbox">
+          </ion-col>
+        </ion-row>
+        <div class="mes-divider"></div>
+        <ion-row>
+          <ion-col col-4 class="mes-header-md">
+            Instructor reg.
+          </ion-col>
+          <ion-col col-8>
+            <input appInputRestriction="integer" type="number" pattern="[0-9]*" class="mes-text-input">
+          </ion-col>
+        </ion-row>
+        <div class="mes-divider"></div>
+        <ion-row>
+          <ion-col col-4 class="mes-header-md">
+            Instructor cert.
+          </ion-col>
+          <ion-col col-8>
+            <input appInputRestriction="integer" type="number" pattern="[0-9]*" class="mes-text-input">
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <div class="action-buttons-wrapper">
+      <button class="mes-button-danger end-test-button" [navPush]="endTestReasonPage">End Test</button>
+      <button class="mes-button-primary confirm-button" type="submit">Confirm</button>
+      <div class="clearfix"></div>
+    </div>
+  </form>
+</ion-content>

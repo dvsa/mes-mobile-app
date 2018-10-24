@@ -1,0 +1,24 @@
+<ion-row align-items-center no-padding>
+  <ion-col *ngFor="let req of requirements | evenOdd:'odd'" no-padding col-6>
+    <button [class.done]="hasMetReq(req.id)" (click)="setReq(req.id)">
+      <ion-row no-padding>
+        <ion-col col-1></ion-col>
+        <ion-col col-9>
+          <span>{{req.name}}</span>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-col>
+</ion-row>
+<ion-row align-items-center no-padding>
+  <ion-col *ngFor="let req of requirements | evenOdd:'even'" no-padding col-6>
+    <button [class.done]="hasMetReq(req.id)" (click)="setReq(req.id)">
+      <ion-row no-padding>
+        <ion-col col-1></ion-col>
+        <ion-col col-9>
+          <span>{{req.name}}</span>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-col>
+</ion-row>

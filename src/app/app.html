@@ -1,0 +1,7 @@
+<ion-header #header *ngIf="!canShowHeader">
+  <alpha-header></alpha-header>
+</ion-header>
+
+<ion-content #ionContent no-bounce>
+  <ion-nav [root]="rootPage" main #content [swipeBackEnabled]="false"></ion-nav>
+</ion-content>

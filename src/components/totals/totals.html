@@ -1,0 +1,14 @@
+<!-- Generated template for the TotalsComponent component -->
+<span class="faults-container">
+  <span class="report-header-text scorecard-item">D/F: {{numFaults}}</span>
+  <span class="report-header-text scorecard-item">S: {{numSerious}}</span>
+  <span class="report-header-text scorecard-item">D: {{numDangerous}}</span>
+  <button
+    *ngIf="options?.undo"
+    [disabled]="isRemoveDisabled" 
+    class="report-header-text scorecard-item remove-fault-button" 
+    [ngClass]="{ 'active': isRemoveButtonPressed }"
+  >
+    <ion-icon (click)="enableRemovingFaults()" name="undo"></ion-icon>
+  </button>
+</span>

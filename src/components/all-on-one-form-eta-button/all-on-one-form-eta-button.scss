@@ -1,0 +1,35 @@
+all-on-one-form-eta-button {
+  position: relative;
+  .pActive:before,
+  .vActive:before,
+  .pActive.vActive:before {
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 30px;
+    color: black;
+    z-index: 1;
+    font-weight: bold;
+  }
+  .pActive.vActive:before {
+    content: 'P, V';
+  }
+  .pActive:before {
+    content: 'P';
+  }
+  .vActive:before {
+    content: 'V';
+  }
+  .active {
+    &.pActive:before,
+    &.vActive:before,
+    &.pActive.vActive:before,
+    button {
+      color: white;
+    }
+    button {
+      background-color: black;
+    }
+  }
+}

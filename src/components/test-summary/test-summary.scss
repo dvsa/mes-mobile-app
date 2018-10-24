@@ -1,0 +1,45 @@
+test-summary {
+  .mes-test-summary-header {
+    border-bottom: 1px solid map-get($colors, faintDivider);
+  }
+  .mes-test-summary-heading {
+    font-size: 15px;
+    color: map-get($colors, textGrey);
+  }
+  .mes-test-summary-result {
+    font-size: 56px;
+    font-weight: 900;
+    border-bottom: 1px solid map-get($colors, faintDivider);
+    &.fail {
+      color: map-get($colors, failRed);
+    }
+    &.pass {
+      color: map-get($colors, mesPrimary);
+    }
+  }
+  .mes-test-summary-details-list {
+    list-style: none;
+    padding-left: 0;
+    li {
+      font-size: 14px;
+      font-weight: 900;
+      color: map-get($colors, textGrey);
+      padding: 2px 0 2px;
+      div {
+        position: relative;
+        ion-icon {
+          position: absolute;
+          left: -18px;
+          font-size: 30px;
+          top: -5px;
+          &[name='checkmark'] {
+            color: map-get($colors, mesPrimary);
+          }
+          &[name='close'] {
+            color: map-get($colors, failRed);
+          }
+        }
+      }
+    }
+  }
+}

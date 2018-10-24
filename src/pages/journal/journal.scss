@@ -1,0 +1,145 @@
+page-journal {
+  .slot {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background: map-get($map: $colors, $key: offWhite);
+    border-radius: 19px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    padding: 0 5px 0 30px;
+    margin: 25px 20px;
+    width: 94%;
+    &:before {
+      content: ' ';
+      position: absolute;
+      left: 0px;
+      right: 0;
+      top: 0px;
+      width: 0px;
+    }
+    &__check:before {
+      background: map-get($map: $colors, $key: checkYellow);
+      padding-left: 7px;
+      padding-top: 14px;
+      font-size: 3em;
+      width: 18px;
+      height: 93px;
+      content: '!';
+    }
+    &__fail:before {
+      color: map-get($map: $colors, $key: danger);
+      border: 10px solid map-get($map: $colors, $key: danger);
+      height: 70px;
+    }
+    &__pass:before {
+      color: map-get($map: $colors, $key: passedGreen);
+      border: 10px solid map-get($map: $colors, $key: passedGreen);
+      height: 70px;
+    }
+    &.slot__double ion-col div {
+      height: 160px;
+    }
+    .mes-journal-candidate-name {
+      &:active {
+        color: map-get($colors, lighterGrey);
+      }
+    }
+    ion-col {
+      &:first-child {
+        padding: 5px 5px 5px 0;
+      }
+      &:last-child {
+        float: right;
+        div {
+          line-height: 40px;
+          border: none;
+          &.slot__details {
+            line-height: 50px;
+          }
+        }
+      }
+      & > div {
+        border-right: 1px solid #ccc;
+        height: 50px;
+        width: 100%;
+        display: inline-block;
+        line-height: 50px;
+        &.slot__candidate {
+          display: block;
+          .wrapper {
+            margin-right: 10px;
+            background-color: #eeeded;
+            border-radius: 13px;
+            padding-top: 4px;
+            padding-left: 8px;
+            -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
+            -moz-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
+            &:hover {
+              background-color: #dddddd;
+            }
+            span {
+              height: 23px;
+              display: block;
+              font-size: 13px;
+              color: gray;
+              line-height: 18px;
+              &:first-child {
+                line-height: 24px;
+                font-size: 1.2em;
+                font-weight: bold;
+                color: black;
+              }
+            }
+          }
+        }
+        &.slot__details {
+          text-align: center;
+          padding-right: 10px;
+          span {
+            display: block;
+            font-weight: 500;
+            border-radius: 13px;
+            background-color: #eeeded;
+          }
+        }
+        &.slot__activityCode {
+          font-size: 1.2em;
+          line-height: 2.4em;
+          border-radius: 10px;
+          background: map-get($map: $colors, $key: failRed);
+          color: map-get($map: $colors, $key: white);
+          font-weight: bold;
+          text-align: center;
+        }
+        &.slot__travel {
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+        &.slot__travelPoints {
+          line-height: 50px;
+          font-size: 1.1em;
+          text-align: center;
+
+          .ion-ios-arrow-round-forward {
+            padding: 0 15px;
+          }
+        }
+      }
+      button {
+        width: 100%;
+        background: map-get($map: $colors, $key: btnGreen);
+      }
+    }
+    &__time {
+      font-weight: bold;
+      font-size: 1.6em;
+    }
+    &__testCentre {
+      ion-icon {
+        margin-right: 5px;
+      }
+      font-weight: 400;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+<ion-grid>
+    <ion-row class="mes-test-summary-header">
+        <ion-col col-4>
+            <span class="mes-test-summary-heading">Result</span>
+        </ion-col>
+        <ion-col>
+            <span class="mes-test-summary-heading">Faults</span>
+        </ion-col>
+    </ion-row>
+    <ion-row margin-top>
+        <ion-col col-4 padding-left>
+            <h1 class="mes-test-summary-result" [ngClass]="{'fail': testResult==='Fail' , 'pass': testResult==='Pass'}">{{testResult}}</h1>
+            <ul class="mes-test-summary-details-list">
+                <li *ngIf="etas.length > 0">
+                    ETA:
+                    <span *ngFor="let action of etas; let i = index">{{action}}<span *ngIf="etas.length > 1 && i !== etas.length - 1">&amp;</span></span>
+                </li>
+                <li>
+                    <div>
+                        <ion-icon name="checkmark" *ngIf="summaryMetadata.selectedManoeuvre"></ion-icon>
+                        <ion-icon name="close" *ngIf="!summaryMetadata.selectedManoeuvre"></ion-icon>
+                        Manoeuvre<span *ngIf="summaryMetadata.selectedManoeuvre">:</span> {{summaryMetadata.selectedManoeuvre}}
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <ion-icon name="checkmark" *ngIf="summaryMetadata.controlledStopDone"></ion-icon>
+                        <ion-icon name="close" *ngIf="!summaryMetadata.controlledStopDone"></ion-icon>
+                        Controlled stop                   
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <ion-icon name="checkmark" *ngIf="summaryMetadata.eco.done"></ion-icon>
+                        <ion-icon name="close" *ngIf="!summaryMetadata.eco.done"></ion-icon>
+                        ECO<span *ngIf="summaryMetadata.eco.selections.length > 0">:</span>
+                        <span *ngFor="let selection of summaryMetadata.eco.selections; let i = index">{{selection}}
+                            <span *ngIf="summaryMetadata.eco.selections.length > 1 && i !== summaryMetadata.eco.selections.length - 1">&amp;</span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </ion-col>
+        <ion-col>
+            <test-summary-section [summary]="dangerousFaultSummary" *ngIf="dangerousFaultSummary.total > 0"></test-summary-section>
+            <test-summary-section [summary]="seriousFaultSummary" *ngIf="seriousFaultSummary.total > 0"></test-summary-section>
+            <test-summary-section [summary]="drivingFaultSummary" *ngIf="drivingFaultSummary.total > 0"></test-summary-section>
+        </ion-col>
+    </ion-row>
+</ion-grid>

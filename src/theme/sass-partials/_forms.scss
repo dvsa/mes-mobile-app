@@ -1,0 +1,43 @@
+$checkbox-width: 30px;
+input[type='checkbox'] {
+  transform: scale(2);
+  margin: 25px 20px;
+  & + label {
+    font-size: 20px;
+    position: relative;
+    cursor: pointer;
+    margin: 20px 2px;
+  }
+}
+
+.signature-pad {
+  button#retry {
+    float: left;
+  }
+  button#continue {
+    float: right;
+  }
+  background-color: map-get($colors, mesBoxGrey);
+  position: relative;
+  padding: 40px;
+  span {
+    font-weight: bold;
+    float: none;
+    position: absolute;
+    top: 60px;
+    left: 60px;
+  }
+  signature-pad {
+    width: 100%;
+    text-align: center;
+    canvas {
+      display: block;
+      border: thick solid map-get($colors, divider);
+      margin-bottom: 20px;
+      width: 100%;
+    }
+  }
+  .clearfix {
+    clear: both;
+  }
+}

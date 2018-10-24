@@ -1,0 +1,20 @@
+.mes-card {
+  margin-bottom: 5px;
+  .mes-main-card-header,
+  .mes-main-card-header--border-bottom {
+    margin-bottom: 3em;
+    ion-icon[name='refresh'] {
+      font-weight: bold;
+      vertical-align: middle;
+      font-size: 2em;
+    }
+  }
+
+  .mes-main-card-header--border-bottom {
+    border-bottom: 1px solid map-get($colors, divider);
+  }
+
+  .content-narrow {
+    padding: 0 110px;
+  }
+}

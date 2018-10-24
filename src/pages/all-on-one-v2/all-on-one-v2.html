@@ -1,0 +1,190 @@
+<ion-header>
+  <mes-header></mes-header>
+  <report-header-v2 [options]="reportHeaderOptions"></report-header-v2>
+</ion-header>
+
+<ion-content no-bounce>
+  <ion-grid class="full-page side-paddings" no-bounce [ngClass]="{'scroll': ecoButton.isEnabled && etaButton.isEnabled}">
+    <ion-row class="main-content flex-none">
+      <ion-col col-4>
+        <p>&nbsp;</p>
+        <ion-row class="sd-buttons-wrapper form-section">
+          <ion-col col-6 no-padding>
+            <button class="s-button" [ngClass]="{'active': isSButtonPressed}" (click)="sButtonClicked()">S</button>
+          </ion-col>
+          <ion-col col-6 no-padding>
+            <button class="d-button" [ngClass]="{'active': isDButtonPressed}" (click)="dButtonClicked()">D</button>
+          </ion-col>
+        </ion-row>
+
+        <div class="form-section no-margin-bottom" [ngClass]="{ 'action-completed' : selectedManoeuvre }">
+          <all-on-one-form-sub-element-button [sectionsToShow]="selectedManoeuvre" #manoeuvresButton text="{{ 'MANOEUVRES' | translate }}"></all-on-one-form-sub-element-button>
+        </div>
+      </ion-col>
+
+      <ion-col col-4 class="no-padding-bottom">
+        <div class="form-section no-margin-bottom">
+          <p>{{ 'MOVE_OFF' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="moSafety" text="safety"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="moControl" text="control"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+      </ion-col>
+
+      <ion-col col-4 class="no-padding-bottom">
+        <div class="form-section bottom-border">
+          <p>{{ 'POSITIONING' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="posDriving" text="normal driving"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="posLane" text="lane discipline"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!-- Manoeuvres -->
+    <ion-row class="main-content expanded-section flex-none" [ngClass]="{'content-open': manoeuvresButton.isEnabled}">
+      <ion-col col-4 class="form-section" style="padding-right: 25px;">
+        <div class="check-btn" *ngFor="let key of manoeuvreKeys">
+          <label>
+            <input type="checkbox" id="{{ key }}" [checked]="isManoeuvreSelected(key)" (click)="selectManoeuvre(key, $event)" />
+            <span>{{manoeuvreBtns[key]}}</span>
+          </label>
+        </div>
+      </ion-col>
+      <ion-col col-8 class="form-section">
+        <div class="man-faults" [ngClass]="{'active': !isManoeuvreSelected('')}">
+          <all-on-one-form-sub-element-hold-no-modal [section]="createSection(selectedManoeuvre, 'Ctrl')" text="control"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal [section]="createSection(selectedManoeuvre, 'Obs')" text="observations"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="main-content" [style.margin-top]="setPixelVal(!manoeuvresButton.isEnabled, 2)" [ngClass]="{'scroll': manoeuvresButton.isEnabled}">
+      <ion-col col-4>
+        <div class="form-section" [ngClass]="{'action-completed': isControlledStopDone}" (click)="controlledStopTap()" (press)="controlledStopTap()">
+          <all-on-one-form-sub-element-hold-no-modal #controlledStopEl section="controlledStop" text="Controlled Stop"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <all-on-one-form-vc-button></all-on-one-form-vc-button>
+
+        <div class="form-section" [ngClass]="{'action-completed': isEcoComplete() || ecoControlOption.isEnabled || ecoPlanningOption.isEnabled}">
+          <all-on-one-form-sub-element-button #ecoButton section="ECO" text="ECO"></all-on-one-form-sub-element-button>
+        </div>
+
+        <!-- ECO Options -->
+        <div class="main-content expanded-section flex-none expanded-section-in-column" [ngClass]="{'content-open': ecoButton.isEnabled}">
+          <div class="check-btn">
+            <label>
+              <input #ecoCompletionInput type="checkbox" [disabled]="ecoControlOption.isEnabled || ecoPlanningOption.isEnabled" [checked]="isEcoComplete() || ecoControlOption.isEnabled || ecoPlanningOption.isEnabled"
+                (change)="setEco($event)" />
+              <span>Completed</span>
+            </label>
+          </div>
+          <all-on-one-form-sub-element-button (click)="ecoSelection()" #ecoControlOption text="control"></all-on-one-form-sub-element-button>
+          <all-on-one-form-sub-element-button (click)="ecoSelection()" #ecoPlanningOption text="planning"></all-on-one-form-sub-element-button>
+        </div>
+
+        <div class="form-section bottom-border">
+          <p>Test Requirements</p>
+          <legal-requirements></legal-requirements>
+        </div>
+
+        <div class="form-section">
+          <all-on-one-form-eta-button #etaButton section="ETA" text="ETA" [pAction]="etaPhysicalOption.isEnabled" [vAction]="etaVerbalOption.isEnabled"></all-on-one-form-eta-button>
+        </div>
+
+        <!-- ETA Options -->
+        <div class="main-content expanded-section flex-none expanded-section-in-column" [ngClass]="{'content-open': etaButton.isEnabled}" (click)="etaClick()">
+          <all-on-one-form-sub-element-button #etaPhysicalOption text="physical"></all-on-one-form-sub-element-button>
+          <all-on-one-form-sub-element-button #etaVerbalOption text="verbal"></all-on-one-form-sub-element-button>
+        </div>
+
+        <div class="form-section bottom-border">
+          <p>{{ 'CONTROL' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="controlAcc" text="accelerator"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="controlClutch" text="clutch"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="controlGears" text="gears"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="controlFBrake" text="footbrake"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="controlPBrake" text="parking brake"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="controlSteering" text="steering"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+        <div class="form-section bottom-border">
+          <all-on-one-form-sub-element-hold-no-modal section="prec" text="precautions"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+        <div class="form-section">
+          <all-on-one-form-sub-element-hold-no-modal section="ancillary" text="ancillary controls"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+      </ion-col>
+
+      <ion-col col-4 [style.margin-top]="setPixelVal(!manoeuvresButton.isEnabled, -18)">
+        <div class="form-section-small">
+          <p>{{ 'USE_OF_MIRRORS' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="mirrorSignal" text="signalling"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="mirrorDirection" text="change direction"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="mirrorSpeed" text="change speed"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section-small">
+          <p>{{ 'SIGNALS' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="signalNecessary" text="necessary"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="signalCorrect" text="correctly"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="signalTimed" text="timed"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section-small">
+          <p>{{ 'JUNCTIONS' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="juncSpeed" text="approach speed"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="juncObs" text="observation"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="juncTRight" text="turning right"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="juncTLeft" text="turning left"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="juncCutting" text="cutting corners"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section-small">
+          <p>{{ 'JUDGEMENT' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="judgeOvertake" text="overtaking"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="judgeMeet" text="meeting"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="judgeCross" text="crossing"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+      </ion-col>
+
+      <ion-col col-4 [ngClass]="{'margin-top-minus-10': !manoeuvresButton.isEnabled}">
+        <div class="form-section bottom-border">
+          <all-on-one-form-sub-element-hold-no-modal section="clearance" text="clearance"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section bottom-border">
+          <all-on-one-form-sub-element-hold-no-modal section="following" text="following distance"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+        <div class="form-section-small">
+          <all-on-one-form-sub-element-hold-no-modal section="speed" text="use of speed"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+        <div class="form-section">
+          <p>{{ 'PROGRESS' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="progSpeed" text="appropriate speed"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="progHesitate" text="undue hesitation"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section bottom-border">
+          <p>{{ 'RESPONSE' | translate }}</p>
+          <all-on-one-form-sub-element-hold-no-modal section="trafficSigns" text="traffic signs"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="roadMarkings" text="road markings"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="trafficLights" text="traffic lights"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="trafficControllers" text="traffic controllers"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="otherRoadUsers" text="other road users"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section bottom-border">
+          <all-on-one-form-sub-element-hold-no-modal section="pedCrossing" text="pedestrian crossings"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section bottom-border">
+          <all-on-one-form-sub-element-hold-no-modal section="position" text="position / normal stop"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+        <div class="form-section">
+          <all-on-one-form-sub-element-hold-no-modal section="awareness" text="awareness planning"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

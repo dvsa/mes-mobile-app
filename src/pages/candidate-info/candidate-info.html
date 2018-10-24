@@ -1,0 +1,95 @@
+<!--
+  Generated template for the CandidateInfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+    <page-header></page-header>
+</ion-header>
+
+<ion-content padding class="mes-main-content">
+
+    <ion-card class="mes-card">
+        <ion-card-header class="mes-main-card-header--border-bottom mes-breadcrumbs">
+            <span class="mes-header-md mes-breadcrumb-link" navPop>
+                <ion-icon name="arrow-back"></ion-icon>
+                {{getPreviousPage()}} /
+            </span>
+            <span padding-left class="mes-header-md">View Candidate</span>
+            <span float-right>
+                <ion-icon padding-right name="refresh"></ion-icon>
+                <span class="mes-text-sm">Last synced: 8:06</span>
+            </span>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-row class="mes-m-b-20">
+                <ion-col col-3 offset-9>
+                    <button float-right class="mes-button-neutral" outline color="dark" [navPush]="initiateSwapPage">Request swap</button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-4 text-center padding-right>
+                    <ion-icon class="mes-candidate-img" name="person"></ion-icon>
+                    <div class="mes-p-sm">
+                        <span class="mes-header-md">Florence Pearson</span>
+                    </div>
+                    <div class="mes-p-sm">
+                        <ion-icon name="clock"></ion-icon>
+                        <span class="mes-bold mes-text-sm">12:23</span>
+                    </div>
+                    <span class="mes-p-sm mes-bold mes-text-sm mes-grey">Category B</span>
+                </ion-col>
+                <ion-col col-8 padding-left>
+                    <ion-row margin-bottom>
+                        <ion-col no-padding>
+                            <span class="mes-header-sm">Address:</span>
+                            <div class="mes-divider mes-one-third-divider"></div>
+                            <span class="mes-text-sm">
+                                18 Bridge St,
+                                <br>Horncastle,
+                                <br>Linconshire
+                                <br>LN9 5JA
+                            </span>
+                        </ion-col>
+                        <ion-col no-padding>
+                            <span class="mes-header-sm">Driving number:</span>
+                            <div class="mes-divider mes-one-third-divider"></div>
+                            <div>
+                                <span class="mes-text-sm">
+                                    PHIL6767655777BN
+                                </span>
+                            </div>
+                            <div margin-top>
+                                <span class="mes-text-sm mes-dark-grey">
+                                    <strong>App ref.</strong> 394 580 790 10
+                                </span>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <div margin-bottom>
+                        <span class="mes-text-sm">florencepearson@gmail.com</span>
+                    </div>
+                    <span class="mes-text-sm">07988674536</span>
+                    <div class="sig" *ngIf="signature">
+                        <ion-img [src]="signature"></ion-img>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <div hidden text-center class="mes-box-grey">
+                <div margin-bottom>
+                    <ion-icon name="alert"></ion-icon>
+                    <span class="mes-header-md">Theory test certificate check required</span>
+                </div>
+                <button class="mes-button-primary">OK</button>
+            </div>
+        </ion-card-content>
+    </ion-card>
+    <div class="confirm-identity-box" *ngIf="signature">
+        <div class="inner" (click)="confirmIdentity()">
+            <ion-checkbox></ion-checkbox>
+            <button class="mes-button-primary">Confirm Candidates Identity</button>
+        </div>
+    </div>
+</ion-content>

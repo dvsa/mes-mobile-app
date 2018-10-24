@@ -1,0 +1,18 @@
+<ion-header padding>
+  <ion-row class="align-items-center">
+    <ion-col>
+      <span class="mes-header-md">{{title}}</span>
+    </ion-col>
+    <ion-col class="text-align-right">
+      <button class="mes-button-primary" (click)="save()">Save</button>
+      <button class="mes-button-danger" (click)="cancel()">Cancel</button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    Notes:
+    <textarea [(ngModel)]="liveNotes" rows="3"></textarea>
+  </div>
+</ion-content>

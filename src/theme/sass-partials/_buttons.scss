@@ -1,0 +1,43 @@
+.mes-button-primary {
+  border-radius: 22px;
+  min-width: 105px;
+  background-color: map-get($colors, mesPrimary);
+  padding: 15px 40px;
+  color: map-get($colors, white);
+  font-weight: bold;
+  font-size: 17px;
+  &:active {
+    background-color: lighten(map-get($colors, mesPrimary), 5);
+  }
+}
+
+.mes-bottom-card {
+  margin-top: 0;
+  .mes-button-primary {
+    padding: 30px 80px;
+    margin: 30px 0;
+  }
+}
+
+.mes-button-neutral {
+  border: solid 1px map-get($colors, light);
+  height: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  font-size: 15px;
+  background: map-get($colors, white);
+}
+
+.mes-button-danger {
+  border-radius: 22px;
+  min-width: 105px;
+  background-color: map-get($colors, danger);
+  padding: 15px 40px;
+  color: map-get($colors, white);
+  font-weight: bold;
+  font-size: 17px;
+  &:active {
+    background-color: lighten(map-get($colors, danger), 5);
+  }
+}

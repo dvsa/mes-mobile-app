@@ -1,0 +1,99 @@
+<ion-header>
+  <page-header></page-header>
+</ion-header>
+
+<ion-content padding class="mes-main-content">
+  <ion-card class="mes-card">
+    <ion-card-header class="mes-main-card-header mes-breadcrumbs">
+      <span class="mes-header-md">Your Journal</span>
+      <span float-right>
+        <ion-icon padding-right name="refresh"></ion-icon>
+        <span class="mes-text-sm">Last synced: 8:06</span>
+      </span>
+    </ion-card-header>
+    <journal-header></journal-header>
+    <ion-list>
+      <ion-item class="slot" *ngFor="let s of journalSlots; let i = index" [ngClass]="{'slot__fail': hasFailed(s), 'slot__pass': hasPassed(s), 'slot__check': requiresCheck(s), 'slot__double': i==5 }">
+          <ion-row *ngIf="i == 2">
+              <ion-col col-2>
+                <div class="slot__time">10:14</div>
+              </ion-col>
+              <ion-col col-4>
+                <div class="slot__candidate" (click)="goToCandidateInfo(s)">
+                  <div class="wrapper">
+                    <span class="mes-journal-candidate-name">Matt Murray</span> 
+                    <span>Category: B</span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col col-6>
+                <div class="slot__activityCode">
+                  <span>
+                    Activity Code: 60
+                  </span>
+                </div>
+              </ion-col>
+            </ion-row>
+        <ion-row *ngIf="i == 4">
+              <ion-col col-2>
+                <div class="slot__time">12:38</div>
+              </ion-col>
+              <ion-col col-4>
+                <div class="slot__travel">
+                  Travel
+                </div>
+              </ion-col>
+              <ion-col col-6>
+                <div class="slot__travelPoints">
+                    <ion-icon name="pin"></ion-icon>
+                    Cardington
+                    <ion-icon name="arrow-round-forward"></ion-icon>
+                    <ion-icon name="pin"></ion-icon>
+                    Garrets Green
+                </div>
+              </ion-col>
+            </ion-row>
+        <ion-row *ngIf="i != 4 && i != 2">
+          <ion-col col-2>
+            <div class="slot__time">{{s.startTime}}</div>
+          </ion-col>
+          <ion-col col-4>
+            <div class="slot__candidate" (click)="goToCandidateInfo()">
+              <div class="wrapper">
+                  <span class="mes-journal-candidate-name">{{s.candidateName.firstName}} {{s.candidateName.lastName}}</span> 
+                  <span>Category: {{extractCategoryCode(s.slotType)}}</span>
+                  <span [hidden]="i!=5">Special needs</span>                  
+              </div>
+            </div>
+          </ion-col>
+          <ion-col *ngIf="s.details" col-4>
+            <div class="slot__details">
+              <span>
+                Route {{s.details.route}}
+              </span>
+            </div>
+          </ion-col>
+          <ion-col *ngIf="s.details" col-2>
+            <div class="slot__details">
+              <span>
+                S-{{s.details.showMe}} | T-{{s.details.tellMe}}
+              </span>
+            </div>
+          </ion-col>
+          <ion-col *ngIf="!s.details" col-4>
+            <div class="slot__testCentre">
+              <ion-icon name="pin"></ion-icon>
+              {{s.testCentreName}}
+            </div>
+          </ion-col>
+          <ion-col *ngIf="!s.details" col-2>
+            <div>
+              <button ion-button [navPush]="declarationConsentPage" color="secondary">Start Test</button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+    <button float-right icon-right margin-right margin-bottom ion-button small outline color="dark" (click)="skipToDL25()">DL25 practice<ion-icon name="construct"></ion-icon></button>
+  </ion-card>
+</ion-content>

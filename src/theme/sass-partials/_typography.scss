@@ -1,0 +1,39 @@
+.mes-text-sm {
+  font-size: 17px;
+  font-weight: normal;
+}
+
+.mes-text-md {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.mes-header-md {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.mes-bold {
+  font-weight: bold;
+}
+
+.mes-header-sm {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.bold-medium {
+  @include bold-24();
+}
+
+.capital-characters {
+  text-transform: uppercase;
+}
+
+.text-align-right {
+  text-align: right;
+}
