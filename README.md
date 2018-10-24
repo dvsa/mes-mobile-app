@@ -1,8 +1,8 @@
-# mobile-examiner-alpha
+# mobile-examiner
 
-DVSA Mobile Examiner Services (GDS Alpha phase)
+DVSA Mobile Examiner Services (GDS Beta phase)
 
-## Mobile Client Prototype
+## Mobile Client
 
 ### Pre-requisites
 
