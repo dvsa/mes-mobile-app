@@ -1,4 +1,8 @@
 <!-- Generated template for the TimerComponent component -->
-<span class="data-item bold-medium">
+<button ion-button clear 
+  [disabled]="isDisabled" 
+  (click)="startTimer()" 
+  color="dark"
+  class="data-item bold-medium">
   {{timer}}
-</span>
+</button>

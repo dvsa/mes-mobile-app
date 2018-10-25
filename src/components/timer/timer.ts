@@ -14,14 +14,17 @@ export class TimerComponent {
   secondsCounter: number;
   date: Date = new Date(null);
   timer: string;
+  isDisabled: boolean = false;
 
   constructor() {
     this.secondsCounter = 0;
     this.date.setSeconds(this.secondsCounter);
-    this.timer = '';
+    this.timer = '00:00';
   }
 
-  ngOnInit() {
+  startTimer() {
+    this.isDisabled = true;
+
     setInterval(() => {
       this.date = new Date(null);
       this.secondsCounter += 1;
