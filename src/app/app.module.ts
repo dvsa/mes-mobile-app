@@ -1,4 +1,3 @@
-import { File } from '@ionic-native/file';
 import { DirectivesModule } from './../directives/directives.module';
 import { AllOnOneV2Page } from './../pages/all-on-one-v2/all-on-one-v2';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -56,8 +55,6 @@ import { HealthDeclarationPage } from '../pages/health-declaration/health-declar
 import { TextboxModalComponent } from '../components/textbox-modal/textbox-modal';
 import { TestSummaryMetadataProvider } from '../providers/test-summary-metadata/test-summary-metadata';
 import { VehicleCheckProvider } from '../providers/vehicle-check/vehicle-check';
-import { Media } from '@ionic-native/media';
-import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
 
 export function createTranslateLoader(http: Http) {
@@ -150,10 +147,7 @@ export function createTranslateLoader(http: Http) {
     Insomnia,
     Globalization,
     TestSummaryMetadataProvider,
-    VehicleCheckProvider,
-    File,
-    Media,
-    AudioRecorderProvider
+    VehicleCheckProvider
   ]
 })
 export class AppModule {}
