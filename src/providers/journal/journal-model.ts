@@ -1,7 +1,8 @@
 export interface IJournal {
   details?: ITestDetails;
   candidateId: number;
-  candidateName: String;
+  candidateName: string;
+  driverNumber: string;
   startTime: string;
   appId: string;
   testCentreName: string;

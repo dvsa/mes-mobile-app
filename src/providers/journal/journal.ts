@@ -31,7 +31,7 @@ export class JournalProvider {
         details,
         slot: { testCentreName = '', start = '', vehicleSlotType: slotType = null },
         booking: {
-          candidate: { candidateName = '', _candidateId: candidateId = 0 },
+          candidate: { candidateName = '', _candidateId: candidateId = 0, driverNumber = '' },
           application: { checkMarker = false, _applicationId: appId = '' }
         }
       } = next;
@@ -39,6 +39,7 @@ export class JournalProvider {
       let journalEntry: IJournal = {
         candidateId,
         candidateName,
+        driverNumber,
         appId,
         testCentreName,
         checkMarker,
