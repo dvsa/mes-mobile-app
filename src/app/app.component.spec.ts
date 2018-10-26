@@ -9,7 +9,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { Globalization } from '@ionic-native/globalization';
 
 import { App } from './app.component';
-import { LoginPage } from '../pages/login/login';
+import { WelcomePage } from '../pages/welcome-page/welcome-page';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -66,8 +66,8 @@ describe('App', () => {
     expect(component).toBeDefined();
   });
 
-  it('should have LoginPage as the root page', () => {
-    expect(component.rootPage).toBe(LoginPage);
+  it('should have WelcomePage as the root page', () => {
+    expect(component.rootPage).toBe(WelcomePage);
   });
 
   it('should call the styleDefault method on statusBar', () => {

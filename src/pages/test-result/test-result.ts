@@ -1,7 +1,7 @@
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
 import { AudioRecorderProvider } from './../../providers/audio-recorder/audio-recorder';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
@@ -30,14 +30,12 @@ export class TestResultPage {
   isRecording;
   fileLength;
   isCordova: boolean;
-  debriefConsent = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private faultStore: FaultStoreProvider,
     private summaryMetadataService: TestSummaryMetadataProvider,
-    private toastCtrl: ToastController,
     private audioRecorder: AudioRecorderProvider,
     private platform: Platform
   ) {
@@ -46,17 +44,7 @@ export class TestResultPage {
       .subscribe((faultSummaries) => (this.faultSummaries = faultSummaries));
     this.testResult = this.faultStore.getTestResult();
     this.summaryMetadata = this.summaryMetadataService.getMetadata();
-    this.debriefConsent = this.faultStore.getDebriefConsentStatus();
     this.isCordova = this.platform.is('cordova');
-
-    if (this.debriefConsent && this.isCordova) {
-      const toast = this.toastCtrl.create({
-        message: 'Candidate has given permission to be recorded',
-        position: 'bottom',
-        duration: 3000
-      });
-      toast.present();
-    }
 
     this.audioRecorder.isRecordingChange.subscribe((newValue) => {
       this.isRecording = newValue;
