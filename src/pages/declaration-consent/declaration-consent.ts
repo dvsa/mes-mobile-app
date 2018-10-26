@@ -36,7 +36,6 @@ export class DeclarationConsentPage {
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
     this.slotDetail = this.navParams.get('slotDetail');
-    console.log('slot detail', this.slotDetail);
   }
 
   ngAfterViewInit() {

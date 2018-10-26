@@ -30,7 +30,6 @@ export class CandidateInfoPage {
   ) {
     this.signature = this.navParams.get('signature');
     this.slotDetail = this.navParams.get('slotDetail');
-    console.log('slot detail', this.slotDetail);
   }
 
   confirmIdentity() {
