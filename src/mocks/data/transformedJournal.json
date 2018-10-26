@@ -9,6 +9,7 @@
       "thirdName": "Ccc",
       "lastName": "Nappin"
     },
+    "driverNumber": "AAAAA123456A78AA",
     "checkMarker": false,
     "details": {
       "success": false,
@@ -30,6 +31,7 @@
       "thirdName": "Ccc",
       "lastName": "Zielinski"
     },
+    "driverNumber": "AAAAA123456A78AA",
     "checkMarker": false,
     "details": {
       "success": true,
@@ -51,6 +53,7 @@
       "thirdName": "Ccc",
       "lastName": "Murry"
     },
+    "driverNumber": "AAAAA123456A78AA",
     "slotType": "Voc90mins",
     "checkMarker": false,
     "startTime": "__TIME__",
