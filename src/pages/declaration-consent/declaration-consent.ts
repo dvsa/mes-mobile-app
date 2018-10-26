@@ -1,5 +1,5 @@
 import { DeviceAuthentication } from '../../types/device-authentication';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { AppConfigProvider } from '../../providers/app-config/app-config';
@@ -13,7 +13,7 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
   selector: 'page-declaration-consent',
   templateUrl: 'declaration-consent.html'
 })
-export class DeclarationConsentPage implements OnInit {
+export class DeclarationConsentPage {
   pretestChecksPage: Page = PretestChecksPage;
   endTestReasonPage: Page = EndTestReasonPage;
   signaturePadOptions: any;
@@ -21,6 +21,8 @@ export class DeclarationConsentPage implements OnInit {
 
   checkInsurance: boolean = false;
   checkResidence: boolean = false;
+
+  slotDetail: any; // todo - make typesafe
 
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
@@ -31,10 +33,8 @@ export class DeclarationConsentPage implements OnInit {
     private deviceAuth: DeviceAuthentication
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
-  }
-
-  ngOnInit() {
-    // todo - get parameters pass through
+    this.slotDetail = this.navParams.get('slotDetail');
+    console.log('slot detail', this.slotDetail);
   }
 
   ngAfterViewInit() {
@@ -83,5 +83,21 @@ export class DeclarationConsentPage implements OnInit {
           this.navCtrl.push(this.pretestChecksPage);
         }
       });
+  }
+
+  /**
+   * Returns concatenated Candidate name
+   */
+  getFormattedCandidateName(): string {
+    return `${this.slotDetail.candidateName.title} ${this.slotDetail.candidateName.firstName} ${
+      this.slotDetail.candidateName.lastName
+    }`;
+  }
+
+  /**
+   * Just returns the Driver Number
+   */
+  getDriverNumber(): string {
+    return this.slotDetail.driverNumber;
   }
 }
