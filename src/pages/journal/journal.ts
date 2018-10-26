@@ -72,4 +72,9 @@ export class JournalPage {
       trainingMode: true
     });
   }
+
+  goToDeclarationConsent(slot) {
+    console.log('declaration consent with slot ', slot);
+    this.navCtrl.push(DeclarationConsentPage, { slotDetail: slot });
+  }
 }

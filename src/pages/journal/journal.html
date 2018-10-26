@@ -88,7 +88,7 @@
           </ion-col>
           <ion-col *ngIf="!s.details" col-2>
             <div>
-              <button ion-button [navPush]="declarationConsentPage" color="secondary">Start Test</button>
+              <button ion-button color="secondary" (click)="goToDeclarationConsent(s)">Start Test</button>
             </div>
           </ion-col>
         </ion-row>
