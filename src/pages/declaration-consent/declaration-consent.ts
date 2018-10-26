@@ -9,6 +9,7 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { IJournal } from '../../providers/journal/journal-model';
+import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
 @Component({
   selector: 'page-declaration-consent',
@@ -87,12 +88,10 @@ export class DeclarationConsentPage {
   }
 
   /**
-   * Returns concatenated Candidate name
+   * Returns concatenated Candidate name for this slot
    */
-  getFormattedCandidateName(): string {
-    return `${this.slotDetail.candidateName.title} ${this.slotDetail.candidateName.firstName} ${
-      this.slotDetail.candidateName.lastName
-    }`;
+  getCandidateName(): string {
+    return getFormattedCandidateName(this.slotDetail.candidateName);
   }
 
   /**

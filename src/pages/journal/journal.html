@@ -58,7 +58,7 @@
             <div class="slot__time">{{s.startTime}}</div>
           </ion-col>
           <ion-col col-4>
-            <div class="slot__candidate" (click)="goToCandidateInfo()">
+            <div class="slot__candidate" (click)="goToCandidateInfo(s)">
               <div class="wrapper">
                   <span class="mes-journal-candidate-name">{{s.candidateName.firstName}} {{s.candidateName.lastName}}</span> 
                   <span>Category: {{extractCategoryCode(s.slotType)}}</span>

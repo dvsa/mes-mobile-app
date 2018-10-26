@@ -62,8 +62,8 @@ export class JournalPage {
     return slot.checkMarker;
   }
 
-  goToCandidateInfo() {
-    return this.navCtrl.push(CandidateInfoPage);
+  goToCandidateInfo(slot: IJournal) {
+    return this.navCtrl.push(CandidateInfoPage, { slotDetail: slot });
   }
 
   skipToDL25() {
