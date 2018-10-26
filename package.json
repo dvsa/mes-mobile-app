@@ -71,6 +71,7 @@
     "redux-logger": "^3.0.6",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
+    "xml2js": "^0.4.19",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
