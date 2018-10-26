@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, NavController, ViewController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginPage } from '../pages/login/login';
 import { AllOnOneV2Page } from '../pages/all-on-one-v2/all-on-one-v2';
 import { Content } from 'ionic-angular/navigation/nav-interfaces';
 import { DEFAULT_LANG, SYS_OPTIONS, AVAILABLE_LANG } from './constants';
@@ -10,6 +9,7 @@ import { TranslateService } from 'ng2-translate';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Globalization } from '@ionic-native/globalization';
+import { WelcomePage } from '../pages/welcome-page/welcome-page';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +18,7 @@ export class App {
   @ViewChild('content') nav: NavController;
   @ViewChild('ionContent') ionContent: Content;
   @ViewChild('ionContent') header: Content;
-  rootPage: any = LoginPage;
+  rootPage: any = WelcomePage;
   canShowHeader = false;
 
   constructor(
