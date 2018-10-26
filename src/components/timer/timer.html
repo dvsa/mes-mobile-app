@@ -1,8 +1,6 @@
-<!-- Generated template for the TimerComponent component -->
-<button ion-button clear 
-  [disabled]="isDisabled" 
-  (click)="startTimer()" 
-  color="dark"
-  class="data-item bold-medium">
-  {{timer}}
+<button ion-button round (click)="startTimer()" *ngIf="!timerStarted" id="timer-button">
+  Start timer
 </button>
+<span *ngIf="timerStarted" class="report-header-text scorecard-item">
+  {{ timer }}
+</span>

@@ -1,5 +1,8 @@
 timer {
-  button:disabled {
-    opacity: 1 !important;
+  #timer-button {
+    background-color: #005ea5;
+    width: 129px;
+    border-radius: 10px;
+    box-shadow: 0 2px 0 0 #6f777b;
   }
 }

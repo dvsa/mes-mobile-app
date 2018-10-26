@@ -14,7 +14,7 @@ export class TimerComponent {
   secondsCounter: number;
   date: Date = new Date(null);
   timer: string;
-  isDisabled: boolean = false;
+  timerStarted: boolean = false;
 
   constructor() {
     this.secondsCounter = 0;
@@ -23,7 +23,7 @@ export class TimerComponent {
   }
 
   startTimer() {
-    this.isDisabled = true;
+    this.timerStarted = true;
 
     setInterval(() => {
       this.date = new Date(null);

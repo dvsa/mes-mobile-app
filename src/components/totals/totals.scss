@@ -3,13 +3,6 @@ totals {
     padding-left: 5px;
     padding-right: 5px;
   }
-  .scorecard-item {
-    border: 1px solid map-get($colors, dark);
-    padding: 4px 7px;
-    border-radius: 3px;
-    margin-left: 3px;
-    color: map-get($colors, dark);
-  }
 
   button {
     background-color: #f8f8f8;
@@ -18,9 +11,16 @@ totals {
   }
 
   .remove-fault-button {
+    font-size: 20px;
+    color: #005ea5;
+    width: 72px;
+    border-radius: 10px;
+    box-shadow: 0 2px 0 0 #6f777b;
+    border: solid 3.5px #005ea5;
+    background-color: #ffffff;
     &.active {
-      background-color: map-get($colors, dark);
-      color: map-get($colors, light);
+    }
+    &.disabled {
     }
   }
 }
