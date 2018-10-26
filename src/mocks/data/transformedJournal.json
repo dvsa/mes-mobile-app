@@ -9,7 +9,17 @@
       "thirdName": "Ccc",
       "lastName": "Nappin"
     },
+    "candidateAddress": {
+      "line1": "1 Some Street",
+      "line2": "Some place",
+      "line3": "Some area",
+      "line4": "Some town",
+      "line5": "Some county",
+      "postcode": "AA1 2BB"
+    },
     "driverNumber": "AAAAA123456A78AA",
+    "email": "aaaa@bbbb.com",
+    "mobileTelephone": "07654 123456",
     "checkMarker": false,
     "details": {
       "success": false,
@@ -31,7 +41,17 @@
       "thirdName": "Ccc",
       "lastName": "Zielinski"
     },
+    "candidateAddress": {
+      "line1": "1 Some Street",
+      "line2": "Some place",
+      "line3": "Some area",
+      "line4": "Some town",
+      "line5": "Some county",
+      "postcode": "AA1 2BB"
+    },
     "driverNumber": "AAAAA123456A78AA",
+    "email": "aaaa@bbbb.com",
+    "mobileTelephone": "07654 123456",
     "checkMarker": false,
     "details": {
       "success": true,
@@ -53,7 +73,17 @@
       "thirdName": "Ccc",
       "lastName": "Murry"
     },
+    "candidateAddress": {
+      "line1": "1 Some Street",
+      "line2": "Some place",
+      "line3": "Some area",
+      "line4": "Some town",
+      "line5": "Some county",
+      "postcode": "AA1 2BB"
+    },
     "driverNumber": "AAAAA123456A78AA",
+    "email": "aaaa@bbbb.com",
+    "mobileTelephone": "07654 123456",
     "slotType": "Voc90mins",
     "checkMarker": false,
     "startTime": "__TIME__",
