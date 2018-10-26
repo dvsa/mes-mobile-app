@@ -8,6 +8,7 @@ import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
 
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { IJournal } from '../../providers/journal/journal-model';
 
 @Component({
   selector: 'page-declaration-consent',
@@ -22,7 +23,7 @@ export class DeclarationConsentPage {
   checkInsurance: boolean = false;
   checkResidence: boolean = false;
 
-  slotDetail: any; // todo - make typesafe
+  slotDetail: IJournal;
 
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 

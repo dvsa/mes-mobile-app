@@ -73,7 +73,7 @@ export class JournalPage {
     });
   }
 
-  goToDeclarationConsent(slot) {
+  goToDeclarationConsent(slot: IJournal) {
     console.log('declaration consent with slot ', slot);
     this.navCtrl.push(DeclarationConsentPage, { slotDetail: slot });
   }

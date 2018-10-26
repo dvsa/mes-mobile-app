@@ -1,7 +1,15 @@
+export interface ICandidateName {
+  firstName: string;
+  lastName: string;
+  secondName?: string;
+  thirdName?: string;
+  title: string;
+}
+
 export interface IJournal {
   details?: ITestDetails;
   candidateId: number;
-  candidateName: string;
+  candidateName: ICandidateName;
   driverNumber: string;
   startTime: string;
   appId: string;

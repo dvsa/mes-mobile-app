@@ -31,7 +31,17 @@ export class JournalProvider {
         details,
         slot: { testCentreName = '', start = '', vehicleSlotType: slotType = null },
         booking: {
-          candidate: { candidateName = '', _candidateId: candidateId = 0, driverNumber = '' },
+          candidate: {
+            candidateName = {
+              firstName: '',
+              lastName: '',
+              secondName: '',
+              thirdName: '',
+              title: ''
+            },
+            _candidateId: candidateId = 0,
+            driverNumber = ''
+          },
           application: { checkMarker = false, _applicationId: appId = '' }
         }
       } = next;
