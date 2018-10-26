@@ -9,6 +9,7 @@ export function getFormattedCandidateName(candidateName: ICandidateName): string
 
 /**
  * `Builds a formatted html structure from a given IAddress
+ * todo - this is quick and dirty for now. Needs to deal with missing fields etc
  * @param address
  */
 export function getFormattedAddress(address?: IAddress): string {
