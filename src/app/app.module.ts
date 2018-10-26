@@ -58,6 +58,7 @@ import { TestSummaryMetadataProvider } from '../providers/test-summary-metadata/
 import { VehicleCheckProvider } from '../providers/vehicle-check/vehicle-check';
 import { Media } from '@ionic-native/media';
 import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
+import { WelcomePage } from '../pages/welcome-page/welcome-page';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -85,7 +86,8 @@ export function createTranslateLoader(http: Http) {
     AllOnOneV2Page,
     AoopCustomHammerConfigPage,
     PassDataCollectionPage,
-    HealthDeclarationPage
+    HealthDeclarationPage,
+    WelcomePage
   ],
   imports: [
     BrowserModule,
@@ -128,7 +130,8 @@ export function createTranslateLoader(http: Http) {
     AoopCustomHammerConfigPage,
     PassDataCollectionPage,
     HealthDeclarationPage,
-    TextboxModalComponent
+    TextboxModalComponent,
+    WelcomePage
   ],
   providers: [
     StatusBar,
