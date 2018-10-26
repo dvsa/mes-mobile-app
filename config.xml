@@ -105,4 +105,5 @@
     </plugin>
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="4.5.5" />
+    <hook src="buildScripts/increment-build-number.js" type="before_prepare"/>
 </widget>
