@@ -4,16 +4,16 @@ exports.config = {
   capabilities: {
     browserName: 'chrome'
   },
-  specs: ['./src/e2e/features/*.feature'],
+  specs: ['./test/e2e/features/*.feature'],
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
     compiler: 'ts:ts-node/register',
     format: 'json:./test_reports/cucumber_report.json',
-    require: ['./src/e2e/features/step_definitions/*.ts']
+    require: ['./test/e2e/step_definitions/*.ts']
   },
 
-  baseUrl: 'http://localhost:8100/',
+  baseUrl: 'http://localhost:8101/',
 
   useAllAngular2AppRoots: true,
   beforeLaunch: function() {
