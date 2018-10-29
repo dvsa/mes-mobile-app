@@ -130,5 +130,8 @@
       "browser",
       "ios"
     ]
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
