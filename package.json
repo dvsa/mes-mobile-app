@@ -130,8 +130,5 @@
       "browser",
       "ios"
     ]
-  },
-  "jest": {
-    "testURL": "http://localhost"
   }
 }
