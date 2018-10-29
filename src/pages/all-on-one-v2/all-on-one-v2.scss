@@ -37,44 +37,38 @@ page-all-on-one-v2 {
   ion-content {
     background-color: map-get($colors, mainBackground) !important;
     button {
-      height: 44px !important;
+      height: 47px !important;
       width: 98%;
       background-color: map-get($map: $colors, $key: white);
       color: map-get($map: $colors, $key: black);
       border: 1px solid rgba(0, 0, 0, 0.35) !important; // border-style: solid !important;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 16px;
     }
   }
   p {
     @extend .test-form-label;
-    //font-weight: bold;
-    //margin: 0px 0px 1px;
-    //font-size: 14px;
   }
   .bottom-border {
     border-bottom: 1px solid darken(map-get($map: $colors, $key: expanderBg), 50);
   }
   .sd-buttons-wrapper {
+    .sd-buttons {
+      background-color: map-get($colors, white) !important;
+      box-shadow: 0 2px 0 0 map-get($colors, shadowGrey);
+      @extend .test-form-label;
+    }
     .s-button.activated {
-      background-color: lighten(map-get($colors, warn), 30) !important;
-      color: black !important;
+      border: solid 3.5px map-get($colors, warn);
     }
     .s-button.active {
-      border: 2px solid map-get($colors, warn) !important;
-      color: map-get($colors, warn) !important;
-      background-color: lighten(map-get($colors, warn), 30);
-      font-weight: bold;
+      border: solid 3.5px map-get($colors, warn) !important;
     }
     .d-button.activated {
-      background-color: lighten(map-get($colors, danger), 35) !important;
-      color: black !important;
+      border: solid 3.5px map-get($colors, danger);
     }
     .d-button.active {
-      border: 2px solid map-get($colors, danger) !important;
-      color: map-get($colors, danger) !important;
-      background-color: lighten(map-get($colors, danger), 35);
-      font-weight: bold;
+      border: solid 3.5px map-get($colors, danger) !important;
     }
   }
   .expanded-section-in-column button:first-child {
