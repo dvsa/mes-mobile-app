@@ -40,6 +40,7 @@ export class HealthDeclarationPage {
 
   clearSignaturePad() {
     this.signaturePad.clear();
+    this.signature = null;
   }
 
   drawStart() {}
