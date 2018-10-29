@@ -132,6 +132,6 @@
     ]
   },
   "jest": {
-    "testEnvironment": "node"
+    "testURL": "http://localhost"
   }
 }
