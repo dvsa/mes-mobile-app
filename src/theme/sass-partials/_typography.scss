@@ -1,3 +1,17 @@
+.test-form-label {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  letter-spacing: 0.4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: map-get($colors, gdsBlack);
+}
+
+//downwards from here are the original alpha items
+
 .mes-text-sm {
   font-size: 17px;
   font-weight: normal;

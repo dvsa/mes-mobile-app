@@ -47,9 +47,10 @@ page-all-on-one-v2 {
     }
   }
   p {
-    font-weight: bold;
-    margin: 0px 0px 1px;
-    font-size: 14px;
+    @extend .test-form-label;
+    //font-weight: bold;
+    //margin: 0px 0px 1px;
+    //font-size: 14px;
   }
   .bottom-border {
     border-bottom: 1px solid darken(map-get($map: $colors, $key: expanderBg), 50);
