@@ -1,9 +1,16 @@
 # Build process
 
+## Scripts
 There are two npm scripts provided:
 
 * `npm run package` - generates an IPA file to (eventually be consumed by CI/CD).
-* `npm run device` - installs the app on a device plugged in via USB. You must have [ios-deploy](https://www.npmjs.com/package/ios-deploy) installed, setup a provisioning profile with your personal iTunes account and setup the `build.json` file described below.
+* `npm run device` - installs the app on a device plugged in via USB.
+
+## Pre-requisites
+* XCode 10.0
+* [ios-deploy](https://www.npmjs.com/package/ios-deploy) (for `npm run device`)
+* A provisioning profile on your Mac. This can be a personal iTunes account for local development.
+* Setup `build.json` as described below.
 
 ## build.json
 
