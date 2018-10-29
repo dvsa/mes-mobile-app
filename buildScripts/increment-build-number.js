@@ -1,8 +1,6 @@
 #!/usr/bin/env node
-// Save hook under `project-root/hooks/before_prepare/`
-//
-// Don't forget to install xml2js using npm
-// `$ npm install xml2js`
+// Updates Cordova config.xml with a semver compatible version.
+// The new version takes the format <existing-major>.<existing-minor>.<unix-timestamp>
 
 var fs = require('fs');
 var xml2js = require('xml2js');
