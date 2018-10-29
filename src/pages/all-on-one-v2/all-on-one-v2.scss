@@ -35,7 +35,7 @@ page-all-on-one-v2 {
     color: map-get($map: $colors, $key: white) !important;
   }
   ion-content {
-    background-color: #f8f8f8 !important;
+    background-color: map-get($colors, mainBackground) !important;
     button {
       height: 44px !important;
       width: 98%;
