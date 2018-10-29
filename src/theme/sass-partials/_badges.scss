@@ -1,0 +1,26 @@
+.round-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.fault-badge_serious {
+  @extend .round-badge;
+  background-color: map-get($colors, warn);
+  color: map-get($colors, white);
+}
+
+.fault-badge_dangerous {
+  @extend .round-badge;
+  background-color: map-get($colors, danger);
+  color: map-get($colors, white);
+}
+
+.check-btn_completed {
+  content: '✔';
+  display: block;
+  position: absolute;
+  @extend .round-badge;
+  background-color: map-get($colors, gdsPrimary);
+  color: map-get($colors, white);
+}

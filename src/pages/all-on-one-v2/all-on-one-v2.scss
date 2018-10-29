@@ -2,16 +2,14 @@ page-all-on-one-v2 {
   .form-section {
     padding: 0;
     margin: 0;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
   }
   .form-section all-on-one-form-sub-element-hold-no-modal:not(:last-child) > ion-row,
   .form-section legal-requirements > ion-row:not(:last-child),
   .form-section-small all-on-one-form-sub-element-hold-no-modal:not(:last-child) > ion-row {
     padding: 0;
     margin: 0;
-    margin-bottom: 10px;
   }
+  //todo - this should be in the all-on-one-form-sub-element-hold-no-modal component
   .action-completed all-on-one-form-sub-element-hold-no-modal .fault-badge.counter {
     left: 32px;
   }
@@ -41,13 +39,14 @@ page-all-on-one-v2 {
       width: 98%;
       background-color: map-get($map: $colors, $key: white);
       color: map-get($map: $colors, $key: black);
-      border: 1px solid rgba(0, 0, 0, 0.35) !important; // border-style: solid !important;
+      border: 1.5px solid map-get($colors, shadowGrey) !important;
+      box-shadow: 0 2px 0 0 map-get($colors, shadowGrey);
       border-radius: 10px;
-      font-size: 16px;
+      @extend .test-form-label;
     }
   }
   p {
-    @extend .test-form-label;
+    @extend .test-form-label-bold;
   }
   .bottom-border {
     border-bottom: 1px solid darken(map-get($map: $colors, $key: expanderBg), 50);
@@ -173,17 +172,14 @@ page-all-on-one-v2 {
     top: -20px;
   }
   .check-btn input:checked + span {
-    color: map-get($map: $colors, $key: black);
-    background: lighten(map-get($colors, expanderBg), 20);
-    border: 1px solid darken(map-get($colors, expanderBg), 10);
+    color: map-get($map: $colors, $key: white);
+    background: map-get($colors, gdsPrimary);
     position: relative;
     &:after {
-      content: '✔';
-      display: block;
-      position: absolute;
       top: 20px;
       right: 15px;
       font-size: 1em;
+      @extend .check-btn_completed;
     }
   }
 }

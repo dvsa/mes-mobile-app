@@ -34,14 +34,12 @@ all-on-one-form-sub-element-hold-no-modal {
 
     &.serious {
       left: -8px;
-      background-color: lighten(map-get($colors, warn), 15);
-      color: map-get($colors, dark);
+      @extend .fault-badge_serious;
     }
 
     &.dangerous {
       left: -6px;
-      background-color: lighten(map-get($colors, danger), 15);
-      color: map-get($colors, dark);
+      @extend .fault-badge_dangerous;
     }
   }
 

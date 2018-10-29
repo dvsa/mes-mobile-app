@@ -29,13 +29,11 @@ all-on-one-form-sub-element-button {
     color: map-get($colors, light);
     &.serious {
       left: 190px;
-      background-color: lighten(map-get($colors, warn), 15);
-      color: map-get($colors, dark);
+      @extend .fault-badge_serious;
     }
     &.dangerous {
       left: 215px;
-      background-color: lighten(map-get($colors, danger), 15);
-      color: map-get($colors, dark);
+      @extend .fault-badge_serious;
     }
   }
   .fault-type-text {
@@ -72,11 +70,10 @@ all-on-one-form-sub-element-button {
 
 .action-completed {
   button:before {
-    content: '✔';
-    display: block;
-    position: absolute;
     top: 46%;
     left: 15px;
     transform: translateY(-50%);
+
+    @extend .check-btn_completed;
   }
 }

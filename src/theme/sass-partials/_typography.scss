@@ -1,6 +1,6 @@
 .test-form-label {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.25;
@@ -8,6 +8,11 @@
   margin-top: 8px;
   margin-bottom: 8px;
   color: map-get($colors, gdsBlack);
+}
+
+.test-form-label-bold {
+  @extend .test-form-label;
+  font-weight: 600;
 }
 
 //downwards from here are the original alpha items

@@ -16,7 +16,7 @@ alpha-header {
   .phase-banner {
     border-top: 10px;
     border-top-style: solid;
-    border-top-color: #005ea5;
+    border-top-color: map-get($colors, gdsPrimary);
     margin-left: 24px;
     margin-right: 24px;
   }
