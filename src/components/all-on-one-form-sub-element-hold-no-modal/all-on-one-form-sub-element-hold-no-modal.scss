@@ -30,6 +30,7 @@ all-on-one-form-sub-element-hold-no-modal {
 
     &.counter {
       left: 4px;
+      @extend .fault-badge_counter;
     }
 
     &.serious {

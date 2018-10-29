@@ -4,6 +4,12 @@
   border-radius: 50%;
 }
 
+.fault-badge_counter {
+  @extend .round-badge;
+  background-color: map-get($colors, gdsBlue);
+  color: map-get($colors, white);
+}
+
 .fault-badge_serious {
   @extend .round-badge;
   background-color: map-get($colors, warn);
@@ -21,6 +27,6 @@
   display: block;
   position: absolute;
   @extend .round-badge;
-  background-color: map-get($colors, gdsPrimary);
+  background-color: map-get($colors, gdsBlue);
   color: map-get($colors, white);
 }

@@ -33,7 +33,7 @@ page-all-on-one-v2 {
     color: map-get($map: $colors, $key: white) !important;
   }
   ion-content {
-    background-color: map-get($colors, mainBackground) !important;
+    background-color: map-get($colors, gdsgrey-3) !important;
     button {
       height: 47px !important;
       width: 98%;
@@ -58,16 +58,16 @@ page-all-on-one-v2 {
       @extend .test-form-label;
     }
     .s-button.activated {
-      border: solid 3.5px map-get($colors, warn);
+      border: solid 3.5px map-get($colors, gdsOrange);
     }
     .s-button.active {
-      border: solid 3.5px map-get($colors, warn) !important;
+      border: solid 3.5px map-get($colors, gdsOrange) !important;
     }
     .d-button.activated {
-      border: solid 3.5px map-get($colors, danger);
+      border: solid 3.5px map-get($colors, gdsRed);
     }
     .d-button.active {
-      border: solid 3.5px map-get($colors, danger) !important;
+      border: solid 3.5px map-get($colors, gdsRed) !important;
     }
   }
   .expanded-section-in-column button:first-child {
@@ -173,7 +173,7 @@ page-all-on-one-v2 {
   }
   .check-btn input:checked + span {
     color: map-get($map: $colors, $key: white);
-    background: map-get($colors, gdsPrimary);
+    background: map-get($colors, gdsBlue);
     position: relative;
     &:after {
       top: 20px;
