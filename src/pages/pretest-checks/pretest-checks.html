@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content padding class="mes-main-content">
-  <form #form="ngForm" (ngSubmit)="gotoDL25(form)" novalidate>
+  <form #form="ngForm" (ngSubmit)="gotoDL25(form)" novalidate (keydown.enter)="$event.preventDefault()">
     <ion-card class="mes-card">
       <ion-card-header class="mes-breadcrumbs">
         <span class="mes-header-md mes-breadcrumb-link" navPop>
