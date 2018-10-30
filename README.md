@@ -60,7 +60,7 @@ Pre-requisites
 
 To run against the web based version
 
-- Run the application as per the Get started guide above `ionic serve`
+- Run the application as per the Get started guide above with fixed port id to match test setup `ionic serve --port 8101`
 - In a separate tab run up up the WebDriver manager `webdriver-manager start`
 - In another tab execute the browser based testsuite `npm run test:e2e-browser-bdd`
 - Once complete generate the report `npm run test:generate-report`
