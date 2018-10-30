@@ -1,13 +1,13 @@
 .test-form-label {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.25;
   letter-spacing: 0.4px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  color: map-get($colors, gdsBlack);
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color: $test-form-label-colour;
 }
 
 .test-form-label-bold {

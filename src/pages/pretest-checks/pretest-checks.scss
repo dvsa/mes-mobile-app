@@ -77,10 +77,10 @@ page-pretest-checks {
       background: map-get($map: $colors, $key: black);
     }
     &.serious-btn.active {
-      background: lighten(map-get($colors, gdsOrange), 5);
+      background: lighten(map-get($colors, gds-orange), 5);
     }
     &.dangerous-btn.active {
-      background: lighten(map-get($colors, gdsRed), 5);
+      background: lighten(map-get($colors, gds-red), 5);
     }
   }
 }
