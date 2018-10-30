@@ -8,13 +8,8 @@ import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
 
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-
-/**
- * Generated class for the DeclarationConsentPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IJournal } from '../../providers/journal/journal-model';
+import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
 @Component({
   selector: 'page-declaration-consent',
@@ -29,6 +24,8 @@ export class DeclarationConsentPage {
   checkInsurance: boolean = false;
   checkResidence: boolean = false;
 
+  slotDetail: IJournal;
+
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
   constructor(
@@ -38,6 +35,7 @@ export class DeclarationConsentPage {
     private deviceAuth: DeviceAuthentication
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
+    this.slotDetail = this.navParams.get('slotDetail');
   }
 
   ngAfterViewInit() {
@@ -86,5 +84,19 @@ export class DeclarationConsentPage {
           this.navCtrl.push(this.pretestChecksPage);
         }
       });
+  }
+
+  /**
+   * Returns concatenated Candidate name for this slot
+   */
+  getCandidateName(): string {
+    return getFormattedCandidateName(this.slotDetail.candidateName);
+  }
+
+  /**
+   * Just returns the Driver Number
+   */
+  getDriverNumber(): string {
+    return this.slotDetail.driverNumber;
   }
 }

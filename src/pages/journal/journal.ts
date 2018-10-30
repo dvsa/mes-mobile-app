@@ -62,8 +62,8 @@ export class JournalPage {
     return slot.checkMarker;
   }
 
-  goToCandidateInfo() {
-    return this.navCtrl.push(CandidateInfoPage);
+  goToCandidateInfo(slot: IJournal) {
+    return this.navCtrl.push(CandidateInfoPage, { slotDetail: slot });
   }
 
   skipToDL25() {
@@ -71,5 +71,9 @@ export class JournalPage {
     return this.navCtrl.push(this.allonOneV2Page, {
       trainingMode: true
     });
+  }
+
+  goToDeclarationConsent(slot: IJournal) {
+    this.navCtrl.push(DeclarationConsentPage, { slotDetail: slot });
   }
 }
