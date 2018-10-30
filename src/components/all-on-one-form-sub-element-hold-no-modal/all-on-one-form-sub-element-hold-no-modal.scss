@@ -21,12 +21,8 @@ all-on-one-form-sub-element-hold-no-modal {
   .fault-badge {
     position: absolute;
     top: 2px;
-    font-size: 12px;
 
     background-color: map-get($colors, dark);
-    padding: 6px;
-    border-radius: 12px;
-    color: map-get($colors, light);
 
     &.counter {
       left: 4px;

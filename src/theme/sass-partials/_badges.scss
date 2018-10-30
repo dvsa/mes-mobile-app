@@ -2,6 +2,8 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
+  font-size: 12px;
+  padding: 6px;
 }
 
 .fault-badge_counter {
@@ -27,8 +29,8 @@
   display: block;
   position: absolute;
   @extend .round-badge;
-  width: 25px;
-  height: 25px;
+  width: 14px;
+  height: 14px;
   background-color: map-get($colors, gds-blue);
   color: map-get($colors, white);
 }

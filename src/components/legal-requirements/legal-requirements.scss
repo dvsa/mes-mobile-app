@@ -1,8 +1,9 @@
 legal-requirements {
   button {
     &.done:before {
-      top: 30%;
-      left: 15px;
+      top: 47%;
+      left: 10px;
+      transform: translateY(-50%);
       @extend .check-btn_completed;
     }
   }

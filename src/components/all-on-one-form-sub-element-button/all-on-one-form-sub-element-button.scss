@@ -19,21 +19,21 @@ all-on-one-form-sub-element-button {
     height: 15px;
   }
   .fault-badge {
-    font-size: 12px;
     position: absolute;
     top: 10px;
     left: 35px;
     background-color: map-get($colors, dark);
-    padding: 6px;
-    border-radius: 12px;
-    color: map-get($colors, light);
+    &.counter {
+      left: 42px;
+      @extend .fault-badge_counter;
+    }
     &.serious {
       left: 190px;
       @extend .fault-badge_serious;
     }
     &.dangerous {
-      left: 215px;
-      @extend .fault-badge_serious;
+      left: 220px;
+      @extend .fault-badge_dangerous;
     }
   }
   .fault-type-text {
@@ -71,7 +71,7 @@ all-on-one-form-sub-element-button {
 .action-completed {
   button:before {
     top: 46%;
-    left: 15px;
+    left: 10px;
     transform: translateY(-50%);
 
     @extend .check-btn_completed;
