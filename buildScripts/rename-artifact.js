@@ -26,7 +26,12 @@ fs.readFile(configFile, 'utf8', (err, xml) => {
 
     const oldArtifactPath = `${artifactDir}/${defaultArtifactName}`;
     const newArtifactPath = `${artifactDir}/${newArtifactName}`;
-    fs.renameSync(oldArtifactPath, newArtifactPath);
-    console.log(`IPA artifact rename: ${oldArtifactPath} => ${newArtifactPath}`);
+
+    if (fs.existsSync(oldArtifactPath)) {
+      fs.renameSync(oldArtifactPath, newArtifactPath);
+      console.log(`IPA artifact rename: ${oldArtifactPath} => ${newArtifactPath}`);
+    } else {
+      console.log(`Couldn't find artifact '${oldArtifactPath}' - skipping IPA rename`);
+    }
   });
 });
