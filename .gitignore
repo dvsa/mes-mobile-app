@@ -31,7 +31,7 @@ plugins/ios.json
 www/
 $RECYCLE.BIN/
 typings/cordova-*
-test_reports/
+test-reports/
 
 .DS_Store
 Thumbs.db

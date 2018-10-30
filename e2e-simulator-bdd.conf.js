@@ -19,8 +19,8 @@ exports.config = {
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
     compiler: 'ts:ts-node/register',
-    format: 'json:./test_reports/cucumber_report.json',
-    require: ['./test/e2e/step_definitions/*.ts']
+    format: 'json:./test-reports/cucumber-report.json',
+    require: ['./test/e2e/step-definitions/*.ts']
   },
   baseUrl: '',
   useAllAngular2AppRoots: true,
@@ -30,7 +30,7 @@ exports.config = {
     });
 
     var fs = require('fs');
-    var dir = './test_reports';
+    var dir = './test-reports';
 
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
