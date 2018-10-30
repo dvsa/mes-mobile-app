@@ -30,7 +30,14 @@
           Pass certificate number *
         </ion-col>
         <ion-col col-7 offset-1>
-          <input appInputRestriction="noSpecialChars" required type="text" class="mes-text-input capital-characters" name="pass-certificate-number" autocapitalize="characters">
+          <input
+            required
+            type="text"
+            name="pass-certificate-number"
+            class="mes-text-input capital-characters"
+            [(ngModel)]="passCertificateNumber"
+            appInputRestriction="noSpecialChars"
+            autocapitalize="characters" />
         </ion-col>
       </ion-row>
       <div class="mes-divider"></div>
@@ -47,6 +54,6 @@
     </ion-card-content>
   </ion-card>
   <ion-card class="mes-bottom-card" text-center>
-    <button [navPush]="healthDeclarationPage" class="mes-button-primary">Save</button>
+    <button [navPush]="healthDeclarationPage" class="mes-button-primary" [disabled]="validation()">Save</button>
   </ion-card>
 </ion-content>
