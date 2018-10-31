@@ -113,12 +113,10 @@ page-all-on-one-v2 {
     padding: 15px 20px;
     margin: 0 8px 8px 0;
   } // Ugly workaround for fitting all competencies together with Manoeuvre row
-  .margin-top-minus-20 {
-    margin-top: -20px;
+  .margin-top-for-manoeuvre-closed {
+    margin-top: -8px;
   }
-  .margin-top-minus-15 {
-    margin-top: -15px;
-  } // This is equivalent to flex: 0 0 auto. It sizes the item according to its width/height properties, but makes it fully inflexible.
+  // This is equivalent to flex: 0 0 auto. It sizes the item according to its width/height properties, but makes it fully inflexible.
   // This is similar to flex: initial except it is not allowed to shrink, even in an overflow situation.
   .flex-none {
     flex: none;
