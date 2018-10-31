@@ -6,6 +6,8 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { PretestChecksPage } from '../pretest-checks/pretest-checks';
 import { InitiateSwapPage } from '../initiate-swap/initiate-swap';
+import { IJournal } from '../../providers/journal/journal-model';
+import { getFormattedCandidateName, getFormattedAddress } from '../../shared/utils/formatters';
 
 @Component({
   selector: 'page-candidate-info',
@@ -19,12 +21,15 @@ export class CandidateInfoPage {
 
   signature: any;
 
+  slotDetail: IJournal;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public configService: AppConfigProvider
   ) {
     this.signature = this.navParams.get('signature');
+    this.slotDetail = this.navParams.get('slotDetail');
   }
 
   confirmIdentity() {
@@ -33,5 +38,16 @@ export class CandidateInfoPage {
 
   getPreviousPage() {
     return 'Your Journal';
+  }
+
+  /**
+   * Returns concatenated Candidate name for this slot
+   */
+  getCandidateName(): string {
+    return getFormattedCandidateName(this.slotDetail.candidateName);
+  }
+
+  getCandidateAddress(): string {
+    return getFormattedAddress(this.slotDetail.candidateAddress);
   }
 }
