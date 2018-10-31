@@ -31,7 +31,27 @@ export class JournalProvider {
         details,
         slot: { testCentreName = '', start = '', vehicleSlotType: slotType = null },
         booking: {
-          candidate: { candidateName = '', _candidateId: candidateId = 0 },
+          candidate: {
+            candidateName = {
+              firstName: '',
+              lastName: '',
+              secondName: '',
+              thirdName: '',
+              title: ''
+            },
+            _candidateId: candidateId = 0,
+            driverNumber = '',
+            candidateAddress = {
+              line1: '',
+              line2: '',
+              line3: '',
+              line4: '',
+              line5: '',
+              postcode: ''
+            },
+            email = '',
+            mobileTelephone = ''
+          },
           application: { checkMarker = false, _applicationId: appId = '' }
         }
       } = next;
@@ -39,6 +59,10 @@ export class JournalProvider {
       let journalEntry: IJournal = {
         candidateId,
         candidateName,
+        candidateAddress,
+        email,
+        mobileTelephone,
+        driverNumber,
         appId,
         testCentreName,
         checkMarker,
