@@ -13,47 +13,8 @@
     </ion-card-header>
     <journal-header></journal-header>
     <ion-list>
-      <ion-item class="slot" *ngFor="let s of journalSlots; let i = index" [ngClass]="{'slot__fail': hasFailed(s), 'slot__pass': hasPassed(s), 'slot__check': requiresCheck(s), 'slot__double': i==5 }">
-          <ion-row *ngIf="i == 2">
-              <ion-col col-2>
-                <div class="slot__time">10:14</div>
-              </ion-col>
-              <ion-col col-4>
-                <div class="slot__candidate" (click)="goToCandidateInfo(s)">
-                  <div class="wrapper">
-                    <span class="mes-journal-candidate-name">Matt Murray</span> 
-                    <span>Category: B</span>
-                  </div>
-                </div>
-              </ion-col>
-              <ion-col col-6>
-                <div class="slot__activityCode">
-                  <span>
-                    Activity Code: 60
-                  </span>
-                </div>
-              </ion-col>
-            </ion-row>
-        <ion-row *ngIf="i == 4">
-              <ion-col col-2>
-                <div class="slot__time">12:38</div>
-              </ion-col>
-              <ion-col col-4>
-                <div class="slot__travel">
-                  Travel
-                </div>
-              </ion-col>
-              <ion-col col-6>
-                <div class="slot__travelPoints">
-                    <ion-icon name="pin"></ion-icon>
-                    Cardington
-                    <ion-icon name="arrow-round-forward"></ion-icon>
-                    <ion-icon name="pin"></ion-icon>
-                    Garrets Green
-                </div>
-              </ion-col>
-            </ion-row>
-        <ion-row *ngIf="i != 4 && i != 2">
+      <ion-item class="slot" *ngFor="let s of journalSlots; let i = index" [ngClass]="{'slot__fail': hasFailed(s), 'slot__pass': hasPassed(s), 'slot__check': requiresCheck(s) }">
+        <ion-row>
           <ion-col col-2>
             <div class="slot__time">{{s.startTime}}</div>
           </ion-col>
@@ -61,8 +22,7 @@
             <div class="slot__candidate" (click)="goToCandidateInfo(s)">
               <div class="wrapper">
                   <span class="mes-journal-candidate-name">{{s.candidateName.firstName}} {{s.candidateName.lastName}}</span> 
-                  <span>Category: {{extractCategoryCode(s.slotType)}}</span>
-                  <span [hidden]="i!=5">Special needs</span>                  
+                  <span>Category: {{extractCategoryCode(s.slotType)}}</span>                
               </div>
             </div>
           </ion-col>
@@ -80,13 +40,20 @@
               </span>
             </div>
           </ion-col>
-          <ion-col *ngIf="!s.details" col-4>
+          <ion-col *ngIf="shouldShowActivityCodeBlock(s)" col-6>
+            <div class="slot__activityCode">
+              <span>
+                Activity Code: {{s.activityCode}}
+              </span>
+            </div>
+          </ion-col>
+          <ion-col *ngIf="!s.details && !shouldShowActivityCodeBlock(s)" col-4>
             <div class="slot__testCentre">
               <ion-icon name="pin"></ion-icon>
               {{s.testCentreName}}
             </div>
           </ion-col>
-          <ion-col *ngIf="!s.details" col-2>
+          <ion-col *ngIf="canStartATest(s)" col-2>
             <div>
               <button ion-button color="secondary" (click)="goToDeclarationConsent(s)">Start Test</button>
             </div>

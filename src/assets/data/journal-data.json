@@ -3,10 +3,11 @@
   "data": {
     "testSlots": [
       {
+        "activityCode": 2,
         "details": {
           "success": false,
-          "route": 8,
-          "showMe": 6,
+          "route": 3,
+          "showMe": 4,
           "tellMe": 11
         },
         "slot": {
@@ -21,21 +22,21 @@
           "candidate": {
             "_candidateId": 100,
             "candidateName": {
-              "title": "Miss",
+              "title": "Mr.",
               "firstName": "Chris",
               "secondName": "Bbb",
               "thirdName": "Ccc",
               "lastName": "Nappin"
             },
             "driverNumber": "AAAAA123456A78AA",
-            "gender": "Female",
+            "gender": "Male",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
+              "line1": "122  Fraserburgh Rd",
+              "line2": "LILLIESLEAF",
               "line3": "Some area",
               "line4": "Some town",
               "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "postcode": "TD6 6NB"
             },
             "primaryTelephone": "01234 567890",
             "secondaryTelephone": "04321 098765",
@@ -66,22 +67,23 @@
             "name": "Dave's Dodgy Driving Instructors",
             "businessAddress": {
               "line1": "Flat 1A",
-              "line2": "1 Example Street",
-              "line3": "Example Area",
-              "line4": "Example Town",
-              "line5": "Example County",
-              "postcode": "AB12 3CD"
+              "line2": "8287 50 Street Northwest",
+              "line3": "Edmonton",
+              "line4": "Edmonton",
+              "line5": "Alberta",
+              "postcode": "T6B 1E7"
             },
             "telephone": "07890 654321"
           }
         }
       },
       {
+        "activityCode": 1,
         "details": {
           "success": true,
           "route": 9,
-          "showMe": 3,
-          "tellMe": 8
+          "showMe": 2,
+          "tellMe": 6
         },
         "slot": {
           "_slotId": 1002,
@@ -94,7 +96,7 @@
           "candidate": {
             "_candidateId": 100,
             "candidateName": {
-              "title": "Miss",
+              "title": "Mr.",
               "firstName": "Kamil",
               "secondName": "Bbb",
               "thirdName": "Ccc",
@@ -103,17 +105,17 @@
             "driverNumber": "AAAAA123456A78AA",
             "gender": "Female",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
-              "line3": "Some area",
+              "line1": "14 Taylor St",
+              "line2": "St. Stephens Ward",
+              "line3": "Kent",
               "line4": "Some town",
               "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "postcode": "CT2 7PP"
             },
-            "primaryTelephone": "01234 567890",
-            "secondaryTelephone": "04321 098765",
+            "primaryTelephone": "01835 703597",
+            "secondaryTelephone": "01944 369967",
             "mobileTelephone": "07654 123456",
-            "email": "aaaa@bbbb.com",
+            "email": "Kamil.Zielinski@example.com",
             "prn": 11223344,
             "previousADITests": 2
           },
@@ -129,11 +131,18 @@
         }
       },
       {
+        "activityCode": 1,
+        "details": {
+          "success": true,
+          "route": 1,
+          "showMe": 9,
+          "tellMe": 4
+        },
         "slot": {
           "_slotId": 1003,
-          "start": "2018-03-05T10:14:00+00:00",
+          "start": "2018-03-05T10:04:00+00:00",
           "duration": 90,
-          "vehicleSlotType": "Voc90mins",
+          "vehicleSlotType": "B57mins",
           "_testCentreId": 54321,
           "testCentreName": "Cardington"
         },
@@ -141,7 +150,7 @@
           "candidate": {
             "_candidateId": 100,
             "candidateName": {
-              "title": "Miss",
+              "title": "Mr.",
               "firstName": "Matthew",
               "secondName": "Bbb",
               "thirdName": "Ccc",
@@ -150,17 +159,17 @@
             "driverNumber": "AAAAA123456A78AA",
             "gender": "Female",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
-              "line3": "Some area",
-              "line4": "Some town",
-              "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "line1": "5 Binney St",
+              "line2": "Abbey Ward",
+              "line3": "Buckinghamshire",
+              "line4": "Buckinghamshire",
+              "line5": "",
+              "postcode": "HP11 2AX"
             },
-            "primaryTelephone": "01234 567890",
+            "primaryTelephone": "01937 864715",
             "secondaryTelephone": "04321 098765",
-            "mobileTelephone": "07654 123456",
-            "email": "aaaa@bbbb.com",
+            "mobileTelephone": "01714 737668",
+            "email": "Matthew.Murry@example.com",
             "prn": 11223344,
             "previousADITests": 2
           },
@@ -176,9 +185,16 @@
         }
       },
       {
+        "activityCode": 2,
+        "details": {
+          "success": false,
+          "route": 9,
+          "showMe": 3,
+          "tellMe": 8
+        },
         "slot": {
           "_slotId": 1001,
-          "start": "2018-03-05T11:11:00+00:00",
+          "start": "2018-03-05T11:01:00+00:00",
           "duration": 57,
           "vehicleSlotType": "B57mins",
           "_testCentreId": 54321,
@@ -197,17 +213,17 @@
             "driverNumber": "AAAAA123456A78AA",
             "gender": "Female",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
-              "line3": "Some area",
-              "line4": "Some town",
-              "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "line1": "505 Exeter Rd",
+              "line2": "Hawerby cum Beesby",
+              "line3": "Lincolnshire",
+              "line4": "Lincolnshire",
+              "line5": "",
+              "postcode": "DN36 5RP"
             },
             "primaryTelephone": "01234 567890",
-            "secondaryTelephone": "04321 098765",
+            "secondaryTelephone": "01912 771311",
             "mobileTelephone": "07654 123456",
-            "email": "aaaa@bbbb.com",
+            "email": "Tracy.Shaw@example.com",
             "prn": 11223344,
             "previousADITests": 2
           },
@@ -220,7 +236,7 @@
             "meetingPlace": "Some meeting place",
             "progressiveAccess": false,
             "specialNeeds": "Heavily pregnant",
-            "checkMarker": true,
+            "checkMarker": false,
             "vehicleSeats": 5,
             "vehicleHeight": 1.75,
             "vehicleWidth": 2.5,
@@ -244,9 +260,10 @@
         }
       },
       {
+        "activityCode": 60,
         "slot": {
           "_slotId": 1001,
-          "start": "2018-03-05T12:38:00+00:00",
+          "start": "2018-03-05T11:58:00+00:00",
           "duration": 57,
           "vehicleSlotType": "B57mins",
           "_testCentreId": 54321,
@@ -265,17 +282,17 @@
             "driverNumber": "AAAAA123456A78AA",
             "gender": "Female",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
-              "line3": "Some area",
-              "line4": "Some town",
-              "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "line1": "9472 Lind St",
+              "line2": "Desborough",
+              "line3": "Northamptonshire",
+              "line4": "Northamptonshire",
+              "line5": "",
+              "postcode": "NN14 2GH"
             },
-            "primaryTelephone": "01234 567890",
+            "primaryTelephone": "01969 886290",
             "secondaryTelephone": "04321 098765",
-            "mobileTelephone": "07654 123456",
-            "email": "aaaa@bbbb.com",
+            "mobileTelephone": "01545-817375",
+            "email": "Ola.Summersell@example.com",
             "prn": 11223344,
             "previousADITests": 2
           },
@@ -312,9 +329,16 @@
         }
       },
       {
+        "activityCode": 1,
+        "details": {
+          "success": true,
+          "route": 7,
+          "showMe": 7,
+          "tellMe": 13
+        },
         "slot": {
           "_slotId": 1001,
-          "start": "2018-03-05T13:35:00+00:00",
+          "start": "2018-03-05T12:55:00+00:00",
           "duration": 57,
           "vehicleSlotType": "B57mins",
           "_testCentreId": 54321,
@@ -324,26 +348,26 @@
           "candidate": {
             "_candidateId": 100,
             "candidateName": {
-              "title": "Miss",
+              "title": "Mr.",
               "firstName": "Ammar",
               "secondName": "Bbb",
               "thirdName": "Ccc",
               "lastName": "Haider"
             },
             "driverNumber": "AAAAA123456A78AA",
-            "gender": "Female",
+            "gender": "Male",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
-              "line3": "Some area",
-              "line4": "Some town",
+              "line1": "4 Forrest St",
+              "line2": "Weston-Super-Mare",
+              "line3": "North Somerset",
+              "line4": "North Somerset",
               "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "postcode": "BS23 3HG"
             },
-            "primaryTelephone": "01234 567890",
+            "primaryTelephone": "01976 755279",
             "secondaryTelephone": "04321 098765",
-            "mobileTelephone": "07654 123456",
-            "email": "aaaa@bbbb.com",
+            "mobileTelephone": "01956-535511",
+            "email": "Ammar.Haider@example.com",
             "prn": 11223344,
             "previousADITests": 2
           },
@@ -382,7 +406,7 @@
       {
         "slot": {
           "_slotId": 1001,
-          "start": "2018-03-05T14:32:00+00:00",
+          "start": "2018-03-05T13:52:00+00:00",
           "duration": 57,
           "vehicleSlotType": "B57mins",
           "_testCentreId": 54321,
@@ -393,25 +417,25 @@
             "_candidateId": 100,
             "candidateName": {
               "title": "Miss",
-              "firstName": "Leigh",
+              "firstName": "Florence",
               "secondName": "Bbb",
               "thirdName": "Ccc",
-              "lastName": "White"
+              "lastName": " Pearson"
             },
             "driverNumber": "AAAAA123456A78AA",
             "gender": "Female",
             "candidateAddress": {
-              "line1": "1 Some Street",
-              "line2": "Some place",
-              "line3": "Some area",
-              "line4": "Some town",
-              "line5": "Some county",
-              "postcode": "AA1 2BB"
+              "line1": "6949 Bourne St",
+              "line2": "Lye and Stourbridge North Ward",
+              "line3": "West Midlands",
+              "line4": "West Midlands",
+              "line5": "",
+              "postcode": "DY5 2QP"
             },
-            "primaryTelephone": "01234 567890",
-            "secondaryTelephone": "04321 098765",
+            "primaryTelephone": "01552 709248",
+            "secondaryTelephone": "01743 139456",
             "mobileTelephone": "07654 123456",
-            "email": "aaaa@bbbb.com",
+            "email": "Florence.Pearson@gmail.com",
             "prn": 11223344,
             "previousADITests": 2
           },
