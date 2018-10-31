@@ -1,6 +1,6 @@
 import { IManualSummary } from './../../components/test-summary/interfaces/IManualSummary';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
-import { Component } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 import { ModalController, NavController, AlertController } from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
@@ -14,6 +14,7 @@ import { VehicleCheckProvider } from '../../providers/vehicle-check/vehicle-chec
 import { TextboxModalComponent } from '../../components/textbox-modal/textbox-modal';
 import { isNumber } from 'lodash';
 import { isNonBlankString } from '../../shared/utils/string-utils';
+import { PostTestSummarySectionComponent } from '../../components/post-test-summary-section/post-test-summary-section';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -37,6 +38,7 @@ export class PostTestSummaryPage {
   routeDeviations: string;
   independentDrivingTypeSelected: boolean = false;
   candidateDescription: string = null;
+  @ViewChildren(PostTestSummarySectionComponent) summarySectionComponents: QueryList<PostTestSummarySectionComponent>;
 
   constructor(
     private modalCtrl: ModalController,
@@ -139,12 +141,14 @@ export class PostTestSummaryPage {
     const weatherCompleted = isNonBlankString(this.conditionsList);
     const showMeSelected = isNonBlankString(this.showMeQuestion);
     const candidateDescriptionCompleted = isNonBlankString(this.candidateDescription);
+    const allSectionsComplete = !this.summarySectionComponents || !this.summarySectionComponents.some((c) => !c.isComplete());
     return [
       routeNumberSelected,
       weatherCompleted,
       showMeSelected,
       this.independentDrivingTypeSelected,
-      candidateDescriptionCompleted
+      candidateDescriptionCompleted,
+      allSectionsComplete,
     ].every((p) => p);
   }
 

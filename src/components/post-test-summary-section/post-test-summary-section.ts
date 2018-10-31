@@ -2,9 +2,10 @@ import { IManualSummary } from './../test-summary/interfaces/IManualSummary';
 import { Component, Input } from '@angular/core';
 import { IFaultSummary } from '../test-summary/interfaces/IFaultSummary';
 import { FaultTitle } from '../test-summary/enums/FaultTitle';
-import { find } from 'lodash';
+import { find, isNil } from 'lodash';
 import { ModalController } from 'ionic-angular';
 import { TextboxModalComponent } from '../textbox-modal/textbox-modal';
+import { isNonBlankString } from '../../shared/utils/string-utils';
 
 @Component({
   selector: 'post-test-summary-section',
@@ -13,6 +14,7 @@ import { TextboxModalComponent } from '../textbox-modal/textbox-modal';
 export class PostTestSummarySectionComponent {
   @Input() summary: IFaultSummary;
   @Input() manualSummary: IManualSummary;
+  @Input() canComplete: boolean = false;
   drivingFaultsTitle: string = FaultTitle.DrivingFaults;
   // Map of fault name to the note
   private faultNotes = new Map<string, string>();
@@ -36,5 +38,17 @@ export class PostTestSummarySectionComponent {
     });
     textboxModal.onDidDismiss((notes?: string) => (this.faultNotes[faultName] = notes));
     textboxModal.present();
+  }
+
+  isComplete(): boolean {
+    if (!this.canComplete) {
+      return true;
+    }
+    const notes = Object.keys(this.faultNotes)
+      .map((n) => this.faultNotes[n])
+      .filter((n) => !isNil(n));
+    const noteForEachFault: boolean = notes.length === this.summary.total;
+    const allNotesValid: boolean = notes.every((v) => isNonBlankString(v));
+    return noteForEachFault && allNotesValid;
   }
 }
