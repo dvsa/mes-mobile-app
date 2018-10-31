@@ -143,7 +143,7 @@ page-all-on-one-v2 {
     }
     all-on-one-form-sub-element-hold-no-modal {
       display: inline-block;
-      width: 250px;
+      width: 259px;
     }
   }
   div label input {
@@ -176,7 +176,7 @@ page-all-on-one-v2 {
     background: map-get($colors, gds-blue);
     position: relative;
     &:after {
-      top: 20px;
+      top: 13px;
       right: 15px;
       font-size: 1em;
       @extend .check-btn_completed;

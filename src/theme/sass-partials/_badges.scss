@@ -16,7 +16,7 @@
 
 .fault-badge_serious {
   @extend .round-badge;
-  left: 194px;
+  left: 195px;
   background-color: map-get($colors, warn);
   color: map-get($colors, white);
 }
