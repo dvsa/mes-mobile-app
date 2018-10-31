@@ -11,7 +11,7 @@ page-all-on-one-v2 {
   }
 
   .action-completed all-on-one-form-sub-element-hold-no-modal .fault-badge.counter {
-    left: 32px;
+    left: 30px;
   }
   .form-section-small {
     margin-bottom: 2px;
@@ -49,7 +49,10 @@ page-all-on-one-v2 {
     @extend .test-form-label-bold;
   }
   .bottom-border {
-    border-bottom: 1px solid darken(map-get($map: $colors, $key: expanderBg), 50);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid map-get($colors, gds-grey-1);
+    box-shadow: 0 1px 0 0 map-get($colors, white);
   }
   .sd-buttons-wrapper {
     .sd-buttons {

@@ -1,8 +1,8 @@
 .round-badge {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 11px;
   padding: 6px;
   position: absolute;
   top: 13px;
@@ -16,14 +16,14 @@
 
 .fault-badge_serious {
   @extend .round-badge;
-  left: 195px;
+  left: 200px;
   background-color: map-get($colors, warn);
   color: map-get($colors, white);
 }
 
 .fault-badge_dangerous {
   @extend .round-badge;
-  left: 222px;
+  left: 225px;
   background-color: map-get($colors, danger);
   color: map-get($colors, white);
 }
@@ -33,8 +33,8 @@
   display: block;
   position: absolute;
   @extend .round-badge;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   background-color: map-get($colors, gds-blue);
   color: map-get($colors, white);
 }

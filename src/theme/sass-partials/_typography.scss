@@ -1,5 +1,5 @@
 .test-form-label {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -12,6 +12,7 @@
 
 .test-form-label-bold {
   @extend .test-form-label;
+  letter-spacing: 0.4px;
   font-weight: 600;
 }
 
