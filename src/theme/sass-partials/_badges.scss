@@ -4,6 +4,8 @@
   border-radius: 50%;
   font-size: 12px;
   padding: 6px;
+  position: absolute;
+  top: 13px;
 }
 
 .fault-badge_counter {
@@ -14,12 +16,14 @@
 
 .fault-badge_serious {
   @extend .round-badge;
+  left: 194px;
   background-color: map-get($colors, warn);
   color: map-get($colors, white);
 }
 
 .fault-badge_dangerous {
   @extend .round-badge;
+  left: 222px;
   background-color: map-get($colors, danger);
   color: map-get($colors, white);
 }

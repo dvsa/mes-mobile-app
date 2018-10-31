@@ -19,9 +19,6 @@ all-on-one-form-sub-element-hold-no-modal {
     height: 15px;
   }
   .fault-badge {
-    position: absolute;
-    top: 2px;
-
     background-color: map-get($colors, dark);
 
     &.counter {
@@ -30,16 +27,13 @@ all-on-one-form-sub-element-hold-no-modal {
     }
 
     &.serious {
-      left: -8px;
       @extend .fault-badge_serious;
     }
 
     &.dangerous {
-      left: -6px;
       @extend .fault-badge_dangerous;
     }
   }
-
   .fault-type-text {
     position: absolute;
     top: 7px;
