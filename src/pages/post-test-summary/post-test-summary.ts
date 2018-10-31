@@ -12,6 +12,8 @@ import { QuestionsModalComponent } from '../../components/questions-modal/questi
 import { SHOW_ME_QUESTIONS } from '../../app/constants';
 import { VehicleCheckProvider } from '../../providers/vehicle-check/vehicle-check';
 import { TextboxModalComponent } from '../../components/textbox-modal/textbox-modal';
+import { isNumber } from 'lodash';
+import { isNonBlankString } from '../../shared/utils/string-utils';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -33,6 +35,8 @@ export class PostTestSummaryPage {
     { title: FaultTitle.DrivingFaults, colour: 'dark' }
   ];
   routeDeviations: string;
+  independentDrivingTypeSelected: boolean = false;
+  candidateDescription: string = null;
 
   constructor(
     private modalCtrl: ModalController,
@@ -127,6 +131,21 @@ export class PostTestSummaryPage {
 
   independentDrivingOptionChanged(event, secondInput) {
     secondInput.checked = false;
+    this.independentDrivingTypeSelected = event.target.checked;
+  }
+
+  canProceed() {
+    const routeNumberSelected = isNumber(this.selectedRoute);
+    const weatherCompleted = isNonBlankString(this.conditionsList);
+    const showMeSelected = isNonBlankString(this.showMeQuestion);
+    const candidateDescriptionCompleted = isNonBlankString(this.candidateDescription);
+    return [
+      routeNumberSelected,
+      weatherCompleted,
+      showMeSelected,
+      this.independentDrivingTypeSelected,
+      candidateDescriptionCompleted
+    ].every((p) => p);
   }
 
   private mapSafetyQuestion(showMeQuestion?): string[] {
