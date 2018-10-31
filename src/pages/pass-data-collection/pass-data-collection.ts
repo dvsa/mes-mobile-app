@@ -25,6 +25,6 @@ export class PassDataCollectionPage {
     return [
       passCertNumberValid,
       this.provisionalProvidedSelection
-    ].some((p) => p === false);
+    ].some((p) => !p);
   }
 }
