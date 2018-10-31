@@ -1,8 +1,8 @@
 timer {
   #timer-button {
-    background-color: #005ea5;
+    background-color: map-get($colors, gds-blue);
     width: 129px;
     border-radius: 10px;
-    box-shadow: 0 2px 0 0 #6f777b;
+    box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
   }
 }
