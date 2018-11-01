@@ -78,7 +78,27 @@ export class PostTestSummaryPage {
     showMeQuestionModal.present();
   };
 
-  backToJournal() {
+  onSubmitPress() {
+    if (this.isFullyComplete()) {
+      this.backToJournal();
+    } else {
+      this.alertCtrl.create({
+        title: 'Defer test result submission?',
+        message: 'You must complete all the mandatory fields before this test result can be submitted. Are you sure you want to defer submission to a later time?',
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Defer',
+            handler: () => this.backToJournal()
+          }
+        ]
+      }).present();
+    }
+  }
+
+  private backToJournal() {
     this.faultStore.reset();
     this.summaryMetadata.reset();
     this.navCtrl.popToRoot();
@@ -136,7 +156,7 @@ export class PostTestSummaryPage {
     this.independentDrivingTypeSelected = event.target.checked;
   }
 
-  canProceed() {
+  private isFullyComplete() {
     const routeNumberSelected = isNumber(this.selectedRoute);
     const weatherCompleted = isNonBlankString(this.conditionsList);
     const showMeSelected = isNonBlankString(this.showMeQuestion);
