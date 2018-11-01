@@ -12,12 +12,12 @@ totals {
 
   .remove-fault-button {
     font-size: 20px;
-    color: #005ea5;
-    width: 72px;
+    color: #005ea5; // todo - add gds colour
+    width: 58px;
     border-radius: 10px;
-    box-shadow: 0 2px 0 0 #6f777b;
-    border: solid 3.5px #005ea5;
-    background-color: #ffffff;
+    box-shadow: 0 2px 0 0 #6f777b; // todo - add gds colour
+    border: solid 3.5px #005ea5; // todo - add gds colour
+    background-color: #ffffff; // todo - add gds colour
     &.active {
     }
     &.disabled {
