@@ -44,8 +44,7 @@ export class PostTestSummarySectionComponent {
     if (!this.canComplete) {
       return true;
     }
-    const notes = Object.keys(this.faultNotes)
-      .map((n) => this.faultNotes[n])
+    const notes = Object.values(this.faultNotes)
       .filter((n) => !isNil(n));
     const noteForEachFault: boolean = notes.length === this.summary.total;
     const allNotesValid: boolean = notes.every((v) => isNonBlankString(v));
