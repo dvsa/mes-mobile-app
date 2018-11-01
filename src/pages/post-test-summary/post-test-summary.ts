@@ -93,11 +93,11 @@ export class PostTestSummaryPage {
           message,
           buttons: [
             {
-              text: 'Cancel'
-            },
-            {
               text: 'Defer',
               handler: () => this.backToJournal()
+            },
+            {
+              text: 'Complete report'
             }
           ]
         })
