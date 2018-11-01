@@ -17,32 +17,8 @@
     </ion-card>
     <ion-card class="mes-bottom-card" text-center>
         <ion-row align-items-center>
-            <ion-col *ngIf="debriefConsent && isCordova">
-
-            </ion-col>
-            <ion-col *ngIf="debriefConsent && isCordova">
-                <div class="recording-controls" align-items-center ion-row>
-                    <record-debrief-button 
-                        *ngIf="!isRecording && !fileLength" 
-                        [isRecording]="isRecording" 
-                        [activeFile]="fileLength" 
-                        (click)="recordAudio();">
-                    </record-debrief-button>
-                    <play-pause-debrief-button 
-                        *ngIf="isRecording || fileLength" 
-                        [clickEventHandler]="togglePlayOrPause" 
-                        [disabled]="playOrPauseDisabled" 
-                        [buttonStatus]="playOrPauseRecording">
-                    </play-pause-debrief-button>
-                    <stop-debrief-destroy-recording-button 
-                        [clickEventHandler]="toggleStopOrDestroy" 
-                        [disabled]="stopOrDesDisabled" 
-                        [buttonStatus]="stopOrDestroyRecording">
-                    </stop-debrief-destroy-recording-button>
-                </div>
-            </ion-col>
             <ion-col>
-                <button [disabled]="isRecording" [navPush]="getNextPage()" class="mes-button-primary">End debrief</button>
+                <button [navPush]="getNextPage()" class="mes-button-primary">End debrief</button>
             </ion-col>
         </ion-row>
     </ion-card>
