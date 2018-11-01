@@ -24,8 +24,8 @@ $app-direction: ltr;
 $colors: (
   primary: #488aff,
   secondary: #32db64,
-  danger: #f53d3d,
-  warn: #f0ad4e,
+  danger: #b10e1e,
+  warn: #f47738,
   light: #f4f4f4,
   dark: #222,
   lighterDark: #25292a,
@@ -101,3 +101,9 @@ $split-pane-ios-side-min-width: 202px;
 $split-pane-ios-side-max-width: 202px;
 $split-pane-md-side-min-width: 202px;
 $split-pane-md-side-max-width: 202px;
+
+// The test form setup
+$test-form-background-colour: map-get($colors, gds-grey-3);
+$test-form-label-colour: map-get($colors, gds-black);
+$test-form-button-text-colour: map-get($colors, gds-black);
+$test-form-button-bg-colour: map-get($colors, white);
