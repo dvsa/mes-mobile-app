@@ -38,7 +38,8 @@ export class PostTestSummaryPage {
   routeDeviations: string;
   independentDrivingTypeSelected: boolean = false;
   candidateDescription: string = null;
-  @ViewChildren(PostTestSummarySectionComponent) summarySectionComponents: QueryList<PostTestSummarySectionComponent>;
+  @ViewChildren(PostTestSummarySectionComponent)
+  summarySectionComponents: QueryList<PostTestSummarySectionComponent>;
 
   constructor(
     private modalCtrl: ModalController,
@@ -82,19 +83,25 @@ export class PostTestSummaryPage {
     if (this.isFullyComplete()) {
       this.backToJournal();
     } else {
-      this.alertCtrl.create({
-        title: 'Defer test result submission?',
-        message: 'You must complete all the mandatory fields before this test result can be submitted. Are you sure you want to defer submission to a later time?',
-        buttons: [
-          {
-            text: 'Cancel',
-          },
-          {
-            text: 'Defer',
-            handler: () => this.backToJournal()
-          }
-        ]
-      }).present();
+      const title = 'Defer test result submission?';
+      const message =
+        'You must complete all the mandatory fields before this test result can be submitted.' +
+        ' Are you sure you want to defer submission to a later time?';
+      this.alertCtrl
+        .create({
+          title,
+          message,
+          buttons: [
+            {
+              text: 'Cancel'
+            },
+            {
+              text: 'Defer',
+              handler: () => this.backToJournal()
+            }
+          ]
+        })
+        .present();
     }
   }
 
@@ -161,14 +168,15 @@ export class PostTestSummaryPage {
     const weatherCompleted = isNonBlankString(this.conditionsList);
     const showMeSelected = isNonBlankString(this.showMeQuestion);
     const candidateDescriptionCompleted = isNonBlankString(this.candidateDescription);
-    const allSectionsComplete = !this.summarySectionComponents || !this.summarySectionComponents.some((c) => !c.isComplete());
+    const allSectionsComplete =
+      !this.summarySectionComponents || !this.summarySectionComponents.some((c) => !c.isComplete());
     return [
       routeNumberSelected,
       weatherCompleted,
       showMeSelected,
       this.independentDrivingTypeSelected,
       candidateDescriptionCompleted,
-      allSectionsComplete,
+      allSectionsComplete
     ].every((p) => p);
   }
 
