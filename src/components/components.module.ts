@@ -21,9 +21,6 @@ import { EvenOddPipe } from '../pipes/evenOdd';
 import { PostTestSummarySectionComponent } from './post-test-summary-section/post-test-summary-section';
 import { TextboxModalComponent } from './textbox-modal/textbox-modal';
 import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-on-one-form-vc-button';
-import { RecordDebriefButtonComponent } from './record-debrief-button/record-debrief-button';
-import { StopDebriefDestroyRecordingButtonComponent } from './stop-debrief-destroy-recording-button/stop-debrief-destroy-recording-button';
-import { PlayPauseDebriefButtonComponent } from './play-pause-debrief-button/play-pause-debrief-button';
 
 @NgModule({
   declarations: [
@@ -47,10 +44,7 @@ import { PlayPauseDebriefButtonComponent } from './play-pause-debrief-button/pla
     EvenOddPipe,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent,
-    RecordDebriefButtonComponent,
-    StopDebriefDestroyRecordingButtonComponent,
-    PlayPauseDebriefButtonComponent
+    AllOnOneFormVcButtonComponent
   ],
   imports: [IonicModule.forRoot(PageHeaderComponent)],
   exports: [
@@ -73,10 +67,7 @@ import { PlayPauseDebriefButtonComponent } from './play-pause-debrief-button/pla
     AllOnOneFormEtaButtonComponent,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent,
-    RecordDebriefButtonComponent,
-    StopDebriefDestroyRecordingButtonComponent,
-    PlayPauseDebriefButtonComponent
+    AllOnOneFormVcButtonComponent
   ]
 })
 export class ComponentsModule {}
