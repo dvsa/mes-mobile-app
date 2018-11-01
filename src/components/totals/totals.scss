@@ -12,12 +12,12 @@ totals {
 
   .remove-fault-button {
     font-size: 20px;
-    color: #005ea5; // todo - add gds colour
+    color: map-get($colors, gds-blue);
     width: 58px;
     border-radius: 10px;
-    box-shadow: 0 2px 0 0 #6f777b; // todo - add gds colour
-    border: solid 3.5px #005ea5; // todo - add gds colour
-    background-color: #ffffff; // todo - add gds colour
+    box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
+    border: solid 3.5px map-get($colors, gds-blue);
+    background-color: map-get($colors, white);
     &.active {
     }
     &.disabled {

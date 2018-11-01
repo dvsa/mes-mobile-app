@@ -1,6 +1,6 @@
 <button ion-button round (click)="startTimer()" *ngIf="!timerStarted" id="timer-button">
   <strong>Start timer</strong>
 </button>
-<span *ngIf="timerStarted" class="report-header-text scorecard-item">
+<span *ngIf="timerStarted" class="report-header-text scorecard-item timer-counter">
   {{ timer }}
 </span>
