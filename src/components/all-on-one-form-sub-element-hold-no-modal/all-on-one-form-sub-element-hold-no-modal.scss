@@ -19,32 +19,21 @@ all-on-one-form-sub-element-hold-no-modal {
     height: 15px;
   }
   .fault-badge {
-    position: absolute;
-    top: 2px;
-    font-size: 12px;
-
     background-color: map-get($colors, dark);
-    padding: 6px;
-    border-radius: 12px;
-    color: map-get($colors, light);
 
     &.counter {
       left: 4px;
+      @extend .fault-badge_counter;
     }
 
     &.serious {
-      left: -8px;
-      background-color: lighten(map-get($colors, warn), 15);
-      color: map-get($colors, dark);
+      @extend .fault-badge_serious;
     }
 
     &.dangerous {
-      left: -6px;
-      background-color: lighten(map-get($colors, danger), 15);
-      color: map-get($colors, dark);
+      @extend .fault-badge_dangerous;
     }
   }
-
   .fault-type-text {
     position: absolute;
     top: 7px;
