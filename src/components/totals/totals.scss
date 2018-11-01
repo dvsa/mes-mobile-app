@@ -1,10 +1,10 @@
 totals {
-  margin-top: 5px;
   .icon {
     padding-left: 5px;
     padding-right: 5px;
   }
   .scorecard-item {
+    margin-top: 5px;
     border: 1px solid map-get($colors, dark);
     padding: 4px 7px;
     height: 44px;
@@ -30,7 +30,7 @@ totals {
     background-color: map-get($colors, white);
     &[disabled] {
       color: map-get($colors, gds-grey-1);
-      border: 1px solid map-get($colors, gds-grey-1);
+      border: 3.5px solid map-get($colors, gds-grey-1);
     }
   }
 }
