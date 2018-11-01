@@ -25,13 +25,13 @@ report-header-v2 {
     line-height: 2;
   }
   totals {
-    margin-left: 28px;
+    margin-left: 23px;
   }
   .scorecard-item {
     border: solid 1px #979797;
     padding: 4px 7px;
     border-radius: 3px;
-    margin-left: 22px;
+    margin-left: 4px;
     color: map-get($colors, dark);
   }
 }
