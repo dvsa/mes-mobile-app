@@ -1,6 +1,6 @@
 import { IManualSummary } from './../../components/test-summary/interfaces/IManualSummary';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
-import { Component } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 import { ModalController, NavController, AlertController } from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
@@ -12,6 +12,9 @@ import { QuestionsModalComponent } from '../../components/questions-modal/questi
 import { SHOW_ME_QUESTIONS } from '../../app/constants';
 import { VehicleCheckProvider } from '../../providers/vehicle-check/vehicle-check';
 import { TextboxModalComponent } from '../../components/textbox-modal/textbox-modal';
+import { isNumber } from 'lodash';
+import { isNonBlankString } from '../../shared/utils/string-utils';
+import { PostTestSummarySectionComponent } from '../../components/post-test-summary-section/post-test-summary-section';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -33,6 +36,10 @@ export class PostTestSummaryPage {
     { title: FaultTitle.DrivingFaults, colour: 'dark' }
   ];
   routeDeviations: string;
+  independentDrivingTypeSelected: boolean = false;
+  candidateDescription: string = null;
+  @ViewChildren(PostTestSummarySectionComponent)
+  summarySectionComponents: QueryList<PostTestSummarySectionComponent>;
 
   constructor(
     private modalCtrl: ModalController,
@@ -72,7 +79,33 @@ export class PostTestSummaryPage {
     showMeQuestionModal.present();
   };
 
-  backToJournal() {
+  onSubmitPress() {
+    if (this.isFullyComplete()) {
+      this.backToJournal();
+    } else {
+      const title = 'Defer test result submission?';
+      const message =
+        'You must complete all the mandatory fields before this test result can be submitted.' +
+        ' Are you sure you want to defer submission to a later time?';
+      this.alertCtrl
+        .create({
+          title,
+          message,
+          buttons: [
+            {
+              text: 'Defer',
+              handler: () => this.backToJournal()
+            },
+            {
+              text: 'Complete report'
+            }
+          ]
+        })
+        .present();
+    }
+  }
+
+  private backToJournal() {
     this.faultStore.reset();
     this.summaryMetadata.reset();
     this.navCtrl.popToRoot();
@@ -127,6 +160,24 @@ export class PostTestSummaryPage {
 
   independentDrivingOptionChanged(event, secondInput) {
     secondInput.checked = false;
+    this.independentDrivingTypeSelected = event.target.checked;
+  }
+
+  private isFullyComplete() {
+    const routeNumberSelected = isNumber(this.selectedRoute);
+    const weatherCompleted = isNonBlankString(this.conditionsList);
+    const showMeSelected = isNonBlankString(this.showMeQuestion);
+    const candidateDescriptionCompleted = isNonBlankString(this.candidateDescription);
+    const allSectionsComplete =
+      !this.summarySectionComponents || !this.summarySectionComponents.some((c) => !c.isComplete());
+    return [
+      routeNumberSelected,
+      weatherCompleted,
+      showMeSelected,
+      this.independentDrivingTypeSelected,
+      candidateDescriptionCompleted,
+      allSectionsComplete
+    ].every((p) => p);
   }
 
   private mapSafetyQuestion(showMeQuestion?): string[] {
