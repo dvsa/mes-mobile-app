@@ -1,26 +1,29 @@
 # Build process
 
-## Scripts
-There are two npm scripts provided:
+## Run on device script
 
-* `npm run package` - generates an IPA file to (eventually be consumed by CI/CD).
-* `npm run device` - installs the app on a device plugged in via USB.
+```bash
+npm run device # installs the app on a device plugged in via USB.
+```
 
 ## Pre-requisites
+
 * XCode 10.0
-* [ios-deploy](https://www.npmjs.com/package/ios-deploy) (for `npm run device`)
+* [ios-deploy](https://www.npmjs.com/package/ios-deploy)
 * A provisioning profile on your Mac. This can be a personal iTunes account for local development (see below for instructions).
 * Setup `build.json` as described below.
 
 # Provisioning Profile
+
 In order to create a provisioning profile for development, follow these steps:
-1. Run `ionic cordova build ios` to generate an XCode project.
-2. Open the workspace at `platforms/ios/Mobile Examiner.xcworkspace` with XCode.
-3. In XCode, goto Preferences (`Cmd+comma`) -> Accounts => Add (plus symbol, dialog lower left) and sign in with your Apple ID.
-4. Close the Preferences dialog. In the top left of the main XCode window select the icon that looks like a folder, then the project name.
-5. Ensure your "Bundle Identifier" is unique (you can probably just suffix your initials).
-6. Ensure "Automatically manage signing" is selected. In the "Team" dropdown, select your personal team. A Provisioning Profile should be populated.
-7. Determine your `TeamIdentifier` in your provisioning profile (found at `~/Library/MobileDevice/Provisioning Profiles`).
+
+1.  Run `ionic cordova build ios` to generate an XCode project.
+2.  Open the workspace at `platforms/ios/Mobile Examiner.xcworkspace` with XCode.
+3.  In XCode, goto Preferences (`Cmd+comma`) -> Accounts => Add (plus symbol, dialog lower left) and sign in with your Apple ID.
+4.  Close the Preferences dialog. In the top left of the main XCode window select the icon that looks like a folder, then the project name.
+5.  Ensure your "Bundle Identifier" is unique (you can probably just suffix your initials).
+6.  Ensure "Automatically manage signing" is selected. In the "Team" dropdown, select your personal team. A Provisioning Profile should be populated.
+7.  Determine your `TeamIdentifier` in your provisioning profile (found at `~/Library/MobileDevice/Provisioning Profiles`).
 
 ## build.json
 
