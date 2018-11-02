@@ -15,7 +15,6 @@
     "ionic:deploy": "git push ionic master",
     "format:fix": "pretty-quick --staged",
     "format:all": "npx prettier --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
-    "package": "buildScripts/build-ipa.sh",
     "precommit": "run-s format:fix lint",
     "prepush": "run-s format:fix lint test gitSecrets scanRepo",
     "test": "jest",
