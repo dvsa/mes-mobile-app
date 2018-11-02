@@ -10,10 +10,10 @@
         <p>&nbsp;</p>
         <ion-row class="sd-buttons-wrapper form-section">
           <ion-col col-6 no-padding>
-            <button class="s-button" [ngClass]="{'active': isSButtonPressed}" (click)="sButtonClicked()">S</button>
+            <button class="sd-buttons s-button" [ngClass]="{'active': isSButtonPressed}" (click)="sButtonClicked()"><strong>S</strong></button>
           </ion-col>
           <ion-col col-6 no-padding>
-            <button class="d-button" [ngClass]="{'active': isDButtonPressed}" (click)="dButtonClicked()">D</button>
+            <button class="sd-buttons d-button" [ngClass]="{'active': isDButtonPressed}" (click)="dButtonClicked()"><strong>D</strong></button>
           </ion-col>
         </ion-row>
 
@@ -146,7 +146,7 @@
         </div>
       </ion-col>
 
-      <ion-col col-4 [ngClass]="{'margin-top-minus-10': !manoeuvresButton.isEnabled}">
+      <ion-col col-4 [ngClass]="{'margin-top-for-manoeuvre-closed': !manoeuvresButton.isEnabled}">
         <div class="form-section bottom-border">
           <all-on-one-form-sub-element-hold-no-modal section="clearance" text="clearance"></all-on-one-form-sub-element-hold-no-modal>
         </div>
@@ -177,7 +177,7 @@
         </div>
 
         <div class="form-section bottom-border">
-          <all-on-one-form-sub-element-hold-no-modal section="position" text="position / normal stop"></all-on-one-form-sub-element-hold-no-modal>
+          <all-on-one-form-sub-element-hold-no-modal section="position" text="position/normal stop"></all-on-one-form-sub-element-hold-no-modal>
         </div>
 
         <div class="form-section">

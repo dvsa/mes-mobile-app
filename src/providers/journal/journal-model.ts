@@ -1,7 +1,28 @@
+export interface ICandidateName {
+  firstName: string;
+  lastName: string;
+  secondName?: string;
+  thirdName?: string;
+  title: string;
+}
+
+export interface IAddress {
+  line1: string;
+  line2: string;
+  line3: string;
+  line4: string;
+  line5: string;
+  postcode: string;
+}
+
 export interface IJournal {
   details?: ITestDetails;
   candidateId: number;
-  candidateName: String;
+  candidateName: ICandidateName;
+  candidateAddress?: IAddress;
+  driverNumber: string;
+  email: string;
+  mobileTelephone: string;
   startTime: string;
   appId: string;
   testCentreName: string;
