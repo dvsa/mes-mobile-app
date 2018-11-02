@@ -26,6 +26,7 @@ totals {
     border: solid 3.5px map-get($colors, gds-blue);
     background-color: map-get($colors, white);
     &[disabled] {
+      box-shadow: 0 0 0 0;
       color: map-get($colors, gds-grey-1);
       border: 3.5px solid map-get($colors, gds-grey-1);
     }
