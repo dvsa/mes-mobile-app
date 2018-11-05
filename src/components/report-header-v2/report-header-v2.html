@@ -2,7 +2,14 @@
     <ion-grid no-padding>
         <ion-row class="container">
             <ion-col>
-                <span class="report-header-text" padding-left><b>Florence Pearson</b></span>
+                <span class="sd-buttons-wrapper form-section">
+                    <ion-col no-padding>
+                        <button class="sd-buttons s-button" [ngClass]="{'active': isSButtonPressed}" (click)="sButtonClicked()"><strong>S</strong></button>
+                    </ion-col>
+                    <ion-col no-padding>
+                        <button class="sd-buttons d-button" [ngClass]="{'active': isDButtonPressed}" (click)="dButtonClicked()"><strong>D</strong></button>
+                    </ion-col>
+                </span>
             </ion-col>
             <ion-col col-2>
                 <timer text-center></timer>

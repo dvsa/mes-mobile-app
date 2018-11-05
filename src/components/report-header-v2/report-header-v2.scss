@@ -20,4 +20,38 @@ report-header-v2 {
   .data-item {
     line-height: 2;
   }
+
+  .sd-buttons-wrapper {
+    .sd-buttons {
+      border-radius: 10px;
+      margin: 0 0 0 16px;
+      width: 40%;
+      background-color: map-get($colors, white) !important;
+      box-shadow: 0 2px 0 0 map-get($colors, shadowGrey);
+      @extend .test-form-label;
+      @extend .button-ios;
+    }
+    .s-button {
+      border: solid 3.5px map-get($colors, gds-orange);
+    }
+    .d-button {
+      border: solid 3.5px map-get($colors, gds-red);
+    }
+    .s-button.activated {
+      background-color: map-get($colors, gds-orange);
+      color: map-get($colors, white);
+    }
+    .s-button.active {
+      background-color: map-get($colors, gds-orange) !important;
+      color: map-get($colors, white);
+    }
+    .d-button.activated {
+      background-color: map-get($colors, gds-red);
+      color: map-get($colors, white);
+    }
+    .d-button.active {
+      background-color: map-get($colors, gds-red) !important;
+      color: map-get($colors, white);
+    }
+  }
 }

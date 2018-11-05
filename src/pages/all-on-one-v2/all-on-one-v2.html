@@ -8,15 +8,6 @@
     <ion-row class="main-content flex-none">
       <ion-col col-4>
         <p>&nbsp;</p>
-        <ion-row class="sd-buttons-wrapper form-section">
-          <ion-col col-6 no-padding>
-            <button class="sd-buttons s-button" [ngClass]="{'active': isSButtonPressed}" (click)="sButtonClicked()"><strong>S</strong></button>
-          </ion-col>
-          <ion-col col-6 no-padding>
-            <button class="sd-buttons d-button" [ngClass]="{'active': isDButtonPressed}" (click)="dButtonClicked()"><strong>D</strong></button>
-          </ion-col>
-        </ion-row>
-
         <div class="form-section no-margin-bottom" [ngClass]="selectedManoeuvre? 'action-completed': 'action-incomplete'">
           <all-on-one-form-sub-element-button [sectionsToShow]="selectedManoeuvre" #manoeuvresButton text="{{ 'MANOEUVRES' | translate }}"></all-on-one-form-sub-element-button>
         </div>

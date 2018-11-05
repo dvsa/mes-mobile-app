@@ -54,25 +54,6 @@ page-all-on-one-v2 {
     border-bottom: 1px solid map-get($colors, gds-grey-1);
     box-shadow: 0 1px 0 0 map-get($colors, white);
   }
-  .sd-buttons-wrapper {
-    .sd-buttons {
-      background-color: map-get($colors, white) !important;
-      box-shadow: 0 2px 0 0 map-get($colors, shadowGrey);
-      @extend .test-form-label;
-    }
-    .s-button.activated {
-      border: solid 3.5px map-get($colors, gds-orange);
-    }
-    .s-button.active {
-      border: solid 3.5px map-get($colors, gds-orange) !important;
-    }
-    .d-button.activated {
-      border: solid 3.5px map-get($colors, gds-red);
-    }
-    .d-button.active {
-      border: solid 3.5px map-get($colors, gds-red) !important;
-    }
-  }
   .expanded-section-in-column button:first-child {
     margin-bottom: 10px;
   }

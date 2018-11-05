@@ -1,6 +1,5 @@
 import { JournalPage } from './../journal/journal';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
-import { HazardRecorderProvider } from './../../providers/hazard-recorder/hazard-recorder';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
@@ -51,7 +50,6 @@ export class AllOnOneV2Page {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private hazardRecorderProvider: HazardRecorderProvider,
     private faultStore: FaultStoreProvider,
     private menuCtrl: MenuController,
     private summaryMetaDataService: TestSummaryMetadataProvider
@@ -63,7 +61,7 @@ export class AllOnOneV2Page {
         nextPage: JournalPage,
         undo: true,
         trainingMode: this.trainingMode
-      }
+      };
     }
   }
 
@@ -73,40 +71,6 @@ export class AllOnOneV2Page {
 
   ionViewDidLeave() {
     this.menuCtrl.swipeEnable(true);
-  }
-
-  dButtonClicked() {
-    this.hazardRecorderProvider.resetHazardRecording();
-    if (this.isDButtonPressed) {
-      this.isDButtonPressed = false;
-      return;
-    }
-
-    this.isDButtonPressed = true;
-    this.isSButtonPressed = false;
-
-    if (this.hazardRecorderProvider.isRemovingFaultsEnabled) {
-      this.hazardRecorderProvider.enableDangerousRemoving(() => (this.isDButtonPressed = false));
-    } else {
-      this.hazardRecorderProvider.enableDangerousRecording(() => (this.isDButtonPressed = false));
-    }
-  }
-
-  sButtonClicked() {
-    this.hazardRecorderProvider.resetHazardRecording();
-    if (this.isSButtonPressed) {
-      this.isSButtonPressed = false;
-      return;
-    }
-
-    this.isDButtonPressed = false;
-    this.isSButtonPressed = true;
-
-    if (this.hazardRecorderProvider.isRemovingFaultsEnabled) {
-      this.hazardRecorderProvider.enableSeriousRemoving(() => (this.isSButtonPressed = false));
-    } else {
-      this.hazardRecorderProvider.enableSeriousRecording(() => (this.isSButtonPressed = false));
-    }
   }
 
   setEco($event: any) {
