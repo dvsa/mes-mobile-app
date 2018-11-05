@@ -1,4 +1,4 @@
-<div class="form-section">
+<div class="form-section" [ngClass]="isCheckComplete()? 'action-completed': 'action-incomplete'">
   <all-on-one-form-sub-element-button #vCheckButton [isComplete]="isCheckComplete()" sectionsToShow="vehicleCheck" section="vehicleCheck"
     text="Vehicle Check"></all-on-one-form-sub-element-button>
 </div>

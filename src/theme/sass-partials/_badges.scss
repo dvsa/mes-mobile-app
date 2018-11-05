@@ -38,3 +38,14 @@
   background-color: map-get($colors, gds-blue);
   color: map-get($colors, white);
 }
+
+.check-btn_incomplete {
+  content: '✔\fe0e'; // \fe0e is to tell safari to render the content as outline. This makes it pick the color: up correctly
+  display: block;
+  position: absolute;
+  @extend .round-badge;
+  width: 12px;
+  height: 12px;
+  background-color: map-get($colors, gds-grey-3);
+  color: map-get($colors, white);
+}

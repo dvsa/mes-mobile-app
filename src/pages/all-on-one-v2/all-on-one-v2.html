@@ -17,7 +17,7 @@
           </ion-col>
         </ion-row>
 
-        <div class="form-section no-margin-bottom" [ngClass]="{ 'action-completed' : selectedManoeuvre }">
+        <div class="form-section no-margin-bottom" [ngClass]="selectedManoeuvre? 'action-completed': 'action-incomplete'">
           <all-on-one-form-sub-element-button [sectionsToShow]="selectedManoeuvre" #manoeuvresButton text="{{ 'MANOEUVRES' | translate }}"></all-on-one-form-sub-element-button>
         </div>
       </ion-col>
@@ -59,13 +59,13 @@
 
     <ion-row class="main-content" [style.margin-top]="setPixelVal(!manoeuvresButton.isEnabled, 2)" [ngClass]="{'scroll': manoeuvresButton.isEnabled}">
       <ion-col col-4>
-        <div class="form-section" [ngClass]="{'action-completed': isControlledStopDone}" (click)="controlledStopTap()" (press)="controlledStopTap()">
+        <div class="form-section" [ngClass]="{'action-completed' : isControlledStopDone}" (click)="controlledStopTap()" (press)="controlledStopTap()">
           <all-on-one-form-sub-element-hold-no-modal #controlledStopEl section="controlledStop" text="Controlled Stop"></all-on-one-form-sub-element-hold-no-modal>
         </div>
 
         <all-on-one-form-vc-button></all-on-one-form-vc-button>
 
-        <div class="form-section" [ngClass]="{'action-completed': isEcoComplete() || ecoControlOption.isEnabled || ecoPlanningOption.isEnabled}">
+        <div class="form-section" [ngClass]="(isEcoComplete() || ecoControlOption.isEnabled || ecoPlanningOption.isEnabled)? 'action-completed': 'action-incomplete'">
           <all-on-one-form-sub-element-button #ecoButton section="ECO" text="ECO"></all-on-one-form-sub-element-button>
         </div>
 
