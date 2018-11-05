@@ -10,7 +10,8 @@ report-header-v2 {
   }
 
   #end-button {
-    width: 72px;
+    margin-top: 0;
+    font-weight: bold;
     border-radius: 10px;
     box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
     background-color: map-get($colors, gds-green);
@@ -18,9 +19,5 @@ report-header-v2 {
 
   .data-item {
     line-height: 2;
-  }
-  totals {
-    margin-left: 34px;
-    margin-right: 10px;
   }
 }
