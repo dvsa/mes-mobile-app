@@ -1,16 +1,38 @@
 report-header-v2 {
-  #end-button {
-    background-color: map-get($colors, dark);
-    border-radius: 3px;
-    margin-top: 7px;
+  .container {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    font-size: 20px;
   }
+
   .report-header-text {
-    line-height: 3.5;
+    line-height: 48px;
   }
+
+  button {
+    max-height: 40px;
+    height: 40px;
+  }
+
+  #end-button {
+    width: 72px;
+    border-radius: 10px;
+    box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
+    background-color: map-get($colors, gds-green);
+  }
+
   .data-item {
     line-height: 2;
   }
   totals {
-    margin-left: 45px;
+    margin-left: 27px;
+  }
+  .scorecard-item {
+    border: solid 1px map-get($colors, gds-grey-1);
+    padding: 4px 7px;
+    border-radius: 3px;
+    margin-left: 4px;
+    color: map-get($colors, gds-black);
+    font-weight: 600;
   }
 }

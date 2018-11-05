@@ -1,2 +1,19 @@
 timer {
+  #timer-button {
+    background-color: map-get($colors, gds-blue);
+    width: 110px;
+    border-radius: 10px;
+    box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
+    margin-left: 48px;
+  }
+  .timer-counter {
+    margin-left: 58px;
+    font-weight: 600;
+    width: 91px;
+    height: 35px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 5px;
+    line-height: 35px;
+  }
 }
