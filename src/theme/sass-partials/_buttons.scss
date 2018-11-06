@@ -13,6 +13,17 @@ $mes-test-form-button-height: 45px;
   }
 }
 
+.mes-button-secondary {
+  border-radius: 10px;
+  min-width: 105px;
+  background-color: map-get($colors, secondaryButton);
+  box-shadow: 0 2px 0 0 #6f777b;
+  padding: 12px;
+  color: map-get($colors, white);
+  font-weight: bold;
+  font-size: 17px;
+}
+
 .mes-bottom-card {
   margin-top: 0;
   .mes-button-primary {

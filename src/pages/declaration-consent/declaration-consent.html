@@ -32,7 +32,7 @@
         <span class="mes-text-sm">Sign here</span>
         <button (click)="clearSignaturePad()" class="mes-button-danger" id="retry" [disabled]="!signature">Retry</button>
         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-        <button class="mes-button-neutral" id="end-test">End driving test</button>
+        <button class="mes-button-secondary" id="end-test">End driving test</button>
         <button (click)="continue()" class="mes-button-primary" id="continue" [disabled]="validation()">Continue</button>
         <div class="clearfix"></div>
       </div>
