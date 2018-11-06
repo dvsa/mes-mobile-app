@@ -29,7 +29,7 @@
       </div>
       <div class="mes-divider"></div>
       <div class="signature-pad">
-        <span class="mes-text-sm">Sign here:</span>
+        <span class="mes-text-sm">Sign here</span>
         <button (click)="clearSignaturePad()" class="mes-button-danger" id="retry" [disabled]="!signature">Retry</button>
         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
         <button class="mes-button-neutral" id="end-test">End driving test</button>
