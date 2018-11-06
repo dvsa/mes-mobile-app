@@ -3,6 +3,8 @@ import { TestSummaryMetadataProvider } from './../../providers/test-summary-meta
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
+import { IJournal } from '../../providers/journal/journal-model';
+import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
 /**
  * Generated class for the AllOnOneV2Page page.
@@ -38,6 +40,8 @@ export class AllOnOneV2Page {
 
   manoeuvreKeys = [];
 
+  slotDetail: IJournal;
+
   @ViewChild('manoeuvresButton') manoeuvresButton;
   @ViewChild('ecoButton') ecoButton;
   @ViewChild('etaPhysicalOption') etaPhysicalOption;
@@ -63,6 +67,7 @@ export class AllOnOneV2Page {
         trainingMode: this.trainingMode
       };
     }
+    this.slotDetail = this.navParams.get('slotDetail');
   }
 
   ionViewDidEnter() {
@@ -131,5 +136,12 @@ export class AllOnOneV2Page {
       this.faultStore.resetFault(`${manoeuvre.PREFIX}${manName}${manoeuvre.CONTROL}`);
       this.faultStore.resetFault(`${manoeuvre.PREFIX}${manName}${manoeuvre.OBSERVATION}`);
     }, this);
+  }
+
+  /**
+   * Returns concatenated Candidate name for this slot
+   */
+  getTitle(): string {
+    return getFormattedCandidateName(this.slotDetail.candidateName) + ' - Test Report';
   }
 }

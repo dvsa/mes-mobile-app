@@ -3,12 +3,13 @@ import { VehicleCheckProvider, vCheckType } from './../../providers/vehicle-chec
 import { AllOnOneV2Page } from './../all-on-one-v2/all-on-one-v2';
 import { EyesightFaultRecordingModalPage } from './../eyesight-fault-recording-modal/eyesight-fault-recording-modal';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, NavParams } from 'ionic-angular';
 import { PolicyDataPage } from '../policy-data/policy-data';
 import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { QuestionsModalComponent } from '../../components/questions-modal/questions-modal';
 import { select } from '@angular-redux/store';
+import { IJournal } from '../../providers/journal/journal-model';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -26,6 +27,7 @@ export class PretestChecksPage {
     tellMeQuestionId: null,
     isAutomatic: null
   };
+  slotDetail: IJournal;
 
   @select(['faults', 'vehicleCheck'])
   vcState$;
@@ -33,8 +35,11 @@ export class PretestChecksPage {
   constructor(
     public navCtrl: NavController,
     private modalCtrl: ModalController,
-    private vcProvider: VehicleCheckProvider
-  ) {}
+    private vcProvider: VehicleCheckProvider,
+    public navParams: NavParams
+  ) {
+    this.slotDetail = this.navParams.get('slotDetail');
+  }
 
   ngAfterViewInit() {
     this.vcProvider.reset(vCheckType.TELLME);
@@ -84,7 +89,7 @@ export class PretestChecksPage {
 
   gotoDL25(form) {
     if (form.valid) {
-      this.navCtrl.push(AllOnOneV2Page, {}, { animate: false });
+      this.navCtrl.push(AllOnOneV2Page, { slotDetail: this.slotDetail }, { animate: false });
     }
   }
 
