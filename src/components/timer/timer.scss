@@ -4,6 +4,7 @@ timer {
     width: 110px;
     border-radius: 10px;
     box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
+    margin-left: 20px;
   }
   .timer-counter {
     border: 1px solid map-get($colors, gds-grey-1);
