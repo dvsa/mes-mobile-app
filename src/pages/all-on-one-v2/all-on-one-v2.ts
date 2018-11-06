@@ -142,6 +142,9 @@ export class AllOnOneV2Page {
    * Returns concatenated Candidate name for this slot
    */
   getTitle(): string {
-    return getFormattedCandidateName(this.slotDetail.candidateName) + ' - Test Report';
+    if (this.slotDetail) {
+      return getFormattedCandidateName(this.slotDetail.candidateName) + ' - Test Report';
+    }
+    return 'Practice Mode - Test Report';
   }
 }
