@@ -4,7 +4,7 @@ import { IAddress, ICandidateName } from '../../providers/journal/journal-model'
  * Returns concatenated Candidate name
  */
 export function getFormattedCandidateName(candidateName: ICandidateName): string {
-  return `${candidateName.title} ${candidateName.firstName} ${candidateName.lastName}`;
+  return `${candidateName.firstName} ${candidateName.lastName}`;
 }
 
 /**
