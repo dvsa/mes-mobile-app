@@ -1,4 +1,3 @@
-import { AlphaHeaderComponent } from './alpha-header/alpha-header';
 import { AllOnOneFormSubElementHoldNoModalComponent } from './all-on-one-form-sub-element-hold-no-modal/all-on-one-form-sub-element-hold-no-modal';
 import { TotalsComponent } from './totals/totals';
 import { ReportHeaderV2Component } from './report-header-v2/report-header-v2';
@@ -39,7 +38,6 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     TotalsComponent,
     AllOnOneFormSubElementHoldNoModalComponent,
     LegalRequirementsComponent,
-    AlphaHeaderComponent,
     AllOnOneFormEtaButtonComponent,
     EvenOddPipe,
     PostTestSummarySectionComponent,
@@ -63,7 +61,6 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     TotalsComponent,
     AllOnOneFormSubElementHoldNoModalComponent,
     LegalRequirementsComponent,
-    AlphaHeaderComponent,
     AllOnOneFormEtaButtonComponent,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
