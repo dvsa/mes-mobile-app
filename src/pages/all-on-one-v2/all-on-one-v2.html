@@ -72,7 +72,7 @@
     </ion-row>
 
     <ion-row class="main-content" [style.margin-top]="setPixelVal(!manoeuvresButton.isEnabled, 2)" [ngClass]="{'scroll': manoeuvresButton.isEnabled}">
-      <ion-col col-4>
+      <ion-col col-4 [ngClass]="{'margin-top-for-manoeuvre-closed': !manoeuvresButton.isEnabled}">
 
         <div class="form-section" [ngClass]="(isEcoComplete() || ecoControlOption.isEnabled || ecoPlanningOption.isEnabled)? 'action-completed': 'action-incomplete'">
           <all-on-one-form-sub-element-button #ecoButton section="ECO" text="ECO"></all-on-one-form-sub-element-button>
@@ -125,8 +125,7 @@
         </div>
       </ion-col>
 
-      <ion-col col-4 [style.margin-top]="setPixelVal(!manoeuvresButton.isEnabled, -18)">
-
+      <ion-col col-4 [ngClass]="{'margin-top-for-manoeuvre-closed': !manoeuvresButton.isEnabled}">
 
         <div class="form-section-small">
           <p>{{ 'SIGNALS' | translate }}</p>
