@@ -99,4 +99,8 @@ export class DeclarationConsentPage {
   getDriverNumber(): string {
     return this.slotDetail.driverNumber;
   }
+
+  onEndTest(): void {
+    this.navCtrl.pop();
+  }
 }

@@ -30,9 +30,9 @@
       <div class="mes-divider"></div>
       <div class="signature-pad">
         <span class="mes-text-sm">Sign here</span>
-        <button (click)="clearSignaturePad()" class="mes-button-signature-pad" id="retry" [disabled]="!signature">Retry</button>
+        <button (click)="clearSignaturePad()" class="mes-button-signature-pad" id="retry" [disabled]="!signature">↻ Retry</button>
         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-        <button class="mes-button-secondary" id="end-test">End driving test</button>
+        <button class="mes-button-secondary" (click)="onEndTest()">End driving test</button>
         <button (click)="continue()" class="mes-button-primary" id="continue" [disabled]="validation()">Continue</button>
         <div class="clearfix"></div>
       </div>
