@@ -12,20 +12,18 @@ input[type='checkbox'] {
 
 .signature-pad {
   button#retry {
-    float: left;
+    float: right;
+    position: relative;
+    top: 65px;
+    right: 20px;
   }
   button#continue {
     float: right;
   }
-  background-color: map-get($colors, mesBoxGrey);
+  background-color: map-get($colors, white);
   position: relative;
-  padding: 40px;
   span {
     font-weight: bold;
-    float: none;
-    position: absolute;
-    top: 60px;
-    left: 60px;
   }
   signature-pad {
     width: 100%;

@@ -30,8 +30,8 @@
       <div class="mes-divider"></div>
       <div class="signature-pad">
         <span class="mes-text-sm">Sign here:</span>
-        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
         <button (click)="clearSignaturePad()" class="mes-button-danger" id="retry">Retry</button>
+        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
         <button (click)="continue()" class="mes-button-primary" id="continue" [disabled]="validation()">Continue</button>
         <div class="clearfix"></div>
       </div>
