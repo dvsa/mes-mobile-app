@@ -28,6 +28,7 @@ export class JournalProvider {
   transformSlotData(slots) {
     return slots.reduce((curr: IJournal[], next) => {
       const {
+        activityCode,
         details,
         slot: { testCentreName = '', start = '', vehicleSlotType: slotType = null },
         booking: {
@@ -72,6 +73,10 @@ export class JournalProvider {
 
       if (details) {
         journalEntry = { ...journalEntry, details };
+      }
+
+      if (activityCode) {
+        journalEntry = { ...journalEntry, activityCode };
       }
 
       return curr.concat(journalEntry);

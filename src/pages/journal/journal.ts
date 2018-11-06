@@ -9,6 +9,7 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { IJournal } from '../../providers/journal/journal-model';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { DeclarationConsentPage } from '../declaration-consent/declaration-consent';
+import { isNil } from 'lodash';
 
 @Component({
   selector: 'page-journal',
@@ -50,20 +51,28 @@ export class JournalPage {
     return slotType.match(re);
   }
 
-  hasFailed(slot) {
+  hasFailed(slot: IJournal) {
     return slot.details && !slot.details.success;
   }
 
-  hasPassed(slot) {
+  hasPassed(slot: IJournal) {
     return slot.details && slot.details.success;
   }
 
-  requiresCheck(slot) {
+  requiresCheck(slot: IJournal) {
     return slot.checkMarker;
   }
 
   goToCandidateInfo(slot: IJournal) {
     return this.navCtrl.push(CandidateInfoPage, { slotDetail: slot });
+  }
+
+  canStartATest(slot: IJournal): boolean {
+    return isNil(slot.details) && isNil(slot.activityCode);
+  }
+
+  shouldShowActivityCodeBlock(slot: IJournal): boolean {
+    return slot.activityCode && slot.activityCode > 5; // codes above 5 represent incomplete tests
   }
 
   skipToDL25() {

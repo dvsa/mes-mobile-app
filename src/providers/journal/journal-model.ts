@@ -16,6 +16,7 @@ export interface IAddress {
 }
 
 export interface IJournal {
+  activityCode?: number;
   details?: ITestDetails;
   candidateId: number;
   candidateName: ICandidateName;
