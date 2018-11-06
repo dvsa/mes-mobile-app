@@ -10,7 +10,7 @@
 
 .fault-badge_counter {
   @extend .round-badge;
-  background-color: map-get($colors, gds-blue);
+  background-color: map-get($colors, gds-black);
   color: map-get($colors, white);
 }
 

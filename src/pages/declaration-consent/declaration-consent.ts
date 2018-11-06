@@ -76,12 +76,12 @@ export class DeclarationConsentPage {
       .runAuthentication('Please authenticate yourself to proceed')
       .then((isAuthenticated: boolean) => {
         if (isAuthenticated) {
-          this.navCtrl.push(this.pretestChecksPage);
+          this.navCtrl.push(this.pretestChecksPage, { slotDetail: this.slotDetail });
         }
       })
       .catch((errorMsg: string) => {
         if (errorMsg === 'cordova_not_available' || errorMsg === 'plugin_not_installed') {
-          this.navCtrl.push(this.pretestChecksPage);
+          this.navCtrl.push(this.pretestChecksPage, { slotDetail: this.slotDetail });
         }
       });
   }
