@@ -27,7 +27,7 @@
 @import '../theme/sass-partials/_alignments.scss';
 @import '../theme/sass-partials/_badges.scss';
 
-ion-header {
+ion-header#app-header {
   height: 44px;
   background-color: map-get($colors, headerGrey);
 }
