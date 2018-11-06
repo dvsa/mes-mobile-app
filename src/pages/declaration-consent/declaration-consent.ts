@@ -8,7 +8,7 @@ import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
 
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-import { IJournal } from '../../providers/journal/journal-model';
+import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
 @Component({
@@ -102,5 +102,10 @@ export class DeclarationConsentPage {
 
   onEndTest(): void {
     this.navCtrl.pop();
+  }
+
+  getTitle(): string {
+    const name: ICandidateName = this.slotDetail.candidateName;
+    return `Declaration - ${name.firstName} ${name.lastName}`;
   }
 }

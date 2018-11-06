@@ -30,8 +30,3 @@
 ion-content.mes-main-content {
   background-color: map-get($colors, appBackground);
 }
-
-ion-header#app-header {
-  height: 44px;
-  background-color: map-get($colors, headerGrey);
-}
