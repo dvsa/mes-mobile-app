@@ -89,6 +89,7 @@
           "_slotId": 1002,
           "start": "2018-03-05T09:07:00+00:00",
           "duration": 30,
+          "vehicleSlotType": "B57mins",
           "_testCentreId": 54321,
           "testCentreName": "Cardington"
         },
@@ -126,7 +127,8 @@
             "welshTest": false,
             "extendedTest": true,
             "progressiveAccess": false,
-            "checkMarker": false
+            "checkMarker": false,
+            "testCategory": "B+E"
           }
         }
       },
