@@ -2,6 +2,15 @@ page-header {
   ion-icon {
     vertical-align: middle;
   }
+  ion-toolbar {
+    div.toolbar-content {
+      background: map-get($colors, appBackground);
+    }
+  }
+  div.device-locked {
+    position: relative;
+    top: -5px;
+  }
   .device-locked {
     background: map-get($colors, deviceLockedOrange);
     height: 47px;
