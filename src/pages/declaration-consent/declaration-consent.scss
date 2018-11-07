@@ -3,10 +3,21 @@ page-declaration-consent {
     vertical-align: middle;
     display: inline;
   }
-  .mes-declaration-title-name {
-    font-size: 30px;
+  ion-card-header.mes-main-card-header {
+    margin-bottom: 1em;
   }
-  .mes-candidate-img {
-    font-size: 9.2em;
+  .mes-waiting-room-name {
+    font-size: 44px;
+    padding-bottom: 1em;
+  }
+  .mes-waiting-room-driver-number {
+    font-size: 24px;
+    padding-bottom: 1em;
+  }
+  button.mes-waiting-room-continue {
+    float: right;
+  }
+  div.mes-waiting-room-ctas {
+    margin: 2em 0.8em;
   }
 }
