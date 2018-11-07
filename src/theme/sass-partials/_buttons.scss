@@ -1,5 +1,18 @@
 $mes-test-form-button-height: 45px;
 
+.mes-button-primary {
+  border-radius: 22px;
+  min-width: 105px;
+  background-color: map-get($colors, mesPrimary);
+  padding: 15px 40px;
+  color: map-get($colors, white);
+  font-weight: bold;
+  font-size: 17px;
+  &:active {
+    background-color: lighten(map-get($colors, mesPrimary), 5);
+  }
+}
+
 .mes-cta-button {
   border-radius: 10px;
   height: 48px;
@@ -11,7 +24,7 @@ $mes-test-form-button-height: 45px;
   box-shadow: 0 2px 0 0 #6f777b;
 }
 
-.mes-button-primary {
+.mes-cta-button-primary {
   @extend .mes-cta-button;
   background-color: map-get($colors, gds-green);
   &:active {
@@ -19,7 +32,7 @@ $mes-test-form-button-height: 45px;
   }
 }
 
-.mes-button-secondary {
+.mes-cta-button-secondary {
   @extend .mes-cta-button;
   background-color: map-get($colors, secondaryButton);
 }
