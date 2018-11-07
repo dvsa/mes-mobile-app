@@ -68,7 +68,10 @@ const deleteFault = (state, action) => {
 
   // reduce fault counter or remove fault type completely
   if (currFaults[faultType] > 1) {
-    newFaultState = { [faultType]: (currFaults[faultType] -= 1) };
+    newFaultState = {
+      ...currFaults,
+      [faultType]: (currFaults[faultType] -= 1)
+    };
   } else {
     ({
       [faultType]: {},
