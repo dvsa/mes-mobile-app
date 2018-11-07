@@ -4,7 +4,7 @@ page-declaration-consent {
     display: inline;
   }
   ion-card-header.mes-main-card-header {
-    margin-bottom: 1em;
+    margin-bottom: 1em !important;
   }
   .mes-waiting-room-name {
     font-size: 44px;
@@ -27,5 +27,8 @@ page-declaration-consent {
         margin-top: 0px;
       }
     }
+  }
+  div.mes-waiting-room-text {
+    margin-bottom: 1em;
   }
 }

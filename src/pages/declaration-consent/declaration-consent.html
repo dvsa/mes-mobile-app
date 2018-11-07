@@ -12,14 +12,18 @@
     <ion-card-content>
       <div class="mes-header-md">I declare that:</div>
       <br>
-      <span class="mes-text-md">The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which satisfies
-        the requirements of the legislation.</span>
+      <div class="mes-waiting-room-text">
+        <span class="mes-text-md">The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which satisfies
+          the requirements of the legislation.</span>
+      </div>
       <div>
         <input type="checkbox" name="insurance" id="check-insurance" [checked]="checkInsurance" (change)="updateValidation('checkInsurance')">
         <label for="check-insurance">I confirm</label>
       </div>
       <div class="mes-divider"></div>
-      <span class=" mes-text-md ">I normally live/have lived in the UK for at least 185 days in the last 12 months (except taxi/private hire).</span>
+      <div class="mes-waiting-room-text">
+        <span class="mes-text-md ">I normally live/have lived in the UK for at least 185 days in the last 12 months (except taxi/private hire).</span>
+      </div>
       <div>
         <input type="checkbox" name="residence" id="check-residence" [checked]="checkResidence" (change)="updateValidation('checkResidence')">
         <label for="check-residence">I confirm</label>
