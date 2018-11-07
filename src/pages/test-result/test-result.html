@@ -5,21 +5,26 @@
 <ion-content padding class="mes-main-content">
     <ion-card class="mes-card">
         <ion-card-header class="mes-main-card-header mes-breadcrumbs">
-            <span class="mes-header-md mes-breadcrumb-link" (click)="goBack()">
-                <ion-icon name="arrow-back"></ion-icon>
-                Back to DL25 /
-            </span>
-            <span padding-left class="mes-header-md">Florence Pearson</span>
+            Test requirements and actions
+        </ion-card-header>
+        <test-result-header [summaryMetadata]="summaryMetadata"></test-result-header>
+    </ion-card>
+    <ion-card class="mes-card">
+        <ion-card-header text-center [ngStyle]="{ 'border': getBorderStyle(), margin: '16px' }">
+            <div>
+                Test outcome
+            </div>
+            <div>
+                {{testResult}}
+            </div>
         </ion-card-header>
         <ion-card-content>
             <test-summary [faultSummaries]="faultSummaries" [testResult]="testResult" [summaryMetadata]="summaryMetadata"></test-summary>
         </ion-card-content>
     </ion-card>
-    <ion-card class="mes-bottom-card" text-center>
-        <ion-row align-items-center>
-            <ion-col>
-                <button [navPush]="getNextPage()" class="mes-button-primary">End debrief</button>
-            </ion-col>
-        </ion-row>
-    </ion-card>
+    <ion-row align-items-center>
+        <ion-col>
+            <button [navPush]="getNextPage()" class="mes-button-primary">End debrief</button>
+        </ion-col>
+    </ion-row>
 </ion-content>

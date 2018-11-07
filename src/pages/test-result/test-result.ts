@@ -34,6 +34,10 @@ export class TestResultPage {
     this.summaryMetadata = this.summaryMetadataService.getMetadata();
   }
 
+  getBorderStyle() {
+    return this.testResult === TestResult.Fail ? '5px solid red' : '5px solid green';
+  }
+
   getNextPage(): Page {
     return this.testResult === TestResult.Fail
       ? this.postTestSummaryPage
