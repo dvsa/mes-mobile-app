@@ -20,4 +20,12 @@ page-declaration-consent {
   div.mes-waiting-room-ctas {
     margin: 2em 0.8em;
   }
+  ion-content {
+    div.scroll-content {
+      padding-top: 0px !important;
+      ion-card.mes-card {
+        margin-top: 0px;
+      }
+    }
+  }
 }
