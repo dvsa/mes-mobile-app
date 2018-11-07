@@ -29,12 +29,7 @@
         <label for="check-residence">I confirm</label>
       </div>
       <div class="mes-divider"></div>
-      <div class="signature-pad">
-        <span class="mes-text-sm">Sign here</span>
-        <button (click)="clearSignaturePad()" class="mes-button-signature-pad" id="retry" [disabled]="!signature">↻ Retry</button>
-        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-        <div class="clearfix"></div>
-      </div>
+      <mes-signature-pad></mes-signature-pad>
     </ion-card-content>
   </ion-card>
   <div class="mes-waiting-room-ctas">

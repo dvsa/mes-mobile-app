@@ -1,0 +1,5 @@
+<div>
+  <span class="mes-header-md">Sign here</span>
+  <button (click)="clear()" class="mes-signature-pad-retry-button" [disabled]="!signature">↻ Retry</button>
+  <signature-pad [options]="options" (onEndEvent)="drawComplete()"></signature-pad>
+</div>

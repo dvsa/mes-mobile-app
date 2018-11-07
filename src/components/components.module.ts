@@ -20,6 +20,8 @@ import { EvenOddPipe } from '../pipes/evenOdd';
 import { PostTestSummarySectionComponent } from './post-test-summary-section/post-test-summary-section';
 import { TextboxModalComponent } from './textbox-modal/textbox-modal';
 import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-on-one-form-vc-button';
+import { MesSignaturePadComponent } from './mes-signature-pad/mes-signature-pad';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   declarations: [
@@ -42,9 +44,10 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     EvenOddPipe,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent
+    AllOnOneFormVcButtonComponent,
+    MesSignaturePadComponent
   ],
-  imports: [IonicModule.forRoot(PageHeaderComponent)],
+  imports: [IonicModule.forRoot(PageHeaderComponent), SignaturePadModule],
   exports: [
     PageHeaderComponent,
     JournalHeaderComponent,
@@ -64,7 +67,8 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     AllOnOneFormEtaButtonComponent,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent
+    AllOnOneFormVcButtonComponent,
+    MesSignaturePadComponent
   ]
 })
 export class ComponentsModule {}
