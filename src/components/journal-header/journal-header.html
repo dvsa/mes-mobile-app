@@ -1,20 +1,30 @@
-<!-- Generated template for the JournalHeaderComponent component -->
 <div>
   <ion-row>
-    <ion-col class="yesterday" col-4>
+    <ion-col col-4>
       <div>
-        <span>Previous</span>
+        <span class="journal-header-day-navigation">◄ Previous day</span>
       </div>
     </ion-col>
-    <ion-col class="today" col-4>
+    <ion-col col-4>
       <div>
-        <span>Today</span>
-        <span>{{getDate()}}</span>
+        <span class="journal-header-today-title">Today</span>
       </div>
     </ion-col>
-    <ion-col class="tomorrow" col-4>
-      <div float-right>
-        <span>Tomorrow</span>
+    <ion-col col-4>
+      <div>
+        <span class="journal-header-day-navigation">Next day ►</span>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-4>
+    </ion-col>
+    <ion-col col-4>
+      <span class="journal-header-date">{{getDate()}}</span>
+    </ion-col>
+    <ion-col col-4>
+      <div>
+        <span class="mes-text-md">Last sync: 08:35</span>
       </div>
     </ion-col>
   </ion-row>
