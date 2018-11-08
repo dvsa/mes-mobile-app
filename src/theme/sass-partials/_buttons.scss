@@ -67,3 +67,12 @@ $mes-test-form-button-height: 45px;
     background-color: lighten(map-get($colors, danger), 5);
   }
 }
+
+.mes-link {
+  height: 26px;
+  color: #005ea5;
+  font-size: 20px;
+  text-decoration: underline;
+  text-align: left;
+  letter-spacing: 0;
+}

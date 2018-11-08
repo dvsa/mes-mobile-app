@@ -1,36 +1,18 @@
 post-test-summary-section {
-  .mes-test-summary-section-card {
-    border-radius: 20px;
-    margin-bottom: 25px;
-    ion-card-header {
-      font-weight: 700;
-      font-size: 17px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid map-get($colors, faintDivider);
-    }
-    .mes-test-summary-list {
-      list-style: none;
-      padding-left: 0;
-      margin-top: 0;
-      li {
-        font-size: 14px;
-        font-weight: 900;
-        color: map-get($colors, textDarkerGrey);
-        ion-icon {
-            font-size: 25px;
-            &.dark {
-              color: map-get($colors, dark);
-            }
-            &.green { 
-              color: map-get($colors, btnGreen);
-            }
-        }
-      }
-    }
+  .fault-number {
+    font-size: 48px;
+    color: black;
   }
-  .hidden {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
+  .fault-note-container {
+    margin-top: 20px;
+  }
+
+  .validation-error {
+    color: map-get($colors, gds-red);
+  }
+  .validation-error-icon {
+    padding-left: 9px;
+    color: map-get($colors, gds-red);
+    font-size: 24px;
   }
 }

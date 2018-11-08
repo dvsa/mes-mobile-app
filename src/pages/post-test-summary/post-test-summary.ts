@@ -1,20 +1,18 @@
 import { IManualSummary } from './../../components/test-summary/interfaces/IManualSummary';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
 import { Component, ViewChildren, QueryList } from '@angular/core';
-import { ModalController, NavController, AlertController } from 'ionic-angular';
+import { Platform, ModalController, NavController, AlertController } from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { IFaultSummary } from '../../components/test-summary/interfaces/IFaultSummary';
-import { FaultTitle } from '../../components/test-summary/enums/FaultTitle';
 import { WeatherSelectorComponent } from '../../components/weather-selector/weather-selector';
 import { JournalPage } from '../journal/journal';
 import { QuestionsModalComponent } from '../../components/questions-modal/questions-modal';
 import { SHOW_ME_QUESTIONS } from '../../app/constants';
 import { VehicleCheckProvider } from '../../providers/vehicle-check/vehicle-check';
-import { TextboxModalComponent } from '../../components/textbox-modal/textbox-modal';
-import { isNumber } from 'lodash';
 import { isNonBlankString } from '../../shared/utils/string-utils';
 import { PostTestSummarySectionComponent } from '../../components/post-test-summary-section/post-test-summary-section';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -25,29 +23,32 @@ export class PostTestSummaryPage {
   seriousFaultSummary: IFaultSummary;
   dangerousFaultSummary: IFaultSummary;
   journalPage: Page = JournalPage;
-  selectedRoute: number = null;
+  selectedRoute: string = null;
   showMeQuestion = null;
   disableBackdropDismissModalOption = { enableBackdropDismiss: false };
   safetyQuestionSummary: IManualSummary;
   conditionsList: string;
-  faultTitleColourMap = [
-    { title: FaultTitle.Dangerous, colour: 'failRed' },
-    { title: FaultTitle.Serious, colour: 'seriousYellow' },
-    { title: FaultTitle.DrivingFaults, colour: 'dark' }
-  ];
-  routeDeviations: string;
-  independentDrivingTypeSelected: boolean = false;
+  independentDrivingType: string = '0';
   candidateDescription: string = null;
   @ViewChildren(PostTestSummarySectionComponent)
   summarySectionComponents: QueryList<PostTestSummarySectionComponent>;
 
+  // Validation Flags
+  showRouteNumberValidation: boolean = false;
+  showShowMeQuestionValidation: boolean = false;
+  showWeatherValidation: boolean = false;
+  showIndependentDrivingValidation: boolean = false;
+  showPhysicalDescriptionValidation: boolean = false;
+
   constructor(
+    private platform: Platform,
     private modalCtrl: ModalController,
     private navCtrl: NavController,
     private faultStore: FaultStoreProvider,
     private alertCtrl: AlertController,
     private vehicleCheckProvider: VehicleCheckProvider,
-    private summaryMetadata: TestSummaryMetadataProvider
+    private summaryMetadata: TestSummaryMetadataProvider,
+    private screenOrientation: ScreenOrientation
   ) {
     this.faultStore.getFaultTotals().subscribe((faultSummaries) => {
       this.drivingFaultSummary = faultSummaries.drivingFaultSummary;
@@ -60,6 +61,18 @@ export class PostTestSummaryPage {
       color: 'dark',
       sentences: this.mapSafetyQuestion()
     };
+  }
+
+  ionViewDidEnter() {
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.unlock();
+    }
+  }
+
+  ionViewDidLeave() {
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    }
   }
 
   showShowMeQuestions = () => {
@@ -79,7 +92,7 @@ export class PostTestSummaryPage {
     showMeQuestionModal.present();
   };
 
-  onSubmitPress() {
+  onSubmit() {
     if (this.isFullyComplete()) {
       this.backToJournal();
     } else {
@@ -105,6 +118,10 @@ export class PostTestSummaryPage {
     }
   }
 
+  onReturnToJournal() {
+    this.backToJournal();
+  }
+
   private backToJournal() {
     this.faultStore.reset();
     this.summaryMetadata.reset();
@@ -121,63 +138,36 @@ export class PostTestSummaryPage {
     modal.present();
   }
 
-  showRouteListAlert() {
-    const inputs = [];
-    for (let i = 1; i <= 13; i += 1) {
-      inputs.push({
-        type: 'radio',
-        label: i,
-        value: i,
-        checked: this.selectedRoute === i
+  private isFullyComplete() {
+    this.runValidation();
+
+    // Need to run validation for all sections
+    let allSectionsComplete = true;
+
+    if (this.summarySectionComponents) {
+      this.summarySectionComponents.forEach((c) => {
+        if (!c.isComplete()) {
+          allSectionsComplete = false;
+        }
       });
     }
 
-    const prompt = this.alertCtrl.create({
-      inputs,
-      title: 'Choose route number',
-      buttons: [
-        {
-          text: 'Ok',
-          handler: (chosenRoute) => {
-            this.selectedRoute = chosenRoute;
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
-
-  openTextBoxModal() {
-    const textBoxModal = this.modalCtrl.create(TextboxModalComponent, {
-      title: 'Route Deviations',
-      notes: this.routeDeviations || ''
-    });
-    textBoxModal.onDidDismiss(
-      (routeDeviations?: string) => (this.routeDeviations = routeDeviations)
-    );
-    textBoxModal.present();
-  }
-
-  independentDrivingOptionChanged(event, secondInput) {
-    secondInput.checked = false;
-    this.independentDrivingTypeSelected = event.target.checked;
-  }
-
-  private isFullyComplete() {
-    const routeNumberSelected = isNumber(this.selectedRoute);
-    const weatherCompleted = isNonBlankString(this.conditionsList);
-    const showMeSelected = isNonBlankString(this.showMeQuestion);
-    const candidateDescriptionCompleted = isNonBlankString(this.candidateDescription);
-    const allSectionsComplete =
-      !this.summarySectionComponents || !this.summarySectionComponents.some((c) => !c.isComplete());
-    return [
-      routeNumberSelected,
-      weatherCompleted,
-      showMeSelected,
-      this.independentDrivingTypeSelected,
-      candidateDescriptionCompleted,
+    return (
+      !this.showRouteNumberValidation &&
+      !this.showWeatherValidation &&
+      !this.showShowMeQuestionValidation &&
+      !this.showPhysicalDescriptionValidation &&
+      !this.showIndependentDrivingValidation &&
       allSectionsComplete
-    ].every((p) => p);
+    );
+  }
+
+  private runValidation() {
+    this.showRouteNumberValidation = !isNonBlankString(this.selectedRoute);
+    this.showWeatherValidation = !isNonBlankString(this.conditionsList);
+    this.showShowMeQuestionValidation = !isNonBlankString(this.showMeQuestion);
+    this.showPhysicalDescriptionValidation = !isNonBlankString(this.candidateDescription);
+    this.showIndependentDrivingValidation = this.independentDrivingType === '0';
   }
 
   private mapSafetyQuestion(showMeQuestion?): string[] {
@@ -187,5 +177,9 @@ export class PostTestSummaryPage {
     ]
       .filter((n) => n)
       .map((question: { id; keyWords }) => `${question.id} - ${question.keyWords}`);
+  }
+
+  getTitle(): string {
+    return 'Test summary - Florence  Pearson';
   }
 }
