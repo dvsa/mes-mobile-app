@@ -10,12 +10,7 @@
             <div class="slot__time">{{s.startTime}}</div>
           </ion-col>
           <ion-col col-4>
-            <div class="slot__candidate" (click)="goToCandidateInfo(s)">
-              <div class="wrapper">
-                  <span class="mes-journal-candidate-name">{{s.candidateName.firstName}} {{s.candidateName.lastName}}</span> 
-                  <span>Cat {{extractCategoryCode(s.slotType)}}</span>                
-              </div>
-            </div>
+            <journal-candidate-info [candidateName]="s.candidateName" [testCategory]="s.slotType"></journal-candidate-info>
           </ion-col>
           <ion-col col-3>
             <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details"></journal-test-details>

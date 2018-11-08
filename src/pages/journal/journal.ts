@@ -43,14 +43,6 @@ export class JournalPage {
     this.summaryMetadata.reset();
   }
 
-  extractCategoryCode(slotType: string) {
-    // slotType comes from the vehicleSlotType key in the journal data
-    // Examples of slotType parameter: 'B57mins' / 'Voc90mins'
-    if (slotType === null) return 'N/A';
-    const re = /^[a-zA-Z]*/;
-    return slotType.match(re);
-  }
-
   hasFailed(slot: IJournal) {
     return slot.details && !slot.details.success;
   }
