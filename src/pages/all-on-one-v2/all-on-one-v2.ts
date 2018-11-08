@@ -121,8 +121,9 @@ export class AllOnOneV2Page {
   }
 
   controlledStopTap() {
-    if (this.controlledStopEl.faultCounter > 0 || this.isDButtonPressed || this.isSButtonPressed)
+    if (this.controlledStopEl.faultCounter > 0 || this.isDButtonPressed || this.isSButtonPressed) {
       return;
+    }
     this.isControlledStopDone = !this.isControlledStopDone;
     this.summaryMetaDataService.toggleControlledStopComplete();
   }
