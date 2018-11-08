@@ -16,12 +16,12 @@
           </ion-col>
           <ion-col col-4>
             <div class="slot__details">
+              <ion-icon name="pin"></ion-icon>
+              {{s.testCentreName}}
               <span *ngIf="s.details">
                 S-{{s.details.showMe}} | T-{{s.details.tellMe}}
                 Route {{s.details.route}}
               </span>
-              <ion-icon name="pin"></ion-icon>
-              {{s.testCentreName}}
             </div>
           </ion-col>
           <ion-col col-2>
