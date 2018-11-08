@@ -12,6 +12,6 @@ export class WelcomePage {
   constructor(public navCtrl: NavController, public viewCtrl: ViewController) {}
 
   navToJournal() {
-    this.navCtrl.push(JournalPage).then(() => this.navCtrl.remove(this.viewCtrl.index));
+    this.navCtrl.push(JournalPage);
   }
 }
