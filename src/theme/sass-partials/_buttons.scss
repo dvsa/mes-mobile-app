@@ -37,21 +37,6 @@ $mes-test-form-button-height: 45px;
   background-color: map-get($colors, secondaryButton);
 }
 
-.mes-button-signature-pad {
-  border-radius: 10px;
-  width: 128px;
-  height: 48px;
-  background-color: #efefee;
-  color: map-get($colors, black);
-  font-weight: bold;
-  font-size: 17px;
-  padding: 12px;
-  &:disabled {
-    color: map-get($colors, darkerGrey);
-    background-color: rgba(0, 0, 0, 0);
-  }
-}
-
 .mes-bottom-card {
   margin-top: 0;
   .mes-button-primary {
