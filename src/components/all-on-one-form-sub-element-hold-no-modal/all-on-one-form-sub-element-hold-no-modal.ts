@@ -11,9 +11,12 @@ declare const Hammer: any;
   templateUrl: 'all-on-one-form-sub-element-hold-no-modal.html'
 })
 export class AllOnOneFormSubElementHoldNoModalComponent {
-  @Input('section') section: string = '';
-  @Input('text') text: string = '';
-  @Input('isDisabled') isDisabled: boolean = false;
+  @Input('section')
+  section: string = '';
+  @Input('text')
+  text: string = '';
+  @Input('isDisabled')
+  isDisabled: boolean = false;
 
   serious: boolean = false;
   dangerous: boolean = false;
@@ -71,7 +74,8 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
     if (this.hazardRecorderProvider.isRecordingOrRemoving() || this.dangerous || this.serious) {
       return;
     }
-
+    // Prevent more than one fault being added to controlled stop
+    if (this.section === 'controlledStop' && this.faultCounter > 0) return;
     this.faultStore.addFault(this.section, 'fault');
   }
 
