@@ -10,7 +10,7 @@
             <div class="slot__time">{{s.startTime}}</div>
           </ion-col>
           <ion-col col-4>
-            <journal-candidate-info [candidateName]="s.candidateName" [testCategory]="s.slotType"></journal-candidate-info>
+            <journal-candidate-info [candidateName]="s.candidateName" [testCategory]="s.slotType" (click)="goToCandidateInfo(s)"></journal-candidate-info>
           </ion-col>
           <ion-col col-3>
             <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details"></journal-test-details>
