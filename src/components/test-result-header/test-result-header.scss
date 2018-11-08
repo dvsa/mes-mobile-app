@@ -1,2 +1,23 @@
 test-result-header {
+  font-size: 20px;
+
+  .action-completed {
+    .test-section:before {
+      @extend .check-btn_completed;
+    }
+  }
+
+  .action-incomplete {
+    .test-section:before {
+      @extend .check-btn_incomplete;
+    }
+  }
+
+  .test-section {
+    padding: 10px;
+  }
+
+  .test-section-text {
+    margin-left: 2em;
+  }
 }

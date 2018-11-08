@@ -35,7 +35,7 @@ export class TestResultPage {
   }
 
   getBorderStyle() {
-    return this.testResult === TestResult.Fail ? '5px solid red' : '5px solid green';
+    return this.testResult === TestResult.Fail ? '8px solid #B10E1E' : '8px solid #28A197';
   }
 
   getNextPage(): Page {
