@@ -71,10 +71,6 @@ export class JournalPage {
     return isNil(slot.details) && isNil(slot.activityCode);
   }
 
-  shouldShowActivityCodeBlock(slot: IJournal): boolean {
-    return slot.activityCode && slot.activityCode > 5; // codes above 5 represent incomplete tests
-  }
-
   skipToDL25() {
     this.vcProvider.markAsComplete({ id: 'foo' }, vCheckType.TELLME);
     return this.navCtrl.push(this.allonOneV2Page, {

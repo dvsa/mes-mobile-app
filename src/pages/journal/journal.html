@@ -10,41 +10,25 @@
             <div class="slot__candidate" (click)="goToCandidateInfo(s)">
               <div class="wrapper">
                   <span class="mes-journal-candidate-name">{{s.candidateName.firstName}} {{s.candidateName.lastName}}</span> 
-                  <span>Category: {{extractCategoryCode(s.slotType)}}</span>                
+                  <span>Cat {{extractCategoryCode(s.slotType)}}</span>                
               </div>
             </div>
           </ion-col>
-          <ion-col *ngIf="s.details" col-4>
+          <ion-col col-4>
             <div class="slot__details">
-              <span>
+              <span *ngIf="s.details">
+                S-{{s.details.showMe}} | T-{{s.details.tellMe}}
                 Route {{s.details.route}}
               </span>
-            </div>
-          </ion-col>
-          <ion-col *ngIf="s.details" col-2>
-            <div class="slot__details">
-              <span>
-                S-{{s.details.showMe}} | T-{{s.details.tellMe}}
-              </span>
-            </div>
-          </ion-col>
-          <ion-col *ngIf="shouldShowActivityCodeBlock(s)" col-6>
-            <div class="slot__activityCode">
-              <span>
-                Activity Code: {{s.activityCode}}
-              </span>
-            </div>
-          </ion-col>
-          <ion-col *ngIf="!s.details && !shouldShowActivityCodeBlock(s)" col-4>
-            <div class="slot__testCentre">
               <ion-icon name="pin"></ion-icon>
               {{s.testCentreName}}
             </div>
           </ion-col>
-          <ion-col *ngIf="canStartATest(s)" col-2>
-            <div>
+          <ion-col col-2>
+            <div *ngIf="canStartATest(s); else activityCode">
               <button ion-button color="secondary" (click)="goToDeclarationConsent(s)">Start Test</button>
             </div>
+            <ng-template #activityCode>{{s.activityCode}}</ng-template>
           </ion-col>
         </ion-row>
       </ion-item>
