@@ -43,10 +43,7 @@ export class DeclarationConsentPage {
   }
 
   validation() {
-    if (this.checkInsurance && this.checkResidence && this.signaturePad.getSignature()) {
-      return false;
-    }
-    return true;
+    return !(this.checkInsurance && this.checkResidence && this.signaturePad.getSignature());
   }
 
   continue() {
