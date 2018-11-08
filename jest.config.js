@@ -6,5 +6,6 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['**/*.{ts}', '!**/node_modules/**', '!**/*.module.ts', '!**/main.ts'],
   coverageDirectory: 'coverage',
-  coverageReporters: ['lcov']
+  coverageReporters: ['lcov'],
+  testURL: 'http://localhost'
 };

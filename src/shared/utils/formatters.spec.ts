@@ -10,7 +10,7 @@ describe('formatters utility - ', () => {
       title: 'Mr'
     };
 
-    expect(getFormattedCandidateName(candidateName)).toEqual('Mr Steve Strange');
+    expect(getFormattedCandidateName(candidateName)).toEqual('Steve Strange');
   });
 
   it('should format an address ', () => {

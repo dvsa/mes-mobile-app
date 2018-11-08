@@ -42,14 +42,22 @@ export class AllOnOneV2Page {
 
   slotDetail: IJournal;
 
-  @ViewChild('manoeuvresButton') manoeuvresButton;
-  @ViewChild('ecoButton') ecoButton;
-  @ViewChild('etaPhysicalOption') etaPhysicalOption;
-  @ViewChild('etaVerbalOption') etaVerbalOption;
-  @ViewChild('ecoControlOption') ecoControlOption;
-  @ViewChild('ecoPlanningOption') ecoPlanningOption;
-  @ViewChild('ecoCompletionInput') ecoCompletionInput;
-  @ViewChild('controlledStopEl') controlledStopEl;
+  @ViewChild('manoeuvresButton')
+  manoeuvresButton;
+  @ViewChild('ecoButton')
+  ecoButton;
+  @ViewChild('etaPhysicalOption')
+  etaPhysicalOption;
+  @ViewChild('etaVerbalOption')
+  etaVerbalOption;
+  @ViewChild('ecoControlOption')
+  ecoControlOption;
+  @ViewChild('ecoPlanningOption')
+  ecoPlanningOption;
+  @ViewChild('ecoCompletionInput')
+  ecoCompletionInput;
+  @ViewChild('controlledStopEl')
+  controlledStopEl;
 
   constructor(
     public navCtrl: NavController,
@@ -143,7 +151,7 @@ export class AllOnOneV2Page {
    */
   getTitle(): string {
     if (this.slotDetail) {
-      return getFormattedCandidateName(this.slotDetail.candidateName) + ' - Test Report';
+      return `${getFormattedCandidateName(this.slotDetail.candidateName)} - Test Report`;
     }
     return 'Practice Mode - Test Report';
   }

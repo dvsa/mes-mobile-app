@@ -13,6 +13,30 @@ $mes-test-form-button-height: 45px;
   }
 }
 
+.mes-cta-button {
+  border-radius: 10px;
+  height: 48px;
+  min-width: 170px;
+  color: map-get($colors, white);
+  font-weight: bold;
+  font-size: 17px;
+  padding: 12px;
+  box-shadow: 0 2px 0 0 #6f777b;
+}
+
+.mes-cta-button-primary {
+  @extend .mes-cta-button;
+  background-color: map-get($colors, gds-green);
+  &:active {
+    background-color: lighten(map-get($colors, mesPrimary), 5);
+  }
+}
+
+.mes-cta-button-secondary {
+  @extend .mes-cta-button;
+  background-color: map-get($colors, secondaryButton);
+}
+
 .mes-bottom-card {
   margin-top: 0;
   .mes-button-primary {

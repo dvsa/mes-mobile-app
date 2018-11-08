@@ -26,3 +26,12 @@
 @import '../theme/sass-partials/_forms.scss';
 @import '../theme/sass-partials/_alignments.scss';
 @import '../theme/sass-partials/_badges.scss';
+
+ion-content.mes-main-content {
+  background-color: map-get($colors, appBackground);
+}
+
+// Remove shadow after header elements
+ion-header.header-md:after {
+  background-image: none !important;
+}

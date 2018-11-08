@@ -1,4 +1,3 @@
-import { AlphaHeaderComponent } from './alpha-header/alpha-header';
 import { AllOnOneFormSubElementHoldNoModalComponent } from './all-on-one-form-sub-element-hold-no-modal/all-on-one-form-sub-element-hold-no-modal';
 import { TotalsComponent } from './totals/totals';
 import { ReportHeaderV2Component } from './report-header-v2/report-header-v2';
@@ -21,6 +20,8 @@ import { EvenOddPipe } from '../pipes/evenOdd';
 import { PostTestSummarySectionComponent } from './post-test-summary-section/post-test-summary-section';
 import { TextboxModalComponent } from './textbox-modal/textbox-modal';
 import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-on-one-form-vc-button';
+import { MesSignaturePadComponent } from './mes-signature-pad/mes-signature-pad';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   declarations: [
@@ -39,14 +40,14 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     TotalsComponent,
     AllOnOneFormSubElementHoldNoModalComponent,
     LegalRequirementsComponent,
-    AlphaHeaderComponent,
     AllOnOneFormEtaButtonComponent,
     EvenOddPipe,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent
+    AllOnOneFormVcButtonComponent,
+    MesSignaturePadComponent
   ],
-  imports: [IonicModule.forRoot(PageHeaderComponent)],
+  imports: [IonicModule.forRoot(PageHeaderComponent), SignaturePadModule],
   exports: [
     PageHeaderComponent,
     JournalHeaderComponent,
@@ -63,11 +64,11 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     TotalsComponent,
     AllOnOneFormSubElementHoldNoModalComponent,
     LegalRequirementsComponent,
-    AlphaHeaderComponent,
     AllOnOneFormEtaButtonComponent,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent
+    AllOnOneFormVcButtonComponent,
+    MesSignaturePadComponent
   ]
 })
 export class ComponentsModule {}

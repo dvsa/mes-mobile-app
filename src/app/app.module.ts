@@ -88,7 +88,9 @@ export function createTranslateLoader(http: Http) {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(App),
+    IonicModule.forRoot(App, {
+      backButtonText: 'Back'
+    }),
     ComponentsModule,
     HttpClientModule,
     SignaturePadModule,
