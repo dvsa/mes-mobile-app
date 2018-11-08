@@ -1,16 +1,5 @@
-<ion-header>
-  <page-header></page-header>
-</ion-header>
-
 <ion-content padding class="mes-main-content">
   <ion-card class="mes-card">
-    <ion-card-header class="mes-main-card-header mes-breadcrumbs">
-      <span class="mes-header-md">Your Journal</span>
-      <span float-right>
-        <ion-icon padding-right name="refresh"></ion-icon>
-        <span class="mes-text-sm">Last synced: 8:06</span>
-      </span>
-    </ion-card-header>
     <journal-header></journal-header>
     <ion-list>
       <ion-item class="slot" *ngFor="let s of journalSlots; let i = index" [ngClass]="{'slot__fail': hasFailed(s), 'slot__pass': hasPassed(s), 'slot__check': requiresCheck(s) }">
