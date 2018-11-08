@@ -1,72 +1,23 @@
 page-journal {
   .slot {
+    margin: 1em auto;
+    height: 7.5em;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     background: map-get($map: $colors, $key: offWhite);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    padding: 0 5px 0 30px;
-    margin: 25px 20px;
-    width: 94%;
-    .mes-journal-candidate-name {
-      &:active {
-        color: map-get($colors, lighterGrey);
-      }
-    }
-    ion-col {
-      &:first-child {
-        padding: 5px 5px 5px 0;
-      }
-      &:last-child {
-        div {
-          line-height: 40px;
-          border: none;
-        }
-      }
-      & > div {
-        border-right: 1px solid #ccc;
-        height: 50px;
-        width: 100%;
-        display: inline-block;
-        line-height: 50px;
-        &.slot__candidate {
-          display: block;
-          .wrapper {
-            margin-right: 10px;
-            background-color: #eeeded;
-            border-radius: 13px;
-            padding-top: 4px;
-            padding-left: 8px;
-            -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
-            -moz-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
-            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
-            &:hover {
-              background-color: #dddddd;
-            }
-            span {
-              height: 23px;
-              display: block;
-              font-size: 13px;
-              color: gray;
-              line-height: 18px;
-              &:first-child {
-                line-height: 24px;
-                font-size: 1.2em;
-                font-weight: bold;
-                color: black;
-              }
-            }
-          }
-        }
-      }
-      button {
-        width: 100%;
-        background: map-get($map: $colors, $key: btnGreen);
-      }
-    }
     &__time {
       font-weight: bold;
       font-size: 1.6em;
+    }
+    ion-col {
+      & > div {
+        border-right: 1px solid #ccc;
+        width: 100%;
+        &.slot__candidate {
+        }
+      }
     }
   }
 }

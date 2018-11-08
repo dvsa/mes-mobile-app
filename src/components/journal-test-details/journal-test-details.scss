@@ -1,5 +1,11 @@
 journal-test-details {
   ion-row {
+    &:first-child {
+      ion-col {
+        display: flex;
+        justify-content: center;
+      }
+    }
     &:last-child {
       div {
         &:last-child {

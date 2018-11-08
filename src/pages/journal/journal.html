@@ -14,12 +14,12 @@
               </div>
             </div>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-3>
             <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details"></journal-test-details>
           </ion-col>
           <ion-col col-2>
             <div *ngIf="canStartATest(s); else activityCode">
-              <button ion-button color="secondary" (click)="goToDeclarationConsent(s)">Start Test</button>
+              <button class="mes-cta-button-primary" (click)="goToDeclarationConsent(s)">Start Test</button>
             </div>
             <ng-template #activityCode>{{s.activityCode}}</ng-template>
           </ion-col>
