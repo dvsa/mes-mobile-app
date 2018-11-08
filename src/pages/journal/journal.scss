@@ -4,41 +4,10 @@ page-journal {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     background: map-get($map: $colors, $key: offWhite);
-    border-radius: 19px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     padding: 0 5px 0 30px;
     margin: 25px 20px;
     width: 94%;
-    &:before {
-      content: ' ';
-      position: absolute;
-      left: 0px;
-      right: 0;
-      top: 0px;
-      width: 0px;
-    }
-    &__check:before {
-      background: map-get($map: $colors, $key: checkYellow);
-      padding-left: 7px;
-      padding-top: 14px;
-      font-size: 3em;
-      width: 18px;
-      height: 93px;
-      content: '!';
-    }
-    &__fail:before {
-      color: map-get($map: $colors, $key: danger);
-      border: 10px solid map-get($map: $colors, $key: danger);
-      height: 70px;
-    }
-    &__pass:before {
-      color: map-get($map: $colors, $key: passedGreen);
-      border: 10px solid map-get($map: $colors, $key: passedGreen);
-      height: 70px;
-    }
-    &.slot__double ion-col div {
-      height: 160px;
-    }
     .mes-journal-candidate-name {
       &:active {
         color: map-get($colors, lighterGrey);

@@ -1,8 +1,7 @@
 <ion-content padding class="mes-main-content">
-  <ion-card class="mes-card">
     <journal-header></journal-header>
     <ion-list>
-      <ion-item class="slot" *ngFor="let s of journalSlots; let i = index" [ngClass]="{'slot__fail': hasFailed(s), 'slot__pass': hasPassed(s), 'slot__check': requiresCheck(s) }">
+      <ion-item class="slot" *ngFor="let s of journalSlots; let i = index">
         <ion-row>
           <ion-col col-2>
             <div class="slot__time">{{s.startTime}}</div>
@@ -50,6 +49,4 @@
         </ion-row>
       </ion-item>
     </ion-list>
-    <button float-right icon-right margin-right margin-bottom ion-button small outline color="dark" (click)="skipToDL25()">DL25 practice<ion-icon name="construct"></ion-icon></button>
-  </ion-card>
 </ion-content>
