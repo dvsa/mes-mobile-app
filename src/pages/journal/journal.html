@@ -15,7 +15,7 @@
             </div>
           </ion-col>
           <ion-col col-4>
-            <journal-test-details [testCentreName]="s.testCentreName"></journal-test-details>
+            <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details"></journal-test-details>
           </ion-col>
           <ion-col col-2>
             <div *ngIf="canStartATest(s); else activityCode">

@@ -1,2 +1,12 @@
 journal-test-details {
+  ion-row {
+    &:last-child {
+      div {
+        &:last-child {
+          width: 50%;
+          text-align: right;
+        }
+      }
+    }
+  }
 }

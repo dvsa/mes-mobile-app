@@ -1,4 +1,14 @@
 <div>
-  <ion-icon name="pin"></ion-icon>
-  <span>{{testCentreName}}</span>
+  <ion-row>
+    <ion-col>
+      <ion-icon name="pin"></ion-icon>
+      <span>{{testCentreName}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="testDetails">
+    <span class="journal-test-details-show-me-tell-me">S{{testDetails.showMe}} | T{{testDetails.tellMe}}</span>
+    <div class="journal-test-details-route">
+      <span>Route {{testDetails.route}}</span>
+    </div>
+  </ion-row>
 </div>
