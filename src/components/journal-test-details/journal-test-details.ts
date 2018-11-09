@@ -10,6 +10,8 @@ export class JournalTestDetailsComponent {
   testCentreName: string;
   @Input()
   testDetails: ITestDetails;
+  @Input()
+  testComplete: boolean;
 
   constructor() {}
 }

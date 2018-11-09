@@ -13,7 +13,7 @@
             <journal-candidate-info [candidateName]="s.candidateName" [testCategory]="s.slotType" (click)="goToCandidateInfo(s)"></journal-candidate-info>
           </ion-col>
           <ion-col col-3>
-            <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details"></journal-test-details>
+            <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details" [testComplete]="!canStartATest(s)"></journal-test-details>
           </ion-col>
           <ion-col col-2>
             <div *ngIf="canStartATest(s); else activityCode">
