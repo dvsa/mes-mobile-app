@@ -70,6 +70,10 @@ export class JournalPage {
     });
   }
 
+  showSlotWarning(slot: IJournal): boolean {
+    return slot.activityCode && slot.activityCode > 5; // codes above 5 represent incomplete tests
+  }
+
   goToDeclarationConsent(slot: IJournal) {
     this.navCtrl.push(DeclarationConsentPage, { slotDetail: slot });
   }

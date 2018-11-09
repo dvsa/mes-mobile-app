@@ -7,7 +7,10 @@
       <ion-item class="slot" *ngFor="let s of journalSlots; let i = index">
         <ion-row>
           <ion-col col-2>
-            <div class="slot__time" [ngClass]="{'journal-test-completed-text': !canStartATest(s)}">{{s.startTime}}</div>
+            <div class="slot__time" [ngClass]="{'journal-test-completed-text': !canStartATest(s)}">
+              <img src="assets/imgs/warning.svg" class="journal-warning-icon" *ngIf="showSlotWarning(s)"/>
+              {{s.startTime}}
+            </div>
           </ion-col>
           <ion-col col-5>
             <journal-candidate-info
