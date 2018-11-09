@@ -11,6 +11,8 @@ export class JournalCandidateInfoComponent {
   candidateName: ICandidateName;
   @Input()
   testCategory: number;
+  @Input()
+  testComplete: boolean;
 
   constructor() {}
 

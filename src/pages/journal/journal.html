@@ -7,13 +7,22 @@
       <ion-item class="slot" *ngFor="let s of journalSlots; let i = index">
         <ion-row>
           <ion-col col-2>
-            <div class="slot__time">{{s.startTime}}</div>
+            <div class="slot__time" [ngClass]="{'journal-test-completed-text': !canStartATest(s)}">{{s.startTime}}</div>
           </ion-col>
           <ion-col col-5>
-            <journal-candidate-info [candidateName]="s.candidateName" [testCategory]="s.slotType" (click)="goToCandidateInfo(s)"></journal-candidate-info>
+            <journal-candidate-info
+              [candidateName]="s.candidateName"
+              [testCategory]="s.slotType"
+              [testComplete]="!canStartATest(s)"
+              (click)="goToCandidateInfo(s)">
+            </journal-candidate-info>
           </ion-col>
           <ion-col col-2>
-            <journal-test-details [testCentreName]="s.testCentreName" [testDetails]="s.details" [testComplete]="!canStartATest(s)"></journal-test-details>
+            <journal-test-details
+              [testCentreName]="s.testCentreName"
+              [testDetails]="s.details"
+              [testComplete]="!canStartATest(s)">
+            </journal-test-details>
           </ion-col>
           <ion-col col-3>
             <div *ngIf="canStartATest(s); else activityCode">
