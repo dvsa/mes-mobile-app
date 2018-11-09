@@ -19,4 +19,8 @@ export class JournalHeaderComponent {
   getDate() {
     return moment(Date.now()).format('dddd, D MMMM');
   }
+
+  getLastSyncTime() {
+    return moment(Date.now()).format('HH:mm');
+  }
 }
