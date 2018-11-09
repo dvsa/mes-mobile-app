@@ -124,6 +124,16 @@ export class AllOnOneV2Page {
     if (this.controlledStopEl.faultCounter > 0 || this.isDButtonPressed || this.isSButtonPressed) {
       return;
     }
+    const { serious, dangerous } = this.controlledStopEl;
+    // Force isControlledStopDone to be true if there is a serious/dangerous fault
+    if (serious || dangerous) {
+      if (this.isControlledStopDone) {
+        return;
+      }
+      this.isControlledStopDone = !this.isControlledStopDone;
+      this.summaryMetaDataService.toggleControlledStopComplete();
+      return;
+    }
     this.isControlledStopDone = !this.isControlledStopDone;
     this.summaryMetaDataService.toggleControlledStopComplete();
   }
