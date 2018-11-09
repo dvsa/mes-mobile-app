@@ -6,8 +6,10 @@
     </ion-col>
   </ion-row>
   <ion-row *ngIf="testDetails">
-    <span class="journal-test-details-show-me-tell-me">S{{testDetails.showMe}} | T{{testDetails.tellMe}}</span>
-    <div class="journal-test-details-route">
+    <div>
+      <span class="journal-test-details-show-me-tell-me">S{{testDetails.showMe}} | T{{testDetails.tellMe}}</span>
+    </div>
+    <div>
       <span>Route {{testDetails.route}}</span>
     </div>
   </ion-row>

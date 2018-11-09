@@ -5,13 +5,17 @@ journal-test-details {
       color: #818080;
     }
     ion-row {
+      height: 50%;
       ion-icon {
         margin-right: 0.5em;
       }
       &:last-child {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
         div {
           &:last-child {
-            width: 50%;
+            width: 35%;
             text-align: right;
           }
         }
