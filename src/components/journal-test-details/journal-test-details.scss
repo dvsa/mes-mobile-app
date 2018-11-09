@@ -1,18 +1,21 @@
 journal-test-details {
-  ion-row {
-    ion-icon {
-      margin-right: 0.5em;
+  div {
+    height: 100%;
+    &.journal-test-details-test-complete {
+      color: #818080;
     }
-    &:last-child {
-      div {
-        &:last-child {
-          width: 50%;
-          text-align: right;
+    ion-row {
+      ion-icon {
+        margin-right: 0.5em;
+      }
+      &:last-child {
+        div {
+          &:last-child {
+            width: 50%;
+            text-align: right;
+          }
         }
       }
     }
-  }
-  .journal-test-details-test-complete {
-    color: #818080;
   }
 }
