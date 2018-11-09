@@ -6,13 +6,6 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
-/**
- * Generated class for the AllOnOneV2Page page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 export enum manoeuvre {
   PREFIX = 'manoeuvre',
   CONTROL = 'Ctrl',
@@ -120,18 +113,19 @@ export class AllOnOneV2Page {
     return this.selectedManoeuvre === key;
   }
 
-  controlledStopTap() {
-    if (this.controlledStopEl.faultCounter > 0 || this.isDButtonPressed || this.isSButtonPressed) {
+  controlledStopPress() {
+    if (this.isControlledStopDone) return;
+    const { serious, dangerous } = this.controlledStopEl;
+    if (this.controlledStopEl.faultCounter > 0 || serious || dangerous) {
       return;
     }
+    this.isControlledStopDone = !this.isControlledStopDone;
+    this.summaryMetaDataService.toggleControlledStopComplete();
+  }
+
+  controlledStopTap() {
     const { serious, dangerous } = this.controlledStopEl;
-    // Force isControlledStopDone to be true if there is a serious/dangerous fault
-    if (serious || dangerous) {
-      if (this.isControlledStopDone) {
-        return;
-      }
-      this.isControlledStopDone = !this.isControlledStopDone;
-      this.summaryMetaDataService.toggleControlledStopComplete();
+    if (this.controlledStopEl.faultCounter > 0 || serious || dangerous) {
       return;
     }
     this.isControlledStopDone = !this.isControlledStopDone;
