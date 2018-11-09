@@ -1,11 +1,11 @@
 <ion-row>
-    <ion-col>
-        <ion-row id="summary-total">{{summary.total}}</ion-row>
-        <ion-row id="summary-title">{{summary.title}}</ion-row>
+    <ion-col col-4>
+        <div id="summary-total">{{summary.total}}</div>
+        <div id="summary-title">{{summary.title}}</div>
     </ion-col>
-    <ion-col>
-        <ul class="mes-test-summary-list">
-            <li *ngFor="let fault of summary.faults" [ngStyle]="{ 'list-style-type': 'none' }">{{fault.name}} <span *ngIf="fault.total > 1">({{fault.total}})</span></li>
+    <ion-col col-8>
+        <ul class="mes-test-summary-list faults-list">
+            <li *ngFor="let fault of summary.faults" class="fault-text">{{fault.name}} <span *ngIf="fault.total > 1">({{fault.total}})</span></li>
         </ul>
     </ion-col>
 </ion-row>

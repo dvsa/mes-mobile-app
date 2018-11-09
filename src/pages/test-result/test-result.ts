@@ -30,18 +30,27 @@ export class TestResultPage {
     this.faultStore
       .getFaultTotals()
       .subscribe((faultSummaries) => (this.faultSummaries = faultSummaries));
-    this.testResult = this.faultStore.getTestResult();
+    this.testResult =
+      this.faultStore.getTestResult() === TestResult.Fail ? 'unsuccessful' : 'passed';
     this.summaryMetadata = this.summaryMetadataService.getMetadata();
   }
 
-  getBorderStyle() {
-    return this.testResult === TestResult.Fail ? '8px solid #B10E1E' : '8px solid #28A197';
+  getTestOutcomeContentClass() {
+    return this.faultStore.getTestResult() === TestResult.Fail
+      ? 'unsuccessful-test-outcome-content'
+      : 'successful-test-outcome-content';
   }
 
   getNextPage(): Page {
     return this.testResult === TestResult.Fail
       ? this.postTestSummaryPage
       : this.passDataCollectionPage;
+  }
+
+  wasThereAnyFault(): boolean {
+    return Object.keys(this.faultSummaries).some(
+      (fault: string) => this.faultSummaries[fault].total > 0
+    );
   }
 
   goBack() {

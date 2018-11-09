@@ -19,12 +19,9 @@ export class TestResultHeaderComponent {
   }
 
   formatEtas() {
-    this.etas = Object.keys(this.summaryMetadata.eta).filter(
-      (action: string) => (this.summaryMetadata.eta[action] ? action : '')
-    );
-    this.etas.forEach(
-      (action: string, index: number) => (this.etas[index] = action.charAt(0).toUpperCase())
-    );
+    this.etas = Object.keys(this.summaryMetadata.eta)
+      .filter((action: string) => this.summaryMetadata.eta[action])
+      .map((action: string) => upperFirst(action));
   }
 
   formatEcoSelections() {

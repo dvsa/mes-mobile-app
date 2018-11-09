@@ -1,26 +1,26 @@
 <ion-grid>
     <ion-row>
-        <ion-col [ngClass]="summaryMetadata.selectedManoeuvre ? 'action-completed' : 'action-incomplete'">
+        <ion-col col-3 [ngClass]="summaryMetadata.selectedManoeuvre ? 'action-completed' : 'action-incomplete'">
             <div [ngClass]="'test-section'">
                 <div [ngClass]="'test-section-text'">Manoeuvre</div>
             </div>
         </ion-col>
-        <ion-col [ngClass]="summaryMetadata.controlledStopDone ? 'action-completed' : 'action-incomplete'">
+        <ion-col col-3 [ngClass]="summaryMetadata.controlledStopDone ? 'action-completed' : 'action-incomplete'">
             <div [ngClass]="'test-section'">
                 <div [ngClass]="'test-section-text'">Controlled stop</div>
             </div>
         </ion-col>
-        <ion-col [ngClass]="summaryMetadata.eco.done ? 'action-completed' : 'action-incomplete'">
+        <ion-col col-2 [ngClass]="summaryMetadata.eco.done ? 'action-completed' : 'action-incomplete'">
             <div [ngClass]="'test-section'">
                 <div [ngClass]="'test-section-text'">ECO</div>
             </div>
         </ion-col>
-        <ion-col>
+        <ion-col col-4>
             <div [ngClass]="'test-section'">
                 ETA:
-                <span *ngFor="let action of etas; let i = index">
+                <span *ngFor="let action of etas; let i = index" [ngClass]="'eta-action'">
                     {{action}}
-                    <span *ngIf="etas.length > 1 && i !== etas.length - 1">&amp;</span>
+                    <span *ngIf="etas.length > 1 && i !== etas.length - 1" [ngClass]="eta-action">,</span>
                 </span>
             </div>
         </ion-col>

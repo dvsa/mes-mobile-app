@@ -29,4 +29,36 @@ page-test-result {
     font-weight: bold;
     font-size: 48px;
   }
+
+  .test-outcome-content {
+    margin: 16px;
+    border-width: 8px;
+    border-style: solid;
+  }
+
+  .successful-test-outcome-content {
+    border-color: map-get($map: $colors, $key: 'gds-turquoise');
+    @extend .test-outcome-content;
+  }
+
+  .unsuccessful-test-outcome-content {
+    border-color: map-get($map: $colors, $key: 'danger');
+    @extend .test-outcome-content;
+  }
+
+  .test-result-header-card {
+    margin-left: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-left: 16px solid #d8d8d8;
+  }
+
+  .test-result-footer {
+    width: 100%;
+  }
+
+  .confirm-button {
+    float: right;
+    margin-right: 18px;
+  }
 }
