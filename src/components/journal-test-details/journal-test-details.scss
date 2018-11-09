@@ -9,7 +9,7 @@ journal-test-details {
       ion-icon {
         margin-right: 0.5em;
       }
-      &:last-child {
+      &:nth-child(2) {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
