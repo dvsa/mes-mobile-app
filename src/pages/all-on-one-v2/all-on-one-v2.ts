@@ -116,7 +116,14 @@ export class AllOnOneV2Page {
   controlledStopPress() {
     if (this.isControlledStopDone) return;
     const { serious, dangerous } = this.controlledStopEl;
-    if (this.controlledStopEl.faultCounter > 0 || serious || dangerous) {
+    if (this.controlledStopEl.faultCounter > 0) {
+      return;
+    }
+    if (serious || dangerous) {
+      if (!this.isControlledStopDone) {
+        this.isControlledStopDone = !this.isControlledStopDone;
+        this.summaryMetaDataService.toggleControlledStopComplete();
+      }
       return;
     }
     this.isControlledStopDone = !this.isControlledStopDone;
@@ -125,7 +132,14 @@ export class AllOnOneV2Page {
 
   controlledStopTap() {
     const { serious, dangerous } = this.controlledStopEl;
-    if (this.controlledStopEl.faultCounter > 0 || serious || dangerous) {
+    if (this.controlledStopEl.faultCounter > 0) {
+      return;
+    }
+    if (serious || dangerous) {
+      if (!this.isControlledStopDone) {
+        this.isControlledStopDone = !this.isControlledStopDone;
+        this.summaryMetaDataService.toggleControlledStopComplete();
+      }
       return;
     }
     this.isControlledStopDone = !this.isControlledStopDone;
