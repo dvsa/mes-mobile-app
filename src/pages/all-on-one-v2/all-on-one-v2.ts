@@ -6,13 +6,6 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
-/**
- * Generated class for the AllOnOneV2Page page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 export enum manoeuvre {
   PREFIX = 'manoeuvre',
   CONTROL = 'Ctrl',
@@ -120,8 +113,35 @@ export class AllOnOneV2Page {
     return this.selectedManoeuvre === key;
   }
 
+  controlledStopPress() {
+    if (this.isControlledStopDone) return;
+    const { serious, dangerous } = this.controlledStopEl;
+    if (this.controlledStopEl.faultCounter > 0) {
+      return;
+    }
+    if (serious || dangerous) {
+      if (!this.isControlledStopDone) {
+        this.isControlledStopDone = !this.isControlledStopDone;
+        this.summaryMetaDataService.toggleControlledStopComplete();
+      }
+      return;
+    }
+    this.isControlledStopDone = !this.isControlledStopDone;
+    this.summaryMetaDataService.toggleControlledStopComplete();
+  }
+
   controlledStopTap() {
-    if (this.controlledStopEl.faultCounter > 0) return;
+    const { serious, dangerous } = this.controlledStopEl;
+    if (this.controlledStopEl.faultCounter > 0) {
+      return;
+    }
+    if (serious || dangerous) {
+      if (!this.isControlledStopDone) {
+        this.isControlledStopDone = !this.isControlledStopDone;
+        this.summaryMetaDataService.toggleControlledStopComplete();
+      }
+      return;
+    }
     this.isControlledStopDone = !this.isControlledStopDone;
     this.summaryMetaDataService.toggleControlledStopComplete();
   }
