@@ -19,12 +19,18 @@ page-journal {
       font-size: 1.6em;
     }
     ion-col {
+      &:not(:last-child) {
+        margin-right: 1.2em;
+      }
       & > div {
         width: 100%;
         font-size: 1.5em;
         font-weight: bold;
         text-align: center;
         padding: 1em;
+        &:last-child {
+          padding: 0.5em;
+        }
         button {
           min-width: 0;
         }
