@@ -1,14 +1,23 @@
 journal-candidate-info {
   & > div {
     height: 100%;
-    padding: 0.8em;
+    padding: 0.3em 0.75em;
     background-color: map-get($colors, gds-grey-4);
     border-radius: 13px;
     -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
-    -moz-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 0px 2px34px 0px rgba(0, 0, 0, 0.55);
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.55);
+    div {
+      height: 50%;
+    }
     &.journal-candidate-info-test-complete-text {
       color: map-get($colors, gds-grey-1);
+    }
+    img {
+      width: 2.25em;
+      &.journal-candidate-info-category-icon-completed {
+        opacity: 0.5;
+      }
     }
     span {
       font-size: 1.2em;
