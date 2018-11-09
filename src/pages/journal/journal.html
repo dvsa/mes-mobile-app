@@ -19,7 +19,11 @@
             <div *ngIf="canStartATest(s); else activityCode">
               <button class="mes-cta-button-primary" (click)="goToDeclarationConsent(s)">Start Test</button>
             </div>
-            <ng-template #activityCode>{{s.activityCode}}</ng-template>
+            <ng-template #activityCode>
+              <div>
+                <span>{{s.activityCode}}</span>
+              </div>
+            </ng-template>
           </ion-col>
         </ion-row>
       </ion-item>

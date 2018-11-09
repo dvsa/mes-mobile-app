@@ -14,6 +14,13 @@ page-journal {
     ion-col {
       & > div {
         width: 100%;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        padding: 1em;
+        button: {
+          min-width: 0;
+        }
       }
     }
     ion-label {
