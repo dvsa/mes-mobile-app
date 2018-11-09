@@ -9,5 +9,5 @@ Feature: Login
    Scenario: User logs in to MES
     Given I am on the login page
 #    When I click the "Login" button
-     When I click the "Ok" button
-    Then I successfully log in and see the journal page
+    When I click the Ok button
+    Then I am on the journal page
