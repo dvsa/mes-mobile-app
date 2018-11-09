@@ -1,4 +1,10 @@
 page-journal {
+  div.scroll-content {
+    padding: 0 1.2em !important;
+  }
+  ion-list {
+    margin-top: -1em !important;
+  }
   .slot {
     margin: 1em auto;
     height: 7.5em;
