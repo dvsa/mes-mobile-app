@@ -1,0 +1,27 @@
+<ion-grid>
+    <ion-row>
+        <ion-col col-3 [ngClass]="summaryMetadata.selectedManoeuvre ? 'action-completed' : 'action-incomplete'">
+            <div class="test-section">
+                <div class="test-section-text">Manoeuvre</div>
+            </div>
+        </ion-col>
+        <ion-col col-3 [ngClass]="summaryMetadata.controlledStopDone ? 'action-completed' : 'action-incomplete'">
+            <div class="test-section">
+                <div class="test-section-text">Controlled stop</div>
+            </div>
+        </ion-col>
+        <ion-col col-2 [ngClass]="summaryMetadata.eco.done ? 'action-completed' : 'action-incomplete'">
+            <div class="test-section">
+                <div class="test-section-text">ECO</div>
+            </div>
+        </ion-col>
+        <ion-col col-4>
+            <div class="test-section">
+                ETA:
+                <span *ngFor="let action of etas; let i = index" class="eta-action">
+                    {{action}}<span *ngIf="isNotLastEtaAction(i)" class="eta-action">,</span>
+                </span>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>
