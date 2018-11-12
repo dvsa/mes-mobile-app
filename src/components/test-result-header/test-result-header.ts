@@ -22,8 +22,6 @@ export class TestResultHeaderComponent {
     this.etas = Object.keys(this.summaryMetadata.eta)
       .filter((action: string) => this.summaryMetadata.eta[action])
       .map((action: string) => upperFirst(action));
-
-    console.log('etas', this.etas);
   }
 
   formatEcoSelections() {
