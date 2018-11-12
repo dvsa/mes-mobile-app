@@ -21,6 +21,10 @@ page-journal {
     ion-col {
       &:not(:last-child) {
         margin-right: 1.2em;
+        &:nth-child(3) {
+          min-width: 9em;
+          margin-right: 0;
+        }
       }
       & > div {
         width: 100%;
