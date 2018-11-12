@@ -1,7 +1,7 @@
 journal-header {
   span.journal-header-day-navigation {
+    @extend .mes-header-sm;
     text-decoration: underline;
-    font-size: 16px;
   }
   span.journal-header-today-title {
     font-size: 48px;
