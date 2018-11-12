@@ -10,6 +10,7 @@ import { IJournal } from '../../providers/journal/journal-model';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { DeclarationConsentPage } from '../declaration-consent/declaration-consent';
 import { isNil } from 'lodash';
+import { isNonBlankString } from '../../shared/utils/string-utils';
 
 @Component({
   selector: 'page-journal',
@@ -71,7 +72,7 @@ export class JournalPage {
   }
 
   showSlotWarning(slot: IJournal): boolean {
-    return slot.activityCode && slot.activityCode > 5; // codes above 5 represent incomplete tests
+    return isNonBlankString(slot.specialNeeds);
   }
 
   goToDeclarationConsent(slot: IJournal) {
