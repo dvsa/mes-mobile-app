@@ -50,10 +50,11 @@ export class TestResultPage {
       : 'successful-test-outcome-content';
   }
 
-  getNextPage(): Page {
-    return this.testResult === TestResult.Fail
-      ? this.postTestSummaryPage
-      : this.passDataCollectionPage;
+  getNextPage() {
+    if (this.testResult === TestResult.Fail) {
+      this.navCtrl.push(this.postTestSummaryPage, { slotDetail: this.slotDetail });
+    }
+    this.navCtrl.push(this.passDataCollectionPage, { slotDetail: this.slotDetail });
   }
 
   wasThereAnyFault(): boolean {
