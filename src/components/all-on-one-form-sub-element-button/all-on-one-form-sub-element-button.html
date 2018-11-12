@@ -1,4 +1,4 @@
-<ion-row align-items-center no-padding> 
+<ion-row align-items-center no-padding [ngClass]="{'active' : isEnabled, 'action-completed': isComplete}"> 
     <ion-col no-padding>
         <button class="all-on-one-form-fault-button" (click)="toggle()">
             <span *ngIf="faultCount !== 0" class="fault-badge counter">{{faultCount}}</span>
