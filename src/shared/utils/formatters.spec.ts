@@ -24,12 +24,12 @@ describe('formatters utility - ', () => {
     };
 
     const expectedResult = `
-     1 New Road<br>
-     Grangemouth<br>
-     Some Area<br>
-     Big City<br>
-     Somethingshire<br>
-     A23 6TY
+     1 New Road<br />
+     Grangemouth<br />
+     Some Area<br />
+     Big City<br />
+     Somethingshire<br />
+     A23 6TY<br />
   `;
     expect(getFormattedAddress(address)).toEqual(expectedResult);
   });
