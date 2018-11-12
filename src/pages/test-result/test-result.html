@@ -5,7 +5,7 @@
 <ion-content padding class="mes-main-content">
     <ion-card class="mes-card">
         <div class="test-result-header-card">
-            <ion-card-header [ngClass]="card-header">
+            <ion-card-header class="card-header">
                 Test requirements and actions
             </ion-card-header>
             <test-result-header [summaryMetadata]="summaryMetadata"></test-result-header>
@@ -21,7 +21,7 @@
             </div>
         </ion-card-content>
         <div *ngIf="wasThereAnyFault()">
-            <ion-card-header [ngClass]="card-header">
+            <ion-card-header class="card-header">
                 Faults recorded
             </ion-card-header>
             <ion-card-content>
