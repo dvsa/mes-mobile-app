@@ -30,4 +30,8 @@ export class TestResultHeaderComponent {
         (this.summaryMetadata.eco.selections[index] = upperFirst(selection))
     );
   }
+
+  isNotLastEtaAction(index: number) {
+    return this.etas.length > 1 && index !== this.etas.length - 1;
+  }
 }

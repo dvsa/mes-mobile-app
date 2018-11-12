@@ -20,7 +20,7 @@
                 ETA:
                 <span *ngFor="let action of etas; let i = index" class="eta-action">
                     {{action}}
-                    <span *ngIf="etas.length > 1 && i !== etas.length - 1" class="eta-action">,</span>
+                    <span *ngIf="isNotLastEtaAction(i)" class="eta-action">,</span>
                 </span>
             </div>
         </ion-col>
