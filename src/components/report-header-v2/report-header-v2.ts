@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { TestResultPage } from '../../pages/test-result/test-result';
 import { NavController } from 'ionic-angular';
+
+import { TestResultPage } from '../../pages/test-result/test-result';
 import { HazardRecorderProvider } from './../../providers/hazard-recorder/hazard-recorder';
+import { IJournal } from '../../providers/journal/journal-model';
 
 /**
  * Generated class for the ReportHeaderComponent component.
@@ -15,7 +17,11 @@ import { HazardRecorderProvider } from './../../providers/hazard-recorder/hazard
   templateUrl: 'report-header-v2.html'
 })
 export class ReportHeaderV2Component {
-  @Input() options;
+  @Input()
+  options;
+  @Input()
+  slotDetail: IJournal;
+
   isDButtonPressed = false;
   isSButtonPressed = false;
 
@@ -46,7 +52,7 @@ export class ReportHeaderV2Component {
     if (this.options.trainingMode) {
       return this.navCtrl.popToRoot();
     }
-    this.navCtrl.push(this.options.nextPage);
+    this.navCtrl.push(this.options.nextPage, { slotDetail: this.slotDetail });
   }
 
   dButtonClicked() {

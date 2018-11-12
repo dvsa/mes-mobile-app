@@ -1,12 +1,17 @@
-import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
+
 import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
-import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
+
 import { IFaultSummary } from '../../components/test-summary/interfaces/IFaultSummary';
 import { TestResult } from '../../components/test-summary/enums/TestResult';
+
+import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
+import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
+
 import { PassDataCollectionPage } from '../pass-data-collection/pass-data-collection';
+import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 
 @Component({
   selector: 'page-test-result',
@@ -21,6 +26,8 @@ export class TestResultPage {
   };
   summaryMetadata: any;
 
+  slotDetail: IJournal;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,6 +40,8 @@ export class TestResultPage {
     this.testResult =
       this.faultStore.getTestResult() === TestResult.Fail ? 'unsuccessful' : 'passed';
     this.summaryMetadata = this.summaryMetadataService.getMetadata();
+
+    this.slotDetail = this.navParams.get('slotDetail');
   }
 
   getTestOutcomeContentClass() {
@@ -51,6 +60,11 @@ export class TestResultPage {
     return Object.keys(this.faultSummaries).some(
       (fault: string) => this.faultSummaries[fault].total > 0
     );
+  }
+
+  getTitle(): string {
+    const name: ICandidateName = this.slotDetail.candidateName;
+    return `${name.firstName} ${name.lastName} - test debrief`;
   }
 
   goBack() {
