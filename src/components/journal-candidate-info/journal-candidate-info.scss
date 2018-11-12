@@ -21,9 +21,11 @@ journal-candidate-info {
     }
     span {
       font-size: 1.2em;
-      &.journal-candidate-info-name {
-        font-weight: bold;
-      }
+    }
+    .journal-candidate-info-name {
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

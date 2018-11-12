@@ -17,11 +17,7 @@ export class JournalCandidateInfoComponent {
   constructor() {}
 
   getName() {
-    const name = getFormattedCandidateName(this.candidateName);
-    if (name.length < 30) {
-      return name;
-    }
-    return `${name.slice(0, 30)}...`;
+    return getFormattedCandidateName(this.candidateName);
   }
 
   extractCategoryCode(slotType: string) {
