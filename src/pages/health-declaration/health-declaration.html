@@ -1,36 +1,31 @@
 <ion-header>
+  <mes-header [title]='getTitle()'></mes-header>
   <page-header [deviceLocked]="true"></page-header>
 </ion-header>
 <ion-content padding class="mes-main-content">
   <ion-card class="mes-card">
-    <ion-card-header class="mes-main-card-header mes-breadcrumbs">
-      <span class="mes-header-md mes-breadcrumb-link" navPop>
-        <ion-icon name="arrow-back"></ion-icon>
-        Debrief /
-      </span>
-      <span padding-left class="mes-header-md">Florence Pearson</span>
-      <span float-right>
-        <ion-icon padding-right name="refresh"></ion-icon>
-        <span class="mes-text-sm">Last synced: 8:06</span>
-      </span>
+    <ion-card-header class="mes-main-card-header">
+      <span class="mes-header-lg">Declaration</span>
     </ion-card-header>
     <ion-card-content>
-      <span class="mes-text-md">You must declare any change to your health status since you last applied for a license. It is a criminal
-        offense for you (or anyone else) to make a false statement in order for you to obtain a driving license and can lead to prosecution.
+      <div text-center class="candidate-name">{{getCandidateName() | uppercase}}</div>
+      <div text-center class="candidate-driving-licence">{{getDriverNumber()}}</div>
+      <span class="mes-text-md decleration">You must declare any change to your health status since you last applied for a license.
+        It is a criminal
+        offense for you (or anyone else) to make a false statement in order for you to obtain a driving license and can
+        lead to prosecution.
       </span>
       <div>
         <input type="checkbox" name="health" id="confirm-health" [(ngModel)]="health-confirmation">
-        <label for="confirm-health">I confirm</label>
+        <label class="mes-header-sm" for="confirm-health">I confirm</label>
+      </div>
+      <div class="mes-divider"></div>
+      <div>
+        <mes-signature-pad></mes-signature-pad>
       </div>
     </ion-card-content>
   </ion-card>
-  <ion-card text-center>
-    <div class="signature-pad">
-      <span class="mes-text-sm">Sign here:</span>
-      <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-      <button (click)="clearSignaturePad()" class="mes-button-danger" id="retry">Retry</button>
-      <button (click)="continue()" class="mes-button-primary" id="continue" [disabled]="validation()">Continue</button>
-      <div class="clearfix"></div>
-    </div>
-  </ion-card>
+  <div margin>
+    <button float-right (click)="continue()" class="mes-cta-button-primary" id="continue" [disabled]="validation()">Continue</button>
+  </div>
 </ion-content>
