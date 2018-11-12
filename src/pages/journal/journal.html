@@ -5,7 +5,7 @@
     <journal-header></journal-header>
     <ion-list>
       <ion-item class="slot" *ngFor="let s of journalSlots; let i = index">
-        <ion-row>
+        <ion-row align-items-center>
           <ion-col col-2>
             <div class="slot__time" [ngClass]="{'journal-test-completed-text': !canStartATest(s)}">
               <img src="assets/imgs/warning.svg" class="journal-warning-icon" *ngIf="showSlotWarning(s)"/>
