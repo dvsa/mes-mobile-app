@@ -9,7 +9,8 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 import { QuestionsModalComponent } from '../../components/questions-modal/questions-modal';
 import { select } from '@angular-redux/store';
 import { IJournal } from '../../providers/journal/journal-model';
-import { EyesightResult } from './eyesight-result';
+import { EyesightResult } from './check-enums/eyesight-result';
+import { GearboxCategory } from './check-enums/gearbox-category';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -30,7 +31,10 @@ export class PretestChecksPage {
   };
   slotDetail: IJournal;
   eyesightResult: EyesightResult = EyesightResult.NotAnswered;
+  gearboxCategory: GearboxCategory = GearboxCategory.NotAnswered;
+
   EyesightResult = EyesightResult;
+  GearboxCategory = GearboxCategory;
 
   @select(['faults', 'vehicleCheck'])
   vcState$;
@@ -55,6 +59,10 @@ export class PretestChecksPage {
 
   clearEyesightResult() {
     this.eyesightResult = EyesightResult.NotAnswered;
+  }
+
+  clearGearboxCategory() {
+    this.gearboxCategory = GearboxCategory.NotAnswered;
   }
 
   setTellMeState(faultType, $event) {

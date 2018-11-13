@@ -99,18 +99,32 @@
             Category
             <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic" [(ngModel)]="preCheck.isAutomatic">
           </ion-col>
-          <ion-col class="mes-header-md" col-6>
+          <ion-col class="mes-text-md" col-6>
             <span class="input-with-label">
-              <input id="manual-category-input" #yesInput type="checkbox" class="mes-radio-button" (change)="automaticInputChanged($event, noInput);">
+              <input
+                id="manual-category-input"
+                class="mes-radio-button"
+                name="manual-category-input"
+                type="radio"
+                value="{{GearboxCategory.Manual}}"
+                [(ngModel)]="gearboxCategory"
+              >
               <label for="manual-category-input">Manual</label>
             </span>
             <span class="input-with-label">
-              <input id="automatic-category-input" #noInput type="checkbox" class="mes-radio-button" (change)="automaticInputChanged($event, yesInput);">
+              <input
+                id="automatic-category-input"
+                class="mes-radio-button"
+                name="automatic-category-input"
+                type="radio"
+                value="{{GearboxCategory.Automatic}}"
+                [(ngModel)]="gearboxCategory"
+              >
               <label for="automatic-category-input">Automatic</label>
             </span>
           </ion-col>
           <ion-col class="pretest-checks-clear-button-column">
-            <button type="button">Clear</button>
+            <button type="button" (click)="clearGearboxCategory()">Clear</button>
           </ion-col>
         </ion-row>
         <p [hidden]="isAutomatic.valid || (isAutomatic.pristine && !form.submitted)" class="warning-text">
