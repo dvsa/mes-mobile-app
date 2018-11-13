@@ -3,11 +3,15 @@
         <ion-title>
             {{title}}
         </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="openHelpModal()">
+                <ion-icon name="help"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
-
 <ion-content padding>
-    <img width=150 src="assets/imgs/dvsa-logo.png"/>
+    <img width=150 src="assets/imgs/dvsa-logo.png" />
     <div class="welcome-message">
         Welcome to the Mobile Examiner Service Familiarisation day.
     </div>
