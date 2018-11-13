@@ -20,7 +20,7 @@
                 name="isEyesightCompleted"
                 type="radio"
                 required
-                value="{{getPossibleEyesightResults().pass}}"
+                value="{{EyesightResult.Pass}}"
                 [(ngModel)]="eyesightResult"
                >
               <label for="isEyesightCompleted">Pass</label>
@@ -30,7 +30,7 @@
                 id="eyeSightSeriousFault"
                 class="mes-radio-button"
                 type="radio"
-                value="{{getPossibleEyesightResults().serious}}"
+                value="{{EyesightResult.Serious}}"
                 [(ngModel)]="eyesightResult"
                 [ngModelOptions]="{standalone: true}"
               >

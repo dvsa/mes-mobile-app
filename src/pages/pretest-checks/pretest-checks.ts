@@ -30,6 +30,7 @@ export class PretestChecksPage {
   };
   slotDetail: IJournal;
   eyesightResult: EyesightResult = EyesightResult.NotAnswered;
+  EyesightResult = EyesightResult;
 
   @select(['faults', 'vehicleCheck'])
   vcState$;
@@ -50,13 +51,6 @@ export class PretestChecksPage {
 
   getTitle() {
     return 'Begin test - Florence Pearson';
-  }
-
-  getPossibleEyesightResults() {
-    return {
-      pass: EyesightResult.Pass,
-      serious: EyesightResult.Serious
-    };
   }
 
   clearEyesightResult() {
