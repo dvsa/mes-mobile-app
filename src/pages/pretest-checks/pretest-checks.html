@@ -9,10 +9,10 @@
         <div class="mes-header-md">Begin test</div>
         <ion-row>
           <ion-col col-4 class="mes-header-md">
-            Eyesight*
+            Eyesight test
           </ion-col>
           <ion-col col-4 class="mes-header-md center-text">
-            Completed
+            Pass
             <input #isEyesightCompleted="ngModel" name="isEyesightCompleted" [(ngModel)]="preCheck.isEyesightCompleted" type="checkbox"
               required class="mes-checkbox">
           </ion-col>
@@ -31,7 +31,7 @@
         <div class="mes-divider"></div>
         <ion-row>
           <ion-col col-4 class="mes-header-md">
-            Tell me question*
+            Tell me question
           </ion-col>
           <ion-col col-4>
             <select-button required #tellMeQuestion="ngModel" [(ngModel)]="preCheck.tellMeQuestionId" name="tellMeQuestionId" [onClickEventHandler]="showTellMeOptions"
@@ -49,7 +49,7 @@
         <div class="mes-divider"></div>
         <ion-row class="height-auto">
           <ion-col col-4 class="mes-header-md">
-            Accompanied by
+            Accompanied by (optional)
           </ion-col>
         </ion-row>
         <ion-row class="center-text">
@@ -68,7 +68,7 @@
         </ion-row>
         <ion-row>
           <ion-col col-4 class="mes-header-md">
-            Car registration*
+            Registration number
           </ion-col>
           <ion-col col-8>
             <input appInputRestriction="noSpecialChars" required type="text" class="mes-text-input capital-characters" #carRegistration="ngModel"
@@ -81,15 +81,15 @@
         <div class="mes-divider"></div>
         <ion-row class="height-auto">
           <ion-col col-4 class="mes-header-md">
-            Automatic*
+            Category
             <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic" [(ngModel)]="preCheck.isAutomatic">
           </ion-col>
           <ion-col col-4 class="mes-header-md">
-            Yes
+            Manual
             <input #yesInput type="checkbox" class="mes-checkbox" (change)="automaticInputChanged($event, noInput);">
           </ion-col>
           <ion-col col-4 class="mes-header-md">
-            No
+            Automatic
             <input #noInput type="checkbox" class="mes-checkbox" (change)="automaticInputChanged($event, yesInput);">
           </ion-col>
         </ion-row>
@@ -98,11 +98,14 @@
         </p>
         <div class="mes-divider"></div>
         <ion-row class="center-text">
-          <ion-col col-6 class="mes-header-md">
+          <ion-col col-4 class="mes-header-md">
+            Vehicle details (optional)
+          </ion-col>
+          <ion-col col-3 class="mes-header-md">
             School car
             <input type="checkbox" class="mes-checkbox">
           </ion-col>
-          <ion-col col-6 class="mes-header-md">
+          <ion-col col-3 class="mes-header-md">
             D/C
             <input type="checkbox" class="mes-checkbox">
           </ion-col>
@@ -110,7 +113,7 @@
         <div class="mes-divider"></div>
         <ion-row>
           <ion-col col-4 class="mes-header-md">
-            Instructor reg.
+            Instructor registration number (optional)
           </ion-col>
           <ion-col col-8>
             <input appInputRestriction="integer" type="number" pattern="[0-9]*" class="mes-text-input">
@@ -119,7 +122,7 @@
         <div class="mes-divider"></div>
         <ion-row>
           <ion-col col-4 class="mes-header-md">
-            Instructor cert.
+            Instructor certification number (optional)
           </ion-col>
           <ion-col col-8>
             <input appInputRestriction="integer" type="number" pattern="[0-9]*" class="mes-text-input">
