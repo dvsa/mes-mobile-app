@@ -1,7 +1,6 @@
 import { TELL_ME_QUESTIONS } from './../../app/constants';
 import { VehicleCheckProvider, vCheckType } from './../../providers/vehicle-check/vehicle-check';
 import { AllOnOneV2Page } from './../all-on-one-v2/all-on-one-v2';
-import { EyesightFaultRecordingModalPage } from './../eyesight-fault-recording-modal/eyesight-fault-recording-modal';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ModalController, NavParams } from 'ionic-angular';
 import { PolicyDataPage } from '../policy-data/policy-data';
@@ -10,6 +9,7 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 import { QuestionsModalComponent } from '../../components/questions-modal/questions-modal';
 import { select } from '@angular-redux/store';
 import { IJournal } from '../../providers/journal/journal-model';
+import { EyesightResult } from './eyesight-result';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -29,6 +29,7 @@ export class PretestChecksPage {
     isAutomatic: null
   };
   slotDetail: IJournal;
+  eyesightResult: EyesightResult = EyesightResult.NotAnswered;
 
   @select(['faults', 'vehicleCheck'])
   vcState$;
@@ -49,6 +50,17 @@ export class PretestChecksPage {
 
   getTitle() {
     return 'Begin test - Florence Pearson';
+  }
+
+  getPossibleEyesightResults() {
+    return {
+      pass: EyesightResult.Pass,
+      serious: EyesightResult.Serious
+    };
+  }
+
+  clearEyesightResult() {
+    this.eyesightResult = EyesightResult.NotAnswered;
   }
 
   setTellMeState(faultType, $event) {
@@ -77,20 +89,6 @@ export class PretestChecksPage {
 
     tellMeQuestionModal.present();
   };
-
-  showEyesightFaultRecordingModal() {
-    const eyesightFaultRecordingModal = this.modalCtrl.create(
-      EyesightFaultRecordingModalPage,
-      null,
-      this.disableBackdropDismissModalOption
-    );
-
-    eyesightFaultRecordingModal.onDidDismiss((flag) => {
-      this.eyeSightSeriousFault = flag;
-    });
-
-    eyesightFaultRecordingModal.present();
-  }
 
   gotoDL25(form) {
     if (form.valid) {

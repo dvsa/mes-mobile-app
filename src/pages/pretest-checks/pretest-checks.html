@@ -7,22 +7,38 @@
     <ion-card class="mes-card">
       <ion-card-content>
         <div class="mes-header-lg">Begin test</div>
-        <ion-row>
+        <ion-row justify-space-between>
           <ion-col col-4 class="mes-header-md">
             Eyesight test
           </ion-col>
-          <ion-col col-4 class="mes-header-md center-text">
-            Pass
-            <input #isEyesightCompleted="ngModel" name="isEyesightCompleted" [(ngModel)]="preCheck.isEyesightCompleted" type="checkbox"
-              required class="mes-checkbox">
+          <ion-col class="mes-text-md" col-3>
+            <span class="input-with-label">
+              <input
+                #isEyesightCompleted="ngModel"
+                id="isEyesightCompleted"
+                class="mes-radio-button"
+                name="isEyesightCompleted"
+                type="radio"
+                required
+                value="{{getPossibleEyesightResults().pass}}"
+                [(ngModel)]="eyesightResult"
+               >
+              <label for="isEyesightCompleted">Pass</label>
+            </span>
+            <span class="input-with-label">
+              <input
+                id="eyeSightSeriousFault"
+                class="mes-radio-button"
+                type="radio"
+                value="{{getPossibleEyesightResults().serious}}"
+                [(ngModel)]="eyesightResult"
+                [ngModelOptions]="{standalone: true}"
+              >
+              <label for="eyeSightSeriousFault">S</label>
+            </span>
           </ion-col>
-          <ion-col offset-1 col-3 class="center-text">
-            <button class="mes-header-md eyesight-record-serious-fault-button" (click)="showEyesightFaultRecordingModal()">
-              <span>S</span>
-              <div>
-                <input class="checkbox" type="checkbox" [(ngModel)]="eyeSightSeriousFault" [ngModelOptions]="{standalone: true}">
-              </div>
-            </button>
+          <ion-col class="pretest-checks-clear-button-column">
+            <button (click)="clearEyesightResult()">Clear</button>
           </ion-col>
         </ion-row>
         <p [hidden]="isEyesightCompleted.valid || (isEyesightCompleted.pristine && !form.submitted)" class="warning-text">
