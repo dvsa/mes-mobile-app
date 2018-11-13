@@ -38,7 +38,7 @@
             </span>
           </ion-col>
           <ion-col class="pretest-checks-clear-button-column">
-            <button (click)="clearEyesightResult()">Clear</button>
+            <button type="button" (click)="clearEyesightResult()">Clear</button>
           </ion-col>
         </ion-row>
         <p [hidden]="isEyesightCompleted.valid || (isEyesightCompleted.pristine && !form.submitted)" class="warning-text">
@@ -110,7 +110,7 @@
             </span>
           </ion-col>
           <ion-col class="pretest-checks-clear-button-column">
-            <button>Clear</button>
+            <button type="button">Clear</button>
           </ion-col>
         </ion-row>
         <p [hidden]="isAutomatic.valid || (isAutomatic.pristine && !form.submitted)" class="warning-text">
