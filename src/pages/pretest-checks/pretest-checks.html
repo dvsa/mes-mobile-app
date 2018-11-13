@@ -86,7 +86,7 @@
             Registration number
           </ion-col>
           <ion-col col-4>
-            <input appInputRestriction="noSpecialChars" required type="text" class="mes-text-input capital-characters" #carRegistration="ngModel"
+            <input appInputRestriction="noSpecialChars" required type="text" class="capital-characters" #carRegistration="ngModel"
               name="carRegistration" [(ngModel)]="preCheck.carRegistration" autocapitalize="characters">
           </ion-col>
         </ion-row>
@@ -136,7 +136,7 @@
             Instructor registration number (optional)
           </ion-col>
           <ion-col col-4>
-            <input appInputRestriction="integer" type="number" pattern="[0-9]*" class="mes-text-input">
+            <input appInputRestriction="integer" type="number" pattern="[0-9]*">
           </ion-col>
         </ion-row>
         <div class="mes-divider"></div>
@@ -145,7 +145,7 @@
             Instructor certification number (optional)
           </ion-col>
           <ion-col col-4>
-            <input appInputRestriction="integer" type="number" pattern="[0-9]*" class="mes-text-input">
+            <input appInputRestriction="integer" type="number" pattern="[0-9]*">
           </ion-col>
         </ion-row>
       </ion-card-content>
