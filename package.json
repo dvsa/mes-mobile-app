@@ -103,7 +103,7 @@
       "cordova-plugin-ionic": {
         "APP_ID": "33dd3db4",
         "CHANNEL_NAME": "Production",
-        "UPDATE_METHOD": "background",
+        "UPDATE_METHOD": "none",
         "WARN_DEBUG": "true",
         "UPDATE_API": "https://api.ionicjs.com",
         "MAX_STORE": "2",
