@@ -125,7 +125,7 @@ export class PostTestSummaryPage {
   private backToJournal() {
     this.faultStore.reset();
     this.summaryMetadata.reset();
-    this.navCtrl.popToRoot();
+    this.navCtrl.popTo(this.navCtrl.getByIndex(1));
   }
 
   openWeatherModal() {

@@ -19,4 +19,7 @@ mes-header {
   span.button-inner {
     color: map-get($colors, backButton);
   }
+  .mes-header-title-alignment-fix {
+    margin-left: -2.5em;
+  }
 }

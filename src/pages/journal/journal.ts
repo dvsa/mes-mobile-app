@@ -10,6 +10,7 @@ import { IJournal } from '../../providers/journal/journal-model';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { DeclarationConsentPage } from '../declaration-consent/declaration-consent';
 import { isNil } from 'lodash';
+import { isNonBlankString } from '../../shared/utils/string-utils';
 
 @Component({
   selector: 'page-journal',
@@ -43,14 +44,6 @@ export class JournalPage {
     this.summaryMetadata.reset();
   }
 
-  extractCategoryCode(slotType: string) {
-    // slotType comes from the vehicleSlotType key in the journal data
-    // Examples of slotType parameter: 'B57mins' / 'Voc90mins'
-    if (slotType === null) return 'N/A';
-    const re = /^[a-zA-Z]*/;
-    return slotType.match(re);
-  }
-
   hasFailed(slot: IJournal) {
     return slot.details && !slot.details.success;
   }
@@ -71,15 +64,15 @@ export class JournalPage {
     return isNil(slot.details) && isNil(slot.activityCode);
   }
 
-  shouldShowActivityCodeBlock(slot: IJournal): boolean {
-    return slot.activityCode && slot.activityCode > 5; // codes above 5 represent incomplete tests
-  }
-
   skipToDL25() {
     this.vcProvider.markAsComplete({ id: 'foo' }, vCheckType.TELLME);
     return this.navCtrl.push(this.allonOneV2Page, {
       trainingMode: true
     });
+  }
+
+  showSlotWarning(slot: IJournal): boolean {
+    return isNonBlankString(slot.specialNeeds);
   }
 
   goToDeclarationConsent(slot: IJournal) {

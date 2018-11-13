@@ -1,5 +1,5 @@
 <ion-navbar hideBackButton='{{hideBackButton}}' no-padding>
-  <ion-grid no-padding>
+  <ion-grid no-padding [ngClass]="{'mes-header-title-alignment-fix': !hideBackButton}">
     <ion-row>
       <ion-col></ion-col>
       <ion-col align-self-center col-8>

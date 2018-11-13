@@ -1,0 +1,32 @@
+journal-test-details {
+  div {
+    height: 100%;
+    &.journal-test-details-test-complete {
+      color: #818080;
+    }
+    ion-grid {
+      height: 100%;
+      ion-row {
+        &.journal-test-details-full-height-row {
+          height: 100%;
+        }
+        &.journal-test-details-half-height-row {
+          height: 50%;
+        }
+        ion-icon {
+          margin-right: 0.5em;
+        }
+        &:nth-child(2) {
+          div {
+            display: flex;
+            align-items: flex-end;
+            &:last-child {
+              width: 35%;
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}

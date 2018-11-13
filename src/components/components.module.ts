@@ -23,6 +23,8 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
 import { MesSignaturePadComponent } from './mes-signature-pad/mes-signature-pad';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { TestResultHeaderComponent } from './test-result-header/test-result-header';
+import { JournalTestDetailsComponent } from './journal-test-details/journal-test-details';
+import { JournalCandidateInfoComponent } from './journal-candidate-info/journal-candidate-info';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { TestResultHeaderComponent } from './test-result-header/test-result-head
     TextboxModalComponent,
     AllOnOneFormVcButtonComponent,
     MesSignaturePadComponent,
-    TestResultHeaderComponent
+    TestResultHeaderComponent,
+    JournalTestDetailsComponent,
+    JournalCandidateInfoComponent
   ],
   imports: [IonicModule.forRoot(PageHeaderComponent), SignaturePadModule],
   exports: [
@@ -71,7 +75,9 @@ import { TestResultHeaderComponent } from './test-result-header/test-result-head
     TextboxModalComponent,
     AllOnOneFormVcButtonComponent,
     MesSignaturePadComponent,
-    TestResultHeaderComponent
+    TestResultHeaderComponent,
+    JournalTestDetailsComponent,
+    JournalCandidateInfoComponent
   ]
 })
 export class ComponentsModule {}

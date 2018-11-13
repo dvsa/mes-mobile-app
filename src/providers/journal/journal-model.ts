@@ -29,6 +29,7 @@ export interface IJournal {
   testCentreName: string;
   slotType: string | null;
   checkMarker: boolean;
+  specialNeeds: string;
 }
 
 export interface ITestDetails {

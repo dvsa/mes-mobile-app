@@ -53,7 +53,7 @@ export class JournalProvider {
             email = '',
             mobileTelephone = ''
           },
-          application: { checkMarker = false, _applicationId: appId = '' }
+          application: { checkMarker = false, _applicationId: appId = '', specialNeeds = null }
         }
       } = next;
 
@@ -67,6 +67,7 @@ export class JournalProvider {
         appId,
         testCentreName,
         checkMarker,
+        specialNeeds,
         slotType,
         startTime: this.dateTimeUtil.getTime(start)
       };

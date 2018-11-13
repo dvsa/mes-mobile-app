@@ -1,22 +1,32 @@
-<!-- Generated template for the JournalHeaderComponent component -->
 <div>
+  <ion-row align-items-center>
+    <ion-col col-4>
+      <div>
+        <span class="journal-header-day-navigation">◄ Previous day</span>
+      </div>
+    </ion-col>
+    <ion-col col-4>
+      <div>
+        <span class="journal-header-today-title">Today</span>
+      </div>
+    </ion-col>
+    <ion-col col-4>
+      <div>
+        <span class="journal-header-day-navigation">Next day ►</span>
+      </div>
+    </ion-col>
+  </ion-row>
   <ion-row>
-    <ion-col class="yesterday" col-4>
+    <ion-col col-4>
+    </ion-col>
+    <ion-col col-4>
       <div>
-        <span>Previous</span>
-        <span>22 March</span>
+        <span class="mes-header-lg">{{getDate()}}</span>
       </div>
     </ion-col>
-    <ion-col class="today" col-4>
+    <ion-col col-4>
       <div>
-        <span>Today</span>
-        <span>23 March</span>
-      </div>
-    </ion-col>
-    <ion-col class="tomorrow" col-4>
-      <div float-right>
-        <span>Tomorrow</span>
-        <span>24 March</span>
+        <span class="mes-text-md">Last sync: {{getLastSyncTime()}}</span>
       </div>
     </ion-col>
   </ion-row>

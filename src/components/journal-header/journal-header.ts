@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import moment from 'moment';
 
 /**
  * Generated class for the JournalHeaderComponent component.
@@ -14,4 +15,12 @@ export class JournalHeaderComponent {
   text: string;
 
   constructor() {}
+
+  getDate() {
+    return moment(Date.now()).format('dddd, D MMMM');
+  }
+
+  getLastSyncTime() {
+    return moment(Date.now()).format('HH:mm');
+  }
 }
