@@ -68,16 +68,16 @@
             Accompanied by (optional)
           </ion-col>
           <ion-col class="mes-header-md">
-            ADI
-            <input type="checkbox" class="mes-checkbox">
+            <input id="adi-accompaniment-input" type="checkbox" class="mes-radio-button">
+            <label for="adi-accompaniment-input">ADI</label>
           </ion-col>
           <ion-col class="mes-header-md">
-            Sup
-            <input type="checkbox" class="mes-checkbox">
+            <input id="sup-accompaniment-input" type="checkbox" class="mes-radio-button">
+            <label for="sup-accompaniment-input">Sup</label>
           </ion-col>
           <ion-col class="mes-header-md">
-            Other
-            <input type="checkbox" class="mes-checkbox">
+            <input id="other-accompaniment-input" type="checkbox" class="mes-radio-button">
+            <label for="other-accompaniment-input">Other</label>
           </ion-col>
         </ion-row>
         <div class="mes-divider"></div>
@@ -100,12 +100,12 @@
             <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic" [(ngModel)]="preCheck.isAutomatic">
           </ion-col>
           <ion-col col-4 class="mes-header-md">
-            Manual
-            <input #yesInput type="checkbox" class="mes-checkbox" (change)="automaticInputChanged($event, noInput);">
+            <input id="manual-category-input" #yesInput type="checkbox" class="mes-radio-button" (change)="automaticInputChanged($event, noInput);">
+            <label for="manual-category-input">Manual</label>
           </ion-col>
           <ion-col col-4 class="mes-header-md">
-            Automatic
-            <input #noInput type="checkbox" class="mes-checkbox" (change)="automaticInputChanged($event, yesInput);">
+            <input id="automatic-category-input" #noInput type="checkbox" class="mes-radio-button" (change)="automaticInputChanged($event, yesInput);">
+            <label for="automatic-category-input">Automatic</label>
           </ion-col>
         </ion-row>
         <p [hidden]="isAutomatic.valid || (isAutomatic.pristine && !form.submitted)" class="warning-text">
@@ -117,12 +117,12 @@
             Vehicle details (optional)
           </ion-col>
           <ion-col col-3 class="mes-header-md">
-            School car
-            <input type="checkbox" class="mes-checkbox">
+            <input id="school-car-input" type="checkbox" class="mes-radio-button">
+            <label for="school-car-input">School car</label>
           </ion-col>
           <ion-col col-3 class="mes-header-md">
-            D/C
-            <input type="checkbox" class="mes-checkbox">
+            <input id="dc-input" type="checkbox" class="mes-radio-button">
+            <label for="dc-input">D/C</label>
           </ion-col>
         </ion-row>
         <div class="mes-divider"></div>
