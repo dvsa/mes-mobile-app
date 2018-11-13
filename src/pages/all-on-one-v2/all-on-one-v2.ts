@@ -1,8 +1,9 @@
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { JournalPage } from './../journal/journal';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
+import { VehicleCheckProvider } from './../../providers/vehicle-check/vehicle-check';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 
@@ -16,11 +17,12 @@ export enum manoeuvre {
   selector: 'page-all-on-one-v2',
   templateUrl: 'all-on-one-v2.html'
 })
-export class AllOnOneV2Page {
+export class AllOnOneV2Page implements AfterViewInit {
   isDButtonPressed = false;
   isSButtonPressed = false;
   isEcoCompleted = false;
   isControlledStopDone = false;
+  isShowMeDone = false;
   selectedManoeuvre = '';
   manoeuvreBtns = {
     RR: 'Reverse / Right',
@@ -51,13 +53,16 @@ export class AllOnOneV2Page {
   ecoCompletionInput;
   @ViewChild('controlledStopEl')
   controlledStopEl;
+  @ViewChild('showMeEl')
+  showMeEl;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private faultStore: FaultStoreProvider,
     private menuCtrl: MenuController,
-    private summaryMetaDataService: TestSummaryMetadataProvider
+    private summaryMetaDataService: TestSummaryMetadataProvider,
+    private vehicleCheckProvider: VehicleCheckProvider
   ) {
     this.manoeuvreKeys = Object.keys(this.manoeuvreBtns);
     if (this.navParams.get('trainingMode')) {
@@ -69,6 +74,10 @@ export class AllOnOneV2Page {
       };
     }
     this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ngAfterViewInit(): void {
+    this.setUpShowMeButton(this.vehicleCheckProvider.getTellMe().faultType);
   }
 
   ionViewDidEnter() {
@@ -113,35 +122,77 @@ export class AllOnOneV2Page {
     return this.selectedManoeuvre === key;
   }
 
+  // Show me button actions
+
+  setUpShowMeButton(tellMeFault: string) {
+    const noFault = undefined;
+    if (tellMeFault === noFault) {
+      return;
+    }
+
+    const drivingFault = 'fault';
+    if (tellMeFault === drivingFault) {
+      this.showMeEl.addDrivingFault();
+      return;
+    }
+
+    const seriousFault = 'serious';
+    if (tellMeFault === seriousFault) {
+      this.showMeEl.addSeriousFault();
+      return;
+    }
+
+    const dangerousFault = 'dangerous';
+    if (tellMeFault === dangerousFault) {
+      this.showMeEl.addDangerousFault();
+      return;
+    }
+  }
+
+  showMePress() {
+    if (this.isShowMeDone) return;
+    if (this.showMeEl.faultCounter > 0) return;
+
+    const { serious, dangerous } = this.showMeEl;
+
+    if ((serious || dangerous) && this.isShowMeDone) return;
+
+    this.isShowMeDone = !this.isShowMeDone;
+    this.summaryMetaDataService.toggleShowMeComplete();
+  }
+
+  showMeTap() {
+    if (this.isShowMeDone && this.showMeEl.faultCounter > 0) return;
+
+    const { serious, dangerous } = this.showMeEl;
+
+    if ((serious || dangerous) && this.isShowMeDone) return;
+
+    this.isShowMeDone = !this.isShowMeDone;
+    this.summaryMetaDataService.toggleShowMeComplete();
+  }
+
+  // Controlled stop button actions
+
   controlledStopPress() {
     if (this.isControlledStopDone) return;
+    if (this.controlledStopEl.faultCounter > 0) return;
+
     const { serious, dangerous } = this.controlledStopEl;
-    if (this.controlledStopEl.faultCounter > 0) {
-      return;
-    }
-    if (serious || dangerous) {
-      if (!this.isControlledStopDone) {
-        this.isControlledStopDone = !this.isControlledStopDone;
-        this.summaryMetaDataService.toggleControlledStopComplete();
-      }
-      return;
-    }
+
+    if ((serious || dangerous) && this.isControlledStopDone) return;
+
     this.isControlledStopDone = !this.isControlledStopDone;
     this.summaryMetaDataService.toggleControlledStopComplete();
   }
 
   controlledStopTap() {
+    if (this.controlledStopEl.faultCounter > 0) return;
+
     const { serious, dangerous } = this.controlledStopEl;
-    if (this.controlledStopEl.faultCounter > 0) {
-      return;
-    }
-    if (serious || dangerous) {
-      if (!this.isControlledStopDone) {
-        this.isControlledStopDone = !this.isControlledStopDone;
-        this.summaryMetaDataService.toggleControlledStopComplete();
-      }
-      return;
-    }
+
+    if ((serious || dangerous) && this.isControlledStopDone) return;
+
     this.isControlledStopDone = !this.isControlledStopDone;
     this.summaryMetaDataService.toggleControlledStopComplete();
   }

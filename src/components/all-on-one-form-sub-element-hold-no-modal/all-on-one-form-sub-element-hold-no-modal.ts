@@ -75,7 +75,8 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
       return;
     }
     // Prevent more than one fault being added to controlled stop
-    if (this.section === 'controlledStop' && this.faultCounter > 0) return;
+    if ((this.section === 'controlledStop' || this.section === 'showMe') && this.faultCounter > 0)
+      return;
     this.faultStore.addFault(this.section, 'fault');
   }
 

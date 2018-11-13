@@ -7,8 +7,12 @@
   <ion-grid class="full-page side-paddings" no-bounce [ngClass]="{'scroll': ecoButton.isEnabled && etaButton.isEnabled}">
     <ion-row class="main-content flex-none">
       <ion-col col-4>
-          <p>{{ 'VEHICLE_CHECKS' | translate }}</p>
-        <all-on-one-form-vc-button></all-on-one-form-vc-button>
+        <p>{{ 'VEHICLE_CHECKS' | translate }}</p>
+          
+        <!-- Show me -->
+        <div class="form-section" [ngClass]="{'action-completed' : isShowMeDone}" (click)="showMeTap()" (press)="showMePress()">
+          <all-on-one-form-sub-element-hold-no-modal #showMeEl section="showMe" text="Show me"></all-on-one-form-sub-element-hold-no-modal>
+        </div>
 
         <div class="form-section bottom-border">
             <p>{{ 'TEST_REQUIREMENTS' | translate }}</p>
@@ -103,6 +107,7 @@
           <all-on-one-form-sub-element-button #etaVerbalOption text="Verbal"></all-on-one-form-sub-element-button>
         </div>
 
+        <!-- Controlled stop -->
         <div class="form-section" [ngClass]="{'action-completed' : isControlledStopDone}" (click)="controlledStopTap()"
           (press)="controlledStopPress()">
           <all-on-one-form-sub-element-hold-no-modal #controlledStopEl section="controlledStop" text="Controlled stop"></all-on-one-form-sub-element-hold-no-modal>

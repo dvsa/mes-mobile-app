@@ -15,6 +15,7 @@ export class TestSummaryMetadataProvider {
     verbal: false
   };
   controlledStopDone: boolean = false;
+  showMeDone: boolean = false;
 
   updateManoeuvre(manoeuvre: string) {
     this.selectedManoeuvre = manoeuvre;
@@ -39,6 +40,10 @@ export class TestSummaryMetadataProvider {
 
   toggleControlledStopComplete() {
     this.controlledStopDone = !this.controlledStopDone;
+  }
+
+  toggleShowMeComplete() {
+    this.showMeDone = !this.showMeDone;
   }
 
   reset() {

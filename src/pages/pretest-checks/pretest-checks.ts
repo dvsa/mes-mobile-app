@@ -16,7 +16,8 @@ import { IJournal } from '../../providers/journal/journal-model';
   templateUrl: 'pretest-checks.html'
 })
 export class PretestChecksPage {
-  @ViewChild('isAutomatic') isAutomaticInput;
+  @ViewChild('isAutomatic')
+  isAutomaticInput;
   endTestReasonPage: Page = EndTestReasonPage;
   policyDataPage: Page = PolicyDataPage;
   eyeSightSeriousFault = false;
@@ -35,24 +36,24 @@ export class PretestChecksPage {
   constructor(
     public navCtrl: NavController,
     private modalCtrl: ModalController,
-    private vcProvider: VehicleCheckProvider,
+    private vehicleCheckProvider: VehicleCheckProvider,
     public navParams: NavParams
   ) {
     this.slotDetail = this.navParams.get('slotDetail');
   }
 
   ngAfterViewInit() {
-    this.vcProvider.reset(vCheckType.TELLME);
-    this.vcProvider.reset(vCheckType.SHOWME);
+    this.vehicleCheckProvider.reset(vCheckType.TELLME);
+    this.vehicleCheckProvider.reset(vCheckType.SHOWME);
   }
 
   setTellMeState(faultType, $event) {
     const isActive = $event.currentTarget.className.includes('active');
 
     if (isActive) {
-      this.vcProvider.removeFault(vCheckType.TELLME);
+      this.vehicleCheckProvider.removeFault(vCheckType.TELLME);
     } else {
-      this.vcProvider.addFault(vCheckType.TELLME, faultType);
+      this.vehicleCheckProvider.addFault(vCheckType.TELLME, faultType);
     }
   }
 
@@ -66,7 +67,7 @@ export class PretestChecksPage {
     tellMeQuestionModal.onDidDismiss((selectedQuestion = { id: null }, role: string) => {
       if (role !== 'dismiss') {
         this.preCheck.tellMeQuestionId = selectedQuestion.id;
-        this.vcProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
+        this.vehicleCheckProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
       }
     });
 

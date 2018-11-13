@@ -22,7 +22,7 @@ all-on-one-form-sub-element-hold-no-modal {
     background-color: map-get($colors, dark);
 
     &.counter {
-      left: 4px;
+      left: 32px;
       @extend .fault-badge_counter;
     }
 
