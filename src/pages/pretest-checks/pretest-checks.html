@@ -151,7 +151,7 @@
       </ion-card-content>
     </ion-card>
     <ion-row justify-content-between padding-left padding-right>
-      <button class="mes-cta-button-secondary" [navPush]="endTestReasonPage">End driving test</button>
+      <button class="mes-cta-button-secondary" (click)="backToJournal()">End driving test</button>
       <button class="mes-cta-button-primary" type="submit">Confirm and continue</button>
     </ion-row>
   </form>

@@ -96,6 +96,10 @@ export class PretestChecksPage {
     }
   }
 
+  backToJournal() {
+    this.navCtrl.popTo(this.navCtrl.getByIndex(1));
+  }
+
   automaticInputChanged(event, secondInput) {
     secondInput.checked = false;
     this.preCheck.isAutomatic = event.target.checked;
