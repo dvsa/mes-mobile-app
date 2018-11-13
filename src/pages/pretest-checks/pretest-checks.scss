@@ -21,6 +21,11 @@ page-pretest-checks {
   .pretest-checks-clear-button-column {
     display: flex;
     justify-content: flex-end;
+    button {
+      @extend .mes-text-md;
+      background: none;
+      color: map-get($colors, secondaryButton);
+    }
   }
   .warning-text {
     padding-left: 5px;
