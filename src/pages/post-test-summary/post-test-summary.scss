@@ -14,11 +14,6 @@ page-post-test-summary {
     border-radius: 5px 5px 5px 5px;
   }
 
-  .mes-radio-button {
-    height: 20px;
-    width: 20px;
-  }
-
   .button {
     @extend .mes-cta-button;
     background-color: map-get($colors, gds-dark-green);
