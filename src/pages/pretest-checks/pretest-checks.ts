@@ -47,6 +47,10 @@ export class PretestChecksPage {
     this.vehicleCheckProvider.reset(vCheckType.SHOWME);
   }
 
+  getTitle() {
+    return 'Begin test - Florence Pearson';
+  }
+
   setTellMeState(faultType, $event) {
     const isActive = $event.currentTarget.className.includes('active');
 

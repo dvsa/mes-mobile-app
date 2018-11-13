@@ -1,18 +1,12 @@
 <ion-header>
-  <page-header></page-header>
+  <mes-header [title]="getTitle()"></mes-header>
 </ion-header>
 
 <ion-content padding class="mes-main-content">
   <form #form="ngForm" (ngSubmit)="gotoDL25(form)" novalidate (keydown.enter)="$event.preventDefault()">
     <ion-card class="mes-card">
-      <ion-card-header class="mes-breadcrumbs">
-        <span class="mes-header-md mes-breadcrumb-link" navPop>
-          <ion-icon name="arrow-back"></ion-icon>
-          Declaration /
-        </span>
-        <span padding-left class="mes-header-md">Begin Test</span>
-      </ion-card-header>
       <ion-card-content>
+        <div class="mes-header-md">Begin test</div>
         <ion-row>
           <ion-col col-4 class="mes-header-md">
             Eyesight*
