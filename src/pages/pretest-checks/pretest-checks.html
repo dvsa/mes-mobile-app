@@ -129,10 +129,9 @@
         </ion-row>
       </ion-card-content>
     </ion-card>
-    <div class="action-buttons-wrapper">
-      <button class="mes-button-danger end-test-button" [navPush]="endTestReasonPage">End Test</button>
-      <button class="mes-button-primary confirm-button" type="submit">Confirm</button>
-      <div class="clearfix"></div>
-    </div>
+    <ion-row justify-content-between padding-left padding-right>
+      <button class="mes-cta-button-secondary" [navPush]="endTestReasonPage">End driving test</button>
+      <button class="mes-cta-button-primary" type="submit">Confirm and continue</button>
+    </ion-row>
   </form>
 </ion-content>
