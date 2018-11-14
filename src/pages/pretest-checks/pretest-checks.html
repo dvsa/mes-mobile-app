@@ -52,20 +52,31 @@
                     </ion-col>
                     <ion-col col-4>
                         <select-button required #tellMeQuestion="ngModel" [(ngModel)]="preCheck.tellMeQuestionId"
-                                       name="tellMeQuestionId" [onClickEventHandler]="showTellMeOptions"
-                                       [selectedText]="preCheck.tellMeQuestionId"></select-button>
+                                       name="tellMeQuestionId"
+                                       [onClickEventHandler]="showTellMeOptions"
+                                       [selectedText]="preCheck.selectedQuestion"
+                                       [questionAsked]="preCheck.questionAsked"></select-button>
                     </ion-col>
-                    <ion-col col-4 [ngClass]="{'btns-disabled': !preCheck.tellMeQuestionId }">
-                        <div class="fault-btn driverFault-btn" [ngClass]="{'active': (vcState$ | async)?.fault}"
-                             (click)="setTellMeState('fault', $event)">D/F
-                        </div>
-                        <div class="fault-btn serious-btn" [ngClass]="{'active': (vcState$ | async)?.serious}"
-                             (click)="setTellMeState('serious', $event)">S
-                        </div>
-                        <div class="fault-btn dangerous-btn" [ngClass]="{'active': (vcState$ | async)?.dangerous}"
-                             (click)="setTellMeState('dangerous', $event)">D
-                        </div>
+
+                    <ion-col col-4 *ngIf="preCheck.questionAsked">
+                        <select class="tell-me-result">
+                            <option value="satisfactory">Satisfactory</option>
+                            <option value="d/f">D/F</option>
+                            <option value="s">S</option>
+                            <option value="d">D</option>
+                        </select>
                     </ion-col>
+                    <!--<ion-col col-4 [ngClass]="{'btns-disabled': !preCheck.tellMeQuestionId }">-->
+                        <!--<div class="fault-btn driverFault-btn" [ngClass]="{'active': (vcState$ | async)?.fault}"-->
+                             <!--(click)="setTellMeState('fault', $event)">D/F-->
+                        <!--</div>-->
+                        <!--<div class="fault-btn serious-btn" [ngClass]="{'active': (vcState$ | async)?.serious}"-->
+                             <!--(click)="setTellMeState('serious', $event)">S-->
+                        <!--</div>-->
+                        <!--<div class="fault-btn dangerous-btn" [ngClass]="{'active': (vcState$ | async)?.dangerous}"-->
+                             <!--(click)="setTellMeState('dangerous', $event)">D-->
+                        <!--</div>-->
+                    <!--</ion-col>-->
                 </ion-row>
                 <p [hidden]="tellMeQuestion.valid || (tellMeQuestion.pristine && !form.submitted)" class="warning-text">
                     Select Tell me question
@@ -112,17 +123,18 @@
                                [(ngModel)]="preCheck.isAutomatic">
                     </ion-col>
                     <ion-col class="mes-text-md" col-6>
-            <span class="input-with-label">
-              <input
-                      id="manual-category-input"
-                      class="mes-radio-button"
-                      name="manual-category-input"
-                      type="radio"
-                      value="{{GearboxCategory.Manual}}"
-                      [(ngModel)]="gearboxCategory"
-              >
+                        <span class="input-with-label">
+                            <input
+                                    #isAutomatic="ngModel"
+                                    id="manual-category-input"
+                                    class="mes-radio-button"
+                                    name="manual-category-input"
+                                    type="radio"
+                                    value="{{GearboxCategory.Manual}}"
+                                    [(ngModel)]="gearboxCategory"
+                            >
               <label for="manual-category-input">Manual</label>
-            </span>
+                        </span>
                         <span class="input-with-label">
               <input
                       id="automatic-category-input"

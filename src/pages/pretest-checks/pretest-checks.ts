@@ -27,7 +27,9 @@ export class PretestChecksPage {
     isEyesightCompleted: false,
     carRegistration: null,
     tellMeQuestionId: null,
-    isAutomatic: null
+    isAutomatic: null,
+    selectedQuestion: null,
+    questionAsked: false
   };
   slotDetail: IJournal;
   eyesightResult: EyesightResult = EyesightResult.NotAnswered;
@@ -85,6 +87,8 @@ export class PretestChecksPage {
     tellMeQuestionModal.onDidDismiss((selectedQuestion = { id: null }, role: string) => {
       if (role !== 'dismiss') {
         this.preCheck.tellMeQuestionId = selectedQuestion.id;
+        this.preCheck.questionAsked = true;
+        this.preCheck.selectedQuestion = `${selectedQuestion.id} - ${selectedQuestion.keyWords}`;
         this.vehicleCheckProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
       }
     });
