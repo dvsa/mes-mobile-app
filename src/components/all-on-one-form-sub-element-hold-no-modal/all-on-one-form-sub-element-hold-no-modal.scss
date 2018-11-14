@@ -3,7 +3,6 @@ all-on-one-form-sub-element-hold-no-modal {
     font-size: 32px;
   }
   .fault-total {
-    //line-height: 1.75;
     position: absolute;
     top: 7px;
     left: 12px;
@@ -22,8 +21,12 @@ all-on-one-form-sub-element-hold-no-modal {
     background-color: map-get($colors, dark);
 
     &.counter {
-      left: 32px;
+      left: 4px;
       @extend .fault-badge_counter;
+
+      &.show-me {
+        left: 32px;
+      }
     }
 
     &.serious {

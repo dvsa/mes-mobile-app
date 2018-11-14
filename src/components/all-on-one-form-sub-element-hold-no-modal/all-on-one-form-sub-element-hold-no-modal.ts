@@ -55,6 +55,10 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
     });
   }
 
+  isShowMeSection() {
+    return this.section === 'showMe';
+  }
+
   resetHammer(newDuration: number) {
     this.mc.remove('press');
     const hammerPress = new Hammer.Press({
