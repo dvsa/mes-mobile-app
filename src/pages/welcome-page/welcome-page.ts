@@ -1,9 +1,9 @@
-import { HelpSectionPage } from './../help-section/help-section';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { Component } from '@angular/core';
 import { NavController, ViewController, Modal, ModalController } from 'ionic-angular';
 import { JournalPage } from '../journal/journal';
 import { YoutubeDemoModalPage } from '../youtube-demo-modal/youtube-demo-modal';
+import { HelpSectionPage } from '../../help/pages/help-section/help-section';
 
 @Component({
   selector: 'page-welcome',

@@ -1,3 +1,4 @@
+import { HelpModule } from './../help/help.module';
 import { DirectivesModule } from './../directives/directives.module';
 import { AllOnOneV2Page } from './../pages/all-on-one-v2/all-on-one-v2';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -56,11 +57,7 @@ import { TextboxModalComponent } from '../components/textbox-modal/textbox-modal
 import { TestSummaryMetadataProvider } from '../providers/test-summary-metadata/test-summary-metadata';
 import { VehicleCheckProvider } from '../providers/vehicle-check/vehicle-check';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
-<<<<<<< HEAD
 import { YoutubeDemoModalPage } from '../pages/youtube-demo-modal/youtube-demo-modal';
-=======
-import { HelpSectionPage } from '../pages/help-section/help-section';
->>>>>>> creates help section page
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -107,7 +104,8 @@ export function createTranslateLoader(http: Http) {
     }),
     NgReduxModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    HelpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -137,11 +135,7 @@ export function createTranslateLoader(http: Http) {
     HealthDeclarationPage,
     TextboxModalComponent,
     WelcomePage,
-<<<<<<< HEAD
     YoutubeDemoModalPage
-=======
-    HelpSectionPage
->>>>>>> creates help section page
   ],
   providers: [
     StatusBar,
