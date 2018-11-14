@@ -1,3 +1,4 @@
+import { HelpSectionPage } from './../help-section/help-section';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { Component } from '@angular/core';
 import { NavController, ViewController, Modal, ModalController } from 'ionic-angular';
@@ -11,6 +12,7 @@ import { YoutubeDemoModalPage } from '../youtube-demo-modal/youtube-demo-modal';
 export class WelcomePage {
   title: string = 'Welcome';
   journalPage: Page = JournalPage;
+  helpPage: Page = HelpSectionPage;
 
   constructor(
     public navCtrl: NavController,
