@@ -18,6 +18,14 @@ import { ComponentsModule } from '../components/components.module';
     HelpWaitingRoomToCarPage
   ],
   imports: [IonicModule.forRoot(HelpSectionPage), ComponentsModule],
+  entryComponents: [
+    HelpDebriefPage,
+    HelpFinalisationSubmissionPage,
+    HelpJournalPage,
+    HelpSectionPage,
+    HelpTestReportPage,
+    HelpWaitingRoomToCarPage
+  ],
   exports: [
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
