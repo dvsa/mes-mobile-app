@@ -76,3 +76,17 @@ $mes-test-form-button-height: 45px;
   text-align: left;
   letter-spacing: 0;
 }
+.mes-full-width-cta {
+  width: 728px;
+  height: 138px;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(to bottom, map-get($colors, white), #efefef);
+  color: map-get($colors, gds-green);
+  &:active {
+    background-image: linear-gradient(to bottom, #fdfdfd, #cbcbcb);
+  }
+}
