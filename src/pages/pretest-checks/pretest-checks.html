@@ -1,172 +1,184 @@
 <ion-header>
-  <mes-header [title]="getTitle()"></mes-header>
+    <mes-header [title]="getTitle()"></mes-header>
 </ion-header>
 
 <ion-content padding class="mes-main-content">
-  <form #form="ngForm" (ngSubmit)="gotoDL25(form)" novalidate (keydown.enter)="$event.preventDefault()">
-    <ion-card class="mes-card">
-      <ion-card-content>
-        <div class="mes-header-lg">Begin test</div>
-        <ion-row justify-space-between>
-          <ion-col col-4 class="mes-header-md">
-            Eyesight test
-          </ion-col>
-          <ion-col class="mes-text-md" col-3>
+    <form #form="ngForm" (ngSubmit)="gotoDL25(form)" novalidate (keydown.enter)="$event.preventDefault()">
+        <ion-card class="mes-card">
+            <ion-card-content>
+                <div class="mes-header-lg">Begin test</div>
+                <ion-row justify-space-between>
+                    <ion-col col-4 class="mes-header-md">
+                        Eyesight test
+                    </ion-col>
+                    <ion-col class="mes-text-md" col-3>
             <span class="input-with-label">
               <input
-                #isEyesightCompleted="ngModel"
-                id="isEyesightCompleted"
-                class="mes-radio-button"
-                name="isEyesightCompleted"
-                type="radio"
-                required
-                value="{{EyesightResult.Pass}}"
-                [(ngModel)]="eyesightResult"
-               >
+                      #isEyesightCompleted="ngModel"
+                      id="isEyesightCompleted"
+                      class="mes-radio-button"
+                      name="isEyesightCompleted"
+                      type="radio"
+                      required
+                      value="{{EyesightResult.Pass}}"
+                      [(ngModel)]="eyesightResult"
+              >
               <label for="isEyesightCompleted">Pass</label>
             </span>
-            <span class="input-with-label">
+                        <span class="input-with-label">
               <input
-                id="eyeSightSeriousFault"
-                class="mes-radio-button"
-                type="radio"
-                value="{{EyesightResult.Serious}}"
-                [(ngModel)]="eyesightResult"
-                [ngModelOptions]="{standalone: true}"
+                      id="eyeSightSeriousFault"
+                      class="mes-radio-button"
+                      type="radio"
+                      value="{{EyesightResult.Serious}}"
+                      [(ngModel)]="eyesightResult"
+                      [ngModelOptions]="{standalone: true}"
               >
               <label for="eyeSightSeriousFault">S</label>
             </span>
-          </ion-col>
-          <ion-col class="pretest-checks-clear-button-column">
-            <button type="button" (click)="clearEyesightResult()">Clear</button>
-          </ion-col>
-        </ion-row>
-        <p [hidden]="isEyesightCompleted.valid || (isEyesightCompleted.pristine && !form.submitted)" class="warning-text">
-          Eyesight is required
-        </p>
-        <div class="mes-divider"></div>
-        <ion-row>
-          <ion-col col-4 class="mes-header-md">
-            Tell me question
-          </ion-col>
-          <ion-col col-4>
-            <select-button required #tellMeQuestion="ngModel" [(ngModel)]="preCheck.tellMeQuestionId" name="tellMeQuestionId" [onClickEventHandler]="showTellMeOptions"
-              [selectedText]="preCheck.tellMeQuestionId"></select-button>
-          </ion-col>
-          <ion-col col-4 [ngClass]="{'btns-disabled': !preCheck.tellMeQuestionId }">
-            <div class="fault-btn driverFault-btn" [ngClass]="{'active': (vcState$ | async)?.fault}" (click)="setTellMeState('fault', $event)">D/F</div>
-            <div class="fault-btn serious-btn" [ngClass]="{'active': (vcState$ | async)?.serious}" (click)="setTellMeState('serious', $event)">S</div>
-            <div class="fault-btn dangerous-btn" [ngClass]="{'active': (vcState$ | async)?.dangerous}" (click)="setTellMeState('dangerous', $event)">D</div>
-          </ion-col>
-        </ion-row>
-        <p [hidden]="tellMeQuestion.valid || (tellMeQuestion.pristine && !form.submitted)" class="warning-text">
-          Select Tell me question
-        </p>
-        <div class="mes-divider"></div>
-        <ion-row class="height-auto">
-          <ion-col col-4 class="mes-header-md">
-            Accompanied by (optional)
-          </ion-col>
-          <ion-col class="mes-header-md">
-            <input id="adi-accompaniment-input" type="checkbox" class="mes-radio-button">
-            <label for="adi-accompaniment-input">ADI</label>
-          </ion-col>
-          <ion-col class="mes-header-md">
-            <input id="sup-accompaniment-input" type="checkbox" class="mes-radio-button">
-            <label for="sup-accompaniment-input">Sup</label>
-          </ion-col>
-          <ion-col class="mes-header-md">
-            <input id="other-accompaniment-input" type="checkbox" class="mes-radio-button">
-            <label for="other-accompaniment-input">Other</label>
-          </ion-col>
-        </ion-row>
-        <div class="mes-divider"></div>
-        <ion-row>
-          <ion-col col-4 class="mes-header-md">
-            Registration number
-          </ion-col>
-          <ion-col col-4>
-            <input appInputRestriction="noSpecialChars" required type="text" class="capital-characters" #carRegistration="ngModel"
-              name="carRegistration" [(ngModel)]="preCheck.carRegistration" autocapitalize="characters">
-          </ion-col>
-        </ion-row>
-        <p [hidden]="carRegistration.valid || (carRegistration.pristine && !form.submitted)" class="warning-text">
-          Car registration number is required
-        </p>
-        <div class="mes-divider"></div>
-        <ion-row class="height-auto">
-          <ion-col col-4 class="mes-header-md">
-            Category
-            <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic" [(ngModel)]="preCheck.isAutomatic">
-          </ion-col>
-          <ion-col class="mes-text-md" col-6>
+                    </ion-col>
+                    <ion-col class="pretest-checks-clear-button-column">
+                        <button type="button" (click)="clearEyesightResult()">Clear</button>
+                    </ion-col>
+                </ion-row>
+                <p [hidden]="isEyesightCompleted.valid || (isEyesightCompleted.pristine && !form.submitted)"
+                   class="warning-text">
+                    Eyesight is required
+                </p>
+                <div class="mes-divider"></div>
+                <ion-row>
+                    <ion-col col-4 class="mes-header-md">
+                        Tell me question
+                    </ion-col>
+                    <ion-col col-4>
+                        <select-button required #tellMeQuestion="ngModel" [(ngModel)]="preCheck.tellMeQuestionId"
+                                       name="tellMeQuestionId" [onClickEventHandler]="showTellMeOptions"
+                                       [selectedText]="preCheck.tellMeQuestionId"></select-button>
+                    </ion-col>
+                    <ion-col col-4 [ngClass]="{'btns-disabled': !preCheck.tellMeQuestionId }">
+                        <div class="fault-btn driverFault-btn" [ngClass]="{'active': (vcState$ | async)?.fault}"
+                             (click)="setTellMeState('fault', $event)">D/F
+                        </div>
+                        <div class="fault-btn serious-btn" [ngClass]="{'active': (vcState$ | async)?.serious}"
+                             (click)="setTellMeState('serious', $event)">S
+                        </div>
+                        <div class="fault-btn dangerous-btn" [ngClass]="{'active': (vcState$ | async)?.dangerous}"
+                             (click)="setTellMeState('dangerous', $event)">D
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <p [hidden]="tellMeQuestion.valid || (tellMeQuestion.pristine && !form.submitted)" class="warning-text">
+                    Select Tell me question
+                </p>
+                <div class="mes-divider"></div>
+                <ion-row class="height-auto">
+                    <ion-col col-4 class="mes-header-md">
+                        Accompanied by (optional)
+                    </ion-col>
+                    <ion-col class="mes-header-md">
+                        <input id="adi-accompaniment-input" type="checkbox" class="mes-radio-button">
+                        <label for="adi-accompaniment-input">ADI</label>
+                    </ion-col>
+                    <ion-col class="mes-header-md">
+                        <input id="sup-accompaniment-input" type="checkbox" class="mes-radio-button">
+                        <label for="sup-accompaniment-input">Sup</label>
+                    </ion-col>
+                    <ion-col class="mes-header-md">
+                        <input id="other-accompaniment-input" type="checkbox" class="mes-radio-button">
+                        <label for="other-accompaniment-input">Other</label>
+                    </ion-col>
+                </ion-row>
+                <div class="mes-divider"></div>
+                <ion-row>
+                    <ion-col col-4 class="mes-header-md">
+                        Registration number
+                    </ion-col>
+                    <ion-col col-4>
+                        <input appInputRestriction="noSpecialChars" required type="text" class="capital-characters"
+                               #carRegistration="ngModel"
+                               name="carRegistration" [(ngModel)]="preCheck.carRegistration"
+                               autocapitalize="characters">
+                    </ion-col>
+                </ion-row>
+                <p [hidden]="carRegistration.valid || (carRegistration.pristine && !form.submitted)"
+                   class="warning-text">
+                    Car registration number is required
+                </p>
+                <div class="mes-divider"></div>
+                <ion-row class="height-auto">
+                    <ion-col col-4 class="mes-header-md">
+                        Category
+                        <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic"
+                               [(ngModel)]="preCheck.isAutomatic">
+                    </ion-col>
+                    <ion-col class="mes-text-md" col-6>
             <span class="input-with-label">
               <input
-                id="manual-category-input"
-                class="mes-radio-button"
-                name="manual-category-input"
-                type="radio"
-                value="{{GearboxCategory.Manual}}"
-                [(ngModel)]="gearboxCategory"
+                      id="manual-category-input"
+                      class="mes-radio-button"
+                      name="manual-category-input"
+                      type="radio"
+                      value="{{GearboxCategory.Manual}}"
+                      [(ngModel)]="gearboxCategory"
               >
               <label for="manual-category-input">Manual</label>
             </span>
-            <span class="input-with-label">
+                        <span class="input-with-label">
               <input
-                id="automatic-category-input"
-                class="mes-radio-button"
-                name="automatic-category-input"
-                type="radio"
-                value="{{GearboxCategory.Automatic}}"
-                [(ngModel)]="gearboxCategory"
+                      id="automatic-category-input"
+                      class="mes-radio-button"
+                      name="automatic-category-input"
+                      type="radio"
+                      value="{{GearboxCategory.Automatic}}"
+                      [(ngModel)]="gearboxCategory"
               >
               <label for="automatic-category-input">Automatic</label>
             </span>
-          </ion-col>
-          <ion-col class="pretest-checks-clear-button-column">
-            <button type="button" (click)="clearGearboxCategory()">Clear</button>
-          </ion-col>
+                    </ion-col>
+                    <ion-col class="pretest-checks-clear-button-column">
+                        <button type="button" (click)="clearGearboxCategory()">Clear</button>
+                    </ion-col>
+                </ion-row>
+                <p [hidden]="isAutomatic.valid || (isAutomatic.pristine && !form.submitted)" class="warning-text">
+                    One option must be selected
+                </p>
+                <div class="mes-divider"></div>
+                <ion-row class="center-text">
+                    <ion-col col-4 class="mes-header-md">
+                        Vehicle details (optional)
+                    </ion-col>
+                    <ion-col col-3 class="mes-header-md">
+                        <input id="school-car-input" type="checkbox" class="mes-radio-button">
+                        <label for="school-car-input">School car</label>
+                    </ion-col>
+                    <ion-col col-3 class="mes-header-md">
+                        <input id="dc-input" type="checkbox" class="mes-radio-button">
+                        <label for="dc-input">D/C</label>
+                    </ion-col>
+                </ion-row>
+                <div class="mes-divider"></div>
+                <ion-row>
+                    <ion-col col-4 class="mes-header-md">
+                        Instructor registration number (optional)
+                    </ion-col>
+                    <ion-col col-4>
+                        <input appInputRestriction="integer" type="number" pattern="[0-9]*">
+                    </ion-col>
+                </ion-row>
+                <div class="mes-divider"></div>
+                <ion-row>
+                    <ion-col col-4 class="mes-header-md">
+                        Instructor certification number (optional)
+                    </ion-col>
+                    <ion-col col-4>
+                        <input appInputRestriction="integer" type="number" pattern="[0-9]*">
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+        </ion-card>
+        <ion-row justify-content-between padding-left padding-right>
+            <button class="mes-cta-button-secondary" (click)="backToJournal()">End driving test</button>
+            <button class="mes-cta-button-primary" type="submit">Confirm and continue</button>
         </ion-row>
-        <p [hidden]="isAutomatic.valid || (isAutomatic.pristine && !form.submitted)" class="warning-text">
-          One option must be selected
-        </p>
-        <div class="mes-divider"></div>
-        <ion-row class="center-text">
-          <ion-col col-4 class="mes-header-md">
-            Vehicle details (optional)
-          </ion-col>
-          <ion-col col-3 class="mes-header-md">
-            <input id="school-car-input" type="checkbox" class="mes-radio-button">
-            <label for="school-car-input">School car</label>
-          </ion-col>
-          <ion-col col-3 class="mes-header-md">
-            <input id="dc-input" type="checkbox" class="mes-radio-button">
-            <label for="dc-input">D/C</label>
-          </ion-col>
-        </ion-row>
-        <div class="mes-divider"></div>
-        <ion-row>
-          <ion-col col-4 class="mes-header-md">
-            Instructor registration number (optional)
-          </ion-col>
-          <ion-col col-4>
-            <input appInputRestriction="integer" type="number" pattern="[0-9]*">
-          </ion-col>
-        </ion-row>
-        <div class="mes-divider"></div>
-        <ion-row>
-          <ion-col col-4 class="mes-header-md">
-            Instructor certification number (optional)
-          </ion-col>
-          <ion-col col-4>
-            <input appInputRestriction="integer" type="number" pattern="[0-9]*">
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-    <ion-row justify-content-between padding-left padding-right>
-      <button class="mes-cta-button-secondary" (click)="backToJournal()">End driving test</button>
-      <button class="mes-cta-button-primary" type="submit">Confirm and continue</button>
-    </ion-row>
-  </form>
+    </form>
 </ion-content>
