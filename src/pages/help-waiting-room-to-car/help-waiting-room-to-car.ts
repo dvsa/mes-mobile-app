@@ -6,6 +6,7 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'help-waiting-room-to-car.html'
 })
 export class HelpWaitingRoomToCarPage {
+  title: 'Waitin room to car - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {

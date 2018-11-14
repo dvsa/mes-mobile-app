@@ -6,6 +6,7 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'help-finalisation-submission.html'
 })
 export class HelpFinalisationSubmissionPage {
+  title: 'Finalisation & Submission - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {

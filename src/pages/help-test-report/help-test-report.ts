@@ -6,6 +6,8 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'help-test-report.html'
 })
 export class HelpTestReportPage {
+  title: 'Test Report - Help';
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {

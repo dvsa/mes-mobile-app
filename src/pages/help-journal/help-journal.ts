@@ -6,6 +6,7 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'help-journal.html'
 })
 export class HelpJournalPage {
+  title: 'Journal - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
