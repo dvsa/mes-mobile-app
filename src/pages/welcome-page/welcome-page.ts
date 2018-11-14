@@ -1,3 +1,4 @@
+import { Page } from 'ionic-angular/navigation/nav-util';
 import { Component } from '@angular/core';
 import { NavController, ViewController, Modal, ModalController } from 'ionic-angular';
 import { JournalPage } from '../journal/journal';
@@ -9,6 +10,7 @@ import { YoutubeDemoModalPage } from '../youtube-demo-modal/youtube-demo-modal';
 })
 export class WelcomePage {
   title: string = 'Welcome';
+  journalPage: Page = JournalPage;
 
   constructor(
     public navCtrl: NavController,
