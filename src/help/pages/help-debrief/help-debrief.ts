@@ -6,7 +6,7 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'help-debrief.html'
 })
 export class HelpDebriefPage {
-  title: 'Debrief - Help';
+  title: string = 'Debrief - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {

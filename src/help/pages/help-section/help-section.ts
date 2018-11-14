@@ -12,7 +12,7 @@ import { Page } from 'ionic-angular/navigation/nav-util';
   templateUrl: 'help-section.html'
 })
 export class HelpSectionPage {
-  title: 'Help';
+  title: string = 'Help section';
   helpDebriefPage: Page = HelpDebriefPage;
   helpFinalisationSubmissionPage: Page = HelpFinalisationSubmissionPage;
   helpJournalPage: Page = HelpJournalPage;
