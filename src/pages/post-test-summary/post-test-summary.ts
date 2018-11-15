@@ -1,7 +1,13 @@
 import { IManualSummary } from './../../components/test-summary/interfaces/IManualSummary';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
 import { Component, ViewChildren, QueryList } from '@angular/core';
-import { Platform, ModalController, NavController, AlertController } from 'ionic-angular';
+import {
+  Platform,
+  ModalController,
+  NavController,
+  AlertController,
+  NavParams
+} from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { IFaultSummary } from '../../components/test-summary/interfaces/IFaultSummary';
@@ -13,6 +19,7 @@ import { VehicleCheckProvider } from '../../providers/vehicle-check/vehicle-chec
 import { isNonBlankString } from '../../shared/utils/string-utils';
 import { PostTestSummarySectionComponent } from '../../components/post-test-summary-section/post-test-summary-section';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -32,6 +39,7 @@ export class PostTestSummaryPage {
   candidateDescription: string = null;
   @ViewChildren(PostTestSummarySectionComponent)
   summarySectionComponents: QueryList<PostTestSummarySectionComponent>;
+  slotDetail: IJournal;
 
   // Validation Flags
   showRouteNumberValidation: boolean = false;
@@ -44,6 +52,7 @@ export class PostTestSummaryPage {
     private platform: Platform,
     private modalCtrl: ModalController,
     private navCtrl: NavController,
+    public navParams: NavParams,
     private faultStore: FaultStoreProvider,
     private alertCtrl: AlertController,
     private vehicleCheckProvider: VehicleCheckProvider,
@@ -54,6 +63,7 @@ export class PostTestSummaryPage {
       this.drivingFaultSummary = faultSummaries.drivingFaultSummary;
       this.seriousFaultSummary = faultSummaries.seriousFaultSummary;
       this.dangerousFaultSummary = faultSummaries.dangerousFaultSummary;
+      this.slotDetail = this.navParams.get('slotDetail');
     });
 
     this.safetyQuestionSummary = {
@@ -180,6 +190,7 @@ export class PostTestSummaryPage {
   }
 
   getTitle(): string {
-    return 'Test summary - Florence  Pearson';
+    const name: ICandidateName = this.slotDetail.candidateName;
+    return `${name.firstName} ${name.lastName} - Test summary`;
   }
 }
