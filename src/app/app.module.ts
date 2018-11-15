@@ -57,7 +57,6 @@ import { TextboxModalComponent } from '../components/textbox-modal/textbox-modal
 import { TestSummaryMetadataProvider } from '../providers/test-summary-metadata/test-summary-metadata';
 import { VehicleCheckProvider } from '../providers/vehicle-check/vehicle-check';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
-import { YoutubeDemoModalPage } from '../pages/youtube-demo-modal/youtube-demo-modal';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -86,8 +85,7 @@ export function createTranslateLoader(http: Http) {
     AoopCustomHammerConfigPage,
     PassDataCollectionPage,
     HealthDeclarationPage,
-    WelcomePage,
-    YoutubeDemoModalPage
+    WelcomePage
   ],
   imports: [
     BrowserModule,
@@ -134,8 +132,7 @@ export function createTranslateLoader(http: Http) {
     PassDataCollectionPage,
     HealthDeclarationPage,
     TextboxModalComponent,
-    WelcomePage,
-    YoutubeDemoModalPage
+    WelcomePage
   ],
   providers: [
     StatusBar,
