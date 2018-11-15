@@ -9,6 +9,8 @@ import { InitiateSwapPage } from '../initiate-swap/initiate-swap';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName, getFormattedAddress } from '../../shared/utils/formatters';
 import { isNonBlankString } from '../../shared/utils/string-utils';
+import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
+
 @Component({
   selector: 'page-candidate-info',
   templateUrl: 'candidate-info.html'
@@ -18,6 +20,7 @@ export class CandidateInfoPage {
   policyDataPage: Page = PolicyDataPage;
   pretestChecksPage: Page = PretestChecksPage;
   initiateSwapPage: Page = InitiateSwapPage;
+  helpPage: Page = HelpJournalPage;
 
   signature: any;
 

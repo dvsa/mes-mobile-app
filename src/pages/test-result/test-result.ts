@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Page } from 'ionic-angular/navigation/nav-util';
 
 import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
+import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
 
 import { IFaultSummary } from '../../components/test-summary/interfaces/IFaultSummary';
 import { TestResult } from '../../components/test-summary/enums/TestResult';
@@ -20,6 +21,7 @@ import { IJournal, ICandidateName } from '../../providers/journal/journal-model'
 export class TestResultPage {
   postTestSummaryPage: Page = PostTestSummaryPage;
   passDataCollectionPage: Page = PassDataCollectionPage;
+  helpPage: Page = HelpDebriefPage;
   testResult: string;
   faultSummaries: {
     [key: string]: IFaultSummary;

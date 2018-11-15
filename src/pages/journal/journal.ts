@@ -11,6 +11,7 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { DeclarationConsentPage } from '../declaration-consent/declaration-consent';
 import { isNil } from 'lodash';
 import { isNonBlankString } from '../../shared/utils/string-utils';
+import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
 
 @Component({
   selector: 'page-journal',
@@ -21,6 +22,7 @@ export class JournalPage {
   candidateInfoPage: Page = CandidateInfoPage;
   declarationConsentPage: Page = DeclarationConsentPage;
   allonOneV2Page: Page = AllOnOneV2Page;
+  helpPage: Page = HelpJournalPage;
 
   constructor(
     public navCtrl: NavController,

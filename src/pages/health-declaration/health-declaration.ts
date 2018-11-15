@@ -6,6 +6,7 @@ import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
+import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
 
 @Component({
   selector: 'page-health-declaration',
@@ -16,6 +17,7 @@ export class HealthDeclarationPage {
   postTestSummaryPage: Page = PostTestSummaryPage;
   confirmation: boolean;
   slotDetail: IJournal;
+  helpPage: Page = HelpDebriefPage;
 
   @ViewChild(MesSignaturePadComponent)
   signaturePad: MesSignaturePadComponent;

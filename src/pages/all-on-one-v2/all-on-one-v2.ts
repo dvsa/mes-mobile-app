@@ -6,6 +6,8 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 import { VehicleCheckProvider } from './../../providers/vehicle-check/vehicle-check';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
+import { HelpTestReportPage } from '../../help/pages/help-test-report/help-test-report';
+import { Page } from 'ionic-angular/navigation/nav-util';
 
 export enum manoeuvre {
   PREFIX = 'manoeuvre',
@@ -36,6 +38,8 @@ export class AllOnOneV2Page implements AfterViewInit {
   manoeuvreKeys = [];
 
   slotDetail: IJournal;
+
+  helpPage: Page = HelpTestReportPage;
 
   @ViewChild('manoeuvresButton')
   manoeuvresButton;
