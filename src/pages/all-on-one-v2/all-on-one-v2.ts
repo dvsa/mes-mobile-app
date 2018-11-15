@@ -131,7 +131,9 @@ export class AllOnOneV2Page implements AfterViewInit {
       dangerous: (el) => el.addDangerousFault()
     };
 
-    drivingFaultActions[tellMeFault](this.showMeEl);
+    if (typeof drivingFaultActions[tellMeFault] === 'function') {
+      drivingFaultActions[tellMeFault](this.showMeEl);
+    }
   }
 
   showMePress() {
