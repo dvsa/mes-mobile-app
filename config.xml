@@ -95,16 +95,6 @@
     <plugin name="cordova-plugin-media" spec="^5.0.2">
         <variable name="KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE" value="NO" />
     </plugin>
-    <plugin name="cordova-plugin-ionic" spec="^4.2.0">
-        <variable name="APP_ID" value="33dd3db4" />
-        <variable name="CHANNEL_NAME" value="Production" />
-        <variable name="WARN_DEBUG" value="true" />
-        <variable name="UPDATE_API" value="https://api.ionicjs.com" />
-        <variable name="UPDATE_METHOD" value="none" />
-        <variable name="MAX_STORE" value="2" />
-        <variable name="ROLLBACK_TIMEOUT" value="10" />
-        <variable name="MIN_BACKGROUND_DURATION" value="30" />
-    </plugin>
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="4.5.5" />
 </widget>
