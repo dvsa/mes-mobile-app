@@ -64,11 +64,9 @@ page-pretest-checks {
       background: lighten(map-get($colors, gds-red), 5);
     }
   }
-
   .tell-me-result {
     padding: 0.5em;
     border: 2px solid #222;
     border-radius: 5px;
-    height: 48px;
   }
 }
