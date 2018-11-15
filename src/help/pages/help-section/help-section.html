@@ -3,9 +3,117 @@
 </ion-header>
 
 <ion-content padding>
-  <div margin-bottom><button [navPush]='helpJournalPage' class="mes-cta-button-primary">Journal help</button></div>
-  <div margin-bottom><button [navPush]='helpWaitingRoomToCarPage' class="mes-cta-button-primary">Waiting room to car help</button></div>
-  <div margin-bottom><button [navPush]='helpTestReportPage' class="mes-cta-button-primary">Test report help</button></div>
-  <div margin-bottom><button [navPush]='helpDebriefPage' class="mes-cta-button-primary">Debrief help</button></div>
-  <div margin-bottom><button [navPush]='helpFinalisationSubmissionPage' class="mes-cta-button-primary">Finalisation and Submission help</button></div>
+
+  <span class="mes-header-xlg">Help guide</span>
+
+  <div>
+    <div style="width: 100%; text-align: right;">
+      <!-- <span>blabla</span> -->
+      <span class="mes-link">show all</span>
+    </div>
+    <ol>
+
+      <!-- Journal -->
+
+      <li>
+        <div style="width: 100%;" class="mes-divider"></div>
+        <div>
+          <span class="mes-header-lg" [navPush]='helpJournalPage'>Journal</span>
+          <span style="float: right;">
+            <span *ngIf="isJournalVisibilityCollapsed()">
+              <span class="show-icon">+</span>
+              <span class="mes-link">show</span>
+            </span>
+            <span *ngIf="isJournalVisibilityExpended()">
+              <span class="hide-icon">-</span>
+              <span class="mes-link">hide</span>
+            </span>
+          </span>
+        </div>
+        <div class="mes-text-md">
+          This is where you can see an overview of your tests for the day
+        </div>
+        <div>
+          Here will be the hidden content
+        </div>
+      </li>
+
+      <!-- Waiting room to car -->
+
+      <li>
+        <div class="mes-divider"></div>
+        <div>
+          <span class="mes-header-lg" [navPush]='helpWaitingRoomToCarPage'>Waiting room to car</span>
+          <span>
+            <span class="mes-text-md">+</span>
+            <span class="mes-link">show</span>
+          </span>
+        </div>
+        <div class="mes-text-md">
+          Recording candidate details
+        </div>
+        <div>
+          Here will be the hidden content
+        </div>
+      </li>
+
+      <!-- In-car testing -->
+
+      <li>
+        <div class="mes-divider"></div>
+        <div>
+          <span class="mes-header-lg" [navPush]='helpTestReportPage'>In-car testing</span>
+          <span>
+            <span class="mes-text-md">+</span>
+            <span class="mes-link">show</span>
+          </span>
+        </div>
+        <div class="mes-text-md">
+          Conducting the test
+        </div>
+        <div>
+          Here will be the hidden content
+        </div>
+      </li>
+
+      <!-- Debrief -->
+
+      <li>
+        <div class="mes-divider"></div>
+        <div>
+          <span class="mes-header-lg" [navPush]='helpDebriefPage'>Debrief</span>
+          <span>
+            <span class="mes-text-md">+</span>
+            <span class="mes-link">show</span>
+          </span>
+        </div>
+        <div class="mes-text-md">
+          Providing feedback to candidate
+        </div>
+        <div>
+          Here will be the hidden content
+        </div>
+      </li>
+
+      <!-- Finalisation and submission -->
+
+      <li>
+        <div class="mes-divider"></div>
+        <div>
+            <span class="mes-header-lg" [navPush]='helpFinalisationSubmissionPage'>Finalisation and submission</span>
+            <span>
+            <span class="mes-text-md">+</span>
+              <span class="mes-link">show</span>
+            </span>
+        </div>
+        <div class="mes-text-md">
+          Writing up report
+        </div>
+        <div>
+          Here will be the hidden content
+        </div>
+      </li>
+    </ol>
+  </div>
+  
 </ion-content>
