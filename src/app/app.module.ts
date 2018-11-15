@@ -1,3 +1,4 @@
+import { HelpModule } from './../help/help.module';
 import { DirectivesModule } from './../directives/directives.module';
 import { AllOnOneV2Page } from './../pages/all-on-one-v2/all-on-one-v2';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -103,7 +104,8 @@ export function createTranslateLoader(http: Http) {
     }),
     NgReduxModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    HelpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

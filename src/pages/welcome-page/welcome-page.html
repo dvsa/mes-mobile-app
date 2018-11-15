@@ -15,10 +15,8 @@
     <div class="welcome-message">
         Welcome to the Mobile Examiner Service Familiarisation day.
     </div>
+    <ion-row margin-top>
+        <ion-col text-center><button [navPush]="helpPage" class="mes-cta-button-primary">Help</button></ion-col>
+        <ion-col text-center><button [navPush]="journalPage" class="mes-cta-button-primary">App</button></ion-col>
+    </ion-row>
 </ion-content>
-
-<ion-footer no-border>
-    <ion-buttons right>
-        <button ion-button color="primary" item-right (click)="navToJournal()">Ok</button>
-    </ion-buttons>
-</ion-footer>
