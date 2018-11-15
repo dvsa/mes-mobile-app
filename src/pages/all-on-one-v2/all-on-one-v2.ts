@@ -131,11 +131,7 @@ export class AllOnOneV2Page implements AfterViewInit {
       dangerous: (el) => el.addDangerousFault()
     };
 
-    const recordedFaultType = Object.keys(drivingFaultActions).find(
-      (faultType) => faultType === tellMeFault
-    );
-
-    drivingFaultActions[recordedFaultType](this.showMeEl);
+    drivingFaultActions[tellMeFault](this.showMeEl);
   }
 
   showMePress() {
