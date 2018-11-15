@@ -125,28 +125,17 @@ export class AllOnOneV2Page implements AfterViewInit {
   // Show me button actions
 
   setUpShowMeButton(tellMeFault: string) {
-    const noFault = undefined;
-    if (tellMeFault === noFault) {
-      return;
-    }
+    const drivingFaultActions = {
+      fault: (el) => el.addDrivingFault(),
+      serious: (el) => el.addSeriousFault(),
+      dangerous: (el) => el.addDangerousFault()
+    };
 
-    const drivingFault = 'fault';
-    if (tellMeFault === drivingFault) {
-      this.showMeEl.addDrivingFault();
-      return;
-    }
+    const recordedFaultType = Object.keys(drivingFaultActions).find(
+      (faultType) => faultType === tellMeFault
+    );
 
-    const seriousFault = 'serious';
-    if (tellMeFault === seriousFault) {
-      this.showMeEl.addSeriousFault();
-      return;
-    }
-
-    const dangerousFault = 'dangerous';
-    if (tellMeFault === dangerousFault) {
-      this.showMeEl.addDangerousFault();
-      return;
-    }
+    drivingFaultActions[recordedFaultType](this.showMeEl);
   }
 
   showMePress() {
