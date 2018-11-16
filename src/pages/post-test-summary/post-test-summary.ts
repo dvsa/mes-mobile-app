@@ -20,6 +20,7 @@ import { isNonBlankString } from '../../shared/utils/string-utils';
 import { PostTestSummarySectionComponent } from '../../components/post-test-summary-section/post-test-summary-section';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
+import { HelpFinalisationSubmissionPage } from '../../help/pages/help-finalisation-submission/help-finalisation-submission';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -30,6 +31,7 @@ export class PostTestSummaryPage {
   seriousFaultSummary: IFaultSummary;
   dangerousFaultSummary: IFaultSummary;
   journalPage: Page = JournalPage;
+  helpPage: Page = HelpFinalisationSubmissionPage;
   selectedRoute: string = null;
   showMeQuestion = null;
   disableBackdropDismissModalOption = { enableBackdropDismiss: false };

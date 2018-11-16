@@ -4,6 +4,7 @@ import { HealthDeclarationPage } from '../health-declaration/health-declaration'
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { isNil } from 'lodash';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
+import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
 
 @Component({
   selector: 'page-pass-data-collection',
@@ -14,6 +15,7 @@ export class PassDataCollectionPage {
   passCertificateNumber: string;
   provisionalProvidedSelection: string = '0';
   slotDetail: IJournal;
+  helpPage: Page = HelpDebriefPage;
 
   // Validation Flags
   showPassCertificateNumberValidation: boolean = false;

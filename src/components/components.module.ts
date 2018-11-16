@@ -25,6 +25,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { TestResultHeaderComponent } from './test-result-header/test-result-header';
 import { JournalTestDetailsComponent } from './journal-test-details/journal-test-details';
 import { JournalCandidateInfoComponent } from './journal-candidate-info/journal-candidate-info';
+import { HelpButtonComponent } from './help-button/help-button';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { JournalCandidateInfoComponent } from './journal-candidate-info/journal-
     MesSignaturePadComponent,
     TestResultHeaderComponent,
     JournalTestDetailsComponent,
-    JournalCandidateInfoComponent
+    JournalCandidateInfoComponent,
+    HelpButtonComponent
   ],
   imports: [IonicModule.forRoot(PageHeaderComponent), SignaturePadModule],
   exports: [
@@ -77,7 +79,8 @@ import { JournalCandidateInfoComponent } from './journal-candidate-info/journal-
     MesSignaturePadComponent,
     TestResultHeaderComponent,
     JournalTestDetailsComponent,
-    JournalCandidateInfoComponent
+    JournalCandidateInfoComponent,
+    HelpButtonComponent
   ]
 })
 export class ComponentsModule {}
