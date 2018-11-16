@@ -45,6 +45,40 @@ export class HelpSectionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
+  // Expanding and collapsing all sections
+
+  isAtLeastOneCollapsed() {
+    return Object.keys(this.visibility).some(
+      (section) => this.visibility[section] === visibilityType.collapsed
+    );
+  }
+
+  isAllExpanded() {
+    return Object.keys(this.visibility).every(
+      (section) => this.visibility[section] === visibilityType.expanded
+    );
+  }
+
+  expandAll() {
+    this.visibility = {
+      journal: visibilityType.expanded,
+      waitingRoomToCar: visibilityType.expanded,
+      inCarTesting: visibilityType.expanded,
+      debreif: visibilityType.expanded,
+      finalisationAndSubmission: visibilityType.expanded
+    };
+  }
+
+  collapseAll() {
+    this.visibility = {
+      journal: visibilityType.collapsed,
+      waitingRoomToCar: visibilityType.collapsed,
+      inCarTesting: visibilityType.collapsed,
+      debreif: visibilityType.collapsed,
+      finalisationAndSubmission: visibilityType.collapsed
+    };
+  }
+
   // Expanding and collapsing Journal section
 
   isJournalVisibilityExpended() {
