@@ -1,8 +1,8 @@
 import { TELL_ME_QUESTIONS } from './../../app/constants';
-import { VehicleCheckProvider, vCheckType } from './../../providers/vehicle-check/vehicle-check';
+import { vCheckType, VehicleCheckProvider } from './../../providers/vehicle-check/vehicle-check';
 import { AllOnOneV2Page } from './../all-on-one-v2/all-on-one-v2';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ModalController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { PolicyDataPage } from '../policy-data/policy-data';
 import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
@@ -40,6 +40,10 @@ export class PretestChecksPage {
 
   @select(['faults', 'vehicleCheck'])
   vcState$;
+
+  // Validation Flags
+  showEyesightValidation: boolean = false;
+  showGearboxValidation: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -97,7 +101,10 @@ export class PretestChecksPage {
   };
 
   gotoDL25(form) {
-    if (form.valid) {
+    this.showEyesightValidation = this.eyesightResult === EyesightResult.NotAnswered;
+    this.showGearboxValidation = this.gearboxCategory === this.GearboxCategory.NotAnswered;
+
+    if (form.valid && !this.showEyesightValidation && !this.showGearboxValidation) {
       this.navCtrl.push(AllOnOneV2Page, { slotDetail: this.slotDetail }, { animate: false });
     }
   }

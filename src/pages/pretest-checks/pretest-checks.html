@@ -10,6 +10,7 @@
                 <ion-row justify-space-between>
                     <ion-col col-4 class="mes-header-md">
                         Eyesight test
+                        <ion-icon name="alert" *ngIf="showEyesightValidation" class="validation-icon"></ion-icon>
                     </ion-col>
                     <ion-col class="mes-text-md" col-3>
             <span class="input-with-label">
@@ -41,14 +42,14 @@
                         <button type="button" (click)="clearEyesightResult()">Clear</button>
                     </ion-col>
                 </ion-row>
-                <p [hidden]="isEyesightCompleted.valid || (isEyesightCompleted.pristine && !form.submitted)"
-                   class="warning-text">
+                <p *ngIf="showEyesightValidation" class="warning-text">
                     Eyesight is required
                 </p>
                 <div class="mes-divider"></div>
                 <ion-row>
                     <ion-col col-4 class="mes-header-md">
                         Tell me question
+                        <ion-icon name="alert" [hidden]="tellMeQuestion.valid || (tellMeQuestion.pristine && !form.submitted)" class="validation-icon"></ion-icon>
                     </ion-col>
                     <ion-col col-4>
                         <select-button required #tellMeQuestion="ngModel" [(ngModel)]="preCheck.tellMeQuestionId"
@@ -104,6 +105,7 @@
                 <ion-row>
                     <ion-col col-4 class="mes-header-md">
                         Registration number
+                        <ion-icon name="alert" [hidden]="carRegistration.valid || (carRegistration.pristine && !form.submitted)" class="validation-icon"></ion-icon>
                     </ion-col>
                     <ion-col col-4>
                         <input appInputRestriction="noSpecialChars" required type="text" class="capital-characters"
@@ -120,6 +122,7 @@
                 <ion-row class="height-auto">
                     <ion-col col-4 class="mes-header-md">
                         Category
+                        <ion-icon name="alert" *ngIf="showGearboxValidation" class="validation-icon"></ion-icon>
                         <!--<input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic"-->
                         <!--[(ngModel)]="preCheck.isAutomatic">-->
                     </ion-col>
@@ -133,8 +136,6 @@
                                     value="{{GearboxCategory.Manual}}"
                                     required
                                     [(ngModel)]="gearboxCategory"
-                                    #gCat="ngModel"
-
                             >
                             <label for="manual-category-input">Manual</label>
                         </span>
@@ -147,8 +148,6 @@
                                 value="{{GearboxCategory.Automatic}}"
                                 required
                                 [(ngModel)]="gearboxCategory"
-                                #gCat="ngModel"
-
                         >
                         <label for="automatic-category-input">Automatic</label>
                         </span>
@@ -157,7 +156,7 @@
                         <button type="button" (click)="clearGearboxCategory()">Clear</button>
                     </ion-col>
                 </ion-row>
-                <p [hidden]="gCat.valid || (gCat.pristine && !form.submitted)" class="warning-text">
+                <p *ngIf="showGearboxValidation" class="warning-text">
                     One option must be selected
                 </p>
                 <div class="mes-divider"></div>

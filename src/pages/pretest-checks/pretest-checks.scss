@@ -26,9 +26,14 @@ page-pretest-checks {
       color: map-get($colors, secondaryButton);
     }
   }
+  .validation-icon {
+    padding-left: 8px;
+    color: map-get($colors, gds-red);
+    font-size: 24px;
+  }
   .warning-text {
     padding-left: 5px;
-    color: map-get($colors, danger);
+    color: map-get($colors, gds-red);
     position: absolute;
   }
   .btns-disabled {
@@ -68,5 +73,9 @@ page-pretest-checks {
     padding: 0.5em;
     border: 2px solid #222;
     border-radius: 5px;
+  }
+  // Make the width of the select contain the whole text
+  .select-text {
+    text-overflow: unset;
   }
 }
