@@ -1,0 +1,18 @@
+<ion-navbar hideBackButton no-padding class="mes-header-lg">
+    <ion-grid>
+        <ion-row align-items-center>
+            <ion-col>
+                <ion-icon name="ios-help-circle-outline" class="header-help-icon"></ion-icon>
+                <span>{{title}}</span>
+            </ion-col>
+            <ion-col>
+                <ion-buttons end>
+                    <button ion-button="bar-button" icon-start class="header-close-button" (click)="closePopup()" (press)="closePopup()">
+                        <ion-icon name="ios-close" class="header-close-icon"></ion-icon>
+                        <span>Close</span>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-navbar>
