@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { HelpDebriefPage } from './pages/help-debrief/help-debrief';
 import { ComponentsModule } from '../components/components.module';
+import { HelpComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { ComponentsModule } from '../components/components.module';
     HelpTestReportPage,
     HelpWaitingRoomToCarPage
   ],
-  imports: [IonicModule.forRoot(HelpSectionPage), ComponentsModule],
+  imports: [IonicModule.forRoot(HelpSectionPage), ComponentsModule, HelpComponentsModule],
   entryComponents: [
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
