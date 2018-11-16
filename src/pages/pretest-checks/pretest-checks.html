@@ -34,6 +34,7 @@
                       value="{{EyesightResult.Serious}}"
                       [(ngModel)]="eyesightResult"
                       [ngModelOptions]="{standalone: true}"
+                      (click)="openEyesightTestAlert()"
               >
               <label for="eyeSightSeriousFault">S</label>
             </span>
@@ -184,7 +185,7 @@
             </ion-card-content>
         </ion-card>
         <ion-row justify-content-between padding-left padding-right>
-            <button class="mes-cta-button-secondary" (click)="backToJournal()">End driving test</button>
+            <button class="mes-cta-button-secondary" type="button" (click)="backToJournal()">End driving test</button>
             <button class="mes-cta-button-primary" type="submit">Confirm and continue</button>
         </ion-row>
     </form>

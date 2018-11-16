@@ -2,7 +2,7 @@ import { TELL_ME_QUESTIONS } from './../../app/constants';
 import { vCheckType, VehicleCheckProvider } from './../../providers/vehicle-check/vehicle-check';
 import { AllOnOneV2Page } from './../all-on-one-v2/all-on-one-v2';
 import { Component, ViewChild } from '@angular/core';
-import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PolicyDataPage } from '../policy-data/policy-data';
 import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
@@ -53,7 +53,8 @@ export class PretestChecksPage {
     public navCtrl: NavController,
     private modalCtrl: ModalController,
     private vehicleCheckProvider: VehicleCheckProvider,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private alertCtrl: AlertController
   ) {
     this.slotDetail = this.navParams.get('slotDetail');
   }
@@ -125,5 +126,29 @@ export class PretestChecksPage {
 
   updateTellMeState() {
     this.setTellMeState(this.tellMeSelection);
+  }
+
+  openEyesightTestAlert() {
+    const title = 'End Driving Test';
+    const message =
+      'You have selected a serious eyesight fault. Are you sure you want to end this test?';
+    this.alertCtrl
+      .create({
+        title,
+        message,
+        buttons: [
+          {
+            text: 'End Test',
+            handler: () => this.backToJournal()
+          },
+          {
+            text: 'Continue Test',
+            handler: () => {
+              this.eyesightResult = EyesightResult.NotAnswered;
+            }
+          }
+        ]
+      })
+      .present();
   }
 }
