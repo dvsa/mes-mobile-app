@@ -73,9 +73,16 @@ page-pretest-checks {
     padding: 0.5em;
     border: 2px solid #222;
     border-radius: 5px;
+    max-width: 70%;
   }
   // Make the width of the select contain the whole text
   .select-text {
     text-overflow: unset;
+  }
+  // Align the icon for our ion-select sizing
+  .select-icon-inner {
+    left: -1px !important;
+    margin-top: 2px !important;
+    color: map-get($colors, gds-black) !important;
   }
 }
