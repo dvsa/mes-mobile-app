@@ -5,6 +5,14 @@ page-help-section {
     font-weight: bold;
   }
 
+  .section-number {
+    font-size: 36px;
+    font-weight: bold;
+    border: 3px solid black;
+    border-radius: 50%;
+    padding: 0px 11px;
+  }
+
   #show-all-container {
     width: 100%;
     text-align: right;
@@ -12,5 +20,29 @@ page-help-section {
 
   .hide-show-links {
     float: right;
+  }
+
+  .divider {
+    @extend .mes-divider;
+
+    margin-left: 80px;
+  }
+
+  .section-header-text {
+    @extend .mes-header-lg;
+
+    margin-left: 28px;
+  }
+
+  .section-header {
+    margin-bottom: 15px;
+  }
+
+  .section-text {
+    margin-left: 80px;
+  }
+
+  .section-details {
+    margin-left: 80px;
   }
 }

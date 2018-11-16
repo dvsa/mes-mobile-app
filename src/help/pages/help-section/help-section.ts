@@ -34,7 +34,6 @@ export class HelpSectionPage {
   helpTestReportPage: Page = HelpTestReportPage;
   helpWaitingRoomToCarPage: Page = HelpWaitingRoomToCarPage;
 
-  // TODO: Define an interface for this
   visibility: IVisibility = {
     journal: visibilityType.expanded,
     waitingRoomToCar: visibilityType.collapsed,

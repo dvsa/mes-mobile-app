@@ -17,10 +17,11 @@
       <!-- Journal -->
 
       <ion-item>
-        <div class="mes-divider"></div>
+        <div class="divider"></div>
         <div (click)="toggleJournalVisibility()">
-          <div>
-            <span class="mes-header-lg" [navPush]='helpJournalPage'>Journal</span>
+          <div class="section-header">
+            <span class="section-number">1</span>
+            <span class="section-header-text">Journal</span>
             <span class="hide-show-links">
               <span *ngIf="isJournalVisibilityCollapsed()">
                 <span class="show-icon">+</span>
@@ -32,11 +33,11 @@
               </span>
             </span>
           </div>
-          <div class="mes-text-md">
+          <div class="mes-text-md section-text">
             This is where you can see an overview of your tests for the day
           </div>
         </div>
-        <div *ngIf="isJournalVisibilityExpended()">
+        <div class="section-details" *ngIf="isJournalVisibilityExpended()">
           Here will be the hidden content
         </div>
       </ion-item>
@@ -44,10 +45,11 @@
       <!-- Waiting room to car -->
 
       <ion-item>
-        <div class="mes-divider"></div>
+        <div class="divider"></div>
         <div (click)="toggleWaitingRoomToCarVisibility()">
-          <div>
-            <span class="mes-header-lg" [navPush]='helpWaitingRoomToCarPage'>Waiting room to car</span>
+          <div class="section-header">
+            <span class="section-number">2</span>
+            <span class="section-header-text">Waiting room to car</span>
             <span class="hide-show-links">
               <span *ngIf="isWaitingRoomToCarVisibilityCollapsed()">
                 <span class="show-icon">+</span>
@@ -71,10 +73,11 @@
       <!-- In-car testing -->
 
       <ion-item>
-        <div class="mes-divider"></div>
+        <div class="divider"></div>
         <div (click)="toggleInCarTestingVisibility()">
-          <div>
-            <span class="mes-header-lg" [navPush]='helpInCarTestingPage'>In-car testing</span>
+          <div class="section-header">
+            <span class="section-number">3</span>
+            <span class="section-header-text">In-car testing</span>
             <span class="hide-show-links">
               <span *ngIf="isInCarTestingVisibilityCollapsed()">
                 <span class="show-icon">+</span>
@@ -98,10 +101,11 @@
       <!-- Debrief -->
 
       <ion-item>
-        <div class="mes-divider"></div>
+        <div class="divider"></div>
         <div (click)="toggleDebreifVisibility()">
-          <div>
-            <span class="mes-header-lg" [navPush]='helpDebreifPage'>Debrief</span>
+          <div class="section-header">
+            <span class="section-number">4</span>
+            <span class="section-header-text">Debrief</span>
             <span class="hide-show-links">
               <span *ngIf="isDebreifVisibilityCollapsed()">
                 <span class="show-icon">+</span>
@@ -125,10 +129,11 @@
       <!-- Finalisation and submission -->
 
       <ion-item>
-        <div class="mes-divider"></div>
+        <div class="divider"></div>
         <div (click)="toggleFinalisationAndSubmissionVisibility()">
-          <div>
-            <span class="mes-header-lg" [navPush]='helpFinalisationAndSubmissionPage'>Finalisation and submission</span>
+          <div class="section-header">
+            <span class="section-number">5</span>
+            <span class="section-header-text">Finalisation and submission</span>
             <span class="hide-show-links">
               <span *ngIf="isFinalisationAndSubmissionVisibilityCollapsed()">
                 <span class="show-icon">+</span>
