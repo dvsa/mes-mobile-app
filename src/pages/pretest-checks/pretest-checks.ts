@@ -45,6 +45,8 @@ export class PretestChecksPage {
   showEyesightValidation: boolean = false;
   showGearboxValidation: boolean = false;
 
+  tellMeSelection: any = null;
+
   constructor(
     public navCtrl: NavController,
     private modalCtrl: ModalController,
@@ -117,5 +119,9 @@ export class PretestChecksPage {
     secondInput.checked = false;
     this.preCheck.isAutomatic = event.target.checked;
     this.isAutomaticInput.control.markAsDirty();
+  }
+
+  updateTellMeState() {
+    console.log('tell me selection', this.tellMeSelection);
   }
 }

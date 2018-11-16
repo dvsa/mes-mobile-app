@@ -60,7 +60,8 @@
                     </ion-col>
 
                     <ion-col col-4 *ngIf="preCheck.questionAsked">
-                        <ion-select class="tell-me-result" multiple="false" interface="popover">
+                        <ion-select class="tell-me-result" multiple="false" interface="popover"
+                                    (ionChange)="updateTellMeState()" [ngModel]="tellMeSelection" name="tellMeSelection">
                             <ion-option value="nothing">Please select</ion-option>
                             <ion-option value="satisfactory">Satisfactory</ion-option>
                             <ion-option value="d/f">D/F</ion-option>
