@@ -93,6 +93,7 @@ export class PretestChecksPage {
     tellMeQuestionModal.onDidDismiss(
       (selectedQuestion = { id: null, shortText: null }, role: string) => {
         if (role !== 'dismiss') {
+          this.tellMeSelection = 'nothing';
           this.preCheck.tellMeQuestionId = selectedQuestion.id;
           this.preCheck.questionAsked = true;
           this.preCheck.selectedQuestion = `${selectedQuestion.id} - ${selectedQuestion.shortText}`;
