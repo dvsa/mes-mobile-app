@@ -89,14 +89,17 @@ export class PretestChecksPage {
       this.disableBackdropDismissModalOption
     );
 
-    tellMeQuestionModal.onDidDismiss((selectedQuestion = { id: null }, role: string) => {
-      if (role !== 'dismiss') {
-        this.preCheck.tellMeQuestionId = selectedQuestion.id;
-        this.preCheck.questionAsked = true;
-        this.preCheck.selectedQuestion = `${selectedQuestion.id} - ${selectedQuestion.keyWords}`;
-        this.vehicleCheckProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
+    tellMeQuestionModal.onDidDismiss(
+      (selectedQuestion = { id: null, shortText: null }, role: string) => {
+        if (role !== 'dismiss') {
+          this.preCheck.tellMeQuestionId = selectedQuestion.id;
+          this.preCheck.questionAsked = true;
+          this.preCheck.selectedQuestion = `${selectedQuestion.id} - ${selectedQuestion.shortText}`;
+          // todo - check this logic and its use with the select option
+          this.vehicleCheckProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
+        }
       }
-    });
+    );
 
     tellMeQuestionModal.present();
   };
