@@ -11,6 +11,7 @@ import { select } from '@angular-redux/store';
 import { IJournal } from '../../providers/journal/journal-model';
 import { EyesightResult } from './check-enums/eyesight-result';
 import { GearboxCategory } from './check-enums/gearbox-category';
+import { HelpWaitingRoomToCarPage } from '../../help/pages/help-waiting-room-to-car/help-waiting-room-to-car';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -45,7 +46,8 @@ export class PretestChecksPage {
   showEyesightValidation: boolean = false;
   showGearboxValidation: boolean = false;
 
-  tellMeSelection: any = null;
+  tellMeSelection: string = 'nothing';
+  helpPage: Page = HelpWaitingRoomToCarPage;
 
   constructor(
     public navCtrl: NavController,
