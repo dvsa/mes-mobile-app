@@ -84,8 +84,9 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
         this.section === 'showMe' ||
         this.section.startsWith('manoeuvre')) &&
       this.faultCounter > 0
-    )
+    ) {
       return;
+    }
     this.faultStore.addFault(this.section, 'fault');
   }
 
