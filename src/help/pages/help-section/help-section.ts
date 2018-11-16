@@ -55,7 +55,7 @@ export class HelpSectionPage {
     return this.visibility.journal === visibilityType.collapsed;
   }
 
-  toggleJournelVisibility() {
+  toggleJournalVisibility() {
     if (this.isJournalVisibilityCollapsed()) {
       this.visibility.journal = visibilityType.expanded;
       return;
@@ -68,9 +68,85 @@ export class HelpSectionPage {
 
   // Expanding and collapsing Waiting Room to Car section
 
+  isWaitingRoomToCarVisibilityExpended() {
+    return this.visibility.waitingRoomToCar === visibilityType.expanded;
+  }
+
+  isWaitingRoomToCarVisibilityCollapsed() {
+    return this.visibility.waitingRoomToCar === visibilityType.collapsed;
+  }
+
+  toggleWaitingRoomToCarVisibility() {
+    if (this.isWaitingRoomToCarVisibilityCollapsed()) {
+      this.visibility.waitingRoomToCar = visibilityType.expanded;
+      return;
+    }
+    if (this.isWaitingRoomToCarVisibilityExpended()) {
+      this.visibility.waitingRoomToCar = visibilityType.collapsed;
+      return;
+    }
+  }
+
   // Expanding and collapsing In-car Testing section
+
+  isInCarTestingVisibilityExpended() {
+    return this.visibility.inCarTesting === visibilityType.expanded;
+  }
+
+  isInCarTestingVisibilityCollapsed() {
+    return this.visibility.inCarTesting === visibilityType.collapsed;
+  }
+
+  toggleInCarTestingVisibility() {
+    if (this.isInCarTestingVisibilityCollapsed()) {
+      this.visibility.inCarTesting = visibilityType.expanded;
+      return;
+    }
+    if (this.isInCarTestingVisibilityExpended()) {
+      this.visibility.inCarTesting = visibilityType.collapsed;
+      return;
+    }
+  }
 
   // Expanding and collapsing Debrief section
 
+  isDebreifVisibilityExpended() {
+    return this.visibility.debreif === visibilityType.expanded;
+  }
+
+  isDebreifVisibilityCollapsed() {
+    return this.visibility.debreif === visibilityType.collapsed;
+  }
+
+  toggleDebreifVisibility() {
+    if (this.isDebreifVisibilityCollapsed()) {
+      this.visibility.debreif = visibilityType.expanded;
+      return;
+    }
+    if (this.isDebreifVisibilityExpended()) {
+      this.visibility.debreif = visibilityType.collapsed;
+      return;
+    }
+  }
+
   // Expanding and collapsing Finalisation and Submission section
+
+  isFinalisationAndSubmissionVisibilityExpended() {
+    return this.visibility.finalisationAndSubmission === visibilityType.expanded;
+  }
+
+  isFinalisationAndSubmissionVisibilityCollapsed() {
+    return this.visibility.finalisationAndSubmission === visibilityType.collapsed;
+  }
+
+  toggleFinalisationAndSubmissionVisibility() {
+    if (this.isFinalisationAndSubmissionVisibilityCollapsed()) {
+      this.visibility.finalisationAndSubmission = visibilityType.expanded;
+      return;
+    }
+    if (this.isFinalisationAndSubmissionVisibilityExpended()) {
+      this.visibility.finalisationAndSubmission = visibilityType.collapsed;
+      return;
+    }
+  }
 }

@@ -10,16 +10,17 @@
     <div id="show-all-container">
       <span class="mes-link">show all</span>
     </div>
-    <ol>
+
+    <ion-list no-lines>
 
       <!-- Journal -->
 
-      <li>
-        <div style="width: 100%;" class="mes-divider"></div>
-        <div (click)="toggleJournelVisibility()">
+      <ion-item>
+        <div class="mes-divider"></div>
+        <div (click)="toggleJournalVisibility()">
           <div>
             <span class="mes-header-lg" [navPush]='helpJournalPage'>Journal</span>
-            <span style="float: right;">
+            <span class="hide-show-links">
               <span *ngIf="isJournalVisibilityCollapsed()">
                 <span class="show-icon">+</span>
                 <span class="mes-link">show</span>
@@ -37,84 +38,118 @@
         <div *ngIf="isJournalVisibilityExpended()">
           Here will be the hidden content
         </div>
-      </li>
+      </ion-item>
 
       <!-- Waiting room to car -->
 
-      <li>
+      <ion-item>
         <div class="mes-divider"></div>
-        <div>
-          <span class="mes-header-lg" [navPush]='helpWaitingRoomToCarPage'>Waiting room to car</span>
-          <span>
-            <span class="mes-text-md">+</span>
-            <span class="mes-link">show</span>
-          </span>
+        <div (click)="toggleWaitingRoomToCarVisibility()">
+          <div>
+            <span class="mes-header-lg" [navPush]='helpWaitingRoomToCarPage'>Waiting room to car</span>
+            <span class="hide-show-links">
+              <span *ngIf="isWaitingRoomToCarVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isWaitingRoomToCarVisibilityExpended()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md">
+            Recording candidate details
+          </div>
         </div>
-        <div class="mes-text-md">
-          Recording candidate details
-        </div>
-        <div>
+        <div *ngIf="isWaitingRoomToCarVisibilityExpended()">
           Here will be the hidden content
         </div>
-      </li>
+      </ion-item>
 
       <!-- In-car testing -->
 
-      <li>
+      <ion-item>
         <div class="mes-divider"></div>
-        <div>
-          <span class="mes-header-lg" [navPush]='helpTestReportPage'>In-car testing</span>
-          <span>
-            <span class="mes-text-md">+</span>
-            <span class="mes-link">show</span>
-          </span>
+        <div (click)="toggleInCarTestingVisibility()">
+          <div>
+            <span class="mes-header-lg" [navPush]='helpInCarTestingPage'>In-car testing</span>
+            <span class="hide-show-links">
+              <span *ngIf="isInCarTestingVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isInCarTestingVisibilityExpended()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md">
+            Conducting the test
+          </div>
         </div>
-        <div class="mes-text-md">
-          Conducting the test
-        </div>
-        <div>
+        <div *ngIf="isInCarTestingVisibilityExpended()">
           Here will be the hidden content
         </div>
-      </li>
+      </ion-item>
 
       <!-- Debrief -->
 
-      <li>
+      <ion-item>
         <div class="mes-divider"></div>
-        <div>
-          <span class="mes-header-lg" [navPush]='helpDebriefPage'>Debrief</span>
-          <span>
-            <span class="mes-text-md">+</span>
-            <span class="mes-link">show</span>
-          </span>
+        <div (click)="toggleDebreifVisibility()">
+          <div>
+            <span class="mes-header-lg" [navPush]='helpDebreifPage'>Debrief</span>
+            <span class="hide-show-links">
+              <span *ngIf="isDebreifVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isDebreifVisibilityExpended()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md">
+            Providing feedback to candidate
+          </div>
         </div>
-        <div class="mes-text-md">
-          Providing feedback to candidate
-        </div>
-        <div>
+        <div *ngIf="isDebreifVisibilityExpended()">
           Here will be the hidden content
         </div>
-      </li>
+      </ion-item>
 
       <!-- Finalisation and submission -->
 
-      <li>
+      <ion-item>
         <div class="mes-divider"></div>
-        <div>
-            <span class="mes-header-lg" [navPush]='helpFinalisationSubmissionPage'>Finalisation and submission</span>
-            <span>
-            <span class="mes-text-md">+</span>
-              <span class="mes-link">show</span>
+        <div (click)="toggleFinalisationAndSubmissionVisibility()">
+          <div>
+            <span class="mes-header-lg" [navPush]='helpFinalisationAndSubmissionPage'>Finalisation and submission</span>
+            <span class="hide-show-links">
+              <span *ngIf="isFinalisationAndSubmissionVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isFinalisationAndSubmissionVisibilityExpended()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
             </span>
+          </div>
+          <div class="mes-text-md">
+            Writing up report
+          </div>
         </div>
-        <div class="mes-text-md">
-          Writing up report
-        </div>
-        <div>
+        <div *ngIf="isFinalisationAndSubmissionVisibilityExpended()">
           Here will be the hidden content
         </div>
-      </li>
-    </ol>
+      </ion-item>
+
+    </ion-list>
+
   </div>
   
 </ion-content>
