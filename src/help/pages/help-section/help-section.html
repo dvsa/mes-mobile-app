@@ -7,8 +7,7 @@
   <span class="mes-header-xlg">Help guide</span>
 
   <div>
-    <div style="width: 100%; text-align: right;">
-      <!-- <span>blabla</span> -->
+    <div id="show-all-container">
       <span class="mes-link">show all</span>
     </div>
     <ol>
@@ -17,23 +16,25 @@
 
       <li>
         <div style="width: 100%;" class="mes-divider"></div>
-        <div>
-          <span class="mes-header-lg" [navPush]='helpJournalPage'>Journal</span>
-          <span style="float: right;">
-            <span *ngIf="isJournalVisibilityCollapsed()">
-              <span class="show-icon">+</span>
-              <span class="mes-link">show</span>
+        <div (click)="toggleJournelVisibility()">
+          <div>
+            <span class="mes-header-lg" [navPush]='helpJournalPage'>Journal</span>
+            <span style="float: right;">
+              <span *ngIf="isJournalVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isJournalVisibilityExpended()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
             </span>
-            <span *ngIf="isJournalVisibilityExpended()">
-              <span class="hide-icon">-</span>
-              <span class="mes-link">hide</span>
-            </span>
-          </span>
+          </div>
+          <div class="mes-text-md">
+            This is where you can see an overview of your tests for the day
+          </div>
         </div>
-        <div class="mes-text-md">
-          This is where you can see an overview of your tests for the day
-        </div>
-        <div>
+        <div *ngIf="isJournalVisibilityExpended()">
           Here will be the hidden content
         </div>
       </li>

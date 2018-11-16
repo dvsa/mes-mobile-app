@@ -13,6 +13,14 @@ enum visibilityType {
   expanded = 'expanded'
 }
 
+interface IVisibility {
+  journal: visibilityType;
+  waitingRoomToCar: visibilityType;
+  inCarTesting: visibilityType;
+  debreif: visibilityType;
+  finalisationAndSubmission: visibilityType;
+}
+
 @Component({
   selector: 'page-help-section',
   templateUrl: 'help-section.html'
@@ -27,7 +35,7 @@ export class HelpSectionPage {
   helpWaitingRoomToCarPage: Page = HelpWaitingRoomToCarPage;
 
   // TODO: Define an interface for this
-  visibility = {
+  visibility: IVisibility = {
     journal: visibilityType.expanded,
     waitingRoomToCar: visibilityType.collapsed,
     inCarTesting: visibilityType.collapsed,
@@ -37,6 +45,8 @@ export class HelpSectionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
+  // Expanding and collapsing Journal section
+
   isJournalVisibilityExpended() {
     return this.visibility.journal === visibilityType.expanded;
   }
@@ -45,7 +55,22 @@ export class HelpSectionPage {
     return this.visibility.journal === visibilityType.collapsed;
   }
 
-  setJournelVisibility(visibility: visibilityType) {
-    this.visibility.journal = visibility;
+  toggleJournelVisibility() {
+    if (this.isJournalVisibilityCollapsed()) {
+      this.visibility.journal = visibilityType.expanded;
+      return;
+    }
+    if (this.isJournalVisibilityExpended()) {
+      this.visibility.journal = visibilityType.collapsed;
+      return;
+    }
   }
+
+  // Expanding and collapsing Waiting Room to Car section
+
+  // Expanding and collapsing In-car Testing section
+
+  // Expanding and collapsing Debrief section
+
+  // Expanding and collapsing Finalisation and Submission section
 }
