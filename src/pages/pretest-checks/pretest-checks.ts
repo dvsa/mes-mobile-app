@@ -73,12 +73,9 @@ export class PretestChecksPage {
     this.gearboxCategory = GearboxCategory.NotAnswered;
   }
 
-  setTellMeState(faultType, $event) {
-    const isActive = $event.currentTarget.className.includes('active');
-
-    if (isActive) {
+  setTellMeState(faultType) {
+    if (faultType !== 'nothing') {
       this.vehicleCheckProvider.removeFault(vCheckType.TELLME);
-    } else {
       this.vehicleCheckProvider.addFault(vCheckType.TELLME, faultType);
     }
   }
@@ -122,6 +119,6 @@ export class PretestChecksPage {
   }
 
   updateTellMeState() {
-    console.log('tell me selection', this.tellMeSelection);
+    this.setTellMeState(this.tellMeSelection);
   }
 }

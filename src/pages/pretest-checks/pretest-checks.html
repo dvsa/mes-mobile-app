@@ -61,25 +61,14 @@
 
                     <ion-col col-4 *ngIf="preCheck.questionAsked">
                         <ion-select class="tell-me-result" multiple="false" interface="popover"
-                                    (ionChange)="updateTellMeState()" [ngModel]="tellMeSelection" name="tellMeSelection">
+                                    (ionChange)="updateTellMeState()" [(ngModel)]="tellMeSelection" name="tellMeSelection">
                             <ion-option value="nothing">Please select</ion-option>
                             <ion-option value="satisfactory">Satisfactory</ion-option>
-                            <ion-option value="d/f">D/F</ion-option>
-                            <ion-option value="s">S</ion-option>
-                            <ion-option value="d">D</ion-option>
+                            <ion-option value="fault">D/F</ion-option>
+                            <ion-option value="serious">S</ion-option>
+                            <ion-option value="dangerous">D</ion-option>
                         </ion-select>
                     </ion-col>
-                    <!--<ion-col col-4 [ngClass]="{'btns-disabled': !preCheck.tellMeQuestionId }">-->
-                    <!--<div class="fault-btn driverFault-btn" [ngClass]="{'active': (vcState$ | async)?.fault}"-->
-                    <!--(click)="setTellMeState('fault', $event)">D/F-->
-                    <!--</div>-->
-                    <!--<div class="fault-btn serious-btn" [ngClass]="{'active': (vcState$ | async)?.serious}"-->
-                    <!--(click)="setTellMeState('serious', $event)">S-->
-                    <!--</div>-->
-                    <!--<div class="fault-btn dangerous-btn" [ngClass]="{'active': (vcState$ | async)?.dangerous}"-->
-                    <!--(click)="setTellMeState('dangerous', $event)">D-->
-                    <!--</div>-->
-                    <!--</ion-col>-->
                 </ion-row>
                 <p [hidden]="tellMeQuestion.valid || (tellMeQuestion.pristine && !form.submitted)" class="warning-text">
                     Select Tell me question
