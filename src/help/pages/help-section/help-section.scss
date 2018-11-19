@@ -1,23 +1,43 @@
 page-help-section {
+  ion-label {
+    margin: 0 !important;
+  }
+
+  .page-title {
+    padding-top: 12px;
+  }
+
+  .header-container {
+    padding-bottom: 38px;
+  }
+
   #help-guide-content {
     padding: 16px;
   }
 
-  .help-section-item::after {
+  .section-item::after {
     content: '';
     position: absolute;
     z-index: 2;
     width: 0;
     height: 100%;
-    border-left: solid 3px black;
+    border-left: solid 3px;
     background: #fff;
     left: 0;
     margin-left: 39px;
-    top: 66px;
+    top: 47px;
   }
 
-  .help-section-item {
-    padding-bottom: 12px;
+  .gray-section-item::after {
+    @extend .section-item::after;
+
+    border-color: #9b9b9b;
+  }
+
+  .black-section-item::after {
+    @extend .section-item::after;
+
+    border-color: black;
   }
 
   .show-icon,
@@ -29,15 +49,30 @@ page-help-section {
   .section-number {
     font-size: 36px;
     font-weight: bold;
-    border: 3px solid black;
+    border: 3px solid;
     border-radius: 50%;
     padding: 0px 11px;
+  }
+
+  .gray-section-number {
+    @extend .section-number;
+
+    border-color: #9b9b9b;
+    color: #9b9b9b;
+  }
+
+  .black-section-number {
+    @extend .section-number;
+
+    border-color: black;
+    color: black;
   }
 
   #show-all-container {
     width: 100%;
     text-align: right;
     padding-right: 36px;
+    margin-bottom: 12px;
   }
 
   .hide-show-links {
@@ -49,7 +84,7 @@ page-help-section {
 
     margin-left: 80px;
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
   }
 
   .section-header-text {
@@ -60,7 +95,7 @@ page-help-section {
   }
 
   .section-header {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     padding-right: 24px;
   }
 
@@ -69,8 +104,7 @@ page-help-section {
   }
 
   .section-details {
-    padding-top: 12px;
-    padding-bottom: 8px;
+    padding-bottom: 24px;
     margin-left: 80px;
     p {
       color: #9b9b9b;

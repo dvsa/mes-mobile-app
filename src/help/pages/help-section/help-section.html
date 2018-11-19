@@ -4,7 +4,9 @@
 
 <ion-content padding>
 
-  <span class="mes-header-xlg">Help guide</span>
+  <div class="page-title">
+    <span class="mes-header-xlg">Help guide</span>
+  </div>
 
   <div>
     <div id="show-all-container">
@@ -16,11 +18,11 @@
 
       <!-- Journal -->
 
-      <ion-item class="help-section-item">
+      <ion-item [ngClass]="journalSectionItemClass()">
         <div class="divider"></div>
-        <div (click)="toggleJournalVisibility()">
+        <div class="header-container" (click)="toggleJournalVisibility()">
           <div class="section-header">
-            <span class="section-number">1</span>
+            <span [ngClass]="journalSectionNumberClass()">1</span>
             <span class="section-header-text">Journal</span>
             <span class="hide-show-links">
               <span *ngIf="isJournalVisibilityCollapsed()">
@@ -47,11 +49,11 @@
 
       <!-- Waiting room to car -->
 
-      <ion-item class="help-section-item">
+      <ion-item [ngClass]="waitingRoomToCarSectionItemClass()">
         <div class="divider"></div>
-        <div (click)="toggleWaitingRoomToCarVisibility()">
+        <div class="header-container" (click)="toggleWaitingRoomToCarVisibility()">
           <div class="section-header">
-            <span class="section-number">2</span>
+            <span [ngClass]="waitingRoomToCarSectionNumberClass()">2</span>
             <span class="section-header-text">Waiting room to car</span>
             <span class="hide-show-links">
               <span *ngIf="isWaitingRoomToCarVisibilityCollapsed()">
@@ -78,11 +80,11 @@
 
       <!-- In-car testing -->
 
-      <ion-item class="help-section-item">
+      <ion-item [ngClass]="inCarTestingSectionItemClass()">
         <div class="divider"></div>
-        <div (click)="toggleInCarTestingVisibility()">
+        <div class="header-container" (click)="toggleInCarTestingVisibility()">
           <div class="section-header">
-            <span class="section-number">3</span>
+            <span [ngClass]="inCarTestingSectionNumberClass()">3</span>
             <span class="section-header-text">In-car testing</span>
             <span class="hide-show-links">
               <span *ngIf="isInCarTestingVisibilityCollapsed()">
@@ -109,11 +111,11 @@
 
       <!-- Debrief -->
 
-      <ion-item class="help-section-item">
+      <ion-item [ngClass]="debreifSectionItemClass()">
         <div class="divider"></div>
-        <div (click)="toggleDebreifVisibility()">
+        <div class="header-container" (click)="toggleDebreifVisibility()">
           <div class="section-header">
-            <span class="section-number">4</span>
+            <span [ngClass]="debreifSectionNumberClass()">4</span>
             <span class="section-header-text">Debrief</span>
             <span class="hide-show-links">
               <span *ngIf="isDebreifVisibilityCollapsed()">
@@ -140,11 +142,11 @@
 
       <!-- Finalisation and submission -->
 
-      <ion-item class="help-section-item">
+      <ion-item [ngClass]="finalisationAndSubmissionSectionItemClass()">
         <div class="divider"></div>
-        <div (click)="toggleFinalisationAndSubmissionVisibility()">
+        <div class="header-container" (click)="toggleFinalisationAndSubmissionVisibility()">
           <div class="section-header">
-            <span class="section-number">5</span>
+            <span [ngClass]="finalisationAndSubmissionSectionNumberClass()">5</span>
             <span class="section-header-text">Finalisation and submission</span>
             <span class="hide-show-links">
               <span *ngIf="isFinalisationAndSubmissionVisibilityCollapsed()">

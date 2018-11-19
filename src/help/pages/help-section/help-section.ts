@@ -99,6 +99,16 @@ export class HelpSectionPage {
     }
   }
 
+  journalSectionNumberClass() {
+    if (this.isJournalVisibilityCollapsed()) return 'gray-section-number';
+    if (this.isJournalVisibilityExpended()) return 'black-section-number';
+  }
+
+  journalSectionItemClass() {
+    if (this.isJournalVisibilityCollapsed()) return 'gray-section-item';
+    if (this.isJournalVisibilityExpended()) return 'black-section-item';
+  }
+
   // Expanding and collapsing Waiting Room to Car section
 
   isWaitingRoomToCarVisibilityExpended() {
@@ -118,6 +128,16 @@ export class HelpSectionPage {
       this.visibility.waitingRoomToCar = visibilityType.collapsed;
       return;
     }
+  }
+
+  waitingRoomToCarSectionNumberClass() {
+    if (this.isWaitingRoomToCarVisibilityCollapsed()) return 'gray-section-number';
+    if (this.isWaitingRoomToCarVisibilityExpended()) return 'black-section-number';
+  }
+
+  waitingRoomToCarSectionItemClass() {
+    if (this.isWaitingRoomToCarVisibilityCollapsed()) return 'gray-section-item';
+    if (this.isWaitingRoomToCarVisibilityExpended()) return 'black-section-item';
   }
 
   // Expanding and collapsing In-car Testing section
@@ -141,6 +161,16 @@ export class HelpSectionPage {
     }
   }
 
+  inCarTestingSectionNumberClass() {
+    if (this.isInCarTestingVisibilityCollapsed()) return 'gray-section-number';
+    if (this.isInCarTestingVisibilityExpended()) return 'black-section-number';
+  }
+
+  inCarTestingSectionItemClass() {
+    if (this.isInCarTestingVisibilityCollapsed()) return 'gray-section-item';
+    if (this.isInCarTestingVisibilityExpended()) return 'black-section-item';
+  }
+
   // Expanding and collapsing Debrief section
 
   isDebreifVisibilityExpended() {
@@ -162,6 +192,16 @@ export class HelpSectionPage {
     }
   }
 
+  debreifSectionNumberClass() {
+    if (this.isDebreifVisibilityCollapsed()) return 'gray-section-number';
+    if (this.isDebreifVisibilityExpended()) return 'black-section-number';
+  }
+
+  debreifSectionItemClass() {
+    if (this.isDebreifVisibilityCollapsed()) return 'gray-section-item';
+    if (this.isDebreifVisibilityExpended()) return 'black-section-item';
+  }
+
   // Expanding and collapsing Finalisation and Submission section
 
   isFinalisationAndSubmissionVisibilityExpended() {
@@ -181,5 +221,15 @@ export class HelpSectionPage {
       this.visibility.finalisationAndSubmission = visibilityType.collapsed;
       return;
     }
+  }
+
+  finalisationAndSubmissionSectionNumberClass() {
+    if (this.isFinalisationAndSubmissionVisibilityCollapsed()) return 'gray-section-number';
+    if (this.isFinalisationAndSubmissionVisibilityExpended()) return 'black-section-number';
+  }
+
+  finalisationAndSubmissionSectionItemClass() {
+    if (this.isFinalisationAndSubmissionVisibilityCollapsed()) return 'gray-section-item';
+    if (this.isFinalisationAndSubmissionVisibilityExpended()) return 'black-section-item';
   }
 }
