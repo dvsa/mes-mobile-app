@@ -46,6 +46,7 @@ export class PretestChecksPage {
   showEyesightValidation: boolean = false;
   showGearboxValidation: boolean = false;
   tellMeValidation: boolean = false;
+  showTellMeValidation: boolean = false;
 
   tellMeSelection: string = 'nothing';
   helpPage: Page = HelpWaitingRoomToCarPage;
@@ -111,6 +112,7 @@ export class PretestChecksPage {
     this.showEyesightValidation = this.eyesightResult === EyesightResult.NotAnswered;
     this.showGearboxValidation = this.gearboxCategory === this.GearboxCategory.NotAnswered;
     this.tellMeValidation = this.tellMeSelection === 'nothing';
+    this.showTellMeValidation = this.tellMeSelection === 'nothing' ? true : false;
 
     if (
       form.valid &&

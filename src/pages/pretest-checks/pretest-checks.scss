@@ -36,6 +36,9 @@ page-pretest-checks {
     color: map-get($colors, gds-red);
     position: absolute;
   }
+  .warning-text-result {
+    right: 178px;
+  }
   .btns-disabled {
     opacity: 0.1;
   }
