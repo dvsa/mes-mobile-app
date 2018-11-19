@@ -31,6 +31,11 @@ page-pretest-checks {
     color: map-get($colors, gds-red);
     font-size: 24px;
   }
+  .validation-icon-tellme-result {
+    position: absolute;
+    top: 21px;
+    left: -31px;
+  }
   .warning-text {
     padding-left: 5px;
     color: map-get($colors, gds-red);
