@@ -1,4 +1,8 @@
 page-help-section {
+  #help-guide-content {
+    padding: 16px;
+  }
+
   .show-icon,
   .hide-icon {
     font-size: 24px;
@@ -16,6 +20,7 @@ page-help-section {
   #show-all-container {
     width: 100%;
     text-align: right;
+    padding-right: 36px;
   }
 
   .hide-show-links {
@@ -36,6 +41,7 @@ page-help-section {
 
   .section-header {
     margin-bottom: 15px;
+    padding-right: 24px;
   }
 
   .section-text {
