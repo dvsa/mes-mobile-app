@@ -152,6 +152,7 @@ export class PretestChecksPage {
             handler: () => this.backToJournal()
           },
           {
+            role: 'cancel',
             text: 'Continue Test',
             handler: () => {
               this.eyesightResult = EyesightResult.NotAnswered;
