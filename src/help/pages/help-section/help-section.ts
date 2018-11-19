@@ -80,7 +80,7 @@ export class HelpSectionPage {
 
   // Expanding and collapsing Journal section
 
-  isJournalVisibilityExpended() {
+  isJournalVisibilityExpanded() {
     return this.visibility.journal === visibilityType.expanded;
   }
 
@@ -93,7 +93,7 @@ export class HelpSectionPage {
       this.visibility.journal = visibilityType.expanded;
       return;
     }
-    if (this.isJournalVisibilityExpended()) {
+    if (this.isJournalVisibilityExpanded()) {
       this.visibility.journal = visibilityType.collapsed;
       return;
     }
@@ -101,17 +101,17 @@ export class HelpSectionPage {
 
   journalSectionNumberClass() {
     if (this.isJournalVisibilityCollapsed()) return 'gray-section-number';
-    if (this.isJournalVisibilityExpended()) return 'black-section-number';
+    if (this.isJournalVisibilityExpanded()) return 'black-section-number';
   }
 
   journalSectionItemClass() {
     if (this.isJournalVisibilityCollapsed()) return 'gray-section-item';
-    if (this.isJournalVisibilityExpended()) return 'black-section-item';
+    if (this.isJournalVisibilityExpanded()) return 'black-section-item';
   }
 
   // Expanding and collapsing Waiting Room to Car section
 
-  isWaitingRoomToCarVisibilityExpended() {
+  isWaitingRoomToCarVisibilityExpanded() {
     return this.visibility.waitingRoomToCar === visibilityType.expanded;
   }
 
@@ -124,7 +124,7 @@ export class HelpSectionPage {
       this.visibility.waitingRoomToCar = visibilityType.expanded;
       return;
     }
-    if (this.isWaitingRoomToCarVisibilityExpended()) {
+    if (this.isWaitingRoomToCarVisibilityExpanded()) {
       this.visibility.waitingRoomToCar = visibilityType.collapsed;
       return;
     }
@@ -132,17 +132,17 @@ export class HelpSectionPage {
 
   waitingRoomToCarSectionNumberClass() {
     if (this.isWaitingRoomToCarVisibilityCollapsed()) return 'gray-section-number';
-    if (this.isWaitingRoomToCarVisibilityExpended()) return 'black-section-number';
+    if (this.isWaitingRoomToCarVisibilityExpanded()) return 'black-section-number';
   }
 
   waitingRoomToCarSectionItemClass() {
     if (this.isWaitingRoomToCarVisibilityCollapsed()) return 'gray-section-item';
-    if (this.isWaitingRoomToCarVisibilityExpended()) return 'black-section-item';
+    if (this.isWaitingRoomToCarVisibilityExpanded()) return 'black-section-item';
   }
 
   // Expanding and collapsing In-car Testing section
 
-  isInCarTestingVisibilityExpended() {
+  isInCarTestingVisibilityExpanded() {
     return this.visibility.inCarTesting === visibilityType.expanded;
   }
 
@@ -155,7 +155,7 @@ export class HelpSectionPage {
       this.visibility.inCarTesting = visibilityType.expanded;
       return;
     }
-    if (this.isInCarTestingVisibilityExpended()) {
+    if (this.isInCarTestingVisibilityExpanded()) {
       this.visibility.inCarTesting = visibilityType.collapsed;
       return;
     }
@@ -163,17 +163,17 @@ export class HelpSectionPage {
 
   inCarTestingSectionNumberClass() {
     if (this.isInCarTestingVisibilityCollapsed()) return 'gray-section-number';
-    if (this.isInCarTestingVisibilityExpended()) return 'black-section-number';
+    if (this.isInCarTestingVisibilityExpanded()) return 'black-section-number';
   }
 
   inCarTestingSectionItemClass() {
     if (this.isInCarTestingVisibilityCollapsed()) return 'gray-section-item';
-    if (this.isInCarTestingVisibilityExpended()) return 'black-section-item';
+    if (this.isInCarTestingVisibilityExpanded()) return 'black-section-item';
   }
 
   // Expanding and collapsing Debrief section
 
-  isDebreifVisibilityExpended() {
+  isDebreifVisibilityExpanded() {
     return this.visibility.debreif === visibilityType.expanded;
   }
 
@@ -186,7 +186,7 @@ export class HelpSectionPage {
       this.visibility.debreif = visibilityType.expanded;
       return;
     }
-    if (this.isDebreifVisibilityExpended()) {
+    if (this.isDebreifVisibilityExpanded()) {
       this.visibility.debreif = visibilityType.collapsed;
       return;
     }
@@ -194,17 +194,17 @@ export class HelpSectionPage {
 
   debreifSectionNumberClass() {
     if (this.isDebreifVisibilityCollapsed()) return 'gray-section-number';
-    if (this.isDebreifVisibilityExpended()) return 'black-section-number';
+    if (this.isDebreifVisibilityExpanded()) return 'black-section-number';
   }
 
   debreifSectionItemClass() {
     if (this.isDebreifVisibilityCollapsed()) return 'gray-section-item';
-    if (this.isDebreifVisibilityExpended()) return 'black-section-item';
+    if (this.isDebreifVisibilityExpanded()) return 'black-section-item';
   }
 
   // Expanding and collapsing Finalisation and Submission section
 
-  isFinalisationAndSubmissionVisibilityExpended() {
+  isFinalisationAndSubmissionVisibilityExpanded() {
     return this.visibility.finalisationAndSubmission === visibilityType.expanded;
   }
 
@@ -217,7 +217,7 @@ export class HelpSectionPage {
       this.visibility.finalisationAndSubmission = visibilityType.expanded;
       return;
     }
-    if (this.isFinalisationAndSubmissionVisibilityExpended()) {
+    if (this.isFinalisationAndSubmissionVisibilityExpanded()) {
       this.visibility.finalisationAndSubmission = visibilityType.collapsed;
       return;
     }
@@ -225,11 +225,11 @@ export class HelpSectionPage {
 
   finalisationAndSubmissionSectionNumberClass() {
     if (this.isFinalisationAndSubmissionVisibilityCollapsed()) return 'gray-section-number';
-    if (this.isFinalisationAndSubmissionVisibilityExpended()) return 'black-section-number';
+    if (this.isFinalisationAndSubmissionVisibilityExpanded()) return 'black-section-number';
   }
 
   finalisationAndSubmissionSectionItemClass() {
     if (this.isFinalisationAndSubmissionVisibilityCollapsed()) return 'gray-section-item';
-    if (this.isFinalisationAndSubmissionVisibilityExpended()) return 'black-section-item';
+    if (this.isFinalisationAndSubmissionVisibilityExpanded()) return 'black-section-item';
   }
 }
