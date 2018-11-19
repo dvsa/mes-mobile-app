@@ -45,6 +45,7 @@ export class PretestChecksPage {
   // Validation Flags
   showEyesightValidation: boolean = false;
   showGearboxValidation: boolean = false;
+  tellMeValidation: boolean = false;
 
   tellMeSelection: string = 'nothing';
   helpPage: Page = HelpWaitingRoomToCarPage;
@@ -109,8 +110,14 @@ export class PretestChecksPage {
   gotoDL25(form) {
     this.showEyesightValidation = this.eyesightResult === EyesightResult.NotAnswered;
     this.showGearboxValidation = this.gearboxCategory === this.GearboxCategory.NotAnswered;
+    this.tellMeValidation = this.tellMeSelection === 'nothing';
 
-    if (form.valid && !this.showEyesightValidation && !this.showGearboxValidation) {
+    if (
+      form.valid &&
+      !this.showEyesightValidation &&
+      !this.showGearboxValidation &&
+      !this.tellMeValidation
+    ) {
       this.navCtrl.push(AllOnOneV2Page, { slotDetail: this.slotDetail }, { animate: false });
     }
   }
