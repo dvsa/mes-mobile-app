@@ -87,7 +87,7 @@
               <ion-option value="serious">S</ion-option>
               <ion-option value="dangerous">D</ion-option>
             </ion-select>
-            <ion-icon name="alert" *ngIf="showTellMeValidation" class="validation-icon"></ion-icon>
+            <ion-icon name="alert" *ngIf="showTellMeValidation" class="validation-icon  validation-icon-tellme-result"></ion-icon>
           </ion-col>
         </ion-row>
         <p
@@ -96,7 +96,7 @@
         >
           Select Tell me question
         </p>
-        <p *ngIf="showTellMeValidation" class="warning-text warning-text-result">
+        <p *ngIf="showTellMeValidation && preCheck.questionAsked" class="warning-text warning-text-result">
           Select a response
         </p>
         <div class="mes-divider"></div>
