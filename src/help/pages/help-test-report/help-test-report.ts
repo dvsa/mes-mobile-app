@@ -9,8 +9,4 @@ export class HelpTestReportPage {
   title: string = 'Test Report - Help';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HelpTestReportPage');
-  }
 }

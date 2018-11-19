@@ -8,8 +8,4 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HelpDebriefPage {
   title: string = 'Debrief - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HelpDebriefPage');
-  }
 }

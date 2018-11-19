@@ -8,8 +8,4 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HelpFinalisationSubmissionPage {
   title: string = 'Finalisation & Submission - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HelpFinalisationSubmissionPage');
-  }
 }
