@@ -33,7 +33,6 @@ import { DateTimeUtility } from '../shared/utils/datetime';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { QuestionsModalComponent } from '../components/questions-modal/questions-modal';
 import { SelectButtonComponent } from '../components/select-button/select-button';
-import { EyesightFaultRecordingModalPage } from '../pages/eyesight-fault-recording-modal/eyesight-fault-recording-modal';
 import {
   TranslateModule,
   TranslateStaticLoader,
@@ -79,7 +78,6 @@ export function createTranslateLoader(http: Http) {
     PretestChecksPage,
     TestResultPage,
     TrainerModePage,
-    EyesightFaultRecordingModalPage,
     PostTestSummaryPage,
     AllOnOneV2Page,
     AoopCustomHammerConfigPage,
@@ -124,7 +122,6 @@ export function createTranslateLoader(http: Http) {
     TrainerModePage,
     QuestionsModalComponent,
     SelectButtonComponent,
-    EyesightFaultRecordingModalPage,
     PostTestSummaryPage,
     WeatherSelectorComponent,
     AllOnOneV2Page,

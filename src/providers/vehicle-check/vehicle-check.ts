@@ -77,10 +77,6 @@ export class VehicleCheckProvider {
   addFault(type: string, faultType: string): void {
     this[type].faultType = faultType;
 
-    const updatedFaultType = this.overwriteFaultWith();
-
-    this.addFaultToStore(updatedFaultType);
-
     if (type === 'showMe') {
       this.markAsComplete({}, type);
     }

@@ -1,15 +1,17 @@
 import { TELL_ME_QUESTIONS } from './../../app/constants';
-import { VehicleCheckProvider, vCheckType } from './../../providers/vehicle-check/vehicle-check';
+import { vCheckType, VehicleCheckProvider } from './../../providers/vehicle-check/vehicle-check';
 import { AllOnOneV2Page } from './../all-on-one-v2/all-on-one-v2';
-import { EyesightFaultRecordingModalPage } from './../eyesight-fault-recording-modal/eyesight-fault-recording-modal';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ModalController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PolicyDataPage } from '../policy-data/policy-data';
 import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { QuestionsModalComponent } from '../../components/questions-modal/questions-modal';
 import { select } from '@angular-redux/store';
 import { IJournal } from '../../providers/journal/journal-model';
+import { EyesightResult } from './check-enums/eyesight-result';
+import { GearboxCategory } from './check-enums/gearbox-category';
+import { HelpWaitingRoomToCarPage } from '../../help/pages/help-waiting-room-to-car/help-waiting-room-to-car';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -26,18 +28,35 @@ export class PretestChecksPage {
     isEyesightCompleted: false,
     carRegistration: null,
     tellMeQuestionId: null,
-    isAutomatic: null
+    isAutomatic: null,
+    selectedQuestion: null,
+    questionAsked: false
   };
   slotDetail: IJournal;
+  eyesightResult: EyesightResult = EyesightResult.NotAnswered;
+  gearboxCategory: GearboxCategory = GearboxCategory.NotAnswered;
+
+  EyesightResult = EyesightResult;
+  GearboxCategory = GearboxCategory;
 
   @select(['faults', 'vehicleCheck'])
   vcState$;
+
+  // Validation Flags
+  showEyesightValidation: boolean = false;
+  showGearboxValidation: boolean = false;
+  tellMeValidation: boolean = false;
+  showTellMeValidation: boolean = false;
+
+  tellMeSelection: string = 'nothing';
+  helpPage: Page = HelpWaitingRoomToCarPage;
 
   constructor(
     public navCtrl: NavController,
     private modalCtrl: ModalController,
     private vehicleCheckProvider: VehicleCheckProvider,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private alertCtrl: AlertController
   ) {
     this.slotDetail = this.navParams.get('slotDetail');
   }
@@ -47,12 +66,21 @@ export class PretestChecksPage {
     this.vehicleCheckProvider.reset(vCheckType.SHOWME);
   }
 
-  setTellMeState(faultType, $event) {
-    const isActive = $event.currentTarget.className.includes('active');
+  getTitle() {
+    return 'Begin test - Florence Pearson';
+  }
 
-    if (isActive) {
+  clearEyesightResult() {
+    this.eyesightResult = EyesightResult.NotAnswered;
+  }
+
+  clearGearboxCategory() {
+    this.gearboxCategory = GearboxCategory.NotAnswered;
+  }
+
+  setTellMeState(faultType) {
+    if (faultType !== 'nothing') {
       this.vehicleCheckProvider.removeFault(vCheckType.TELLME);
-    } else {
       this.vehicleCheckProvider.addFault(vCheckType.TELLME, faultType);
     }
   }
@@ -64,39 +92,74 @@ export class PretestChecksPage {
       this.disableBackdropDismissModalOption
     );
 
-    tellMeQuestionModal.onDidDismiss((selectedQuestion = { id: null }, role: string) => {
-      if (role !== 'dismiss') {
-        this.preCheck.tellMeQuestionId = selectedQuestion.id;
-        this.vehicleCheckProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
+    tellMeQuestionModal.onDidDismiss(
+      (selectedQuestion = { id: null, shortText: null }, role: string) => {
+        if (role !== 'dismiss') {
+          this.tellMeSelection = 'nothing';
+          this.preCheck.tellMeQuestionId = selectedQuestion.id;
+          this.preCheck.questionAsked = true;
+          this.preCheck.selectedQuestion = `${selectedQuestion.id} - ${selectedQuestion.shortText}`;
+          // todo - check this logic and its use with the select option
+          this.vehicleCheckProvider.markAsComplete(selectedQuestion, vCheckType.TELLME);
+        }
       }
-    });
+    );
 
     tellMeQuestionModal.present();
   };
 
-  showEyesightFaultRecordingModal() {
-    const eyesightFaultRecordingModal = this.modalCtrl.create(
-      EyesightFaultRecordingModalPage,
-      null,
-      this.disableBackdropDismissModalOption
-    );
-
-    eyesightFaultRecordingModal.onDidDismiss((flag) => {
-      this.eyeSightSeriousFault = flag;
-    });
-
-    eyesightFaultRecordingModal.present();
-  }
-
   gotoDL25(form) {
-    if (form.valid) {
+    this.showEyesightValidation = this.eyesightResult === EyesightResult.NotAnswered;
+    this.showGearboxValidation = this.gearboxCategory === this.GearboxCategory.NotAnswered;
+    this.tellMeValidation = this.tellMeSelection === 'nothing';
+    this.showTellMeValidation = this.tellMeSelection === 'nothing' ? true : false;
+
+    if (
+      form.valid &&
+      !this.showEyesightValidation &&
+      !this.showGearboxValidation &&
+      !this.tellMeValidation
+    ) {
       this.navCtrl.push(AllOnOneV2Page, { slotDetail: this.slotDetail }, { animate: false });
     }
+  }
+
+  backToJournal() {
+    this.navCtrl.popTo(this.navCtrl.getByIndex(1));
   }
 
   automaticInputChanged(event, secondInput) {
     secondInput.checked = false;
     this.preCheck.isAutomatic = event.target.checked;
     this.isAutomaticInput.control.markAsDirty();
+  }
+
+  updateTellMeState() {
+    this.setTellMeState(this.tellMeSelection);
+  }
+
+  openEyesightTestAlert() {
+    const title = 'End Driving Test';
+    const message =
+      'You have selected a serious eyesight fault. Are you sure you want to end this test?';
+    this.alertCtrl
+      .create({
+        title,
+        message,
+        buttons: [
+          {
+            text: 'End Test',
+            handler: () => this.backToJournal()
+          },
+          {
+            role: 'cancel',
+            text: 'Continue Test',
+            handler: () => {
+              this.eyesightResult = EyesightResult.NotAnswered;
+            }
+          }
+        ]
+      })
+      .present();
   }
 }
