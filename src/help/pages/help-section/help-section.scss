@@ -3,6 +3,23 @@ page-help-section {
     padding: 16px;
   }
 
+  .help-section-item::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 100%;
+    border-left: solid 3px black;
+    background: #fff;
+    left: 0;
+    margin-left: 39px;
+    top: 66px;
+  }
+
+  .help-section-item {
+    padding-bottom: 12px;
+  }
+
   .show-icon,
   .hide-icon {
     font-size: 24px;
@@ -31,12 +48,15 @@ page-help-section {
     @extend .mes-divider;
 
     margin-left: 80px;
+    margin-top: 0;
+    margin-bottom: 8px;
   }
 
   .section-header-text {
     @extend .mes-header-lg;
 
     margin-left: 28px;
+    color: #007347;
   }
 
   .section-header {
@@ -49,6 +69,24 @@ page-help-section {
   }
 
   .section-details {
+    padding-top: 12px;
+    padding-bottom: 8px;
     margin-left: 80px;
+    p {
+      color: #9b9b9b;
+      font-size: 20px;
+      padding-top: 8px;
+    }
+  }
+
+  .video {
+    width: 474px;
+    height: 276px;
+    background: map-get($colors, white);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    iframe {
+      margin: 8px;
+    }
+    margin-bottom: 12px;
   }
 }
