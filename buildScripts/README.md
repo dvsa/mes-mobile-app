@@ -8,10 +8,10 @@ npm run device # installs the app on a device plugged in via USB.
 
 ## Pre-requisites
 
-* XCode 10.0
-* [ios-deploy](https://www.npmjs.com/package/ios-deploy)
-* A provisioning profile on your Mac. This can be a personal iTunes account for local development (see below for instructions).
-* Setup `build.json` as described below.
+- XCode 10.0
+- [ios-deploy](https://www.npmjs.com/package/ios-deploy)
+- A provisioning profile on your Mac. This can be a personal iTunes account for local development (see below for instructions).
+- Setup `build.json` as described below.
 
 # Provisioning Profile
 
@@ -22,8 +22,9 @@ In order to create a provisioning profile for development, follow these steps:
 3.  In XCode, goto Preferences (`Cmd+comma`) -> Accounts => Add (plus symbol, dialog lower left) and sign in with your Apple ID.
 4.  Close the Preferences dialog. In the top left of the main XCode window select the icon that looks like a folder, then the project name.
 5.  Ensure your "Bundle Identifier" is unique (you can probably just suffix your initials).
-6.  Ensure "Automatically manage signing" is selected. In the "Team" dropdown, select your personal team. A Provisioning Profile should be populated.
-7.  Determine your `TeamIdentifier` in your provisioning profile (found at `~/Library/MobileDevice/Provisioning Profiles`).
+6.  Select a connected device in the top menu bar.
+7.  Ensure "Automatically manage signing" is selected. In the "Team" dropdown, select your personal team. A Provisioning Profile should be populated.
+8.  Determine your `TeamIdentifier` in your provisioning profile (found at `~/Library/MobileDevice/Provisioning Profiles`).
 
 ## build.json
 
