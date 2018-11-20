@@ -23,8 +23,9 @@ In order to create a provisioning profile for development, follow these steps:
 4.  Close the Preferences dialog. In the top left of the main XCode window select the icon that looks like a folder, then the project name.
 5.  Ensure your "Bundle Identifier" is unique (you can probably just suffix your initials).
 6.  Select a connected device in the top menu bar.
-7.  Ensure "Automatically manage signing" is selected. In the "Team" dropdown, select your personal team. A Provisioning Profile should be populated.
-8.  Determine your `TeamIdentifier` in your provisioning profile (found at `~/Library/MobileDevice/Provisioning Profiles`).
+7.  Go to `File` -> `Workspace Settings` and seting `Build System` to `Legacy Build System`.
+8.  Ensure "Automatically manage signing" is selected. In the "Team" dropdown, select your personal team. A Provisioning Profile should be populated.
+9.  Determine your `TeamIdentifier` in your provisioning profile (found at `~/Library/MobileDevice/Provisioning Profiles`).
 
 ## build.json
 
