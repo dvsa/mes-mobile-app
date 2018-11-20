@@ -47,6 +47,7 @@ $colors: (
   gds-yellow: #ffbf47,
   gds-light-green: #85994b,
   gds-green: #006435,
+  gds-dark-green: #00823b,
   gds-turquoise: #28a197,
   gds-light-blue: #2b8cc4,
   gds-blue: #005ea5,
@@ -70,7 +71,11 @@ $colors: (
   deviceLockedOrange: #edc628,
   black: black,
   expanderBg: #c5c5c5,
-  recording: #ff2f00
+  recording: #f3edeb,
+  headerGrey: rgba(33, 33, 33, 0.72),
+  appBackground: #efefee,
+  secondaryButton: #9b9b9b,
+  backButton: #ff9500
 );
 // App iOS Variables
 // --------------------------------------------------

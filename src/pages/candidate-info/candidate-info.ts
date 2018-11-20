@@ -8,6 +8,8 @@ import { PretestChecksPage } from '../pretest-checks/pretest-checks';
 import { InitiateSwapPage } from '../initiate-swap/initiate-swap';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName, getFormattedAddress } from '../../shared/utils/formatters';
+import { isNonBlankString } from '../../shared/utils/string-utils';
+import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
 
 @Component({
   selector: 'page-candidate-info',
@@ -18,6 +20,7 @@ export class CandidateInfoPage {
   policyDataPage: Page = PolicyDataPage;
   pretestChecksPage: Page = PretestChecksPage;
   initiateSwapPage: Page = InitiateSwapPage;
+  helpPage: Page = HelpJournalPage;
 
   signature: any;
 
@@ -36,10 +39,6 @@ export class CandidateInfoPage {
     this.navCtrl.push(this.pretestChecksPage);
   }
 
-  getPreviousPage() {
-    return 'Your Journal';
-  }
-
   /**
    * Returns concatenated Candidate name for this slot
    */
@@ -49,5 +48,22 @@ export class CandidateInfoPage {
 
   getCandidateAddress(): string {
     return getFormattedAddress(this.slotDetail.candidateAddress);
+  }
+
+  getTitle(): string {
+    return 'View candidate';
+  }
+
+  // Todo: make this data-driven (fetch this from slot data and format)
+  getSlotType(): string {
+    return 'Single slot';
+  }
+
+  getCandidateComments(): string {
+    return isNonBlankString(this.slotDetail.specialNeeds) ? this.slotDetail.specialNeeds : 'None';
+  }
+
+  showSlotWarning(): boolean {
+    return isNonBlankString(this.slotDetail.specialNeeds);
   }
 }

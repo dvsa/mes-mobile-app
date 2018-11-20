@@ -4,7 +4,7 @@ mes-header {
     min-height: 44px;
   }
   .toolbar-background {
-    background-color: black;
+    background-color: map-get($colors, headerGrey);
   }
   .heading-small {
     position: absolute;
@@ -14,6 +14,12 @@ mes-header {
     font-size: smaller;
   }
   button {
-    background-color: black;
+    background-color: map-get($colors, headerGrey);
+  }
+  span.button-inner {
+    color: map-get($colors, backButton);
+  }
+  .mes-header-title-alignment-fix {
+    margin-left: -2.5em;
   }
 }

@@ -20,9 +20,9 @@ export class QuestionsModalComponent {
     this.viewCtrl.dismiss(null, 'dismiss');
   }
 
-  select({ id, keyWords } = { id: '', keyWords: '' }) {
+  select({ id, keyWords, shortText } = { id: '', keyWords: '', shortText: '' }) {
     this.selectedTellMeQuestionId = id;
-    setTimeout(() => this.viewCtrl.dismiss({ id, keyWords }), 300);
+    setTimeout(() => this.viewCtrl.dismiss({ id, keyWords, shortText }), 300);
   }
 
   toggle(index: number) {

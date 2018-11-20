@@ -21,7 +21,7 @@ all-on-one-form-sub-element-button {
   .fault-badge {
     background-color: map-get($colors, dark);
     &.counter {
-      left: 30px;
+      left: 34px;
       @extend .fault-badge_counter;
     }
     &.serious {
@@ -62,13 +62,22 @@ all-on-one-form-sub-element-button {
     opacity: 0;
   }
 }
+.action {
+  top: 50%;
+  left: 6px;
+  transform: translateY(-50%);
+}
 
 .action-completed {
   button:before {
-    top: 50%;
-    left: 3px;
-    transform: translateY(-50%);
-
+    @extend .action;
     @extend .check-btn_completed;
+  }
+}
+
+.action-incomplete {
+  button:before {
+    @extend .action;
+    @extend .check-btn_incomplete;
   }
 }

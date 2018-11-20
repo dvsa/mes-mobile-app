@@ -3,52 +3,46 @@ page-pretest-checks {
     height: 50px;
     align-items: center;
   }
+  input[type='text'],
+  input[type='number'] {
+    padding: 0.5em;
+    border: 2px solid map-get($colors, dark);
+    width: 100%;
+  }
   .mes-checkbox {
     margin: 0 0 0 20px;
     height: 18px;
     width: 18px;
   }
-  .mes-text-input {
-    background-color: map-get($colors, offWhite);
-    border: solid 3px map-get($colors, divider);
-    width: 100%;
-    height: 36px;
+  .input-with-label {
+    margin-right: 2em;
   }
-  .card-top-separator {
-    margin-top: 12px;
-  }
-  .action-buttons-wrapper {
-    margin: 30px 28px 0 28px;
-  }
-  .end-test-button {
-    float: left;
-  }
-  .confirm-button {
-    float: right;
-  }
-  .eyesight-record-serious-fault-button {
-    background-color: map-get($colors, offWhite);
-    width: 100%;
-    float: left;
-    padding: 10px 22px;
-    border-radius: 23px;
+  .pretest-checks-clear-button-column {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    &:active {
-      background-color: map-get($colors, divider);
+    justify-content: flex-end;
+    button {
+      @extend .mes-text-md;
+      background: none;
+      color: map-get($colors, secondaryButton);
     }
-    div {
-      margin-left: auto;
-    }
-    input {
-      margin: 0;
-    }
+  }
+  .validation-icon {
+    padding-left: 8px;
+    color: map-get($colors, gds-red);
+    font-size: 24px;
+  }
+  .validation-icon-tellme-result {
+    position: absolute;
+    top: 21px;
+    left: -31px;
   }
   .warning-text {
     padding-left: 5px;
-    color: map-get($colors, danger);
+    color: map-get($colors, gds-red);
     position: absolute;
+  }
+  .warning-text-result {
+    right: 178px;
   }
   .btns-disabled {
     opacity: 0.1;
@@ -82,5 +76,21 @@ page-pretest-checks {
     &.dangerous-btn.active {
       background: lighten(map-get($colors, gds-red), 5);
     }
+  }
+  .tell-me-result {
+    padding: 0.5em;
+    border: 2px solid #222;
+    border-radius: 5px;
+    max-width: 70%;
+  }
+  // Make the width of the select contain the whole text
+  .select-text {
+    text-overflow: unset;
+  }
+  // Align the icon for our ion-select sizing
+  .select-icon-inner {
+    left: -1px !important;
+    margin-top: 2px !important;
+    color: map-get($colors, gds-black) !important;
   }
 }

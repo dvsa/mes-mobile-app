@@ -1,16 +1,13 @@
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { JournalPage } from './../journal/journal';
 import { TestSummaryMetadataProvider } from './../../providers/test-summary-metadata/test-summary-metadata';
-import { HazardRecorderProvider } from './../../providers/hazard-recorder/hazard-recorder';
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
-
-/**
- * Generated class for the AllOnOneV2Page page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { VehicleCheckProvider } from './../../providers/vehicle-check/vehicle-check';
+import { IJournal } from '../../providers/journal/journal-model';
+import { getFormattedCandidateName } from '../../shared/utils/formatters';
+import { HelpTestReportPage } from '../../help/pages/help-test-report/help-test-report';
+import { Page } from 'ionic-angular/navigation/nav-util';
 
 export enum manoeuvre {
   PREFIX = 'manoeuvre',
@@ -22,11 +19,12 @@ export enum manoeuvre {
   selector: 'page-all-on-one-v2',
   templateUrl: 'all-on-one-v2.html'
 })
-export class AllOnOneV2Page {
+export class AllOnOneV2Page implements AfterViewInit {
   isDButtonPressed = false;
   isSButtonPressed = false;
   isEcoCompleted = false;
   isControlledStopDone = false;
+  isShowMeDone = false;
   selectedManoeuvre = '';
   manoeuvreBtns = {
     RR: 'Reverse / Right',
@@ -39,22 +37,36 @@ export class AllOnOneV2Page {
 
   manoeuvreKeys = [];
 
-  @ViewChild('manoeuvresButton') manoeuvresButton;
-  @ViewChild('ecoButton') ecoButton;
-  @ViewChild('etaPhysicalOption') etaPhysicalOption;
-  @ViewChild('etaVerbalOption') etaVerbalOption;
-  @ViewChild('ecoControlOption') ecoControlOption;
-  @ViewChild('ecoPlanningOption') ecoPlanningOption;
-  @ViewChild('ecoCompletionInput') ecoCompletionInput;
-  @ViewChild('controlledStopEl') controlledStopEl;
+  slotDetail: IJournal;
+
+  helpPage: Page = HelpTestReportPage;
+
+  @ViewChild('manoeuvresButton')
+  manoeuvresButton;
+  @ViewChild('ecoButton')
+  ecoButton;
+  @ViewChild('etaPhysicalOption')
+  etaPhysicalOption;
+  @ViewChild('etaVerbalOption')
+  etaVerbalOption;
+  @ViewChild('ecoControlOption')
+  ecoControlOption;
+  @ViewChild('ecoPlanningOption')
+  ecoPlanningOption;
+  @ViewChild('ecoCompletionInput')
+  ecoCompletionInput;
+  @ViewChild('controlledStopEl')
+  controlledStopEl;
+  @ViewChild('showMeEl')
+  showMeEl;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private hazardRecorderProvider: HazardRecorderProvider,
     private faultStore: FaultStoreProvider,
     private menuCtrl: MenuController,
-    private summaryMetaDataService: TestSummaryMetadataProvider
+    private summaryMetaDataService: TestSummaryMetadataProvider,
+    private vehicleCheckProvider: VehicleCheckProvider
   ) {
     this.manoeuvreKeys = Object.keys(this.manoeuvreBtns);
     if (this.navParams.get('trainingMode')) {
@@ -63,8 +75,13 @@ export class AllOnOneV2Page {
         nextPage: JournalPage,
         undo: true,
         trainingMode: this.trainingMode
-      }
+      };
     }
+    this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ngAfterViewInit(): void {
+    this.setUpShowMeButton(this.vehicleCheckProvider.getTellMe().faultType);
   }
 
   ionViewDidEnter() {
@@ -73,40 +90,6 @@ export class AllOnOneV2Page {
 
   ionViewDidLeave() {
     this.menuCtrl.swipeEnable(true);
-  }
-
-  dButtonClicked() {
-    this.hazardRecorderProvider.resetHazardRecording();
-    if (this.isDButtonPressed) {
-      this.isDButtonPressed = false;
-      return;
-    }
-
-    this.isDButtonPressed = true;
-    this.isSButtonPressed = false;
-
-    if (this.hazardRecorderProvider.isRemovingFaultsEnabled) {
-      this.hazardRecorderProvider.enableDangerousRemoving(() => (this.isDButtonPressed = false));
-    } else {
-      this.hazardRecorderProvider.enableDangerousRecording(() => (this.isDButtonPressed = false));
-    }
-  }
-
-  sButtonClicked() {
-    this.hazardRecorderProvider.resetHazardRecording();
-    if (this.isSButtonPressed) {
-      this.isSButtonPressed = false;
-      return;
-    }
-
-    this.isDButtonPressed = false;
-    this.isSButtonPressed = true;
-
-    if (this.hazardRecorderProvider.isRemovingFaultsEnabled) {
-      this.hazardRecorderProvider.enableSeriousRemoving(() => (this.isSButtonPressed = false));
-    } else {
-      this.hazardRecorderProvider.enableSeriousRecording(() => (this.isSButtonPressed = false));
-    }
   }
 
   setEco($event: any) {
@@ -143,8 +126,64 @@ export class AllOnOneV2Page {
     return this.selectedManoeuvre === key;
   }
 
+  // Show me button actions
+
+  setUpShowMeButton(tellMeFault: string) {
+    const drivingFaultActions = {
+      fault: (el) => el.addDrivingFault(),
+      serious: (el) => el.addSeriousFault(),
+      dangerous: (el) => el.addDangerousFault()
+    };
+
+    if (typeof drivingFaultActions[tellMeFault] === 'function') {
+      drivingFaultActions[tellMeFault](this.showMeEl);
+    }
+  }
+
+  showMePress() {
+    if (this.isShowMeDone) return;
+    if (this.showMeEl.faultCounter > 0) return;
+
+    const { serious, dangerous } = this.showMeEl;
+
+    if ((serious || dangerous) && this.isShowMeDone) return;
+
+    this.isShowMeDone = !this.isShowMeDone;
+    this.summaryMetaDataService.toggleShowMeComplete();
+  }
+
+  showMeTap() {
+    if (this.isShowMeDone && this.showMeEl.faultCounter > 0) return;
+
+    const { serious, dangerous } = this.showMeEl;
+
+    if ((serious || dangerous) && this.isShowMeDone) return;
+
+    this.isShowMeDone = !this.isShowMeDone;
+    this.summaryMetaDataService.toggleShowMeComplete();
+  }
+
+  // Controlled stop button actions
+
+  controlledStopPress() {
+    if (this.isControlledStopDone) return;
+    if (this.controlledStopEl.faultCounter > 0) return;
+
+    const { serious, dangerous } = this.controlledStopEl;
+
+    if ((serious || dangerous) && this.isControlledStopDone) return;
+
+    this.isControlledStopDone = !this.isControlledStopDone;
+    this.summaryMetaDataService.toggleControlledStopComplete();
+  }
+
   controlledStopTap() {
     if (this.controlledStopEl.faultCounter > 0) return;
+
+    const { serious, dangerous } = this.controlledStopEl;
+
+    if ((serious || dangerous) && this.isControlledStopDone) return;
+
     this.isControlledStopDone = !this.isControlledStopDone;
     this.summaryMetaDataService.toggleControlledStopComplete();
   }
@@ -167,5 +206,15 @@ export class AllOnOneV2Page {
       this.faultStore.resetFault(`${manoeuvre.PREFIX}${manName}${manoeuvre.CONTROL}`);
       this.faultStore.resetFault(`${manoeuvre.PREFIX}${manName}${manoeuvre.OBSERVATION}`);
     }, this);
+  }
+
+  /**
+   * Returns concatenated Candidate name for this slot
+   */
+  getTitle(): string {
+    if (this.slotDetail) {
+      return `${getFormattedCandidateName(this.slotDetail.candidateName)} - Test Report`;
+    }
+    return 'Practice Mode - Test Report';
   }
 }

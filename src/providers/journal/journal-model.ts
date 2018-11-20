@@ -16,6 +16,7 @@ export interface IAddress {
 }
 
 export interface IJournal {
+  activityCode?: number;
   details?: ITestDetails;
   candidateId: number;
   candidateName: ICandidateName;
@@ -28,6 +29,7 @@ export interface IJournal {
   testCentreName: string;
   slotType: string | null;
   checkMarker: boolean;
+  specialNeeds: string;
 }
 
 export interface ITestDetails {

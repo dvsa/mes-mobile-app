@@ -1,59 +1,59 @@
+<ion-header>
+  <mes-header [title]='getTitle()' [helpPage]='helpPage'></mes-header>
+</ion-header>
 <ion-content padding class="mes-main-content">
   <ion-card class="mes-card">
-    <ion-card-header class="mes-main-card-header--border-bottom mes-breadcrumbs">
-      <span class="mes-header-md mes-breadcrumb-link" navPop>
-        <ion-icon name="arrow-back"></ion-icon>
-        Debrief /
-      </span>
-      <span padding-left class="mes-header-md">Florence Pearson</span>
-      <span float-right>
-        <span class="mes-text-sm">App Ref: 392 382 354 33</span>
-      </span>
+    <ion-card-header>
+      <span class="mes-header-lg">Candidate Information</span>
     </ion-card-header>
     <ion-card-content>
       <ion-row>
-        <ion-col col-4 class="mes-header-md">
-          Provisional licence provided *
+        <ion-col col-4>
+          <span class="mes-header-md">App Ref</span>
         </ion-col>
-        <ion-col col-3 offset-1 class="mes-header-md">
-          Yes
-          <input #yesInput type="checkbox" name="provisional-yes" class="mes-checkbox" (change)="provisionalInputChanged($event, noInput);">
-        </ion-col>
-        <ion-col col-4 class="mes-header-md">
-          No
-          <input #noInput type="checkbox" name="provisional-no" class="mes-checkbox" (change)="provisionalInputChanged($event, yesInput);">
+        <ion-col>
+          <span class="mes-text-md">{{ getAppRef() }}</span>
         </ion-col>
       </ion-row>
       <div class="mes-divider"></div>
       <ion-row>
-        <ion-col col-4 class="mes-header-md">
-          Pass certificate number *
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Provisional licence provided 
+            <ion-icon name="alert" *ngIf="showProvisionalProvidedValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showProvisionalProvidedValidation" class="validation-text">
+            Provisional licence provided is required.
+          </p>
         </ion-col>
-        <ion-col col-7 offset-1>
-          <input
-            required
-            type="text"
-            name="pass-certificate-number"
-            class="mes-text-input capital-characters"
-            [(ngModel)]="passCertificateNumber"
-            appInputRestriction="noSpecialChars"
-            autocapitalize="characters" />
-        </ion-col>
+        <ion-col>
+            <input name="provisionalLicence" type="radio" class="mes-radio-button" value="1" [(ngModel)]="provisionalProvidedSelection">
+            <span class="mes-text-md">Yes</span> 
+          </ion-col>
+          <ion-col>
+            <input name="provisionalLicence" type="radio" class="mes-radio-button" value="2" [(ngModel)]="provisionalProvidedSelection" >
+            <span class="mes-text-md">No</span>
+          </ion-col>
       </ion-row>
       <div class="mes-divider"></div>
       <ion-row>
-        <ion-col col-4 class="mes-header-md">
-          Survey
+        <ion-col col-4>
+          <span class="mes-header-md">
+          Pass certificate number             
+          <ion-icon name="alert" *ngIf="showPassCertificateNumberValidation" class="validation-icon"></ion-icon>
+        </span>
+        <p *ngIf="showPassCertificateNumberValidation" class="validation-text">
+            Pass certificate number is required.
+        </p>
         </ion-col>
-        <ion-col col-3 offset-1 class="mes-header-md">
-          Yes
-          <input name="survey-yes" type="checkbox" required class="mes-checkbox">
+        <ion-col>
+          <input required type="text" name="pass-certificate-number" class="mes-text-input capital-characters"
+            [(ngModel)]="passCertificateNumber" appInputRestriction="noSpecialChars" autocapitalize="characters" />
         </ion-col>
-        <ion-col col-4></ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
-  <ion-card class="mes-bottom-card" text-center>
-    <button [navPush]="healthDeclarationPage" class="mes-button-primary" [disabled]="validation()">Save</button>
-  </ion-card>
+  <div padding>
+    <button float-right class="mes-cta-button-primary" (click)="continue()">Continue</button>
+  </div>
 </ion-content>

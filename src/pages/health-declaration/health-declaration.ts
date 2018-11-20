@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { DeviceAuthentication } from '../../types/device-authentication';
 import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
 import { Page } from 'ionic-angular/navigation/nav-util';
+import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
+import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
+import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
 
 @Component({
   selector: 'page-health-declaration',
@@ -12,11 +14,13 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 })
 export class HealthDeclarationPage {
   signaturePadOptions: any;
-  signature: any;
   postTestSummaryPage: Page = PostTestSummaryPage;
   confirmation: boolean;
+  slotDetail: IJournal;
+  helpPage: Page = HelpDebriefPage;
 
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  @ViewChild(MesSignaturePadComponent)
+  signaturePad: MesSignaturePadComponent;
 
   constructor(
     public navCtrl: NavController,
@@ -25,35 +29,11 @@ export class HealthDeclarationPage {
     private deviceAuth: DeviceAuthentication
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
-  }
-
-  ngAfterViewInit() {
-    // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 1); // set szimek/signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-  }
-
-  drawComplete() {
-    this.signature = this.signaturePad.toDataURL();
-    this.validation();
-  }
-
-  clearSignaturePad() {
-    this.signaturePad.clear();
-    this.signature = null;
-  }
-
-  drawStart() {}
-
-  ionViewDidLoad() {
-    this.signaturePad.resizeCanvas();
+    this.slotDetail = this.navParams.get('slotDetail');
   }
 
   validation() {
-    if (this.confirmation && this.signature) {
-      return false;
-    }
-    return true;
+    return !this.confirmation || !this.signaturePad.getSignature();
   }
 
   continue() {
@@ -61,13 +41,26 @@ export class HealthDeclarationPage {
       .runAuthentication('Please authenticate yourself to proceed')
       .then((isAuthenticated: boolean) => {
         if (isAuthenticated) {
-          this.navCtrl.push(this.postTestSummaryPage);
+          this.navCtrl.push(this.postTestSummaryPage, { slotDetail: this.slotDetail });
         }
       })
       .catch((errorMsg: string) => {
         if (errorMsg === 'cordova_not_available' || errorMsg === 'plugin_not_installed') {
-          this.navCtrl.push(this.postTestSummaryPage);
+          this.navCtrl.push(this.postTestSummaryPage, { slotDetail: this.slotDetail });
         }
       });
+  }
+
+  getTitle(): string {
+    return `${this.getCandidateName()} - Test debrief`;
+  }
+
+  getCandidateName(): string {
+    const name: ICandidateName = this.slotDetail.candidateName;
+    return `${name.firstName} ${name.lastName}`;
+  }
+
+  getDriverNumber(): string {
+    return this.slotDetail.driverNumber;
   }
 }

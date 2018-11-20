@@ -1,69 +1,29 @@
-page-candidate-info {
-  ion-icon {
-    vertical-align: middle;
+.mes-view-candidate-header-padding-fix {
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 8px;
+}
+
+.warning-icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  position: relative;
+  top: 0.15em;
+}
+
+ion-card-content > ion-row {
+  font-size: 19px;
+
+  &:first-child {
+    margin-top: 5px;
   }
-  .mes-card {
-    .mes-main-card-header--border-bottom {
-      margin-bottom: 1em;
-    }
-    .mes-candidate-img {
-      font-size: 9.2em;
-    }
-    .mes-box-grey {
-      margin: 70px;
-    }
-    .sig ion-img {
-      width: 100%;
-      contain: none;
-      background: none;
-    }
+
+  &:last-child {
+    margin-bottom: 5px;
   }
 
-  .confirm-identity-box {
-    width: 100%;
-    height: 132px;
-    border-radius: 3px;
-    box-shadow: 0 2px 4px 2px rgba(212, 209, 209, 0.5);
-    background-color: #ffffff;
-    border: solid 1px #e0e0e0;
-    position: relative;
-
-    .inner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .inner h2,
-    .inner ion-checkbox {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .inner h2 {
-      margin: 0px 0px 0px 13px;
-      font-weight: 700;
-    }
-
-    .inner .checkbox-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 0px;
-      border-width: 5px;
-      vertical-align: middle;
-    }
-
-    .inner .checkbox-icon .checkbox-inner {
-      left: 46%;
-      top: 27%;
-      width: 6px;
-      height: 20px;
-    }
-
-    .inner .checkbox-icon.checkbox-checked {
-      border-color: #3b7a00;
-      background-color: #3b7a00;
-    }
+  & > ion-col:nth-child(1) {
+    @extend .mes-bold;
   }
 }

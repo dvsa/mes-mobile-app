@@ -24,8 +24,12 @@ import {
   ]
 })
 export class SelectButtonComponent implements ControlValueAccessor, Validator, OnChanges {
-  @Input() selectedText: string;
-  @Input() onClickEventHandler: () => void;
+  @Input()
+  selectedText: string;
+  @Input()
+  onClickEventHandler: () => void;
+  @Input()
+  questionAsked: boolean = false;
 
   constructor() {}
 

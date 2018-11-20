@@ -28,6 +28,7 @@ export class JournalProvider {
   transformSlotData(slots) {
     return slots.reduce((curr: IJournal[], next) => {
       const {
+        activityCode,
         details,
         slot: { testCentreName = '', start = '', vehicleSlotType: slotType = null },
         booking: {
@@ -52,7 +53,7 @@ export class JournalProvider {
             email = '',
             mobileTelephone = ''
           },
-          application: { checkMarker = false, _applicationId: appId = '' }
+          application: { checkMarker = false, _applicationId: appId = '', specialNeeds = null }
         }
       } = next;
 
@@ -66,12 +67,17 @@ export class JournalProvider {
         appId,
         testCentreName,
         checkMarker,
+        specialNeeds,
         slotType,
         startTime: this.dateTimeUtil.getTime(start)
       };
 
       if (details) {
         journalEntry = { ...journalEntry, details };
+      }
+
+      if (activityCode) {
+        journalEntry = { ...journalEntry, activityCode };
       }
 
       return curr.concat(journalEntry);

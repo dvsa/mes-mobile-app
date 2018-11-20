@@ -13,6 +13,30 @@ $mes-test-form-button-height: 45px;
   }
 }
 
+.mes-cta-button {
+  border-radius: 10px;
+  height: 48px;
+  min-width: 170px;
+  color: map-get($colors, white);
+  font-weight: bold;
+  font-size: 17px;
+  padding: 12px;
+  box-shadow: 0 2px 0 0 #6f777b;
+}
+
+.mes-cta-button-primary {
+  @extend .mes-cta-button;
+  background-color: map-get($colors, gds-green);
+  &:active {
+    background-color: lighten(map-get($colors, mesPrimary), 5);
+  }
+}
+
+.mes-cta-button-secondary {
+  @extend .mes-cta-button;
+  background-color: map-get($colors, secondaryButton);
+}
+
 .mes-bottom-card {
   margin-top: 0;
   .mes-button-primary {
@@ -41,5 +65,28 @@ $mes-test-form-button-height: 45px;
   font-size: 17px;
   &:active {
     background-color: lighten(map-get($colors, danger), 5);
+  }
+}
+
+.mes-link {
+  height: 26px;
+  color: #005ea5;
+  font-size: 20px;
+  text-decoration: underline;
+  text-align: left;
+  letter-spacing: 0;
+}
+.mes-full-width-cta {
+  width: 728px;
+  height: 138px;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(to bottom, map-get($colors, white), #efefef);
+  color: map-get($colors, gds-green);
+  &:active {
+    background-image: linear-gradient(to bottom, #fdfdfd, #cbcbcb);
   }
 }

@@ -18,6 +18,8 @@
 
 //downwards from here are the original alpha items
 
+// mes-texts
+
 .mes-text-sm {
   font-size: 17px;
   font-weight: normal;
@@ -28,17 +30,36 @@
   font-weight: normal;
 }
 
+// mes-headers
+
+.mes-header-sm {
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .mes-header-md {
   font-size: 20px;
   font-weight: bold;
 }
 
-.mes-bold {
+.mes-header-lg {
+  font-size: 24px;
   font-weight: bold;
 }
 
-.mes-header-sm {
-  font-size: 16px;
+.mes-header-xlg {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.mes-header-xxlg {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+// others
+
+.mes-bold {
   font-weight: bold;
 }
 

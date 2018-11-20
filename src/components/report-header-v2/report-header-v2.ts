@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { TestResultPage } from '../../pages/test-result/test-result';
 import { NavController } from 'ionic-angular';
+
+import { TestResultPage } from '../../pages/test-result/test-result';
+import { HazardRecorderProvider } from './../../providers/hazard-recorder/hazard-recorder';
+import { IJournal } from '../../providers/journal/journal-model';
 
 /**
  * Generated class for the ReportHeaderComponent component.
@@ -14,7 +17,13 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'report-header-v2.html'
 })
 export class ReportHeaderV2Component {
-  @Input() options;
+  @Input()
+  options;
+  @Input()
+  slotDetail: IJournal;
+
+  isDButtonPressed = false;
+  isSButtonPressed = false;
 
   defaultOptions: any = {
     undo: true,
@@ -22,7 +31,10 @@ export class ReportHeaderV2Component {
     trainingMode: false
   };
 
-  constructor(private navCtrl: NavController) {
+  constructor(
+    private navCtrl: NavController,
+    private hazardRecorderProvider: HazardRecorderProvider
+  ) {
     this.setDefaultOptions();
   }
 
@@ -40,6 +52,40 @@ export class ReportHeaderV2Component {
     if (this.options.trainingMode) {
       return this.navCtrl.popToRoot();
     }
-    this.navCtrl.push(this.options.nextPage);
+    this.navCtrl.push(this.options.nextPage, { slotDetail: this.slotDetail });
+  }
+
+  dButtonClicked() {
+    this.hazardRecorderProvider.resetHazardRecording();
+    if (this.isDButtonPressed) {
+      this.isDButtonPressed = false;
+      return;
+    }
+
+    this.isDButtonPressed = true;
+    this.isSButtonPressed = false;
+
+    if (this.hazardRecorderProvider.isRemovingFaultsEnabled) {
+      this.hazardRecorderProvider.enableDangerousRemoving(() => (this.isDButtonPressed = false));
+    } else {
+      this.hazardRecorderProvider.enableDangerousRecording(() => (this.isDButtonPressed = false));
+    }
+  }
+
+  sButtonClicked() {
+    this.hazardRecorderProvider.resetHazardRecording();
+    if (this.isSButtonPressed) {
+      this.isSButtonPressed = false;
+      return;
+    }
+
+    this.isDButtonPressed = false;
+    this.isSButtonPressed = true;
+
+    if (this.hazardRecorderProvider.isRemovingFaultsEnabled) {
+      this.hazardRecorderProvider.enableSeriousRemoving(() => (this.isSButtonPressed = false));
+    } else {
+      this.hazardRecorderProvider.enableSeriousRecording(() => (this.isSButtonPressed = false));
+    }
   }
 }

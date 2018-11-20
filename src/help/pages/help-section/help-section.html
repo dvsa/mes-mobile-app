@@ -1,0 +1,178 @@
+<ion-header>
+  <mes-header [title]="title"></mes-header>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="page-title">
+    <span class="mes-header-xlg">Help guide</span>
+  </div>
+
+  <div>
+    <div id="show-all-container">
+      <span class="mes-link" *ngIf="isAtLeastOneCollapsed()" (click)="expandAll()" >show all</span>
+      <span class="mes-link" *ngIf="isAllExpanded()" (click)="collapseAll()">hide all</span>
+    </div>
+
+    <ion-list no-lines>
+
+      <!-- Journal -->
+
+      <ion-item [ngClass]="journalSectionItemClass()">
+        <div class="divider"></div>
+        <div class="header-container" (click)="toggleJournalVisibility()">
+          <div class="section-header">
+            <span [ngClass]="journalSectionNumberClass()">1</span>
+            <span class="section-header-text">Journal</span>
+            <span class="hide-show-links">
+              <span *ngIf="isJournalVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isJournalVisibilityExpanded()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md section-text">
+            This is where you can see an overview of your tests for the day
+          </div>
+        </div>
+        <div class="section-details" *ngIf="isJournalVisibilityExpanded()">
+          <div class="video">
+            <iframe width="458" height="262" src="https://www.youtube.com/embed/m78Lif1wsuI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="mes-text-md">click on the arrow to play the video</p>
+        </div>
+      </ion-item>
+
+      <!-- Waiting room to car -->
+
+      <ion-item [ngClass]="waitingRoomToCarSectionItemClass()">
+        <div class="divider"></div>
+        <div class="header-container" (click)="toggleWaitingRoomToCarVisibility()">
+          <div class="section-header">
+            <span [ngClass]="waitingRoomToCarSectionNumberClass()">2</span>
+            <span class="section-header-text">Waiting room to car</span>
+            <span class="hide-show-links">
+              <span *ngIf="isWaitingRoomToCarVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isWaitingRoomToCarVisibilityExpanded()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md section-text">
+            Recording candidate details
+          </div>
+        </div>
+        <div class="section-details" *ngIf="isWaitingRoomToCarVisibilityExpanded()">
+          <div class="video">
+            <iframe width="458" height="262" src="https://www.youtube.com/embed/m78Lif1wsuI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="mes-text-md">click on the arrow to play the video</p>
+        </div>
+      </ion-item>
+
+      <!-- In-car testing -->
+
+      <ion-item [ngClass]="inCarTestingSectionItemClass()">
+        <div class="divider"></div>
+        <div class="header-container" (click)="toggleInCarTestingVisibility()">
+          <div class="section-header">
+            <span [ngClass]="inCarTestingSectionNumberClass()">3</span>
+            <span class="section-header-text">In-car testing</span>
+            <span class="hide-show-links">
+              <span *ngIf="isInCarTestingVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isInCarTestingVisibilityExpanded()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md section-text">
+            Conducting the test
+          </div>
+        </div>
+        <div class="section-details" *ngIf="isInCarTestingVisibilityExpanded()">
+          <div class="video">
+            <iframe width="458" height="262" src="https://www.youtube.com/embed/m78Lif1wsuI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="mes-text-md">click on the arrow to play the video</p>
+        </div>
+      </ion-item>
+
+      <!-- Debrief -->
+
+      <ion-item [ngClass]="debreifSectionItemClass()">
+        <div class="divider"></div>
+        <div class="header-container" (click)="toggleDebreifVisibility()">
+          <div class="section-header">
+            <span [ngClass]="debreifSectionNumberClass()">4</span>
+            <span class="section-header-text">Debrief</span>
+            <span class="hide-show-links">
+              <span *ngIf="isDebreifVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isDebreifVisibilityExpanded()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md section-text">
+            Providing feedback to candidate
+          </div>
+        </div>
+        <div class="section-details" *ngIf="isDebreifVisibilityExpanded()">
+          <div class="video">
+            <iframe width="458" height="262" src="https://www.youtube.com/embed/m78Lif1wsuI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="mes-text-md">click on the arrow to play the video</p>
+        </div>
+      </ion-item>
+
+      <!-- Finalisation and submission -->
+
+      <ion-item [ngClass]="finalisationAndSubmissionSectionItemClass()">
+        <div class="divider"></div>
+        <div class="header-container" (click)="toggleFinalisationAndSubmissionVisibility()">
+          <div class="section-header">
+            <span [ngClass]="finalisationAndSubmissionSectionNumberClass()">5</span>
+            <span class="section-header-text">Finalisation and submission</span>
+            <span class="hide-show-links">
+              <span *ngIf="isFinalisationAndSubmissionVisibilityCollapsed()">
+                <span class="show-icon">+</span>
+                <span class="mes-link">show</span>
+              </span>
+              <span *ngIf="isFinalisationAndSubmissionVisibilityExpanded()">
+                <span class="hide-icon">-</span>
+                <span class="mes-link">hide</span>
+              </span>
+            </span>
+          </div>
+          <div class="mes-text-md section-text">
+            Writing up report
+          </div>
+        </div>
+        <div class="section-details" *ngIf="isFinalisationAndSubmissionVisibilityExpanded()">
+          <div class="video">
+            <iframe width="458" height="262" src="https://www.youtube.com/embed/m78Lif1wsuI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="mes-text-md">click on the arrow to play the video</p>
+        </div>
+      </ion-item>
+
+    </ion-list>
+
+  </div>
+  
+</ion-content>

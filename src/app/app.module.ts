@@ -1,3 +1,4 @@
+import { HelpModule } from './../help/help.module';
 import { DirectivesModule } from './../directives/directives.module';
 import { AllOnOneV2Page } from './../pages/all-on-one-v2/all-on-one-v2';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -32,7 +33,6 @@ import { DateTimeUtility } from '../shared/utils/datetime';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { QuestionsModalComponent } from '../components/questions-modal/questions-modal';
 import { SelectButtonComponent } from '../components/select-button/select-button';
-import { EyesightFaultRecordingModalPage } from '../pages/eyesight-fault-recording-modal/eyesight-fault-recording-modal';
 import {
   TranslateModule,
   TranslateStaticLoader,
@@ -78,7 +78,6 @@ export function createTranslateLoader(http: Http) {
     PretestChecksPage,
     TestResultPage,
     TrainerModePage,
-    EyesightFaultRecordingModalPage,
     PostTestSummaryPage,
     AllOnOneV2Page,
     AoopCustomHammerConfigPage,
@@ -88,7 +87,9 @@ export function createTranslateLoader(http: Http) {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(App),
+    IonicModule.forRoot(App, {
+      backButtonText: 'Back'
+    }),
     ComponentsModule,
     HttpClientModule,
     SignaturePadModule,
@@ -99,7 +100,8 @@ export function createTranslateLoader(http: Http) {
     }),
     NgReduxModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    HelpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -120,7 +122,6 @@ export function createTranslateLoader(http: Http) {
     TrainerModePage,
     QuestionsModalComponent,
     SelectButtonComponent,
-    EyesightFaultRecordingModalPage,
     PostTestSummaryPage,
     WeatherSelectorComponent,
     AllOnOneV2Page,

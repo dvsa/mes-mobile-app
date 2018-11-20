@@ -4,7 +4,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2015"],
+    "lib": ["dom", "es2017"],
     "types": ["jest"],
     "module": "es2015",
     "moduleResolution": "node",
@@ -14,7 +14,7 @@
     "noUnusedParameters": false
   },
   "include": ["src/**/*.ts", "typings/typings.d.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "test"],
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false

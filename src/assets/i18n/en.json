@@ -1,14 +1,15 @@
 {
   "MANOEUVRES": "Manoeuvres",
-  "VEHICLE_CHECKS": "Vehicle Checks",
+  "VEHICLE_CHECKS": "Vehicle check",
   "PRECAUTIONS": "Precautions",
   "CONTROL": "Control",
-  "MOVE_OFF": "Move Off",
+  "MOVE_OFF": "Move off",
   "USE_OF_MIRRORS": "Use of mirrors",
   "SIGNALS": "Signals",
   "RESPONSE": "Response to signs/signals",
   "PROGRESS": "Progress",
   "JUNCTIONS": "Junctions",
   "JUDGEMENT": "Judgement",
-  "POSITIONING": "Positioning"
+  "POSITIONING": "Positioning",
+  "TEST_REQUIREMENTS": "Test requirements"
 }

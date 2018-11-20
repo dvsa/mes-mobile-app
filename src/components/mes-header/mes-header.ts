@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Page } from 'ionic-angular/umd/navigation/nav-util';
 
 /**
  * Generated class for the HeaderComponent component.
@@ -11,5 +12,12 @@ import { Component } from '@angular/core';
   templateUrl: 'mes-header.html'
 })
 export class HeaderComponent {
+  @Input()
+  title: string;
+  @Input()
+  hideBackButton: boolean = false;
+  @Input()
+  helpPage: Page;
+
   constructor() {}
 }

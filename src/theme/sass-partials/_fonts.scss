@@ -1,0 +1,29 @@
+$GDSTransport-font-path: $font-path !default;
+
+@font-face {
+  font-family: 'GDSTransportTabular-Bold';
+  font-weight: bold;
+  font-style: normal;
+  src: local('GDSTransportTabular-Bold'),
+    url('#{$GDSTransport-font-path}/GDSTransportTabular-Bold.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'GDSTransportTabular-Light';
+  font-weight: initial;
+  src: local('GDSTransportTabular Light'),
+    url('#{$GDSTransport-font-path}/GDSTransportTabular-Light.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'GDSTransportWebsite';
+  src: local('GDSTransportWebsite'),
+    url('#{$GDSTransport-font-path}/GDSTransportWebsite.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'GDSTransportWebsite-Bold';
+  font-weight: bold;
+  src: local('GDSTransportWebsite-Bold'),
+    url('#{$GDSTransport-font-path}/GDSTransportWebsite-Bold.eot') format('eot');
+}

@@ -1,4 +1,3 @@
-import { AlphaHeaderComponent } from './alpha-header/alpha-header';
 import { AllOnOneFormSubElementHoldNoModalComponent } from './all-on-one-form-sub-element-hold-no-modal/all-on-one-form-sub-element-hold-no-modal';
 import { TotalsComponent } from './totals/totals';
 import { ReportHeaderV2Component } from './report-header-v2/report-header-v2';
@@ -21,6 +20,12 @@ import { EvenOddPipe } from '../pipes/evenOdd';
 import { PostTestSummarySectionComponent } from './post-test-summary-section/post-test-summary-section';
 import { TextboxModalComponent } from './textbox-modal/textbox-modal';
 import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-on-one-form-vc-button';
+import { MesSignaturePadComponent } from './mes-signature-pad/mes-signature-pad';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { TestResultHeaderComponent } from './test-result-header/test-result-header';
+import { JournalTestDetailsComponent } from './journal-test-details/journal-test-details';
+import { JournalCandidateInfoComponent } from './journal-candidate-info/journal-candidate-info';
+import { HelpButtonComponent } from './help-button/help-button';
 
 @NgModule({
   declarations: [
@@ -39,14 +44,18 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     TotalsComponent,
     AllOnOneFormSubElementHoldNoModalComponent,
     LegalRequirementsComponent,
-    AlphaHeaderComponent,
     AllOnOneFormEtaButtonComponent,
     EvenOddPipe,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent
+    AllOnOneFormVcButtonComponent,
+    MesSignaturePadComponent,
+    TestResultHeaderComponent,
+    JournalTestDetailsComponent,
+    JournalCandidateInfoComponent,
+    HelpButtonComponent
   ],
-  imports: [IonicModule.forRoot(PageHeaderComponent)],
+  imports: [IonicModule.forRoot(PageHeaderComponent), SignaturePadModule],
   exports: [
     PageHeaderComponent,
     JournalHeaderComponent,
@@ -63,11 +72,15 @@ import { AllOnOneFormVcButtonComponent } from './all-on-one-form-vc-button/all-o
     TotalsComponent,
     AllOnOneFormSubElementHoldNoModalComponent,
     LegalRequirementsComponent,
-    AlphaHeaderComponent,
     AllOnOneFormEtaButtonComponent,
     PostTestSummarySectionComponent,
     TextboxModalComponent,
-    AllOnOneFormVcButtonComponent
+    AllOnOneFormVcButtonComponent,
+    MesSignaturePadComponent,
+    TestResultHeaderComponent,
+    JournalTestDetailsComponent,
+    JournalCandidateInfoComponent,
+    HelpButtonComponent
   ]
 })
 export class ComponentsModule {}

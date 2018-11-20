@@ -12,6 +12,7 @@ log.txt
 .vscode/
 npm-debug.log*
 .env
+*.DS_Store
 
 .idea/
 .sourcemaps/
@@ -31,6 +32,7 @@ plugins/ios.json
 www/
 $RECYCLE.BIN/
 typings/cordova-*
+test-reports/
 
 .DS_Store
 Thumbs.db

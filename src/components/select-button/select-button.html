@@ -1,6 +1,4 @@
-<button class="select-button" type="button" (click)="onClickEventHandler()">
-  <span class="select-text" [ngClass]="{'black-text': selectedText || false}">{{selectedText || 'Select'}}</span>
-  <span class="arrow">
-    <ion-icon name="arrow-down"></ion-icon>
-  </span>
+<button class="mes-cta-button-primary" type="button" (click)="onClickEventHandler()">
+    <ion-icon *ngIf="questionAsked" name="md-sync" class="question-asked"></ion-icon>
+    <span>{{selectedText || 'Select a question'}}</span>
 </button>

@@ -1,86 +1,119 @@
 <ion-header>
-    <page-header></page-header>
+    <mes-header [title]='getTitle()' [helpPage]="helpPage"></mes-header>  
 </ion-header>
 
 <ion-content padding class="mes-main-content">
-
+    <div class="mes-header-xxlg mes-view-candidate-header-padding-fix">
+        <ion-row>
+            <ion-col col-9 text-left>
+                {{getCandidateName()}}
+            </ion-col>
+            <ion-col col-3 text-right>
+                {{slotDetail.startTime}}
+            </ion-col>
+        </ion-row>
+    </div>
     <ion-card class="mes-card">
-        <ion-card-header class="mes-main-card-header--border-bottom mes-breadcrumbs">
-            <span class="mes-header-md mes-breadcrumb-link" navPop>
-                <ion-icon name="arrow-back"></ion-icon>
-                {{getPreviousPage()}} /
-            </span>
-            <span padding-left class="mes-header-md">View Candidate</span>
-            <span float-right>
-                <ion-icon padding-right name="refresh"></ion-icon>
-                <span class="mes-text-sm">Last synced: 8:06</span>
-            </span>
+        <ion-card-header class="mes-header-lg">
+            Candidate information 
         </ion-card-header>
         <ion-card-content>
-            <ion-row class="mes-m-b-20">
-                <ion-col col-3 offset-9>
-                    <button float-right class="mes-button-neutral" outline color="dark" [navPush]="initiateSwapPage">
-                        Request swap
-                    </button>
-                </ion-col>
-            </ion-row>
             <ion-row>
-                <ion-col col-4 text-center padding-right>
-                    <ion-icon class="mes-candidate-img" name="person"></ion-icon>
-                    <div class="mes-p-sm">
-                        <span class="mes-header-md">{{getCandidateName()}}</span>
-                    </div>
-                    <div class="mes-p-sm">
-                        <ion-icon name="clock"></ion-icon>
-                        <span class="mes-bold mes-text-sm">{{slotDetail.startTime}}</span>
-                    </div>
-                    <span class="mes-p-sm mes-bold mes-text-sm mes-grey">{{slotDetail.slotType}}</span>
+                <ion-col col-4 class="mes-bold">
+                    Test category
                 </ion-col>
-                <ion-col col-8 padding-left>
-                    <ion-row margin-bottom>
-                        <ion-col no-padding>
-                            <span class="mes-header-sm">Address:</span>
-                            <div class="mes-divider mes-one-third-divider"></div>
-                            <span class="mes-text-sm" [innerHTML]="getCandidateAddress()">
-                            </span>
-                        </ion-col>
-                        <ion-col no-padding>
-                            <span class="mes-header-sm">Driving number:</span>
-                            <div class="mes-divider mes-one-third-divider"></div>
-                            <div>
-                                <span class="mes-text-sm">
-                                    {{slotDetail.driverNumber}}
-                                </span>
-                            </div>
-                            <div margin-top>
-                                <span class="mes-text-sm mes-dark-grey">
-                                    <strong>App ref.</strong> {{slotDetail.appId}}
-                                </span>
-                            </div>
-                        </ion-col>
-                    </ion-row>
-                    <div margin-bottom>
-                        <span class="mes-text-sm">{{slotDetail.email}}</span>
-                    </div>
-                    <span class="mes-text-sm">{{slotDetail.mobileTelephone}}</span>
-                    <div class="sig" *ngIf="signature">
-                        <ion-img [src]="signature"></ion-img>
-                    </div>
+                <ion-col col-8>
+                    Category B
                 </ion-col>
             </ion-row>
-            <div hidden text-center class="mes-box-grey">
-                <div margin-bottom>
-                    <ion-icon name="alert"></ion-icon>
-                    <span class="mes-header-md">Theory test certificate check required</span>
-                </div>
-                <button class="mes-button-primary">OK</button>
-            </div>
+            <div class="mes-divider"></div>
+            <ion-row>
+                <ion-col col-4>
+                    Slot
+                </ion-col>
+                <ion-col col-8>
+                    {{getSlotType()}}
+                </ion-col>
+            </ion-row>
+            <div class="mes-divider"></div>
+            <ion-row>
+                <ion-col col-4>
+                    Driving number
+                </ion-col>
+                <ion-col col-8>
+                    {{slotDetail.driverNumber}}
+                </ion-col>
+            </ion-row>
+            <div class="mes-divider"></div>
+            <ion-row>
+                <ion-col col-4>
+                    Application Ref.
+                </ion-col>
+                <ion-col col-8>
+                    {{slotDetail.appId}}
+                </ion-col>
+            </ion-row>
+            <div class="mes-divider"></div>
+            <ion-row>
+                <ion-col col-4>
+                    Candidate comments
+                </ion-col>
+                <ion-col col-8>
+                    <span>
+                        <img src="assets/imgs/warning.png" class="warning-icon" *ngIf="showSlotWarning()" />
+                        {{getCandidateComments()}}
+                    </span>
+                </ion-col>
+            </ion-row>
         </ion-card-content>
     </ion-card>
+
+    <ion-card class="mes-card">
+        <ion-card-header class="mes-header-lg">
+            Contact details
+        </ion-card-header>
+        <ion-card-content>
+            <ion-row>
+                <ion-col col-4>
+                    Phone number
+                </ion-col>
+                <ion-col col-8>
+                    {{slotDetail.mobileTelephone}}
+                </ion-col>
+            </ion-row>
+            <div class="mes-divider"></div>
+            <ion-row>
+                <ion-col col-4>
+                    Email
+                </ion-col>
+                <ion-col col-8>
+                    {{slotDetail.email}}
+                </ion-col>
+            </ion-row>
+            <div class="mes-divider"></div>
+            <ion-row>
+                <ion-col col-4>
+                    Address
+                </ion-col>
+                <ion-col col-8>
+                    <div  [innerHTML]="getCandidateAddress()"></div>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+
+    </ion-card>
+
     <div class="confirm-identity-box" *ngIf="signature">
         <div class="inner" (click)="confirmIdentity()">
             <ion-checkbox></ion-checkbox>
             <button class="mes-button-primary">Confirm Candidates Identity</button>
         </div>
     </div>
+
+    <div class="mes-view-candidate-header-padding-fix">
+        <button class="mes-cta-button-secondary">
+                Request swap
+        </button>
+    </div>
+
 </ion-content>

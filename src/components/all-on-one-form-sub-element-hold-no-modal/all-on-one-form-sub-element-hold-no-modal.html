@@ -2,7 +2,7 @@
   <ion-col no-padding>
     <button [disabled]="isDisabled" style="padding-left:0px; padding-right:0px;" class="all-on-one-form-fault-button" (click)="recordHazard(section)"
       [ngClass]="{'highlight' : isLastFault}">
-          <span *ngIf="faultCounter" class="fault-badge counter">{{faultCounter}}</span>
+          <span *ngIf="faultCounter" class="fault-badge counter" [ngClass]="{ 'show-me': isShowMeSection() }">{{faultCounter}}</span>
           <span>{{ text }}</span>
           <span *ngIf="serious" class="fault-badge serious">S</span>
           <span *ngIf="dangerous" class="fault-badge dangerous">D</span>
