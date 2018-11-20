@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "device": "buildScripts/run-on-device.sh",
+    "device": "ionic cordova run ios --device --development --buildConfig buildScripts/build.json",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
