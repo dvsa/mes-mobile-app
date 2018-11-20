@@ -12,9 +12,12 @@ import { isNonBlankString } from '../../shared/utils/string-utils';
   templateUrl: 'post-test-summary-section.html'
 })
 export class PostTestSummarySectionComponent {
-  @Input() summary: IFaultSummary;
-  @Input() manualSummary: IManualSummary;
-  @Input() canComplete: boolean = false;
+  @Input()
+  summary: IFaultSummary;
+  @Input()
+  manualSummary: IManualSummary;
+  @Input()
+  canComplete: boolean = false;
   drivingFaultsTitle: string = FaultTitle.DrivingFaults;
   // Map of fault name to the note
   faultNotes = new Map<string, string>();

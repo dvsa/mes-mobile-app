@@ -14,9 +14,12 @@ import { WelcomePage } from '../pages/welcome-page/welcome-page';
   templateUrl: 'app.html'
 })
 export class App {
-  @ViewChild('content') nav: NavController;
-  @ViewChild('ionContent') ionContent: Content;
-  @ViewChild('ionContent') header: Content;
+  @ViewChild('content')
+  nav: NavController;
+  @ViewChild('ionContent')
+  ionContent: Content;
+  @ViewChild('ionContent')
+  header: Content;
   rootPage: any = WelcomePage;
 
   constructor(
