@@ -106,18 +106,16 @@
         <ion-row class="height-auto">
           <ion-col col-4 class="mes-header-md"> Accompanied by (optional)</ion-col>
           <ion-col>
-            <div class="gds-checkbox-button">
-              <input id="adi-accompaniment-input" type="checkbox"/>
+              <input id="adi-accompaniment-input" type="checkbox" class="mes-checkbox-button"/>
               <label for="adi-accompaniment-input" class="checkbox-label">ADI</label>
-            </div>
           </ion-col>
           <ion-col>
-            <input id="sup-accompaniment-input" type="checkbox" class="mes-radio-button"/>
-            <label for="sup-accompaniment-input">Sup</label>
+            <input id="sup-accompaniment-input" type="checkbox" class="mes-checkbox-button"/>
+            <label for="sup-accompaniment-input" class="checkbox-label">Sup</label>
           </ion-col>
           <ion-col>
-            <input id="other-accompaniment-input" type="checkbox" class="mes-radio-button"/>
-            <label for="other-accompaniment-input">Other</label>
+            <input id="other-accompaniment-input" type="checkbox" class="mes-checkbox-button"/>
+            <label for="other-accompaniment-input" class="checkbox-label">Other</label>
           </ion-col>
         </ion-row>
         <div class="mes-divider"></div>
@@ -154,16 +152,11 @@
           <ion-col col-4 class="mes-header-md">
             Category
             <ion-icon name="alert" *ngIf="showGearboxValidation" class="validation-icon"></ion-icon>
-            <!--
-              <input type="checkbox" hidden required #isAutomatic="ngModel" name="isAutomatic"
-            -->
-            <!-- [(ngModel)]="preCheck.isAutomatic"> -->
           </ion-col>
           <ion-col class="mes-text-md" col-3>
             <div class="gds-radio-button">
               <input
                 id="manual-category-input"
-                class="mes-radio-button"
                 name="gearbox-category"
                 type="radio"
                 value="{{GearboxCategory.Manual}}"
@@ -178,7 +171,6 @@
             <div class="gds-radio-button">
               <input
                 id="automatic-category-input"
-                class="mes-radio-button"
                 name="gearbox-category"
                 type="radio"
                 value="{{GearboxCategory.Automatic}}"
@@ -198,12 +190,12 @@
         <ion-row class="center-text">
           <ion-col col-4 class="mes-header-md"> Vehicle details (optional)</ion-col>
           <ion-col col-3>
-            <input id="school-car-input" type="checkbox" class="mes-radio-button"/>
-            <label for="school-car-input">School car</label>
+            <input id="school-car-input" type="checkbox" class="mes-checkbox-button"/>
+            <label for="school-car-input" class="checkbox-label">School car</label>
           </ion-col>
           <ion-col col-3>
-            <input id="dc-input" type="checkbox" class="mes-radio-button"/>
-            <label for="dc-input">D/C</label>
+            <input id="dc-input" type="checkbox" class="mes-checkbox-button"/>
+            <label for="dc-input" class="checkbox-label">D/C</label>
           </ion-col>
         </ion-row>
         <div class="mes-divider"></div>
