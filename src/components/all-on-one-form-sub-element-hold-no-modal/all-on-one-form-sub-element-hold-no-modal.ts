@@ -80,9 +80,7 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
     }
     // Prevent more than one fault being added to controlled stop
     if (
-      (this.section === 'controlledStop' ||
-        this.section === 'showMe' ||
-        this.section.startsWith('manoeuvre')) &&
+      (this.section === 'controlledStop' || this.section === 'showMe' || this.isManoeuvre()) &&
       this.faultCounter > 0
     ) {
       return;
@@ -117,6 +115,7 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
 
   addSeriousFault() {
     if (this.serious || this.dangerous) return;
+    if (this.isManoeuvre() && (this.faultCounter > 0 || this.dangerous)) return;
     this.serious = true;
     this.faultStore.addFault(this.section, 'serious');
   }
@@ -129,6 +128,7 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
 
   addDangerousFault() {
     if (this.dangerous) return;
+    if (this.isManoeuvre() && (this.faultCounter > 0 || this.serious)) return;
     this.dangerous = true;
     this.faultStore.addFault(this.section, 'dangerous');
   }
@@ -137,5 +137,9 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
     if (!this.dangerous) return;
     this.dangerous = false;
     this.faultStore.removeFault(this.section, 'dangerous');
+  }
+
+  isManoeuvre() {
+    return this.section.startsWith('manoeuvre');
   }
 }
