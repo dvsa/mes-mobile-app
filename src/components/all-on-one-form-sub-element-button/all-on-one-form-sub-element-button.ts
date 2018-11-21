@@ -6,10 +6,16 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
   templateUrl: 'all-on-one-form-sub-element-button.html'
 })
 export class AllOnOneFormSubElementButtonComponent {
-  @Input() isEnabled: boolean = false;
-  @Input() text: string;
-  @Input() sectionsToShow: string;
-  @Input() isComplete: boolean;
+  @Input()
+  isEnabled: boolean = false;
+  @Input()
+  text: string;
+  @Input()
+  sectionsToShow: string;
+  @Input()
+  isComplete: boolean;
+  @Input()
+  isMesLink: boolean;
   serious: boolean = false;
   dangerous: boolean = false;
   faultCount: number = 0;
