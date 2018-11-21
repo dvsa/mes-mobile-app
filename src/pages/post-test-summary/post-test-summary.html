@@ -78,12 +78,16 @@
           </p>
         </ion-col>
         <ion-col class="mes-text-md">
-          <input name="independentDrivingOption" type="radio" value="1" [(ngModel)]="independentDrivingType">
-          Sat nav 
+          <div class="gds-radio-button">
+            <input id="independentDrivingOption-satnav" name="independentDrivingOption" type="radio" value="1" [(ngModel)]="independentDrivingType">
+            <label for="independentDrivingOption-satnav" class="radio-label">Sat nav </label>
+          </div>
         </ion-col>
         <ion-col class="mes-text-md">
-          <input name="independentDrivingOption" type="radio" value="2" [(ngModel)]="independentDrivingType" >
-          Traffic signs
+          <div class="gds-radio-button">
+            <input id="independentDrivingOption-trafficsigns" name="independentDrivingOption" type="radio" value="2" [(ngModel)]="independentDrivingType">
+            <label for="independentDrivingOption-trafficsigns" class="radio-label">Traffic signs</label>
+          </div>
         </ion-col>
       </ion-row>
       <div class="mes-divider"></div>
@@ -108,12 +112,15 @@
       <span class="mes-header-lg">Faults recorded</span>
     </ion-card-header>
     <ion-card-content>
-      <post-test-summary-section [canComplete]="true" [summary]="dangerousFaultSummary" *ngIf="dangerousFaultSummary.total > 0"></post-test-summary-section>
+      <post-test-summary-section [canComplete]="true" [summary]="dangerousFaultSummary"
+                                 *ngIf="dangerousFaultSummary.total > 0"></post-test-summary-section>
       <div *ngIf="dangerousFaultSummary.total > 0 && (seriousFaultSummary.total > 0 || drivingFaultSummary.total > 0)"
-        class="mes-divider"></div>
-      <post-test-summary-section [canComplete]="true" [summary]="seriousFaultSummary" *ngIf="seriousFaultSummary.total > 0"></post-test-summary-section>
+           class="mes-divider"></div>
+      <post-test-summary-section [canComplete]="true" [summary]="seriousFaultSummary"
+                                 *ngIf="seriousFaultSummary.total > 0"></post-test-summary-section>
       <div *ngIf="seriousFaultSummary.total > 0 && drivingFaultSummary.total > 0" class="mes-divider"></div>
-      <post-test-summary-section [summary]="drivingFaultSummary" *ngIf="drivingFaultSummary.total > 0"></post-test-summary-section>
+      <post-test-summary-section [summary]="drivingFaultSummary"
+                                 *ngIf="drivingFaultSummary.total > 0"></post-test-summary-section>
     </ion-card-content>
   </ion-card>
   <div margin>

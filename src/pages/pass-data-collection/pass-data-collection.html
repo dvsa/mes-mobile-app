@@ -26,13 +26,17 @@
             Provisional licence provided is required.
           </p>
         </ion-col>
-        <ion-col>
-            <input name="provisionalLicence" type="radio" value="1" [(ngModel)]="provisionalProvidedSelection">
-            <span class="mes-text-md">Yes</span> 
+        <ion-col col-3>
+          <div class="gds-radio-button">
+            <input id="provisionalLicence-yes" name="provisionalLicence" type="radio" value="1" [(ngModel)]="provisionalProvidedSelection">
+            <label for="provisionalLicence-yes" class="radio-label">Yes</label>
+          </div>
           </ion-col>
           <ion-col>
-            <input name="provisionalLicence" type="radio" value="2" [(ngModel)]="provisionalProvidedSelection" >
-            <span class="mes-text-md">No</span>
+            <div class="gds-radio-button">
+              <input id="provisionalLicence-no" name="provisionalLicence" type="radio" value="2" [(ngModel)]="provisionalProvidedSelection" >
+              <label for="provisionalLicence-no" class="radio-label">No</label>
+            </div>
           </ion-col>
       </ion-row>
       <div class="mes-divider"></div>
