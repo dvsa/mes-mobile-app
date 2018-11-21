@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-section no-margin-bottom manoeuvre" [ngClass]="selectedManoeuvre? 'action-completed': 'action-incomplete'">
-          <all-on-one-form-sub-element-button [sectionsToShow]="selectedManoeuvre" #manoeuvresButton text="{{ 'MANOEUVRES' | translate }}"></all-on-one-form-sub-element-button>
+          <all-on-one-form-sub-element-button [isMesLink]="true" [sectionsToShow]="selectedManoeuvre" #manoeuvresButton text="{{ 'MANOEUVRES' | translate }}"></all-on-one-form-sub-element-button>
         </div>
       </ion-col>
 
@@ -79,7 +79,7 @@
       <ion-col col-4 [ngClass]="{'margin-top-for-manoeuvre-closed': !manoeuvresButton.isEnabled}">
 
         <div class="form-section" [ngClass]="(isEcoComplete() || ecoControlOption.isEnabled || ecoPlanningOption.isEnabled)? 'action-completed': 'action-incomplete'">
-          <all-on-one-form-sub-element-button #ecoButton section="ECO" text="ECO"></all-on-one-form-sub-element-button>
+          <all-on-one-form-sub-element-button [isMesLink]="true" #ecoButton section="ECO" text="ECO"></all-on-one-form-sub-element-button>
         </div>
 
         <!-- ECO Options -->
