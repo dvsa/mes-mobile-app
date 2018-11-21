@@ -8,8 +8,4 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HelpJournalPage {
   title: string = 'Journal - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HelpJournalPage');
-  }
 }

@@ -8,8 +8,4 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HelpWaitingRoomToCarPage {
   title: string = 'Waiting room to car - Help';
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HelpWaitingRoomToCarPage');
-  }
 }

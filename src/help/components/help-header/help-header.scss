@@ -4,11 +4,6 @@ help-header {
   .toolbar-background {
     background: linear-gradient(-180deg, #edc628 0%, #c2a11f 100%);
   }
-  .header-help-icon {
-    font-size: 24px !important;
-    font-weight: bold !important;
-    margin: 0 12px 0 8px;
-  }
   .header-close-button {
     color: map-get($colors, gds-black);
     font-weight: bold;

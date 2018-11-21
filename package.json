@@ -8,6 +8,7 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
+    "device": "ionic cordova run ios --device --development --buildConfig buildScripts/build.json",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
@@ -85,6 +86,7 @@
     "cucumber": "^4.2.1",
     "cucumber-html-reporter": "^4.0.2",
     "dotenv-safe": "^5.0.1",
+    "git-rev-sync": "^1.12.0",
     "husky": "^0.14.3",
     "jest": "^22.4.2",
     "jest-preset-angular": "^5.2.1",
@@ -96,7 +98,8 @@
     "ts-node": "^5.0.1",
     "tslint-config-airbnb": "^5.8.0",
     "tslint-config-prettier": "^1.10.0",
-    "typescript": "2.4.2"
+    "typescript": "2.4.2",
+    "xml2js": "^0.4.19"
   },
   "cordova": {
     "plugins": {
