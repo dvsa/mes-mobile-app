@@ -7,7 +7,7 @@ import { HomePage } from "../pages/home/home";
 @Component({
   templateUrl: "app.html"
 })
-export class MyApp {
+export class App {
   rootPage: any = HomePage;
 
   constructor(
@@ -19,6 +19,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
+      statusBar.overlaysWebView(false);
       splashScreen.hide();
     });
   }
