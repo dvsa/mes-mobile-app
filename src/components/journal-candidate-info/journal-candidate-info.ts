@@ -10,21 +10,21 @@ export class JournalCandidateInfoComponent {
   @Input()
   candidateName: ICandidateName;
   @Input()
-  testCategory: number;
+  testCategory: string;
   @Input()
   testComplete: boolean;
 
   constructor() {}
 
-  getName() {
+  get name() {
     return getFormattedCandidateName(this.candidateName);
   }
 
-  extractCategoryCode(slotType: string) {
+  get categoryCode() {
     // slotType comes from the vehicleSlotType key in the journal data
     // Examples of slotType parameter: 'B57mins' / 'Voc90mins'
-    if (slotType === null) return 'N/A';
+    if (this.testCategory === null) return 'N/A';
     const re = /^[a-zA-Z]*/;
-    return slotType.match(re);
+    return this.testCategory.match(re)[0];
   }
 }
