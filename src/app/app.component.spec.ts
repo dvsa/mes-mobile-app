@@ -23,21 +23,6 @@ describe("App", () => {
   const splashScreenStub = {
     hide: jest.fn()
   };
-  const translateServiceStub = {
-    getBrowserLang: jest.fn(),
-    use: jest.fn(),
-    setDefaultLang: jest.fn()
-  };
-  const screenOrientationStub = {
-    lock: jest.fn(),
-    ORIENTATIONS: { PORTRAIT_PRIMARY: "" }
-  };
-  const insomniaStub = {
-    keepAwake: jest.fn()
-  };
-  const globalizationStub = {
-    getPreferredLanguage: jest.fn().mockResolvedValue({ value: "en" })
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
