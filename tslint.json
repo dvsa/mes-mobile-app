@@ -1,12 +1,7 @@
 {
   "rules": {
-    "max-line-length": [true, { "limit": 200, "ignore-pattern": "^import |^export {(.*?)}" }],
     "no-duplicate-variable": true,
-    "no-unused-variable": [true],
-    "trailing-comma": false,
-    "ter-arrow-parens": [true, "always"],
-    "align": [true, "parameters"]
+    "no-unused-variable": [true]
   },
-  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"],
-  "extends": ["tslint-config-airbnb", "tslint-config-prettier"]
+  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"]
 }
