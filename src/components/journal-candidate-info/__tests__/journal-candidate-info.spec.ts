@@ -35,7 +35,7 @@ describe('JournalCandidateInfoComponent', () => {
       it('should return the result of passing the candidate name to the name formatter', () => {
         mockGetFormattedCandidateName.mockReturnValue('Joe Bloggs');
         expect(component.name).toBe('Joe Bloggs');
-        expect(mockGetFormattedCandidateName).toHaveBeenCalled();
+        expect(mockGetFormattedCandidateName).toHaveBeenCalledWith(component.candidateName);
       });
     });
 
@@ -59,7 +59,8 @@ describe('JournalCandidateInfoComponent', () => {
     });
 
     describe('test completion class', () => {
-      const testCompletionClass = 'journal-candidate-info-test-complete-text';
+      const testCompletionTextClass = 'journal-candidate-info-test-complete-text';
+      const testCompletionImgClass = 'journal-candidate-info-category-icon-completed';
       let topLevelDivEl: HTMLElement;
       let categoryImgEl: HTMLElement;
 
@@ -72,16 +73,16 @@ describe('JournalCandidateInfoComponent', () => {
         it('should not be applied', () => {
           component.testComplete = false;
           fixture.detectChanges();
-          expect(topLevelDivEl.classList).not.toContain(testCompletionClass);
-          expect(categoryImgEl.classList).not.toContain(testCompletionClass);
+          expect(topLevelDivEl.classList).not.toContain(testCompletionTextClass);
+          expect(categoryImgEl.classList).not.toContain(testCompletionImgClass);
         });
       });
       describe('when the test is complete', () => {
         it('should be applied', () => {
           component.testComplete = true;
           fixture.detectChanges();
-          expect(topLevelDivEl.classList).toContain(testCompletionClass);
-          // expect(categoryImgEl.classList).toContain(testCompletionClass);
+          expect(topLevelDivEl.classList).toContain(testCompletionTextClass);
+          expect(categoryImgEl.classList).toContain(testCompletionImgClass);
         });
       });
     });
