@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
 import { JournalPage } from '../journal/journal';
 import { HelpSectionPage } from '../../help/pages/help-section/help-section';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @Component({
   selector: 'page-welcome',
@@ -13,5 +14,23 @@ export class WelcomePage {
   journalPage: Page = JournalPage;
   helpPage: Page = HelpSectionPage;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController) {}
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController,
+    public logging: AnalyticsProvider
+  ) {}
+
+  ionViewDidLoad() {
+    this.logging.setCurrentPage('welcome page');
+  }
+
+  gotoHelpPage() {
+    this.logging.logEvent('click', 'help page');
+    this.navCtrl.push(this.helpPage);
+  }
+
+  gotoJournalPage() {
+    this.logging.logEvent('click', 'journal page');
+    this.navCtrl.push(this.journalPage);
+  }
 }

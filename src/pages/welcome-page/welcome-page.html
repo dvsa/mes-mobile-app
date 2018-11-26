@@ -33,7 +33,7 @@
     </ion-row>
     <ion-row>
         <ion-col text-center>
-            <button class="mes-full-width-cta" [navPush]="helpPage">
+            <button class="mes-full-width-cta" (click)="gotoHelpPage()">
                 <ion-row align-items-center no-margin>
                     <ion-col col-2>
                         <img float-start margin-left class="icon" src="assets/imgs/welcome-page-2.png" />
@@ -47,7 +47,7 @@
     </ion-row>
     <ion-row>
         <ion-col text-center>
-            <button class="mes-full-width-cta" [navPush]="journalPage">
+            <button class="mes-full-width-cta" (click)="gotoJournalPage()">
                 <ion-row align-items-center no-margin>
                     <ion-col col-2>
                         <img float-start margin-left class="icon" src="assets/imgs/welcome-page-3.png" />

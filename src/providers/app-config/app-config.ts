@@ -14,6 +14,8 @@ export class AppConfigProvider {
     backgroundColor: '#ffffff'
   };
 
+  googleAnalyticsId: string = 'UA-129814222-1';
+
   constructor() {
     this.journalApiUrl = 'assets/data/journalResp.json';
   }
@@ -24,5 +26,9 @@ export class AppConfigProvider {
 
   getSignaturePadOptions() {
     return this.signaturePadOptions;
+  }
+
+  getGoogleAnalyticsKey() {
+    return this.googleAnalyticsId;
   }
 }

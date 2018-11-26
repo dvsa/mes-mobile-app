@@ -21,6 +21,7 @@ import { PostTestSummarySectionComponent } from '../../components/post-test-summ
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { HelpFinalisationSubmissionPage } from '../../help/pages/help-finalisation-submission/help-finalisation-submission';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -59,7 +60,8 @@ export class PostTestSummaryPage {
     private alertCtrl: AlertController,
     private vehicleCheckProvider: VehicleCheckProvider,
     private summaryMetadata: TestSummaryMetadataProvider,
-    private screenOrientation: ScreenOrientation
+    private screenOrientation: ScreenOrientation,
+    public logging: AnalyticsProvider
   ) {
     this.faultStore.getFaultTotals().subscribe((faultSummaries) => {
       this.drivingFaultSummary = faultSummaries.drivingFaultSummary;
@@ -79,6 +81,10 @@ export class PostTestSummaryPage {
     if (this.platform.is('cordova')) {
       this.screenOrientation.unlock();
     }
+  }
+
+  ionViewDidLoad() {
+    this.logging.setCurrentPage('test page');
   }
 
   ionViewDidLeave() {
@@ -135,6 +141,7 @@ export class PostTestSummaryPage {
   }
 
   private backToJournal() {
+    this.logging.logEvent('click', 'test end');
     this.faultStore.reset();
     this.summaryMetadata.reset();
     this.navCtrl.popTo(this.navCtrl.getByIndex(1));
