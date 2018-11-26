@@ -10,6 +10,8 @@ import { Globalization } from '@ionic-native/globalization';
 
 import { App } from './app.component';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
+import { Device } from '@ionic-native/device';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -54,7 +56,9 @@ describe('App', () => {
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: ScreenOrientation, useValue: screenOrientationStub },
         { provide: Insomnia, useValue: insomniaStub },
-        { provide: Globalization, useValue: globalizationStub }
+        { provide: Globalization, useValue: globalizationStub },
+        { provide: Device },
+        { provide: GoogleAnalytics }
       ]
     }).compileComponents();
 

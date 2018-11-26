@@ -23,14 +23,4 @@ export class WelcomePage {
   ionViewDidLoad() {
     this.logging.setCurrentPage('welcome page');
   }
-
-  gotoHelpPage() {
-    this.logging.logEvent('click', 'help page');
-    this.navCtrl.push(this.helpPage);
-  }
-
-  gotoJournalPage() {
-    this.logging.logEvent('click', 'journal page');
-    this.navCtrl.push(this.journalPage);
-  }
 }
