@@ -28,14 +28,16 @@ const journalProviderStub = {
           title: 'Mr',
           firstName: 'Joe',
           lastName: 'Bloggs'
-        }
+        },
+        testCentreName: 'Colwick'
       },
       {
         candidateName: {
           title: 'Mrs',
           firstName: 'Jodie',
           lastName: 'Blogger'
-        }
+        },
+        testCentreName: 'Cardington'
       }
     ])
   )
@@ -96,13 +98,19 @@ describe('Journal Page', () => {
 
     it('should input the candidate info + completion status to the candidate info component', () => {
       fixture.detectChanges();
-      const queried = componentEl.query(By.css('journal-candidate-info'));
-      expect(queried).toBeTruthy();
-      const instance = queried.componentInstance;
-      const { title, firstName, lastName } = instance.candidateName;
+      const firstCandidateInfo = componentEl.query(By.css('journal-candidate-info'))
+        .componentInstance as JournalCandidateInfoComponent;
+      const { title, firstName, lastName } = firstCandidateInfo.candidateName;
       expect(title).toBe('Mr');
       expect(firstName).toBe('Joe');
       expect(lastName).toBe('Bloggs');
+    });
+
+    it('should input the test information into the test details component', () => {
+      fixture.detectChanges();
+      const firstTestDetails = componentEl.query(By.css('journal-test-details'))
+        .componentInstance as JournalTestDetailsComponent;
+      expect(firstTestDetails.testCentreName).toBe('Colwick');
     });
   });
 });
