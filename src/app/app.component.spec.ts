@@ -48,11 +48,19 @@ describe('App', () => {
   const deviceStub = {
     uuid: 'Random string'
   };
-  const googleAnalyticsStub = {
-    startTrackerWithId: jest.fn(),
-    setUserId: jest.fn(),
-    addCustomDimension: jest.fn(),
-    trackEvent: jest.fn()
+  const googleAnalyticsMock = {
+    startTrackerWithId: (id: string) => {
+      return new Promise((resolve) => {});
+    },
+    setUserId: (id: string) => {
+      return new Promise((resolve) => {});
+    },
+    addCustomDimension: (index: number, id: string) => {
+      return new Promise((resolve) => {});
+    },
+    trackEvent: (category: string, event: string) => {
+      return new Promise((resolve) => {});
+    }
   };
   const appConfigStub = {
     getGoogleAnalyticsKey: jest.fn(),
@@ -71,7 +79,7 @@ describe('App', () => {
         { provide: Insomnia, useValue: insomniaStub },
         { provide: Globalization, useValue: globalizationStub },
         { provide: Device, useValue: deviceStub },
-        { provide: GoogleAnalytics, useValue: googleAnalyticsStub },
+        { provide: GoogleAnalytics, useValue: googleAnalyticsMock },
         { provide: AppConfigProvider, useValue: appConfigStub }
       ]
     }).compileComponents();
