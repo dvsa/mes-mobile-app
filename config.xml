@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="uk.gov.dvsa.mobile-examiner" version="1.0.1543247935" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="uk.gov.dvsa.mobile-examiner" version="1.0.1543396707" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Mobile Examiner Beta</name>
   <description>An application for DVSA driving examiners to conduct driving tests</description>
   <author email="mobexaminer@gmail.com">MES Team</author>

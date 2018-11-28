@@ -13,6 +13,11 @@ import { isNil } from 'lodash';
 import { isNonBlankString } from '../../shared/utils/string-utils';
 import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import {
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+  AnalyticsScreenNames
+} from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-journal',
@@ -41,12 +46,12 @@ export class JournalPage {
     });
 
     this.faultStore.reset();
-    this.logging.setCurrentPage('journal page');
   }
 
   ionViewDidEnter() {
     this.faultStore.reset();
     this.summaryMetadata.reset();
+    this.logging.setCurrentPage(AnalyticsScreenNames.JOURNAL);
   }
 
   hasFailed(slot: IJournal) {
@@ -81,7 +86,7 @@ export class JournalPage {
   }
 
   goToDeclarationConsent(slot: IJournal) {
-    this.logging.logEvent('click', 'start test');
+    this.logging.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
     this.navCtrl.push(DeclarationConsentPage, { slotDetail: slot });
   }
 }

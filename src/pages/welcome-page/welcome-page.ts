@@ -4,6 +4,7 @@ import { NavController, ViewController } from 'ionic-angular';
 import { JournalPage } from '../journal/journal';
 import { HelpSectionPage } from '../../help/pages/help-section/help-section';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-welcome',
@@ -20,7 +21,7 @@ export class WelcomePage {
     public logging: AnalyticsProvider
   ) {}
 
-  ionViewDidLoad() {
-    this.logging.setCurrentPage('welcome page');
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.WELCOME);
   }
 }

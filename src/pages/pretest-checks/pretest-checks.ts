@@ -13,6 +13,7 @@ import { EyesightResult } from './check-enums/eyesight-result';
 import { GearboxCategory } from './check-enums/gearbox-category';
 import { HelpWaitingRoomToCarPage } from '../../help/pages/help-waiting-room-to-car/help-waiting-room-to-car';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -68,8 +69,8 @@ export class PretestChecksPage {
     this.vehicleCheckProvider.reset(vCheckType.SHOWME);
   }
 
-  ionViewDidLoad() {
-    this.logging.setCurrentPage('test page');
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
   }
 
   getTitle() {

@@ -6,6 +6,7 @@ import { isNil } from 'lodash';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-pass-data-collection',
@@ -30,8 +31,8 @@ export class PassDataCollectionPage {
     this.slotDetail = this.navParams.get('slotDetail');
   }
 
-  ionViewDidLoad() {
-    this.logging.setCurrentPage('pass data collection page');
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.PASS_FINALISATION);
   }
 
   continue() {

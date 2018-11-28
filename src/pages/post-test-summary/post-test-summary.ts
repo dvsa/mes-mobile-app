@@ -22,6 +22,11 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { HelpFinalisationSubmissionPage } from '../../help/pages/help-finalisation-submission/help-finalisation-submission';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import {
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+  AnalyticsScreenNames
+} from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-post-test-summary',
@@ -81,10 +86,7 @@ export class PostTestSummaryPage {
     if (this.platform.is('cordova')) {
       this.screenOrientation.unlock();
     }
-  }
-
-  ionViewDidLoad() {
-    this.logging.setCurrentPage('test page');
+    this.logging.setCurrentPage(AnalyticsScreenNames.OFFICE);
   }
 
   ionViewDidLeave() {
@@ -141,7 +143,7 @@ export class PostTestSummaryPage {
   }
 
   private backToJournal() {
-    this.logging.logEvent('click', 'test end');
+    this.logging.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.END_TEST);
     this.faultStore.reset();
     this.summaryMetadata.reset();
     this.navCtrl.popTo(this.navCtrl.getByIndex(1));

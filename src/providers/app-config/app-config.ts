@@ -14,7 +14,9 @@ export class AppConfigProvider {
     backgroundColor: '#ffffff'
   };
 
-  googleAnalyticsId: string = 'UA-129814222-1';
+  googleAnalyticsId: string = 'UA-129489007-1'; // Key for beta
+  // googleAnalyticsId: string = 'UA-129814222-1';   // Brians test key
+  userIdDimensionIndex: number = 1; // This is the userId dimension index
 
   constructor() {
     this.journalApiUrl = 'assets/data/journalResp.json';
@@ -28,7 +30,11 @@ export class AppConfigProvider {
     return this.signaturePadOptions;
   }
 
-  getGoogleAnalyticsKey() {
+  getGoogleAnalyticsKey(): string {
     return this.googleAnalyticsId;
+  }
+
+  getGoogleAnalyticsUserIdDimension(): number {
+    return this.userIdDimensionIndex;
   }
 }

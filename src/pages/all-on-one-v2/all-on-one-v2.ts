@@ -9,6 +9,7 @@ import { getFormattedCandidateName } from '../../shared/utils/formatters';
 import { HelpTestReportPage } from '../../help/pages/help-test-report/help-test-report';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 export enum manoeuvre {
   PREFIX = 'manoeuvre',
@@ -87,11 +88,8 @@ export class AllOnOneV2Page implements AfterViewInit {
   }
 
   ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.TEST);
     this.menuCtrl.swipeEnable(false);
-  }
-
-  ionViewDidLoad() {
-    this.logging.setCurrentPage('test page');
   }
 
   ionViewDidLeave() {

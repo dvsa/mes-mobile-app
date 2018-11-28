@@ -11,6 +11,8 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { Globalization } from '@ionic-native/globalization';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { AppConfigProvider } from '../providers/app-config/app-config';
+import { AnalyticsEventCategories, AnalyticsEvents } from '../providers/analytics/analytics.model';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,7 +35,8 @@ export class App {
     insomnia: Insomnia,
     globalization: Globalization,
     private device: Device,
-    private ga: GoogleAnalytics
+    private ga: GoogleAnalytics,
+    private appConfig: AppConfigProvider
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -50,17 +53,20 @@ export class App {
         globalization.getPreferredLanguage().then((res) => {
           this.setDefaultLanguage(res.value);
         });
-        console.log('device uuid is ', this.device.uuid);
+
+        //console.log('device uuid is ', this.device.uuid);
         this.ga
-          .startTrackerWithId('UA-129814222-1')
+          .startTrackerWithId(this.appConfig.getGoogleAnalyticsKey())
           .then(() => {
-            console.log('Google analytics is ready now');
-            this.ga.setUserId(this.device.uuid).then((resp) => {
-              console.log('Response from setUserId', resp);
-            });
-            this.ga.trackView('app load').then((resp) => {
-              console.log('initial trackview response', resp);
-            });
+            //console.log('Google analytics is ready now');
+            this.ga.setUserId(this.device.uuid).then();
+            this.ga
+              .addCustomDimension(
+                this.appConfig.getGoogleAnalyticsUserIdDimension(),
+                this.device.uuid
+              )
+              .then();
+            this.ga.trackEvent(AnalyticsEventCategories.LIFECYCLE, AnalyticsEvents.APP_LOAD).then();
           })
           .catch((e) => console.log('Error starting GA', e));
       } else {
