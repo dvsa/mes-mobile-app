@@ -7,8 +7,13 @@ import { FaultStoreProvider } from '../../../providers/fault-store/fault-store';
 import { TestSummaryMetadataProvider } from '../../../providers/test-summary-metadata/test-summary-metadata';
 import { VehicleCheckProvider } from '../../../providers/vehicle-check/vehicle-check';
 import { Observable } from 'rxjs';
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DebugElement } from '@angular/core';
+import { MockComponent } from 'ng-mocks';
 import { By } from '@angular/platform-browser';
+import { HeaderComponent } from '../../../components/mes-header/mes-header';
+import { JournalHeaderComponent } from '../../../components/journal-header/journal-header';
+import { JournalCandidateInfoComponent } from '../../../components/journal-candidate-info/journal-candidate-info';
+import { JournalTestDetailsComponent } from '../../../components/journal-test-details/journal-test-details';
 
 const navCtrl = { push: jest.fn() };
 const navParams = new NavParams();
@@ -16,7 +21,24 @@ const faultStoreStub = { reset: jest.fn() };
 const summaryMetadataStub = { reset: jest.fn() };
 const vehicleCheckStub = { markAsComplete: jest.fn() };
 const journalProviderStub = {
-  getData: jest.fn().mockReturnValue(Observable.of([{ key: 'hey' }, { key: 'there' }]))
+  getData: jest.fn().mockReturnValue(
+    Observable.of([
+      {
+        candidateName: {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs'
+        }
+      },
+      {
+        candidateName: {
+          title: 'Mrs',
+          firstName: 'Jodie',
+          lastName: 'Blogger'
+        }
+      }
+    ])
+  )
 };
 
 describe('Journal Page', () => {
@@ -25,7 +47,13 @@ describe('Journal Page', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalPage],
+      declarations: [
+        JournalPage,
+        MockComponent(HeaderComponent),
+        MockComponent(JournalCandidateInfoComponent),
+        MockComponent(JournalHeaderComponent),
+        MockComponent(JournalTestDetailsComponent)
+      ],
       imports: [HelpModule, IonicModule],
       providers: [
         { provide: NavController, useValue: navCtrl },
@@ -34,8 +62,7 @@ describe('Journal Page', () => {
         { provide: FaultStoreProvider, useValue: faultStoreStub },
         { provide: TestSummaryMetadataProvider, useValue: summaryMetadataStub },
         { provide: VehicleCheckProvider, useValue: vehicleCheckStub }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      ]
     }).compileComponents();
   }));
 
@@ -65,6 +92,17 @@ describe('Journal Page', () => {
       fixture.detectChanges();
       expect(slotList.children.length).toBe(2);
       expect(slotList.children.every((child) => child.name === 'ion-item')).toBeTruthy();
+    });
+
+    it('should input the candidate info + completion status to the candidate info component', () => {
+      fixture.detectChanges();
+      const queried = componentEl.query(By.css('journal-candidate-info'));
+      expect(queried).toBeTruthy();
+      const instance = queried.componentInstance;
+      const { title, firstName, lastName } = instance.candidateName;
+      expect(title).toBe('Mr');
+      expect(firstName).toBe('Joe');
+      expect(lastName).toBe('Bloggs');
     });
   });
 });
