@@ -7,7 +7,6 @@ import { PageHeaderComponent } from './page-header/page-header';
 import { IonicModule } from 'ionic-angular';
 import { JournalHeaderComponent } from './journal-header/journal-header';
 import { TestSummaryComponent } from './test-summary/test-summary';
-import { ButtonCardComponent } from './button-card/button-card';
 import { TestSummarySectionComponent } from './test-summary/test-summary-section/test-summary-section';
 import { QuestionsModalComponent } from './questions-modal/questions-modal';
 import { SelectButtonComponent } from './select-button/select-button';
@@ -33,7 +32,6 @@ import { HelpButtonComponent } from './help-button/help-button';
     JournalHeaderComponent,
     HeaderComponent,
     TestSummaryComponent,
-    ButtonCardComponent,
     TestSummarySectionComponent,
     QuestionsModalComponent,
     SelectButtonComponent,
@@ -61,7 +59,6 @@ import { HelpButtonComponent } from './help-button/help-button';
     JournalHeaderComponent,
     HeaderComponent,
     TestSummaryComponent,
-    ButtonCardComponent,
     TestSummarySectionComponent,
     QuestionsModalComponent,
     SelectButtonComponent,
