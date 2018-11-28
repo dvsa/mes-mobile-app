@@ -17,16 +17,19 @@
           the requirements of the legislation.</span>
       </div>
       <div>
-        <input type="checkbox" name="insurance" id="check-insurance" [checked]="checkInsurance" (change)="updateValidation('checkInsurance')">
-        <label for="check-insurance">I confirm</label>
+        <input type="checkbox" name="insurance" id="check-insurance" [checked]="checkInsurance"
+               (change)="updateValidation('checkInsurance')" class="mes-checkbox-button">
+        <label for="check-insurance" class="checkbox-label">I confirm</label>
       </div>
       <div class="mes-divider"></div>
       <div class="mes-waiting-room-text">
-        <span class="mes-text-md ">I normally live/have lived in the UK for at least 185 days in the last 12 months.</span>
+        <span
+          class="mes-text-md ">I normally live/have lived in the UK for at least 185 days in the last 12 months.</span>
       </div>
       <div>
-        <input type="checkbox" name="residence" id="check-residence" [checked]="checkResidence" (change)="updateValidation('checkResidence')">
-        <label for="check-residence">I confirm</label>
+        <input type="checkbox" name="residence" id="check-residence" [checked]="checkResidence"
+               (change)="updateValidation('checkResidence')" class="mes-checkbox-button">
+        <label for="check-residence" class="checkbox-label">I confirm</label>
       </div>
       <div class="mes-divider"></div>
       <div class="mes-waiting-room-signature-pad-container">
@@ -36,6 +39,8 @@
   </ion-card>
   <div class="mes-waiting-room-ctas">
     <button class="mes-cta-button-secondary" (click)="onEndTest()">End driving test</button>
-    <button (click)="continue()" class="mes-cta-button-primary mes-waiting-room-continue" [disabled]="validation()">Continue</button>
+    <button (click)="continue()" class="mes-cta-button-primary mes-waiting-room-continue" [disabled]="validation()">
+      Continue
+    </button>
   </div>
 </ion-content>
