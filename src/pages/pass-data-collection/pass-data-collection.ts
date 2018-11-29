@@ -42,7 +42,10 @@ export class PassDataCollectionPage {
     this.showProvisionalProvidedValidation = this.provisionalProvidedSelection === '0';
 
     if (!this.showPassCertificateNumberValidation && !this.showProvisionalProvidedValidation) {
-      this.navCtrl.push(this.healthDeclarationPage, { slotDetail: this.slotDetail });
+      this.navCtrl.push(this.healthDeclarationPage, {
+        slotDetail: this.slotDetail,
+        passNumber: this.passCertificateNumber
+      });
     }
   }
 
