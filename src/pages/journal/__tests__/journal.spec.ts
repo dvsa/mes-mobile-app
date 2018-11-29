@@ -2,6 +2,7 @@ import { JournalPage } from '../journal';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams } from 'ionic-angular';
 import { HelpModule } from '../../../help/help.module';
+// @ts-ignore
 import { JournalProvider, mockGetData } from '../../../providers/journal/journal';
 import { FaultStoreProvider } from '../../../providers/fault-store/fault-store';
 import { TestSummaryMetadataProvider } from '../../../providers/test-summary-metadata/test-summary-metadata';
