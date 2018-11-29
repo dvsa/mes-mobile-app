@@ -5,6 +5,8 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 import { isNil } from 'lodash';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-pass-data-collection',
@@ -21,8 +23,16 @@ export class PassDataCollectionPage {
   showPassCertificateNumberValidation: boolean = false;
   showProvisionalProvidedValidation: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public logging: AnalyticsProvider
+  ) {
     this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.PASS_FINALISATION);
   }
 
   continue() {

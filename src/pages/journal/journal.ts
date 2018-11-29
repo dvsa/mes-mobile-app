@@ -12,6 +12,12 @@ import { DeclarationConsentPage } from '../declaration-consent/declaration-conse
 import { isNil } from 'lodash';
 import { isNonBlankString } from '../../shared/utils/string-utils';
 import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import {
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+  AnalyticsScreenNames
+} from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-journal',
@@ -30,7 +36,8 @@ export class JournalPage {
     private journalProvider: JournalProvider,
     private faultStore: FaultStoreProvider,
     private summaryMetadata: TestSummaryMetadataProvider,
-    private vcProvider: VehicleCheckProvider
+    private vcProvider: VehicleCheckProvider,
+    public logging: AnalyticsProvider
   ) {}
 
   ionViewDidLoad() {
@@ -44,6 +51,7 @@ export class JournalPage {
   ionViewDidEnter() {
     this.faultStore.reset();
     this.summaryMetadata.reset();
+    this.logging.setCurrentPage(AnalyticsScreenNames.JOURNAL);
   }
 
   hasFailed(slot: IJournal) {
@@ -78,6 +86,7 @@ export class JournalPage {
   }
 
   goToDeclarationConsent(slot: IJournal) {
+    this.logging.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
     this.navCtrl.push(DeclarationConsentPage, { slotDetail: slot });
   }
 }

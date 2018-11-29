@@ -7,6 +7,8 @@ import { HelpTestReportPage } from './../help-test-report/help-test-report';
 import { HelpJournalPage } from './../help-journal/help-journal';
 import { HelpFinalisationSubmissionPage } from './../help-finalisation-submission/help-finalisation-submission';
 import { HelpDebriefPage } from './../help-debrief/help-debrief';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../../providers/analytics/analytics.model';
 
 enum visibilityType {
   collapsed = 'collapsed',
@@ -42,7 +44,15 @@ export class HelpSectionPage {
     finalisationAndSubmission: visibilityType.collapsed
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public logging: AnalyticsProvider
+  ) {}
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.HELP_GUIDE);
+  }
 
   // Expanding and collapsing all sections
 

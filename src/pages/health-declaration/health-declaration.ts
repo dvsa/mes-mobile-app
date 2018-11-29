@@ -7,6 +7,8 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @Component({
   selector: 'page-health-declaration',
@@ -26,10 +28,15 @@ export class HealthDeclarationPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public configService: AppConfigProvider,
-    private deviceAuth: DeviceAuthentication
+    private deviceAuth: DeviceAuthentication,
+    public logging: AnalyticsProvider
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
     this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.HEALTH_DECLARATION);
   }
 
   validation() {

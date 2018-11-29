@@ -10,6 +10,9 @@ import { Globalization } from '@ionic-native/globalization';
 
 import { App } from './app.component';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
+import { Device } from '@ionic-native/device';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { AppConfigProvider } from '../providers/app-config/app-config';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -42,7 +45,27 @@ describe('App', () => {
   const globalizationStub = {
     getPreferredLanguage: jest.fn().mockResolvedValue({ value: 'en' })
   };
-
+  const deviceStub = {
+    uuid: 'Random string'
+  };
+  const googleAnalyticsMock = {
+    startTrackerWithId: (id: string) => {
+      return new Promise((resolve) => {});
+    },
+    setUserId: (id: string) => {
+      return new Promise((resolve) => {});
+    },
+    addCustomDimension: (index: number, id: string) => {
+      return new Promise((resolve) => {});
+    },
+    trackEvent: (category: string, event: string) => {
+      return new Promise((resolve) => {});
+    }
+  };
+  const appConfigStub = {
+    getGoogleAnalyticsKey: jest.fn(),
+    getGoogleAnalyticsUserIdDimension: jest.fn()
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -54,7 +77,10 @@ describe('App', () => {
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: ScreenOrientation, useValue: screenOrientationStub },
         { provide: Insomnia, useValue: insomniaStub },
-        { provide: Globalization, useValue: globalizationStub }
+        { provide: Globalization, useValue: globalizationStub },
+        { provide: Device, useValue: deviceStub },
+        { provide: GoogleAnalytics, useValue: googleAnalyticsMock },
+        { provide: AppConfigProvider, useValue: appConfigStub }
       ]
     }).compileComponents();
 
