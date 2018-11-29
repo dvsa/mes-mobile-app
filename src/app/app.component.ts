@@ -54,11 +54,9 @@ export class App {
           this.setDefaultLanguage(res.value);
         });
 
-        // console.log('device uuid is ', this.device.uuid);
         this.ga
           .startTrackerWithId(this.appConfig.getGoogleAnalyticsKey())
           .then(() => {
-            // console.log('Google analytics is ready now');
             this.ga.setUserId(this.device.uuid);
             this.ga
               .addCustomDimension(
