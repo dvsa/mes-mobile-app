@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "5.2.10",
-    "@ionic/app-scripts": "^3.2.0",
+    "@ionic/app-scripts": "3.2.1",
     "@types/jest": "^22.2.2",
     "@types/lodash": "^4.14.106",
     "@types/node": "^9.6.0",
