@@ -17,6 +17,7 @@ export class HealthDeclarationPage {
   postTestSummaryPage: Page = PostTestSummaryPage;
   confirmation: boolean;
   slotDetail: IJournal;
+  passCertificateNumber: string;
   helpPage: Page = HelpDebriefPage;
 
   @ViewChild(MesSignaturePadComponent)
@@ -30,6 +31,7 @@ export class HealthDeclarationPage {
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
     this.slotDetail = this.navParams.get('slotDetail');
+    this.passCertificateNumber = this.navParams.get('passNumber');
   }
 
   validation() {
@@ -62,5 +64,9 @@ export class HealthDeclarationPage {
 
   getDriverNumber(): string {
     return this.slotDetail.driverNumber;
+  }
+
+  getCertificateNumber(): string {
+    return this.passCertificateNumber;
   }
 }
