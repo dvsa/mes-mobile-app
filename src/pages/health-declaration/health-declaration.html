@@ -16,8 +16,9 @@
         lead to prosecution.
       </span>
       <div>
-        <input type="checkbox" name="health" id="confirm-health" [(ngModel)]="health-confirmation">
-        <label class="mes-header-sm" for="confirm-health">I confirm</label>
+        <input type="checkbox" name="health" id="confirm-health" [(ngModel)]="health-confirmation"
+               class="mes-checkbox-button">
+        <label class="checkbox-label" for="confirm-health">I confirm</label>
       </div>
       <div class="mes-divider"></div>
       <div>
@@ -26,6 +27,8 @@
     </ion-card-content>
   </ion-card>
   <div margin>
-    <button float-right (click)="continue()" class="mes-cta-button-primary" id="continue" [disabled]="validation()">Continue</button>
+    <button float-right (click)="continue()" class="mes-cta-button-primary" id="continue" [disabled]="validation()">
+      Continue
+    </button>
   </div>
 </ion-content>
