@@ -65,15 +65,15 @@ describe('Journal Page', () => {
         { provide: TestSummaryMetadataProvider, useValue: summaryMetadataStub },
         { provide: VehicleCheckProvider, useValue: vehicleCheckStub }
       ]
-    }).compileComponents();
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(JournalPage);
+        component = fixture.componentInstance;
+        component.ionViewDidLoad();
+        component.ionViewDidEnter();
+      });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(JournalPage);
-    component = fixture.componentInstance;
-    component.ionViewDidLoad();
-    component.ionViewDidEnter();
-  });
 
   describe('Class', () => {
     it('should create', () => {
