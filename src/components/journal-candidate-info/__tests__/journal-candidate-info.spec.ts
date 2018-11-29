@@ -16,15 +16,15 @@ describe('JournalCandidateInfoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [JournalCandidateInfoComponent],
       imports: [IonicModule]
-    }).compileComponents();
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(JournalCandidateInfoComponent);
+        component = fixture.componentInstance;
+        component.candidateName = { title: 'Mr', firstName: 'Joe', lastName: 'Bloggs' };
+        component.testCategory = 'B57mins';
+      });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(JournalCandidateInfoComponent);
-    component = fixture.componentInstance;
-    component.candidateName = { title: 'Mr', firstName: 'Joe', lastName: 'Bloggs' };
-    component.testCategory = 'B57mins';
-  });
 
   describe('Class', () => {
     it('should create', () => {
