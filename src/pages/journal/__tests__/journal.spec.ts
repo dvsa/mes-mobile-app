@@ -2,11 +2,11 @@ import { JournalPage } from '../journal';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams } from 'ionic-angular';
 import { HelpModule } from '../../../help/help.module';
-// @ts-ignore
-import { JournalProvider, mockGetData } from '../../../providers/journal/journal';
+import { JournalProvider } from '../../../providers/journal/journal';
 import { FaultStoreProvider } from '../../../providers/fault-store/fault-store';
 import { TestSummaryMetadataProvider } from '../../../providers/test-summary-metadata/test-summary-metadata';
 import { VehicleCheckProvider } from '../../../providers/vehicle-check/vehicle-check';
+import { Observable } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng-mocks';
 import { By } from '@angular/platform-browser';
@@ -15,13 +15,33 @@ import { JournalHeaderComponent } from '../../../components/journal-header/journ
 import { JournalCandidateInfoComponent } from '../../../components/journal-candidate-info/journal-candidate-info';
 import { JournalTestDetailsComponent } from '../../../components/journal-test-details/journal-test-details';
 
-jest.mock('../../../providers/journal/journal');
-
 const navCtrl = { push: jest.fn() };
 const navParams = new NavParams();
 const faultStoreStub = { reset: jest.fn() };
 const summaryMetadataStub = { reset: jest.fn() };
 const vehicleCheckStub = { markAsComplete: jest.fn() };
+const journalProviderStub = {
+  getData: jest.fn().mockReturnValue(
+    Observable.of([
+      {
+        candidateName: {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs'
+        },
+        testCentreName: 'Colwick'
+      },
+      {
+        candidateName: {
+          title: 'Mrs',
+          firstName: 'Jodie',
+          lastName: 'Blogger'
+        },
+        testCentreName: 'Cardington'
+      }
+    ])
+  )
+};
 
 describe('Journal Page', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -40,7 +60,7 @@ describe('Journal Page', () => {
       providers: [
         { provide: NavController, useValue: navCtrl },
         { provide: NavParams, useValue: navParams },
-        JournalProvider,
+        { provide: JournalProvider, useValue: journalProviderStub },
         { provide: FaultStoreProvider, useValue: faultStoreStub },
         { provide: TestSummaryMetadataProvider, useValue: summaryMetadataStub },
         { provide: VehicleCheckProvider, useValue: vehicleCheckStub }
@@ -74,7 +94,6 @@ describe('Journal Page', () => {
       fixture.detectChanges();
       expect(slotList.children.length).toBe(2);
       expect(slotList.children.every((child) => child.name === 'ion-item')).toBeTruthy();
-      expect(mockGetData).toHaveBeenCalled();
     });
 
     it('should input the candidate info + completion status to the candidate info component', () => {
