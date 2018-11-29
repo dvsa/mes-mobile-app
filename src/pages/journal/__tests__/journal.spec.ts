@@ -108,8 +108,9 @@ describe('Journal Page', () => {
 
     it('should input the test information into the test details component', () => {
       fixture.detectChanges();
-      const firstTestDetails = componentEl.query(By.css('journal-test-details'))
-        .componentInstance as JournalTestDetailsComponent;
+      const firstTestDetails = componentEl.query(
+        By.directive(MockComponent(JournalTestDetailsComponent))
+      ).componentInstance;
       expect(firstTestDetails.testCentreName).toBe('Colwick');
     });
   });
