@@ -9,7 +9,10 @@
     </ion-card-header>
     <ion-card-content>
       <div text-center class="candidate-name">{{getCandidateName() | uppercase}}</div>
-      <div text-center class="candidate-driving-licence">{{getDriverNumber()}}</div>
+      <div text-center class="mes-header-md mes-label-spacing">Driver number</div>
+      <div text-center class="candidate-numbers">{{getDriverNumber()}}</div>
+      <div text-center class="mes-header-md mes-label-spacing">Pass certificate number</div>
+      <div text-center class="candidate-numbers">{{getCertificateNumber()}}</div>
       <span class="mes-text-md decleration">You must declare any change to your health status since you last applied for a license.
         It is a criminal
         offense for you (or anyone else) to make a false statement in order for you to obtain a driving license and can

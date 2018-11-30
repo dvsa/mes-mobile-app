@@ -12,6 +12,8 @@ import { IJournal } from '../../providers/journal/journal-model';
 import { EyesightResult } from './check-enums/eyesight-result';
 import { GearboxCategory } from './check-enums/gearbox-category';
 import { HelpWaitingRoomToCarPage } from '../../help/pages/help-waiting-room-to-car/help-waiting-room-to-car';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-pretest-checks',
@@ -56,7 +58,8 @@ export class PretestChecksPage {
     private modalCtrl: ModalController,
     private vehicleCheckProvider: VehicleCheckProvider,
     public navParams: NavParams,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public logging: AnalyticsProvider
   ) {
     this.slotDetail = this.navParams.get('slotDetail');
   }
@@ -64,6 +67,10 @@ export class PretestChecksPage {
   ngAfterViewInit() {
     this.vehicleCheckProvider.reset(vCheckType.TELLME);
     this.vehicleCheckProvider.reset(vCheckType.SHOWME);
+  }
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
   }
 
   getTitle() {

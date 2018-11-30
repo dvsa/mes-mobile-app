@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AnalyticsScreenNames } from '../../../providers/analytics/analytics.model';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 
 @Component({
   selector: 'page-help-test-report',
@@ -8,5 +10,13 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HelpTestReportPage {
   title: string = 'Test Report - Help';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public logging: AnalyticsProvider
+  ) {}
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.HELP_TEST_REPORT);
+  }
 }

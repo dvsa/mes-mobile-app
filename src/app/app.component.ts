@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, NavController, ViewController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Device } from '@ionic-native/device';
 import { Content } from 'ionic-angular/navigation/nav-interfaces';
 import { DEFAULT_LANG, SYS_OPTIONS, AVAILABLE_LANG } from './constants';
 import { TranslateService } from 'ng2-translate';
@@ -9,6 +10,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Globalization } from '@ionic-native/globalization';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { AppConfigProvider } from '../providers/app-config/app-config';
+import { AnalyticsEventCategories, AnalyticsEvents } from '../providers/analytics/analytics.model';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,7 +33,10 @@ export class App {
     private translate: TranslateService,
     screenOrientation: ScreenOrientation,
     insomnia: Insomnia,
-    globalization: Globalization
+    globalization: Globalization,
+    private device: Device,
+    private ga: GoogleAnalytics,
+    private appConfig: AppConfigProvider
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -46,6 +53,20 @@ export class App {
         globalization.getPreferredLanguage().then((res) => {
           this.setDefaultLanguage(res.value);
         });
+
+        this.ga
+          .startTrackerWithId(this.appConfig.getGoogleAnalyticsKey())
+          .then(() => {
+            this.ga.setUserId(this.device.uuid);
+            this.ga
+              .addCustomDimension(
+                this.appConfig.getGoogleAnalyticsUserIdDimension(),
+                this.device.uuid
+              )
+              .then();
+            this.ga.trackEvent(AnalyticsEventCategories.LIFECYCLE, AnalyticsEvents.APP_LOAD).then();
+          })
+          .catch((e) => console.log('Error starting GA', e));
       } else {
         const browserLanguage = translate.getBrowserLang() || DEFAULT_LANG;
         this.setDefaultLanguage(browserLanguage);
