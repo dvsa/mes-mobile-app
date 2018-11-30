@@ -14,12 +14,14 @@ import { HeaderComponent } from '../../../components/mes-header/mes-header';
 import { JournalHeaderComponent } from '../../../components/journal-header/journal-header';
 import { JournalCandidateInfoComponent } from '../../../components/journal-candidate-info/journal-candidate-info';
 import { JournalTestDetailsComponent } from '../../../components/journal-test-details/journal-test-details';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 
 const navCtrl = { push: jest.fn() };
 const navParams = new NavParams();
 const faultStoreStub = { reset: jest.fn() };
 const summaryMetadataStub = { reset: jest.fn() };
 const vehicleCheckStub = { markAsComplete: jest.fn() };
+const analyticsStub = { setCurrentPage: jest.fn(), logEvent: jest.fn() };
 const journalProviderStub = {
   getData: jest.fn().mockReturnValue(
     Observable.of([
@@ -63,7 +65,8 @@ describe('Journal Page', () => {
         { provide: JournalProvider, useValue: journalProviderStub },
         { provide: FaultStoreProvider, useValue: faultStoreStub },
         { provide: TestSummaryMetadataProvider, useValue: summaryMetadataStub },
-        { provide: VehicleCheckProvider, useValue: vehicleCheckStub }
+        { provide: VehicleCheckProvider, useValue: vehicleCheckStub },
+        { provide: AnalyticsProvider, useValue: analyticsStub }
       ]
     })
       .compileComponents()
