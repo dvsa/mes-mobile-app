@@ -1,4 +1,3 @@
-import { HomePage } from "./../pages/home/home";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { Platform } from "ionic-angular";
@@ -6,6 +5,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
 import { App } from "./app.component";
+import { LoginPage } from "../pages/login/login";
 
 describe("App", () => {
   let fixture: ComponentFixture<App>;
@@ -43,8 +43,8 @@ describe("App", () => {
     expect(component).toBeDefined();
   });
 
-  it("should have WelcomePage as the root page", () => {
-    expect(component.rootPage).toBe(HomePage);
+  it("should have Login Page as the root page", () => {
+    expect(component.rootPage).toBe(LoginPage);
   });
 
   it("should call the styleDefault method on statusBar", () => {
