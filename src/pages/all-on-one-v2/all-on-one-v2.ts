@@ -8,6 +8,8 @@ import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 import { HelpTestReportPage } from '../../help/pages/help-test-report/help-test-report';
 import { Page } from 'ionic-angular/navigation/nav-util';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 export enum manoeuvre {
   PREFIX = 'manoeuvre',
@@ -66,7 +68,8 @@ export class AllOnOneV2Page implements AfterViewInit {
     private faultStore: FaultStoreProvider,
     private menuCtrl: MenuController,
     private summaryMetaDataService: TestSummaryMetadataProvider,
-    private vehicleCheckProvider: VehicleCheckProvider
+    private vehicleCheckProvider: VehicleCheckProvider,
+    public logging: AnalyticsProvider
   ) {
     this.manoeuvreKeys = Object.keys(this.manoeuvreBtns);
     if (this.navParams.get('trainingMode')) {
@@ -85,6 +88,7 @@ export class AllOnOneV2Page implements AfterViewInit {
   }
 
   ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.TEST);
     this.menuCtrl.swipeEnable(false);
   }
 

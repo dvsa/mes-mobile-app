@@ -13,6 +13,8 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
 
 import { PassDataCollectionPage } from '../pass-data-collection/pass-data-collection';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @Component({
   selector: 'page-test-result',
@@ -34,7 +36,8 @@ export class TestResultPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private faultStore: FaultStoreProvider,
-    private summaryMetadataService: TestSummaryMetadataProvider
+    private summaryMetadataService: TestSummaryMetadataProvider,
+    public logging: AnalyticsProvider
   ) {
     this.faultStore
       .getFaultTotals()
@@ -44,6 +47,14 @@ export class TestResultPage {
     this.summaryMetadata = this.summaryMetadataService.getMetadata();
 
     this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ionViewDidEnter() {
+    if (this.faultStore.getTestResult() === TestResult.Fail) {
+      this.logging.setCurrentPage(AnalyticsScreenNames.FAIL_RESULTS_DEBRIEF);
+    } else {
+      this.logging.setCurrentPage(AnalyticsScreenNames.PASS_RESULTS_DEBRIEF);
+    }
   }
 
   getTestOutcomeContentClass() {

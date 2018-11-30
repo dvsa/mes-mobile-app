@@ -56,6 +56,9 @@ import { TextboxModalComponent } from '../components/textbox-modal/textbox-modal
 import { TestSummaryMetadataProvider } from '../providers/test-summary-metadata/test-summary-metadata';
 import { VehicleCheckProvider } from '../providers/vehicle-check/vehicle-check';
 import { WelcomePage } from '../pages/welcome-page/welcome-page';
+import { Device } from '@ionic-native/device';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { AnalyticsProvider } from '../providers/analytics/analytics';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -148,7 +151,10 @@ export function createTranslateLoader(http: Http) {
     Insomnia,
     Globalization,
     TestSummaryMetadataProvider,
-    VehicleCheckProvider
+    VehicleCheckProvider,
+    Device,
+    GoogleAnalytics,
+    AnalyticsProvider
   ]
 })
 export class AppModule {}

@@ -11,6 +11,8 @@ import { HelpWaitingRoomToCarPage } from '../../help/pages/help-waiting-room-to-
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @Component({
   selector: 'page-declaration-consent',
@@ -34,10 +36,15 @@ export class DeclarationConsentPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public configService: AppConfigProvider,
-    private deviceAuth: DeviceAuthentication
+    private deviceAuth: DeviceAuthentication,
+    public logging: AnalyticsProvider
   ) {
     this.signaturePadOptions = configService.getSignaturePadOptions();
     this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM);
   }
 
   updateValidation(prop: string) {

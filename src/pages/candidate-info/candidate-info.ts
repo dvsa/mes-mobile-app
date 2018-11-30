@@ -10,6 +10,8 @@ import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName, getFormattedAddress } from '../../shared/utils/formatters';
 import { isNonBlankString } from '../../shared/utils/string-utils';
 import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @Component({
   selector: 'page-candidate-info',
@@ -29,10 +31,15 @@ export class CandidateInfoPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public configService: AppConfigProvider
+    public configService: AppConfigProvider,
+    public logging: AnalyticsProvider
   ) {
     this.signature = this.navParams.get('signature');
     this.slotDetail = this.navParams.get('slotDetail');
+  }
+
+  ionViewDidEnter() {
+    this.logging.setCurrentPage(AnalyticsScreenNames.CONTACT_DETAILS);
   }
 
   confirmIdentity() {
