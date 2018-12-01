@@ -1,6 +1,7 @@
 import { JournalPage } from '../journal';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock } from 'ionic-mocks-jest';
 import { HelpModule } from '../../../help/help.module';
 import { JournalProvider } from '../../../providers/journal/journal';
 import { FaultStoreProvider } from '../../../providers/fault-store/fault-store';
@@ -16,12 +17,11 @@ import { JournalCandidateInfoComponent } from '../../../components/journal-candi
 import { JournalTestDetailsComponent } from '../../../components/journal-test-details/journal-test-details';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 
-const navCtrl = { push: jest.fn() };
-const navParams = new NavParams();
-const faultStoreStub = { reset: jest.fn() };
-const summaryMetadataStub = { reset: jest.fn() };
-const vehicleCheckStub = { markAsComplete: jest.fn() };
-const analyticsStub = { setCurrentPage: jest.fn(), logEvent: jest.fn() };
+jest.mock('../../../providers/analytics/analytics');
+jest.mock('../../../providers/vehicle-check/vehicle-check');
+jest.mock('../../../providers/test-summary-metadata/test-summary-metadata');
+jest.mock('../../../providers/fault-store/fault-store');
+
 const journalProviderStub = {
   getData: jest.fn().mockReturnValue(
     Observable.of([
@@ -60,13 +60,13 @@ describe('Journal Page', () => {
       ],
       imports: [HelpModule, IonicModule],
       providers: [
-        { provide: NavController, useValue: navCtrl },
-        { provide: NavParams, useValue: navParams },
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: JournalProvider, useValue: journalProviderStub },
-        { provide: FaultStoreProvider, useValue: faultStoreStub },
-        { provide: TestSummaryMetadataProvider, useValue: summaryMetadataStub },
-        { provide: VehicleCheckProvider, useValue: vehicleCheckStub },
-        { provide: AnalyticsProvider, useValue: analyticsStub }
+        FaultStoreProvider,
+        TestSummaryMetadataProvider,
+        VehicleCheckProvider,
+        AnalyticsProvider
       ]
     })
       .compileComponents()
