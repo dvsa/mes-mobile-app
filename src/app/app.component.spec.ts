@@ -1,17 +1,17 @@
-import { TestBed, ComponentFixture } from "@angular/core/testing";
-import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { Platform } from "ionic-angular";
-import { StatusBar } from "@ionic-native/status-bar";
-import { SplashScreen } from "@ionic-native/splash-screen";
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { App } from "./app.component";
+import { App } from './app.component';
 
-describe("App", () => {
+describe('App', () => {
   let fixture: ComponentFixture<App>;
   let component: App;
 
   const platformStub = {
-    ready: jest.fn().mockResolvedValue("ready"),
+    ready: jest.fn().mockResolvedValue('ready'),
     is: jest.fn().mockResolvedValue(true)
   };
   const statusBarStub = {
@@ -38,20 +38,20 @@ describe("App", () => {
     component = fixture.componentInstance;
   });
 
-  it("should create the App component", () => {
+  it('should create the App component', () => {
     expect(component).toBeDefined();
   });
 
-  it("should have Login Page as the root page", () => {
-    expect(component.rootPage).toBe("LoginPage");
+  it('should have Login Page as the root page', () => {
+    expect(component.rootPage).toBe('LoginPage');
   });
 
-  it("should call the styleDefault method on statusBar", () => {
+  it('should call the styleDefault method on statusBar', () => {
     expect(platformStub.ready).toBeCalled();
     expect(statusBarStub.overlaysWebView).toBeCalledWith(false);
   });
 
-  it("should call the hide method on splashScreen", () => {
+  it('should call the hide method on splashScreen', () => {
     expect(splashScreenStub.hide).toBeCalled();
   });
 });
