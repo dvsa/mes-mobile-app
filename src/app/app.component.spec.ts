@@ -5,7 +5,6 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
 import { App } from "./app.component";
-import { LoginPage } from "../pages/login/login";
 
 describe("App", () => {
   let fixture: ComponentFixture<App>;
@@ -44,7 +43,7 @@ describe("App", () => {
   });
 
   it("should have Login Page as the root page", () => {
-    expect(component.rootPage).toBe(LoginPage);
+    expect(component.rootPage).toBe("LoginPage");
   });
 
   it("should call the styleDefault method on statusBar", () => {
