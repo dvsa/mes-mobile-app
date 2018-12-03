@@ -1,25 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TerminateTestPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 @IonicPage()
 @Component({
-  selector: 'page-terminate-test',
-  templateUrl: 'terminate-test.html',
+  selector: "page-terminate-test",
+  templateUrl: "terminate-test.html"
 })
 export class TerminateTestPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TerminateTestPage');
-  }
-
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 }
