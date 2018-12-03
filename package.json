@@ -61,7 +61,7 @@
     "@ngrx/store-devtools": "^5.2.0",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
-    "appium": "^1.9.1",
+    "appium": "^1.10.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "cucumber": "^5.0.2",
