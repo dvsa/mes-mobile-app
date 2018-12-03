@@ -1,11 +1,11 @@
-import { ComponentFixture, async, TestBed } from "@angular/core/testing";
-import { IonicModule, NavController, NavParams, Config } from "ionic-angular";
-import { NavControllerMock, NavParamsMock, ConfigMock } from "ionic-mocks-jest";
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { IonicModule, NavController, NavParams, Config } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock } from 'ionic-mocks-jest';
 
-import { ContactDetailsPage } from "../contact-details";
-import { AppModule } from "../../../app/app.module";
+import { ContactDetailsPage } from '../contact-details';
+import { AppModule } from '../../../app/app.module';
 
-describe("ContactDetailsPage", () => {
+describe('ContactDetailsPage', () => {
   let fixture: ComponentFixture<ContactDetailsPage>;
   let component: ContactDetailsPage;
 
@@ -29,14 +29,14 @@ describe("ContactDetailsPage", () => {
       });
   }));
 
-  describe("Class", () => {
+  describe('Class', () => {
     // Unit tests for the components TypeScript class
-    it("should create", () => {
+    it('should create', () => {
       expect(component).toBeDefined();
     });
   });
 
-  describe("DOM", () => {
-    //Unit tests for the components template
+  describe('DOM', () => {
+    // Unit tests for the components template
   });
 });

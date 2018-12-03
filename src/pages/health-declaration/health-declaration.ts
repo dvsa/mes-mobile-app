@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: "page-health-declaration",
-  templateUrl: "health-declaration.html"
+  selector: 'page-health-declaration',
+  templateUrl: 'health-declaration.html'
 })
 export class HealthDeclarationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
