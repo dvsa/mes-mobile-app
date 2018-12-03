@@ -4,5 +4,6 @@
     "no-unused-variable": [true],
     "quotemark": [true, "single"]
   },
-  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"]
+  "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"],
+  "extends": ["tslint-config-airbnb", "tslint-config-prettier"]
 }
