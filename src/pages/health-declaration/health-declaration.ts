@@ -6,9 +6,9 @@ import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
-import { HelpDebriefPage } from '../../help/pages/help-debrief/help-debrief';
 import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { HelpHealthDeclarationPage } from '../../help/pages/help-health-declaration/help-health-declaration';
 
 @Component({
   selector: 'page-health-declaration',
@@ -20,7 +20,7 @@ export class HealthDeclarationPage {
   confirmation: boolean;
   slotDetail: IJournal;
   passCertificateNumber: string;
-  helpPage: Page = HelpDebriefPage;
+  helpPage: Page = HelpHealthDeclarationPage;
 
   @ViewChild(MesSignaturePadComponent)
   signaturePad: MesSignaturePadComponent;

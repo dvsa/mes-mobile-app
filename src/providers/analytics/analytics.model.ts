@@ -15,6 +15,7 @@ export enum AnalyticsScreenNames {
   HELP_DEBRIEF = 'help debrief page',
   HELP_FINALISATION = 'help finalisation page',
   HELP_GUIDE = 'help guide page',
+  HELP_HEALTH_DECLARATION = 'help health declaration page',
   HELP_JOURNAL = 'help journal page',
   HELP_TEST_REPORT = 'help test report page',
   HELP_WAITING_ROOM = 'help waiting room',
