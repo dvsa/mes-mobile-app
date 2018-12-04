@@ -10,6 +10,7 @@ import { ComponentsModule } from '../components/components.module';
 import { HelpComponentsModule } from './components/components.module';
 import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-candidate-details';
 import { HelpWaitingRoomPage } from './pages/help-waiting-room/help-waiting-room';
+import { HelpPassFinalisationPage } from './pages/help-pass-finalisation/help-pass-finalisation';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HelpWaitingRoomPage } from './pages/help-waiting-room/help-waiting-room
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
     HelpJournalPage,
+    HelpPassFinalisationPage,
     HelpSectionPage,
     HelpTestReportPage,
     HelpWaitingRoomPage,
@@ -28,6 +30,7 @@ import { HelpWaitingRoomPage } from './pages/help-waiting-room/help-waiting-room
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
     HelpJournalPage,
+    HelpPassFinalisationPage,
     HelpSectionPage,
     HelpTestReportPage,
     HelpWaitingRoomPage,
@@ -38,6 +41,7 @@ import { HelpWaitingRoomPage } from './pages/help-waiting-room/help-waiting-room
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
     HelpJournalPage,
+    HelpPassFinalisationPage,
     HelpSectionPage,
     HelpTestReportPage,
     HelpWaitingRoomPage,
