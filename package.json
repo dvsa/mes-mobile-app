@@ -24,7 +24,8 @@
     "test:e2e-simulator-bdd": "protractor e2e-simulator-bdd.conf.js",
     "test:generate-report": "node generateTestReport.js",
     "gitSecrets": "git secrets --scan",
-    "scanRepo": "git log -p -n 15 | scanrepo"
+    "scanRepo": "git log -p -n 15 | scanrepo",
+    "stylelint": "stylelint 'src/**/*.scss' fix --config stylelint.json"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -79,6 +80,8 @@
     "protractor": "^5.4.1",
     "protractor-cucumber-framework": "^6.1.1",
     "request": "^2.88.0",
+    "stylelint": "^9.9.0",
+    "stylelint-config-standard": "^18.2.0",
     "ts-node": "^7.0.1",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.17.0",
