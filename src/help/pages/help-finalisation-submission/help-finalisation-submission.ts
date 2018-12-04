@@ -8,7 +8,7 @@ import { AnalyticsProvider } from '../../../providers/analytics/analytics';
   templateUrl: 'help-finalisation-submission.html'
 })
 export class HelpFinalisationSubmissionPage {
-  title: string = 'Finalisation & Submission - Help';
+  title: string = 'Test Summary - Help';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

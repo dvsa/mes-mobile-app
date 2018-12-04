@@ -51,7 +51,7 @@ export class PassDataCollectionPage {
 
   getTitle(): string {
     const name: ICandidateName = this.slotDetail.candidateName;
-    return `${name.firstName} ${name.lastName} - Test debrief`;
+    return `${name.firstName} ${name.lastName} - Candidate Information`;
   }
 
   getAppRef(): string {

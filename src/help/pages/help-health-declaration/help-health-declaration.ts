@@ -8,7 +8,7 @@ import { AnalyticsProvider } from '../../../providers/analytics/analytics';
   templateUrl: 'help-health-declaration.html'
 })
 export class HelpHealthDeclarationPage {
-  title: string = 'Health declaration - Help';
+  title: string = 'Health Declaration - Help';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

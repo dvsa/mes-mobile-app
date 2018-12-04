@@ -61,7 +61,7 @@ export class HealthDeclarationPage {
   }
 
   getTitle(): string {
-    return `${this.getCandidateName()} - Test debrief`;
+    return `${this.getCandidateName()} - Health Declaration`;
   }
 
   getCandidateName(): string {
