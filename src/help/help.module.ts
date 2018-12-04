@@ -8,31 +8,47 @@ import { IonicModule } from 'ionic-angular';
 import { HelpDebriefPage } from './pages/help-debrief/help-debrief';
 import { ComponentsModule } from '../components/components.module';
 import { HelpComponentsModule } from './components/components.module';
+import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-candidate-details';
+import { HelpWaitingRoomPage } from './pages/help-waiting-room/help-waiting-room';
+import { HelpPassFinalisationPage } from './pages/help-pass-finalisation/help-pass-finalisation';
+import { HelpHealthDeclarationPage } from './pages/help-health-declaration/help-health-declaration';
 
 @NgModule({
   declarations: [
+    HelpCandidateDetailsPage,
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
+    HelpHealthDeclarationPage,
     HelpJournalPage,
+    HelpPassFinalisationPage,
     HelpSectionPage,
     HelpTestReportPage,
+    HelpWaitingRoomPage,
     HelpWaitingRoomToCarPage
   ],
   imports: [IonicModule.forRoot(HelpSectionPage), ComponentsModule, HelpComponentsModule],
   entryComponents: [
+    HelpCandidateDetailsPage,
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
+    HelpHealthDeclarationPage,
     HelpJournalPage,
+    HelpPassFinalisationPage,
     HelpSectionPage,
     HelpTestReportPage,
+    HelpWaitingRoomPage,
     HelpWaitingRoomToCarPage
   ],
   exports: [
+    HelpCandidateDetailsPage,
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
+    HelpHealthDeclarationPage,
     HelpJournalPage,
+    HelpPassFinalisationPage,
     HelpSectionPage,
     HelpTestReportPage,
+    HelpWaitingRoomPage,
     HelpWaitingRoomToCarPage
   ]
 })

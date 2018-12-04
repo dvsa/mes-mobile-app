@@ -4,11 +4,11 @@ import { AnalyticsScreenNames } from '../../../providers/analytics/analytics.mod
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 
 @Component({
-  selector: 'page-help-waiting-room-to-car',
-  templateUrl: 'help-waiting-room-to-car.html'
+  selector: 'page-help-health-declaration',
+  templateUrl: 'help-health-declaration.html'
 })
-export class HelpWaitingRoomToCarPage {
-  title: string = 'Waiting room to car - Help';
+export class HelpHealthDeclarationPage {
+  title: string = 'Health Declaration - Help';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -16,6 +16,6 @@ export class HelpWaitingRoomToCarPage {
   ) {}
 
   ionViewDidEnter() {
-    this.logging.setCurrentPage(AnalyticsScreenNames.HELP_WAITING_ROOM_TO_CAR);
+    this.logging.setCurrentPage(AnalyticsScreenNames.HELP_HEALTH_DECLARATION);
   }
 }
