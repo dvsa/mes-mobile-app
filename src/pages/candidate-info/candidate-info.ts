@@ -9,9 +9,9 @@ import { InitiateSwapPage } from '../initiate-swap/initiate-swap';
 import { IJournal } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName, getFormattedAddress } from '../../shared/utils/formatters';
 import { isNonBlankString } from '../../shared/utils/string-utils';
-import { HelpJournalPage } from '../../help/pages/help-journal/help-journal';
 import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { HelpCandidateDetailsPage } from '../../help/pages/help-candidate-details/help-candidate-details';
 
 @Component({
   selector: 'page-candidate-info',
@@ -22,7 +22,7 @@ export class CandidateInfoPage {
   policyDataPage: Page = PolicyDataPage;
   pretestChecksPage: Page = PretestChecksPage;
   initiateSwapPage: Page = InitiateSwapPage;
-  helpPage: Page = HelpJournalPage;
+  helpPage: Page = HelpCandidateDetailsPage;
 
   signature: any;
 

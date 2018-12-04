@@ -11,6 +11,7 @@ export interface IAnalyticsProvider {
 export enum AnalyticsScreenNames {
   CONTACT_DETAILS = 'contact details page',
   FAIL_RESULTS_DEBRIEF = 'fail results debrief page',
+  HELP_CANDIDATE_DETAILS = 'help candidate details page',
   HELP_DEBRIEF = 'help debrief page',
   HELP_FINALISATION = 'help finalisation page',
   HELP_GUIDE = 'help guide page',

@@ -8,9 +8,11 @@ import { IonicModule } from 'ionic-angular';
 import { HelpDebriefPage } from './pages/help-debrief/help-debrief';
 import { ComponentsModule } from '../components/components.module';
 import { HelpComponentsModule } from './components/components.module';
+import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-candidate-details';
 
 @NgModule({
   declarations: [
+    HelpCandidateDetailsPage,
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
     HelpJournalPage,
@@ -20,6 +22,7 @@ import { HelpComponentsModule } from './components/components.module';
   ],
   imports: [IonicModule.forRoot(HelpSectionPage), ComponentsModule, HelpComponentsModule],
   entryComponents: [
+    HelpCandidateDetailsPage,
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
     HelpJournalPage,
@@ -28,6 +31,7 @@ import { HelpComponentsModule } from './components/components.module';
     HelpWaitingRoomToCarPage
   ],
   exports: [
+    HelpCandidateDetailsPage,
     HelpDebriefPage,
     HelpFinalisationSubmissionPage,
     HelpJournalPage,
