@@ -9,6 +9,7 @@ import { HelpDebriefPage } from './pages/help-debrief/help-debrief';
 import { ComponentsModule } from '../components/components.module';
 import { HelpComponentsModule } from './components/components.module';
 import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-candidate-details';
+import { HelpWaitingRoomPage } from './pages/help-waiting-room/help-waiting-room';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-ca
     HelpJournalPage,
     HelpSectionPage,
     HelpTestReportPage,
+    HelpWaitingRoomPage,
     HelpWaitingRoomToCarPage
   ],
   imports: [IonicModule.forRoot(HelpSectionPage), ComponentsModule, HelpComponentsModule],
@@ -28,6 +30,7 @@ import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-ca
     HelpJournalPage,
     HelpSectionPage,
     HelpTestReportPage,
+    HelpWaitingRoomPage,
     HelpWaitingRoomToCarPage
   ],
   exports: [
@@ -37,6 +40,7 @@ import { HelpCandidateDetailsPage } from './pages/help-candidate-details/help-ca
     HelpJournalPage,
     HelpSectionPage,
     HelpTestReportPage,
+    HelpWaitingRoomPage,
     HelpWaitingRoomToCarPage
   ]
 })

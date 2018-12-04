@@ -6,13 +6,13 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { PretestChecksPage } from '../pretest-checks/pretest-checks';
 import { EndTestReasonPage } from '../end-test-reason/end-test-reason';
 import { Page } from 'ionic-angular/navigation/nav-util';
-import { HelpWaitingRoomToCarPage } from '../../help/pages/help-waiting-room-to-car/help-waiting-room-to-car';
 
 import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
 import { getFormattedCandidateName } from '../../shared/utils/formatters';
 import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
+import { HelpWaitingRoomPage } from '../../help/pages/help-waiting-room/help-waiting-room';
 
 @Component({
   selector: 'page-declaration-consent',
@@ -21,7 +21,7 @@ import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model'
 export class DeclarationConsentPage {
   pretestChecksPage: Page = PretestChecksPage;
   endTestReasonPage: Page = EndTestReasonPage;
-  helpPage: Page = HelpWaitingRoomToCarPage;
+  helpPage: Page = HelpWaitingRoomPage;
   signaturePadOptions: any;
 
   checkInsurance: boolean = false;
