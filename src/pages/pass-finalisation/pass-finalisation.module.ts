@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+import { ComponentsModule } from '../../components/components.module';
 import { PassFinalisationPage } from './pass-finalisation';
 
 @NgModule({
@@ -8,6 +9,7 @@ import { PassFinalisationPage } from './pass-finalisation';
   ],
   imports: [
     IonicPageModule.forChild(PassFinalisationPage),
+    ComponentsModule,
   ],
 })
 export class PassFinalisationPageModule {}
