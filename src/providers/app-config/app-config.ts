@@ -15,8 +15,8 @@ export class AppConfigProvider {
   };
 
   // todo - needs to be commented in for deployment for familiarisation
-  // googleAnalyticsId: string = 'UA-129489007-1'; // Key for beta
-  googleAnalyticsId: string = 'UA-129814222-1'; // Brians test key for development until we deploy for familiarisation
+  googleAnalyticsId: string = 'UA-129489007-1'; // Key for beta
+  // googleAnalyticsId: string = 'UA-129814222-1'; // Brians test key for development until we deploy for familiarisation
   userIdDimensionIndex: number = 1; // This is the userId dimension index
 
   constructor() {
