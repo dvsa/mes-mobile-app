@@ -19,8 +19,8 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
+$background-color: #ecf4f6;
 $toolbar-background: rgba(33, 33, 33, 0.72);
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -43,6 +43,9 @@ $colors: (
 // iOS only Sass variables can go here
 
 $toolbar-ios-button-color: #ff9500;
+
+$card-ios-background-color: #ffffff;
+$card-ios-margin-bottom: 16px;
 
 // App Material Design Variables
 // --------------------------------------------------
