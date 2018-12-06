@@ -1,91 +1,100 @@
-<ion-header> <mes-header [title]="title"></mes-header> </ion-header>
+<ion-header>
+    <mes-header [title]='title'></mes-header>
+</ion-header>
 <ion-content padding no-bounce>
-  <ion-row no-margin>
-    <ion-col> <img class="logo" src="assets/imgs/dvsa-logo-black.png" /> </ion-col>
-    <ion-col text-right>
-      <span class="strapline">Helping you stay safe on Britain's roads</span>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col text-center> <span class="title">Welcome!</span> </ion-col>
-  </ion-row>
-  <ion-row align-items-center>
-    <ion-col col-2 text-center> <img class="icon" src="assets/imgs/welcome-page-1.png" /> </ion-col>
-    <ion-col> <span class="text">Watch the introduction video</span> </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <div class="video">
-        <iframe
-          width="458"
-          height="262"
-          src="https://www.youtube.com/embed/lvvNhQZKlKg"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col text-center>
-      <button class="mes-full-width-cta" [navPush]="helpPage">
-        <ion-row align-items-center no-margin>
-          <ion-col col-2>
-            <img float-start margin-left class="icon" src="assets/imgs/welcome-page-2.png" />
-          </ion-col>
-          <ion-col> <span class="button-text">Help guide</span> </ion-col>
-        </ion-row>
-      </button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col text-center>
-      <button class="mes-full-width-cta" [navPush]="journalPage">
-        <ion-row align-items-center no-margin>
-          <ion-col col-2>
-            <img float-start margin-left class="icon" src="assets/imgs/welcome-page-3.png" />
-          </ion-col>
-          <ion-col> <span class="button-text">Try the app</span> </ion-col>
-        </ion-row>
-      </button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col text-center>
-      <a class="link-button-hover-fix" href="https://www.smartsurvey.co.uk/s/Examiner_app/">
-        <button class="mes-full-width-cta">
-          <ion-row align-items-center no-margin>
-            <ion-col col-2>
-              <img float-start margin-left class="icon" src="assets/imgs/welcome-page-4.png" />
-            </ion-col>
-            <ion-col> <span class="button-text">Give feedback for this app</span> </ion-col>
-          </ion-row>
-        </button>
-      </a>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col text-center>
-      <a class="link-button-hover-fix" href="https://www.smartsurvey.co.uk/s/DEiPads/">
-        <button class="mes-full-width-cta">
-          <ion-row align-items-center no-margin>
-            <ion-col col-2>
-              <img float-start margin-left class="icon" src="assets/imgs/welcome-page-5.png" />
-            </ion-col>
-            <ion-col> <span class="button-text">Tell us about your iPad</span> </ion-col>
-          </ion-row>
-        </button>
-      </a>
-    </ion-col>
-  </ion-row>
+    <ion-row no-margin>
+        <ion-col>
+            <img class="logo" src="assets/imgs/dvsa-logo-black.png" />
+        </ion-col>
+        <ion-col text-right>
+            <span class="strapline">Helping you stay safe on Britain's roads</span>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <span class="title">Welcome!</span>
+        </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+        <ion-col col-2 text-center>
+            <img class="icon" src="assets/imgs/welcome-page-1.png" />
+        </ion-col>
+        <ion-col>
+            <span class="text">Watch the introduction video</span>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <div class="video">
+                <iframe width="458" height="262" src="https://www.youtube.com/embed/lvvNhQZKlKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <button class="mes-full-width-cta" [navPush]="helpPage">
+                <ion-row align-items-center no-margin>
+                    <ion-col col-2>
+                        <img float-start margin-left class="icon" src="assets/imgs/welcome-page-2.png" />
+                    </ion-col>
+                    <ion-col>
+                        <span class="button-text">Help guide</span>
+                    </ion-col>
+                </ion-row>
+            </button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <button class="mes-full-width-cta" [navPush]="journalPage">
+                <ion-row align-items-center no-margin>
+                    <ion-col col-2>
+                        <img float-start margin-left class="icon" src="assets/imgs/welcome-page-3.png" />
+                    </ion-col>
+                    <ion-col>
+                        <span class="button-text">Try the app</span>
+                    </ion-col>
+                </ion-row>
+            </button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <a class="link-button-hover-fix" href="https://www.smartsurvey.co.uk/s/Examiner_app/">
+                <button class="mes-full-width-cta">
+                        <ion-row align-items-center no-margin>
+                            <ion-col col-2>
+                                <img float-start margin-left class="icon" src="assets/imgs/welcome-page-4.png" />
+                            </ion-col>
+                            <ion-col>
+                                <span class="button-text">Give feedback for this app</span>
+                            </ion-col>
+                        </ion-row>
+                </button>
+            </a>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <a class="link-button-hover-fix" href="https://www.smartsurvey.co.uk/s/DEiPads/">
+                <button class="mes-full-width-cta">
+                        <ion-row align-items-center no-margin>
+                            <ion-col col-2>
+                                <img float-start margin-left class="icon" src="assets/imgs/welcome-page-5.png" />
+                            </ion-col>
+                            <ion-col>
+                                <span class="button-text">Tell us about your iPad</span>
+                            </ion-col>
+                        </ion-row>
+                </button>
+            </a>
+        </ion-col>
+    </ion-row>
 
-  <ion-row>
-    <ion-col text-center>
-      <span class="disclaimer"
-        >This is a prototype to help you learn how to use the app.
-        <a href="https://youtu.be/G3bVhFzTMHo">Open video in YouTube</a>
-      </span>
-    </ion-col>
-  </ion-row>
+    <ion-row>
+        <ion-col text-center>
+            <span class="disclaimer">This is a prototype to help you learn how to use the app. <a href="https://youtu.be/G3bVhFzTMHo">Open video in YouTube</a> </span>
+        </ion-col>
+    </ion-row>
 </ion-content>
