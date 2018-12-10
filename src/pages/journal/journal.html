@@ -5,4 +5,10 @@
 <ion-content padding>
   <button ion-button navPush="ContactDetailsPage">Contact Details</button>
   <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
+
+ <ion-list>
+  <ion-card *ngFor="let s of journalSlot">
+     <h3>{{s | json}}</h3>
+  </ion-card>
+</ion-list>
 </ion-content>
