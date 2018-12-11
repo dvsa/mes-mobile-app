@@ -1,0 +1,35 @@
+
+@mixin mes-text-bold($color, $size) {
+  font-family: GDSTransportWebsite-Bold;
+  font: {
+    size: $size;
+  }
+  color: $color;
+}
+
+@mixin mes-text-normal($color, $size) {
+  font-family: GDSTransportWebsite;
+  font: {
+    size: $size;
+  }
+  color: $color;
+}
+
+// Generate text classes for bold weight
+@each $colorItem, $color in $colors-gds-fonts {
+  @each $sizeItem, $size in $sizes-font {
+    .mes-text-bold-#{$colorItem}-#{$sizeItem} {
+      @include mes-text-bold($color, $size);
+    }
+  }
+}
+
+// Generate text classes for normal weight
+@each $colorItem, $color in $colors-gds-fonts {
+  @each $sizeItem, $size in $sizes-font {
+    .mes-text-normal-#{$colorItem}-#{$sizeItem} {
+      @include mes-text-normal($color, $size);
+    }
+  }
+}
+

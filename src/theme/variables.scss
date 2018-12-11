@@ -35,6 +35,39 @@ $colors: (
   dark: #222
 );
 
+$colors-gds: (
+  gds-black: #0b0c0c,
+  gds-grey-1: #6f777b,
+  gds-grey-2: #bfc1c3,
+  gds-grey-3: #dee0e2,
+  gds-grey-4: #f8f8f8,
+  gds-red: #b10e1e,
+  gds-bright-red: #df3034,
+  gds-orange: #f47738,
+  gds-brown: #b58840,
+  gds-yellow: #ffbf47,
+  gds-light-green: #85994b,
+  gds-green: #006435,
+  gds-dark-green: #00823b,
+  gds-turquoise: #28a197,
+  gds-light-blue: #2b8cc4,
+  gds-blue: #005ea5,
+  gds-light-purple: #6f72af,
+  gds-purple: #2e358b,
+  gds-bright-purple: #912b88,
+  gds-pink: #d53880,
+  gds-light-pink: #f499be,
+);
+
+// Used by mixin to generate font classes
+$colors-gds-fonts: (
+  black: map-get($colors-gds, gds-black),
+  dark-grey: #040404,
+  green: map-get($colors-gds, gds-dark-green),
+  grey: map-get($colors-gds, gds-grey-1),
+  red: map-get($colors-gds, gds-bright-red)
+);
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -68,3 +101,15 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+// Font sizes used in the design
+
+$sizes-font: (
+  xxlarge: 48px,
+  xlarge: 44px,
+  large: 36px,
+  medium: 24px,
+  small: 19px,
+  xsmall: 17px,
+  xxsmall: 16px
+);
