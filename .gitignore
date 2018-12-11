@@ -13,6 +13,7 @@ log.txt
 npm-debug.log*
 .env
 *.DS_Store
+.editorconfig
 
 .idea/
 .sourcemaps/

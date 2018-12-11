@@ -1,37 +1,8 @@
 <ion-header>
-  <mes-header [title]='getTitle()' [helpPage]="helpPage"></mes-header>
-  <page-header [deviceLocked]="true"></page-header>
+  <ion-navbar> <ion-title>health-declaration</ion-title> </ion-navbar>
 </ion-header>
-<ion-content padding class="mes-main-content">
-  <ion-card class="mes-card">
-    <ion-card-header class="mes-main-card-header">
-      <span class="mes-header-lg">Declaration</span>
-    </ion-card-header>
-    <ion-card-content>
-      <div text-center class="candidate-name">{{getCandidateName() | uppercase}}</div>
-      <div text-center class="mes-header-md mes-label-spacing">Driver number</div>
-      <div text-center class="candidate-numbers">{{getDriverNumber()}}</div>
-      <div text-center class="mes-header-md mes-label-spacing">Pass certificate number</div>
-      <div text-center class="candidate-numbers">{{getCertificateNumber()}}</div>
-      <span class="mes-text-md decleration">You must declare any change to your health status since you last applied for a license.
-        It is a criminal
-        offense for you (or anyone else) to make a false statement in order for you to obtain a driving license and can
-        lead to prosecution.
-      </span>
-      <div>
-        <input type="checkbox" name="health" id="confirm-health" [(ngModel)]="health-confirmation"
-               class="mes-checkbox-button">
-        <label class="checkbox-label" for="confirm-health">I confirm</label>
-      </div>
-      <div class="mes-divider"></div>
-      <div>
-        <mes-signature-pad></mes-signature-pad>
-      </div>
-    </ion-card-content>
-  </ion-card>
-  <div margin>
-    <button float-right (click)="continue()" class="mes-cta-button-primary" id="continue" [disabled]="validation()">
-      Continue
-    </button>
-  </div>
+
+<ion-content padding>
+  <button ion-button navPush="OfficePage">Office Page</button>
+  <button ion-button navPush="TerminateTestPage">Terminate Test</button>
 </ion-content>

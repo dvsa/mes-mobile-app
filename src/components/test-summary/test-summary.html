@@ -1,7 +1,0 @@
-<ion-grid>
-    <test-summary-section [summary]="dangerousFaultSummary" *ngIf="dangerousFaultSummary.total > 0"></test-summary-section>
-    <div class="mes-divider" *ngIf="dangerousFaultSummary.total > 0"></div>
-    <test-summary-section [summary]="seriousFaultSummary" *ngIf="seriousFaultSummary.total > 0"></test-summary-section>
-    <div class="mes-divider" *ngIf="seriousFaultSummary.total > 0"></div>
-    <test-summary-section [summary]="drivingFaultSummary" *ngIf="drivingFaultSummary.total > 0"></test-summary-section>
-</ion-grid>

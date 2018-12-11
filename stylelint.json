@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    /** Rule triggers on the default angular selectors */
+    "selector-type-no-unknown": null,
+    /** Disabled for start of project as all pages have a bblank scss file*/
+    "block-no-empty": null
+  }
+}
