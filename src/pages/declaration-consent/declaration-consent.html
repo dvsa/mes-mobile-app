@@ -1,0 +1,46 @@
+<ion-header>
+  <mes-header [title]='getTitle()' [helpPage]="helpPage"></mes-header>
+  <page-header [deviceLocked]="true"></page-header>
+</ion-header>
+<ion-content padding no-bounce class="mes-main-content">
+  <ion-card class="mes-card">
+    <ion-card-header class="mes-main-card-header">
+      <span class="mes-header-md">Declaration</span>
+    </ion-card-header>
+    <div text-center class="mes-waiting-room-name">{{getCandidateName() | uppercase}}</div>
+    <div text-center class="mes-header-md mes-label-spacing">Driver Number</div>
+    <div text-center class="mes-waiting-room-driver-number">{{getDriverNumber()}}</div>
+    <ion-card-content>
+      <div class="mes-header-md mes-label-spacing">I declare that:</div>
+      <div class="mes-waiting-room-text">
+        <span class="mes-text-md">The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which satisfies
+          the requirements of the legislation.</span>
+      </div>
+      <div>
+        <input type="checkbox" name="insurance" id="check-insurance" [checked]="checkInsurance"
+               (change)="updateValidation('checkInsurance')" class="mes-checkbox-button">
+        <label for="check-insurance" class="checkbox-label">I confirm</label>
+      </div>
+      <div class="mes-divider"></div>
+      <div class="mes-waiting-room-text">
+        <span
+          class="mes-text-md ">I normally live/have lived in the UK for at least 185 days in the last 12 months.</span>
+      </div>
+      <div>
+        <input type="checkbox" name="residence" id="check-residence" [checked]="checkResidence"
+               (change)="updateValidation('checkResidence')" class="mes-checkbox-button">
+        <label for="check-residence" class="checkbox-label">I confirm</label>
+      </div>
+      <div class="mes-divider"></div>
+      <div class="mes-waiting-room-signature-pad-container">
+        <mes-signature-pad></mes-signature-pad>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <div class="mes-waiting-room-ctas">
+    <button class="mes-cta-button-secondary" (click)="onEndTest()">End driving test</button>
+    <button (click)="continue()" class="mes-cta-button-primary mes-waiting-room-continue" [disabled]="validation()">
+      Continue
+    </button>
+  </div>
+</ion-content>

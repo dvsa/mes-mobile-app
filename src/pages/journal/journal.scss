@@ -1,0 +1,64 @@
+page-journal {
+  div.scroll-content {
+    padding: 0 1.2em !important;
+  }
+  ion-list {
+    margin-top: -1em !important;
+    margin-bottom: 0 !important;
+  }
+  .slot {
+    margin: 0.75em auto;
+    height: 7.1em;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background: map-get($colors, white);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    &__time {
+      font-weight: bold;
+      font-size: 1.6em;
+    }
+    ion-col {
+      &:not(:last-child) {
+        margin-right: 1.2em;
+        &:nth-child(3) {
+          min-width: 9em;
+          margin-right: 0;
+        }
+      }
+      &:first-child img {
+        position: relative;
+        top: 0.15em;
+      }
+      & > div {
+        width: 100%;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        padding: 1em;
+        &:last-child {
+          padding: 0.5em;
+        }
+        button {
+          min-width: 0;
+        }
+      }
+    }
+    ion-label {
+      margin: 0;
+      height: 100%;
+      & > ion-row {
+        height: 100%;
+        padding: 1em 0;
+      }
+    }
+    .journal-test-completed-text {
+      color: #818080;
+    }
+    .journal-warning-icon {
+      width: 1em;
+      height: 1em;
+      margin-left: -1em;
+    }
+  }
+}

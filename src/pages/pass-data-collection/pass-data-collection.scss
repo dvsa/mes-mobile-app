@@ -1,0 +1,20 @@
+page-pass-data-collection {
+  .mes-text-input {
+    padding: 8px;
+    height: 48px;
+    width: 100%;
+    border: 2px solid map-get($map: $colors, $key: dark);
+    border-radius: 5px 5px 5px 5px;
+  }
+
+  .validation-icon {
+    padding-left: 8px;
+    color: map-get($colors, gds-red);
+    font-size: 24px;
+  }
+
+  .validation-text {
+    font-size: 16px;
+    color: map-get($colors, gds-red);
+  }
+}

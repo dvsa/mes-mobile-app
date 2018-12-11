@@ -1,0 +1,63 @@
+<ion-header>
+  <mes-header [title]='getTitle()' [helpPage]='helpPage'></mes-header>
+</ion-header>
+<ion-content padding class="mes-main-content">
+  <ion-card class="mes-card">
+    <ion-card-header>
+      <span class="mes-header-lg">Candidate Information</span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-4>
+          <span class="mes-header-md">App Ref</span>
+        </ion-col>
+        <ion-col>
+          <span class="mes-text-md">{{ getAppRef() }}</span>
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Provisional licence provided 
+            <ion-icon name="alert" *ngIf="showProvisionalProvidedValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showProvisionalProvidedValidation" class="validation-text">
+            Provisional licence provided is required.
+          </p>
+        </ion-col>
+        <ion-col col-3>
+          <div class="gds-radio-button">
+            <input id="provisionalLicence-yes" name="provisionalLicence" type="radio" value="1" [(ngModel)]="provisionalProvidedSelection">
+            <label for="provisionalLicence-yes" class="radio-label">Yes</label>
+          </div>
+          </ion-col>
+          <ion-col>
+            <div class="gds-radio-button">
+              <input id="provisionalLicence-no" name="provisionalLicence" type="radio" value="2" [(ngModel)]="provisionalProvidedSelection" >
+              <label for="provisionalLicence-no" class="radio-label">No</label>
+            </div>
+          </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4>
+          <span class="mes-header-md">
+          Pass certificate number             
+          <ion-icon name="alert" *ngIf="showPassCertificateNumberValidation" class="validation-icon"></ion-icon>
+        </span>
+        <p *ngIf="showPassCertificateNumberValidation" class="validation-text">
+            Pass certificate number is required.
+        </p>
+        </ion-col>
+        <ion-col>
+          <input required type="text" name="pass-certificate-number" class="mes-text-input capital-characters"
+            [(ngModel)]="passCertificateNumber" appInputRestriction="noSpecialChars" autocapitalize="characters" />
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <div padding>
+    <button float-right class="mes-cta-button-primary" (click)="continue()">Continue</button>
+  </div>
+</ion-content>

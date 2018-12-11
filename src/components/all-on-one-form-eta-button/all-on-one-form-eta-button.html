@@ -1,0 +1,8 @@
+<ion-row align-items-center no-padding [ngClass]="{'active' : isEnabled, 'pActive': pAction, 'vActive': vAction }">
+  <ion-col no-padding>
+    <button class="all-on-one-form-fault-button" (click)="toggle()" text-center>
+      <img src="assets/icon/Arrow.png" alt="arrow icon" />
+      <span class="mes-link">{{ text }}</span>
+    </button>
+  </ion-col>
+</ion-row>

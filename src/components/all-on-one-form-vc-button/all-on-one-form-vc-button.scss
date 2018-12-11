@@ -1,0 +1,20 @@
+all-on-one-form-vc-button {
+  .expanded-section .fault-badge {
+    background-color: map-get($colors, dark);
+
+    &.counter {
+      left: 4px;
+      @extend .fault-badge_counter;
+    }
+    &.serious {
+      position: relative;
+      right: 10px;
+      @extend .fault-badge_serious;
+    }
+    &.dangerous {
+      position: relative;
+      right: 10px;
+      @extend .fault-badge_dangerous;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+totals {
+  .icon {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .scorecard-item {
+    border: 1px solid map-get($colors, gds-grey-1);
+    padding: 8px;
+    margin-left: 2px;
+    color: map-get($colors, dark);
+    font-weight: bold;
+    font-size: 19px;
+  }
+
+  button {
+    background-color: #f8f8f8;
+    font-size: 13px;
+  }
+
+  .remove-fault-button {
+    font-size: 20px;
+    color: map-get($colors, gds-black);
+    line-height: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
+    border: solid 3.5px map-get($colors, gds-black);
+    background-color: map-get($colors, white);
+    &[disabled] {
+      box-shadow: 0 0 0 0;
+      color: map-get($colors, gds-grey-1);
+      border: 3.5px solid map-get($colors, gds-grey-1);
+    }
+    &.active {
+      background-color: map-get($colors, gds-black);
+      color: map-get($colors, white);
+    }
+  }
+}

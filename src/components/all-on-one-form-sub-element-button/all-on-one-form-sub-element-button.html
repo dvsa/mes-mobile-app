@@ -1,0 +1,11 @@
+<ion-row align-items-center no-padding [ngClass]="{'active' : isEnabled, 'action-completed': isComplete}"> 
+    <ion-col no-padding>
+        <button class="all-on-one-form-fault-button" (click)="toggle()" text-center>
+            <span *ngIf="faultCount !== 0" class="fault-badge counter">{{faultCount}}</span>
+            <span *ngIf="isMesLink"><img src="assets/icon/Arrow.png" alt="arrow icon" /></span>
+            <span [ngClass]="isMesLink && 'mes-link'">{{ text }}</span>
+            <span *ngIf="serious" class="fault-badge serious">S</span>
+            <span *ngIf="dangerous" class="fault-badge dangerous">D</span>
+        </button>
+    </ion-col>
+</ion-row>

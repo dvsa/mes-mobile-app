@@ -1,0 +1,130 @@
+<ion-header>
+  <mes-header [title]='getTitle()' [helpPage]="helpPage"></mes-header>
+</ion-header>
+<ion-content padding class="mes-main-content">
+  <ion-card class="mes-card">
+    <ion-card-header>
+      <span class="mes-header-lg">Test Summary</span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Route Number
+            <ion-icon name="alert" *ngIf="showRouteNumberValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showRouteNumberValidation" class="validation-text">
+            Route number is required.
+          </p>
+        </ion-col>
+        <ion-col>
+          <input type="text" maxlength="2" appInputRestriction="integer" [(ngModel)]="selectedRoute">
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4 class="mes-header-md">
+          <span>Oral explanation comments (optional)</span>
+        </ion-col>
+        <ion-col>
+          <textarea rows="3"></textarea>
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Show me question
+            <ion-icon name="alert" *ngIf="showShowMeQuestionValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showShowMeQuestionValidation" class="validation-text">
+            Show me question is required.
+          </p>
+        </ion-col>
+        <ion-col col-4>
+          <button class="button" (click)="showShowMeQuestions()">Select</button>
+        </ion-col>
+        <ion-col col-4>
+          <span>{{showMeQuestion}}</span>
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row align-items-center>
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Weather
+            <ion-icon name="alert" *ngIf="showWeatherValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showWeatherValidation" class="validation-text">
+            Weather is required.
+          </p>
+        </ion-col>
+        <ion-col col-4>
+          <button class="button" (click)="openWeatherModal()">Select</button>
+        </ion-col>
+        <ion-col col-4>
+          <span class="conditions-list">{{conditionsList}}</span>
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Independent driving
+            <ion-icon name="alert" *ngIf="showIndependentDrivingValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showIndependentDrivingValidation" class="validation-text">
+            Independent driving is required.
+          </p>
+        </ion-col>
+        <ion-col>
+          <div class="gds-radio-button">
+            <input id="independentDrivingOption-satnav" name="independentDrivingOption" type="radio" value="1" [(ngModel)]="independentDrivingType">
+            <label for="independentDrivingOption-satnav" class="radio-label">Sat nav </label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="gds-radio-button">
+            <input id="independentDrivingOption-trafficsigns" name="independentDrivingOption" type="radio" value="2" [(ngModel)]="independentDrivingType">
+            <label for="independentDrivingOption-trafficsigns" class="radio-label">Traffic signs</label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <div class="mes-divider"></div>
+      <ion-row>
+        <ion-col col-4>
+          <span class="mes-header-md">
+            Physical description of candidate
+            <ion-icon name="alert" *ngIf="showPhysicalDescriptionValidation" class="validation-icon"></ion-icon>
+          </span>
+          <p *ngIf="showPhysicalDescriptionValidation" class="validation-text">
+            Physical description of candidate is required.
+          </p>
+        </ion-col>
+        <ion-col>
+          <textarea rows="3" [(ngModel)]="candidateDescription"></textarea>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card margin-top class="mes-card">
+    <ion-card-header class="mes-main-card-header--border-bottom">
+      <span class="mes-header-lg">Faults recorded</span>
+    </ion-card-header>
+    <ion-card-content>
+      <post-test-summary-section [canComplete]="true" [summary]="dangerousFaultSummary"
+                                 *ngIf="dangerousFaultSummary.total > 0"></post-test-summary-section>
+      <div *ngIf="dangerousFaultSummary.total > 0 && (seriousFaultSummary.total > 0 || drivingFaultSummary.total > 0)"
+           class="mes-divider"></div>
+      <post-test-summary-section [canComplete]="true" [summary]="seriousFaultSummary"
+                                 *ngIf="seriousFaultSummary.total > 0"></post-test-summary-section>
+      <div *ngIf="seriousFaultSummary.total > 0 && drivingFaultSummary.total > 0" class="mes-divider"></div>
+      <post-test-summary-section [summary]="drivingFaultSummary"
+                                 *ngIf="drivingFaultSummary.total > 0"></post-test-summary-section>
+    </ion-card-content>
+  </ion-card>
+  <div margin>
+    <button (click)="onReturnToJournal()" class="mes-cta-button-secondary">Save and return to journal</button>
+    <button float-right (click)="onSubmit()" class="mes-cta-button-primary">Submit</button>
+  </div>
+</ion-content>

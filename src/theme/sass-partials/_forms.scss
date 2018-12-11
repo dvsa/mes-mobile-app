@@ -1,0 +1,121 @@
+$checkbox-width: 30px;
+input[type='checkbox'] {
+  transform: scale(2);
+  margin: 25px 20px;
+
+  & + label {
+    font-size: 20px;
+    position: relative;
+    cursor: pointer;
+    margin: 20px 2px;
+  }
+}
+
+.signature-pad {
+  button#retry {
+    float: left;
+  }
+
+  button#continue {
+    float: right;
+  }
+
+  background-color: map-get($colors, white);
+  position: relative;
+
+  span {
+    font-weight: bold;
+  }
+
+  signature-pad {
+    width: 100%;
+    text-align: center;
+
+    canvas {
+      display: block;
+      border: thick solid map-get($colors, divider);
+      margin-bottom: 20px;
+      width: 100%;
+    }
+  }
+
+  .clearfix {
+    clear: both;
+  }
+}
+
+.mes-checkbox-button {
+  height: 20px;
+  width: 20px;
+}
+
+.checkbox-label-typography {
+  // todo - add font back later
+  //font-family: 'GDSTransportWebsite';
+  font-size: 19px;
+  letter-spacing: 0.36px;
+}
+
+.checkbox-label {
+  @extend .checkbox-label-typography;
+}
+
+.gds-radio-button {
+  @extend .checkbox-label-typography;
+  > label {
+    display: flex;
+    align-items: center;
+  }
+  input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    + .radio-label {
+      &:before {
+        content: '';
+        background: map-get($colors, white);
+        border: 2px solid map-get($colors, dark);
+        border-radius: 100%;
+        display: inline-block;
+        width: 44px;
+        height: 44px;
+        position: relative;
+        vertical-align: top;
+        margin-right: 0.6em;
+        cursor: pointer;
+        text-align: center;
+      }
+    }
+    &:checked {
+      + .radio-label {
+        &:before {
+          background-color: map-get($colors, gds-black);
+          box-shadow: inset 0 0 0 9px map-get($colors, white);
+        }
+      }
+    }
+    &:focus {
+      + .radio-label {
+        &:before {
+          //outline: none;
+          border-color: map-get($colors, map-get($colors, gds-orange));
+        }
+      }
+    }
+    &:disabled {
+      + .radio-label {
+        &:before {
+          box-shadow: inset 0 0 0 4px black;
+          border-color: darken(black, 25%);
+          background: darken(black, 25%);
+        }
+      }
+    }
+    + .radio-label {
+      &:empty {
+        &:before {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<ion-toolbar no-padding>
+    <ion-grid no-padding>
+        <ion-row class="container">
+            <ion-col>
+                <span class="sd-buttons-wrapper form-section">
+                    <ion-col no-padding>
+                        <button class="sd-buttons s-button" [ngClass]="{'active': isSButtonPressed}" (click)="sButtonClicked()"><strong>S</strong></button>
+                    </ion-col>
+                    <ion-col no-padding>
+                        <button class="sd-buttons d-button" [ngClass]="{'active': isDButtonPressed}" (click)="dButtonClicked()"><strong>D</strong></button>
+                    </ion-col>
+                </span>
+            </ion-col>
+            <ion-col col-2>
+                <timer text-center></timer>
+            </ion-col>
+            <ion-col>
+                <totals [options]="options"></totals>
+            </ion-col>
+            <ion-col col-1>
+                <button float-right margin-right ion-button id="end-button" (click)="goToTestResultPage()">End</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-toolbar>

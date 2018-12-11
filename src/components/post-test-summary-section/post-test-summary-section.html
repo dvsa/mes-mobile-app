@@ -1,0 +1,38 @@
+<ion-row *ngIf="summary && summary.total !== 0 ">
+  <ion-col col-3>
+    <p class="fault-number">{{summary.total}} </p>
+    <p><span class="mes-text-md">{{summary.title}}</span></p>
+  </ion-col>
+  <ion-col>
+    <ion-row *ngFor="let fault of summary.faults; let isFirst = first;">
+      <ion-col>
+        <div *ngIf="!isFirst && !isDrivingFaults()" class="mes-divider"></div>
+        <ion-row>
+          <ion-col class="mes-header-md">
+            <span *ngIf="fault.total > 1">{{fault.total}} x</span>
+            <span>{{fault.name}}</span>
+            <ion-icon name="alert" *ngIf="hasFailedValidation && !faultNotes[fault.name]" class="validation-error-icon"></ion-icon>
+          </ion-col>
+          <ion-col *ngIf="!isDrivingFaults()">
+            <span *ngIf="showAddButton(fault.name)" float-right class="mes-link" (click)="openTextboxModal(fault.name)">
+              Add Feedback
+            </span>
+            <span *ngIf="showEditButton(fault.name)" float-right class="mes-link" (click)="openTextboxModal(fault.name)">
+              Edit Feedback
+            </span>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="faultNotes[fault.name]" class="fault-note-container">
+          <ion-col>
+            <span class="mes-text-md">{{faultNotes[fault.name]}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="hasFailedValidation && !faultNotes[fault.name]">
+          <ion-col>
+            <span class="mes-text-md validation-error">Feedback is required</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>

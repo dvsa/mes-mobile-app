@@ -1,0 +1,15 @@
+legal-requirements {
+  button {
+    :before {
+      top: 50%;
+      left: 6px;
+      transform: translateY(-50%);
+    }
+    &.complete:before {
+      @extend .check-btn_completed;
+    }
+    &.incomplete:before {
+      @extend .check-btn_incomplete;
+    }
+  }
+}

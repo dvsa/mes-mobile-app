@@ -1,0 +1,13 @@
+<div [ngClass]="{'journal-candidate-info-test-complete-text': testComplete}">
+  <ion-row>
+    <ion-col class="journal-candidate-info-name">
+      <span>{{name}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <img [ngClass]="{'journal-candidate-info-category-icon-completed': testComplete}" src="assets/icon/test-categories/category-b.png" />
+      <span>Cat {{categoryCode}}</span>
+    </ion-col>
+  </ion-row>
+</div>

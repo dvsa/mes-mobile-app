@@ -1,0 +1,35 @@
+<ion-header>
+    <mes-header [title]='getTitle()' [helpPage]="helpPage"></mes-header>
+</ion-header>
+
+<ion-content padding class="mes-main-content">
+    <ion-card class="mes-card">
+        <div class="test-result-header-card">
+            <ion-card-header class="card-header">
+                Test requirements and actions
+            </ion-card-header>
+            <test-result-header [summaryMetadata]="summaryMetadata"></test-result-header>
+        </div>
+    </ion-card>
+    <ion-card class="mes-card">
+        <ion-card-content text-center [ngClass]="getTestOutcomeContentClass()">
+            <div id="test-outcome-label">
+                Test outcome
+            </div>
+            <div id="test-outcome">
+                {{testResult}}
+            </div>
+        </ion-card-content>
+        <div *ngIf="wasThereAnyFault()">
+            <ion-card-header class="card-header">
+                Faults recorded
+            </ion-card-header>
+            <ion-card-content>
+                <test-summary [faultSummaries]="faultSummaries" [testResult]="testResult" [summaryMetadata]="summaryMetadata"></test-summary>
+            </ion-card-content>
+        </div>
+    </ion-card>
+    <div class="test-result-footer" text-center>
+        <button (click)="getNextPage()" class="mes-cta-button-primary confirm-button">End debrief</button>
+    </div>
+</ion-content>

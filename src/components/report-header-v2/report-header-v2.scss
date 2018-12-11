@@ -1,0 +1,56 @@
+report-header-v2 {
+  .container {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .report-header-text {
+    line-height: 48px;
+  }
+
+  #end-button {
+    margin-top: 0;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 2px 0 0 map-get($colors, gds-grey-1);
+    background-color: map-get($colors, gds-green);
+  }
+
+  .data-item {
+    line-height: 2;
+  }
+
+  .sd-buttons-wrapper {
+    .sd-buttons {
+      opacity: 1 !important;
+      border-radius: 10px;
+      margin: 0 0 0 16px;
+      width: 40%;
+      background-color: map-get($colors, white);
+      box-shadow: 0 2px 0 0 map-get($colors, shadowGrey);
+      @extend .test-form-label;
+      @extend .button-ios;
+    }
+    .s-button {
+      border: solid 3.5px map-get($colors, gds-orange);
+    }
+    .d-button {
+      border: solid 3.5px map-get($colors, gds-red);
+    }
+    .s-button.activated {
+      background-color: map-get($colors, gds-orange);
+    }
+    .s-button.active {
+      background-color: map-get($colors, gds-orange) !important;
+      color: map-get($colors, white);
+    }
+    .d-button.activated {
+      background-color: map-get($colors, gds-red);
+    }
+    .d-button.active {
+      background-color: map-get($colors, gds-red) !important;
+      color: map-get($colors, white);
+    }
+  }
+}
