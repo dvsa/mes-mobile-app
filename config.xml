@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="uk.gov.dvsa.mobile-examiner" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="uk.gov.dvsa.mobile-examiner-services" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>mes-mobile-app</name>
     <description>An application for DVSA driving examiners to conduct driving tests</description>
     <author email="mobexaminer@gmail.com">MES Team</author>
@@ -83,5 +83,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <engine name="ios" spec="^4.5.5" />
+    <plugin name="cordova-plugin-ms-adal" spec="0.10.1" />
+    <engine name="ios" spec="4.5.5" />
 </widget>
