@@ -13,7 +13,7 @@ export class JournalPage {
   public journalSlot: any; 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.journalJson= this.getMockJournal();
+    this.journalJson = this.getMockJournal();
     this.journalSlot = this.journalJson.testSlot;
   }
 
