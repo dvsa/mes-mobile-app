@@ -3,10 +3,12 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { MSAdal } from '@ionic-native/ms-adal';
 
 import { App } from './app.component';
 import { JournalProvider } from '../providers/journal/journal';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
 @NgModule({
   declarations: [App],
@@ -16,8 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     StatusBar,
     SplashScreen,
+    MSAdal,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    JournalProvider
+    JournalProvider,
+    AuthenticationServiceProvider,
   ]
 })
 export class AppModule {}
