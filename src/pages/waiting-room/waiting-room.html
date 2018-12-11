@@ -1,8 +1,19 @@
 <ion-header>
-  <ion-navbar> <ion-title>waiting-room</ion-title> </ion-navbar>
+  <ion-navbar>
+    <ion-title>Waiting Room</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button navPush="WaitingRoomToCarPage">Waiting Room to Car</button>
-  <button ion-button navPush="TerminateTestPage">Terminate Test</button>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Waiting Room
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-header>
+      <button ion-button navPush="WaitingRoomToCarPage">Waiting Room to Car</button>
+      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
+    </ion-card-header>
+  </ion-card>
 </ion-content>
