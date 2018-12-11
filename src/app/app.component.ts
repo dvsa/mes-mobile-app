@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Component } from "@angular/core";
+import { Platform } from "ionic-angular";
+import { StatusBar } from "@ionic-native/status-bar";
+import { SplashScreen } from "@ionic-native/splash-screen";
+
+import { AuthenticationServiceProvider } from "../providers/authentication-service/authentication-service";
 
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
@@ -21,21 +23,12 @@ export class App {
 
       statusBar.styleDefault();
       statusBar.overlaysWebView(false);
+      splashScreen.hide();
 
       // Attempt to login if on an ios device
       if (platform.is('ios')) {
-        await authenticationService.login();
-        splashScreen.hide();
-
-        if(authenticationService.isAuthenticated()) {
-          this.rootPage = 'LoginPage';
-        } else {
-          this.rootPage = 'JournalPage'
-        }
-      } else {
-        this.rootPage = 'JournalPage'
+        authenticationService.login();
       }
-
     });
   }
 }
