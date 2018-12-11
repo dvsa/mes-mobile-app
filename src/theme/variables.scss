@@ -12,13 +12,6 @@ $app-direction: ltr;
 
 @import "ionic.globals";
 
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -32,7 +25,11 @@ $colors: (
   secondary: #32db64,
   danger: #f53d3d,
   light: #f4f4f4,
-  dark: #222
+  dark: #222,
+  mes-background: #ecf4f6,
+  mes-toolbar-background: rgba(33, 33, 33, 0.72),
+  mes-toolbar-button-color:  #ff9500,
+  mes-white: #ffffff,
 );
 
 $colors-gds: (
@@ -68,9 +65,25 @@ $colors-gds-fonts: (
   red: map-get($colors-gds, gds-bright-red)
 );
 
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+$background-color: map-get($colors, mes-background);
+
+$toolbar-background: map-get($colors, mes-toolbar-background);
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+
+$toolbar-ios-button-color: map-get($colors, mes-toolbar-button-color);
+
+$card-ios-background-color: map-get($colors, mes-white);
+$card-ios-margin-bottom: 16px;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -103,7 +116,6 @@ $colors-gds-fonts: (
 @import "noto-sans";
 
 // Font sizes used in the design
-
 $sizes-font: (
   xxlarge: 48px,
   xlarge: 44px,

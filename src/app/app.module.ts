@@ -8,7 +8,7 @@ import { App } from './app.component';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, IonicModule.forRoot(App)],
+  imports: [BrowserModule, IonicModule.forRoot(App , {mode: 'ios'})],
   bootstrap: [IonicApp],
   entryComponents: [App],
   providers: [
