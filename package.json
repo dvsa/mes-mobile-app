@@ -6,6 +6,7 @@
   "homepage": "https://github.com/dvsa/mes-mobile-app",
   "private": true,
   "scripts": {
+    "docs": "cd docs && ionic serve --port 8200",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "device": "ionic cordova run ios --device --development --buildConfig buildScripts/build.json",
