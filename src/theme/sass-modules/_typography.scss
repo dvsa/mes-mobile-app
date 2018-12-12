@@ -15,6 +15,10 @@
   color: $color;
 }
 
+@mixin mes-text-spacing($spacing) {
+  letter-spacing: $spacing;
+}
+
 // Generate text classes for bold weight
 @each $colorItem, $color in $colors-gds-fonts {
   @each $sizeItem, $size in $sizes-font {
@@ -32,4 +36,13 @@
     }
   }
 }
+
+$spacingConfig: 'widest' 0.36px, 'wide' 0.28px, 'compressed' -0.24px, 'highest' -0.38px;
+@each $spacingSetting in $spacingConfig {
+  .mes-text-spacing-#{nth($spacingSetting, 1)} {
+    @include mes-text-spacing(#{nth($spacingSetting, 2)});
+  }
+}
+
+
 
