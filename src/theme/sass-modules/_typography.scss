@@ -19,8 +19,9 @@
   letter-spacing: $spacing;
 }
 
-// Generate text classes for bold weight
-@each $colorItem, $color in $colors-gds-fonts {
+// Generate text classes for bold weight from the color map and size map in all combinations
+// i.e. .mes-text-bold-black-xxlarge, .mes-text-bold-red-medium etc..
+@each $colorItem, $color in $colors-mes-fonts {
   @each $sizeItem, $size in $sizes-font {
     .mes-text-bold-#{$colorItem}-#{$sizeItem} {
       @include mes-text-bold($color, $size);
@@ -28,8 +29,9 @@
   }
 }
 
-// Generate text classes for normal weight
-@each $colorItem, $color in $colors-gds-fonts {
+// Generate text classes for normal weight from the color map and size map in all combinations
+// i.e. .mes-text-normal-black-xxlarge, .mes-text-normal-red-medium etc..
+@each $colorItem, $color in $colors-mes-fonts {
   @each $sizeItem, $size in $sizes-font {
     .mes-text-normal-#{$colorItem}-#{$sizeItem} {
       @include mes-text-normal($color, $size);
@@ -37,12 +39,15 @@
   }
 }
 
-$spacingConfig: 'widest' 0.36px, 'wide' 0.28px, 'compressed' -0.24px, 'highest' -0.38px;
+// Generate spacing modifiers
+// i.e. .mes-text-spacing-widest, .mes-text-spacing-wide, .mes-text-spacing-compressed, .mes-text-spacing-tightest
+// Use like this
+// <div class="mes-text-bold-black-xxlarge mes-text-spacing-tightest">I'm bold black xxlarge with tightest spacing</div>
+$spacingConfig: 'widest' 0.36px, 'wide' 0.28px, 'compressed' -0.24px, 'tightest' -0.38px;
 @each $spacingSetting in $spacingConfig {
   .mes-text-spacing-#{nth($spacingSetting, 1)} {
     @include mes-text-spacing(#{nth($spacingSetting, 2)});
   }
 }
-
 
 
