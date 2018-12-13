@@ -24,7 +24,11 @@ export abstract class BasePageComponenet {
     return true
   }
 
-  isIos() : boolean {
+  /**
+   *  Method
+   *    Checks if the app is running on a IOS device
+   */
+  isIos(): boolean {
     return this.platform.is('ios');
   }
 
@@ -33,8 +37,10 @@ export abstract class BasePageComponenet {
    *    Logs the user out of the app and redirects them to the login page
    */
   logout() {
-    this.authenticationService.logout()
-    this.navController.setRoot('LoginPage');
+    if (this.isIos()) {
+      this.authenticationService.logout()
+      this.navController.setRoot('LoginPage');
+    }
   }
 
 }
