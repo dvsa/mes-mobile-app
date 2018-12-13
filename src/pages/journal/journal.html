@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Journal</ion-title>
+    <ion-buttons end>
+      <button ion-button  *ngIf="isIos()" (click)="logout()">Logout</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
