@@ -26,10 +26,11 @@ export abstract class BasePageComponenet {
 
   /**
    *  Method
-   *    Allows user to log out of the app
+   *    Logs the user out of the app and redirects them to the login page
    */
   logout() {
     this.authenticationService.logout()
+    this.navController.setRoot('LoginPage');
   }
 
 }
