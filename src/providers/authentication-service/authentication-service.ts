@@ -36,28 +36,44 @@ export class AuthenticationServiceProvider {
   login = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
 
-    authenticationContext
-      .acquireTokenSilentAsync(this.resourceUrl, this.clientId, '')
-      .then(this.successfulLogin)
-      .catch((error: any) => {
-        console.log('we should call login with credentials');
-        this.loginWithCredentials();
-      });
+    return new Promise((resolve, reject) => {
+      authenticationContext
+        .acquireTokenSilentAsync(this.resourceUrl, this.clientId, '')
+        .then((authResponse: AuthenticationResult) => {
+          this.successfulLogin(authResponse);
+          resolve();
+        })
+        .catch((error: any) => {
+          console.log('we should call login with credentials');
+          this.loginWithCredentials()
+            .then(() => resolve())
+            .catch(() => reject());
+        });
+    });
   };
 
   loginWithCredentials = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
 
-    authenticationContext
-      .acquireTokenAsync(
-        this.resourceUrl,
-        this.clientId,
-        this.redirectUrl,
-        '',
-        ''
-      )
-      .then(this.successfulLogin, this.failedLogin)
-      .catch((error: any) => error);
+    return new Promise((resolve, reject) => {
+      authenticationContext
+        .acquireTokenAsync(
+          this.resourceUrl,
+          this.clientId,
+          this.redirectUrl,
+          '',
+          ''
+        )
+        .then((authResponse: AuthenticationResult) => {
+          this.successfulLogin(authResponse);
+          resolve();
+        })
+        .catch((error: any) => {
+          this.failedLogin(error);
+          reject();
+        });
+    });
+    
   };
 
   /*
