@@ -86,6 +86,6 @@ export class AuthenticationServiceProvider {
     Method deals with a failed login
   */
   private failedLogin = (error: any) => {
-    // Not sure what to do here yet
+    //Not sure what to do here
   };
 }
