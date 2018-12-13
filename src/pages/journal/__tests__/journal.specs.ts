@@ -1,9 +1,11 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock } from 'ionic-mocks-jest';
+import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
 
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
+import { AuthenticationServiceProvider } from '../../../providers/authentication-service/authentication-service';
+import { AuthenticationServiceProviderMock } from '../../../providers/authentication-service/authentication-service.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -14,12 +16,11 @@ describe('JournalPage', () => {
       declarations: [JournalPage],
       imports: [IonicModule, AppModule],
       providers: [
-        {
-          provide: NavController,
-          useFactory: () => NavControllerMock.instance()
-        },
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
-        { provide: Config, useFactory: () => ConfigMock.instance() }
+        { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: AuthenticationServiceProvider, useClass: AuthenticationServiceProviderMock },
       ]
     })
       .compileComponents()
