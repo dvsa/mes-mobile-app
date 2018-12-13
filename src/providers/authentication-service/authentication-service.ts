@@ -4,11 +4,11 @@ import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-nati
 @Injectable()
 export class AuthenticationServiceProvider {
   // TODO - Load from config
-  private context: string = "https://login.windows.net/common";
-  private resourceUrl: string = "https://graph.windows.net";
-  private clientId: string = "09fdd68c-4f2f-45c2-be55-dd98104d4f74";
+  private context: string = 'https://login.windows.net/common';
+  private resourceUrl: string = 'https://graph.windows.net';
+  private clientId: string = '09fdd68c-4f2f-45c2-be55-dd98104d4f74';
   private redirectUrl: string =
-    "x-msauth-uk-gov-dvsa-mobile-examiner-services://uk.gov.dvsa.mobile-examiner-services";
+    'x-msauth-uk-gov-dvsa-mobile-examiner-services://uk.gov.dvsa.mobile-examiner-services';
 
   private authenticationToken: string;
 
@@ -40,17 +40,24 @@ export class AuthenticationServiceProvider {
       .acquireTokenSilentAsync(this.resourceUrl, this.clientId, '')
       .then(this.successfulLogin)
       .catch((error: any) => {
-        authenticationContext
-          .acquireTokenAsync(
-            this.resourceUrl,
-            this.clientId,
-            this.redirectUrl,
-            '',
-            ''
-          )
-          .then(this.successfulLogin, this.failedLogin)
-          .catch((error: any) => error);
+        console.log('we should call login with credentials');
+        this.loginWithCredentials();
       });
+  };
+
+  loginWithCredentials = () => {
+    const authenticationContext: AuthenticationContext = this.createAuthContext();
+
+    authenticationContext
+      .acquireTokenAsync(
+        this.resourceUrl,
+        this.clientId,
+        this.redirectUrl,
+        '',
+        ''
+      )
+      .then(this.successfulLogin, this.failedLogin)
+      .catch((error: any) => error);
   };
 
   /*
@@ -79,6 +86,7 @@ export class AuthenticationServiceProvider {
       Gets the authenticationToken and stores it in the service.
   */
   private successfulLogin = (authResponse: AuthenticationResult) => {
+    console.log('setting the authenticationToken', authResponse.accessToken);
     this.authenticationToken = authResponse.accessToken;
   };
 

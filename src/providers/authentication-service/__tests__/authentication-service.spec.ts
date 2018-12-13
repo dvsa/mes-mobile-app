@@ -43,9 +43,18 @@ describe('Authentication Service', () => {
       expect(authenticationService.getAuthenticationToken()).toEqual('SILENT AYSNC TEST TOKEN')
     });
 
-    it('should sign in with credentials if a silent sign in fails', async () => {
+    xit('should call login with credentials if the silent login fails', async () => {
+      authenticationService.loginWithCredentials = jest.fn();
       await authenticationService.login();
-      // TODO
+      
+      expect(authenticationService.loginWithCredentials).toHaveBeenCalled();
+    });
+
+    it('should sign in with credetials', async() => {
+      await authenticationService.loginWithCredentials();
+
+      expect(authenticationService.isAuthenticated()).toEqual(true);
+      expect(authenticationService.getAuthenticationToken()).toEqual('AYSNC TEST TOKEN');
     });
 
     it('should do something when login fails', async () => {
