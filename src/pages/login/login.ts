@@ -21,11 +21,10 @@ export class LoginPage extends BasePageComponenet {
   }
 
 
-  async login() {
-    await this.authenticationService.login();
-
-    if (this.authenticationService.isAuthenticated()) {
-      this.navController.push('JournalPage');
-    }
+  login() {
+    this.authenticationService.login()
+      .then(() => {
+        this.navController.setRoot('JournalPage');
+      })
   }
 }
