@@ -1,9 +1,23 @@
 <ion-header>
-  <ion-navbar> <ion-title>debrief</ion-title> </ion-navbar>
+  <ion-navbar>
+    <ion-title>Debrief</ion-title>
+    <ion-buttons end>
+        <button ion-button  *ngIf="isIos()" (click)="logout()">Logout</button>
+      </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button navPush="PassFinalisationPage">Pass Test</button>
-  <button ion-button navPush="OfficePage">Fail Test</button>
-  <button ion-button navPush="TerminateTestPage">Terminate Test</button>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Debrief
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button navPush="PassFinalisationPage">Pass Test</button>
+      <button ion-button navPush="OfficePage">Fail Test</button>
+      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

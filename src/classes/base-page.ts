@@ -17,19 +17,24 @@ export abstract class BasePageComponenet {
    *    Checks that the user is authenticated before allowing them to load the page.
    */
   ionViewWillEnter() {
-    if (this.loginRequired && this.platform.is('ios') && !this.authenticationService.isAuthenticated()) {
-      this.navController.setRoot('LoginPage')
+    if (this.loginRequired && this.isIos() && !this.authenticationService.isAuthenticated()) {
+      this.navController.setRoot('LoginPage');
       return false;
     }
     return true
   }
 
+  isIos() : boolean {
+    return this.platform.is('ios');
+  }
+
   /**
    *  Method
-   *    Allows user to log out of the app
+   *    Logs the user out of the app and redirects them to the login page
    */
   logout() {
     this.authenticationService.logout()
+    this.navController.setRoot('LoginPage');
   }
 
 }

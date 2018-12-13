@@ -10,7 +10,7 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, IonicModule.forRoot(App)],
+  imports: [BrowserModule, IonicModule.forRoot(App , {mode: 'ios'})],
   bootstrap: [IonicApp],
   entryComponents: [App],
   providers: [

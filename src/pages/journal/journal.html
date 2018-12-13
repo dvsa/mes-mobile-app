@@ -1,9 +1,22 @@
 <ion-header>
-  <ion-navbar> <ion-title>journal</ion-title> </ion-navbar>
+  <ion-navbar>
+    <ion-title>Journal</ion-title>
+    <ion-buttons end>
+      <button ion-button  *ngIf="isIos()" (click)="logout()">Logout</button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button navPush="ContactDetailsPage">Contact Details</button>
-  <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
-  <button ion-button (click)="logout()">Logout</button>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Journal
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button navPush="ContactDetailsPage">Contact Details</button>
+      <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
