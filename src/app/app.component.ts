@@ -19,25 +19,25 @@ export class App {
     splashScreen: SplashScreen,
     authenticationService: AuthenticationServiceProvider
   ) {
-    platform.ready().then( async () => {
-
+    platform.ready().then(() => {
       statusBar.styleDefault();
       statusBar.overlaysWebView(false);
 
       // Attempt to login if on an ios device
       if (platform.is('ios')) {
-        await authenticationService.login();
-        splashScreen.hide();
-
-        if(authenticationService.isAuthenticated()) {
-          this.rootPage = 'LoginPage';
-        } else {
-          this.rootPage = 'JournalPage'
-        }
+        authenticationService
+          .login()
+          .then(() => {
+            splashScreen.hide();
+            this.rootPage = 'JournalPage';
+          })
+          .catch(() => {
+            splashScreen.hide();
+            this.rootPage = 'LoginPage';
+          });
       } else {
-        this.rootPage = 'JournalPage'
+        this.rootPage = 'JournalPage';
       }
-
     });
   }
 }
