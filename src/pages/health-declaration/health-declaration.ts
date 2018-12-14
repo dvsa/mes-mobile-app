@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
-import { BasePageComponenet } from '../../classes/base-page';
+import { BasePageComponent } from '../../classes/base-page';
 
 @IonicPage()
 @Component({
   selector: 'page-health-declaration',
   templateUrl: 'health-declaration.html'
 })
-export class HealthDeclarationPage extends BasePageComponenet {
+export class HealthDeclarationPage extends BasePageComponent {
 
   constructor(
     public navCtrl: NavController,
