@@ -7,8 +7,7 @@ export class AuthenticationServiceProvider {
   private context: string = 'https://login.windows.net/common';
   private resourceUrl: string = 'https://graph.windows.net';
   private clientId: string = '09fdd68c-4f2f-45c2-be55-dd98104d4f74';
-  private redirectUrl: string =
-    'x-msauth-uk-gov-dvsa-mobile-examiner-services://uk.gov.dvsa.mobile-examiner-services';
+  private redirectUrl: string = 'x-msauth-uk-gov-dvsa-mobile-examiner-services://uk.gov.dvsa.mobile-examiner-services';
 
   private authenticationToken: string;
 
@@ -44,7 +43,6 @@ export class AuthenticationServiceProvider {
           resolve();
         })
         .catch((error: any) => {
-          console.log('we should call login with credentials');
           this.loginWithCredentials()
             .then(() => resolve())
             .catch(() => reject());
@@ -102,7 +100,6 @@ export class AuthenticationServiceProvider {
       Gets the authenticationToken and stores it in the service.
   */
   private successfulLogin = (authResponse: AuthenticationResult) => {
-    console.log('setting the authenticationToken', authResponse.accessToken);
     this.authenticationToken = authResponse.accessToken;
   };
 
