@@ -56,15 +56,6 @@ $colors-gds: (
   gds-light-pink: #f499be,
 );
 
-// Used by mixin to generate font classes
-$colors-mes-fonts: (
-  black: map-get($colors-gds, gds-black),
-  nearly-black: #040404,
-  green: map-get($colors-gds, gds-dark-green),
-  grey: map-get($colors-gds, gds-grey-1),
-  red: map-get($colors-gds, gds-bright-red)
-);
-
 // Shared Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
@@ -115,13 +106,3 @@ $card-ios-margin-bottom: 16px;
 @import "roboto";
 @import "noto-sans";
 
-// Font sizes used in the design
-$sizes-font: (
-  xxlarge: 48px,
-  xlarge: 44px,
-  large: 36px,
-  medium: 24px,
-  small: 19px,
-  xsmall: 17px,
-  xxsmall: 16px
-);
