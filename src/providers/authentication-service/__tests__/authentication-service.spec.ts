@@ -43,13 +43,6 @@ describe('Authentication Service', () => {
       expect(authenticationService.getAuthenticationToken()).toEqual('SILENT AYSNC TEST TOKEN')
     });
 
-    xit('should call login with credentials if the silent login fails', async () => {
-      authenticationService.loginWithCredentials = jest.fn();
-      await authenticationService.login();
-      
-      expect(authenticationService.loginWithCredentials).toHaveBeenCalled();
-    });
-
     it('should sign in with credetials', async() => {
       await authenticationService.loginWithCredentials();
 
