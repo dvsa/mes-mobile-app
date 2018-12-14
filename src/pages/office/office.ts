@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponenet } from '../../classes/base-page';
+import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
 
 @IonicPage()
@@ -8,7 +8,7 @@ import { AuthenticationServiceProvider } from '../../providers/authentication-se
   selector: 'page-office',
   templateUrl: 'office.html'
 })
-export class OfficePage extends BasePageComponenet {
+export class OfficePage extends BasePageComponent {
 
   constructor(
     public navCtrl: NavController,
