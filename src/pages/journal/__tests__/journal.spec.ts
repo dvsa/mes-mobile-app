@@ -6,6 +6,8 @@ import { By } from '@angular/platform-browser';
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
+import { JournalProvider } from '../../../providers/journal/journal';
+import { JournalServiceMock } from '../../../providers/journal/__mocks__/journal.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -21,7 +23,8 @@ describe('JournalPage', () => {
           useFactory: () => NavControllerMock.instance()
         },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
-        { provide: Config, useFactory: () => ConfigMock.instance() }
+        { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: JournalProvider, useClass: JournalServiceMock }
       ]
     })
       .compileComponents()
@@ -47,10 +50,10 @@ describe('JournalPage', () => {
     });
 
     it('there should be one card for every journal entry', () => {
-      const noOfSlotsReturned = component.journalSlot.length;
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
+      const noOfSlotsReturned = component.journalSlot.length;
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'ion-card')).toBeTruthy();
     }); 
