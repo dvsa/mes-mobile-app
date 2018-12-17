@@ -18,7 +18,7 @@ exports.config = {
   useAllAngular2AppRoots: true,
   beforeLaunch: function() {
     require('ts-node').register({
-      project: 'e2e'
+      project: 'test/e2e/tsconfig.e2espec.json'
     });
 
     var fs = require('fs');
