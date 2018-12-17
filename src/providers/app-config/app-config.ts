@@ -8,40 +8,39 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AppConfigProvider implements IEnvironment {
-  isRemote: boolean;
-  googleAnalyticsId: string;
-  userIdDimensionIndex: number;
-  dynamicAppSettingsUrl: string;
 
-  constructor(private httpClient: HttpClient) {}
+  /* tslint:disable */
+  environmentFile: any;
 
-  getGoogleAnalyticsKey = (): string => {
-    return this.googleAnalyticsId;
+  private _googleAnalyticsId: string;
+  private _userIdDimensionIndex: number;
+  /* tslint:enable */
+
+  get googleAnalyticsId(): string { return this._googleAnalyticsId }
+  get userIdDimensionIndex(): number { return this._userIdDimensionIndex; }
+
+
+  constructor(private httpClient: HttpClient) {
+    this.environmentFile = environment;
   }
 
-  getGoogleAnalyticsUserIdDimension = (): number => {
-    return this.userIdDimensionIndex;
-  }
-
-  refreshConfigSettings = (): Observable<any> => {
-    this.readEnvironments();
-    if (this.isRemote) {
+  public refreshConfigSettings = (): Observable<any> => {
+    if (this.environmentFile.isRemote) {
       return this.getRemoteData();
     }
+    this.getLocalData();
   }
 
-  getRemoteData = (): Observable<any> => {
-    return this.httpClient.get<any>(this.dynamicAppSettingsUrl).map((res) => {
-      this.googleAnalyticsId = res.body.data.googleAnalyticsId;
-      this.userIdDimensionIndex = res.body.data.userIdDimensionIndex;
+  private getRemoteData = (): Observable<any> => {
+    return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl).map((res) => {
+      this._googleAnalyticsId = res.body.data.googleAnalyticsId;
+      this._userIdDimensionIndex = res.body.data.userIdDimensionIndex;
       return;
     });
   }
 
-  readEnvironments = () => {
-    this.isRemote = environment.isRemote;
-    this.dynamicAppSettingsUrl = environment.remoteSettingsUrl;
-    this.googleAnalyticsId = environment.googleAnalyticsId;
-    this.userIdDimensionIndex = environment.userIdDimensionIndex;
+  private getLocalData = () => {
+    this._googleAnalyticsId = this.environmentFile.googleAnalyticsId;
+    this._userIdDimensionIndex = this.environmentFile.userIdDimensionIndex;
   }
 }

@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AppConfigProvider } from '../app-config';
 
 import { environmentResponseMock } from '../__mocks__/environment-response.mock';
+import { remoteEnvironmentMock, localEnvironmentMock } from '../__mocks__/environment.mock';
 
 describe('App Config Provider', () => {
 
@@ -13,7 +14,9 @@ describe('App Config Provider', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AppConfigProvider],
+      providers: [
+        { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock }
+      ],
     });
 
     appConfig = TestBed.get(AppConfigProvider);
@@ -24,29 +27,28 @@ describe('App Config Provider', () => {
     httpMock.verify();
   });
 
-  describe('getRemoteData', () => {
-    it('should get remote data', () => {
-      appConfig.readEnvironments();
-      appConfig.getRemoteData().subscribe(() => {
-        expect(appConfig.getGoogleAnalyticsKey()).toBe('TEST-GA-ID');
-        expect(appConfig.getGoogleAnalyticsUserIdDimension()).toBe(99);
+  describe('refreshConfigSettings', () => {
+    it('should load local config', () => {
+      appConfig.environmentFile = localEnvironmentMock;
+
+      appConfig.refreshConfigSettings();
+
+      expect(appConfig.googleAnalyticsId).toBe('local-ga-id');
+      expect(appConfig.userIdDimensionIndex).toBe(2018);
+
+    });
+    it('should load remote config', () => {
+      appConfig.environmentFile = remoteEnvironmentMock;
+
+      appConfig.refreshConfigSettings().subscribe(() => {
+        expect(appConfig.googleAnalyticsId).toBe('TEST-GA-ID');
+        expect(appConfig.userIdDimensionIndex).toBe(99);
       });
 
-      const request = httpMock.expectOne(appConfig.dynamicAppSettingsUrl);
+      const request = httpMock.expectOne(remoteEnvironmentMock.remoteSettingsUrl);
       expect(request.request.method).toBe('GET');
 
       request.flush(environmentResponseMock);
-    });
-  });
-
-  describe('readEnviroments', () => {
-    it('should read Enviroments', () => {
-      appConfig.readEnvironments()
-
-      expect(appConfig.isRemote).toBeDefined();
-      expect(appConfig.dynamicAppSettingsUrl).toBeDefined();
-      expect(appConfig.getGoogleAnalyticsKey).toBeDefined();
-      expect(appConfig.userIdDimensionIndex).toBeDefined();
     });
   });
 
