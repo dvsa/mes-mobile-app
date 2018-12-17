@@ -11,4 +11,10 @@ export class JournalProvider {
   getJournal(){
     return this.http.get(this.url);
   }
+
+  extractJournalData(data) {
+    const journalData = data.testSlot;
+    return journalData;
+  }
+
 }
