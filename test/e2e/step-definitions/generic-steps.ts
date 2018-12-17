@@ -39,10 +39,10 @@ When("I log in to the application", function() {
 // After hook to take screenshots of page on failure
 After(function(testCase) {
   var world = this;
-  //if (testCase.result.status === Status.FAILED) {
+  if (testCase.result.status === Status.FAILED) {
     return browser.takeScreenshot().then(function(screenShot) {
       // screenShot is a base-64 encoded PNG
       world.attach(screenShot, "image/png");
     });
-  //}
+  }
 });
