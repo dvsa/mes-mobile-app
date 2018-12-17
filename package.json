@@ -27,10 +27,10 @@
     "gitSecrets": "git secrets --scan",
     "scanRepo": "git log -p -n 15 | scanrepo",
     "stylelint": "stylelint 'src/**/*.scss' fix --config stylelint.json",
-    "config:dev": "cp config/environment.dev.ts src/environment/environment.ts",
-    "config:uat": "cp config/environment.uat.ts src/environment/environment.ts",
-    "config:staging": "cp config/environment.staging.ts src/environment/environment.ts",
-    "config:production": "cp config/environment.production.ts src/environment/environment.ts"
+    "config:dev": "cp src/environment/environment.dev.ts src/environment/environment.ts",
+    "config:uat": "cp src/environment/environment.uat.ts src/environment/environment.ts",
+    "config:staging": "cp src/environment/environment.staging.ts src/environment/environment.ts",
+    "config:production": "cp src/environment/environment.production.ts src/environment/environment.ts"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",

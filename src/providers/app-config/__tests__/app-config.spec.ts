@@ -33,16 +33,16 @@ describe('App Config Provider', () => {
 
       appConfig.refreshConfigSettings();
 
-      expect(appConfig.googleAnalyticsId).toBe('local-ga-id');
-      expect(appConfig.userIdDimensionIndex).toBe(2018);
+      expect(appConfig.getAppConfig().googleAnalyticsId).toBe('local-ga-id');
+      expect(appConfig.getAppConfig().userIdDimensionIndex).toBe(2018);
 
     });
     it('should load remote config', () => {
       appConfig.environmentFile = remoteEnvironmentMock;
 
       appConfig.refreshConfigSettings().subscribe(() => {
-        expect(appConfig.googleAnalyticsId).toBe('TEST-GA-ID');
-        expect(appConfig.userIdDimensionIndex).toBe(99);
+        expect(appConfig.getAppConfig().googleAnalyticsId).toBe('TEST-GA-ID');
+        expect(appConfig.getAppConfig().userIdDimensionIndex).toBe(99);
       });
 
       const request = httpMock.expectOne(remoteEnvironmentMock.remoteSettingsUrl);
