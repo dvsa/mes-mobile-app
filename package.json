@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
+    "bootstrap": "json2ts schema/schemaExaminerSchedule.json > src/common/domain/Journal.d.ts",
     "build": "ionic-app-scripts build",
     "device": "ionic cordova run ios --device --development --buildConfig buildScripts/build.json",
     "lint": "ionic-app-scripts lint",
@@ -73,6 +74,7 @@
     "ionic-mocks-jest": "^1.3.3",
     "jest": "^23.6.0",
     "jest-preset-angular": "^6.0.1",
+    "json-schema-to-typescript": "^6.1.0",
     "ng-mocks": "^7.1.3",
     "npm-run-all": "^4.1.3",
     "prettier": "^1.15.2",
