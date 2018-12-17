@@ -7,7 +7,7 @@ import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
 import { JournalProvider } from '../../../providers/journal/journal';
-import { JournalServiceMock } from '../../../providers/journal/__mocks__/journal.mock';
+import { JournalServiceMock } from '../../../providers/journal/journal.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
