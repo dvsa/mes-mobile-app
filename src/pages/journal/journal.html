@@ -20,19 +20,24 @@
     </ion-card-content>
     <ion-list>
       <ion-card *ngFor="let testSlot of pageState.testSlots$ | async">
-        <h3>{{s | json}}</h3>
+        <h3>{{testSlot | json}}</h3>
         <ion-row align-items-center>
           <ion-col col-2>
-            Time:
+            <journal-time [time]="testSlot.slotDetail.start"></journal-time>
           </ion-col>
           <ion-col col-5>
-            Candidate Info:
+            <journal-candidate 
+              [title]="testSlot.booking.candidate.candidateName.title" 
+              [firstName]="testSlot.booking.candidate.candidateName.firstName" 
+              [lastName]="testSlot.booking.candidate.candidateName.lastName"
+              [testCategory]="testSlot.vehicleSlotType">
+            </journal-candidate>
           </ion-col>
           <ion-col col-2>
-            <journal-test-details [testCentreName]="s.testCentre.centreName"></journal-test-details>
+            <!-- <journal-test-details [testCentreName]="testSlot.testCentre.centreName"></journal-test-details> -->
           </ion-col>
           <ion-col col-2>
-            <journal-test-outcome [slot]="s" (onStartTest)="gotoWaitingRoom($event)"></journal-test-outcome>
+            Activity
           </ion-col>
         </ion-row>
       </ion-card>
