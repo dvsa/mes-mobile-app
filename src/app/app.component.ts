@@ -5,8 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
-import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
-
 @Component({
   templateUrl: 'app.html'
 })

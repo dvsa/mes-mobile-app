@@ -1,11 +1,6 @@
 
 import { Platform, NavController } from 'ionic-angular';
 import { PlatformMock, NavControllerMock } from 'ionic-mocks-jest';
-import { TestBed } from '@angular/core/testing';
-
-import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service'; 
-import { AuthenticationServiceProviderMock } from '../../providers/authentication-service/authentication-service.mock';
-
 import { BasePageComponent } from '../base-page'
 
 
