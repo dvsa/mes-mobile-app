@@ -23,7 +23,7 @@ describe('JournalPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: JournalProvider, useClass: JournalServiceMock }
+        { provide: JournalProvider, useClass: JournalServiceMock },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationServiceProvider, useClass: AuthenticationServiceProviderMock },
       ]
