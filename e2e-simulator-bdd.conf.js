@@ -1,11 +1,11 @@
-var appPath = __dirname + '/platforms/ios/build/emulator/Mobile Examiner Beta.app';
+var appPath = __dirname + '/platforms/ios/build/emulator/mes-mobile-app.app';
 
 exports.config = {
   seleniumAddress: 'http://localhost:4723/wd/hub',
   allScriptsTimeout: 11000,
   capabilities: {
     platformName: 'iOS',
-    platformVersion: '12.0',
+    platformVersion: '12.1',
     deviceName: 'iPad Pro (10.5-inch)',
     browserName: '',
     autoWebview: true,
@@ -26,7 +26,7 @@ exports.config = {
   useAllAngular2AppRoots: true,
   beforeLaunch: function() {
     require('ts-node').register({
-      project: 'e2e'
+      project: 'test/e2e/tsconfig.e2espec.json'
     });
 
     var fs = require('fs');

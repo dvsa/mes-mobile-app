@@ -23,55 +23,17 @@ When("I launch the mobile app", function() {
   return browser.get("");
 });
 
-Then("I should see the login screen", function() {
-  return expect(
-    element
-      .all(by.css("ion-navbar:first-child"))
-      .first()
-      .getText()
-  ).to.eventually.equal("DVSA");
+Then("I should see the {string} page", function(pageTitle) {
+  return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
 });
 
 Given("I am on the login page", function() {
   return browser.get("");
 });
 
-When("I click the {string} button", function(buttonName) {
-  var buttonElement = element(
-    by.xpath('//button[span[text()="' + buttonName + '"]]')
-  );
+When("I log in to the application", function() {
+  var buttonElement = element(by.xpath('//button/span[text() = "Journal"]'));
   return buttonElement.click();
-});
-
-Then("I successfully log in and see the journal page", function() {
-  return expect(
-    element
-      .all(by.css("span.mes-header-md"))
-      .first()
-      .getText()
-  ).to.eventually.equal("Your Journal");
-});
-
-Given("I am logged in and on the journal page", function() {
-  var loginButton = element(by.xpath('//button[span[text()="Ok"]]'));
-  browser.get("");
-  return loginButton.click();
-});
-
-Then("I have a slot at {string} for {string}", function(time, candidate) {
-  return expect(
-    element
-      .all(
-        by.xpath(
-          '//ion-row[ion-col[div[@class="slot__time" and text()="' +
-            time +
-            '"]] and ion-col[div[@class="slot__candidate" and div[span[@class="mes-journal-candidate-name" and text()="' +
-            candidate +
-            '"]]]]]'
-        )
-      )
-      .isPresent()
-  ).to.eventually.equal(true);
 });
 
 // After hook to take screenshots of page on failure
