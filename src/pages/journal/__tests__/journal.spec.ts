@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs/Subscription';
+import { JournalComponentsModule } from '../journal-components/journal-components.module';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -24,12 +25,16 @@ describe('JournalPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JournalPage],
-      imports: [IonicModule, AppModule,
+      imports: [
+        IonicModule,
+        AppModule,
         StoreModule.forRoot({
           journal: journalReducer
         }),
         StoreDevtoolsModule.instrument(),
-        EffectsModule.forRoot([JournalEffects])],
+        EffectsModule.forRoot([JournalEffects]),
+        JournalComponentsModule
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },

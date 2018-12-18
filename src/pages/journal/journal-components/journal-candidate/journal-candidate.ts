@@ -6,7 +6,6 @@ import { Component, Input } from '@angular/core';
   inputs: ['title', 'firstName', 'lastName','testCategory']
 })
 export class JournalCandidateComponent {
-
   @Input()
   title: string;
 
@@ -19,15 +18,18 @@ export class JournalCandidateComponent {
   @Input()
   testCategory: string;
 
-  testCategoryDescription: string;
-
+  testCategoryDescription : string
   constructor() {
+  }
+
+  ngOnInit() {
+    this.testCategoryDescription = this.getCategoryDescription();
   }
 
   getCategoryDescription(): string {
     if (this.testCategory === 'B57mins') {
       return 'Cat B'
     }
-    return '';
+    return 'N/A';
   }
 }

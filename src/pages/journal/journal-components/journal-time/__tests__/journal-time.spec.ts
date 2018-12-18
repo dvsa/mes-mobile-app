@@ -1,33 +1,48 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { JournalTimeComponent } from '../journal-time';
+import { IonicModule } from 'ionic-angular';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-describe('Journal Test Details', () => {
-  let fixture: ComponentFixture<JournalTimeComponent>;
+
+describe('JournalTimeComponent', () => {
   let component: JournalTimeComponent;
+  let fixture: ComponentFixture<JournalTimeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JournalTimeComponent],
-      imports: [IonicModule.forRoot(JournalTimeComponent)],
-      providers: []
+      imports: [IonicModule]
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(JournalTimeComponent);
         component = fixture.componentInstance;
+        component.time =  '2018-12-10T10:04:00+00:00';
       });
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
     });
-  });
 
   describe('DOM', () => {
-    // Unit tests for the components template
+    let componentEl: DebugElement;
 
+    beforeEach(() => {
+      componentEl = fixture.debugElement;
+    });
+
+    describe('Time output ', () => {
+      it('should be displayed', () => {
+        const timeSpan: HTMLElement = componentEl.query(By.css('ion-row:first-child span'))
+          .nativeElement;
+        fixture.detectChanges();
+        expect(timeSpan.textContent).toBe('10:04');
+      });
+    });
+
+    });
   });
 });
