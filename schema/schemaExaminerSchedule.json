@@ -1,0 +1,465 @@
+{
+  "definitions": {
+    "testCentre": {
+      "description": "Details of the test centre",
+      "type": "object",
+      "properties": {
+        "centreId": {
+          "description": "Identifier for the test centre",
+          "type": "integer"
+        },
+        "centreName": {
+          "description": "Name of the test centre",
+          "type": "string",
+          "maxLength": 50
+        },
+        "costCode": {
+          "description": "Cost centre code for the test centre",
+          "type": "string",
+          "maxLength": 6
+        }
+      }
+    },
+    "slotDetail": {
+      "description": "Details of the test slot",
+      "type": "object",
+      "properties": {
+        "slotId": {
+          "description": "Unique identifier for the test slot",
+          "type": "integer"
+        },
+        "start": {
+          "description": "Start time of the test slot",
+          "type": "string",
+          "minLength": 25,
+          "maxLength": 25
+        },
+        "duration": {
+          "description": "The length in minutes of the test slot",
+          "type": "integer"
+        }
+      }
+    },
+    "name": {
+      "description": "Details of the individual's name",
+      "type": "object",
+      "required": [
+        "title",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "title": {
+          "description": "The individual's title",
+          "type": "string",
+          "maxLength": 7
+        },
+        "firstName": {
+          "description": "The individual's forename",
+          "type": "string",
+          "maxLength": 50
+        },
+        "secondName": {
+          "description": "The individual's second name",
+          "type": "string",
+          "maxLength": 50
+        },
+        "thirdName": {
+          "description": "The individual's third name",
+          "type": "string",
+          "maxLength": 50
+        },
+        "lastName": {
+          "description": "The individual's surname",
+          "type": "string",
+          "maxLength": 50
+        }
+      }
+    },
+    "address": {
+      "description": "Details of the address",
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "description": "First line of address",
+          "type": "string",
+          "maxLength": 255
+        },
+        "addressLine2": {
+          "description": "Second line of address",
+          "type": "string",
+          "maxLength": 100
+        },
+        "addressLine3": {
+          "description": "Third line of address",
+          "type": "string",
+          "maxLength": 100
+        },
+        "addressLine4": {
+          "description": "Fourth line of address",
+          "type": "string",
+          "maxLength": 100
+        },
+        "addressLine5": {
+          "description": "Fifth line of address",
+          "type": "string",
+          "maxLength": 255
+        },
+        "postcode": {
+          "description": "The address postcode",
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "vehicleGearbox": {
+      "description": "The type of vehicle gearbox, if captured",
+      "type": "string",
+      "enum": [
+        "Manual",
+        "Semi-Automatic",
+        "Automatic"
+      ],
+      "maxLength": 14
+    },
+    "application": {
+      "$id": "#/properties/testSlot/properties/booking/properties/application",
+      "description": "Details of the test application",
+      "type": "object",
+      "properties": {
+        "applicationId": {
+          "description": "The application's id",
+          "type": "integer"
+        },
+        "bookingSequence": {
+          "description": "The application's booking sequence number",
+          "type": "integer"
+        },
+        "checkDigits": {
+          "description": "The application's reference checksum",
+          "type": "integer"
+        },
+        "welshTest": {
+          "description": "Whether the test is to be conducted using the welsh language",
+          "type": "boolean"
+        },
+        "extendedTest": {
+          "description": "Whether this is an extended test",
+          "type": "boolean"
+        },
+        "meetingPlace": {
+          "description": "Offsite Test location, if any",
+          "type": "string",
+          "maxLength": 512
+        },
+        "progressiveAccess": {
+          "description": "Whether this is a progressive access test",
+          "type": "boolean"
+        },
+        "specialNeeds": {
+          "description": " The candidate's special test needs, if any",
+          "type": "string",
+          "maxLength": 512
+        },
+        "entitlementCheck": {
+          "description": "Indicates whether the examiner needs to check the candidates entitlement evidence(e.g. test application has not been checked with DVLA)",
+          "type": "boolean"
+        },
+        "vehicleSeats": {
+          "description": "The number of seats in the vehicle, if captured",
+          "type": "integer"
+        },
+        "vehicleHeight": {
+          "description": "The height of the vehicle in metres, if captured",
+          "type": "number"
+        },
+        "vehicleWidth": {
+          "description": "The width of the vehicle in metres, if captured",
+          "type": "number"
+        },
+        "vehicleLength": {
+          "description": "The length of the vehicle in metres, if captured",
+          "type": "number"
+        },
+        "testCategory": {
+          "description": "The test category reference, if any",
+          "type": "string",
+          "maxLength": 10
+        },
+        "vehicleGearbox": {
+          "$ref": "#/definitions/vehicleGearbox"
+        }
+      }
+    },
+    "candidate": {
+      "$id": "#/properties/testSlot/properties/booking/properties/candidate",
+      "description": "Details of the candidate booked into the test slot",
+      "type": "object",
+      "properties": {
+        "candidateId": {
+          "description": "The id of the test candidate",
+          "type": "integer"
+        },
+        "age": {
+          "description": "The age of the test candidate on the day of the test",
+          "type": "integer"
+        },
+        "candidateName": {
+          "$ref": "#/definitions/name"
+        },
+        "driverNumber": {
+          "description": "The candidate's driver number if any, typically (though not always) 16 characters if UK, or 8 digits if NI",
+          "type": "string",
+          "maxLength": 24
+        },
+        "gender": {
+          "description": "The candidate's gender",
+          "type": "string",
+          "maxLength": 255
+        },
+        "candidateAddress": {
+          "$ref": "#/definitions/address"
+        },
+        "primaryTelephone": {
+          "description": "The candidate's primary telephone number, if any (and consent to leave voicemail has been given)",
+          "type": "string",
+          "maxLength": 20
+        },
+        "secondaryTelephone": {
+          "description": "The candidate's secondary telephone number, if any (and consent to leave voicemail has been given)",
+          "type": "string",
+          "maxLength": 20
+        },
+        "mobileTelephone": {
+          "description": "The candidate's mobile telephone number, if any (and consent to leave voicemail has been given)",
+          "type": "string",
+          "maxLength": 30
+        },
+        "prn": {
+          "description": "The candidate's ADI PRN (potential register number), if an ADI test",
+          "type": "integer"
+        },
+        "previousADITests": {
+          "description": "The number of previous test attempts, if an ADI test",
+          "type": "integer"
+        }
+      }
+    },
+    "initiator": {
+      "description": "The reason for the previous test cancellation",
+      "type": "string",
+      "enum": [
+        "Act of nature",
+        "DSA"
+      ],
+      "maxLength": 15
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "https://example.com/arrays.schema.json",
+  "title": "Examiner Work Schedule",
+  "type": "object",
+  "description": "JSON Schema definition for Examiner Work Schedule",
+  "properties": {
+    "examiner": {
+      "$id": "#/properties/examiner",
+      "description": "The examiner details",
+      "type": "object",
+      "properties": {
+        "staffNumber": {
+          "$id": "#/properties/staffNumber",
+          "description": "The examiner's DSA staff number",
+          "type": "string",
+          "maxLength": 10
+        },
+        "examinerName": {
+          "$ref": "#/definitions/name"
+        },
+        "permTestCentre": {
+          "$ref": "#/definitions/testCentre"
+        }
+      }
+    },
+    "testSlot": {
+      "$id": "#/properties/testSlot",
+      "description": "A test slot, possibly populated with booking data",
+      "type": "array",
+      "items": {
+        "properties": {
+          "slotDetail": {
+            "$ref": "#/definitions/slotDetail"
+          },
+          "vehicleSlotType": {
+            "description": "A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any",
+            "type": "string",
+            "maxLength": 11
+          },
+          "testCentre": {
+            "$ref": "#/definitions/testCentre"
+          },
+          "booking": {
+            "$id": "#/properties/testSlot/properties/booking",
+            "description": "If this slot is booked, this contains the details",
+            "type": "object",
+            "properties": {
+              "candidate": {
+                "$ref": "#/definitions/candidate"
+              },
+              "application": {
+                "$ref": "#/definitions/application"
+              },
+              "previousCancellation": {
+                "$id": "#/properties/testSlot/properties/booking/properties/previousCancellation",
+                "description": "The details of any previous test cancellations",
+                "type": "array",
+                "properties": {
+                  "initiator": {
+                    "$ref": "#/definitions/initiator"
+                  }
+                }
+              },
+              "business": {
+                "$id": "#/properties/testSlot/properties/booking/properties/business",
+                "description": "The business details, only for tests that are booked by a business or trainer booker",
+                "type": "object",
+                "properties": {
+                  "businessId": {
+                    "description": "The business id",
+                    "type": "integer"
+                  },
+                  "businessName": {
+                    "description": "The business name",
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "businessAddress": {
+                    "$ref": "#/definitions/address"
+                  },
+                  "telephone": {
+                    "description": "The business telephone number, if any",
+                    "type": "string",
+                    "maxLength": 20
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "personalCommitment": {
+        "$id": "#/properties/personalCommitment",
+        "description": "An examiner's personal commitment",
+        "type": "array",
+        "items": {
+          "properties": {
+            "commitmentId": {
+              "description": "The commitment id",
+              "type": "integer"
+            },
+            "startDate": {
+              "description": "The start date of the personal commitment",
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 10
+            },
+            "startTime": {
+              "description": "The start time of the personal commitment, if any (in practice this will always be populated)",
+              "type": "string",
+              "minLength": 14,
+              "maxLength": 14
+            },
+            "endDate": {
+              "description": "The end date of the personal commitment",
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 10
+            },
+            "endTime": {
+              "description": "The end time of the personal commitment, if any(in practice this will always be populated)",
+              "type": "string",
+              "minLength": 14,
+              "maxLength": 14
+            },
+            "activityCode": {
+              "description": "The personal commitment activity code",
+              "type": "string",
+              "maxLength": 4
+            },
+            "activityDescription": {
+              "description": "The personal commitment activity description",
+              "type": "string",
+              "maxLength": 50
+            }
+          }
+        }
+      },
+      "nonTestActivity": {
+        "$id": "#/properties/nonTestActivity",
+        "description": "An examiner's non test activity (associated with a test slot duration)",
+        "type": "array",
+        "items": {
+          "properties": {
+            "slotDetail": {
+              "$ref": "#/definitions/slotDetail"
+            },
+            "activityCode": {
+              "description": "The non test activity code",
+              "type": "string",
+              "maxLength": 4
+            },
+            "activityDescription": {
+              "description": "The non test activity description",
+              "type": "string",
+              "maxLength": 50
+            },
+            "testCentre": {
+              "$ref": "#/definitions/testCentre"
+            }
+          }
+        }
+      },
+      "advanceTestSlot": {
+        "$id": "#/properties/advanceTestSlot",
+        "description": "Advance details of a test slot",
+        "type": "array",
+        "items": {
+          "properties": {
+            "slotDetail": {
+              "$ref": "#/definitions/slotDetail"
+            },
+            "testCentre": {
+              "$ref": "#/definitions/testCentre"
+            },
+            "vehicleSlotType": {
+              "description": "A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any",
+              "type": "string",
+              "maxLength": 11
+            }
+          }
+        }
+      },
+      "deployment": {
+        "$id": "#/properties/deployment",
+        "description": "Temporary secondment of the examiner to an alternative test centre",
+        "type": "array",
+        "items": {
+          "properties": {
+            "deploymentId": {
+              "description": "The deployment id",
+              "type": "integer"
+            },
+            "testCentre": {
+              "$ref": "#/definitions/testCentre"
+            },
+            "date": {
+              "description": "Date of the deployment",
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 10
+            }
+          }
+        }
+      }
+    }
+  }
+}

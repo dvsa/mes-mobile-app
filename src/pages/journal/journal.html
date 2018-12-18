@@ -30,6 +30,11 @@
       <h6 class="mes-red"> H6 16px normal red</h6>
 
     </ion-card-content>
+    <ion-list>
+      <ion-card *ngFor="let s of journalSlot">
+         <h3>{{s | json}}</h3>
+      </ion-card>
+    </ion-list>
   </ion-card>
 
 </ion-content>

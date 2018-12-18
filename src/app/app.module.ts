@@ -5,16 +5,19 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { App } from './app.component';
+import { JournalProvider } from '../providers/journal/journal';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, IonicModule.forRoot(App , {mode: 'ios'})],
+  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(App , {mode: 'ios'})],
   bootstrap: [IonicApp],
   entryComponents: [App],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    JournalProvider
   ]
 })
 export class AppModule {}
