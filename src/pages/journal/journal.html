@@ -20,7 +20,6 @@
     </ion-card-content>
     <ion-list>
       <ion-card *ngFor="let testSlot of pageState.testSlots$ | async">
-        <h3>{{testSlot | json}}</h3>
         <ion-row align-items-center>
           <ion-col col-2>
             <journal-time [time]="testSlot.slotDetail.start"></journal-time>
