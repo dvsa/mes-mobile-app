@@ -8,6 +8,7 @@ import { MSAdal } from '@ionic-native/ms-adal';
 import { App } from './app.component';
 import { JournalProvider } from '../providers/journal/journal';
 import { HttpClientModule } from '@angular/common/http';
+import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     MSAdal,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     JournalProvider,
+    AppConfigProvider,
     AuthenticationServiceProvider,
   ]
 })
