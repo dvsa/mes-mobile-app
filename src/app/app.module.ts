@@ -6,11 +6,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MSAdal } from '@ionic-native/ms-adal';
 
 import { App } from './app.component';
+import { JournalProvider } from '../providers/journal/journal';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, IonicModule.forRoot(App , {mode: 'ios'})],
+  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(App , {mode: 'ios'})],
   bootstrap: [IonicApp],
   entryComponents: [App],
   providers: [
@@ -18,8 +20,8 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     SplashScreen,
     MSAdal,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ,
-    AuthenticationServiceProvider
+    JournalProvider,
+    AuthenticationServiceProvider,
   ]
 })
 export class AppModule {}
