@@ -1,0 +1,12 @@
+<div>
+  <ion-grid>
+    <ion-row align-items-center>
+      <ion-col *ngIf="!canStartTest">
+        <span>{{testSlot.testCentre.costCode}}</span>
+      </ion-col>
+      <ion-col *ngIf="canStartTest">
+        <span><button ion-button>Start Test</button></span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
