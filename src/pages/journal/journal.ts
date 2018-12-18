@@ -114,4 +114,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       duration: 5000
     });
   }
+  
+  gotoWaitingRoom($event) {
+    console.log('going to waiting room with ', $event);
+  }
 }

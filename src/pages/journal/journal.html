@@ -32,7 +32,7 @@
             <journal-test-details [testCentreName]="s.testCentre.centreName"></journal-test-details>
           </ion-col>
           <ion-col col-2>
-            Activity
+            <journal-test-outcome [slot]="s" (onStartTest)="gotoWaitingRoom($event)"></journal-test-outcome>
           </ion-col>
         </ion-row>
       </ion-card>

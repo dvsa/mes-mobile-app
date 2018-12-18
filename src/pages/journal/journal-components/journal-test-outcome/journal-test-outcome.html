@@ -2,10 +2,10 @@
   <ion-grid>
     <ion-row align-items-center>
       <ion-col *ngIf="!canStartTest">
-        <span>{{testSlot.testCentre.costCode}}</span>
+        <span>{{outcome}}</span>
       </ion-col>
       <ion-col *ngIf="canStartTest">
-        <span><button ion-button>Start Test</button></span>
+        <span><button ion-button (click)="startTestClicked()">Start Test</button></span>
       </ion-col>
     </ion-row>
   </ion-grid>
