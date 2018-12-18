@@ -71,7 +71,7 @@ export class AuthenticationServiceProvider {
           reject();
         });
     });
-    
+
   };
 
   /*
