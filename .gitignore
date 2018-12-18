@@ -34,6 +34,7 @@ www/
 $RECYCLE.BIN/
 typings/cordova-*
 test-reports/
+src/environment/environment.ts
 
 .DS_Store
 Thumbs.db
