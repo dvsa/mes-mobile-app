@@ -45,7 +45,7 @@ describe('App', () => {
   describe('login()', () => {
     it('should set rootPage to Journal if login succeeds', () => {
       component.login().then(() => {
-        expect(component.rootPage).toBe('TestReportPage');
+        expect(component.rootPage).toBe('JournalPage');
       });
     });;
     it('should set root page to Login Page if login fails', () => {

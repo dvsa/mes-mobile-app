@@ -27,16 +27,14 @@ export class App {
       // Attempt to login if on an ios device
       if (platform.is('ios')) {
         this.login();
-      } else {
-        this.rootPage = 'JournalPage';
-      }
+      };
     });
   }
 
   login = (): Promise<any> => this.authenticationProvider.login()
     .then(() => {
       this.splashScreen.hide();
-      this.rootPage = 'TestReportPage';
+      this.rootPage = 'JournalPage';
     })
     .catch(() => {
       this.splashScreen.hide();
