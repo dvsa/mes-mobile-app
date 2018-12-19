@@ -23,7 +23,6 @@ describe('Authentication Service', () => {
 
   beforeEach(() => {
     authenticationService = TestBed.get(AuthenticationServiceProvider)
-    console.log('Settings', authenticationService.authenticationSettings)
   });
 
   describe('Provider', () => {
