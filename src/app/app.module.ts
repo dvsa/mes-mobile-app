@@ -9,7 +9,7 @@ import { App } from './app.component';
 import { JournalProvider } from '../providers/journal/journal';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
-import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
 
 @NgModule({
   declarations: [App],
@@ -23,7 +23,7 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     JournalProvider,
     AppConfigProvider,
-    AuthenticationServiceProvider,
+    AuthenticationProvider,
   ]
 })
 export class AppModule {}

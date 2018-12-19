@@ -1,4 +1,4 @@
-export class AuthenticationServiceProviderMock {
+export class AuthenticationProviderMock {
 
   isAuthenticated() : boolean {
     return true;

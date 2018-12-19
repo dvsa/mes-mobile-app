@@ -1,12 +1,12 @@
 import { Platform, NavController } from 'ionic-angular';
-import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
 
 export abstract class BasePageComponent {
 
   constructor(
     public platform: Platform,
     public navController: NavController,
-    public authenticationService: AuthenticationServiceProvider,
+    public authenticationProvider: AuthenticationProvider,
     public loginRequired: boolean = true
   ) {
 
@@ -17,7 +17,7 @@ export abstract class BasePageComponent {
    *    Checks that the user is authenticated before allowing them to load the page.
    */
   ionViewWillEnter() {
-    if (this.loginRequired && this.isIos() && !this.authenticationService.isAuthenticated()) {
+    if (this.loginRequired && this.isIos() && !this.authenticationProvider.isAuthenticated()) {
       this.navController.setRoot('LoginPage');
       return false;
     }
@@ -38,7 +38,7 @@ export abstract class BasePageComponent {
    */
   logout() {
     if (this.isIos()) {
-      this.authenticationService.logout()
+      this.authenticationProvider.logout()
       this.navController.setRoot('LoginPage');
     }
   }

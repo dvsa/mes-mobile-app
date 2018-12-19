@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { JournalProvider } from '../../providers/journal/journal';
 import { ExaminerWorkSchedule } from '../../common/domain/Journal';
 import { BasePageComponent } from '../../classes/base-page';
-import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 @IonicPage()
 @Component({
@@ -20,14 +20,14 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public authenticationService: AuthenticationServiceProvider,
-    public journalService: JournalProvider
+    public authentication: AuthenticationProvider,
+    public journalProvider: JournalProvider
   ) {
-    super(platform, navCtrl, authenticationService)
+    super(platform, navCtrl, authentication)
   }
 
   ngOnInit() {
-    this.journalService.getJournal().subscribe((journal) => {
+    this.journalProvider.getJournal().subscribe((journal) => {
       this.journalJson = journal;
       this.journalSlot = this.journalJson.testSlot;
     })

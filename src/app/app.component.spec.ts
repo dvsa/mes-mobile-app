@@ -5,10 +5,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { App } from './app.component';
-import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { MSAdal } from '@ionic-native/ms-adal';
-import { MSAdalMock } from '../mocks/ms-adal.mock';
-import { AuthenticationServiceProviderMock } from '../providers/authentication-service/authentication-service.mock';
+import { MSAdalMock } from '../providers/authentication/__mocks__/ms-adal.mock';
+import { AuthenticationProviderMock } from '../providers/authentication/__mocks__/authentication.mock';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -36,7 +36,7 @@ describe('App', () => {
         { provide: StatusBar, useValue: statusBarStub },
         { provide: SplashScreen, useValue: splashScreenStub },
         { provide: MSAdal, useClass: MSAdalMock},
-        { provide: AuthenticationServiceProvider, useClass: AuthenticationServiceProviderMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ]
     }).compileComponents();
 

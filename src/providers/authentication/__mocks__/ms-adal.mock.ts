@@ -1,3 +1,5 @@
+// TODO: Move it to providers/authentication/__mocks__/
+
 export class MSAdalMock {
 
   createAuthenticationContext(context: string) {

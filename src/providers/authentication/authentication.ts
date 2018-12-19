@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-native/ms-adal';
 
 @Injectable()
-export class AuthenticationServiceProvider {
+export class AuthenticationProvider {
   // TODO - Load from config
   private context: string = 'https://login.windows.net/common';
   private resourceUrl: string = 'https://graph.windows.net';

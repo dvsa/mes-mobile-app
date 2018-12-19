@@ -3,7 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +15,7 @@ export class App {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    authenticationService: AuthenticationServiceProvider
+    authenticationProvider: AuthenticationProvider
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -23,7 +23,7 @@ export class App {
 
       // Attempt to login if on an ios device
       if (platform.is('ios')) {
-        authenticationService
+        authenticationProvider
           .login()
           .then(() => {
             splashScreen.hide();

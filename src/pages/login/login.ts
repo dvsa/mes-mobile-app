@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
-import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../classes/base-page';
 
 @IonicPage()
@@ -15,14 +15,14 @@ export class LoginPage extends BasePageComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public authenticationService: AuthenticationServiceProvider,
+    public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationService, false);
+    super(platform, navCtrl, authenticationProvider, false);
   }
 
 
   login() {
-    this.authenticationService.login()
+    this.authenticationProvider.login()
       .then(() => {
         this.navController.setRoot('JournalPage');
       })

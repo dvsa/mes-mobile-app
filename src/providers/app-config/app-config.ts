@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { AppConfig } from './app-config.model';
 import { EnviromentFile } from '../../environment/models/environment.model';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environment/environment.dev';
 
 @Injectable()
 export class AppConfigProvider {
