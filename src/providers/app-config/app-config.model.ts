@@ -6,5 +6,6 @@ export type AppConfig = {
     resourceUrl: string,
     clientId: string,
     redirectUrl: string,
+    logoutUrl: string,
   },
 };

@@ -14,5 +14,6 @@ export const localEnvironmentMock: EnviromentFile = {
     resourceUrl: 'local-authentication-resource-url',
     clientId: 'local-authentication-client-id',
     redirectUrl: 'local-authentication-redirect-url',
+    logoutUrl: 'local-logout-url',
   }
 }

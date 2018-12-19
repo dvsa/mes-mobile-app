@@ -8,7 +8,8 @@
         "context": "",
         "resourceUrl": "",
         "clientId": "",
-        "redirectUrl": ""
+        "redirectUrl": "",
+        "logoutUrl": ""
       }
     }
   }

@@ -7,6 +7,8 @@ import { MSAdalMock } from '../../../mocks/ms-adal.mock';
 import { AuthenticationServiceProvider } from '../authentication-service';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
 
 describe('Authentication Service', () => {
   let authenticationService: AuthenticationServiceProvider;
@@ -17,6 +19,7 @@ describe('Authentication Service', () => {
         AuthenticationServiceProvider,
         { provide: MSAdal, useClass: MSAdalMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: InAppBrowser, useClass: InAppBrowserMock}
       ]
     })
   });

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-native/ms-adal';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AppConfigProvider } from '../app-config/app-config';
 
 @Injectable()
@@ -10,29 +11,20 @@ export class AuthenticationServiceProvider {
   private authenticationToken: string;
 
   constructor(
-    private msAdal: MSAdal, appConfig: AppConfigProvider) {
+    private msAdal: MSAdal,
+    private inAppBrowser: InAppBrowser,
+    appConfig: AppConfigProvider) {
     this.authenticationSettings = appConfig.getAppConfig().authentication;
   }
 
-  /*
-    Method returns if user is authenticated
-  */
   isAuthenticated = (): boolean => {
     return this.authenticationToken ? true : false;
   };
 
-  /*
-    Method returns authentication token
-  */
   getAuthenticationToken = (): string => {
     return this.authenticationToken;
   };
 
-  /*
-    Method to log in a user via Authenticator.
-      Tries to login the user silently.
-      If that fails, tries to login the user asking them for credentials
-  */
   login = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
 
@@ -79,38 +71,32 @@ export class AuthenticationServiceProvider {
 
   };
 
-  /*
-    Method to logout a user
-      Removes the stored authentication token
-      Clears the token cache
-  */
   logout = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
     authenticationContext.tokenCache.clear();
 
     this.authenticationToken = undefined;
 
-    // TODO - Part 2 of logging out
+    const browserOptions: InAppBrowserOptions = {
+      hidden: 'yes',
+    };
+
+    const browser =
+      this.inAppBrowser.create(this.authenticationSettings.logoutUrl, '', browserOptions);
+
+    browser.on('loadstop').subscribe(() => {
+      browser.close();
+    });
   };
 
-  /*
-    Method which generates an Authentication Context
-  */
   private createAuthContext = (): AuthenticationContext => {
     return this.msAdal.createAuthenticationContext(this.authenticationSettings.context);
   };
 
-  /*
-    Method deals with a successful login.
-      Gets the authenticationToken and stores it in the service.
-  */
   private successfulLogin = (authResponse: AuthenticationResult) => {
     this.authenticationToken = authResponse.accessToken;
   };
 
-  /*
-    Method deals with a failed login
-  */
   private failedLogin = (error: any) => {
     // Not sure what to do here
   };

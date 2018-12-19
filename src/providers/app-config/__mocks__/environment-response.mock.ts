@@ -9,6 +9,7 @@ export const environmentResponseMock = {
           'resourceUrl': 'remote-authentication-resource-url',
           'clientId': 'remote-authentication-client-id',
           'redirectUrl': 'remote-authentication-redirect-url',
+          'logoutUrl' : 'remote-logout-url'
       }
     }
   }
