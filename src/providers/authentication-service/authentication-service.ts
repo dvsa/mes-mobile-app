@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-native/ms-adal';
+import { AppConfigProvider } from '../app-config/app-config';
 
 @Injectable()
 export class AuthenticationServiceProvider {
-  // TODO - Load from config
-  private context: string = 'https://login.windows.net/common';
-  private resourceUrl: string = 'https://graph.windows.net';
-  private clientId: string = '09fdd68c-4f2f-45c2-be55-dd98104d4f74';
-  private redirectUrl: string = 'x-msauth-uk-gov-dvsa-mobile-examiner-services://uk.gov.dvsa.mobile-examiner-services';
+
+  public authenticationSettings: any;
 
   private authenticationToken: string;
 
-  constructor(private msAdal: MSAdal) { }
+  constructor(
+    private msAdal: MSAdal, appConfig: AppConfigProvider) {
+    this.authenticationSettings = appConfig.getAppConfig().authentication;
+  }
 
   /*
     Method returns if user is authenticated
@@ -37,7 +38,11 @@ export class AuthenticationServiceProvider {
 
     return new Promise((resolve, reject) => {
       authenticationContext
-        .acquireTokenSilentAsync(this.resourceUrl, this.clientId, '')
+        .acquireTokenSilentAsync(
+          this.authenticationSettings.resourceUrl,
+          this.authenticationSettings.clientId,
+          ''
+        )
         .then((authResponse: AuthenticationResult) => {
           this.successfulLogin(authResponse);
           resolve();
@@ -56,9 +61,9 @@ export class AuthenticationServiceProvider {
     return new Promise((resolve, reject) => {
       authenticationContext
         .acquireTokenAsync(
-          this.resourceUrl,
-          this.clientId,
-          this.redirectUrl,
+          this.authenticationSettings.resourceUrl,
+          this.authenticationSettings.clientId,
+          this.authenticationSettings.redirectUrl,
           '',
           ''
         )
@@ -92,7 +97,7 @@ export class AuthenticationServiceProvider {
     Method which generates an Authentication Context
   */
   private createAuthContext = (): AuthenticationContext => {
-    return this.msAdal.createAuthenticationContext(this.context);
+    return this.msAdal.createAuthenticationContext(this.authenticationSettings.context);
   };
 
   /*

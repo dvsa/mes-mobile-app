@@ -5,6 +5,8 @@ import { MSAdal } from '@ionic-native/ms-adal';
 import { MSAdalMock } from '../../../mocks/ms-adal.mock';
 
 import { AuthenticationServiceProvider } from '../authentication-service';
+import { AppConfigProvider } from '../../app-config/app-config';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 
 describe('Authentication Service', () => {
   let authenticationService: AuthenticationServiceProvider;
@@ -14,12 +16,14 @@ describe('Authentication Service', () => {
       providers: [
         AuthenticationServiceProvider,
         { provide: MSAdal, useClass: MSAdalMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ]
     })
   });
 
   beforeEach(() => {
     authenticationService = TestBed.get(AuthenticationServiceProvider)
+    console.log('Settings', authenticationService.authenticationSettings)
   });
 
   describe('Provider', () => {
@@ -43,7 +47,7 @@ describe('Authentication Service', () => {
       expect(authenticationService.getAuthenticationToken()).toEqual('SILENT AYSNC TEST TOKEN')
     });
 
-    it('should sign in with credetials', async() => {
+    it('should sign in with credetials', async () => {
       await authenticationService.loginWithCredentials();
 
       expect(authenticationService.isAuthenticated()).toEqual(true);

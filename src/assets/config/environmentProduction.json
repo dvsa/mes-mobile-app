@@ -3,7 +3,13 @@
     "message": "Success",
     "data": {
       "googleAnalyticsId": "UA-129489007-1",
-      "userIdDimensionIndex": 10
+      "userIdDimensionIndex": 10,
+      "authentication": {
+        "context": "",
+        "resourceUrl": "",
+        "clientId": "",
+        "redirectUrl": ""
+      }
     }
   }
 }

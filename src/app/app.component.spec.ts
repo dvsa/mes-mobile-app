@@ -9,6 +9,8 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
 import { MSAdal } from '@ionic-native/ms-adal';
 import { MSAdalMock } from '../mocks/ms-adal.mock';
 import { AuthenticationServiceProviderMock } from '../providers/authentication-service/authentication-service.mock';
+import { AppConfigProvider } from '../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../providers/app-config/__mocks__/app-config.mock';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -37,6 +39,7 @@ describe('App', () => {
         { provide: SplashScreen, useValue: splashScreenStub },
         { provide: MSAdal, useClass: MSAdalMock},
         { provide: AuthenticationServiceProvider, useClass: AuthenticationServiceProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock}
       ]
     }).compileComponents();
 
