@@ -34,6 +34,12 @@ export class AppConfigProvider {
       this.appConfig = {
         googleAnalyticsId: res.body.data.googleAnalyticsId,
         userIdDimensionIndex: res.body.data.userIdDimensionIndex,
+        authentication: {
+          context: res.body.data.authentication.context ,
+          redirectUrl:  res.body.data.authentication.redirectUrl,
+          resourceUrl: res.body.data.authentication.resourceUrl,
+          clientId: res.body.data.authentication.clientId,
+        },
       }
       return;
     });
@@ -43,6 +49,12 @@ export class AppConfigProvider {
     this.appConfig = {
       googleAnalyticsId: this.environmentFile.googleAnalyticsId,
       userIdDimensionIndex: this.environmentFile.userIdDimensionIndex,
+      authentication: {
+        context: this.environmentFile.authentication.context,
+        redirectUrl: this.environmentFile.authentication.redirectUrl,
+        resourceUrl: this.environmentFile.authentication.resourceUrl,
+        clientId: this.environmentFile.authentication.clientId,
+      },
     }
   }
 }

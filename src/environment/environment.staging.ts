@@ -4,4 +4,10 @@ export const environment: EnviromentFile = {
   isRemote: false,
   googleAnalyticsId: 'UA-129814222-1',
   userIdDimensionIndex: 1,
+  authentication: {
+    context: '',
+    resourceUrl: '',
+    clientId: '',
+    redirectUrl: '',
+  },
 };
