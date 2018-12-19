@@ -20,9 +20,11 @@
     </ion-card-content>
     <ion-list>
       <ion-card *ngFor="let s of journalSlot">
-         <h3>{{s | json}}</h3>
+         <h6>{{s | json}}</h6>
+      </ion-card>
+      <ion-card *ngIf="hasError">
+        <h3 class="mes-red">Unfortunately your journal cannot be loaded at the moment</h3>
       </ion-card>
     </ion-list>
   </ion-card>
-
 </ion-content>

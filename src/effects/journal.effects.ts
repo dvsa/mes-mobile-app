@@ -28,7 +28,7 @@ export class JournalEffects {
         )
         // todo - remove delay pipe after testing
         .pipe(
-          delay(5000)
+          delay(500)
         )
     })
   )

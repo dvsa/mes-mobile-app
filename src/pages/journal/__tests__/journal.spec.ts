@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform, LoadingController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, LoadingControllerMock } from 'ionic-mocks-jest';
+import { IonicModule, NavController, NavParams, Config, Platform, LoadingController, ToastController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, LoadingControllerMock, ToastControllerMock } from 'ionic-mocks-jest';
 import { By } from '@angular/platform-browser';
 
 import { AppModule } from '../../../app/app.module';
@@ -32,6 +32,7 @@ describe('JournalPage', () => {
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
+        { provide: ToastController, useFactory: () => ToastControllerMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
