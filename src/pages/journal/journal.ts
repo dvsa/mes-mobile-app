@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { JournalProvider } from '../../providers/journal/journal';
-import { ExaminerWorkSchedule } from '../../common/domain/Journal';
+import { IonicPage, LoadingController, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { Store } from '@ngrx/store';
+
+import * as journalActions from '../../store/journal.actions';
+
+interface StoreModel {
+  journal: {
+    isLoading: boolean,
+    testSlot: any,
+    error: any
+  }
+}
 
 @IonicPage()
 @Component({
@@ -13,23 +22,30 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 
 export class JournalPage extends BasePageComponent implements OnInit {
 
-  private journalJson: ExaminerWorkSchedule;
   public journalSlot: any;
 
+  errorText: string = '';
+
+  loader: any = this.loadingController.create({
+    spinner: 'circles'
+  });
+
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    public navController: NavController,
     public platform: Platform,
-    public authentication: AuthenticationProvider,
-    public journalProvider: JournalProvider
+    public authenticationProvider: AuthenticationProvider,
+    public navParams: NavParams,
+    public loadingController: LoadingController,
+    private store: Store<StoreModel>
   ) {
-    super(platform, navCtrl, authentication)
+    super(platform, navController, authenticationProvider);
+
+    store.select(state => state.journal).subscribe(journal => journal.isLoading ? this.loader.present() : this.loader.dismiss());
+    store.select(state => state.journal.testSlot).subscribe(testSlot => this.journalSlot = testSlot);
+    store.select(state => state.journal.error).subscribe(error => this.errorText = error.message);
   }
 
   ngOnInit() {
-    this.journalProvider.getJournal().subscribe((journal) => {
-      this.journalJson = journal;
-      this.journalSlot = this.journalJson.testSlot;
-    })
+    this.store.dispatch(new journalActions.LoadJournal());
   }
 }

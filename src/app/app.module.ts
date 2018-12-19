@@ -11,10 +11,23 @@ import { JournalProvider } from '../providers/journal/journal';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
+import { StoreModule } from '@ngrx/store';
+import { journalReducer } from '../store/journal.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { JournalEffects } from '../effects/journal.effects';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(App , {mode: 'ios'})],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    IonicModule.forRoot(App, { mode: 'ios' }),
+    StoreModule.forRoot({
+      journal: journalReducer
+    }),
+    StoreDevtoolsModule.instrument(),
+    EffectsModule.forRoot([JournalEffects])],
   bootstrap: [IonicApp],
   entryComponents: [App],
   providers: [
@@ -28,4 +41,5 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     InAppBrowser,
   ]
 })
-export class AppModule {}
+export class AppModule {
+}
