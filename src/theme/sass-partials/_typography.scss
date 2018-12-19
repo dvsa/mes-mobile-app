@@ -1,0 +1,58 @@
+.bold-family {
+  font-family: GDSTransportWebsite-Bold;
+}
+
+.normal-family {
+  font-family: GDSTransportWebsite;
+}
+
+h1 {
+  @extend .bold-family;
+  font-size: 48px;
+}
+
+h2 {
+  @extend .bold-family;
+  font-size: 44px;
+
+}
+
+h3 {
+  @extend .bold-family;
+  font-size: 36px;
+}
+
+h4 {
+  @extend .normal-family;
+  font-size: 24px;
+}
+
+h5 {
+  @extend .normal-family;
+  font-size: 19px;
+}
+
+h6 {
+  @extend .normal-family;
+  font-size: 16px;
+}
+
+// Override some ionic defaults. There will be more to follow
+.card-ios h1 {
+  @extend h1;
+}
+.card-ios h2 {
+  @extend h2;
+}
+.card-ios h3 {
+  @extend h3;
+}
+.card-ios h4 {
+  @extend h4;
+}
+.card-ios h5 {
+  @extend h5;
+}
+.card-ios h6 {
+  @extend h6;
+}

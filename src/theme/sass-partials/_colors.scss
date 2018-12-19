@@ -1,0 +1,20 @@
+.mes-black {
+  color: map-get($colors-gds, gds-black);
+}
+
+// This will most likely be gds-black going forward
+.mes-nearly-black {
+  color: #040404;
+}
+
+.mes-green {
+  color: map-get($colors-gds, gds-dark-green);
+}
+
+.mes-grey {
+  color: map-get($colors-gds, gds-grey-1);
+}
+
+.mes-red {
+  color: map-get($colors-gds, gds-bright-red);
+}
