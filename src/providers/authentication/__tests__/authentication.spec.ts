@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MSAdal } from '@ionic-native/ms-adal';
 
 import { MSAdalMock } from '../__mocks__/ms-adal.mock';
-
 import { AuthenticationProvider } from '../authentication';
+import { AppConfigProvider } from '../../app-config/app-config';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
@@ -14,6 +16,8 @@ describe('Authentication', () => {
       providers: [
         AuthenticationProvider,
         { provide: MSAdal, useClass: MSAdalMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: InAppBrowser, useClass: InAppBrowserMock}
       ]
     })
   });
