@@ -10,6 +10,7 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
   let component: LoginPage;
+  let navController: NavController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,6 +28,7 @@ describe('LoginPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(LoginPage);
         component = fixture.componentInstance;
+        navController = TestBed.get(NavController);
       });
   }));
 
@@ -34,6 +36,11 @@ describe('LoginPage', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+    it('should login successfully', () => {
+      component.login().then(() => {
+        expect(navController.setRoot).toBeCalled;
+      })
     });
   });
 

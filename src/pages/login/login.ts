@@ -21,10 +21,8 @@ export class LoginPage extends BasePageComponent {
   }
 
 
-  login() {
-    this.authenticationProvider.login()
+  login = () : Promise<any> => this.authenticationProvider.login()
       .then(() => {
         this.navController.setRoot('JournalPage');
-      })
-  }
+      });
 }

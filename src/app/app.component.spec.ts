@@ -11,35 +11,23 @@ import { MSAdalMock } from '../providers/authentication/__mocks__/ms-adal.mock';
 import { AuthenticationProviderMock } from '../providers/authentication/__mocks__/authentication.mock';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../providers/app-config/__mocks__/app-config.mock';
+import { StatusBarMock, SplashScreenMock, PlatformMock } from 'ionic-mocks-jest';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
   let component: App;
 
-  const platformStub = {
-    ready: jest.fn().mockResolvedValue('ready'),
-    is: jest.fn().mockResolvedValue(true)
-  };
-  const statusBarStub = {
-    styleDefault: jest.fn((): void => undefined),
-    overlaysWebView: jest.fn(),
-    backgroundColorByName: jest.fn()
-  };
-  const splashScreenStub = {
-    hide: jest.fn()
-  };
-
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [App],
       providers: [
-        { provide: Platform, useValue: platformStub },
-        { provide: StatusBar, useValue: statusBarStub },
-        { provide: SplashScreen, useValue: splashScreenStub },
-        { provide: MSAdal, useClass: MSAdalMock},
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
+        { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
+        { provide: MSAdal, useClass: MSAdalMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock},
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     }).compileComponents();
 
@@ -50,17 +38,20 @@ describe('App', () => {
   it('should create the App component', () => {
     expect(component).toBeDefined();
   });
-
-  it('should have Login Page as the root page', () => {
-   // expect(component.rootPage).toBe('LoginPage');
+  it('should set the Journal Page as the route page if not ios', () => {
+    expect(component.rootPage).toBe('JournalPage');
   });
 
-  it('should call the styleDefault method on statusBar', () => {
-    expect(platformStub.ready).toBeCalled();
-    expect(statusBarStub.overlaysWebView).toBeCalledWith(false);
-  });
-
-  it('should call the hide method on splashScreen', () => {
-   // expect(splashScreenStub.hide).toBeCalled();
+  describe('login()', () => {
+    it('should set rootPage to Journal if login succeeds', () => {
+      component.login().then(() => {
+        expect(component.rootPage).toBe('TestReportPage');
+      });
+    });;
+    it('should set root page to Login Page if login fails', () => {
+      component.login().catch(() => {
+        expect(component.rootPage).toBe('LoginPage');
+      });
+    });
   });
 });

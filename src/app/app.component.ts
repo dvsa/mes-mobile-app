@@ -10,14 +10,14 @@ import { AppConfigProvider } from '../providers/app-config/app-config';
   templateUrl: 'app.html'
 })
 export class App {
-  rootPage: any;
+  rootPage: any = 'JournalPage';
 
   constructor(
     platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen,
-    authenticationProvider: AuthenticationProvider,
-    appConfig: AppConfigProvider
+    appConfig: AppConfigProvider,
+    private splashScreen: SplashScreen,
+    private authenticationProvider: AuthenticationProvider,
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -26,19 +26,21 @@ export class App {
 
       // Attempt to login if on an ios device
       if (platform.is('ios')) {
-        authenticationProvider
-          .login()
-          .then(() => {
-            splashScreen.hide();
-            this.rootPage = 'JournalPage';
-          })
-          .catch(() => {
-            splashScreen.hide();
-            this.rootPage = 'LoginPage';
-          });
+        this.login();
       } else {
         this.rootPage = 'JournalPage';
       }
     });
   }
+
+  login = (): Promise<any> => this.authenticationProvider.login()
+    .then(() => {
+      this.splashScreen.hide();
+      this.rootPage = 'TestReportPage';
+    })
+    .catch(() => {
+      this.splashScreen.hide();
+      this.rootPage = 'LoginPage';
+    })
+
 }

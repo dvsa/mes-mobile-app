@@ -1,15 +1,19 @@
 export class AuthenticationProviderMock {
 
-  isAuthenticated() : boolean {
-    return true;
-  }
+  isAuthenticated = jest.fn().mockReturnValue(true);
 
-  getAuthenticationToken() : string {
-    return 'token';
-  }
+  getAuthenticationToken = jest.fn().mockReturnValue('token');
 
-  login(): void { }
+  login = jest.fn(() => {
+    return new Promise(() => {});
+  })
 
-  logout(): void { }
+  loginWithCredentials = jest.fn(() => {
+    return new Promise(() => {});
+  })
+
+  logout =  jest.fn(() => {
+    return new Promise(() => { });
+  })
 
 }

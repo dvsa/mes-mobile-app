@@ -12,10 +12,6 @@ export abstract class BasePageComponent {
 
   }
 
-  /**
-   *  Lifecycle Method
-   *    Checks that the user is authenticated before allowing them to load the page.
-   */
   ionViewWillEnter() {
     if (this.loginRequired && this.isIos() && !this.authenticationProvider.isAuthenticated()) {
       this.navController.setRoot('LoginPage');
@@ -24,18 +20,10 @@ export abstract class BasePageComponent {
     return true
   }
 
-  /**
-   *  Method
-   *    Checks if the app is running on a IOS device
-   */
   isIos(): boolean {
     return this.platform.is('ios');
   }
 
-  /**
-   *  Method
-   *    Logs the user out of the app and redirects them to the login page
-   */
   logout() {
     if (this.isIos()) {
       this.authenticationProvider.logout()
