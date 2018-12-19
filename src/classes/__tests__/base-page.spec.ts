@@ -10,13 +10,13 @@ describe('Base Page', () => {
 
   let platform: Platform;
   let navController: NavController;
-  // let authenticationService: AuthenticationServiceProvider;
+  // let authenticationProvider: AuthenticationProvider;
   const loginRequired: boolean = true;
 
   beforeAll(() => {
     platform = PlatformMock.instance();
     navController = NavControllerMock.instance();
-    // authenticationService = new AuthenticationServiceProvider();
+    // authenticationProvider = new AuthenticationProvider();
 
     class BasePageClass extends BasePageComponent {
       constructor() {

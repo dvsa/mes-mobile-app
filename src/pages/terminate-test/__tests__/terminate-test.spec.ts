@@ -4,8 +4,8 @@ import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ioni
 
 import { AppModule } from '../../../app/app.module';
 import { TerminateTestPage } from '../terminate-test';
-import { AuthenticationServiceProvider } from '../../../providers/authentication-service/authentication-service';
-import { AuthenticationServiceProviderMock } from '../../../providers/authentication-service/authentication-service.mock';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
 describe('TerminateTestPage', () => {
   let fixture: ComponentFixture<TerminateTestPage>;
@@ -20,7 +20,7 @@ describe('TerminateTestPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
-        { provide: AuthenticationServiceProvider, useClass: AuthenticationServiceProviderMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ]
     })
       .compileComponents()

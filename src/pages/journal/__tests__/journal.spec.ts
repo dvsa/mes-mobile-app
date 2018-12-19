@@ -8,8 +8,8 @@ import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
 import { JournalProvider } from '../../../providers/journal/journal';
 import { JournalServiceMock } from '../../../providers/journal/__mocks__/journal.mock';
-import { AuthenticationServiceProvider } from '../../../providers/authentication-service/authentication-service';
-import { AuthenticationServiceProviderMock } from '../../../providers/authentication-service/authentication-service.mock';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -25,7 +25,7 @@ describe('JournalPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: JournalProvider, useClass: JournalServiceMock },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
-        { provide: AuthenticationServiceProvider, useClass: AuthenticationServiceProviderMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ]
     })
       .compileComponents()

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../classes/base-page';
-import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 @IonicPage()
 @Component({
@@ -14,8 +14,8 @@ export class ContactDetailsPage extends BasePageComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public authenticationService: AuthenticationServiceProvider
+    public authenticationProvider: AuthenticationProvider
   ) {
-    super(platform, navCtrl, authenticationService)
+    super(platform, navCtrl, authenticationProvider)
   }
 }
