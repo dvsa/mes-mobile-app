@@ -20,7 +20,8 @@ export class AppConfigProviderMock {
         clientId: localEnvironmentMock.authentication.clientId,
         context: localEnvironmentMock.authentication.context,
         redirectUrl: localEnvironmentMock.authentication.redirectUrl,
-        resourceUrl: localEnvironmentMock.authentication.resourceUrl
+        resourceUrl: localEnvironmentMock.authentication.resourceUrl,
+        logoutUrl: localEnvironmentMock.authentication.logoutUrl,
       }
     } ;
   }

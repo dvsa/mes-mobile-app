@@ -9,5 +9,6 @@ export const environment: EnviromentFile = {
     resourceUrl: '',
     clientId: '',
     redirectUrl: '',
+    logoutUrl: '',
   },
 };

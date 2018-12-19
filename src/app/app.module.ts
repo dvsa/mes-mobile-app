@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MSAdal } from '@ionic-native/ms-adal';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { App } from './app.component';
 import { JournalProvider } from '../providers/journal/journal';
@@ -24,6 +25,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     JournalProvider,
     AppConfigProvider,
     AuthenticationProvider,
+    InAppBrowser,
   ]
 })
 export class AppModule {}

@@ -39,6 +39,7 @@ export class AppConfigProvider {
           redirectUrl:  res.body.data.authentication.redirectUrl,
           resourceUrl: res.body.data.authentication.resourceUrl,
           clientId: res.body.data.authentication.clientId,
+          logoutUrl: res.body.data.authentication.logoutUrl,
         },
       }
       return;
@@ -54,6 +55,7 @@ export class AppConfigProvider {
         redirectUrl: this.environmentFile.authentication.redirectUrl,
         resourceUrl: this.environmentFile.authentication.resourceUrl,
         clientId: this.environmentFile.authentication.clientId,
+        logoutUrl: this.environmentFile.authentication.logoutUrl,
       },
     }
   }
