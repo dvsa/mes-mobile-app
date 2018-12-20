@@ -17,6 +17,7 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 
 - Set up your [environment variables](https://wiki.i-env.net/display/MES/Application+environment+variables)
 - `npm install`
+- `npm run config:dev` (if using the dev config)
 - `ionic serve`
 
 ### Mac users
