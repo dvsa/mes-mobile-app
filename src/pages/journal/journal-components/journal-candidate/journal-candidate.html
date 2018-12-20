@@ -6,7 +6,7 @@
       <ion-row align-items-left>
         <ion-col col-1><img [ngClass]="{'journal-candidate-category-icon-completed': testComplete}" src="assets/icon/test-categories/category-b.png" /></ion-col>
         <ion-col col-11>
-          <h5 class="mes-text-spacing-tightest journal-test-category">{{testCategoryDescription}}</h5>
+          <h5 class="mes-text-spacing-tightest" [ngClass]="{'journal-test-category-complete-text': testComplete}">{{testCategoryDescription}}</h5>
         </ion-col>
       </ion-row>
     </ion-grid>

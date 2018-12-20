@@ -53,7 +53,7 @@ describe('JournalCandidateComponent', () => {
 
     describe('candidate name', () => {
       it('should be displayed', () => {
-        const nameSpan: HTMLElement = componentEl.query(By.css('ion-row:first-child span'))
+        const nameSpan: HTMLElement = componentEl.query(By.css('ion-row:first-child h5'))
           .nativeElement;
         fixture.detectChanges();
         expect(nameSpan.textContent).toBe('Mr Joe Bloggs');
@@ -62,7 +62,7 @@ describe('JournalCandidateComponent', () => {
 
     describe('test category', () => {
       it('should be displayed', () => {
-        const categorySpan: HTMLElement = componentEl.query(By.css('ion-row:last-child span'))
+        const categorySpan: HTMLElement = componentEl.query(By.css('ion-row:last-child h5'))
           .nativeElement;
         fixture.detectChanges();
         expect(categorySpan.textContent).toBe('Cat B');

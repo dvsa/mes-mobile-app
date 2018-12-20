@@ -19,6 +19,7 @@ describe('JournalTimeComponent', () => {
         fixture = TestBed.createComponent(JournalTimeComponent);
         component = fixture.componentInstance;
         component.time =  '2018-12-10T10:04:00+00:00';
+        component.testComplete = true;
       });
   }));
 

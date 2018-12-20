@@ -69,14 +69,14 @@ describe('JournalPage', () => {
       componentEl = fixture.debugElement;
     });
 
-    it('there should be one card for every journal entry', () => {
+    it('there should be one slot for every journal entry', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
       let noOfSlotsReturned: number;
       component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
-      expect(slotsList.children.every((child) => child.name === 'ion-card')).toBeTruthy();
-    });
+      expect(slotsList.children.every((child) => child.name === 'journal-slot')).toBeTruthy();
+    }); 
   });
 });
