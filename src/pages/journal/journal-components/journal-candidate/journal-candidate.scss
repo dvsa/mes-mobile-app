@@ -2,14 +2,14 @@ journal-candidate {
     & > div {
       height: 100%;
       padding: 0.3em 0.75em;
-      background-color: map-get($colors, gds-grey-4);
+      background-color: map-get($colors-gds, gds-grey-4);
       border-radius: 13px;
-    //   @include box-shadow(0px, 2px, 4px, rgba(0, 0, 0, 0.55));
+      @include box-shadow(0px, 2px, 4px, rgba(0, 0, 0, 0.55));
       div {
         height: 50%;
       }
       &.journal-candidate-test-complete-text {
-        color: map-get($colors, gds-grey-1);
+        color: map-get($colors-gds, gds-grey-1);
       }
       img {
         width: 2.25em;
@@ -24,6 +24,9 @@ journal-candidate {
         font-weight: bold;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+      .journal-test-category {
+        color: map-get($colors, journalTestCategory )
       }
     }
   }
