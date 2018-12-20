@@ -39,7 +39,7 @@ describe('LoginPage', () => {
     });
     it('should login successfully', () => {
       component.login().then(() => {
-        expect(navController.setRoot).toBeCalled;
+        expect(navController.setRoot).toBeCalledWith('JournalPage');
       })
     });
   });
