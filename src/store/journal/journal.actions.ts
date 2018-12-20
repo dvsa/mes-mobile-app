@@ -1,8 +1,8 @@
 import { Action } from '@ngrx/store';
 
-export const LOAD_JOURNAL = '[Main] Load Journal';
-export const LOAD_JOURNAL_SUCCESS = '[Main] Load Journal Success';
-export const LOAD_JOURNAL_FAILURE = '[Main] Load Journal Failure';
+export const LOAD_JOURNAL = '[JournalPage] Load Journal';
+export const LOAD_JOURNAL_SUCCESS = '[JournalPage] Load Journal Success';
+export const LOAD_JOURNAL_FAILURE = '[JournalPage] Load Journal Failure';
 
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;

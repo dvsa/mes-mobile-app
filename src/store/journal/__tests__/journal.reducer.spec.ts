@@ -12,7 +12,7 @@ describe('Journal Reducer', () => {
     });
   });
 
-  describe('[Main] Load Journal', () => {
+  describe('[JournalPage] Load Journal', () => {
     it('should toggle loading state', () => {
       const action = new LoadJournal();
       const result = journalReducer(initialState.journal, action);
@@ -24,7 +24,7 @@ describe('Journal Reducer', () => {
     });
   });
 
-  describe('[Main] Load Journal Success', () => {
+  describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state', () => {
 
       const action = new LoadJournalSuccess({ testJournal: true });
