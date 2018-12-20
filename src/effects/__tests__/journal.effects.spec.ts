@@ -6,7 +6,7 @@ import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { empty } from 'rxjs/observable/empty';
 import { JournalProvider } from '../../providers/journal/journal';
-import { JournalServiceMock } from '../../providers/journal/__mocks__/journal.mock';
+import { JournalProviderMock } from '../../providers/journal/__mocks__/journal.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -39,7 +39,7 @@ describe('Journal Effects', () => {
           provide: Actions,
           useFactory: getActions
         },
-        { provide: JournalProvider, useClass: JournalServiceMock }
+        { provide: JournalProvider, useClass: JournalProviderMock }
       ]
     });
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, map, delay } from 'rxjs/operators';
+import { switchMap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import * as journalActions from '../store/journal/journal.actions';
@@ -25,10 +25,6 @@ export class JournalEffects {
           map(data => this.journalProvider.extractJournalData(data)),
           map(testSlot => new journalActions.LoadJournalSuccess(testSlot)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
-        )
-        // todo - remove delay pipe after testing
-        .pipe(
-          delay(5000)
         )
     })
   )

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-export class JournalServiceMock {
+export class JournalProviderMock {
 
 public getJournal(): Observable<any> {
   return Observable.of ({
