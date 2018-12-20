@@ -7,7 +7,7 @@ import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
 import { JournalProvider } from '../../../providers/journal/journal';
-import { JournalServiceMock } from '../../../providers/journal/__mocks__/journal.mock';
+import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule } from '@ngrx/store';
@@ -36,7 +36,7 @@ describe('JournalPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: JournalProvider, useClass: JournalServiceMock },
+        { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ]
     })
