@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { AppConfig } from './app-config.model';
 import { EnviromentFile } from '../../environment/models/environment.model';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environment/environment.dev';
 
 @Injectable()
 export class AppConfigProvider {
@@ -34,6 +34,13 @@ export class AppConfigProvider {
       this.appConfig = {
         googleAnalyticsId: res.body.data.googleAnalyticsId,
         userIdDimensionIndex: res.body.data.userIdDimensionIndex,
+        authentication: {
+          context: res.body.data.authentication.context ,
+          redirectUrl:  res.body.data.authentication.redirectUrl,
+          resourceUrl: res.body.data.authentication.resourceUrl,
+          clientId: res.body.data.authentication.clientId,
+          logoutUrl: res.body.data.authentication.logoutUrl,
+        },
       }
       return;
     });
@@ -43,6 +50,13 @@ export class AppConfigProvider {
     this.appConfig = {
       googleAnalyticsId: this.environmentFile.googleAnalyticsId,
       userIdDimensionIndex: this.environmentFile.userIdDimensionIndex,
+      authentication: {
+        context: this.environmentFile.authentication.context,
+        redirectUrl: this.environmentFile.authentication.redirectUrl,
+        resourceUrl: this.environmentFile.authentication.resourceUrl,
+        clientId: this.environmentFile.authentication.clientId,
+        logoutUrl: this.environmentFile.authentication.logoutUrl,
+      },
     }
   }
 }

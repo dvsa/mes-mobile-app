@@ -8,5 +8,12 @@ export const remoteEnvironmentMock : EnviromentFile = {
 export const localEnvironmentMock: EnviromentFile = {
   isRemote: false,
   googleAnalyticsId: 'local-ga-id',
-  userIdDimensionIndex: 2018
+  userIdDimensionIndex: 2018,
+  authentication: {
+    context: 'local-authentication-context',
+    resourceUrl: 'local-authentication-resource-url',
+    clientId: 'local-authentication-client-id',
+    redirectUrl: 'local-authentication-redirect-url',
+    logoutUrl: 'local-logout-url',
+  }
 }

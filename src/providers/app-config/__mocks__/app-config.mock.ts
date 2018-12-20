@@ -14,8 +14,15 @@ export class AppConfigProviderMock {
 
   public getAppConfig(): AppConfig {
     return{
-      googleAnalyticsId: 'test',
-      userIdDimensionIndex: 102
+      googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
+      userIdDimensionIndex: localEnvironmentMock.userIdDimensionIndex,
+      authentication: {
+        clientId: localEnvironmentMock.authentication.clientId,
+        context: localEnvironmentMock.authentication.context,
+        redirectUrl: localEnvironmentMock.authentication.redirectUrl,
+        resourceUrl: localEnvironmentMock.authentication.resourceUrl,
+        logoutUrl: localEnvironmentMock.authentication.logoutUrl,
+      }
     } ;
   }
 }

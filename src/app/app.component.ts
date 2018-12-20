@@ -3,23 +3,44 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { AuthenticationProvider } from '../providers/authentication/authentication';
+import { AppConfigProvider } from '../providers/app-config/app-config';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class App {
-  rootPage: any = 'LoginPage';
+  rootPage: any;
 
   constructor(
     platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen
+    appConfig: AppConfigProvider,
+    private splashScreen: SplashScreen,
+    private authenticationProvider: AuthenticationProvider,
   ) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       statusBar.overlaysWebView(false);
-      splashScreen.hide();
+      appConfig.refreshConfigSettings();
+
+      // Attempt to login if on an ios device
+      if (platform.is('ios')) {
+        this.login();
+      } else {
+        this.rootPage = 'JournalPage';
+      };
     });
   }
+
+  login = (): Promise<any> => this.authenticationProvider.login()
+    .then(() => {
+      this.splashScreen.hide();
+      this.rootPage = 'JournalPage';
+    })
+    .catch(() => {
+      this.splashScreen.hide();
+      this.rootPage = 'LoginPage';
+    })
+
 }
