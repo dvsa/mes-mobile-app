@@ -19,11 +19,8 @@
       <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
     </ion-card-content>
     <ion-list>
-      <ion-card *ngFor="let s of journalSlot">
-         <h6>{{s | json}}</h6>
-      </ion-card>
-      <ion-card *ngIf="hasError">
-        <h3 class="mes-red">Unfortunately your journal cannot be loaded at the moment</h3>
+      <ion-card *ngFor="let slot of journalSlot">
+         <h6>{{slot | json}}</h6>
       </ion-card>
     </ion-list>
   </ion-card>

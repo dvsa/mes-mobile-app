@@ -18,7 +18,6 @@ export class JournalEffects {
   journal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL),
     switchMap(() => {
-      console.log('load journal effect');
       return this.journalProvider
         .getJournal()
         .pipe(
