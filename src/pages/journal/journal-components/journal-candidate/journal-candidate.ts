@@ -18,12 +18,16 @@ export class JournalCandidateComponent {
   @Input()
   testCategory: string;
 
+  @Input()
+  testComplete: boolean;
+
   testCategoryDescription : string
   constructor() {
   }
 
   ngOnInit() {
     this.testCategoryDescription = this.getCategoryDescription();
+    this.testComplete = true; // not in json as yet... add when it is
   }
 
   getCategoryDescription(): string {
