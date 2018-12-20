@@ -4,15 +4,8 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
 
-import * as journalActions from '../../store/journal.actions';
-
-interface StoreModel {
-  journal: {
-    isLoading: boolean,
-    testSlot: any,
-    error: any
-  }
-}
+import * as journalActions from '../../store/journal/journal.actions';
+import { StoreModel } from '../../store/store.model';
 
 @IonicPage()
 @Component({
@@ -38,6 +31,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public loadingController: LoadingController,
     public toastController: ToastController,
     private store: Store<StoreModel>
+  
   ) {
     super(platform, navController, authenticationProvider);
 

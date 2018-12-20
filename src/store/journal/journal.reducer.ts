@@ -1,12 +1,15 @@
-import * as journalActions from '../store/journal.actions';
+import * as journalActions from './journal.actions';
+import { StoreModel } from '../store.model';
 
-const initialState = {
-  isLoading: true,
-  testSlot: [],
-  error: {},
+export const initialState: StoreModel = {
+  journal: {
+    isLoading: true,
+    testSlot: [],
+    error: {}
+  }
 };
 
-export function journalReducer(state = initialState, action: journalActions.Types) {
+export function journalReducer(state = initialState.journal, action: journalActions.Types) {
   switch (action.type) {
     case journalActions.LOAD_JOURNAL:
       return {

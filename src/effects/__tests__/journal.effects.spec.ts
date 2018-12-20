@@ -49,4 +49,8 @@ describe('Journal Effects', () => {
   it('should create the journal effects', () => {
     expect(effects).toBeTruthy();
   });
+
+  it('should load journal data', () => {
+    // todo - scaffold the load journal test
+  });
 });

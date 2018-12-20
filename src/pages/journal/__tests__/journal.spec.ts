@@ -11,7 +11,7 @@ import { JournalServiceMock } from '../../../providers/journal/__mocks__/journal
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule } from '@ngrx/store';
-import { journalReducer } from '../../../store/journal.reducer';
+import { journalReducer } from '../../../store/journal/journal.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../../../effects/journal.effects';
