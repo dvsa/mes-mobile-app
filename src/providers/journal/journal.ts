@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AppConfigProvider } from '../app-config/app-config';
 
 @Injectable()
 export class JournalProvider {
 
-  url = 'https://vulv731rce.execute-api.eu-west-1.amazonaws.com/default'; // todo - pull this from config when added
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, public appConfig: AppConfigProvider) {}
 
   getJournal(){
-    return this.http.get(this.url);
+    return this.http.get(this.appConfig.getAppConfig().journal.journalUrl);
   }
 
   extractJournalData(data) {

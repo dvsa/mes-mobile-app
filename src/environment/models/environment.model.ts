@@ -10,4 +10,7 @@ export type EnviromentFile = {
     redirectUrl: string,
     logoutUrl: string,
   },
+  journal?: {
+    journalUrl: string
+  }
 }

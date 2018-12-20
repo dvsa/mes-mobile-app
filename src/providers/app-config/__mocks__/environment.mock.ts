@@ -15,5 +15,8 @@ export const localEnvironmentMock: EnviromentFile = {
     clientId: 'local-authentication-client-id',
     redirectUrl: 'local-authentication-redirect-url',
     logoutUrl: 'local-logout-url',
+  },
+  journal: {
+    journalUrl: 'local-journal-url'
   }
 }

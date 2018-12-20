@@ -51,6 +51,9 @@ export class AppConfigProvider {
         clientId: data.authentication.clientId,
         logoutUrl: data.authentication.logoutUrl,
       },
+      journal: {
+        journalUrl: this.environmentFile.journal.journalUrl
+      }
     }
   }
 }

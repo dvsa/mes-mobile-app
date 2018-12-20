@@ -22,6 +22,9 @@ export class AppConfigProviderMock {
         redirectUrl: localEnvironmentMock.authentication.redirectUrl,
         resourceUrl: localEnvironmentMock.authentication.resourceUrl,
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
+      },
+      journal: {
+        journalUrl: localEnvironmentMock.journal.journalUrl
       }
     } ;
   }

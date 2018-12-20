@@ -8,4 +8,7 @@ export type AppConfig = {
     redirectUrl: string,
     logoutUrl: string,
   },
+  journal: {
+    journalUrl: string
+  }
 };
