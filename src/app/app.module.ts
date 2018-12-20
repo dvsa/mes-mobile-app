@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { StoreModule } from '@ngrx/store';
-import { journalReducer } from '../store/journal.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../effects/journal.effects';
@@ -23,9 +22,7 @@ import { JournalEffects } from '../effects/journal.effects';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(App, { mode: 'ios' }),
-    StoreModule.forRoot({
-      journal: journalReducer
-    }),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([JournalEffects])],
   bootstrap: [IonicApp],
