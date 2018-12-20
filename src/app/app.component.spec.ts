@@ -30,6 +30,9 @@ describe('App', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     }).compileComponents();
+    // By default we set the app to be running on a non-ios device
+    const platform: Platform = TestBed.get(Platform);
+    platform.is = jest.fn().mockReturnValue(false);
 
     fixture = TestBed.createComponent(App);
     component = fixture.componentInstance;
@@ -39,7 +42,7 @@ describe('App', () => {
     expect(component).toBeDefined();
   });
   it('should set the Journal Page as the route page if not ios', () => {
-    expect(component.rootPage).toBe('JournalPage');
+      expect(component.rootPage).toBe('JournalPage');
   });
 
   describe('login()', () => {

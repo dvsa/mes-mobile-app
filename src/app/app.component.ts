@@ -10,7 +10,7 @@ import { AppConfigProvider } from '../providers/app-config/app-config';
   templateUrl: 'app.html'
 })
 export class App {
-  rootPage: any = 'JournalPage';
+  rootPage: any;
 
   constructor(
     platform: Platform,
@@ -27,6 +27,8 @@ export class App {
       // Attempt to login if on an ios device
       if (platform.is('ios')) {
         this.login();
+      } else {
+        this.rootPage = 'JournalPage';
       };
     });
   }
