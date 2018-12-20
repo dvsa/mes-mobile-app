@@ -14,7 +14,6 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { JournalEffects } from '../effects/journal.effects';
 
 @NgModule({
   declarations: [App],
@@ -24,7 +23,8 @@ import { JournalEffects } from '../effects/journal.effects';
     IonicModule.forRoot(App, { mode: 'ios' }),
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([JournalEffects])],
+    EffectsModule.forRoot([]),
+  ],
   bootstrap: [IonicApp],
   entryComponents: [App],
   providers: [
