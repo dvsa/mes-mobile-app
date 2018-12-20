@@ -1,7 +1,5 @@
+import { JournalModel } from './journal/journal.model';
+
 export interface StoreModel {
-  journal: {
-    isLoading: boolean,
-    testSlot: any,
-    error: any
-  }
+  journal: JournalModel,
 }
