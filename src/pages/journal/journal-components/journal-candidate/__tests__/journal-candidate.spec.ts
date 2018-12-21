@@ -18,10 +18,11 @@ describe('JournalCandidateComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(JournalCandidateComponent);
         component = fixture.componentInstance;
+        component.testCategory = 'B57mins';
+        component.name = { title: '', firstName: '', lastName: ''}
         component.name.title =  'Mr';
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
-        component.testCategory = 'B57mins';
       });
   }));
 

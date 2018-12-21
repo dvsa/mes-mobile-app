@@ -90,6 +90,7 @@ describe('JournalSlotComponent', () => {
         })
     }));
 
+    describe('DOM', () => {
     describe('Component Interaction', () => {
        it('should pass something to sub-component journal-time input', () => {
            fixture.detectChanges();
@@ -100,9 +101,9 @@ describe('JournalSlotComponent', () => {
         it('should pass something to sub-component journal-candidate input', () => {
             fixture.detectChanges();
             const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalCandidateComponent))).componentInstance;
-            expect(subByDirective.title).toBe('Miss');
-            expect(subByDirective.firstName).toBe('Florence');
-            expect(subByDirective.lastName).toBe('Pearson');
+            expect(subByDirective.name.title).toBe('Miss');
+            expect(subByDirective.name.firstName).toBe('Florence');
+            expect(subByDirective.name.lastName).toBe('Pearson');
             expect(subByDirective.testCategory).toBe('B57mins');
          });  // unit tests for the component template
 
@@ -112,5 +113,6 @@ describe('JournalSlotComponent', () => {
             expect(subByDirective.testCentreName).toBe('Example Test Centre');
          });  // unit tests for the component template
     });
+  });
 
 }); 
