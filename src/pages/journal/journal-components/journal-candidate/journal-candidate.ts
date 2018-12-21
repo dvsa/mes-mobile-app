@@ -1,19 +1,14 @@
 import { Component, Input } from '@angular/core';
+import { Name } from '../../../../common/domain/Journal';
 
 @Component({
   selector: 'journal-candidate',
   templateUrl: 'journal-candidate.html',
-  inputs: ['title', 'firstName', 'lastName','testCategory']
+  inputs: ['name','testCategory']
 })
 export class JournalCandidateComponent {
   @Input()
-  title: string;
-
-  @Input()
-  firstName: string;
-
-  @Input()
-  lastName: string;
+  name: Name;
 
   @Input()
   testCategory: string;

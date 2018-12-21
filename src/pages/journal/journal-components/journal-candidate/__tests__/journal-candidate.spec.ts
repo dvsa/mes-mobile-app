@@ -18,9 +18,9 @@ describe('JournalCandidateComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(JournalCandidateComponent);
         component = fixture.componentInstance;
-        component.title =  'Mr';
-        component.firstName = 'Joe';
-        component.lastName = 'Bloggs';
+        component.name.title =  'Mr';
+        component.name.firstName = 'Joe';
+        component.name.lastName = 'Bloggs';
         component.testCategory = 'B57mins';
       });
   }));
@@ -66,6 +66,15 @@ describe('JournalCandidateComponent', () => {
           .nativeElement;
         fixture.detectChanges();
         expect(categorySpan.textContent).toBe('Cat B');
+      });
+    });
+
+    describe('test category b image', () => {
+      it ('should be displayed', () => {
+        const categoryImage: HTMLImageElement = componentEl.query(By.css('img'))
+          .nativeElement;
+        fixture.detectChanges();
+        expect(categoryImage.src).toContain('assets/icon/test-categories/category-b.png');
       });
     });
   });

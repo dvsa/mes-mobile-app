@@ -5,9 +5,7 @@
     </ion-col>
     <ion-col col-5>
       <journal-candidate 
-        [title]="slot.booking.candidate.candidateName.title" 
-        [firstName]="slot.booking.candidate.candidateName.firstName" 
-        [lastName]="slot.booking.candidate.candidateName.lastName"
+        [name]="slot.booking.candidate.candidateName"
         [testCategory]="slot.vehicleSlotType">
       </journal-candidate>
     </ion-col>
