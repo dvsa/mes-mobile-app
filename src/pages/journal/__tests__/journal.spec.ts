@@ -66,7 +66,8 @@ describe('JournalPage', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
-      const noOfSlotsReturned = component.journalSlot.length;
+      let noOfSlotsReturned: number;
+      component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'ion-card')).toBeTruthy();
     });

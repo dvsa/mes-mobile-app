@@ -1,4 +1,7 @@
+import { createFeatureSelector } from '@ngrx/store';
+
 import * as journalActions from './journal.actions';
+import { JournalModel } from './journal.model';
 import { StoreModel } from '../store.model';
 
 export const initialState: StoreModel = {
@@ -31,3 +34,5 @@ export function journalReducer(state = initialState.journal, action: journalActi
       return state;
   }
 }
+
+export const getJournalState = createFeatureSelector<JournalModel>('journal');
