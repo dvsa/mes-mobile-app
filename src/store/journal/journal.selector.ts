@@ -1,13 +1,8 @@
 
 import { JournalModel } from './journal.model';
 
-export const getTestSlots = (journal: JournalModel) => {
+export const getTestSlots = (journal: JournalModel) => journal.testSlot;
 
-  // console.log('journal', journal);
+export const getError = (journal: JournalModel) => journal.error;
 
-  return journal.testSlot;
-}
-
-// store.select(state => state.journal).subscribe(journal => journal.isLoading ? this.loader.present() : this.loader.dismiss());
-// store.select(state => state.journal.testSlot).subscribe(testSlot => this.journalSlot = testSlot);
-// store.select(state => state.journal.error).subscribe(error => error.message ? this.showError(error.message) : this.hasError = false);
+export const getIsLoading = (journal: JournalModel) => journal.isLoading;

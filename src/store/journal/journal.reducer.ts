@@ -6,9 +6,8 @@ import { StoreModel } from '../store.model';
 
 export const initialState: StoreModel = {
   journal: {
-    isLoading: true,
+    isLoading: false,
     testSlot: [],
-    error: {}
   }
 };
 
@@ -17,6 +16,7 @@ export function journalReducer(state = initialState.journal, action: journalActi
     case journalActions.LOAD_JOURNAL:
       return {
         ...state,
+        isLoading: true,
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
