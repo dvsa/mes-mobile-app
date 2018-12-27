@@ -78,7 +78,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     isLoading ? this.loadingSpinner.present() : this.loadingSpinner.dismiss();
   }
 
-  showError(error): void {
+  showError = (error): void => {
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
