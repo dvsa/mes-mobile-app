@@ -8,17 +8,17 @@ describe('Journal Reducer', () => {
       const action = { type: 'NOOP' } as any;
       const result = journalReducer(undefined, action);
 
-      expect(result).toBe(initialState.journal);
+      expect(result).toBe(initialState);
     });
   });
 
   describe('[JournalPage] Load Journal', () => {
     it('should toggle loading state', () => {
       const action = new LoadJournal();
-      const result = journalReducer(initialState.journal, action);
+      const result = journalReducer(initialState, action);
 
       expect(result).toEqual({
-        ...initialState.journal,
+        ...initialState,
         isLoading: true
       });
     });
@@ -28,10 +28,10 @@ describe('Journal Reducer', () => {
     it('should toggle loading state', () => {
 
       const action = new LoadJournalSuccess({ testJournal: true });
-      const result = journalReducer(initialState.journal, action);
+      const result = journalReducer(initialState, action);
 
       expect(result).toEqual({
-        ...initialState.journal,
+        ...initialState,
         isLoading: false,
         testSlot: { 'testJournal': true }
       });

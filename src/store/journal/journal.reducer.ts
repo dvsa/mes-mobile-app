@@ -2,16 +2,13 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
-import { StoreModel } from '../store.model';
 
-export const initialState: StoreModel = {
-  journal: {
+export const initialState: JournalModel = {
     isLoading: false,
     testSlot: [],
-  }
 };
 
-export function journalReducer(state = initialState.journal, action: journalActions.Types) {
+export function journalReducer(state = initialState, action: journalActions.Types) {
   switch (action.type) {
     case journalActions.LOAD_JOURNAL:
       return {
