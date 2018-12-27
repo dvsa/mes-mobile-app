@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -23,12 +23,13 @@ interface JournalPageState {
   templateUrl: 'journal.html'
 })
 
-export class JournalPage extends BasePageComponent implements OnInit {
+export class JournalPage extends BasePageComponent implements OnInit, OnDestroy {
 
   pageState: JournalPageState;
 
   loadingSpinner: any;
   toast: any;
+  subscription: Subscription;
 
   // TODO: Figure out what is the difference between the constructor and the ngOnInit. Also when to use what.
 
@@ -47,15 +48,34 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.createToast('just a text');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.store.dispatch(new journalActions.LoadJournal());
+
     this.pageState = {
       testSlots$: this.store.select(getJournalState).map(getTestSlots),
       error$: this.store.select(getJournalState).map(getError),
       isLoading$: this.store.select(getJournalState).map(getIsLoading),
     };
-    this.pageState.isLoading$.subscribe(isLoading => isLoading ? this.loadingSpinner.present() : this.loadingSpinner.dismiss());
-    this.pageState.error$.subscribe(error => this.showError(error));
+
+    const { testSlots$, error$, isLoading$ } = this.pageState;
+    // Merge observables into one
+    const merged = Observable.merge(
+      testSlots$,
+      // Run any transformations necessary here
+      error$.map(this.showError),
+      isLoading$.map(this.handleLoadingSpinner)
+    );
+
+    this.subscription = merged.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    // Using .merge helps with unsubscribing
+    this.subscription.unsubscribe();
+  }
+
+  handleLoadingSpinner = (isLoading: boolean): void => {
+    isLoading ? this.loadingSpinner.present() : this.loadingSpinner.dismiss();
   }
 
   showError(error): void {
