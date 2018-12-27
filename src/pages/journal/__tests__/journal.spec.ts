@@ -15,6 +15,7 @@ import { journalReducer } from '../../../store/journal/journal.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../../../effects/journal.effects';
+import { Subscription } from 'rxjs';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -44,6 +45,7 @@ describe('JournalPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(JournalPage);
         component = fixture.componentInstance;
+        component.subscription = new Subscription();
       });
   }));
 
