@@ -2,8 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'journal-time',
-  templateUrl: 'journal-time.html',
-  inputs: ['time','testComplete']
+  templateUrl: 'journal-time.html'
 })
 export class JournalTimeComponent {
 

@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs/Observable';
 
-import { EnviromentFile } from '../../../environment/models/environment.model';
+import { EnvironmentFile } from '../../../environment/models/environment.model';
 import { localEnvironmentMock } from './environment.mock';
 import { AppConfig } from '../app-config.model';
 
 export class AppConfigProviderMock {
 
-  environmentFile: EnviromentFile = localEnvironmentMock;
+  environmentFile: EnvironmentFile = localEnvironmentMock;
 
   public refreshConfigSettings = (): Observable<any> => {
     return;
