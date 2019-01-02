@@ -33,7 +33,7 @@ describe('Journal Reducer', () => {
       expect(result).toEqual({
         ...initialState,
         isLoading: false,
-        testSlot: { 'testJournal': true }
+        data: { 'testJournal': true }
       });
     });
   });

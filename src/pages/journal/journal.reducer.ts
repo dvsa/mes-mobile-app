@@ -5,7 +5,7 @@ import { JournalModel } from './journal.model';
 
 export const initialState: JournalModel = {
     isLoading: false,
-    testSlot: [],
+    data: {},
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {
@@ -19,7 +19,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
       return {
         ...state,
         isLoading: false,
-        testSlot: action.payload,
+        data: action.payload,
       };
     case journalActions.LOAD_JOURNAL_FAILURE:
       return {

@@ -11,9 +11,4 @@ export class JournalProvider {
     return this.http.get(this.appConfig.getAppConfig().journal.journalUrl);
   }
 
-  extractJournalData(data) {
-    const journalData = data.testSlot;
-    return journalData;
-  }
-
 }

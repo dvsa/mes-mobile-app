@@ -21,7 +21,6 @@ export class JournalEffects {
       return this.journalProvider
         .getJournal()
         .pipe(
-          map(data => this.journalProvider.extractJournalData(data)),
           map(testSlot => new journalActions.LoadJournalSuccess(testSlot)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
