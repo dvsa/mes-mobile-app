@@ -18,10 +18,6 @@ export class TestActions extends Actions {
   }
 }
 
-export function getActions() {
-  return new TestActions();
-}
-
 describe('Journal Effects', () => {
 
   // @ts-ignore
@@ -37,7 +33,7 @@ describe('Journal Effects', () => {
         JournalEffects,
         {
           provide: Actions,
-          useFactory: getActions
+          useFactory: () => new TestActions(),
         },
         { provide: JournalProvider, useClass: JournalProviderMock }
       ]
