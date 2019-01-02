@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
-import { StoreModel } from '../../store/store.model';
+import { StoreModel } from '../../common/store.model';
 import { getTestSlots, getError, getIsLoading } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { TestSlot } from './journal.model';

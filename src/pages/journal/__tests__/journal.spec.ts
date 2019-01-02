@@ -14,7 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { JournalEffects } from '../../../effects/journal.effects';
+import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs';
 
 describe('JournalPage', () => {

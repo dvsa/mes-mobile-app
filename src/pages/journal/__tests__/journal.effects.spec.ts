@@ -5,8 +5,8 @@ import { JournalEffects } from '../journal.effects';
 import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { empty } from 'rxjs/observable/empty';
-import { JournalProvider } from '../../providers/journal/journal';
-import { JournalProviderMock } from '../../providers/journal/__mocks__/journal.mock';
+import { JournalProvider } from '../../../providers/journal/journal'
+import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 
 export class TestActions extends Actions {
   constructor() {
