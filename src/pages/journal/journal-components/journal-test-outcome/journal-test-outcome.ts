@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'journal-test-outcome',
@@ -8,8 +8,6 @@ export class JournalTestOutcomeComponent implements OnInit {
   @Input()
   slot: any;
 
-  @Output() onStartTest = new EventEmitter<any>();
-
   canStartTest: boolean = true;
   outcome: string = '1'; // todo - get the activity code
 
@@ -17,7 +15,4 @@ export class JournalTestOutcomeComponent implements OnInit {
 
   ngOnInit() {}
 
-  startTestClicked(){
-    this.onStartTest.emit(this.slot);
-  }
 }
