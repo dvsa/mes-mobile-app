@@ -30,32 +30,26 @@ export class AppConfigProvider {
   }
 
   private getRemoteData = (): Observable<any> => {
-    return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl).map((res) => {
-      this.appConfig = {
-        googleAnalyticsId: res.body.data.googleAnalyticsId,
-        userIdDimensionIndex: res.body.data.userIdDimensionIndex,
-        authentication: {
-          context: res.body.data.authentication.context ,
-          redirectUrl:  res.body.data.authentication.redirectUrl,
-          resourceUrl: res.body.data.authentication.resourceUrl,
-          clientId: res.body.data.authentication.clientId,
-          logoutUrl: res.body.data.authentication.logoutUrl,
-        },
-      }
-      return;
+    return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl)
+    .map((res) => {
+      this.mapConfig(res.body.data);
     });
   }
 
   private getLocalData = () => {
+    this.mapConfig(this.environmentFile);
+  }
+
+  private mapConfig = (data: any) => {
     this.appConfig = {
-      googleAnalyticsId: this.environmentFile.googleAnalyticsId,
-      userIdDimensionIndex: this.environmentFile.userIdDimensionIndex,
+      googleAnalyticsId: data.googleAnalyticsId,
+      userIdDimensionIndex: data.userIdDimensionIndex,
       authentication: {
-        context: this.environmentFile.authentication.context,
-        redirectUrl: this.environmentFile.authentication.redirectUrl,
-        resourceUrl: this.environmentFile.authentication.resourceUrl,
-        clientId: this.environmentFile.authentication.clientId,
-        logoutUrl: this.environmentFile.authentication.logoutUrl,
+        context: data.authentication.context,
+        redirectUrl: data.authentication.redirectUrl,
+        resourceUrl: data.authentication.resourceUrl,
+        clientId: data.authentication.clientId,
+        logoutUrl: data.authentication.logoutUrl,
       },
     }
   }
