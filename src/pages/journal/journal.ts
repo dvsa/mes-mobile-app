@@ -97,7 +97,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       message: errorMessage,
       position: 'middle',
       dismissOnPageChange: true,
-      cssClass: 'toast-message-error',
+      cssClass: 'mes-toast-message-error',
       duration: 5000
     });
   }
