@@ -9,7 +9,8 @@ import * as journalActions from '../../store/journal/journal.actions';
 import { StoreModel } from '../../store/store.model';
 import { getTestSlots, getError, getIsLoading } from '../../store/journal/journal.selector';
 import { getJournalState } from '../../store/journal/journal.reducer';
-import { TestSlot, MesError } from '../../store/journal/journal.model';
+import { TestSlot } from '../../store/journal/journal.model';
+import { MesError } from '../../common/mes-error.model';
 
 interface JournalPageState {
   testSlots$: Observable<TestSlot[]>,
@@ -78,7 +79,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     isLoading ? this.loadingSpinner.present() : this.loadingSpinner.dismiss();
   }
 
-  showError = (error): void => {
+  showError = (error: MesError): void => {
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
@@ -91,6 +92,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   private createToast = (errorMessage: string) => {
+    // This is just a temporary way to display the error
+
     this.toast = this.toastController.create({
       message: errorMessage,
       position: 'middle',
