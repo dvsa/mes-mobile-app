@@ -31,9 +31,9 @@ export class AppConfigProvider {
 
   private getRemoteData = (): Observable<any> => {
     return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl)
-    .map((res) => {
-      this.mapConfig(res.body.data);
-    });
+      .map((res) => {
+        this.mapConfig(res.body.data);
+      });
   }
 
   private getLocalData = () => {
@@ -52,7 +52,7 @@ export class AppConfigProvider {
         logoutUrl: data.authentication.logoutUrl,
       },
       journal: {
-        journalUrl: this.environmentFile.journal.journalUrl
+        journalUrl: data.journal.journalUrl
       }
     }
   }
