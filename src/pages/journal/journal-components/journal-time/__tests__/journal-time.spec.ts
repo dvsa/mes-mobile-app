@@ -48,8 +48,6 @@ describe('JournalTimeComponent', () => {
       it('should be journal-time-test-complete-text', () => {
         fixture.detectChanges();
         const timeSpan: any = componentEl.query(By.css('ion-row:first-child span'));
-//          .nativeElement;
-          console.log(timeSpan);
         expect(timeSpan.classes['journal-time-test-complete-text']).toBeTruthy();
       });
     });
