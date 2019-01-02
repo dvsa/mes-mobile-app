@@ -13,7 +13,7 @@ export class JournalTimeComponent {
   testComplete: boolean;
 
   ngOnInit() {
-    this.testComplete = false; // TODO pick up testComplete from JSON when available
+    this.testComplete = true; // TODO pick up testComplete from JSON when available
   }
 
   constructor() {
