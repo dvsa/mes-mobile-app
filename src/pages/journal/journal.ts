@@ -46,7 +46,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     super(platform, navController, authenticationProvider);
 
     this.createLoadingSpinner();
-    this.createToast('just a text');
   }
 
   ngOnInit(): void {
