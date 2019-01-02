@@ -8,7 +8,7 @@ export const initialState: JournalModel = {
     testSlot: [],
 };
 
-export function journalReducer(state = initialState, action: journalActions.Types) {
+export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {
   switch (action.type) {
     case journalActions.LOAD_JOURNAL:
       return {
