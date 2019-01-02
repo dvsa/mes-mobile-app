@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from '../../components/components.module';
 import { JournalPage } from './journal';
-import { journalReducer } from '../../store/journal/journal.reducer';
+import { journalReducer } from './journal.reducer';
 import { JournalEffects } from '../../effects/journal.effects';
 
 @NgModule({

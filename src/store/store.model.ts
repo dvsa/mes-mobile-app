@@ -1,4 +1,4 @@
-import { JournalModel } from './journal/journal.model';
+import { JournalModel } from '../pages/journal/journal.model';
 
 export interface StoreModel {
   journal: JournalModel,

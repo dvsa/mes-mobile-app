@@ -5,11 +5,11 @@ import { Observable, Subscription } from 'rxjs';
 
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import * as journalActions from '../../store/journal/journal.actions';
+import * as journalActions from './journal.actions';
 import { StoreModel } from '../../store/store.model';
-import { getTestSlots, getError, getIsLoading } from '../../store/journal/journal.selector';
-import { getJournalState } from '../../store/journal/journal.reducer';
-import { TestSlot } from '../../store/journal/journal.model';
+import { getTestSlots, getError, getIsLoading } from './journal.selector';
+import { getJournalState } from './journal.reducer';
+import { TestSlot } from './journal.model';
 import { MesError } from '../../common/mes-error.model';
 
 interface JournalPageState {
