@@ -32,8 +32,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   toast: any;
   subscription: Subscription;
 
-  // TODO: Figure out what is the difference between the constructor and the ngOnInit. Also when to use what.
-
   constructor(
     public navController: NavController,
     public platform: Platform,

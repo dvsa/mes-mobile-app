@@ -1,5 +1,5 @@
 import { JournalModel } from '../pages/journal/journal.model';
 
-export interface StoreModel {
+export type StoreModel = {
   journal: JournalModel,
 }
