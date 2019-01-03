@@ -9,8 +9,8 @@ import { get } from 'lodash';
 export class JournalSlotComponent {
   @Input()
   slot: any;
-  constructor() {
-  }
+
+  constructor() {}
 
   isSpecialNeedsSlot(): boolean {
     return get(this.slot, 'booking.application.specialNeeds', '').length > 0;

@@ -9,6 +9,7 @@ import { IonicModule, Config } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks-jest';
 import { JournalIndicatorsComponent } from '../../journal-indicators/journal-indicators';
+import { cloneDeep } from 'lodash';
 
 describe('JournalSlotComponent', () => {
     let fixture: ComponentFixture<JournalSlotComponent>;
@@ -72,7 +73,7 @@ describe('JournalSlotComponent', () => {
             ],
           },
         };
-        
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -88,7 +89,7 @@ describe('JournalSlotComponent', () => {
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(JournalSlotComponent);
             component = fixture.componentInstance;
-            component.slot = mockSlot;
+            component.slot = cloneDeep(mockSlot);
         })
     }));
 
@@ -110,9 +111,12 @@ describe('JournalSlotComponent', () => {
 
     describe('DOM', () => {
       describe('Component Interaction', () => {
-        it('should render a journal-indicator component', () => {
+        it('should pass the special needs status to a journal-indicator component', () => {
+          component.slot.booking.application.specialNeeds = ''
+          fixture.detectChanges();
           const indicatorComponent = fixture.debugElement.query(By.directive(MockComponent(JournalIndicatorsComponent))).componentInstance;
           expect(indicatorComponent).toBeDefined();
+          expect(indicatorComponent.showSpecialNeedsIndicator).toBeFalsy();
         });
 
         it('should pass something to sub-component journal-time input', () => {
