@@ -72,6 +72,8 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.2.1",
     "@ngrx/store-devtools": "^5.2.0",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/aws4": "^1.5.1",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
     "appium": "^1.10.0",
