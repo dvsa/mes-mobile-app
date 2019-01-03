@@ -3,8 +3,7 @@ import { get } from 'lodash';
 
 @Component({
   selector: 'journal-slot',
-  templateUrl: 'journal-slot.html',
-  inputs: ['slot']
+  templateUrl: 'journal-slot.html'
 })
 export class JournalSlotComponent {
   @Input()
