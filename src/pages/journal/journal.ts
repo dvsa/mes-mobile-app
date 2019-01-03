@@ -85,7 +85,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   handleLoadingSpinner = (isLoading: boolean): void => {
     if (isLoading) {
       this.createLoadingSpinner();
-      this.loadingSpinner.present().then(() => this.loadingSpinner.dismiss());
+      this.loadingSpinner.present();
+    } else {
+      this.loadingSpinner.dismiss();
     }
   }
 
@@ -97,6 +99,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   private createLoadingSpinner = () => {
     this.loadingSpinner = this.loadingController.create({
+      dismissOnPageChange: true,
       spinner: 'circles'
     });
   }
