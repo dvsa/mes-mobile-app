@@ -29,8 +29,8 @@ describe('JournalIndicatorsComponent', () => {
       it('should render when visibility is configured', () => {
         component.showSpecialNeedsIndicator = true;
         fixture.detectChanges();
-        const renderedImage = fixture.debugElement.query(By.css('.special-needs-indicator')).nativeElement;
-        expect(renderedImage.getAttribute('src')).toContain('special');
+        const renderedImage = fixture.debugElement.query(By.css('.special-needs-indicator'));
+        expect(renderedImage.attributes.src).toContain('special');
       });
       it('should not be rendered when visibility is turned off', () => {
         component.showSpecialNeedsIndicator = false;
