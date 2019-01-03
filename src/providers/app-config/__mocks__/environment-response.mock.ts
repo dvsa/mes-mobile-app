@@ -11,6 +11,9 @@ export const environmentResponseMock = {
           'redirectUrl': 'remote-authentication-redirect-url',
           'logoutUrl' : 'remote-logout-url'
       },
+      'aws': {
+        'region': 'aws-region'
+      },
       'journal' : {
         'journalUrl': 'remote-journal-url'
       }

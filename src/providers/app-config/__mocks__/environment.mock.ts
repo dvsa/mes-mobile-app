@@ -16,6 +16,9 @@ export const localEnvironmentMock: EnvironmentFile = {
     redirectUrl: 'local-authentication-redirect-url',
     logoutUrl: 'local-logout-url',
   },
+  aws: {
+    region: 'aws-region'
+  },
   journal: {
     journalUrl: 'local-journal-url'
   }
