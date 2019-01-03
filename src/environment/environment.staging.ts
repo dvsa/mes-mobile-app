@@ -11,4 +11,7 @@ export const environment: EnvironmentFile = {
     redirectUrl: '',
     logoutUrl: '',
   },
+  journal: {
+    journalUrl: '',
+  }
 };

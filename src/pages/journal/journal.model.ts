@@ -1,5 +1,5 @@
 import { MesError } from '../../common/mes-error.model';
-import { ExaminerWorkSchedule } from '../../common/domain/Journal';
+import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 
 export type TestSlot = {
   booking: any,

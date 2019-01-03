@@ -33,6 +33,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   loadingSpinner: Loading;
   toast: Toast;
   subscription: Subscription;
+  start = "2018-12-10T08:10:00+00:00";
 
   constructor(
     public navController: NavController,

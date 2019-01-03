@@ -27,6 +27,7 @@ describe('JournalTimeComponent', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+  });
 
   describe('DOM', () => {
     let componentEl: DebugElement;
@@ -50,10 +51,6 @@ describe('JournalTimeComponent', () => {
         const timeSpan: any = componentEl.query(By.css('ion-row:first-child span'));
         expect(timeSpan.classes['journal-time-test-complete-text']).toBeTruthy();
       });
-    });
-
-
-
     });
   });
 });

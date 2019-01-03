@@ -19,27 +19,7 @@
       <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
     </ion-card-content>
     <ion-list>
-      <ion-card *ngFor="let testSlot of pageState.testSlots$ | async">
-        <ion-row align-items-center>
-          <ion-col col-2>
-            <journal-time [time]="testSlot.slotDetail.start"></journal-time>
-          </ion-col>
-          <ion-col col-5>
-            <journal-candidate 
-              [title]="testSlot.booking.candidate.candidateName.title" 
-              [firstName]="testSlot.booking.candidate.candidateName.firstName" 
-              [lastName]="testSlot.booking.candidate.candidateName.lastName"
-              [testCategory]="testSlot.vehicleSlotType">
-            </journal-candidate>
-          </ion-col>
-          <ion-col col-2>
-            <!-- <journal-test-details [testCentreName]="testSlot.testCentre.centreName"></journal-test-details> -->
-          </ion-col>
-          <ion-col col-2>
-            Activity
-          </ion-col>
-        </ion-row>
-      </ion-card>
+      <journal-slot *ngFor="let testSlot of pageState.testSlots$ | async" [slot]="testSlot"></journal-slot>
     </ion-list>
   </ion-card>
 </ion-content>
