@@ -73,7 +73,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingSpinner))
     );
-
+    this.createLoadingSpinner();
     this.subscription = merged$.subscribe();
   }
 
@@ -84,7 +84,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   handleLoadingSpinner = (isLoading: boolean): void => {
     if (isLoading) {
-      this.createLoadingSpinner();
       this.loadingSpinner.present();
     } else {
       this.loadingSpinner.dismiss();
