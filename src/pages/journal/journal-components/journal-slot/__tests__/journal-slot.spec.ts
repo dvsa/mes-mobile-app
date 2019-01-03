@@ -92,6 +92,22 @@ describe('JournalSlotComponent', () => {
         })
     }));
 
+    describe('Class', () => {
+      describe('isSpecialNeedsSlot', () => {
+        it('should return true if specialNeeds is a non-blank string', () => {
+          expect(component.isSpecialNeedsSlot()).toBe(true);
+        });
+        it('should return false if specialNeeds is blank', () => {
+          component.slot.booking.application.specialNeeds = '';
+          expect(component.isSpecialNeedsSlot()).toBe(false);
+        });
+        it('should return false if specialNeeds is missing', () => {
+          delete component.slot.booking.application;
+          expect(component.isSpecialNeedsSlot()).toBe(false);
+        });
+      });
+    });
+
     describe('DOM', () => {
       describe('Component Interaction', () => {
         it('should render a journal-indicator component', () => {
