@@ -16,6 +16,8 @@ interface JournalPageState {
   testSlots$: Observable<ExaminerWorkSchedule[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
+
+  hasLoaded: boolean,
 }
 
 @IonicPage()
@@ -42,8 +44,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private store: Store<StoreModel>
   ) {
     super(platform, navController, authenticationProvider);
-
-    this.createLoadingSpinner();
   }
 
   ngOnInit(): void {
@@ -53,6 +53,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       testSlots$: this.store.select(getJournalState).map(getTestSlots),
       error$: this.store.select(getJournalState).map(getError),
       isLoading$: this.store.select(getJournalState).map(getIsLoading),
+      hasLoaded: true,
     };
 
     const { testSlots$, error$, isLoading$ } = this.pageState;
@@ -61,7 +62,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       testSlots$,
       // Run any transformations necessary here
       error$.map(this.showError),
-      isLoading$.map(this.handleLoadingSpinner)
+      isLoading$
     );
 
     this.subscription = merged.subscribe();
@@ -73,7 +74,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   handleLoadingSpinner = (isLoading: boolean): void => {
-    isLoading ? this.loadingSpinner.present() : this.loadingSpinner.dismiss();
+    if (isLoading) {
+      this.createLoadingSpinner();
+      this.loadingSpinner.present().then(() => this.loadingSpinner.dismiss());
+    }
   }
 
   showError = (error: MesError): void => {
