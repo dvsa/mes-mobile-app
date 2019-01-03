@@ -13,6 +13,9 @@ export const environment : EnvironmentFile = {
     openIdConnectUrl: 'sts.windows.net/6c448d90-4ca1-4caf-ab59-0a2aa67d7801',
     identityPoolId: 'eu-west-1:f5a0346e-9bbb-4153-affd-bbe59cd5b7a3',
   },
+  aws: {
+    region: 'eu-west-1',
+  },
   journal: {
     journalUrl: 'https://vulv731rce.execute-api.eu-west-1.amazonaws.com/default'
   }
