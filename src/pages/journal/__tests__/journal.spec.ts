@@ -1,15 +1,21 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
+import { IonicModule, NavController, NavParams, Config, Platform, LoadingController, ToastController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, LoadingControllerMock, ToastControllerMock } from 'ionic-mocks-jest';
 import { By } from '@angular/platform-browser';
 
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
 import { JournalProvider } from '../../../providers/journal/journal';
-import { JournalServiceMock } from '../../../providers/journal/__mocks__/journal.mock';
+import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { StoreModule } from '@ngrx/store';
+import { journalReducer } from '../journal.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { JournalEffects } from '../journal.effects';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -18,13 +24,20 @@ describe('JournalPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JournalPage],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule,
+        StoreModule.forRoot({
+          journal: journalReducer
+        }),
+        StoreDevtoolsModule.instrument(),
+        EffectsModule.forRoot([JournalEffects])],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
+        { provide: ToastController, useFactory: () => ToastControllerMock.instance() },
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: JournalProvider, useClass: JournalServiceMock },
-        { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
       ]
     })
@@ -32,6 +45,7 @@ describe('JournalPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(JournalPage);
         component = fixture.componentInstance;
+        component.subscription = new Subscription();
       });
   }));
 
@@ -54,7 +68,8 @@ describe('JournalPage', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
-      const noOfSlotsReturned = component.journalSlot.length;
+      let noOfSlotsReturned: number;
+      component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'ion-card')).toBeTruthy();
     });

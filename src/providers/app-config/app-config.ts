@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 import { AppConfig } from './app-config.model';
 import { EnviromentFile } from '../../environment/models/environment.model';
 import { environment } from '../../environment/environment.dev';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AppConfigProvider {
@@ -31,9 +31,11 @@ export class AppConfigProvider {
 
   private getRemoteData = (): Observable<any> => {
     return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl)
-    .map((res) => {
-      this.mapConfig(res.body.data);
-    });
+      .pipe(
+        map((res) => {
+          this.mapConfig(res.body.data);
+        })
+      );
   }
 
   private getLocalData = () => {
@@ -51,6 +53,9 @@ export class AppConfigProvider {
         clientId: data.authentication.clientId,
         logoutUrl: data.authentication.logoutUrl,
       },
+      journal: {
+        journalUrl: data.journal.journalUrl
+      }
     }
   }
 }

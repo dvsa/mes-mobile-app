@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 import { EnviromentFile } from '../../../environment/models/environment.model';
 import { localEnvironmentMock } from './environment.mock';
@@ -22,6 +22,9 @@ export class AppConfigProviderMock {
         redirectUrl: localEnvironmentMock.authentication.redirectUrl,
         resourceUrl: localEnvironmentMock.authentication.resourceUrl,
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
+      },
+      journal: {
+        journalUrl: localEnvironmentMock.journal.journalUrl
       }
     } ;
   }

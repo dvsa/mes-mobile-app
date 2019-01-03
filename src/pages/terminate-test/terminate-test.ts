@@ -18,4 +18,8 @@ export class TerminateTestPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider)
   }
+
+  popToRoot() {
+    this.navCtrl.popToRoot();
+  }
 }

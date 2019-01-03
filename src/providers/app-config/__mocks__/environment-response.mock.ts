@@ -10,6 +10,9 @@ export const environmentResponseMock = {
           'clientId': 'remote-authentication-client-id',
           'redirectUrl': 'remote-authentication-redirect-url',
           'logoutUrl' : 'remote-logout-url'
+      },
+      'journal' : {
+        'journalUrl': 'remote-journal-url'
       }
     }
   }

@@ -18,5 +18,8 @@ export class OfficePage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider)
   }
-
+  
+  popToRoot() {
+    this.navCtrl.popToRoot();
+  }
 }
