@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast } from 'ionic-angular';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -11,13 +12,13 @@ import { getTestSlots, getError, getIsLoading } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { ExaminerWorkSchedule } from '../../common/domain/Journal';
 import { MesError } from '../../common/mes-error.model';
+import { map } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
 
 interface JournalPageState {
   testSlots$: Observable<ExaminerWorkSchedule[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
-
-  hasLoaded: boolean,
 }
 
 @IonicPage()
@@ -30,8 +31,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   pageState: JournalPageState;
 
-  loadingSpinner: any;
-  toast: any;
+  loadingSpinner: Loading;
+  toast: Toast;
   subscription: Subscription;
 
   constructor(
@@ -41,31 +42,39 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public navParams: NavParams,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private store: Store<StoreModel>
+    private store$: Store<StoreModel>
   ) {
     super(platform, navController, authenticationProvider);
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new journalActions.LoadJournal());
+    this.store$.dispatch(new journalActions.LoadJournal());
 
     this.pageState = {
-      testSlots$: this.store.select(getJournalState).map(getTestSlots),
-      error$: this.store.select(getJournalState).map(getError),
-      isLoading$: this.store.select(getJournalState).map(getIsLoading),
-      hasLoaded: true,
+      testSlots$: this.store$.pipe(
+        select(getJournalState),
+        map(getTestSlots)
+      ),
+      error$: this.store$.pipe(
+        select(getJournalState),
+        map(getError)
+      ),
+      isLoading$: this.store$.pipe(
+        select(getJournalState),
+        map(getIsLoading)
+      )
     };
 
     const { testSlots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
-    const merged = Observable.merge(
+    const merged$ = merge(
       testSlots$,
       // Run any transformations necessary here
-      error$.map(this.showError),
-      isLoading$
+      error$.pipe(map(this.showError)),
+      isLoading$.pipe(map(this.handleLoadingSpinner))
     );
 
-    this.subscription = merged.subscribe();
+    this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {

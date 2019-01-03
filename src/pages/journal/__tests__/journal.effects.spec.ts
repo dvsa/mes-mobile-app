@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { JournalEffects } from '../journal.effects';
 import { Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { JournalProvider } from '../../../providers/journal/journal'
 import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
@@ -13,8 +13,8 @@ export class TestActions extends Actions {
     super(empty());
   }
 
-  set stream(source: Observable<any>) {
-    this.source = source;
+  set stream$(source$: Observable<any>) {
+    this.source = source$;
   }
 }
 

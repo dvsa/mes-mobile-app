@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 import { EnviromentFile } from '../../../environment/models/environment.model';
 import { localEnvironmentMock } from './environment.mock';

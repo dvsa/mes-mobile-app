@@ -15,7 +15,7 @@ import { journalReducer } from '../journal.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../journal.effects';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
