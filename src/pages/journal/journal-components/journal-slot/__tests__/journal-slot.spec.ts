@@ -8,6 +8,7 @@ import { JournalCandidateComponent } from '../../journal-candidate/journal-candi
 import { IonicModule, Config } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks-jest';
+import { JournalIndicatorsComponent } from '../../journal-indicators/journal-indicators';
 
 describe('JournalSlotComponent', () => {
     let fixture: ComponentFixture<JournalSlotComponent>;
@@ -76,6 +77,7 @@ describe('JournalSlotComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 JournalSlotComponent,
+                MockComponent(JournalIndicatorsComponent),
                 MockComponent(JournalTimeComponent),
                 MockComponent(JournalTestDetailsComponent),
                 MockComponent(JournalTestOutcomeComponent),
@@ -91,28 +93,33 @@ describe('JournalSlotComponent', () => {
     }));
 
     describe('DOM', () => {
-    describe('Component Interaction', () => {
-       it('should pass something to sub-component journal-time input', () => {
-           fixture.detectChanges();
-           const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalTimeComponent))).componentInstance;
-           expect(subByDirective.time).toBe('2018-12-10T09:07:00+00:00');
-        });  // unit tests for the component template
+      describe('Component Interaction', () => {
+        it('should render a journal-indicator component', () => {
+          const indicatorComponent = fixture.debugElement.query(By.directive(MockComponent(JournalIndicatorsComponent))).componentInstance;
+          expect(indicatorComponent).toBeDefined();
+        });
+
+        it('should pass something to sub-component journal-time input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalTimeComponent))).componentInstance;
+          expect(subByDirective.time).toBe('2018-12-10T09:07:00+00:00');
+        });
 
         it('should pass something to sub-component journal-candidate input', () => {
-            fixture.detectChanges();
-            const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalCandidateComponent))).componentInstance;
-            expect(subByDirective.name.title).toBe('Miss');
-            expect(subByDirective.name.firstName).toBe('Florence');
-            expect(subByDirective.name.lastName).toBe('Pearson');
-            expect(subByDirective.testCategory).toBe('B57mins');
-         });  // unit tests for the component template
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalCandidateComponent))).componentInstance;
+          expect(subByDirective.name.title).toBe('Miss');
+          expect(subByDirective.name.firstName).toBe('Florence');
+          expect(subByDirective.name.lastName).toBe('Pearson');
+          expect(subByDirective.testCategory).toBe('B57mins');
+        });
 
-         it('should pass something to sub-component journal-test-details input', () => {
-            fixture.detectChanges();
-            const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalTestDetailsComponent))).componentInstance;
-            expect(subByDirective.testCentreName).toBe('Example Test Centre');
-         });  // unit tests for the component template
-    });
+        it('should pass something to sub-component journal-test-details input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(JournalTestDetailsComponent))).componentInstance;
+          expect(subByDirective.testCentreName).toBe('Example Test Centre');
+        });
+      });
   });
 
 }); 

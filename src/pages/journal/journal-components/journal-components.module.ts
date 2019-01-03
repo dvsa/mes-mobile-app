@@ -2,14 +2,18 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 
 import { JournalTestDetailsComponent } from './journal-test-details/journal-test-details';
+import { JournalIndicatorsComponent } from './journal-indicators/journal-indicators';
+import { JournalTimeComponent } from './journal-time/journal-time';
+import { JournalCandidateComponent } from './journal-candidate/journal-candidate';
 import { JournalTestOutcomeComponent } from './journal-test-outcome/journal-test-outcome';
-import { JournalTimeComponent} from './journal-time/journal-time';
-import { JournalCandidateComponent} from './journal-candidate/journal-candidate';
 import { JournalSlotComponent } from './journal-slot/journal-slot';
 
 @NgModule({
 	declarations: [
-		JournalTestDetailsComponent,
+		JournalTestDetailsComponent, 
+		JournalIndicatorsComponent, 
+		JournalTimeComponent, 
+		JournalCandidateComponent, 
 		JournalTestOutcomeComponent, 
 		JournalTimeComponent,
 		JournalCandidateComponent,
@@ -17,10 +21,11 @@ import { JournalSlotComponent } from './journal-slot/journal-slot';
 	],
 	imports: [IonicModule],
 	exports: [
-		JournalTestDetailsComponent,
-		JournalTestOutcomeComponent,
-		JournalTimeComponent,
-		JournalCandidateComponent,
+		JournalTestDetailsComponent, 
+		JournalIndicatorsComponent, 
+		JournalTimeComponent, 
+		JournalCandidateComponent, 
+		JournalTestOutcomeComponent, 
 		JournalSlotComponent
 	]
 })
