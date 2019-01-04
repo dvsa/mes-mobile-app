@@ -18,11 +18,11 @@ import { JournalTestOutcomeComponent } from './journal-components/journal-test-o
   declarations: [
     JournalPage,
     JournalTestDetailsComponent,
-		JournalIndicatorsComponent,
-		JournalTimeComponent,
-		JournalCandidateComponent,
-		JournalTestOutcomeComponent,
-		JournalSlotComponent
+    JournalIndicatorsComponent,
+    JournalTimeComponent,
+    JournalCandidateComponent,
+    JournalTestOutcomeComponent,
+    JournalSlotComponent
   ],
   imports: [
     IonicPageModule.forChild(JournalPage),
