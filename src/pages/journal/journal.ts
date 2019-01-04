@@ -81,18 +81,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       isLoading$.pipe(map(this.handleLoadingSpinner))
     );
     this.createLoadingSpinner();
-    this.subscription = merged$.subscribe((data) => {
-      if (data) {
-        const slots = this.slotSelector.getSlotTypes(data);
-        for (const slot of slots) {
-          const factory = this.resolver.resolveComponentFactory(slot.component);
-          const componentRef = this.slotContainer.createComponent(factory);
-          (<SlotComponent>componentRef.instance).slot = slot.slotData;
-        }
-      }
-    });
+    this.subscription = merged$.subscribe((data) => this.createSlots(data));
   }
-
 
   ngOnDestroy(): void {
     // Using .merge helps with unsubscribing
@@ -111,6 +101,17 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
+  }
+
+  private createSlots = (slotData: any) => {
+    if (slotData) {
+      const slots = this.slotSelector.getSlotTypes(slotData);
+      for (const slot of slots) {
+        const factory = this.resolver.resolveComponentFactory(slot.component);
+        const componentRef = this.slotContainer.createComponent(factory);
+        (<SlotComponent>componentRef.instance).slot = slot.slotData;
+      }
+    }
   }
 
   private createLoadingSpinner = () => {
