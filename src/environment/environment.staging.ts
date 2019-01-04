@@ -1,6 +1,6 @@
-import { EnviromentFile } from './models/environment.model';
+import { EnvironmentFile } from './models/environment.model';
 
-export const environment: EnviromentFile = {
+export const environment: EnvironmentFile = {
   isRemote: false,
   googleAnalyticsId: 'UA-129814222-1',
   userIdDimensionIndex: 1,
@@ -11,4 +11,7 @@ export const environment: EnviromentFile = {
     redirectUrl: '',
     logoutUrl: '',
   },
+  journal: {
+    journalUrl: '',
+  }
 };
