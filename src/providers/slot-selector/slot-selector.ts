@@ -9,9 +9,9 @@ export class SlotSelectorProvider {
 
   public getSlotTypes = (slots: any): SlotItem[] => {
 
-    let result: SlotItem[] = [];
+    const result: SlotItem[] = [];
     if (Array.isArray(slots)) {
-      for (let slot of slots) {
+      for (const slot of slots) {
         result.push(new SlotItem(
           this.resolveComponentName(slot.vehicleSlotType),
           slot

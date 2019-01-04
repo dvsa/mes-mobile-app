@@ -1,7 +1,7 @@
-import { TestBed } from "@angular/core/testing";
-import { SlotSelectorProvider } from "../slot-selector";
+import { TestBed } from '@angular/core/testing';
+import { SlotSelectorProvider } from '../slot-selector';
 
-import { JournalSlotComponent } from "../../../pages/journal/journal-components/journal-slot/journal-slot";
+import { JournalSlotComponent } from '../../../pages/journal/journal-components/journal-slot/journal-slot';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
@@ -30,14 +30,14 @@ describe('Slot Selector', () => {
       expect(slotSelector.getSlotTypes('not a slot').length).toBe(0);
     });
     it('should provide correct component when test type is B57mins', () => {
-      let slots = [
+      const slots = [
         {
           vehicleSlotType:  'B57mins',
           testData: 'test data for Cat B'
         }
       ];
 
-      let response = slotSelector.getSlotTypes(slots);
+      const response = slotSelector.getSlotTypes(slots);
 
       expect(response.length).toBe(1);
       expect(response[0].component).toBe(JournalSlotComponent);

@@ -83,10 +83,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.createLoadingSpinner();
     this.subscription = merged$.subscribe((data) => {
       if (data) {
-        let slots = this.slotSelector.getSlotTypes(data);
-        for (let slot of slots) {
+        const slots = this.slotSelector.getSlotTypes(data);
+        for (const slot of slots) {
           const factory = this.resolver.resolveComponentFactory(slot.component);
-          let componentRef = this.slotContainer.createComponent(factory);
+          const componentRef = this.slotContainer.createComponent(factory);
           (<SlotComponent>componentRef.instance).slot = slot.slotData;
         }
       }
