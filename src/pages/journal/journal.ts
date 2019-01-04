@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +13,8 @@ import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
+import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
+import { SlotComponent } from '../../providers/slot-selector/slot-component.interface';
 
 interface JournalPageState {
   testSlots$: Observable<ExaminerWorkSchedule[]>,
@@ -28,6 +30,9 @@ interface JournalPageState {
 
 export class JournalPage extends BasePageComponent implements OnInit, OnDestroy {
 
+  @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
+
+
   pageState: JournalPageState;
 
   loadingSpinner: Loading;
@@ -42,7 +47,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public navParams: NavParams,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private store$: Store<StoreModel>
+    private store$: Store<StoreModel>,
+    private slotSelector: SlotSelectorProvider,
+    private resolver: ComponentFactoryResolver
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -74,7 +81,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       isLoading$.pipe(map(this.handleLoadingSpinner))
     );
     this.createLoadingSpinner();
-    this.subscription = merged$.subscribe();
+    this.subscription = merged$.subscribe(this.createSlots);
   }
 
   ngOnDestroy(): void {
@@ -96,6 +103,17 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.toast.present();
   }
 
+  private createSlots = (slotData: any) => {
+    if (slotData) {
+      const slots = this.slotSelector.getSlotTypes(slotData);
+      for (const slot of slots) {
+        const factory = this.resolver.resolveComponentFactory(slot.component);
+        const componentRef = this.slotContainer.createComponent(factory);
+        (<SlotComponent>componentRef.instance).slot = slot.slotData;
+      }
+    }
+  }
+
   private createLoadingSpinner = () => {
     this.loadingSpinner = this.loadingController.create({
       dismissOnPageChange: true,
@@ -114,7 +132,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       duration: 5000
     });
   }
-  
+
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
   }

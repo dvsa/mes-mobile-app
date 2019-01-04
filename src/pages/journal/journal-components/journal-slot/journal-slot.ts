@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
+import { SlotComponent } from '../../../../providers/slot-selector/slot-component.interface';
 
 @Component({
   selector: 'journal-slot',
   templateUrl: 'journal-slot.html'
 })
-export class JournalSlotComponent {
+export class JournalSlotComponent implements SlotComponent {
   @Input()
   slot: any;
 
