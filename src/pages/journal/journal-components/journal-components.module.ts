@@ -10,23 +10,21 @@ import { JournalSlotComponent } from './journal-slot/journal-slot';
 
 @NgModule({
 	declarations: [
-		JournalTestDetailsComponent, 
-		JournalIndicatorsComponent, 
-		JournalTimeComponent, 
-		JournalCandidateComponent, 
-		JournalTestOutcomeComponent, 
+		JournalTestDetailsComponent,
+		JournalIndicatorsComponent,
 		JournalTimeComponent,
 		JournalCandidateComponent,
+		JournalTestOutcomeComponent,
 		JournalSlotComponent
 	],
 	imports: [IonicModule],
 	exports: [
-		JournalTestDetailsComponent, 
-		JournalIndicatorsComponent, 
-		JournalTimeComponent, 
-		JournalCandidateComponent, 
-		JournalTestOutcomeComponent, 
+		JournalTestDetailsComponent,
+		JournalIndicatorsComponent,
+		JournalTimeComponent,
+		JournalCandidateComponent,
+		JournalTestOutcomeComponent,
 		JournalSlotComponent
-	]
+  ],
 })
 export class JournalComponentsModule {}

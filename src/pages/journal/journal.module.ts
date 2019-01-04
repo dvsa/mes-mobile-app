@@ -7,10 +7,13 @@ import { JournalComponentsModule } from './journal-components/journal-components
 import { JournalPage } from './journal';
 import { journalReducer } from './journal.reducer';
 import { JournalEffects } from './journal.effects';
+import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
+import { JournalSlotComponent } from './journal-components/journal-slot/journal-slot';
 
 @NgModule({
   declarations: [
     JournalPage,
+    JournalSlotComponent
   ],
   imports: [
     IonicPageModule.forChild(JournalPage),
@@ -19,5 +22,9 @@ import { JournalEffects } from './journal.effects';
     JournalComponentsModule,
     ComponentsModule,
   ],
+  entryComponents: [JournalSlotComponent],
+  providers: [
+    SlotSelectorProvider
+  ]
 })
 export class JournalPageModule {}
