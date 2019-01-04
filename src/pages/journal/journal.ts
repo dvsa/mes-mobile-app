@@ -81,7 +81,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       isLoading$.pipe(map(this.handleLoadingSpinner))
     );
     this.createLoadingSpinner();
-    this.subscription = merged$.subscribe((data) => this.createSlots(data));
+    this.subscription = merged$.subscribe(this.createSlots);
   }
 
   ngOnDestroy(): void {
