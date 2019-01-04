@@ -32,8 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (!this.platform.is('ios')) return next.handle(request);
-    const url = new URL(request.url);
-    const { host, pathname } = url;
+    const { host, pathname } = new URL(request.url);
 
     return this.createCredentials().pipe(
       map(creds => this.sign(creds, host, pathname)),
