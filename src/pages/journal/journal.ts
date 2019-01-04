@@ -82,12 +82,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     );
     this.createLoadingSpinner();
     this.subscription = merged$.subscribe((data) => {
-      let slots = this.slotSelector.getSlotTypes(data);
-
-      for (let slot of slots) {
-        const factory = this.resolver.resolveComponentFactory(slot.component);
-        let componentRef = this.slotContainer.createComponent(factory);
-        (<SlotComponent>componentRef.instance).slot = slot.slotData;
+      if (data) {
+        let slots = this.slotSelector.getSlotTypes(data);
+        for (let slot of slots) {
+          const factory = this.resolver.resolveComponentFactory(slot.component);
+          let componentRef = this.slotContainer.createComponent(factory);
+          (<SlotComponent>componentRef.instance).slot = slot.slotData;
+        }
       }
     });
   }

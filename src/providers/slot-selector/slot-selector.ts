@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JournalSlotComponent } from '../../pages/journal/journal-components/journal-slot/journal-slot';
 import { SlotItem } from './slot-item';
-import { SlotComponent } from './slot-component.interface';
 
 @Injectable()
 export class SlotSelectorProvider {
@@ -9,10 +8,6 @@ export class SlotSelectorProvider {
   constructor() { }
 
   public getSlotTypes = (slots: any): SlotItem[] => {
-
-    if(slots === undefined ) {
-      return []
-    }
 
     let result: SlotItem[] = [];
 
@@ -25,12 +20,11 @@ export class SlotSelectorProvider {
     return result;
   }
 
-  private resolveComponentName = (slotType: string): SlotComponent => {
+  private resolveComponentName = (slotType: string) => {
     switch (slotType) {
       case 'B57mins':
-        return new JournalSlotComponent
       default:
-        return new class BlankComponent implements SlotComponent { slot = {} }
+        return JournalSlotComponent
     }
   }
 }

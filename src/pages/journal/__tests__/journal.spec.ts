@@ -16,7 +16,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs/Subscription';
-import { JournalComponentsModule } from '../journal-components/journal-components.module';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -33,7 +32,6 @@ describe('JournalPage', () => {
         }),
         StoreDevtoolsModule.instrument(),
         EffectsModule.forRoot([JournalEffects]),
-        JournalComponentsModule
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -77,6 +75,6 @@ describe('JournalPage', () => {
       component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'journal-slot')).toBeTruthy();
-    }); 
+    });
   });
 });
