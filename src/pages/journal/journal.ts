@@ -130,14 +130,18 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   };
 
-  public refreshJournal = (refresher: Refresher) => {
+  public pullRefreshJournal = (refresher: Refresher) => {
     this.loadJournal();
     // todo - dismiss refresher when journal loaded
     setTimeout(() => {
       refresher.complete();
     }, 200);
   };
-  
+
+  public refreshJournal = () => {
+    this.loadJournal();
+  };
+
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
   }
