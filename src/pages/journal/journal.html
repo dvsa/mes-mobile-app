@@ -8,6 +8,14 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="refreshJournal($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing Journal...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card>
     <ion-card-header>
       <ion-card-title>

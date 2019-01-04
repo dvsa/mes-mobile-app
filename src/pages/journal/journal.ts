@@ -1,5 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast } from 'ionic-angular';
+import {
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  Platform,
+  ToastController,
+  Loading,
+  Toast,
+  Refresher
+} from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -48,7 +58,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.store$.dispatch(new journalActions.LoadJournal());
+    this.loadJournal();
 
     this.pageState = {
       testSlots$: this.store$.pipe(
@@ -73,7 +83,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingSpinner))
     );
-    this.createLoadingSpinner();
     this.subscription = merged$.subscribe();
   }
 
@@ -82,26 +91,31 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.subscription.unsubscribe();
   }
 
-  handleLoadingSpinner = (isLoading: boolean): void => {
-    if (isLoading) {
-      this.loadingSpinner.present();
-    } else {
-      this.loadingSpinner.dismiss();
-    }
+  loadJournal() {
+    this.store$.dispatch(new journalActions.LoadJournal());
+    this.createLoadingSpinner();
   }
+
+  handleLoadingSpinner = (isLoading: boolean): void => {
+    if (!isLoading && this.loadingSpinner != null) {
+      this.loadingSpinner.dismiss();
+      this.loadingSpinner = null;
+    }
+  };
 
   showError = (error: MesError): void => {
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
-  }
+  };
 
   private createLoadingSpinner = () => {
     this.loadingSpinner = this.loadingController.create({
       dismissOnPageChange: true,
       spinner: 'circles'
     });
-  }
+    this.loadingSpinner.present();
+  };
 
   private createToast = (errorMessage: string) => {
     // This is just a temporary way to display the error
@@ -113,5 +127,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       cssClass: 'mes-toast-message-error',
       duration: 5000
     });
-  }
+  };
+
+  public refreshJournal = (refresher: Refresher) => {
+    this.loadJournal();
+    // todo - dismiss refresher when journal loaded
+    setTimeout(() => {
+      refresher.complete();
+    }, 200);
+  };
 }
