@@ -1,11 +1,11 @@
-import { EnviromentFile } from '../../../environment/models/environment.model';
+import { EnvironmentFile } from '../../../environment/models/environment.model';
 
-export const remoteEnvironmentMock : EnviromentFile = {
+export const remoteEnvironmentMock : EnvironmentFile = {
   isRemote: true,
   remoteSettingsUrl: 'remote-url'
 }
 
-export const localEnvironmentMock: EnviromentFile = {
+export const localEnvironmentMock: EnvironmentFile = {
   isRemote: false,
   googleAnalyticsId: 'local-ga-id',
   userIdDimensionIndex: 2018,

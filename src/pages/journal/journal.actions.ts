@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ExaminerWorkSchedule } from '../../common/domain/Journal';
+import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { MesError } from '../../common/mes-error.model';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';

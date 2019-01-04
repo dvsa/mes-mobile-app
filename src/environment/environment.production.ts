@@ -1,6 +1,6 @@
-import { EnviromentFile } from './models/environment.model';
+import { EnvironmentFile } from './models/environment.model';
 
-export const environment: EnviromentFile = {
+export const environment: EnvironmentFile = {
   isRemote: true,
-  remoteSettingsUrl: 'assets/config/environmentProduction.json',
+  remoteSettingsUrl: 'assets/config/environmentProduction.json'
 };

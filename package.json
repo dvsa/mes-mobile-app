@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
-    "bootstrap": "json2ts schema/schemaExaminerSchedule.json > src/common/domain/Journal.d.ts",
+    "bootstrap": "json2ts schema/schemaExaminerSchedule.json > src/common/domain/DJournal.ts",
     "build": "ionic-app-scripts build",
     "device": "ionic cordova run ios --device --development --buildConfig buildScripts/build.json",
     "lint": "ionic-app-scripts lint",

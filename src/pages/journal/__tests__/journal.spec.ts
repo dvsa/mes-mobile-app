@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs/Subscription';
+import { JournalComponentsModule } from '../journal-components/journal-components.module';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -24,12 +25,16 @@ describe('JournalPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JournalPage],
-      imports: [IonicModule, AppModule,
+      imports: [
+        IonicModule,
+        AppModule,
         StoreModule.forRoot({
           journal: journalReducer
         }),
         StoreDevtoolsModule.instrument(),
-        EffectsModule.forRoot([JournalEffects])],
+        EffectsModule.forRoot([JournalEffects]),
+        JournalComponentsModule
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
@@ -64,14 +69,14 @@ describe('JournalPage', () => {
       componentEl = fixture.debugElement;
     });
 
-    it('there should be one card for every journal entry', () => {
+    it('there should be one slot for every journal entry', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
       let noOfSlotsReturned: number;
       component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
-      expect(slotsList.children.every((child) => child.name === 'ion-card')).toBeTruthy();
-    });
+      expect(slotsList.children.every((child) => child.name === 'journal-slot')).toBeTruthy();
+    }); 
   });
 });

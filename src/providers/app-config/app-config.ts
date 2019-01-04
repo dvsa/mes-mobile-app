@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { AppConfig } from './app-config.model';
-import { EnviromentFile } from '../../environment/models/environment.model';
-import { environment } from '../../environment/environment.dev';
+import { environment } from '../../environment/environment';
 import { map } from 'rxjs/operators';
+import { EnvironmentFile } from '../../environment/models/environment.model';
 
 @Injectable()
 export class AppConfigProvider {
 
-  environmentFile: EnviromentFile = environment;
+  environmentFile: EnvironmentFile = environment;
 
   private appConfig: AppConfig;
 

@@ -1,6 +1,6 @@
-export type EnviromentFile = {
+export type EnvironmentFile = {
   isRemote: boolean,
-  remoteSettingsUrl?: string ,
+  remoteSettingsUrl?: string,
   googleAnalyticsId?: string,
   userIdDimensionIndex?: number,
   authentication?: {

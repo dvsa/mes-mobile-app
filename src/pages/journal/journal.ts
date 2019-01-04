@@ -13,14 +13,13 @@ import {
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-
+import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
 import { getTestSlots, getError, getIsLoading } from './journal.selector';
 import { getJournalState } from './journal.reducer';
-import { ExaminerWorkSchedule } from '../../common/domain/Journal';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -44,6 +43,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   loadingSpinner: Loading;
   toast: Toast;
   subscription: Subscription;
+  start = '2018-12-10T08:10:00+00:00';
 
   constructor(
     public navController: NavController,
@@ -127,6 +127,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       cssClass: 'mes-toast-message-error',
       duration: 5000
     });
+
   };
 
   public refreshJournal = (refresher: Refresher) => {
@@ -136,4 +137,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       refresher.complete();
     }, 200);
   };
+  
+  gotoWaitingRoom($event) {
+    console.log('going to waiting room with ', $event);
+  }
+
 }
