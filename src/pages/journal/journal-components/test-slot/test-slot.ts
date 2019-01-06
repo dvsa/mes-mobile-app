@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { get } from 'lodash';
-import { SlotComponent } from '../../../../providers/slot-selector/slot-component.interface';
+import { SlotComponent } from '../slot/slot';
 
 @Component({
   selector: 'test-slot',
