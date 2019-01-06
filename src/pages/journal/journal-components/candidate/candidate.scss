@@ -1,0 +1,29 @@
+candidate {
+    & > div {
+      height: 100%;
+      padding: 0.3em 0.75em;
+      background-color: map-get($colors-gds, gds-grey-4);
+      border-radius: 13px;
+      @include box-shadow(0px, 2px, 4px, rgba(0, 0, 0, 0.55));
+      &.candidate-test-complete-text {
+        color: map-get($colors-gds, gds-grey-1);
+      }
+      img {
+        &.candidate-category-icon-completed {
+          opacity: 0.5;
+        }
+      }
+      .catb {
+        width: 35px;
+        height: 17px;
+      }
+      .candidate-name {
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .test-category-category-complete-text {
+        color: map-get($colors, journalTestCategory )
+      }
+    }
+  }
