@@ -13,6 +13,7 @@ import { CandidateComponent } from './journal-components/candidate/candidate';
 import { TestOutcomeComponent } from './journal-components/test-outcome/test-outcome';
 import { TestSlotComponent } from './journal-components/test-slot/test-slot';
 import { IndicatorsComponent } from './journal-components/indicators/indicators';
+import { JournalProvider } from '../../providers/journal/journal';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { IndicatorsComponent } from './journal-components/indicators/indicators'
     TestSlotComponent
   ],
   providers: [
+    JournalProvider,
     SlotSelectorProvider
   ]
 })
