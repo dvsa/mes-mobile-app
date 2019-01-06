@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SlotSelectorProvider } from '../slot-selector';
+import { TestSlotComponent } from '../../../pages/journal/journal-components/test-slot/test-slot';
 
-import { JournalSlotComponent } from '../../../pages/journal/journal-components/journal-slot/journal-slot';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
@@ -40,7 +40,7 @@ describe('Slot Selector', () => {
       const response = slotSelector.getSlotTypes(slots);
 
       expect(response.length).toBe(1);
-      expect(response[0].component).toBe(JournalSlotComponent);
+      expect(response[0].component).toBe(TestSlotComponent);
       expect(response[0].slotData).toBe(slots[0]);
     })
   });

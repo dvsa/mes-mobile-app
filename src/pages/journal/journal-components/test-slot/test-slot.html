@@ -1,0 +1,24 @@
+<ion-card>
+  <ion-row align-items-center>
+    <ion-col col-auto>
+      <indicators [showSpecialNeedsIndicator]="isSpecialNeedsSlot()"></indicators>
+    </ion-col>
+    <ion-col col-2>
+      <time [time]="slot.slotDetail.start" [testComplete]="testComplete"></time>
+    </ion-col>
+    <ion-col col-5>
+      <candidate
+        [name]="slot.booking.candidate.candidateName"
+        [testCategory]="slot.vehicleSlotType"
+        [welshLanguage]="slot.booking.application.welshTest">
+      >
+      </candidate>
+    </ion-col>
+    <ion-col col-2>
+       <test-details [testCentreName]="slot.testCentre.centreName"></test-details>
+    </ion-col>
+    <ion-col col-2>
+      <test-outcome [slot]="slot"></test-outcome>
+    </ion-col>
+  </ion-row>
+</ion-card>

@@ -1,24 +1,23 @@
 import { NgModule } from '@angular/core';
-import { JournalSlotComponent } from '../journal-components/journal-slot/journal-slot';
-import { JournalTestDetailsComponent } from '../journal-components/journal-test-details/journal-test-details';
-import { JournalIndicatorsComponent } from '../journal-components/journal-indicators/journal-indicators';
-import { JournalTimeComponent } from '../journal-components/journal-time/journal-time';
-import { JournalCandidateComponent } from '../journal-components/journal-candidate/journal-candidate';
-import { JournalTestOutcomeComponent } from '../journal-components/journal-test-outcome/journal-test-outcome';
 import { IonicModule } from 'ionic-angular';
+import { TestSlotComponent } from '../journal-components/test-slot/test-slot';
+import { TestDetailsComponent } from '../journal-components/test-details/test-details';
+import { IndicatorsComponent } from '../journal-components/indicators/indicators';
+import { TimeComponent } from '../journal-components/time/time';
+import { CandidateComponent } from '../journal-components/candidate/candidate';
+import { TestOutcomeComponent } from '../journal-components/test-outcome/test-outcome';
 
 @NgModule({
   declarations: [
-    JournalSlotComponent,
-    JournalTestDetailsComponent,
-		JournalIndicatorsComponent,
-		JournalTimeComponent,
-		JournalCandidateComponent,
-		JournalTestOutcomeComponent,
-    JournalSlotComponent
+    TestSlotComponent,
+    TestDetailsComponent,
+		IndicatorsComponent,
+		TimeComponent,
+		CandidateComponent,
+		TestOutcomeComponent,
   ],
   entryComponents: [
-    JournalSlotComponent,
+    TestSlotComponent,
   ],
   imports: [
     IonicModule

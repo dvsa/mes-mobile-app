@@ -7,22 +7,22 @@ import { JournalPage } from './journal';
 import { journalReducer } from './journal.reducer';
 import { JournalEffects } from './journal.effects';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
-import { JournalSlotComponent } from './journal-components/journal-slot/journal-slot';
-import { JournalTestDetailsComponent } from './journal-components/journal-test-details/journal-test-details';
-import { JournalIndicatorsComponent } from './journal-components/journal-indicators/journal-indicators';
-import { JournalTimeComponent } from './journal-components/journal-time/journal-time';
-import { JournalCandidateComponent } from './journal-components/journal-candidate/journal-candidate';
-import { JournalTestOutcomeComponent } from './journal-components/journal-test-outcome/journal-test-outcome';
+import { TestDetailsComponent } from './journal-components/test-details/test-details';
+import { TimeComponent } from './journal-components/time/time';
+import { CandidateComponent } from './journal-components/candidate/candidate';
+import { TestOutcomeComponent } from './journal-components/test-outcome/test-outcome';
+import { TestSlotComponent } from './journal-components/test-slot/test-slot';
+import { IndicatorsComponent } from './journal-components/indicators/indicators';
 
 @NgModule({
   declarations: [
     JournalPage,
-    JournalTestDetailsComponent,
-    JournalIndicatorsComponent,
-    JournalTimeComponent,
-    JournalCandidateComponent,
-    JournalTestOutcomeComponent,
-    JournalSlotComponent
+    TestDetailsComponent,
+    IndicatorsComponent,
+    TimeComponent,
+    CandidateComponent,
+    TestOutcomeComponent,
+    TestSlotComponent
   ],
   imports: [
     IonicPageModule.forChild(JournalPage),
@@ -31,7 +31,7 @@ import { JournalTestOutcomeComponent } from './journal-components/journal-test-o
     ComponentsModule,
   ],
   entryComponents: [
-    JournalSlotComponent
+    TestSlotComponent
   ],
   providers: [
     SlotSelectorProvider
