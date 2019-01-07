@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SlotItem } from './slot-item';
-import { TestSlotComponent } from '../../pages/journal/journal-components/test-slot/test-slot';
+import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
 
 @Injectable()
 export class SlotSelectorProvider {

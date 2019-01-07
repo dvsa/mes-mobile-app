@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SlotSelectorProvider } from '../slot-selector';
-import { TestSlotComponent } from '../../../pages/journal/journal-components/test-slot/test-slot';
-
+import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
