@@ -9,11 +9,13 @@ journal-candidate {
         color: map-get($colors-gds, gds-grey-1);
       }
       img {
-        width: 35px;
-        height: 17px;
         &.journal-candidate-category-icon-completed {
           opacity: 0.5;
         }
+      }
+      .catb {
+        width: 35px;
+        height: 17px;
       }
       .journal-candidate-name {
         font-weight: bold;

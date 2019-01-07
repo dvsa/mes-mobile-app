@@ -2,9 +2,9 @@
     <ion-grid>
         <ion-row align-items-left>
             <ion-col><h5 class="journal-candidate-name">{{name.title}} {{name.firstName}} {{name.lastName}}</h5></ion-col>
-        </ion-row>
-      <ion-row align-items-left>
-        <ion-col col-auto><img [ngClass]="{'journal-candidate-category-icon-completed': testComplete}" src="assets/icon/test-categories/category-b.png" /></ion-col>
+            <ion-col col-auto><img src="assets/imgs/journal/Welsh.png" class="welsh-language-indicator" *ngIf="welshLanguage" [ngClass]="{'journal-candidate-category-icon-completed': testComplete}"/></ion-col>          </ion-row>
+        <ion-row align-items-left>
+          <ion-col col-auto><img class="catb" [ngClass]="{'journal-candidate-category-icon-completed': testComplete}" src="assets/icon/test-categories/category-b.png" /></ion-col>
         <ion-col>
           <h5 class="mes-text-spacing-tightest" [ngClass]="{'journal-test-category-complete-text': testComplete}">{{testCategoryDescription}}</h5>
         </ion-col>

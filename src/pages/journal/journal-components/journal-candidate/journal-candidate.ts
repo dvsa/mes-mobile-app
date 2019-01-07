@@ -15,6 +15,9 @@ export class JournalCandidateComponent {
   @Input()
   testComplete: boolean;
 
+  @Input()
+  welshLanguage: boolean;
+
   testCategoryDescription : string
   constructor() {
   }
