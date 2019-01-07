@@ -1,15 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
-  IonicPage,
-  LoadingController,
-  NavController,
-  NavParams,
-  Platform,
-  ToastController,
-  Loading,
-  Toast,
-  Refresher
-} from 'ionic-angular';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast, Refresher } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -23,6 +13,8 @@ import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
+import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
+import { SlotComponent } from '../../providers/slot-selector/slot-component.interface';
 
 interface JournalPageState {
   testSlots$: Observable<ExaminerWorkSchedule[]>,
@@ -38,9 +30,13 @@ interface JournalPageState {
 
 export class JournalPage extends BasePageComponent implements OnInit, OnDestroy {
 
+  @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
+
   pageState: JournalPageState;
 
   loadingSpinner: Loading;
+  pageRefresher: Refresher;
+
   toast: Toast;
   subscription: Subscription;
   start = '2018-12-10T08:10:00+00:00';
@@ -52,7 +48,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public navParams: NavParams,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private store$: Store<StoreModel>
+    private store$: Store<StoreModel>,
+    private slotSelector: SlotSelectorProvider,
+    private resolver: ComponentFactoryResolver
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -81,9 +79,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       testSlots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingSpinner))
+      isLoading$.pipe(map(this.handleLoadingUI))
     );
-    this.subscription = merged$.subscribe();
+    this.subscription = merged$.subscribe(this.createSlots);
   }
 
   ngOnDestroy(): void {
@@ -96,10 +94,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.createLoadingSpinner();
   }
 
-  handleLoadingSpinner = (isLoading: boolean): void => {
-    if (!isLoading && this.loadingSpinner != null) {
-      this.loadingSpinner.dismiss();
-      this.loadingSpinner = null;
+  handleLoadingUI = (isLoading: boolean): void => {
+    if (!isLoading) {
+      this.pageRefresher ? this.pageRefresher.complete() : null;
+      if (this.loadingSpinner) {
+        this.loadingSpinner.dismiss();
+        this.loadingSpinner = null;
+      }
     }
   };
 
@@ -108,6 +109,17 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.createToast(error.message);
     this.toast.present();
   };
+
+  private createSlots = (slotData: any) => {
+    if (slotData) {
+      const slots = this.slotSelector.getSlotTypes(slotData);
+      for (const slot of slots) {
+        const factory = this.resolver.resolveComponentFactory(slot.component);
+        const componentRef = this.slotContainer.createComponent(factory);
+        (<SlotComponent>componentRef.instance).slot = slot.slotData;
+      }
+    }
+  }
 
   private createLoadingSpinner = () => {
     this.loadingSpinner = this.loadingController.create({
@@ -132,10 +144,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   public pullRefreshJournal = (refresher: Refresher) => {
     this.loadJournal();
-    // todo - dismiss refresher when journal loaded
-    setTimeout(() => {
-      refresher.complete();
-    }, 200);
+    this.pageRefresher = refresher;
   };
 
   public refreshJournal = () => {
