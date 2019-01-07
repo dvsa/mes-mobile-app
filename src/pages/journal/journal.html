@@ -8,6 +8,16 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="pullRefreshJournal($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing Journal..."
+      pullMin=70
+      pullMax=500>
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -15,6 +25,9 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <button ion-button icon-only color="light" (click)="refreshJournal()">
+        <ion-icon name="md-sync"></ion-icon>
+      </button>
       <button ion-button navPush="ContactDetailsPage">Contact Details</button>
       <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
     </ion-card-content>

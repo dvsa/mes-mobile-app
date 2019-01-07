@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast, Refresher } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -32,10 +32,11 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
 
-
   pageState: JournalPageState;
 
   loadingSpinner: Loading;
+  pageRefresher: Refresher;
+
   toast: Toast;
   subscription: Subscription;
   start = '2018-12-10T08:10:00+00:00';
@@ -55,7 +56,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.store$.dispatch(new journalActions.LoadJournal());
+    this.loadJournal();
 
     this.pageState = {
       testSlots$: this.store$.pipe(
@@ -78,9 +79,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       testSlots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingSpinner))
+      isLoading$.pipe(map(this.handleLoadingUI))
     );
-    this.createLoadingSpinner();
     this.subscription = merged$.subscribe(this.createSlots);
   }
 
@@ -89,22 +89,31 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.subscription.unsubscribe();
   }
 
-  handleLoadingSpinner = (isLoading: boolean): void => {
-    if (isLoading) {
-      this.loadingSpinner.present();
-    } else {
-      this.loadingSpinner.dismiss();
-    }
+  loadJournal() {
+    this.store$.dispatch(new journalActions.LoadJournal());
+    this.createLoadingSpinner();
   }
+
+  handleLoadingUI = (isLoading: boolean): void => {
+    if (!isLoading) {
+      this.pageRefresher ? this.pageRefresher.complete() : null;
+      if (this.loadingSpinner) {
+        this.loadingSpinner.dismiss();
+        this.loadingSpinner = null;
+      }
+    }
+  };
 
   showError = (error: MesError): void => {
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
-  }
+  };
 
   private createSlots = (slotData: any) => {
     if (slotData) {
+      // Clear any dynamically created slots before adding the latest
+      this.slotContainer.clear();
       const slots = this.slotSelector.getSlotTypes(slotData);
       for (const slot of slots) {
         const factory = this.resolver.resolveComponentFactory(slot.component);
@@ -119,7 +128,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       dismissOnPageChange: true,
       spinner: 'circles'
     });
-  }
+    this.loadingSpinner.present();
+  };
 
   private createToast = (errorMessage: string) => {
     // This is just a temporary way to display the error
@@ -131,9 +141,20 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       cssClass: 'mes-toast-message-error',
       duration: 5000
     });
-  }
+
+  };
+
+  public pullRefreshJournal = (refresher: Refresher) => {
+    this.loadJournal();
+    this.pageRefresher = refresher;
+  };
+
+  public refreshJournal = () => {
+    this.loadJournal();
+  };
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
   }
+
 }
