@@ -14,7 +14,7 @@ import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
-import { SlotComponent } from '../../providers/slot-selector/slot-component.interface';
+import { SlotComponent } from './components/slot/slot';
 
 interface JournalPageState {
   testSlots$: Observable<ExaminerWorkSchedule[]>,

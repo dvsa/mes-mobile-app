@@ -78,7 +78,7 @@ describe('JournalPage', () => {
       let noOfSlotsReturned: number;
       component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
-      expect(slotsList.children.every((child) => child.name === 'journal-slot')).toBeTruthy();
+      expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
     });
   });
 });
