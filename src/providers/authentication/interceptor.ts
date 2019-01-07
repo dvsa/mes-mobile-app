@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
       .pipe(
         // Generate the signature + headers using aws4
         map((credentials: CredentialsOptions) => this.sign(credentials, host, pathname)),
-        // Switch observables returning a cloned + signed request
+        // Switch to observable returning a cloned + signed request
         switchMap((signature: any) => {
           const signedRequest = request.clone({
             setHeaders: {

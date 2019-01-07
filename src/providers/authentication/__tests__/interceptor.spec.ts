@@ -25,9 +25,8 @@ describe('Authentication interceptor', () => {
       imports: [HttpClientTestingModule],
       providers: [
         AuthInterceptor,
-        { provide: Platform, useFactory: () => PlatformMock.instance() },
-        // { provide: JournalProvider, useClass: JournalProviderMock },
         JournalProvider,
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: CognitoIdentityWrapper, useClass: CognitoIdentityWrapperMock },
         {
