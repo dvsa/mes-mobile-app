@@ -59,10 +59,10 @@ describe('TestSlotComponent', () => {
               progressiveAccess: false,
               specialNeeds: 'Candidate has dyslexia',
               entitlementCheck: false,
-              vehicleSeats: null,
-              vehicleHeight: null,
-              vehicleWidth: null,
-              vehicleLength: null,
+              vehicleSeats: 5,
+              vehicleHeight: 4,
+              vehicleWidth: 3,
+              vehicleLength: 2,
               testCategory: 'B',
               vehicleGearbox: 'Manual',
             },
@@ -139,6 +139,10 @@ describe('TestSlotComponent', () => {
           const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestDetailsComponent))).componentInstance;
           expect(subByDirective.category).toBe('B');
           expect(subByDirective.transmission).toBe('Manual');
+          expect(subByDirective.height).toBe(4);
+          expect(subByDirective.width).toBe(3);
+          expect(subByDirective.length).toBe(2);
+          expect(subByDirective.seats).toBe(5);
         });
       });
   });

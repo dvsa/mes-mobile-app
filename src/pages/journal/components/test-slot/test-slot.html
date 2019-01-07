@@ -15,9 +15,14 @@
       </candidate>
     </ion-col>
     <ion-col col-3>
-      <test-details
-      [category]="slot.booking.application.testCategory"
-      [transmission]="slot.booking.application.vehicleGearbox">
+       <test-details
+       [category]="slot.booking.application.testCategory"
+       [transmission]="slot.booking.application.vehicleGearbox"
+       [height]="slot.booking.application.vehicleHeight"
+       [width]="slot.booking.application.vehicleWidth"
+       [length]="slot.booking.application.vehicleLength"
+       [seats]="slot.booking.application.vehicleSeats"
+       >
       </test-details>
     </ion-col>
     <ion-col col-2>
