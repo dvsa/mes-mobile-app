@@ -1,3 +1,4 @@
+import { CognitoIdentityWrapper } from './../providers/authentication/cognitoIdentityWrapper';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -40,6 +41,7 @@ import { AuthInterceptor } from '../providers/authentication/interceptor';
     AppConfigProvider,
     AuthenticationProvider,
     InAppBrowser,
+    CognitoIdentityWrapper
   ]
 })
 export class AppModule {

@@ -12,23 +12,22 @@ import {
 import { CognitoIdentityCredentials, config } from 'aws-sdk';
 import { sign } from 'aws4';
 
-import { AuthenticationProvider } from './authentication';
 import { AppConfigProvider } from '../app-config/app-config';
 import { Platform } from 'ionic-angular';
+import { CognitoIdentityWrapper } from './cognitoIdentityWrapper';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  private readonly authenticationSettings: any;
   private readonly region: string;
+  private cognitoIdentity: CognitoIdentityCredentials;
 
   constructor(
-    private auth: AuthenticationProvider,
     private platform: Platform,
+    cognitoIdentityWrapper: CognitoIdentityWrapper,
     appConfig: AppConfigProvider) {
-      this.authenticationSettings = appConfig.getAppConfig().authentication;
       this.region = appConfig.getAppConfig().aws.region;
-      config.region = this.region;
+      this.cognitoIdentity = cognitoIdentityWrapper.createIdentity();
     }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -36,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!this.platform.is('ios')) return next.handle(request);
     const { host, pathname } = new URL(request.url);
 
-    return this.createCredentials()
+    return this.getCredentials()
       .pipe(
         map(() => this.sign(config.credentials, host, pathname)),
         switchMap((signature: any) => {
@@ -62,14 +61,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return options;
   }
 
-  private createCredentials(): Observable<void>  {
-    const cognitoIdentity = new CognitoIdentityCredentials({
-      IdentityPoolId: this.authenticationSettings.identityPoolId,
-      Logins: {
-        [this.authenticationSettings.openIdConnectUrl]: this.auth.getAuthenticationToken()
-      }
-    });
-    config.credentials = cognitoIdentity;
-    return from(cognitoIdentity.getPromise());
+  private getCredentials(): Observable<void>  {
+    return from(this.cognitoIdentity.getPromise());
   }
 }
