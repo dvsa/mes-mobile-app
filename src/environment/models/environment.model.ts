@@ -11,6 +11,7 @@ export type EnvironmentFile = {
     logoutUrl: string,
   },
   journal?: {
-    journalUrl: string
+    journalUrl: string,
+    backgroundRefreshTime: number
   }
 }

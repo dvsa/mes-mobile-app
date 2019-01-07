@@ -12,6 +12,7 @@ export const environment : EnvironmentFile = {
     logoutUrl: 'ttps://login.windows.net/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/logout',
   },
   journal: {
-    journalUrl: 'https://vulv731rce.execute-api.eu-west-1.amazonaws.com/default'
+    journalUrl: 'https://vulv731rce.execute-api.eu-west-1.amazonaws.com/default',
+    backgroundRefreshTime: 20000
   }
 };

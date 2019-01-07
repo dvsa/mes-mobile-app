@@ -13,5 +13,6 @@ export const environment: EnvironmentFile = {
   },
   journal: {
     journalUrl: '',
+    backgroundRefreshTime: 20000
   }
 };
