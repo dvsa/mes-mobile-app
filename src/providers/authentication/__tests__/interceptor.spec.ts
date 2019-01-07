@@ -59,9 +59,11 @@ describe('Authentication interceptor', () => {
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(false);
+      expect(httpRequest.request.headers.has('X-Amz-Date')).toBe(false);
+      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBe(false);
     });
 
-    it('should add the signed headers', () => {
+    it('should add the signed headers if running on ios', () => {
       platform.is = jest.fn().mockReturnValue(true);
       const { journalUrl } = appConfig.getAppConfig().journal;
       journalProvider.getJournal().subscribe(
@@ -70,6 +72,8 @@ describe('Authentication interceptor', () => {
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(true);
+      expect(httpRequest.request.headers.has('X-Amz-Date')).toBe(true);
+      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBe(true);
     });
 
   });
