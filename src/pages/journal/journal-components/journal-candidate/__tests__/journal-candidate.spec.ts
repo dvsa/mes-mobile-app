@@ -23,6 +23,7 @@ describe('JournalCandidateComponent', () => {
         component.name.title =  'Mr';
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
+        component.welshLanguage = false;
       });
   }));
 
@@ -78,5 +79,24 @@ describe('JournalCandidateComponent', () => {
         expect(categoryImage.src).toContain('assets/icon/test-categories/category-b.png');
       });
     });
+    
+    describe('test welsh languge true', () => {
+      it ('should display welsh language image', () => {
+        component.welshLanguage = true;
+        fixture.detectChanges();
+        const renderedImages = fixture.debugElement.queryAll(By.css('.welsh-language-indicator'));
+        expect(renderedImages).toHaveLength(1);
+      });
+    });
+
+    describe('test welsh languge false', () => {
+      it ('should not display welsh language image', () => {
+        component.welshLanguage = false;
+        fixture.detectChanges();
+        const renderedImages = fixture.debugElement.queryAll(By.css('.welsh-language-indicator'));
+        expect(renderedImages).toHaveLength(0);
+      });
+    });
+
   });
 });
