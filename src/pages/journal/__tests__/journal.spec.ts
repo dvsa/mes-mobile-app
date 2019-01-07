@@ -16,7 +16,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs/Subscription';
-import { JournalComponentsModule } from '../journal-components/journal-components.module';
+import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
+import { MockedJournalModule } from '../__mocks__/journal.module.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -33,7 +34,7 @@ describe('JournalPage', () => {
         }),
         StoreDevtoolsModule.instrument(),
         EffectsModule.forRoot([JournalEffects]),
-        JournalComponentsModule
+        MockedJournalModule
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -44,6 +45,7 @@ describe('JournalPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: SlotSelectorProvider, useClass: SlotSelectorProvider}
       ]
     })
       .compileComponents()
@@ -77,6 +79,6 @@ describe('JournalPage', () => {
       component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'journal-slot')).toBeTruthy();
-    }); 
+    });
   });
 });
