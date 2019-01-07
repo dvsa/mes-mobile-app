@@ -26,6 +26,14 @@ describe('Test Details', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+    it('should get correct icon for cat B test', () => {
+      component.category = 'B';
+      expect(component.getCategoryIcon()).toBe('assets/icon/test-categories/category-b.png');
+    });
+    it('should not show additional details for a cat B test', () => {
+      component.category = 'B';
+      expect(component.showAdditionalInformation()).toBeFalsy();
+    })
   });
 
   describe('DOM', () => {
@@ -34,14 +42,6 @@ describe('Test Details', () => {
 
     beforeEach(() => {
       componentEl = fixture.debugElement;
-    });
-
-    it('should correctly display to test centre name', () => {
-      const nameToTest = 'example test centre';
-      component.testCentreName = nameToTest;
-      fixture.detectChanges();
-      const centreName = componentEl.query(By.css('span'));
-      expect(centreName.nativeElement.innerHTML).toBe(nameToTest);
     });
 
   });

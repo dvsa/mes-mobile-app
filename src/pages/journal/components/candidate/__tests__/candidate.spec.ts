@@ -18,7 +18,6 @@ describe('CandidateComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(CandidateComponent);
         component = fixture.componentInstance;
-        component.testCategory = 'B57mins';
         component.name = { title: '', firstName: '', lastName: ''}
         component.name.title =  'Mr';
         component.name.firstName = 'Joe';
@@ -30,19 +29,6 @@ describe('CandidateComponent', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
-    });
-
-    describe('getTestCategory', () => {
-      it('should return N/A for a null test category', () => {
-        component.testCategory = null;
-        fixture.detectChanges();
-        expect(component.testCategoryDescription).toBe('N/A');
-      });
-      it('should extract the textual part of test category', () => {
-        component.testCategory = 'B57mins';
-        fixture.detectChanges();
-        expect(component.testCategoryDescription).toBe('Cat B');
-      });
     });
   });
 
@@ -62,24 +48,6 @@ describe('CandidateComponent', () => {
       });
     });
 
-    describe('test category', () => {
-      it('should be displayed', () => {
-        const categorySpan: HTMLElement = componentEl.query(By.css('ion-row:last-child h5'))
-          .nativeElement;
-        fixture.detectChanges();
-        expect(categorySpan.textContent).toBe('Cat B');
-      });
-    });
-
-    describe('test category b image', () => {
-      it ('should be displayed', () => {
-        const categoryImage: HTMLImageElement = componentEl.query(By.css('img'))
-          .nativeElement;
-        fixture.detectChanges();
-        expect(categoryImage.src).toContain('assets/icon/test-categories/category-b.png');
-      });
-    });
-    
     describe('test welsh languge true', () => {
       it ('should display welsh language image', () => {
         component.welshLanguage = true;

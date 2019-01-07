@@ -131,13 +131,14 @@ describe('TestSlotComponent', () => {
           expect(subByDirective.name.title).toBe('Miss');
           expect(subByDirective.name.firstName).toBe('Florence');
           expect(subByDirective.name.lastName).toBe('Pearson');
-          expect(subByDirective.testCategory).toBe('B57mins');
+          expect(subByDirective.welshTest).toBeFalsy();
         });
 
         it('should pass something to sub-component test-details input', () => {
           fixture.detectChanges();
           const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestDetailsComponent))).componentInstance;
-          expect(subByDirective.testCentreName).toBe('Example Test Centre');
+          expect(subByDirective.category).toBe('B');
+          expect(subByDirective.transmission).toBe('Manual');
         });
       });
   });

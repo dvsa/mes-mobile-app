@@ -1,22 +1,24 @@
-<ion-card>
-  <ion-row class="slot-row" align-items-center>
+<ion-card class="test-slot-card">
+  <ion-row class="slot-row" align-items-center class="test-slot-row">
     <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>
-    <ion-col col-auto>
+    <ion-col col-auto padding-left>
       <indicators [showSpecialNeedsIndicator]="isSpecialNeedsSlot()"></indicators>
     </ion-col>
     <ion-col col-2>
       <time [time]="slot.slotDetail.start" [testComplete]="testComplete"></time>
     </ion-col>
-    <ion-col col-5>
+    <ion-col col-4>
       <candidate
-        [name]="slot.booking.candidate.candidateName"
-        [testCategory]="slot.vehicleSlotType"
-        [welshLanguage]="slot.booking.application.welshTest">
-      >
+      [name]="slot.booking.candidate.candidateName"
+      [welshLanguage]="slot.booking.application.welshTest">
+        >
       </candidate>
     </ion-col>
-    <ion-col col-2>
-       <test-details [testCentreName]="slot.testCentre.centreName"></test-details>
+    <ion-col col-3>
+      <test-details
+      [category]="slot.booking.application.testCategory"
+      [transmission]="slot.booking.application.vehicleGearbox">
+      </test-details>
     </ion-col>
     <ion-col col-2>
       <test-outcome [slot]="slot"></test-outcome>

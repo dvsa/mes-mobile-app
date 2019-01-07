@@ -1,11 +1,14 @@
 <div>
   <ion-grid>
     <ion-row align-items-right>
-      <ion-col *ngIf="!canStartTest">
+      <ion-col *ngIf="!canStartTest && !canSubmitTest">
         <span>{{outcome}}</span>
       </ion-col>
       <ion-col *ngIf="canStartTest">
-        <span><button ion-button>Start Test</button></span>
+        <span><button class="start-test-button" ion-button>Start Test</button></span>
+      </ion-col>
+      <ion-col *ngIf="canSubmitTest">
+          <span><button class="submit-test-button" ion-button>Submit</button></span>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -1,11 +1,29 @@
 <div>
   <ion-grid>
     <ion-row align-items-center>
+      <ion-col col-2>
+        <span class="category">{{ category }}</span>
+      </ion-col>
       <ion-col>
-        <ion-icon name="pin"></ion-icon>
-        <span>{{testCentreName}}</span>
+        <img class="icon" src={{getCategoryIcon()}} />
+      </ion-col>
+      <ion-col *ngIf="showAdditionalInformation()">
+        <span class="transmission">{{ transmission }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="showAdditionalInformation()" class="additional-test-information">
+      <ion-col>
+        <span>L:</span>
+      </ion-col>
+      <ion-col>
+        <span>W:</span>
+      </ion-col>
+      <ion-col>
+        <span>H</span>
+      </ion-col>
+      <ion-col>
+        <span>Seats:</span>
       </ion-col>
     </ion-row>
   </ion-grid>
 </div>
-

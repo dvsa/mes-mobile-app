@@ -1,3 +1,19 @@
 test-details {
-
+  .category {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .icon {
+    justify-self: center;
+    align-self: center;
+    max-height: 27px;
+    width: auto;
+  }
+  .transmission {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .additional-test-information {
+    font-size: 14px;
+  }
 }
