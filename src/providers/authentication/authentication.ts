@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-native/ms-adal';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AppConfigProvider } from '../app-config/app-config';
+import { ToastController } from 'ionic-angular';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -13,6 +14,7 @@ export class AuthenticationProvider {
   constructor(
     private msAdal: MSAdal,
     private inAppBrowser: InAppBrowser,
+    public toastController: ToastController,
     appConfig: AppConfigProvider) {
     this.authenticationSettings = appConfig.getAppConfig().authentication;
   }
@@ -98,6 +100,13 @@ export class AuthenticationProvider {
   };
 
   private failedLogin = (error: any) => {
-    // Not sure what to do here
+    // This is just a temporary way to display the error
+    this.toastController.create({
+      message: error.message,
+      position: 'middle',
+      dismissOnPageChange: true,
+      cssClass: 'mes-toast-message-error',
+      duration: 5000
+    });
   };
 }
