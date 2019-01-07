@@ -51,6 +51,16 @@ describe('Authentication interceptor', () => {
       expect(interceptor).toBeDefined;
     });
 
+    it('should not modify the request if not on ios', () => {
+      const { journalUrl } = appConfig.getAppConfig().journal;
+      journalProvider.getJournal().subscribe(
+        res => {},
+        err => {}
+      );
+      const httpRequest = httpMock.expectOne(journalUrl);
+      expect(httpRequest.request.headers.has('Authorization')).toBe(false);
+    });
+
     it('should add the signed headers', () => {
       platform.is = jest.fn().mockReturnValue(true);
       const { journalUrl } = appConfig.getAppConfig().journal;
