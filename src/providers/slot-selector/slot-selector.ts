@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { JournalSlotComponent } from '../../pages/journal/journal-components/journal-slot/journal-slot';
 import { SlotItem } from './slot-item';
+import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
 
 @Injectable()
 export class SlotSelectorProvider {
@@ -25,7 +25,7 @@ export class SlotSelectorProvider {
     switch (slotType) {
       case 'B57mins':
       default:
-        return JournalSlotComponent
+        return TestSlotComponent
     }
   }
 }

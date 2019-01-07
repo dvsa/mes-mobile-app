@@ -7,7 +7,6 @@ import { MSAdal } from '@ionic-native/ms-adal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { App } from './app.component';
-import { JournalProvider } from '../providers/journal/journal';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
@@ -32,7 +31,6 @@ import { EffectsModule } from '@ngrx/effects';
     SplashScreen,
     MSAdal,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    JournalProvider,
     AppConfigProvider,
     AuthenticationProvider,
     InAppBrowser,
