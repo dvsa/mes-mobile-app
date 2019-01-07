@@ -22,6 +22,6 @@ export const localEnvironmentMock: EnvironmentFile = {
     region: 'aws-region'
   },
   journal: {
-    journalUrl: 'local-journal-url'
+    journalUrl: 'https://mock.journal.com/url'
   }
 }

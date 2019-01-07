@@ -1,11 +1,16 @@
+import { CredentialsOptions } from 'aws-sdk/lib/credentials';
 import { Injectable } from '@angular/core';
 import { config, CognitoIdentityCredentials } from 'aws-sdk';
 
 import { AuthenticationProvider } from './authentication';
 import { AppConfigProvider } from '../app-config/app-config';
+import { from } from 'rxjs/Observable/from';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CognitoIdentityWrapper {
+
   private readonly authenticationSettings: any;
   private readonly region: string;
   private cognitoIdentity: CognitoIdentityCredentials;
@@ -31,5 +36,12 @@ export class CognitoIdentityWrapper {
     // Set credentials in aws-sdk config
     config.credentials = this.cognitoIdentity;
     return this.cognitoIdentity;
+  }
+
+  getCredentials(): Observable<CredentialsOptions>  {
+    return from(this.cognitoIdentity.getPromise())
+      .pipe(
+        map(() => config.credentials)
+      );
   }
 }
