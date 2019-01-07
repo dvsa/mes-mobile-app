@@ -7,12 +7,12 @@ import { JournalPage } from './journal';
 import { journalReducer } from './journal.reducer';
 import { JournalEffects } from './journal.effects';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
-import { TestDetailsComponent } from './journal-components/test-details/test-details';
-import { TimeComponent } from './journal-components/time/time';
-import { CandidateComponent } from './journal-components/candidate/candidate';
-import { TestOutcomeComponent } from './journal-components/test-outcome/test-outcome';
-import { TestSlotComponent } from './journal-components/test-slot/test-slot';
-import { IndicatorsComponent } from './journal-components/indicators/indicators';
+import { TestDetailsComponent } from './components/test-details/test-details';
+import { TimeComponent } from './components/time/time';
+import { CandidateComponent } from './components/candidate/candidate';
+import { TestOutcomeComponent } from './components/test-outcome/test-outcome';
+import { TestSlotComponent } from './components/test-slot/test-slot';
+import { IndicatorsComponent } from './components/indicators/indicators';
 import { JournalProvider } from '../../providers/journal/journal';
 
 @NgModule({
