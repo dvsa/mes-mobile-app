@@ -8,11 +8,11 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getTestSlots, getError, getIsLoading } from './journal.selector';
+import { getTestSlots, getError, getIsLoading, getSlotChanges } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
+import { zip } from 'rxjs/observable/zip';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
 
@@ -20,6 +20,7 @@ interface JournalPageState {
   testSlots$: Observable<ExaminerWorkSchedule[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
+  slotChanges$: Observable<boolean[]>,
 }
 
 @IonicPage()
@@ -70,18 +71,23 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       isLoading$: this.store$.pipe(
         select(getJournalState),
         map(getIsLoading)
+      ),
+      slotChanges$: this.store$.pipe(
+        select(getJournalState),
+        map(getSlotChanges)
       )
     };
 
-    const { testSlots$, error$, isLoading$ } = this.pageState;
+    const { testSlots$, error$, isLoading$, slotChanges$ } = this.pageState;
     // Merge observables into one
-    const merged$ = merge(
+    const merged$ = zip(
       testSlots$,
+      slotChanges$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingUI))
+      isLoading$.pipe(map(this.handleLoadingUI)),
     );
-    this.subscription = merged$.subscribe(this.createSlots);
+    this.subscription = merged$.subscribe((this.createSlots));
   }
 
   ngOnDestroy(): void {
@@ -110,15 +116,16 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.toast.present();
   };
 
-  private createSlots = (slotData: any) => {
-    if (slotData) {
+  private createSlots = (emission: any) => {
+    if (emission[0] !== undefined && emission[1] !== undefined) {
       // Clear any dynamically created slots before adding the latest
       this.slotContainer.clear();
-      const slots = this.slotSelector.getSlotTypes(slotData);
+      const slots = this.slotSelector.getSlotTypes(emission);
       for (const slot of slots) {
         const factory = this.resolver.resolveComponentFactory(slot.component);
         const componentRef = this.slotContainer.createComponent(factory);
         (<SlotComponent>componentRef.instance).slot = slot.slotData;
+        (<SlotComponent>componentRef.instance).slotChanged = slot.slotChanged;
       }
     }
   }

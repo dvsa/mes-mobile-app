@@ -7,6 +7,15 @@ export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
   data: {},
+  slotChanges: [
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+  ],
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {

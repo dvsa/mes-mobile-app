@@ -10,6 +10,9 @@ export class TestSlotComponent implements SlotComponent {
   @Input()
   slot: any;
 
+  @Input()
+  slotChanged: boolean;
+
   constructor() {}
 
   isSpecialNeedsSlot(): boolean {
