@@ -14,6 +14,5 @@ export type JournalModel = {
   lastRefreshed: Date,
   data: ExaminerWorkSchedule,
   slots: JournalSlot[],
-  slotChanges: boolean[],
   error?: MesError,
 }
