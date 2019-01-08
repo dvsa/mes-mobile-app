@@ -1,5 +1,23 @@
 {
   "definitions": {
+    "examiner": {
+      "description": "The examiner details",
+      "type": "object",
+      "properties": {
+        "staffNumber": {
+          "$id": "#/properties/staffNumber",
+          "description": "The examiner's DSA staff number",
+          "type": "string",
+          "maxLength": 10
+        },
+        "examinerName": {
+          "$ref": "#/definitions/name"
+        },
+        "permTestCentre": {
+          "$ref": "#/definitions/testCentre"
+        }
+      }
+    },
     "testCentre": {
       "description": "Details of the test centre",
       "type": "object",
@@ -253,35 +271,37 @@
         "DSA"
       ],
       "maxLength": 15
-    }
-  },
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "https://example.com/arrays.schema.json",
-  "title": "Examiner Work Schedule",
-  "type": "object",
-  "description": "JSON Schema definition for Examiner Work Schedule",
-  "properties": {
-    "examiner": {
-      "$id": "#/properties/examiner",
-      "description": "The examiner details",
+    },
+    "booking": {
+      "description": "If this slot is booked, this contains the details",
       "type": "object",
       "properties": {
-        "staffNumber": {
-          "$id": "#/properties/staffNumber",
-          "description": "The examiner's DSA staff number",
-          "type": "string",
-          "maxLength": 10
+        "candidate": {
+          "$ref": "#/definitions/candidate"
         },
-        "examinerName": {
-          "$ref": "#/definitions/name"
+        "application": {
+          "$ref": "#/definitions/application"
         },
-        "permTestCentre": {
-          "$ref": "#/definitions/testCentre"
+        "previousCancellation": {
+          "$ref": "#/definitions/previousCancellation"
+        },
+        "business": {
+          "$ref": "#/definitions/business"
+        }
+      }
+    },
+    "previousCancellation": {
+      "description": "The details of any previous test cancellations",
+      "type": "array",
+      "items": {
+        "properties": {
+          "initiator": {
+            "$ref": "#/definitions/initiator"
+          }
         }
       }
     },
     "testSlot": {
-      "$id": "#/properties/testSlot",
       "description": "A test slot, possibly populated with booking data",
       "type": "array",
       "items": {
@@ -298,51 +318,7 @@
             "$ref": "#/definitions/testCentre"
           },
           "booking": {
-            "$id": "#/properties/testSlot/properties/booking",
-            "description": "If this slot is booked, this contains the details",
-            "type": "object",
-            "properties": {
-              "candidate": {
-                "$ref": "#/definitions/candidate"
-              },
-              "application": {
-                "$ref": "#/definitions/application"
-              },
-              "previousCancellation": {
-                "$id": "#/properties/testSlot/properties/booking/properties/previousCancellation",
-                "description": "The details of any previous test cancellations",
-                "type": "array",
-                "properties": {
-                  "initiator": {
-                    "$ref": "#/definitions/initiator"
-                  }
-                }
-              },
-              "business": {
-                "$id": "#/properties/testSlot/properties/booking/properties/business",
-                "description": "The business details, only for tests that are booked by a business or trainer booker",
-                "type": "object",
-                "properties": {
-                  "businessId": {
-                    "description": "The business id",
-                    "type": "integer"
-                  },
-                  "businessName": {
-                    "description": "The business name",
-                    "type": "string",
-                    "maxLength": 100
-                  },
-                  "businessAddress": {
-                    "$ref": "#/definitions/address"
-                  },
-                  "telephone": {
-                    "description": "The business telephone number, if any",
-                    "type": "string",
-                    "maxLength": 20
-                  }
-                }
-              }
-            }
+            "$ref": "#/definitions/booking"
           }
         }
       },
@@ -460,6 +436,42 @@
           }
         }
       }
+    },
+    "business": {
+      "description": "The business details, only for tests that are booked by a business or trainer booker",
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "description": "The business id",
+          "type": "integer"
+        },
+        "businessName": {
+          "description": "The business name",
+          "type": "string",
+          "maxLength": 100
+        },
+        "businessAddress": {
+          "$ref": "#/definitions/address"
+        },
+        "telephone": {
+          "description": "The business telephone number, if any",
+          "type": "string",
+          "maxLength": 20
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "https://example.com/arrays.schema.json",
+  "title": "Examiner Work Schedule",
+  "type": "object",
+  "description": "JSON Schema definition for Examiner Work Schedule",
+  "properties": {
+    "examiner": {
+      "$ref": "#/definitions/examiner"
+    },
+    "testSlot": {
+      "$ref": "#/definitions/testSlot"
     }
   }
 }
