@@ -1,7 +1,7 @@
 
 import { JournalModel } from './journal.model';
 
-export const getTestSlots = (journal: JournalModel) => journal.data.testSlot;
+export const getTestSlots = (journal: JournalModel) => journal.slots;
 
 export const getError = (journal: JournalModel) => journal.error;
 

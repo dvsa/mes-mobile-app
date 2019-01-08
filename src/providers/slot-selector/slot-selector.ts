@@ -1,32 +1,24 @@
 import { Injectable } from '@angular/core';
 import { SlotItem } from './slot-item';
 import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
-import { zipWith } from 'lodash';
 import { TestSlot } from '../../pages/journal/journal.model';
+import { JournalSlot } from '../../pages/journal/domain/JournalSlot';
 
 @Injectable()
 export class SlotSelectorProvider {
 
   constructor() { }
 
-  public getSlotTypes = (emmitted: [TestSlot[], boolean[], any, any]): SlotItem[] => {
+  public getSlotTypes = (journalSlots: JournalSlot[]): SlotItem[] => {
 
-    const slots = emmitted[0];
-    const slotChangedIndicators = emmitted[1];
-    const slotsAndChanges = zipWith(slots, slotChangedIndicators, (slot, changed) => (
-      {
-        slot,
-        changed,
-      }
-    ));
     const result: SlotItem[] = [];
-    if (Array.isArray(slots)) {
-      for (const slotAndChange of slotsAndChanges) {
-        const slot: TestSlot = slotAndChange.slot;
+    if (Array.isArray(journalSlots)) {
+      for (const journalSlot of journalSlots) {
+        const testSlot: TestSlot = journalSlot.slot;
         result.push(new SlotItem(
-          this.resolveComponentName(slot.vehicleSlotType),
-          slot,
-          slotAndChange.changed
+          this.resolveComponentName(testSlot.vehicleSlotType),
+          testSlot,
+          journalSlot.slotChanged
         ))
       }
     }

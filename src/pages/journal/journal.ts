@@ -3,7 +3,6 @@ import { IonicPage, LoadingController, NavController, NavParams, Platform, Toast
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
@@ -15,9 +14,10 @@ import { map } from 'rxjs/operators';
 import { zip } from 'rxjs/observable/zip';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
+import { JournalSlot } from './domain/JournalSlot';
 
 interface JournalPageState {
-  testSlots$: Observable<ExaminerWorkSchedule[]>,
+  testSlots$: Observable<JournalSlot[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
   slotChanges$: Observable<boolean[]>,
@@ -87,7 +87,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
     );
-    this.subscription = merged$.subscribe((this.createSlots));
+    this.subscription = merged$.subscribe(this.createSlots);
   }
 
   ngOnDestroy(): void {
@@ -117,10 +117,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createSlots = (emission: any) => {
-    if (emission[0] !== undefined && emission[1] !== undefined) {
+    if (Array.isArray(emission[0]) && emission[0].length > 0) {
       // Clear any dynamically created slots before adding the latest
       this.slotContainer.clear();
-      const slots = this.slotSelector.getSlotTypes(emission);
+      const slots = this.slotSelector.getSlotTypes(emission[0]);
       for (const slot of slots) {
         const factory = this.resolver.resolveComponentFactory(slot.component);
         const componentRef = this.slotContainer.createComponent(factory);
