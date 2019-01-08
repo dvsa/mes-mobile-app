@@ -8,10 +8,10 @@ export const initialState: JournalModel = {
   lastRefreshed: null,
   data: {},
   slotChanges: [
-    false,
-    false,
-    false,
     true,
+    false,
+    false,
+    false,
     false,
     false,
     false,

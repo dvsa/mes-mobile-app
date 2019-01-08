@@ -1,2 +1,12 @@
 test-slot {
+  ion-col {
+    height: 100%;
+  }
+  .slot-changed-indicator {
+    height: 100%;
+    width: 1em; 
+  }
+  .slot-changed {
+    background: map-get($colors, journalSlotChangeIdentifier);
+  }
 }
