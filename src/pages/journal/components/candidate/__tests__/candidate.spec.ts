@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CandidateComponent } from '../candidate';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule, NavController } from 'ionic-angular';
+import { NavControllerMock } from 'ionic-mocks-jest';
 import { By } from '@angular/platform-browser';
+import { CandidateComponent } from '../candidate';
 
 describe('CandidateComponent', () => {
   let component: CandidateComponent;
@@ -9,10 +10,10 @@ describe('CandidateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CandidateComponent],
-      imports: [IonicModule],
-    })
-      .compileComponents()
+      declarations: [ CandidateComponent ],
+      imports: [ IonicModule ],
+      providers: [ { provide: NavController, useFactory: () => NavControllerMock.instance() } ],
+    }).compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(CandidateComponent);
         component = fixture.componentInstance;
