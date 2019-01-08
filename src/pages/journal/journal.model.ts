@@ -1,5 +1,6 @@
 import { MesError } from '../../common/mes-error.model';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
+import { JournalSlot } from './domain/JournalSlot';
 
 export type TestSlot = {
   booking: any,
@@ -12,6 +13,7 @@ export type JournalModel = {
   isLoading: boolean,
   lastRefreshed: Date,
   data: ExaminerWorkSchedule,
+  slots: JournalSlot[],
   slotChanges: boolean[],
   error?: MesError,
 }
