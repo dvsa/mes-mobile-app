@@ -10,6 +10,7 @@ export type TestSlot = {
 
 export type JournalModel = {
   isLoading: boolean,
+  lastRefreshed: Date,
   data: ExaminerWorkSchedule,
   error?: MesError,
 }

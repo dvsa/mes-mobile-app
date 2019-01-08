@@ -8,18 +8,14 @@ export class JournalProvider {
 
   constructor(public http: HttpClient, public appConfig: AppConfigProvider) {}
 
-  lastGet: Date;
-
-  getJournal(){
-    const prevGet = this.lastGet;
-    this.lastGet = new Date();
-
+  getJournal(lastRefreshed: Date){
     let get$;
-    if (prevGet === undefined) {
+    if (lastRefreshed === null) {
       get$ = this.http.get(this.appConfig.getAppConfig().journal.journalUrl);
     } else {
+      const modifiedSinceValue = moment(lastRefreshed).format('ddd[,] D MMM YYYY HH:mm:ss [GMT]');
       const options = {
-        headers: new HttpHeaders().set('If-Modified-Since', `${moment(prevGet).format('ddd[,] D MMM YYYY HH:mm:ss [GMT]')}`),
+        headers: new HttpHeaders().set('If-Modified-Since', modifiedSinceValue),
       };
       get$ = this.http.get(this.appConfig.getAppConfig().journal.journalUrl, options);
     }

@@ -4,8 +4,9 @@ import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 
 export const initialState: JournalModel = {
-    isLoading: false,
-    data: {},
+  isLoading: false,
+  lastRefreshed: null,
+  data: {},
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {
@@ -18,6 +19,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
         ...state,
+        lastRefreshed: new Date(),
         isLoading: false,
         data: action.payload,
       };
