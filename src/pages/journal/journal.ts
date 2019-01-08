@@ -20,7 +20,6 @@ interface JournalPageState {
   testSlots$: Observable<JournalSlot[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
-  slotChanges$: Observable<boolean[]>,
 }
 
 @IonicPage()
@@ -72,17 +71,12 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getJournalState),
         map(getIsLoading)
       ),
-      slotChanges$: this.store$.pipe(
-        select(getJournalState),
-        map(getSlotChanges)
-      )
     };
 
-    const { testSlots$, error$, isLoading$, slotChanges$ } = this.pageState;
+    const { testSlots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = zip(
       testSlots$,
-      slotChanges$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
