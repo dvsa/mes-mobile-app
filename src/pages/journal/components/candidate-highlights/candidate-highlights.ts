@@ -3,10 +3,10 @@ import { Name } from '../../../../common/domain/DJournal';
 import { NavController } from 'ionic-angular';
 
 @Component({
-  selector: 'candidate',
-  templateUrl: 'candidate.html'
+  selector: 'candidate-highlights',
+  templateUrl: 'candidate-highlights.html'
 })
-export class CandidateComponent {
+export class CandidateHighlightsComponent {
   @Input()
   slotId: number;
 

@@ -2,20 +2,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { NavControllerMock } from 'ionic-mocks-jest';
 import { By } from '@angular/platform-browser';
-import { CandidateComponent } from '../candidate';
+import { CandidateHighlightsComponent } from '../candidate-highlights';
 
-describe('CandidateComponent', () => {
-  let component: CandidateComponent;
-  let fixture: ComponentFixture<CandidateComponent>;
+describe('CandidateHighlightsComponent', () => {
+  let component: CandidateHighlightsComponent;
+  let fixture: ComponentFixture<CandidateHighlightsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CandidateComponent ],
+      declarations: [ CandidateHighlightsComponent ],
       imports: [ IonicModule ],
       providers: [ { provide: NavController, useFactory: () => NavControllerMock.instance() } ],
     }).compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(CandidateComponent);
+        fixture = TestBed.createComponent(CandidateHighlightsComponent);
         component = fixture.componentInstance;
         component.name = { title: '', firstName: '', lastName: '' }
         component.name.title = 'Mr';

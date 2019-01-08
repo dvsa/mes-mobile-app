@@ -3,7 +3,7 @@ import { IonicModule } from 'ionic-angular';
 import { TestSlotComponent } from '../components/test-slot/test-slot';
 import { IndicatorsComponent } from '../components/indicators/indicators';
 import { TimeComponent } from '../components/time/time';
-import { CandidateComponent } from '../components/candidate/candidate';
+import { CandidateHighlightsComponent } from '../components/candidate-highlights/candidate-highlights';
 import { TestOutcomeComponent } from '../components/test-outcome/test-outcome';
 import { TestCategoryComponent } from '../components/test-category/test-category';
 import { TestCategoryIconComponent } from '../../../components/test-category-icon/test-category-icon';
@@ -14,7 +14,7 @@ import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-d
     TestSlotComponent,
 		IndicatorsComponent,
 		TimeComponent,
-		CandidateComponent,
+		CandidateHighlightsComponent,
     TestOutcomeComponent,
     TestCategoryComponent,
     TestCategoryIconComponent,
