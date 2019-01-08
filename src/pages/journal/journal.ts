@@ -76,7 +76,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     const { testSlots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
-      testSlots$,
+      testSlots$.pipe(map(testSlot => { console.log(testSlot); return testSlot; })),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),

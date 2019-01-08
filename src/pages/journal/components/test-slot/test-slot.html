@@ -16,6 +16,7 @@
     </ion-col>
     <ion-col col-4 class="candidate-details-col">
       <candidate
+        [slotId]="slot.slotDetail.slotId"
         [name]="slot.booking.candidate.candidateName"
         [welshLanguage]="slot.booking.application.welshTest"
         [isPortrait]="isPortrait()"

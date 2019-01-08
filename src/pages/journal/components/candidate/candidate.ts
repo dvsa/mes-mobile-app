@@ -1,11 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { Name } from '../../../../common/domain/DJournal';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'candidate',
   templateUrl: 'candidate.html'
 })
 export class CandidateComponent {
+  @Input()
+  slotId: number;
+
   @Input()
   name: Name;
 
@@ -18,6 +22,10 @@ export class CandidateComponent {
   @Input()
   isPortrait: boolean;
 
-  constructor() {
+  constructor(public navController: NavController) {
+  }
+
+  navigateToCandidateDetails() {
+    this.navController.push('CandidateDetailsPage', { slotId: this.slotId });
   }
 }
