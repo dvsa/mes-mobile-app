@@ -50,6 +50,8 @@
     "@ionic/storage": "2.2.0",
     "@ngrx/effects": "^5.2.0",
     "@ngrx/store": "^5.2.0",
+    "aws-sdk": "^2.382.0",
+    "aws4": "^1.8.0",
     "cordova-ios": "4.5.5",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-device": "^2.0.2",
@@ -70,6 +72,8 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.2.1",
     "@ngrx/store-devtools": "^5.2.0",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/aws4": "^1.5.1",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
     "appium": "^1.10.0",
