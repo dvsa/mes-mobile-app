@@ -42,6 +42,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@auth0/angular-jwt": "^1.2.0",
     "@ionic-native/core": "~4.17.0",
     "@ionic-native/in-app-browser": "^4.18.0",
     "@ionic-native/ms-adal": "^4.18.0",
