@@ -3,12 +3,13 @@ import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-nati
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AppConfigProvider } from '../app-config/app-config';
 import { ToastController } from 'ionic-angular';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthenticationProvider {
 
   public authenticationSettings: any;
-  
+  private employeeId: string;
   private authenticationToken: string;
 
   constructor(
@@ -25,6 +26,10 @@ export class AuthenticationProvider {
 
   getAuthenticationToken = (): string => {
     return this.authenticationToken;
+  };
+
+  getEmployeeId = (): string => {
+    return this.employeeId;
   };
 
   login = () => {
@@ -96,7 +101,12 @@ export class AuthenticationProvider {
   };
 
   private successfulLogin = (authResponse: AuthenticationResult) => {
-    this.authenticationToken = authResponse.accessToken;
+    const { accessToken } = authResponse;
+    const helper: JwtHelperService = new JwtHelperService();
+    const decodedToken = helper.decodeToken(accessToken);
+    const employeeId = decodedToken['extn.employeeId'][0];
+    this.authenticationToken = accessToken;
+    this.employeeId = employeeId;
   };
 
   private failedLogin = (error: any) => {
