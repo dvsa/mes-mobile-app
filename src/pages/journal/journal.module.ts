@@ -15,7 +15,6 @@ import { IndicatorsComponent } from './components/indicators/indicators';
 import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
-import { TestCategoryIconComponent } from './components/test-category-icon/test-category-icon';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { TestCategoryIconComponent } from './components/test-category-icon/test-
     TestOutcomeComponent,
     TestSlotComponent,
     TestCategoryComponent,
-    TestCategoryIconComponent,
     VehicleDetailsComponent
   ],
   imports: [

@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
+import { TestCategoryIconComponent } from './test-category-icon/test-category-icon';
 @NgModule({
-	declarations: [],
+	declarations: [
+    TestCategoryIconComponent
+  ],
 	imports: [],
-	exports: []
+	exports: [
+    TestCategoryIconComponent
+  ]
 })
 export class ComponentsModule {}

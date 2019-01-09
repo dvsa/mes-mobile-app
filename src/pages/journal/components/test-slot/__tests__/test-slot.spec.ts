@@ -10,10 +10,10 @@ import { TimeComponent } from '../../time/time';
 import { TestOutcomeComponent } from '../../test-outcome/test-outcome';
 import { CandidateComponent } from '../../candidate/candidate';
 import { TestCategoryComponent } from '../../test-category/test-category';
-import { TestCategoryIconComponent } from '../../test-category-icon/test-category-icon';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
+import { TestCategoryIconComponent } from '../../../../../components/test-category-icon/test-category-icon';
 
 describe('TestSlotComponent', () => {
     let fixture: ComponentFixture<TestSlotComponent>;
@@ -85,10 +85,10 @@ describe('TestSlotComponent', () => {
                 MockComponent(IndicatorsComponent),
                 MockComponent(TimeComponent),
                 MockComponent(TestCategoryComponent),
-                MockComponent(TestCategoryIconComponent),
                 MockComponent(TestOutcomeComponent),
                 MockComponent(VehicleDetailsComponent),
                 MockComponent(CandidateComponent),
+                MockComponent(TestCategoryIconComponent)
             ],
             imports: [IonicModule],
             providers: [
