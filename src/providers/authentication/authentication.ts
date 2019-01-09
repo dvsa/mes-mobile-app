@@ -3,14 +3,16 @@ import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-nati
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AppConfigProvider } from '../app-config/app-config';
 import { ToastController } from 'ionic-angular';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import jwtDecode from 'jwt-decode';
 
 @Injectable()
 export class AuthenticationProvider {
 
   public authenticationSettings: any;
+  private employeeIdKey: string;
   private employeeId: string;
   private authenticationToken: string;
+  public jwtDecode: any;
 
   constructor(
     private msAdal: MSAdal,
@@ -18,6 +20,8 @@ export class AuthenticationProvider {
     public toastController: ToastController,
     appConfig: AppConfigProvider) {
     this.authenticationSettings = appConfig.getAppConfig().authentication;
+    this.employeeIdKey = appConfig.getAppConfig().authentication.employeeIdKey;
+    this.jwtDecode = jwtDecode;
   }
 
   isAuthenticated = (): boolean => {
@@ -102,9 +106,8 @@ export class AuthenticationProvider {
 
   private successfulLogin = (authResponse: AuthenticationResult) => {
     const { accessToken } = authResponse;
-    const helper: JwtHelperService = new JwtHelperService();
-    const decodedToken = helper.decodeToken(accessToken);
-    const employeeId = decodedToken['extn.employeeId'][0];
+    const decodedToken = this.jwtDecode(accessToken);
+    const employeeId = decodedToken[this.employeeIdKey][0];
     this.authenticationToken = accessToken;
     this.employeeId = employeeId;
   };
