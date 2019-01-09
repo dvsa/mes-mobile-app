@@ -13,6 +13,7 @@ import { TestCategoryComponent } from '../../test-category/test-category';
 import { TestCategoryIconComponent } from '../../test-category-icon/test-category-icon';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
 
 describe('TestSlotComponent', () => {
     let fixture: ComponentFixture<TestSlotComponent>;
@@ -90,7 +91,11 @@ describe('TestSlotComponent', () => {
                 MockComponent(CandidateComponent),
             ],
             imports: [IonicModule],
-            providers: [ { provide: Config, useFactory: () => ConfigMock.instance() }, ScreenOrientation ]
+            providers: [
+              { provide: Config, useFactory: () => ConfigMock.instance() },
+              { provide: ScreenOrientation, useClass: ScreenOrientationMock}
+
+            ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(TestSlotComponent);
             component = fixture.componentInstance;
@@ -117,6 +122,7 @@ describe('TestSlotComponent', () => {
     describe('DOM', () => {
       describe('Component Interaction', () => {
         it('should pass the special needs status to a indicator component', () => {
+
           component.slot.booking.application.specialNeeds = ''
           fixture.detectChanges();
           const indicatorComponent = fixture.debugElement.query(By.directive(MockComponent(IndicatorsComponent))).componentInstance;
