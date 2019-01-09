@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { JournalProvider } from '../../../providers/journal/journal'
 import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
+import { StoreModule } from '@ngrx/store';
+import { journalReducer } from '../journal.reducer';
 
 export class TestActions extends Actions {
   constructor() {
@@ -28,6 +30,9 @@ describe('Journal Effects', () => {
     TestBed.configureTestingModule({
       imports: [
         // any modules needed
+        StoreModule.forRoot({
+          journal: journalReducer
+        }),
       ],
       providers: [
         JournalEffects,
