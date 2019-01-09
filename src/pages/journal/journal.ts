@@ -39,6 +39,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   toast: Toast;
   subscription: Subscription;
+  employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
 
   constructor(
@@ -53,6 +54,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private resolver: ComponentFactoryResolver
   ) {
     super(platform, navController, authenticationProvider);
+    this.employeeId = this.authenticationProvider.getEmployeeId();
   }
 
   ngOnInit(): void {
