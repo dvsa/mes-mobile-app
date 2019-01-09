@@ -1,0 +1,17 @@
+export const vehicleDetails = {
+  'A': false,
+  'A1': false,
+  'A2': false,
+  'AM': false,
+  'B': false,
+  'B1': false,
+  'B+E': false,
+  'C': true,
+  'C1': true,
+  'C1+E': true,
+  'C+E': true,
+  'D': true,
+  'D1': true,
+  'D1+E': true,
+  'D+E': true,
+};

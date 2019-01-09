@@ -147,8 +147,6 @@ describe('TestSlotComponent', () => {
           expect(component.showVehicleDetails()).toBeTruthy();
           component.slot.booking.application.testCategory = 'D1+E';
           expect(component.showVehicleDetails()).toBeTruthy();
-          component.slot.booking.application.testCategory = 'DE D1+E';
-          expect(component.showVehicleDetails()).toBeTruthy();
         })
         it('should return true for isPortrait() if device is portrait', () => {
           component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY;
