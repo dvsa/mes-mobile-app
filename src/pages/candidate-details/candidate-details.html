@@ -29,6 +29,12 @@
     <ion-row class="mes-data-row-with-separator">
       <ion-col col-4>
         <label>Slot type</label>
+        <img 
+          src="assets/imgs/journal/special-needs-indicator.png"
+          class="special-needs-indicator"
+          *ngIf="(pageState.details$ | async).slotType.icon == 'SpecialNeedsIndicator'"
+          style="float: right"  
+        />
       </ion-col>
       <ion-col col-8>
         <span class="mes-data">{{ (pageState.details$ | async).slotType.text }}</span>

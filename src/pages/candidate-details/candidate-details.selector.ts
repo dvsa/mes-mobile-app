@@ -22,10 +22,10 @@ export const getPhoneNumber = (testSlot: any): string => {
 export const getSlotType = (testSlot: any): { text: string, icon: string } => {
   return isEmpty(testSlot.booking.application.specialNeeds) ? { 
     text: 'Single slot',
-    icon: 'exclamation mark',
+    icon: 'NoIndicator',
    } : {
     text: 'Double slot (special needs)',
-    icon: 'no icon',
+    icon: 'SpecialNeedsIndicator',
    };
 }
 
