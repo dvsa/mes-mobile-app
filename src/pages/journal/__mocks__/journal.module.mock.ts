@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { TestSlotComponent } from '../components/test-slot/test-slot';
-import { TestDetailsComponent } from '../components/test-details/test-details';
 import { IndicatorsComponent } from '../components/indicators/indicators';
 import { TimeComponent } from '../components/time/time';
 import { CandidateComponent } from '../components/candidate/candidate';
 import { TestOutcomeComponent } from '../components/test-outcome/test-outcome';
+import { TestCategoryComponent } from '../components/test-category/test-category';
+import { TestCategoryIconComponent } from '../components/test-category-icon/test-category-icon';
+import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-details';
 
 @NgModule({
   declarations: [
     TestSlotComponent,
-    TestDetailsComponent,
 		IndicatorsComponent,
 		TimeComponent,
 		CandidateComponent,
-		TestOutcomeComponent,
+    TestOutcomeComponent,
+    TestCategoryComponent,
+    TestCategoryIconComponent,
+    VehicleDetailsComponent
   ],
   entryComponents: [
     TestSlotComponent,

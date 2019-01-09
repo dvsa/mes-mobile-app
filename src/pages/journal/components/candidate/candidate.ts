@@ -15,10 +15,9 @@ export class CandidateComponent {
   @Input()
   welshLanguage: boolean;
 
-  constructor() {
-  }
+  @Input()
+  isPortrait: boolean;
 
-  ngOnInit() {
-    this.testComplete = false; // not in json as yet... add when it is
+  constructor() {
   }
 }

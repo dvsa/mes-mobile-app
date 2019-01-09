@@ -7,9 +7,12 @@ import { ConfigMock } from 'ionic-mocks-jest';
 import { cloneDeep } from 'lodash';
 import { IndicatorsComponent } from '../../indicators/indicators';
 import { TimeComponent } from '../../time/time';
-import { TestDetailsComponent } from '../../test-details/test-details';
 import { TestOutcomeComponent } from '../../test-outcome/test-outcome';
 import { CandidateComponent } from '../../candidate/candidate';
+import { TestCategoryComponent } from '../../test-category/test-category';
+import { TestCategoryIconComponent } from '../../test-category-icon/test-category-icon';
+import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 describe('TestSlotComponent', () => {
     let fixture: ComponentFixture<TestSlotComponent>;
@@ -80,12 +83,14 @@ describe('TestSlotComponent', () => {
                 TestSlotComponent,
                 MockComponent(IndicatorsComponent),
                 MockComponent(TimeComponent),
-                MockComponent(TestDetailsComponent),
+                MockComponent(TestCategoryComponent),
+                MockComponent(TestCategoryIconComponent),
                 MockComponent(TestOutcomeComponent),
+                MockComponent(VehicleDetailsComponent),
                 MockComponent(CandidateComponent),
             ],
             imports: [IonicModule],
-            providers: [ { provide: Config, useFactory: () => ConfigMock.instance() } ]
+            providers: [ { provide: Config, useFactory: () => ConfigMock.instance() }, ScreenOrientation ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(TestSlotComponent);
             component = fixture.componentInstance;
@@ -132,17 +137,37 @@ describe('TestSlotComponent', () => {
           expect(subByDirective.name.firstName).toBe('Florence');
           expect(subByDirective.name.lastName).toBe('Pearson');
           expect(subByDirective.welshTest).toBeFalsy();
+          expect(subByDirective.isPortrait).toBeFalsy();
         });
 
-        it('should pass something to sub-component test-details input', () => {
+        it('should pass something to sub-component test-category  input', () => {
           fixture.detectChanges();
-          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestDetailsComponent))).componentInstance;
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryComponent))).componentInstance;
           expect(subByDirective.category).toBe('B');
-          expect(subByDirective.transmission).toBe('Manual');
+        });
+
+        it('should pass something to sub-component test-category-icon  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryIconComponent))).componentInstance;
+          expect(subByDirective.category).toBe('B');
+        });
+
+        it('should pass something to sub-component test-outcome  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
+          expect(subByDirective.slot).toEqual(mockSlot);
+        });
+
+        it('should pass something to sub-component vehicle-details  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(VehicleDetailsComponent))).componentInstance;
           expect(subByDirective.height).toBe(4);
           expect(subByDirective.width).toBe(3);
           expect(subByDirective.length).toBe(2);
           expect(subByDirective.seats).toBe(5);
+          expect(subByDirective.transmission).toBe('Manual');
+          expect(subByDirective.showDimensions).toBeFalsy();
+          expect(subByDirective.showVehicleDetails).toBeFalsy();
         });
       });
   });

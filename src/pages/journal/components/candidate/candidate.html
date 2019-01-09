@@ -1,11 +1,12 @@
-<div [ngClass]="{'candidate-test-complete-text': testComplete}">
+<div>
   <ion-grid>
-    <ion-row align-items-left>
+    <ion-row align-items-left [ngClass]="{'candidate-grid-row' : isPortrait}">
       <ion-col>
         <h5 class="candidate-name">{{name.title}} {{name.firstName}} {{name.lastName}}</h5>
       </ion-col>
-      <ion-col col-auto><img src="assets/imgs/journal/Welsh.png" class="welsh-language-indicator" *ngIf="welshLanguage"
-          [ngClass]="{'journal-candidate-category-icon-completed': testComplete}" /></ion-col>
+      <ion-col col-auto *ngIf="welshLanguage">
+        <img  src="assets/imgs/journal/Welsh.png" class="welsh-language-indicator" />
+      </ion-col>
     </ion-row>
   </ion-grid>
 </div>

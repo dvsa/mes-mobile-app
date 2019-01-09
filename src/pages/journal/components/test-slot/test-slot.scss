@@ -1,6 +1,8 @@
 test-slot {
   ion-card {
-    height: 108px
+    &.test-slot-portrait-mode {
+      height:108px;
+    }
   }
   ion-row {
     height: 100%;
