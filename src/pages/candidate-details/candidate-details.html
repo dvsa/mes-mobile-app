@@ -55,7 +55,11 @@
         <label>Candidate comments</label>
       </ion-col>
       <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).candidateComments }}</span>
+        <div class="mes-data">{{ (pageState.details$ | async).candidateComments.specialNeeds }}</div>
+        <div *ngIf="(pageState.details$ | async).candidateComments.previousCancellations?.length > 0">
+          <div class="mes-data" style="margin-top: 8px;"><i>Previous cancellations</i></div>
+          <div *ngFor="let previousCancellation of (pageState.details$ | async).candidateComments.previousCancellations" class="mes-data">{{previousCancellation.initiator}}</div>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row class="mes-data-row-with-separator">
@@ -86,5 +90,5 @@
     </ion-row>
   </ion-grid>
 
-  <button class="mes-primary-button">Done</button>
+  <button class="mes-primary-button" (click)="handleDoneButtonClick()">Done</button>
 </ion-content>

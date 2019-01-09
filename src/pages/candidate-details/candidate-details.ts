@@ -31,13 +31,13 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   slotId: number;
 
   constructor(
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private store$: Store<StoreModel>
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navController, authenticationProvider);
     this.slotId = navParams.get('slotId');
   }
 
@@ -76,5 +76,9 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  handleDoneButtonClick(): void {
+    this.navController.pop();
   }
 }

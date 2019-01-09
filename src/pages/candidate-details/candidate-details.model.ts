@@ -10,7 +10,10 @@ export type Details = {
   },
   driverNumber: string,
   applicationRef: string,
-  candidateComments: string,
+  candidateComments: {
+    specialNeeds: string,
+    previousCancellations: { initiator: string }[],
+  },
   phoneNumber: string,
   email: string,
   address: {

@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
-import { JournalModel } from "../journal/journal.model";
-import { Details } from "./candidate-details.model";
+import { JournalModel } from '../journal/journal.model';
+import { Details } from './candidate-details.model';
 
 export const getTestSlots = (journal: JournalModel) => journal.data.testSlot;
 
@@ -19,6 +19,26 @@ export const getPhoneNumber = (testSlot: any): string => {
   return 'No phone number provided';
 }
 
+export const getSlotType = (testSlot: any): { text: string, icon: string } => {
+  return isEmpty(testSlot.booking.application.specialNeeds) ? { 
+    text: 'Single slot',
+    icon: 'exclamation mark',
+   } : {
+    text: 'Double slot (special needs)',
+    icon: 'no icon',
+   };
+}
+
+export const getCity = (address: any): string => {
+  let city = '';
+  if (!isEmpty(address.addressLine2)) city += address.addressLine2;
+  if (!isEmpty(address.addressLine3)) city += `, ${address.addressLine3}`;
+  if (!isEmpty(address.addressLine4)) city += `, ${address.addressLine4}`;
+  if (!isEmpty(address.addressLine5)) city += `, ${address.addressLine5}`;
+
+  return city
+}
+
 export const getDetails = (testSlot: any): Details => {
   console.log('testSlot', testSlot);
   const details: Details = {
@@ -26,18 +46,18 @@ export const getDetails = (testSlot: any): Details => {
       text: `Category ${testSlot.booking.application.testCategory}`,
       icon: testSlot.booking.application.testCategory,
     },
-    slotType: {
-      text: 'Double slot (special needs)',
-      icon: 'excalmation mark',
-    },
+    slotType: getSlotType(testSlot),
     driverNumber: testSlot.booking.candidate.driverNumber,
     applicationRef: testSlot.booking.application.applicationId,
-    candidateComments: 'none',
+    candidateComments: {
+      specialNeeds: testSlot.booking.application.specialNeeds,
+      previousCancellations: testSlot.booking.previousCancellation
+    },
     phoneNumber: getPhoneNumber(testSlot),
-    email: 'florencepearson@gmail.com',
+    email: 'emailaddress@generic.info',
     address: {
       street: testSlot.booking.candidate.candidateAddress.addressLine1,
-      city: testSlot.booking.candidate.candidateAddress.addressLine2,
+      city: getCity(testSlot.booking.candidate.candidateAddress),
       postcode: testSlot.booking.candidate.candidateAddress.postcode,
     }
   };
