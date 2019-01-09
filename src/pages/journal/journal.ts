@@ -11,10 +11,10 @@ import { getTestSlots, getError, getIsLoading } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
-import { zip } from 'rxjs/observable/zip';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
 import { JournalSlot } from './domain/JournalSlot';
+import { merge } from 'rxjs/observable/merge';
 
 interface JournalPageState {
   testSlots$: Observable<JournalSlot[]>,
@@ -75,7 +75,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
     const { testSlots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
-    const merged$ = zip(
+    const merged$ = merge(
       testSlots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
@@ -111,10 +111,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createSlots = (emission: any) => {
-    if (Array.isArray(emission[0]) && emission[0].length > 0) {
+    if (Array.isArray(emission) && emission.length > 0) {
       // Clear any dynamically created slots before adding the latest
       this.slotContainer.clear();
-      const slots = this.slotSelector.getSlotTypes(emission[0]);
+      const slots = this.slotSelector.getSlotTypes(emission);
       for (const slot of slots) {
         const factory = this.resolver.resolveComponentFactory(slot.component);
         const componentRef = this.slotContainer.createComponent(factory);
