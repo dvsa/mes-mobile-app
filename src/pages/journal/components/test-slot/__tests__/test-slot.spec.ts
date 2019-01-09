@@ -116,6 +116,52 @@ describe('TestSlotComponent', () => {
           delete component.slot.booking.application;
           expect(component.isSpecialNeedsSlot()).toBe(false);
         });
+        it('should return correct value for showing vehicle details', () => {
+          component.slot.booking.application.testCategory = 'A';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'A1';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'A2';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'AM';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'B';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'B1';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'B+E';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'C';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'C1';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'C1+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'C+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D1';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D1+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'DE D1+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+        })
+        it('should return true for isPortrait() if device is portrait', () => {
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY;
+          expect(component.isPortrait()).toBeTruthy();
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.PORTRAIT;
+          expect(component.isPortrait()).toBeTruthy();
+        })
+        it('should return fa;se for isPortrait() if device is landscape', () => {
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY;
+          expect(component.isPortrait()).toBeFalsy();
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.LANDSCAPE;
+          expect(component.isPortrait()).toBeFalsy();
+        })
       });
     });
 

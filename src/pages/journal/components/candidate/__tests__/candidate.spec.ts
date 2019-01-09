@@ -53,5 +53,20 @@ describe('CandidateComponent', () => {
       const renderedImages = fixture.debugElement.queryAll(By.css('.welsh-language-indicator'));
       expect(renderedImages).toHaveLength(0);
     });
+
+    it('should apply additional css styles if device isPortrait', () => {
+      component.isPortrait = true;;
+      fixture.detectChanges();
+      const renderedImages = fixture.debugElement.queryAll(By.css('.candidate-grid-row'));
+      expect(renderedImages).toHaveLength(1);
+    });
+
+    it('should not apply additional css styles if device isLandscape', () => {
+      component.isPortrait = false;;
+      fixture.detectChanges();
+      const renderedImages = fixture.debugElement.queryAll(By.css('.candidate-grid-row'));
+      expect(renderedImages).toHaveLength(0);
+    });
+
   });
 });
