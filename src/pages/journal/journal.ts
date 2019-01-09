@@ -111,16 +111,17 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createSlots = (emission: any) => {
-    if (Array.isArray(emission) && emission.length > 0) {
-      // Clear any dynamically created slots before adding the latest
-      this.slotContainer.clear();
-      const slots = this.slotSelector.getSlotTypes(emission);
-      for (const slot of slots) {
-        const factory = this.resolver.resolveComponentFactory(slot.component);
-        const componentRef = this.slotContainer.createComponent(factory);
-        (<SlotComponent>componentRef.instance).slot = slot.slotData;
-        (<SlotComponent>componentRef.instance).slotChanged = slot.slotChanged;
-      }
+    if (!Array.isArray(emission) || emission.length === 0) {
+      return;
+    }
+    // Clear any dynamically created slots before adding the latest
+    this.slotContainer.clear();
+    const slots = this.slotSelector.getSlotTypes(emission);
+    for (const slot of slots) {
+      const factory = this.resolver.resolveComponentFactory(slot.component);
+      const componentRef = this.slotContainer.createComponent(factory);
+      (<SlotComponent>componentRef.instance).slot = slot.slotData;
+      (<SlotComponent>componentRef.instance).slotChanged = slot.slotChanged;
     }
   }
 
