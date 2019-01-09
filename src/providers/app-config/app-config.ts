@@ -52,6 +52,11 @@ export class AppConfigProvider {
         resourceUrl: data.authentication.resourceUrl,
         clientId: data.authentication.clientId,
         logoutUrl: data.authentication.logoutUrl,
+        openIdConnectUrl: data.authentication.openIdConnectUrl,
+        identityPoolId: data.authentication.identityPoolId,
+      },
+      aws: {
+        region: data.aws.region,
       },
       journal: {
         journalUrl: data.journal.journalUrl
