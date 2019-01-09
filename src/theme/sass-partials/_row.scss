@@ -1,0 +1,8 @@
+.mes-data-row {
+  padding: 22px 0;
+}
+
+.mes-data-row-with-separator {
+  @extend .mes-data-row;
+  border-bottom: 1px solid #BEC0C2;
+}

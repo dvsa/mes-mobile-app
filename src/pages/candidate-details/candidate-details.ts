@@ -10,11 +10,14 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../../common/store.model';
 import { getJournalState } from '../journal/journal.reducer';
-import { getSlotById, getTestSlots } from './candidate-details.selector';
+import { getSlotById, getTestSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
+import { Details } from './candidate-details.model';
 
 interface CandidateDetailsPageState {
-  slot$: Observable<any>;
-}
+  name$: Observable<string>,
+  time$: Observable<string>,
+  details$: Observable<Details>,
+};
 
 @IonicPage()
 @Component({
@@ -40,17 +43,32 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
 
   ngOnInit(): void {
     this.pageState = {
-      slot$: this.store$.pipe(
+      name$: this.store$.pipe(
         select(getJournalState),
         select(getTestSlots),
-        map((testSlots) => getSlotById(testSlots, this.slotId))
-      )
+        map(testSlots => getSlotById(testSlots, this.slotId)),
+        select(getCandidateName)
+      ),
+      time$: this.store$.pipe(
+        select(getJournalState),
+        select(getTestSlots),
+        map(testSlots => getSlotById(testSlots, this.slotId)),
+        select(getTime)
+      ),
+      details$: this.store$.pipe(
+        select(getJournalState),
+        select(getTestSlots),
+        map(testSlots => getSlotById(testSlots, this.slotId)),
+        select(getDetails)
+      ),
     }
 
-    const { slot$ } = this.pageState;
+    const { name$, time$, details$ } = this.pageState;
 
     const merged$ = merge(
-      slot$.pipe(map(slot => { console.log('slot', slot); return slot; }))
+      name$,
+      time$,
+      details$
     );
 
     this.subscription = merged$.subscribe();

@@ -19,8 +19,11 @@
 @import '../theme/sass-partials/_fonts.scss';
 @import '../theme/sass-partials/_colors.scss';
 @import '../theme/sass-partials/_toast.scss';
-@import '../theme/sass-modules/_typography.scss';
 @import '../theme/sass-partials/_box.scss';
+@import '../theme/sass-partials/_row.scss';
+@import '../theme/sass-partials/_buttons.scss';
+
+@import '../theme/sass-modules/_typography.scss';
 
 img {
   user-drag: none;

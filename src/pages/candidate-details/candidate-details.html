@@ -4,23 +4,87 @@
       Candidate Details
     </ion-title>
     <ion-buttons end>
-        <button ion-button (click)="logout()">Logout</button>
-      </ion-buttons>
+      <button ion-button (click)="logout()">Logout</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Candidate Details
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ul>
-        <li>show the information what is in the design</li>
-        <li>style the table</li>
-      </ul>
-    </ion-card-content>
-  </ion-card>
+  <h1>
+    {{ pageState.name$ | async }}
+    <span style="float: right;">
+      {{ pageState.time$ | async | date: "HH:mm" }}
+    </span>
+  </h1>
+  
+  <ion-grid>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Test category</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).testCategory.text }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Slot type</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).slotType.text }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Driver number</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).driverNumber }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Application Ref.</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Candidate comments</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).candidateComments }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Phone number</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row-with-separator">
+      <ion-col col-4>
+        <label>Email</label>
+      </ion-col>
+      <ion-col col-8>
+        <span class="mes-data">{{ (pageState.details$ | async).email }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mes-data-row">
+      <ion-col col-4>
+        <label>Address</label>
+      </ion-col>
+      <ion-col col-8>
+        <div class="mes-data">{{ (pageState.details$ | async).address.street }}</div>
+        <div class="mes-data">{{ (pageState.details$ | async).address.city }}</div>
+        <div class="mes-data">{{ (pageState.details$ | async).address.postcode }}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <button class="mes-primary-button">Done</button>
 </ion-content>
