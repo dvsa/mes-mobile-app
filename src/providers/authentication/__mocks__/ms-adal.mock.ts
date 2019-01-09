@@ -12,7 +12,7 @@ export class AuthenticationContextMock {
   acquireTokenSilentAsync(resourceUrl: string, clientId: string, emptyString: string) {
     return new Promise((resolve, reject) => {
       resolve({
-        accessToken: 'SILENT AYSNC TEST TOKEN'
+        accessToken: 'U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4'
       });
     })
   }
@@ -26,7 +26,7 @@ export class AuthenticationContextMock {
   ) {
     return new Promise((resolve, reject) => {
       resolve({
-        accessToken: 'AYSNC TEST TOKEN'
+        accessToken: 'QVlTTkMgVEVTVCBUT0tFTg=='
       });
     });
   }
