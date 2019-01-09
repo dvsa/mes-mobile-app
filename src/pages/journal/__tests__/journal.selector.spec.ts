@@ -10,7 +10,7 @@ describe('JournalSelector', () => {
     data: {},
     slots: [
       {
-        slotChanged: false,
+        hasSlotChanged: false,
         slot: {}
       }
     ],
@@ -31,7 +31,7 @@ describe('JournalSelector', () => {
     it('should select the test slots from the state', () => {
       const selectedSlots = getTestSlots(state);
       expect(selectedSlots).toHaveLength(1);
-      expect(selectedSlots[0].slotChanged).toBe(false);
+      expect(selectedSlots[0].hasSlotChanged).toBe(false);
       expect(selectedSlots[0].slot).toBeDefined();
     });
   });

@@ -11,7 +11,7 @@ export class TestSlotComponent implements SlotComponent {
   slot: any;
 
   @Input()
-  slotChanged: boolean;
+  hasSlotChanged: boolean;
 
   constructor() {}
 

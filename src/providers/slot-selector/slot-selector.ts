@@ -18,7 +18,7 @@ export class SlotSelectorProvider {
         result.push(new SlotItem(
           this.resolveComponentName(testSlot.vehicleSlotType),
           testSlot,
-          journalSlot.slotChanged
+          journalSlot.hasSlotChanged
         ))
       }
     }

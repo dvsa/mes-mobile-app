@@ -1,6 +1,6 @@
 <ion-card>
   <ion-row align-items-center>
-    <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': slotChanged }"></div>
+    <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>
     <ion-col col-auto>
       <indicators [showSpecialNeedsIndicator]="isSpecialNeedsSlot()"></indicators>
     </ion-col>

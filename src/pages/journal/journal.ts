@@ -121,7 +121,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
-      (<SlotComponent>componentRef.instance).slotChanged = slot.slotChanged;
+      (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
     }
   }
 

@@ -41,7 +41,7 @@ describe('Slot Selector', () => {
       expect(response.length).toBe(1);
       expect(response[0].component).toBe(TestSlotComponent);
       expect(response[0].slotData).toBe(testSlot);
-      expect(response[0].slotChanged).toBe(false)
+      expect(response[0].hasSlotChanged).toBe(false)
     })
   });
 });

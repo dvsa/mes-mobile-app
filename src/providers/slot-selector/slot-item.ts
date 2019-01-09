@@ -5,6 +5,6 @@ export class SlotItem {
   constructor(
     public component: Type<SlotComponent>,
     public slotData: any,
-    public slotChanged: boolean
+    public hasSlotChanged: boolean
   ) { }
 }
