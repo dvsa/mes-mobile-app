@@ -27,13 +27,14 @@ describe('Journal Reducer', () => {
   describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state', () => {
 
-      const action = new LoadJournalSuccess({ testJournal: true });
+      const action = new LoadJournalSuccess({ testJournal: true, testSlot: [] });
       const result = journalReducer(initialState, action);
 
       expect(result).toEqual({
         ...initialState,
         isLoading: false,
-        data: { 'testJournal': true }
+        data: { 'testJournal': true, testSlot: [] },
+        lastRefreshed: expect.any(Date)
       });
     });
   });
