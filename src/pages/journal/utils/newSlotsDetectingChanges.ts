@@ -1,6 +1,6 @@
 import { JournalSlot } from '../domain/JournalSlot';
 import { ExaminerWorkSchedule } from '../../../common/domain/DJournal';
-import diff from 'deep-diff';
+import deepDiff from 'deep-diff';
 
 export default function(oldJournalSlots: JournalSlot[], newJournal: ExaminerWorkSchedule): JournalSlot[] {
   const newSlots = newJournal.testSlot;
@@ -10,7 +10,7 @@ export default function(oldJournalSlots: JournalSlot[], newJournal: ExaminerWork
 
     let differenceFound = false;
     if (replacedJournalSlot) {
-      const differenceToSlot = diff(replacedJournalSlot.slot, newSlot);
+      const differenceToSlot = deepDiff(replacedJournalSlot.slot, newSlot);
       if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
         differenceFound = true;
       }
