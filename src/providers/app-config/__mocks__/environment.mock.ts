@@ -17,6 +17,7 @@ export const localEnvironmentMock: EnvironmentFile = {
     logoutUrl: 'local-logout-url',
     openIdConnectUrl: 'local-openIdConnectUrl',
     identityPoolId: 'local-identityPoolId',
+    employeeIdKey: 'local-employeeIdKey'
   },
   aws: {
     region: 'aws-region'

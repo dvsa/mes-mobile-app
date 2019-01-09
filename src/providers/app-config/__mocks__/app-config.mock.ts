@@ -24,6 +24,7 @@ export class AppConfigProviderMock {
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
         openIdConnectUrl: localEnvironmentMock.authentication.openIdConnectUrl,
         identityPoolId: localEnvironmentMock.authentication.identityPoolId,
+        employeeIdKey: localEnvironmentMock.authentication.employeeIdKey
       },
       aws: {
         region: localEnvironmentMock.aws.region
