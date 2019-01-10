@@ -13,11 +13,11 @@ import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
-import { JournalSlot } from './domain/JournalSlot';
 import { merge } from 'rxjs/observable/merge';
+import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 interface JournalPageState {
-  testSlots$: Observable<JournalSlot[]>,
+  testSlots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
 }

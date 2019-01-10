@@ -11,7 +11,7 @@ describe('JournalSelector', () => {
     slots: [
       {
         hasSlotChanged: false,
-        slot: {}
+        slotData: {}
       }
     ],
     error: {
@@ -32,7 +32,7 @@ describe('JournalSelector', () => {
       const selectedSlots = getTestSlots(state);
       expect(selectedSlots).toHaveLength(1);
       expect(selectedSlots[0].hasSlotChanged).toBe(false);
-      expect(selectedSlots[0].slot).toBeDefined();
+      expect(selectedSlots[0].slotData).toBeDefined();
     });
   });
 

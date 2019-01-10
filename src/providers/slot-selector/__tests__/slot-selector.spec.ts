@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SlotSelectorProvider } from '../slot-selector';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
-import { JournalSlot } from '../../../pages/journal/domain/JournalSlot';
+import { SlotItem } from '../slot-item';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
@@ -33,7 +33,7 @@ describe('Slot Selector', () => {
         vehicleSlotType: 'B57Mins'
       };
       const journalSlots = [
-        new JournalSlot(testSlot, false)
+        new SlotItem(testSlot, false)
       ];
 
       const response = slotSelector.getSlotTypes(journalSlots);

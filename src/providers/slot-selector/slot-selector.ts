@@ -2,27 +2,22 @@ import { Injectable } from '@angular/core';
 import { SlotItem } from './slot-item';
 import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
 import { TestSlot } from '../../pages/journal/journal.model';
-import { JournalSlot } from '../../pages/journal/domain/JournalSlot';
 
 @Injectable()
 export class SlotSelectorProvider {
 
   constructor() { }
 
-  public getSlotTypes = (journalSlots: JournalSlot[]): SlotItem[] => {
-
-    const result: SlotItem[] = [];
-    if (Array.isArray(journalSlots)) {
-      for (const journalSlot of journalSlots) {
-        const testSlot: TestSlot = journalSlot.slot;
-        result.push(new SlotItem(
-          this.resolveComponentName(testSlot.vehicleSlotType),
-          testSlot,
-          journalSlot.hasSlotChanged
-        ))
-      }
+  public getSlotTypes = (slotItems: SlotItem[]): SlotItem[] => {
+    if (!Array.isArray(slotItems)) {
+      return [];
     }
-    return result;
+
+    for (const slotItem of slotItems) {
+      const testSlot: TestSlot = slotItem.slotData;
+      slotItem.component = this.resolveComponentName(testSlot.vehicleSlotType);
+    }
+    return slotItems;
   }
 
   private resolveComponentName = (slotType: string) => {
