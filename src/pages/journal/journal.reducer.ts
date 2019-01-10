@@ -4,6 +4,11 @@ import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 import newSlotsDetectingChanges from './utils/newSlotsDetectingChanges';
 
+/*
+ * data and slots in JournalModel currently contain very
+ * similar information. We should decide at a later point
+ * which one we want to keep.
+ */
 export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
