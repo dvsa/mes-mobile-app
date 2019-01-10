@@ -10,91 +10,107 @@
 </ion-header>
 
 <ion-content padding>
-  <h1>
+  <h1 style="margin-bottom: 36px">
     {{ pageState.name$ | async }}
     <span style="float: right;">
       {{ pageState.time$ | async | date: "HH:mm" }}
     </span>
   </h1>
   
-  <ion-grid>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Test category</label>
-      </ion-col>
-      <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).testCategory.text }}</span>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Slot type</label>
-        <img 
-          src="assets/imgs/journal/special-needs-indicator.png"
-          class="special-needs-indicator"
-          *ngIf="(pageState.details$ | async).slotType.icon == 'SpecialNeedsIndicator'"
-          style="float: right"  
-        />
-      </ion-col>
-      <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).slotType.text }}</span>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Driver number</label>
-      </ion-col>
-      <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).driverNumber }}</span>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Application Ref.</label>
-      </ion-col>
-      <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Candidate comments</label>
-      </ion-col>
-      <ion-col col-8>
-        <div class="mes-data">{{ (pageState.details$ | async).candidateComments.specialNeeds }}</div>
-        <div *ngIf="(pageState.details$ | async).candidateComments.previousCancellations?.length > 0">
-          <div class="mes-data" style="margin-top: 8px;"><i>Previous cancellations</i></div>
-          <div *ngFor="let previousCancellation of (pageState.details$ | async).candidateComments.previousCancellations" class="mes-data">{{previousCancellation.initiator}}</div>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Phone number</label>
-      </ion-col>
-      <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row-with-separator">
-      <ion-col col-4>
-        <label>Email</label>
-      </ion-col>
-      <ion-col col-8>
-        <span class="mes-data">{{ (pageState.details$ | async).email }}</span>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mes-data-row">
-      <ion-col col-4>
-        <label>Address</label>
-      </ion-col>
-      <ion-col col-8>
-        <div class="mes-data">{{ (pageState.details$ | async).address.street }}</div>
-        <div class="mes-data">{{ (pageState.details$ | async).address.city }}</div>
-        <div class="mes-data">{{ (pageState.details$ | async).address.postcode }}</div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-card>
+    <ion-card-header>
+      <h3>Candidate details</h3>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-4>
+            <label>Test category</label>
+          </ion-col>
+          <ion-col col-8>
+            <span class="mes-data">{{ (pageState.details$ | async).testCategory.text }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-4>
+            <label>Slot type</label>
+            <img 
+              src="assets/imgs/journal/special-needs-indicator.png"
+              class="special-needs-indicator"
+              *ngIf="(pageState.details$ | async).slotType.icon == 'SpecialNeedsIndicator'"
+              style="float: right"  
+            />
+          </ion-col>
+          <ion-col col-8>
+            <span class="mes-data">{{ (pageState.details$ | async).slotType.text }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-4>
+            <label>Driver number</label>
+          </ion-col>
+          <ion-col col-8>
+            <span class="mes-data">{{ (pageState.details$ | async).driverNumber }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-4>
+            <label>Application Ref.</label>
+          </ion-col>
+          <ion-col col-8>
+            <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col col-4>
+            <label>Candidate comments</label>
+          </ion-col>
+          <ion-col col-8>
+            <div class="mes-data">{{ (pageState.details$ | async).candidateComments.specialNeeds }}</div>
+            <div *ngIf="(pageState.details$ | async).candidateComments.previousCancellations?.length > 0">
+              <div class="mes-data" style="margin-top: 8px;"><i>Previous cancellations</i></div>
+              <div *ngFor="let previousCancellation of (pageState.details$ | async).candidateComments.previousCancellations" class="mes-data">{{previousCancellation.initiator}}</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <h3>Contact details</h3>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-4>
+            <label>Phone number</label>
+          </ion-col>
+          <ion-col col-8>
+            <span class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-4>
+            <label>Email</label>
+          </ion-col>
+          <ion-col col-8>
+            <span class="mes-data">{{ (pageState.details$ | async).email }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col col-4>
+            <label>Address</label>
+          </ion-col>
+          <ion-col col-8>
+            <div class="mes-data">{{ (pageState.details$ | async).address.street }}</div>
+            <div class="mes-data">{{ (pageState.details$ | async).address.city }}</div>
+            <div class="mes-data">{{ (pageState.details$ | async).address.postcode }}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
-  <button class="mes-primary-button" (click)="handleDoneButtonClick()">Done</button>
+  <!-- <button class="mes-primary-button" (click)="handleDoneButtonClick()">Done</button> -->
 </ion-content>
