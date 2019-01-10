@@ -9,7 +9,12 @@ test-slot {
     &.slot-row {
       position: relative;
     }
-}
+  }
+  ion-col {
+    &.candidate-details-col {
+    margin-left: -30px;
+    }
+  }
   .slot-changed-indicator {
     position: absolute;
     height: 100%;
@@ -17,4 +22,5 @@ test-slot {
   }
   .slot-changed {
     background: map-get($colors, journalSlotChangeIdentifier);
+  }
 }

@@ -28,14 +28,14 @@ describe('VehicleDetailsComponent', () => {
   });
 
   describe('DOM', () => {
-    it('should show vehicle details when showVehicleDetails is true', () => {
+    it('should show vehicle details when showDimensions is true', () => {
       component.showDimensions = true;
       fixture.detectChanges();
       const ionRows = fixture.debugElement.queryAll(By.css('ion-row'));
       expect(ionRows).toHaveLength(2);
     });
 
-    it('should not vehicle details when showVehicleDetails is false', () => {
+    it('should not vehicle details when showDimensions is false', () => {
       component.showDimensions = false;
       fixture.detectChanges();
       const ionRows = fixture.debugElement.queryAll(By.css('ion-row'));
@@ -52,10 +52,10 @@ describe('VehicleDetailsComponent', () => {
 
     it('should not show number of seats when showNumberOfSeats is false', () => {
       component.showDimensions = false;
-      component.showNumberOfSeats = true;
+      component.showNumberOfSeats = false;
       fixture.detectChanges();
       const ionCols = fixture.debugElement.queryAll(By.css('ion-col'));
-      expect(ionCols).toHaveLength(2)
+      expect(ionCols).toHaveLength(1)
     });
   });
 
