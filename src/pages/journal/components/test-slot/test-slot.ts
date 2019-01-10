@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
+import { TestCategory } from '../../../../common/test-category';
 
 @Component({
   selector: 'test-slot',
@@ -27,6 +28,6 @@ export class TestSlotComponent implements SlotComponent {
   }
 
   showVehicleDetails(): boolean {
-    return vehicleDetails[this.slot.booking.application.testCategory]
+    return vehicleDetails[this.slot.booking.application.testCategory as TestCategory]
   }
 }
