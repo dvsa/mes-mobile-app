@@ -1,4 +1,5 @@
 import newSlotsDetectingChanges from '../newSlotsDetectingChanges';
+import { cloneDeep } from 'lodash';
 
 describe('newSlotsDetectingChanges', () => {
 
@@ -79,63 +80,7 @@ describe('newSlotsDetectingChanges', () => {
         centreName: 'Example Test Centre',
         costCode: 'EXTC1',
       },
-      testSlot: [
-        {
-          slotDetail: {
-            slotId: 1001,
-            start: '2018-12-10T08:10:00+00:00',
-            duration: 57,
-          },
-          vehicleSlotType: 'B57mins',
-          testCentre: {
-            centreId: 54321,
-            centreName: 'Example Test Centre',
-            costCode: 'EXTC1',
-          },
-          booking: {
-            candidate: {
-              candidateId: 101,
-              age: 17,
-              candidateName: {
-                title: 'Miss',
-                firstName: 'Florence',
-                lastName: 'Pearson',
-              },
-              driverNumber: 'PEARS015220A99HC',
-              gender: 'Female',
-              candidateAddress: {
-                addressLine1: '1 Station Street',
-                addressLine2: 'Someplace',
-                addressLine3: 'Sometown',
-                addressLine4: '',
-                addressLine5: '',
-                postcode: 'AB12 3CD',
-              },
-              primaryTelephone: '01234 567890',
-              secondaryTelephone: '04321 098765',
-              mobileTelephone: '07654 123456',
-            },
-            application: {
-              applicationId: 1234567,
-              bookingSequence: 3,
-              checkDigits: 1,
-              welshTest: false,
-              extendedTest: false,
-              meetingPlace: '',
-              progressiveAccess: false,
-              specialNeeds: 'Candidate has dyslexia',
-              entitlementCheck: false,
-              testCategory: 'B',
-              vehicleGearbox: 'Manual',
-            },
-            previousCancellation: [
-              {
-                initiator: 'Act of nature',
-              },
-            ],
-          },
-        },
-      ],
+      testSlot: cloneDeep(oldSlots),
     }
     oldSlotItems = oldSlots.map(oldSlot => ({ slotData: oldSlot }))
   });
