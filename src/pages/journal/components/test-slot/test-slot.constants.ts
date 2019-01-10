@@ -1,4 +1,4 @@
-import { TestCategory } from "../../../../common/test-category";
+import { TestCategory } from '../../../../common/test-category';
 
 export const vehicleDetails = {
   [TestCategory.A]: false,
