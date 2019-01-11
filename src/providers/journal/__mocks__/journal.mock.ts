@@ -403,6 +403,7 @@ public getJournal(): Observable<any> {
         },
       },
     ],
+    nonTestActivities: []
   });
 }
 

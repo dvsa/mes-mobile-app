@@ -7,6 +7,7 @@ export type TestSlot = {
   slotDetail: any,
   testCentre: any,
   vehicleSlotType: string,
+  activityCode?: string,
 }
 
 export type JournalModel = {

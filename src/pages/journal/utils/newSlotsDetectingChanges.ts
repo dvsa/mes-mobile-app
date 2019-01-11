@@ -1,9 +1,10 @@
 import { ExaminerWorkSchedule } from '../../../common/domain/DJournal';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 import { DeepDiff } from 'deep-diff';
+import { flatten } from 'lodash';
 
 export default function(oldJournalSlots: SlotItem[], newJournal: ExaminerWorkSchedule): SlotItem[] {
-  const newSlots = newJournal.testSlot;
+  const newSlots = flatten([newJournal.testSlot, newJournal.nonTestActivities]);
   return newSlots.map(newSlot => {
     const newSlotId = newSlot.slotDetail.slotId;
     const replacedJournalSlot = oldJournalSlots.find(oldSlot => oldSlot.slotData.slotDetail.slotId === newSlotId);
