@@ -1,13 +1,15 @@
 
+export type SlotTypeView = {
+  text: string,
+  icon: string,
+};
+
 export type Details = {
   testCategory: {
     text: string,
     icon: string,
   },
-  slotType: {
-    text: string,
-    icon: string,
-  },
+  slotType: SlotTypeView,
   driverNumber: string,
   applicationRef: string,
   candidateComments: {
