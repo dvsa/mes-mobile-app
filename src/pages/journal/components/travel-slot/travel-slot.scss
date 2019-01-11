@@ -1,2 +1,6 @@
 travel-slot {
+  ion-card.travel-slot {
+    height: 60px;
+    background: map-get($colors, travelSlotBackground);
+  }
 }

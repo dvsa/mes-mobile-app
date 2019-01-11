@@ -1,1 +1,14 @@
-<p>Travelling</p>
+<ion-card class="travel-slot">
+  <ion-row class="slot-row" align-items-center nowrap>
+    <ion-col col-2>
+      <time
+        [time]="slot.slotDetail.start"
+        [testComplete]="false"
+      >
+      </time>
+    </ion-col>
+    <ion-col>
+      Travel
+    </ion-col>
+  </ion-row>
+</ion-card>
