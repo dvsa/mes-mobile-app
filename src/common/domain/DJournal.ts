@@ -21,16 +21,38 @@ export type PreviousCancellation = {
   [k: string]: any;
 }[];
 /**
- * A test slot, possibly populated with booking data
+ * A collection of test slots, possibly populated with booking data
  */
-export type TestSlot = {
-  slotDetail?: SlotDetail;
-  /**
-   * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
-   */
-  vehicleSlotType?: string;
-  testCentre?: TestCentre;
-  booking?: Booking;
+export type TestSlots = {
+  testSlot?: TestSlot;
+  [k: string]: any;
+}[];
+/**
+ * A collection of the examiner's personal commitment(s)
+ */
+export type PersonalCommitments = {
+  personalCommitment?: PersonalCommitment;
+  [k: string]: any;
+}[];
+/**
+ * A collection of the examiner's non test activity(s) (associated with a test slot duration)
+ */
+export type NonTestActivities = {
+  nonTestActivity?: NonTestActivity;
+  [k: string]: any;
+}[];
+/**
+ * A collection of an examiner's future test slots
+ */
+export type AdvanceTestSlots = {
+  advanceTestSlot?: AdvanceTestSlot;
+  [k: string]: any;
+}[];
+/**
+ * A collection of temporary secondments of the examiner to an alternative test centre
+ */
+export type Deployments = {
+  deployment?: Deployment;
   [k: string]: any;
 }[];
 
@@ -39,7 +61,11 @@ export type TestSlot = {
  */
 export interface ExaminerWorkSchedule {
   examiner?: Examiner;
-  testSlot?: TestSlot;
+  testSlots?: TestSlots;
+  personalCommitments?: PersonalCommitments;
+  nonTestActivities?: NonTestActivities;
+  advanceTestSlots?: AdvanceTestSlots;
+  deployments?: Deployments;
   [k: string]: any;
 }
 /**
@@ -101,6 +127,19 @@ export interface TestCentre {
 /**
  * Details of the test slot
  */
+export interface TestSlot {
+  slotDetail?: SlotDetail;
+  /**
+   * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
+   */
+  vehicleSlotType?: string;
+  testCentre?: TestCentre;
+  booking?: Booking;
+  [k: string]: any;
+}
+/**
+ * Identifier, start time and duration of the slot
+ */
 export interface SlotDetail {
   /**
    * Unique identifier for the test slot
@@ -160,6 +199,10 @@ export interface Candidate {
    * The candidate's mobile telephone number, if any (and consent to leave voicemail has been given)
    */
   mobileTelephone?: string;
+  /**
+   * The candidate's email address, if any
+   */
+  emailAddress?: string;
   /**
    * The candidate's ADI PRN (potential register number), if an ADI test
    */
@@ -280,5 +323,82 @@ export interface Business {
    * The business telephone number, if any
    */
   telephone?: string;
+  [k: string]: any;
+}
+/**
+ * Details of the test slot
+ */
+export interface PersonalCommitment {
+  /**
+   * The commitment id
+   */
+  commitmentId?: number;
+  /**
+   * The start date of the personal commitment
+   */
+  startDate?: string;
+  /**
+   * The start time of the personal commitment, if any (in practice this will always be populated)
+   */
+  startTime?: string;
+  /**
+   * The end date of the personal commitment
+   */
+  endDate?: string;
+  /**
+   * The end time of the personal commitment, if any(in practice this will always be populated)
+   */
+  endTime?: string;
+  /**
+   * The personal commitment activity code
+   */
+  activityCode?: string;
+  /**
+   * The personal commitment activity description
+   */
+  activityDescription?: string;
+  [k: string]: any;
+}
+/**
+ * An examiner's non test activity (associated with a test slot duration)
+ */
+export interface NonTestActivity {
+  slotDetail?: SlotDetail;
+  /**
+   * The non test activity code
+   */
+  activityCode?: string;
+  /**
+   * The non test activity description
+   */
+  activityDescription?: string;
+  testCentre?: TestCentre;
+  [k: string]: any;
+}
+/**
+ * Details of an examiner's future test slot
+ */
+export interface AdvanceTestSlot {
+  slotDetail?: SlotDetail;
+  testCentre?: TestCentre;
+  /**
+   * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
+   */
+  vehicleSlotType?: string;
+  [k: string]: any;
+}
+/**
+ * Temporary secondment of the examiner to an alternative test centre
+ */
+export interface Deployment {
+  /**
+   * The deployment id
+   */
+  deploymentId?: number;
+  testCentre?: TestCentre;
+  /**
+   * Date of the deployment
+   */
+  date?: string;
   [k: string]: any;
 }

@@ -38,8 +38,130 @@
         }
       }
     },
-    "slotDetail": {
+    "testSlot": {
       "description": "Details of the test slot",
+      "type": "object",
+      "properties": {
+        "slotDetail": {
+          "$ref": "#/definitions/slotDetail"
+        },
+        "vehicleSlotType": {
+          "description": "A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any",
+          "type": "string",
+          "maxLength": 11
+        },
+        "testCentre": {
+          "$ref": "#/definitions/testCentre"
+        },
+        "booking": {
+          "$ref": "#/definitions/booking"
+        }
+      }
+    },
+    "personalCommitment": {
+      "description": "Details of the test slot",
+      "type": "object",
+      "properties": {
+        "commitmentId": {
+          "description": "The commitment id",
+          "type": "integer"
+        },
+        "startDate": {
+          "description": "The start date of the personal commitment",
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "startTime": {
+          "description": "The start time of the personal commitment, if any (in practice this will always be populated)",
+          "type": "string",
+          "minLength": 14,
+          "maxLength": 14
+        },
+        "endDate": {
+          "description": "The end date of the personal commitment",
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "endTime": {
+          "description": "The end time of the personal commitment, if any(in practice this will always be populated)",
+          "type": "string",
+          "minLength": 14,
+          "maxLength": 14
+        },
+        "activityCode": {
+          "description": "The personal commitment activity code",
+          "type": "string",
+          "maxLength": 4
+        },
+        "activityDescription": {
+          "description": "The personal commitment activity description",
+          "type": "string",
+          "maxLength": 50
+        }
+      }
+    },
+    "nonTestActivity": {
+      "description": "An examiner's non test activity (associated with a test slot duration)",
+      "type": "object",
+      "properties": {
+        "slotDetail": {
+          "$ref": "#/definitions/slotDetail"
+        },
+        "activityCode": {
+          "description": "The non test activity code",
+          "type": "string",
+          "maxLength": 4
+        },
+        "activityDescription": {
+          "description": "The non test activity description",
+          "type": "string",
+          "maxLength": 50
+        },
+        "testCentre": {
+          "$ref": "#/definitions/testCentre"
+        }
+      }
+    },
+    "advanceTestSlot": {
+      "description": "Details of an examiner's future test slot",
+      "type": "object",
+      "properties": {
+        "slotDetail": {
+          "$ref": "#/definitions/slotDetail"
+        },
+        "testCentre": {
+          "$ref": "#/definitions/testCentre"
+        },
+        "vehicleSlotType": {
+          "description": "A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any",
+          "type": "string",
+          "maxLength": 11
+        }
+      }
+    },
+    "deployment": {
+      "description": "Temporary secondment of the examiner to an alternative test centre",
+      "type": "object",
+      "properties": {
+        "deploymentId": {
+          "description": "The deployment id",
+          "type": "integer"
+        },
+        "testCentre": {
+          "$ref": "#/definitions/testCentre"
+        },
+        "date": {
+          "description": "Date of the deployment",
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10
+        }
+      }
+    },
+    "slotDetail": {
+      "description": "Identifier, start time and duration of the slot",
       "type": "object",
       "properties": {
         "slotId": {
@@ -253,6 +375,11 @@
           "type": "string",
           "maxLength": 30
         },
+        "emailAddress": {
+          "description": "The candidate's email address, if any",
+          "type": "string",
+          "maxLength": 100
+        },
         "prn": {
           "description": "The candidate's ADI PRN (potential register number), if an ADI test",
           "type": "integer"
@@ -301,138 +428,61 @@
         }
       }
     },
-    "testSlot": {
-      "description": "A test slot, possibly populated with booking data",
+    "testSlots": {
+      "description": "A collection of test slots, possibly populated with booking data",
       "type": "array",
       "items": {
         "properties": {
-          "slotDetail": {
-            "$ref": "#/definitions/slotDetail"
-          },
-          "vehicleSlotType": {
-            "description": "A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any",
-            "type": "string",
-            "maxLength": 11
-          },
-          "testCentre": {
-            "$ref": "#/definitions/testCentre"
-          },
-          "booking": {
-            "$ref": "#/definitions/booking"
+          "testSlot": {
+            "$ref": "#/definitions/testSlot"
           }
         }
-      },
-      "personalCommitment": {
-        "$id": "#/properties/personalCommitment",
-        "description": "An examiner's personal commitment",
-        "type": "array",
-        "items": {
-          "properties": {
-            "commitmentId": {
-              "description": "The commitment id",
-              "type": "integer"
-            },
-            "startDate": {
-              "description": "The start date of the personal commitment",
-              "type": "string",
-              "minLength": 10,
-              "maxLength": 10
-            },
-            "startTime": {
-              "description": "The start time of the personal commitment, if any (in practice this will always be populated)",
-              "type": "string",
-              "minLength": 14,
-              "maxLength": 14
-            },
-            "endDate": {
-              "description": "The end date of the personal commitment",
-              "type": "string",
-              "minLength": 10,
-              "maxLength": 10
-            },
-            "endTime": {
-              "description": "The end time of the personal commitment, if any(in practice this will always be populated)",
-              "type": "string",
-              "minLength": 14,
-              "maxLength": 14
-            },
-            "activityCode": {
-              "description": "The personal commitment activity code",
-              "type": "string",
-              "maxLength": 4
-            },
-            "activityDescription": {
-              "description": "The personal commitment activity description",
-              "type": "string",
-              "maxLength": 50
-            }
+      }
+    },
+    "personalCommitments": {
+      "$id": "#/properties/personalCommitments",
+      "description": "A collection of the examiner's personal commitment(s)",
+      "type": "array",
+      "items": {
+        "properties": {
+          "personalCommitment": {
+            "$ref": "#/definitions/personalCommitment"
           }
         }
-      },
-      "nonTestActivity": {
-        "$id": "#/properties/nonTestActivity",
-        "description": "An examiner's non test activity (associated with a test slot duration)",
-        "type": "array",
-        "items": {
-          "properties": {
-            "slotDetail": {
-              "$ref": "#/definitions/slotDetail"
-            },
-            "activityCode": {
-              "description": "The non test activity code",
-              "type": "string",
-              "maxLength": 4
-            },
-            "activityDescription": {
-              "description": "The non test activity description",
-              "type": "string",
-              "maxLength": 50
-            },
-            "testCentre": {
-              "$ref": "#/definitions/testCentre"
-            }
+      }
+    },
+    "nonTestActivities": {
+      "$id": "#/properties/nonTestActivities",
+      "description": "A collection of the examiner's non test activity(s) (associated with a test slot duration)",
+      "type": "array",
+      "items": {
+        "properties": {
+          "nonTestActivity": {
+            "$ref": "#/definitions/nonTestActivity"
           }
         }
-      },
-      "advanceTestSlot": {
-        "$id": "#/properties/advanceTestSlot",
-        "description": "Advance details of a test slot",
-        "type": "array",
-        "items": {
-          "properties": {
-            "slotDetail": {
-              "$ref": "#/definitions/slotDetail"
-            },
-            "testCentre": {
-              "$ref": "#/definitions/testCentre"
-            },
-            "vehicleSlotType": {
-              "description": "A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any",
-              "type": "string",
-              "maxLength": 11
-            }
+      }
+    },
+    "advanceTestSlots": {
+      "$id": "#/properties/advanceTestSlots",
+      "description": "A collection of an examiner's future test slots",
+      "type": "array",
+      "items": {
+        "properties": {
+          "advanceTestSlot": {
+            "$ref": "#/definitions/advanceTestSlot"
           }
         }
-      },
-      "deployment": {
-        "$id": "#/properties/deployment",
-        "description": "Temporary secondment of the examiner to an alternative test centre",
-        "type": "array",
-        "items": {
-          "properties": {
-            "deploymentId": {
-              "description": "The deployment id",
-              "type": "integer"
-            },
-            "testCentre": {
-              "$ref": "#/definitions/testCentre"
-            },
-            "date": {
-              "description": "Date of the deployment",
-              "type": "string",
-              "minLength": 10,
-              "maxLength": 10
-            }
+      }
+    },
+    "deployments": {
+      "$id": "#/properties/deployments",
+      "description": "A collection of temporary secondments of the examiner to an alternative test centre",
+      "type": "array",
+      "items": {
+        "properties": {
+          "deployment": {
+            "$ref": "#/definitions/deployment"
           }
         }
       }
@@ -464,14 +514,27 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "https://example.com/arrays.schema.json",
   "title": "Examiner Work Schedule",
+  "version": "{{VERSION_PLACEHOLDER}}",
   "type": "object",
   "description": "JSON Schema definition for Examiner Work Schedule",
   "properties": {
     "examiner": {
       "$ref": "#/definitions/examiner"
     },
-    "testSlot": {
-      "$ref": "#/definitions/testSlot"
+    "testSlots": {
+      "$ref": "#/definitions/testSlots"
+    },
+    "personalCommitments": {
+      "$ref": "#/definitions/personalCommitments"
+    },
+    "nonTestActivities": {
+      "$ref": "#/definitions/nonTestActivities"
+    },
+    "advanceTestSlots": {
+      "$ref": "#/definitions/advanceTestSlots"
+    },
+    "deployments": {
+      "$ref": "#/definitions/deployments"
     }
   }
 }
