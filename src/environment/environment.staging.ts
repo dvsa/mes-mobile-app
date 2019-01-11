@@ -10,6 +10,7 @@ export const environment: EnvironmentFile = {
     clientId: '',
     redirectUrl: '',
     logoutUrl: '',
+    employeeIdKey: ''
   },
   journal: {
     journalUrl: '',

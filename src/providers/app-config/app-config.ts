@@ -54,6 +54,7 @@ export class AppConfigProvider {
         logoutUrl: data.authentication.logoutUrl,
         openIdConnectUrl: data.authentication.openIdConnectUrl,
         identityPoolId: data.authentication.identityPoolId,
+        employeeIdKey: data.authentication.employeeIdKey
       },
       aws: {
         region: data.aws.region,

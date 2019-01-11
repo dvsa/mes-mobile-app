@@ -11,6 +11,7 @@ export type EnvironmentFile = {
     logoutUrl: string,
     openIdConnectUrl?: string,
     identityPoolId?: string,
+    employeeIdKey: string
   },
   aws?: {
     region: string;
