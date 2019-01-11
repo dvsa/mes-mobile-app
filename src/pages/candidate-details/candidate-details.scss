@@ -1,7 +1,8 @@
 page-candidate-details {
   .special-needs-indicator {
-    width: 1.8em;
-    height: 1.8em;
+    width: 26px;
+    height: 26px;
+    float: right;
   }
 
   .test-category-icon {
@@ -9,5 +10,13 @@ page-candidate-details {
     height: 25px;
     width: auto;
     margin-left: 8px;
+  }
+
+  .test-start-time {
+    float: right;
+  }
+
+  .previous-cancellation-title {
+    margin-top: 8px;
   }
 }
