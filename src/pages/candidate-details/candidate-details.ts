@@ -9,6 +9,7 @@ import { merge } from 'rxjs/observable/merge';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../../common/store.model';
+import { TestCategory, testCategoryIcons } from '../../common/test-category';
 import { getJournalState } from '../journal/journal.reducer';
 import { getSlotById, getTestSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
 import { Details } from './candidate-details.model';
@@ -29,6 +30,9 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   pageState: CandidateDetailsPageState;
   subscription: Subscription;
   slotId: number;
+
+  testCategoryIcons = testCategoryIcons;
+  testCategory = TestCategory.B;
 
   constructor(
     public navController: NavController,
@@ -68,7 +72,9 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     const merged$ = merge(
       name$,
       time$,
-      details$
+      details$.pipe(
+        map(details => this.testCategory = details.testCategory.icon as TestCategory)
+      )
     );
 
     this.subscription = merged$.subscribe();
@@ -80,5 +86,9 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
 
   handleDoneButtonClick(): void {
     this.navController.pop();
+  }
+
+  getCategoryIcon(): string {
+    return this.testCategoryIcons[this.testCategory];
   }
 }

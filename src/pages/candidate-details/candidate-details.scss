@@ -1,6 +1,13 @@
 page-candidate-details {
   .special-needs-indicator {
-      width: 1.8em;
-      height: 1.8em;
-    }
+    width: 1.8em;
+    height: 1.8em;
+  }
+
+  .test-category-icon {
+    display: inline-block;
+    height: 25px;
+    width: auto;
+    margin-left: 8px;
+  }
 }
