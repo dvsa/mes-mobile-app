@@ -17,6 +17,6 @@ export const environment : EnvironmentFile = {
     region: 'eu-west-1',
   },
   journal: {
-    journalUrl: 'https://vulv731rce.execute-api.eu-west-1.amazonaws.com/default'
+    journalUrl: 'https://m1694kymbj.execute-api.eu-west-1.amazonaws.com/dev/journal'
   }
 };

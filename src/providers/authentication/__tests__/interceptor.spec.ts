@@ -52,7 +52,7 @@ describe('Authentication interceptor', () => {
 
     it('should not modify the request if not on ios', () => {
       const { journalUrl } = appConfig.getAppConfig().journal;
-      journalProvider.getJournal().subscribe(
+      journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
       );
@@ -65,7 +65,7 @@ describe('Authentication interceptor', () => {
     it('should add the signed headers if running on ios', () => {
       platform.is = jest.fn().mockReturnValue(true);
       const { journalUrl } = appConfig.getAppConfig().journal;
-      journalProvider.getJournal().subscribe(
+      journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
       );

@@ -9,66 +9,49 @@
  * The type of vehicle gearbox, if captured
  */
 export type VehicleGearbox = "Manual" | "Semi-Automatic" | "Automatic";
+/**
+ * The reason for the previous test cancellation
+ */
+export type Initiator = "Act of nature" | "DSA";
+/**
+ * The details of any previous test cancellations
+ */
+export type PreviousCancellation = {
+  initiator?: Initiator;
+  [k: string]: any;
+}[];
+/**
+ * A test slot, possibly populated with booking data
+ */
+export type TestSlot = {
+  slotDetail?: SlotDetail;
+  /**
+   * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
+   */
+  vehicleSlotType?: string;
+  testCentre?: TestCentre;
+  booking?: Booking;
+  [k: string]: any;
+}[];
 
 /**
  * JSON Schema definition for Examiner Work Schedule
  */
 export interface ExaminerWorkSchedule {
+  examiner?: Examiner;
+  testSlot?: TestSlot;
+  [k: string]: any;
+}
+/**
+ * The examiner details
+ */
+export interface Examiner {
   /**
-   * The examiner details
+   * The examiner's DSA staff number
    */
-  examiner?: {
-    /**
-     * The examiner's DSA staff number
-     */
-    staffNumber?: string;
-    examinerName?: Name;
-    permTestCentre?: TestCentre;
-    [k: string]: any;
-  };
-  /**
-   * A test slot, possibly populated with booking data
-   */
-  testSlot?: {
-    slotDetail?: SlotDetail;
-    /**
-     * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
-     */
-    vehicleSlotType?: string;
-    testCentre?: TestCentre;
-    /**
-     * If this slot is booked, this contains the details
-     */
-    booking?: {
-      candidate?: Candidate;
-      application?: Application;
-      /**
-       * The details of any previous test cancellations
-       */
-      previousCancellation?: any[];
-      /**
-       * The business details, only for tests that are booked by a business or trainer booker
-       */
-      business?: {
-        /**
-         * The business id
-         */
-        businessId?: number;
-        /**
-         * The business name
-         */
-        businessName?: string;
-        businessAddress?: Address;
-        /**
-         * The business telephone number, if any
-         */
-        telephone?: string;
-        [k: string]: any;
-      };
-      [k: string]: any;
-    };
-    [k: string]: any;
-  }[];
+  staffNumber?: string;
+  examinerName?: Name;
+  permTestCentre?: TestCentre;
   [k: string]: any;
 }
 /**
@@ -131,6 +114,16 @@ export interface SlotDetail {
    * The length in minutes of the test slot
    */
   duration?: number;
+  [k: string]: any;
+}
+/**
+ * If this slot is booked, this contains the details
+ */
+export interface Booking {
+  candidate?: Candidate;
+  application?: Application;
+  previousCancellation?: PreviousCancellation;
+  business?: Business;
   [k: string]: any;
 }
 /**
@@ -268,5 +261,24 @@ export interface Application {
    */
   testCategory?: string;
   vehicleGearbox?: VehicleGearbox;
+  [k: string]: any;
+}
+/**
+ * The business details, only for tests that are booked by a business or trainer booker
+ */
+export interface Business {
+  /**
+   * The business id
+   */
+  businessId?: number;
+  /**
+   * The business name
+   */
+  businessName?: string;
+  businessAddress?: Address;
+  /**
+   * The business telephone number, if any
+   */
+  telephone?: string;
   [k: string]: any;
 }
