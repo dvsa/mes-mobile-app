@@ -1,5 +1,5 @@
-<ion-card class="test-slot-card" [ngClass]="{'test-slot-portrait-mode': isPortrait()}">
-  <ion-row class="slot-row" align-items-center class="test-slot-row" nowrap>
+<ion-card [ngClass]="{'test-slot-portrait-mode': isPortrait()}">
+  <ion-row class="slot-row" align-items-center nowrap>
     <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>
     <ion-col col-auto padding-left>
       <indicators
