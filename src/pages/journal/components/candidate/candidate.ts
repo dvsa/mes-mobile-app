@@ -10,27 +10,14 @@ export class CandidateComponent {
   name: Name;
 
   @Input()
-  testCategory: string;
-
-  @Input()
   testComplete: boolean;
 
   @Input()
   welshLanguage: boolean;
 
-  testCategoryDescription : string
+  @Input()
+  isPortrait: boolean;
+
   constructor() {
-  }
-
-  ngOnInit() {
-    this.testCategoryDescription = this.getCategoryDescription();
-    this.testComplete = true; // not in json as yet... add when it is
-  }
-
-  getCategoryDescription(): string {
-    if (this.testCategory === 'B57mins') {
-      return 'Cat B'
-    }
-    return 'N/A';
   }
 }

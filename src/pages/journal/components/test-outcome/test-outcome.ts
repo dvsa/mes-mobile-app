@@ -9,6 +9,7 @@ export class TestOutcomeComponent implements OnInit {
   slot: any;
 
   canStartTest: boolean = true;
+  canSubmitTest: boolean = false
   outcome: string = '1'; // todo - get the activity code
 
   constructor() {}

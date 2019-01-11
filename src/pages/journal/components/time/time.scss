@@ -2,4 +2,8 @@ time {
     &.time-test-complete-text {
         color: map-get($colors-gds, gds-grey-1);
       }
+      .time-text {
+        font-weight: bold;
+        font-size: 28px;
+      }
 }

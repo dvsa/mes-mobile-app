@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthInterceptor } from '../providers/authentication/interceptor';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @NgModule({
   declarations: [App],
@@ -41,7 +42,8 @@ import { AuthInterceptor } from '../providers/authentication/interceptor';
     AppConfigProvider,
     AuthenticationProvider,
     InAppBrowser,
-    CognitoIdentityWrapper
+    CognitoIdentityWrapper,
+    ScreenOrientation
   ]
 })
 export class AppModule {

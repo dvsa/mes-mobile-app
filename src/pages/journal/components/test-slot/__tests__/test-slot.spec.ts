@@ -7,9 +7,13 @@ import { ConfigMock } from 'ionic-mocks-jest';
 import { cloneDeep } from 'lodash';
 import { IndicatorsComponent } from '../../indicators/indicators';
 import { TimeComponent } from '../../time/time';
-import { TestDetailsComponent } from '../../test-details/test-details';
 import { TestOutcomeComponent } from '../../test-outcome/test-outcome';
 import { CandidateComponent } from '../../candidate/candidate';
+import { TestCategoryComponent } from '../../test-category/test-category';
+import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
+import { TestCategoryIconComponent } from '../../../../../components/test-category-icon/test-category-icon';
 
 describe('TestSlotComponent', () => {
     let fixture: ComponentFixture<TestSlotComponent>;
@@ -59,10 +63,10 @@ describe('TestSlotComponent', () => {
               progressiveAccess: false,
               specialNeeds: 'Candidate has dyslexia',
               entitlementCheck: false,
-              vehicleSeats: null,
-              vehicleHeight: null,
-              vehicleWidth: null,
-              vehicleLength: null,
+              vehicleSeats: 5,
+              vehicleHeight: 4,
+              vehicleWidth: 3,
+              vehicleLength: 2,
               testCategory: 'B',
               vehicleGearbox: 'Manual',
             },
@@ -80,12 +84,18 @@ describe('TestSlotComponent', () => {
                 TestSlotComponent,
                 MockComponent(IndicatorsComponent),
                 MockComponent(TimeComponent),
-                MockComponent(TestDetailsComponent),
+                MockComponent(TestCategoryComponent),
                 MockComponent(TestOutcomeComponent),
+                MockComponent(VehicleDetailsComponent),
                 MockComponent(CandidateComponent),
+                MockComponent(TestCategoryIconComponent)
             ],
             imports: [IonicModule],
-            providers: [ { provide: Config, useFactory: () => ConfigMock.instance() } ]
+            providers: [
+              { provide: Config, useFactory: () => ConfigMock.instance() },
+              { provide: ScreenOrientation, useClass: ScreenOrientationMock}
+
+            ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(TestSlotComponent);
             component = fixture.componentInstance;
@@ -106,12 +116,57 @@ describe('TestSlotComponent', () => {
           delete component.slot.booking.application;
           expect(component.isSpecialNeedsSlot()).toBe(false);
         });
+        it('should return correct value for showing vehicle details', () => {
+          component.slot.booking.application.testCategory = 'A';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'A1';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'A2';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'AM';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'B';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'B1';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'B+E';
+          expect(component.showVehicleDetails()).toBeFalsy();
+          component.slot.booking.application.testCategory = 'C';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'C1';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'C1+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'C+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D1';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+          component.slot.booking.application.testCategory = 'D1+E';
+          expect(component.showVehicleDetails()).toBeTruthy();
+        })
+        it('should return true for isPortrait() if device is portrait', () => {
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY;
+          expect(component.isPortrait()).toBeTruthy();
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.PORTRAIT;
+          expect(component.isPortrait()).toBeTruthy();
+        })
+        it('should return fa;se for isPortrait() if device is landscape', () => {
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY;
+          expect(component.isPortrait()).toBeFalsy();
+          component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.LANDSCAPE;
+          expect(component.isPortrait()).toBeFalsy();
+        })
       });
     });
 
     describe('DOM', () => {
       describe('Component Interaction', () => {
         it('should pass the special needs status to a indicator component', () => {
+
           component.slot.booking.application.specialNeeds = ''
           fixture.detectChanges();
           const indicatorComponent = fixture.debugElement.query(By.directive(MockComponent(IndicatorsComponent))).componentInstance;
@@ -131,13 +186,38 @@ describe('TestSlotComponent', () => {
           expect(subByDirective.name.title).toBe('Miss');
           expect(subByDirective.name.firstName).toBe('Florence');
           expect(subByDirective.name.lastName).toBe('Pearson');
-          expect(subByDirective.testCategory).toBe('B57mins');
+          expect(subByDirective.welshTest).toBeFalsy();
+          expect(subByDirective.isPortrait).toBeFalsy();
         });
 
-        it('should pass something to sub-component test-details input', () => {
+        it('should pass something to sub-component test-category  input', () => {
           fixture.detectChanges();
-          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestDetailsComponent))).componentInstance;
-          expect(subByDirective.testCentreName).toBe('Example Test Centre');
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryComponent))).componentInstance;
+          expect(subByDirective.category).toBe('B');
+        });
+
+        it('should pass something to sub-component test-category-icon  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryIconComponent))).componentInstance;
+          expect(subByDirective.category).toBe('B');
+        });
+
+        it('should pass something to sub-component test-outcome  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
+          expect(subByDirective.slot).toEqual(mockSlot);
+        });
+
+        it('should pass something to sub-component vehicle-details  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(VehicleDetailsComponent))).componentInstance;
+          expect(subByDirective.height).toBe(4);
+          expect(subByDirective.width).toBe(3);
+          expect(subByDirective.length).toBe(2);
+          expect(subByDirective.seats).toBe(5);
+          expect(subByDirective.transmission).toBe('Manual');
+          expect(subByDirective.showDimensions).toBeFalsy();
+          expect(subByDirective.showVehicleDetails).toBeFalsy();
         });
       });
   });
