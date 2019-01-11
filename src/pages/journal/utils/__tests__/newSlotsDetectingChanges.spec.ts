@@ -67,7 +67,7 @@ describe('newSlotsDetectingChanges', () => {
       {
         slotDetail: {
           slotId: 1002,
-          start: '2018-12-10T09:07:00+00:00',
+          start: '2018-12-10T10:14:00+00:00',
           duration: 57
         },
         vehicleSlotType: 'B57mins',
@@ -119,7 +119,7 @@ describe('newSlotsDetectingChanges', () => {
       {
         slotDetail: {
           slotId: 1003,
-          start: '2012-10-05T09:07:00+01:00',
+          start: '2018-12-10T09:07:00+01:00',
           duration: 57,
         },
         activityCode: '091',
@@ -187,8 +187,15 @@ describe('newSlotsDetectingChanges', () => {
       const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
       expect(result).toHaveLength(3);
       expect(result[0].hasSlotChanged).toBe(true);
-      expect(result[1].hasSlotChanged).toBe(true);
-      expect(result[2].hasSlotChanged).toBe(false);
+      expect(result[1].hasSlotChanged).toBe(false);
+      expect(result[2].hasSlotChanged).toBe(true);
+    });
+  });
+
+  describe('when the journal payload contains nonTestActivities', () => {
+    it('should mix them into the TestSlots such that they appear in date order', () => {
+      const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
+      expect(result[1].slotData.activityCode).toBe('091');
     });
   });
 });

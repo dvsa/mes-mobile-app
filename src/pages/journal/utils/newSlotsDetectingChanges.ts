@@ -5,6 +5,9 @@ import { flatten } from 'lodash';
 
 export default function(oldJournalSlots: SlotItem[], newJournal: ExaminerWorkSchedule): SlotItem[] {
   const newSlots = flatten([newJournal.testSlot, newJournal.nonTestActivities]);
+
+  newSlots.sort((slotA, slotB) => slotA.slotDetail.start < slotB.slotDetail.start ? -1 : 1);
+
   return newSlots.map(newSlot => {
     const newSlotId = newSlot.slotDetail.slotId;
     const replacedJournalSlot = oldJournalSlots.find(oldSlot => oldSlot.slotData.slotDetail.slotId === newSlotId);
