@@ -46,7 +46,8 @@ export const getDetails = (testSlot: any): Details => {
       previousCancellations: testSlot.booking.previousCancellation
     },
     phoneNumber: getPhoneNumber(testSlot.booking.candidate),
-    email: 'emailaddress@generic.info',
+    // TODO: remove the string literal when e-mail address is configured in the service
+    email: testSlot.booking.candidate.emailAddress || 'e-mail not yet configured in the service',
     address: {
       street: testSlot.booking.candidate.candidateAddress.addressLine1,
       city: getCity(testSlot.booking.candidate.candidateAddress),
