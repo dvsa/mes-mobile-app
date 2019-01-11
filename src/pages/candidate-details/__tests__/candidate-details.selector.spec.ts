@@ -1,7 +1,6 @@
 
-import { getTestSlots, getSlotById, getTime, getCandidateName, getPhoneNumber, getSlotTypeView, getCity, getDetails } from '../candidate-details.selector';
+import { getTestSlots, getSlotById, getTime, getCandidateName, getPhoneNumber, getSlotTypeView, getCity } from '../candidate-details.selector';
 import { singleSlotType, doubleSlotType } from '../candidate-details.constants';
-import { Details } from '../candidate-details.model';
 
 describe('Candidate Details Selector', () => {
 
@@ -9,6 +8,7 @@ describe('Candidate Details Selector', () => {
     it('returns the correct test slot array from the journal data', () => {
       const journal = {
         isLoading: false,
+        lastRefreshed: new Date(0),
         data: {
           testSlot: [
             {
@@ -16,6 +16,12 @@ describe('Candidate Details Selector', () => {
             },
           ],
         },
+        slots: [
+          {
+            hasSlotChanged: false,
+            slotData: {}
+          }
+        ],
       };
 
       const result = getTestSlots(journal);
