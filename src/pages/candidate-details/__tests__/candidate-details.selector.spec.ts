@@ -1,6 +1,6 @@
 
 import { getTestSlots, getSlotById, getTime, getCandidateName, getPhoneNumber, getSlotTypeView, getCity } from '../candidate-details.selector';
-import { singleSlotType, doubleSlotType } from '../candidate-details.constants';
+import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
 
 describe('Candidate Details Selector', () => {
 
@@ -139,7 +139,7 @@ describe('Candidate Details Selector', () => {
   });
 
   describe('getSlotTypeView', () => {
-    it('should return singleSlotType when no special needs is provided', () => {
+    it('should return carStandardSlotType when no special needs is provided', () => {
       const testSlot = {
         booking: {
           application: {
@@ -150,7 +150,7 @@ describe('Candidate Details Selector', () => {
 
       const result = getSlotTypeView(testSlot);
 
-      expect(result).toEqual(singleSlotType);
+      expect(result).toEqual(carStandardSlotType);
     });
 
     it('should return a double slot type when special needs are provided', () => {
@@ -164,7 +164,7 @@ describe('Candidate Details Selector', () => {
 
       const result = getSlotTypeView(testSlot);
 
-      expect(result).toEqual(doubleSlotType);
+      expect(result).toEqual(carSpecialNeedsSlotType);
     });
   });
 

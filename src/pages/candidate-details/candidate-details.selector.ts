@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 
 import { JournalModel } from '../journal/journal.model';
 import { Details, SlotTypeView } from './candidate-details.model';
-import { singleSlotType, doubleSlotType } from './candidate-details.constants';
+import { carStandardSlotType, carSpecialNeedsSlotType } from './candidate-details.constants';
 
 export const getTestSlots = (journal: JournalModel) => journal.data.testSlot;
 
@@ -20,7 +20,7 @@ export const getPhoneNumber = (candidate: any): string => {
   return 'No phone number provided';
 }
 
-export const getSlotTypeView = (testSlot: any): SlotTypeView => isEmpty(testSlot.booking.application.specialNeeds) ? singleSlotType : doubleSlotType;
+export const getSlotTypeView = (testSlot: any): SlotTypeView => isEmpty(testSlot.booking.application.specialNeeds) ? carStandardSlotType : carSpecialNeedsSlotType;
 
 export const getCity = (address: any): string => {
   let city = '';
