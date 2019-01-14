@@ -50,7 +50,7 @@ describe('Slot Selector', () => {
 
       it('should provide correct component when test type is B57mins', () => {
         const testSlot = {
-          vehicleSlotType: 'B57Mins'
+          vehicleSlotType: 'B57mins'
         };
         const journalSlots = [
           new SlotItem(testSlot, false)
@@ -62,7 +62,7 @@ describe('Slot Selector', () => {
         expect(response[0].component).toBe(TestSlotComponent);
         expect(response[0].slotData).toBe(testSlot);
         expect(response[0].hasSlotChanged).toBe(false)
-      })
+      });
 
       it('should provide the NonTestActivitySlotComponent for NTA activity codes', () => {
         expectNonTestActivitySlotComponentResolvedForActivityCode('091');

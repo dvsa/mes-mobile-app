@@ -22,25 +22,13 @@ export class SlotSelectorProvider {
   }
 
   private resolveComponentName = (slotType: string, activityCode: string) => {
-    if (this.isNonTestActivityCode(activityCode)) {
-      return ActivitySlotComponent;
-    }
-
     switch (slotType) {
       case 'B57mins':
+        return TestSlotComponent;
       default:
-        return TestSlotComponent
+        return ActivitySlotComponent;
     }
   }
 
-  private isNonTestActivityCode(activityCode: string): boolean {
-    const ntaCodes = [
-      '091',
-      '094',
-      '096',
-      '142',
-    ];
-    return ntaCodes.includes(activityCode);
-  }
 }
 
