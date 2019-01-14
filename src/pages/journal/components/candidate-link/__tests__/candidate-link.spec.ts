@@ -1,25 +1,29 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CandidateComponent } from '../candidate';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule, NavController } from 'ionic-angular';
+import { NavControllerMock } from 'ionic-mocks-jest';
 import { By } from '@angular/platform-browser';
+import { CandidateLinkComponent } from '../candidate-link';
 
-describe('CandidateComponent', () => {
-  let component: CandidateComponent;
-  let fixture: ComponentFixture<CandidateComponent>;
+describe('CandidateLinkComponent', () => {
+  let component: CandidateLinkComponent;
+  let fixture: ComponentFixture<CandidateLinkComponent>;
+
+  const navControllerMock = NavControllerMock.instance();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CandidateComponent],
-      imports: [IonicModule],
-    })
-      .compileComponents()
+      declarations: [ CandidateLinkComponent ],
+      imports: [ IonicModule ],
+      providers: [ { provide: NavController, useFactory: () => navControllerMock } ],
+    }).compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(CandidateComponent);
+        fixture = TestBed.createComponent(CandidateLinkComponent);
         component = fixture.componentInstance;
         component.name = { title: '', firstName: '', lastName: '' }
         component.name.title = 'Mr';
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
+        component.slotId = 12345;
         component.welshLanguage = false;
       });
   }));
@@ -27,6 +31,12 @@ describe('CandidateComponent', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    it('should call the push function of navController and pass the right slotId', () => {
+      component.navigateToCandidateDetails();
+
+      expect(component.navController.push).toBeCalledWith('CandidateDetailsPage', { slotId: component.slotId });
     });
   });
 
@@ -67,6 +77,17 @@ describe('CandidateComponent', () => {
       const renderedImages = fixture.debugElement.queryAll(By.css('.candidate-grid-row'));
       expect(renderedImages).toHaveLength(0);
     });
+
+    it('should call navigateToCandidateDetails when the main div component is taped', () => {
+      spyOn(component, 'navigateToCandidateDetails');
+
+      const mainDiv = fixture.debugElement.nativeElement.querySelector('div');
+      mainDiv.click();
+
+      fixture.whenStable().then(() => {
+        expect(component.navigateToCandidateDetails).toHaveBeenCalled();
+      });
+    })
 
   });
 });

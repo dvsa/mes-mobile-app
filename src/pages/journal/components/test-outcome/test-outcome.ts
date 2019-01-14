@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'test-outcome',
   templateUrl: 'test-outcome.html'
 })
-export class TestOutcomeComponent implements OnInit {
+export class TestOutcomeComponent {
   @Input()
   slot: any;
 
@@ -13,7 +13,4 @@ export class TestOutcomeComponent implements OnInit {
   outcome: string = '1'; // todo - get the activity code
 
   constructor() {}
-
-  ngOnInit() {}
-
 }
