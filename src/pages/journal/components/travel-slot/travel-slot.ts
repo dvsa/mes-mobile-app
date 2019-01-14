@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SlotComponent } from '../slot/slot';
+import { isNil } from 'lodash';
 
 @Component({
   selector: 'travel-slot',
@@ -13,5 +14,12 @@ export class TravelSlotComponent implements SlotComponent {
   hasSlotChanged: boolean;
 
   constructor() {}
+
+  formatActivityCode(activityCode: string): string {
+    if(isNil(activityCode)) {
+      return '0';
+    }
+    return activityCode.replace(/^\w*0/, '');
+  }
 
 }
