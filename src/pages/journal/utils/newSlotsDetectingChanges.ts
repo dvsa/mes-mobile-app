@@ -4,7 +4,10 @@ import { DeepDiff } from 'deep-diff';
 import { flatten } from 'lodash';
 
 export default function(oldJournalSlots: SlotItem[], newJournal: ExaminerWorkSchedule): SlotItem[] {
-  const newSlots = flatten([newJournal.testSlot, newJournal.nonTestActivities]);
+  const newSlots = flatten([
+    newJournal.testSlot || [],
+    newJournal.nonTestActivities || [],
+  ]);
 
   newSlots.sort((slotA, slotB) => slotA.slotDetail.start < slotB.slotDetail.start ? -1 : 1);
 

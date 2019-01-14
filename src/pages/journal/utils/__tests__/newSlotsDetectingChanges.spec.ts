@@ -154,7 +154,7 @@ describe('newSlotsDetectingChanges', () => {
 
   describe('when there are no slots in the new journal', () => {
     it('should return a blank array', () => {
-      const result = newSlotsDetectingChanges([], { testSlot: [], nonTestActivities: []});
+      const result = newSlotsDetectingChanges([], {});
       expect(result).toHaveLength(0);
     });
   });
