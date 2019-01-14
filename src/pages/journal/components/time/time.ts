@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'time',
   templateUrl: 'time.html'
 })
-export class TimeComponent {
+export class TimeComponent implements OnInit {
 
   @Input()
   time: string;

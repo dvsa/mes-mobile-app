@@ -15,12 +15,13 @@
     </time>
     </ion-col>
     <ion-col col-4 class="candidate-details-col">
-      <candidate
+      <candidate-link
+        [slotId]="slot.slotDetail.slotId"
         [name]="slot.booking.candidate.candidateName"
         [welshLanguage]="slot.booking.application.welshTest"
         [isPortrait]="isPortrait()"
       >
-      </candidate>
+      </candidate-link>
     </ion-col>
     <ion-col>
       <ion-grid>

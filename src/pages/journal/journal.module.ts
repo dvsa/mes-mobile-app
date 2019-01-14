@@ -8,7 +8,7 @@ import { journalReducer } from './journal.reducer';
 import { JournalEffects } from './journal.effects';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { TimeComponent } from './components/time/time';
-import { CandidateComponent } from './components/candidate/candidate';
+import { CandidateLinkComponent } from './components/candidate-link/candidate-link';
 import { TestOutcomeComponent } from './components/test-outcome/test-outcome';
 import { TestSlotComponent } from './components/test-slot/test-slot';
 import { ActivitySlotComponent } from './components/activity-slot/activity-slot';
@@ -22,7 +22,7 @@ import { TestCategoryComponent } from './components/test-category/test-category'
     JournalPage,
     IndicatorsComponent,
     TimeComponent,
-    CandidateComponent,
+    CandidateLinkComponent,
     TestOutcomeComponent,
     TestSlotComponent,
     ActivitySlotComponent,
