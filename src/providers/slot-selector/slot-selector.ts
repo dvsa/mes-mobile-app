@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { SlotItem } from './slot-item';
 import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
 import { TestSlot } from '../../pages/journal/journal.model';
-import { TravelSlotComponent } from '../../pages/journal/components/travel-slot/travel-slot';
+import { ActivitySlotComponent } from '../../pages/journal/components/activity-slot/activity-slot';
+import { Activity, activities } from './activity.constants';
 
 @Injectable()
 export class SlotSelectorProvider {
@@ -22,8 +23,8 @@ export class SlotSelectorProvider {
   }
 
   private resolveComponentName = (slotType: string, activityCode: string) => {
-    if (activityCode === '091') {
-      return TravelSlotComponent;
+    if (this.isNonTestActivityCode(activityCode)) {
+      return ActivitySlotComponent;
     }
 
     switch (slotType) {
@@ -32,4 +33,23 @@ export class SlotSelectorProvider {
         return TestSlotComponent
     }
   }
+
+  public activityCodeDisplayName(activityCode: string): string {
+    const matchingActivity: Activity = activities.find(a => a.activityCode === activityCode);
+    if (matchingActivity) {
+      return matchingActivity.displayName || matchingActivity.description;
+    }
+    return 'Unknown';
+  }
+
+  private isNonTestActivityCode(activityCode: string): boolean {
+    const ntaCodes = [
+      '091',
+      '094',
+      '096',
+      '142',
+    ];
+    return ntaCodes.includes(activityCode);
+  }
 }
+

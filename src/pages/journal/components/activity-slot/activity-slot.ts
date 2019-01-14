@@ -3,10 +3,10 @@ import { SlotComponent } from '../slot/slot';
 import { isNil } from 'lodash';
 
 @Component({
-  selector: 'travel-slot',
-  templateUrl: 'travel-slot.html'
+  selector: 'activity-slot',
+  templateUrl: 'activity-slot.html'
 })
-export class TravelSlotComponent implements SlotComponent {
+export class ActivitySlotComponent implements SlotComponent {
   @Input()
   slot: any;
 

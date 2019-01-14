@@ -11,7 +11,7 @@ import { TimeComponent } from './components/time/time';
 import { CandidateComponent } from './components/candidate/candidate';
 import { TestOutcomeComponent } from './components/test-outcome/test-outcome';
 import { TestSlotComponent } from './components/test-slot/test-slot';
-import { TravelSlotComponent } from './components/travel-slot/travel-slot';
+import { ActivitySlotComponent } from './components/activity-slot/activity-slot';
 import { IndicatorsComponent } from './components/indicators/indicators';
 import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
@@ -25,7 +25,7 @@ import { TestCategoryComponent } from './components/test-category/test-category'
     CandidateComponent,
     TestOutcomeComponent,
     TestSlotComponent,
-    TravelSlotComponent,
+    ActivitySlotComponent,
     TestCategoryComponent,
     VehicleDetailsComponent
   ],
@@ -37,7 +37,7 @@ import { TestCategoryComponent } from './components/test-category/test-category'
   ],
   entryComponents: [
     TestSlotComponent,
-    TravelSlotComponent,
+    ActivitySlotComponent,
   ],
   providers: [
     JournalProvider,

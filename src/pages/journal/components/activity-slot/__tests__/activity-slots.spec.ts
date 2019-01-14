@@ -1,4 +1,4 @@
-import { TravelSlotComponent } from '../travel-slot';
+import { ActivitySlotComponent } from '../activity-slot';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
@@ -8,14 +8,14 @@ import { AppConfigProviderMock } from '../../../../../providers/app-config/__moc
 import { ConfigMock } from 'ionic-mocks-jest';
 import { By } from '@angular/platform-browser';
 
-describe('TravelSlotComponent', () => {
-  let fixture: ComponentFixture<TravelSlotComponent>;
-  let component: TravelSlotComponent;
+describe('ActivitySlotComponent', () => {
+  let fixture: ComponentFixture<ActivitySlotComponent>;
+  let component: ActivitySlotComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TravelSlotComponent,
+        ActivitySlotComponent,
         MockComponent(TimeComponent),
       ],
       providers: [
@@ -24,7 +24,7 @@ describe('TravelSlotComponent', () => {
       ],
       imports: [IonicModule],
     }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(TravelSlotComponent);
+      fixture = TestBed.createComponent(ActivitySlotComponent);
       component = fixture.componentInstance;
     });
   }));
