@@ -1,5 +1,5 @@
 activity-slot {
-  ion-card.travel-slot {
+  ion-card.activity-slot {
     height: 60px;
     background: map-get($colors, travelSlotBackground);
     border: 1px solid #d9e3d1;
@@ -8,10 +8,10 @@ activity-slot {
   .time-column div {
     margin-left: 1.7em;
   }
-  .travel-title-column {
+  .title-column {
     display: flex;
     justify-content: center;
-    .travel-title {
+    .title {
       font-weight: bold;
     }
   }
