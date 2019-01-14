@@ -8,7 +8,7 @@ import { cloneDeep } from 'lodash';
 import { IndicatorsComponent } from '../../indicators/indicators';
 import { TimeComponent } from '../../time/time';
 import { TestOutcomeComponent } from '../../test-outcome/test-outcome';
-import { CandidateHighlightsComponent } from '../../candidate-highlights/candidate-highlights';
+import { CandidateLinkComponent } from '../../candidate-link/candidate-link';
 import { TestCategoryComponent } from '../../test-category/test-category';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -87,7 +87,7 @@ describe('TestSlotComponent', () => {
                 MockComponent(TestCategoryComponent),
                 MockComponent(TestOutcomeComponent),
                 MockComponent(VehicleDetailsComponent),
-                MockComponent(CandidateHighlightsComponent),
+                MockComponent(CandidateLinkComponent),
                 MockComponent(TestCategoryIconComponent)
             ],
             imports: [IonicModule],
@@ -182,7 +182,7 @@ describe('TestSlotComponent', () => {
 
         it('should pass something to sub-component candidate input', () => {
           fixture.detectChanges();
-          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(CandidateHighlightsComponent))).componentInstance;
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(CandidateLinkComponent))).componentInstance;
           expect(subByDirective.name.title).toBe('Miss');
           expect(subByDirective.name.firstName).toBe('Florence');
           expect(subByDirective.name.lastName).toBe('Pearson');
