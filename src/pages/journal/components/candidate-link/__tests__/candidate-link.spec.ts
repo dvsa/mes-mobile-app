@@ -8,11 +8,13 @@ describe('CandidateLinkComponent', () => {
   let component: CandidateLinkComponent;
   let fixture: ComponentFixture<CandidateLinkComponent>;
 
+  const navControllerMock = NavControllerMock.instance();
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CandidateLinkComponent ],
       imports: [ IonicModule ],
-      providers: [ { provide: NavController, useFactory: () => NavControllerMock.instance() } ],
+      providers: [ { provide: NavController, useFactory: () => navControllerMock } ],
     }).compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(CandidateLinkComponent);
@@ -21,6 +23,7 @@ describe('CandidateLinkComponent', () => {
         component.name.title = 'Mr';
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
+        component.slotId = 12345;
         component.welshLanguage = false;
       });
   }));
@@ -28,6 +31,12 @@ describe('CandidateLinkComponent', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    it('should call the push function of navController and pass the right slotId', () => {
+      component.navigateToCandidateDetails();
+
+      expect(component.navController.push).toBeCalledWith('CandidateDetailsPage', { slotId: component.slotId });
     });
   });
 
@@ -68,6 +77,17 @@ describe('CandidateLinkComponent', () => {
       const renderedImages = fixture.debugElement.queryAll(By.css('.candidate-grid-row'));
       expect(renderedImages).toHaveLength(0);
     });
+
+    it('should call navigateToCandidateDetails when the main div component is taped', () => {
+      spyOn(component, 'navigateToCandidateDetails');
+
+      const mainDiv = fixture.debugElement.nativeElement.querySelector('div');
+      mainDiv.click();
+
+      fixture.whenStable().then(() => {
+        expect(component.navigateToCandidateDetails).toHaveBeenCalled();
+      });
+    })
 
   });
 });
