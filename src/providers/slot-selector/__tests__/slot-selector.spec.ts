@@ -71,19 +71,5 @@ describe('Slot Selector', () => {
         expectNonTestActivitySlotComponentResolvedForActivityCode('142');
       });
     });
-
-    describe('activityCodeDisplayName', () => {
-      it('should return Unknown for an unmapped code', () => {
-        expect(slotSelector.activityCodeDisplayName('notactivitycode')).toBe('Unknown')
-      });     
-
-      it('should return the display name if one exists', () => {
-        expect(slotSelector.activityCodeDisplayName('091')).toBe('Travel');
-      });
-
-      it('should return the activity description if there is no display name', () => {
-        expect(slotSelector.activityCodeDisplayName('142')).toBe('Personal development');
-      });
-    });
   });
 });

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SlotComponent } from '../slot/slot';
 import { isNil } from 'lodash';
+import { Activity, activities } from '../../../../providers/slot-selector/activity.constants';
 
 @Component({
   selector: 'activity-slot',
@@ -20,6 +21,15 @@ export class ActivitySlotComponent implements SlotComponent {
       return '0';
     }
     return activityCode.replace(/^\w*0/, '');
+  }
+
+  public getTitle(): string {
+    const activityCode = this.slot.activityCode;
+    const matchingActivity: Activity = activities.find(a => a.activityCode === activityCode);
+    if (matchingActivity) {
+      return matchingActivity.displayName || matchingActivity.description;
+    }
+    return 'Unknown';
   }
 
 }

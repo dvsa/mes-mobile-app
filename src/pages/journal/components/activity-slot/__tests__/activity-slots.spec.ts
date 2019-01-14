@@ -42,6 +42,23 @@ describe('ActivitySlotComponent', () => {
         expect(component.formatActivityCode('091')).toBe('91');
       });
     });
+
+    describe('getTitle', () => {
+      it('should return Unknown for an unmapped code', () => {
+        component.slot.activityCode = 'notactivitycode';
+        expect(component.getTitle()).toBe('Unknown')
+      });     
+
+      it('should return the display name if one exists', () => {
+        component.slot.activityCode = '091';
+        expect(component.getTitle()).toBe('Travel');
+      });
+
+      it('should return the activity description if there is no display name', () => {
+        component.slot.activityCode = '142';
+        expect(component.getTitle()).toBe('Personal development');
+      });
+    });
   });
 
   describe('DOM', () => {
