@@ -16,7 +16,8 @@ export class ActivitySlotComponent implements SlotComponent {
 
   constructor() {}
 
-  formatActivityCode(activityCode: string): string {
+  formatActivityCode(): string {
+    const activityCode = this.slot.activityCode;
     if(isNil(activityCode)) {
       return '0';
     }

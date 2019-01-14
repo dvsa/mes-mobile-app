@@ -35,11 +35,20 @@ describe('ActivitySlotComponent', () => {
     });
 
     describe('formatActivityCode', () => {
+      beforeEach(() => {
+        component.slot = {};
+      });
       it('should strip leading zeroes if they exist', () => {
-        expect(component.formatActivityCode(undefined)).toBe('0');
-        expect(component.formatActivityCode(null)).toBe('0');
-        expect(component.formatActivityCode('128')).toBe('128');
-        expect(component.formatActivityCode('091')).toBe('91');
+        const cases = [
+          { activityCode: undefined, expected: '0'},
+          { activityCode: null, expected: '0'},
+          { activityCode: '128', expected: '128'},
+          { activityCode: '091', expected: '91'},
+        ];
+        cases.forEach(testCase => {
+          component.slot.activityCode = testCase.activityCode;
+          expect(component.formatActivityCode()).toBe(testCase.expected);
+        });
       });
     });
 
