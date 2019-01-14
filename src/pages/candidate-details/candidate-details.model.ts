@@ -13,6 +13,7 @@ export type Details = {
   driverNumber: string,
   applicationRef: string,
   candidateComments: {
+    isSectionEmpty: boolean,
     specialNeeds: string,
     previousCancellations: { initiator: string }[],
   },

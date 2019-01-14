@@ -13,6 +13,8 @@ export const getCandidateName = (testSlot: any): string => `${testSlot.booking.c
 
 export const getTime = (testSlot: any): string => testSlot.slotDetail.start;
 
+export const isCandidateCommentsEmpty = (testSlot: any): boolean => isEmpty(testSlot.booking.candidate.specialNeeds) && isEmpty(testSlot.booking.previousCancellation);
+
 export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.mobileTelephone)) return candidate.mobileTelephone;
   if (!isEmpty(candidate.primaryTelephone)) return candidate.primaryTelephone;
@@ -29,7 +31,7 @@ export const getCity = (address: any): string => {
   if (!isEmpty(address.addressLine4)) city += `, ${address.addressLine4}`;
   if (!isEmpty(address.addressLine5)) city += `, ${address.addressLine5}`;
 
-  return city
+  return city;
 }
 
 export const getDetails = (testSlot: any): Details => {
@@ -42,6 +44,7 @@ export const getDetails = (testSlot: any): Details => {
     driverNumber: testSlot.booking.candidate.driverNumber,
     applicationRef: testSlot.booking.application.applicationId,
     candidateComments: {
+      isSectionEmpty: isCandidateCommentsEmpty(testSlot),
       specialNeeds: testSlot.booking.application.specialNeeds,
       previousCancellations: testSlot.booking.previousCancellation
     },

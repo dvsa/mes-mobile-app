@@ -1,5 +1,14 @@
 
-import { getTestSlots, getSlotById, getTime, getCandidateName, getPhoneNumber, getSlotTypeView, getCity } from '../candidate-details.selector';
+import {
+  getTestSlots,
+  getSlotById,
+  getTime,
+  getCandidateName,
+  getPhoneNumber,
+  getSlotTypeView,
+  getCity, 
+  isCandidateCommentsEmpty
+} from '../candidate-details.selector';
 import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
 
 describe('Candidate Details Selector', () => {
@@ -66,6 +75,53 @@ describe('Candidate Details Selector', () => {
       const result = getTime(testSlot);
 
       expect(result).toEqual(testSlotStartTime);
+    });
+  });
+
+  describe('isCandidateCommentsEmpty', () => {
+    it('returns true if the specialNeeds and previousCancellation are empty', () => {
+      const testSlot = {
+        booking: {
+          candidate: {
+            specialNeeds: '',
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = isCandidateCommentsEmpty(testSlot);
+
+      expect(result).toBe(true);
+    });
+
+    it('returns false if the specialNeeds is provided', () => {
+      const testSlot = {
+        booking: {
+          candidate: {
+            specialNeeds: 'there are some special needs',
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = isCandidateCommentsEmpty(testSlot);
+
+      expect(result).toBe(false);
+    });
+
+    it('returns false if the previousCancellation is not empty', () => {
+      const testSlot = {
+        booking: {
+          candidate: {
+            specialNeeds: '',
+          },
+          previousCancellation: [ { initiator: 'one' } ],
+        },
+      };
+
+      const result = isCandidateCommentsEmpty(testSlot);
+
+      expect(result).toBe(false);
     });
   });
 
