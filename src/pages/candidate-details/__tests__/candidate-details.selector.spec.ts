@@ -169,65 +169,35 @@ describe('Candidate Details Selector', () => {
   });
 
   describe('getCity', () => {
-    it('returns empty string if not addressLine2,3,4,5 was provided', () => {
-      const address = {
-        addressLine1: '23 Canal str',
-      };
+    it('returns the right combination of address lines', () => {
+      const cases = [
+        { 
+          input: {addressLine1: '23 Canal str'},
+          expected: '',
+        },
+        {
+          input: {addressLine1: '23 Canal str', addressLine2: 'some place'},
+          expected: 'some place',
+        },
+        {
+          input: {addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place'},
+          expected: 'some place, some other place',
+        },
+        {
+          input: {addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here'},
+          expected: 'some place, some other place, here',
+        },
+        {
+          input: {addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here', addressLine5: 'there'},
+          expected: 'some place, some other place, here, there',
+        },
+      ];
 
-      const result = getCity(address);
+      cases.map(c => {
+        const result = getCity(c.input);
 
-      expect(result).toEqual('');
-    });
-
-    it('returns adressLine2 if it is provided & addressLine3,4,5 are not', () => {
-      const address = {
-        addressLine1: '23 Canal str',
-        addressLine2: 'some place',
-      };
-
-      const result = getCity(address);
-
-      expect(result).toEqual('some place');
-    });
-
-    it('returns a concatenation of addressLine2,3 if they are provided & address4,5 are not', () => {
-      const address = {
-        addressLine1: '23 Canal str',
-        addressLine2: 'some place',
-        addressLine3: 'some other place'
-      };
-
-      const result = getCity(address);
-
-      expect(result).toEqual('some place, some other place');
-    });
-
-    it('returns a concatenation of addressLine2,3,4 if they are provided & address5 is not', () => {
-      const address = {
-        addressLine1: '23 Canal str',
-        addressLine2: 'some place',
-        addressLine3: 'some other place',
-        addressLine4: 'here'
-      };
-
-      const result = getCity(address);
-
-      expect(result).toEqual('some place, some other place, here');
-    });
-
-    it('returns a concatenation of addressLine2,3,4,5 if they are provided', () => {
-      const address = {
-        addressLine1: '23 Canal str',
-        addressLine2: 'some place',
-        addressLine3: 'some other place',
-        addressLine4: 'here',
-        addressLine5: 'there',
-      };
-
-      const result = getCity(address);
-
-      expect(result).toEqual('some place, some other place, here, there');
+        expect(result).toEqual(c.expected);
+      });
     });
   });
-
 });
