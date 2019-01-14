@@ -32,4 +32,8 @@ export class ActivitySlotComponent implements SlotComponent {
     return 'Unknown';
   }
 
+  public isTravelSlot(): boolean {
+    return this.slot.activityCode === '091';
+  }
+
 }

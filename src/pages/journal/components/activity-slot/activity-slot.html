@@ -1,4 +1,4 @@
-<ion-card class="activity-slot">
+<ion-card class="activity-slot" [ngClass]="{ 'travel-slot': isTravelSlot() }">
   <ion-row class="slot-row" align-items-center nowrap>
     <ion-col class="time-column">
       <div>
