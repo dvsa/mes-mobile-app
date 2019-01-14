@@ -18,7 +18,7 @@ export class ActivitySlotComponent implements SlotComponent {
 
   formatActivityCode(): string {
     const activityCode = this.slot.activityCode;
-    if(isNil(activityCode)) {
+    if (isNil(activityCode)) {
       return '0';
     }
     return activityCode.replace(/^\w*0/, '');
