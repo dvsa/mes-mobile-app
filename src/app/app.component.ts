@@ -20,8 +20,9 @@ export class App {
     private authenticationProvider: AuthenticationProvider,
   ) {
     platform.ready().then(() => {
-      statusBar.styleDefault();
+      statusBar.styleLightContent();
       statusBar.overlaysWebView(false);
+      statusBar.backgroundColorByHexString('#000000');
       appConfig.refreshConfigSettings();
 
       // Attempt to login if on an ios device
