@@ -16,7 +16,7 @@ import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { isNil } from 'lodash';
-import moment from 'moment';
+import * as moment from 'moment';
 
 interface JournalPageState {
   testSlots$: Observable<SlotItem[]>,
