@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ComponentLibraryPage } from './component-library';
 import { HeadingsComponent } from './components/headings/headings';
+import { ButtonsComponent } from './components/buttons/buttons';
+import { DataRowsComponent } from './components/data-rows/data-rows';
 
 @NgModule({
   declarations: [
     ComponentLibraryPage,
-    HeadingsComponent
+    HeadingsComponent,
+    ButtonsComponent,
+    DataRowsComponent
   ],
   imports: [
     IonicPageModule.forChild(ComponentLibraryPage),
