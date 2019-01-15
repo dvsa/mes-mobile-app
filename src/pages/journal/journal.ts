@@ -15,6 +15,8 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { isNil } from 'lodash';
+import moment from 'moment';
 
 interface JournalPageState {
   testSlots$: Observable<SlotItem[]>,
@@ -161,6 +163,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   public refreshJournal = () => {
     this.loadJournal();
   };
+
+  public formatLastRefreshTime() {
+    const lastRefreshed$ = this.pageState.lastRefreshed$.pipe(
+      map(date => isNil(date) ? '--:--' : moment(date).format('hh:mma')),
+    );
+    return lastRefreshed$;
+  }
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
