@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="logout()">Logout</button>
+      <button ion-button (click)="logout()">Logout (Employee ID: {{employeeId}})</button>
     </ion-buttons>
     <ion-title>Journal</ion-title>
     <ion-buttons end>
@@ -25,8 +25,6 @@
       pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
-  <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
-  <span>Employee Id: {{employeeId}}</span>
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>
