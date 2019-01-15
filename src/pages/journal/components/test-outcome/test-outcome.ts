@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'test-outcome',
@@ -10,7 +11,13 @@ export class TestOutcomeComponent {
 
   canStartTest: boolean = true;
   canSubmitTest: boolean = false
-  outcome: string = '1'; // todo - get the activity code
+  outcome: string = '0';
 
-  constructor() {}
+  constructor(
+    public navController: NavController,
+  ) {}
+
+  startTest() {
+    this.navController.push('WaitingRoomPage');
+  }
 }

@@ -1,7 +1,8 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule, NavController } from 'ionic-angular';
 import { TestOutcomeComponent } from '../test-outcome';
 import { By } from '@angular/platform-browser';
+import { NavControllerMock } from 'ionic-mocks-jest';
 
 
 describe('Test Outcome', () => {
@@ -12,7 +13,9 @@ describe('Test Outcome', () => {
     TestBed.configureTestingModule({
       declarations: [TestOutcomeComponent],
       imports: [IonicModule.forRoot(TestOutcomeComponent)],
-      providers: []
+      providers: [
+        { provide: NavController, useFactory: () => NavControllerMock.instance },
+      ]
     })
       .compileComponents()
       .then(() => {
