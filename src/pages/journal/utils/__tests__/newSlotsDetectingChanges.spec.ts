@@ -3,12 +3,12 @@ import { cloneDeep } from 'lodash';
 
 describe('newSlotsDetectingChanges', () => {
 
-  let oldSlots;
+  let oldTestSlots;
   let newJournal;
   let oldSlotItems;
   
   beforeEach(() => {
-    oldSlots = [
+    oldTestSlots = [
       {
         slotDetail: {
           slotId: 1001,
@@ -67,7 +67,7 @@ describe('newSlotsDetectingChanges', () => {
       {
         slotDetail: {
           slotId: 1002,
-          start: '2018-12-10T09:07:00+00:00',
+          start: '2018-12-10T10:14:00+00:00',
           duration: 57
         },
         vehicleSlotType: 'B57mins',
@@ -115,6 +115,23 @@ describe('newSlotsDetectingChanges', () => {
       }
     ];
 
+    const oldNonTestActivities = [
+      {
+        slotDetail: {
+          slotId: 1003,
+          start: '2018-12-10T09:07:00+01:00',
+          duration: 57,
+        },
+        activityCode: '091',
+        activityDescription: 'Travel period to detached TC and/or outstation',
+        testCentre: {
+          centreId: 54321,
+          centreName: 'Example Test Centre',
+          costCode: 'EXTC',
+        },
+      }
+    ];
+
     newJournal = {
       staffNumber: 12345,
       examinerName: {
@@ -129,14 +146,15 @@ describe('newSlotsDetectingChanges', () => {
         centreName: 'Example Test Centre',
         costCode: 'EXTC1',
       },
-      testSlot: cloneDeep(oldSlots),
+      testSlot: cloneDeep(oldTestSlots),
+      nonTestActivities: cloneDeep(oldNonTestActivities),
     }
-    oldSlotItems = oldSlots.map(oldSlot => ({ slotData: oldSlot }));
+    oldSlotItems = oldTestSlots.map(oldSlot => ({ slotData: oldSlot }));
   });
 
   describe('when there are no slots in the new journal', () => {
     it('should return a blank array', () => {
-      const result = newSlotsDetectingChanges([], { testSlot: []});
+      const result = newSlotsDetectingChanges([], {});
       expect(result).toHaveLength(0);
     });
   });
@@ -144,9 +162,10 @@ describe('newSlotsDetectingChanges', () => {
   describe('when the new slots match the old slots exactly', () => {
     it('should produce the new slot items indicating there was no change', () => {
       const result = newSlotsDetectingChanges(oldSlotItems, newJournal);
-      expect(result).toHaveLength(2);
+      expect(result).toHaveLength(3);
       expect(result[0].hasSlotChanged).toBe(false);
       expect(result[1].hasSlotChanged).toBe(false);
+      expect(result[2].hasSlotChanged).toBe(false);
     });
   });
 
@@ -154,9 +173,10 @@ describe('newSlotsDetectingChanges', () => {
     it('should produce the new slot items indicating there was a change', () => {
       newJournal.testSlot[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
       const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
-      expect(result).toHaveLength(2);
+      expect(result).toHaveLength(3);
       expect(result[0].hasSlotChanged).toBe(true);
       expect(result[1].hasSlotChanged).toBe(false);
+      expect(result[2].hasSlotChanged).toBe(false);
     });
   });
 
@@ -165,9 +185,17 @@ describe('newSlotsDetectingChanges', () => {
       newJournal.testSlot[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
       newJournal.testSlot[1].booking.application.welshTest = true;
       const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
-      expect(result).toHaveLength(2);
+      expect(result).toHaveLength(3);
       expect(result[0].hasSlotChanged).toBe(true);
-      expect(result[1].hasSlotChanged).toBe(true);
+      expect(result[1].hasSlotChanged).toBe(false);
+      expect(result[2].hasSlotChanged).toBe(true);
+    });
+  });
+
+  describe('when the journal payload contains nonTestActivities', () => {
+    it('should mix them into the TestSlots such that they appear in date order', () => {
+      const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
+      expect(result[1].slotData.activityCode).toBe('091');
     });
   });
 });
