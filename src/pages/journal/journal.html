@@ -18,12 +18,12 @@
       pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
+  <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
+  <span>Employee Id: {{employeeId}}</span>
   <button ion-button icon-only color="light" (click)="refreshJournal()">
     <ion-icon name="md-sync"></ion-icon>
   </button>
-  <button ion-button navPush="ContactDetailsPage">Contact Details</button>
-  <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
-  <span>Employee Id: {{employeeId}}</span>
+  <span>Last sync: {{pageState.lastRefreshed$ | async | date:"hh:mmaa" | lowercase}}</span>
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>
