@@ -21,7 +21,7 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 - `ionic serve`
 
 #### Serve with local data
-- `npm run serve:local` (This will take the files in `/mock/` and serve them. You can edit them in `src/assets/mock` after running the command, this will live reload the UI with the new updated mock data)
+- `npm run serve:local` (This will take the files in `/mock/` and serve them. You can edit them in `src/assets/mock` after running the command, this will live reload the UI with the new updated mock data. To point the app to different mock data, edit the `environment/environment.local.ts` file)
 
 ### Mac users
 
