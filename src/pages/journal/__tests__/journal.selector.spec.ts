@@ -1,5 +1,5 @@
 import { JournalModel } from '../journal.model';
-import { getTestSlots, getLastRefreshed, getIsLoading, getError } from '../journal.selector';
+import { getTestSlots, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime } from '../journal.selector';
 import { MesError } from '../../../common/mes-error.model';
 
 describe('JournalSelector', () => {
@@ -39,6 +39,17 @@ describe('JournalSelector', () => {
   describe('getLastRefreshed', () => {
     it('should select the last refreshed date from the state', () => {
       expect(getLastRefreshed(state).getUTCMilliseconds()).toBe(0);
+    });
+  });
+
+  describe('getLastRefreshedTime', () => {
+    it('should transform a nil date to the placeholder', () => {
+      expect(getLastRefreshedTime(null)).toBe('--:--');
+      expect(getLastRefreshedTime(undefined)).toBe('--:--');
+    });
+    it('should format the date to 24hr format with lowercase am/pm', () => {
+      expect(getLastRefreshedTime(new Date('2019-01-16T09:24:00'))).toBe('09:24am');
+      expect(getLastRefreshedTime(new Date('2019-01-16T15:45:10'))).toBe('03:45pm');
     });
   });
 

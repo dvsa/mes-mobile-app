@@ -1,8 +1,15 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="logout()">Logout (Employee ID: {{employeeId}})</button>
+    </ion-buttons>
     <ion-title>Journal</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="logout()">Logout</button>
+      <button ion-button (click)="refreshJournal()">
+        <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
+        <span>Refresh</span>
+      </button>
+      <div class="last-sync">Last sync: {{pageState.lastRefreshedTime$ | async}}</div>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -18,12 +25,6 @@
       pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
-  <button ion-button icon-only color="light" (click)="refreshJournal()">
-    <ion-icon name="md-sync"></ion-icon>
-  </button>
-  <button ion-button navPush="ContactDetailsPage">Contact Details</button>
-  <button ion-button navPush="WaitingRoomPage">Waiting Room</button>
-  <span>Employee Id: {{employeeId}}</span>
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>

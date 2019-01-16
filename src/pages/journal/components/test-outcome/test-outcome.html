@@ -5,7 +5,7 @@
         <span class="outcome">{{outcome}}</span>
       </ion-col>
       <ion-col *ngIf="canStartTest">
-        <span><button class="mes-primary-button" ion-button>Start test</button></span>
+        <span><button class="mes-primary-button" ion-button (click)="startTest()">Start test</button></span>
       </ion-col>
       <ion-col *ngIf="canSubmitTest">
         <span><button class="mes-secondary-button" ion-button>Submit</button></span>

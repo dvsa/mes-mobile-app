@@ -2,4 +2,14 @@ page-journal {
   h3 {
     text-align: center;
   }
+  .last-sync {
+    color: #dbd8d8;
+  }
+  .refresh-button-icon {
+    padding: 0 10px;
+  }
+  ion-title {
+    height: 100%;
+    align-items: flex-end;
+  }
 }
