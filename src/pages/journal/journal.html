@@ -5,9 +5,9 @@
     </ion-buttons>
     <ion-title>Journal</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only color="light" (click)="refreshJournal()">
+      <button ion-button (click)="refreshJournal()">
+        <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
         <span>Refresh</span>
-        <ion-icon name="md-sync"></ion-icon>
       </button>
       <div class="last-sync">Last sync: {{formatLastRefreshTime() | async}}</div>
     </ion-buttons>
