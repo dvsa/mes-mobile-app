@@ -7,6 +7,8 @@ import { AuthenticationProvider } from '../authentication';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
+import { ToastController } from 'ionic-angular';
+import { ToastControllerMock } from 'ionic-mocks-jest';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
@@ -15,6 +17,7 @@ describe('Authentication', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthenticationProvider,
+        { provide: ToastController, useFactory: () => ToastControllerMock.instance() },
         { provide: MSAdal, useClass: MSAdalMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock}
@@ -24,6 +27,9 @@ describe('Authentication', () => {
 
   beforeEach(() => {
     authenticationProvider = TestBed.get(AuthenticationProvider)
+    authenticationProvider.jwtDecode = () => ({
+      'local-employeeIdKey': ['a']
+    });
   });
 
   describe('Provider', () => {
@@ -44,14 +50,21 @@ describe('Authentication', () => {
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getAuthenticationToken()).toEqual('SILENT AYSNC TEST TOKEN')
+      expect(authenticationProvider.getAuthenticationToken()).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4')
     });
 
     it('should sign in with credetials', async() => {
       await authenticationProvider.loginWithCredentials();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getAuthenticationToken()).toEqual('AYSNC TEST TOKEN');
+      expect(authenticationProvider.getAuthenticationToken()).toEqual('QVlTTkMgVEVTVCBUT0tFTg==');
+    });
+
+    it('should set the correct employeeId', async() => {
+      await authenticationProvider.login();
+
+      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      expect(authenticationProvider.getEmployeeId()).toEqual('a');
     });
 
     it('should do something when login fails', async () => {

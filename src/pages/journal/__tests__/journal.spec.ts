@@ -18,6 +18,8 @@ import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs/Subscription';
 import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
 import { MockedJournalModule } from '../__mocks__/journal.module.mock';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-orientation.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -45,7 +47,8 @@ describe('JournalPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: SlotSelectorProvider, useClass: SlotSelectorProvider}
+        { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock}
       ]
     })
       .compileComponents()

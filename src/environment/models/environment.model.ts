@@ -9,7 +9,13 @@ export type EnvironmentFile = {
     clientId: string,
     redirectUrl: string,
     logoutUrl: string,
+    openIdConnectUrl?: string,
+    identityPoolId?: string,
+    employeeIdKey: string
   },
+  aws?: {
+    region: string;
+  }
   journal?: {
     journalUrl: string,
     backgroundRefreshTime: number

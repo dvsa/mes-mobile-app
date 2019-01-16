@@ -1,7 +1,8 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule, NavController } from 'ionic-angular';
 import { TestOutcomeComponent } from '../test-outcome';
-
+import { By } from '@angular/platform-browser';
+import { NavControllerMock } from 'ionic-mocks-jest';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -11,7 +12,9 @@ describe('Test Outcome', () => {
     TestBed.configureTestingModule({
       declarations: [TestOutcomeComponent],
       imports: [IonicModule.forRoot(TestOutcomeComponent)],
-      providers: []
+      providers: [
+        { provide: NavController, useFactory: () => NavControllerMock.instance },
+      ]
     })
       .compileComponents()
       .then(() => {
@@ -29,6 +32,48 @@ describe('Test Outcome', () => {
 
   describe('DOM', () => {
     // Unit tests for the components template
+    it('should show start test button when canStartTest is true', () => {
+      component.canStartTest = true;
+      fixture.detectChanges();
+      const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
+      expect(startButton).toHaveLength(1);
+    });
 
+    it('should not show start test button when canStartTest is false', () => {
+      component.canStartTest = false;
+      fixture.detectChanges();
+      const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
+      expect(startButton).toHaveLength(0);
+    });
+
+    it('should show submit test button when canSubmitTest is true', () => {
+      component.canSubmitTest = true;
+      fixture.detectChanges();
+      const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
+      expect(submitButton).toHaveLength(1);
+    });
+
+    it('should show submit test button when canSubmitTest is false', () => {
+      component.canSubmitTest = false;
+      fixture.detectChanges();
+      const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
+      expect(submitButton).toHaveLength(0);
+    });
+
+    it('should show activity code when canSubmitTest and canStartTest are false', () => {
+      component.canStartTest = false;
+      component.canSubmitTest = false;
+      fixture.detectChanges();
+      const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
+      expect(outcome).toHaveLength(1);
+    });
+
+    it('should not show activity code when canSubmitTest or canStartTest are true', () => {
+      component.canStartTest = true;
+      component.canSubmitTest = false;
+      fixture.detectChanges();
+      const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
+      expect(outcome).toHaveLength(0);
+    });
   });
 });

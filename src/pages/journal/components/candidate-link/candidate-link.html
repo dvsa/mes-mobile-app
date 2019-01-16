@@ -1,0 +1,12 @@
+<div (click)="navigateToCandidateDetails()">
+  <ion-grid>
+    <ion-row align-items-left [ngClass]="{'candidate-grid-row' : isPortrait}">
+      <ion-col>
+        <h5 class="candidate-name">{{name.title}} {{name.firstName}} {{name.lastName}}</h5>
+      </ion-col>
+      <ion-col col-auto *ngIf="welshLanguage">
+        <img src="assets/imgs/journal/Welsh.png" class="welsh-language-indicator" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

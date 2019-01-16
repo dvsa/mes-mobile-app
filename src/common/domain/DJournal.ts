@@ -9,66 +9,75 @@
  * The type of vehicle gearbox, if captured
  */
 export type VehicleGearbox = "Manual" | "Semi-Automatic" | "Automatic";
+/**
+ * The reason for the previous test cancellation
+ */
+export type Initiator = "Act of nature" | "DSA";
+/**
+ * The details of any previous test cancellations
+ */
+export type PreviousCancellation = {
+  initiator?: Initiator;
+  [k: string]: any;
+}[];
+/**
+ * A collection of test slots, possibly populated with booking data
+ */
+export type TestSlots = {
+  testSlot?: TestSlot;
+  [k: string]: any;
+}[];
+/**
+ * A collection of the examiner's personal commitment(s)
+ */
+export type PersonalCommitments = {
+  personalCommitment?: PersonalCommitment;
+  [k: string]: any;
+}[];
+/**
+ * A collection of the examiner's non test activity(s) (associated with a test slot duration)
+ */
+export type NonTestActivities = {
+  nonTestActivity?: NonTestActivity;
+  [k: string]: any;
+}[];
+/**
+ * A collection of an examiner's future test slots
+ */
+export type AdvanceTestSlots = {
+  advanceTestSlot?: AdvanceTestSlot;
+  [k: string]: any;
+}[];
+/**
+ * A collection of temporary secondments of the examiner to an alternative test centre
+ */
+export type Deployments = {
+  deployment?: Deployment;
+  [k: string]: any;
+}[];
 
 /**
  * JSON Schema definition for Examiner Work Schedule
  */
 export interface ExaminerWorkSchedule {
+  examiner?: Examiner;
+  testSlots?: TestSlots;
+  personalCommitments?: PersonalCommitments;
+  nonTestActivities?: NonTestActivities;
+  advanceTestSlots?: AdvanceTestSlots;
+  deployments?: Deployments;
+  [k: string]: any;
+}
+/**
+ * The examiner details
+ */
+export interface Examiner {
   /**
-   * The examiner details
+   * The examiner's DSA staff number
    */
-  examiner?: {
-    /**
-     * The examiner's DSA staff number
-     */
-    staffNumber?: string;
-    examinerName?: Name;
-    permTestCentre?: TestCentre;
-    [k: string]: any;
-  };
-  /**
-   * A test slot, possibly populated with booking data
-   */
-  testSlot?: {
-    slotDetail?: SlotDetail;
-    /**
-     * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
-     */
-    vehicleSlotType?: string;
-    testCentre?: TestCentre;
-    /**
-     * If this slot is booked, this contains the details
-     */
-    booking?: {
-      candidate?: Candidate;
-      application?: Application;
-      /**
-       * The details of any previous test cancellations
-       */
-      previousCancellation?: any[];
-      /**
-       * The business details, only for tests that are booked by a business or trainer booker
-       */
-      business?: {
-        /**
-         * The business id
-         */
-        businessId?: number;
-        /**
-         * The business name
-         */
-        businessName?: string;
-        businessAddress?: Address;
-        /**
-         * The business telephone number, if any
-         */
-        telephone?: string;
-        [k: string]: any;
-      };
-      [k: string]: any;
-    };
-    [k: string]: any;
-  }[];
+  staffNumber?: string;
+  examinerName?: Name;
+  permTestCentre?: TestCentre;
   [k: string]: any;
 }
 /**
@@ -118,6 +127,19 @@ export interface TestCentre {
 /**
  * Details of the test slot
  */
+export interface TestSlot {
+  slotDetail?: SlotDetail;
+  /**
+   * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
+   */
+  vehicleSlotType?: string;
+  testCentre?: TestCentre;
+  booking?: Booking;
+  [k: string]: any;
+}
+/**
+ * Identifier, start time and duration of the slot
+ */
 export interface SlotDetail {
   /**
    * Unique identifier for the test slot
@@ -131,6 +153,16 @@ export interface SlotDetail {
    * The length in minutes of the test slot
    */
   duration?: number;
+  [k: string]: any;
+}
+/**
+ * If this slot is booked, this contains the details
+ */
+export interface Booking {
+  candidate?: Candidate;
+  application?: Application;
+  previousCancellation?: PreviousCancellation;
+  business?: Business;
   [k: string]: any;
 }
 /**
@@ -167,6 +199,10 @@ export interface Candidate {
    * The candidate's mobile telephone number, if any (and consent to leave voicemail has been given)
    */
   mobileTelephone?: string;
+  /**
+   * The candidate's email address, if any
+   */
+  emailAddress?: string;
   /**
    * The candidate's ADI PRN (potential register number), if an ADI test
    */
@@ -268,5 +304,101 @@ export interface Application {
    */
   testCategory?: string;
   vehicleGearbox?: VehicleGearbox;
+  [k: string]: any;
+}
+/**
+ * The business details, only for tests that are booked by a business or trainer booker
+ */
+export interface Business {
+  /**
+   * The business id
+   */
+  businessId?: number;
+  /**
+   * The business name
+   */
+  businessName?: string;
+  businessAddress?: Address;
+  /**
+   * The business telephone number, if any
+   */
+  telephone?: string;
+  [k: string]: any;
+}
+/**
+ * Details of the test slot
+ */
+export interface PersonalCommitment {
+  /**
+   * The commitment id
+   */
+  commitmentId?: number;
+  /**
+   * The start date of the personal commitment
+   */
+  startDate?: string;
+  /**
+   * The start time of the personal commitment, if any (in practice this will always be populated)
+   */
+  startTime?: string;
+  /**
+   * The end date of the personal commitment
+   */
+  endDate?: string;
+  /**
+   * The end time of the personal commitment, if any(in practice this will always be populated)
+   */
+  endTime?: string;
+  /**
+   * The personal commitment activity code
+   */
+  activityCode?: string;
+  /**
+   * The personal commitment activity description
+   */
+  activityDescription?: string;
+  [k: string]: any;
+}
+/**
+ * An examiner's non test activity (associated with a test slot duration)
+ */
+export interface NonTestActivity {
+  slotDetail?: SlotDetail;
+  /**
+   * The non test activity code
+   */
+  activityCode?: string;
+  /**
+   * The non test activity description
+   */
+  activityDescription?: string;
+  testCentre?: TestCentre;
+  [k: string]: any;
+}
+/**
+ * Details of an examiner's future test slot
+ */
+export interface AdvanceTestSlot {
+  slotDetail?: SlotDetail;
+  testCentre?: TestCentre;
+  /**
+   * A short description of the Vehicle Slot Type, e.g. B57mins, Voc90mins, Hometest, if any
+   */
+  vehicleSlotType?: string;
+  [k: string]: any;
+}
+/**
+ * Temporary secondment of the examiner to an alternative test centre
+ */
+export interface Deployment {
+  /**
+   * The deployment id
+   */
+  deploymentId?: number;
+  testCentre?: TestCentre;
+  /**
+   * Date of the deployment
+   */
+  date?: string;
   [k: string]: any;
 }

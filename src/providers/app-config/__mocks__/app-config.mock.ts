@@ -13,7 +13,7 @@ export class AppConfigProviderMock {
   }
 
   public getAppConfig(): AppConfig {
-    return{
+    return {
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
       userIdDimensionIndex: localEnvironmentMock.userIdDimensionIndex,
       authentication: {
@@ -22,6 +22,12 @@ export class AppConfigProviderMock {
         redirectUrl: localEnvironmentMock.authentication.redirectUrl,
         resourceUrl: localEnvironmentMock.authentication.resourceUrl,
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
+        openIdConnectUrl: localEnvironmentMock.authentication.openIdConnectUrl,
+        identityPoolId: localEnvironmentMock.authentication.identityPoolId,
+        employeeIdKey: localEnvironmentMock.authentication.employeeIdKey
+      },
+      aws: {
+        region: localEnvironmentMock.aws.region
       },
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl

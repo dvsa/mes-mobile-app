@@ -1,18 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'test-outcome',
   templateUrl: 'test-outcome.html'
 })
-export class TestOutcomeComponent implements OnInit {
+export class TestOutcomeComponent {
   @Input()
   slot: any;
 
   canStartTest: boolean = true;
-  outcome: string = '1'; // todo - get the activity code
+  canSubmitTest: boolean = false
+  outcome: string = '0';
 
-  constructor() {}
+  constructor(
+    public navController: NavController,
+  ) {}
 
-  ngOnInit() {}
-
+  startTest() {
+    this.navController.push('WaitingRoomPage');
+  }
 }

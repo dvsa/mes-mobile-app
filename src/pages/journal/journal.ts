@@ -3,23 +3,24 @@ import { IonicPage, LoadingController, NavController, NavParams, Platform, Toast
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getTestSlots, getError, getIsLoading } from './journal.selector';
+import { getTestSlots, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
+import { merge } from 'rxjs/observable/merge';
+import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 interface JournalPageState {
-  testSlots$: Observable<ExaminerWorkSchedule[]>,
+  testSlots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
+  lastRefreshedTime$: Observable<string>,
 }
 
 @IonicPage()
@@ -39,6 +40,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   toast: Toast;
   subscription: Subscription;
+  employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
 
   constructor(
@@ -53,6 +55,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private resolver: ComponentFactoryResolver
   ) {
     super(platform, navController, authenticationProvider);
+    this.employeeId = this.authenticationProvider.getEmployeeId();
   }
 
   ngOnInit(): void {
@@ -70,7 +73,12 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       isLoading$: this.store$.pipe(
         select(getJournalState),
         map(getIsLoading)
-      )
+      ),
+      lastRefreshedTime$: this.store$.pipe(
+        select(getJournalState),
+        map(getLastRefreshed),
+        map(getLastRefreshedTime),
+      ),
     };
 
     const { testSlots$, error$, isLoading$ } = this.pageState;
@@ -79,7 +87,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       testSlots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingUI))
+      isLoading$.pipe(map(this.handleLoadingUI)),
     );
     this.subscription = merged$.subscribe(this.createSlots);
   }
@@ -110,16 +118,18 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.toast.present();
   };
 
-  private createSlots = (slotData: any) => {
-    if (slotData) {
-      // Clear any dynamically created slots before adding the latest
-      this.slotContainer.clear();
-      const slots = this.slotSelector.getSlotTypes(slotData);
-      for (const slot of slots) {
-        const factory = this.resolver.resolveComponentFactory(slot.component);
-        const componentRef = this.slotContainer.createComponent(factory);
-        (<SlotComponent>componentRef.instance).slot = slot.slotData;
-      }
+  private createSlots = (emission: any) => {
+    if (!Array.isArray(emission) || emission.length === 0) {
+      return;
+    }
+    // Clear any dynamically created slots before adding the latest
+    this.slotContainer.clear();
+    const slots = this.slotSelector.getSlotTypes(emission);
+    for (const slot of slots) {
+      const factory = this.resolver.resolveComponentFactory(slot.component);
+      const componentRef = this.slotContainer.createComponent(factory);
+      (<SlotComponent>componentRef.instance).slot = slot.slotData;
+      (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
     }
   }
 

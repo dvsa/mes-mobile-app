@@ -26,12 +26,15 @@ $colors: (
   danger: #f53d3d,
   light: #f4f4f4,
   dark: #222,
-  mes-background: #ecf4f6,
-  mes-toolbar-background: rgba(33, 33, 33, 0.72),
-  mes-toolbar-button-color:  #ff9500,
+  mes-background: #efefee,
+  mes-toolbar-background: #212121,
   mes-white: #ffffff,
   mesBoxGrey: #f6f6f6,
   journalTestCategory:  #818080,
+  journalSlotChangeIdentifier: #d0021b,
+  secondary-button: #f5a623,
+  nonTestActivitySlotBackground: rgba(198, 236, 233, 0.1),
+  travelSlotBackground: #eef8e5,
 );
 
 $colors-gds: (
@@ -73,7 +76,7 @@ $toolbar-background: map-get($colors, mes-toolbar-background);
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-$toolbar-ios-button-color: map-get($colors, mes-toolbar-button-color);
+$toolbar-ios-button-color: map-get($colors, mes-white);
 
 $card-ios-background-color: map-get($colors, mes-white);
 $card-ios-margin-bottom: 16px;

@@ -4,6 +4,8 @@ export class AuthenticationProviderMock {
 
   getAuthenticationToken = jest.fn().mockReturnValue('token');
 
+  getEmployeeId = jest.fn().mockReturnValue('a');
+
   login = jest.fn(() => {
     return new Promise(() => {});
   })
