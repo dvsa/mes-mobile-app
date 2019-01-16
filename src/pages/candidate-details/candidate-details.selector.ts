@@ -4,7 +4,7 @@ import { JournalModel } from '../journal/journal.model';
 import { Details, SlotTypeView } from './candidate-details.model';
 import { carStandardSlotType, carSpecialNeedsSlotType } from './candidate-details.constants';
 
-export const getTestSlots = (journal: JournalModel) => journal.data.testSlot;
+export const getTestSlots = (journal: JournalModel) => journal.slots.map(slotItem => slotItem.slotData);
 
 // TODO: replace any with TestSlot types when we have the data structure
 export const getSlotById = (testSlots: any[], slotId: number): any => testSlots.find(testSlot => testSlot.slotDetail.slotId === slotId);
