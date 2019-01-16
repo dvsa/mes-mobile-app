@@ -22,7 +22,7 @@ interface JournalPageState {
   testSlots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
-  lastRefreshed$: Observable<Date>,
+  lastRefreshedTime$: Observable<Date>,
 }
 
 @IonicPage()
@@ -76,7 +76,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getJournalState),
         map(getIsLoading)
       ),
-      lastRefreshed$: this.store$.pipe(
+      lastRefreshedTime$: this.store$.pipe(
         select(getJournalState),
         map(getLastRefreshed),
       ),
@@ -165,7 +165,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   public formatLastRefreshTime() {
-    const lastRefreshed$ = this.pageState.lastRefreshed$.pipe(
+    const lastRefreshed$ = this.pageState.lastRefreshedTime$.pipe(
       map(date => isNil(date) ? '--:--' : moment(date).format('hh:mma')),
     );
     return lastRefreshed$;
