@@ -1,7 +1,7 @@
 
 import { JournalModel } from './journal.model';
 import { isNil } from 'lodash';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export const getTestSlots = (journal: JournalModel) => journal.slots;
 

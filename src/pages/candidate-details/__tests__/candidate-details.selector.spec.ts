@@ -18,24 +18,19 @@ describe('Candidate Details Selector', () => {
       const journal = {
         isLoading: false,
         lastRefreshed: new Date(0),
-        data: {
-          testSlot: [
-            {
-              vehicleSlotType: 'B57mins',
-            },
-          ],
-        },
         slots: [
           {
             hasSlotChanged: false,
-            slotData: {}
-          }
+            slotData: {
+              vehicleSlotType: 'B57mins',
+            }
+          },
         ],
       };
 
       const result = getTestSlots(journal);
 
-      expect(result).toEqual(journal.data.testSlot); 
+      expect(result).toEqual(journal.slots.map(slotItem => slotItem.slotData)); 
     });
   });
 
