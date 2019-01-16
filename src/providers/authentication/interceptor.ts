@@ -56,6 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
       host,
       path,
       region: this.region,
+      service: 'execute-api',
     }
     sign(options, { accessKeyId, secretAccessKey, sessionToken });
     return options;
