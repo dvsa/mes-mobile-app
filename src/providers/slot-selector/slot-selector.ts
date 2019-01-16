@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SlotItem } from './slot-item';
 import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
-import { TestSlot } from '../../pages/journal/journal.model';
+import { Slot } from '../../pages/journal/journal.model';
 import { ActivitySlotComponent } from '../../pages/journal/components/activity-slot/activity-slot';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class SlotSelectorProvider {
     }
 
     for (const slotItem of slotItems) {
-      const testSlot: TestSlot = slotItem.slotData;
+      const testSlot: Slot = slotItem.slotData;
       slotItem.component = this.resolveComponentName(testSlot.vehicleSlotType, testSlot.activityCode);
     }
     return slotItems;

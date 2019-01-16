@@ -39,7 +39,6 @@ describe('Journal Reducer', () => {
       expect(result).toEqual({
         ...initialState,
         isLoading: false,
-        data: { testSlot: [] },
         lastRefreshed: expect.any(Date),
         slots: [{ newSlots: true }]
       });

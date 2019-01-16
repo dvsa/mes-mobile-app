@@ -7,7 +7,6 @@ describe('JournalSelector', () => {
   const state: JournalModel = {
     isLoading: true,
     lastRefreshed: new Date(0),
-    data: {},
     slots: [
       {
         hasSlotChanged: false,
