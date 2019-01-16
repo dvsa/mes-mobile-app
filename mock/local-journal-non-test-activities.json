@@ -1,0 +1,263 @@
+{
+  "staffNumber": 12345,
+  "examinerName": {
+    "title": "Mr",
+    "firstName": "Joe",
+    "secondName": "Frederic",
+    "thirdName": "Englbert",
+    "lastName": "Bloggs"
+  },
+  "permTestCentre": {
+    "centreId": 54321,
+    "centreName": "Example Test Centre",
+    "costCode": "EXTC"
+  },
+  "testSlot": [
+    {
+      "slotDetail": {
+        "slotId": 1000,
+        "start": "2012-10-05T09:00:00+01:00",
+        "duration": 57
+      },
+      "vehicleSlotType": "B57mins",
+      "testCentre": {
+        "centreId": 54321,
+        "centreName": "Example Test Centre",
+        "costCode": "EXTC"
+      }
+    },
+    {
+      "slotDetail": {
+        "slotId": 1001,
+        "start": "2012-10-05T10:15:00+01:00",
+        "duration": 57
+      },
+      "vehicleSlotType": "B57mins",
+      "testCentre": {
+        "centreId": 54321,
+        "centreName": "Example Test Centre",
+        "costCode": "EXTC"
+      },
+      "booking": {
+        "candidate": {
+          "candidateId": 100,
+          "age": 17,
+          "candidateName": {
+            "title": "Miss",
+            "firstName": "Aaa",
+            "lastName": "Bbb"
+          },
+          "driverNumber": "AAAAA123456A78AA",
+          "gender": "Female",
+          "candidateAddress": {
+            "addressLine1": "1 Station Street",
+            "addressLine2": "Someplace",
+            "addressLine3": ""
+          },
+          "primaryTelephone": "01234 567890",
+          "secondaryTelephone": "04321 098765",
+          "mobileTelephone": "07654 123456",
+          "prn": 11223344,
+          "previousADITests": 2
+        },
+        "application": {
+          "applicationId": 1234567,
+          "bookingSequence": 3,
+          "checkDigits": 1,
+          "welshTest": false,
+          "extendedTest": true,
+          "meetingPlace": "Some meeting place",
+          "progressiveAccess": false,
+          "specialNeeds": "Some special needs",
+          "entitlementCheck": true,
+          "vehicleSeats": 5,
+          "vehicleHeight": 1.75,
+          "vehicleWidth": 2.5,
+          "vehicleLength": 5.5,
+          "testCategory": "B+E",
+          "vehicleGearbox": "Manual"
+        },
+        "previousCancellation": [
+          { "initiator": "Act of nature" },
+          { "initiator": "DSA" },
+          { "initiator": "DSA" }
+        ],
+        "business": {
+          "businessId": 1000,
+          "businessName": "Dave's Dodgy Driving Instructors",
+          "businessAddress": {
+            "addressLine1": "Flat 1A",
+            "addressLine2": "1 Example Street",
+            "addressLine3": "Example Area",
+            "addressLine4": "Example Town",
+            "addressLine5": "Example County",
+            "postcode": "AB12 3CD"
+          },
+          "telephone": "07890 654321"
+        }
+      }
+    },
+    {
+      "slotDetail": {
+        "slotId": 1002,
+        "start": "2012-10-05T11:15:00+01:00",
+        "duration": 30
+      },
+      "testCentre": {
+        "centreId": 54321,
+        "centreName": "Example Test Centre",
+        "costCode": "EXTC"
+      },
+      "booking": {
+        "candidate": {
+          "candidateId": 200
+        },
+        "application": {
+          "applicationId": 1234568,
+          "bookingSequence": 3,
+          "checkDigits": 1,
+          "welshTest": false,
+          "extendedTest": true,
+          "progressiveAccess": false,
+          "entitlementCheck": true
+        }
+      }
+    },
+    {
+      "slotDetail": {
+        "slotId": 1003,
+        "start": "2012-10-05T11:45:00+01:00",
+        "duration": 45
+      },
+      "testCentre": {
+        "centreId": 54321,
+        "centreName": "Example Test Centre",
+        "costCode": "EXTC"
+      },
+      "booking": {
+        "application": {
+          "applicationId": 1234569,
+          "bookingSequence": 1,
+          "checkDigits": 6,
+          "welshTest": false,
+          "extendedTest": true,
+          "progressiveAccess": false,
+          "entitlementCheck": true
+        }
+      }
+    }
+  ],
+  "personalCommitment": [
+    {
+      "commitmentId": 123400,
+      "startDate": "2012-10-08",
+      "startTime": "10:00:00+01:00",
+      "endDate": "2012-10-08",
+      "endTime": "11:00:00+01:00",
+      "activityCode": "104",
+      "activityDescription": "Medical appointment"
+    },
+    {
+      "commitmentId": 123401,
+      "startDate": "2012-10-15",
+      "endDate": "2012-10-19",
+      "activityCode": "081",
+      "activityDescription": "Annual Leave"
+    }
+  ],
+  "nonTestActivity": [
+    {
+      "slotDetail": {
+        "slotId": 1001,
+        "start": "2012-10-05T10:15:00+01:00",
+        "duration": 57
+      },
+      "activityCode": "091",
+      "activityDescription": "Travel period to detached TC and/or outstation",
+      "testCentre": {
+        "centreId": 54321,
+        "centreName": "Example Test Centre",
+        "costCode": "EXTC"
+      }
+    },
+    {
+      "slotDetail": {
+        "slotId": 1100,
+        "start": "2012-10-15T10:15:00+01:00",
+        "duration": 57
+      },
+      "activityCode": "089",
+      "activityDescription": "Management period",
+      "testCentre": {
+        "centreId": 65432,
+        "centreName": "Example Test Centre 2",
+        "costCode": "EXTC2"
+      }
+    },
+    {
+      "slotDetail": {
+        "slotId": 1200,
+        "start": "2012-10-22T10:15:00+01:00",
+        "duration": 57
+      },
+      "activityCode": "089",
+      "activityDescription": "Management period",
+      "testCentre": {
+        "centreId": 54321,
+        "centreName": "Example Test Centre",
+        "costCode": "EXTC"
+      }
+    }
+  ],
+  "advanceTestSlot": [
+    {
+      "slotId": 1300,
+      "start": "2012-10-23T09:00:00+01:00",
+      "duration": 90,
+      "centreId": 76543,
+      "centreName": "Example Test Centre 3",
+      "costCode": "EXTC 3",
+      "vehicleSlotType": "Voc90mins"
+    },
+    {
+      "slotId": 1301,
+      "start": "2012-10-23T10:45:00+01:00",
+      "duration": 90,
+      "centreId": 76543,
+      "centreName": "Example Test Centre 3",
+      "costCode": "EXTC 3",
+      "vehicleSlotType": "Voc90mins"
+    },
+    {
+      "slotId": 1302,
+      "start": "2012-10-23T12:30:00+01:00",
+      "duration": 90,
+      "centreId": 76543,
+      "centreName": "Example Test Centre 3",
+      "costCode": "EXTC 3",
+      "vehicleSlotType": "Voc90mins"
+    }
+  ],
+  "deployment": [
+    {
+      "deploymentId": 11111,
+      "centreId": 76543,
+      "centreName": "Example Test Centre 3",
+      "costCode": "EXTC 3",
+      "date": "2012-10-23"
+    },
+    {
+      "deploymentId": 22222,
+      "centreId": 87654,
+      "centreName": "Example Test Centre 4",
+      "costCode": "EXTC 4",
+      "date": [
+        "2012-10-24",
+        "2012-10-25",
+        "2012-10-26",
+        "2012-10-29",
+        "2012-10-30"
+      ]
+    }
+  ]
+}
