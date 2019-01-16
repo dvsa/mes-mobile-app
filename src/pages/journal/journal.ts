@@ -7,7 +7,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getTestSlots, getError, getIsLoading, getLastRefreshed } from './journal.selector';
+import { getTestSlots, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -15,14 +15,12 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
-import { isNil } from 'lodash';
-import * as moment from 'moment';
 
 interface JournalPageState {
   testSlots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
-  lastRefreshedTime$: Observable<Date>,
+  lastRefreshedTime$: Observable<string>,
 }
 
 @IonicPage()
@@ -79,6 +77,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       lastRefreshedTime$: this.store$.pipe(
         select(getJournalState),
         map(getLastRefreshed),
+        map(getLastRefreshedTime),
       ),
     };
 
@@ -163,13 +162,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   public refreshJournal = () => {
     this.loadJournal();
   };
-
-  public formatLastRefreshTime() {
-    const lastRefreshed$ = this.pageState.lastRefreshedTime$.pipe(
-      map(date => isNil(date) ? '--:--' : moment(date).format('hh:mma')),
-    );
-    return lastRefreshed$;
-  }
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);

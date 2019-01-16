@@ -9,7 +9,7 @@
         <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
         <span>Refresh</span>
       </button>
-      <div class="last-sync">Last sync: {{formatLastRefreshTime() | async}}</div>
+      <div class="last-sync">Last sync: {{pageState.lastRefreshedTime$ | async}}</div>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
