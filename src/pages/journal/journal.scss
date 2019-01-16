@@ -8,4 +8,8 @@ page-journal {
   .refresh-button-icon {
     padding: 0 10px;
   }
+  ion-title {
+    height: 100%;
+    align-items: flex-end;
+  }
 }
