@@ -12,13 +12,18 @@ import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.moc
 import { CognitoIdentityWrapperMock } from '../__mocks__/cognito-identity-wrapper.mock';
 import { Platform } from 'ionic-angular';
 import { PlatformMock } from 'ionic-mocks-jest';
+import { AuthenticationProvider } from '../authentication';
+import { AuthenticationProviderMock } from '../__mocks__/authentication.mock';
+import { UrlProvider } from '../../url/url';
+import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 
 describe('Authentication interceptor', () => {
   let httpMock: HttpTestingController;
   let interceptor: AuthInterceptor;
   let journalProvider: JournalProvider;
   let platform: Platform;
-  let appConfig: AppConfigProvider;
+  let urlProvider: UrlProvider;
+  let journalUrl: string;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,6 +34,8 @@ describe('Authentication interceptor', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: CognitoIdentityWrapper, useClass: CognitoIdentityWrapperMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: UrlProvider, useClass: UrlProviderMock },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptor,
@@ -41,7 +48,8 @@ describe('Authentication interceptor', () => {
     httpMock = TestBed.get(HttpTestingController);
     interceptor = TestBed.get(AuthInterceptor);
     journalProvider = TestBed.get(JournalProvider);
-    appConfig = TestBed.get(AppConfigProvider);
+    urlProvider = TestBed.get(UrlProvider);
+    journalUrl = urlProvider.getPersonalJournalUrl('');
   });
 
   describe('Interceptor', () => {
@@ -51,7 +59,6 @@ describe('Authentication interceptor', () => {
     });
 
     it('should not modify the request if not on ios', () => {
-      const { journalUrl } = appConfig.getAppConfig().journal;
       journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
@@ -64,7 +71,6 @@ describe('Authentication interceptor', () => {
 
     it('should add the signed headers if running on ios', () => {
       platform.is = jest.fn().mockReturnValue(true);
-      const { journalUrl } = appConfig.getAppConfig().journal;
       journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}

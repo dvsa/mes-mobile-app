@@ -32,6 +32,6 @@ export class AppConfigProviderMock {
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl
       }
-    } ;
+    };
   }
 }
