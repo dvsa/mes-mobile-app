@@ -13,7 +13,7 @@ export class AppConfigProviderMock {
   }
 
   public getPersonalJournalUrl(): string {
-    return 'https://www.example.com/api/v1/journals/1234/today'
+    return 'https://www.example.com/api/v1/journals/1234/personal'
   }
 
   public getAppConfig(): AppConfig {

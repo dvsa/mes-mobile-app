@@ -39,7 +39,7 @@ describe('JournalProvider', () => {
 
       journalProvider.getJournal(null).subscribe();
 
-      httpMock.expectOne('https://www.example.com/api/v1/journals/2468/today');
+      httpMock.expectOne('https://www.example.com/api/v1/journals/2468/personal');
       expect(authProviderMock.getEmployeeId).toHaveBeenCalled();
     });
 
