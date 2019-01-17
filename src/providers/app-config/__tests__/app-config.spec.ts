@@ -52,4 +52,28 @@ describe('App Config Provider', () => {
     });
   });
 
+  describe('getPersonalJournalUrl', () => {
+    it('should populate the staffId into the URL template when an number is provided', () => {
+      appConfig.environmentFile = remoteEnvironmentMock;
+
+      appConfig.refreshConfigSettings().subscribe(() => {
+        expect(appConfig.getPersonalJournalUrl('1234')).toBe('https://www.example.com/api/v1/journals/1234/today');
+      });
+
+      const request = httpMock.expectOne(remoteEnvironmentMock.remoteSettingsUrl);
+      expect(request.request.method).toBe('GET');
+    });
+    it('should use a placeholder staffId when no staffId parameter is provided', () => {
+      appConfig.environmentFile = remoteEnvironmentMock;
+      const placeholderUrl = 'https://www.example.com/api/v1/journals/1/today';
+      appConfig.refreshConfigSettings().subscribe(() => {
+        expect(appConfig.getPersonalJournalUrl(undefined)).toBe(placeholderUrl);
+        expect(appConfig.getPersonalJournalUrl(null)).toBe(placeholderUrl);
+      });
+
+      const request = httpMock.expectOne(remoteEnvironmentMock.remoteSettingsUrl);
+      expect(request.request.method).toBe('GET');
+    });
+  });
+
 });

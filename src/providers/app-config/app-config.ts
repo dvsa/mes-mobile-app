@@ -29,6 +29,10 @@ export class AppConfigProvider {
     return this.appConfig;
   }
 
+  public getPersonalJournalUrl(staffNumber: string) {
+    return this.appConfig.journal.journalUrl.replace('{staffNumber}', staffNumber || '1');
+  }
+
   private getRemoteData = (): Observable<any> => {
     return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl)
       .pipe(
