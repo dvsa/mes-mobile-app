@@ -1,6 +1,6 @@
 
 import {
-  getTestSlots,
+  getSlots,
   getSlotById,
   getTime,
   getCandidateName,
@@ -13,36 +13,35 @@ import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-detai
 
 describe('Candidate Details Selector', () => {
 
-  describe('getTestSlots', () => {
+  describe('getSlots', () => {
     it('returns the correct test slot array from the journal data', () => {
       const journal = {
         isLoading: false,
         lastRefreshed: new Date(0),
-        data: {
-          testSlot: [
-            {
-              vehicleSlotType: 'B57mins',
-            },
-          ],
-        },
         slots: [
           {
             hasSlotChanged: false,
-            slotData: {}
-          }
+            slotData: {
+              vehicleSlotType: 'B57mins',
+            }
+          },
         ],
       };
 
-      const result = getTestSlots(journal);
+      const result = getSlots(journal);
 
-      expect(result).toEqual(journal.data.testSlot); 
+      expect(result).toEqual([
+        {
+          vehicleSlotType: 'B57mins',
+        },
+      ]); 
     });
   });
 
   describe('getSlotById', () => {
     it('returns the right slot after giving an id', () => {
       const selectedSlotId = 12345;
-      const testSlots = [
+      const slots = [
         {
           vehicleSlotType: 'B57mins',
           slotDetail: {
@@ -57,30 +56,35 @@ describe('Candidate Details Selector', () => {
         },
       ];
 
-      const result = getSlotById(testSlots, selectedSlotId);
+      const result = getSlotById(slots, selectedSlotId);
 
-      expect(result).toEqual(testSlots[0]);
+      expect(result).toEqual({
+        vehicleSlotType: 'B57mins',
+        slotDetail: {
+          slotId: 12345,
+        },
+      });
     });
   });
 
   describe('getTime', () => {
     it('returns the start time of the slot', () => {
-      const testSlotStartTime = Date.now();
-      const testSlot = {
+      const slotStartTime = Date.now();
+      const slot = {
         slotDetail: {
-          start: testSlotStartTime,
+          start: slotStartTime,
         },
       };
 
-      const result = getTime(testSlot);
+      const result = getTime(slot);
 
-      expect(result).toEqual(testSlotStartTime);
+      expect(result).toEqual(slotStartTime);
     });
   });
 
   describe('isCandidateCommentsEmpty', () => {
     it('returns true if the specialNeeds and previousCancellation are empty', () => {
-      const testSlot = {
+      const slot = {
         booking: {
           candidate: {
             specialNeeds: '',
@@ -89,13 +93,13 @@ describe('Candidate Details Selector', () => {
         },
       };
 
-      const result = isCandidateCommentsEmpty(testSlot);
+      const result = isCandidateCommentsEmpty(slot);
 
       expect(result).toBe(true);
     });
 
     it('returns false if the specialNeeds is provided', () => {
-      const testSlot = {
+      const slot = {
         booking: {
           candidate: {
             specialNeeds: 'there are some special needs',
@@ -104,13 +108,13 @@ describe('Candidate Details Selector', () => {
         },
       };
 
-      const result = isCandidateCommentsEmpty(testSlot);
+      const result = isCandidateCommentsEmpty(slot);
 
       expect(result).toBe(false);
     });
 
     it('returns false if the previousCancellation is not empty', () => {
-      const testSlot = {
+      const slot = {
         booking: {
           candidate: {
             specialNeeds: '',
@@ -119,7 +123,7 @@ describe('Candidate Details Selector', () => {
         },
       };
 
-      const result = isCandidateCommentsEmpty(testSlot);
+      const result = isCandidateCommentsEmpty(slot);
 
       expect(result).toBe(false);
     });
@@ -130,7 +134,7 @@ describe('Candidate Details Selector', () => {
       const title = 'Miss';
       const firstName = 'Florence';
       const lastName = 'Pearson';
-      const testSlot = {
+      const slot = {
         booking: {
           candidate: {
             candidateName: {
@@ -142,7 +146,7 @@ describe('Candidate Details Selector', () => {
         },
       };
 
-      const result = getCandidateName(testSlot);
+      const result = getCandidateName(slot);
 
       expect(result).toEqual(`${title} ${firstName} ${lastName}`);
     });
@@ -196,7 +200,7 @@ describe('Candidate Details Selector', () => {
 
   describe('getSlotTypeView', () => {
     it('should return carStandardSlotType when no special needs is provided', () => {
-      const testSlot = {
+      const slot = {
         booking: {
           application: {
             specialNeeds: '',
@@ -204,13 +208,13 @@ describe('Candidate Details Selector', () => {
         },
       };
 
-      const result = getSlotTypeView(testSlot);
+      const result = getSlotTypeView(slot);
 
       expect(result).toEqual(carStandardSlotType);
     });
 
     it('should return a double slot type when special needs are provided', () => {
-      const testSlot = {
+      const slot = {
         booking: {
           application: {
             specialNeeds: 'Candidate has dyslexia',
@@ -218,7 +222,7 @@ describe('Candidate Details Selector', () => {
         },
       };
 
-      const result = getSlotTypeView(testSlot);
+      const result = getSlotTypeView(slot);
 
       expect(result).toEqual(carSpecialNeedsSlotType);
     });

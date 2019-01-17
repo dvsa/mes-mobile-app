@@ -9,7 +9,7 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../common/store.model';
 import { getJournalState } from './journal.reducer';
-import { getLastRefreshed } from './journal.selector';
+import newSlotsDetectingChanges from './utils/newSlotsDetectingChanges';
 
 @Injectable()
 export class JournalEffects {
@@ -25,15 +25,15 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL),
     withLatestFrom(
       this.store$.pipe(
-        select(getJournalState),
-        map(getLastRefreshed)
+        select(getJournalState)
       )
     ),
-    switchMap(([action, lastRefreshed]) => {
+    switchMap(([action, journal]) => {
       return this.journalProvider
-        .getJournal(lastRefreshed)
+        .getJournal(journal.lastRefreshed)
         .pipe(
-          map(testSlot => new journalActions.LoadJournalSuccess(testSlot)),
+          map(journalData => newSlotsDetectingChanges(journal.slots, journalData)),
+          map(slots => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
     })

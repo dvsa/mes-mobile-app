@@ -11,7 +11,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { StoreModel } from '../../common/store.model';
 import { TestCategory, testCategoryIcons } from '../../common/test-category';
 import { getJournalState } from '../journal/journal.reducer';
-import { getSlotById, getTestSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
+import { getSlotById, getSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
 import { Details } from './candidate-details.model';
 
 interface CandidateDetailsPageState {
@@ -49,20 +49,20 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     this.pageState = {
       name$: this.store$.pipe(
         select(getJournalState),
-        select(getTestSlots),
-        map(testSlots => getSlotById(testSlots, this.slotId)),
+        select(getSlots),
+        map(slots => getSlotById(slots, this.slotId)),
         select(getCandidateName)
       ),
       time$: this.store$.pipe(
         select(getJournalState),
-        select(getTestSlots),
-        map(testSlots => getSlotById(testSlots, this.slotId)),
+        select(getSlots),
+        map(slots => getSlotById(slots, this.slotId)),
         select(getTime)
       ),
       details$: this.store$.pipe(
         select(getJournalState),
-        select(getTestSlots),
-        map(testSlots => getSlotById(testSlots, this.slotId)),
+        select(getSlots),
+        map(slots => getSlotById(slots, this.slotId)),
         select(getDetails)
       ),
     }

@@ -79,7 +79,7 @@ describe('JournalPage', () => {
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
       let noOfSlotsReturned: number;
-      component.pageState.testSlots$.subscribe(testSlots => noOfSlotsReturned = testSlots.length);
+      component.pageState.slots$.subscribe(slots => noOfSlotsReturned = slots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
     });
