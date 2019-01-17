@@ -12,9 +12,7 @@ export class AppConfigProviderMock {
     return;
   }
 
-  public getPersonalJournalUrl(): string {
-    return 'https://www.example.com/api/v1/journals/1234/personal'
-  }
+  getPersonalJournalUrl = jest.fn().mockReturnValue('https://www.example.com/api/v1/journals/12345678/personal');
 
   public getAppConfig(): AppConfig {
     return {
@@ -36,6 +34,6 @@ export class AppConfigProviderMock {
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl
       }
-    } ;
+    };
   }
 }

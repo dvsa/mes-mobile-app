@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { JournalProvider } from '../journal';
-import { remoteEnvironmentMock, localEnvironmentMock } from '../../app-config/__mocks__/environment.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AuthenticationProvider } from '../../authentication/authentication';
 import { AuthenticationProviderMock } from '../../authentication/__mocks__/authentication.mock';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 
 describe('JournalProvider', () => {
   describe('getJournal', () => {
@@ -12,7 +12,7 @@ describe('JournalProvider', () => {
     let journalProvider;
     let httpMock;
     let authProviderMock;
-    let appConfig;
+    let appConfigMock;
     
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('JournalProvider', () => {
         ],
         providers: [
           JournalProvider,
-          { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
+          { provide: AppConfigProvider, useClass: AppConfigProviderMock },
           { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         ],
       });
@@ -29,18 +29,15 @@ describe('JournalProvider', () => {
       httpMock = TestBed.get(HttpTestingController);
       journalProvider = TestBed.get(JournalProvider);
       authProviderMock = TestBed.get(AuthenticationProvider);
-      appConfig = TestBed.get(AppConfigProvider);
+      appConfigMock = TestBed.get(AppConfigProvider);
     });
 
     it('should use the configured URL populated with the staff ID to get the journal', () => {
-      appConfig.environmentFile = localEnvironmentMock;
-      appConfig.refreshConfigSettings();
-      authProviderMock.getEmployeeId.mockReturnValue('2468');
-
       journalProvider.getJournal(null).subscribe();
 
-      httpMock.expectOne('https://www.example.com/api/v1/journals/2468/personal');
+      httpMock.expectOne('https://www.example.com/api/v1/journals/12345678/personal');
       expect(authProviderMock.getEmployeeId).toHaveBeenCalled();
+      expect(appConfigMock.getPersonalJournalUrl).toHaveBeenCalledWith('12345678');
     });
 
   });
