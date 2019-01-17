@@ -5,6 +5,7 @@ import { JournalModel } from './journal.model';
 
 export const initialState: JournalModel = {
   isLoading: false,
+  isPolling: false,
   lastRefreshed: null,
   slots: [],
 };
@@ -20,6 +21,13 @@ export function journalReducer(state = initialState, action: journalActions.Type
       return {
         ...state,
         isLoading: true,
+        isPolling: true
+      };
+    case journalActions.CANCEL_JOURNAL_POLL:
+      return {
+        ...state,
+        isLoading: false,
+        isPolling: false
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {

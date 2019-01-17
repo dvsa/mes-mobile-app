@@ -9,7 +9,6 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../common/store.model';
 import { getJournalState } from './journal.reducer';
-import { getLastRefreshed } from './journal.selector';
 import { timer } from 'rxjs/observable/timer';
 
 import newSlotsDetectingChanges from './utils/newSlotsDetectingChanges';

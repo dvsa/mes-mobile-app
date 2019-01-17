@@ -102,8 +102,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.createLoadingSpinner();
   }
 
-  loadJournalPolled(stopPoll) {
-    this.store$.dispatch(new journalActions.LoadJournalPolled(stopPoll));
+  loadJournalPolled() {
+    this.store$.dispatch(new journalActions.LoadJournalPolled());
     this.createLoadingSpinner();
   }
 
@@ -169,16 +169,11 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   public refreshJournalPolled = () => {
-    this.loadJournalPolled(false);
+    this.loadJournalPolled();
   };
 
   public stopRefreshJournalPoll = () => {
-
-    this.loadJournalPolled(true);
+    this.store$.dispatch(new journalActions.CancelJournalPoll());
   };
-
-  gotoWaitingRoom($event) {
-    console.log('going to waiting room with ', $event);
-  }
 
 }
