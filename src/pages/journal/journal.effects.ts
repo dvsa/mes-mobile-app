@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, map, withLatestFrom, tap, mapTo, takeUntil } from 'rxjs/operators';
+import { switchMap, catchError, map, withLatestFrom, tap, mapTo } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import * as journalActions from './journal.actions';
@@ -11,6 +11,9 @@ import { StoreModel } from '../../common/store.model';
 import { getJournalState } from './journal.reducer';
 import { getLastRefreshed } from './journal.selector';
 import { timer } from 'rxjs/observable/timer';
+
+import newSlotsDetectingChanges from './utils/newSlotsDetectingChanges';
+
 
 @Injectable()
 export class JournalEffects {
@@ -27,15 +30,15 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL),
     withLatestFrom(
       this.store$.pipe(
-        select(getJournalState),
-        map(getLastRefreshed)
+        select(getJournalState)
       )
     ),
-    switchMap(([action, lastRefreshed]) => {
+    switchMap(([action, journal]) => {
       return this.journalProvider
-        .getJournal(lastRefreshed)
+        .getJournal(journal.lastRefreshed)
         .pipe(
-          map(testSlot => new journalActions.LoadJournalSuccess(testSlot)),
+          map(journalData => newSlotsDetectingChanges(journal.slots, journalData)),
+          map(slots => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         );
     })
@@ -55,16 +58,16 @@ export class JournalEffects {
     tap(val => console.log('before latestFrom', val)),
     withLatestFrom(
       this.store$.pipe(
-        select(getJournalState),
-        map(getLastRefreshed)
+        select(getJournalState)
       )
     ),
     tap(val => console.log('after latestFrom', val)),
-    switchMap(([action, lastRefreshed]) => {
+    switchMap(([action, journal]) => {
       return this.journalProvider
-        .getJournal(lastRefreshed)
+        .getJournal(journal.lastRefreshed)
         .pipe(
-          map(testSlot => new journalActions.LoadJournalSuccess(testSlot)),
+          map(journalData => newSlotsDetectingChanges(journal.slots, journalData)),
+          map(slots => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         );
     })

@@ -7,7 +7,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getTestSlots, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
+import { getSlots, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 interface JournalPageState {
-  testSlots$: Observable<SlotItem[]>,
+  slots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
   lastRefreshedTime$: Observable<string>,
@@ -62,9 +62,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.loadJournal();
 
     this.pageState = {
-      testSlots$: this.store$.pipe(
+      slots$: this.store$.pipe(
         select(getJournalState),
-        map(getTestSlots)
+        map(getSlots)
       ),
       error$: this.store$.pipe(
         select(getJournalState),
@@ -81,10 +81,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       ),
     };
 
-    const { testSlots$, error$, isLoading$ } = this.pageState;
+    const { slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
-      testSlots$,
+      slots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),

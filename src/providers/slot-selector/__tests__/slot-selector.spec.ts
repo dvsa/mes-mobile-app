@@ -49,18 +49,18 @@ describe('Slot Selector', () => {
       });
 
       it('should provide correct component when test type is B57mins', () => {
-        const testSlot = {
+        const slot = {
           vehicleSlotType: 'B57mins'
         };
         const journalSlots = [
-          new SlotItem(testSlot, false)
+          new SlotItem(slot, false)
         ];
 
         const response = slotSelector.getSlotTypes(journalSlots);
 
         expect(response.length).toBe(1);
         expect(response[0].component).toBe(TestSlotComponent);
-        expect(response[0].slotData).toBe(testSlot);
+        expect(response[0].slotData).toBe(slot);
         expect(response[0].hasSlotChanged).toBe(false)
       });
 

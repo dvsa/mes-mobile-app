@@ -1,13 +1,7 @@
 import { initialState, journalReducer } from '../journal.reducer';
 import { LoadJournal, LoadJournalSuccess } from '../journal.actions';
-import * as newSlotsDetectingChanges from '../utils/newSlotsDetectingChanges';
 
 describe('Journal Reducer', () => {
-
-  let changeDetectorSpy;
-  beforeEach(() => {
-    changeDetectorSpy = spyOn(newSlotsDetectingChanges, 'default').and.callFake(() => [{ newSlots: true }]);
-  });
 
   describe('undefined action', () => {
     it('should return the default state', () => {
@@ -31,19 +25,23 @@ describe('Journal Reducer', () => {
   });
 
   describe('[JournalPage] Load Journal Success', () => {
-    it('should toggle loading state and populate slots from change detection', () => {
-      const actionPayload = { testSlot: [] };
+    it('should toggle loading state and populate slots', () => {
+      const actionPayload = [{
+        hasSlotChanged: false,
+        slotData: {},
+      }];
       const action = new LoadJournalSuccess(actionPayload);
       const result = journalReducer(initialState, action);
 
       expect(result).toEqual({
         ...initialState,
         isLoading: false,
-        data: { testSlot: [] },
         lastRefreshed: expect.any(Date),
-        slots: [{ newSlots: true }]
+        slots: [{
+          hasSlotChanged: false,
+          slotData: {},
+        }]
       });
-      expect(changeDetectorSpy).toHaveBeenCalledWith([], actionPayload);
     });
   });
 

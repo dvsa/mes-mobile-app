@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { MesError } from '../../common/mes-error.model';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
@@ -13,7 +12,9 @@ export class LoadJournal implements Action {
 
 export class LoadJournalSuccess implements Action {
   readonly type = LOAD_JOURNAL_SUCCESS;
-  constructor(public payload: ExaminerWorkSchedule) {}
+
+  // TODO: declare payload with the correct type when we have a slot type in place
+  constructor(public payload: any[]) {}
 }
 
 export class LoadJournalFailure implements Action {

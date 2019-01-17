@@ -3,7 +3,7 @@ import { JournalModel } from './journal.model';
 import { isNil } from 'lodash';
 import * as moment from 'moment';
 
-export const getTestSlots = (journal: JournalModel) => journal.slots;
+export const getSlots = (journal: JournalModel) => journal.slots;
 
 export const getError = (journal: JournalModel) => journal.error;
 
