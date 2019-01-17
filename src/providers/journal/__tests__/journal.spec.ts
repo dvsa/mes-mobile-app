@@ -39,8 +39,9 @@ describe('JournalProvider', () => {
     it('should use the configured URL populated with the staff ID to get the journal', () => {
       appConfig.environmentFile = localEnvironmentMock;
       appConfig.refreshConfigSettings();
+      authProviderMock.getEmployeeId.mockReturnValue('2468');
       journalProvider.getJournal(null).subscribe();
-      httpMock.expectOne('https://www.example.com/api/v1/journals/a/today');
+      httpMock.expectOne('https://www.example.com/api/v1/journals/2468/today');
       expect(authProviderMock.getEmployeeId).toHaveBeenCalled();
     });
 
