@@ -58,7 +58,12 @@ describe('Candidate Details Selector', () => {
 
       const result = getSlotById(slots, selectedSlotId);
 
-      expect(result).toEqual(slots[0]);
+      expect(result).toEqual({
+        vehicleSlotType: 'B57mins',
+        slotDetail: {
+          slotId: 12345,
+        },
+      });
     });
   });
 
