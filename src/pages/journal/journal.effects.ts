@@ -33,7 +33,7 @@ export class JournalEffects {
         .getJournal(journal.lastRefreshed)
         .pipe(
           map(journalData => newSlotsDetectingChanges(journal.slots, journalData)),
-          map(journalData => new journalActions.LoadJournalSuccess(journalData)),
+          map(slots => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
     })
