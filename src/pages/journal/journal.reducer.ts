@@ -2,7 +2,6 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
-import newSlotsDetectingChanges from './utils/newSlotsDetectingChanges';
 
 export const initialState: JournalModel = {
   isLoading: false,
@@ -22,7 +21,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
         ...state,
         lastRefreshed: new Date(),
         isLoading: false,
-        slots: newSlotsDetectingChanges(state.slots, action.payload),
+        slots: action.payload,
       };
     case journalActions.LOAD_JOURNAL_FAILURE:
       return {

@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { MesError } from '../../common/mes-error.model';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
@@ -12,7 +11,7 @@ export class LoadJournal implements Action {
 
 export class LoadJournalSuccess implements Action {
   readonly type = LOAD_JOURNAL_SUCCESS;
-  constructor(public payload: ExaminerWorkSchedule) {}
+  constructor(public payload: any[]) {}
 }
 
 export class LoadJournalFailure implements Action {

@@ -31,8 +31,11 @@ describe('Journal Reducer', () => {
   });
 
   describe('[JournalPage] Load Journal Success', () => {
-    it('should toggle loading state and populate slots from change detection', () => {
-      const actionPayload = { testSlot: [] };
+    it('should toggle loading state and populate slots', () => {
+      const actionPayload = [{
+        hasSlotChanged: false,
+        slotData: {},
+      }];
       const action = new LoadJournalSuccess(actionPayload);
       const result = journalReducer(initialState, action);
 
@@ -40,9 +43,11 @@ describe('Journal Reducer', () => {
         ...initialState,
         isLoading: false,
         lastRefreshed: expect.any(Date),
-        slots: [{ newSlots: true }]
+        slots: [{
+          hasSlotChanged: false,
+          slotData: {},
+        }]
       });
-      expect(changeDetectorSpy).toHaveBeenCalledWith([], actionPayload);
     });
   });
 
