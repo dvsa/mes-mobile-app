@@ -1,13 +1,7 @@
 import { initialState, journalReducer } from '../journal.reducer';
 import { LoadJournal, LoadJournalSuccess } from '../journal.actions';
-import * as newSlotsDetectingChanges from '../utils/newSlotsDetectingChanges';
 
 describe('Journal Reducer', () => {
-
-  let changeDetectorSpy;
-  beforeEach(() => {
-    changeDetectorSpy = spyOn(newSlotsDetectingChanges, 'default').and.callFake(() => [{ newSlots: true }]);
-  });
 
   describe('undefined action', () => {
     it('should return the default state', () => {

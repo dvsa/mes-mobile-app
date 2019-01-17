@@ -33,10 +33,7 @@ export class JournalEffects {
         .getJournal(journal.lastRefreshed)
         .pipe(
           map(journalData => newSlotsDetectingChanges(journal.slots, journalData)),
-          map(journalData => {
-            console.log('testSlot after request', journalData);
-            return new journalActions.LoadJournalSuccess(journalData);
-          }),
+          map(journalData => new journalActions.LoadJournalSuccess(journalData)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
     })
