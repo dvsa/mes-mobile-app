@@ -1,5 +1,5 @@
 import { JournalModel } from '../journal.model';
-import { getTestSlots, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime } from '../journal.selector';
+import { getSlots, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime } from '../journal.selector';
 import { MesError } from '../../../common/mes-error.model';
 
 describe('JournalSelector', () => {
@@ -26,9 +26,9 @@ describe('JournalSelector', () => {
     });
   });
 
-  describe('getTestSlots', () => {
+  describe('getSlots', () => {
     it('should select the test slots from the state', () => {
-      const selectedSlots = getTestSlots(state);
+      const selectedSlots = getSlots(state);
       expect(selectedSlots).toHaveLength(1);
       expect(selectedSlots[0].hasSlotChanged).toBe(false);
       expect(selectedSlots[0].slotData).toBeDefined();

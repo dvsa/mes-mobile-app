@@ -15,8 +15,8 @@ export class SlotSelectorProvider {
     }
 
     for (const slotItem of slotItems) {
-      const testSlot: Slot = slotItem.slotData;
-      slotItem.component = this.resolveComponentName(testSlot.vehicleSlotType, testSlot.activityCode);
+      const slot: Slot = slotItem.slotData;
+      slotItem.component = this.resolveComponentName(slot.vehicleSlotType, slot.activityCode);
     }
     return slotItems;
   }

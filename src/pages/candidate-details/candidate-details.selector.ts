@@ -4,16 +4,16 @@ import { JournalModel } from '../journal/journal.model';
 import { Details, SlotTypeView } from './candidate-details.model';
 import { carStandardSlotType, carSpecialNeedsSlotType } from './candidate-details.constants';
 
-export const getTestSlots = (journal: JournalModel) => journal.slots.map(slotItem => slotItem.slotData);
+export const getSlots = (journal: JournalModel) => journal.slots.map(slotItem => slotItem.slotData);
 
-// TODO: replace any with TestSlot types when we have the data structure
-export const getSlotById = (testSlots: any[], slotId: number): any => testSlots.find(testSlot => testSlot.slotDetail.slotId === slotId);
+// TODO: replace any with Slot types when we have the data structure
+export const getSlotById = (slots: any[], slotId: number): any => slots.find(slot => slot.slotDetail.slotId === slotId);
 
-export const getCandidateName = (testSlot: any): string => `${testSlot.booking.candidate.candidateName.title} ${testSlot.booking.candidate.candidateName.firstName} ${testSlot.booking.candidate.candidateName.lastName}`;
+export const getCandidateName = (slot: any): string => `${slot.booking.candidate.candidateName.title} ${slot.booking.candidate.candidateName.firstName} ${slot.booking.candidate.candidateName.lastName}`;
 
-export const getTime = (testSlot: any): string => testSlot.slotDetail.start;
+export const getTime = (slot: any): string => slot.slotDetail.start;
 
-export const isCandidateCommentsEmpty = (testSlot: any): boolean => isEmpty(testSlot.booking.candidate.specialNeeds) && isEmpty(testSlot.booking.previousCancellation);
+export const isCandidateCommentsEmpty = (slot: any): boolean => isEmpty(slot.booking.candidate.specialNeeds) && isEmpty(slot.booking.previousCancellation);
 
 export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.mobileTelephone)) return candidate.mobileTelephone;
@@ -22,7 +22,7 @@ export const getPhoneNumber = (candidate: any): string => {
   return 'No phone number provided';
 }
 
-export const getSlotTypeView = (testSlot: any): SlotTypeView => isEmpty(testSlot.booking.application.specialNeeds) ? carStandardSlotType : carSpecialNeedsSlotType;
+export const getSlotTypeView = (slot: any): SlotTypeView => isEmpty(slot.booking.application.specialNeeds) ? carStandardSlotType : carSpecialNeedsSlotType;
 
 export const getCity = (address: any): string => {
   let city = '';
@@ -34,28 +34,28 @@ export const getCity = (address: any): string => {
   return city;
 }
 
-export const getDetails = (testSlot: any): Details => {
+export const getDetails = (slot: any): Details => {
   const details: Details = {
     testCategory: {
-      text: `Category ${testSlot.booking.application.testCategory}`,
-      icon: testSlot.booking.application.testCategory,
+      text: `Category ${slot.booking.application.testCategory}`,
+      icon: slot.booking.application.testCategory,
     },
-    slotType: getSlotTypeView(testSlot),
-    driverNumber: testSlot.booking.candidate.driverNumber,
-    applicationRef: testSlot.booking.application.applicationId,
+    slotType: getSlotTypeView(slot),
+    driverNumber: slot.booking.candidate.driverNumber,
+    applicationRef: slot.booking.application.applicationId,
     candidateComments: {
-      isSectionEmpty: isCandidateCommentsEmpty(testSlot),
-      specialNeeds: testSlot.booking.application.specialNeeds,
-      previousCancellations: testSlot.booking.previousCancellation
+      isSectionEmpty: isCandidateCommentsEmpty(slot),
+      specialNeeds: slot.booking.application.specialNeeds,
+      previousCancellations: slot.booking.previousCancellation
     },
-    phoneNumber: getPhoneNumber(testSlot.booking.candidate),
+    phoneNumber: getPhoneNumber(slot.booking.candidate),
 
     // TODO: remove the string literal when e-mail address is configured in the service
-    email: testSlot.booking.candidate.emailAddress || 'e-mail unavailable',
+    email: slot.booking.candidate.emailAddress || 'e-mail unavailable',
     address: {
-      street: testSlot.booking.candidate.candidateAddress.addressLine1,
-      city: getCity(testSlot.booking.candidate.candidateAddress),
-      postcode: testSlot.booking.candidate.candidateAddress.postcode,
+      street: slot.booking.candidate.candidateAddress.addressLine1,
+      city: getCity(slot.booking.candidate.candidateAddress),
+      postcode: slot.booking.candidate.candidateAddress.postcode,
     }
   };
   return details;
