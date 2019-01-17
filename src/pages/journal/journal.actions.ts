@@ -11,6 +11,8 @@ export class LoadJournal implements Action {
 
 export class LoadJournalSuccess implements Action {
   readonly type = LOAD_JOURNAL_SUCCESS;
+
+  // TODO: declare payload with the correct type when we have a slot type in place
   constructor(public payload: any[]) {}
 }
 

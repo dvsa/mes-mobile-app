@@ -30,7 +30,11 @@ describe('Candidate Details Selector', () => {
 
       const result = getSlots(journal);
 
-      expect(result).toEqual(journal.slots.map(slotItem => slotItem.slotData)); 
+      expect(result).toEqual([
+        {
+          vehicleSlotType: 'B57mins',
+        },
+      ]); 
     });
   });
 
