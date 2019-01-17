@@ -12,6 +12,10 @@ export class AppConfigProviderMock {
     return;
   }
 
+  public getPersonalJournalUrl(staffNumber: string): string {
+    return 'https://www.example.com/api/v1/journals/today'
+  }
+
   public getAppConfig(): AppConfig {
     return {
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,

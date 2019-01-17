@@ -12,6 +12,8 @@ import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.moc
 import { CognitoIdentityWrapperMock } from '../__mocks__/cognito-identity-wrapper.mock';
 import { Platform } from 'ionic-angular';
 import { PlatformMock } from 'ionic-mocks-jest';
+import { AuthenticationProvider } from '../authentication';
+import { AuthenticationProviderMock } from '../__mocks__/authentication.mock';
 
 describe('Authentication interceptor', () => {
   let httpMock: HttpTestingController;
@@ -29,6 +31,7 @@ describe('Authentication interceptor', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: CognitoIdentityWrapper, useClass: CognitoIdentityWrapperMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptor,
@@ -51,7 +54,7 @@ describe('Authentication interceptor', () => {
     });
 
     it('should not modify the request if not on ios', () => {
-      const { journalUrl } = appConfig.getAppConfig().journal;
+      const  journalUrl  = appConfig.getPersonalJournalUrl('');
       journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
@@ -64,7 +67,7 @@ describe('Authentication interceptor', () => {
 
     it('should add the signed headers if running on ios', () => {
       platform.is = jest.fn().mockReturnValue(true);
-      const { journalUrl } = appConfig.getAppConfig().journal;
+      const journalUrl = appConfig.getPersonalJournalUrl('');
       journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
