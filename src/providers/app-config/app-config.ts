@@ -60,7 +60,8 @@ export class AppConfigProvider {
         region: data.aws.region,
       },
       journal: {
-        journalUrl: data.journal.journalUrl
+        journalUrl: data.journal.journalUrl,
+        backgroundRefreshTime: data.journal.backgroundRefreshTime
       }
     }
   }

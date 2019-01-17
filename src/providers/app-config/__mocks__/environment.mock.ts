@@ -23,6 +23,7 @@ export const localEnvironmentMock: EnvironmentFile = {
     region: 'aws-region'
   },
   journal: {
-    journalUrl: 'https://www.example.com/path'
+    journalUrl: 'https://www.example.com/path',
+    backgroundRefreshTime: 1000 * 60 * 15
   }
 }
