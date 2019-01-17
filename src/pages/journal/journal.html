@@ -25,6 +25,14 @@
       pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
+  <button ion-button (click)="refreshJournalPolled()">
+    <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
+    <span>Refresh with Poll</span>
+  </button>
+  <button ion-button (click)="stopRefreshJournalPoll()">
+    <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
+    <span>Stop Poll</span>
+  </button>
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>

@@ -9,6 +9,7 @@ export class JournalProvider {
   constructor(public http: HttpClient, public appConfig: AppConfigProvider) {}
 
   getJournal(lastRefreshed: Date){
+    console.log('last refreshed', lastRefreshed)
     if (lastRefreshed === null) {
       return this.http.get(this.appConfig.getAppConfig().journal.journalUrl);
     }

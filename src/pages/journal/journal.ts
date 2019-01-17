@@ -102,6 +102,11 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.createLoadingSpinner();
   }
 
+  loadJournalPolled(stopPoll) {
+    this.store$.dispatch(new journalActions.LoadJournalPolled(stopPoll));
+    this.createLoadingSpinner();
+  }
+
   handleLoadingUI = (isLoading: boolean): void => {
     if (!isLoading) {
       this.pageRefresher ? this.pageRefresher.complete() : null;
@@ -161,6 +166,15 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   public refreshJournal = () => {
     this.loadJournal();
+  };
+
+  public refreshJournalPolled = () => {
+    this.loadJournalPolled(false);
+  };
+
+  public stopRefreshJournalPoll = () => {
+
+    this.loadJournalPolled(true);
   };
 
   gotoWaitingRoom($event) {

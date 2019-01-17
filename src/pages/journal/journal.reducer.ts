@@ -23,6 +23,11 @@ export function journalReducer(state = initialState, action: journalActions.Type
         ...state,
         isLoading: true,
       };
+    case journalActions.LOAD_JOURNAL_POLLED:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
         ...state,
