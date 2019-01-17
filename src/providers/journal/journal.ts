@@ -1,21 +1,21 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppConfigProvider } from '../app-config/app-config';
 import moment from 'moment';
 import { AuthenticationProvider } from '../authentication/authentication';
+import { UrlProvider } from '../url/url';
 
 @Injectable()
 export class JournalProvider {
 
   constructor(
     public http: HttpClient,
-    public appConfig: AppConfigProvider,
+    public urlProvider: UrlProvider,
     public authProvider: AuthenticationProvider,
   ) {}
 
   getJournal(lastRefreshed: Date){
     const staffNumber = this.authProvider.getEmployeeId();
-    const journalUrl = this.appConfig.getPersonalJournalUrl(staffNumber);
+    const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
 
     if (lastRefreshed === null) {
       return this.http.get(journalUrl);

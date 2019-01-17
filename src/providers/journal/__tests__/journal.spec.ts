@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { JournalProvider } from '../journal';
-import { AppConfigProvider } from '../../app-config/app-config';
 import { AuthenticationProvider } from '../../authentication/authentication';
 import { AuthenticationProviderMock } from '../../authentication/__mocks__/authentication.mock';
-import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { UrlProvider } from '../../url/url';
+import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 
 describe('JournalProvider', () => {
   describe('getJournal', () => {
@@ -12,7 +12,7 @@ describe('JournalProvider', () => {
     let journalProvider;
     let httpMock;
     let authProviderMock;
-    let appConfigMock;
+    let urlProviderMock;
     
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('JournalProvider', () => {
         ],
         providers: [
           JournalProvider,
-          { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+          { provide: UrlProvider, useClass: UrlProviderMock },
           { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         ],
       });
@@ -29,15 +29,15 @@ describe('JournalProvider', () => {
       httpMock = TestBed.get(HttpTestingController);
       journalProvider = TestBed.get(JournalProvider);
       authProviderMock = TestBed.get(AuthenticationProvider);
-      appConfigMock = TestBed.get(AppConfigProvider);
+      urlProviderMock = TestBed.get(UrlProvider)
     });
 
-    it('should use the configured URL populated with the staff ID to get the journal', () => {
+    it('should obtain the personal journal URL from the journal provider, passing the cached employee ID', () => {
       journalProvider.getJournal(null).subscribe();
 
       httpMock.expectOne('https://www.example.com/api/v1/journals/12345678/personal');
       expect(authProviderMock.getEmployeeId).toHaveBeenCalled();
-      expect(appConfigMock.getPersonalJournalUrl).toHaveBeenCalledWith('12345678');
+      expect(urlProviderMock.getPersonalJournalUrl).toHaveBeenCalledWith('12345678');
     });
 
   });

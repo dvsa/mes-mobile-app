@@ -12,8 +12,6 @@ export class AppConfigProviderMock {
     return;
   }
 
-  getPersonalJournalUrl = jest.fn().mockReturnValue('https://www.example.com/api/v1/journals/12345678/personal');
-
   public getAppConfig(): AppConfig {
     return {
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
