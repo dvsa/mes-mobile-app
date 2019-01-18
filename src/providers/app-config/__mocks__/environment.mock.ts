@@ -1,9 +1,9 @@
 import { EnvironmentFile } from '../../../environment/models/environment.model';
 
-export const remoteEnvironmentMock : EnvironmentFile = {
+export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
   remoteSettingsUrl: 'remote-url'
-}
+};
 
 export const localEnvironmentMock: EnvironmentFile = {
   isRemote: false,
@@ -23,7 +23,7 @@ export const localEnvironmentMock: EnvironmentFile = {
     region: 'aws-region'
   },
   journal: {
-    journalUrl: 'https://www.example.com/path',
+    journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',
     backgroundRefreshTime: 1000 * 60 * 15
   }
-}
+};
