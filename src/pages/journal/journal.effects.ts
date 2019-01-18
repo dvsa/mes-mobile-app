@@ -35,9 +35,9 @@ export class JournalEffects {
         .getJournal(journal.lastRefreshed)
         .pipe(
           map((journalData: ExaminerWorkSchedule) => {
-            this.slotProvider.detectSlotChanges(journal.slots, journalData);
-            console.log('journal data', journalData.testSlot);
-            return journalData.testSlot;
+            const updatedSlots = this.slotProvider.detectSlotChanges(journal.slots, journalData);
+            console.log('updated slots', updatedSlots);
+            return updatedSlots;
           }),
           map((slots: any[]) => {
             const c = this.slotProvider.groupByDate(slots)

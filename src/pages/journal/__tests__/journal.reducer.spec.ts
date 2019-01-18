@@ -27,10 +27,13 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state and populate slots', () => {
-      const actionPayload = [{
-        hasSlotChanged: false,
-        slotData: {},
-      }];
+      const actionPayload = {
+        '2019-01-17': [{
+          hasSlotChanged: false,
+          slotData: {},
+          }
+        ],
+      };
       const action = new LoadJournalSuccess(actionPayload);
       const result = journalReducer(initialState, action);
 
