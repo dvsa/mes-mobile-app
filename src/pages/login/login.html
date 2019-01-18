@@ -1,17 +1,24 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Login</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>You must Login to continue</p>
-      <button ion-button (click)="login()">Login</button>
-    </ion-card-content>
-  </ion-card>
+<ion-content>
+  <div class="login-grid">
+    <div *ngIf="hasUserLoggedOut">
+      <h2> You have now logged out of the MES App</h2>
+      <h5> You need to <span class="link" (click)="login()">login</span> to continue</h5>
+    </div>
+    <div *ngIf="isInternetConnectionError()">
+      <h2>You're not connected to the internet</h2>
+      <h5>Check your <span class="link">network settings</span> and try again</h5>
+    </div>
+    <div *ngIf="isUserCancelledError()">
+      <h2>User Cancelled Error Placeholder</h2>
+      <h5>User Cancelled Error Placeholder</h5>
+    </div>
+    <div *ngIf="isUnknownError()">
+        <h2>Unknown Error Placeholder</h2>
+        <h5>Unkown Error Placeholder</h5>
+    </div>
+  </div>
 </ion-content>
