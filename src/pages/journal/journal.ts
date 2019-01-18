@@ -59,7 +59,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.loadJournal();
 
     this.pageState = {
       slots$: this.store$.pipe(
@@ -97,12 +96,19 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.subscription.unsubscribe();
   }
 
-  loadJournal() {
-    this.store$.dispatch(new journalActions.LoadJournal());
-    this.createLoadingSpinner();
+  ionViewWillEnter(){
+    super.ionViewWillEnter();
+    this.loadJournal();
+    return true;
   }
 
-  loadJournalPolled() {
+  ionViewDidLeave(){
+    this.store$.dispatch(new journalActions.CancelJournalPoll());
+  }
+
+  loadJournal() {
+    this.store$.dispatch(new journalActions.CancelJournalPoll());
+    this.store$.dispatch(new journalActions.LoadJournal());
     this.store$.dispatch(new journalActions.LoadJournalPolled());
     this.createLoadingSpinner();
   }
@@ -166,14 +172,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   public refreshJournal = () => {
     this.loadJournal();
-  };
-
-  public refreshJournalPolled = () => {
-    this.loadJournalPolled();
-  };
-
-  public stopRefreshJournalPoll = () => {
-    this.store$.dispatch(new journalActions.CancelJournalPoll());
   };
 
 }
