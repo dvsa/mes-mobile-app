@@ -5,7 +5,7 @@ import { flatten } from 'lodash';
 
 export default function(oldJournalSlots: SlotItem[], newJournal: ExaminerWorkSchedule): SlotItem[] {
   const newSlots = flatten([
-    newJournal.testSlot || [],
+    newJournal.testSlots || [],
     newJournal.nonTestActivities || [],
   ]);
 
