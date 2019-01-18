@@ -17,6 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthInterceptor } from '../providers/authentication/interceptor';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { UrlProvider } from '../providers/url/url';
+import { SlotProvider } from '../providers/slot/slot';
 
 @NgModule({
   declarations: [App],
@@ -46,6 +47,7 @@ import { UrlProvider } from '../providers/url/url';
     CognitoIdentityWrapper,
     ScreenOrientation,
     UrlProvider,
+    SlotProvider
   ]
 })
 export class AppModule {

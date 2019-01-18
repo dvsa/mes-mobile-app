@@ -9,14 +9,16 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../common/store.model';
 import { getJournalState } from './journal.reducer';
-import newSlotsDetectingChanges from './utils/newSlotsDetectingChanges';
+import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
+import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { SlotProvider } from '../../providers/slot/slot';
 
 @Injectable()
 export class JournalEffects {
-
   constructor(
     private actions$: Actions,
     private journalProvider: JournalProvider,
+    private slotProvider: SlotProvider,
     private store$: Store<StoreModel>,
   ) {}
 
@@ -32,8 +34,17 @@ export class JournalEffects {
       return this.journalProvider
         .getJournal(journal.lastRefreshed)
         .pipe(
-          map(journalData => newSlotsDetectingChanges(journal.slots, journalData)),
-          map(slots => new journalActions.LoadJournalSuccess(slots)),
+          map((journalData: ExaminerWorkSchedule) => {
+            this.slotProvider.detectSlotChanges(journal.slots, journalData);
+            console.log('journal data', journalData.testSlot);
+            return journalData.testSlot;
+          }),
+          map((slots: any[]) => {
+            const c = this.slotProvider.groupByDate(slots)
+            console.log(c);
+            return c;
+          }),
+          map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
     })
