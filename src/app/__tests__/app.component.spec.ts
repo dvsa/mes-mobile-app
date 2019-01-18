@@ -3,11 +3,11 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { App } from './app.component';
+import { App } from '../app.component';
 import { MSAdal } from '@ionic-native/ms-adal';
-import { MSAdalMock } from '../providers/authentication/__mocks__/ms-adal.mock';
-import { AppConfigProvider } from '../providers/app-config/app-config';
-import { AppConfigProviderMock } from '../providers/app-config/__mocks__/app-config.mock';
+import { MSAdalMock } from '../../providers/authentication/__mocks__/ms-adal.mock';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../providers/app-config/__mocks__/app-config.mock';
 import { StatusBarMock, PlatformMock } from 'ionic-mocks-jest';
 
 describe('App', () => {
