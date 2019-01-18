@@ -6,6 +6,7 @@ describe('JournalSelector', () => {
 
   const state: JournalModel = {
     isLoading: true,
+    isPolling: false,
     lastRefreshed: new Date(0),
     slots: [
       {

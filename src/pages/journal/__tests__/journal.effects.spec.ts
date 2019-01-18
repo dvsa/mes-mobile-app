@@ -9,6 +9,8 @@ import { JournalProvider } from '../../../providers/journal/journal'
 import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 import { StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -40,7 +42,8 @@ describe('Journal Effects', () => {
           provide: Actions,
           useFactory: () => new TestActions(),
         },
-        { provide: JournalProvider, useClass: JournalProviderMock }
+        { provide: JournalProvider, useClass: JournalProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock }
       ]
     });
 

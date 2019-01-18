@@ -17,6 +17,7 @@ describe('Candidate Details Selector', () => {
     it('returns the correct test slot array from the journal data', () => {
       const journal = {
         isLoading: false,
+        isPolling: true,
         lastRefreshed: new Date(0),
         slots: [
           {
