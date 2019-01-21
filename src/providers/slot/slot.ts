@@ -38,17 +38,6 @@ export class SlotProvider {
     });
   }
 
-  groupByDate(slots: any[]): {[k: string]: SlotItem[]} {
-    const slotsGroupedByDate = slots.reduce((grouped, slot) => {
-      const key = this.getSlotDate(slot);
-      grouped[key] = grouped[key] || [];
-      grouped[key].push(slot);
-      return grouped;
-    }, {});
-
-    return slotsGroupedByDate;
-  }
-
-  private getSlotDate = (slot: any): string => moment(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
+  getSlotDate = (slot: any): string => moment(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }

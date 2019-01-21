@@ -4,6 +4,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, catchError, map, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
+import { groupBy } from 'lodash';
+
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
 import { Store, select } from '@ngrx/store';
@@ -35,7 +37,11 @@ export class JournalEffects {
         .getJournal(journal.lastRefreshed)
         .pipe(
           map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(journal.slots, journalData)),
-          map((slots: any[]) => this.slotProvider.groupByDate(slots)),
+          map((slots: any[]) => {
+            const s = groupBy(slots, this.slotProvider.getSlotDate);
+            console.log('slots', s);
+            return s;
+          }),
           map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
