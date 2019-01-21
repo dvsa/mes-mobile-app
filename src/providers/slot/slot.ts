@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
 import { flatten } from 'lodash';
+import moment from 'moment';
 
 import { SlotItem } from '../slot-selector/slot-item';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
@@ -49,6 +50,6 @@ export class SlotProvider {
   }
 
   // TODO: change this to use moment.format instead of .slice
-  private getSlotDate = (slot: any): string => slot.slotData.slotDetail.start.slice(0, 10);
+  private getSlotDate = (slot: any): string => moment(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }
