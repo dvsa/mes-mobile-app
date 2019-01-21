@@ -21,24 +21,10 @@ export type PreviousCancellation = {
   [k: string]: any;
 }[];
 /**
- * A collection of test slots, possibly populated with booking data
- */
-export type TestSlots = {
-  testSlot?: TestSlot;
-  [k: string]: any;
-}[];
-/**
  * A collection of the examiner's personal commitment(s)
  */
 export type PersonalCommitments = {
   personalCommitment?: PersonalCommitment;
-  [k: string]: any;
-}[];
-/**
- * A collection of the examiner's non test activity(s) (associated with a test slot duration)
- */
-export type NonTestActivities = {
-  nonTestActivity?: NonTestActivity;
   [k: string]: any;
 }[];
 /**
@@ -61,9 +47,15 @@ export type Deployments = {
  */
 export interface ExaminerWorkSchedule {
   examiner?: Examiner;
-  testSlots?: TestSlots;
+  /**
+   * A collection of test slots, possibly populated with booking data
+   */
+  testSlots?: TestSlot[];
   personalCommitments?: PersonalCommitments;
-  nonTestActivities?: NonTestActivities;
+  /**
+   * A collection of the examiner's non test activity(s) (associated with a test slot duration)
+   */
+  nonTestActivities?: NonTestActivity[];
   advanceTestSlots?: AdvanceTestSlots;
   deployments?: Deployments;
   [k: string]: any;

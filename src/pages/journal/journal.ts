@@ -152,6 +152,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       duration: 5000
     });
 
+    this.toast.onDidDismiss(() => {
+      this.store$.dispatch(new journalActions.UnsetError());
+    });
   };
 
   public pullRefreshJournal = (refresher: Refresher) => {
@@ -165,6 +168,11 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
+  }
+
+  logout() {
+    this.store$.dispatch(new journalActions.UnloadJournal());
+    super.logout();
   }
 
 }

@@ -146,7 +146,7 @@ describe('newSlotsDetectingChanges', () => {
         centreName: 'Example Test Centre',
         costCode: 'EXTC1',
       },
-      testSlot: cloneDeep(oldTestSlots),
+      testSlots: cloneDeep(oldTestSlots),
       nonTestActivities: cloneDeep(oldNonTestActivities),
     }
     oldSlotItems = oldTestSlots.map(oldSlot => ({ slotData: oldSlot }));
@@ -171,7 +171,7 @@ describe('newSlotsDetectingChanges', () => {
 
   describe('when one of the new slots differ from the old slots', () => {
     it('should produce the new slot items indicating there was a change', () => {
-      newJournal.testSlot[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
+      newJournal.testSlots[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
       const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
       expect(result).toHaveLength(3);
       expect(result[0].hasSlotChanged).toBe(true);
@@ -182,8 +182,8 @@ describe('newSlotsDetectingChanges', () => {
 
   describe('when several of the slots differ from the old slots', () => {
     it('should produce new slot items indicating which slots changed', () => {
-      newJournal.testSlot[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
-      newJournal.testSlot[1].booking.application.welshTest = true;
+      newJournal.testSlots[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
+      newJournal.testSlots[1].booking.application.welshTest = true;
       const result = newSlotsDetectingChanges(oldSlotItems, newJournal)
       expect(result).toHaveLength(3);
       expect(result[0].hasSlotChanged).toBe(true);
