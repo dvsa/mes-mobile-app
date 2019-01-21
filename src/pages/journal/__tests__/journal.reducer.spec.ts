@@ -41,10 +41,13 @@ describe('Journal Reducer', () => {
         ...initialState,
         isLoading: false,
         lastRefreshed: expect.any(Date),
-        slots: [{
-          hasSlotChanged: false,
-          slotData: {},
-        }]
+        slots: {
+          '2019-01-17': [{
+            hasSlotChanged: false,
+            slotData: {},
+            }
+          ],
+        }
       });
     });
   });

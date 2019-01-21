@@ -49,7 +49,6 @@ export class SlotProvider {
     return slotsGroupedByDate;
   }
 
-  // TODO: change this to use moment.format instead of .slice
   private getSlotDate = (slot: any): string => moment(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }

@@ -2,7 +2,7 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export const initialState: JournalModel = {
   isLoading: false,

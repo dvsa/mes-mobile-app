@@ -14,6 +14,7 @@ export class JournalProvider {
   ) {}
 
   getJournal(lastRefreshed: Date){
+    console.log('real journal provider');
     const staffNumber = this.authProvider.getEmployeeId();
     const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
 

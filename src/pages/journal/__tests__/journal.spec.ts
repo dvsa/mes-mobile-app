@@ -23,6 +23,7 @@ import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-
 import { UnloadJournal, LoadJournal } from '../journal.actions';
 import { BasePageComponent } from '../../../classes/base-page';
 import { StoreModel } from '../../../common/store.model';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -51,6 +52,7 @@ describe('JournalPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: JournalProvider, useClass: JournalProviderMock },
+        SlotProvider,
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
         { provide: ScreenOrientation, useClass: ScreenOrientationMock},
@@ -72,6 +74,7 @@ describe('JournalPage', () => {
   describe('Class', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
+      console.log('should create');
       expect(component).toBeDefined();
     });
 
@@ -106,7 +109,9 @@ describe('JournalPage', () => {
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
       let noOfSlotsReturned: number;
-      component.pageState.slots$.subscribe(slots => noOfSlotsReturned = slots.length);
+      component.pageState.isLoading$.subscribe(a => console.log('isloading', a));
+      component.pageState.lastRefreshedTime$.subscribe(a => console.log('lastrefreshed', a));
+      component.pageState.slots$.subscribe(slots => { console.log(slots); noOfSlotsReturned = slots.length });
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
     });
