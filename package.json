@@ -45,7 +45,6 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
-    "@ionic-native-mocks/open-native-settings": "^2.0.12",
     "@ionic-native/core": "~4.17.0",
     "@ionic-native/in-app-browser": "^4.18.0",
     "@ionic-native/ms-adal": "^4.18.0",
@@ -82,6 +81,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
+    "@ionic-native-mocks/open-native-settings": "^2.0.12",
     "@ionic/app-scripts": "3.2.1",
     "@ngrx/store-devtools": "^5.2.0",
     "@types/aws-sdk": "^2.7.0",

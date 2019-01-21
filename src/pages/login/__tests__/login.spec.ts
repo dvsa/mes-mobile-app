@@ -59,7 +59,7 @@ describe('LoginPage', () => {
       });
     });
 
-    it('should should not log in succesfully', () => {
+    it('should fail to login gracefully', () => {
       authenticationProvider.login = jest.fn().mockRejectedValue(AuthenticationError.NO_INTERNET);
 
       component.login().catch(() => {
