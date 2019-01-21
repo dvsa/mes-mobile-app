@@ -29,6 +29,11 @@ export function journalReducer(state = initialState, action: journalActions.Type
         isLoading: false,
         error: action.payload,
       };
+    case journalActions.UNLOAD_JOURNAL:
+      return {
+        ...state,
+        slots: [],
+      };
     default: 
       return state;
   }

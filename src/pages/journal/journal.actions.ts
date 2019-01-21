@@ -4,6 +4,7 @@ import { MesError } from '../../common/mes-error.model';
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
 export const LOAD_JOURNAL_SUCCESS = '[JournalPage] Load Journal Success';
 export const LOAD_JOURNAL_FAILURE = '[JournalPage] Load Journal Failure';
+export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal'
 
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
@@ -21,8 +22,13 @@ export class LoadJournalFailure implements Action {
   constructor(public payload: MesError) {}
 }
 
+export class UnloadJournal implements Action {
+  readonly type = UNLOAD_JOURNAL;
+}
+
 export type Types = 
   | LoadJournal
   | LoadJournalSuccess
-  | LoadJournalFailure;
+  | LoadJournalFailure
+  | UnloadJournal;
 

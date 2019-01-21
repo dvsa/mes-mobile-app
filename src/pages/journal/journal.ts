@@ -167,4 +167,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     console.log('going to waiting room with ', $event);
   }
 
+  logout() {
+    this.store$.dispatch(new journalActions.UnloadJournal());
+    super.logout();
+  }
+
 }
