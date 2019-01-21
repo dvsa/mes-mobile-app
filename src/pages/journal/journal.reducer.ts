@@ -16,6 +16,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
       return {
         ...state,
         isLoading: true,
+        error: {message: '', status: 0, statusText: ''}
       };
     case journalActions.LOAD_JOURNAL_POLLED:
       return {
@@ -34,7 +35,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
         ...state,
         lastRefreshed: new Date(),
         isLoading: false,
-        slots: action.payload,
+        slots: action.payload
       };
     case journalActions.LOAD_JOURNAL_FAILURE:
       return {
