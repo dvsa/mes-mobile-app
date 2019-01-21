@@ -1,5 +1,6 @@
 import { initialState, journalReducer } from '../journal.reducer';
-import { LoadJournal, LoadJournalSuccess } from '../journal.actions';
+import { LoadJournal, LoadJournalSuccess, UnloadJournal } from '../journal.actions';
+import { SlotItem } from '../../../providers/slot-selector/slot-item';
 
 describe('Journal Reducer', () => {
 
@@ -42,6 +43,15 @@ describe('Journal Reducer', () => {
           slotData: {},
         }]
       });
+    });
+  });
+
+  describe('[JournalPage] Unload Journal', () => {
+    it('should clear the journal slots', () => {
+      const stateWithJournals = { ...initialState, slots: [new SlotItem({}, false)] }
+      const action = new UnloadJournal();
+      const result = journalReducer(stateWithJournals, action);
+      expect(result.slots).toHaveLength(0);
     });
   });
 
