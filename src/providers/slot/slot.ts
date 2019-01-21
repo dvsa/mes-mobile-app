@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
 import { flatten } from 'lodash';
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { SlotItem } from '../slot-selector/slot-item';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
