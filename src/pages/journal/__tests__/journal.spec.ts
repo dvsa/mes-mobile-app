@@ -23,6 +23,7 @@ import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-
 import { UnloadJournal, LoadJournal } from '../journal.actions';
 import { BasePageComponent } from '../../../classes/base-page';
 import { StoreModel } from '../../../common/store.model';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -51,6 +52,7 @@ describe('JournalPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: JournalProvider, useClass: JournalProviderMock },
+        SlotProvider,
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
         { provide: ScreenOrientation, useClass: ScreenOrientationMock},

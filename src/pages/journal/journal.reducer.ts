@@ -2,11 +2,13 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
+import * as moment from 'moment';
 
 export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
-  slots: [],
+  slots: {},
+  selectedDate: moment().format('YYYY-MM-DD'),
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {
@@ -32,7 +34,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
     case journalActions.UNLOAD_JOURNAL:
       return {
         ...state,
-        slots: [],
+        slots: {},
       };
     case journalActions.UNSET_ERROR:
     const { error, ...stateWithoutError } = state;

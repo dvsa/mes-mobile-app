@@ -27,10 +27,13 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state and populate slots', () => {
-      const actionPayload = [{
-        hasSlotChanged: false,
-        slotData: {},
-      }];
+      const actionPayload = {
+        '2019-01-17': [{
+          hasSlotChanged: false,
+          slotData: {},
+          }
+        ],
+      };
       const action = new LoadJournalSuccess(actionPayload);
       const result = journalReducer(initialState, action);
 
@@ -38,20 +41,23 @@ describe('Journal Reducer', () => {
         ...initialState,
         isLoading: false,
         lastRefreshed: expect.any(Date),
-        slots: [{
-          hasSlotChanged: false,
-          slotData: {},
-        }]
+        slots: {
+          '2019-01-17': [{
+            hasSlotChanged: false,
+            slotData: {},
+            }
+          ],
+        }
       });
     });
   });
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: [new SlotItem({}, false)] }
+      const stateWithJournals = { ...initialState, slots: { '2019-01-21': [new SlotItem({}, false)] } }
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
-      expect(result.slots).toHaveLength(0);
+      expect(result.slots).toEqual({});
     });
   });
 

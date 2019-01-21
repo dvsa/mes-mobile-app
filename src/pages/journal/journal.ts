@@ -7,7 +7,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getSlots, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
+import { getSlotsOnSelectedDate, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -64,7 +64,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.pageState = {
       slots$: this.store$.pipe(
         select(getJournalState),
-        map(getSlots)
+        map(getSlotsOnSelectedDate)
       ),
       error$: this.store$.pipe(
         select(getJournalState),

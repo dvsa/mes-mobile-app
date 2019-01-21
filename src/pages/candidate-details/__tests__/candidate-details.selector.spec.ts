@@ -18,14 +18,17 @@ describe('Candidate Details Selector', () => {
       const journal = {
         isLoading: false,
         lastRefreshed: new Date(0),
-        slots: [
-          {
-            hasSlotChanged: false,
-            slotData: {
-              vehicleSlotType: 'B57mins',
-            }
-          },
-        ],
+        slots: {
+          '2019-01-17': [
+            {
+              hasSlotChanged: false,
+              slotData: {
+                vehicleSlotType: 'B57mins',
+              }
+            },
+          ],
+        },
+        selectedDate: '2019-01-17',
       };
 
       const result = getSlots(journal);
