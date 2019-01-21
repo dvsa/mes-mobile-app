@@ -152,6 +152,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       duration: 5000
     });
 
+    this.toast.onDidDismiss(() => {
+      this.store$.dispatch(new journalActions.UnsetError());
+    });
   };
 
   public pullRefreshJournal = (refresher: Refresher) => {

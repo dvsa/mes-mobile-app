@@ -34,6 +34,11 @@ export function journalReducer(state = initialState, action: journalActions.Type
         ...state,
         slots: [],
       };
+    case journalActions.UNSET_ERROR:
+    const { error, ...stateWithoutError } = state;
+      return {
+        ...stateWithoutError,
+      }
     default: 
       return state;
   }

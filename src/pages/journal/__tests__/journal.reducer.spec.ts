@@ -1,5 +1,5 @@
 import { initialState, journalReducer } from '../journal.reducer';
-import { LoadJournal, LoadJournalSuccess, UnloadJournal } from '../journal.actions';
+import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 
 describe('Journal Reducer', () => {
@@ -52,6 +52,15 @@ describe('Journal Reducer', () => {
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toHaveLength(0);
+    });
+  });
+
+  describe('[JournalPage] Unset error', () => {
+    it('should remove any journal error in the state', () => {
+      const stateWithError = { ...initialState, error: { message: '', status: 0, statusText: '' }  };
+      const action = new UnsetError();
+      const result = journalReducer(stateWithError, action);
+      expect(result.error).toBeUndefined();
     });
   });
 
