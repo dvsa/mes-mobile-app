@@ -34,7 +34,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
     case journalActions.UNLOAD_JOURNAL:
       return {
         ...state,
-        slots: [],
+        slots: {},
       };
     case journalActions.UNSET_ERROR:
     const { error, ...stateWithoutError } = state;
