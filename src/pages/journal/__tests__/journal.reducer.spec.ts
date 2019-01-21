@@ -54,10 +54,10 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: [new SlotItem({}, false)] }
+      const stateWithJournals = { ...initialState, slots: { '2019-01-21': [new SlotItem({}, false)] } }
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
-      expect(result.slots).toHaveLength(0);
+      expect(result.slots).toEqual({});
     });
   });
 
