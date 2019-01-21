@@ -18,6 +18,6 @@ export const environment : EnvironmentFile = {
     region: 'eu-west-1',
   },
   journal: {
-    journalUrl: 'https://g2u8m8j9o3.execute-api.eu-west-1.amazonaws.com/default'
+    journalUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/journals/{staffNumber}/personal'
   }
 };
