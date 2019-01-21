@@ -37,11 +37,7 @@ export class JournalEffects {
         .getJournal(journal.lastRefreshed)
         .pipe(
           map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(journal.slots, journalData)),
-          map((slots: any[]) => {
-            const s = groupBy(slots, this.slotProvider.getSlotDate);
-            console.log('slots', s);
-            return s;
-          }),
+          map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
           map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         )
