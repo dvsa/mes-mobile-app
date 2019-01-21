@@ -9,6 +9,8 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthenticationError } from '../../../providers/authentication/authentication.constants';
 import { By } from '@angular/platform-browser';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+import { OpenNativeSettingsMock } from '@ionic-native-mocks/open-native-settings';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -28,6 +30,7 @@ describe('LoginPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: OpenNativeSettings, useClass: OpenNativeSettingsMock},
       ]
     })
       .compileComponents()

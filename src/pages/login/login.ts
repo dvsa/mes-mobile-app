@@ -5,6 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 @IonicPage()
 @Component({
@@ -20,13 +21,14 @@ export class LoginPage extends BasePageComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
+    public authenticationProvider: AuthenticationProvider,
     public splashScreen: SplashScreen,
-    public authenticationProvider: AuthenticationProvider
+    private openNativeSettings: OpenNativeSettings,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
     // Check to see if redirect to page was from a logout
-    this.hasUserLoggedOut = this.navParams.get('hasLoggedOut');
+    this.hasUserLoggedOut = navParams.get('hasLoggedOut');
 
     // Trigger Authentication if this isn't a logout and is an ios device
     if (!this.hasUserLoggedOut && this.isIos()) {
@@ -55,5 +57,9 @@ export class LoginPage extends BasePageComponent {
 
   isUnknownError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === undefined;
+  }
+
+  openWifiSetting = (): void => {
+    this.openNativeSettings.open('wifi');
   }
 }

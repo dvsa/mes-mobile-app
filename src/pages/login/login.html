@@ -10,7 +10,10 @@
     </div>
     <div *ngIf="isInternetConnectionError()">
       <h2>You're not connected to the internet</h2>
-      <h5>Check your <span class="link">network settings</span> and try again</h5>
+      <h5>
+        Check your <span class="link" (click)="openWifiSetting()">network settings</span> and
+        <span class="link" (click)="login()">try again</span>
+      </h5>
     </div>
     <div *ngIf="isUserCancelledError()">
       <h2>User Cancelled Error Placeholder</h2>
