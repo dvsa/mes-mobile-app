@@ -25,17 +25,17 @@ describe('IndicatorsComponent', () => {
   });
 
   describe('DOM', () => {
-    describe('special needs indicator', () => {
+    describe('exclamation indicator', () => {
       it('should render when visibility is configured', () => {
-        component.showSpecialNeedsIndicator = true;
+        component.showExclamationIndicator = true;
         fixture.detectChanges();
-        const renderedImage = fixture.debugElement.query(By.css('.special-needs-indicator'));
-        expect(renderedImage.attributes.src).toContain('special');
+        const renderedImage = fixture.debugElement.query(By.css('.exclamation-indicator'));
+        expect(renderedImage.attributes.src).toContain('exclamation');
       });
       it('should not be rendered when visibility is turned off', () => {
-        component.showSpecialNeedsIndicator = false;
+        component.showExclamationIndicator = false;
         fixture.detectChanges();
-        const renderedImages = fixture.debugElement.queryAll(By.css('.special-needs-indicator'));
+        const renderedImages = fixture.debugElement.queryAll(By.css('.exclamation-indicator'));
         expect(renderedImages).toHaveLength(0);
       });
     });

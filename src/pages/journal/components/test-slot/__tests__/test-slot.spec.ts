@@ -104,18 +104,34 @@ describe('TestSlotComponent', () => {
     }));
 
     describe('Class', () => {
-      describe('isSpecialNeedsSlot', () => {
+      describe('isIndicatorNeededForSlot', () => {
         it('should return true if specialNeeds is a non-blank string', () => {
-          expect(component.isSpecialNeedsSlot()).toBe(true);
+          expect(component.isIndicatorNeededForSlot()).toBe(true);
         });
-        it('should return false if specialNeeds is blank', () => {
+        it('should return false if specialNeeds is blank (and entitlementCheck is false)', () => {
           component.slot.booking.application.specialNeeds = '';
-          expect(component.isSpecialNeedsSlot()).toBe(false);
+          expect(component.isIndicatorNeededForSlot()).toBe(false);
         });
         it('should return false if specialNeeds is missing', () => {
           delete component.slot.booking.application;
           expect(component.isSpecialNeedsSlot()).toBe(false);
         });
+        it ('should return true if entitlementCheck is true (and specialNeeds is blank)', () => {
+            component.slot.booking.application.specialNeeds = '';
+            component.slot.booking.application.entitlementCheck = true;
+            expect(component.isIndicatorNeededForSlot()).toBe(true);
+        });
+        it ('should return false if entitlementCheck is missing (and specialNeeds is blank)', () => {
+          component.slot.booking.application.specialNeeds = '';
+          delete component.slot.booking.application.entitlementCheck;
+          expect(component.isIndicatorNeededForSlot()).toBe(false);
+        });
+        it ('should return false if entitlementCheck is false (and specialNeeds is blank)', () => {
+          component.slot.booking.application.specialNeeds = '';
+          component.slot.booking.application.entitlementCheck = false;
+          expect(component.isIndicatorNeededForSlot()).toBe(false);
+        });
+
         it('should return correct value for showing vehicle details', () => {
           component.slot.booking.application.testCategory = 'A';
           expect(component.showVehicleDetails()).toBeFalsy();
@@ -154,7 +170,7 @@ describe('TestSlotComponent', () => {
           component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.PORTRAIT;
           expect(component.isPortrait()).toBeTruthy();
         })
-        it('should return fa;se for isPortrait() if device is landscape', () => {
+        it('should return false for isPortrait() if device is landscape', () => {
           component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY;
           expect(component.isPortrait()).toBeFalsy();
           component.screenOrientation.type =  component.screenOrientation.ORIENTATIONS.LANDSCAPE;
@@ -171,7 +187,7 @@ describe('TestSlotComponent', () => {
           fixture.detectChanges();
           const indicatorComponent = fixture.debugElement.query(By.directive(MockComponent(IndicatorsComponent))).componentInstance;
           expect(indicatorComponent).toBeDefined();
-          expect(indicatorComponent.showSpecialNeedsIndicator).toBeFalsy();
+          expect(indicatorComponent.showExclamationIndicator).toBeFalsy();
         });
 
         it('should pass something to sub-component time input', () => {

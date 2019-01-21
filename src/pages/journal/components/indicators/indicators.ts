@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 export class IndicatorsComponent {
 
   @Input()
-  showSpecialNeedsIndicator: boolean;
+  showExclamationIndicator: boolean;
 
 }
