@@ -13,8 +13,7 @@ export class JournalProvider {
     public authProvider: AuthenticationProvider,
   ) {}
 
-  getJournal(lastRefreshed: Date){
-    console.log('real journal provider');
+  getJournal(lastRefreshed: Date) {
     const staffNumber = this.authProvider.getEmployeeId();
     const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
 

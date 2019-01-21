@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 export class JournalProviderMock {
 
   public getJournal(): Observable<any> {
-    console.log('journal provider mock');
     return of({
       staffNumber: 12345,
       examinerName: {

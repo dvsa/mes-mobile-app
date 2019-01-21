@@ -74,7 +74,6 @@ describe('JournalPage', () => {
   describe('Class', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
-      console.log('should create');
       expect(component).toBeDefined();
     });
 
@@ -109,10 +108,7 @@ describe('JournalPage', () => {
       expect(slotsList.children.length).toBe(0);
       fixture.detectChanges();
       let noOfSlotsReturned: number;
-      // component.pageState.isLoading$.subscribe(a => console.log('isloading', a));
-      component.pageState.lastRefreshedTime$.subscribe(a => console.log('lastrefreshed', a));
-      component.pageState.error$.subscribe(err => console.log('error', err));
-      component.pageState.slots$.subscribe(slots => { console.log(slots); noOfSlotsReturned = slots.length });
+      component.pageState.slots$.subscribe(slots => noOfSlotsReturned = slots.length);
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
     });
