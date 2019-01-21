@@ -20,7 +20,7 @@ import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-sele
 import { MockedJournalModule } from '../__mocks__/journal.module.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-orientation.mock';
-import { UnloadJournal } from '../journal.actions';
+import { UnloadJournal, LoadJournal } from '../journal.actions';
 import { BasePageComponent } from '../../../classes/base-page';
 import { StoreModel } from '../../../common/store.model';
 
@@ -28,6 +28,7 @@ describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
   let component: JournalPage;
   let store: Store<StoreModel>;
+  let loadingControllerMock: LoadingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -64,6 +65,8 @@ describe('JournalPage', () => {
 
       store = TestBed.get(Store);
       jest.spyOn(store, 'dispatch');
+
+      loadingControllerMock = TestBed.get(LoadingController);
   }));
 
   describe('Class', () => {
@@ -78,6 +81,14 @@ describe('JournalPage', () => {
         component.logout();
         expect(store.dispatch).toHaveBeenCalledWith(new UnloadJournal());
         expect(BasePageComponent.prototype.logout).toHaveBeenCalled();
+      });
+    });
+
+    describe('loadJournal', () => {
+      it('should dispatch a LoadJournal action and create the loading spinner', () => {
+        component.loadJournal();
+        expect(store.dispatch).toHaveBeenCalledWith(new LoadJournal());
+        expect(loadingControllerMock.create).toHaveBeenCalled();
       });
     });
   });
