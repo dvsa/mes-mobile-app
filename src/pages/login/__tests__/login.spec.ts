@@ -18,6 +18,7 @@ describe('LoginPage', () => {
   let navController: NavController;
   let splashScreen: SplashScreen;
   let authenticationProvider: AuthenticationProvider;
+  let openNativeSettings: OpenNativeSettings;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -40,6 +41,7 @@ describe('LoginPage', () => {
         navController = TestBed.get(NavController);
         splashScreen = TestBed.get(SplashScreen);
         authenticationProvider = TestBed.get(AuthenticationProvider);
+        openNativeSettings = TestBed.get(OpenNativeSettings);
       });
   }));
 
@@ -122,6 +124,12 @@ describe('LoginPage', () => {
       component.hasUserLoggedOut = true;
 
       expect(component.isUnknownError()).toBeFalsy();
+    });
+
+    it('should request the wifi network settings to be opened ', () => {
+      openNativeSettings.open = jest.fn();
+      component.openWifiSetting();
+      expect(openNativeSettings.open).toBeCalledWith('wifi');
     });
   });
 
