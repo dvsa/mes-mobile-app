@@ -27,7 +27,7 @@ import { StoreModel } from '../../../common/store.model';
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
   let component: JournalPage;
-  let store: Store<StoreModel>;
+  let store$: Store<StoreModel>;
   let loadingControllerMock: LoadingController;
 
   beforeEach(async(() => {
@@ -63,8 +63,8 @@ describe('JournalPage', () => {
         component.subscription = new Subscription();
       });
 
-      store = TestBed.get(Store);
-      jest.spyOn(store, 'dispatch');
+      store$ = TestBed.get(Store);
+      jest.spyOn(store$, 'dispatch');
 
       loadingControllerMock = TestBed.get(LoadingController);
   }));
@@ -79,7 +79,7 @@ describe('JournalPage', () => {
       it('should dispatch an UnloadJournal action and call base page logout', () => {
         jest.spyOn(BasePageComponent.prototype, 'logout');
         component.logout();
-        expect(store.dispatch).toHaveBeenCalledWith(new UnloadJournal());
+        expect(store$.dispatch).toHaveBeenCalledWith(new UnloadJournal());
         expect(BasePageComponent.prototype.logout).toHaveBeenCalled();
       });
     });
@@ -87,7 +87,7 @@ describe('JournalPage', () => {
     describe('loadJournal', () => {
       it('should dispatch a LoadJournal action and create the loading spinner', () => {
         component.loadJournal();
-        expect(store.dispatch).toHaveBeenCalledWith(new LoadJournal());
+        expect(store$.dispatch).toHaveBeenCalledWith(new LoadJournal());
         expect(loadingControllerMock.create).toHaveBeenCalled();
       });
     });
