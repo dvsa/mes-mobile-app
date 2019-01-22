@@ -428,17 +428,6 @@
         }
       }
     },
-    "testSlots": {
-      "description": "A collection of test slots, possibly populated with booking data",
-      "type": "array",
-      "items": {
-        "properties": {
-          "testSlot": {
-            "$ref": "#/definitions/testSlot"
-          }
-        }
-      }
-    },
     "personalCommitments": {
       "$id": "#/properties/personalCommitments",
       "description": "A collection of the examiner's personal commitment(s)",
@@ -447,18 +436,6 @@
         "properties": {
           "personalCommitment": {
             "$ref": "#/definitions/personalCommitment"
-          }
-        }
-      }
-    },
-    "nonTestActivities": {
-      "$id": "#/properties/nonTestActivities",
-      "description": "A collection of the examiner's non test activity(s) (associated with a test slot duration)",
-      "type": "array",
-      "items": {
-        "properties": {
-          "nonTestActivity": {
-            "$ref": "#/definitions/nonTestActivity"
           }
         }
       }
@@ -514,7 +491,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "https://example.com/arrays.schema.json",
   "title": "Examiner Work Schedule",
-  "version": "{{VERSION_PLACEHOLDER}}",
   "type": "object",
   "description": "JSON Schema definition for Examiner Work Schedule",
   "properties": {
@@ -522,13 +498,21 @@
       "$ref": "#/definitions/examiner"
     },
     "testSlots": {
-      "$ref": "#/definitions/testSlots"
+      "description": "A collection of test slots, possibly populated with booking data",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/testSlot"
+      }
     },
     "personalCommitments": {
       "$ref": "#/definitions/personalCommitments"
     },
     "nonTestActivities": {
-      "$ref": "#/definitions/nonTestActivities"
+      "description": "A collection of the examiner's non test activity(s) (associated with a test slot duration)",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/nonTestActivity"
+      }
     },
     "advanceTestSlots": {
       "$ref": "#/definitions/advanceTestSlots"

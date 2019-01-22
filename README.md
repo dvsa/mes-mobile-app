@@ -15,7 +15,6 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 
 ### Get started
 
-- Set up your [environment variables](https://wiki.i-env.net/display/MES/Application+environment+variables)
 - `npm install`
 - `npm run config:dev` (if using the dev config)
 - `ionic serve`
@@ -75,3 +74,20 @@ To run against the simulator
 - Run Appium `appium`
 - In another tab execute the simulator based testsuite `npm run test:e2e-simulator-bdd`
 - Once complete generate the report `npm run test:generate-report`
+
+### Building & signing the app using Fastlane
+N.B. this assumes you have Fastlane installed along with the required DVSA distribution certificate & provisioning profile. This is done via the Mac OS Jenkins slave so these steps are only for information only. 
+
+#### Unlock Keychain
+The login keychain needs to be unlocked if this is running as part of a CI build:
+
+```
+security unlock-keychain -p "$PASSWORD" /Users/$USERNAME/Library/Keychains/$KEYCHAIN_NAME
+security set-keychain-settings -t 1900 -l /Users/$USERNAME/Library/Keychains/$KEYCHAIN_NAME
+```
+
+#### Build
+
+ Run `fastlane ios build` 
+ 
+ The output of this will be a signed .IPA package stored in the `build` directory.

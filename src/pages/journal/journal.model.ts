@@ -12,6 +12,7 @@ export type Slot = {
 export type JournalModel = {
   isLoading: boolean,
   lastRefreshed: Date,
-  slots: SlotItem[],
+  slots: {[k: string]: SlotItem[]},
   error?: MesError,
+  selectedDate: string,
 }

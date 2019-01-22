@@ -1,5 +1,6 @@
 import { initialState, journalReducer } from '../journal.reducer';
-import { LoadJournal, LoadJournalSuccess } from '../journal.actions';
+import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError } from '../journal.actions';
+import { SlotItem } from '../../../providers/slot-selector/slot-item';
 
 describe('Journal Reducer', () => {
 
@@ -26,10 +27,13 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state and populate slots', () => {
-      const actionPayload = [{
-        hasSlotChanged: false,
-        slotData: {},
-      }];
+      const actionPayload = {
+        '2019-01-17': [{
+          hasSlotChanged: false,
+          slotData: {},
+          }
+        ],
+      };
       const action = new LoadJournalSuccess(actionPayload);
       const result = journalReducer(initialState, action);
 
@@ -37,11 +41,32 @@ describe('Journal Reducer', () => {
         ...initialState,
         isLoading: false,
         lastRefreshed: expect.any(Date),
-        slots: [{
-          hasSlotChanged: false,
-          slotData: {},
-        }]
+        slots: {
+          '2019-01-17': [{
+            hasSlotChanged: false,
+            slotData: {},
+            }
+          ],
+        }
       });
+    });
+  });
+
+  describe('[JournalPage] Unload Journal', () => {
+    it('should clear the journal slots', () => {
+      const stateWithJournals = { ...initialState, slots: { '2019-01-21': [new SlotItem({}, false)] } }
+      const action = new UnloadJournal();
+      const result = journalReducer(stateWithJournals, action);
+      expect(result.slots).toEqual({});
+    });
+  });
+
+  describe('[JournalPage] Unset error', () => {
+    it('should remove any journal error in the state', () => {
+      const stateWithError = { ...initialState, error: { message: '', status: 0, statusText: '' }  };
+      const action = new UnsetError();
+      const result = journalReducer(stateWithError, action);
+      expect(result.error).toBeUndefined();
     });
   });
 

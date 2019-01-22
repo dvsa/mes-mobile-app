@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { JournalProvider } from '../../../providers/journal/journal'
 import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
+import { SlotProvider } from '../../../providers/slot/slot';
 import { StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
 
@@ -40,7 +41,8 @@ describe('Journal Effects', () => {
           provide: Actions,
           useFactory: () => new TestActions(),
         },
-        { provide: JournalProvider, useClass: JournalProviderMock }
+        { provide: JournalProvider, useClass: JournalProviderMock },
+        SlotProvider,
       ]
     });
 
