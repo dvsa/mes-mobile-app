@@ -5,23 +5,20 @@
 <ion-content>
   <div class="login-grid">
     <div *ngIf="hasUserLoggedOut">
-      <h2> You have now logged out of the MES App</h2>
-      <h5> You need to <span class="link" (click)="login()">login</span> to continue</h5>
+      <h2> You've signed out</h2>
+      <h5> <span class="link" (click)="login()">Sign in</span> again.</h5>
     </div>
     <div *ngIf="isInternetConnectionError()">
-      <h2>You're not connected to the internet</h2>
-      <h5>
-        Check your <span class="link" (click)="openWifiSetting()">network settings</span> and
-        <span class="link" (click)="login()">try again</span>
-      </h5>
+      <h2>You're offline</h2>
+      <h5>Close the app, turn on mobile data or wifi, and then try again.</h5>
     </div>
     <div *ngIf="isUserCancelledError()">
-      <h2>User Cancelled Error Placeholder</h2>
-      <h5>User Cancelled Error Placeholder</h5>
+      <h2>You've cancelled sign in</h2>
+      <h5><span class="link">Sign in</span> to continue.</h5>
     </div>
     <div *ngIf="isUnknownError()">
-        <h2>Unknown Error Placeholder</h2>
-        <h5>Unkown Error Placeholder</h5>
+        <h2>Sorry, something went wrong</h2>
+        <h5>Please try again later.</h5>
     </div>
   </div>
 </ion-content>

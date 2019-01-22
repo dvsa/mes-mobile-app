@@ -9,8 +9,6 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthenticationError } from '../../../providers/authentication/authentication.constants';
 import { By } from '@angular/platform-browser';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings';
-import { OpenNativeSettingsMock } from '@ionic-native-mocks/open-native-settings';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -18,7 +16,6 @@ describe('LoginPage', () => {
   let navController: NavController;
   let splashScreen: SplashScreen;
   let authenticationProvider: AuthenticationProvider;
-  let openNativeSettings: OpenNativeSettings;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,9 +27,7 @@ describe('LoginPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
-        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: OpenNativeSettings, useClass: OpenNativeSettingsMock},
-      ]
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock }      ]
     })
       .compileComponents()
       .then(() => {
@@ -41,7 +36,6 @@ describe('LoginPage', () => {
         navController = TestBed.get(NavController);
         splashScreen = TestBed.get(SplashScreen);
         authenticationProvider = TestBed.get(AuthenticationProvider);
-        openNativeSettings = TestBed.get(OpenNativeSettings);
       });
   }));
 
@@ -108,7 +102,7 @@ describe('LoginPage', () => {
     });
 
     it('should return true for isUnknownError when criteria is met', () => {
-      component.authenticationError = undefined;
+      component.authenticationError = AuthenticationError.NO_RESPONSE;
       component.hasUserLoggedOut = false;
 
       expect(component.isUnknownError()).toBeTruthy();
@@ -125,12 +119,6 @@ describe('LoginPage', () => {
 
       expect(component.isUnknownError()).toBeFalsy();
     });
-
-    it('should request the wifi network settings to be opened ', () => {
-      openNativeSettings.open = jest.fn();
-      component.openWifiSetting();
-      expect(openNativeSettings.open).toBeCalledWith('wifi');
-    });
   });
 
   describe('DOM', () => {
@@ -140,7 +128,7 @@ describe('LoginPage', () => {
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
       expect(tags).toHaveLength(1);
-      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('logged out');
+      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('signed out');
     });
 
     it('should show the correct div if user has an internet connection error', () => {
@@ -150,7 +138,7 @@ describe('LoginPage', () => {
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
       expect(tags).toHaveLength(1);
-      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('connected to the internet');
+      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('offline');
     });
 
     it('should show the correct div if user has an user cancelled error', () => {
@@ -160,17 +148,17 @@ describe('LoginPage', () => {
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
       expect(tags).toHaveLength(1);
-      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('User Cancelled Error Placeholder');
+      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('cancelled sign in');
     });
 
     it('should show the correct div if user has an internet connection error', () => {
       component.hasUserLoggedOut = false;
-      component.authenticationError = undefined;
+      component.authenticationError = AuthenticationError.NO_RESPONSE;
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
       expect(tags).toHaveLength(1);
-      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('Unknown Error Placeholder');
+      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('Sorry, something went wrong');
     });
 
   });

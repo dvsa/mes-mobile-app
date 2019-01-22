@@ -5,7 +5,6 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 @IonicPage()
 @Component({
@@ -22,8 +21,7 @@ export class LoginPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public splashScreen: SplashScreen,
-    private openNativeSettings: OpenNativeSettings,
+    public splashScreen: SplashScreen
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -33,6 +31,11 @@ export class LoginPage extends BasePageComponent {
     // Trigger Authentication if this isn't a logout and is an ios device
     if (!this.hasUserLoggedOut && this.isIos()) {
       this.login();
+    }
+
+    if(!this.isIos()) {
+        this.navController.setRoot('JournalPage');
+        this.splashScreen.hide();
     }
   }
 
@@ -56,10 +59,10 @@ export class LoginPage extends BasePageComponent {
   }
 
   isUnknownError = (): boolean => {
-    return !this.hasUserLoggedOut && this.authenticationError === undefined;
+    return !this.hasUserLoggedOut &&
+      this.authenticationError &&
+      this.authenticationError.valueOf() !== AuthenticationError.USER_CANCELLED &&
+      this.authenticationError.valueOf() !== AuthenticationError.NO_INTERNET;
   }
 
-  openWifiSetting = (): void => {
-    this.openNativeSettings.open('wifi');
-  }
 }
