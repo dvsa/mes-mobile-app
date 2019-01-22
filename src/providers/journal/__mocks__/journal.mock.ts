@@ -23,7 +23,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1001,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -82,7 +82,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1002,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -135,7 +135,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1003,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -195,7 +195,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1004,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -247,7 +247,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1005,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -300,7 +300,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1006,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -354,7 +354,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1007,
-            start: moment().format(),
+            start: moment().format('YYYY-MM-DDTHH:mm:ssZ'),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
