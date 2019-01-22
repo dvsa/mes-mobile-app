@@ -11,7 +11,7 @@ function updateLocalJournal() {
   const path = 'mock/local-journal.json';
 
   let data = getData(path);
-  data.testSlot = updateTestSlots(data.testSlot);
+  data.testSlots = updateTestSlots(data.testSlots);
   data.nonTestActivities = updateTestSlots(data.nonTestActivities);
   data.personalCommitment = updatePersonalCommitments(data.personalCommitment);
   data.advanceTestSlot = updateAdvanceTestSlots(data.advanceTestSlot);
