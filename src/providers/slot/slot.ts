@@ -13,7 +13,7 @@ export class SlotProvider {
 
   detectSlotChanges(slots: {[k: string]: SlotItem[]}, newJournal: ExaminerWorkSchedule): SlotItem[] {
     const newSlots = flatten([
-      newJournal.testSlot || [],
+      newJournal.testSlots || [],
       newJournal.nonTestActivities || [],
     ]);
 

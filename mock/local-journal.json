@@ -12,7 +12,7 @@
     "centreName" : "Example Test Centre",
     "costCode" : "EXTC1"
   },
-  "testSlot" : [
+  "testSlots" : [
     {
       "slotDetail" : {
         "slotId" : 8165,
