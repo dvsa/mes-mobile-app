@@ -1,13 +1,30 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast, Refresher } from 'ionic-angular';
-import { Store, select } from '@ngrx/store';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  IonicPage,
+  Loading,
+  LoadingController,
+  NavController,
+  NavParams,
+  Platform,
+  Refresher,
+  Toast,
+  ToastController
+} from 'ionic-angular';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getSlots, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
+import {
+  getError,
+  getIsLoading,
+  getIsPolling,
+  getLastRefreshed,
+  getLastRefreshedTime,
+  getSlots
+} from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -15,11 +32,13 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { ConnectionStatus, NetworkStateProvider } from '../../providers/network-state/network-state';
 
 interface JournalPageState {
   slots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
+  isPolling$: Observable<boolean>,
   lastRefreshedTime$: Observable<string>,
 }
 
@@ -43,6 +62,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
 
+  networkStateSubscription$: Subscription;
+
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -52,7 +73,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public toastController: ToastController,
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private networkState: NetworkStateProvider
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -73,12 +95,25 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getJournalState),
         map(getIsLoading)
       ),
+      isPolling$: this.store$.pipe(
+        select(getJournalState),
+        map(getIsPolling)
+      ),
       lastRefreshedTime$: this.store$.pipe(
         select(getJournalState),
         map(getLastRefreshed),
-        map(getLastRefreshedTime),
-      ),
+        map(getLastRefreshedTime)
+      )
     };
+
+    this.networkStateSubscription$ = this.networkState.onNetworkChange().subscribe( (networkState: ConnectionStatus) => {
+      console.log('network state is ', networkState)
+      if (this.networkState.getNetworkState() === ConnectionStatus.OFFLINE){
+        this.store$.dispatch(new journalActions.CancelJournalPoll());
+      } else {
+        this.store$.dispatch(new journalActions.LoadJournalPolled());
+      }
+    });
 
     const { slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
@@ -86,23 +121,25 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       slots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingUI)),
+      isLoading$.pipe(map(this.handleLoadingUI))
     );
     this.subscription = merged$.subscribe(this.createSlots);
+
   }
 
   ngOnDestroy(): void {
     // Using .merge helps with unsubscribing
     this.subscription.unsubscribe();
+    this.networkStateSubscription$.unsubscribe();
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     super.ionViewWillEnter();
     this.loadJournal();
     return true;
   }
 
-  ionViewDidLeave(){
+  ionViewDidLeave() {
     this.store$.dispatch(new journalActions.CancelJournalPoll());
   }
 
@@ -124,6 +161,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   showError = (error: MesError): void => {
+    if (this.pageState.isPolling$) return;
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
@@ -142,7 +180,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
     }
-  }
+  };
 
   private createLoadingSpinner = () => {
     this.loadingSpinner = this.loadingController.create({
