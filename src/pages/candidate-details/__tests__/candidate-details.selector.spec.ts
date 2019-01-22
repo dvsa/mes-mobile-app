@@ -89,7 +89,7 @@ describe('Candidate Details Selector', () => {
     it('returns true if the specialNeeds and previousCancellation are empty', () => {
       const slot = {
         booking: {
-          candidate: {
+          application: {
             specialNeeds: '',
           },
           previousCancellation: [],
@@ -104,7 +104,7 @@ describe('Candidate Details Selector', () => {
     it('returns false if the specialNeeds is provided', () => {
       const slot = {
         booking: {
-          candidate: {
+          application: {
             specialNeeds: 'there are some special needs',
           },
           previousCancellation: [],
@@ -119,7 +119,7 @@ describe('Candidate Details Selector', () => {
     it('returns false if the previousCancellation is not empty', () => {
       const slot = {
         booking: {
-          candidate: {
+          application: {
             specialNeeds: '',
           },
           previousCancellation: [ { initiator: 'one' } ],
