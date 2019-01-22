@@ -679,7 +679,7 @@
           "meetingPlace" : "",
           "progressiveAccess" : false,
           "specialNeeds" : "",
-          "entitlementCheck" : false,
+          "entitlementCheck" : true,
           "testCategory" : "D",
           "vehicleGearbox" : "Automatic"
         }
