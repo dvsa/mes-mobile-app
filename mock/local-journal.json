@@ -1072,7 +1072,7 @@
     {
       "slotDetail": {
         "slotId": 3696,
-        "start": "Invalid date",
+        "start": "2019-01-25T08:00:03+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1120,7 +1120,7 @@
     {
       "slotDetail": {
         "slotId": 3385,
-        "start": "2019-01-24T08:59:43+00:00",
+        "start": "2019-01-25T08:59:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1168,7 +1168,7 @@
     {
       "slotDetail": {
         "slotId": 1338,
-        "start": "2019-01-24T09:55:43+00:00",
+        "start": "2019-01-25T09:55:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1216,7 +1216,7 @@
     {
       "slotDetail": {
         "slotId": 5956,
-        "start": "2019-01-24T11:00:43+00:00",
+        "start": "2019-01-25T11:00:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1264,7 +1264,7 @@
     {
       "slotDetail": {
         "slotId": 6008,
-        "start": "2019-01-24T13:00:43+00:00",
+        "start": "2019-01-25T13:00:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1312,7 +1312,7 @@
     {
       "slotDetail": {
         "slotId": 6659,
-        "start": "2019-01-24T13:59:43+00:00",
+        "start": "2019-01-25T13:59:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1360,7 +1360,7 @@
     {
       "slotDetail": {
         "slotId": 9260,
-        "start": "2019-01-25T11:25:10+00:00",
+        "start": "2019-01-26T11:25:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1408,7 +1408,7 @@
     {
       "slotDetail": {
         "slotId": 1681,
-        "start": "2019-01-25T13:00:10+00:00",
+        "start": "2019-01-26T13:00:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1456,7 +1456,7 @@
     {
       "slotDetail": {
         "slotId": 4558,
-        "start": "2019-01-25T13:55:10+00:00",
+        "start": "2019-01-26T13:55:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1504,7 +1504,7 @@
     {
       "slotDetail": {
         "slotId": 7201,
-        "start": "2019-01-25T14:39:10+00:00",
+        "start": "2019-01-26T14:39:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1552,7 +1552,7 @@
     {
       "slotDetail": {
         "slotId": 5841,
-        "start": "2019-01-25T15:15:10+00:00",
+        "start": "2019-01-26T15:15:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1600,7 +1600,7 @@
     {
       "slotDetail": {
         "slotId": 1048,
-        "start": "2019-01-25T16:43:10+00:00",
+        "start": "2019-01-26T16:43:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1648,7 +1648,7 @@
     {
       "slotDetail": {
         "slotId": 6655,
-        "start": "2019-01-25T17:05:10+00:00",
+        "start": "2019-01-26T17:05:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1696,7 +1696,7 @@
     {
       "slotDetail": {
         "slotId": 1570,
-        "start": "2019-01-26T09:00:44+00:00",
+        "start": "2019-01-27T09:00:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1744,7 +1744,7 @@
     {
       "slotDetail": {
         "slotId": 5527,
-        "start": "2019-01-26T09:33:44+00:00",
+        "start": "2019-01-27T09:33:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1792,7 +1792,7 @@
     {
       "slotDetail": {
         "slotId": 2379,
-        "start": "2019-01-26T09:55:44+00:00",
+        "start": "2019-01-27T09:55:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1840,7 +1840,7 @@
     {
       "slotDetail": {
         "slotId": 4039,
-        "start": "2019-01-26T11:25:44+00:00",
+        "start": "2019-01-27T11:25:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1888,7 +1888,7 @@
     {
       "slotDetail": {
         "slotId": 8182,
-        "start": "2019-01-26T13:25:44+00:00",
+        "start": "2019-01-27T13:25:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1936,7 +1936,7 @@
     {
       "slotDetail": {
         "slotId": 6825,
-        "start": "2019-01-26T15:25:44+00:00",
+        "start": "2019-01-27T15:25:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1985,7 +1985,7 @@
   "personalCommitment": [
     {
       "commitmentId": 123400,
-      "startDate": "Invalid date",
+      "startDate": "2019-01-22",
       "startTime": "10:00:00+01:00",
       "endDate": "2019-01-21",
       "endTime": "11:00:00+01:00",
@@ -1994,7 +1994,7 @@
     },
     {
       "commitmentId": 123401,
-      "startDate": "Invalid date",
+      "startDate": "2019-01-20",
       "endDate": "2019-01-20",
       "activityCode": "081",
       "activityDescription": "Annual Leave"

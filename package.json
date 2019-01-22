@@ -34,7 +34,7 @@
     "config:production": "cp src/environment/environment.production.ts src/environment/environment.ts",
     "config:local": "cp src/environment/environment.local.ts src/environment/environment.ts",
     "copy-mock-data": "cp -r mock/ src/assets/mock/",
-    "update-mock-data": "ts-node bin/update-mock-data.ts"
+    "update-mock-data": "ts-node -P tsconfig.scripts.json bin/update-mock-data.ts"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",

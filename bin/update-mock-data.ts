@@ -124,7 +124,7 @@ function caculateNewProcessingDate( dateProcessing: moment.Moment, itemDate: mom
 
 function formatDate(startDate: string, startTime: String): string {
   if (startTime) {
-    return '${startDate}T${startTime}';
+    return startDate + 'T' + startTime;
   }
-  return '${startDate}T00:00:00+00:00';
+  return startDate + 'T00:00:00+00:00';
 }
