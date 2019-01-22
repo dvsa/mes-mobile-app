@@ -14,6 +14,7 @@ export class JournalProvider {
   ) {}
 
   getJournal(lastRefreshed: Date){
+    console.log('last refreshed', lastRefreshed)
     const staffNumber = this.authProvider.getEmployeeId();
     const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
     if (lastRefreshed === null) {

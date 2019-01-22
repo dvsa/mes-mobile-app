@@ -20,6 +20,8 @@ import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-sele
 import { MockedJournalModule } from '../__mocks__/journal.module.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-orientation.mock';
+import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -48,7 +50,8 @@ describe('JournalPage', () => {
         { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock}
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock},
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock }
       ]
     })
       .compileComponents()
@@ -56,6 +59,7 @@ describe('JournalPage', () => {
         fixture = TestBed.createComponent(JournalPage);
         component = fixture.componentInstance;
         component.subscription = new Subscription();
+        component.networkStateSubscription$ = new Subscription();
       });
   }));
 
