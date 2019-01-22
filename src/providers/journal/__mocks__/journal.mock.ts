@@ -1,11 +1,11 @@
+import { ExaminerWorkSchedule } from './../../../common/domain/DJournal';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
 
 export class JournalProviderMock {
 
-  public getJournal(): Observable<any> {
-    return of({
+  mockJournal: ExaminerWorkSchedule = {
       staffNumber: 12345,
       examinerName: {
         title: 'Mr',
@@ -23,7 +23,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1001,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -82,7 +82,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1002,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -135,7 +135,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1003,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -195,7 +195,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1004,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -247,7 +247,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1005,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -300,7 +300,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1006,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -354,7 +354,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1007,
-            start: moment(),
+            start: moment().format(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -405,7 +405,10 @@ export class JournalProviderMock {
         },
       ],
       nonTestActivities: []
-    });
+    }
+
+  public getJournal(): Observable<ExaminerWorkSchedule> {
+    return of(this.mockJournal);
   }
 
 }
