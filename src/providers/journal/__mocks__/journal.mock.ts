@@ -19,7 +19,7 @@ export class JournalProviderMock {
         centreName: 'Example Test Centre',
         costCode: 'EXTC1',
       },
-      testSlot: [
+      testSlots: [
         {
           slotDetail: {
             slotId: 1001,

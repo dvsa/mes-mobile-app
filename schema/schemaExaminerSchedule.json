@@ -38,7 +38,7 @@
         }
       }
     },
-    "testSlot": {
+    "testSlots": {
       "description": "Details of the test slot",
       "type": "object",
       "properties": {
