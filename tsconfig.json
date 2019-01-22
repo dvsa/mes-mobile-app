@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "lib": ["dom", "es2017"],
     "types": ["jest", "node"],
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5",
