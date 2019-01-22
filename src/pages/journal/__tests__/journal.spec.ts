@@ -36,7 +36,6 @@ describe('JournalPage', () => {
         StoreModule.forRoot({
           journal: journalReducer
         }),
-        // EffectsModule.forRoot([JournalEffects]),
         MockedJournalModule
       ],
       providers: [
@@ -46,8 +45,6 @@ describe('JournalPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        // { provide: JournalProvider, useClass: JournalProviderMock },
-        // SlotProvider,
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
         { provide: ScreenOrientation, useClass: ScreenOrientationMock},
@@ -97,14 +94,14 @@ describe('JournalPage', () => {
 
     beforeEach(() => {
       componentEl = fixture.debugElement;
+
+      // Manually dispatching an action which loads slots to the store
+      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
     });
 
     it('there should be one slot for every journal entry', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
-
-      // Manually dispatching an action which loads slots to the store
-      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
 
       fixture.detectChanges();
 
