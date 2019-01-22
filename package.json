@@ -14,7 +14,7 @@
     "lint:fix": "tslint --fix -p ./",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "serve:local": "run-s copy-mock-data config:local ionic:serve",
+    "serve:local": "run-s update-mock-data copy-mock-data config:local ionic:serve",
     "ionic:deploy": "git push ionic master",
     "format:fix": "pretty-quick --staged",
     "format:all": "npx prettier --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
@@ -33,7 +33,8 @@
     "config:staging": "cp src/environment/environment.staging.ts src/environment/environment.ts",
     "config:production": "cp src/environment/environment.production.ts src/environment/environment.ts",
     "config:local": "cp src/environment/environment.local.ts src/environment/environment.ts",
-    "copy-mock-data": "cp -r mock/ src/assets/mock/"
+    "copy-mock-data": "cp -r mock/ src/assets/mock/",
+    "update-mock-data": "ts-node -P tsconfig.scripts.json bin/update-mock-data.ts"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -72,8 +73,8 @@
     "event-stream": "3.3.4",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
-    "moment": "^2.23.0",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.23.0",
     "rxjs": "^5.5.11",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26"
