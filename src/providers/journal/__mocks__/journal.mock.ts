@@ -1,5 +1,6 @@
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
+import * as moment from 'moment';
 
 export class JournalProviderMock {
 
@@ -22,7 +23,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1001,
-            start: '2019-01-21T09:07:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -81,7 +82,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1002,
-            start: '2019-01-21T10:04:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -134,7 +135,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1003,
-            start: '2019-01-21T11:01:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -194,7 +195,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1004,
-            start: '2019-01-21T13:00:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -246,7 +247,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1005,
-            start: '2019-01-21T13:57:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -299,7 +300,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1006,
-            start: '2019-01-21T13:54:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
@@ -353,7 +354,7 @@ export class JournalProviderMock {
         {
           slotDetail: {
             slotId: 1007,
-            start: '2019-01-21T14:51:00+00:00',
+            start: moment(),
             duration: 57,
           },
           vehicleSlotType: 'B57mins',
