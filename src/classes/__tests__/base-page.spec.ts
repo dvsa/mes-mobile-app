@@ -77,6 +77,9 @@ describe('Base Page', () => {
 
       expect(authenticationProvider.logout).toBeCalledTimes(1)
       expect(navController.setRoot).toBeCalledTimes(1);
+      expect(navController.setRoot).toBeCalledWith('LoginPage', {
+        hasLoggedOut: true
+      });
     });
     it('should not try to logout when platform is not ios', () => {
       platform.is = jest.fn().mockReturnValue(false);
