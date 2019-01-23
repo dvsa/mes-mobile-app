@@ -13,7 +13,7 @@ export const getCandidateName = (slot: any): string => `${slot.booking.candidate
 
 export const getTime = (slot: any): string => slot.slotDetail.start;
 
-export const isCandidateCommentsEmpty = (slot: any): boolean => isEmpty(slot.booking.candidate.specialNeeds) && isEmpty(slot.booking.previousCancellation);
+export const isCandidateCommentsEmpty = (slot: any): boolean => isEmpty(slot.booking.application.specialNeeds) && isEmpty(slot.booking.previousCancellation);
 
 export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.mobileTelephone)) return candidate.mobileTelephone;
