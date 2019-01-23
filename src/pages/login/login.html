@@ -14,7 +14,7 @@
     </div>
     <div *ngIf="isUserCancelledError()">
       <h2>You've cancelled sign in</h2>
-      <h5><span class="link">Sign in</span> to continue.</h5>
+      <h5><span class="link" (click)="login()">Sign in</span> to continue.</h5>
     </div>
     <div *ngIf="isUnknownError()">
         <h2>Sorry, something went wrong</h2>
