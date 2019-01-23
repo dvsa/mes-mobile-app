@@ -1982,7 +1982,7 @@
       }
     }
   ],
-  "personalCommitment": [
+  "personalCommitments": [
     {
       "commitmentId": 123400,
       "startDate": "2019-01-23",
@@ -2044,7 +2044,7 @@
       }
     }
   ],
-  "advanceTestSlot": [
+  "advanceTestSlots": [
     {
       "slotId": 1300,
       "start": "2019-01-23T06:00:00+00:00",
