@@ -3,7 +3,7 @@ import { groupBy } from 'lodash';
 
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 
-import * as localJournalJson from '../../../assets/mock/local-journal.json';
+const localJournalJson = require('../../../../mock/local-journal.json');
 
 const slotItems: SlotItem[] = localJournalJson.testSlots.map(testSlot => {
   return {
