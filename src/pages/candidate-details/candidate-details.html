@@ -11,8 +11,8 @@
 
 <ion-content padding>
   <h1>
-    {{ pageState.name$ | async }}
-    <span class="test-start-time">
+    <span id="test-candidate-details-name">{{ pageState.name$ | async }}</span>
+    <span id="test-candidate-details-time" class="test-start-time">
       {{ pageState.time$ | async | date: "HH:mm" }}
     </span>
   </h1>
@@ -28,7 +28,7 @@
             <label>Test category</label>
           </ion-col>
           <ion-col col-8>
-            <span class="mes-data">{{(pageState.details$ | async).testCategory.text}}</span>
+            <span id="test-candidate-details-test-category" class="mes-data">{{(pageState.details$ | async).testCategory.text}}</span>
             <img class="test-category-icon" src={{getCategoryIcon()}} />
           </ion-col>
         </ion-row>
