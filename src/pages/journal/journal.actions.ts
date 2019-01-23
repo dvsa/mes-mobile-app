@@ -7,7 +7,7 @@ export const LOAD_JOURNAL_SUCCESS = '[JournalPage] Load Journal Success';
 export const LOAD_JOURNAL_FAILURE = '[JournalPage] Load Journal Failure';
 export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal'
 export const UNSET_ERROR = '[JournalPage] Unset error';
-
+export const CLEAR_CHANGED_SLOT = '[JournalPage] Clear Changed Slot';
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
 }
@@ -32,10 +32,16 @@ export class UnsetError implements Action {
   readonly type = UNSET_ERROR;
 }
 
+export class ClearChangedSlot implements Action {
+  readonly type = CLEAR_CHANGED_SLOT;
+  constructor(public slotId: number) {}
+}
+
 export type Types = 
   | LoadJournal
   | LoadJournalSuccess
   | LoadJournalFailure
   | UnloadJournal
-  | UnsetError;
+  | UnsetError
+  | ClearChangedSlot;
 

@@ -41,6 +41,25 @@ export function journalReducer(state = initialState, action: journalActions.Type
       return {
         ...stateWithoutError,
       }
+    case journalActions.CLEAR_CHANGED_SLOT:
+      const slots = state.slots[state.selectedDate].map( (slot) => {
+       if ( slot.slotData.slotDetail.slotId === action.slotId) {
+         return {
+           ...slot,
+           hasSlotChanged: false,
+         }
+       }
+       return slot;
+     });
+     
+
+     return {
+       ...state,
+       slots: { 
+         ...state.slots,
+         [state.selectedDate]: slots
+        },
+     };
     default: 
       return state;
   }
