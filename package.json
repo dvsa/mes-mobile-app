@@ -19,7 +19,7 @@
     "format:fix": "pretty-quick --staged",
     "format:all": "npx prettier --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "prepush": "run-s format:fix lint test gitSecrets scanRepo",
-    "test": "jest",
+    "test": "npm run update-mock-data && jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand",
     "test:e2e-browser-bdd": "protractor e2e-browser-bdd.conf.js",
