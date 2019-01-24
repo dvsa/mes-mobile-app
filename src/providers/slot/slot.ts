@@ -28,6 +28,7 @@ export class SlotProvider {
   
       let differenceFound = false;
       if (replacedJournalSlot) {
+        differenceFound = replacedJournalSlot.hasSlotChanged;
         const differenceToSlot = DeepDiff(replacedJournalSlot.slotData, newSlot);
         if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
           differenceFound = true;

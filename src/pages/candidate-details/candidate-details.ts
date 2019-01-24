@@ -13,6 +13,7 @@ import { TestCategory, testCategoryIcons } from '../../common/test-category';
 import { getJournalState } from '../journal/journal.reducer';
 import { getSlotById, getSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
 import { Details } from './candidate-details.model';
+import { ClearChangedSlot } from '../journal/journal.actions';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>,
@@ -46,6 +47,9 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   ngOnInit(): void {
+    
+    this.store$.dispatch(new ClearChangedSlot(this.slotId));
+
     this.pageState = {
       name$: this.store$.pipe(
         select(getJournalState),

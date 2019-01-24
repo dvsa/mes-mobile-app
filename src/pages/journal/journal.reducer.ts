@@ -3,6 +3,7 @@ import { createFeatureSelector } from '@ngrx/store';
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 import * as moment from 'moment';
+import { has } from 'lodash';
 
 export const initialState: JournalModel = {
   isLoading: false,
@@ -41,6 +42,27 @@ export function journalReducer(state = initialState, action: journalActions.Type
       return {
         ...stateWithoutError,
       }
+    case journalActions.CLEAR_CHANGED_SLOT:
+      const slots = state.slots[state.selectedDate].map((slot) => {
+       if (has(slot.slotData, 'slotDetail') &&
+           has(slot.slotData.slotDetail, 'slotId') && 
+           slot.slotData.slotDetail.slotId === action.slotId) {
+         return {
+           ...slot,
+           hasSlotChanged: false,
+         }
+       }
+       return slot;
+     });
+     
+
+     return {
+       ...state,
+       slots: { 
+         ...state.slots,
+         [state.selectedDate]: slots
+        },
+     };
     default: 
       return state;
   }
