@@ -1,6 +1,7 @@
 import { initialState, journalReducer } from '../journal.reducer';
-import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError } from '../journal.actions';
+import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError, ClearChangedSlot } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
+import * as moment from 'moment';
 
 describe('Journal Reducer', () => {
 
@@ -70,4 +71,14 @@ describe('Journal Reducer', () => {
     });
   });
 
+  describe('[JournalPage] Clear Changed Slot', () => {
+    it('should clear hasChangedState flag on specified slot', () => {
+        const slotDate = moment().format('YYYY-MM-DD');
+        const stateWithChangedSlot = { ...initialState, slots: {  [`${slotDate}`] : [new SlotItem({ slotDetail: {slotId:1234}}, true)] } };
+        const action = new ClearChangedSlot(1234);
+        const result = journalReducer(stateWithChangedSlot, action);
+        expect(result.slots[slotDate][0].hasSlotChanged).toBeFalsy();
+
+    })
+  });
 });
