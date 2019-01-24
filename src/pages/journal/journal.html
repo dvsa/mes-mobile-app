@@ -25,6 +25,10 @@
       pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
+  <div>
+    <button ion-button class="mes-primary-button" (click)="onPreviousDayClick()">Previous day</button>
+    <button ion-button class="mes-primary-button" (click)="onNextDayClick()">Next day</button>
+  </div>
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>

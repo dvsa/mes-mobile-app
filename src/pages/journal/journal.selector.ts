@@ -12,3 +12,5 @@ export const getIsLoading = (journal: JournalModel) => journal.isLoading;
 export const getLastRefreshed = (journal: JournalModel) => journal.lastRefreshed;
 
 export const getLastRefreshedTime = (date: Date) => isNil(date) ? '--:--' : moment(date).format('hh:mma');
+
+export const getSelectedDay = (journal: JournalModel) => journal.selectedDate;

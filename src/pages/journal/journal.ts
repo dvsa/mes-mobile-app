@@ -102,6 +102,14 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.createLoadingSpinner();
   }
 
+  onPreviousDayClick() {
+    this.store$.dispatch(new journalActions.SelectPreviousDay());
+  }
+
+  onNextDayClick() {
+    this.store$.dispatch(new journalActions.SelectNextDay());
+  }
+
   handleLoadingUI = (isLoading: boolean): void => {
     if (!isLoading) {
       this.pageRefresher ? this.pageRefresher.complete() : null;
@@ -142,7 +150,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createToast = (errorMessage: string) => {
-    // This is just a temporary way to display the error
+    // TODO: This is just a temporary way to display the error. Initiate a conversation with the team about how to handle errors.
 
     this.toast = this.toastController.create({
       message: errorMessage,
