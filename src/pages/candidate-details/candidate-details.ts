@@ -48,7 +48,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
 
   ngOnInit(): void {
     
-    this.store$.dispatch( new ClearChangedSlot(this.slotId));
+    this.store$.dispatch(new ClearChangedSlot(this.slotId));
 
     this.pageState = {
       name$: this.store$.pipe(
