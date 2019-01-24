@@ -13,6 +13,7 @@ import { journalReducer } from '../../journal/journal.reducer';
 import { LoadJournalSuccess } from '../../journal/journal.actions';
 import journalSlotsDataMock from '../../journal/__mocks__/journal-slots-data.mock';
 import { StoreModel } from '../../../common/store.model';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -41,6 +42,7 @@ describe('CandidateDetailsPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(CandidateDetailsPage);
         component = fixture.componentInstance;
+        component.subscription = new Subscription();
 
         // this slot id comes from the local-journal.json file
         component.slotId = 8165;
@@ -67,25 +69,27 @@ describe('CandidateDetailsPage', () => {
       store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
     });
 
-    describe('heading with name and time', () => {
+    // describe('heading with name and time', () => {
       it('should display candidate name', () => {
-        const name  = componentEl.query(By.css('#test-candidate-details-name'));
-
-        expect(name).toBe('Captain Sims Montgomery');
+        const name: HTMLElement = fixture.debugElement.query(By.css('#test-candidate-details-name')).nativeElement;
+        fixture.detectChanges();
+        expect(name.textContent).toContain('Capitan Sims Montgomery');
       });
 
-      it('should diplay test activity start time', () => {
-
-      });
+      // it('should diplay test activity start time', () => {
+      //   const name: HTMLElement = fixture.debugElement.query(By.css('#test-candidate-details-time')).nativeElement;
+      //   fixture.detectChanges();
+      //   expect(name.textContent).toContain('time');
+      // });
       
-    });
+    // });
 
-    describe('candidate details', () => {
+    // describe('candidate details', () => {
 
-    });
+    // });
 
-    describe('candidate contacts', () => {
+    // describe('candidate contacts', () => {
 
-    });
+    // });
   });
 });
