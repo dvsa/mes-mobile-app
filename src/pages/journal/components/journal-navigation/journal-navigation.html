@@ -1,10 +1,10 @@
-<div>
+<div style="margin: 24px 12px;">
   <span (click)="onPreviousDayClick()">
     <ion-icon name="arrow-back"></ion-icon>
     <span>Previous day</span>
   </span>
 
-  <span>{{ pageState.selectedDate$ | async }}</span>
+  <h1 style="text-align: center;">{{ pageState.selectedDate$ | async }}</h1>
 
   <span (click)="onNextDayClick()" style="float: right;">
     <span>Next day</span>
