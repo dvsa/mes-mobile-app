@@ -7,7 +7,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getSlotsOnSelectedDate, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
+import { getSlotsOnselectedDay, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime, getSelectedDay } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -21,6 +21,7 @@ interface JournalPageState {
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
   lastRefreshedTime$: Observable<string>,
+  selectedDay$: Observable<string>,
 }
 
 @IonicPage()
@@ -64,7 +65,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.pageState = {
       slots$: this.store$.pipe(
         select(getJournalState),
-        map(getSlotsOnSelectedDate)
+        map(getSlotsOnselectedDay)
       ),
       error$: this.store$.pipe(
         select(getJournalState),
@@ -79,6 +80,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         map(getLastRefreshed),
         map(getLastRefreshedTime),
       ),
+      selectedDay$: this.store$.pipe(
+        select(getJournalState),
+        map(getSelectedDay)
+      )
     };
 
     const { slots$, error$, isLoading$ } = this.pageState;

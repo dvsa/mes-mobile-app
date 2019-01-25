@@ -9,7 +9,7 @@ export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
   slots: {},
-  selectedDate: moment().format('YYYY-MM-DD'),
+  selectedDay: moment().format('YYYY-MM-DD'),
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {
@@ -43,7 +43,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
         ...stateWithoutError,
       }
     case journalActions.CLEAR_CHANGED_SLOT:
-      const slots = state.slots[state.selectedDate].map((slot) => {
+      const slots = state.slots[state.selectedDay].map((slot) => {
         if (has(slot.slotData, 'slotDetail') &&
           has(slot.slotData.slotDetail, 'slotId') && 
           slot.slotData.slotDetail.slotId === action.slotId) {
@@ -54,17 +54,18 @@ export function journalReducer(state = initialState, action: journalActions.Type
         }
         return slot;
       });
+
       return {
         ...state,
         slots: { 
           ...state.slots,
-          [state.selectedDate]: slots
+          [state.selectedDay]: slots
         },
       };
     case journalActions.SET_SELECTED_DAY:
       return {
         ...state,
-        selectedDate: action.payload,
+        selectedDay: action.payload,
       };
     default: 
       return state;

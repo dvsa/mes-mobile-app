@@ -25,9 +25,18 @@
       pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
-  <div>
-    <button ion-button class="mes-primary-button" (click)="onPreviousDayClick()">Previous day</button>
-    <button ion-button class="mes-primary-button" (click)="onNextDayClick()">Next day</button>
+  <div style="margin: 24px 0;">
+    <span (click)="onPreviousDayClick()">
+      <ion-icon name="arrow-back"></ion-icon>
+      <span>Previous day</span>
+    </span>
+
+    <span>{{ pageState.selectedDay$ | async }}</span>
+
+    <span (click)="onNextDayClick()" style="float: right;">
+      <span>Next day</span>
+      <ion-icon name="arrow-forward"></ion-icon>
+    </span>
   </div>
   <ion-list>
     <ng-template #slotContainer></ng-template>

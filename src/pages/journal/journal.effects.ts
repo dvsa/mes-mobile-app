@@ -15,7 +15,7 @@ import { getJournalState } from './journal.reducer';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDay } from './journal.selector';
+import { getSelectedDay, getLastRefreshed, getSlots, getAvailableDays } from './journal.selector';
 
 @Injectable()
 export class JournalEffects {
@@ -29,18 +29,21 @@ export class JournalEffects {
   @Effect()
   journal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL),
-
-    // TODO: Instead of selecting the entire journal at once we should select the slots and the lastRefreshed with two withLatestFrom functions
     withLatestFrom(
       this.store$.pipe(
-        select(getJournalState)
+        select(getJournalState),
+        map(getLastRefreshed)
+      ),
+      this.store$.pipe(
+        select(getJournalState),
+        map(getSlots)
       )
     ),
-    switchMap(([action, journal]) => {
+    switchMap(([action, lastRefreshed, slots]) => {
       return this.journalProvider
-        .getJournal(journal.lastRefreshed)
+        .getJournal(lastRefreshed)
         .pipe(
-          map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(journal.slots, journalData)),
+          map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
           map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
           map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
@@ -55,17 +58,19 @@ export class JournalEffects {
       this.store$.pipe(
         select(getJournalState),
         map(getSelectedDay)
+      ),
+      this.store$.pipe(
+        select(getJournalState),
+        map(getAvailableDays)
       )
     ),
-    switchMap(([action, selectedDay]) => {
-      if (moment().format('YYYY-MM-DD') === selectedDay) {
-        console.log('can not back from Today');
+    switchMap(([action, selectedDay, availableDays]) => {
+      const previousDay = moment(selectedDay).add(-1, 'day').format('YYYY-MM-DD');
+      if (moment().format('YYYY-MM-DD') === selectedDay || !availableDays.includes(previousDay)) {
+        console.log('can not go to previous day');
         return of();
       }
-      const previousDay = moment(selectedDay).add(-1, 'day').format('YYYY-MM-DD');
-
       console.log('previous day is', previousDay);
-
       return of(new journalActions.SetSelectedDay(previousDay));
     }),
   )
@@ -77,15 +82,19 @@ export class JournalEffects {
       this.store$.pipe(
         select(getJournalState),
         map(getSelectedDay)
+      ),
+      this.store$.pipe(
+        select(getJournalState),
+        map(getAvailableDays)
       )
     ),
-    switchMap(([action, selectedDay]) => {
-      console.log('select next day effect');
-      
+    switchMap(([action, selectedDay, availableDays]) => {
       const nextDay = moment(selectedDay).add(1, 'day').format('YYYY-MM-DD');
-
+      if (!availableDays.includes(nextDay)) {
+        console.log('can not go to next day');
+        return of();
+      }
       console.log('next day is', nextDay);
-
       return of(new journalActions.SetSelectedDay(nextDay));
     }),
   )
