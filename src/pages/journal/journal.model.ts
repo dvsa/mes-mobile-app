@@ -14,5 +14,5 @@ export type JournalModel = {
   lastRefreshed: Date,
   slots: {[k: string]: SlotItem[]},
   error?: MesError,
-  selectedDay: string,
+  selectedDate: string,
 }

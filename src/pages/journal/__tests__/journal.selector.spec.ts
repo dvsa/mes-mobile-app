@@ -1,5 +1,5 @@
 import { JournalModel } from '../journal.model';
-import { getSlotsOnselectedDay, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime } from '../journal.selector';
+import { getSlotsOnselectedDate, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime } from '../journal.selector';
 import { MesError } from '../../../common/mes-error.model';
 
 describe('JournalSelector', () => {
@@ -20,7 +20,7 @@ describe('JournalSelector', () => {
       status: 404,
       statusText: 'HTTP 404'
     },
-    selectedDay: '2019-01-17',
+    selectedDate: '2019-01-17',
   };
 
   describe('getIsLoading', () => {
@@ -31,7 +31,7 @@ describe('JournalSelector', () => {
 
   describe('getSlots', () => {
     it('should select the test slots from the state', () => {
-      const selectedSlots = getSlotsOnselectedDay(state);
+      const selectedSlots = getSlotsOnselectedDate(state);
       expect(selectedSlots).toHaveLength(1);
       expect(selectedSlots[0].hasSlotChanged).toBe(false);
       expect(selectedSlots[0].slotData).toBeDefined();

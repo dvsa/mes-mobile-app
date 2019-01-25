@@ -28,7 +28,7 @@ describe('Candidate Details Selector', () => {
             },
           ],
         },
-        selectedDay: '2019-01-17',
+        selectedDate: '2019-01-17',
       };
 
       const result = getSlots(journal);

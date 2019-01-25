@@ -20,6 +20,7 @@ import { BasePageComponent } from '../../../classes/base-page';
 import { StoreModel } from '../../../common/store.model';
 
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
+import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -29,14 +30,14 @@ describe('JournalPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalPage],
+      declarations: [ JournalPage, JournalNavigationComponent ],
       imports: [
         IonicModule,
         AppModule,
         StoreModule.forRoot({
           journal: journalReducer
         }),
-        MockedJournalModule
+        MockedJournalModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

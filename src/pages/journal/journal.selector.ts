@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
-export const getSlotsOnselectedDay = (journal: JournalModel) => journal.slots[journal.selectedDay];
+export const getSlotsOnselectedDate = (journal: JournalModel) => journal.slots[journal.selectedDate];
 
 export const getAvailableDays = (journal: JournalModel) => Object.keys(journal.slots);
 
@@ -17,4 +17,4 @@ export const getLastRefreshed = (journal: JournalModel) => journal.lastRefreshed
 
 export const getLastRefreshedTime = (date: Date) => isNil(date) ? '--:--' : moment(date).format('hh:mma');
 
-export const getSelectedDay = (journal: JournalModel) => journal.selectedDay;
+export const getSelectedDate = (journal: JournalModel) => journal.selectedDate;

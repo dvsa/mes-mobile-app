@@ -8,6 +8,7 @@ import { TestOutcomeComponent } from '../components/test-outcome/test-outcome';
 import { TestCategoryComponent } from '../components/test-category/test-category';
 import { TestCategoryIconComponent } from '../../../components/test-category-icon/test-category-icon';
 import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-details';
+// import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 
 @NgModule({
   declarations: [
@@ -18,13 +19,14 @@ import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-d
     TestOutcomeComponent,
     TestCategoryComponent,
     TestCategoryIconComponent,
-    VehicleDetailsComponent
+    VehicleDetailsComponent,
+    // JournalNavigationComponent,
   ],
   entryComponents: [
     TestSlotComponent,
   ],
   imports: [
-    IonicModule
-  ]
+    IonicModule,
+  ],
 })
 export class MockedJournalModule {}

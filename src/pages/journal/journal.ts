@@ -7,7 +7,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getSlotsOnselectedDay, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime, getSelectedDay } from './journal.selector';
+import { getSlotsOnselectedDate, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime, getSelectedDate } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -21,7 +21,6 @@ interface JournalPageState {
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
   lastRefreshedTime$: Observable<string>,
-  selectedDay$: Observable<string>,
 }
 
 @IonicPage()
@@ -65,7 +64,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.pageState = {
       slots$: this.store$.pipe(
         select(getJournalState),
-        map(getSlotsOnselectedDay)
+        map(getSlotsOnselectedDate)
       ),
       error$: this.store$.pipe(
         select(getJournalState),
@@ -80,10 +79,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         map(getLastRefreshed),
         map(getLastRefreshedTime),
       ),
-      selectedDay$: this.store$.pipe(
-        select(getJournalState),
-        map(getSelectedDay)
-      )
     };
 
     const { slots$, error$, isLoading$ } = this.pageState;
@@ -105,14 +100,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   loadJournal() {
     this.store$.dispatch(new journalActions.LoadJournal());
     this.createLoadingSpinner();
-  }
-
-  onPreviousDayClick() {
-    this.store$.dispatch(new journalActions.SelectPreviousDay());
-  }
-
-  onNextDayClick() {
-    this.store$.dispatch(new journalActions.SelectNextDay());
   }
 
   handleLoadingUI = (isLoading: boolean): void => {

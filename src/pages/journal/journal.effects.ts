@@ -15,7 +15,7 @@ import { getJournalState } from './journal.reducer';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDay, getLastRefreshed, getSlots, getAvailableDays } from './journal.selector';
+import { getSelectedDate, getLastRefreshed, getSlots, getAvailableDays } from './journal.selector';
 
 @Injectable()
 export class JournalEffects {
@@ -57,21 +57,21 @@ export class JournalEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDay)
+        map(getSelectedDate)
       ),
       this.store$.pipe(
         select(getJournalState),
         map(getAvailableDays)
       )
     ),
-    switchMap(([action, selectedDay, availableDays]) => {
-      const previousDay = moment(selectedDay).add(-1, 'day').format('YYYY-MM-DD');
-      if (moment().format('YYYY-MM-DD') === selectedDay || !availableDays.includes(previousDay)) {
+    switchMap(([action, selectedDate, availableDays]) => {
+      const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
+      if (moment().format('YYYY-MM-DD') === selectedDate || !availableDays.includes(previousDay)) {
         console.log('can not go to previous day');
         return of();
       }
       console.log('previous day is', previousDay);
-      return of(new journalActions.SetSelectedDay(previousDay));
+      return of(new journalActions.SetselectedDate(previousDay));
     }),
   )
 
@@ -81,21 +81,21 @@ export class JournalEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDay)
+        map(getSelectedDate)
       ),
       this.store$.pipe(
         select(getJournalState),
         map(getAvailableDays)
       )
     ),
-    switchMap(([action, selectedDay, availableDays]) => {
-      const nextDay = moment(selectedDay).add(1, 'day').format('YYYY-MM-DD');
+    switchMap(([action, selectedDate, availableDays]) => {
+      const nextDay = moment(selectedDate).add(1, 'day').format('YYYY-MM-DD');
       if (!availableDays.includes(nextDay)) {
         console.log('can not go to next day');
         return of();
       }
       console.log('next day is', nextDay);
-      return of(new journalActions.SetSelectedDay(nextDay));
+      return of(new journalActions.SetselectedDate(nextDay));
     }),
   )
 }
