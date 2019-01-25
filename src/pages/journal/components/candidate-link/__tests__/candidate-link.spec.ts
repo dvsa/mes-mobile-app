@@ -43,7 +43,7 @@ describe('CandidateLinkComponent', () => {
   describe('DOM', () => {
 
     it('should display candidate name', () => {
-      const nameSpan: HTMLElement = fixture.debugElement.query(By.css('ion-row:first-child h5'))
+      const nameSpan: HTMLElement = fixture.debugElement.query(By.css('ion-row:first-child h3'))
         .nativeElement;
       fixture.detectChanges();
       expect(nameSpan.textContent).toBe('Mr Joe Bloggs');
