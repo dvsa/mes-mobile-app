@@ -5,20 +5,20 @@
 <ion-content>
   <div class="login-grid">
     <div *ngIf="hasUserLoggedOut">
-      <h2> You've signed out</h2>
-      <h5> <span class="link" (click)="login()">Sign in</span> again.</h5>
+      <h2>You've signed out</h2>
+      <h3> <span class="link" (click)="login()">Sign in</span> again.</h3>
     </div>
     <div *ngIf="isInternetConnectionError()">
       <h2>You're offline</h2>
-      <h5>Close the app, turn on mobile data or wifi, and then try again.</h5>
+      <h3>Close the app, turn on mobile data or wifi, and then try again.</h3>
     </div>
     <div *ngIf="isUserCancelledError()">
       <h2>You've cancelled sign in</h2>
-      <h5><span class="link" (click)="login()">Sign in</span> to continue.</h5>
+      <h3><span class="link" (click)="login()">Sign in</span> to continue.</h3>
     </div>
     <div *ngIf="isUnknownError()">
         <h2>Sorry, something went wrong</h2>
-        <h5>Please try again later.</h5>
+        <h3>Please try again later.</h3>
     </div>
   </div>
 </ion-content>
