@@ -18,3 +18,18 @@ export const getLastRefreshed = (journal: JournalModel) => journal.lastRefreshed
 export const getLastRefreshedTime = (date: Date) => isNil(date) ? '--:--' : moment(date).format('hh:mma');
 
 export const getSelectedDate = (journal: JournalModel) => journal.selectedDate;
+
+export const canNavigateToPreviousDay = (journal: JournalModel): boolean => {
+  const selectedDate = journal.selectedDate;
+  const availableDays = getAvailableDays(journal);
+  const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
+
+  return moment().format('YYYY-MM-DD') !== selectedDate && availableDays.includes(previousDay);
+};
+
+export const canNavigateToNextDay = (journal: JournalModel): boolean => {
+  const availableDays = getAvailableDays(journal);
+  const nextDay = moment(journal.selectedDate).add(1, 'day').format('YYYY-MM-DD');
+  
+  return availableDays.includes(nextDay);
+};

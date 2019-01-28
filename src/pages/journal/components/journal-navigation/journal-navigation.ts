@@ -3,13 +3,15 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../common/store.model';
 import { getJournalState } from '../../journal.reducer';
 import { map } from 'rxjs/operators';
-import { getSelectedDate } from '../../journal.selector';
+import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay } from '../../journal.selector';
 import { Observable } from 'rxjs/Observable';
 
 import { SelectPreviousDay, SelectNextDay } from '../../journal.actions';
 
 interface JournalNavigationPageState {
   selectedDate$: Observable<string>,
+  canNavigateToPreviousDay$: Observable<boolean>,
+  canNavigateToNextDay$: Observable<boolean>,
 }
 
 @Component({
@@ -28,6 +30,14 @@ export class JournalNavigationComponent implements OnInit {
         select(getJournalState),
         map(getSelectedDate)
       ),
+      canNavigateToPreviousDay$: this.store$.pipe(
+        select(getJournalState),
+        map(canNavigateToPreviousDay)
+      ),
+      canNavigateToNextDay$: this.store$.pipe(
+        select(getJournalState),
+        map(canNavigateToNextDay)
+      )
     };
   }
 

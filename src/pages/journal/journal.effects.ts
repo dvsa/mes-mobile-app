@@ -15,7 +15,7 @@ import { getJournalState } from './journal.reducer';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDate, getLastRefreshed, getSlots, getAvailableDays } from './journal.selector';
+import { getSelectedDate, getLastRefreshed, getSlots, getAvailableDays, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
 
 @Injectable()
 export class JournalEffects {
@@ -61,16 +61,14 @@ export class JournalEffects {
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(getAvailableDays)
+        map(canNavigateToPreviousDay)
       )
     ),
-    switchMap(([action, selectedDate, availableDays]) => {
-      const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
-      if (moment().format('YYYY-MM-DD') === selectedDate || !availableDays.includes(previousDay)) {
-        console.log('can not go to previous day');
+    switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
+      if (!canNavigateToPreviousDay) {
         return of();
       }
-      console.log('previous day is', previousDay);
+      const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
       return of(new journalActions.SetselectedDate(previousDay));
     }),
   )
@@ -85,16 +83,14 @@ export class JournalEffects {
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(getAvailableDays)
+        map(canNavigateToNextDay)
       )
     ),
-    switchMap(([action, selectedDate, availableDays]) => {
-      const nextDay = moment(selectedDate).add(1, 'day').format('YYYY-MM-DD');
-      if (!availableDays.includes(nextDay)) {
-        console.log('can not go to next day');
+    switchMap(([action, selectedDate, canNavigateToNextDay]) => {
+      if (!canNavigateToNextDay) {
         return of();
       }
-      console.log('next day is', nextDay);
+      const nextDay = moment(selectedDate).add(1, 'day').format('YYYY-MM-DD');
       return of(new journalActions.SetselectedDate(nextDay));
     }),
   )

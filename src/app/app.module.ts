@@ -47,7 +47,7 @@ import { SlotProvider } from '../providers/slot/slot';
     CognitoIdentityWrapper,
     ScreenOrientation,
     UrlProvider,
-    SlotProvider
+    SlotProvider,
   ]
 })
 export class AppModule {

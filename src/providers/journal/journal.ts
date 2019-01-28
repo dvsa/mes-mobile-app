@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import moment from 'moment';
+import * as moment from 'moment';
 import { AuthenticationProvider } from '../authentication/authentication';
 import { UrlProvider } from '../url/url';
 
