@@ -15,7 +15,7 @@ import { getJournalState } from './journal.reducer';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDate, getLastRefreshed, getSlots, getAvailableDays, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
+import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
 
 @Injectable()
 export class JournalEffects {
