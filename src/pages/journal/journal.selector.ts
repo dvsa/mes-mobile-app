@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
-export const getSlotsOnselectedDate = (journal: JournalModel) => journal.slots[journal.selectedDate];
+export const getSlotsOnSelectedDate = (journal: JournalModel) => journal.slots[journal.selectedDate];
 
 export const getAvailableDays = (journal: JournalModel) => Object.keys(journal.slots);
 
