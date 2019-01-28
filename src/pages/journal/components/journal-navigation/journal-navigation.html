@@ -9,8 +9,14 @@
       </ion-col>
       <ion-col>
         <div id="date-container">
-          <h1>{{ pageState.selectedDate$ | async | date:'EEEE' }}</h1>
-          <h3>{{ pageState.selectedDate$ | async | date:'d MMMM y' }}</h3>
+          <div *ngIf="pageState.isSelectedDateToday$ | async; else notToday">
+            <h1>Today</h1>
+            <h3>{{ pageState.selectedDate$ | async | date:'EEEE d MMMM y' }}</h3>
+          </div>
+          <ng-template #notToday>
+            <h1>{{ pageState.selectedDate$ | async | date:'EEEE' }}</h1>
+            <h3>{{ pageState.selectedDate$ | async | date:'d MMMM y' }}</h3>
+          </ng-template>
         </div>
       </ion-col>
       <ion-col>
