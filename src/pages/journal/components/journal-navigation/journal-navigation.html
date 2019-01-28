@@ -1,16 +1,24 @@
-<div style="margin: 24px 12px; display: flex; flex-direction: row;">
-  <div class="navigation-button" style="flex-grow: 1;" (click)="onPreviousDayClick()">
-    <ion-icon class="navigation-arrow" name="arrow-back"></ion-icon>
-    <span id="previous-day">Previous day</span>
-  </div>
-
-  <div style="flex-grow: 1;">
-    <h1>{{ pageState.selectedDate$ | async | date:'EEEE' }}</h1>
-    <h3>{{ pageState.selectedDate$ | async | date:'d MMMM y' }}</h3>
-  </div>
-
-  <div class="navigation-button" style="flex-grow: 1;" (click)="onNextDayClick()" style="float: right;">
-    <span id="next-day">Next day</span>
-    <ion-icon class="navigation-arrow" name="arrow-forward"></ion-icon>
-  </div>
+<div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="navigation-button" (click)="onPreviousDayClick()">
+          <ion-icon class="navigation-arrow" name="arrow-back"></ion-icon>
+          <span id="previous-day">Previous day</span>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div id="date-container">
+          <h1>{{ pageState.selectedDate$ | async | date:'EEEE' }}</h1>
+          <h3>{{ pageState.selectedDate$ | async | date:'d MMMM y' }}</h3>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="next-navigation-button" (click)="onNextDayClick()">
+          <span id="next-day">Next day</span>
+          <ion-icon class="navigation-arrow" name="arrow-forward"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </div>

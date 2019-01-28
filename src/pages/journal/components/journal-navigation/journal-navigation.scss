@@ -1,10 +1,17 @@
 journal-navigation {
+  margin: 24px 12px;
+
   .navigation-button {
     margin-top: 12px;
     font-size: 20px;
     font-weight: 900;
     letter-spacing: 0.19px;
     line-height: 25px;
+  }
+
+  .next-navigation-button {
+    @extend .navigation-button;
+    float: right;
   }
 
   .navigation-arrow {
@@ -26,6 +33,11 @@ journal-navigation {
     padding-right: 12px;
   }
 
+  #date-container {
+    text-align: center;
+  }
+
+  // TODO: This is here only until PR #134 gets merged in
   h1 {
     margin: 0;
   }
