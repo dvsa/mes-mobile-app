@@ -3,11 +3,15 @@ import { MesError } from '../../common/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
-export const LOAD_JOURNAL_SUCCESS = '[JournalPage] Load Journal Success';
-export const LOAD_JOURNAL_FAILURE = '[JournalPage] Load Journal Failure';
-export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal'
-export const UNSET_ERROR = '[JournalPage] Unset error';
+export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
+export const LOAD_JOURNAL_FAILURE = '[JournalEffects] Load Journal Failure';
+export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal';
 export const CLEAR_CHANGED_SLOT = '[JournalPage] Clear Changed Slot';
+export const UNSET_ERROR = '[JournalPage] Unset Error';
+export const SELECT_PREVIOUS_DAY = '[JournalPage] Select Previous Day';
+export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
+export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
+
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
 }
@@ -37,11 +41,26 @@ export class ClearChangedSlot implements Action {
   constructor(public slotId: number) {}
 }
 
+export class SelectPreviousDay implements Action {
+  readonly type = SELECT_PREVIOUS_DAY;
+}
+
+export class SelectNextDay implements Action {
+  readonly type = SELECT_NEXT_DAY;
+}
+
+export class SetSelectedDate implements Action {
+  readonly type = SET_SELECTED_DAY;
+  constructor(public payload: string) {}
+}
+
 export type Types = 
   | LoadJournal
   | LoadJournalSuccess
   | LoadJournalFailure
   | UnloadJournal
   | UnsetError
-  | ClearChangedSlot;
-
+  | ClearChangedSlot
+  | SelectPreviousDay
+  | SelectNextDay
+  | SetSelectedDate;
