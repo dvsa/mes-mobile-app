@@ -18,6 +18,13 @@ export class TestSlotComponent implements SlotComponent {
 
   constructor(public screenOrientation: ScreenOrientation) {}
 
+  isIndicatorNeededForSlot(): boolean {
+    const specialNeeds:boolean = get(this.slot, 'booking.application.specialNeeds', '').length > 0;
+    const checkNeeded:boolean = this.slot.booking.application.entitlementCheck || false;
+
+    return specialNeeds || checkNeeded;
+  }
+
   isSpecialNeedsSlot(): boolean {
     return get(this.slot, 'booking.application.specialNeeds', '').length > 0;
   }

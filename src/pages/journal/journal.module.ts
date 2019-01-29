@@ -16,6 +16,8 @@ import { IndicatorsComponent } from './components/indicators/indicators';
 import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
+import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
+import { SlotProvider } from '../../providers/slot/slot';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { TestCategoryComponent } from './components/test-category/test-category'
     TestSlotComponent,
     ActivitySlotComponent,
     TestCategoryComponent,
-    VehicleDetailsComponent
+    VehicleDetailsComponent,
+    JournalNavigationComponent,
   ],
   imports: [
     IonicPageModule.forChild(JournalPage),
@@ -41,6 +44,7 @@ import { TestCategoryComponent } from './components/test-category/test-category'
   ],
   providers: [
     JournalProvider,
+    SlotProvider,
     SlotSelectorProvider
   ]
 })

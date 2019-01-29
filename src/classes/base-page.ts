@@ -27,7 +27,9 @@ export abstract class BasePageComponent {
   logout() {
     if (this.isIos()) {
       this.authenticationProvider.logout()
-      this.navController.setRoot('LoginPage');
+      this.navController.setRoot('LoginPage', {
+        hasLoggedOut: true
+      });
     }
   }
 

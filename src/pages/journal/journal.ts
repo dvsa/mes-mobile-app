@@ -23,7 +23,7 @@ import {
   getIsPolling,
   getLastRefreshed,
   getLastRefreshedTime,
-  getSlots
+  getSlotsOnSelectedDate,
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
@@ -85,7 +85,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.pageState = {
       slots$: this.store$.pipe(
         select(getJournalState),
-        map(getSlots)
+        map(getSlotsOnSelectedDate)
       ),
       error$: this.store$.pipe(
         select(getJournalState),
@@ -191,7 +191,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createToast = (errorMessage: string) => {
-    // This is just a temporary way to display the error
+    // TODO: This is just a temporary way to display the error. Initiate a conversation with the team about how to handle errors.
 
     this.toast = this.toastController.create({
       message: errorMessage,
@@ -201,6 +201,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       duration: 5000
     });
 
+    this.toast.onDidDismiss(() => {
+      this.store$.dispatch(new journalActions.UnsetError());
+    });
   };
 
   public pullRefreshJournal = (refresher: Refresher) => {
@@ -211,5 +214,14 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   public refreshJournal = () => {
     this.loadJournal();
   };
+
+  gotoWaitingRoom($event) {
+    console.log('going to waiting room with ', $event);
+  }
+
+  logout() {
+    this.store$.dispatch(new journalActions.UnloadJournal());
+    super.logout();
+  }
 
 }

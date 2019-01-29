@@ -18,13 +18,13 @@ import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-d
     TestOutcomeComponent,
     TestCategoryComponent,
     TestCategoryIconComponent,
-    VehicleDetailsComponent
+    VehicleDetailsComponent,
   ],
   entryComponents: [
     TestSlotComponent,
   ],
   imports: [
-    IonicModule
-  ]
+    IonicModule,
+  ],
 })
 export class MockedJournalModule {}

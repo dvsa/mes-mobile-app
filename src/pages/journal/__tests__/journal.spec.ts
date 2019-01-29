@@ -6,15 +6,10 @@ import { By } from '@angular/platform-browser';
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
-import { JournalProvider } from '../../../providers/journal/journal';
-import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-import { JournalEffects } from '../journal.effects';
 import { Subscription } from 'rxjs/Subscription';
 import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
 import { MockedJournalModule } from '../__mocks__/journal.module.mock';
@@ -22,23 +17,29 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-orientation.mock';
 import { NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
+import { UnloadJournal, LoadJournal, LoadJournalSuccess } from '../journal.actions';
+import { BasePageComponent } from '../../../classes/base-page';
+import { StoreModel } from '../../../common/store.model';
+
+import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
+import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
   let component: JournalPage;
+  let store$: Store<StoreModel>;
+  let loadingControllerMock: LoadingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalPage],
+      declarations: [ JournalPage, JournalNavigationComponent ],
       imports: [
         IonicModule,
         AppModule,
         StoreModule.forRoot({
           journal: journalReducer
         }),
-        StoreDevtoolsModule.instrument(),
-        EffectsModule.forRoot([JournalEffects]),
-        MockedJournalModule
+        MockedJournalModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -47,7 +48,6 @@ describe('JournalPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
         { provide: ScreenOrientation, useClass: ScreenOrientationMock},
@@ -61,6 +61,11 @@ describe('JournalPage', () => {
         component.subscription = new Subscription();
         component.networkStateSubscription$ = new Subscription();
       });
+
+      store$ = TestBed.get(Store);
+      jest.spyOn(store$, 'dispatch');
+
+      loadingControllerMock = TestBed.get(LoadingController);
   }));
 
   describe('Class', () => {
@@ -68,6 +73,24 @@ describe('JournalPage', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+
+    describe('logout', () => {
+      it('should dispatch an UnloadJournal action and call base page logout', () => {
+        jest.spyOn(BasePageComponent.prototype, 'logout');
+        component.logout();
+        expect(store$.dispatch).toHaveBeenCalledWith(new UnloadJournal());
+        expect(BasePageComponent.prototype.logout).toHaveBeenCalled();
+      });
+    });
+
+    describe('loadJournal', () => {
+      it('should dispatch a LoadJournal action and create the loading spinner', () => {
+        component.loadJournal();
+        expect(store$.dispatch).toHaveBeenCalledWith(new LoadJournal());
+        expect(loadingControllerMock.create).toHaveBeenCalled();
+      });
+    });
+
   });
 
   describe('DOM', () => {
@@ -76,14 +99,20 @@ describe('JournalPage', () => {
 
     beforeEach(() => {
       componentEl = fixture.debugElement;
+
+      // Manually dispatching an action which loads slots to the store
+      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
     });
 
     it('there should be one slot for every journal entry', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
+
       fixture.detectChanges();
+
       let noOfSlotsReturned: number;
       component.pageState.slots$.subscribe(slots => noOfSlotsReturned = slots.length);
+
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
     });

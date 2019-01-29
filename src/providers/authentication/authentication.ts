@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { MSAdal, AuthenticationContext, AuthenticationResult } from '@ionic-native/ms-adal';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AppConfigProvider } from '../app-config/app-config';
-import { ToastController } from 'ionic-angular';
 import jwtDecode from 'jwt-decode';
+import { AuthenticationError } from './authentication.constants';
+import { MsAdalError } from './authentication.models';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -17,7 +18,6 @@ export class AuthenticationProvider {
   constructor(
     private msAdal: MSAdal,
     private inAppBrowser: InAppBrowser,
-    public toastController: ToastController,
     appConfig: AppConfigProvider) {
     this.authenticationSettings = appConfig.getAppConfig().authentication;
     this.employeeIdKey = appConfig.getAppConfig().authentication.employeeIdKey;
@@ -53,7 +53,7 @@ export class AuthenticationProvider {
         .catch((error: any) => {
           this.loginWithCredentials()
             .then(() => resolve())
-            .catch(() => reject());
+            .catch((error: AuthenticationError) => reject(error));
         });
     });
   };
@@ -74,9 +74,8 @@ export class AuthenticationProvider {
           this.successfulLogin(authResponse);
           resolve();
         })
-        .catch((error: any) => {
-          this.failedLogin(error);
-          reject();
+        .catch((error: MsAdalError) => {
+          reject(error.details.errorDescription as AuthenticationError);
         });
     });
 
@@ -112,14 +111,4 @@ export class AuthenticationProvider {
     this.employeeId = employeeId;
   };
 
-  private failedLogin = (error: any) => {
-    // This is just a temporary way to display the error
-    this.toastController.create({
-      message: error.message,
-      position: 'middle',
-      dismissOnPageChange: true,
-      cssClass: 'mes-toast-message-error',
-      duration: 5000
-    });
-  };
 }

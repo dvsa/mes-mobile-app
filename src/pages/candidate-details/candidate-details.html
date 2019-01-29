@@ -19,7 +19,7 @@
   
   <ion-card>
     <ion-card-header>
-      <h3>Candidate details</h3>
+      <h4>Candidate details</h4>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
@@ -36,9 +36,9 @@
           <ion-col col-4>
             <label>Slot type</label>
             <img 
-              src="assets/imgs/journal/special-needs-indicator.png"
-              class="special-needs-indicator"
-              *ngIf="(pageState.details$ | async).slotType.icon == 'SpecialNeedsIndicator'"
+              src="assets/imgs/journal/exclamation-indicator.png"
+              class="exclamation-indicator"
+              *ngIf="(pageState.details$ | async).slotType.icon == 'ExclamationIndicator'"
             />
           </ion-col>
           <ion-col col-8>
@@ -83,7 +83,7 @@
   </ion-card>
   <ion-card>
     <ion-card-header>
-      <h3>Contact details</h3>
+      <h4>Contact details</h4>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>

@@ -8,5 +8,5 @@ export const carStandardSlotType: SlotTypeView = {
 
 export const carSpecialNeedsSlotType: SlotTypeView = {
   text: 'Double slot (special needs)',
-  icon: 'SpecialNeedsIndicator',
+  icon: 'ExclamationIndicator',
 };

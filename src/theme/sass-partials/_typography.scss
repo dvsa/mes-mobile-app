@@ -1,50 +1,62 @@
-.bold-family {
-  font-family: GDSTransportWebsite-Bold;
+
+.heavy-font-family {
+  font-family: "Roboto";
+  font-weight: 900;
 }
 
-.normal-family {
-  font-family: GDSTransportWebsite;
+.semibold-font-family {
+  font-family: "Roboto";
+  font-weight: 500;
 }
+
+.regular-font-family {
+  font-family: "Roboto";
+  font-weight: 400;
+};
 
 h1 {
-  @extend .bold-family;
-  font-size: 48px;
-  margin-bottom: 36px;
+  @extend .heavy-font-family;
+  font-size: 40px;
 }
 
 h2 {
-  @extend .bold-family;
-  font-size: 44px;
+  @extend .heavy-font-family;
+  font-size: 28px;
 }
 
 h3 {
-  @extend .bold-family;
-  font-size: 36px;
+  @extend .semibold-font-family;
+  font-size: 20px;
 }
 
 h4 {
-  @extend .normal-family;
+  @extend .heavy-font-family;
   font-size: 24px;
 }
 
-h5 {
-  @extend .normal-family;
-  font-size: 19px;
+a {
+  @extend .semibold-font-family;
+  font-size: 20px;
 }
 
-h6 {
-  @extend .normal-family;
-  font-size: 16px;
+a:hover {
+  @extend .semibold-font-family;
+  font-size: 20px;
 }
 
 label {
-  @extend .bold-family;
-  font-size: 19px;
+  @extend .semibold-font-family;
+  font-size: 20px;
 }
 
 .mes-data {
-  @extend .normal-family;
-  font-size: 19px;
+  @extend .regular-font-family;
+  font-size: 20px;
+}
+
+p {
+  @extend .regular-font-family;
+  font-size: 15px;
 }
 
 // Override some ionic defaults. There will be more to follow

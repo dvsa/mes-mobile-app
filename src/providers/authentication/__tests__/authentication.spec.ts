@@ -7,8 +7,6 @@ import { AuthenticationProvider } from '../authentication';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
-import { ToastController } from 'ionic-angular';
-import { ToastControllerMock } from 'ionic-mocks-jest';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
@@ -17,7 +15,6 @@ describe('Authentication', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthenticationProvider,
-        { provide: ToastController, useFactory: () => ToastControllerMock.instance() },
         { provide: MSAdal, useClass: MSAdalMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock}
@@ -66,10 +63,6 @@ describe('Authentication', () => {
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
       expect(authenticationProvider.getEmployeeId()).toEqual('a');
     });
-
-    it('should do something when login fails', async () => {
-      // TODO
-    })
 
     it('should logout successfully', async () => {
       await authenticationProvider.login();
