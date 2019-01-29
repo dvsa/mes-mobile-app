@@ -47,11 +47,11 @@ export class JournalNavigationComponent implements OnInit {
     };
   }
 
-  onPreviousDayClick() {
+  onPreviousDayClick(): void {
     this.store$.dispatch(new SelectPreviousDay());
   }
 
-  onNextDayClick() {
+  onNextDayClick(): void {
     this.store$.dispatch(new SelectNextDay());
   }
 }
