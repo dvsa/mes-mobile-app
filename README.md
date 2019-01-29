@@ -58,8 +58,9 @@ You can run the Appium testsuite either against a web based version of the appli
 
 Pre-requisites
 
-- Appium (https://www.npmjs.com/package/appium)
-- WebDriver-Manager (https://www.npmjs.com/package/webdriver-manager)
+- Appium (`npm install -g appium` - https://www.npmjs.com/package/appium)
+- WebDriver-Manager (`npm install -g webdriver-manager` - https://www.npmjs.com/package/webdriver-manager)
+- Carthage (`brew install carthage` - https://github.com/appium/appium/blob/HEAD/docs/en/drivers/ios-xcuitest.md - dependancy of XCUITest driver)
 
 To run against the simulator
 
