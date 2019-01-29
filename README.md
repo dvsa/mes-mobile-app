@@ -61,19 +61,14 @@ Pre-requisites
 - Appium (https://www.npmjs.com/package/appium)
 - WebDriver-Manager (https://www.npmjs.com/package/webdriver-manager)
 
-To run against the web based version
-
-- Run the application as per the Get started guide above with fixed port id to match test setup `ionic serve --port 8101`
-- In a separate tab run up up the WebDriver manager `webdriver-manager start`
-- In another tab execute the browser based testsuite `npm run test:e2e-browser-bdd`
-- Once complete generate the report `npm run test:generate-report`
-
 To run against the simulator
 
 - Build the application `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0"`
 - Run Appium `appium`
 - In another tab execute the simulator based testsuite `npm run test:e2e-simulator-bdd`
 - Once complete generate the report `npm run test:generate-report`
+
+You can run individual features e.g. `npm run test:e2e-simulator-bdd -- --specs='test/e2e/features/01-login.feature'`
 
 ### Building & signing the app using Fastlane
 N.B. this assumes you have Fastlane installed along with the required DVSA distribution certificate & provisioning profile. This is done via the Mac OS Jenkins slave so these steps are only for information only. 
