@@ -49,7 +49,7 @@ export class SelectNextDay implements Action {
   readonly type = SELECT_NEXT_DAY;
 }
 
-export class SetselectedDate implements Action {
+export class SetSelectedDate implements Action {
   readonly type = SET_SELECTED_DAY;
   constructor(public payload: string) {}
 }
@@ -63,4 +63,4 @@ export type Types =
   | ClearChangedSlot
   | SelectPreviousDay
   | SelectNextDay
-  | SetselectedDate;
+  | SetSelectedDate;

@@ -69,7 +69,7 @@ export class JournalEffects {
         return of();
       }
       const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
-      return of(new journalActions.SetselectedDate(previousDay));
+      return of(new journalActions.SetSelectedDate(previousDay));
     }),
   )
 
@@ -91,7 +91,7 @@ export class JournalEffects {
         return of();
       }
       const nextDay = moment(selectedDate).add(1, 'day').format('YYYY-MM-DD');
-      return of(new journalActions.SetselectedDate(nextDay));
+      return of(new journalActions.SetSelectedDate(nextDay));
     }),
   )
 }
