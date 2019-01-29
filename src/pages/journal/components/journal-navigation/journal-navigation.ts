@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../common/store.model';
 import { getJournalState } from '../../journal.reducer';
 import { map } from 'rxjs/operators';
-import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay, isSelectedDateToday } from '../../journal.selector';
+import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay, isToday } from '../../journal.selector';
 import { Observable } from 'rxjs/Observable';
 
 import { SelectPreviousDay, SelectNextDay } from '../../journal.actions';
@@ -42,7 +42,7 @@ export class JournalNavigationComponent implements OnInit {
       isSelectedDateToday$: this.store$.pipe(
         select(getJournalState),
         map(getSelectedDate),
-        map(isSelectedDateToday)
+        map(isToday)
       )
     };
   }

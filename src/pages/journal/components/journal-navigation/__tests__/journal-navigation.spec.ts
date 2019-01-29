@@ -34,6 +34,6 @@ describe('JournalNavigationComponent', () => {
   });
 
   describe('DOM', () => {
-    
+    // TODO: set up the store and implement unit tests for the UI logic
   });
 });

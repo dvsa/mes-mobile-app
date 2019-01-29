@@ -1,6 +1,7 @@
 import { JournalModel } from '../journal.model';
-import { getSlotsOnSelectedDate, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime } from '../journal.selector';
+import { getSlotsOnSelectedDate, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime, isToday, canNavigateToNextDay, canNavigateToPreviousDay } from '../journal.selector';
 import { MesError } from '../../../common/mes-error.model';
+import * as moment from 'moment';
 
 describe('JournalSelector', () => {
 
@@ -61,4 +62,112 @@ describe('JournalSelector', () => {
       expect(error.status).toBe(404);
     });
   });
+
+  describe('isToday', () => {
+    it('should return true if its today', () => {
+      const result = isToday(moment().format('YYYY-MM-DD'));
+      expect(result).toBe(true);
+    });
+
+    it('should return false if its not today', () => {
+      const result = isToday('2019-01-28');
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('canNavigateToNextDay', () => {
+    it('should return true if there are any next days', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          '2019-01-29': [
+            {
+              hasSlotChanged: false,
+              slotData: {}
+            },
+          ],
+          '2019-01-30': [
+            {
+              hasSlotChanged: false,
+              slotData: {}
+            },
+          ],
+        },
+        selectedDate: '2019-01-29',
+      };
+
+      const result = canNavigateToNextDay(journal);
+
+      expect(result).toBe(true);
+    });
+    
+    it('should return false if there are no next days', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          '2019-01-29': [
+            {
+              hasSlotChanged: false,
+              slotData: {}
+            },
+          ],
+        },
+        selectedDate: '2019-01-29',
+      };
+
+      const result = canNavigateToNextDay(journal);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('canNavigateToPreviousDay', () => {
+    it('should return false if selected day is today', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          [moment().format('YYYY-MM-DD')]: [
+            {
+              hasSlotChanged: false,
+              slotData: {}
+            },
+          ],
+        },
+        selectedDate: moment().format('YYYY-MM-DD'),
+      };
+
+      const result = canNavigateToPreviousDay(journal);
+
+      expect(result).toBe(false);
+    });
+
+    it('should return true if selected day is not today and we have days to go to', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          [moment().format('YYYY-MM-DD')]: [
+            {
+              hasSlotChanged: false,
+              slotData: {}
+            },
+          ],
+          [moment().add(1, 'days').format('YYYY-MM-DD')]: [
+            {
+              hasSlotChanged: false,
+              slotData: {}
+            },
+          ],
+        },
+        selectedDate: moment().add(1, 'day').format('YYYY-MM-DD'),
+      };
+
+      const result = canNavigateToPreviousDay(journal);
+
+      expect(result).toBe(true);
+    });
+  })
 });
