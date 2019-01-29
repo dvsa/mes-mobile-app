@@ -17,6 +17,7 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
 import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
+import { SlotProvider } from '../../providers/slot/slot';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { JournalNavigationComponent } from './components/journal-navigation/jour
   ],
   providers: [
     JournalProvider,
+    SlotProvider,
     SlotSelectorProvider
   ]
 })
