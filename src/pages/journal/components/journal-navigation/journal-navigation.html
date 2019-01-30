@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div *ngIf="pageState.canNavigateToPreviousDay$ | async" class="navigation-button" (click)="onPreviousDayClick()">
+        <div id="previous-day-container" *ngIf="pageState.canNavigateToPreviousDay$ | async" class="navigation-button" (click)="onPreviousDayClick()">
           <ion-icon class="navigation-arrow" name="arrow-back"></ion-icon>
           <span id="previous-day">Previous day</span>
         </div>
@@ -20,7 +20,7 @@
         </div>
       </ion-col>
       <ion-col>
-        <div *ngIf="pageState.canNavigateToNextDay$ | async" class="next-navigation-button" (click)="onNextDayClick()">
+        <div id="next-day-container" *ngIf="pageState.canNavigateToNextDay$ | async" class="next-navigation-button" (click)="onNextDayClick()">
           <span id="next-day">Next day</span>
           <ion-icon class="navigation-arrow" name="arrow-forward"></ion-icon>
         </div>
