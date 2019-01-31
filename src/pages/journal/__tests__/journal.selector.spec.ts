@@ -33,7 +33,7 @@ describe('JournalSelector', () => {
   describe('getSlots', () => {
     it('should select the test slots from the state', () => {
       const selectedSlots = getSlotsOnSelectedDate(state);
-      expect(selectedSlots).toHaveLength(1);
+      expect(selectedSlots.length).toBe(1);
       expect(selectedSlots[0].hasSlotChanged).toBe(false);
       expect(selectedSlots[0].slotData).toBeDefined();
     });

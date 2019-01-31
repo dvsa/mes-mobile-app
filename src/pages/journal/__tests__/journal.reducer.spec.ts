@@ -41,7 +41,7 @@ describe('Journal Reducer', () => {
       expect(result).toEqual({
         ...initialState,
         isLoading: false,
-        lastRefreshed: expect.any(Date),
+        lastRefreshed: jasmine.any(Date),
         slots: {
           '2019-01-17': [{
             hasSlotChanged: false,
