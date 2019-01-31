@@ -38,7 +38,7 @@ describe('Slot Selector', () => {
   describe('SlotSelectorProvider', () => {
 
     it('should compile', () => {
-      expect(slotSelector).toBeDefined();
+      expect(slotSelector).toBeDefined;
     });
 
     describe('getSlotTypes', () => {
