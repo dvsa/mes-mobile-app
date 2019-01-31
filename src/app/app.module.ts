@@ -17,6 +17,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthInterceptor } from '../providers/authentication/interceptor';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { UrlProvider } from '../providers/url/url';
+import { AnalyticsProvider } from '../providers/analytics/analytics';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 @NgModule({
   declarations: [App],
@@ -46,6 +48,8 @@ import { UrlProvider } from '../providers/url/url';
     CognitoIdentityWrapper,
     ScreenOrientation,
     UrlProvider,
+    GoogleAnalytics,
+    AnalyticsProvider,
     
   ]
 })
