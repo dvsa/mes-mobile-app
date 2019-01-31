@@ -6,13 +6,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { App } from '../app.component';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../providers/app-config/__mocks__/app-config.mock';
-import { StatusBarMock, PlatformMock } from 'ionic-mocks';
-import { Spied } from '../../../test/helpers/spy-generic';
+import { StatusBarMock, PlatformMock } from 'ionic-mocks-jest';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
   let component: App;
-  let statusBar: Spied<StatusBar>
+  let statusBar: StatusBar
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -42,11 +41,11 @@ describe('App', () => {
     });
 
     it('should configure the status bar', () => {
-      expect(statusBar.styleLightContent.calls.count()).toBe(1);
-      expect(statusBar.overlaysWebView.calls.count()).toBe(1);
-      expect(statusBar.overlaysWebView).toHaveBeenCalledWith(false);
-      expect(statusBar.backgroundColorByHexString.calls.count()).toBe(1);
-      expect(statusBar.backgroundColorByHexString).toHaveBeenCalledWith('#000000')
+      expect(statusBar.styleLightContent).toBeCalledTimes(1);
+      expect(statusBar.overlaysWebView).toBeCalledTimes(1);
+      expect(statusBar.overlaysWebView).toBeCalledWith(false);
+      expect(statusBar.backgroundColorByHexString).toBeCalledTimes(1);
+      expect(statusBar.backgroundColorByHexString).toBeCalledWith('#000000')
     });
   });
 

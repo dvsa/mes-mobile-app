@@ -36,7 +36,7 @@ describe('IndicatorsComponent', () => {
         component.showExclamationIndicator = false;
         fixture.detectChanges();
         const renderedImages = fixture.debugElement.queryAll(By.css('.exclamation-indicator'));
-        expect(renderedImages.length).toBe(0);
+        expect(renderedImages).toHaveLength(0);
       });
     });
   });
