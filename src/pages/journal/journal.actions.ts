@@ -3,6 +3,9 @@ import { MesError } from '../../common/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
+export const FETCH_JOURNAL = '[JournalPage] Fetch Journal';
+export const SETUP_POLLING = '[JournalPage] Setup Polling';
+export const STOP_POLLING = '[JournalPage] Stop Polling';
 export const LOAD_JOURNAL_POLLED = '[JournalPage] Load Journal Polled';
 export const CANCEL_JOURNAL_POLL = '[JournalPage] Cancel Journal Poll';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
@@ -16,6 +19,10 @@ export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
+}
+
+export class FetchJournal implements Action {
+  readonly type = FETCH_JOURNAL;
 }
 
 export class LoadJournalSuccess implements Action {
@@ -63,8 +70,17 @@ export class SetSelectedDate implements Action {
   constructor(public payload: string) {}
 }
 
+export class SetupPolling implements Action {
+  readonly type = SETUP_POLLING;
+}
+
+export class StopPolling implements Action {
+  readonly type = STOP_POLLING;
+}
+
 export type Types = 
   | LoadJournal
+  | FetchJournal
   | LoadJournalPolled
   | CancelJournalPoll
   | LoadJournalSuccess
@@ -74,4 +90,6 @@ export type Types =
   | ClearChangedSlot
   | SelectPreviousDay
   | SelectNextDay
-  | SetSelectedDate;
+  | SetSelectedDate
+  | SetupPolling
+  | StopPolling;

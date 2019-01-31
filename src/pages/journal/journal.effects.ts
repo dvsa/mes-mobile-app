@@ -32,7 +32,7 @@ export class JournalEffects {
 
   @Effect()
   journal$ = this.actions$.pipe(
-    ofType(journalActions.LOAD_JOURNAL),
+    ofType(journalActions.FETCH_JOURNAL),
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
@@ -56,13 +56,19 @@ export class JournalEffects {
   );
 
   @Effect()
-  journalPolled$ = this.actions$.pipe(
-    ofType(journalActions.LOAD_JOURNAL_POLLED),
-    switchMap((action$: journalActions.LoadJournalPolled) =>
-      timer(0, this.appConfig.getAppConfig().journal.backgroundRefreshTime)
+  loadJournal$ = this.actions$.pipe(
+    ofType(journalActions.LOAD_JOURNAL),
+    mapTo({ type: journalActions.FETCH_JOURNAL }),
+  );
+
+  @Effect()
+  pollingSetup$ = this.actions$.pipe(
+    ofType(journalActions.SETUP_POLLING),
+    switchMap((action$: journalActions.SetupPolling) =>
+      timer(this.appConfig.getAppConfig().journal.backgroundRefreshTime, this.appConfig.getAppConfig().journal.backgroundRefreshTime)
         .pipe(
-          takeUntil(this.actions$.ofType(journalActions.CANCEL_JOURNAL_POLL)),
-          mapTo({ type: journalActions.LOAD_JOURNAL })
+          takeUntil(this.actions$.ofType(journalActions.STOP_POLLING)),
+          mapTo({ type: journalActions.FETCH_JOURNAL })
         )
     )
   );

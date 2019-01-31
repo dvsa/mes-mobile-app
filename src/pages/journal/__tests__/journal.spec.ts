@@ -28,7 +28,6 @@ describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
   let component: JournalPage;
   let store$: Store<StoreModel>;
-  let loadingControllerMock: LoadingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -64,8 +63,6 @@ describe('JournalPage', () => {
 
       store$ = TestBed.get(Store);
       jest.spyOn(store$, 'dispatch');
-
-      loadingControllerMock = TestBed.get(LoadingController);
   }));
 
   describe('Class', () => {
@@ -83,14 +80,12 @@ describe('JournalPage', () => {
       });
     });
 
-    describe('loadJournal', () => {
-      it('should dispatch a LoadJournal action and create the loading spinner', () => {
-        component.loadJournal();
+    describe('loadJournalManually', () => {
+      it('should dispatch a LoadJournal action', () => {
+        component.loadJournalManually();
         expect(store$.dispatch).toHaveBeenCalledWith(new LoadJournal());
-        expect(loadingControllerMock.create).toHaveBeenCalled();
       });
     });
-
   });
 
   describe('DOM', () => {

@@ -32,7 +32,6 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
-import { ConnectionStatus, NetworkStateProvider } from '../../providers/network-state/network-state';
 
 interface JournalPageState {
   slots$: Observable<SlotItem[]>,
@@ -74,7 +73,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
-    private networkState: NetworkStateProvider
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -106,15 +104,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       )
     };
 
-    this.networkStateSubscription$ = this.networkState.onNetworkChange().subscribe( (networkState: ConnectionStatus) => {
-      console.log('network state is ', networkState)
-      if (this.networkState.getNetworkState() === ConnectionStatus.OFFLINE){
-        this.store$.dispatch(new journalActions.CancelJournalPoll());
-      } else {
-        this.store$.dispatch(new journalActions.LoadJournalPolled());
-      }
-    });
-
     const { slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
@@ -135,23 +124,32 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   ionViewWillEnter() {
     super.ionViewWillEnter();
-    this.loadJournal();
+    this.loadJournalManually();
+    this.setupPolling();
     return true;
   }
 
-  ionViewDidLeave() {
-    this.store$.dispatch(new journalActions.CancelJournalPoll());
+  ionViewWillLeave() {
+    this.store$.dispatch(new journalActions.StopPolling());
   }
 
-  loadJournal() {
-    this.store$.dispatch(new journalActions.CancelJournalPoll());
+  loadJournalManually() {
     this.store$.dispatch(new journalActions.LoadJournal());
-    this.store$.dispatch(new journalActions.LoadJournalPolled());
-    this.createLoadingSpinner();
+  }
+
+  setupPolling() {
+    this.store$.dispatch(new journalActions.SetupPolling());
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
-    if (!isLoading) {
+    console.log(`HANDLELOADINGUI ISLOADING: ${isLoading}`);
+    if (isLoading) {
+      this.loadingSpinner = this.loadingController.create({
+        dismissOnPageChange: true,
+        spinner: 'circles'
+      });
+      this.loadingSpinner.present();
+    } else {
       this.pageRefresher ? this.pageRefresher.complete() : null;
       if (this.loadingSpinner) {
         this.loadingSpinner.dismiss();
@@ -182,14 +180,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     }
   };
 
-  private createLoadingSpinner = () => {
-    this.loadingSpinner = this.loadingController.create({
-      dismissOnPageChange: true,
-      spinner: 'circles'
-    });
-    this.loadingSpinner.present();
-  };
-
   private createToast = (errorMessage: string) => {
     // TODO: This is just a temporary way to display the error. Initiate a conversation with the team about how to handle errors.
 
@@ -207,12 +197,12 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   public pullRefreshJournal = (refresher: Refresher) => {
-    this.loadJournal();
+    this.loadJournalManually();
     this.pageRefresher = refresher;
   };
 
   public refreshJournal = () => {
-    this.loadJournal();
+    this.loadJournalManually();
   };
 
   gotoWaitingRoom($event) {
