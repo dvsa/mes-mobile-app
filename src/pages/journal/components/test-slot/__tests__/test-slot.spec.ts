@@ -3,7 +3,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { TestSlotComponent } from '../test-slot';
 import { IonicModule, Config } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { ConfigMock } from 'ionic-mocks-jest';
+import { ConfigMock } from 'ionic-mocks';
 import { cloneDeep } from 'lodash';
 import { IndicatorsComponent } from '../../indicators/indicators';
 import { TimeComponent } from '../../time/time';

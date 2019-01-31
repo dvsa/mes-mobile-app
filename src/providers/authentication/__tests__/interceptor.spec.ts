@@ -54,7 +54,7 @@ describe('Authentication interceptor', () => {
   describe('Interceptor', () => {
 
     it('should compile', () => {
-      expect(interceptor).toBeDefined;
+      expect(interceptor).toBeDefined();
     });
 
     it('should not modify the request if not on ios', () => {

@@ -6,6 +6,7 @@ import { CandidateDetailsPage } from '../candidate-details';
 import { AppModule } from '../../../app/app.module';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -27,6 +28,7 @@ describe('CandidateDetailsPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(CandidateDetailsPage);
         component = fixture.componentInstance;
+        component.subscription = new Subscription();
       });
   }));
 
