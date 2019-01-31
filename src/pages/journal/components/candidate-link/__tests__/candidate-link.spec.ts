@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
-import { NavControllerMock } from 'ionic-mocks-jest';
+import { NavControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import { CandidateLinkComponent } from '../candidate-link';
 
@@ -36,7 +36,7 @@ describe('CandidateLinkComponent', () => {
     it('should call the push function of navController and pass the right slotId', () => {
       component.navigateToCandidateDetails();
 
-      expect(component.navController.push).toBeCalledWith('CandidateDetailsPage', { slotId: component.slotId });
+      expect(component.navController.push).toHaveBeenCalledWith('CandidateDetailsPage', { slotId: component.slotId });
     });
   });
 
@@ -53,7 +53,7 @@ describe('CandidateLinkComponent', () => {
       component.welshLanguage = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(By.css('.welsh-language-indicator'));
-      expect(renderedImages).toHaveLength(1);
+      expect(renderedImages.length).toBe(1);
     });
 
 
@@ -61,21 +61,21 @@ describe('CandidateLinkComponent', () => {
       component.welshLanguage = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(By.css('.welsh-language-indicator'));
-      expect(renderedImages).toHaveLength(0);
+      expect(renderedImages.length).toBe(0);
     });
 
     it('should apply additional css styles if device isPortrait', () => {
-      component.isPortrait = true;;
+      component.isPortrait = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(By.css('.candidate-grid-row'));
-      expect(renderedImages).toHaveLength(1);
+      expect(renderedImages.length).toBe(1);
     });
 
     it('should not apply additional css styles if device isLandscape', () => {
       component.isPortrait = false;;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(By.css('.candidate-grid-row'));
-      expect(renderedImages).toHaveLength(0);
+      expect(renderedImages.length).toBe(0);
     });
 
     it('should call navigateToCandidateDetails when the main div component is taped', () => {

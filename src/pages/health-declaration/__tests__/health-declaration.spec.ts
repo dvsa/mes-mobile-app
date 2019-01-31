@@ -1,19 +1,19 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
-import { TerminateTestPage } from '../terminate-test';
+import { HealthDeclarationPage } from '../health-declaration';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
-describe('TerminateTestPage', () => {
-  let fixture: ComponentFixture<TerminateTestPage>;
-  let component: TerminateTestPage;
+describe('HealthDeclarationPage', () => {
+  let fixture: ComponentFixture<HealthDeclarationPage>;
+  let component: HealthDeclarationPage;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TerminateTestPage],
+      declarations: [HealthDeclarationPage],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -25,7 +25,7 @@ describe('TerminateTestPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(TerminateTestPage);
+        fixture = TestBed.createComponent(HealthDeclarationPage);
         component = fixture.componentInstance;
       });
   }));
