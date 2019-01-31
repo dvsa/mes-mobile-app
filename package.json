@@ -19,7 +19,7 @@
     "format:fix": "pretty-quick --staged",
     "format:all": "npx prettier --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "prepush": "run-s format:fix lint test gitSecrets scanRepo",
-    "test": "npm run update-mock-data && npm run test:jasmine && npm run test:jest",
+    "test": "npm run update-mock-data && npm run test:jasmine",
     "test:jasmine": "karma start ./test-config/karma.conf.js",
     "test:jasmine-ci": "karma start ./test-config/karma.conf.js --single-run",
     "test:jasmine-coverage": "karma start ./test-config/karma.conf.js --coverage",
