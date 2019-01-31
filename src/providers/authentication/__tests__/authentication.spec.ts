@@ -32,7 +32,7 @@ describe('Authentication', () => {
   describe('Provider', () => {
 
     it('should compile', () => {
-      expect(authenticationProvider).toBeDefined;
+      expect(authenticationProvider).toBeDefined();
     });
 
     it('isAuthenticated() should return false when no login has happened', () => {
