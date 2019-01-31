@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, catchError, map, withLatestFrom, takeUntil, mapTo } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { timer } from 'rxjs/observable/timer';
+import { interval } from 'rxjs/observable/interval';
 
 import { groupBy } from 'lodash';
 import * as moment from 'moment';
@@ -65,7 +65,7 @@ export class JournalEffects {
   pollingSetup$ = this.actions$.pipe(
     ofType(journalActions.SETUP_POLLING),
     switchMap((action$: journalActions.SetupPolling) =>
-      timer(this.appConfig.getAppConfig().journal.backgroundRefreshTime, this.appConfig.getAppConfig().journal.backgroundRefreshTime)
+      interval(this.appConfig.getAppConfig().journal.backgroundRefreshTime)
         .pipe(
           takeUntil(this.actions$.ofType(journalActions.STOP_POLLING)),
           mapTo({ type: journalActions.FETCH_JOURNAL })
