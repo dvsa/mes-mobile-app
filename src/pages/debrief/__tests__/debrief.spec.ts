@@ -1,19 +1,19 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
-import { WaitingRoomToCarPage } from '../waiting-room-to-car';
+import { DebriefPage } from '../debrief';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
-describe('WaitingRoomToCarPage', () => {
-  let fixture: ComponentFixture<WaitingRoomToCarPage>;
-  let component: WaitingRoomToCarPage;
+describe('DebriefPage', () => {
+  let fixture: ComponentFixture<DebriefPage>;
+  let component: DebriefPage;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WaitingRoomToCarPage],
+      declarations: [DebriefPage],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -25,7 +25,7 @@ describe('WaitingRoomToCarPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarPage);
+        fixture = TestBed.createComponent(DebriefPage);
         component = fixture.componentInstance;
       });
   }));

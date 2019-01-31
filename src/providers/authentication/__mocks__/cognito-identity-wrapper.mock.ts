@@ -16,7 +16,7 @@ export class CognitoIdentityWrapperMock {
 
   createIdentity() {
     return {
-      getPromise: jest.fn().mockResolvedValue(1)
+      getPromise: jasmine.createSpy().and.returnValue(Promise.resolve(1))
     }
   }
 

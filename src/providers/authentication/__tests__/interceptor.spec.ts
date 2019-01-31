@@ -11,7 +11,7 @@ import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { CognitoIdentityWrapperMock } from '../__mocks__/cognito-identity-wrapper.mock';
 import { Platform } from 'ionic-angular';
-import { PlatformMock } from 'ionic-mocks-jest';
+import { PlatformMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../authentication';
 import { AuthenticationProviderMock } from '../__mocks__/authentication.mock';
 import { UrlProvider } from '../../url/url';
@@ -44,7 +44,6 @@ describe('Authentication interceptor', () => {
       ]
     });
     platform = TestBed.get(Platform);
-    platform.is = jest.fn().mockReturnValue(false);
     httpMock = TestBed.get(HttpTestingController);
     interceptor = TestBed.get(AuthInterceptor);
     journalProvider = TestBed.get(JournalProvider);
@@ -59,26 +58,27 @@ describe('Authentication interceptor', () => {
     });
 
     it('should not modify the request if not on ios', () => {
+      platform.is = jasmine.createSpy().and.returnValue(false);
       journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
       );
       const httpRequest = httpMock.expectOne(journalUrl);
-      expect(httpRequest.request.headers.has('Authorization')).toBe(false);
-      expect(httpRequest.request.headers.has('X-Amz-Date')).toBe(false);
-      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBe(false);
+      expect(httpRequest.request.headers.has('Authorization')).toBeFalsy();
+      expect(httpRequest.request.headers.has('X-Amz-Date')).toBeFalsy();
+      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBeFalsy();
     });
 
     it('should add the signed headers if running on ios', () => {
-      platform.is = jest.fn().mockReturnValue(true);
+      platform.is = jasmine.createSpy().and.returnValue(true);
       journalProvider.getJournal(null).subscribe(
         res => {},
         err => {}
       );
       const httpRequest = httpMock.expectOne(journalUrl);
-      expect(httpRequest.request.headers.has('Authorization')).toBe(true);
-      expect(httpRequest.request.headers.has('X-Amz-Date')).toBe(true);
-      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBe(true);
+      expect(httpRequest.request.headers.has('Authorization')).toBeTruthy();
+      expect(httpRequest.request.headers.has('X-Amz-Date')).toBeTruthy();
+      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBeTruthy();
     });
 
   });
