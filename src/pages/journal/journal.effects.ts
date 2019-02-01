@@ -34,7 +34,7 @@ export class JournalEffects {
   }
 
   callJournalProvider$ = () => {
-    return of('value').pipe(
+    return of(null).pipe(
       withLatestFrom(
         this.store$.pipe(
           select(getJournalState),
