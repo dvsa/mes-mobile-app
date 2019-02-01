@@ -1,15 +1,15 @@
 export class AuthenticationProviderMock {
 
-  isAuthenticated = jasmine.createSpy().and.returnValue(true);
+  isAuthenticated = jasmine.createSpy('isAuthenticated').and.returnValue(true);
 
-  getAuthenticationToken = jasmine.createSpy().and.returnValue('token');
+  getAuthenticationToken = jasmine.createSpy('getAuthenticationToken').and.returnValue('token');
 
-  getEmployeeId = jasmine.createSpy().and.returnValue('12345678');
+  getEmployeeId = jasmine.createSpy('getEmployeeId').and.returnValue('12345678');
 
-  login = jasmine.createSpy().and.returnValue(new Promise(() => { }));
+  login = jasmine.createSpy('login').and.returnValue(new Promise(() => { }));
 
-  loginWithCredentials = jasmine.createSpy().and.returnValue(new Promise(() => { }));
+  loginWithCredentials = jasmine.createSpy('loginWithCredentials').and.returnValue(new Promise(() => { }));
 
-  logout = jasmine.createSpy().and.returnValue(new Promise(() => { }));
+  logout = jasmine.createSpy('logout').and.returnValue(new Promise(() => { }));
 }
 

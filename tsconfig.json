@@ -5,7 +5,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es2017"],
-    "types": ["jest", "node"],
+    "types": ["jasmine", "node"],
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,

@@ -16,7 +16,7 @@ export class CognitoIdentityWrapperMock {
 
   createIdentity() {
     return {
-      getPromise: jasmine.createSpy().and.returnValue(Promise.resolve(1))
+      getPromise: jasmine.createSpy('createIdentity').and.returnValue(Promise.resolve(1))
     }
   }
 

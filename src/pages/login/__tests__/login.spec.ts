@@ -45,8 +45,10 @@ describe('LoginPage', () => {
     });
 
     it('should login successfully', fakeAsync(() => {
-      component.platform.ready = jasmine.createSpy().and.returnValue(Promise.resolve());
-      component.authenticationProvider.login = jasmine.createSpy().and.returnValue(Promise.resolve());
+      component.platform.ready =
+        jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
+      component.authenticationProvider.login =
+        jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.login();
       tick()
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
@@ -55,9 +57,11 @@ describe('LoginPage', () => {
     }));
 
     it('should fail to login gracefully', fakeAsync(() => {
-      component.platform.ready = jasmine.createSpy().and.returnValue(Promise.resolve());
+      component.platform.ready =
+        jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
       authenticationProvider.login =
-        jasmine.createSpy().and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
+        jasmine.createSpy('authenticationProvider.login')
+          .and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
       component.login();
       tick();
       expect(component.authenticationError === AuthenticationError.NO_INTERNET);

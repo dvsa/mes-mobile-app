@@ -45,14 +45,15 @@ describe('Base Page', () => {
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
     it('should allow user access if authentication is required and device is not ios', () => {
-      platform.is = jasmine.createSpy().and.returnValue(false);
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
     it('should allow user access if authenticated , is an ios device and is required', () => {
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
     it('should not allow user access if user is not authenticated, authentication is required and device is ios', () => {
-      authenticationProvider.isAuthenticated = jasmine.createSpy().and.returnValue(false);
+      authenticationProvider.isAuthenticated =
+      jasmine.createSpy('authenticationProvider.isAuthenticated').and.returnValue(false);
       expect(basePageComponent.ionViewWillEnter()).toBe(false);
     });
 
@@ -60,11 +61,11 @@ describe('Base Page', () => {
 
   describe('isIos()', () => {
     it('should return true if platform is ios', () => {
-      platform.is = jasmine.createSpy().and.returnValue(true);
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       expect(basePageComponent.isIos()).toBe(true)
     });
     it('should return false if platform is not ios', () => {
-      platform.is = jasmine.createSpy().and.returnValue(false);
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       expect(basePageComponent.isIos()).toBe(false)
     });
   });
@@ -80,7 +81,7 @@ describe('Base Page', () => {
       });
     });
     it('should not try to logout when platform is not ios', () => {
-      platform.is = jasmine.createSpy().and.returnValue(false);
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
 
       basePageComponent.logout();
 
