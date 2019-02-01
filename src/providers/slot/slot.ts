@@ -40,7 +40,7 @@ export class SlotProvider {
   }
 
   /**
-   * Exentind the journal with empty days where there was no slots defined in the next 7 days
+   * Extending the journal with empty days where there was no slots defined in the next 7 days
    * @param slots Journal slots
    * @returns Slots with additional empty days 
    */
