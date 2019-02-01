@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, tap, throttleTime, catchError } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, tap, catchError, startWith } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -77,12 +77,15 @@ export class JournalEffects {
   pollingSetup$ = this.actions$.pipe(
     ofType(journalActions.SETUP_POLLING),
     switchMap((action$: journalActions.SetupPolling) => {
-      const pollInterval = this.appConfig.getAppConfig().journal.backgroundRefreshTime;
-      const pollTimer$ = interval(pollInterval);
-      const stopPolling$ = this.actions$
-        .pipe(
-          ofType(journalActions.STOP_POLLING),
-        );
+      // Switch map the manual refreshes so they restart the timer.
+      const manualRefreshes$ = this.actions$.pipe(
+        ofType(journalActions.LOAD_JOURNAL),
+        // Initial emission so poll doesn't wait until the first manual refresh
+        startWith(null),
+      );
+      const pollTimer$ = manualRefreshes$.pipe(
+        switchMap(() => interval(this.appConfig.getAppConfig().journal.backgroundRefreshTime))
+      );
 
       const netStateChanges$ = this.networkStateProvider.onNetworkChange()
           .pipe(
@@ -93,13 +96,12 @@ export class JournalEffects {
         pollTimer$,
         netStateChanges$,
       ).pipe(
-        takeUntil(stopPolling$),
         filter(([_, connectionStatus]) => connectionStatus === ConnectionStatus.ONLINE),
       );
 
       return pollsWhileOnline$
         .pipe(
-          throttleTime(pollInterval),
+          takeUntil(this.actions$.pipe(ofType(journalActions.STOP_POLLING))),
           tap(() => console.log('DOING A POLL')),
           mapTo({ type: journalActions.FETCH_JOURNAL }),
         );
