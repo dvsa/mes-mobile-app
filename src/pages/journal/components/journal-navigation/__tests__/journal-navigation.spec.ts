@@ -7,7 +7,7 @@ import { journalReducer } from '../../../journal.reducer';
 import { DebugElement } from '@angular/core';
 import { StoreModel } from '../../../../../common/store.model';
 import { LoadJournalSuccess, SetSelectedDate } from '../../../journal.actions';
-import journalSlotsDataMock from '../../../__mocks__/journal-slots-data.mock';
+import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
 import * as moment from 'moment';
 
@@ -109,7 +109,7 @@ describe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is the last available date', () => {
-      const selectedDay = moment().add(8, 'day').format('YYYY-MM-DD');
+      const selectedDay = moment().add(2, 'day').format('YYYY-MM-DD');
       beforeEach(() => {
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
