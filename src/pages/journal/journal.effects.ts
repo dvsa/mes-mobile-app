@@ -60,7 +60,14 @@ export class JournalEffects {
   @Effect()
   journal$ = this.actions$.pipe(
     ofType(journalActions.FETCH_JOURNAL),
-    switchMap(this.callJournalProvider$),
+    switchMap(
+      () => this.callJournalProvider$().pipe(
+        catchError(err => {
+          console.error(err);
+          return of();
+        })
+      )
+    ),
   );
 
   @Effect()
