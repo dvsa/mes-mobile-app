@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { JournalNavigationComponent } from '../journal-navigation';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { journalReducer } from '../../../journal.reducer';
 import { DebugElement } from '@angular/core';
 import { StoreModel } from '../../../../../common/store.model';
