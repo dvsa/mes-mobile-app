@@ -94,14 +94,9 @@ export class JournalEffects {
         switchMap(() => interval(this.appConfig.getAppConfig().journal.backgroundRefreshTime))
       );
 
-      const netStateChanges$ = this.networkStateProvider.onNetworkChange()
-          .pipe(
-            tap(() => console.log('*****NETWORK STATE CHANGE')),
-          );
-
       const pollsWhileOnline$ = combineLatest(
         pollTimer$,
-        netStateChanges$,
+        this.networkStateProvider.onNetworkChange(),
       ).pipe(
         filter(([_, connectionStatus]) => connectionStatus === ConnectionStatus.ONLINE),
       );
