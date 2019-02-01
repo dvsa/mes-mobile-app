@@ -26,10 +26,13 @@ export interface IAnalyticsProvider {
     PASS_FINALISATION = 'pass finalisation page',
     PASS_RESULTS_DEBRIEF = 'pass results debrief page',
     TEST = 'test report page',
+    TERMINATE_TEST = 'terminate test page',
     WAITING_ROOM = 'waiting room page',
     WAITING_ROOM_TO_CAR = 'waiting room to car page',
     WELCOME = 'welcome page',
-    CANDIDATE_DETAILS = 'candidate details page'
+    CANDIDATE_DETAILS = 'candidate details page',
+    DEBRIEF = 'debrief page',
+    LOGIN = 'login page'
   }
   
   export enum AnalyticsEventCategories {

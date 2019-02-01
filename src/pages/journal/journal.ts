@@ -105,7 +105,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.subscription.unsubscribe();
   }
 
-  ionViewDidEntr(): void {
+  ionViewDidEnter(): void {
     this.logging.setCurrentPage(AnalyticsScreenNames.JOURNAL);
   }
 

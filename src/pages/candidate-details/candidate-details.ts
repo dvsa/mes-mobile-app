@@ -14,6 +14,13 @@ import { getJournalState } from '../journal/journal.reducer';
 import { getSlotById, getSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
 import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import {
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+  AnalyticsScreenNames
+} from '../../providers/analytics/analytics.model';
+
 
 interface CandidateDetailsPageState {
   name$: Observable<string>,
@@ -40,7 +47,8 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    private store$: Store<StoreModel>
+    private store$: Store<StoreModel>,
+    public logging: AnalyticsProvider
   ) {
     super(platform, navController, authenticationProvider);
     this.slotId = navParams.get('slotId');
@@ -87,6 +95,11 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+  
+  ionViewDidEnter(): void {
+    this.logging.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+  }
+
 
   handleDoneButtonClick(): void {
     this.navController.pop();
