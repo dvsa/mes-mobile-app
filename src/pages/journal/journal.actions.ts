@@ -6,8 +6,6 @@ export const LOAD_JOURNAL = '[JournalPage] Load Journal';
 export const FETCH_JOURNAL = '[JournalPage] Fetch Journal';
 export const SETUP_POLLING = '[JournalPage] Setup Polling';
 export const STOP_POLLING = '[JournalPage] Stop Polling';
-export const LOAD_JOURNAL_POLLED = '[JournalPage] Load Journal Polled';
-export const CANCEL_JOURNAL_POLL = '[JournalPage] Cancel Journal Poll';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
 export const LOAD_JOURNAL_FAILURE = '[JournalEffects] Load Journal Failure';
 export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal';
@@ -37,13 +35,6 @@ export class LoadJournalFailure implements Action {
   constructor(public payload: MesError) {}
 }
 
-export class LoadJournalPolled implements Action {
-  readonly type = LOAD_JOURNAL_POLLED;
-}
-
-export class CancelJournalPoll implements Action {
-  readonly type = CANCEL_JOURNAL_POLL;
-}
 export class UnloadJournal implements Action {
   readonly type = UNLOAD_JOURNAL;
 }
@@ -81,8 +72,6 @@ export class StopPolling implements Action {
 export type Types = 
   | LoadJournal
   | FetchJournal
-  | LoadJournalPolled
-  | CancelJournalPoll
   | LoadJournalSuccess
   | LoadJournalFailure
   | UnloadJournal

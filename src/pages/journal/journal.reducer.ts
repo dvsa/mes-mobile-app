@@ -20,16 +20,6 @@ export function journalReducer(state = initialState, action: journalActions.Type
         isLoading: true,
         error: {message: '', status: 0, statusText: ''}
       };
-    case journalActions.LOAD_JOURNAL_POLLED:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case journalActions.CANCEL_JOURNAL_POLL:
-      return {
-        ...state,
-        isLoading: false,
-      };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
         ...state,
