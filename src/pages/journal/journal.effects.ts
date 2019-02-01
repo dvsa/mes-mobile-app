@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, map, withLatestFrom, takeUntil, mapTo, filter, tap, throttleTime } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, tap, throttleTime, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -33,35 +33,44 @@ export class JournalEffects {
   ) {
   }
 
+  callJournalProvider$ = () => {
+    return of('value').pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getJournalState),
+          map(getLastRefreshed)
+        ),
+        this.store$.pipe(
+          select(getJournalState),
+          map(getSlots)
+        )
+      ),
+      switchMap(([action, lastRefreshed, slots]) => {
+        return this.journalProvider
+          .getJournal(lastRefreshed)
+          .pipe(
+            map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
+            map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
+            map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
+          );
+      })
+    );
+  }
+
   @Effect()
   journal$ = this.actions$.pipe(
     ofType(journalActions.FETCH_JOURNAL),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        map(getLastRefreshed)
-      ),
-      this.store$.pipe(
-        select(getJournalState),
-        map(getSlots)
-      )
-    ),
-    switchMap(([action, lastRefreshed, slots]) => {
-      return this.journalProvider
-        .getJournal(lastRefreshed)
-        .pipe(
-          map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
-          map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
-          map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
-          catchError(err => of(new journalActions.LoadJournalFailure(err)))
-        );
-    })
+    switchMap(this.callJournalProvider$),
   );
 
   @Effect()
   loadJournal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL),
-    mapTo({ type: journalActions.FETCH_JOURNAL }),
+    switchMap(
+      () => this.callJournalProvider$().pipe(
+        catchError(err => of(new journalActions.LoadJournalFailure(err))),
+      )
+    ),
   );
 
   @Effect()

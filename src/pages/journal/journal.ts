@@ -136,7 +136,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
-    console.log(`HANDLELOADINGUI ISLOADING: ${isLoading}`);
     if (isLoading) {
       this.loadingSpinner = this.loadingController.create({
         dismissOnPageChange: true,
