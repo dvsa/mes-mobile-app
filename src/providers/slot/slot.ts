@@ -39,6 +39,35 @@ export class SlotProvider {
     });
   }
 
+  extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}) => {
+    const emptyDays = {
+      [moment().add(0, 'day').format('YYYY-MM-DD')]: [],
+      [moment().add(1, 'day').format('YYYY-MM-DD')]: [],
+      [moment().add(2, 'day').format('YYYY-MM-DD')]: [],
+      [moment().add(3, 'day').format('YYYY-MM-DD')]: [],
+      [moment().add(4, 'day').format('YYYY-MM-DD')]: [],
+      [moment().add(5, 'day').format('YYYY-MM-DD')]: [],
+      [moment().add(6, 'day').format('YYYY-MM-DD')]: [],
+    };
+
+    return {
+      ...emptyDays,
+      ...slots,
+    }
+  }
+
+  getRelevantDays = (slots: {[k: string]: SlotItem[]}) => {
+    const friday = 5;
+    const daysAhead = moment().day() === friday ? 4 : 2;
+
+    const result = Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
+      ...acc,
+      [date]: slots[date],
+    }), {});
+
+    return result;
+  }
+
   getSlotDate = (slot: any): string => moment(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }
