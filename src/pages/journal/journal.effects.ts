@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, map, withLatestFrom, takeUntil, mapTo } from 'rxjs/operators';
+import { switchMap, catchError, map, withLatestFrom, takeUntil, mapTo, filter, tap, throttleTime } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -18,6 +18,8 @@ import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
+import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Injectable()
 export class JournalEffects {
@@ -26,7 +28,8 @@ export class JournalEffects {
     private journalProvider: JournalProvider,
     private slotProvider: SlotProvider,
     private store$: Store<StoreModel>,
-    public appConfig: AppConfigProvider
+    public appConfig: AppConfigProvider,
+    public networkStateProvider: NetworkStateProvider,
   ) {
   }
 
@@ -64,13 +67,34 @@ export class JournalEffects {
   @Effect()
   pollingSetup$ = this.actions$.pipe(
     ofType(journalActions.SETUP_POLLING),
-    switchMap((action$: journalActions.SetupPolling) =>
-      interval(this.appConfig.getAppConfig().journal.backgroundRefreshTime)
+    switchMap((action$: journalActions.SetupPolling) => {
+      const pollInterval = this.appConfig.getAppConfig().journal.backgroundRefreshTime;
+      const pollTimer$ = interval(pollInterval);
+      const stopPolling$ = this.actions$
         .pipe(
-          takeUntil(this.actions$.ofType(journalActions.STOP_POLLING)),
-          mapTo({ type: journalActions.FETCH_JOURNAL })
-        )
-    )
+          ofType(journalActions.STOP_POLLING),
+        );
+
+      const netStateChanges$ = this.networkStateProvider.onNetworkChange()
+          .pipe(
+            tap(() => console.log('*****NETWORK STATE CHANGE')),
+          );
+
+      const pollsWhileOnline$ = combineLatest(
+        pollTimer$,
+        netStateChanges$,
+      ).pipe(
+        takeUntil(stopPolling$),
+        filter(([_, connectionStatus]) => connectionStatus === ConnectionStatus.ONLINE),
+      );
+
+      return pollsWhileOnline$
+        .pipe(
+          throttleTime(pollInterval),
+          tap(() => console.log('DOING A POLL')),
+          mapTo({ type: journalActions.FETCH_JOURNAL }),
+        );
+    }),
   );
 
   @Effect()
