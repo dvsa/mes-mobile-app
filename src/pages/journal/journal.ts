@@ -20,7 +20,6 @@ import { StoreModel } from '../../common/store.model';
 import {
   getError,
   getIsLoading,
-  getIsPolling,
   getLastRefreshed,
   getLastRefreshedTime,
   getSlotsOnSelectedDate,
@@ -37,7 +36,6 @@ interface JournalPageState {
   slots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
-  isPolling$: Observable<boolean>,
   lastRefreshedTime$: Observable<string>,
 }
 
@@ -92,10 +90,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       isLoading$: this.store$.pipe(
         select(getJournalState),
         map(getIsLoading)
-      ),
-      isPolling$: this.store$.pipe(
-        select(getJournalState),
-        map(getIsPolling)
       ),
       lastRefreshedTime$: this.store$.pipe(
         select(getJournalState),
@@ -159,7 +153,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   showError = (error: MesError): void => {
-    if (this.pageState.isPolling$) return;
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();

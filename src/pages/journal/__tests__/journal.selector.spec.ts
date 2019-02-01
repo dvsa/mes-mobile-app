@@ -7,7 +7,6 @@ describe('JournalSelector', () => {
 
   const state: JournalModel = {
     isLoading: true,
-    isPolling: false,
     lastRefreshed: new Date(0),
     slots: {
       '2019-01-17': [
@@ -80,7 +79,6 @@ describe('JournalSelector', () => {
     it('should return true if there are any next days', () => {
       const journal: JournalModel = {
         isLoading: true,
-        isPolling: false,
         lastRefreshed: new Date(0),
         slots: {
           '2019-01-29': [
@@ -107,7 +105,6 @@ describe('JournalSelector', () => {
     it('should return false if there are no next days', () => {
       const journal: JournalModel = {
         isLoading: true,
-        isPolling: false,
         lastRefreshed: new Date(0),
         slots: {
           '2019-01-29': [
@@ -130,7 +127,6 @@ describe('JournalSelector', () => {
     it('should return false if selected day is today', () => {
       const journal: JournalModel = {
         isLoading: true,
-        isPolling: false,
         lastRefreshed: new Date(0),
         slots: {
           [moment().format('YYYY-MM-DD')]: [
@@ -151,7 +147,6 @@ describe('JournalSelector', () => {
     it('should return true if selected day is not today and we have days to go to', () => {
       const journal: JournalModel = {
         isLoading: true,
-        isPolling: false,
         lastRefreshed: new Date(0),
         slots: {
           [moment().format('YYYY-MM-DD')]: [

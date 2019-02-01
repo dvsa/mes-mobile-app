@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -45,6 +47,7 @@ describe('Journal Effects', () => {
         },
         { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         SlotProvider,
       ]
     });
