@@ -46,7 +46,7 @@ export class JournalEffects {
           map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
           map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
           map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.extendWithEmptyDays(slots)),
-          map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantDays(slots)),
+          map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantSlots(slots)),
           map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           catchError(err => of(new journalActions.LoadJournalFailure(err)))
         );

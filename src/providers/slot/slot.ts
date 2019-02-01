@@ -39,7 +39,12 @@ export class SlotProvider {
     });
   }
 
-  extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}) => {
+  /**
+   * Exentind the journal with empty days where there was no slots defined in the next 7 days
+   * @param slots Journal slots
+   * @returns Slots with additional empty days 
+   */
+  extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
     const emptyDays = {
       [moment().add(0, 'day').format('YYYY-MM-DD')]: [],
       [moment().add(1, 'day').format('YYYY-MM-DD')]: [],
@@ -56,16 +61,23 @@ export class SlotProvider {
     }
   }
 
-  getRelevantDays = (slots: {[k: string]: SlotItem[]}) => {
+  /**
+   * Slice the journal slots and get the slots only for the relevant days
+   * | From regular working weekday we can see the next working weekday
+   * | From Friday we can navigate through weekend till Monday
+   * @param slots Journal slots
+   * @returns Only the relevant slots
+   */
+  getRelevantSlots = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
+    // we have to take in consideration if it's Friday so that we can navigate through the weekend till the next working weekday
+    // if it's not Friday we just need to navigate to the next working weekday day
     const friday = 5;
     const daysAhead = moment().day() === friday ? 4 : 2;
 
-    const result = Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
+    return Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
       ...acc,
       [date]: slots[date],
     }), {});
-
-    return result;
   }
 
   getSlotDate = (slot: any): string => moment(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
