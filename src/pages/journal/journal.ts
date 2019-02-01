@@ -22,8 +22,6 @@ import {
   AnalyticsScreenNames
 } from '../../providers/analytics/analytics.model';
 
-import { SelectMultipleControlValueAccessor } from '@angular/forms';
-
 interface JournalPageState {
   slots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
