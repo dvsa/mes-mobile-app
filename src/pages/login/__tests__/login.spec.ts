@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks';
 
@@ -13,9 +13,9 @@ import { By } from '@angular/platform-browser';
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
   let component: LoginPage;
-  //  let navController: NavController;
-  // let splashScreen: SplashScreen;
-  //let authenticationProvider: AuthenticationProvider;
+  let navController: NavController;
+  let splashScreen: SplashScreen;
+  let authenticationProvider: AuthenticationProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,9 +33,9 @@ describe('LoginPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(LoginPage);
         component = fixture.componentInstance;
-        //      navController = TestBed.get(NavController);
-        //    splashScreen = TestBed.get(SplashScreen);
-        //  authenticationProvider = TestBed.get(AuthenticationProvider);
+        navController = TestBed.get(NavController);
+        splashScreen = TestBed.get(SplashScreen);
+        authenticationProvider = TestBed.get(AuthenticationProvider);
       });
   }));
 
@@ -44,30 +44,26 @@ describe('LoginPage', () => {
       expect(component).toBeDefined();
     });
 
-    /* it('should login successfully', async (done) => {
+    it('should login successfully', fakeAsync(() => {
+      component.platform.ready = jasmine.createSpy().and.returnValue(Promise.resolve());
+      component.authenticationProvider.login = jasmine.createSpy().and.returnValue(Promise.resolve());
+      component.login();
+      tick()
+      expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
+      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(splashScreen.hide).toHaveBeenCalledTimes(1);
+    }));
 
-       component.platform.ready = jasmine.createSpy().and.returnValue(Promise.resolve());
-       component.authenticationProvider.login = jasmine.createSpy().and.returnValue(Promise.resolve());
-
-       await component.login();
-       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
-       expect(component.hasUserLoggedOut).toBeFalsy();
-       expect(splashScreen.hide).toHaveBeenCalledTimes(1);
-       done();
-     });
-
-     it('should fail to login gracefully', (done) => {
-       component.platform.ready = jasmine.createSpy().and.returnValue(Promise.resolve());
-       authenticationProvider.login =
-         jasmine.createSpy().and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
-
-       component.login().catch(() => {
-         expect(component.authenticationError === AuthenticationError.NO_INTERNET);
-         expect(component.hasUserLoggedOut).toBeFalsy();
-         expect(splashScreen.hide).toHaveBeenCalledTimes(1);
-         done();
-       });
-     }); */
+    it('should fail to login gracefully', fakeAsync(() => {
+      component.platform.ready = jasmine.createSpy().and.returnValue(Promise.resolve());
+      authenticationProvider.login =
+        jasmine.createSpy().and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
+      component.login();
+      tick();
+      expect(component.authenticationError === AuthenticationError.NO_INTERNET);
+      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(splashScreen.hide).toHaveBeenCalledTimes(1);
+    }));
 
     it('should return true for isInternetConnectError when criteria is met', () => {
       component.authenticationError = AuthenticationError.NO_INTERNET;
