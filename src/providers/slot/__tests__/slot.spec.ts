@@ -1,8 +1,10 @@
 import { TestBed } from '@angular/core/testing';
+import { cloneDeep } from 'lodash';
 
 import { SlotProvider } from '../slot';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
-import { cloneDeep } from 'lodash';
+
+const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
 describe('SlotProvider', () => {
   let slotProvider;
@@ -239,6 +241,17 @@ describe('SlotProvider', () => {
       const result = slotProvider.getSlotDate(slot);
 
       expect(result).toBe('2019-01-21');
-    })
-  })
+    });
+  });
+
+  describe('extendWithEmptyDays', () => {
+    it('should have all days of the week', () => {
+      const slotsWithEmptyDays = slotProvider.extendWithEmptyDays(journalSlotsMissingDays);
+      
+      const numberOfDays = Object.keys(slotsWithEmptyDays).length;
+      
+      expect(numberOfDays).toBe(9);
+    });
+  });
+
 });
