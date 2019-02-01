@@ -19,13 +19,13 @@ export class PassFinalisationPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public logging: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navCtrl, authenticationProvider)
   }
 
   ionViewDidEnter(): void {
-    this.logging.setCurrentPage(AnalyticsScreenNames.PASS_FINALISATION);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_FINALISATION);
   }
 
 }

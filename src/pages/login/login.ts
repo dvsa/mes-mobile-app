@@ -28,7 +28,7 @@ export class LoginPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public splashScreen: SplashScreen,
-    public logging: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -47,7 +47,7 @@ export class LoginPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.logging.setCurrentPage(AnalyticsScreenNames.LOGIN);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.LOGIN);
   }
 
   login = (): Promise<any> =>

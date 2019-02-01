@@ -20,13 +20,13 @@ export class TestReportPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public logging: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navCtrl, authenticationProvider)
   }
 
   ionViewDidEnter(): void {
-    this.logging.setCurrentPage(AnalyticsScreenNames.TEST);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
   }
 
 }

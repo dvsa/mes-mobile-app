@@ -16,8 +16,6 @@ import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsEventCategories,
-  AnalyticsEvents,
   AnalyticsScreenNames
 } from '../../providers/analytics/analytics.model';
 
@@ -48,7 +46,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private store$: Store<StoreModel>,
-    public logging: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navController, authenticationProvider);
     this.slotId = navParams.get('slotId');
@@ -97,7 +95,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
   
   ionViewDidEnter(): void {
-    this.logging.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
   }
 
 

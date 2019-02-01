@@ -60,7 +60,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
-    public logging: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -106,7 +106,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ionViewDidEnter(): void {
-    this.logging.setCurrentPage(AnalyticsScreenNames.JOURNAL);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
   }
 
   loadJournal() {
@@ -181,7 +181,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
     // TODO define more AnalyticsEvents for where it is going to - don't think start test is right here.
-    this.logging.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
+    this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
   }
 
   logout() {

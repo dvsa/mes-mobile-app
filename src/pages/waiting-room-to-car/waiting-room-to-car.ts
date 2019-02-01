@@ -18,13 +18,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public logging: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navCtrl, authenticationProvider)
   }
 
   ionViewDidEnter(): void {
-    this.logging.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
   }
 
 }
