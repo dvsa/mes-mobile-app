@@ -61,8 +61,10 @@ Then('I should see the {string} page', (pageTitle) => {
 
 Given('I am on the journal page as {string}', (username) => {
   // If we are not already logged in do so now and then load the application
-  loggedIn().then((response) => {
+  loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
     if (!response) {
+      // If not logged in as the right user logout and log in as the correct user
+      logout();
       logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
     }
   });
@@ -78,6 +80,26 @@ When('I view candidate details for {string}', (candidateName) => {
 When('I start the test for {string}', (candidateName) => {
   const buttonElement = element(by.xpath(`//button/span[text()[normalize-space(.) = "Start test"]][ancestor::ion-row/ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
   return clickElement(buttonElement);
+});
+
+Then('I have a special needs slot for {string}', (candidateName) => {
+  const exclamationIndicator = element(by.xpath(`//indicators/div/img[@class = "exclamation-indicator"][ancestor::ion-row/ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
+  return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
+});
+
+Then('I have a welsh slot for {string}', (candidateName) => {
+  const exclamationIndicator = element(by.xpath(`//ion-row/ion-col/img[@class = "welsh-language-indicator"][ancestor::ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
+  return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
+});
+
+Then('I should see the {string} contains {string}', (rowName, rowValue) => {
+  const exclamationIndicator = element(by.xpath(`//ion-col/label[text()= "${rowName}"][parent::ion-col/parent::ion-row//*[text() = "${rowValue}"]]`));
+  return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
+});
+
+When('I refresh the journal', () => {
+  const refreshButton = element(by.xpath('//button/span/span[text() = "Refresh"]'));
+  return clickElement(refreshButton);
 });
 
 // After hook to take screenshots of page
@@ -128,9 +150,9 @@ function logInToApplication(username, password) {
 }
 
 // Checks whether the user is logged in. This will need updating as it only checks for the existance of the logout button.
-function loggedIn() {
+function loggedInAs(staffNumber) {
   browser.driver.sleep(3000);
-  const logout = element(by.xpath('//button/span[contains(text(), "Logout")]'));
+  const logout = element(by.xpath(`//button/span[contains(text(), "Logout (Employee ID: ${staffNumber}")]`));
   return logout.isPresent();
 }
 
