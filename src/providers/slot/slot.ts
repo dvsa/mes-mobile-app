@@ -49,7 +49,7 @@ export class SlotProvider {
     const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
 
     const days = times(numberOfDaysToView, (d: number): string => moment().add(d, 'day').format('YYYY-MM-DD'));
-    const emptyDays = days.reduce((days: {[k: string]: []}, day: string) => ({ ...days, [day]: []}), {});
+    const emptyDays = days.reduce((days: {[k: string]: SlotItem[]}, day: string) => ({ ...days, [day]: []}), {});
 
     return {
       ...emptyDays,
