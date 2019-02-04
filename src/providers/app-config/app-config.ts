@@ -61,7 +61,7 @@ export class AppConfigProvider {
       },
       journal: {
         journalUrl: data.journal.journalUrl,
-        backgroundRefreshTime: data.journal.backgroundRefreshTime
+        backgroundRefreshTime: data.journal.backgroundRefreshTime || 15000,
       }
     }
   }
