@@ -15,8 +15,9 @@ export type EnvironmentFile = {
   },
   aws?: {
     region: string;
-  }
+  },
   journal?: {
-    journalUrl: string
-  }
+    journalUrl: string,
+    numberOfDaysToView: number,
+  },
 }
