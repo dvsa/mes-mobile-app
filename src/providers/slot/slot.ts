@@ -5,11 +5,12 @@ import * as moment from 'moment';
 
 import { SlotItem } from '../slot-selector/slot-item';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
+import { AppConfigProvider } from '../app-config/app-config';
 
 @Injectable()
 export class SlotProvider {
 
-  constructor() {}
+  constructor(public appConfigProvider: AppConfigProvider) {}
 
   detectSlotChanges(slots: {[k: string]: SlotItem[]}, newJournal: ExaminerWorkSchedule): SlotItem[] {
     const newSlots = flatten([
@@ -45,6 +46,10 @@ export class SlotProvider {
    * @returns Slots with additional empty days 
    */
   extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
+    const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
+
+    console.log(numberOfDaysToView);
+
     const emptyDays = {
       [moment().add(0, 'day').format('YYYY-MM-DD')]: [],
       [moment().add(1, 'day').format('YYYY-MM-DD')]: [],

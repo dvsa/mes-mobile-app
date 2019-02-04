@@ -10,6 +10,8 @@ import { JournalProviderMock } from '../../../providers/journal/__mocks__/journa
 import { SlotProvider } from '../../../providers/slot/slot';
 import { StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -33,6 +35,7 @@ describe('Journal Effects', () => {
         }),
       ],
       providers: [
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         JournalEffects,
         {
           provide: Actions,

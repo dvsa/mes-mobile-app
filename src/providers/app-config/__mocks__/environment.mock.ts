@@ -23,6 +23,7 @@ export const localEnvironmentMock: EnvironmentFile = {
     region: 'aws-region'
   },
   journal: {
-    journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal'
+    journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',
+    numberOfDaysToView: 7,
   }
 }

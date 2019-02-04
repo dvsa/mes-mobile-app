@@ -3,6 +3,8 @@ import { cloneDeep } from 'lodash';
 
 import { SlotProvider } from '../slot';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
+import { AppConfigProvider } from '../../app-config/app-config';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 
 const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
@@ -14,6 +16,7 @@ describe('SlotProvider', () => {
       imports: [
       ],
       providers: [
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         SlotProvider
       ],
     });
