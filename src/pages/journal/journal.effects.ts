@@ -19,7 +19,6 @@ import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Injectable()
 export class JournalEffects {
@@ -94,12 +93,11 @@ export class JournalEffects {
         switchMap(() => interval(this.appConfig.getAppConfig().journal.backgroundRefreshTime))
       );
 
-      const pollsWhileOnline$ = combineLatest(
-        pollTimer$,
-        this.networkStateProvider.onNetworkChange(),
-      ).pipe(
-        filter(([_, connectionStatus]) => connectionStatus === ConnectionStatus.ONLINE),
-      );
+      const pollsWhileOnline$ = pollTimer$
+        .pipe(
+          withLatestFrom(this.networkStateProvider.onNetworkChange()),
+          filter(([_, connectionStatus]) => connectionStatus === ConnectionStatus.ONLINE),
+        );
 
       return pollsWhileOnline$
         .pipe(
