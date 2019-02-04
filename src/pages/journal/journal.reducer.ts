@@ -9,7 +9,7 @@ export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
   slots: {},
-  selectedDate: moment().add(4, 'days').format('YYYY-MM-DD'),
+  selectedDate: moment().format('YYYY-MM-DD'),
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {

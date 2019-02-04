@@ -250,7 +250,7 @@ describe('SlotProvider', () => {
       
       const numberOfDays = Object.keys(slotsWithEmptyDays).length;
       
-      expect(numberOfDays).toBe(9);
+      expect(numberOfDays).toBe(8);
     });
   });
 
