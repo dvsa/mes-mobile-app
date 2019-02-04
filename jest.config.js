@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'jest-preset-angular',
   roots: ['src'],
+  modulePathIgnorePatterns: ["spec.ts"], // Migrated tests should be run by Jasmine
   setupTestFrameworkScriptFile: '<rootDir>/src/setupJest.ts',
   transformIgnorePatterns: ['node_modules/(?!@ngrx|@ionic-native|@ionic)'],
   collectCoverage: true,

@@ -12,7 +12,7 @@ exports.config = {
     //fullReset: true,
     app: appPath,
     automationName: 'XCUITest',
-    isHeadless: true
+    isHeadless: false
   },
   specs: ['./test/e2e/features/*.feature'],
   framework: 'custom',
