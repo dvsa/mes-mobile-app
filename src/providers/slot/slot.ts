@@ -72,11 +72,11 @@ export class SlotProvider {
     // we have to take in consideration if it's Friday so that we can navigate through the weekend till the next working weekday
     // if it's not Friday we just need to navigate to the next working weekday day
     const friday = 5;
-    const daysAhead = moment().add(4, 'days').day() === friday ? 4 : 2;
+    const daysAhead = moment().day() === friday ? 4 : 2;
 
     console.log('slots', slots);
 
-    return Object.keys(slots).slice(4, 4 + daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
+    return Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
       ...acc,
       [date]: slots[date],
     }), {});
