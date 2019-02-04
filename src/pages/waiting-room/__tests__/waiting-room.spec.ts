@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
 import { WaitingRoomPage } from '../waiting-room';

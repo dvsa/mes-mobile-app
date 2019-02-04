@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Platform, NavController } from 'ionic-angular';
-import { PlatformMock, NavControllerMock } from 'ionic-mocks-jest';
+import { PlatformMock, NavControllerMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../providers/authentication/__mocks__/authentication.mock';
 import { BasePageComponent } from '../base-page';
@@ -45,14 +45,15 @@ describe('Base Page', () => {
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
     it('should allow user access if authentication is required and device is not ios', () => {
-      platform.is = jest.fn().mockReturnValue(false);
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
     it('should allow user access if authenticated , is an ios device and is required', () => {
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
     it('should not allow user access if user is not authenticated, authentication is required and device is ios', () => {
-      authenticationProvider.isAuthenticated = jest.fn().mockReturnValue(false);
+      authenticationProvider.isAuthenticated =
+      jasmine.createSpy('authenticationProvider.isAuthenticated').and.returnValue(false);
       expect(basePageComponent.ionViewWillEnter()).toBe(false);
     });
 
@@ -60,13 +61,11 @@ describe('Base Page', () => {
 
   describe('isIos()', () => {
     it('should return true if platform is ios', () => {
-      platform.is = jest.fn().mockReturnValue(true);
-
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       expect(basePageComponent.isIos()).toBe(true)
     });
     it('should return false if platform is not ios', () => {
-      platform.is = jest.fn().mockReturnValue(false);
-
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       expect(basePageComponent.isIos()).toBe(false)
     });
   });
@@ -75,19 +74,19 @@ describe('Base Page', () => {
     it('should try to logout when platform is ios', () => {
       basePageComponent.logout();
 
-      expect(authenticationProvider.logout).toBeCalledTimes(1)
-      expect(navController.setRoot).toBeCalledTimes(1);
-      expect(navController.setRoot).toBeCalledWith('LoginPage', {
+      expect(authenticationProvider.logout).toHaveBeenCalledTimes(1)
+      expect(navController.setRoot).toHaveBeenCalledTimes(1);
+      expect(navController.setRoot).toHaveBeenCalledWith('LoginPage', {
         hasLoggedOut: true
       });
     });
     it('should not try to logout when platform is not ios', () => {
-      platform.is = jest.fn().mockReturnValue(false);
+      platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
 
       basePageComponent.logout();
 
-      expect(authenticationProvider.logout).toBeCalledTimes(0)
-      expect(navController.setRoot).toBeCalledTimes(0);
+      expect(authenticationProvider.logout).toHaveBeenCalledTimes(0)
+      expect(navController.setRoot).toHaveBeenCalledTimes(0);
     });
   });
 

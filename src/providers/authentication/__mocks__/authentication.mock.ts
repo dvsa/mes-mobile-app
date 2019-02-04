@@ -1,21 +1,15 @@
 export class AuthenticationProviderMock {
 
-  isAuthenticated = jest.fn().mockReturnValue(true);
+  isAuthenticated = jasmine.createSpy('isAuthenticated').and.returnValue(true);
 
-  getAuthenticationToken = jest.fn().mockReturnValue('token');
+  getAuthenticationToken = jasmine.createSpy('getAuthenticationToken').and.returnValue('token');
 
-  getEmployeeId = jest.fn().mockReturnValue('12345678');
+  getEmployeeId = jasmine.createSpy('getEmployeeId').and.returnValue('12345678');
 
-  login = jest.fn(() => {
-    return new Promise(() => {});
-  })
+  login = jasmine.createSpy('login').and.returnValue(new Promise(() => { }));
 
-  loginWithCredentials = jest.fn(() => {
-    return new Promise(() => {});
-  })
+  loginWithCredentials = jasmine.createSpy('loginWithCredentials').and.returnValue(new Promise(() => { }));
 
-  logout =  jest.fn(() => {
-    return new Promise(() => { });
-  })
-
+  logout = jasmine.createSpy('logout').and.returnValue(new Promise(() => { }));
 }
+

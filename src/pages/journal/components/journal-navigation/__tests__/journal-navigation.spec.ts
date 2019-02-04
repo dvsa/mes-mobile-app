@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { JournalNavigationComponent } from '../journal-navigation';
 import { IonicModule, Config } from 'ionic-angular';
-import { ConfigMock } from 'ionic-mocks-jest';
+import { ConfigMock } from 'ionic-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { journalReducer } from '../../../journal.reducer';
 import { DebugElement } from '@angular/core';
@@ -74,7 +74,7 @@ describe('JournalNavigationComponent', () => {
         fixture.detectChanges();
         const nextDayContainer: DebugElement = componentEl.query(By.css('#next-day-container'));
         expect(nextDayContainer).not.toBeNull();
-      }); 
+      });
     });
 
     describe('selected date is day in the middle', () => {
@@ -82,7 +82,7 @@ describe('JournalNavigationComponent', () => {
       beforeEach(() => {
         store$.dispatch(new SetSelectedDate(nextDay));
       });
-      
+
       it('shows previous day button', () => {
         fixture.detectChanges();
         const previousDayContainer: DebugElement = componentEl.query(By.css('#previous-day-container'));
@@ -107,13 +107,13 @@ describe('JournalNavigationComponent', () => {
         expect(nextDayContainer).not.toBeNull();
       });
     });
-    
+
     describe('selected date is the last available date', () => {
       const selectedDay = moment().add(5, 'day').format('YYYY-MM-DD');
       beforeEach(() => {
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
-      
+
       it('shows previous day button', () => {
         fixture.detectChanges();
         const previousDayContainer: DebugElement = componentEl.query(By.css('#previous-day-container'));
@@ -138,6 +138,6 @@ describe('JournalNavigationComponent', () => {
         expect(nextDayContainer).toBeNull();
       });
     });
-    
+
   });
 });
