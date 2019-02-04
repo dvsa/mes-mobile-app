@@ -154,12 +154,12 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         spinner: 'circles'
       });
       this.loadingSpinner.present();
-    } else {
-      this.pageRefresher ? this.pageRefresher.complete() : null;
-      if (this.loadingSpinner) {
-        this.loadingSpinner.dismiss();
-        this.loadingSpinner = null;
-      }
+      return;
+    }
+    this.pageRefresher ? this.pageRefresher.complete() : null;
+    if (this.loadingSpinner) {
+      this.loadingSpinner.dismiss();
+      this.loadingSpinner = null;
     }
   };
 
