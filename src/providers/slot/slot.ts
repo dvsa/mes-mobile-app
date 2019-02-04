@@ -48,8 +48,8 @@ export class SlotProvider {
   extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
     const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
 
-    const days = times(numberOfDaysToView, (d: number) => moment().add(d, 'day').format('YYYY-MM-DD'));
-    const emptyDays = days.reduce((days, day) => ({ ...days, [day]: []}), {});
+    const days = times(numberOfDaysToView, (d: number): string => moment().add(d, 'day').format('YYYY-MM-DD'));
+    const emptyDays = days.reduce((days: {[k: string]: []}, day: string) => ({ ...days, [day]: []}), {});
 
     return {
       ...emptyDays,
@@ -65,12 +65,14 @@ export class SlotProvider {
    * @returns Only the relevant slots
    */
   getRelevantSlots = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
-    // we have to take in consideration if it's Friday so that we can navigate through the weekend till the next working weekday
-    // if it's not Friday we just need to navigate to the next working weekday day
+    // we have to take in consideration if it's Friday so that we can navigate through the weekend till the next working weekday (Monday)
+    // if it's not Friday 
+    // we need to check if it's Saturday so that we can navigate till Monday
+    // otherwise we just go to next day
     const friday = 5;
-    const daysAhead = moment().day() === friday ? 4 : 2;
-
-    console.log('slots', slots);
+    const saturday = 6;
+    const today = moment().day();
+    const daysAhead = today === friday ? 4 : today === saturday ? 3 : 2;
 
     return Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
       ...acc,
