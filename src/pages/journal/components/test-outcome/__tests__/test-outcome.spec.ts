@@ -3,6 +3,9 @@ import { IonicModule, NavController } from 'ionic-angular';
 import { TestOutcomeComponent } from '../test-outcome';
 import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
+import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
+import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
+
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -14,6 +17,8 @@ describe('Test Outcome', () => {
       imports: [IonicModule.forRoot(TestOutcomeComponent)],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance },
+        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+
       ]
     })
       .compileComponents()
