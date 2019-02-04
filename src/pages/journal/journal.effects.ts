@@ -59,7 +59,7 @@ export class JournalEffects {
 
   @Effect()
   journal$ = this.actions$.pipe(
-    ofType(journalActions.FETCH_JOURNAL),
+    ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
       () => this.callJournalProvider$().pipe(
         catchError(err => {
@@ -105,7 +105,7 @@ export class JournalEffects {
         .pipe(
           takeUntil(this.actions$.pipe(ofType(journalActions.STOP_POLLING))),
           tap(() => console.log('DOING A POLL')),
-          mapTo({ type: journalActions.FETCH_JOURNAL }),
+          mapTo({ type: journalActions.LOAD_JOURNAL_SILENT }),
         );
     }),
   );

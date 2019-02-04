@@ -3,7 +3,7 @@ import { MesError } from '../../common/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
-export const FETCH_JOURNAL = '[JournalPage] Fetch Journal';
+export const LOAD_JOURNAL_SILENT = '[JournalPage] Load Journal Silently';
 export const SETUP_POLLING = '[JournalPage] Setup Polling';
 export const STOP_POLLING = '[JournalPage] Stop Polling';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
@@ -19,8 +19,8 @@ export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
 }
 
-export class FetchJournal implements Action {
-  readonly type = FETCH_JOURNAL;
+export class LoadJournalSilent implements Action {
+  readonly type = LOAD_JOURNAL_SILENT;
 }
 
 export class LoadJournalSuccess implements Action {
@@ -71,7 +71,7 @@ export class StopPolling implements Action {
 
 export type Types = 
   | LoadJournal
-  | FetchJournal
+  | LoadJournalSilent
   | LoadJournalSuccess
   | LoadJournalFailure
   | UnloadJournal
