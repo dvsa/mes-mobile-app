@@ -4,7 +4,7 @@ import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, LoadingCont
 
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
-// import { DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule, Store } from '@ngrx/store';
@@ -20,6 +20,7 @@ import { StoreModel } from '../../../common/store.model';
 
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
+import { By } from '@angular/platform-browser';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -29,7 +30,7 @@ describe('JournalPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JournalPage, JournalNavigationComponent ],
+      declarations: [JournalPage, JournalNavigationComponent],
       imports: [
         IonicModule,
         AppModule,
@@ -46,8 +47,8 @@ describe('JournalPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: SlotSelectorProvider, useClass: SlotSelectorProvider},
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock},
+        { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
       ]
     })
       .compileComponents()
@@ -57,10 +58,10 @@ describe('JournalPage', () => {
         component.subscription = new Subscription();
       });
 
-      store$ = TestBed.get(Store);
-      spyOn(store$, 'dispatch');
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
 
-      loadingControllerMock = TestBed.get(LoadingController);
+    loadingControllerMock = TestBed.get(LoadingController);
   }));
 
   describe('Class', () => {
@@ -90,18 +91,17 @@ describe('JournalPage', () => {
 
   describe('DOM', () => {
     // Unit tests for the components template
-    // let componentEl: DebugElement;
+    let componentEl: DebugElement;
 
     beforeEach(() => {
-      // componentEl = fixture.debugElement;
+      componentEl = fixture.debugElement;
 
       // Manually dispatching an action which loads slots to the store
       store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
     });
 
     // TODO - Come back and look at this test
-    /*
-    it('there should be one slot for every journal entry', () => {
+    xit('there should be one slot for every journal entry', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
       expect(slotsList.children.length).toBe(0);
 
@@ -113,6 +113,5 @@ describe('JournalPage', () => {
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
     });
-    */
   });
 });
