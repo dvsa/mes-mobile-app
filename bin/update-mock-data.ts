@@ -109,7 +109,7 @@ class DateUpdater {
     if (date) {
       return moment(date, this.dateFormat, true);
     }
-    return moment()
+    return moment().add(4, 'days');
   };
 
   private updateDate = (currentDate: moment.Moment, newDate: moment.Moment): string => {
@@ -123,6 +123,12 @@ class DateUpdater {
 
       const daysToAdd = this.caculateDiffInDays(itemDate, dateProcessing)
       newDate.add(daysToAdd, 'days');
+
+      // Skip Sunday's
+      const sunday = 0;
+      if(newDate.day() === sunday) {
+        newDate.add('1');
+      }
       return this.createMoment(itemDate);
     };
 
