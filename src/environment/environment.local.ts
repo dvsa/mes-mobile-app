@@ -2,7 +2,7 @@ import { EnvironmentFile } from './models/environment.model';
 
 export const environment : EnvironmentFile = {
   isRemote: false,
-  googleAnalyticsId: 'UA-129814222-1',
+  googleAnalyticsId: 'UA-129489007-3',
   userIdDimensionIndex: 1,
   authentication: {
     context: 'https://login.windows.net/common',
