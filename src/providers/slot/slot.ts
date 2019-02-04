@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
-import { flatten } from 'lodash';
+import { flatten, times } from 'lodash';
 import * as moment from 'moment';
 
 import { SlotItem } from '../slot-selector/slot-item';
@@ -48,22 +48,13 @@ export class SlotProvider {
   extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
     const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
 
-    console.log(numberOfDaysToView);
-
-    const emptyDays = {
-      [moment().add(0, 'day').format('YYYY-MM-DD')]: [],
-      [moment().add(1, 'day').format('YYYY-MM-DD')]: [],
-      [moment().add(2, 'day').format('YYYY-MM-DD')]: [],
-      [moment().add(3, 'day').format('YYYY-MM-DD')]: [],
-      [moment().add(4, 'day').format('YYYY-MM-DD')]: [],
-      [moment().add(5, 'day').format('YYYY-MM-DD')]: [],
-      [moment().add(6, 'day').format('YYYY-MM-DD')]: [],
-    };
+    const days = times(numberOfDaysToView, (d: number) => moment().add(d, 'day').format('YYYY-MM-DD'));
+    const emptyDays = days.reduce((days, day) => ({ ...days, [day]: []}), {});
 
     return {
       ...emptyDays,
       ...slots,
-    }
+    };
   }
 
   /**
