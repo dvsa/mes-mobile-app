@@ -1,19 +1,19 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
-import { PassFinalisationPage } from '../pass-finalisation';
+import { WaitingRoomToCarPage } from '../waiting-room-to-car';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
-describe('PassFinalisationPage', () => {
-  let fixture: ComponentFixture<PassFinalisationPage>;
-  let component: PassFinalisationPage;
+describe('WaitingRoomToCarPage', () => {
+  let fixture: ComponentFixture<WaitingRoomToCarPage>;
+  let component: WaitingRoomToCarPage;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PassFinalisationPage],
+      declarations: [WaitingRoomToCarPage],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -25,7 +25,7 @@ describe('PassFinalisationPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationPage);
+        fixture = TestBed.createComponent(WaitingRoomToCarPage);
         component = fixture.componentInstance;
       });
   }));

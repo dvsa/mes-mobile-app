@@ -19,6 +19,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { UrlProvider } from '../providers/url/url';
 import { Network } from '@ionic-native/network';
 import { NetworkStateProvider } from '../providers/network-state/network-state';
+import { AnalyticsProvider } from '../providers/analytics/analytics';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 @NgModule({
   declarations: [App],
@@ -49,7 +51,10 @@ import { NetworkStateProvider } from '../providers/network-state/network-state';
     ScreenOrientation,
     UrlProvider,
     Network,
-    NetworkStateProvider
+    NetworkStateProvider,
+    GoogleAnalytics,
+    AnalyticsProvider,
+    
   ]
 })
 export class AppModule {

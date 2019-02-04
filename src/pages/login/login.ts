@@ -5,6 +5,12 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {
+  AnalyticsScreenNames
+} from '../../providers/analytics/analytics.model';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+
+
 
 @IonicPage()
 @Component({
@@ -21,7 +27,8 @@ export class LoginPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -37,6 +44,10 @@ export class LoginPage extends BasePageComponent {
         this.navController.setRoot('JournalPage');
         this.splashScreen.hide();
     }
+  }
+
+  ionViewDidEnter(): void {
+    this.analytics.setCurrentPage(AnalyticsScreenNames.LOGIN);
   }
 
   login = (): Promise<any> =>

@@ -1,6 +1,6 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks-jest';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
 import { LoginPage } from '../login';
@@ -27,7 +27,7 @@ describe('LoginPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
-        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock }      ]
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock }]
     })
       .compileComponents()
       .then(() => {
@@ -44,24 +44,30 @@ describe('LoginPage', () => {
       expect(component).toBeDefined();
     });
 
-    it('should login successfully', () => {
+    it('should login successfully', fakeAsync(() => {
+      component.platform.ready =
+        jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
+      component.authenticationProvider.login =
+        jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
+      component.login();
+      tick()
+      expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
+      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(splashScreen.hide).toHaveBeenCalledTimes(1);
+    }));
 
-      component.login().then(() => {
-        expect(navController.setRoot).toBeCalledWith('JournalPage');
-        expect(component.hasUserLoggedOut).toBeFalsy();
-        expect(splashScreen.hide).toBeCalledTimes(1);
-      });
-    });
-
-    it('should fail to login gracefully', () => {
-      authenticationProvider.login = jest.fn().mockRejectedValue(AuthenticationError.NO_INTERNET);
-
-      component.login().catch(() => {
-        expect(component.authenticationError === AuthenticationError.NO_INTERNET);
-        expect(component.hasUserLoggedOut).toBeFalsy();
-        expect(splashScreen.hide).toBeCalledTimes(1);
-      });
-    });
+    it('should fail to login gracefully', fakeAsync(() => {
+      component.platform.ready =
+        jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
+      authenticationProvider.login =
+        jasmine.createSpy('authenticationProvider.login')
+          .and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
+      component.login();
+      tick();
+      expect(component.authenticationError === AuthenticationError.NO_INTERNET);
+      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(splashScreen.hide).toHaveBeenCalledTimes(1);
+    }));
 
     it('should return true for isInternetConnectError when criteria is met', () => {
       component.authenticationError = AuthenticationError.NO_INTERNET;
@@ -127,7 +133,7 @@ describe('LoginPage', () => {
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
-      expect(tags).toHaveLength(1);
+      expect(tags.length).toBe(1);
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('signed out');
     });
 
@@ -137,7 +143,7 @@ describe('LoginPage', () => {
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
-      expect(tags).toHaveLength(1);
+      expect(tags.length).toBe(1);
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('offline');
     });
 
@@ -147,7 +153,7 @@ describe('LoginPage', () => {
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
-      expect(tags).toHaveLength(1);
+      expect(tags.length).toBe(1);
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('cancelled sign in');
     });
 
@@ -157,7 +163,7 @@ describe('LoginPage', () => {
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
-      expect(tags).toHaveLength(1);
+      expect(tags.length).toBe(1);
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('Sorry, something went wrong');
     });
 

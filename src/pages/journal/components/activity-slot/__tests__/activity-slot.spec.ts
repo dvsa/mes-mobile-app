@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { TimeComponent } from '../../time/time';
 import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
-import { ConfigMock } from 'ionic-mocks-jest';
+import { ConfigMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 
 describe('ActivitySlotComponent', () => {
@@ -60,7 +60,7 @@ describe('ActivitySlotComponent', () => {
       it('should return Unknown for an unmapped code', () => {
         component.slot.activityCode = 'notactivitycode';
         expect(component.getTitle()).toBe('Unknown')
-      });     
+      });
       it('should return the display name if one exists', () => {
         component.slot.activityCode = '091';
         expect(component.getTitle()).toBe('Travel');

@@ -1,19 +1,19 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks-jest';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { CandidateDetailsPage } from '../candidate-details';
 import { AppModule } from '../../../app/app.module';
+import { OfficePage } from '../office';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
-describe('CandidateDetailsPage', () => {
-  let fixture: ComponentFixture<CandidateDetailsPage>;
-  let component: CandidateDetailsPage;
+describe('OfficePage', () => {
+  let fixture: ComponentFixture<OfficePage>;
+  let component: OfficePage;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CandidateDetailsPage],
+      declarations: [OfficePage],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -25,7 +25,7 @@ describe('CandidateDetailsPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(CandidateDetailsPage);
+        fixture = TestBed.createComponent(OfficePage);
         component = fixture.componentInstance;
       });
   }));

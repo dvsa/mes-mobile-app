@@ -31,7 +31,7 @@ describe('Journal Effects', () => {
 
   let effects: JournalEffects;
 
-  beforeEach(() => { 
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         // any modules needed
@@ -61,5 +61,6 @@ describe('Journal Effects', () => {
 
   it('should load journal data', () => {
     // todo - scaffold the load journal test
+    expect(true).toBeTruthy();
   });
 });

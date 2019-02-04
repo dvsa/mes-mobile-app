@@ -174,14 +174,16 @@ describe('SlotProvider', () => {
     describe('when there are no slots in the new journal', () => {
       it('should return a blank array', () => {
         const result = slotProvider.detectSlotChanges({}, {});
-        expect(result).toHaveLength(0);
+        expect(result.length).toBe(0);
       });
     });
 
     describe('when the new slots match the old slots exactly', () => {
       it('should produce the new slot items indicating there was no change', () => {
-        const result = slotProvider.detectSlotChanges(oldSlots, newJournal);
-        expect(result).toHaveLength(3);
+        const tempOldSlots = cloneDeep(oldSlots);
+        const tempNewJournal = cloneDeep(newJournal);
+        const result = slotProvider.detectSlotChanges(tempOldSlots, tempNewJournal);
+        expect(result.length).toBe(3);
         expect(result[0].hasSlotChanged).toBe(false);
         expect(result[1].hasSlotChanged).toBe(false);
         expect(result[2].hasSlotChanged).toBe(false);
@@ -190,9 +192,11 @@ describe('SlotProvider', () => {
 
     describe('when one of the new slots differ from the old slots', () => {
       it('should produce the new slot items indicating there was a change', () => {
-        newJournal.testSlots[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
-        const result = slotProvider.detectSlotChanges(oldSlots, newJournal)
-        expect(result).toHaveLength(3);
+        const tempOldSlots = cloneDeep(oldSlots);
+        const tempNewJournal = cloneDeep(newJournal);
+        tempNewJournal.testSlots[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
+        const result = slotProvider.detectSlotChanges(tempOldSlots, tempNewJournal);
+        expect(result.length).toBe(3);
         expect(result[0].hasSlotChanged).toBe(true);
         expect(result[1].hasSlotChanged).toBe(false);
         expect(result[2].hasSlotChanged).toBe(false);
@@ -201,10 +205,12 @@ describe('SlotProvider', () => {
 
     describe('when several of the slots differ from the old slots', () => {
       it('should produce new slot items indicating which slots changed', () => {
-        newJournal.testSlots[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
-        newJournal.testSlots[1].booking.application.welshTest = true;
-        const result = slotProvider.detectSlotChanges(oldSlots, newJournal)
-        expect(result).toHaveLength(3);
+        const tempOldSlots = cloneDeep(oldSlots);
+        const tempNewJournal = cloneDeep(newJournal);
+        tempNewJournal.testSlots[0].booking.candidate.driverNumber = 'NEWDRIVERNUMBER';
+        tempNewJournal.testSlots[1].booking.application.welshTest = true;
+        const result = slotProvider.detectSlotChanges(tempOldSlots, tempNewJournal);
+        expect(result.length).toBe(3);
         expect(result[0].hasSlotChanged).toBe(true);
         expect(result[1].hasSlotChanged).toBe(false);
         expect(result[2].hasSlotChanged).toBe(true);
@@ -231,7 +237,7 @@ describe('SlotProvider', () => {
       };
 
       const result = slotProvider.getSlotDate(slot);
-      
+
       expect(result).toBe('2019-01-21');
     })
   })
