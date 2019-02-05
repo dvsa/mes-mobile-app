@@ -24,6 +24,6 @@ export const localEnvironmentMock: EnvironmentFile = {
   },
   journal: {
     journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',
-    backgroundRefreshTime: 1000 * 60 * 15
+    autoRefreshInterval: 1000 * 60 * 15
   }
 };

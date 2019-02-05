@@ -90,7 +90,7 @@ export class JournalEffects {
         startWith(null),
       );
       const pollTimer$ = manualRefreshes$.pipe(
-        switchMap(() => interval(this.appConfig.getAppConfig().journal.backgroundRefreshTime))
+        switchMap(() => interval(this.appConfig.getAppConfig().journal.autoRefreshInterval))
       );
 
       const pollsWhileOnline$ = pollTimer$

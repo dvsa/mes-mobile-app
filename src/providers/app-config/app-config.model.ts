@@ -16,6 +16,6 @@ export type AppConfig = {
   }
   journal: {
     journalUrl: string,
-    backgroundRefreshTime: number
+    autoRefreshInterval: number
   }
 };

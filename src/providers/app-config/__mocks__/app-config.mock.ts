@@ -31,7 +31,7 @@ export class AppConfigProviderMock {
       },
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl,
-        backgroundRefreshTime: localEnvironmentMock.journal.backgroundRefreshTime
+        autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval
       }
     };
   }

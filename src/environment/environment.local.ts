@@ -19,6 +19,6 @@ export const environment : EnvironmentFile = {
   },
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
-    backgroundRefreshTime: 20000
+    autoRefreshInterval: 20000
   }
 };

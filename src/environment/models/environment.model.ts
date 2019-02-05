@@ -18,6 +18,6 @@ export type EnvironmentFile = {
   }
   journal?: {
     journalUrl: string,
-    backgroundRefreshTime?: number
+    autoRefreshInterval?: number
   }
 }
