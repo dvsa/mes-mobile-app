@@ -1,4 +1,3 @@
-import { CognitoIdentityWrapper } from './../providers/authentication/cognitoIdentityWrapper';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -47,7 +46,6 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
     AppConfigProvider,
     AuthenticationProvider,
     InAppBrowser,
-    CognitoIdentityWrapper,
     ScreenOrientation,
     UrlProvider,
     Network,
