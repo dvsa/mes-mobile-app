@@ -55,7 +55,6 @@ describe('JournalPage', () => {
         fixture = TestBed.createComponent(JournalPage);
         component = fixture.componentInstance;
         component.subscription = new Subscription();
-        component.networkStateSubscription$ = new Subscription();
       });
 
     store$ = TestBed.get(Store);
