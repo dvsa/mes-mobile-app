@@ -26,6 +26,10 @@ export class DateTime {
   day(): number {
     return this.moment.day();
   }
+
+  toString(): string {
+    return this.moment.toString();
+  }
 }
 
 export enum Duration {
@@ -37,3 +41,10 @@ export enum Duration {
 
 export const now = () => new DateTime();
 export const at = (sourceDateTime: DateTime | string | Date) => new DateTime(sourceDateTime);
+
+export default {
+  DateTime,
+  Duration,
+  now,
+  at,
+};
