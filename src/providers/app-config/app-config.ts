@@ -62,6 +62,7 @@ export class AppConfigProvider {
       journal: {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
+        numberOfDaysToView: data.journal.numberOfDaysToView,
       }
     }
   }

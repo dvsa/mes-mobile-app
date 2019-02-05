@@ -27,19 +27,17 @@ export class TestActions extends Actions {
 
 describe('Journal Effects', () => {
 
-  // @ts-ignore
-
   let effects: JournalEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        // any modules needed
         StoreModule.forRoot({
           journal: journalReducer
         }),
       ],
       providers: [
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         JournalEffects,
         {
           provide: Actions,

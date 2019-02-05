@@ -14,5 +14,6 @@ export const environment: EnvironmentFile = {
   },
   journal: {
     journalUrl: '',
+    numberOfDaysToView: 7,
   }
 };

@@ -155,7 +155,7 @@ describe('JournalSelector', () => {
               slotData: {}
             },
           ],
-          [moment().add(1, 'days').format('YYYY-MM-DD')]: [
+          [moment().add(1, 'day').format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
               slotData: {}

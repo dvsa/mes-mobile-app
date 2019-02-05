@@ -10,7 +10,8 @@ import { ExaminerWorkSchedule } from '../src/common/domain/DJournal';
  */
 class DateUpdater {
 
-  private dateFormat = 'YYYY-MM-DDTHH:mm:ssZ'
+  private dateFormat = 'YYYY-MM-DDTHH:mm:ssZ';
+  private hasSkippedSunday = false;
 
   constructor(public data: ExaminerWorkSchedule) { }
 
@@ -109,7 +110,7 @@ class DateUpdater {
     if (date) {
       return moment(date, this.dateFormat, true);
     }
-    return moment()
+    return moment();
   };
 
   private updateDate = (currentDate: moment.Moment, newDate: moment.Moment): string => {
@@ -123,6 +124,13 @@ class DateUpdater {
 
       const daysToAdd = this.caculateDiffInDays(itemDate, dateProcessing)
       newDate.add(daysToAdd, 'days');
+
+      // Skip Sunday's
+      const sunday = 0;
+      if(newDate.day() === sunday || this.hasSkippedSunday) {
+        newDate.add(1, 'day');
+        this.hasSkippedSunday = true;
+      }
       return this.createMoment(itemDate);
     };
 

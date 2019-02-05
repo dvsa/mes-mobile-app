@@ -15,7 +15,8 @@ export const environmentResponseMock = {
         'region': 'aws-region'
       },
       'journal' : {
-        'journalUrl': 'remote-journal-url'
+        'journalUrl': 'remote-journal-url',
+        'numberOfDaysToView': 7,
       }
     }
   }

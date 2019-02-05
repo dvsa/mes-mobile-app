@@ -17,5 +17,6 @@ export type AppConfig = {
   journal: {
     journalUrl: string,
     autoRefreshInterval: number
+    numberOfDaysToView: number,
   }
 };
