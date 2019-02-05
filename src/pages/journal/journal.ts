@@ -22,7 +22,6 @@ import {
   AnalyticsScreenNames
 } from '../../providers/analytics/analytics.model';
 
-
 interface JournalPageState {
   slots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
@@ -92,12 +91,12 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     const { slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
-      slots$,
+      slots$.pipe(map(this.createSlots)),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
     );
-    this.subscription = merged$.subscribe(this.createSlots);
+    this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {
@@ -131,11 +130,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createSlots = (emission: any) => {
-    if (!Array.isArray(emission) || emission.length === 0) {
-      return;
-    }
+    if (!Array.isArray(emission)) return;
+
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
+
+    if (emission.length === 0) return;
+
     const slots = this.slotSelector.getSlotTypes(emission);
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
