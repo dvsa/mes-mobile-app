@@ -5,6 +5,7 @@ import { SlotProvider } from '../slot';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import dateTime from '../../../common/date-time';
 
 const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
@@ -248,12 +249,13 @@ describe('SlotProvider', () => {
   });
 
   describe('extendWithEmptyDays', () => {
-    xit('should have all days of the week', () => {
+    it('should have all days of the week', () => {
+      spyOn(dateTime, 'now').and.callFake(() => dateTime.at('2019-02-01'));
       const slotsWithEmptyDays = slotProvider.extendWithEmptyDays(journalSlotsMissingDays);
       
       const numberOfDays = Object.keys(slotsWithEmptyDays).length;
       
-      expect(numberOfDays).toBe(8);
+      expect(numberOfDays).toBe(7);
     });
   });
 
