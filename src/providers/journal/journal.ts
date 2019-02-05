@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 import { AuthenticationProvider } from '../authentication/authentication';
 import { UrlProvider } from '../url/url';
+import { at } from '../../common/date-time';
 
 @Injectable()
 export class JournalProvider {
@@ -20,7 +20,7 @@ export class JournalProvider {
       return this.http.get(journalUrl);
     }
 
-    const modifiedSinceValue = moment(lastRefreshed).format('ddd[,] D MMM YYYY HH:mm:ss [GMT]');
+    const modifiedSinceValue = at(lastRefreshed).format('ddd[,] D MMM YYYY HH:mm:ss [GMT]');
     const options = {
       headers: new HttpHeaders().set('If-Modified-Since', modifiedSinceValue),
     };

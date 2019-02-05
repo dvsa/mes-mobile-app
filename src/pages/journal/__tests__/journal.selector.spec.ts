@@ -1,7 +1,7 @@
 import { JournalModel } from '../journal.model';
 import { getSlotsOnSelectedDate, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime, isToday, canNavigateToNextDay, canNavigateToPreviousDay } from '../journal.selector';
 import { MesError } from '../../../common/mes-error.model';
-import * as moment from 'moment';
+import { now, Duration } from '../../../common/date-time';
 
 describe('JournalSelector', () => {
 
@@ -65,7 +65,7 @@ describe('JournalSelector', () => {
 
   describe('isToday', () => {
     it('should return true if its today', () => {
-      const result = isToday(moment().format('YYYY-MM-DD'));
+      const result = isToday(now().format('YYYY-MM-DD'));
       expect(result).toBe(true);
     });
 
@@ -129,14 +129,14 @@ describe('JournalSelector', () => {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          [moment().format('YYYY-MM-DD')]: [
+          [now().format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
               slotData: {}
             },
           ],
         },
-        selectedDate: moment().format('YYYY-MM-DD'),
+        selectedDate: now().format('YYYY-MM-DD'),
       };
 
       const result = canNavigateToPreviousDay(journal);
@@ -149,20 +149,20 @@ describe('JournalSelector', () => {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          [moment().format('YYYY-MM-DD')]: [
+          [now().format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
               slotData: {}
             },
           ],
-          [moment().add(1, 'day').format('YYYY-MM-DD')]: [
+          [now().add(1, Duration.DAY).format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
               slotData: {}
             },
           ],
         },
-        selectedDate: moment().add(1, 'day').format('YYYY-MM-DD'),
+        selectedDate: now().add(1, Duration.DAY).format('YYYY-MM-DD'),
       };
 
       const result = canNavigateToPreviousDay(journal);

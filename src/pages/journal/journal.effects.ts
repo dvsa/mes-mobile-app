@@ -6,7 +6,6 @@ import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
 import { groupBy } from 'lodash';
-import * as moment from 'moment';
 
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
@@ -19,6 +18,7 @@ import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { at, Duration } from '../../common/date-time';
 
 @Injectable()
 export class JournalEffects {
@@ -126,7 +126,7 @@ export class JournalEffects {
       if (!canNavigateToPreviousDay) {
         return of();
       }
-      const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
+      const previousDay = at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
   )
@@ -148,7 +148,7 @@ export class JournalEffects {
       if (!canNavigateToNextDay) {
         return of();
       }
-      const nextDay = moment(selectedDate).add(1, 'day').format('YYYY-MM-DD');
+      const nextDay = at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
       return of(new journalActions.SetSelectedDate(nextDay));
     }),
   )
