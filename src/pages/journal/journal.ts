@@ -66,8 +66,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
 
-  networkStateSubscription$: Subscription;
-
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -121,7 +119,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   ngOnDestroy(): void {
     // Using .merge helps with unsubscribing
     this.subscription.unsubscribe();
-    this.networkStateSubscription$.unsubscribe();
   }
 
   ionViewWillEnter() {
