@@ -17,6 +17,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthInterceptor } from '../providers/authentication/interceptor';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { UrlProvider } from '../providers/url/url';
+import { Network } from '@ionic-native/network';
+import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { AnalyticsProvider } from '../providers/analytics/analytics';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
@@ -48,6 +50,8 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
     CognitoIdentityWrapper,
     ScreenOrientation,
     UrlProvider,
+    Network,
+    NetworkStateProvider,
     GoogleAnalytics,
     AnalyticsProvider,
     

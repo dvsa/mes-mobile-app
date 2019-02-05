@@ -18,6 +18,7 @@ export type EnvironmentFile = {
   },
   journal?: {
     journalUrl: string,
+    autoRefreshInterval?: number
     numberOfDaysToView: number,
   },
 }

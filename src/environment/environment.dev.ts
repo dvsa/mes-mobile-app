@@ -19,6 +19,7 @@ export const environment : EnvironmentFile = {
   },
   journal: {
     journalUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/journals/{staffNumber}/personal',
+    autoRefreshInterval: 20000,
     numberOfDaysToView: 7,
   }
 };

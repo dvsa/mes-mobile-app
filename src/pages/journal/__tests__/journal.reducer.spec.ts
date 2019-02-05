@@ -21,7 +21,8 @@ describe('Journal Reducer', () => {
 
       expect(result).toEqual({
         ...initialState,
-        isLoading: true
+        isLoading: true,
+        error: {message: '', status: 0, statusText: ''}
       });
     });
   });
