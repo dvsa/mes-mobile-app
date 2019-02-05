@@ -57,7 +57,6 @@
     "@ionic/storage": "2.2.0",
     "@ngrx/effects": "^5.2.0",
     "@ngrx/store": "^5.2.0",
-    "@types/jwt-decode": "^2.2.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-device": "^2.0.2",
