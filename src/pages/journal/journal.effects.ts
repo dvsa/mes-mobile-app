@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, tap, catchError, startWith } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -102,7 +102,6 @@ export class JournalEffects {
       return pollsWhileOnline$
         .pipe(
           takeUntil(this.actions$.pipe(ofType(journalActions.STOP_POLLING))),
-          tap(() => console.log('DOING A POLL')),
           mapTo({ type: journalActions.LOAD_JOURNAL_SILENT }),
         );
     }),
