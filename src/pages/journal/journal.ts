@@ -1,13 +1,30 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Platform, ToastController, Loading, Toast, Refresher } from 'ionic-angular';
-import { Store, select } from '@ngrx/store';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  IonicPage,
+  Loading,
+  LoadingController,
+  NavController,
+  NavParams,
+  Platform,
+  Refresher,
+  Toast,
+  ToastController
+} from 'ionic-angular';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getSlotsOnSelectedDate, getSelectedDate, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
+import {
+  getError,
+  getIsLoading,
+  getSelectedDate,
+  getLastRefreshed,
+  getLastRefreshedTime,
+  getSlotsOnSelectedDate,
+} from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -21,7 +38,6 @@ import {
   AnalyticsEvents,
   AnalyticsScreenNames
 } from '../../providers/analytics/analytics.model';
-
 
 interface JournalPageState {
   selectedDate$: Observable<string>,
@@ -70,7 +86,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.loadJournal();
 
     this.pageState = {
       selectedDate$: this.store$.pipe(
@@ -92,20 +107,20 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       lastRefreshedTime$: this.store$.pipe(
         select(getJournalState),
         map(getLastRefreshed),
-        map(getLastRefreshedTime),
-      ),
+        map(getLastRefreshedTime)
+      )
     };
 
     const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
-      slots$,
+      slots$.pipe(map(this.createSlots)),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingUI)),
+      isLoading$.pipe(map(this.handleLoadingUI))
     );
-    this.subscription = merged$.subscribe(this.createSlots);
+    this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {
@@ -113,13 +128,27 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.subscription.unsubscribe();
   }
 
+  ionViewWillEnter() {
+    super.ionViewWillEnter();
+    this.loadJournalManually();
+    this.setupPolling();
+    return true;
+  }
+
+  ionViewWillLeave() {
+    this.store$.dispatch(new journalActions.StopPolling());
+  }
+
   ionViewDidEnter(): void {
     this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(this.selectedDate)} ${AnalyticsScreenNames.JOURNAL}`);
   }
 
-  loadJournal() {
+  loadJournalManually() {
     this.store$.dispatch(new journalActions.LoadJournal());
-    this.createLoadingSpinner();
+  }
+
+  setupPolling() {
+    this.store$.dispatch(new journalActions.SetupPolling());
   }
 
   setSelectedDate = (selectedDate: string): void => {
@@ -127,12 +156,18 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
-    if (!isLoading) {
-      this.pageRefresher ? this.pageRefresher.complete() : null;
-      if (this.loadingSpinner) {
-        this.loadingSpinner.dismiss();
-        this.loadingSpinner = null;
-      }
+    if (isLoading) {
+      this.loadingSpinner = this.loadingController.create({
+        dismissOnPageChange: true,
+        spinner: 'circles'
+      });
+      this.loadingSpinner.present();
+      return;
+    }
+    this.pageRefresher ? this.pageRefresher.complete() : null;
+    if (this.loadingSpinner) {
+      this.loadingSpinner.dismiss();
+      this.loadingSpinner = null;
     }
   };
 
@@ -143,11 +178,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   private createSlots = (emission: any) => {
-    if (!Array.isArray(emission) || emission.length === 0) {
-      return;
-    }
+    if (!Array.isArray(emission)) return;
+
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
+
+    if (emission.length === 0) return;
+
     const slots = this.slotSelector.getSlotTypes(emission);
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
@@ -155,14 +192,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
     }
-  }
-
-  private createLoadingSpinner = () => {
-    this.loadingSpinner = this.loadingController.create({
-      dismissOnPageChange: true,
-      spinner: 'circles'
-    });
-    this.loadingSpinner.present();
   };
 
   private createToast = (errorMessage: string) => {
@@ -182,12 +211,12 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   };
 
   public pullRefreshJournal = (refresher: Refresher) => {
-    this.loadJournal();
+    this.loadJournalManually();
     this.pageRefresher = refresher;
   };
 
   public refreshJournal = () => {
-    this.loadJournal();
+    this.loadJournalManually();
   };
 
   gotoWaitingRoom($event) {

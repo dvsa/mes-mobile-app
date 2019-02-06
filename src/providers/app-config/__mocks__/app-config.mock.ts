@@ -30,7 +30,9 @@ export class AppConfigProviderMock {
         region: localEnvironmentMock.aws.region
       },
       journal: {
-        journalUrl: localEnvironmentMock.journal.journalUrl
+        journalUrl: localEnvironmentMock.journal.journalUrl,
+        autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
+        numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
       }
     };
   }

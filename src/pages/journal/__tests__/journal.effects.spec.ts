@@ -12,6 +12,10 @@ import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/an
 import { SlotProvider } from '../../../providers/slot/slot';
 import { StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -25,19 +29,17 @@ export class TestActions extends Actions {
 
 describe('Journal Effects', () => {
 
-  // @ts-ignore
-
   let effects: JournalEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        // any modules needed
         StoreModule.forRoot({
           journal: journalReducer
         }),
       ],
       providers: [
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         JournalEffects,
         {
           provide: Actions,
@@ -45,6 +47,8 @@ describe('Journal Effects', () => {
         },
         { provide: JournalProvider, useClass: JournalProviderMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         SlotProvider,
       ]
     });

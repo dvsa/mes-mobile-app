@@ -1,5 +1,4 @@
 import { JournalProvider } from './../../journal/journal';
-import { CognitoIdentityWrapper } from './../cognitoIdentityWrapper';
 import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
@@ -9,7 +8,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../interceptor';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
-import { CognitoIdentityWrapperMock } from '../__mocks__/cognito-identity-wrapper.mock';
 import { Platform } from 'ionic-angular';
 import { PlatformMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../authentication';
@@ -24,6 +22,7 @@ describe('Authentication interceptor', () => {
   let platform: Platform;
   let urlProvider: UrlProvider;
   let journalUrl: string;
+  let authenticationProvider: AuthenticationProvider
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,7 +32,6 @@ describe('Authentication interceptor', () => {
         JournalProvider,
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-        { provide: CognitoIdentityWrapper, useClass: CognitoIdentityWrapperMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: UrlProvider, useClass: UrlProviderMock },
         {
@@ -49,6 +47,7 @@ describe('Authentication interceptor', () => {
     journalProvider = TestBed.get(JournalProvider);
     urlProvider = TestBed.get(UrlProvider);
     journalUrl = urlProvider.getPersonalJournalUrl('');
+    authenticationProvider = TestBed.get(AuthenticationProvider);
   });
 
   describe('Interceptor', () => {
@@ -64,9 +63,7 @@ describe('Authentication interceptor', () => {
         err => {}
       );
       const httpRequest = httpMock.expectOne(journalUrl);
-      expect(httpRequest.request.headers.has('Authorization')).toBeFalsy();
-      expect(httpRequest.request.headers.has('X-Amz-Date')).toBeFalsy();
-      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBeFalsy();
+      expect(httpRequest.request.headers.has('Authorization')).toBe(false);
     });
 
     it('should add the signed headers if running on ios', () => {
@@ -76,9 +73,8 @@ describe('Authentication interceptor', () => {
         err => {}
       );
       const httpRequest = httpMock.expectOne(journalUrl);
-      expect(httpRequest.request.headers.has('Authorization')).toBeTruthy();
-      expect(httpRequest.request.headers.has('X-Amz-Date')).toBeTruthy();
-      expect(httpRequest.request.headers.has('X-Amz-Security-Token')).toBeTruthy();
+      expect(httpRequest.request.headers.has('Authorization')).toBe(true);
+      expect(httpRequest.request.headers.get('Authorization')).toEqual(authenticationProvider.getAuthenticationToken());
     });
 
   });

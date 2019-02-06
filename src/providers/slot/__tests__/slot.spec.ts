@@ -1,10 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { cloneDeep } from 'lodash';
 
 import { SlotProvider } from '../slot';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
-import { cloneDeep } from 'lodash';
+import { AppConfigProvider } from '../../app-config/app-config';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { DateTime } from '../../../common/date-time';
+
+const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
 describe('SlotProvider', () => {
   let slotProvider;
@@ -14,9 +19,10 @@ describe('SlotProvider', () => {
       imports: [
       ],
       providers: [
-        SlotProvider,
-        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
-     ],
+     { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+     { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        SlotProvider
+      ],
     });
 
     slotProvider = TestBed.get(SlotProvider);
@@ -242,6 +248,22 @@ describe('SlotProvider', () => {
       const result = slotProvider.getSlotDate(slot);
 
       expect(result).toBe('2019-01-21');
-    })
+    });
+  });
+
+  describe('extendWithEmptyDays', () => {
+    it('should have all days of the week', () => {
+      spyOn(DateTime, 'now').and.callFake(() => DateTime.at('2019-02-01'));
+      const slotsWithEmptyDays = slotProvider.extendWithEmptyDays(journalSlotsMissingDays);
+      
+      const numberOfDays = Object.keys(slotsWithEmptyDays).length;
+      
+      expect(numberOfDays).toBe(7);
+    });
+  });
+
+  describe('getRelevantSlots', () => {
+    
   })
+
 });

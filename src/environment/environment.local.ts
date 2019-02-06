@@ -18,6 +18,8 @@ export const environment : EnvironmentFile = {
     region: 'eu-west-1',
   },
   journal: {
-    journalUrl: '/assets/mock/local-journal.json'
+    journalUrl: '/assets/mock/local-journal.json',
+    autoRefreshInterval: 20000,
+    numberOfDaysToView: 7,
   }
 };
