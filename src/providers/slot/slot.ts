@@ -5,7 +5,7 @@ import { flatten, times } from 'lodash';
 import { SlotItem } from '../slot-selector/slot-item';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { AppConfigProvider } from '../app-config/app-config';
-import dateTime from '../../common/date-time';
+import { DateTime, Duration } from '../../common/date-time';
 
 @Injectable()
 export class SlotProvider {
@@ -48,7 +48,7 @@ export class SlotProvider {
   extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
     const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
 
-    const days = times(numberOfDaysToView, (d: number): string => dateTime.now().add(d, dateTime.Duration.DAY).format('YYYY-MM-DD'));
+    const days = times(numberOfDaysToView, (d: number): string => DateTime.now().add(d, Duration.DAY).format('YYYY-MM-DD'));
     const emptyDays = days.reduce((days: {[k: string]: SlotItem[]}, day: string) => ({ ...days, [day]: []}), {});
 
     return {
@@ -71,7 +71,7 @@ export class SlotProvider {
     // otherwise we just go to next day
     const friday = 5;
     const saturday = 6;
-    const today = dateTime.now().day();
+    const today = DateTime.now().day();
     const daysAhead = today === friday ? 4 : today === saturday ? 3 : 2;
 
     return Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
@@ -80,6 +80,6 @@ export class SlotProvider {
     }), {});
   }
 
-  getSlotDate = (slot: any): string => dateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
+  getSlotDate = (slot: any): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }

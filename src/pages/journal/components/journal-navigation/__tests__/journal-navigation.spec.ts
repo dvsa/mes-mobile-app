@@ -9,7 +9,7 @@ import { StoreModel } from '../../../../../common/store.model';
 import { LoadJournalSuccess, SetSelectedDate } from '../../../journal.actions';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
-import { now, Duration, at } from '../../../../../common/date-time';
+import { DateTime, Duration } from '../../../../../common/date-time';
 
 describe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
@@ -67,7 +67,7 @@ describe('JournalNavigationComponent', () => {
       it('shows correct date format as sub header', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
-        expect(subHeader.textContent).toBe(now().format('dddd D MMMM YYYY'));
+        expect(subHeader.textContent).toBe(DateTime.now().format('dddd D MMMM YYYY'));
       });
 
       it('shows next day button', () => {
@@ -78,7 +78,7 @@ describe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is day in the middle', () => {
-      const nextDay = now().add(1, Duration.DAY).format('YYYY-MM-DD');
+      const nextDay = DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD');
       beforeEach(() => {
         store$.dispatch(new SetSelectedDate(nextDay));
       });
@@ -92,13 +92,13 @@ describe('JournalNavigationComponent', () => {
       it('shows day of the week as header', () => {
         fixture.detectChanges();
         const mainHeader: HTMLElement = componentEl.query(By.css('h1')).nativeElement;
-        expect(mainHeader.textContent).toBe(at(nextDay).format('dddd'));
+        expect(mainHeader.textContent).toBe(DateTime.at(nextDay).format('dddd'));
       });
 
       it('shows correct date format as sub header', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
-        expect(subHeader.textContent).toBe(at(nextDay).format('D MMMM YYYY'));
+        expect(subHeader.textContent).toBe(DateTime.at(nextDay).format('D MMMM YYYY'));
       });
 
       it('shows next day button', () => {
@@ -109,7 +109,7 @@ describe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is the last available date', () => {
-      const selectedDay = now().add(2, Duration.DAY).format('YYYY-MM-DD');
+      const selectedDay = DateTime.now().add(2, Duration.DAY).format('YYYY-MM-DD');
       beforeEach(() => {
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
@@ -123,13 +123,13 @@ describe('JournalNavigationComponent', () => {
       it('shows day of the week as header', () => {
         fixture.detectChanges();
         const mainHeader: HTMLElement = componentEl.query(By.css('h1')).nativeElement;
-        expect(mainHeader.textContent).toBe(at(selectedDay).format('dddd'));
+        expect(mainHeader.textContent).toBe(DateTime.at(selectedDay).format('dddd'));
       });
 
       it('shows correct date format as sub header', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
-        expect(subHeader.textContent).toBe(at(selectedDay).format('D MMMM YYYY'));
+        expect(subHeader.textContent).toBe(DateTime.at(selectedDay).format('D MMMM YYYY'));
       });
 
       it('does not shows next day button', () => {

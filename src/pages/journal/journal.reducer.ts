@@ -3,13 +3,13 @@ import { createFeatureSelector } from '@ngrx/store';
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 import { has } from 'lodash';
-import { now } from '../../common/date-time';
+import { DateTime } from '../../common/date-time';
 
 export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
   slots: {},
-  selectedDate: now().format('YYYY-MM-DD'),
+  selectedDate: DateTime.now().format('YYYY-MM-DD'),
 };
 
 export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {

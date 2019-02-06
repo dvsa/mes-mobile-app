@@ -13,6 +13,14 @@ export class DateTime {
     }
   }
 
+  static now(): DateTime {
+    return new DateTime();
+  }
+
+  static at(sourceDateTime: DateTime | string | Date): DateTime {
+    return new DateTime(sourceDateTime);
+  }
+
   add(amount: number, unit: Duration): DateTime {
     const momentUnit = unit.valueOf() as moment.unitOfTime.DurationConstructor;
     this.moment.add(amount, momentUnit);
@@ -38,13 +46,3 @@ export enum Duration {
   MINUTE = 'minute',
   SECOND = 'second',
 }
-
-export const now = () => new DateTime();
-export const at = (sourceDateTime: DateTime | string | Date) => new DateTime(sourceDateTime);
-
-export default {
-  DateTime,
-  Duration,
-  now,
-  at,
-};
