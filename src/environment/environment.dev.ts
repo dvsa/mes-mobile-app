@@ -13,4 +13,5 @@ export const environment: EnvironmentFile = {
     identityPoolId: 'eu-west-1:f5a0346e-9bbb-4153-affd-bbe59cd5b7a3',
     employeeIdKey: 'extn.employeeId'
   },
+  loggingUrl: '',
 };

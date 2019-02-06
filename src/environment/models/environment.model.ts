@@ -11,6 +11,7 @@ export interface EnvironmentFile {
     identityPoolId: string;
     employeeIdKey: string;
   };
+  loggingUrl: string;
 }
 
 export interface LocalEnvironmentFile extends EnvironmentFile {

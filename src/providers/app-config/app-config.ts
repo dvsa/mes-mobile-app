@@ -53,6 +53,7 @@ export class AppConfigProvider {
         identityPoolId: data.authentication.identityPoolId,
         employeeIdKey: data.authentication.employeeIdKey
       },
+      loggingUrl: data.loggingUrl
     } as AppConfig);
 
 

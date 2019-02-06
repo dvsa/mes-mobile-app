@@ -16,4 +16,5 @@ export type AppConfig = {
     autoRefreshInterval: number
     numberOfDaysToView: number,
   }
+  loggingUrl: string;
 };
