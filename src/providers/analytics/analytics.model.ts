@@ -1,9 +1,9 @@
 export interface IAnalyticsProvider {
     setCurrentPage(name: string);
   
-    logEvent(category: string, event: string, params?: any);
+    logEvent(category: string, event: string, label?:string, params?: any);
   
-    logError(message: string);
+    logError(type:string, message: string);
   
     setUserId(userId: string);
   }
@@ -28,12 +28,27 @@ export interface IAnalyticsProvider {
   
   export enum AnalyticsEventCategories {
     CLICK = 'click',
-    LIFECYCLE = 'lifecycle'
+    LIFECYCLE = 'lifecycle',
+    ERROR = 'error',
+    JOURNAL = 'journal',
+    AUTHENTICATION = 'authentication'
   }
   
   export enum AnalyticsEvents {
     START_TEST = 'start test',
     END_TEST = 'end test',
-    APP_LOAD = 'app load'
+    APP_LOAD = 'app load',
+    SLOT_CHANGED = 'slot changed',
+    SLOT_CHANGE_VIEWED = 'slot change viewed',
+    NAVIGATION = 'navigation',
+    REFRESH_JOURNAL = 'refresh journal',
+    LOGIN = 'login',
   }
   
+  export enum AnalyticsDimensionIndices {
+    DEVICE_ID = 1,
+    JOURNAL_DAYS_FROM_TODAY = 2,
+    CANDIDATE_WITH_SPECIAL_NEEDS = 3,
+    CANDIDATE_WITH_CHECK = 4,
+    CANDIDATE_ID=5
+  }

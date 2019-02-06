@@ -5,11 +5,17 @@ import * as moment from 'moment';
 
 import { SlotItem } from '../slot-selector/slot-item';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import {
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+} from '../../providers/analytics/analytics.model';
+
 
 @Injectable()
 export class SlotProvider {
 
-  constructor() {}
+  constructor(public analytics: AnalyticsProvider) {}
 
   detectSlotChanges(slots: {[k: string]: SlotItem[]}, newJournal: ExaminerWorkSchedule): SlotItem[] {
     const newSlots = flatten([
@@ -31,6 +37,7 @@ export class SlotProvider {
         differenceFound = replacedJournalSlot.hasSlotChanged;
         const differenceToSlot = DeepDiff(replacedJournalSlot.slotData, newSlot);
         if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
+          this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.SLOT_CHANGED, newSlotId.toString());
           differenceFound = true;
         }
       }

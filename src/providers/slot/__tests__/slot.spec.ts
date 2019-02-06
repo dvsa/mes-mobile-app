@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { SlotProvider } from '../slot';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { cloneDeep } from 'lodash';
 
 describe('SlotProvider', () => {
@@ -12,8 +14,9 @@ describe('SlotProvider', () => {
       imports: [
       ],
       providers: [
-        SlotProvider
-      ],
+        SlotProvider,
+        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+     ],
     });
 
     slotProvider = TestBed.get(SlotProvider);

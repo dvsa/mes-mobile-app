@@ -7,7 +7,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
-import { getSlotsOnSelectedDate, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
+import { getSlotsOnSelectedDate, getSelectedDate, getError, getIsLoading, getLastRefreshed, getLastRefreshedTime } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
 import { map } from 'rxjs/operators';
@@ -24,6 +24,7 @@ import {
 
 
 interface JournalPageState {
+  selectedDate$: Observable<string>,
   slots$: Observable<SlotItem[]>,
   error$: Observable<MesError>,
   isLoading$: Observable<boolean>,
@@ -41,7 +42,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
 
   pageState: JournalPageState;
-
+  selectedDate: string;
   loadingSpinner: Loading;
   pageRefresher: Refresher;
 
@@ -49,6 +50,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
+
+  // private selectedDate: string;
 
   constructor(
     public navController: NavController,
@@ -70,6 +73,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.loadJournal();
 
     this.pageState = {
+      selectedDate$: this.store$.pipe(
+        select(getJournalState),
+        map(getSelectedDate)
+      ),
       slots$: this.store$.pipe(
         select(getJournalState),
         map(getSlotsOnSelectedDate)
@@ -89,9 +96,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       ),
     };
 
-    const { slots$, error$, isLoading$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
+      selectedDate$.pipe(map(this.setSelectedDate)),
       slots$,
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
@@ -106,12 +114,16 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
+    this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(this.selectedDate)} ${AnalyticsScreenNames.JOURNAL}`);
   }
 
   loadJournal() {
     this.store$.dispatch(new journalActions.LoadJournal());
     this.createLoadingSpinner();
+  }
+
+  setSelectedDate = (selectedDate: string): void => {
+      this.selectedDate = selectedDate;  
   }
 
   handleLoadingUI = (isLoading: boolean): void => {

@@ -16,6 +16,12 @@ import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import {
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+  AnalyticsScreenNames
+} from '../../providers/analytics/analytics.model';
 
 @Injectable()
 export class JournalEffects {
@@ -24,12 +30,17 @@ export class JournalEffects {
     private journalProvider: JournalProvider,
     private slotProvider: SlotProvider,
     private store$: Store<StoreModel>,
+    private analytics: AnalyticsProvider
   ) {}
 
   @Effect()
   journal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL),
     withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        map(getSelectedDate)
+      ),
       this.store$.pipe(
         select(getJournalState),
         map(getLastRefreshed)
@@ -39,7 +50,7 @@ export class JournalEffects {
         map(getSlots)
       )
     ),
-    switchMap(([action, lastRefreshed, slots]) => {
+    switchMap(([action, selectedDate, lastRefreshed, slots]) => {
       return this.journalProvider
         .getJournal(lastRefreshed)
         .pipe(
@@ -69,6 +80,8 @@ export class JournalEffects {
         return of();
       }
       const previousDay = moment(selectedDate).add(-1, 'day').format('YYYY-MM-DD');
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(previousDay));
+      this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(previousDay)} ${AnalyticsScreenNames.JOURNAL}`);
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
   )
@@ -91,6 +104,9 @@ export class JournalEffects {
         return of();
       }
       const nextDay = moment(selectedDate).add(1, 'day').format('YYYY-MM-DD');
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(nextDay));
+      this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(nextDay)} ${AnalyticsScreenNames.JOURNAL}`);
+
       return of(new journalActions.SetSelectedDate(nextDay));
     }),
   )

@@ -5,6 +5,7 @@ import { JournalModel } from './journal.model';
 import * as moment from 'moment';
 import { has } from 'lodash';
 
+
 export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,

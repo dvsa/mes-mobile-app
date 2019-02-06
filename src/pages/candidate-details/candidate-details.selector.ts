@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, has } from 'lodash';
 
 import { JournalModel } from '../journal/journal.model';
 import { Details, SlotTypeView } from './candidate-details.model';
@@ -9,11 +9,18 @@ export const getSlots = (journal: JournalModel) => journal.slots[journal.selecte
 // TODO: replace any with Slot types when we have the data structure
 export const getSlotById = (slots: any[], slotId: number): any => slots.find(slot => slot.slotDetail.slotId === slotId);
 
+
 export const getCandidateName = (slot: any): string => `${slot.booking.candidate.candidateName.title} ${slot.booking.candidate.candidateName.firstName} ${slot.booking.candidate.candidateName.lastName}`;
 
 export const getTime = (slot: any): string => slot.slotDetail.start;
 
 export const isCandidateCommentsEmpty = (slot: any): boolean => isEmpty(slot.booking.application.specialNeeds) && isEmpty(slot.booking.previousCancellation);
+
+// TODO add tests for isCandidateSpecialNeeds, isCandidateCheckNeeded and getCandidateId
+export const getCandidateId = (slot: any): string => `${slot.booking.candidate.candidateId}`;
+export const isCandidateSpecialNeeds = (slot: any): boolean => !isEmpty(slot.booking.application.specialNeeds);
+export const isCandidateCheckNeeded = (slot: any): boolean => slot.booking.application.entitlementCheck==='true';
+export const getSlotChanged = (slot: any): boolean => has(slot,'hasSlotChanged') && slot.hasSlotChanged ;
 
 export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.mobileTelephone)) return candidate.mobileTelephone;

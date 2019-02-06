@@ -11,16 +11,22 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { StoreModel } from '../../common/store.model';
 import { TestCategory, testCategoryIcons } from '../../common/test-category';
 import { getJournalState } from '../journal/journal.reducer';
-import { getSlotById, getSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
 import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsDimensionIndices
 } from '../../providers/analytics/analytics.model';
+import { 
+  getSlotById, getSlots, getSlotChanged, getCandidateName, getCandidateId, 
+  getTime, getDetails, isCandidateSpecialNeeds, isCandidateCheckNeeded } from './candidate-details.selector';
 
 
 interface CandidateDetailsPageState {
+  slotChanged$: Observable<boolean>,
+  specialNeeds$: Observable<boolean>,
+  entitlementCheck$: Observable<boolean>,
+  candidateId$: Observable<string>,
   name$: Observable<string>,
   time$: Observable<string>,
   details$: Observable<Details>,
@@ -36,6 +42,10 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   pageState: CandidateDetailsPageState;
   subscription: Subscription;
   slotId: number;
+  slotChanged: boolean;
+  specialNeeds: boolean;
+  entitlementCheck: boolean;
+  candidateId: string;
 
   testCategoryIcons = testCategoryIcons;
   testCategory = TestCategory.B;
@@ -53,10 +63,32 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   ngOnInit(): void {
-    
-    this.store$.dispatch(new ClearChangedSlot(this.slotId));
 
     this.pageState = {
+      slotChanged$: this.store$.pipe(
+        select(getJournalState),
+        select(getSlots),
+        map(slots=>getSlotById(slots, this.slotId)),
+        select(getSlotChanged)
+      ),
+      specialNeeds$: this.store$.pipe(
+        select(getJournalState),
+        select(getSlots),
+        map(slots=>getSlotById(slots, this.slotId)),
+        select(isCandidateSpecialNeeds)
+      ),
+      entitlementCheck$: this.store$.pipe(
+        select(getJournalState),
+        select(getSlots),
+        map(slots=>getSlotById(slots, this.slotId)),
+        select(isCandidateCheckNeeded)
+      ),
+      candidateId$: this.store$.pipe(
+        select(getJournalState),
+        select(getSlots),
+        map(slots=>getSlotById(slots, this.slotId)),
+        select(getCandidateId)
+      ),
       name$: this.store$.pipe(
         select(getJournalState),
         select(getSlots),
@@ -77,17 +109,25 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       ),
     }
 
-    const { name$, time$, details$ } = this.pageState;
+    const { slotChanged$, specialNeeds$, entitlementCheck$, candidateId$, name$, time$, details$ } = this.pageState;
 
     const merged$ = merge(
       name$,
       time$,
       details$.pipe(
         map(details => this.testCategory = details.testCategory.icon as TestCategory)
-      )
+      ),
+      slotChanged$.pipe(map(this.setSlotChanged)),
+      specialNeeds$.pipe(map(this.setSpecialNeeds)),
+      entitlementCheck$.pipe(map(this.setEntitlementCheck)),
+      candidateId$.pipe(map(this.setCandidateId))
     );
 
     this.subscription = merged$.subscribe();
+    if (this.slotChanged) {
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.SLOT_CHANGE_VIEWED, this.slotId.toString());
+    }
+    this.store$.dispatch(new ClearChangedSlot(this.slotId));
   }
 
   ngOnDestroy(): void {
@@ -95,9 +135,29 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
   
   ionViewDidEnter(): void {
+    this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, this.candidateId);
+    this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, this.entitlementCheck ? '1' : '0');
+    this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, this.specialNeeds ? '1' : '0');
     this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
   }
 
+  setSlotChanged(changed: boolean)
+  {
+    this.slotChanged = changed;
+  }
+
+  setSpecialNeeds(specialNeeds: boolean)
+  {
+    this.specialNeeds = specialNeeds;
+  }
+
+  setEntitlementCheck(check: boolean): void {
+    this.entitlementCheck = check;
+  }
+
+  setCandidateId(id: string): void {
+    this.candidateId = id;
+  }
 
   handleDoneButtonClick(): void {
     this.navController.pop();
