@@ -20,6 +20,7 @@ import { Network } from '@ionic-native/network';
 import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { AnalyticsProvider } from '../providers/analytics/analytics';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { Device } from '@ionic-native/device/ngx';
 
 @NgModule({
   declarations: [App],
@@ -52,7 +53,7 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
     NetworkStateProvider,
     GoogleAnalytics,
     AnalyticsProvider,
-    
+    Device,
   ]
 })
 export class AppModule {

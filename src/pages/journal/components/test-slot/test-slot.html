@@ -17,6 +17,7 @@
     <ion-col col-4 class="candidate-details-col">
       <candidate-link
         [slotId]="slot.slotDetail.slotId"
+        [slotChanged]="hasSlotChanged"
         [name]="slot.booking.candidate.candidateName"
         [welshLanguage]="slot.booking.application.welshTest"
         [isPortrait]="isPortrait()"

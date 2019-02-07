@@ -1,5 +1,7 @@
 export interface IAnalyticsProvider {
     setCurrentPage(name: string);
+
+    addCustomDimension(key: number, value: string);
   
     logEvent(category: string, event: string, label?:string, params?: any);
   

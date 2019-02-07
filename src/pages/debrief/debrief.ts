@@ -4,7 +4,7 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames, AnalyticsDimensionIndices
 } from '../../providers/analytics/analytics.model';
 
 @IonicPage()
@@ -25,6 +25,7 @@ export class DebriefPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
+    this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.setCurrentPage(AnalyticsScreenNames.DEBRIEF);
   }
 

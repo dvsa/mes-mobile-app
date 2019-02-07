@@ -21,7 +21,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
+  AnalyticsDimensionIndices
 } from '../../providers/analytics/analytics.model';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../common/date-time';
@@ -135,6 +136,7 @@ export class JournalEffects {
       }
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
       this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(previousDay));
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
       this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(previousDay)} ${AnalyticsScreenNames.JOURNAL}`);
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
@@ -159,6 +161,7 @@ export class JournalEffects {
       }
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
       this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(nextDay));
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
       this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(nextDay)} ${AnalyticsScreenNames.JOURNAL}`);
 
       return of(new journalActions.SetSelectedDate(nextDay));

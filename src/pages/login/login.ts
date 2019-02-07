@@ -6,7 +6,8 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
+  // AnalyticsDimensionIndices
 } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
@@ -47,6 +48,7 @@ export class LoginPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
+    //this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.setCurrentPage(AnalyticsScreenNames.LOGIN);
   }
 

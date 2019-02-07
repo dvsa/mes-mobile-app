@@ -19,8 +19,8 @@ export const isCandidateCommentsEmpty = (slot: any): boolean => isEmpty(slot.boo
 // TODO add tests for isCandidateSpecialNeeds, isCandidateCheckNeeded and getCandidateId
 export const getCandidateId = (slot: any): string => `${slot.booking.candidate.candidateId}`;
 export const isCandidateSpecialNeeds = (slot: any): boolean => !isEmpty(slot.booking.application.specialNeeds);
-export const isCandidateCheckNeeded = (slot: any): boolean => slot.booking.application.entitlementCheck==='true';
-export const getSlotChanged = (slot: any): boolean => has(slot,'hasSlotChanged') && slot.hasSlotChanged ;
+export const isCandidateCheckNeeded = (slot: any): boolean => slot.booking.application.entitlementCheck;
+export const getSlotChanged = (slot: any): boolean =>  has(slot,'hasSlotChanged') && slot.hasSlotChanged;
 
 export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.mobileTelephone)) return candidate.mobileTelephone;

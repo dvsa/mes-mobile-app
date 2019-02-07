@@ -8,8 +8,9 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
 
   logEvent(category: string, event: string, params?: any) {}
 
+  addCustomDimension(key: number, value: string) {}
+
   logError(message: string) {}
 
   setUserId(userId: string) {}
-
 }
