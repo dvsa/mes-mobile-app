@@ -137,6 +137,7 @@ export class JournalEffects {
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
       this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(previousDay));
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY, this.analytics.getDiffDays(previousDay).toString());
       this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(previousDay)} ${AnalyticsScreenNames.JOURNAL}`);
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
@@ -162,6 +163,7 @@ export class JournalEffects {
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
       this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(nextDay));
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY, this.analytics.getDiffDays(nextDay).toString());
       this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(nextDay)} ${AnalyticsScreenNames.JOURNAL}`);
 
       return of(new journalActions.SetSelectedDate(nextDay));
