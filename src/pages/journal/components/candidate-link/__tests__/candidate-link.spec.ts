@@ -33,6 +33,7 @@ describe('CandidateLinkComponent', () => {
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
         component.slotId = 12345;
+        component.slotChanged = false;
         component.welshLanguage = false;
       });
   }));
@@ -47,7 +48,7 @@ describe('CandidateLinkComponent', () => {
 
       expect(component.navController.push).toHaveBeenCalledWith(
         'CandidateDetailsPage',
-        { slotId: component.slotId }
+        { slotId: component.slotId, slotChanged: false }
       );
     });
   });
