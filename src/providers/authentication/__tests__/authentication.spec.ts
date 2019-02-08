@@ -7,17 +7,21 @@ import { AuthenticationProvider } from '../authentication';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
+import { StoreModule } from '@ngrx/store';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({}),
+      ],
       providers: [
         AuthenticationProvider,
         { provide: MSAdal, useClass: MSAdalMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-        { provide: InAppBrowser, useClass: InAppBrowserMock}
+        { provide: InAppBrowser, useClass: InAppBrowserMock},
       ]
     })
   });

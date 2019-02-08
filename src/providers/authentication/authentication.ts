@@ -5,6 +5,9 @@ import { AppConfigProvider } from '../app-config/app-config';
 import jwtDecode from 'jwt-decode';
 import { AuthenticationError } from './authentication.constants';
 import { MsAdalError } from './authentication.models';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../common/store.model';
+import { RefreshToken } from '../../app/app.actions';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -18,7 +21,9 @@ export class AuthenticationProvider {
   constructor(
     private msAdal: MSAdal,
     private inAppBrowser: InAppBrowser,
-    appConfig: AppConfigProvider) {
+    appConfig: AppConfigProvider,
+    private store: Store<StoreModel>,
+  ) {
     this.authenticationSettings = appConfig.getAppConfig().authentication;
     this.employeeIdKey = appConfig.getAppConfig().authentication.employeeIdKey;
     this.jwtDecode = jwtDecode;
@@ -109,6 +114,7 @@ export class AuthenticationProvider {
     const employeeId = decodedToken[this.employeeIdKey][0];
     this.authenticationToken = accessToken;
     this.employeeId = employeeId;
+    this.store.dispatch(new RefreshToken());
   };
 
 }
