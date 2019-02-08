@@ -1,14 +1,24 @@
-import { EnvironmentFile } from '../../../environment/models/environment.model';
+import { EnvironmentFile, LocalEnvironmentFile } from '../../../environment/models/environment.model';
 
 export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
-  remoteSettingsUrl: 'remote-url'
+  configUrl: 'remote-url',
+  authentication: {
+    context: 'remote-authentication-context',
+    resourceUrl: 'remote-authentication-resource-url',
+    clientId: 'remote-authentication-client-id',
+    redirectUrl: 'remote-authentication-redirect-url',
+    logoutUrl: 'remote-logout-url',
+    openIdConnectUrl: 'remote-openIdConnectUrl',
+    identityPoolId: 'remote-identityPoolId',
+    employeeIdKey: 'remote-employeeIdKey'
+  },
 };
 
-export const localEnvironmentMock: EnvironmentFile = {
+export const localEnvironmentMock: LocalEnvironmentFile = {
   isRemote: false,
+  configUrl: 'https://www.example.com/api/v1/config/dev',
   googleAnalyticsId: 'local-ga-id',
-  userIdDimensionIndex: 2018,
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',
@@ -18,9 +28,6 @@ export const localEnvironmentMock: EnvironmentFile = {
     openIdConnectUrl: 'local-openIdConnectUrl',
     identityPoolId: 'local-identityPoolId',
     employeeIdKey: 'local-employeeIdKey'
-  },
-  aws: {
-    region: 'aws-region'
   },
   journal: {
     journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',

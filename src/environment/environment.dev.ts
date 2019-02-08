@@ -1,9 +1,8 @@
 import { EnvironmentFile } from './models/environment.model';
 
-export const environment : EnvironmentFile = {
-  isRemote: false,
-  googleAnalyticsId: 'UA-129489007-3',
-  userIdDimensionIndex: 1,
+export const environment: EnvironmentFile = {
+  isRemote: true,
+  configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   authentication: {
     context: 'https://login.windows.net/common',
     resourceUrl: '09fdd68c-4f2f-45c2-be55-dd98104d4f74',
@@ -14,12 +13,4 @@ export const environment : EnvironmentFile = {
     identityPoolId: 'eu-west-1:f5a0346e-9bbb-4153-affd-bbe59cd5b7a3',
     employeeIdKey: 'extn.employeeId'
   },
-  aws: {
-    region: 'eu-west-1',
-  },
-  journal: {
-    journalUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/journals/{staffNumber}/personal',
-    autoRefreshInterval: 20000,
-    numberOfDaysToView: 7,
-  }
 };

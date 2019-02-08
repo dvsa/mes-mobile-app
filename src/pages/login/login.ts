@@ -5,10 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {
-  AnalyticsScreenNames
-} from '../../providers/analytics/analytics.model';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
 
 
 
@@ -28,7 +25,7 @@ export class LoginPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public splashScreen: SplashScreen,
-    public analytics: AnalyticsProvider
+    public appConfigProvider: AppConfigProvider
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -46,15 +43,12 @@ export class LoginPage extends BasePageComponent {
     }
   }
 
-  ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(AnalyticsScreenNames.LOGIN);
-  }
-
   login = (): Promise<any> =>
     this.platform.ready()
       .then(() =>
         this.authenticationProvider
           .login()
+          .then(() => this.appConfigProvider.loadRemoteConfig())
           .then(() => this.navController.setRoot('JournalPage'))
           .catch((error: AuthenticationError) => this.authenticationError = error)
       )
