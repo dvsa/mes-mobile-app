@@ -16,8 +16,24 @@ const expect = chai.expect;
 // We need this much timeout for the login process to complete
 setDefaultTimeout(30 * 1000);
 
+// Turn off syncronisation with Angular
+browser.ignoreSynchronization = true;
+
 Given('I am not logged in', () => {
-  return logout();
+  // Log out if we are logged in
+  logout();
+
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    // Switch to NATIVE context
+    browser.driver.selectContext('NATIVE_APP');
+
+    // Wait until we are on the login page before proceeding
+    const usernameElement = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+    browser.wait(ExpectedConditions.presenceOf(usernameElement));
+
+    // Switch back to WEBVIEW context
+    browser.driver.selectContext(webviewContext);
+  });
 });
 
 When('I launch the mobile app', () => {
@@ -31,20 +47,9 @@ Then('I should see the Microsoft login page', () => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP');
 
-    // Disable angular mode
-    browser.ignoreSynchronization = true;
-
-    // Because we have disabled syncronisation we are manually having to put waits between actions
-    browser.driver.sleep(2000);
-
     // Check for Microsoft login username field
     const usernameElement = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
     expect(usernameElement.isPresent()).to.eventually.be.true;
-
-    // Enable angular mode
-    browser.ignoreSynchronization = false;
-
-    browser.driver.sleep(2000);
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
@@ -56,6 +61,7 @@ When('I log in to the application as {string}', (username) => {
 });
 
 Then('I should see the {string} page', (pageTitle) => {
+  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
 });
 
@@ -69,36 +75,42 @@ Given('I am on the journal page as {string}', (username) => {
     }
   });
 
-  return loadApplication();
+  loadApplication().then(() => {
+    // Small wait to make sure the action has initiated
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+  });
+
+  // If the journal page is loaded we should have a refresh button
+  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//button/span/span[text() = "Refresh"]'))));
 });
 
 When('I view candidate details for {string}', (candidateName) => {
-  const buttonElement = element(by.xpath(`//h3[text() = "${candidateName}"]`));
+  const buttonElement = getElement(by.xpath(`//h3[text() = "${candidateName}"]`));
   return clickElement(buttonElement);
 });
 
 When('I start the test for {string}', (candidateName) => {
-  const buttonElement = element(by.xpath(`//button/span[text()[normalize-space(.) = "Start test"]][ancestor::ion-row/ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
+  const buttonElement = getElement(by.xpath(`//button/span[text()[normalize-space(.) = "Start test"]][ancestor::ion-row/ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
   return clickElement(buttonElement);
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
-  const exclamationIndicator = element(by.xpath(`//indicators/div/img[@class = "exclamation-indicator"][ancestor::ion-row/ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = getElement(by.xpath(`//indicators/div/img[@class = "exclamation-indicator"][ancestor::ion-row/ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 Then('I have a welsh slot for {string}', (candidateName) => {
-  const exclamationIndicator = element(by.xpath(`//ion-row/ion-col/img[@class = "welsh-language-indicator"][ancestor::ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = getElement(by.xpath(`//ion-row/ion-col/img[@class = "welsh-language-indicator"][ancestor::ion-col/candidate-link/div/ion-grid/ion-row/ion-col/h3[text() = "${candidateName}"]]`));
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  const exclamationIndicator = element(by.xpath(`//ion-col/label[text()= "${rowName}"][parent::ion-col/parent::ion-row//*[text() = "${rowValue}"]]`));
+  const exclamationIndicator = getElement(by.xpath(`//ion-col/label[text()= "${rowName}"][parent::ion-col/parent::ion-row//*[text() = "${rowValue}"]]`));
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
 When('I refresh the journal', () => {
-  const refreshButton = element(by.xpath('//button/span/span[text() = "Refresh"]'));
+  const refreshButton = getElement(by.xpath('//button/span/span[text() = "Refresh"]'));
   return clickElement(refreshButton);
 });
 
@@ -120,29 +132,18 @@ function logInToApplication(username, password) {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP');
 
-    // Disable angular mode
-    browser.ignoreSynchronization = true;
-
-    // Because we have disabled syncronisation we are manually having to put waits between actions
-    browser.driver.sleep(2000);
-
     // Fill in username and click Next
     const usernameElement = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
     usernameElement.sendKeys(username);
     const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
     nextButtonElement.click();
-    browser.driver.sleep(2000);
+    browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
     // Fill in password and click Sign in
     const passwordElement = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
     passwordElement.sendKeys(password);
     const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
     signInButtonElement.click();
-
-    // Enable angular mode
-    browser.ignoreSynchronization = false;
-
-    browser.driver.sleep(2000);
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
@@ -151,27 +152,26 @@ function logInToApplication(username, password) {
 
 // Checks whether the user is logged in. This will need updating as it only checks for the existance of the logout button.
 function loggedInAs(staffNumber) {
-  browser.driver.sleep(3000);
+  browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   const logout = element(by.xpath(`//button/span[contains(text(), "Logout (Employee ID: ${staffNumber}")]`));
   return logout.isPresent();
 }
 
 // Logs out of the application and takes them to the login page if they were logged in else returns (which should be the login page)
 function logout() {
-    browser.sleep(500);
-    const logout = element(by.xpath('//button/span[contains(text(), "Logout")]'));
-    logout.isPresent().then((result) => {
-      if ( result ) {
-        logout.click().then (() => {
-          // After logout click sign in to get us to the login screen
-          const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
-          return signIn.click();
-        });
-      } else {
-        return Promise.resolve();
-      }
-    });
-
+  browser.sleep(TEST_CONFIG.ACTION_WAIT);
+  const logout = element(by.xpath('//button/span[contains(text(), "Logout")]'));
+  logout.isPresent().then((result) => {
+    if ( result ) {
+      logout.click().then (() => {
+        // After logout click sign in to get us to the login screen
+        const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
+        signIn.click();
+      });
+    } else {
+      return Promise.resolve();
+    }
+  });
 }
 
 // A framework safe click method
@@ -183,18 +183,24 @@ function clickElement(fieldElement) {
 
 // Goes to the home page which will be the journal for logged in Examiners
 function loadApplication() {
-  browser.get('').then((promise) => {
-    browser.sleep(500);
-    return isReady(promise);
-  });
+  browser.ignoreSynchronization = false;
+  const promise = browser.get('');
+  browser.ignoreSynchronization = true;
+  return promise;
 }
 
 // Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear
 function isReady(promise) {
   // There is a 200ms transition duration we have to account for
-  browser.sleep(250);
+  browser.sleep(TEST_CONFIG.ACTION_WAIT);
   // Then wait for the page to become active again
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   // Then return the original promise
   return promise;
+}
+
+// Waits for the element to exist on the page before returning it.
+function getElement(elementBy) {
+  browser.wait(ExpectedConditions.presenceOf(element(elementBy)));
+  return element(elementBy);
 }
