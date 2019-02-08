@@ -42,9 +42,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   subscription: Subscription;
   slotId: number;
   slotChanged: boolean = false;
-  // specialNeeds: boolean = false;
-  // entitlementCheck: boolean = false;
-  // candidateId: string;
 
   testCategoryIcons = testCategoryIcons;
   testCategory = TestCategory.B;
