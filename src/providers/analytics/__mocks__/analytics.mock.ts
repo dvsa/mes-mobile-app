@@ -12,5 +12,7 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
 
   logError(message: string) {}
 
+  logException(message: string, fatal: boolean) {}
+
   setUserId(userId: string) {}
 }

@@ -6,6 +6,8 @@ export interface IAnalyticsProvider {
     logEvent(category: string, event: string, label?:string, params?: any);
   
     logError(type:string, message: string);
+
+    logException(message: string, fatal: boolean); 
   
     setUserId(userId: string);
   }
