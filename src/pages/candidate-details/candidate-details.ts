@@ -122,12 +122,12 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
   }
 
-  startAnalytics([specialNeeds, entitlementCheck, candidateId]: any[], analyticsProvider: AnalyticsProvider): void {
+  startAnalytics([specialNeeds, entitlementCheck, candidateId]: any[]): void {
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specialNeeds ? '1' : '0');
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, entitlementCheck ? '1' : '0');    
-    analyticsProvider.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+    this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
   }
 
   ngOnDestroy(): void {
