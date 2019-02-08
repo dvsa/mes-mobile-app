@@ -74,8 +74,8 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
-        catchError(err => {
-          console.error(err);
+        catchError((err) => {
+          this.analytics.logError('AutomaticJournalRefresh', err.message);
           return of();
         })
       )
@@ -87,7 +87,10 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL),
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
-        catchError(err => of(new journalActions.LoadJournalFailure(err))),
+        catchError((err) => {
+          this.analytics.logError('ManualJournalRefresh', err.message);
+          return of(new journalActions.LoadJournalFailure(err))
+        }),
       )
     ),
   );

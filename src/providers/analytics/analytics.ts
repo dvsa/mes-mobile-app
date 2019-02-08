@@ -22,10 +22,22 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     this.platform.ready().then(() => {
       this.uniqueDeviceId = cryptoJs.SHA256(this.device.uuid).toString(cryptoJs.enc.Hex);
       this.setUserId(this.uniqueDeviceId); 
-      this.ga.enableUncaughtExceptionReporting(true).then((resp) => {})
-        .catch((error) => console.log(this.analyticsStartupError, error));
+      this.enableExceptionReporting();
     });
   
+  }
+
+  enableExceptionReporting() {
+    this.platform.ready().then(() => { 
+      this.ga
+        .startTrackerWithId(this.googleAnalyticsKey)
+        .then(() => {
+          this.ga.enableUncaughtExceptionReporting(true)
+          .then((resp) => {})
+          .catch((uncaughtError) => console.log('Error enabling uncaught exceptions', uncaughtError));
+        })
+        .catch((error) => console.log(`enableExceptionReporting: ${this.analyticsStartupError}`, error));
+    });
   }
 
   setCurrentPage(name: string) {
@@ -37,7 +49,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
           .then((resp) => {})
           .catch((pageError) => console.log('Error setting page', pageError));
         })
-        .catch((error) => console.log(this.analyticsStartupError, error));
+        .catch((error) => console.log(`setCurrentPage: ${this.analyticsStartupError}`, error));
     });
   }
 
@@ -50,7 +62,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
           .then((resp) => {})
           .catch((eventError) => console.log('Error tracking event', eventError));
         })
-        .catch((error) => console.log(this.analyticsStartupError, error));
+        .catch((error) => console.log(`logEvent: ${this.analyticsStartupError}`, error));
     });
   }
 
@@ -62,7 +74,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then((resp) => {})
         .catch((dimError) => console.log('Error adding custom dimension ', dimError));
     })
-    .catch((error) => console.log(this.analyticsStartupError, error));
+    .catch((error) => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
   }
 
   logError(type: string, message: string) {
@@ -77,7 +89,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then((resp) => {})
         .catch((trackingError) => console.log('Error logging exception in Google Analytics', trackingError));
     })
-    .catch((error) => console.log(this.analyticsStartupError, error));
+    .catch((error) => console.log(`logException: ${this.analyticsStartupError}`, error));
   }
 
   setUserId(userId: string) {
@@ -88,7 +100,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then((resp) => {})
         .catch((idError) => console.log(`Error setting userid ${userId}`,idError));
     })
-    .catch((error) => console.log(this.analyticsStartupError, error));
+    .catch((error) => console.log(`setUserId: ${this.analyticsStartupError}`, error));
   }
 
   getDiffDays(userDate: string): number {
