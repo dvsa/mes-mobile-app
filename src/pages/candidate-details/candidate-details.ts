@@ -3,7 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { map, zip } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { zip } from 'rxjs/observable/zip';
 import { merge } from 'rxjs/observable/merge';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -134,11 +135,13 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
   
   ionViewDidEnter(): void {
-    const dimensions$ = this.pageState.specialNeeds$.pipe(
-      zip(this.pageState.entitlementCheck$, this.pageState.candidateId$),
+    const dimensions$ = zip(
+      this.pageState.specialNeeds$,
+      this.pageState.entitlementCheck$, 
+      this.pageState.candidateId$
     );
 
-    dimensions$.subscribe((emission: any) => this.startAnalytics(emission, this.analytics));
+    dimensions$.subscribe(this.startAnalytics.bind(this));
   }
 
   handleDoneButtonClick(): void {
