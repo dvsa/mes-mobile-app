@@ -54,3 +54,8 @@ export interface IAnalyticsProvider {
     CANDIDATE_WITH_CHECK = 4,
     CANDIDATE_ID=5
   }
+
+  export enum JournalRefreshModes {
+    MANUAL = 'MANUAL',
+    AUTOMATIC = 'AUTOMATIC'
+  }

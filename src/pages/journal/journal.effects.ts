@@ -22,7 +22,8 @@ import {
   AnalyticsEventCategories,
   AnalyticsEvents,
   AnalyticsScreenNames,
-  AnalyticsDimensionIndices
+  AnalyticsDimensionIndices,
+  JournalRefreshModes
 } from '../../providers/analytics/analytics.model';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../common/date-time';
@@ -40,7 +41,9 @@ export class JournalEffects {
   ) {
   }
 
-  callJournalProvider$ = () => {
+  callJournalProvider$ = (mode: string) => {
+    this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.REFRESH_JOURNAL, mode);
+
     return of(null).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -70,7 +73,7 @@ export class JournalEffects {
   journal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
-      () => this.callJournalProvider$().pipe(
+      () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
         catchError(err => {
           console.error(err);
           return of();
@@ -83,7 +86,7 @@ export class JournalEffects {
   loadJournal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL),
     switchMap(
-      () => this.callJournalProvider$().pipe(
+      () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
         catchError(err => of(new journalActions.LoadJournalFailure(err))),
       )
     ),
