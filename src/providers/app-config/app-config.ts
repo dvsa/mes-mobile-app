@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { merge } from 'lodash';
 
 import { AppConfig } from './app-config.model';
 import { environment } from '../../environment/environment';
-import { map } from 'rxjs/operators';
 import { EnvironmentFile } from '../../environment/models/environment.model';
 
 @Injectable()
@@ -15,37 +14,35 @@ export class AppConfigProvider {
   private appConfig: AppConfig;
 
   constructor(private httpClient: HttpClient) {
-    this.refreshConfigSettings();
-  }
+    this.mapInAppConfig(this.environmentFile);
 
-  public refreshConfigSettings = (): Observable<any> => {
-    if (this.environmentFile.isRemote) {
-      return this.getRemoteData();
+    if (!this.environmentFile.isRemote) {
+      this.mapRemoteConfig(this.environmentFile);
     }
-    this.getLocalData();
   }
 
-  public getAppConfig(): AppConfig {
-    return this.appConfig;
-  }
+  public getAppConfig = (): AppConfig => this.appConfig;
 
-  private getRemoteData = (): Observable<any> => {
-    return this.httpClient.get<any>(this.environmentFile.remoteSettingsUrl)
-      .pipe(
-        map((res) => {
-          this.mapConfig(res.body.data);
-        })
-      );
-  }
 
-  private getLocalData = () => {
-    this.mapConfig(this.environmentFile);
-  }
+  public loadRemoteConfig = (): Promise<any> =>
+    this.getRemoteData()
+      .then(data => this.mapRemoteConfig(data))
+      .catch(error => console.log('Error Getting Remote Config', error))
 
-  private mapConfig = (data: any) => {
-    this.appConfig = {
-      googleAnalyticsId: data.googleAnalyticsId,
-      userIdDimensionIndex: data.userIdDimensionIndex,
+
+  private getRemoteData = (): Promise<any> =>
+    new Promise((resolve, reject) => {
+      this.httpClient.get<any>(this.environmentFile.configUrl)
+        .subscribe(
+          data => resolve(data),
+          error => reject(error)
+        )
+    });
+
+
+  private mapInAppConfig = (data: EnvironmentFile) =>
+    this.appConfig = merge({}, this.appConfig, {
+      configUrl: data.configUrl,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,
@@ -56,14 +53,17 @@ export class AppConfigProvider {
         identityPoolId: data.authentication.identityPoolId,
         employeeIdKey: data.authentication.employeeIdKey
       },
-      aws: {
-        region: data.aws.region,
-      },
+    } as AppConfig);
+
+
+  private mapRemoteConfig = (data: any) =>
+    this.appConfig = merge({}, this.appConfig, {
+      googleAnalyticsId: data.googleAnalyticsId,
       journal: {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
         numberOfDaysToView: data.journal.numberOfDaysToView,
       }
-    }
-  }
+    } as AppConfig);
+
 }

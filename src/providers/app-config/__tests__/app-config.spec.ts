@@ -1,10 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { AppConfigProvider } from '../app-config';
 
 import { environmentResponseMock } from '../__mocks__/environment-response.mock';
-import { remoteEnvironmentMock, localEnvironmentMock } from '../__mocks__/environment.mock';
+import { remoteEnvironmentMock } from '../__mocks__/environment.mock';
 
 describe('App Config Provider', () => {
 
@@ -27,29 +27,16 @@ describe('App Config Provider', () => {
     httpMock.verify();
   });
 
-  describe('refreshConfigSettings', () => {
-    it('should load local config', () => {
-      appConfig.environmentFile = localEnvironmentMock;
-
-      appConfig.refreshConfigSettings();
-
-      expect(appConfig.getAppConfig().googleAnalyticsId).toBe('local-ga-id');
-      expect(appConfig.getAppConfig().userIdDimensionIndex).toBe(2018);
-
-    });
-    it('should load remote config', () => {
+  describe('loadRemoteConfig',() => {
+    it('should load remote config', fakeAsync(() => {
       appConfig.environmentFile = remoteEnvironmentMock;
 
-      appConfig.refreshConfigSettings().subscribe(() => {
-        expect(appConfig.getAppConfig().googleAnalyticsId).toBe('TEST-GA-ID');
-        expect(appConfig.getAppConfig().userIdDimensionIndex).toBe(99);
-      });
+      appConfig.loadRemoteConfig();
+      tick();
 
-      const request = httpMock.expectOne(remoteEnvironmentMock.remoteSettingsUrl);
+      const request = httpMock.expectOne(remoteEnvironmentMock.configUrl);
       expect(request.request.method).toBe('GET');
-
       request.flush(environmentResponseMock);
-    });
+    }));
   });
-
 });
