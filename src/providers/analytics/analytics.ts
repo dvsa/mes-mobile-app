@@ -5,7 +5,7 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Platform } from 'ionic-angular';
 import { Device } from '@ionic-native/device';
 import * as moment from 'moment';
-import cryptoJs from 'crypto-js';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class AnalyticsProvider implements IAnalyticsProvider {
@@ -25,7 +25,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     new Promise((resolve) => {
       this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
       this.platform.ready().then(() => {
-        this.uniqueDeviceId = cryptoJs.SHA256(this.device.uuid).toString(cryptoJs.enc.Hex);
+        this.uniqueDeviceId = createHash('sha256').update(this.device.uuid).digest('hex');
         this.setUserId(this.uniqueDeviceId); 
         this.enableExceptionReporting();
       });
