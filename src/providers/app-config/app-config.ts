@@ -52,8 +52,7 @@ export class AppConfigProvider {
         openIdConnectUrl: data.authentication.openIdConnectUrl,
         identityPoolId: data.authentication.identityPoolId,
         employeeIdKey: data.authentication.employeeIdKey
-      },
-      loggingUrl: data.loggingUrl
+      }
     } as AppConfig);
 
 
@@ -64,7 +63,8 @@ export class AppConfigProvider {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
         numberOfDaysToView: data.journal.numberOfDaysToView,
-      }
+      },
+      loggingUrl: data.loggingUrl
     } as AppConfig);
 
 }

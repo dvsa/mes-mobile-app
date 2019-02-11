@@ -13,5 +13,4 @@ export const environment: EnvironmentFile = {
     openIdConnectUrl: '',
     identityPoolId: '',
   },
-  loggingUrl: '',
 };

@@ -19,5 +19,5 @@ export const environment: LocalEnvironmentFile = {
     autoRefreshInterval: 20000,
     numberOfDaysToView: 7,
   },
-  loggingUrl: '',
+  loggingUrl: 'https://calvin.mes.dev-dvsacloud.uk/v1/logs/',
 };

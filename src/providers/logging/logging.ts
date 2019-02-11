@@ -17,7 +17,6 @@ export class LoggingProvider {
     this.http
       .post(this.urlProvider.getLoggingServiceUrl(), logs)
       .subscribe(error => this.handleError(error))
-      .unsubscribe();
   }
 
   private handleError = (error: any) => {
