@@ -17,15 +17,20 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     public ga: GoogleAnalytics,
     public platform: Platform,
     private device: Device
-  ) {
-    this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
-    this.platform.ready().then(() => {
-      this.uniqueDeviceId = cryptoJs.SHA256(this.device.uuid).toString(cryptoJs.enc.Hex);
-      this.setUserId(this.uniqueDeviceId); 
-      this.enableExceptionReporting();
-    });
+  ) { }
+
   
-  }
+
+  initialiseAnalytics = (): Promise<any> =>
+    new Promise((resolve) => {
+      this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
+      this.platform.ready().then(() => {
+        this.uniqueDeviceId = cryptoJs.SHA256(this.device.uuid).toString(cryptoJs.enc.Hex);
+        this.setUserId(this.uniqueDeviceId); 
+        this.enableExceptionReporting();
+      });
+      resolve();
+    });
 
   enableExceptionReporting() {
     this.platform.ready().then(() => { 

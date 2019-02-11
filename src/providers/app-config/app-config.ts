@@ -65,5 +65,4 @@ export class AppConfigProvider {
         numberOfDaysToView: data.journal.numberOfDaysToView,
       }
     } as AppConfig);
-
 }

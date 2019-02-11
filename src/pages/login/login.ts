@@ -51,6 +51,7 @@ export class LoginPage extends BasePageComponent {
         this.authenticationProvider
           .login()
           .then(() => this.appConfigProvider.loadRemoteConfig())
+          .then(() => this.analytics.initialiseAnalytics())
           .then(() => this.navController.setRoot('JournalPage'))
           .catch((error: AuthenticationError) => { 
             if (error === AuthenticationError.USER_CANCELLED) {
