@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import {
-  AnalyticsScreenNames,
-  AnalyticsDimensionIndices
-} from '../../providers/analytics/analytics.model';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 
@@ -27,7 +24,6 @@ export class TestReportPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
   }
 

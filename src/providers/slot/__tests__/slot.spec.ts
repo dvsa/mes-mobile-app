@@ -19,8 +19,8 @@ describe('SlotProvider', () => {
       imports: [
       ],
       providers: [
-     { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
-     { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         SlotProvider
       ],
     });

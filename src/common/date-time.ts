@@ -27,6 +27,18 @@ export class DateTime {
     return this;
   }
 
+  subtract(amount: number, unit: Duration): DateTime {
+    const momentUnit = unit.valueOf() as moment.unitOfTime.DurationConstructor;
+    this.moment.subtract(amount, momentUnit);
+    return this;
+  }
+
+  daysDiff(targetDateTime: string): number {
+    const today = this.moment.startOf('day');
+    const startOfDay = moment(targetDateTime, 'YYYY-MM-DD').startOf('day');
+    return(moment.duration(startOfDay.diff(today)).asDays());
+  }
+
   format(formatString: string): string {
     return this.moment.format(formatString);
   }

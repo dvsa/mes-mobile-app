@@ -36,8 +36,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsScreenNames,
-  AnalyticsDimensionIndices
+  AnalyticsScreenNames
 } from '../../providers/analytics/analytics.model';
 
 interface JournalPageState {
@@ -141,7 +140,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ionViewDidEnter(): void {
-    this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(this.selectedDate)} ${AnalyticsScreenNames.JOURNAL}`);
   }
 
@@ -154,7 +152,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   setSelectedDate = (selectedDate: string): void => {
-      this.selectedDate = selectedDate;  
+    this.selectedDate = selectedDate;  
   }
 
   handleLoadingUI = (isLoading: boolean): void => {

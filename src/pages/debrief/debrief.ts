@@ -3,9 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import {
-  AnalyticsScreenNames, AnalyticsDimensionIndices
-} from '../../providers/analytics/analytics.model';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 @IonicPage()
 @Component({
@@ -25,7 +23,6 @@ export class DebriefPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.setCurrentPage(AnalyticsScreenNames.DEBRIEF);
   }
 

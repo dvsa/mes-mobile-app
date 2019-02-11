@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../classes/base-page';
-import {
-  AnalyticsScreenNames, AnalyticsDimensionIndices
-} from '../../providers/analytics/analytics.model';
+import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 
@@ -26,7 +24,6 @@ export class HealthDeclarationPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.setCurrentPage(AnalyticsScreenNames.HEALTH_DECLARATION);
   }
 

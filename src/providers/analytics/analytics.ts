@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AppConfigProvider } from '../app-config/app-config';
-import { IAnalyticsProvider, AnalyticsEventCategories } from './analytics.model';
+import { IAnalyticsProvider, AnalyticsEventCategories, AnalyticsDimensionIndices } from './analytics.model';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Platform } from 'ionic-angular';
 import { Device } from '@ionic-native/device';
-import * as moment from 'moment';
+import { DateTime } from '../../common/date-time';
 import { createHash } from 'crypto';
 
 @Injectable()
 export class AnalyticsProvider implements IAnalyticsProvider {
-  private analyticsStartupError: string = 'Error starting Google Analytics';
+  private analyticsStartupError: string ='Error starting Google Analytics';
   googleAnalyticsKey: string;
   uniqueDeviceId: string;
   constructor(
@@ -25,7 +25,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     new Promise((resolve) => {
       this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
       this.platform.ready().then(() => {
-        this.uniqueDeviceId = createHash('sha256').update(this.device.uuid).digest('hex');
+        this.uniqueDeviceId = createHash('sha256').update(this.device.uuid?this.device.uuid:'defaultDevice').digest('hex');
         this.setUserId(this.uniqueDeviceId); 
         this.enableExceptionReporting();
       });
@@ -50,6 +50,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
+          this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
           this.ga.trackView(name)
           .then((resp) => {})
           .catch((pageError) => console.log('Error setting page', pageError));
@@ -109,18 +110,16 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   getDiffDays(userDate: string): number {
-    const today = moment().startOf('day');
-    const startOfDay = moment(userDate, 'YYYY-MM-DD').startOf('day');
-
-    return(moment.duration(startOfDay.diff(today)).asDays());
+    const today = new DateTime();
+    return today.daysDiff(userDate);
   }
   
   getDescriptiveDate(userDate: string): string {
     let ret: string;
+
     const daysDiff = this.getDiffDays(userDate);
 
-    switch (daysDiff) 
-    {
+    switch (daysDiff) {
       case -1 : 
         ret = 'Yesterday';
         break;
@@ -131,7 +130,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         ret = 'Tomorrow';
         break;
       default:
-        ret = moment(userDate, 'YYYY-MM-DD').startOf('day').format('YYYYMMDD');
+        ret = userDate;
         break;
     }
     return ret;

@@ -15,11 +15,20 @@ import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsDimensionIndices
+  AnalyticsScreenNames, 
+  AnalyticsEventCategories, 
+  AnalyticsEvents, 
+  AnalyticsDimensionIndices
 } from '../../providers/analytics/analytics.model';
 import { 
-  getSlotById, getSlots, getCandidateName, getCandidateId, 
-  getTime, getDetails, isCandidateSpecialNeeds, isCandidateCheckNeeded } from './candidate-details.selector';
+  getSlotById, 
+  getSlots, 
+  getCandidateName, 
+  getCandidateId, 
+  getTime, 
+  getDetails, 
+  isCandidateSpecialNeeds, 
+  isCandidateCheckNeeded } from './candidate-details.selector';
 
 
 interface CandidateDetailsPageState {
@@ -37,12 +46,11 @@ interface CandidateDetailsPageState {
   templateUrl: 'candidate-details.html'
 })
 export class CandidateDetailsPage extends BasePageComponent implements OnInit, OnDestroy {
-
-  pageState: CandidateDetailsPageState;
-  subscription: Subscription;
   slotId: number;
   slotChanged: boolean = false;
 
+  pageState: CandidateDetailsPageState;
+  subscription: Subscription;
   testCategoryIcons = testCategoryIcons;
   testCategory = TestCategory.B;
 
@@ -120,7 +128,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   startAnalytics([specialNeeds, entitlementCheck, candidateId]: any[]): void {
-    this.analytics.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.analytics.uniqueDeviceId);
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specialNeeds ? '1' : '0');
     this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, entitlementCheck ? '1' : '0');    
