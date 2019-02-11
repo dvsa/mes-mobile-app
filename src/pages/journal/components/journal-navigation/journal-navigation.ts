@@ -48,6 +48,7 @@ export class JournalNavigationComponent implements OnInit {
   }
 
   onPreviousDayClick(): void {
+    console.log('clicked onPreviousDay');
     this.store$.dispatch(new SelectPreviousDay());
   }
 

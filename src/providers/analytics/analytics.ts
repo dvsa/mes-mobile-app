@@ -77,7 +77,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     .startTrackerWithId(this.googleAnalyticsKey)
     .then(() => {
       this.ga.addCustomDimension(key,value)
-        .then((resp) => {})
+        .then((resp) => {console.log(`successful customdimension ${key} - ${value}`);})
         .catch((dimError) => console.log('Error adding custom dimension ', dimError));
     })
     .catch((error) => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));

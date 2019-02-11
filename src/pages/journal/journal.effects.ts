@@ -137,10 +137,13 @@ export class JournalEffects {
       )
     ),
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
+      console.log('SELECT_PREVIOUS_DAY');
       if (!canNavigateToPreviousDay) {
+        console.log(`selected date in SELECT_PREVIOUS_DAY is ${selectedDate} can not navigate to previous`);
         return of();
       }
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
+      console.log(`previous day ${previousDay} - SELECT_PREVIOUS_DAY`);
       this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(previousDay));
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY, this.analytics.getDiffDays(previousDay).toString());
       this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(previousDay)} ${AnalyticsScreenNames.JOURNAL}`);

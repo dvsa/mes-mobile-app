@@ -20,7 +20,7 @@ export const getCandidateId = (slot: any): string => `${slot.booking.candidate.c
 export const isCandidateSpecialNeeds = (slot: any): boolean => !isEmpty(slot.booking.application.specialNeeds);
 export const isCandidateCheckNeeded = (slot: any): boolean => slot.booking.application.entitlementCheck;
 // export const getSlotChanged = (slot: any): boolean =>  has(slot,'hasSlotChanged') && slot.hasSlotChanged;
-export const getSlotChanged = (slot: any): boolean =>  slot.hasSlotChanged;
+export const getSlotChanged = (slot: any): boolean => slot.hasSlotChanged;
 
 export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.mobileTelephone)) return candidate.mobileTelephone;
