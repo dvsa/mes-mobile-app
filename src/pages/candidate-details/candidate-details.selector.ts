@@ -16,7 +16,6 @@ export const getTime = (slot: any): string => slot.slotDetail.start;
 
 export const isCandidateCommentsEmpty = (slot: any): boolean => isEmpty(slot.booking.application.specialNeeds) && isEmpty(slot.booking.previousCancellation);
 
-// TODO add tests for isCandidateSpecialNeeds, isCandidateCheckNeeded and getCandidateId
 export const getCandidateId = (slot: any): string => `${slot.booking.candidate.candidateId}`;
 export const isCandidateSpecialNeeds = (slot: any): boolean => !isEmpty(slot.booking.application.specialNeeds);
 export const isCandidateCheckNeeded = (slot: any): boolean => slot.booking.application.entitlementCheck;
