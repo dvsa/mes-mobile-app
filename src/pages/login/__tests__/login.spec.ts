@@ -9,6 +9,8 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthenticationError } from '../../../providers/authentication/authentication.constants';
 import { By } from '@angular/platform-browser';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -16,6 +18,7 @@ describe('LoginPage', () => {
   let navController: NavController;
   let splashScreen: SplashScreen;
   let authenticationProvider: AuthenticationProvider;
+  let appConfigProvider: AppConfigProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,7 +30,8 @@ describe('LoginPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
-        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock }]
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock}]
     })
       .compileComponents()
       .then(() => {
@@ -36,6 +40,7 @@ describe('LoginPage', () => {
         navController = TestBed.get(NavController);
         splashScreen = TestBed.get(SplashScreen);
         authenticationProvider = TestBed.get(AuthenticationProvider);
+        appConfigProvider = TestBed.get(AppConfigProvider);
       });
   }));
 
@@ -51,6 +56,7 @@ describe('LoginPage', () => {
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.login();
       tick()
+      expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();
       expect(splashScreen.hide).toHaveBeenCalledTimes(1);

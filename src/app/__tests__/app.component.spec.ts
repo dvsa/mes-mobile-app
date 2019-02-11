@@ -4,8 +4,6 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { App } from '../app.component';
-import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { AppConfigProviderMock } from '../../providers/app-config/__mocks__/app-config.mock';
 import { StatusBarMock, PlatformMock } from 'ionic-mocks';
 import { Spied } from '../../../test/helpers/spy-generic';
 
@@ -21,7 +19,6 @@ describe('App', () => {
       providers: [
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     }).compileComponents();
 

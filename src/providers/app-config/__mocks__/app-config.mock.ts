@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Observable';
-
 import { EnvironmentFile } from '../../../environment/models/environment.model';
 import { localEnvironmentMock } from './environment.mock';
 import { AppConfig } from '../app-config.model';
@@ -8,14 +6,15 @@ export class AppConfigProviderMock {
 
   environmentFile: EnvironmentFile = localEnvironmentMock;
 
-  public refreshConfigSettings = (): Observable<any> => {
-    return;
-  }
+  public loadRemoteConfig = jasmine.createSpy('loadRemoteConfig')
+    .and
+    .returnValue(Promise.resolve())
 
-  public getAppConfig(): AppConfig {
-    return {
+  public getAppConfig = jasmine.createSpy('getAppConfig')
+    .and
+    .returnValue({
+      configUrl: localEnvironmentMock.configUrl,
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
-      userIdDimensionIndex: localEnvironmentMock.userIdDimensionIndex,
       authentication: {
         clientId: localEnvironmentMock.authentication.clientId,
         context: localEnvironmentMock.authentication.context,
@@ -26,14 +25,10 @@ export class AppConfigProviderMock {
         identityPoolId: localEnvironmentMock.authentication.identityPoolId,
         employeeIdKey: localEnvironmentMock.authentication.employeeIdKey
       },
-      aws: {
-        region: localEnvironmentMock.aws.region
-      },
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
       }
-    };
-  }
+    } as AppConfig);
 }
