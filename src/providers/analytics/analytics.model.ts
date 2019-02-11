@@ -13,21 +13,21 @@ export interface IAnalyticsProvider {
   }
   
   export enum AnalyticsScreenNames {
-    CONTACT_DETAILS = 'contact details page', // this may need removing as could be candidate details now
-    FAIL_RESULTS_DEBRIEF = 'fail results debrief page',
-    HEALTH_DECLARATION = 'health declaration page',
-    JOURNAL = 'journal page',
-    OFFICE = 'office page',
-    PASS_FINALISATION = 'pass finalisation page',
-    PASS_RESULTS_DEBRIEF = 'pass results debrief page',
-    TEST = 'test report page',
-    TERMINATE_TEST = 'terminate test page',
-    WAITING_ROOM = 'waiting room page',
-    WAITING_ROOM_TO_CAR = 'waiting room to car page',
-    WELCOME = 'welcome page',
-    CANDIDATE_DETAILS = 'candidate details page',
-    DEBRIEF = 'debrief page',
-    LOGIN = 'login page'
+    CONTACT_DETAILS = 'contact details screen', // this may need removing as could be candidate details now
+    FAIL_RESULTS_DEBRIEF = 'fail results debrief screen',
+    HEALTH_DECLARATION = 'health declaration screen',
+    JOURNAL = 'journal screen',
+    OFFICE = 'office screen',
+    PASS_FINALISATION = 'pass finalisation screen',
+    PASS_RESULTS_DEBRIEF = 'pass results debrief screen',
+    TEST = 'test report screen',
+    TERMINATE_TEST = 'terminate test screen',
+    WAITING_ROOM = 'waiting room screen',
+    WAITING_ROOM_TO_CAR = 'waiting room to car screen',
+    WELCOME = 'welcome screen',
+    CANDIDATE_DETAILS = 'candidate details screen',
+    DEBRIEF = 'debrief screen',
+    LOGIN = 'login screen'
   }
   
   export enum AnalyticsEventCategories {
