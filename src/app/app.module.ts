@@ -18,7 +18,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { UrlProvider } from '../providers/url/url';
 import { Network } from '@ionic-native/network';
 import { NetworkStateProvider } from '../providers/network-state/network-state';
-import { AnalyticsProvider } from '../providers/analytics/analytics';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Device } from '@ionic-native/device';
 
@@ -52,8 +51,7 @@ import { Device } from '@ionic-native/device';
     Network,
     NetworkStateProvider,
     GoogleAnalytics,
-    AnalyticsProvider,
-    Device,
+    Device
   ]
 })
 export class AppModule {

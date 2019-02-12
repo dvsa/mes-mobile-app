@@ -23,8 +23,7 @@ export const canNavigateToPreviousDay = (journal: JournalModel): boolean => {
   const selectedDate = journal.selectedDate;
   const availableDays = getAvailableDays(journal);
   const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
-
-  console.log(` selected date ${selectedDate}, previousDay = ${previousDay}, available= ${availableDays.includes(previousDay)}`);
+  
   return !isToday(selectedDate) && availableDays.includes(previousDay);
 };
 

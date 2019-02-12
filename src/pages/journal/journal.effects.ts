@@ -17,12 +17,12 @@ import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
+// import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsEventCategories,
-  AnalyticsEvents,
-  AnalyticsScreenNames,
-  AnalyticsDimensionIndices,
+  // AnalyticsEventCategories,
+  // AnalyticsEvents,
+  // AnalyticsScreenNames,
+  // AnalyticsDimensionIndices,
   JournalRefreshModes
 } from '../../providers/analytics/analytics.model';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
@@ -35,15 +35,14 @@ export class JournalEffects {
     private journalProvider: JournalProvider,
     private slotProvider: SlotProvider,
     private store$: Store<StoreModel>,
-    private analytics: AnalyticsProvider,
+    // private analytics: AnalyticsProvider,
     public appConfig: AppConfigProvider,
     public networkStateProvider: NetworkStateProvider,
   ) {
   }
 
   callJournalProvider$ = (mode: string) => {
-    this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.REFRESH_JOURNAL, mode);
-
+    this.store$.dispatch( new journalActions.JournalRefresh(mode));
     return of(null).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -75,7 +74,7 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
         catchError((err) => {
-          this.analytics.logError('AutomaticJournalRefresh', err.message);
+          this.store$.dispatch( new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
           return of();
         })
       )
@@ -88,7 +87,7 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
         catchError((err) => {
-          this.analytics.logError('ManualJournalRefresh', err.message);
+          this.store$.dispatch( new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
           return of(new journalActions.LoadJournalFailure(err))
         }),
       )
@@ -137,16 +136,11 @@ export class JournalEffects {
       )
     ),
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
-      console.log('SELECT_PREVIOUS_DAY');
       if (!canNavigateToPreviousDay) {
-        console.log(`selected date in SELECT_PREVIOUS_DAY is ${selectedDate} can not navigate to previous`);
         return of();
       }
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
-      console.log(`previous day ${previousDay} - SELECT_PREVIOUS_DAY`);
-      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(previousDay));
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY, this.analytics.getDiffDays(previousDay).toString());
-      this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(previousDay)} ${AnalyticsScreenNames.JOURNAL}`);
+      this.store$.dispatch(new journalActions.JournalNavigateDay(previousDay));
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
   )
@@ -169,10 +163,7 @@ export class JournalEffects {
         return of();
       }
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
-      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.NAVIGATION, this.analytics.getDescriptiveDate(nextDay));
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY, this.analytics.getDiffDays(nextDay).toString());
-      this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(nextDay)} ${AnalyticsScreenNames.JOURNAL}`);
-
+      this.store$.dispatch(new journalActions.JournalNavigateDay(nextDay));
       return of(new journalActions.SetSelectedDate(nextDay));
     }),
   )

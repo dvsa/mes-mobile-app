@@ -15,6 +15,13 @@ export const SELECT_PREVIOUS_DAY = '[JournalPage] Select Previous Day';
 export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
 export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 
+// Analytic actions
+
+export const JOURNAL_VIEW_DID_ENTER = '[JournalPage] Journal view did enter';
+export const JOURNAL_NAVIGATE_DAY = '[JournalPage] Navigate Day';
+export const JOURNAL_REFRESH='[JournalPage] Journal Refresh';
+export const JOURNAL_REFRESH_ERROR= '[JournalPage] Journal Refresh Error';
+
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
 }
@@ -69,6 +76,27 @@ export class StopPolling implements Action {
   readonly type = STOP_POLLING;
 }
 
+export class JournalViewDidEnter implements Action {
+  readonly type = JOURNAL_VIEW_DID_ENTER;
+}
+
+
+export class JournalNavigateDay implements Action {
+  readonly type = JOURNAL_NAVIGATE_DAY;
+  constructor(public day: string) {}
+}
+
+export class JournalRefreshError implements Action {
+  readonly type = JOURNAL_REFRESH_ERROR;
+  constructor(public errorDescription: string, public errorMessage: string) {}
+}
+
+export class JournalRefresh implements Action {
+  readonly type = JOURNAL_REFRESH;
+  constructor(public mode: string) {}
+}
+
+
 export type Types = 
   | LoadJournal
   | LoadJournalSilent
@@ -81,4 +109,8 @@ export type Types =
   | SelectNextDay
   | SetSelectedDate
   | SetupPolling
-  | StopPolling;
+  | StopPolling
+  | JournalViewDidEnter
+  | JournalNavigateDay
+  | JournalRefreshError
+  | JournalRefresh;

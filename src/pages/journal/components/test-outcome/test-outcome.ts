@@ -1,10 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
-import {
-  AnalyticsEventCategories,
-  AnalyticsEvents,
-} from '../../../../providers/analytics/analytics.model';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../../../common/store.model';
+import { TestOutcomeStartTest } from './test-outcome.actions';
 
 
 @Component({
@@ -20,12 +18,12 @@ export class TestOutcomeComponent {
   outcome: string = '0';
 
   constructor(
-    public navController: NavController,
-    public analytics: AnalyticsProvider
+    private store$: Store<StoreModel>,
+    public navController: NavController
   ) {}
 
   startTest() {
-    this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
+    this.store$.dispatch(new TestOutcomeStartTest());
     this.navController.push('WaitingRoomPage');
   }
 }

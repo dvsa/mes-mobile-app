@@ -24,10 +24,12 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   initialiseAnalytics = (): Promise<any> =>
     new Promise((resolve) => {
       this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
+      console.log(`analyticsKey = ${this.googleAnalyticsKey}`);
       this.platform.ready().then(() => {
         this.uniqueDeviceId = createHash('sha256').update(this.device.uuid?this.device.uuid:'defaultDevice').digest('hex');
         this.setUserId(this.uniqueDeviceId); 
         this.enableExceptionReporting();
+        console.log('analytics initialised');
       });
       resolve();
     });

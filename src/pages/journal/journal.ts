@@ -32,12 +32,12 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import {
-  AnalyticsEventCategories,
-  AnalyticsEvents,
-  AnalyticsScreenNames
-} from '../../providers/analytics/analytics.model';
+// import { AnalyticsProvider } from '../../providers/analytics/analytics';
+// import {
+//   AnalyticsEventCategories,
+//   AnalyticsEvents,
+//   AnalyticsScreenNames
+// } from '../../providers/analytics/analytics.model';
 
 interface JournalPageState {
   selectedDate$: Observable<string>,
@@ -79,7 +79,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
-    public analytics: AnalyticsProvider
+    // public analytics: AnalyticsProvider
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -140,7 +140,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(`${this.analytics.getDescriptiveDate(this.selectedDate)} ${AnalyticsScreenNames.JOURNAL}`);
+     this.store$.dispatch( new journalActions.JournalViewDidEnter());
   }
 
   loadJournalManually() {
@@ -221,8 +221,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
-    // TODO define more AnalyticsEvents for where it is going to - don't think start test is right here.
-    this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
   }
 
   logout() {
