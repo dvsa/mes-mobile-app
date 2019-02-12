@@ -31,15 +31,15 @@ describe('VehicleDetailsComponent', () => {
     it('should show vehicle details when showDimensions is true', () => {
       component.showDimensions = true;
       fixture.detectChanges();
-      const ionRows = fixture.debugElement.queryAll(By.css('ion-row'));
-      expect(ionRows.length).toBe(2);
+      const ionCols = fixture.debugElement.queryAll(By.css('ion-col'));
+      expect(ionCols.length).toBe(3);
     });
 
     it('should not vehicle details when showDimensions is false', () => {
       component.showDimensions = false;
       fixture.detectChanges();
-      const ionRows = fixture.debugElement.queryAll(By.css('ion-row'));
-      expect(ionRows.length).toBe(1);
+      const ionCols = fixture.debugElement.queryAll(By.css('ion-col'));
+      expect(ionCols.length).toBe(0);
     });
 
     it('should show number of seats when showNumberOfSeats is true', () => {
@@ -47,7 +47,7 @@ describe('VehicleDetailsComponent', () => {
       component.showNumberOfSeats = true;
       fixture.detectChanges();
       const ionCols = fixture.debugElement.queryAll(By.css('ion-col'));
-      expect(ionCols.length).toBe(2);
+      expect(ionCols.length).toBe(1);
     });
 
     it('should not show number of seats when showNumberOfSeats is false', () => {
@@ -55,7 +55,7 @@ describe('VehicleDetailsComponent', () => {
       component.showNumberOfSeats = false;
       fixture.detectChanges();
       const ionCols = fixture.debugElement.queryAll(By.css('ion-col'));
-      expect(ionCols.length).toBe(1);
+      expect(ionCols.length).toBe(0);
     });
   });
 
