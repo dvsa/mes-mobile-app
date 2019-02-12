@@ -1,9 +1,3 @@
 <div>
-  <ion-grid>
-    <ion-row align-items-left>
-      <ion-col>
-        <h2 [ngClass]="{'time-test-complete-text': testComplete}">{{time | date: "HH:mm" }}</h2>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <h2 [ngClass]="{'time-test-complete-text': testComplete}">{{time | date: "HH:mm" }}</h2>
 </div>
