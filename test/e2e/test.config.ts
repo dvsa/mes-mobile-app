@@ -8,6 +8,9 @@ export const TEST_CONFIG = {
       'mobexaminer5': {'username': '<USERNAME-HERE>', 'password': '<PASSWORD-HERE>', 'employeeId': '47182032'},
       'mobexaminer6': {'username': '<USERNAME-HERE>', 'password': '<PASSWORD-HERE>', 'employeeId': '78471231'},
       'mobexaminer7': {'username': '<USERNAME-HERE>', 'password': '<PASSWORD-HERE>', 'employeeId': '67128492'}
-    }
+    },
+    'PAGE_LOAD_WAIT': 2000,
+    'ACTION_WAIT': 300,
+    'DEFAULT_TIMEOUT': 30000 
   };
   
