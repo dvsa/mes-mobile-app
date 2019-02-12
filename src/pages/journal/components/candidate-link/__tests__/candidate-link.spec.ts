@@ -19,7 +19,7 @@ describe('CandidateLinkComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CandidateLinkComponent],
-      imports: [IonicModule],
+      imports: [IonicModule.forRoot(CandidateLinkComponent)],
       providers: [
         { provide: NavController, useFactory: () => navControllerMock },
       ],
@@ -38,11 +38,11 @@ describe('CandidateLinkComponent', () => {
   }));
 
   describe('Class', () => {
-    xit('should create', () => {
+    it('should create', () => {
       expect(component).toBeDefined();
     });
 
-    xit('should call the push function of navController and pass the right slotId', () => {
+    it('should call the push function of navController and pass the right slotId', () => {
       component.navigateToCandidateDetails();
 
       expect(component.navController.push).toHaveBeenCalledWith(
@@ -53,7 +53,7 @@ describe('CandidateLinkComponent', () => {
   });
 
   describe('DOM', () => {
-    xit('should display candidate name', () => {
+    it('should display candidate name', () => {
       const nameSpan: HTMLElement = fixture.debugElement.query(
         By.css('h3')
       ).nativeElement;
@@ -61,15 +61,15 @@ describe('CandidateLinkComponent', () => {
       expect(nameSpan.textContent).toBe('Mr Joe Bloggs');
     });
 
-    xit('should display a right arrow after the candidate name', () => {
+    it('should display a right arrow after the candidate name', () => {
       const iconElement = fixture.debugElement.queryAll(
-        By.css('arrow-forward')
+        By.css('ion-icon[name="arrow-forward"]')
       );
       fixture.detectChanges();
       expect(iconElement.length).toBe(1);
     });
 
-    xit('should apply additional css styles if device isPortrait', () => {
+    it('should apply additional css styles if device isPortrait', () => {
       component.isPortrait = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
@@ -78,7 +78,7 @@ describe('CandidateLinkComponent', () => {
       expect(renderedImages.length).toBe(1);
     });
 
-    xit('should not apply additional css styles if device isPortrait', () => {
+    it('should not apply additional css styles if device isPortrait', () => {
       component.isPortrait = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
@@ -87,7 +87,7 @@ describe('CandidateLinkComponent', () => {
       expect(renderedImages.length).toBe(0);
     });
 
-    xit('should apply additional css styles if device isLandscape', () => {
+    it('should apply additional css styles if device isLandscape', () => {
       component.isPortrait = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
@@ -96,7 +96,7 @@ describe('CandidateLinkComponent', () => {
       expect(renderedImages.length).toBe(1);
     });
 
-    xit('should not apply additional css styles if device isLandscape', () => {
+    it('should not apply additional css styles if device isLandscape', () => {
       component.isPortrait = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
@@ -105,11 +105,11 @@ describe('CandidateLinkComponent', () => {
       expect(renderedImages.length).toBe(0);
     });
 
-    xit('should call navigateToCandidateDetails when the main div component is clicked', fakeAsync(() => {
+    it('should call navigateToCandidateDetails when the main div component is clicked', fakeAsync(() => {
       fixture.detectChanges();
       spyOn(component, 'navigateToCandidateDetails');
-      const mainDiv = fixture.debugElement.query(By.css('div'));
-      mainDiv.triggerEventHandler('click', null);
+      const button = fixture.debugElement.query(By.css('button'));
+      button.triggerEventHandler('click', null);
       tick();
       fixture.detectChanges();
       expect(component.navigateToCandidateDetails).toHaveBeenCalled();
