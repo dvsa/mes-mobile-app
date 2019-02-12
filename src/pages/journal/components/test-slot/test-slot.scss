@@ -1,24 +1,47 @@
 test-slot {
   ion-card {
-    &.test-slot-portrait-mode {
-      height:108px;
+    ion-grid {
+      height: 100%;
     }
   }
   ion-row {
-    height: 100%;
     &.slot-row {
+      min-height: 108px;
       position: relative;
+      &.test-slot-portrait-mode {
+        min-height:108px;
+      }
+    }
+    &.slot-header,
+    &.slot-footer {
+      min-height: 22px;
+      &.vehicle-details-displayed {
+        min-height: 34px;
+      }
+    }
+    &.slot-main {
+      min-height: 48px;
     }
   }
   ion-col {
-    &.candidate-details-col {
-    margin-left: -30px;
+    &.time-exclamation-col {
+      max-width: 152px;
+    }
+    &.exclamation-col {
+      max-width: 48px;
+    }
+    &.test-outcome-col {
+      max-width: 152px;
+    }
+    &.vehicle-details-col {
+      padding-left: 152px;
+      margin-top: -6px;
     }
   }
   .slot-changed-indicator {
     position: absolute;
     height: 100%;
-    width: 10px;
+    width: 8px;
   }
   .slot-changed {
     background: map-get($colors, journalSlotChangeIdentifier);

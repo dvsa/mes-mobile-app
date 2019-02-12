@@ -1,12 +1,11 @@
-<div (click)="navigateToCandidateDetails()">
-  <ion-grid>
-    <ion-row align-items-left [ngClass]="{'candidate-grid-row' : isPortrait}">
-      <ion-col>
-        <h3 class="candidate-name">{{name.title}} {{name.firstName}} {{name.lastName}}</h3>
-      </ion-col>
-      <ion-col col-auto *ngIf="welshLanguage">
-        <img src="assets/imgs/journal/Welsh.png" class="welsh-language-indicator" />
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<div>
+  <button class="mes-transparent-button" ion-button (click)="navigateToCandidateDetails()">
+    <h3 class="candidate-name" [ngClass]="{
+      'candidate-name-short': isPortrait,
+      'candidate-name-long': !isPortrait
+    }">
+      {{name.title}} {{name.firstName}} {{name.lastName}}
+    </h3>
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
 </div>
