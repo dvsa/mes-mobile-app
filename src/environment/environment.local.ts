@@ -18,5 +18,6 @@ export const environment: LocalEnvironmentFile = {
     journalUrl: '/assets/mock/local-journal.json',
     autoRefreshInterval: 20000,
     numberOfDaysToView: 7,
-  }
+  },
+  loggingUrl: '',
 };
