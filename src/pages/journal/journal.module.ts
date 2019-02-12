@@ -18,11 +18,13 @@ import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-de
 import { TestCategoryComponent } from './components/test-category/test-category';
 import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
 import { SlotProvider } from '../../providers/slot/slot';
+import { LanguageComponent } from './components/language/language';
 
 @NgModule({
   declarations: [
     JournalPage,
     IndicatorsComponent,
+    LanguageComponent,
     TimeComponent,
     CandidateLinkComponent,
     TestOutcomeComponent,
