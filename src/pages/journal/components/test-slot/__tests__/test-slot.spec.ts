@@ -14,6 +14,7 @@ import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
 import { TestCategoryIconComponent } from '../../../../../components/test-category-icon/test-category-icon';
+import { LanguageComponent } from '../../language/language';
 
 describe('TestSlotComponent', () => {
     let fixture: ComponentFixture<TestSlotComponent>;
@@ -82,6 +83,7 @@ describe('TestSlotComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 TestSlotComponent,
+                MockComponent(LanguageComponent),
                 MockComponent(IndicatorsComponent),
                 MockComponent(TimeComponent),
                 MockComponent(TestCategoryComponent),
@@ -202,19 +204,12 @@ describe('TestSlotComponent', () => {
           expect(subByDirective.name.title).toBe('Miss');
           expect(subByDirective.name.firstName).toBe('Florence');
           expect(subByDirective.name.lastName).toBe('Pearson');
-          expect(subByDirective.welshTest).toBeFalsy();
           expect(subByDirective.isPortrait).toBeFalsy();
         });
 
         it('should pass something to sub-component test-category  input', () => {
           fixture.detectChanges();
           const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryComponent))).componentInstance;
-          expect(subByDirective.category).toBe('B');
-        });
-
-        it('should pass something to sub-component test-category-icon  input', () => {
-          fixture.detectChanges();
-          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TestCategoryIconComponent))).componentInstance;
           expect(subByDirective.category).toBe('B');
         });
 
@@ -234,6 +229,12 @@ describe('TestSlotComponent', () => {
           expect(subByDirective.transmission).toBe('Manual');
           expect(subByDirective.showDimensions).toBeFalsy();
           expect(subByDirective.showVehicleDetails).toBeFalsy();
+        });
+
+        it('should pass something to sub-component language  input', () => {
+          fixture.detectChanges();
+          const subByDirective = fixture.debugElement.query(By.directive(MockComponent(LanguageComponent))).componentInstance;
+          expect(subByDirective.welshLanguage).toBeFalsy();
         });
       });
   });

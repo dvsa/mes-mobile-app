@@ -17,9 +17,6 @@ export class CandidateLinkComponent {
   testComplete: boolean;
 
   @Input()
-  welshLanguage: boolean;
-
-  @Input()
   isPortrait: boolean;
 
   constructor(public navController: NavController) {
