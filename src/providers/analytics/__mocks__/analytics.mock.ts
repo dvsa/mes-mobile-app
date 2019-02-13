@@ -6,6 +6,11 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
 
   setCurrentPage(name: string):void {}
 
+  initialiseAnalytics = (): Promise<any> =>
+    new Promise((resolve) => {
+      resolve();
+    });
+
   logEvent(category: string, event: string, params?: any) {}
 
   addCustomDimension(key: number, value: string) {}

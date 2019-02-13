@@ -10,6 +10,8 @@ export interface IAnalyticsProvider {
     logException(message: string, fatal: boolean); 
   
     setUserId(userId: string);
+    initialiseAnalytics(): Promise<any>;
+
   }
   
   export enum AnalyticsScreenNames {
