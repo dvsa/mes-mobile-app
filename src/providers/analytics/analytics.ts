@@ -29,7 +29,6 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         this.uniqueDeviceId = createHash('sha256').update(this.device.uuid?this.device.uuid:'defaultDevice').digest('hex');
         this.setUserId(this.uniqueDeviceId); 
         this.enableExceptionReporting();
-        console.log('analytics initialised');
       });
       resolve();
     });
@@ -79,7 +78,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     .startTrackerWithId(this.googleAnalyticsKey)
     .then(() => {
       this.ga.addCustomDimension(key,value)
-        .then((resp) => {console.log(`successful customdimension ${key} - ${value}`);})
+        .then((resp) => {})
         .catch((dimError) => console.log('Error adding custom dimension ', dimError));
     })
     .catch((error) => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));

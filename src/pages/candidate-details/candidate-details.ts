@@ -19,7 +19,10 @@ import {
   getTime, 
   getDetails, 
 } from './candidate-details.selector';
-import { CandidateDetailsViewDidEnter, CandidateDetailsSlotChangeViewed } from './candidate-details.actions';
+import { 
+  CandidateDetailsViewDidEnter, 
+  CandidateDetailsSlotChangeViewed 
+} from './candidate-details.actions';
 
 
 interface CandidateDetailsPageState {  
@@ -97,7 +100,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
   
   ionViewDidEnter(): void {
-    console.log('############# CandidateDetailsViewDidEnter ##############');
     this.store$.dispatch( new CandidateDetailsViewDidEnter(this.slotId) );
   }
 
