@@ -17,7 +17,7 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
 import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
-import { AnalyticsEffects } from '../../providers/analytics/analytics.effects';
+// import { AnalyticsEffects } from '../../providers/analytics/analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { SlotProvider } from '../../providers/slot/slot';
 
@@ -38,7 +38,6 @@ import { SlotProvider } from '../../providers/slot/slot';
     IonicPageModule.forChild(JournalPage),
     StoreModule.forFeature('journal', journalReducer),
     EffectsModule.forFeature([JournalEffects]),
-    EffectsModule.forFeature([AnalyticsEffects]),
     ComponentsModule,
   ],
   entryComponents: [

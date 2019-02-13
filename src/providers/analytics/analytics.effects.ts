@@ -23,7 +23,8 @@ import {
   CANDIDATE_DETAILS_VIEW_DID_ENTER, 
   CandidateDetailsViewDidEnter, 
   CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED,
-  CandidateDetailsSlotChangeViewed} from '../../pages/candidate-details/candidate-details.actions';
+  CandidateDetailsSlotChangeViewed
+} from '../../pages/candidate-details/candidate-details.actions';
 import { 
   JOURNAL_VIEW_DID_ENTER, 
   JOURNAL_NAVIGATE_DAY, 
@@ -90,29 +91,6 @@ export class AnalyticsEffects {
   }
   
   @Effect()
-  candidateView$ = this.actions$.pipe(
-    ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        map(getSlots),
-      ) 
-    ),
-    switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
-      const slot = getSlotById(slots, action.slotId)
-      const specNeeds = isCandidateSpecialNeeds(slot);
-      const candidateCheck = isCandidateCheckNeeded(slot);
-      const candidateId = getCandidateId(slot);
-
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specNeeds ? '1' : '0');
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, candidateCheck ? '1' : '0');    
-      this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
-      return of();
-    })
-  );
-
-  @Effect()
   journalView$ = this.actions$.pipe(
     ofType(JOURNAL_VIEW_DID_ENTER),
     switchMap(
@@ -168,6 +146,29 @@ export class AnalyticsEffects {
         return of();
       }
     )
+  );
+
+  @Effect()
+  candidateView$ = this.actions$.pipe(
+    ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        map(getSlots),
+      ) 
+    ),
+    switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
+      const slot = getSlotById(slots, action.slotId)
+      const specNeeds = isCandidateSpecialNeeds(slot);
+      const candidateCheck = isCandidateCheckNeeded(slot);
+      const candidateId = getCandidateId(slot);
+
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specNeeds ? '1' : '0');
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, candidateCheck ? '1' : '0');    
+      this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+      return of();
+    })
   );
 
   @Effect()
