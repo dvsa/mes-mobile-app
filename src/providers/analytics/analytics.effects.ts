@@ -68,7 +68,10 @@ import {
   WAITING_ROOM_TO_CAR_VIEW_DID_ENTER, 
   WaitingRoomToCarViewDidEnter 
 } from '../../pages/waiting-room-to-car/waiting-room-to-car.actions';
-import { WAITING_ROOM_VIEW_DID_ENTER, WaitingRoomViewDidEnter } from '../../pages/waiting-room/waiting-room.actions';
+import { 
+  WAITING_ROOM_VIEW_DID_ENTER, 
+  WaitingRoomViewDidEnter 
+} from '../../pages/waiting-room/waiting-room.actions';
 
 @Injectable()
 export class AnalyticsEffects {
@@ -109,16 +112,6 @@ export class AnalyticsEffects {
     })
   );
 
-  @Effect()
-  candidateSlotChangeViewed$ = this.actions$.pipe(
-    ofType(CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED),
-    switchMap( (action: CandidateDetailsSlotChangeViewed) => {
-      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.SLOT_CHANGE_VIEWED, action.slotId.toString());
-      return of();
-    })
-  );
-
-  
   @Effect()
   journalView$ = this.actions$.pipe(
     ofType(JOURNAL_VIEW_DID_ENTER),
@@ -176,6 +169,16 @@ export class AnalyticsEffects {
       }
     )
   );
+
+  @Effect()
+  slotChangeViewed$ = this.actions$.pipe(
+    ofType(CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED),
+    switchMap( (action: CandidateDetailsSlotChangeViewed) => {
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.SLOT_CHANGE_VIEWED, action.slotId.toString());
+      return of();
+    })
+  );
+
 
   @Effect()
   debriefViewDidEnter$ = this.actions$.pipe(
