@@ -32,4 +32,11 @@ describe('UrlProvider', () => {
       expect(url).toBe('https://www.example.com/api/v1/journals/00000000/personal');
     });
   });
+
+  describe('getLoggingServiceUrl', () => {
+    it('should return the correct url', () => {
+      const url = urlProvider.getLoggingServiceUrl();
+      expect(url).toBe('https://www.example.com/api/v1/logs');
+    });
+  });
 });

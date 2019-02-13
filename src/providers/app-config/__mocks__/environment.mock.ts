@@ -33,5 +33,6 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',
     autoRefreshInterval: 1000 * 60 * 15,
     numberOfDaysToView: 7,
-  }
+  },
+  loggingUrl: 'https://www.example.com/api/v1/logs'
 };

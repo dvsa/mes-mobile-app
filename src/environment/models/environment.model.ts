@@ -20,4 +20,5 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     autoRefreshInterval: number;
     numberOfDaysToView: number;
   };
+  loggingUrl: string;
 }

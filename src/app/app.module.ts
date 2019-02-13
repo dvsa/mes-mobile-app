@@ -20,6 +20,7 @@ import { Network } from '@ionic-native/network';
 import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Device } from '@ionic-native/device';
+import { LoggingProvider } from '../providers/logging/logging';
 
 @NgModule({
   declarations: [App],
@@ -51,7 +52,9 @@ import { Device } from '@ionic-native/device';
     Network,
     NetworkStateProvider,
     GoogleAnalytics,
-    Device
+    Device,
+    LoggingProvider,
+    
   ]
 })
 export class AppModule {
