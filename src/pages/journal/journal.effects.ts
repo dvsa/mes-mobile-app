@@ -16,15 +16,11 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
-// import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
-  // AnalyticsEventCategories,
-  // AnalyticsEvents,
-  // AnalyticsScreenNames,
-  // AnalyticsDimensionIndices,
-  JournalRefreshModes
-} from '../../providers/analytics/analytics.model';
+  getSelectedDate, getLastRefreshed, getSlots,
+  canNavigateToPreviousDay, canNavigateToNextDay,
+} from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../common/date-time';
 
@@ -47,12 +43,12 @@ export class JournalEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getJournalState),
-          map(getLastRefreshed)
+          map(getLastRefreshed),
         ),
         this.store$.pipe(
           select(getJournalState),
-          map(getSlots)
-        )
+          map(getSlots),
+        ),
       ),
       switchMap(([action, lastRefreshed, slots]) => {
         return this.journalProvider
@@ -64,7 +60,7 @@ export class JournalEffects {
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantSlots(slots)),
             map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           );
-      })
+      }),
     );
   }
 
@@ -75,9 +71,10 @@ export class JournalEffects {
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
         catchError((err) => {
           this.store$.dispatch( new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
+          console.log(err);
           return of();
-        })
-      )
+        }),
+      ),
     ),
   );
 
@@ -105,7 +102,7 @@ export class JournalEffects {
         startWith(null),
       );
       const pollTimer$ = manualRefreshes$.pipe(
-        switchMap(() => interval(this.appConfig.getAppConfig().journal.autoRefreshInterval))
+        switchMap(() => interval(this.appConfig.getAppConfig().journal.autoRefreshInterval)),
       );
 
       const pollsWhileOnline$ = pollTimer$
@@ -128,12 +125,12 @@ export class JournalEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDate)
+        map(getSelectedDate),
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToPreviousDay)
-      )
+        map(canNavigateToPreviousDay),
+      ),
     ),
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
       if (!canNavigateToPreviousDay) {
@@ -143,7 +140,7 @@ export class JournalEffects {
       this.store$.dispatch(new journalActions.JournalNavigateDay(previousDay));
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
-  )
+  );
 
   @Effect()
   selectNextDayEffect$ = this.actions$.pipe(
@@ -151,12 +148,12 @@ export class JournalEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDate)
+        map(getSelectedDate),
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToNextDay)
-      )
+        map(canNavigateToNextDay),
+      ),
     ),
     switchMap(([action, selectedDate, canNavigateToNextDay]) => {
       if (!canNavigateToNextDay) {
@@ -166,5 +163,5 @@ export class JournalEffects {
       this.store$.dispatch(new journalActions.JournalNavigateDay(nextDay));
       return of(new journalActions.SetSelectedDate(nextDay));
     }),
-  )
+  );
 }

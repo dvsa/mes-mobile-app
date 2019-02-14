@@ -3,7 +3,7 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick
+  tick,
 } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { NavControllerMock } from 'ionic-mocks';
@@ -21,8 +21,8 @@ describe('CandidateLinkComponent', () => {
       declarations: [CandidateLinkComponent],
       imports: [IonicModule],
       providers: [
-        { provide: NavController, useFactory: () => navControllerMock }
-      ]
+        { provide: NavController, useFactory: () => navControllerMock },
+      ],
     })
       .compileComponents()
       .then(() => {
@@ -56,7 +56,7 @@ describe('CandidateLinkComponent', () => {
   describe('DOM', () => {
     it('should display candidate name', () => {
       const nameSpan: HTMLElement = fixture.debugElement.query(
-        By.css('ion-row:first-child h3')
+        By.css('ion-row:first-child h3'),
       ).nativeElement;
       fixture.detectChanges();
       expect(nameSpan.textContent).toBe('Mr Joe Bloggs');
@@ -66,7 +66,7 @@ describe('CandidateLinkComponent', () => {
       component.welshLanguage = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.welsh-language-indicator')
+        By.css('.welsh-language-indicator'),
       );
       expect(renderedImages.length).toBe(1);
     });
@@ -75,7 +75,7 @@ describe('CandidateLinkComponent', () => {
       component.welshLanguage = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.welsh-language-indicator')
+        By.css('.welsh-language-indicator'),
       );
       expect(renderedImages.length).toBe(0);
     });
@@ -84,7 +84,7 @@ describe('CandidateLinkComponent', () => {
       component.isPortrait = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.candidate-grid-row')
+        By.css('.candidate-grid-row'),
       );
       expect(renderedImages.length).toBe(1);
     });
@@ -93,7 +93,7 @@ describe('CandidateLinkComponent', () => {
       component.isPortrait = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.candidate-grid-row')
+        By.css('.candidate-grid-row'),
       );
       expect(renderedImages.length).toBe(0);
     });

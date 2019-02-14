@@ -9,7 +9,7 @@ export type AppConfig = {
     logoutUrl: string,
     openIdConnectUrl: string,
     identityPoolId: string,
-    employeeIdKey: string
+    employeeIdKey: string,
   },
   journal: {
     journalUrl: string,

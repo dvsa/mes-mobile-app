@@ -24,7 +24,7 @@ describe('Test Outcome', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
 
-      ]
+      ],
     })
       .compileComponents()
       .then(() => {

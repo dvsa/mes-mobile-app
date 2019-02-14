@@ -19,14 +19,14 @@ export function journalReducer(state = initialState, action: journalActions.Type
       return {
         ...state,
         isLoading: true,
-        error: {message: '', status: 0, statusText: ''}
+        error: { message: '', status: 0, statusText: '' },
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
         ...state,
         lastRefreshed: new Date(),
         isLoading: false,
-        slots: action.payload
+        slots: action.payload,
       };
     case journalActions.LOAD_JOURNAL_FAILURE:
       return {
@@ -40,28 +40,28 @@ export function journalReducer(state = initialState, action: journalActions.Type
         slots: {},
       };
     case journalActions.UNSET_ERROR:
-    const { error, ...stateWithoutError } = state;
+      const { error, ...stateWithoutError } = state;
       return {
         ...stateWithoutError,
-      }
+      };
     case journalActions.CLEAR_CHANGED_SLOT:
       const slots = state.slots[state.selectedDate].map((slot) => {
         if (has(slot.slotData, 'slotDetail') &&
-          has(slot.slotData.slotDetail, 'slotId') && 
+          has(slot.slotData.slotDetail, 'slotId') &&
           slot.slotData.slotDetail.slotId === action.slotId) {
           return {
             ...slot,
             hasSlotChanged: false,
-          }
+          };
         }
         return slot;
       });
 
       return {
         ...state,
-        slots: { 
+        slots: {
           ...state.slots,
-          [state.selectedDate]: slots
+          [state.selectedDate]: slots,
         },
       };
     case journalActions.SET_SELECTED_DAY:
@@ -69,7 +69,7 @@ export function journalReducer(state = initialState, action: journalActions.Type
         ...state,
         selectedDate: action.payload,
       };
-    default: 
+    default:
       return state;
   }
 }

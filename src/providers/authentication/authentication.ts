@@ -26,15 +26,15 @@ export class AuthenticationProvider {
 
   isAuthenticated = (): boolean => {
     return this.authenticationToken ? true : false;
-  };
+  }
 
   getAuthenticationToken = (): string => {
     return this.authenticationToken;
-  };
+  }
 
   getEmployeeId = (): string => {
     return this.employeeId;
-  };
+  }
 
   login = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
@@ -44,7 +44,7 @@ export class AuthenticationProvider {
         .acquireTokenSilentAsync(
           this.authenticationSettings.resourceUrl,
           this.authenticationSettings.clientId,
-          ''
+          '',
         )
         .then((authResponse: AuthenticationResult) => {
           this.successfulLogin(authResponse);
@@ -56,7 +56,7 @@ export class AuthenticationProvider {
             .catch((error: AuthenticationError) => reject(error));
         });
     });
-  };
+  }
 
   loginWithCredentials = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
@@ -68,7 +68,7 @@ export class AuthenticationProvider {
           this.authenticationSettings.clientId,
           this.authenticationSettings.redirectUrl,
           '',
-          ''
+          '',
         )
         .then((authResponse: AuthenticationResult) => {
           this.successfulLogin(authResponse);
@@ -79,7 +79,7 @@ export class AuthenticationProvider {
         });
     });
 
-  };
+  }
 
   logout = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
@@ -97,11 +97,11 @@ export class AuthenticationProvider {
     browser.on('loadstop').subscribe(() => {
       browser.close();
     });
-  };
+  }
 
   private createAuthContext = (): AuthenticationContext => {
     return this.msAdal.createAuthenticationContext(this.authenticationSettings.context);
-  };
+  }
 
   private successfulLogin = (authResponse: AuthenticationResult) => {
     const { accessToken } = authResponse;
@@ -109,6 +109,6 @@ export class AuthenticationProvider {
     const employeeId = decodedToken[this.employeeIdKey][0];
     this.authenticationToken = accessToken;
     this.employeeId = employeeId;
-  };
+  }
 
 }

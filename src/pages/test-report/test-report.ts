@@ -6,11 +6,10 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../common/store.model';
 import { TestReportViewDidEnter } from './test-report.actions';
 
-
 @IonicPage()
 @Component({
   selector: 'page-test-report',
-  templateUrl: 'test-report.html'
+  templateUrl: 'test-report.html',
 })
 export class TestReportPage extends BasePageComponent {
 
@@ -21,7 +20,7 @@ export class TestReportPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

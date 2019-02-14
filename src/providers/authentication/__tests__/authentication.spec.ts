@@ -17,15 +17,15 @@ describe('Authentication', () => {
         AuthenticationProvider,
         { provide: MSAdal, useClass: MSAdalMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-        { provide: InAppBrowser, useClass: InAppBrowserMock}
-      ]
-    })
+        { provide: InAppBrowser, useClass: InAppBrowserMock },
+      ],
+    });
   });
 
   beforeEach(() => {
-    authenticationProvider = TestBed.get(AuthenticationProvider)
+    authenticationProvider = TestBed.get(AuthenticationProvider);
     authenticationProvider.jwtDecode = () => ({
-      'local-employeeIdKey': ['a']
+      'local-employeeIdKey': ['a'],
     });
   });
 
@@ -41,13 +41,13 @@ describe('Authentication', () => {
 
     it('getAuthenticationToken() should return undefined if no login has happened', () => {
       expect(authenticationProvider.getAuthenticationToken()).toEqual(undefined);
-    })
+    });
 
     it('should silently login successfully', async () => {
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getAuthenticationToken()).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4')
+      expect(authenticationProvider.getAuthenticationToken()).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4');
     });
 
     it('should sign in with credetials', async() => {
@@ -75,7 +75,7 @@ describe('Authentication', () => {
       expect(authenticationProvider.isAuthenticated()).toEqual(false);
       expect(authenticationProvider.getAuthenticationToken()).toBeUndefined();
 
-    })
+    });
 
   });
 });

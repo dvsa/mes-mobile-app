@@ -10,7 +10,7 @@ import { PassFinalisationViewDidEnter } from './pass-finalisation.actions';
 @IonicPage()
 @Component({
   selector: 'page-pass-finalisation',
-  templateUrl: 'pass-finalisation.html'
+  templateUrl: 'pass-finalisation.html',
 })
 export class PassFinalisationPage extends BasePageComponent {
 
@@ -21,7 +21,7 @@ export class PassFinalisationPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

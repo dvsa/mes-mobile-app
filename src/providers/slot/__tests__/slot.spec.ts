@@ -26,7 +26,7 @@ describe('SlotProvider', () => {
       providers: [
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-        SlotProvider
+        SlotProvider,
       ],
     });
 
@@ -103,13 +103,13 @@ describe('SlotProvider', () => {
             slotDetail: {
               slotId: 1002,
               start: '2018-12-10T10:14:00+00:00',
-              duration: 57
+              duration: 57,
             },
             vehicleSlotType: 'B57mins',
             testCentre: {
               centreId: 54321,
               centreName: 'Example Test Centre',
-              costCode: 'EXTC1'
+              costCode: 'EXTC1',
             },
             booking: {
               candidate: {
@@ -118,7 +118,7 @@ describe('SlotProvider', () => {
                 candidateName: {
                   title: 'Mr',
                   firstName: 'Kamil',
-                  lastName: 'Zielinski'
+                  lastName: 'Zielinski',
                 },
                 driverNumber: 'ZIELI965220A99HC',
                 gender: 'Male',
@@ -128,10 +128,10 @@ describe('SlotProvider', () => {
                   addressLine3: 'Sometown',
                   addressLine4: '',
                   addressLine5: '',
-                  postcode: 'AB34 5CD'
+                  postcode: 'AB34 5CD',
                 },
                 primaryTelephone: '01234 567890',
-                mobileTelephone: '07654 123456'
+                mobileTelephone: '07654 123456',
               },
               application: {
                 applicationId: 1234568,
@@ -144,12 +144,12 @@ describe('SlotProvider', () => {
                 specialNeeds: '',
                 entitlementCheck: false,
                 testCategory: 'B',
-                vehicleGearbox: 'Manual'
-              }
-            }
-          }
-        }
-      ]
+                vehicleGearbox: 'Manual',
+              },
+            },
+          },
+        },
+      ],
     };
 
     const oldNonTestActivities = [
@@ -166,7 +166,7 @@ describe('SlotProvider', () => {
           centreName: 'Example Test Centre',
           costCode: 'EXTC',
         },
-      }
+      },
     ];
 
     const newJournal = {
@@ -185,7 +185,7 @@ describe('SlotProvider', () => {
       },
       testSlots: cloneDeep(oldSlots['2019-01-21'].map(slot => slot.slotData)),
       nonTestActivities: cloneDeep(oldNonTestActivities),
-    }
+    };
 
     describe('when there are no slots in the new journal', () => {
       it('should return a blank array', () => {
@@ -235,7 +235,7 @@ describe('SlotProvider', () => {
 
     describe('when the journal payload contains nonTestActivities', () => {
       it('should mix them into the TestSlots such that they appear in date order', () => {
-        const result = slotProvider.detectSlotChanges(oldSlots, newJournal)
+        const result = slotProvider.detectSlotChanges(oldSlots, newJournal);
         expect(result[1].slotData.activityCode).toBe('091');
       });
     });
@@ -247,7 +247,7 @@ describe('SlotProvider', () => {
       const slot = {
         slotData: {
           slotDetail: {
-            start: '2019-01-21T08:10:00+00:00'
+            start: '2019-01-21T08:10:00+00:00',
           },
         },
       };
@@ -262,15 +262,15 @@ describe('SlotProvider', () => {
     it('should have all days of the week', () => {
       spyOn(DateTime, 'now').and.callFake(() => DateTime.at('2019-02-01'));
       const slotsWithEmptyDays = slotProvider.extendWithEmptyDays(journalSlotsMissingDays);
-      
+
       const numberOfDays = Object.keys(slotsWithEmptyDays).length;
-      
+
       expect(numberOfDays).toBe(7);
     });
   });
 
   describe('getRelevantSlots', () => {
-    
-  })
+
+  });
 
 });

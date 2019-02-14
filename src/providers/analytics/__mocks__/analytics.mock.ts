@@ -1,7 +1,7 @@
 import { IAnalyticsProvider } from '../analytics.model';
 
 export class AnalyticsProviderMock implements IAnalyticsProvider {
-  
+
   googleAnalyticsKey: string = 'UA-12345678';
 
   setCurrentPage(name: string):void {}

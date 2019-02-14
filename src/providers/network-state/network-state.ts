@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 export enum ConnectionStatus {
   ONLINE = 0,
-  OFFLINE
+  OFFLINE,
 }
 
 @Injectable()
@@ -24,20 +24,20 @@ export class NetworkStateProvider {
 
   private initialiseNetworkEvents(): void {
     this.network.onDisconnect().subscribe(() => {
-      console.log('Offline fired')
-      console.log('network type', this.network.type)
+      console.log('Offline fired');
+      console.log('network type', this.network.type);
       this.updateNetworkStatus(ConnectionStatus.OFFLINE);
     });
 
     this.network.onConnect().subscribe(() => {
-      console.log('online fired')
-      console.log('network type', this.network.type)
+      console.log('online fired');
+      console.log('network type', this.network.type);
       this.updateNetworkStatus(ConnectionStatus.ONLINE);
     });
   }
 
-  private updateNetworkStatus(status: ConnectionStatus){
-    console.log('Updating network status with', status)
+  private updateNetworkStatus(status: ConnectionStatus) {
+    console.log('Updating network status with', status);
     this.networkStatus$.next(status);
   }
 

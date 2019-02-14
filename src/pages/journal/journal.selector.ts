@@ -30,7 +30,7 @@ export const canNavigateToPreviousDay = (journal: JournalModel): boolean => {
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
   const availableDays = getAvailableDays(journal);
   const nextDay = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
-  
+
   return availableDays.includes(nextDay);
 };
 

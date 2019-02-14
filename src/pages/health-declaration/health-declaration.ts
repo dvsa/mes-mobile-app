@@ -9,7 +9,7 @@ import { HealthDeclarationViewDidEnter } from './health-declaration.actions';
 @IonicPage()
 @Component({
   selector: 'page-health-declaration',
-  templateUrl: 'health-declaration.html'
+  templateUrl: 'health-declaration.html',
 })
 export class HealthDeclarationPage extends BasePageComponent {
 
@@ -20,7 +20,7 @@ export class HealthDeclarationPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

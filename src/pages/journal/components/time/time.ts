@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'time',
-  templateUrl: 'time.html'
+  templateUrl: 'time.html',
 })
 export class TimeComponent implements OnInit {
 

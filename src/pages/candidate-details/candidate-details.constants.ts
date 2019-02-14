@@ -1,7 +1,7 @@
 
 import { SlotTypeView } from './candidate-details.model';
 
-export const carStandardSlotType: SlotTypeView = { 
+export const carStandardSlotType: SlotTypeView = {
   text: 'Single slot',
   icon: 'NoIndicator',
 };

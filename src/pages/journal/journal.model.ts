@@ -7,7 +7,7 @@ export type Slot = {
   testCentre: any,
   vehicleSlotType: string,
   activityCode?: string,
-}
+};
 
 export type JournalModel = {
   isLoading: boolean,
@@ -15,4 +15,4 @@ export type JournalModel = {
   slots: {[k: string]: SlotItem[]},
   error?: MesError,
   selectedDate: string,
-}
+};

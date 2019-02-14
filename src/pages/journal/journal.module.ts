@@ -17,7 +17,6 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
 import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
-// import { AnalyticsEffects } from '../../providers/analytics/analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { SlotProvider } from '../../providers/slot/slot';
 import { JournalAnalyticsEffects } from './journal.analytics.effects';
@@ -49,7 +48,7 @@ import { JournalAnalyticsEffects } from './journal.analytics.effects';
     JournalProvider,
     SlotProvider,
     SlotSelectorProvider,
-    AnalyticsProvider
-  ]
+    AnalyticsProvider,
+  ],
 })
 export class JournalPageModule {}

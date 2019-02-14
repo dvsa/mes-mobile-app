@@ -17,11 +17,11 @@ export class InAppBrowserObjectMock {
   hide(): void { }
 
   executeScript(script: object): Promise<any> {
-    return new Promise((resolve) => { })
+    return new Promise((resolve) => { });
   }
 
   insertCSS(css: object): Promise<any> {
-    return new Promise((resolve) => { })
+    return new Promise((resolve) => { });
   }
 
   on(event: string): Observable<InAppBrowserEventMock> {

@@ -3,7 +3,6 @@ import { IonicModule } from 'ionic-angular';
 import { VehicleDetailsComponent } from '../vehicle-details';
 import { By } from '@angular/platform-browser';
 
-
 describe('VehicleDetailsComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsComponent>;
   let component: VehicleDetailsComponent;
@@ -11,14 +10,14 @@ describe('VehicleDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        VehicleDetailsComponent
+        VehicleDetailsComponent,
       ],
       imports: [IonicModule],
 
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(VehicleDetailsComponent);
       component = fixture.componentInstance;
-    })
+    });
   }));
 
   describe('Class', () => {

@@ -13,11 +13,11 @@ describe('JournalProvider', () => {
     let httpMock;
     let authProviderMock;
     let urlProviderMock;
-    
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpClientTestingModule
+          HttpClientTestingModule,
         ],
         providers: [
           JournalProvider,
@@ -29,7 +29,7 @@ describe('JournalProvider', () => {
       httpMock = TestBed.get(HttpTestingController);
       journalProvider = TestBed.get(JournalProvider);
       authProviderMock = TestBed.get(AuthenticationProvider);
-      urlProviderMock = TestBed.get(UrlProvider)
+      urlProviderMock = TestBed.get(UrlProvider);
     });
 
     it('should obtain the personal journal URL from the journal provider, passing the cached employee ID', () => {

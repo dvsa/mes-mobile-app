@@ -38,7 +38,7 @@ import { LoggingProvider } from '../providers/logging/logging';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     StatusBar,
     SplashScreen,
@@ -54,8 +54,8 @@ import { LoggingProvider } from '../providers/logging/logging';
     GoogleAnalytics,
     Device,
     LoggingProvider,
-    
-  ]
+
+  ],
 })
 export class AppModule {
 }

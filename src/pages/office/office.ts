@@ -10,7 +10,7 @@ import { OfficeViewDidEnter } from './office.actions';
 @IonicPage()
 @Component({
   selector: 'page-office',
-  templateUrl: 'office.html'
+  templateUrl: 'office.html',
 })
 export class OfficePage extends BasePageComponent {
 
@@ -21,9 +21,9 @@ export class OfficePage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
-  
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new OfficeViewDidEnter());
   }

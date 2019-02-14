@@ -12,9 +12,9 @@ import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-d
 @NgModule({
   declarations: [
     TestSlotComponent,
-		IndicatorsComponent,
-		TimeComponent,
-		CandidateLinkComponent,
+    IndicatorsComponent,
+    TimeComponent,
+    CandidateLinkComponent,
     TestOutcomeComponent,
     TestCategoryComponent,
     TestCategoryIconComponent,

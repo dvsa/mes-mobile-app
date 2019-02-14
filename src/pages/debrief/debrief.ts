@@ -9,7 +9,7 @@ import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
 @IonicPage()
 @Component({
   selector: 'page-debrief',
-  templateUrl: 'debrief.html'
+  templateUrl: 'debrief.html',
 })
 export class DebriefPage extends BasePageComponent {
 
@@ -20,7 +20,7 @@ export class DebriefPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

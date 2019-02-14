@@ -12,28 +12,28 @@ import { TestCategory, testCategoryIcons } from '../../common/test-category';
 import { getJournalState } from '../journal/journal.reducer';
 import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
-import { 
-  getSlotById, 
-  getSlots, 
-  getCandidateName, 
-  getTime, 
-  getDetails, 
+import {
+  getSlotById,
+  getSlots,
+  getCandidateName,
+  getTime,
+  getDetails,
 } from './candidate-details.selector';
-import { 
-  CandidateDetailsViewDidEnter, 
-  CandidateDetailsSlotChangeViewed 
+import {
+  CandidateDetailsViewDidEnter,
+  CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 
-interface CandidateDetailsPageState {  
-  name$: Observable<string>,
-  time$: Observable<string>,
-  details$: Observable<Details>,
-};
+interface CandidateDetailsPageState {
+  name$: Observable<string>;
+  time$: Observable<string>;
+  details$: Observable<Details>;
+}
 
 @IonicPage()
 @Component({
   selector: 'page-candidate-details',
-  templateUrl: 'candidate-details.html'
+  templateUrl: 'candidate-details.html',
 })
 export class CandidateDetailsPage extends BasePageComponent implements OnInit, OnDestroy {
   pageState: CandidateDetailsPageState;
@@ -56,26 +56,29 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   ngOnInit(): void {
+
+    this.store$.dispatch(new ClearChangedSlot(this.slotId));
+
     this.pageState = {
       name$: this.store$.pipe(
         select(getJournalState),
         select(getSlots),
         map(slots => getSlotById(slots, this.slotId)),
-        select(getCandidateName)
+        select(getCandidateName),
       ),
       time$: this.store$.pipe(
         select(getJournalState),
         select(getSlots),
         map(slots => getSlotById(slots, this.slotId)),
-        select(getTime)
+        select(getTime),
       ),
       details$: this.store$.pipe(
         select(getJournalState),
         select(getSlots),
         map(slots => getSlotById(slots, this.slotId)),
-        select(getDetails)
+        select(getDetails),
       ),
-    }
+    };
 
     const { name$, time$, details$ } = this.pageState;
 
@@ -83,13 +86,13 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       name$,
       time$,
       details$.pipe(
-        map(details => this.testCategory = details.testCategory.icon as TestCategory)
-      )
+        map(details => this.testCategory = details.testCategory.icon as TestCategory),
+      ),
     );
 
     this.subscription = merged$.subscribe();
     if (this.slotChanged) {
-       this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
+      this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
     }
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
   }
@@ -97,7 +100,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new CandidateDetailsViewDidEnter(this.slotId));
   }

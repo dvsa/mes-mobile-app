@@ -25,8 +25,9 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     new Promise((resolve) => {
       this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
       this.platform.ready().then(() => {
-        this.uniqueDeviceId = createHash('sha256').update(this.device.uuid?this.device.uuid:'defaultDevice').digest('hex');
-        this.setUserId(this.uniqueDeviceId); 
+        this.uniqueDeviceId = createHash('sha256')
+          .update(this.device.uuid ? this.device.uuid : 'defaultDevice').digest('hex');
+        this.setUserId(this.uniqueDeviceId);
         this.enableExceptionReporting();
       });
       resolve();
@@ -39,9 +40,9 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then(() => {
           this.ga.enableUncaughtExceptionReporting(true)
           .then((resp) => {})
-          .catch((uncaughtError) => console.log('Error enabling uncaught exceptions', uncaughtError));
+          .catch(uncaughtError => console.log('Error enabling uncaught exceptions', uncaughtError));
         })
-        .catch((error) => console.log(`enableExceptionReporting: ${this.analyticsStartupError}`, error));
+        .catch(error => console.log(`enableExceptionReporting: ${this.analyticsStartupError}`, error));
     });
   }
 
@@ -53,9 +54,9 @@ export class AnalyticsProvider implements IAnalyticsProvider {
           this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
           this.ga.trackView(name)
           .then((resp) => {})
-          .catch((pageError) => console.log('Error setting page', pageError));
+          .catch(pageError => console.log('Error setting page', pageError));
         })
-        .catch((error) => console.log(`setCurrentPage: ${this.analyticsStartupError}`, error));
+        .catch(error => console.log('Error starting Google Analytics', error));
     });
   }
 
@@ -66,9 +67,9 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then(() => {
           this.ga.trackEvent(category, event, label)
           .then((resp) => {})
-          .catch((eventError) => console.log('Error tracking event', eventError));
+          .catch(eventError => console.log('Error tracking event', eventError));
         })
-        .catch((error) => console.log(`logEvent: ${this.analyticsStartupError}`, error));
+        .catch(error => console.log(`logEvent: ${this.analyticsStartupError}`, error));
     });
   }
 
@@ -76,11 +77,11 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     this.ga
     .startTrackerWithId(this.googleAnalyticsKey)
     .then(() => {
-      this.ga.addCustomDimension(key,value)
+      this.ga.addCustomDimension(key, value)
         .then((resp) => {})
-        .catch((dimError) => console.log('Error adding custom dimension ', dimError));
+        .catch(dimError => console.log('Error adding custom dimension ', dimError));
     })
-    .catch((error) => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
+    .catch(error => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
   }
 
   logError(type: string, message: string) {
@@ -93,9 +94,9 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     .then(() => {
       this.ga.trackException(message, fatal)
         .then((resp) => {})
-        .catch((trackingError) => console.log('Error logging exception in Google Analytics', trackingError));
+        .catch(trackingError => console.log('Error logging exception in Google Analytics', trackingError));
     })
-    .catch((error) => console.log(`logException: ${this.analyticsStartupError}`, error));
+    .catch(error => console.log(`logException: ${this.analyticsStartupError}`, error));
   }
 
   setUserId(userId: string) {
@@ -104,26 +105,26 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     .then(() => {
       this.ga.setUserId(userId)
         .then((resp) => {})
-        .catch((idError) => console.log(`Error setting userid ${userId}`,idError));
+        .catch(idError => console.log(`Error setting userid ${userId}`, idError));
     })
-    .catch((error) => console.log(`setUserId: ${this.analyticsStartupError}`, error));
+    .catch(error => console.log(`setUserId: ${this.analyticsStartupError}`, error));
   }
 
   getDiffDays(userDate: string): number {
     const today = new DateTime();
     return today.daysDiff(userDate);
   }
-  
+
   getDescriptiveDate(userDate: string): string {
     let ret: string;
 
     const daysDiff = this.getDiffDays(userDate);
 
     switch (daysDiff) {
-      case -1 : 
+      case -1 :
         ret = 'Yesterday';
         break;
-      case 0: 
+      case 0:
         ret = 'Today';
         break;
       case 1:

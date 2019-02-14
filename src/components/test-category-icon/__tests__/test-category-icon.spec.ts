@@ -10,7 +10,7 @@ describe('Test Category Icon', () => {
     TestBed.configureTestingModule({
       declarations: [TestCategoryIconComponent],
       imports: [IonicModule.forRoot(TestCategoryIconComponent)],
-      providers: []
+      providers: [],
     })
       .compileComponents()
       .then(() => {
@@ -66,7 +66,7 @@ describe('Test Category Icon', () => {
 
       component.category = 'D+E';
       expect(component.getCategoryIcon()).toBe('assets/icon/test-categories/DE.png');
-    })
+    });
   });
 
   describe('DOM', () => {

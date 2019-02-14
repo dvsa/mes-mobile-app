@@ -21,7 +21,7 @@ describe('WaitingRoomToCarPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-      ]
+      ],
     })
       .compileComponents()
       .then(() => {

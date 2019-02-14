@@ -9,7 +9,7 @@ import { TerminateTestViewDidEnter } from './terminate-test.actions';
 @IonicPage()
 @Component({
   selector: 'page-terminate-test',
-  templateUrl: 'terminate-test.html'
+  templateUrl: 'terminate-test.html',
 })
 export class TerminateTestPage extends BasePageComponent {
 
@@ -18,9 +18,9 @@ export class TerminateTestPage extends BasePageComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public authenticationProvider: AuthenticationProvider
+    public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

@@ -80,7 +80,6 @@ export class JournalViewDidEnter implements Action {
   readonly type = JOURNAL_VIEW_DID_ENTER;
 }
 
-
 export class JournalNavigateDay implements Action {
   readonly type = JOURNAL_NAVIGATE_DAY;
   constructor(public day: string) {}
@@ -96,8 +95,7 @@ export class JournalRefresh implements Action {
   constructor(public mode: string) {}
 }
 
-
-export type Types = 
+export type Types =
   | LoadJournal
   | LoadJournalSilent
   | LoadJournalSuccess

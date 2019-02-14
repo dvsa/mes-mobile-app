@@ -4,7 +4,6 @@ import { IonicModule } from 'ionic-angular';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-
 describe('TimeComponent', () => {
   let component: TimeComponent;
   let fixture: ComponentFixture<TimeComponent>;
@@ -12,7 +11,7 @@ describe('TimeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TimeComponent],
-      imports: [IonicModule]
+      imports: [IonicModule],
     })
       .compileComponents()
       .then(() => {

@@ -23,22 +23,19 @@ export class AppConfigProvider {
 
   public getAppConfig = (): AppConfig => this.appConfig;
 
-
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
       .then(data => this.mapRemoteConfig(data))
       .catch(error => console.log('Error Getting Remote Config', error))
-
 
   private getRemoteData = (): Promise<any> =>
     new Promise((resolve, reject) => {
       this.httpClient.get<any>(this.environmentFile.configUrl)
         .subscribe(
           data => resolve(data),
-          error => reject(error)
-        )
-    });
-
+          error => reject(error),
+        );
+    })
 
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
@@ -51,10 +48,9 @@ export class AppConfigProvider {
         logoutUrl: data.authentication.logoutUrl,
         openIdConnectUrl: data.authentication.openIdConnectUrl,
         identityPoolId: data.authentication.identityPoolId,
-        employeeIdKey: data.authentication.employeeIdKey
-      }
-    } as AppConfig);
-
+        employeeIdKey: data.authentication.employeeIdKey,
+      },
+    } as AppConfig)
 
   private mapRemoteConfig = (data: any) =>
     this.appConfig = merge({}, this.appConfig, {
@@ -64,6 +60,6 @@ export class AppConfigProvider {
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
         numberOfDaysToView: data.journal.numberOfDaysToView,
       },
-      loggingUrl: data.loggingUrl
-    } as AppConfig);
+      loggingUrl: data.loggingUrl,
+    } as AppConfig)
 }

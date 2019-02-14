@@ -1072,7 +1072,7 @@
     {
       "slotDetail": {
         "slotId": 3696,
-        "start": "2019-02-23T08:00:03+00:00",
+        "start": "2019-02-22T08:00:03+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1120,7 +1120,7 @@
     {
       "slotDetail": {
         "slotId": 3385,
-        "start": "2019-02-23T08:59:43+00:00",
+        "start": "2019-02-22T08:59:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1168,7 +1168,7 @@
     {
       "slotDetail": {
         "slotId": 1338,
-        "start": "2019-02-23T09:55:43+00:00",
+        "start": "2019-02-22T09:55:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1216,7 +1216,7 @@
     {
       "slotDetail": {
         "slotId": 5956,
-        "start": "2019-02-23T11:00:43+00:00",
+        "start": "2019-02-22T11:00:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1264,7 +1264,7 @@
     {
       "slotDetail": {
         "slotId": 6008,
-        "start": "2019-02-23T13:00:43+00:00",
+        "start": "2019-02-22T13:00:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1312,7 +1312,7 @@
     {
       "slotDetail": {
         "slotId": 6659,
-        "start": "2019-02-23T13:59:43+00:00",
+        "start": "2019-02-22T13:59:43+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1360,7 +1360,7 @@
     {
       "slotDetail": {
         "slotId": 9260,
-        "start": "2019-03-02T11:25:10+00:00",
+        "start": "2019-02-27T11:25:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1408,7 +1408,7 @@
     {
       "slotDetail": {
         "slotId": 1681,
-        "start": "2019-03-02T13:00:10+00:00",
+        "start": "2019-02-27T13:00:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1456,7 +1456,7 @@
     {
       "slotDetail": {
         "slotId": 4558,
-        "start": "2019-03-02T13:55:10+00:00",
+        "start": "2019-02-27T13:55:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1504,7 +1504,7 @@
     {
       "slotDetail": {
         "slotId": 7201,
-        "start": "2019-03-02T14:39:10+00:00",
+        "start": "2019-02-27T14:39:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1552,7 +1552,7 @@
     {
       "slotDetail": {
         "slotId": 5841,
-        "start": "2019-03-02T15:15:10+00:00",
+        "start": "2019-02-27T15:15:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1600,7 +1600,7 @@
     {
       "slotDetail": {
         "slotId": 1048,
-        "start": "2019-03-02T16:43:10+00:00",
+        "start": "2019-02-27T16:43:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1648,7 +1648,7 @@
     {
       "slotDetail": {
         "slotId": 6655,
-        "start": "2019-03-02T17:05:10+00:00",
+        "start": "2019-02-27T17:05:10+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1696,7 +1696,7 @@
     {
       "slotDetail": {
         "slotId": 1570,
-        "start": "2019-03-11T09:00:44+00:00",
+        "start": "2019-03-05T09:00:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1744,7 +1744,7 @@
     {
       "slotDetail": {
         "slotId": 5527,
-        "start": "2019-03-11T09:33:44+00:00",
+        "start": "2019-03-05T09:33:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1792,7 +1792,7 @@
     {
       "slotDetail": {
         "slotId": 2379,
-        "start": "2019-03-11T09:55:44+00:00",
+        "start": "2019-03-05T09:55:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1840,7 +1840,7 @@
     {
       "slotDetail": {
         "slotId": 4039,
-        "start": "2019-03-11T11:25:44+00:00",
+        "start": "2019-03-05T11:25:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1888,7 +1888,7 @@
     {
       "slotDetail": {
         "slotId": 8182,
-        "start": "2019-03-11T13:25:44+00:00",
+        "start": "2019-03-05T13:25:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -1936,7 +1936,7 @@
     {
       "slotDetail": {
         "slotId": 6825,
-        "start": "2019-03-11T15:25:44+00:00",
+        "start": "2019-03-05T15:25:44+00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -2032,7 +2032,7 @@
     {
       "slotDetail": {
         "slotId": 1193,
-        "start": "2019-02-25T11:11:00+00:00",
+        "start": "2019-02-20T11:11:00+00:00",
         "duration": 57
       },
       "activityCode": "091",

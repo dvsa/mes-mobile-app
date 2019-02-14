@@ -11,7 +11,7 @@ export const remoteEnvironmentMock: EnvironmentFile = {
     logoutUrl: 'remote-logout-url',
     openIdConnectUrl: 'remote-openIdConnectUrl',
     identityPoolId: 'remote-identityPoolId',
-    employeeIdKey: 'remote-employeeIdKey'
+    employeeIdKey: 'remote-employeeIdKey',
   },
 };
 
@@ -27,12 +27,12 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     logoutUrl: 'local-logout-url',
     openIdConnectUrl: 'local-openIdConnectUrl',
     identityPoolId: 'local-identityPoolId',
-    employeeIdKey: 'local-employeeIdKey'
+    employeeIdKey: 'local-employeeIdKey',
   },
   journal: {
     journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',
     autoRefreshInterval: 1000 * 60 * 15,
     numberOfDaysToView: 7,
   },
-  loggingUrl: 'https://www.example.com/api/v1/logs'
+  loggingUrl: 'https://www.example.com/api/v1/logs',
 };

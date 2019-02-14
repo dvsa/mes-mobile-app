@@ -9,7 +9,7 @@ import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
 @IonicPage()
 @Component({
   selector: 'page-waiting-room-to-car',
-  templateUrl: 'waiting-room-to-car.html'
+  templateUrl: 'waiting-room-to-car.html',
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   constructor(
@@ -19,7 +19,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

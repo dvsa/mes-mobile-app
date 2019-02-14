@@ -5,7 +5,7 @@ import { JournalEffects } from '../journal.effects';
 import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
-import { JournalProvider } from '../../../providers/journal/journal'
+import { JournalProvider } from '../../../providers/journal/journal';
 import { JournalProviderMock } from '../../../providers/journal/__mocks__/journal.mock';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -35,7 +35,7 @@ describe('Journal Effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          journal: journalReducer
+          journal: journalReducer,
         }),
       ],
       providers: [
@@ -50,11 +50,11 @@ describe('Journal Effects', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         SlotProvider,
-      ]
+      ],
     });
 
     effects = TestBed.get(JournalEffects);
-  })
+  });
 
   it('should create the journal effects', () => {
     expect(effects).toBeTruthy();
