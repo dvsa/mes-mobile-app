@@ -45,7 +45,7 @@ describe('ActivitySlotComponent', () => {
           { activityCode: '128', expected: '128' },
           { activityCode: '091', expected: '91' },
         ];
-        cases.forEach(testCase => {
+        cases.forEach((testCase) => {
           component.slot.activityCode = testCase.activityCode;
           expect(component.formatActivityCode()).toBe(testCase.expected);
         });
