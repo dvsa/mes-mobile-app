@@ -9,14 +9,14 @@ describe('TestCategoryComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TestCategoryComponent
+        TestCategoryComponent,
       ],
       imports: [IonicModule],
 
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(TestCategoryComponent);
       component = fixture.componentInstance;
-    })
+    });
   }));
 
   describe('Class', () => {

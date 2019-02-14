@@ -15,7 +15,7 @@ describe('App Config Provider', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock }
+        { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
       ],
     });
 
@@ -27,7 +27,7 @@ describe('App Config Provider', () => {
     httpMock.verify();
   });
 
-  describe('loadRemoteConfig',() => {
+  describe('loadRemoteConfig', () => {
     it('should load remote config', fakeAsync(() => {
       appConfig.environmentFile = remoteEnvironmentMock;
 

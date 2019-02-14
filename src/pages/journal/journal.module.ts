@@ -45,7 +45,7 @@ import { SlotProvider } from '../../providers/slot/slot';
   providers: [
     JournalProvider,
     SlotProvider,
-    SlotSelectorProvider
-  ]
+    SlotSelectorProvider,
+  ],
 })
 export class JournalPageModule {}

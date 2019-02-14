@@ -69,7 +69,7 @@ export class StopPolling implements Action {
   readonly type = STOP_POLLING;
 }
 
-export type Types = 
+export type Types =
   | LoadJournal
   | LoadJournalSilent
   | LoadJournalSuccess

@@ -2,7 +2,7 @@ import { JournalProvider } from './../../journal/journal';
 import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
-  HttpTestingController
+  HttpTestingController,
 } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../interceptor';
@@ -22,7 +22,7 @@ describe('Authentication interceptor', () => {
   let platform: Platform;
   let urlProvider: UrlProvider;
   let journalUrl: string;
-  let authenticationProvider: AuthenticationProvider
+  let authenticationProvider: AuthenticationProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -37,9 +37,9 @@ describe('Authentication interceptor', () => {
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptor,
-          multi: true
-        }
-      ]
+          multi: true,
+        },
+      ],
     });
     platform = TestBed.get(Platform);
     httpMock = TestBed.get(HttpTestingController);
@@ -59,8 +59,8 @@ describe('Authentication interceptor', () => {
     it('should not modify the request if not on ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       journalProvider.getJournal(null).subscribe(
-        res => {},
-        err => {}
+        (res) => {},
+        (err) => {},
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(false);
@@ -69,8 +69,8 @@ describe('Authentication interceptor', () => {
     it('should add the signed headers if running on ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       journalProvider.getJournal(null).subscribe(
-        res => {},
-        err => {}
+        (res) => {},
+        (err) => {},
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(true);

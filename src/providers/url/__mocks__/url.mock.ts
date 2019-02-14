@@ -5,9 +5,9 @@ export class UrlProviderMock {
     .and
     .returnValue('https://www.example.com/api/v1/journals/12345678/personal');
 
-    getLoggingServiceUrl =
+  getLoggingServiceUrl =
       jasmine.createSpy('getLoggingServiceUrl')
       .and
-      .returnValue('https://www.example.com/api/v1/logs')
+      .returnValue('https://www.example.com/api/v1/logs');
 
 }

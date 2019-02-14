@@ -6,7 +6,6 @@ import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 
-
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
   let component: TestOutcomeComponent;
@@ -19,7 +18,7 @@ describe('Test Outcome', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
 
-      ]
+      ],
     })
       .compileComponents()
       .then(() => {

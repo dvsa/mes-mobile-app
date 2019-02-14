@@ -11,7 +11,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   constructor(
     private appConfig: AppConfigProvider,
     public ga: GoogleAnalytics,
-    public platform: Platform
+    public platform: Platform,
   ) {
     this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
   }
@@ -23,7 +23,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then(() => {
           this.ga.trackView(name).then((resp) => {});
         })
-        .catch((error) => console.log('Error starting Google Analytics', error));
+        .catch(error => console.log('Error starting Google Analytics', error));
     });
   }
 
@@ -34,7 +34,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         .then(() => {
           this.ga.trackEvent(category, event).then((resp) => {});
         })
-        .catch((error) => console.log('Error starting Google Analytics', error));
+        .catch(error => console.log('Error starting Google Analytics', error));
     });
   }
 

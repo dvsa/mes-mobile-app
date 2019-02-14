@@ -16,20 +16,19 @@ import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 
-
 interface CandidateDetailsPageState {
-  name$: Observable<string>,
-  time$: Observable<string>,
-  details$: Observable<Details>,
-};
+  name$: Observable<string>;
+  time$: Observable<string>;
+  details$: Observable<Details>;
+}
 
 @IonicPage()
 @Component({
   selector: 'page-candidate-details',
-  templateUrl: 'candidate-details.html'
+  templateUrl: 'candidate-details.html',
 })
 export class CandidateDetailsPage extends BasePageComponent implements OnInit, OnDestroy {
 
@@ -46,14 +45,14 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private store$: Store<StoreModel>,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.slotId = navParams.get('slotId');
   }
 
   ngOnInit(): void {
-    
+
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
 
     this.pageState = {
@@ -61,21 +60,21 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
         select(getJournalState),
         select(getSlots),
         map(slots => getSlotById(slots, this.slotId)),
-        select(getCandidateName)
+        select(getCandidateName),
       ),
       time$: this.store$.pipe(
         select(getJournalState),
         select(getSlots),
         map(slots => getSlotById(slots, this.slotId)),
-        select(getTime)
+        select(getTime),
       ),
       details$: this.store$.pipe(
         select(getJournalState),
         select(getSlots),
         map(slots => getSlotById(slots, this.slotId)),
-        select(getDetails)
+        select(getDetails),
       ),
-    }
+    };
 
     const { name$, time$, details$ } = this.pageState;
 
@@ -83,8 +82,8 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       name$,
       time$,
       details$.pipe(
-        map(details => this.testCategory = details.testCategory.icon as TestCategory)
-      )
+        map(details => this.testCategory = details.testCategory.icon as TestCategory),
+      ),
     );
 
     this.subscription = merged$.subscribe();
@@ -93,11 +92,10 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  
+
   ionViewDidEnter(): void {
     this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
   }
-
 
   handleDoneButtonClick(): void {
     this.navController.pop();

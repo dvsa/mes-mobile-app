@@ -21,12 +21,12 @@ export class SlotProvider {
     const oldJournalSlots: SlotItem[] = flatten(Object.values(slots));
 
     newSlots.sort((slotA, slotB) => slotA.slotDetail.start < slotB.slotDetail.start ? -1 : 1);
-  
-    return newSlots.map(newSlot => {
+
+    return newSlots.map((newSlot) => {
       const newSlotId = newSlot.slotDetail.slotId;
 
       const replacedJournalSlot = oldJournalSlots.find(oldSlot => oldSlot.slotData.slotDetail.slotId === newSlotId);
-  
+
       let differenceFound = false;
       if (replacedJournalSlot) {
         differenceFound = replacedJournalSlot.hasSlotChanged;
@@ -35,21 +35,24 @@ export class SlotProvider {
           differenceFound = true;
         }
       }
-  
-      return new SlotItem(newSlot, differenceFound)
+
+      return new SlotItem(newSlot, differenceFound);
     });
   }
 
   /**
    * Extends the journal with empty days where there was no slots defined in the next 7 days
    * @param slots Journal slots
-   * @returns Slots with additional empty days 
+   * @returns Slots with additional empty days
    */
   extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
     const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
 
-    const days = times(numberOfDaysToView, (d: number): string => DateTime.now().add(d, Duration.DAY).format('YYYY-MM-DD'));
-    const emptyDays = days.reduce((days: {[k: string]: SlotItem[]}, day: string) => ({ ...days, [day]: []}), {});
+    const days = times(
+      numberOfDaysToView,
+      (d: number): string => DateTime.now().add(d, Duration.DAY).format('YYYY-MM-DD'),
+    );
+    const emptyDays = days.reduce((days: {[k: string]: SlotItem[]}, day: string) => ({ ...days, [day]: [] }), {});
 
     return {
       ...emptyDays,
@@ -65,8 +68,9 @@ export class SlotProvider {
    * @returns Only the relevant slots
    */
   getRelevantSlots = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
-    // we have to take in consideration if it's Friday so that we can navigate through the weekend till the next working weekday (Monday)
-    // if it's not Friday 
+    // we have to take in consideration if it's Friday
+    // so that we can navigate through the weekend till the next working weekday (Monday)
+    // if it's not Friday
     // we need to check if it's Saturday so that we can navigate till Monday
     // otherwise we just go to next day
     const friday = 5;
@@ -74,10 +78,15 @@ export class SlotProvider {
     const today = DateTime.now().day();
     const daysAhead = today === friday ? 4 : today === saturday ? 3 : 2;
 
-    return Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
-      ...acc,
-      [date]: slots[date],
-    }), {});
+    return Object.keys(slots)
+      .slice(0, daysAhead)
+      .reduce(
+        (acc: {[k: string]: SlotItem[]}, date) => ({
+          ...acc,
+          [date]: slots[date],
+        }),
+        {},
+      );
   }
 
   getSlotDate = (slot: any): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');

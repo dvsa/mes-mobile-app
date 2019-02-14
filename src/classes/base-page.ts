@@ -7,7 +7,7 @@ export abstract class BasePageComponent {
     public platform: Platform,
     public navController: NavController,
     public authenticationProvider: AuthenticationProvider,
-    public loginRequired: boolean = true
+    public loginRequired: boolean = true,
   ) {
 
   }
@@ -17,7 +17,7 @@ export abstract class BasePageComponent {
       this.navController.setRoot('LoginPage');
       return false;
     }
-    return true
+    return true;
   }
 
   isIos(): boolean {
@@ -26,9 +26,9 @@ export abstract class BasePageComponent {
 
   logout() {
     if (this.isIos()) {
-      this.authenticationProvider.logout()
+      this.authenticationProvider.logout();
       this.navController.setRoot('LoginPage', {
-        hasLoggedOut: true
+        hasLoggedOut: true,
       });
     }
   }

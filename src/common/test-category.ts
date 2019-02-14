@@ -2,8 +2,8 @@ export enum TestCategory {
   A = 'A',
   A1 = 'A1',
   A2 = 'A2',
-  ADI2 ='ADI2',
-  ADI3 ='ADI3',
+  ADI2 = 'ADI2',
+  ADI3 = 'ADI3',
   AM = 'AM',
   B = 'B',
   B1 = 'B1',
@@ -30,8 +30,8 @@ export enum TestCategory {
   G = 'G',
   H = 'H',
   K = 'K',
-  SC = 'SC'
-};
+  SC = 'SC',
+}
 
 export const testCategoryIcons = {
   [TestCategory.A]: 'assets/icon/test-categories/A.png',
@@ -66,4 +66,4 @@ export const testCategoryIcons = {
   [TestCategory.H]: '',
   [TestCategory.K]: '',
   [TestCategory.SC]: '',
-}
+};

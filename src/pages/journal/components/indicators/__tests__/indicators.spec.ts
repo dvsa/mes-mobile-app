@@ -3,7 +3,6 @@ import { IndicatorsComponent } from '../indicators';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 
-
 describe('IndicatorsComponent', () => {
   let component: IndicatorsComponent;
   let fixture: ComponentFixture<IndicatorsComponent>;
@@ -11,7 +10,7 @@ describe('IndicatorsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [IndicatorsComponent],
-      imports: [IonicModule]
+      imports: [IonicModule],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(IndicatorsComponent);
       component = fixture.componentInstance;

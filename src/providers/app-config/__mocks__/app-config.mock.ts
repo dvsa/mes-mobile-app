@@ -8,7 +8,7 @@ export class AppConfigProviderMock {
 
   public loadRemoteConfig = jasmine.createSpy('loadRemoteConfig')
     .and
-    .returnValue(Promise.resolve())
+    .returnValue(Promise.resolve());
 
   public getAppConfig = jasmine.createSpy('getAppConfig')
     .and
@@ -23,13 +23,13 @@ export class AppConfigProviderMock {
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
         openIdConnectUrl: localEnvironmentMock.authentication.openIdConnectUrl,
         identityPoolId: localEnvironmentMock.authentication.identityPoolId,
-        employeeIdKey: localEnvironmentMock.authentication.employeeIdKey
+        employeeIdKey: localEnvironmentMock.authentication.employeeIdKey,
       },
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
       },
-      loggingUrl: localEnvironmentMock.loggingUrl
+      loggingUrl: localEnvironmentMock.loggingUrl,
     } as AppConfig);
 }

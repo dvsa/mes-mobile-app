@@ -7,7 +7,7 @@ import { TestCategory } from '../../../../common/test-category';
 
 @Component({
   selector: 'test-slot',
-  templateUrl: 'test-slot.html'
+  templateUrl: 'test-slot.html',
 })
 export class TestSlotComponent implements SlotComponent {
   @Input()
@@ -35,6 +35,6 @@ export class TestSlotComponent implements SlotComponent {
   }
 
   showVehicleDetails(): boolean {
-    return vehicleDetails[this.slot.booking.application.testCategory as TestCategory]
+    return vehicleDetails[this.slot.booking.application.testCategory as TestCategory];
   }
 }

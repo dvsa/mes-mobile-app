@@ -3,7 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class App {
   rootPage: any = 'LoginPage';
@@ -17,6 +17,6 @@ export class App {
         statusBar.styleLightContent();
         statusBar.overlaysWebView(false);
         statusBar.backgroundColorByHexString('#000000');
-      })
+      });
   }
 }

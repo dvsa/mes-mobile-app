@@ -18,16 +18,16 @@ describe('JournalNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JournalNavigationComponent ],
+      declarations: [JournalNavigationComponent],
       imports: [
         IonicModule,
         StoreModule.forRoot({
-          journal: journalReducer
+          journal: journalReducer,
         }),
       ],
       providers: [
-        { provide: Config, useFactory: () => ConfigMock.instance() }
-      ]
+        { provide: Config, useFactory: () => ConfigMock.instance() },
+      ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(JournalNavigationComponent);
       component = fixture.componentInstance;
@@ -49,7 +49,7 @@ describe('JournalNavigationComponent', () => {
       componentEl = fixture.debugElement;
 
       store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
-    })
+    });
 
     describe('selected date is today', () => {
       it('does not show previous day button', () => {

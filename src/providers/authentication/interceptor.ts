@@ -4,7 +4,7 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 
 import { Platform } from 'ionic-angular';
@@ -22,9 +22,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const newRequest = request.clone({
       setHeaders: {
-        Authorization: this.authService.getAuthenticationToken()
-      }
-    })
+        Authorization: this.authService.getAuthenticationToken(),
+      },
+    });
 
     return next.handle(newRequest);
   }

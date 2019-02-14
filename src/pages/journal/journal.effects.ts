@@ -16,7 +16,10 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
+import {
+  getSelectedDate, getLastRefreshed, getSlots,
+  canNavigateToPreviousDay, canNavigateToNextDay,
+} from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../common/date-time';
 
@@ -37,12 +40,12 @@ export class JournalEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getJournalState),
-          map(getLastRefreshed)
+          map(getLastRefreshed),
         ),
         this.store$.pipe(
           select(getJournalState),
-          map(getSlots)
-        )
+          map(getSlots),
+        ),
       ),
       switchMap(([action, lastRefreshed, slots]) => {
         return this.journalProvider
@@ -54,7 +57,7 @@ export class JournalEffects {
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantSlots(slots)),
             map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
           );
-      })
+      }),
     );
   }
 
@@ -63,11 +66,11 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
       () => this.callJournalProvider$().pipe(
-        catchError(err => {
+        catchError((err) => {
           console.error(err);
           return of();
-        })
-      )
+        }),
+      ),
     ),
   );
 
@@ -77,7 +80,7 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$().pipe(
         catchError(err => of(new journalActions.LoadJournalFailure(err))),
-      )
+      ),
     ),
   );
 
@@ -92,7 +95,7 @@ export class JournalEffects {
         startWith(null),
       );
       const pollTimer$ = manualRefreshes$.pipe(
-        switchMap(() => interval(this.appConfig.getAppConfig().journal.autoRefreshInterval))
+        switchMap(() => interval(this.appConfig.getAppConfig().journal.autoRefreshInterval)),
       );
 
       const pollsWhileOnline$ = pollTimer$
@@ -115,12 +118,12 @@ export class JournalEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDate)
+        map(getSelectedDate),
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToPreviousDay)
-      )
+        map(canNavigateToPreviousDay),
+      ),
     ),
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
       if (!canNavigateToPreviousDay) {
@@ -129,7 +132,7 @@ export class JournalEffects {
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
-  )
+  );
 
   @Effect()
   selectNextDayEffect$ = this.actions$.pipe(
@@ -137,12 +140,12 @@ export class JournalEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDate)
+        map(getSelectedDate),
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToNextDay)
-      )
+        map(canNavigateToNextDay),
+      ),
     ),
     switchMap(([action, selectedDate, canNavigateToNextDay]) => {
       if (!canNavigateToNextDay) {
@@ -151,5 +154,5 @@ export class JournalEffects {
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
       return of(new journalActions.SetSelectedDate(nextDay));
     }),
-  )
+  );
 }

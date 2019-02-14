@@ -4,7 +4,7 @@ import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'candidate-link',
-  templateUrl: 'candidate-link.html'
+  templateUrl: 'candidate-link.html',
 })
 export class CandidateLinkComponent {
   @Input()

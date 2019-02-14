@@ -13,7 +13,7 @@ describe('LoggingProvider', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       providers: [
         LoggingProvider,
@@ -23,23 +23,23 @@ describe('LoggingProvider', () => {
 
     httpMock = TestBed.get(HttpTestingController);
     loggingProvider = TestBed.get(LoggingProvider);
-    urlProviderMock = TestBed.get(UrlProvider)
+    urlProviderMock = TestBed.get(UrlProvider);
   });
 
   describe('log' , () => {
     it('should successfully send a log', () => {
 
-        const testLog: Log = {
-          type: LogType.DEBUG,
-          message: 'Successfully logged one log'
-        }
+      const testLog: Log = {
+        type: LogType.DEBUG,
+        message: 'Successfully logged one log',
+      };
 
-        loggingProvider.logMultiple =
+      loggingProvider.logMultiple =
           jasmine.createSpy('logMultiple', loggingProvider.logMultiple);
 
-        loggingProvider.log(testLog);
+      loggingProvider.log(testLog);
 
-        expect(loggingProvider.logMultiple).toHaveBeenCalledWith([testLog]);
+      expect(loggingProvider.logMultiple).toHaveBeenCalledWith([testLog]);
     });
   });
 
@@ -47,7 +47,7 @@ describe('LoggingProvider', () => {
     it('should sucessfully send the logs', () => {
       loggingProvider.logMultiple([{
         type: LogType.DEBUG,
-        message: 'Successfully logged multiple'
+        message: 'Successfully logged multiple',
       }]);
 
       httpMock.expectOne('https://www.example.com/api/v1/logs');

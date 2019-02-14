@@ -4,7 +4,7 @@ export type MsAdalError = {
     errorCode: string,
     statusCode: number,
     error: any,
-    errorDescription: string
+    errorDescription: string,
   },
   __zone_symbol__currentTask : {
     type: string,
@@ -12,9 +12,9 @@ export type MsAdalError = {
     source: string,
     zone: string,
     cancelFn: any,
-    runCount: number
+    runCount: number,
   }
   line: number,
   column: number,
   sourceURL: string
-}
+};
