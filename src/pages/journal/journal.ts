@@ -171,7 +171,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
       lastLocation = slot.slotData.testCentre.centreName;
-      console.log(slot.slotData);
     }
   }
 

@@ -4,7 +4,6 @@ import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
 import { TestCategory } from '../../../../common/test-category';
-// import { PassFinalisationPageModule } from '../../../pass-finalisation/pass-finalisation.module';
 
 @Component({
   selector: 'test-slot',
