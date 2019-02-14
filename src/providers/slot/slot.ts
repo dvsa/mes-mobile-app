@@ -78,10 +78,15 @@ export class SlotProvider {
     const today = DateTime.now().day();
     const daysAhead = today === friday ? 4 : today === saturday ? 3 : 2;
 
-    return Object.keys(slots).slice(0, daysAhead).reduce((acc: {[k: string]: SlotItem[]}, date) => ({
-      ...acc,
-      [date]: slots[date],
-    }),                                                  {});
+    return Object.keys(slots)
+      .slice(0, daysAhead)
+      .reduce(
+        (acc: {[k: string]: SlotItem[]}, date) => ({
+          ...acc,
+          [date]: slots[date],
+        }),
+        {},
+      );
   }
 
   getSlotDate = (slot: any): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
