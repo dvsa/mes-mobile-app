@@ -5,7 +5,6 @@ import { JournalModel } from './journal.model';
 import { has } from 'lodash';
 import { DateTime } from '../../common/date-time';
 
-
 export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,

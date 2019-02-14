@@ -6,7 +6,6 @@ import { CandidateDetailsPage } from './candidate-details';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.effects';
 
-
 @NgModule({
   declarations: [
     CandidateDetailsPage,
@@ -17,8 +16,7 @@ import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.
     ComponentsModule,
   ],
   providers: [
-    AnalyticsProvider
-  ]
+    AnalyticsProvider,
+  ],
 })
 export class CandidateDetailsPageModule {}
- 

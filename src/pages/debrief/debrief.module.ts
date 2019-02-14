@@ -8,7 +8,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @NgModule({
   declarations: [
-    DebriefPage
+    DebriefPage,
   ],
   imports: [
     IonicPageModule.forChild(DebriefPage),
@@ -16,7 +16,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
     ComponentsModule,
   ],
   providers: [
-    AnalyticsProvider    
-  ]
+    AnalyticsProvider,
+  ],
 })
 export class DebriefPageModule {}

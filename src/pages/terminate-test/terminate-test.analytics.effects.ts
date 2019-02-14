@@ -8,7 +8,7 @@ import {
 } from '../../providers/analytics/analytics.model';
 import {
   TERMINATE_TEST_VIEW_DID_ENTER,
-  TerminateTestViewDidEnter
+  TerminateTestViewDidEnter,
 } from '../../pages/terminate-test/terminate-test.actions';
 
 @Injectable()
@@ -21,17 +21,17 @@ export class TerminateTestAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
   @Effect()
   terminateTestViewDidEnter$ = this.actions$.pipe(
     ofType(TERMINATE_TEST_VIEW_DID_ENTER),
-    switchMap( (action: TerminateTestViewDidEnter) => {
+    switchMap((action: TerminateTestViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.TERMINATE_TEST);
       return of();
-    })
+    }),
   );
 }

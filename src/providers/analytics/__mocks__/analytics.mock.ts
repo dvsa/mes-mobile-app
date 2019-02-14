@@ -9,7 +9,7 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
   initialiseAnalytics = (): Promise<any> =>
     new Promise((resolve) => {
       resolve();
-    });
+    })
 
   logEvent(category: string, event: string, params?: any) {}
 

@@ -51,12 +51,12 @@ export class LoginPage extends BasePageComponent {
           .then(() => this.appConfigProvider.loadRemoteConfig())
           .then(() => this.analytics.initialiseAnalytics())
           .then(() => this.navController.setRoot('JournalPage'))
-          .catch((error: AuthenticationError) => { 
+          .catch((error: AuthenticationError) => {
             if (error === AuthenticationError.USER_CANCELLED) {
-              this.analytics.logException(error, true)
+              this.analytics.logException(error, true);
             }
-            this.authenticationError = error; 
-          })
+            this.authenticationError = error;
+          }),
       )
       .then(() => this.hasUserLoggedOut = false)
       .then(() => this.splashScreen.hide())

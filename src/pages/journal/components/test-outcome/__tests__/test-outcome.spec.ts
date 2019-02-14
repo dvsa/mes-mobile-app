@@ -2,7 +2,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { TestOutcomeComponent } from '../test-outcome';
 import { StoreModel } from '../../../../../common/store.model';
-import { Store , StoreModule} from '@ngrx/store';
+import { Store , StoreModule } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
@@ -18,7 +18,7 @@ describe('Test Outcome', () => {
       declarations: [TestOutcomeComponent],
       imports: [
         IonicModule.forRoot(TestOutcomeComponent),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance },
@@ -31,8 +31,8 @@ describe('Test Outcome', () => {
         fixture = TestBed.createComponent(TestOutcomeComponent);
         component = fixture.componentInstance;
       });
-      store$ = TestBed.get(Store);
-      spyOn(store$, 'dispatch');
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
 
   }));
 

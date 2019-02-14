@@ -24,7 +24,7 @@ export class DebriefPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.store$.dispatch( new DebriefViewDidEnter());
+    this.store$.dispatch(new DebriefViewDidEnter());
   }
 
 }

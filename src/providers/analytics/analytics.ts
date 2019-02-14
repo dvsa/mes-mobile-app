@@ -9,17 +9,15 @@ import { createHash } from 'crypto';
 
 @Injectable()
 export class AnalyticsProvider implements IAnalyticsProvider {
-  private analyticsStartupError: string ='Error starting Google Analytics';
+  private analyticsStartupError: string = 'Error starting Google Analytics';
   googleAnalyticsKey: string;
   uniqueDeviceId: string;
   constructor(
     private appConfig: AppConfigProvider,
     public ga: GoogleAnalytics,
     public platform: Platform,
-    private device: Device
+    private device: Device,
   ) { }
-
-  
 
   initialiseAnalytics = (): Promise<any> =>
     new Promise((resolve) => {
@@ -31,10 +29,10 @@ export class AnalyticsProvider implements IAnalyticsProvider {
         this.enableExceptionReporting();
       });
       resolve();
-    });
+    })
 
-  enableExceptionReporting() {
-    this.platform.ready().then(() => { 
+  enableExceptionReporting():void {
+    this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
@@ -46,8 +44,8 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     });
   }
 
-  setCurrentPage(name: string) {
-    this.platform.ready().then(() => { 
+  setCurrentPage(name: string):void {
+    this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
@@ -60,7 +58,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     });
   }
 
-  logEvent(category: string, event: string, label?: string, params?: any) {
+  logEvent(category: string, event: string, label?: string, params?: any):void {
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
@@ -73,7 +71,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     });
   }
 
-  addCustomDimension(key: number, value: string) {
+  addCustomDimension(key: number, value: string):void {
     this.ga
     .startTrackerWithId(this.googleAnalyticsKey)
     .then(() => {
@@ -84,11 +82,11 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     .catch(error => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
   }
 
-  logError(type: string, message: string) {
+  logError(type: string, message: string):void {
     this.logEvent(AnalyticsEventCategories.ERROR, type, message);
   }
 
-  logException(message: string, fatal: boolean) {
+  logException(message: string, fatal: boolean):void {
     this.ga
     .startTrackerWithId(this.googleAnalyticsKey)
     .then(() => {
@@ -99,7 +97,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     .catch(error => console.log(`logException: ${this.analyticsStartupError}`, error));
   }
 
-  setUserId(userId: string) {
+  setUserId(userId: string):void {
     this.ga
     .startTrackerWithId(this.googleAnalyticsKey)
     .then(() => {

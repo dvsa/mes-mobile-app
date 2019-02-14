@@ -38,7 +38,7 @@ export class JournalEffects {
   }
 
   callJournalProvider$ = (mode: string) => {
-    this.store$.dispatch( new journalActions.JournalRefresh(mode));
+    this.store$.dispatch(new journalActions.JournalRefresh(mode));
     return of(null).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -70,7 +70,7 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
         catchError((err) => {
-          this.store$.dispatch( new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
+          this.store$.dispatch(new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
           console.log(err);
           return of();
         }),
@@ -84,10 +84,10 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
         catchError((err) => {
-          this.store$.dispatch( new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
-          return of(new journalActions.LoadJournalFailure(err))
+          this.store$.dispatch(new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
+          return of(new journalActions.LoadJournalFailure(err));
         }),
-      )
+      ),
     ),
   );
 

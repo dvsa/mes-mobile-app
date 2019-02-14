@@ -16,7 +16,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
     ComponentsModule,
   ],
   providers: [
-    AnalyticsProvider
-  ]
+    AnalyticsProvider,
+  ],
 })
 export class TestReportPageModule {}

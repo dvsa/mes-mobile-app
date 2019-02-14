@@ -24,11 +24,11 @@ import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 interface JournalPageState {
-  selectedDate$: Observable<string>,
-  slots$: Observable<SlotItem[]>,
-  error$: Observable<MesError>,
-  isLoading$: Observable<boolean>,
-  lastRefreshedTime$: Observable<string>,
+  selectedDate$: Observable<string>;
+  slots$: Observable<SlotItem[]>;
+  error$: Observable<MesError>;
+  isLoading$: Observable<boolean>;
+  lastRefreshedTime$: Observable<string>;
 }
 
 @IonicPage()
@@ -75,7 +75,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.pageState = {
       selectedDate$: this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDate)
+        map(getSelectedDate),
       ),
       slots$: this.store$.pipe(
         select(getJournalState),
@@ -125,7 +125,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ionViewDidEnter(): void {
-     this.store$.dispatch( new journalActions.JournalViewDidEnter());
+    this.store$.dispatch(new journalActions.JournalViewDidEnter());
   }
 
   loadJournalManually() {
@@ -137,7 +137,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   setSelectedDate = (selectedDate: string): void => {
-    this.selectedDate = selectedDate;  
+    this.selectedDate = selectedDate;
   }
 
   handleLoadingUI = (isLoading: boolean): void => {

@@ -48,7 +48,7 @@ describe('CandidateLinkComponent', () => {
 
       expect(component.navController.push).toHaveBeenCalledWith(
         'CandidateDetailsPage',
-        { slotId: component.slotId, slotChanged: false }
+        { slotId: component.slotId, slotChanged: false },
       );
     });
   });

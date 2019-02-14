@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { cloneDeep } from 'lodash';
 
 import { SlotProvider } from '../slot';
-import { Store , StoreModule} from '@ngrx/store';
+import { Store , StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../common/store.model';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
@@ -16,7 +16,6 @@ const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days
 describe('SlotProvider', () => {
   let slotProvider;
   let store$: Store<StoreModel>;
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({

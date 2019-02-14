@@ -9,13 +9,12 @@ export class CandidateDetailsViewDidEnter implements Action {
   }
 }
 
-
 export class CandidateDetailsSlotChangeViewed implements Action {
   readonly type = CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED;
   constructor (public slotId: number) {
   }
 }
 
-export type Types = 
+export type Types =
   | CandidateDetailsViewDidEnter
   | CandidateDetailsSlotChangeViewed;

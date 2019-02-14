@@ -8,7 +8,7 @@ import {
 } from '../../providers/analytics/analytics.model';
 import {
   TEST_REPORT_VIEW_DID_ENTER,
-  TestReportViewDidEnter
+  TestReportViewDidEnter,
 } from '../../pages/test-report/test-report.actions';
 
 @Injectable()
@@ -22,18 +22,17 @@ export class TestReportAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
-
 
   @Effect()
   testReportViewDidEnter$ = this.actions$.pipe(
     ofType(TEST_REPORT_VIEW_DID_ENTER),
-    switchMap( (action: TestReportViewDidEnter) => {
+    switchMap((action: TestReportViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
       return of();
-    })
+    }),
   );
 }

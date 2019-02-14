@@ -5,10 +5,10 @@ import { switchMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model'
+} from '../../providers/analytics/analytics.model';
 import {
   PASS_FINALISTATION_VIEW_DID_ENTER,
-  PassFinalisationViewDidEnter
+  PassFinalisationViewDidEnter,
 } from '../../pages/pass-finalisation/pass-finalisation.actions';
 
 @Injectable()
@@ -21,17 +21,17 @@ export class PassFinalisationAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
   @Effect()
   passFinalisationViewDidEnter$ = this.actions$.pipe(
     ofType(PASS_FINALISTATION_VIEW_DID_ENTER),
-    switchMap( (action: PassFinalisationViewDidEnter) => {
+    switchMap((action: PassFinalisationViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_FINALISATION);
       return of();
-    })
+    }),
   );
 }

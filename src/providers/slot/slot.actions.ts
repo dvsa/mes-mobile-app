@@ -7,5 +7,5 @@ export class SlotHasChanged implements Action {
   constructor (public slotId: number) {
   }
 }
-export type Types = 
+export type Types =
   | SlotHasChanged;

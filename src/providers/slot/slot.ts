@@ -13,7 +13,7 @@ import { SlotHasChanged } from './slot.actions';
 export class SlotProvider {
 
   constructor(
-    private store$: Store<StoreModel>, 
+    private store$: Store<StoreModel>,
     public appConfigProvider: AppConfigProvider) {}
 
   detectSlotChanges(slots: {[k: string]: SlotItem[]}, newJournal: ExaminerWorkSchedule): SlotItem[] {
@@ -36,7 +36,7 @@ export class SlotProvider {
         differenceFound = replacedJournalSlot.hasSlotChanged;
         const differenceToSlot = DeepDiff(replacedJournalSlot.slotData, newSlot);
         if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
-          this.store$.dispatch( new SlotHasChanged(newSlotId));
+          this.store$.dispatch(new SlotHasChanged(newSlotId));
           differenceFound = true;
         }
       }

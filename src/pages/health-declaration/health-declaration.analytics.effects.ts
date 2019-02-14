@@ -8,7 +8,7 @@ import {
 } from '../../providers/analytics/analytics.model';
 import {
   HEALTH_DECLARATION_VIEW_DID_ENTER,
-  HealthDeclarationViewDidEnter
+  HealthDeclarationViewDidEnter,
 } from './health-declaration.actions';
 
 @Injectable()
@@ -20,18 +20,18 @@ export class HealthDeclarationAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
   @Effect()
   healthDeclarationViewDidEnter$ = this.actions$.pipe(
     ofType(HEALTH_DECLARATION_VIEW_DID_ENTER),
-    switchMap( (action: HealthDeclarationViewDidEnter) => {
+    switchMap((action: HealthDeclarationViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.HEALTH_DECLARATION);
       return of();
-    })
+    }),
   );
 
 }

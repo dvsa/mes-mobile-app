@@ -19,8 +19,8 @@ export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 
 export const JOURNAL_VIEW_DID_ENTER = '[JournalPage] Journal view did enter';
 export const JOURNAL_NAVIGATE_DAY = '[JournalPage] Navigate Day';
-export const JOURNAL_REFRESH='[JournalPage] Journal Refresh';
-export const JOURNAL_REFRESH_ERROR= '[JournalPage] Journal Refresh Error';
+export const JOURNAL_REFRESH = '[JournalPage] Journal Refresh';
+export const JOURNAL_REFRESH_ERROR = '[JournalPage] Journal Refresh Error';
 
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;

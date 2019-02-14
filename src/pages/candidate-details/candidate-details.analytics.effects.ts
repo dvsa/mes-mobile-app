@@ -10,22 +10,22 @@ import {
     AnalyticsDimensionIndices,
     AnalyticsScreenNames,
     AnalyticsEventCategories,
-    AnalyticsEvents
-  } from '../../providers/analytics/analytics.model'
-  
+    AnalyticsEvents,
+  } from '../../providers/analytics/analytics.model';
+
 import {
     getSlotById,
     getSlots,
     isCandidateSpecialNeeds,
     getCandidateId,
-    isCandidateCheckNeeded
+    isCandidateCheckNeeded,
   } from './candidate-details.selector';
-  
-import { 
-  CANDIDATE_DETAILS_VIEW_DID_ENTER, 
-  CandidateDetailsViewDidEnter, 
-  CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED, 
-  CandidateDetailsSlotChangeViewed 
+
+import {
+  CANDIDATE_DETAILS_VIEW_DID_ENTER,
+  CandidateDetailsViewDidEnter,
+  CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED,
+  CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 
 @Injectable()
@@ -39,41 +39,44 @@ export class CandidateDetailsAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
-    @Effect()
+  @Effect()
     candidateView$ = this.actions$.pipe(
     ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
     withLatestFrom(
         this.store$.pipe(
         select(getJournalState),
         map(getSlots),
-        )
+        ),
     ),
     switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
-        const slot = getSlotById(slots, action.slotId)
-        const specNeeds = isCandidateSpecialNeeds(slot);
-        const candidateCheck = isCandidateCheckNeeded(slot);
-        const candidateId = getCandidateId(slot);
+      const slot = getSlotById(slots, action.slotId);
+      const specNeeds = isCandidateSpecialNeeds(slot);
+      const candidateCheck = isCandidateCheckNeeded(slot);
+      const candidateId = getCandidateId(slot);
 
-        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
-        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specNeeds ? '1' : '0');
-        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, candidateCheck ? '1' : '0');
-        this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
-        return of();
-    })
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specNeeds ? '1' : '0');
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, candidateCheck ? '1' : '0');
+      this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+      return of();
+    }),
     );
 
-    @Effect()
+  @Effect()
     slotChangeViewed$ = this.actions$.pipe(
     ofType(CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED),
-    switchMap( (action: CandidateDetailsSlotChangeViewed) => {
-        console.log('slot change viewed');
-        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.SLOT_CHANGE_VIEWED, action.slotId.toString());
-        return of();
-    })
-    );  
+    switchMap((action: CandidateDetailsSlotChangeViewed) => {
+      console.log('slot change viewed');
+      this.analytics.logEvent(
+        AnalyticsEventCategories.JOURNAL,
+        AnalyticsEvents.SLOT_CHANGE_VIEWED,
+        action.slotId.toString());
+      return of();
+    }),
+    );
 }

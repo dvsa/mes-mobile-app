@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../common/store.model';
 import { PassFinalisationViewDidEnter } from './pass-finalisation.actions';
 
-
 @IonicPage()
 @Component({
   selector: 'page-pass-finalisation',

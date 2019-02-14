@@ -5,10 +5,10 @@ import { switchMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model'
+} from '../../providers/analytics/analytics.model';
 import {
   OFFICE_VIEW_DID_ENTER,
-  OfficeViewDidEnter
+  OfficeViewDidEnter,
 } from '../../pages/office/office.actions';
 
 @Injectable()
@@ -20,17 +20,17 @@ export class OfficeAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
   @Effect()
   officeViewDidEnter$ = this.actions$.pipe(
     ofType(OFFICE_VIEW_DID_ENTER),
-    switchMap( (action: OfficeViewDidEnter) => {
+    switchMap((action: OfficeViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.OFFICE);
       return of();
-    })
+    }),
   );
 }

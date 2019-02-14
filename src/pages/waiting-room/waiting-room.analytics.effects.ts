@@ -8,7 +8,7 @@ import {
 } from '../../providers/analytics/analytics.model';
 import {
   WAITING_ROOM_VIEW_DID_ENTER,
-  WaitingRoomViewDidEnter
+  WaitingRoomViewDidEnter,
 } from '../../pages/waiting-room/waiting-room.actions';
 
 @Injectable()
@@ -21,18 +21,18 @@ export class WaitingRoomAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
   @Effect()
   waitingRoomViewDidEnter$ = this.actions$.pipe(
     ofType(WAITING_ROOM_VIEW_DID_ENTER),
-    switchMap( (action: WaitingRoomViewDidEnter) => {
+    switchMap((action: WaitingRoomViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM);
       return of();
-    })
+    }),
   );
 
 }

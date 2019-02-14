@@ -29,7 +29,7 @@ export enum AnalyticsScreenNames {
     WELCOME = 'welcome screen',
     CANDIDATE_DETAILS = 'candidate details screen',
     DEBRIEF = 'debrief screen',
-    LOGIN = 'login screen'
+    LOGIN = 'login screen',
   }
 
 export enum AnalyticsEventCategories {
@@ -37,7 +37,7 @@ export enum AnalyticsEventCategories {
     LIFECYCLE = 'lifecycle',
     ERROR = 'error',
     JOURNAL = 'journal',
-    AUTHENTICATION = 'authentication'
+    AUTHENTICATION = 'authentication',
   }
 
 export enum AnalyticsEvents {
@@ -56,10 +56,10 @@ export enum AnalyticsDimensionIndices {
     JOURNAL_DAYS_FROM_TODAY = 2,
     CANDIDATE_WITH_SPECIAL_NEEDS = 3,
     CANDIDATE_WITH_CHECK = 4,
-    CANDIDATE_ID=5
+    CANDIDATE_ID= 5,
   }
 
 export enum JournalRefreshModes {
     MANUAL = 'MANUAL',
-    AUTOMATIC = 'AUTOMATIC'
+    AUTOMATIC = 'AUTOMATIC',
   }

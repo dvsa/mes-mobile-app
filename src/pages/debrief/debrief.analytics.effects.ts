@@ -6,10 +6,10 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
 //  AnalyticsDimensionIndices,
   AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model'
+} from '../../providers/analytics/analytics.model';
 import {
   DEBRIEF_VIEW_DID_ENTER,
-  DebriefViewDidEnter
+  DebriefViewDidEnter,
 } from '../../pages/debrief/debrief.actions';
 
 @Injectable()
@@ -23,18 +23,18 @@ export class DebriefAnalyticsEffects {
     this.analytics.initialiseAnalytics()
           .then(() => console.log('Analytics initialised successfully'))
           .catch(() => {
-            console.log('error initialising analytics')
-          }
+            console.log('error initialising analytics');
+          },
     );
   }
 
   @Effect()
   debriefViewDidEnter$ = this.actions$.pipe(
     ofType(DEBRIEF_VIEW_DID_ENTER),
-    switchMap( (action: DebriefViewDidEnter) => {
+    switchMap((action: DebriefViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.DEBRIEF);
       return of();
-    })
+    }),
   );
 
 }

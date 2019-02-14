@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../common/store.model';
 import { OfficeViewDidEnter } from './office.actions';
 
-
 @IonicPage()
 @Component({
   selector: 'page-office',

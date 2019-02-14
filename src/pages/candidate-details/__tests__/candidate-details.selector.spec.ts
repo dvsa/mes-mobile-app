@@ -165,16 +165,16 @@ describe('Candidate Details Selector', () => {
       const slot = {
         booking: {
           candidate: {
-            candidateId
-          }
-        }
+            candidateId,
+          },
+        },
       };
       const result = getCandidateId(slot);
       expect(result).toEqual('12354567');
     });
   });
 
-  describe('isCandidateSpecialNeeds', ()=> {
+  describe('isCandidateSpecialNeeds', () => {
     it('returns true if special needs exist', () => {
       const slot = {
         booking: {
@@ -189,12 +189,12 @@ describe('Candidate Details Selector', () => {
     });
   });
 
-  describe('isCandidateCheckNeeded', ()=> {
+  describe('isCandidateCheckNeeded', () => {
     it('returns true if entitlement check needed', () => {
       const slot = {
         booking: {
           application: {
-            entitlementCheck: 'true'
+            entitlementCheck: 'true',
           },
           previousCancellation: [],
         },
@@ -204,13 +204,13 @@ describe('Candidate Details Selector', () => {
     });
   });
 
-  describe('getSlotChanged', ()=> {
+  describe('getSlotChanged', () => {
     it('returns true if slot marked as changed', () => {
       const slot = {
         hasSlotChanged: true,
         booking: {
           application: {
-            entitlementCheck: 'true'
+            entitlementCheck: 'true',
           },
           previousCancellation: [],
         },
