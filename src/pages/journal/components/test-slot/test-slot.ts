@@ -16,6 +16,9 @@ export class TestSlotComponent implements SlotComponent {
   @Input()
   hasSlotChanged: boolean;
 
+  @Input()
+  showLocation: boolean;
+
   constructor(public screenOrientation: ScreenOrientation) {}
 
   isIndicatorNeededForSlot(): boolean {

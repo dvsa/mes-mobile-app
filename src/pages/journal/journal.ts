@@ -163,11 +163,14 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     if (emission.length === 0) return;
 
     const slots = this.slotSelector.getSlotTypes(emission);
+    let lastLocation;
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
+      (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
+      lastLocation = slot.slotData.testCentre.centreName;
     }
   }
 

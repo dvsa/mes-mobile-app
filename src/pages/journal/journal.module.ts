@@ -12,22 +12,26 @@ import { CandidateLinkComponent } from './components/candidate-link/candidate-li
 import { TestOutcomeComponent } from './components/test-outcome/test-outcome';
 import { TestSlotComponent } from './components/test-slot/test-slot';
 import { ActivitySlotComponent } from './components/activity-slot/activity-slot';
+import { LocationComponent } from './components/location/location';
 import { IndicatorsComponent } from './components/indicators/indicators';
 import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
 import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
 import { SlotProvider } from '../../providers/slot/slot';
+import { LanguageComponent } from './components/language/language';
 
 @NgModule({
   declarations: [
     JournalPage,
     IndicatorsComponent,
+    LanguageComponent,
     TimeComponent,
     CandidateLinkComponent,
     TestOutcomeComponent,
     TestSlotComponent,
     ActivitySlotComponent,
+    LocationComponent,
     TestCategoryComponent,
     VehicleDetailsComponent,
     JournalNavigationComponent,
