@@ -4,7 +4,7 @@
   border-radius: 10px;
   margin: 0 0.2rem;
   h3 {
-    color: map-get($colors, mes-white);;
+    color: map-get($colors, mes-white);
   }
 }
 
@@ -14,12 +14,12 @@
   border-radius: 10px;
   margin: 0 0.2rem;
   h3 {
-    color: map-get($colors, mes-white);;
+    color: map-get($colors, mes-white);
   }
 }
 
 .mes-transparent-button {
-  background: map-get($colors, mes-white);;
+  background: map-get($colors, mes-white);
   color: map-get($colors-gds, gds-black);
   border-radius: 4px;
   padding: 0 0.8rem;

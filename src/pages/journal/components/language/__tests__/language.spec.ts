@@ -46,7 +46,7 @@ describe('LanguageComponent', () => {
         component.welshLanguage = true;
         fixture.detectChanges();
         const renderedText = fixture.debugElement.query(By.css('div.language-description'))
-          .nativeElement;;
+          .nativeElement;
         expect(renderedText.textContent).toBe('Cymraeg');
       });
       it('should not render text when the language is not Welsh', () => {
