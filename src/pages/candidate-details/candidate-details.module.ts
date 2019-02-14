@@ -3,8 +3,8 @@ import { IonicPageModule } from 'ionic-angular';
 import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from '../../components/components.module';
 import { CandidateDetailsPage } from './candidate-details';
-import { AnalyticsEffects } from '../../providers/analytics/analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.effects';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   ],
   imports: [
     IonicPageModule.forChild(CandidateDetailsPage),
-    EffectsModule.forFeature([AnalyticsEffects]),
+    EffectsModule.forFeature([CandidateDetailsAnalyticsEffects]),
     ComponentsModule,
   ],
   providers: [
@@ -21,3 +21,4 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   ]
 })
 export class CandidateDetailsPageModule {}
+ 

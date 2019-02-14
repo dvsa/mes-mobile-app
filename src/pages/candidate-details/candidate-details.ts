@@ -24,7 +24,6 @@ import {
   CandidateDetailsSlotChangeViewed 
 } from './candidate-details.actions';
 
-
 interface CandidateDetailsPageState {  
   name$: Observable<string>,
   time$: Observable<string>,

@@ -20,6 +20,7 @@ import { JournalNavigationComponent } from './components/journal-navigation/jour
 // import { AnalyticsEffects } from '../../providers/analytics/analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { SlotProvider } from '../../providers/slot/slot';
+import { JournalAnalyticsEffects } from './journal.analytics.effects';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { SlotProvider } from '../../providers/slot/slot';
   imports: [
     IonicPageModule.forChild(JournalPage),
     StoreModule.forFeature('journal', journalReducer),
-    EffectsModule.forFeature([JournalEffects]),
+    EffectsModule.forFeature([JournalEffects, JournalAnalyticsEffects]),
     ComponentsModule,
   ],
   entryComponents: [

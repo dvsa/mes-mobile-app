@@ -32,7 +32,7 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
-// import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 // import {
 //   AnalyticsEventCategories,
 //   AnalyticsEvents,
@@ -79,9 +79,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
-    // public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider
   ) {
     super(platform, navController, authenticationProvider);
+    this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
     this.employeeId = this.authenticationProvider.getEmployeeId();
   }
 

@@ -21,6 +21,8 @@ import { StoreModel } from '../../../common/store.model';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 import { By } from '@angular/platform-browser';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -48,7 +50,7 @@ describe('JournalPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
-      ]
+        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },      ]
     })
       .compileComponents()
       .then(() => {
