@@ -16,7 +16,10 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
-import { getSelectedDate, getLastRefreshed, getSlots, canNavigateToPreviousDay, canNavigateToNextDay } from './journal.selector';
+import {
+  getSelectedDate, getLastRefreshed, getSlots,
+  canNavigateToPreviousDay, canNavigateToNextDay,
+} from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../common/date-time';
 
@@ -63,7 +66,7 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
       () => this.callJournalProvider$().pipe(
-        catchError(err => {
+        catchError((err) => {
           console.error(err);
           return of();
         }),

@@ -59,8 +59,8 @@ describe('Authentication interceptor', () => {
     it('should not modify the request if not on ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       journalProvider.getJournal(null).subscribe(
-        res => {},
-        err => {},
+        (res) => {},
+        (err) => {},
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(false);
@@ -69,8 +69,8 @@ describe('Authentication interceptor', () => {
     it('should add the signed headers if running on ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       journalProvider.getJournal(null).subscribe(
-        res => {},
-        err => {},
+        (res) => {},
+        (err) => {},
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(true);

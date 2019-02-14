@@ -75,7 +75,12 @@ describe('Journal Reducer', () => {
   describe('[JournalPage] Clear Changed Slot', () => {
     it('should clear hasChangedState flag on specified slot', () => {
       const slotDate = DateTime.now().format('YYYY-MM-DD');
-      const stateWithChangedSlot = { ...initialState, slots: {  [`${slotDate}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)] } };
+      const stateWithChangedSlot = {
+        ...initialState,
+        slots: {
+          [`${slotDate}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)],
+        },
+      };
       const action = new ClearChangedSlot(1234);
       const result = journalReducer(stateWithChangedSlot, action);
       expect(result.slots[slotDate][0].hasSlotChanged).toBeFalsy();

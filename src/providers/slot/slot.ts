@@ -22,7 +22,7 @@ export class SlotProvider {
 
     newSlots.sort((slotA, slotB) => slotA.slotDetail.start < slotB.slotDetail.start ? -1 : 1);
 
-    return newSlots.map(newSlot => {
+    return newSlots.map((newSlot) => {
       const newSlotId = newSlot.slotDetail.slotId;
 
       const replacedJournalSlot = oldJournalSlots.find(oldSlot => oldSlot.slotData.slotDetail.slotId === newSlotId);
@@ -48,7 +48,10 @@ export class SlotProvider {
   extendWithEmptyDays = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
     const numberOfDaysToView = this.appConfigProvider.getAppConfig().journal.numberOfDaysToView;
 
-    const days = times(numberOfDaysToView, (d: number): string => DateTime.now().add(d, Duration.DAY).format('YYYY-MM-DD'));
+    const days = times(
+      numberOfDaysToView,
+      (d: number): string => DateTime.now().add(d, Duration.DAY).format('YYYY-MM-DD'),
+    );
     const emptyDays = days.reduce((days: {[k: string]: SlotItem[]}, day: string) => ({ ...days, [day]: [] }), {});
 
     return {
@@ -65,7 +68,8 @@ export class SlotProvider {
    * @returns Only the relevant slots
    */
   getRelevantSlots = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
-    // we have to take in consideration if it's Friday so that we can navigate through the weekend till the next working weekday (Monday)
+    // we have to take in consideration if it's Friday
+    // so that we can navigate through the weekend till the next working weekday (Monday)
     // if it's not Friday
     // we need to check if it's Saturday so that we can navigate till Monday
     // otherwise we just go to next day

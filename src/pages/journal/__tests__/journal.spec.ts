@@ -1,6 +1,12 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform, LoadingController, ToastController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, LoadingControllerMock, ToastControllerMock } from 'ionic-mocks';
+import {
+  Config, Platform,
+  LoadingController, ToastController, IonicModule, NavController, NavParams,
+} from 'ionic-angular';
+import {
+  NavControllerMock, NavParamsMock, ConfigMock,
+  PlatformMock, LoadingControllerMock, ToastControllerMock,
+} from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
@@ -106,7 +112,7 @@ describe('JournalPage', () => {
       component.pageState.slots$.subscribe(slots => noOfSlotsReturned = slots.length);
 
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
-      expect(slotsList.children.every((child) => child.name === 'test-slot')).toBeTruthy();
+      expect(slotsList.children.every(child => child.name === 'test-slot')).toBeTruthy();
     });
   });
 });

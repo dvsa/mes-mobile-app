@@ -1,14 +1,7 @@
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import {
-  IonicPage,
-  Loading,
-  LoadingController,
-  NavController,
-  NavParams,
-  Platform,
-  Refresher,
-  Toast,
-  ToastController,
+  IonicPage, Loading, LoadingController, NavController,
+  NavParams, Platform, Refresher, Toast, ToastController,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -18,11 +11,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
 import {
-  getError,
-  getIsLoading,
-  getLastRefreshed,
-  getLastRefreshedTime,
-  getSlotsOnSelectedDate,
+  getError, getIsLoading, getLastRefreshed,
+  getLastRefreshedTime, getSlotsOnSelectedDate,
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
@@ -182,7 +172,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   private createToast = (errorMessage: string) => {
-    // TODO: This is just a temporary way to display the error. Initiate a conversation with the team about how to handle errors.
+    // TODO: This is just a temporary way to display the error.
+    // Initiate a conversation with the team about how to handle errors.
 
     this.toast = this.toastController.create({
       message: errorMessage,

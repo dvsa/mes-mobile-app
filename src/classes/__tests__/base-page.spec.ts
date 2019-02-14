@@ -51,6 +51,7 @@ describe('Base Page', () => {
     it('should allow user access if authenticated , is an ios device and is required', () => {
       expect(basePageComponent.ionViewWillEnter()).toBe(true);
     });
+    // tslint:disable-next-line:max-line-length
     it('should not allow user access if user is not authenticated, authentication is required and device is ios', () => {
       authenticationProvider.isAuthenticated =
       jasmine.createSpy('authenticationProvider.isAuthenticated').and.returnValue(false);

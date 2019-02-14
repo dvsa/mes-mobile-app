@@ -1,5 +1,9 @@
 import { JournalModel } from '../journal.model';
-import { getSlotsOnSelectedDate, getLastRefreshed, getIsLoading, getError, getLastRefreshedTime, isToday, canNavigateToNextDay, canNavigateToPreviousDay } from '../journal.selector';
+import {
+  getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
+  getError, getLastRefreshedTime, isToday,
+  canNavigateToNextDay, canNavigateToPreviousDay,
+} from '../journal.selector';
 import { MesError } from '../../../common/mes-error.model';
 import { DateTime, Duration } from '../../../common/date-time';
 

@@ -247,16 +247,24 @@ describe('Candidate Details Selector', () => {
           expected: 'some place, some other place',
         },
         {
-          input: { addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here' },
+          input: {
+            addressLine1: '23 Canal str',
+            addressLine2: 'some place',
+            addressLine3: 'some other place',
+            addressLine4: 'here' },
           expected: 'some place, some other place, here',
         },
         {
-          input: { addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here', addressLine5: 'there' },
+          input: { addressLine1: '23 Canal str',
+            addressLine2: 'some place',
+            addressLine3: 'some other place',
+            addressLine4: 'here',
+            addressLine5: 'there' },
           expected: 'some place, some other place, here, there',
         },
       ];
 
-      cases.map(c => {
+      cases.map((c) => {
         const result = getCity(c.input);
 
         expect(result).toEqual(c.expected);
