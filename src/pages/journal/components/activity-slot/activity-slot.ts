@@ -14,6 +14,9 @@ export class ActivitySlotComponent implements SlotComponent {
   @Input()
   hasSlotChanged: boolean;
 
+  @Input()
+  showLocation: boolean;
+
   constructor() {}
 
   formatActivityCode(): string {

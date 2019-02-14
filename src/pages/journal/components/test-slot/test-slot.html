@@ -1,3 +1,6 @@
+<location *ngIf="showLocation"
+  [location]="slot.testCentre.centreName">
+</location>
 <ion-card [ngClass]="{'test-slot-portrait-mode': isPortrait()}">
   <ion-row class="slot-row" align-items-center nowrap>
     <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>

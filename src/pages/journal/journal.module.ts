@@ -12,6 +12,7 @@ import { CandidateLinkComponent } from './components/candidate-link/candidate-li
 import { TestOutcomeComponent } from './components/test-outcome/test-outcome';
 import { TestSlotComponent } from './components/test-slot/test-slot';
 import { ActivitySlotComponent } from './components/activity-slot/activity-slot';
+import { LocationComponent } from './components/location/location';
 import { IndicatorsComponent } from './components/indicators/indicators';
 import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
@@ -30,6 +31,7 @@ import { LanguageComponent } from './components/language/language';
     TestOutcomeComponent,
     TestSlotComponent,
     ActivitySlotComponent,
+    LocationComponent,
     TestCategoryComponent,
     VehicleDetailsComponent,
     JournalNavigationComponent,

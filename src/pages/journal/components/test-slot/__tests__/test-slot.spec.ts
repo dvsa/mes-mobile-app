@@ -15,6 +15,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
 import { TestCategoryIconComponent } from '../../../../../components/test-category-icon/test-category-icon';
 import { LanguageComponent } from '../../language/language';
+import { LocationComponent } from '../../location/location';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -84,6 +85,7 @@ describe('TestSlotComponent', () => {
       declarations: [
         TestSlotComponent,
         MockComponent(LanguageComponent),
+        MockComponent(LocationComponent),
         MockComponent(IndicatorsComponent),
         MockComponent(TimeComponent),
         MockComponent(TestCategoryComponent),
@@ -97,12 +99,13 @@ describe('TestSlotComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock }
 
-      ],
+      ]
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(TestSlotComponent);
       component = fixture.componentInstance;
       component.slot = cloneDeep(mockSlot);
-    });
+      component.showLocation = true;
+    })
   }));
 
   describe('Class', () => {
@@ -241,6 +244,13 @@ describe('TestSlotComponent', () => {
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(LanguageComponent))).componentInstance;
         expect(subByDirective.welshLanguage).toBeFalsy();
+      });
+
+      it('should pass something to sub-component location input', () => {
+        fixture.detectChanges();
+        const subByDirective = fixture.debugElement.query(
+          By.directive(MockComponent(LocationComponent))).componentInstance;
+        expect(subByDirective.location).toBe('Example Test Centre');
       });
     });
   });
