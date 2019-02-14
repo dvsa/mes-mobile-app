@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'vehicle-details',
-  templateUrl: 'vehicle-details.html'
+  templateUrl: 'vehicle-details.html',
 })
 export class VehicleDetailsComponent {
   @Input()

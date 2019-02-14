@@ -11,6 +11,6 @@ export const environment: EnvironmentFile = {
     logoutUrl: '',
     employeeIdKey: '',
     identityPoolId: '',
-    openIdConnectUrl: ''
-  }
+    openIdConnectUrl: '',
+  },
 };

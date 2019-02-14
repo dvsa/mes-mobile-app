@@ -34,7 +34,7 @@ describe('JournalPage', () => {
         IonicModule,
         AppModule,
         StoreModule.forRoot({
-          journal: journalReducer
+          journal: journalReducer,
         }),
         MockedJournalModule,
       ],
@@ -48,7 +48,7 @@ describe('JournalPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
-      ]
+      ],
     })
       .compileComponents()
       .then(() => {

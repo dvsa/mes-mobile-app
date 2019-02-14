@@ -23,5 +23,5 @@ export type Details = {
     street: string,
     city: string,
     postcode: string,
-  }
+  },
 };

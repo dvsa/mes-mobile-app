@@ -10,7 +10,7 @@ import { Spied } from '../../../test/helpers/spy-generic';
 describe('App', () => {
   let fixture: ComponentFixture<App>;
   let component: App;
-  let statusBar: Spied<StatusBar>
+  let statusBar: Spied<StatusBar>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -43,7 +43,7 @@ describe('App', () => {
       expect(statusBar.overlaysWebView.calls.count()).toBe(1);
       expect(statusBar.overlaysWebView).toHaveBeenCalledWith(false);
       expect(statusBar.backgroundColorByHexString.calls.count()).toBe(1);
-      expect(statusBar.backgroundColorByHexString).toHaveBeenCalledWith('#000000')
+      expect(statusBar.backgroundColorByHexString).toHaveBeenCalledWith('#000000');
     });
   });
 

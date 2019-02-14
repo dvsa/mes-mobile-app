@@ -20,7 +20,7 @@ export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.primaryTelephone)) return candidate.primaryTelephone;
   if (!isEmpty(candidate.secondaryTelephone)) return candidate.secondaryTelephone;
   return 'No phone number provided';
-}
+};
 
 export const getSlotTypeView = (slot: any): SlotTypeView => isEmpty(slot.booking.application.specialNeeds) ? carStandardSlotType : carSpecialNeedsSlotType;
 
@@ -32,7 +32,7 @@ export const getCity = (address: any): string => {
   if (!isEmpty(address.addressLine5)) city += `, ${address.addressLine5}`;
 
   return city;
-}
+};
 
 export const getDetails = (slot: any): Details => {
   const details: Details = {
@@ -46,7 +46,7 @@ export const getDetails = (slot: any): Details => {
     candidateComments: {
       isSectionEmpty: isCandidateCommentsEmpty(slot),
       specialNeeds: slot.booking.application.specialNeeds,
-      previousCancellations: slot.booking.previousCancellation
+      previousCancellations: slot.booking.previousCancellation,
     },
     phoneNumber: getPhoneNumber(slot.booking.candidate),
 
@@ -56,7 +56,7 @@ export const getDetails = (slot: any): Details => {
       street: slot.booking.candidate.candidateAddress.addressLine1,
       city: getCity(slot.booking.candidate.candidateAddress),
       postcode: slot.booking.candidate.candidateAddress.postcode,
-    }
+    },
   };
   return details;
-}
+};

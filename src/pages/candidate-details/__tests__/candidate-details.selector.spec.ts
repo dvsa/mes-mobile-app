@@ -6,8 +6,8 @@ import {
   getCandidateName,
   getPhoneNumber,
   getSlotTypeView,
-  getCity, 
-  isCandidateCommentsEmpty
+  getCity,
+  isCandidateCommentsEmpty,
 } from '../candidate-details.selector';
 import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
 
@@ -24,7 +24,7 @@ describe('Candidate Details Selector', () => {
               hasSlotChanged: false,
               slotData: {
                 vehicleSlotType: 'B57mins',
-              }
+              },
             },
           ],
         },
@@ -37,7 +37,7 @@ describe('Candidate Details Selector', () => {
         {
           vehicleSlotType: 'B57mins',
         },
-      ]); 
+      ]);
     });
   });
 
@@ -122,7 +122,7 @@ describe('Candidate Details Selector', () => {
           application: {
             specialNeeds: '',
           },
-          previousCancellation: [ { initiator: 'one' } ],
+          previousCancellation: [{ initiator: 'one' }],
         },
       };
 
@@ -234,24 +234,24 @@ describe('Candidate Details Selector', () => {
   describe('getCity', () => {
     it('returns the right combination of address lines', () => {
       const cases = [
-        { 
-          input: {addressLine1: '23 Canal str'},
+        {
+          input: { addressLine1: '23 Canal str' },
           expected: '',
         },
         {
-          input: {addressLine1: '23 Canal str', addressLine2: 'some place'},
+          input: { addressLine1: '23 Canal str', addressLine2: 'some place' },
           expected: 'some place',
         },
         {
-          input: {addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place'},
+          input: { addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place' },
           expected: 'some place, some other place',
         },
         {
-          input: {addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here'},
+          input: { addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here' },
           expected: 'some place, some other place, here',
         },
         {
-          input: {addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here', addressLine5: 'there'},
+          input: { addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place', addressLine4: 'here', addressLine5: 'there' },
           expected: 'some place, some other place, here, there',
         },
       ];

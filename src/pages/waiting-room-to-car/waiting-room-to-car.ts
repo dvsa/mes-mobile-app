@@ -4,13 +4,13 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 
 @IonicPage()
 @Component({
   selector: 'page-waiting-room-to-car',
-  templateUrl: 'waiting-room-to-car.html'
+  templateUrl: 'waiting-room-to-car.html',
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   constructor(
@@ -18,9 +18,9 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

@@ -7,12 +7,10 @@ import { AuthenticationError } from '../../providers/authentication/authenticati
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 
-
-
 @IonicPage()
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
 })
 export class LoginPage extends BasePageComponent {
 
@@ -25,7 +23,7 @@ export class LoginPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public splashScreen: SplashScreen,
-    public appConfigProvider: AppConfigProvider
+    public appConfigProvider: AppConfigProvider,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -37,9 +35,9 @@ export class LoginPage extends BasePageComponent {
       this.login();
     }
 
-    if(!this.isIos()) {
-        this.navController.setRoot('JournalPage');
-        this.splashScreen.hide();
+    if (!this.isIos()) {
+      this.navController.setRoot('JournalPage');
+      this.splashScreen.hide();
     }
   }
 
@@ -50,10 +48,10 @@ export class LoginPage extends BasePageComponent {
           .login()
           .then(() => this.appConfigProvider.loadRemoteConfig())
           .then(() => this.navController.setRoot('JournalPage'))
-          .catch((error: AuthenticationError) => this.authenticationError = error)
+          .catch((error: AuthenticationError) => this.authenticationError = error),
       )
       .then(() => this.hasUserLoggedOut = false)
-      .then(() => this.splashScreen.hide());
+      .then(() => this.splashScreen.hide())
 
   isInternetConnectionError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;

@@ -8,7 +8,7 @@ export const activities: Activity[] = [
   {
     activityCode: '091',
     description: 'Travel period to detached test centre and /or out station',
-    displayName: 'Travel'
+    displayName: 'Travel',
   },
   {
     activityCode: '094',
@@ -21,5 +21,5 @@ export const activities: Activity[] = [
   {
     activityCode: '142',
     description: 'Personal development',
-  }
+  },
 ];

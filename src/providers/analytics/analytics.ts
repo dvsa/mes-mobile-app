@@ -11,7 +11,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   constructor(
     private appConfig: AppConfigProvider,
     public ga: GoogleAnalytics,
-    public platform: Platform
+    public platform: Platform,
   ) {
     this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
   }

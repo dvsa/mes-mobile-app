@@ -8,7 +8,7 @@ import {
   Platform,
   Refresher,
   Toast,
-  ToastController
+  ToastController,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -35,20 +35,20 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 
 interface JournalPageState {
-  slots$: Observable<SlotItem[]>,
-  error$: Observable<MesError>,
-  isLoading$: Observable<boolean>,
-  lastRefreshedTime$: Observable<string>,
+  slots$: Observable<SlotItem[]>;
+  error$: Observable<MesError>;
+  isLoading$: Observable<boolean>;
+  lastRefreshedTime$: Observable<string>;
 }
 
 @IonicPage()
 @Component({
   selector: 'page-journal',
-  templateUrl: 'journal.html'
+  templateUrl: 'journal.html',
 })
 
 export class JournalPage extends BasePageComponent implements OnInit, OnDestroy {
@@ -75,7 +75,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId();
@@ -86,21 +86,21 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.pageState = {
       slots$: this.store$.pipe(
         select(getJournalState),
-        map(getSlotsOnSelectedDate)
+        map(getSlotsOnSelectedDate),
       ),
       error$: this.store$.pipe(
         select(getJournalState),
-        map(getError)
+        map(getError),
       ),
       isLoading$: this.store$.pipe(
         select(getJournalState),
-        map(getIsLoading)
+        map(getIsLoading),
       ),
       lastRefreshedTime$: this.store$.pipe(
         select(getJournalState),
         map(getLastRefreshed),
-        map(getLastRefreshedTime)
-      )
+        map(getLastRefreshedTime),
+      ),
     };
 
     const { slots$, error$, isLoading$ } = this.pageState;
@@ -109,7 +109,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       slots$.pipe(map(this.createSlots)),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
-      isLoading$.pipe(map(this.handleLoadingUI))
+      isLoading$.pipe(map(this.handleLoadingUI)),
     );
     this.subscription = merged$.subscribe();
   }
@@ -146,7 +146,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     if (isLoading) {
       this.loadingSpinner = this.loadingController.create({
         dismissOnPageChange: true,
-        spinner: 'circles'
+        spinner: 'circles',
       });
       this.loadingSpinner.present();
       return;
@@ -156,13 +156,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       this.loadingSpinner.dismiss();
       this.loadingSpinner = null;
     }
-  };
+  }
 
   showError = (error: MesError): void => {
     if (error === undefined || error.message === '') return;
     this.createToast(error.message);
     this.toast.present();
-  };
+  }
 
   private createSlots = (emission: any) => {
     if (!Array.isArray(emission)) return;
@@ -179,7 +179,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
     }
-  };
+  }
 
   private createToast = (errorMessage: string) => {
     // TODO: This is just a temporary way to display the error. Initiate a conversation with the team about how to handle errors.
@@ -189,22 +189,22 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       position: 'middle',
       dismissOnPageChange: true,
       cssClass: 'mes-toast-message-error',
-      duration: 5000
+      duration: 5000,
     });
 
     this.toast.onDidDismiss(() => {
       this.store$.dispatch(new journalActions.UnsetError());
     });
-  };
+  }
 
   public pullRefreshJournal = (refresher: Refresher) => {
     this.loadJournalManually();
     this.pageRefresher = refresher;
-  };
+  }
 
   public refreshJournal = () => {
     this.loadJournalManually();
-  };
+  }
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);

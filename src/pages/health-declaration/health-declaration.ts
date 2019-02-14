@@ -3,15 +3,14 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../classes/base-page';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-
 
 @IonicPage()
 @Component({
   selector: 'page-health-declaration',
-  templateUrl: 'health-declaration.html'
+  templateUrl: 'health-declaration.html',
 })
 export class HealthDeclarationPage extends BasePageComponent {
 
@@ -20,9 +19,9 @@ export class HealthDeclarationPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

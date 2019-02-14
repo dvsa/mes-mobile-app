@@ -22,7 +22,7 @@ describe('Journal Reducer', () => {
       expect(result).toEqual({
         ...initialState,
         isLoading: true,
-        error: {message: '', status: 0, statusText: ''}
+        error: { message: '', status: 0, statusText: '' },
       });
     });
   });
@@ -33,7 +33,7 @@ describe('Journal Reducer', () => {
         '2019-01-17': [{
           hasSlotChanged: false,
           slotData: {},
-          }
+        },
         ],
       };
       const action = new LoadJournalSuccess(actionPayload);
@@ -47,16 +47,16 @@ describe('Journal Reducer', () => {
           '2019-01-17': [{
             hasSlotChanged: false,
             slotData: {},
-            }
+          },
           ],
-        }
+        },
       });
     });
   });
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: { '2019-01-21': [new SlotItem({}, false)] } }
+      const stateWithJournals = { ...initialState, slots: { '2019-01-21': [new SlotItem({}, false)] } };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toEqual({});
@@ -74,12 +74,12 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Clear Changed Slot', () => {
     it('should clear hasChangedState flag on specified slot', () => {
-        const slotDate = DateTime.now().format('YYYY-MM-DD');
-        const stateWithChangedSlot = { ...initialState, slots: {  [`${slotDate}`] : [new SlotItem({ slotDetail: {slotId:1234}}, true)] } };
-        const action = new ClearChangedSlot(1234);
-        const result = journalReducer(stateWithChangedSlot, action);
-        expect(result.slots[slotDate][0].hasSlotChanged).toBeFalsy();
+      const slotDate = DateTime.now().format('YYYY-MM-DD');
+      const stateWithChangedSlot = { ...initialState, slots: {  [`${slotDate}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)] } };
+      const action = new ClearChangedSlot(1234);
+      const result = journalReducer(stateWithChangedSlot, action);
+      expect(result.slots[slotDate][0].hasSlotChanged).toBeFalsy();
 
-    })
+    });
   });
 });

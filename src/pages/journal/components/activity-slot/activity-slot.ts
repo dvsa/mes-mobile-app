@@ -5,7 +5,7 @@ import { Activity, activities } from '../../../../providers/slot-selector/activi
 
 @Component({
   selector: 'activity-slot',
-  templateUrl: 'activity-slot.html'
+  templateUrl: 'activity-slot.html',
 })
 export class ActivitySlotComponent implements SlotComponent {
   @Input()

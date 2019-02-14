@@ -9,15 +9,15 @@ import { Observable } from 'rxjs/Observable';
 import { SelectPreviousDay, SelectNextDay } from '../../journal.actions';
 
 interface JournalNavigationPageState {
-  selectedDate$: Observable<string>,
-  canNavigateToPreviousDay$: Observable<boolean>,
-  canNavigateToNextDay$: Observable<boolean>,
-  isSelectedDateToday$: Observable<boolean>,
+  selectedDate$: Observable<string>;
+  canNavigateToPreviousDay$: Observable<boolean>;
+  canNavigateToNextDay$: Observable<boolean>;
+  isSelectedDateToday$: Observable<boolean>;
 }
 
 @Component({
   selector: 'journal-navigation',
-  templateUrl: 'journal-navigation.html'
+  templateUrl: 'journal-navigation.html',
 })
 export class JournalNavigationComponent implements OnInit {
 
@@ -29,21 +29,21 @@ export class JournalNavigationComponent implements OnInit {
     this.pageState = {
       selectedDate$: this.store$.pipe(
         select(getJournalState),
-        map(getSelectedDate)
+        map(getSelectedDate),
       ),
       canNavigateToPreviousDay$: this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToPreviousDay)
+        map(canNavigateToPreviousDay),
       ),
       canNavigateToNextDay$: this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToNextDay)
+        map(canNavigateToNextDay),
       ),
       isSelectedDateToday$: this.store$.pipe(
         select(getJournalState),
         map(getSelectedDate),
-        map(isToday)
-      )
+        map(isToday),
+      ),
     };
   }
 

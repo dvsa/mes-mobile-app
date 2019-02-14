@@ -40,10 +40,10 @@ describe('ActivitySlotComponent', () => {
       });
       it('should strip leading zeroes if they exist', () => {
         const cases = [
-          { activityCode: undefined, expected: '0'},
-          { activityCode: null, expected: '0'},
-          { activityCode: '128', expected: '128'},
-          { activityCode: '091', expected: '91'},
+          { activityCode: undefined, expected: '0' },
+          { activityCode: null, expected: '0' },
+          { activityCode: '128', expected: '128' },
+          { activityCode: '091', expected: '91' },
         ];
         cases.forEach(testCase => {
           component.slot.activityCode = testCase.activityCode;
@@ -59,7 +59,7 @@ describe('ActivitySlotComponent', () => {
 
       it('should return Unknown for an unmapped code', () => {
         component.slot.activityCode = 'notactivitycode';
-        expect(component.getTitle()).toBe('Unknown')
+        expect(component.getTitle()).toBe('Unknown');
       });
       it('should return the display name if one exists', () => {
         component.slot.activityCode = '091';
@@ -77,8 +77,8 @@ describe('ActivitySlotComponent', () => {
       component.slot = {
         slotDetail: {
           start: 12345,
-        }
-      }
+        },
+      };
       fixture.detectChanges();
       const timeSubComponent = fixture.debugElement
         .query(By.directive(MockComponent(TimeComponent))).componentInstance as TimeComponent;

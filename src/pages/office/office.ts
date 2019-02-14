@@ -3,14 +3,14 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 @IonicPage()
 @Component({
   selector: 'page-office',
-  templateUrl: 'office.html'
+  templateUrl: 'office.html',
 })
 export class OfficePage extends BasePageComponent {
 
@@ -19,11 +19,11 @@ export class OfficePage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
-  
+
   ionViewDidEnter(): void {
     this.analytics.setCurrentPage(AnalyticsScreenNames.OFFICE);
   }

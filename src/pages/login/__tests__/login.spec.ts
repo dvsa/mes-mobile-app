@@ -31,7 +31,7 @@ describe('LoginPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock}]
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock }],
     })
       .compileComponents()
       .then(() => {
@@ -55,7 +55,7 @@ describe('LoginPage', () => {
       component.authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.login();
-      tick()
+      tick();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();

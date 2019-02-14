@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'indicators',
-  templateUrl: 'indicators.html'
+  templateUrl: 'indicators.html',
 })
 export class IndicatorsComponent {
 

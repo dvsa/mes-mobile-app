@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { Log } from './logging.constants';
 import { UrlProvider } from '../url/url';
 
-
 @Injectable()
 export class LoggingProvider {
 
-  constructor(public http: HttpClient, public urlProvider: UrlProvider ) {}
+  constructor(public http: HttpClient, public urlProvider: UrlProvider) {}
 
   public log = (log: Log): void => {
     this.logMultiple([log]);
@@ -16,7 +15,7 @@ export class LoggingProvider {
   public logMultiple = (logs : Log[]): void => {
     this.http
       .post(this.urlProvider.getLoggingServiceUrl(), logs)
-      .subscribe(error => this.handleError(error))
+      .subscribe(error => this.handleError(error));
   }
 
   private handleError = (error: any) => {

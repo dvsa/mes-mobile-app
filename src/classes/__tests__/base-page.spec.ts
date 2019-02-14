@@ -22,17 +22,17 @@ describe('Base Page', () => {
       ],
     }).compileComponents();
 
-    platform = TestBed.get(Platform)
-    navController = TestBed.get(NavController)
-    authenticationProvider = TestBed.get(AuthenticationProvider)
+    platform = TestBed.get(Platform);
+    navController = TestBed.get(NavController);
+    authenticationProvider = TestBed.get(AuthenticationProvider);
 
     class BasePageClass extends BasePageComponent {
       constructor(
         platform: Platform,
         navController: NavController,
-        authenticationProvider: AuthenticationProvider
+        authenticationProvider: AuthenticationProvider,
       ) {
-        super(platform, navController, authenticationProvider)
+        super(platform, navController, authenticationProvider);
       }
     }
 
@@ -62,11 +62,11 @@ describe('Base Page', () => {
   describe('isIos()', () => {
     it('should return true if platform is ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
-      expect(basePageComponent.isIos()).toBe(true)
+      expect(basePageComponent.isIos()).toBe(true);
     });
     it('should return false if platform is not ios', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
-      expect(basePageComponent.isIos()).toBe(false)
+      expect(basePageComponent.isIos()).toBe(false);
     });
   });
 
@@ -74,10 +74,10 @@ describe('Base Page', () => {
     it('should try to logout when platform is ios', () => {
       basePageComponent.logout();
 
-      expect(authenticationProvider.logout).toHaveBeenCalledTimes(1)
+      expect(authenticationProvider.logout).toHaveBeenCalledTimes(1);
       expect(navController.setRoot).toHaveBeenCalledTimes(1);
       expect(navController.setRoot).toHaveBeenCalledWith('LoginPage', {
-        hasLoggedOut: true
+        hasLoggedOut: true,
       });
     });
     it('should not try to logout when platform is not ios', () => {
@@ -85,7 +85,7 @@ describe('Base Page', () => {
 
       basePageComponent.logout();
 
-      expect(authenticationProvider.logout).toHaveBeenCalledTimes(0)
+      expect(authenticationProvider.logout).toHaveBeenCalledTimes(0);
       expect(navController.setRoot).toHaveBeenCalledTimes(0);
     });
   });

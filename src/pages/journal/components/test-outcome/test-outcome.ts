@@ -6,22 +6,21 @@ import {
   AnalyticsEvents,
 } from '../../../../providers/analytics/analytics.model';
 
-
 @Component({
   selector: 'test-outcome',
-  templateUrl: 'test-outcome.html'
+  templateUrl: 'test-outcome.html',
 })
 export class TestOutcomeComponent {
   @Input()
   slot: any;
 
   canStartTest: boolean = true;
-  canSubmitTest: boolean = false
+  canSubmitTest: boolean = false;
   outcome: string = '0';
 
   constructor(
     public navController: NavController,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {}
 
   startTest() {

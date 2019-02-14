@@ -12,4 +12,3 @@ export class AuthenticationProviderMock {
 
   logout = jasmine.createSpy('logout').and.returnValue(new Promise(() => { }));
 }
-

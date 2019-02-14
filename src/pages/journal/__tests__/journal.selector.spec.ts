@@ -12,14 +12,14 @@ describe('JournalSelector', () => {
       '2019-01-17': [
         {
           hasSlotChanged: false,
-          slotData: {}
+          slotData: {},
         },
       ],
     },
     error: {
       message: 'something failed',
       status: 404,
-      statusText: 'HTTP 404'
+      statusText: 'HTTP 404',
     },
     selectedDate: '2019-01-17',
   };
@@ -84,13 +84,13 @@ describe('JournalSelector', () => {
           '2019-01-29': [
             {
               hasSlotChanged: false,
-              slotData: {}
+              slotData: {},
             },
           ],
           '2019-01-30': [
             {
               hasSlotChanged: false,
-              slotData: {}
+              slotData: {},
             },
           ],
         },
@@ -101,7 +101,7 @@ describe('JournalSelector', () => {
 
       expect(result).toBe(true);
     });
-    
+
     it('should return false if there are no next days', () => {
       const journal: JournalModel = {
         isLoading: true,
@@ -110,7 +110,7 @@ describe('JournalSelector', () => {
           '2019-01-29': [
             {
               hasSlotChanged: false,
-              slotData: {}
+              slotData: {},
             },
           ],
         },
@@ -132,7 +132,7 @@ describe('JournalSelector', () => {
           [DateTime.now().format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
-              slotData: {}
+              slotData: {},
             },
           ],
         },
@@ -152,13 +152,13 @@ describe('JournalSelector', () => {
           [DateTime.now().format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
-              slotData: {}
+              slotData: {},
             },
           ],
           [DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD')]: [
             {
               hasSlotChanged: false,
-              slotData: {}
+              slotData: {},
             },
           ],
         },
@@ -169,5 +169,5 @@ describe('JournalSelector', () => {
 
       expect(result).toBe(true);
     });
-  })
+  });
 });

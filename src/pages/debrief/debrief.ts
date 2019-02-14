@@ -4,13 +4,13 @@ import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames
+  AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 
 @IonicPage()
 @Component({
   selector: 'page-debrief',
-  templateUrl: 'debrief.html'
+  templateUrl: 'debrief.html',
 })
 export class DebriefPage extends BasePageComponent {
 
@@ -19,9 +19,9 @@ export class DebriefPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public analytics: AnalyticsProvider
+    public analytics: AnalyticsProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider)
+    super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {

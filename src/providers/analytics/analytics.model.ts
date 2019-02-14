@@ -1,14 +1,14 @@
 export interface IAnalyticsProvider {
-    setCurrentPage(name: string);
-  
-    logEvent(category: string, event: string, params?: any);
-  
-    logError(message: string);
-  
-    setUserId(userId: string);
-  }
-  
-  export enum AnalyticsScreenNames {
+  setCurrentPage(name: string);
+
+  logEvent(category: string, event: string, params?: any);
+
+  logError(message: string);
+
+  setUserId(userId: string);
+}
+
+export enum AnalyticsScreenNames {
     CONTACT_DETAILS = 'contact details page', // this may need removing as could be candidate details now
     FAIL_RESULTS_DEBRIEF = 'fail results debrief page',
     HEALTH_DECLARATION = 'health declaration page',
@@ -23,17 +23,16 @@ export interface IAnalyticsProvider {
     WELCOME = 'welcome page',
     CANDIDATE_DETAILS = 'candidate details page',
     DEBRIEF = 'debrief page',
-    LOGIN = 'login page'
+    LOGIN = 'login page',
   }
-  
-  export enum AnalyticsEventCategories {
+
+export enum AnalyticsEventCategories {
     CLICK = 'click',
-    LIFECYCLE = 'lifecycle'
+    LIFECYCLE = 'lifecycle',
   }
-  
-  export enum AnalyticsEvents {
+
+export enum AnalyticsEvents {
     START_TEST = 'start test',
     END_TEST = 'end test',
-    APP_LOAD = 'app load'
+    APP_LOAD = 'app load',
   }
-  
