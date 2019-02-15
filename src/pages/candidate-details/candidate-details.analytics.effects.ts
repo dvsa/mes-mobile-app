@@ -46,37 +46,37 @@ export class CandidateDetailsAnalyticsEffects {
 
   @Effect()
     candidateView$ = this.actions$.pipe(
-    ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
-    withLatestFrom(
+      ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
+      withLatestFrom(
         this.store$.pipe(
           select(getJournalState),
           map(getSlots),
         ),
-    ),
-    switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
-      const slot = getSlotById(slots, action.slotId);
-      const specNeeds = isCandidateSpecialNeeds(slot);
-      const candidateCheck = isCandidateCheckNeeded(slot);
-      const candidateId = getCandidateId(slot);
+      ),
+      switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
+        const slot = getSlotById(slots, action.slotId);
+        const specNeeds = isCandidateSpecialNeeds(slot);
+        const candidateCheck = isCandidateCheckNeeded(slot);
+        const candidateId = getCandidateId(slot);
 
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specNeeds ? '1' : '0');
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, candidateCheck ? '1' : '0');
-      this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
-      return of();
-    }),
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
+        this.analytics.addCustomDimension(
+          AnalyticsDimensionIndices.CANDIDATE_WITH_SPECIAL_NEEDS, specNeeds ? '1' : '0');
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_WITH_CHECK, candidateCheck ? '1' : '0');
+        this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+        return of();
+      }),
     );
 
   @Effect()
     slotChangeViewed$ = this.actions$.pipe(
-    ofType(CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED),
-    switchMap((action: CandidateDetailsSlotChangeViewed) => {
-      console.log('slot change viewed');
-      this.analytics.logEvent(
-        AnalyticsEventCategories.JOURNAL,
-        AnalyticsEvents.SLOT_CHANGE_VIEWED,
-        action.slotId.toString());
-      return of();
-    }),
+      ofType(CANDIDATE_DETAILS_SLOT_CHANGE_VIEWED),
+      switchMap((action: CandidateDetailsSlotChangeViewed) => {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.JOURNAL,
+          AnalyticsEvents.SLOT_CHANGE_VIEWED,
+          action.slotId.toString());
+        return of();
+      }),
     );
 }

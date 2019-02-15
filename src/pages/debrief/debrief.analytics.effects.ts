@@ -4,7 +4,6 @@ import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-//  AnalyticsDimensionIndices,
   AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 import {
@@ -18,7 +17,6 @@ export class DebriefAnalyticsEffects {
   constructor(
     public analytics: AnalyticsProvider,
     private actions$: Actions,
-//    private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
           .then(() => {})
