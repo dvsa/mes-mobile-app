@@ -3,7 +3,6 @@ import { LanguageComponent } from '../language';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 
-
 describe('LanguageComponent', () => {
   let component: LanguageComponent;
   let fixture: ComponentFixture<LanguageComponent>;
@@ -11,7 +10,7 @@ describe('LanguageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LanguageComponent],
-      imports: [IonicModule]
+      imports: [IonicModule],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(LanguageComponent);
       component = fixture.componentInstance;

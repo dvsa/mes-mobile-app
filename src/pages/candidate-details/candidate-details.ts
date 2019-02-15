@@ -102,6 +102,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   ionViewDidEnter(): void {
+    console.log('candidate details view did enter');
     this.store$.dispatch(new CandidateDetailsViewDidEnter(this.slotId));
   }
 
