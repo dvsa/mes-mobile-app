@@ -21,9 +21,14 @@ export function journalReducer(state = initialState, action: journalActions.Type
         error: { message: '', status: 0, statusText: '' },
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
+      const date = DateTime.now().daysUntil(state.selectedDate) < 0
+      ? DateTime.now().format('YYYY-MM-DD')
+      : state.selectedDate;
+
       return {
         ...state,
         lastRefreshed: new Date(),
+        selectedDate: date,
         isLoading: false,
         slots: action.payload,
       };
