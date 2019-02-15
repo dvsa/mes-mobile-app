@@ -19,7 +19,7 @@ export class PassFinalisationAnalyticsEffects {
     private actions$: Actions,
   ) {
     this.analytics.initialiseAnalytics()
-          .then(() => console.log('Analytics initialised successfully'))
+          .then(() => {})
           .catch(() => {
             console.log('error initialising analytics');
           },

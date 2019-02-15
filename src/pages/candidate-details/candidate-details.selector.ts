@@ -22,10 +22,9 @@ export const isCandidateCommentsEmpty = (slot: any): boolean => {
   return isEmpty(slot.booking.application.specialNeeds) && isEmpty(slot.booking.previousCancellation);
 };
 
-export const getCandidateId = (slot: any): string => `${slot.booking.candidate.candidateId}`;
+export const getCandidateId = (slot: any): string => slot.booking.candidate.candidateId;
 export const isCandidateSpecialNeeds = (slot: any): boolean => !isEmpty(slot.booking.application.specialNeeds);
 export const isCandidateCheckNeeded = (slot: any): boolean => slot.booking.application.entitlementCheck;
-// export const getSlotChanged = (slot: any): boolean =>  has(slot,'hasSlotChanged') && slot.hasSlotChanged;
 export const getSlotChanged = (slot: any): boolean => slot.hasSlotChanged;
 
 export const getPhoneNumber = (candidate: any): string => {

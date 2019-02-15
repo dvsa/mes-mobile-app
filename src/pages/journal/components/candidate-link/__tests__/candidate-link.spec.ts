@@ -34,7 +34,6 @@ describe('CandidateLinkComponent', () => {
         component.name.lastName = 'Bloggs';
         component.slotId = 12345;
         component.slotChanged = false;
-        // component.welshLanguage = false;
         component.isPortrait = true;
       });
   }));

@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
-// import { Store} from '@ngrx/store';
-// import { StoreModel } from '../../common/store.model';
-// import { getJournalState } from '../journal/journal.reducer';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   JOURNAL_VIEW_DID_ENTER,
@@ -29,10 +26,9 @@ export class JournalAnalyticsEffects {
   constructor(
     public analytics: AnalyticsProvider,
     private actions$: Actions,
-//    private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
-          .then(() => console.log('Analytics initialised successfully'))
+          .then(() => {})
           .catch(() => {
             console.log('error initialising analytics');
           },
@@ -112,7 +108,6 @@ export class JournalAnalyticsEffects {
   testOutcomeStartTest$ = this.actions$.pipe(
     ofType(TEST_OUTCOME_START_TEST),
     switchMap((action: TestOutcomeStartTest) => {
-      console.log('test outcome started effect triggered');
       this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
       return of();
     }),

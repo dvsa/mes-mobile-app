@@ -11,7 +11,7 @@ import {
     AnalyticsScreenNames,
     AnalyticsEventCategories,
     AnalyticsEvents,
-  } from '../../providers/analytics/analytics.model';
+} from '../../providers/analytics/analytics.model';
 
 import {
     getSlotById,
@@ -19,7 +19,7 @@ import {
     isCandidateSpecialNeeds,
     getCandidateId,
     isCandidateCheckNeeded,
-  } from './candidate-details.selector';
+} from './candidate-details.selector';
 
 import {
   CANDIDATE_DETAILS_VIEW_DID_ENTER,
@@ -37,7 +37,7 @@ export class CandidateDetailsAnalyticsEffects {
     private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
-          .then(() => console.log('Analytics initialised successfully'))
+          .then(() => {})
           .catch(() => {
             console.log('error initialising analytics');
           },
@@ -49,8 +49,8 @@ export class CandidateDetailsAnalyticsEffects {
     ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
     withLatestFrom(
         this.store$.pipe(
-        select(getJournalState),
-        map(getSlots),
+          select(getJournalState),
+          map(getSlots),
         ),
     ),
     switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {

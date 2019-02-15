@@ -17,10 +17,9 @@ export class TestReportAnalyticsEffects {
   constructor(
     public analytics: AnalyticsProvider,
     private actions$: Actions,
-//    private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
-          .then(() => console.log('Analytics initialised successfully'))
+          .then(() => {})
           .catch(() => {
             console.log('error initialising analytics');
           },
