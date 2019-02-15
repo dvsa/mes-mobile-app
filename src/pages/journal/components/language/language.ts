@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'language',
-  templateUrl: 'language.html'
+  templateUrl: 'language.html',
 })
 export class LanguageComponent {
 

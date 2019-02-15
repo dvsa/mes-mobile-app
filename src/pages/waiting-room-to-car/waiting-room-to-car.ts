@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import {
-  AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../common/store.model';
+import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
 
 @IonicPage()
 @Component({
@@ -14,17 +13,17 @@ import {
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   constructor(
+    private store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public analytics: AnalyticsProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
+    this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
   }
 
 }

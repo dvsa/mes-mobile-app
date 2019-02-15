@@ -11,6 +11,9 @@ export class CandidateLinkComponent {
   slotId: number;
 
   @Input()
+  slotChanged: boolean;
+
+  @Input()
   name: Name;
 
   @Input()
@@ -23,6 +26,6 @@ export class CandidateLinkComponent {
   }
 
   navigateToCandidateDetails() {
-    this.navController.push('CandidateDetailsPage', { slotId: this.slotId });
+    this.navController.push('CandidateDetailsPage', { slotId: this.slotId, slotChanged: this.slotChanged });
   }
 }

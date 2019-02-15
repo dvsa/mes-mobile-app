@@ -18,7 +18,9 @@ import { JournalProvider } from '../../providers/journal/journal';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 import { TestCategoryComponent } from './components/test-category/test-category';
 import { JournalNavigationComponent } from './components/journal-navigation/journal-navigation';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { SlotProvider } from '../../providers/slot/slot';
+import { JournalAnalyticsEffects } from './journal.analytics.effects';
 import { LanguageComponent } from './components/language/language';
 
 @NgModule({
@@ -39,7 +41,7 @@ import { LanguageComponent } from './components/language/language';
   imports: [
     IonicPageModule.forChild(JournalPage),
     StoreModule.forFeature('journal', journalReducer),
-    EffectsModule.forFeature([JournalEffects]),
+    EffectsModule.forFeature([JournalEffects, JournalAnalyticsEffects]),
     ComponentsModule,
   ],
   entryComponents: [
@@ -50,6 +52,7 @@ import { LanguageComponent } from './components/language/language';
     JournalProvider,
     SlotProvider,
     SlotSelectorProvider,
+    AnalyticsProvider,
   ],
 })
 export class JournalPageModule {}

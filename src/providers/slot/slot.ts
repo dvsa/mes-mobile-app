@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
 import { flatten, times } from 'lodash';
-
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../common/store.model';
 import { SlotItem } from '../slot-selector/slot-item';
 import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
 import { AppConfigProvider } from '../app-config/app-config';
 import { DateTime, Duration } from '../../common/date-time';
+import { SlotHasChanged } from './slot.actions';
 
 @Injectable()
 export class SlotProvider {
 
-  constructor(public appConfigProvider: AppConfigProvider) {}
+  constructor(
+    private store$: Store<StoreModel>,
+    public appConfigProvider: AppConfigProvider) {}
 
   detectSlotChanges(slots: {[k: string]: SlotItem[]}, newJournal: ExaminerWorkSchedule): SlotItem[] {
     const newSlots = flatten([
@@ -32,6 +36,7 @@ export class SlotProvider {
         differenceFound = replacedJournalSlot.hasSlotChanged;
         const differenceToSlot = DeepDiff(replacedJournalSlot.slotData, newSlot);
         if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
+          this.store$.dispatch(new SlotHasChanged(newSlotId));
           differenceFound = true;
         }
       }

@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../classes/base-page';
-import {
-  AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../common/store.model';
+import { HealthDeclarationViewDidEnter } from './health-declaration.actions';
 
 @IonicPage()
 @Component({
@@ -15,17 +14,17 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 export class HealthDeclarationPage extends BasePageComponent {
 
   constructor(
+    private store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public analytics: AnalyticsProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(AnalyticsScreenNames.HEALTH_DECLARATION);
+    this.store$.dispatch(new HealthDeclarationViewDidEnter());
   }
 
 }

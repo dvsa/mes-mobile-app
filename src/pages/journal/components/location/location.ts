@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'location',
-  templateUrl: 'location.html'
+  templateUrl: 'location.html',
 })
 export class LocationComponent {
 

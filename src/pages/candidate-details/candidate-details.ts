@@ -5,19 +5,24 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
-
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../../common/store.model';
 import { TestCategory, testCategoryIcons } from '../../common/test-category';
 import { getJournalState } from '../journal/journal.reducer';
-import { getSlotById, getSlots, getCandidateName, getTime, getDetails } from './candidate-details.selector';
 import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model';
+  getSlotById,
+  getSlots,
+  getCandidateName,
+  getTime,
+  getDetails,
+} from './candidate-details.selector';
+import {
+  CandidateDetailsViewDidEnter,
+  CandidateDetailsSlotChangeViewed,
+} from './candidate-details.actions';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>;
@@ -31,11 +36,10 @@ interface CandidateDetailsPageState {
   templateUrl: 'candidate-details.html',
 })
 export class CandidateDetailsPage extends BasePageComponent implements OnInit, OnDestroy {
-
   pageState: CandidateDetailsPageState;
   subscription: Subscription;
   slotId: number;
-
+  slotChanged: boolean = false;
   testCategoryIcons = testCategoryIcons;
   testCategory = TestCategory.B;
 
@@ -45,10 +49,10 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private store$: Store<StoreModel>,
-    public analytics: AnalyticsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.slotId = navParams.get('slotId');
+    this.slotChanged = navParams.get('slotChanged');
   }
 
   ngOnInit(): void {
@@ -87,6 +91,10 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     );
 
     this.subscription = merged$.subscribe();
+    if (this.slotChanged) {
+      this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
+    }
+    this.store$.dispatch(new ClearChangedSlot(this.slotId));
   }
 
   ngOnDestroy(): void {
@@ -94,7 +102,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(AnalyticsScreenNames.CANDIDATE_DETAILS);
+    this.store$.dispatch(new CandidateDetailsViewDidEnter(this.slotId));
   }
 
   handleDoneButtonClick(): void {

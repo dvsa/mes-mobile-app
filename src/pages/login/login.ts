@@ -5,6 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 
 @IonicPage()
@@ -24,6 +25,7 @@ export class LoginPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public splashScreen: SplashScreen,
     public appConfigProvider: AppConfigProvider,
+    public analytics: AnalyticsProvider,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -47,8 +49,14 @@ export class LoginPage extends BasePageComponent {
         this.authenticationProvider
           .login()
           .then(() => this.appConfigProvider.loadRemoteConfig())
+          .then(() => this.analytics.initialiseAnalytics())
           .then(() => this.navController.setRoot('JournalPage'))
-          .catch((error: AuthenticationError) => this.authenticationError = error),
+          .catch((error: AuthenticationError) => {
+            if (error === AuthenticationError.USER_CANCELLED) {
+              this.analytics.logException(error, true);
+            }
+            this.authenticationError = error;
+          }),
       )
       .then(() => this.hasUserLoggedOut = false)
       .then(() => this.splashScreen.hide())

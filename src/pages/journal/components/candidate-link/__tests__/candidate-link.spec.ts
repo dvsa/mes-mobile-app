@@ -33,6 +33,7 @@ describe('CandidateLinkComponent', () => {
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
         component.slotId = 12345;
+        component.slotChanged = false;
         component.isPortrait = true;
       });
   }));
@@ -47,7 +48,7 @@ describe('CandidateLinkComponent', () => {
 
       expect(component.navController.push).toHaveBeenCalledWith(
         'CandidateDetailsPage',
-        { slotId: component.slotId },
+        { slotId: component.slotId, slotChanged: false },
       );
     });
   });
@@ -55,7 +56,7 @@ describe('CandidateLinkComponent', () => {
   describe('DOM', () => {
     it('should display candidate name', () => {
       const nameSpan: HTMLElement = fixture.debugElement.query(
-        By.css('h3')
+        By.css('h3'),
       ).nativeElement;
       fixture.detectChanges();
       expect(nameSpan.textContent).toBe('Mr Joe Bloggs');
@@ -63,7 +64,7 @@ describe('CandidateLinkComponent', () => {
 
     it('should display a right arrow after the candidate name', () => {
       const iconElement = fixture.debugElement.queryAll(
-        By.css('ion-icon[name="arrow-forward"]')
+        By.css('ion-icon[name="arrow-forward"]'),
       );
       fixture.detectChanges();
       expect(iconElement.length).toBe(1);
@@ -73,7 +74,7 @@ describe('CandidateLinkComponent', () => {
       component.isPortrait = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.candidate-name-short')
+        By.css('.candidate-name-short'),
       );
       expect(renderedImages.length).toBe(1);
     });
@@ -82,7 +83,7 @@ describe('CandidateLinkComponent', () => {
       component.isPortrait = true;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.candidate-name-long')
+        By.css('.candidate-name-long'),
       );
       expect(renderedImages.length).toBe(0);
     });
@@ -91,7 +92,7 @@ describe('CandidateLinkComponent', () => {
       component.isPortrait = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.candidate-name-long')
+        By.css('.candidate-name-long'),
       );
       expect(renderedImages.length).toBe(1);
     });
@@ -100,7 +101,7 @@ describe('CandidateLinkComponent', () => {
       component.isPortrait = false;
       fixture.detectChanges();
       const renderedImages = fixture.debugElement.queryAll(
-        By.css('.candidate-name-short')
+        By.css('.candidate-name-short'),
       );
       expect(renderedImages.length).toBe(0);
     });

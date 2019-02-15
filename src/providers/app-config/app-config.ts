@@ -62,5 +62,4 @@ export class AppConfigProvider {
       },
       loggingUrl: data.loggingUrl,
     } as AppConfig)
-
 }

@@ -11,7 +11,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import * as journalActions from './journal.actions';
 import { StoreModel } from '../../common/store.model';
 import {
-  getError, getIsLoading, getLastRefreshed,
+  getError, getIsLoading, getSelectedDate, getLastRefreshed,
   getLastRefreshedTime, getSlotsOnSelectedDate,
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
@@ -22,13 +22,9 @@ import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import {
-  AnalyticsEventCategories,
-  AnalyticsEvents,
-  AnalyticsScreenNames,
-} from '../../providers/analytics/analytics.model';
 
 interface JournalPageState {
+  selectedDate$: Observable<string>;
   slots$: Observable<SlotItem[]>;
   error$: Observable<MesError>;
   isLoading$: Observable<boolean>;
@@ -46,7 +42,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
 
   pageState: JournalPageState;
-
+  selectedDate: string;
   loadingSpinner: Loading;
   pageRefresher: Refresher;
 
@@ -54,6 +50,8 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
+
+  // private selectedDate: string;
 
   constructor(
     public navController: NavController,
@@ -68,12 +66,17 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public analytics: AnalyticsProvider,
   ) {
     super(platform, navController, authenticationProvider);
+    this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
     this.employeeId = this.authenticationProvider.getEmployeeId();
   }
 
   ngOnInit(): void {
 
     this.pageState = {
+      selectedDate$: this.store$.pipe(
+        select(getJournalState),
+        map(getSelectedDate),
+      ),
       slots$: this.store$.pipe(
         select(getJournalState),
         map(getSlotsOnSelectedDate),
@@ -93,9 +96,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       ),
     };
 
-    const { slots$, error$, isLoading$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
+      selectedDate$.pipe(map(this.setSelectedDate)),
       slots$.pipe(map(this.createSlots)),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
@@ -121,7 +125,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ionViewDidEnter(): void {
-    this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
+    this.store$.dispatch(new journalActions.JournalViewDidEnter());
   }
 
   loadJournalManually() {
@@ -130,6 +134,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   setupPolling() {
     this.store$.dispatch(new journalActions.SetupPolling());
+  }
+
+  setSelectedDate = (selectedDate: string): void => {
+    this.selectedDate = selectedDate;
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
@@ -202,8 +210,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   gotoWaitingRoom($event) {
     console.log('going to waiting room with ', $event);
-    // TODO define more AnalyticsEvents for where it is going to - don't think start test is right here.
-    this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
   }
 
   logout() {

@@ -1,7 +1,8 @@
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks';
-
+import { Store , StoreModule } from '@ngrx/store';
+import { StoreModel } from '../../../common/store.model';
 import { AppModule } from '../../../app/app.module';
 import { LoginPage } from '../login';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -11,6 +12,8 @@ import { AuthenticationError } from '../../../providers/authentication/authentic
 import { By } from '@angular/platform-browser';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -19,11 +22,13 @@ describe('LoginPage', () => {
   let splashScreen: SplashScreen;
   let authenticationProvider: AuthenticationProvider;
   let appConfigProvider: AppConfigProvider;
+  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule, StoreModule.forRoot({}),
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
@@ -31,7 +36,9 @@ describe('LoginPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock }],
+        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+      ],
     })
       .compileComponents()
       .then(() => {
@@ -42,6 +49,8 @@ describe('LoginPage', () => {
         authenticationProvider = TestBed.get(AuthenticationProvider);
         appConfigProvider = TestBed.get(AppConfigProvider);
       });
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {

@@ -8,6 +8,10 @@ import {
   getSlotTypeView,
   getCity,
   isCandidateCommentsEmpty,
+  getCandidateId,
+  isCandidateSpecialNeeds,
+  isCandidateCheckNeeded,
+  getSlotChanged,
 } from '../candidate-details.selector';
 import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
 
@@ -152,6 +156,67 @@ describe('Candidate Details Selector', () => {
       const result = getCandidateName(slot);
 
       expect(result).toEqual(`${title} ${firstName} ${lastName}`);
+    });
+  });
+
+  describe('getCandidateId', () => {
+    it('returns a candidate id', () => {
+      const candidateId = '12354567';
+      const slot = {
+        booking: {
+          candidate: {
+            candidateId,
+          },
+        },
+      };
+      const result = getCandidateId(slot);
+      expect(result).toEqual('12354567');
+    });
+  });
+
+  describe('isCandidateSpecialNeeds', () => {
+    it('returns true if special needs exist', () => {
+      const slot = {
+        booking: {
+          application: {
+            specialNeeds: 'there are some special needs',
+          },
+          previousCancellation: [],
+        },
+      };
+      const result = isCandidateSpecialNeeds(slot);
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('isCandidateCheckNeeded', () => {
+    it('returns true if entitlement check needed', () => {
+      const slot = {
+        booking: {
+          application: {
+            entitlementCheck: 'true',
+          },
+          previousCancellation: [],
+        },
+      };
+      const result = isCandidateCheckNeeded(slot);
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('getSlotChanged', () => {
+    it('returns true if slot marked as changed', () => {
+      const slot = {
+        hasSlotChanged: true,
+        booking: {
+          application: {
+            entitlementCheck: 'true',
+          },
+          previousCancellation: [],
+        },
+      };
+      const result = getSlotChanged(slot);
+      expect(result).toBeTruthy();
     });
   });
 

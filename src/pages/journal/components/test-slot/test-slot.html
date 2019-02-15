@@ -39,6 +39,7 @@
               <ion-col col-10>
                 <candidate-link
                   [slotId]="slot.slotDetail.slotId"
+                  [slotChanged]="hasSlotChanged"
                   [name]="slot.booking.candidate.candidateName"
                   [isPortrait]="isPortrait()"
                 >

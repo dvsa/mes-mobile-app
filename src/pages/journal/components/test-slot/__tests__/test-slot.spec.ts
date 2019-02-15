@@ -92,20 +92,20 @@ describe('TestSlotComponent', () => {
         MockComponent(TestOutcomeComponent),
         MockComponent(VehicleDetailsComponent),
         MockComponent(CandidateLinkComponent),
-        MockComponent(TestCategoryIconComponent)
+        MockComponent(TestCategoryIconComponent),
       ],
       imports: [IonicModule],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock }
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
 
-      ]
+      ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(TestSlotComponent);
       component = fixture.componentInstance;
       component.slot = cloneDeep(mockSlot);
       component.showLocation = true;
-    })
+    });
   }));
 
   describe('Class', () => {
