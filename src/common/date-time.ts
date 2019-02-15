@@ -50,6 +50,11 @@ export class DateTime {
   toString(): string {
     return this.moment.toString();
   }
+
+  daysUntil(targetDate: DateTime | string | Date): number {
+    const date = new DateTime(targetDate);
+    return date.moment.startOf(Duration.DAY).diff(this.moment.startOf(Duration.DAY), Duration.DAY);
+  }
 }
 
 export enum Duration {

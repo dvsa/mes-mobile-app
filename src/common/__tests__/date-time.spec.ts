@@ -13,4 +13,17 @@ describe('DateTime', () => {
     expect(today.daysDiff(tomorrowString)).toBe(1);
     expect(today.daysDiff(yesterdayString)).toBe(-1);
   });
+
+  it('should construct from text and calculate the difference of a future date', () => {
+    expect(DateTime.at('2019-02-13').daysUntil('2019-02-14')).toBe(1);
+  });
+
+  it('should construct from text and calculate the difference of a past date', () => {
+    expect(DateTime.at('2019-02-13').daysUntil('2019-02-12')).toBe(-1);
+  });
+
+  it('should construct from default and calculate the difference of a future date', () => {
+    const futureDate = DateTime.now().add(1, Duration.DAY);
+    expect(DateTime.now().daysUntil(futureDate)).toBe(1);
+  });
 });

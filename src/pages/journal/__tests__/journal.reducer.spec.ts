@@ -1,7 +1,9 @@
 import { initialState, journalReducer } from '../journal.reducer';
 import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError, ClearChangedSlot } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
-import { DateTime } from '../../../common/date-time';
+import { DateTime, Duration } from '../../../common/date-time';
+
+const today = DateTime.now().format('YYYY-MM-DD');
 
 describe('Journal Reducer', () => {
 
@@ -30,7 +32,7 @@ describe('Journal Reducer', () => {
   describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state and populate slots', () => {
       const actionPayload = {
-        '2019-01-17': [{
+        [`${today}`]: [{
           hasSlotChanged: false,
           slotData: {},
         },
@@ -44,7 +46,7 @@ describe('Journal Reducer', () => {
         isLoading: false,
         lastRefreshed: jasmine.any(Date),
         slots: {
-          '2019-01-17': [{
+          [`${today}`]: [{
             hasSlotChanged: false,
             slotData: {},
           },
@@ -52,11 +54,32 @@ describe('Journal Reducer', () => {
         },
       });
     });
+
+    it('should set the selected date to today if it was yesterday', () => {
+      const yesterday = DateTime.now().add(-1, Duration.DAY).format('YYYY-MM-DD');
+      const actionPayload = {
+        [`${today}`]: [{
+          hasSlotChanged: false,
+          slotData: {},
+        },
+        ],
+      };
+      const stateWithYesterdaysDate = {
+        ...initialState,
+        slots: {
+          [`${yesterday}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)],
+        },
+        selectedDate: yesterday,
+      };
+      const action = new LoadJournalSuccess(actionPayload);
+      const result = journalReducer(stateWithYesterdaysDate, action);
+      expect(result.selectedDate).toEqual(today);
+    });
   });
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: { '2019-01-21': [new SlotItem({}, false)] } };
+      const stateWithJournals = { ...initialState, slots: { [`${today}`]: [new SlotItem({}, false)] } };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toEqual({});
