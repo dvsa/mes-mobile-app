@@ -1,27 +1,22 @@
 candidate-link {
-    & > div {
-      height: 100%;
-      padding: 0.3em 0.75em;
-      background-color: map-get($colors-gds, gds-grey-4);
-      border-radius: 13px;
-      @include box-shadow(0px, 2px, 4px, rgba(0, 0, 0, 0.55));
-
-      .candidate-grid-row {
-        min-height: 58px;
-        display: flex;
-        align-items: center;
+  & > div {
+    .candidate-name {
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &.candidate-name-short {
+        max-width: 300px;
       }
-
-      .candidate-name {
-        font-weight: bold;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .welsh-language-indicator {
-        opacity: 0.5;
-        height: 20px;
-        width: 30px;
+      &.candidate-name-long {
+        max-width: 420px;
       }
     }
+    ion-icon {
+      padding-left: 6px;
+      padding-right: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 3px;
+    }
   }
+}

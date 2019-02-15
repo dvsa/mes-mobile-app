@@ -1,14 +1,14 @@
 <div float-right>
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row align-items-right>
       <ion-col *ngIf="!canStartTest && !canSubmitTest">
-        <span class="outcome">{{outcome}}</span>
+        <span class="outcome"><h4>{{outcome}}</h4></span>
       </ion-col>
       <ion-col *ngIf="canStartTest">
-        <span><button class="mes-primary-button" ion-button (click)="startTest()">Start test</button></span>
+        <span><button class="mes-primary-button" ion-button (click)="startTest()"><h3>Start test</h3></button></span>
       </ion-col>
       <ion-col *ngIf="canSubmitTest">
-        <span><button class="mes-secondary-button" ion-button>Submit</button></span>
+        <span><button class="mes-secondary-button" ion-button><h3>Submit</h3></button></span>
       </ion-col>
     </ion-row>
   </ion-grid>
