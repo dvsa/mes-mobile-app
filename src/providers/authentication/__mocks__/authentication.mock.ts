@@ -2,7 +2,7 @@ export class AuthenticationProviderMock {
 
   isAuthenticated = jasmine.createSpy('isAuthenticated').and.returnValue(true);
 
-  getAuthenticationToken = jasmine.createSpy('getAuthenticationToken').and.returnValue('token');
+  getAuthenticationToken = jasmine.createSpy('getAuthenticationToken').and.returnValue(Promise.resolve('token'));
 
   getEmployeeId = jasmine.createSpy('getEmployeeId').and.returnValue('12345678');
 
