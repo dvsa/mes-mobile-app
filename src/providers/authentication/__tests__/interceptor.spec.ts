@@ -4,7 +4,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpRequest } from '@angular/common/http';
 import { AuthInterceptor } from '../interceptor';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
@@ -14,6 +14,7 @@ import { AuthenticationProvider } from '../authentication';
 import { AuthenticationProviderMock } from '../__mocks__/authentication.mock';
 import { UrlProvider } from '../../url/url';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
+import { of } from 'rxjs/observable/of';
 
 describe('Authentication interceptor', () => {
   let httpMock: HttpTestingController;
@@ -22,7 +23,6 @@ describe('Authentication interceptor', () => {
   let platform: Platform;
   let urlProvider: UrlProvider;
   let journalUrl: string;
-  let authenticationProvider: AuthenticationProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,8 +47,9 @@ describe('Authentication interceptor', () => {
     journalProvider = TestBed.get(JournalProvider);
     urlProvider = TestBed.get(UrlProvider);
     journalUrl = urlProvider.getPersonalJournalUrl('');
-    authenticationProvider = TestBed.get(AuthenticationProvider);
   });
+
+  afterEach(() => httpMock.verify());
 
   describe('Interceptor', () => {
 
@@ -66,16 +67,17 @@ describe('Authentication interceptor', () => {
       expect(httpRequest.request.headers.has('Authorization')).toBe(false);
     });
 
-    xit('should add the signed headers if running on ios', async() => {
+    it('should add the authentication header to the request if running on ios', (done) => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
-      journalProvider.getJournal(null).subscribe(
-        (res) => {},
-        (err) => {},
-      );
-      const httpRequest = httpMock.expectOne(journalUrl);
-      expect(httpRequest.request.headers.has('Authorization')).toBe(true);
-      expect(httpRequest.request.headers.get('Authorization'))
-        .toEqual(await authenticationProvider.getAuthenticationToken());
+      const next: any = {
+        handle: (request: HttpRequest<any>) => {
+          expect(request.headers.has('Authorization')).toBeTruthy();
+          expect(request.headers.get('Authorization')).toEqual('token');
+          return of({});
+        },
+      };
+      const req = new HttpRequest<any>('GET', journalUrl);
+      interceptor.intercept(req, next).subscribe(obj => done());
     });
 
   });
