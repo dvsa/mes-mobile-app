@@ -6,7 +6,7 @@ const {
   Then,
   When,
   setDefaultTimeout,
-  After
+  After,
 } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -28,8 +28,8 @@ Given('I am not logged in', () => {
     browser.driver.selectContext('NATIVE_APP');
 
     // Wait until we are on the login page before proceeding
-    const usernameElement = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-    browser.wait(ExpectedConditions.presenceOf(usernameElement));
+    const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+    browser.wait(ExpectedConditions.presenceOf(usernameField));
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
@@ -41,15 +41,15 @@ When('I launch the mobile app', () => {
 });
 
 Then('I should see the Microsoft login page', () => {
-  // To be able to fill in the Authenticator login we need to switch to NATIVE context but then switch back to WEBVIEW after
+  // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
   browser.driver.getCurrentContext().then((webviewContext) => {
 
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP');
 
     // Check for Microsoft login username field
-    const usernameElement = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-    expect(usernameElement.isPresent()).to.eventually.be.true;
+    const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+    expect(usernameField.isPresent()).to.eventually.be.true;
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
@@ -66,8 +66,9 @@ Then('I should see the {string} page', (pageTitle) => {
 });
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
-  const exclamationIndicator = getElement(by.xpath(`//ion-col/label[text()= "${rowName}"][parent::ion-col/parent::ion-row//*[text() = "${rowValue}"]]`));
-  return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
+  const dataRow = getElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
+    [parent::ion-col/parent::ion-row//*[text() = "${rowValue}"]]`));
+  return expect(dataRow.isPresent()).to.eventually.be.true;
 });
 
 // After hook to take screenshots of page
@@ -78,48 +79,48 @@ After(function (testCase) {
   });
 });
 
-
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////
 
 // Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
 export const logInToApplication = (username, password) => {
-  // To be able to fill in the Authenticator login we need to switch to NATIVE context but then switch back to WEBVIEW after
+  // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
     browser.driver.selectContext('NATIVE_APP');
 
     // Fill in username and click Next
-    const usernameElement = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-    usernameElement.sendKeys(username);
+    const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+    usernameField.sendKeys(username);
     const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
     nextButtonElement.click();
     browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
     // Fill in password and click Sign in
-    const passwordElement = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
-    passwordElement.sendKeys(password);
+    const passFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
+    passFld.sendKeys(password);
     const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
     signInButtonElement.click();
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
   });
-}
+};
 
-// Checks whether the user is logged in. This will need updating as it only checks for the existance of the logout button.
+// Checks whether the user is logged in. This will need updating as it checks for the existance of the logout button.
 export const loggedInAs = (staffNumber) => {
   browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   const logout = element(by.xpath(`//button/span[contains(text(), "Logout (Employee ID: ${staffNumber}")]`));
   return logout.isPresent();
-}
+};
 
-// Logs out of the application and takes them to the login page if they were logged in else returns (which should be the login page)
+// Logs out of the application and takes them to the login page if they were logged in else returns current page
 export const logout = () => {
   browser.sleep(TEST_CONFIG.ACTION_WAIT);
+  browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   const logout = element(by.xpath('//button/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
-    if ( result ) {
-      logout.click().then (() => {
+    if (result) {
+      logout.click().then(() => {
         // After logout click sign in to get us to the login screen
         const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
         signIn.click();
@@ -128,22 +129,22 @@ export const logout = () => {
       return Promise.resolve();
     }
   });
-}
+};
 
 // A framework safe click method
 export const clickElement = (fieldElement) => {
   fieldElement.click().then((promise) => {
     return isReady(promise);
   });
-}
+};
 
 // Goes to the home page which will be the journal for logged in Examiners
 export const loadApplication = () => {
   browser.ignoreSynchronization = false;
   const promise = browser.get('');
   browser.ignoreSynchronization = true;
-  return promise;
-}
+  return isReady(promise);
+};
 
 // Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear
 const isReady = (promise) => {
@@ -153,10 +154,10 @@ const isReady = (promise) => {
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   // Then return the original promise
   return promise;
-}
+};
 
 // Waits for the element to exist on the page before returning it.
 export const getElement = (elementBy) => {
   browser.wait(ExpectedConditions.presenceOf(element(elementBy)));
   return element(elementBy);
-}
+};
