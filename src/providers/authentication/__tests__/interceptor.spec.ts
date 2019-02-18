@@ -74,7 +74,8 @@ describe('Authentication interceptor', () => {
       );
       const httpRequest = httpMock.expectOne(journalUrl);
       expect(httpRequest.request.headers.has('Authorization')).toBe(true);
-      expect(httpRequest.request.headers.get('Authorization')).toEqual(await authenticationProvider.getAuthenticationToken());
+      expect(httpRequest.request.headers.get('Authorization'))
+        .toEqual(await authenticationProvider.getAuthenticationToken());
     });
 
   });
