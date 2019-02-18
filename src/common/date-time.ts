@@ -33,12 +33,6 @@ export class DateTime {
     return this;
   }
 
-  daysDiff(targetDateTime: string): number {
-    const today = this.moment.startOf('day');
-    const startOfDay = moment(targetDateTime, 'YYYY-MM-DD').startOf('day');
-    return(moment.duration(startOfDay.diff(today)).asDays());
-  }
-
   format(formatString: string): string {
     return this.moment.format(formatString);
   }
@@ -51,9 +45,10 @@ export class DateTime {
     return this.moment.toString();
   }
 
-  daysUntil(targetDate: DateTime | string | Date): number {
+  daysDiff(targetDate: DateTime | string | Date): number {
     const date = new DateTime(targetDate);
-    return date.moment.startOf(Duration.DAY).diff(this.moment.startOf(Duration.DAY), Duration.DAY);
+    const today = this.moment.startOf(Duration.DAY);
+    return date.moment.startOf(Duration.DAY).diff(today, Duration.DAY);
   }
 }
 
