@@ -7,7 +7,6 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
-import { AppVersion } from '@ionic-native/app-version/ngx';
 
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -53,8 +52,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
 
-  // private selectedDate: string;
-
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -66,19 +63,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
     public analytics: AnalyticsProvider,
-    private appVersion: AppVersion,
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
     this.employeeId = this.authenticationProvider.getEmployeeId();
-
-    // console.log('App Name: ', this.appVersion.getAppName());
-    // console.log('Package Name: ', this.appVersion.getPackageName());
-    // console.log('Version Code: ', this.appVersion.getVersionCode());
-    this.appVersion.getVersionNumber()
-      .then((version: string) => {
-        console.log('Version Number: ', version);
-      });
   }
 
   ngOnInit(): void {
