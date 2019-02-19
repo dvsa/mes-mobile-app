@@ -182,6 +182,21 @@ describe('TestSlotComponent', () => {
         expect(component.isPortrait()).toBeFalsy();
       });
     });
+
+    describe('isSpecialNeedsSlot', () => {
+      it('should return true if there is a non-empty special needs string', () => {
+        component.slot.booking.application.specialNeeds = 'something';
+        expect(component.isSpecialNeedsSlot()).toBe(true);
+      });
+      it('should return false if special needs is an empty string', () => {
+        component.slot.booking.application.specialNeeds = '';
+        expect(component.isSpecialNeedsSlot()).toBe(false);
+      });
+      it('should return false if special needs is null', () => {
+        component.slot.booking.application.specialNeeds = null;
+        expect(component.isSpecialNeedsSlot()).toBe(false);
+      });
+    });
   });
 
   describe('DOM', () => {
