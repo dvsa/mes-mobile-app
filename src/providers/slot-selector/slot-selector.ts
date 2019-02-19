@@ -24,11 +24,12 @@ export class SlotSelectorProvider {
 
   private resolveComponentName = (slot:Slot) => {
 
-    if (slot.vehicleSlotType !== 'B57mins' && (!has(slot, 'slot.activityCode') || slot.activityCode === null)) {
+    if ((has(slot, 'vehicleSlotType') && slot.vehicleSlotType !== 'B57mins') &&
+        (!has(slot, 'activityCode') || slot.activityCode === null)) {
       return EmptySlotComponent;
     }
 
-    if (slot.vehicleSlotType === 'B57mins') {
+    if (has(slot, 'vehicleSlotType') && slot.vehicleSlotType === 'B57mins') {
       return TestSlotComponent;
     }
     return ActivitySlotComponent;
