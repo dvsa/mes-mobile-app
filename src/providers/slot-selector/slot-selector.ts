@@ -4,7 +4,7 @@ import { TestSlotComponent } from '../../pages/journal/components/test-slot/test
 import { Slot } from '../../pages/journal/journal.model';
 import { ActivitySlotComponent } from '../../pages/journal/components/activity-slot/activity-slot';
 import { EmptySlotComponent } from '../../pages/journal/components/empty-slot/empty-slot';
-import { has } from 'lodash';
+import { has, isEmpty } from 'lodash';
 @Injectable()
 export class SlotSelectorProvider {
 
@@ -24,7 +24,7 @@ export class SlotSelectorProvider {
 
   private resolveComponentName = (slot:Slot) => {
 
-    if ((has(slot, 'vehicleSlotType') && slot.vehicleSlotType !== 'B57mins') &&
+    if ((has(slot, 'booking') && isEmpty(slot.booking)) &&
         (!has(slot, 'activityCode') || slot.activityCode === null)) {
       return EmptySlotComponent;
     }
