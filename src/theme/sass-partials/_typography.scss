@@ -1,3 +1,30 @@
+$font-size-h1: 40px;
+$font-size-h2: 28px;
+$font-size-h3: 20px;
+$font-size-h4: 24px;
+$font-size-h5: 20px;
+$font-size-h6: 20px;
+$font-size-a: 20px;
+$font-size-p: 20px;
+
+$line-height-h1: 56px;
+$line-height-h2: 40px;
+$line-height-h3: 25px;
+$line-height-h4: 30px;
+$line-height-h5: 25px;
+$line-height-h6: 25px;
+$line-height-a: 25px;
+$line-height-p: 25px;
+
+$zoom-multiples: (
+  88: 0.88,  // XS
+  94: 0.94,  // S
+  100: 1.00, // M
+  106: 1.06, // L
+  119: 1.19, // XL
+  131: 1.31, // XXL
+  144: 1.44  // XXX:
+);
 
 .heavy-font-family {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
@@ -6,7 +33,7 @@
 
 .semibold-font-family {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .regular-font-family {
@@ -14,67 +41,55 @@
   font-weight: 400;
 };
 
-h1 {
-  @extend .heavy-font-family;
-  font-size: 40px;
-}
-
-h2 {
-  @extend .heavy-font-family;
-  font-size: 28px;
-}
-
-h3 {
-  @extend .semibold-font-family;
-  font-size: 20px;
-}
-
-h4 {
-  @extend .heavy-font-family;
-  font-size: 24px;
-}
-
-a {
-  @extend .semibold-font-family;
-  font-size: 20px;
-}
-
-a:hover {
-  @extend .semibold-font-family;
-  font-size: 20px;
-}
-
-label {
-  @extend .semibold-font-family;
-  font-size: 20px;
-}
-
-.mes-data {
-  @extend .regular-font-family;
-  font-size: 20px;
-}
-
-p {
-  @extend .regular-font-family;
-  font-size: 20px;
-}
-
-// Override some ionic defaults. There will be more to follow
-.card-ios h1 {
-  @extend h1;
-}
-.card-ios h2 {
-  @extend h2;
-}
-.card-ios h3 {
-  @extend h3;
-}
-.card-ios h4 {
-  @extend h4;
-}
-.card-ios h5 {
-  @extend h5;
-}
-.card-ios h6 {
-  @extend h6;
+@each $zoom-level, $zoom-multiple in $zoom-multiples {
+  .text-zoom-#{$zoom-level}, 
+  .text-zoom-#{$zoom-level} .card-ios {
+    h1 {
+      @extend .heavy-font-family;
+      font-size: $font-size-h1 * $zoom-multiple;
+      line-height: $line-height-h1 * $zoom-multiple;
+    }
+    h2 {
+      @extend .heavy-font-family;
+      font-size: $font-size-h2 * $zoom-multiple;
+      line-height: $line-height-h2 * $zoom-multiple;
+    }
+    h3 {
+      @extend .semibold-font-family;
+      font-size: $font-size-h3 * $zoom-multiple;
+      line-height: $line-height-h3 * $zoom-multiple;
+    }
+    h4 {
+      @extend .heavy-font-family;
+      font-size: $font-size-h4 * $zoom-multiple;
+      line-height: $line-height-h4 * $zoom-multiple;
+    }
+    h5 {
+      @extend .heavy-font-family;
+      font-size: $font-size-h5 * $zoom-multiple;
+      line-height: $line-height-h5 * $zoom-multiple;
+    }
+    h6 {
+      @extend .heavy-font-family;
+      font-size: $font-size-h6 * $zoom-multiple;
+      line-height: $line-height-h6 * $zoom-multiple;
+    }
+    a,
+    a:hover {
+      @extend .semibold-font-family;
+      font-size: $font-size-a * $zoom-multiple;
+      line-height: $line-height-a * $zoom-multiple;
+    }    
+    label {
+      @extend .semibold-font-family;
+      font-size: $font-size-p * $zoom-multiple;
+      line-height: $line-height-p * $zoom-multiple;
+    }
+    p,
+    .mes-data {
+      @extend .regular-font-family;
+      font-size: $font-size-p * $zoom-multiple;
+      line-height: $line-height-p * $zoom-multiple;
+    }
+  }
 }

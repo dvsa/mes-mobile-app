@@ -2,11 +2,9 @@ journal-navigation {
   margin: 24px 12px;
 
   .navigation-button {
+    display: flex;
+    align-items: center;
     margin-top: 12px;
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: 0.19px;
-    line-height: 25px;
   }
 
   .next-navigation-button {

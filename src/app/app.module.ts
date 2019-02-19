@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MSAdal } from '@ionic-native/ms-adal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AppVersion } from '@ionic-native/app-version';
+import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
 import { App } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -52,6 +53,7 @@ import { AppInfoProvider } from '../providers/app-info/app-info';
     AppConfigProvider,
     AuthenticationProvider,
     InAppBrowser,
+    MobileAccessibility,
     ScreenOrientation,
     UrlProvider,
     Network,
