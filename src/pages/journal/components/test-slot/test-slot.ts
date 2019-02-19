@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { get } from 'lodash';
+import { get, isNil } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
@@ -22,14 +22,15 @@ export class TestSlotComponent implements SlotComponent {
   constructor(public screenOrientation: ScreenOrientation) {}
 
   isIndicatorNeededForSlot(): boolean {
-    const specialNeeds:boolean = get(this.slot, 'booking.application.specialNeeds', '').length > 0;
-    const checkNeeded:boolean = this.slot.booking.application.entitlementCheck || false;
+    const specialNeeds: boolean = this.isSpecialNeedsSlot();
+    const checkNeeded: boolean = this.slot.booking.application.entitlementCheck || false;
 
     return specialNeeds || checkNeeded;
   }
 
   isSpecialNeedsSlot(): boolean {
-    return get(this.slot, 'booking.application.specialNeeds', '').length > 0;
+    const specialNeeds = get(this.slot, 'booking.application.specialNeeds', '');
+    return !isNil(specialNeeds) && specialNeeds.length > 0;
   }
 
   isPortrait() : boolean {
