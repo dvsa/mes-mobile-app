@@ -4,7 +4,5 @@ export type AppInfoModel = {
   // i.e developing in the browser
 
   versionNumber: string,
-  versionCode: string,
-  appName: string,
-  appPackage: string,
+  error?: any,
 };

@@ -22,7 +22,8 @@ import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Device } from '@ionic-native/device';
 import { LoggingProvider } from '../providers/logging/logging';
-import { AppInfoEffects } from './app-info.effects';
+import { AppInfoModule } from '../app-info/app-info.module';
+import { AppInfoProvider } from '../providers/app-info/app-info';
 
 @NgModule({
   declarations: [App],
@@ -32,7 +33,8 @@ import { AppInfoEffects } from './app-info.effects';
     IonicModule.forRoot(App, { mode: 'ios' }),
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([AppInfoEffects]),
+    EffectsModule.forRoot([]),
+    AppInfoModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
@@ -57,7 +59,7 @@ import { AppInfoEffects } from './app-info.effects';
     GoogleAnalytics,
     Device,
     LoggingProvider,
+    AppInfoProvider,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}
