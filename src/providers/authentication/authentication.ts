@@ -12,7 +12,7 @@ export class AuthenticationProvider {
   public authenticationSettings: any;
   private employeeIdKey: string;
   private employeeId: string;
-  private authenticationToken: string;
+  private isUserAuthenticated: boolean;
   public jwtDecode: any;
 
   constructor(
@@ -22,43 +22,62 @@ export class AuthenticationProvider {
     this.authenticationSettings = appConfig.getAppConfig().authentication;
     this.employeeIdKey = appConfig.getAppConfig().authentication.employeeIdKey;
     this.jwtDecode = jwtDecode;
+    this.isUserAuthenticated = false;
   }
 
-  isAuthenticated = (): boolean => {
-    return this.authenticationToken ? true : false;
+  public isAuthenticated = (): boolean => {
+    return this.isUserAuthenticated;
   }
 
-  getAuthenticationToken = (): string => {
-    return this.authenticationToken;
+  public getAuthenticationToken = async (): Promise<string> => {
+    const response = await this.aquireTokenSilently();
+    return response.accessToken;
   }
 
-  getEmployeeId = (): string => {
+  public getEmployeeId = (): string => {
     return this.employeeId;
   }
 
-  login = () => {
-    const authenticationContext: AuthenticationContext = this.createAuthContext();
-
+  public login = () => {
     return new Promise((resolve, reject) => {
-      authenticationContext
-        .acquireTokenSilentAsync(
-          this.authenticationSettings.resourceUrl,
-          this.authenticationSettings.clientId,
-          '',
-        )
+      this.aquireTokenSilently()
         .then((authResponse: AuthenticationResult) => {
           this.successfulLogin(authResponse);
           resolve();
         })
         .catch((error: any) => {
-          this.loginWithCredentials()
+          this.aquireTokenWithCredentials()
             .then(() => resolve())
             .catch((error: AuthenticationError) => reject(error));
         });
     });
   }
 
-  loginWithCredentials = () => {
+  public logout = () => {
+    const authenticationContext: AuthenticationContext = this.createAuthContext();
+    authenticationContext.tokenCache.clear();
+
+    this.isUserAuthenticated = false;
+
+    const browserOptions: InAppBrowserOptions = {
+      hidden: 'yes',
+    };
+
+    const browser =
+      this.inAppBrowser.create(this.authenticationSettings.logoutUrl, '', browserOptions);
+
+    browser.on('loadstop').subscribe(() => {
+      browser.close();
+    });
+  }
+
+  private aquireTokenSilently = async (): Promise<AuthenticationResult> => {
+    const authenticationContext: AuthenticationContext = this.createAuthContext();
+    return authenticationContext
+      .acquireTokenSilentAsync(this.authenticationSettings.resourceUrl, this.authenticationSettings.clientId, '');
+  }
+
+  private aquireTokenWithCredentials = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
 
     return new Promise((resolve, reject) => {
@@ -81,34 +100,16 @@ export class AuthenticationProvider {
 
   }
 
-  logout = () => {
-    const authenticationContext: AuthenticationContext = this.createAuthContext();
-    authenticationContext.tokenCache.clear();
-
-    this.authenticationToken = undefined;
-
-    const browserOptions: InAppBrowserOptions = {
-      hidden: 'yes',
-    };
-
-    const browser =
-      this.inAppBrowser.create(this.authenticationSettings.logoutUrl, '', browserOptions);
-
-    browser.on('loadstop').subscribe(() => {
-      browser.close();
-    });
-  }
-
   private createAuthContext = (): AuthenticationContext => {
     return this.msAdal.createAuthenticationContext(this.authenticationSettings.context);
   }
 
   private successfulLogin = (authResponse: AuthenticationResult) => {
-    const { accessToken } = authResponse;
-    const decodedToken = this.jwtDecode(accessToken);
+    const decodedToken = this.jwtDecode(authResponse.accessToken);
     const employeeId = decodedToken[this.employeeIdKey][0];
-    this.authenticationToken = accessToken;
     this.employeeId = employeeId;
+
+    this.isUserAuthenticated = true;
   }
 
 }

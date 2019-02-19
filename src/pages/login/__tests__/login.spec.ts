@@ -68,7 +68,7 @@ describe('LoginPage', () => {
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();
-      expect(splashScreen.hide).toHaveBeenCalledTimes(1);
+      expect(splashScreen.hide).toHaveBeenCalled();
     }));
 
     it('should fail to login gracefully', fakeAsync(() => {
@@ -81,7 +81,7 @@ describe('LoginPage', () => {
       tick();
       expect(component.authenticationError === AuthenticationError.NO_INTERNET);
       expect(component.hasUserLoggedOut).toBeFalsy();
-      expect(splashScreen.hide).toHaveBeenCalledTimes(1);
+      expect(splashScreen.hide).toHaveBeenCalled();
     }));
 
     it('should return true for isInternetConnectError when criteria is met', () => {

@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MSAdal } from '@ionic-native/ms-adal';
 
@@ -11,7 +11,7 @@ import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         AuthenticationProvider,
@@ -20,14 +20,12 @@ describe('Authentication', () => {
         { provide: InAppBrowser, useClass: InAppBrowserMock },
       ],
     });
-  });
 
-  beforeEach(() => {
     authenticationProvider = TestBed.get(AuthenticationProvider);
     authenticationProvider.jwtDecode = () => ({
       'local-employeeIdKey': ['a'],
     });
-  });
+  }));
 
   describe('Provider', () => {
 
@@ -39,25 +37,19 @@ describe('Authentication', () => {
       expect(authenticationProvider.isAuthenticated()).toEqual(false);
     });
 
-    it('getAuthenticationToken() should return undefined if no login has happened', () => {
-      expect(authenticationProvider.getAuthenticationToken()).toEqual(undefined);
+    it('getAuthenticationToken() should return a token', async () => {
+      const token: string = await authenticationProvider.getAuthenticationToken();
+
+      expect(token).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4');
     });
 
-    it('should silently login successfully', async () => {
+    it('should login successfully', async () => {
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getAuthenticationToken()).toEqual('U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4');
     });
 
-    it('should sign in with credetials', async() => {
-      await authenticationProvider.loginWithCredentials();
-
-      expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getAuthenticationToken()).toEqual('QVlTTkMgVEVTVCBUT0tFTg==');
-    });
-
-    it('should set the correct employeeId', async() => {
+    it('should set the correct employeeId', async () => {
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
@@ -67,14 +59,11 @@ describe('Authentication', () => {
     it('should logout successfully', async () => {
       await authenticationProvider.login();
 
-      expect(authenticationProvider.getAuthenticationToken()).toBeDefined();
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
 
       await authenticationProvider.logout();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(false);
-      expect(authenticationProvider.getAuthenticationToken()).toBeUndefined();
-
     });
 
   });
