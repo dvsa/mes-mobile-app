@@ -3,7 +3,8 @@ import { SlotItem } from './slot-item';
 import { TestSlotComponent } from '../../pages/journal/components/test-slot/test-slot';
 import { Slot } from '../../pages/journal/journal.model';
 import { ActivitySlotComponent } from '../../pages/journal/components/activity-slot/activity-slot';
-
+import { EmptySlotComponent } from '../../pages/journal/components/empty-slot/empty-slot';
+import { has } from 'lodash';
 @Injectable()
 export class SlotSelectorProvider {
 
@@ -16,18 +17,20 @@ export class SlotSelectorProvider {
 
     for (const slotItem of slotItems) {
       const slot: Slot = slotItem.slotData;
-      slotItem.component = this.resolveComponentName(slot.vehicleSlotType, slot.activityCode);
+      slotItem.component = this.resolveComponentName(slot);
     }
     return slotItems;
   }
 
-  private resolveComponentName = (slotType: string, activityCode: string) => {
-    switch (slotType) {
-      case 'B57mins':
-        return TestSlotComponent;
-      default:
-        return ActivitySlotComponent;
-    }
-  }
+  private resolveComponentName = (slot:Slot) => {
 
+    if (slot.vehicleSlotType !== 'B57mins' && (!has(slot, 'slot.activityCode') || slot.activityCode === null)) {
+      return EmptySlotComponent;
+    }
+
+    if (slot.vehicleSlotType === 'B57mins') {
+      return TestSlotComponent;
+    }
+    return ActivitySlotComponent;
+  }
 }
