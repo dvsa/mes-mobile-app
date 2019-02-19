@@ -90,4 +90,6 @@
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-app-version" spec="0.1.9" />
     <engine name="ios" spec="4.5.5" />
+    <engine name="ios" spec="~4.5.5" />
+    <plugin name="cordova-plugin-app-preferences" spec="0.99.3" />
 </widget>
