@@ -1,3 +1,5 @@
+import { createFeatureSelector } from '@ngrx/store';
+
 import { AppInfoModel } from './app-info.model';
 import * as appInfoActions from './app-info.actions';
 
@@ -21,3 +23,5 @@ export function appInfoReducer(state = initialState, action: appInfoActions.Type
       return state;
   }
 }
+
+export const getAppInfoState = createFeatureSelector<AppInfoModel>('appInfo');
