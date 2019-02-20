@@ -3,7 +3,7 @@ import { createFeatureSelector } from '@ngrx/store';
 import { AppInfoModel } from './app-info.model';
 import * as appInfoActions from './app-info.actions';
 
-const initialState: AppInfoModel = {
+export const initialState: AppInfoModel = {
   versionNumber: 'z.z.z',
 };
 
