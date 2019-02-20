@@ -6,6 +6,8 @@ import { AppModule } from '../../../app/app.module';
 import { WaitingRoomPage } from '../waiting-room';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { AppPreferences } from '@ionic-native/app-preferences';
+import { AppPreferencesMock } from '../__mocks__/AppPreferencesMock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -21,6 +23,7 @@ describe('WaitingRoomPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: AppPreferences, useClass: AppPreferencesMock },
       ],
     })
       .compileComponents()

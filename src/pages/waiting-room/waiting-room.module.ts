@@ -5,6 +5,7 @@ import { WaitingRoomPage } from './waiting-room';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from './waiting-room.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { AppPreferences } from '@ionic-native/app-preferences';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   ],
   providers: [
     AnalyticsProvider,
+    AppPreferences,
   ],
 })
 export class WaitingRoomPageModule {}
