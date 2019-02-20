@@ -3,9 +3,8 @@ import { createFeatureSelector } from '@ngrx/store';
 import { AirwatchConfigStateModel } from './airwatch-config.model';
 import * as airwatchConfigActions from './airwatch-config.actions';
 
-const initialState: AirwatchConfigStateModel = {
+export const initialState: AirwatchConfigStateModel = {
    configUrl: undefined,
-  error: undefined,
 };
 
 export function airwatchConfigReducer(state = initialState, action: airwatchConfigActions.Types) {
@@ -20,6 +19,8 @@ export function airwatchConfigReducer(state = initialState, action: airwatchConf
         ...state,
         error: action.error,
       };
+    default:
+      return state;
   }
 }
 
