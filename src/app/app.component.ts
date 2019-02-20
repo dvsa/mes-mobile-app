@@ -15,16 +15,23 @@ export class App {
 
   constructor(
     private store$: Store<AppInfoModel>,
+    private statusBar: StatusBar,
     platform: Platform,
-    statusBar: StatusBar,
   ) {
     platform.ready()
       .then(() => {
-        statusBar.styleLightContent();
-        statusBar.overlaysWebView(false);
-        statusBar.backgroundColorByHexString('#000000');
-
-        this.store$.dispatch(new LoadAppInfo());
+        this.configureStatusBar();
+        this.loadAppInfo();
       });
+  }
+
+  configureStatusBar() {
+    this.statusBar.styleLightContent();
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString('#000000');
+  }
+
+  loadAppInfo() {
+    this.store$.dispatch(new LoadAppInfo());
   }
 }
