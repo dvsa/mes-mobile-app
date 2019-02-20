@@ -2,6 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
+import { StoreModule } from '@ngrx/store';
 
 import { App } from '../app.component';
 import { StatusBarMock, PlatformMock } from 'ionic-mocks';
@@ -16,6 +17,9 @@ describe('App', () => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [App],
+      imports: [
+        StoreModule.forRoot({}),
+      ],
       providers: [
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },

@@ -7,16 +7,12 @@ import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay, isToda
 import { Observable } from 'rxjs/Observable';
 
 import { SelectPreviousDay, SelectNextDay } from '../../journal.actions';
-import { getAppInfoState } from '../../../../app-info/app-info.reducer';
-import { getVersionNumber } from '../../../../app-info/app-info.selector';
 
 interface JournalNavigationPageState {
   selectedDate$: Observable<string>;
   canNavigateToPreviousDay$: Observable<boolean>;
   canNavigateToNextDay$: Observable<boolean>;
   isSelectedDateToday$: Observable<boolean>;
-
-  appVersion$: Observable<string>;
 }
 
 @Component({
@@ -47,11 +43,6 @@ export class JournalNavigationComponent implements OnInit {
         select(getJournalState),
         map(getSelectedDate),
         map(isToday),
-      ),
-
-      appVersion$: this.store$.pipe(
-        select(getAppInfoState),
-        map(getVersionNumber),
       ),
     };
   }
