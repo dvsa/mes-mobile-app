@@ -51,6 +51,11 @@ describe('Slot Selector', () => {
       it('should provide correct component when test type is B57mins', () => {
         const slot = {
           vehicleSlotType: 'B57mins',
+          booking: {
+            application: {
+              applicationId: '1234567',
+            },
+          },
         };
         const journalSlots = [
           new SlotItem(slot, false),

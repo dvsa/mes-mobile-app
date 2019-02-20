@@ -4,10 +4,18 @@ import { TestSlotComponent } from '../../pages/journal/components/test-slot/test
 import { Slot } from '../../pages/journal/journal.model';
 import { ActivitySlotComponent } from '../../pages/journal/components/activity-slot/activity-slot';
 import { EmptySlotComponent } from '../../pages/journal/components/empty-slot/empty-slot';
-import { has, isEmpty } from 'lodash';
+import { has, isEmpty, forOwn, isNil, isObject } from 'lodash';
 @Injectable()
 export class SlotSelectorProvider {
 
+  private ignoreBookingProperty: string[] = [
+    'entitlementCheck',
+    'extendedTest',
+    'progressiveAccess',
+    'specialNeeds',
+    'vehicleSeats',
+    'welshTest',
+  ];
   constructor() { }
 
   public getSlotTypes = (slotItems: SlotItem[]): SlotItem[] => {
@@ -22,9 +30,35 @@ export class SlotSelectorProvider {
     return slotItems;
   }
 
+  private isBookingEmptyOrNull = (slot:Slot):boolean => {
+    let gotValue:boolean = false;
+    if (has(slot, 'booking') && isEmpty(slot.booking)) {
+      return true;
+    }
+    gotValue = this.checkPropertiesHaveValues(slot.booking);
+    return !gotValue;
+  }
+
+  private checkPropertiesHaveValues = (obj:any):boolean => {
+    let gotValue: boolean = false;
+
+    forOwn(obj, (value, key) => {
+      if (this.ignoreBookingProperty.indexOf(key) < 0) {
+        if (isObject(value)) {
+          if (this.checkPropertiesHaveValues(value)) {
+            gotValue = true;
+          }
+        } else if (!isNil(value)) {
+          gotValue = true;
+        }
+      }
+    });
+    return gotValue;
+  }
+
   private resolveComponentName = (slot:Slot) => {
 
-    if ((has(slot, 'booking') && isEmpty(slot.booking)) &&
+    if (this.isBookingEmptyOrNull(slot) &&
         (!has(slot, 'activityCode') || slot.activityCode === null)) {
       return EmptySlotComponent;
     }
