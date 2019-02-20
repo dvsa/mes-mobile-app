@@ -22,7 +22,7 @@ import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Device } from '@ionic-native/device';
 import { LoggingProvider } from '../providers/logging/logging';
-import { AppInfoModule } from '../app-info/app-info.module';
+import { AppInfoModule } from '../modules/app-info/app-info.module';
 import { AppInfoProvider } from '../providers/app-info/app-info';
 
 @NgModule({

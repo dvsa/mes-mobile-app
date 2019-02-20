@@ -5,7 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import * as appInfoActions from './app-info.actions';
-import { AppInfoProvider } from '../providers/app-info/app-info';
+import { AppInfoProvider } from '../../providers/app-info/app-info';
 
 @Injectable()
 export class AppInfoEffects {
