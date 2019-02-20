@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<managedApplicationConfiguration>
+    <version>1</version>
+    <bundleId>uk.gov.dvsa.mobile-examiner</bundleId>
+    <dict>
+        <string keyName="configUrl">
+            <defaultValue>
+                <value>https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev</value>
+            </defaultValue>
+        </string>
+    </dict>
+</managedApplicationConfiguration>
