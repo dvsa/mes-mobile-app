@@ -1,40 +1,27 @@
 export class MSAdalMock {
 
-  createAuthenticationContext(context: string) {
-    return new AuthenticationContextMock;
-  }
+  createAuthenticationContext =
+    jasmine.createSpy('createAuthenticationContext')
+    .and
+    .returnValue(new AuthenticationContextMock());
 }
 
 export class AuthenticationContextMock {
 
   tokenCache = new TokenCacheMock();
 
-  acquireTokenSilentAsync(resourceUrl: string, clientId: string, emptyString: string) {
-    return new Promise((resolve, reject) => {
-      resolve({
-        accessToken: 'U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4',
-      });
-    });
-  }
+  acquireTokenSilentAsync =
+    jasmine.createSpy('acquireTokenSilentAsync')
+    .and
+    .returnValue(Promise.resolve({ accessToken: 'U0lMRU5UIEFZU05DIFRFU1QgVE9LRU4' }));
 
-  acquireTokenAsync(
-    resourceUrl: string,
-    clientId: string,
-    redirectUrl: string,
-    emptyString1: string,
-    emptyString2: string,
-  ) {
-    return new Promise((resolve, reject) => {
-      resolve({
-        accessToken: 'QVlTTkMgVEVTVCBUT0tFTg==',
-      });
-    });
-  }
+  acquireTokenAsync =
+    jasmine.createSpy('acquireTokenAsync')
+    .and
+    .returnValue(Promise.resolve({ accessToken: 'QVlTTkMgVEVTVCBUT0tFTg==' }));
 }
 
 export class TokenCacheMock {
 
-  clear() {
-
-  }
+  clear = jasmine.createSpy('clear');
 }
