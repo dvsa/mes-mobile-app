@@ -1,4 +1,6 @@
 export class AppPreferencesMock {
 
-  fetch = jasmine.createSpy('fetch').and.returnValue(Promise.resolve('value'));
+  fetch = jasmine.createSpy('fetch').and.returnValues(
+    Promise.resolve('configUrl'),
+    );
 }
