@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { VehicleDetailsComponent } from '../vehicle-details';
-import { By } from '@angular/platform-browser';
+// import { By } from '@angular/platform-browser';
 
 describe('VehicleDetailsComponent', () => {
   let fixture: ComponentFixture<VehicleDetailsComponent>;

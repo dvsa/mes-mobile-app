@@ -1,5 +1,7 @@
 journal-navigation {
-  margin: 24px 12px;
+  > div {
+    margin: 12px 0 24px;
+  }
 
   .navigation-button {
     display: flex;
