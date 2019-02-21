@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SlotComponent } from '../slot/slot';
-import { isNil } from 'lodash';
+import { isNil, has } from 'lodash';
 import { Activity, activities } from '../../../../providers/slot-selector/activity.constants';
 
 @Component({
@@ -28,12 +28,17 @@ export class ActivitySlotComponent implements SlotComponent {
   }
 
   public getTitle(): string {
+    let returnTitle: string = 'Unknown';
+
     const activityCode = this.slot.activityCode;
     const matchingActivity: Activity = activities.find(a => a.activityCode === activityCode);
     if (matchingActivity) {
       return matchingActivity.displayName || matchingActivity.description;
     }
-    return 'Unknown';
+    if (has(this.slot, 'activityDescription') && this.slot.activityDescription !== '') {
+      returnTitle = this.slot.activityDescription;
+    }
+    return returnTitle;
   }
 
   public isTravelSlot(): boolean {
