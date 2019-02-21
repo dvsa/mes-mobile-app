@@ -18,6 +18,12 @@ export class AirwatchConfigProvider {
   private getConfig = async(): Promise<AirwatchConfigModel> => {
     return {
       configUrl: await this.appPreferences.fetch('configUrl'),
+      authenticationContext: await this.appPreferences.fetch('authenticationContext'),
+      resourceUrl: await this.appPreferences.fetch('resourceUrl'),
+      clientId: await this.appPreferences.fetch('clientId'),
+      redirectUrl: await this.appPreferences.fetch('redirectUrl'),
+      logoutUrl: await this.appPreferences.fetch('logoutUrl'),
+      employeeIdKey: await this.appPreferences.fetch('employeeIdKey'),
     } as AirwatchConfigModel;
   }
 }

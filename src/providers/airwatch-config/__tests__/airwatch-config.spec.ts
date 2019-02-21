@@ -25,6 +25,12 @@ describe('AirwatchConfigProvider', () => {
     it('should return config', (done) => {
       airwatchConfigProvider.getAirwatchConfig().subscribe((config:  AirwatchConfigModel) => {
         expect(config.configUrl).toBe('configUrl');
+        expect(config.authenticationContext).toBe('authenticationContext');
+        expect(config.resourceUrl).toBe('resourceUrl');
+        expect(config.clientId).toBe('clientId');
+        expect(config.redirectUrl).toBe('redirectUrl');
+        expect(config.logoutUrl).toBe('logoutUrl');
+        expect(config.employeeIdKey).toBe('employeeIdKey');
         done();
       });
     });

@@ -1,6 +1,6 @@
 import { airwatchConfigReducer, initialState } from '../airwatch-config.reducer';
 import * as airwatchConfigActions from '../airwatch-config.actions';
-import { AirwatchConfigModel } from '../../../providers/airwatch-config/airwatch-config.model';
+import { airwatchConfigModelData } from '../__mocks__/airwatch-config.data.mocks';
 
 describe('Airwatch Config Reducer', () => {
 
@@ -15,16 +15,18 @@ describe('Airwatch Config Reducer', () => {
 
   describe('[AppComponent] Load Airwatch Config Success', () => {
     it('should update state', () => {
-      const data = {
-        configUrl: 'https://example.com/api/v1/config/dev',
-      } as AirwatchConfigModel;
 
-      const action = new airwatchConfigActions.LoadAirwatchConfigSuccess(data);
+      const action = new airwatchConfigActions.LoadAirwatchConfigSuccess(airwatchConfigModelData);
       const result = airwatchConfigReducer(initialState, action);
 
-      expect(result.configUrl).toBe('https://example.com/api/v1/config/dev');
+      expect(result.configUrl).toBe(airwatchConfigModelData.configUrl);
+      expect(result.authenticationContext).toBe(airwatchConfigModelData.authenticationContext);
+      expect(result.resourceUrl).toBe(airwatchConfigModelData.resourceUrl);
+      expect(result.clientId).toBe(airwatchConfigModelData.clientId);
+      expect(result.redirectUrl).toBe(airwatchConfigModelData.redirectUrl);
+      expect(result.logoutUrl).toBe(airwatchConfigModelData.logoutUrl);
+      expect(result.employeeIdKey).toBe(airwatchConfigModelData.employeeIdKey);
       expect(result.error).toBeUndefined();
-
     });
   });
 
@@ -36,8 +38,13 @@ describe('Airwatch Config Reducer', () => {
       const result = airwatchConfigReducer(initialState, action);
 
       expect(result.configUrl).toBeUndefined();
+      expect(result.authenticationContext).toBeUndefined();
+      expect(result.resourceUrl).toBeUndefined();
+      expect(result.clientId).toBeUndefined();
+      expect(result.redirectUrl).toBeUndefined();
+      expect(result.logoutUrl).toBeUndefined();
+      expect(result.employeeIdKey).toBeUndefined();
       expect(result.error).toBe('Error Doing Stuff');
-
     });
   });
 });

@@ -4,7 +4,13 @@ import { AirwatchConfigStateModel } from './airwatch-config.model';
 import * as airwatchConfigActions from './airwatch-config.actions';
 
 export const initialState: AirwatchConfigStateModel = {
-   configUrl: undefined,
+  configUrl: undefined,
+  authenticationContext: undefined,
+  resourceUrl: undefined,
+  clientId: undefined,
+  redirectUrl: undefined,
+  logoutUrl: undefined,
+  employeeIdKey: undefined,
 };
 
 export function airwatchConfigReducer(state = initialState, action: airwatchConfigActions.Types) {
@@ -13,12 +19,18 @@ export function airwatchConfigReducer(state = initialState, action: airwatchConf
       return {
         ...state,
         configUrl: action.airwatchConfig.configUrl,
-      };
+        authenticationContext: action.airwatchConfig.authenticationContext,
+        resourceUrl: action.airwatchConfig.resourceUrl,
+        clientId: action.airwatchConfig.clientId,
+        redirectUrl: action.airwatchConfig.redirectUrl,
+        logoutUrl: action.airwatchConfig.logoutUrl,
+        employeeIdKey: action.airwatchConfig.employeeIdKey,
+      } as AirwatchConfigStateModel;
     case airwatchConfigActions.LOAD_AIRWATCH_CONFIG_FAILURE:
       return {
         ...state,
         error: action.error,
-      };
+      } as AirwatchConfigStateModel;
     default:
       return state;
   }

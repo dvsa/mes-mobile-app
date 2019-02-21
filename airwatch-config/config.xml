@@ -8,5 +8,35 @@
                 <value>https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev</value>
             </defaultValue>
         </string>
+        <string keyName="authenticationContext">
+          <defaultValue>
+            <value>https://login.windows.net/common</value>
+          </defaultValue>
+        </string>
+        <string keyName="resourceUrl">
+          <defaultValue>
+            <value>09fdd68c-4f2f-45c2-be55-dd98104d4f74</value>
+          </defaultValue>
+        </string>
+        <string keyName="clientId">
+          <defaultValue>
+            <value>09fdd68c-4f2f-45c2-be55-dd98104d4f74/value>
+          </defaultValue>
+        </string>
+        <string keyName="redirectUrl">
+          <defaultValue>
+            <value>x-msauth-uk-gov-dvsa-mobile-examiner://uk.gov.dvsa.mobile-examiner</value>
+          </defaultValue>
+        </string>
+        <string keyName="logoutUrl">
+          <defaultValue>
+            <value>https://login.windows.net/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/logout</value>
+          </defaultValue>
+        </string>
+        <string keyName="employeeIdKey">
+          <defaultValue>
+            <value>extn.employeeId</value>
+          </defaultValue>
+        </string>
     </dict>
 </managedApplicationConfiguration>
