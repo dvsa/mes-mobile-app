@@ -41,21 +41,27 @@ export class App {
 
   configureAccessibility() {
     if (this.platform.is('ios') && window && window.MobileAccessibility) {
-      window.MobileAccessibility.getTextZoom((textZoom: number) => this.textZoom = textZoom);
+      window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
       window.MobileAccessibility.isDarkerSystemColorsEnabled(
         (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
     }
+    this.platform.resume.subscribe(() => {
+      window.MobileAccessibility.usePreferredTextZoom(true);
+      window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+    });
   }
 
-  public getTextZoom(zoom: number): number {
-    if (!zoom) return 100;
-    if (zoom >= 144) return 144;
-    if (zoom >= 131) return 131;
-    if (zoom >= 119) return 119;
-    if (zoom >= 106) return 106;
-    if (zoom >= 100) return 100;
-    if (zoom >= 94) return 94;
-    return 88;
+  getTextZoomCallback = (zoomLevel: number) => {
+    // Default iOS zoom levels are: 88%, 94%, 100%, 106%, 119%, 131%, 144%
+    this.textZoom = zoomLevel;
+    window.MobileAccessibility.usePreferredTextZoom(false);
+  }
+
+  public getTextZoom(zoom: number): string {
+    if (!zoom) return 'regular';
+    if (zoom >= 131) return 'x-large';
+    if (zoom >= 106) return 'large';
+    return 'regular';
   }
 
   public getTextZoomClass(): string {

@@ -1,34 +1,15 @@
-$font-size-h1: 40px;
-$font-size-h2: 28px;
-$font-size-h3: 20px;
-$font-size-h4: 24px;
-$font-size-h5: 20px;
-$font-size-h6: 20px;
-$font-size-a: 20px;
-$font-size-p: 20px;
-
-$line-height-h1: 56px;
-$line-height-h2: 40px;
-$line-height-h3: 25px;
-$line-height-h4: 30px;
-$line-height-h5: 25px;
-$line-height-h6: 25px;
-$line-height-a: 25px;
-$line-height-p: 25px;
-
-$zoom-multiples: (
-  88: 0.88,  // XS
-  94: 0.94,  // S
-  100: 1.00, // M
-  106: 1.06, // L
-  119: 1.19, // XL
-  131: 1.31, // XXL
-  144: 1.44  // XXX:
-);
+// reset the default ionic styling
+.card-ios {
+  h1, h2, h3, h4, h5, h6, p {
+    font-size: initial;
+    font-weight: initial;
+    margin: initial;
+  }
+}
 
 .heavy-font-family {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .semibold-font-family {
@@ -41,55 +22,261 @@ $zoom-multiples: (
   font-weight: 400;
 };
 
-@each $zoom-level, $zoom-multiple in $zoom-multiples {
-  .text-zoom-#{$zoom-level}, 
-  .text-zoom-#{$zoom-level} .card-ios {
-    h1 {
-      @extend .heavy-font-family;
-      font-size: $font-size-h1 * $zoom-multiple;
-      line-height: $line-height-h1 * $zoom-multiple;
-    }
-    h2 {
-      @extend .heavy-font-family;
-      font-size: $font-size-h2 * $zoom-multiple;
-      line-height: $line-height-h2 * $zoom-multiple;
-    }
-    h3 {
-      @extend .semibold-font-family;
-      font-size: $font-size-h3 * $zoom-multiple;
-      line-height: $line-height-h3 * $zoom-multiple;
-    }
-    h4 {
-      @extend .heavy-font-family;
-      font-size: $font-size-h4 * $zoom-multiple;
-      line-height: $line-height-h4 * $zoom-multiple;
-    }
-    h5 {
-      @extend .heavy-font-family;
-      font-size: $font-size-h5 * $zoom-multiple;
-      line-height: $line-height-h5 * $zoom-multiple;
-    }
-    h6 {
-      @extend .heavy-font-family;
-      font-size: $font-size-h6 * $zoom-multiple;
-      line-height: $line-height-h6 * $zoom-multiple;
-    }
-    a,
-    a:hover {
-      @extend .semibold-font-family;
-      font-size: $font-size-a * $zoom-multiple;
-      line-height: $line-height-a * $zoom-multiple;
-    }    
-    label {
-      @extend .semibold-font-family;
-      font-size: $font-size-p * $zoom-multiple;
-      line-height: $line-height-p * $zoom-multiple;
-    }
-    p,
-    .mes-data {
-      @extend .regular-font-family;
-      font-size: $font-size-p * $zoom-multiple;
-      line-height: $line-height-p * $zoom-multiple;
-    }
+html .text-zoom-regular {
+  h1 {
+    @extend .heavy-font-family;
+    font-size: 40px;
+    line-height: 56px;
+  }
+  h2 {
+    @extend .heavy-font-family;
+    font-size: 28px;
+    line-height: 40px;
+  }
+  h3 {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  h4 {
+    @extend .heavy-font-family;
+    font-size: 24px;
+    line-height: 30px;
+  }
+  h5 {
+    @extend .heavy-font-family;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  h6 {
+    @extend .regular-font-family;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  a,
+  a:hover {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }    
+  label {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  p,
+  .mes-data {
+    @extend .regular-font-family;
+    font-size: 20px;
+    line-height: 25px;
   }
 }
+
+.text-zoom-large {
+  h1 {
+    @extend .heavy-font-family;
+    font-size: 40px;
+    line-height: 56px;
+  }
+  h2 {
+    @extend .heavy-font-family;
+    font-size: 28px;
+    line-height: 40px;
+  }
+  h3 {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  h4 {
+    @extend .heavy-font-family;
+    font-size: 24px;
+    line-height: 30px;
+  }
+  h5 {
+    @extend .heavy-font-family;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  h6 {
+    @extend .regular-font-family;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  a,
+  a:hover {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }    
+  label {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  p,
+  .mes-data {
+    @extend .regular-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }
+}
+
+.text-zoom-x-large {
+  color: red;
+  $toolbar-ios-title-font-weight: 1000;
+  h1 {
+    @extend .heavy-font-family;
+    font-size: 58px;
+    line-height: 80px;
+  }
+  h2 {
+    @extend .heavy-font-family;
+    font-size: 38px;
+    line-height: 48px;
+  }
+  h3 {
+    @extend .semibold-font-family;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 36px;
+  }
+  h4 {
+    @extend .heavy-font-family;
+    font-size: 24px;
+    line-height: 30px;
+  }
+  h5 {
+    @extend .heavy-font-family;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 36px;
+  }
+  h6 {
+    @extend .regular-font-family;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  a,
+  a:hover {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }    
+  label {
+    @extend .semibold-font-family;
+    font-size: 20px;
+    line-height: 25px;
+  }
+  p,
+  .mes-data {
+    @extend .regular-font-family;
+    font-size: 28px;
+    line-height: 36px;
+  }
+  div {
+    @extend .regular-font-family;
+    font-size: 24px;
+    line-height: 36px;
+  }
+}
+
+// h1
+// .card-ios h1
+// .text-zoom-regular h1
+// .text-zoom-regular .card-ios h1
+// .text-zoom-large h1
+// .text-zoom-large .card-ios h1
+// .text-zoom-x-large h1
+// .text-zoom-x-large .card-ios h1
+
+// h1 - 800 - day
+// h2 - 800 - time, activity code
+// h3 - 600 - date, location, candidate name, start button
+// h4 - 800 - test cat
+// h5 - 700 - nav
+
+// $zoom-multiples: (
+//   88: 0.88,  // XS
+//   94: 0.94,  // S
+//   100: 1.00, // M
+//   106: 1.06, // L
+//   119: 1.19, // XL
+//   131: 1.31, // XXL
+//   144: 1.44  // XXX:
+// );
+
+// @each $zoom-level, $zoom-multiple in $zoom-multiples {
+//   .text-zoom-#{$zoom-level}, 
+//   .text-zoom-#{$zoom-level} .card-ios {
+//     h1 { 
+//       @extend .heavy-font-family;
+//       // day - 800
+//       font-size: $font-size-h1 * $zoom-multiple;
+//       line-height: $line-height-h1 * $zoom-multiple;
+//     }
+//     h2 {
+//       @extend .heavy-font-family;
+//       // time, activity code - 800
+//       font-size: $font-size-h2 * $zoom-multiple;
+//       line-height: $line-height-h2 * $zoom-multiple;
+//     }
+//     h3 {
+//       @extend .semibold-font-family;
+//       // date, location, candidate name, start button  - 600
+//       font-size: $font-size-h3 * $zoom-multiple;
+//       line-height: $line-height-h3 * $zoom-multiple;
+//     }
+//     h4 {
+//       @extend .heavy-font-family;
+//       // test cat - 800
+//       font-size: $font-size-h4 * $zoom-multiple;
+//       line-height: $line-height-h4 * $zoom-multiple;
+//     }
+//     h5 {
+//       @extend .heavy-font-family;
+//       // nav - 700
+//       font-weight: 700;
+//       font-size: $font-size-h5 * $zoom-multiple;
+//       line-height: $line-height-h5 * $zoom-multiple;
+//     }
+//     h6 {
+//       @extend .heavy-font-family;
+//       font-size: $font-size-h6 * $zoom-multiple;
+//       line-height: $line-height-h6 * $zoom-multiple;
+//     }
+//     a,
+//     a:hover {
+//       @extend .semibold-font-family;
+//       font-size: $font-size-a * $zoom-multiple;
+//       line-height: $line-height-a * $zoom-multiple;
+//     }    
+//     label {
+//       @extend .semibold-font-family;
+//       font-size: $font-size-p * $zoom-multiple;
+//       line-height: $line-height-p * $zoom-multiple;
+//     }
+//     p,
+//     .mes-data {
+//       @extend .regular-font-family;
+//       font-size: $font-size-p * $zoom-multiple;
+//       line-height: $line-height-p * $zoom-multiple;
+//     }
+//   }
+// }
+
+// $font-size-h1: 40px;
+// $font-size-h2: 28px;
+// $font-size-h3: 20px;
+// $font-size-h4: 24px;
+// $font-size-h5: 20px;
+// $font-size-h6: 14px;
+
+// $line-height-h1: 56px;
+// $line-height-h2: 40px;
+// $line-height-h3: 25px;
+// $line-height-h4: 30px;
+// $line-height-h5: 25px;
+// $line-height-h6: 20px;

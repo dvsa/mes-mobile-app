@@ -26,16 +26,34 @@ test-slot {
   ion-col {
     &.time-exclamation-col {
       max-width: 152px;
+      .text-zoom-large & {
+        max-width: 172px;
+      }
+      .text-zoom-x-large & {
+        max-width: 192px;
+      }
     }
     &.exclamation-col {
       max-width: 48px;
     }
     &.test-outcome-col {
       max-width: 152px;
+      .text-zoom-large & {
+        max-width: 172px;
+      }
+      .text-zoom-x-large & {
+        max-width: 192px;
+      }
     }
     &.vehicle-details-col {
       padding-left: 152px;
       margin-top: -6px;
+      .text-zoom-large & {
+        padding-left: 172px;
+      }
+      .text-zoom-x-large & {
+        padding-left: 192px;
+      }
     }
   }
   .slot-changed-indicator {

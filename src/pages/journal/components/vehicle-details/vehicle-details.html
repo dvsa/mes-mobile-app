@@ -1,16 +1,19 @@
-<ion-grid class="vehicle-details-grid">
+<!-- <ion-grid class="vehicle-details-grid">
   <ion-row>
     <ion-col col-auto *ngIf="showDimensions">
-      <span><p>Length: </p></span><span class="bold"><p>{{ length }}</p></span>
+      <p><span>Length: </span><span class="bold">{{ length }}</span></p>
     </ion-col>
     <ion-col col-auto *ngIf="showDimensions">
-      <span><p>Width: </p></span><span class="bold"><p>{{ width }}</p></span>
+      <p><span>Width: </span><span class="bold">{{ width }}</span></p>
     </ion-col>
     <ion-col col-auto *ngIf="showDimensions">
-      <span><p>Height: </p></span><span class="bold"><p>{{ height }}</p></span>
+      <p><span>Height: </span><span class="bold">{{ height }}</span></p>
     </ion-col>
     <ion-col col-auto *ngIf="showNumberOfSeats">
-      <span><p>Seats: </p></span><span class="bold"><p>{{ seats }}</p></span>
+      <p><span>Seats: </span><span class="bold">{{ seats }}</span></p>
     </ion-col>
   </ion-row>
-</ion-grid>
+</ion-grid> -->
+<div *ngIf="showDimensions">
+  <p><span>Length: </span><span class="bold">{{ length }}</span> …</p>
+</div>

@@ -1,7 +1,7 @@
 activity-slot {
   ion-card.activity-slot {
     .slot-row {
-      height: 60px;
+      padding: 0.5em 0;
     }
     background: map-get($colors, nonTestActivitySlotBackground);
     border: 1px solid #28a096;
@@ -13,22 +13,18 @@ activity-slot {
     }
   }
   .time-column {
-    max-width: 152px;
+    max-width: 192px;
     padding-left: 55px;
   }
   .title-column {
     display: flex;
     justify-content: center;
-    .title {
-      font-weight: bold;
-    }
   }
   .activity-code-column {
-    max-width: 152px;
-    display: flex;
-    justify-content: center;
+    max-width: 192px;
+    padding-right: 55px;
     .activity-code {
-      font-weight: bold;
+      float: right;
     }
   }
 }
