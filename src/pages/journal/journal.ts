@@ -23,6 +23,8 @@ import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
+import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -30,6 +32,7 @@ interface JournalPageState {
   error$: Observable<MesError>;
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
+  appVersion$: Observable<string>;
 }
 
 @IonicPage()
@@ -92,6 +95,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getJournalState),
         map(getLastRefreshed),
         map(getLastRefreshedTime),
+      ),
+      appVersion$: this.store$.pipe(
+        select(getAppInfoState),
+        map(getVersionNumber),
       ),
     };
 

@@ -1,6 +1,10 @@
 page-journal {
+  .version-number {
+    color: map-get($colors, mes-secondary-header);
+    margin-left: 5px;
+  }
   .last-sync {
-    color: #dbd8d8;
+    color: map-get($colors, mes-secondary-header);
   }
   .refresh-button-icon {
     padding: 0 10px;
