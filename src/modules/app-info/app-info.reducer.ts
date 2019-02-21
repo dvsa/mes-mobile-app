@@ -4,7 +4,7 @@ import { AppInfoModel } from './app-info.model';
 import * as appInfoActions from './app-info.actions';
 
 export const initialState: AppInfoModel = {
-  versionNumber: 'z.z.z',
+  versionNumber: 'VERSION_NOT_LOADED',
 };
 
 export function appInfoReducer(state = initialState, action: appInfoActions.Types) {

@@ -21,14 +21,8 @@ export class AppInfoEffects {
       return this.appInfoProvider
         .getVersionNumber()
         .pipe(
-          map((versionNumber: string) => {
-            console.log(versionNumber);
-            return new appInfoActions.LoadAppInfoSuccess(versionNumber);
-          }),
-          catchError((err) => {
-            console.log('Could not load app info', err);
-            return of(new appInfoActions.LoadAppInfoFailure(err));
-          }),
+          map((versionNumber: string) => new appInfoActions.LoadAppInfoSuccess(versionNumber)),
+          catchError(err => of(new appInfoActions.LoadAppInfoFailure(err))),
         );
     }),
   );
