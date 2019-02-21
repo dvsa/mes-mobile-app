@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MSAdal } from '@ionic-native/ms-adal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppVersion } from '@ionic-native/app-version';
 
 import { App } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,6 +22,8 @@ import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Device } from '@ionic-native/device';
 import { LoggingProvider } from '../providers/logging/logging';
+import { AppInfoModule } from '../modules/app-info/app-info.module';
+import { AppInfoProvider } from '../providers/app-info/app-info';
 
 @NgModule({
   declarations: [App],
@@ -31,6 +34,7 @@ import { LoggingProvider } from '../providers/logging/logging';
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
+    AppInfoModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
@@ -40,6 +44,7 @@ import { LoggingProvider } from '../providers/logging/logging';
       useClass: AuthInterceptor,
       multi: true,
     },
+    AppVersion,
     StatusBar,
     SplashScreen,
     MSAdal,
@@ -54,8 +59,7 @@ import { LoggingProvider } from '../providers/logging/logging';
     GoogleAnalytics,
     Device,
     LoggingProvider,
-
+    AppInfoProvider,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}
