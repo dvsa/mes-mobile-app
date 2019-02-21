@@ -31,7 +31,7 @@ describe('App Config Provider', () => {
     it('should load remote config', fakeAsync(() => {
       appConfig.environmentFile = remoteEnvironmentMock;
 
-      appConfig.loadRemoteConfig();
+      appConfig.loadRemoteConfig(remoteEnvironmentMock.configUrl);
       tick();
 
       const request = httpMock.expectOne(remoteEnvironmentMock.configUrl);

@@ -9,7 +9,6 @@ import { App } from '../app.component';
 import { LoadAppInfo } from '../../modules/app-info/app-info.actions';
 import { AppInfoModel } from '../../modules/app-info/app-info.model';
 import { Spied } from '../../../test/helpers/spy-generic';
-import { LoadAirwatchConfig } from '../../modules/airwatch-config/airwatch-config.actions';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -62,11 +61,6 @@ describe('App', () => {
     it('should start loading the app info', () => {
       component.loadAppInfo();
       expect(store$.dispatch).toHaveBeenCalledWith(new LoadAppInfo());
-    });
-
-    it('should try and get config from airwatch', () => {
-      component.loadAirwatchConfig();
-      expect(store$.dispatch).toHaveBeenCalledWith(new LoadAirwatchConfig());
     });
   });
 

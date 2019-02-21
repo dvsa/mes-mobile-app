@@ -63,7 +63,7 @@ describe('LoginPage', () => {
         jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
       component.authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
-      component.login();
+      component.login(undefined);
       tick();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
@@ -77,7 +77,7 @@ describe('LoginPage', () => {
       authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login')
           .and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
-      component.login();
+      component.login(undefined);
       tick();
       expect(component.authenticationError === AuthenticationError.NO_INTERNET);
       expect(component.hasUserLoggedOut).toBeFalsy();

@@ -23,14 +23,14 @@ export class AppConfigProvider {
 
   public getAppConfig = (): AppConfig => this.appConfig;
 
-  public loadRemoteConfig = (): Promise<any> =>
-    this.getRemoteData()
+  public loadRemoteConfig = (configUrl: string): Promise<any> =>
+    this.getRemoteData(configUrl)
       .then(data => this.mapRemoteConfig(data))
       .catch(error => console.log('Error Getting Remote Config', error))
 
-  private getRemoteData = (): Promise<any> =>
+  private getRemoteData = (configUrl: string): Promise<any> =>
     new Promise((resolve, reject) => {
-      this.httpClient.get<any>(this.environmentFile.configUrl)
+      this.httpClient.get<any>(configUrl)
         .subscribe(
           data => resolve(data),
           error => reject(error),
