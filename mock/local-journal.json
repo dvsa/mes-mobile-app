@@ -1,2078 +1,1017 @@
 {
-  "staffNumber": 12345678,
-  "examinerName": {
-    "title": "Mr",
-    "firstName": "Joe",
-    "secondName": "Frederic",
-    "thirdName": "Englbert",
-    "lastName": "Bloggs"
+  "examiner": {
+    "staffNumber": "17255"
   },
-  "permTestCentre": {
-    "centreId": 54321,
-    "centreName": "Example Test Centre",
-    "costCode": "EXTC1"
-  },
-  "testSlots": [
-    {
-      "slotDetail": {
-        "slotId": 8165,
-        "start": "2019-02-21T08:00:00+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 7447,
-          "age": 56,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Sims",
-            "lastName": "Montgomery"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "19 Aviation Road",
-            "addressLine2": "Canal Avenue",
-            "addressLine3": "Calverton",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(885) 496-3714"
-        },
-        "application": {
-          "applicationId": 8124245,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "entitlementCheck": false,
-          "testCategory": "C+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9620,
-        "start": "2019-02-21T08:58:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 9865,
-          "age": 112,
-          "candidateName": {
-            "title": "Mr",
-            "firstName": "Rachelle",
-            "lastName": "Bartlett"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "45 Kermit Place",
-            "addressLine2": "Stryker Court",
-            "addressLine3": "Wilsonia",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(861) 490-2568"
-        },
-        "application": {
-          "applicationId": 1106518,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 6887,
-        "start": "2019-02-21T09:56:00+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 2321,
-          "age": 40,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Jeannine",
-            "lastName": "Langley"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "37 Onderdonk Avenue",
-            "addressLine2": "Vernon Avenue",
-            "addressLine3": "Brookfield",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(940) 422-2260"
-        },
-        "application": {
-          "applicationId": 871003,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 2396,
-        "start": "2019-02-21T11:25:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 8191,
-          "age": 58,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Lambert",
-            "lastName": "Petersen"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "33 Jamison Lane",
-            "addressLine2": "Cropsey Avenue",
-            "addressLine3": "Cleary",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(867) 435-3613"
-        },
-        "application": {
-          "applicationId": 7507737,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1813,
-        "start": "2019-02-21T12:10:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 3832,
-          "age": 30,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Baxter",
-            "lastName": "Warren"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "45 Stuyvesant Avenue",
-            "addressLine2": "Farragut Place",
-            "addressLine3": "Nogal",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(866) 449-3667"
-        },
-        "application": {
-          "applicationId": 1003354,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 7027,
-        "start": "2019-02-21T13:00:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 2428,
-          "age": 96,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Angelia",
-            "lastName": "Jacobson"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "31 McKibben Street",
-            "addressLine2": "Llama Court",
-            "addressLine3": "Emerald",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(912) 547-3615"
-        },
-        "application": {
-          "applicationId": 5461100,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9134,
-        "start": "2019-02-21T14:35:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 862,
-          "age": 81,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Allyson",
-            "lastName": "Simmons"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "49 Fay Court",
-            "addressLine2": "Duffield Street",
-            "addressLine3": "Gorham",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(929) 494-2456"
-        },
-        "application": {
-          "applicationId": 231463,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "A",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9593,
-        "start": "2019-02-21T15:50:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 862,
-          "age": 81,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Allyson",
-            "lastName": "Simmons"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "49 Fay Court",
-            "addressLine2": "Duffield Street",
-            "addressLine3": "Gorham",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(929) 494-2456"
-        },
-        "application": {
-          "applicationId": 231463,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "A",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 7386,
-        "start": "2019-02-22T07:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 732,
-          "age": 77,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Janie",
-            "lastName": "Bright"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "59 Railroad Avenue",
-            "addressLine2": "Holmes Lane",
-            "addressLine3": "Westboro",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(985) 447-3393"
-        },
-        "application": {
-          "applicationId": 9051934,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "C",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 8143,
-        "start": "2019-02-22T08:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 5988,
-          "age": 120,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Mcfarland",
-            "lastName": "Villarreal"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "29 Voorhies Avenue",
-            "addressLine2": "Tech Place",
-            "addressLine3": "Bendon",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(905) 413-3502"
-        },
-        "application": {
-          "applicationId": 3489717,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "D",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 2853,
-        "start": "2019-02-22T09:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4925,
-          "age": 77,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Vang",
-            "lastName": "Johns"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "45 Seagate Terrace",
-            "addressLine2": "Ashford Street",
-            "addressLine3": "Clarence",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(849) 464-3093"
-        },
-        "application": {
-          "applicationId": 9021472,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "C+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9123,
-        "start": "2019-02-22T10:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 5996,
-          "age": 39,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Virginia",
-            "lastName": "Holman"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "60 Sunnyside Court",
-            "addressLine2": "Morton Street",
-            "addressLine3": "Morriston",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(883) 566-2098"
-        },
-        "application": {
-          "applicationId": 7572398,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "D",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 7919,
-        "start": "2019-02-22T13:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4526,
-          "age": 29,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Roxanne",
-            "lastName": "Strong"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "44 Pleasant Place",
-            "addressLine2": "Porter Avenue",
-            "addressLine3": "Belvoir",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(808) 521-3410"
-        },
-        "application": {
-          "applicationId": 7097995,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1868,
-        "start": "2019-02-22T14:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 5345,
-          "age": 99,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Karin",
-            "lastName": "Mckay"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "32 Crescent Street",
-            "addressLine2": "Harrison Place",
-            "addressLine3": "Roberts",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(975) 531-3236"
-        },
-        "application": {
-          "applicationId": 3039507,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "D",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 2379,
-        "start": "2019-02-22T15:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 7549,
-          "age": 127,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Augusta",
-            "lastName": "Allison"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "20 Taaffe Place",
-            "addressLine2": "Keen Court",
-            "addressLine3": "Bellamy",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(845) 466-2961"
-        },
-        "application": {
-          "applicationId": 3051561,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": true,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9483,
-        "start": "2019-02-22T16:11:01+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 6794,
-          "age": 118,
-          "candidateName": {
-            "title": "Mr",
-            "firstName": "Rosie",
-            "lastName": "Neal"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "40 Bristol Street",
-            "addressLine2": "Haring Street",
-            "addressLine3": "Waiohinu",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(892) 559-3791"
-        },
-        "application": {
-          "applicationId": 9788855,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": false,
-          "testCategory": "C+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 6623,
-        "start": "2019-02-26T08:23:37+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 2133,
-          "age": 35,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Curry",
-            "lastName": "Wiley"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "23 Gilmore Court",
-            "addressLine2": "Leonora Court",
-            "addressLine3": "Loretto",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(948) 597-2327"
-        },
-        "application": {
-          "applicationId": 8202909,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "C+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 8342,
-        "start": "2019-02-26T09:13:37+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 9151,
-          "age": 127,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Santos",
-            "lastName": "Morton"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "58 Hicks Street",
-            "addressLine2": "Regent Place",
-            "addressLine3": "Babb",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(812) 564-2889"
-        },
-        "application": {
-          "applicationId": 7702490,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "D",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9137,
-        "start": "2019-02-26T10:00:37+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 6345,
-          "age": 123,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Rodriquez",
-            "lastName": "Swanson"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "29 Rogers Avenue",
-            "addressLine2": "Autumn Avenue",
-            "addressLine3": "Shepardsville",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(849) 461-2925"
-        },
-        "application": {
-          "applicationId": 1064451,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 3522,
-        "start": "2019-02-26T11:23:37+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 2722,
-          "age": 64,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Stacy",
-            "lastName": "Herring"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "30 Banner Avenue",
-            "addressLine2": "Seton Place",
-            "addressLine3": "Villarreal",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(958) 428-3320"
-        },
-        "application": {
-          "applicationId": 4571423,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 8556,
-        "start": "2019-02-26T12:53:37+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 5474,
-          "age": 117,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Hope",
-            "lastName": "Hammond"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "25 Bragg Court",
-            "addressLine2": "Lincoln Place",
-            "addressLine3": "Utting",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(800) 540-2535"
-        },
-        "application": {
-          "applicationId": 9025516,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 2946,
-        "start": "2019-02-26T14:00:37+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 613,
-          "age": 102,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Hilary",
-            "lastName": "Bird"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "23 Albee Square",
-            "addressLine2": "Ocean Avenue",
-            "addressLine3": "Enoree",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(879) 575-2631"
-        },
-        "application": {
-          "applicationId": 1282500,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": false,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 3696,
-        "start": "2019-03-04T08:00:03+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 3301,
-          "age": 96,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Hutchinson",
-            "lastName": "Levy"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "53 Sutton Street",
-            "addressLine2": "Kings Place",
-            "addressLine3": "Faywood",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(932) 470-3969"
-        },
-        "application": {
-          "applicationId": 483373,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": true,
-          "testCategory": "C",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 3385,
-        "start": "2019-03-04T08:59:43+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4988,
-          "age": 45,
-          "candidateName": {
-            "title": "Mr",
-            "firstName": "Ruthie",
-            "lastName": "Terrell"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "60 Coleman Street",
-            "addressLine2": "Loring Avenue",
-            "addressLine3": "Boykin",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(911) 472-2348"
-        },
-        "application": {
-          "applicationId": 3182273,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "C+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1338,
-        "start": "2019-03-04T09:55:43+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 3647,
-          "age": 36,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Ashley",
-            "lastName": "Landry"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "58 Gaylord Drive",
-            "addressLine2": "Bath Avenue",
-            "addressLine3": "Nicut",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(937) 536-2086"
-        },
-        "application": {
-          "applicationId": 526441,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 5956,
-        "start": "2019-03-04T11:00:43+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 7177,
-          "age": 70,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Evangeline",
-            "lastName": "Small"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "54 Hull Street",
-            "addressLine2": "Ovington Avenue",
-            "addressLine3": "Blodgett",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(952) 467-3243"
-        },
-        "application": {
-          "applicationId": 6301583,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 6008,
-        "start": "2019-03-04T13:00:43+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 9558,
-          "age": 36,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Cora",
-            "lastName": "Rocha"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "57 Downing Street",
-            "addressLine2": "Bristol Street",
-            "addressLine3": "Ezel",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(888) 546-2083"
-        },
-        "application": {
-          "applicationId": 1499823,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": true,
-          "testCategory": "B",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 6659,
-        "start": "2019-03-04T13:59:43+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 1012,
-          "age": 103,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Gayle",
-            "lastName": "Lee"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "29 Portal Street",
-            "addressLine2": "Denton Place",
-            "addressLine3": "Blanco",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(845) 441-2183"
-        },
-        "application": {
-          "applicationId": 7545997,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "C",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 9260,
-        "start": "2019-03-12T11:25:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 2798,
-          "age": 57,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Roy",
-            "lastName": "Rivas"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "22 Debevoise Avenue",
-            "addressLine2": "Paerdegat Avenue",
-            "addressLine3": "Hoehne",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(969) 514-3400"
-        },
-        "application": {
-          "applicationId": 8095125,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "B",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1681,
-        "start": "2019-03-12T13:00:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 5541,
-          "age": 70,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Dunlap",
-            "lastName": "Herrera"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "40 Love Lane",
-            "addressLine2": "McKibben Street",
-            "addressLine3": "Bynum",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(905) 562-2726"
-        },
-        "application": {
-          "applicationId": 9319067,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 4558,
-        "start": "2019-03-12T13:55:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4313,
-          "age": 116,
-          "candidateName": {
-            "title": "Mr",
-            "firstName": "Dotson",
-            "lastName": "Stanley"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "48 Schenck Place",
-            "addressLine2": "Forrest Street",
-            "addressLine3": "Needmore",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(947) 482-3784"
-        },
-        "application": {
-          "applicationId": 9621498,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "B",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 7201,
-        "start": "2019-03-12T14:39:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4849,
-          "age": 35,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Floyd",
-            "lastName": "Kelly"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "59 Ruby Street",
-            "addressLine2": "Madison Place",
-            "addressLine3": "Tedrow",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(858) 531-3121"
-        },
-        "application": {
-          "applicationId": 7731966,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 5841,
-        "start": "2019-03-12T15:15:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 5517,
-          "age": 79,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Sylvia",
-            "lastName": "Goff"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "24 Radde Place",
-            "addressLine2": "Meserole Street",
-            "addressLine3": "Saticoy",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(944) 415-2348"
-        },
-        "application": {
-          "applicationId": 3222166,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "C+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1048,
-        "start": "2019-03-12T16:43:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 7383,
-          "age": 31,
-          "candidateName": {
-            "title": "Mr",
-            "firstName": "Collins",
-            "lastName": "Owens"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "48 Eaton Court",
-            "addressLine2": "Allen Avenue",
-            "addressLine3": "Mammoth",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(842) 486-2533"
-        },
-        "application": {
-          "applicationId": 6999896,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": true,
-          "testCategory": "A",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 6655,
-        "start": "2019-03-12T17:05:10+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4669,
-          "age": 43,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Molly",
-            "lastName": "Murray"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "39 Hutchinson Court",
-            "addressLine2": "Irving Street",
-            "addressLine3": "Hickory",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(984) 457-2200"
-        },
-        "application": {
-          "applicationId": 8772166,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "C",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1570,
-        "start": "2019-03-22T09:00:44+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 1857,
-          "age": 121,
-          "candidateName": {
-            "title": "Sir",
-            "firstName": "Roach",
-            "lastName": "Riley"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "33 Lake Street",
-            "addressLine2": "Bryant Street",
-            "addressLine3": "National",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(980) 499-3208"
-        },
-        "application": {
-          "applicationId": 863211,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "A",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 5527,
-        "start": "2019-03-22T09:33:44+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 9193,
-          "age": 44,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Cash",
-            "lastName": "Fitzpatrick"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "60 Irvington Place",
-            "addressLine2": "Vermont Court",
-            "addressLine3": "Gambrills",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(877) 413-2703"
-        },
-        "application": {
-          "applicationId": 7114042,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": true,
-          "testCategory": "A",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 2379,
-        "start": "2019-03-22T09:55:44+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 6394,
-          "age": 117,
-          "candidateName": {
-            "title": "Mr",
-            "firstName": "Pugh",
-            "lastName": "Mcgee"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "58 Kingsway Place",
-            "addressLine2": "Beard Street",
-            "addressLine3": "Brookfield",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(930) 586-2502"
-        },
-        "application": {
-          "applicationId": 4062785,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 4039,
-        "start": "2019-03-22T11:25:44+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4335,
-          "age": 59,
-          "candidateName": {
-            "title": "Ms",
-            "firstName": "Gabrielle",
-            "lastName": "Rhodes"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "59 Branton Street",
-            "addressLine2": "Bridgewater Street",
-            "addressLine3": "Glenshaw",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(981) 487-2379"
-        },
-        "application": {
-          "applicationId": 9303658,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": false,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "D1+E",
-          "vehicleGearbox": "Automatic"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 8182,
-        "start": "2019-03-22T13:25:44+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 4225,
-          "age": 98,
-          "candidateName": {
-            "title": "Capitan",
-            "firstName": "Bowen",
-            "lastName": "Summers"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "37 Coleman Street",
-            "addressLine2": "Juliana Place",
-            "addressLine3": "Shawmut",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(832) 413-2829"
-        },
-        "application": {
-          "applicationId": 1500966,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": false,
-          "meetingPlace": "",
-          "progressiveAccess": true,
-          "specialNeeds": "Some Special Needs",
-          "entitlementCheck": false,
-          "testCategory": "B+E",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 6825,
-        "start": "2019-03-22T15:25:44+00:00",
-        "duration": 57
-      },
-      "vehicleSlotType": "B57mins",
-      "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC1"
-      },
-      "booking": {
-        "candidate": {
-          "candidateId": 8673,
-          "age": 67,
-          "candidateName": {
-            "title": "Doctor",
-            "firstName": "Karen",
-            "lastName": "Combs"
-          },
-          "driverNumber": "SMYTH375220A99HC",
-          "gender": "Male",
-          "candidateAddress": {
-            "addressLine1": "28 Hubbard Street",
-            "addressLine2": "Ovington Court",
-            "addressLine3": "Bayview",
-            "addressLine4": "",
-            "addressLine5": "",
-            "postcode": "AB78 9CD"
-          },
-          "primaryTelephone": "(816) 585-3287"
-        },
-        "application": {
-          "applicationId": 5658783,
-          "bookingSequence": 7,
-          "checkDigits": 7,
-          "welshTest": true,
-          "extendedTest": true,
-          "meetingPlace": "",
-          "progressiveAccess": false,
-          "specialNeeds": "",
-          "entitlementCheck": false,
-          "testCategory": "A",
-          "vehicleGearbox": "Manual"
-        }
-      }
-    }
-  ],
-  "personalCommitments": [
-    {
-      "commitmentId": 123400,
-      "startDate": "2019-02-21",
-      "startTime": "10:00:00+01:00",
-      "endDate": "2019-01-21",
-      "endTime": "11:00:00+01:00",
-      "activityCode": "104",
-      "activityDescription": "Medical appointment"
-    },
-    {
-      "commitmentId": 123401,
-      "startDate": "2019-02-21",
-      "endDate": "2019-01-20",
-      "activityCode": "081",
-      "activityDescription": "Annual Leave"
-    }
-  ],
   "nonTestActivities": [
     {
+      "activityCode": "198",
+      "activityDescription": "Corporate Connectivity",
       "slotDetail": {
-        "slotId": 1001,
-        "start": "2019-02-21T08:40:00+00:00",
-        "duration": 57
+        "duration": 57,
+        "slotId": 66558326,
+        "start": "2019-02-21T15:54:00+00:00"
       },
-      "activityCode": "091",
-      "activityDescription": "Travel period to detached TC and/or outstation",
       "testCentre": {
-        "centreId": 54321,
-        "centreName": "Example Test Centre",
-        "costCode": "EXTC"
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1100,
-        "start": "2019-02-21T11:45:00+00:00",
-        "duration": 57
-      },
-      "activityCode": "091",
-      "activityDescription": "Travel period to detached TC and/or outstation",
-      "testCentre": {
-        "centreId": 65432,
-        "centreName": "Example Test Centre 2",
-        "costCode": "EXTC2"
-      }
-    },
-    {
-      "slotDetail": {
-        "slotId": 1193,
-        "start": "2019-03-04T11:11:00+00:00",
-        "duration": 57
-      },
-      "activityCode": "091",
-      "activityDescription": "Travel period to detached TC and/or outstation",
-      "testCentre": {
-        "centreId": 65432,
-        "centreName": "Example Test Centre 2",
-        "costCode": "EXTC2"
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
       }
     }
   ],
-  "advanceTestSlots": [
+  "testSlots": [
     {
-      "slotId": 1300,
-      "start": "2019-02-21T06:00:00+00:00",
-      "duration": 90,
-      "centreId": 76543,
-      "centreName": "Example Test Centre 3",
-      "costCode": "EXTC 3",
-      "vehicleSlotType": "Voc90mins"
-    }
-  ],
-  "deployment": [
-    {
-      "deploymentId": 11111,
-      "centreId": 76543,
-      "centreName": "Example Test Centre 3",
-      "costCode": "EXTC 3",
-      "date": "2019-10-23"
+      "booking": {
+        "application": {
+          "applicationId": null,
+          "bookingSequence": null,
+          "checkDigits": null,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": null,
+          "vehicleGearbox": null,
+          "vehicleHeight": null,
+          "vehicleLength": null,
+          "vehicleSeats": 0,
+          "vehicleWidth": null,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "candidateId": null,
+          "candidateName": {
+            "firstName": null,
+            "lastName": null,
+            "secondName": null,
+            "thirdName": null,
+            "title": null
+          },
+          "driverNumber": null,
+          "emailAddress": null,
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": null,
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558319,
+        "start": "2019-02-21T08:40:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
     },
     {
-      "centreId": 87654,
-      "centreName": "Example Test Centre 4",
-      "costCode": "EXTC 4",
-      "date": [
-        "2019-01-22",
-        "2019-01-19",
-        "2019-02-01",
-        "2019-03-01",
-        "2019-04-01"
-      ]
+      "booking": {
+        "application": {
+          "applicationId": 38073302,
+          "bookingSequence": 1,
+          "checkDigits": 1,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": null,
+          "vehicleLength": null,
+          "vehicleSeats": 0,
+          "vehicleWidth": null,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": "89 T    S      ",
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": "EIOEIOUL",
+            "addressLine5": null,
+            "postcode": "HC36 0OT"
+          },
+          "businessId": 10134880,
+          "businessName": "Happy Drive Driving school",
+          "telephone": "88888888888"
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "123 Derby Road",
+            "addressLine2": "Oakwood",
+            "addressLine3": "Derby",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "DE21 2AB"
+          },
+          "candidateId": 18152908,
+          "candidateName": {
+            "firstName": "ANDY",
+            "lastName": "TEST",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "RAJPU852277S99AM",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558320,
+        "start": "2019-02-21T09:37:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38260631,
+          "bookingSequence": 2,
+          "checkDigits": 3,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": true
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "59 C        I     ",
+            "addressLine2": null,
+            "addressLine3": "E      S       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "ED90 1AR"
+          },
+          "candidateId": 22097377,
+          "candidateName": {
+            "firstName": "B    ",
+            "lastName": "E    ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "WITTE911219AP9WJ",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558321,
+        "start": "2019-02-21T10:44:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38181710,
+          "bookingSequence": 1,
+          "checkDigits": 8,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "46 T         E    ",
+            "addressLine2": null,
+            "addressLine3": "N         ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "SE50 7PN"
+          },
+          "candidateId": 21884045,
+          "candidateName": {
+            "firstName": "I   ",
+            "lastName": "E       ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "CHARL908269J99TT",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558322,
+        "start": "2019-02-21T11:41:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38281399,
+          "bookingSequence": 1,
+          "checkDigits": 6,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "10 R",
+            "addressLine2": "S        R     ",
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "TO65 8FT"
+          },
+          "candidateId": 20627348,
+          "candidateName": {
+            "firstName": "E      ",
+            "lastName": "T         ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "SRINI808135P99PN",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558323,
+        "start": "2019-02-21T13:03:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38131199,
+          "bookingSequence": 1,
+          "checkDigits": 6,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "95 E           M     ",
+            "addressLine2": null,
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "RN80 0SI"
+          },
+          "candidateId": 22143763,
+          "candidateName": {
+            "firstName": "R      E    ",
+            "lastName": "E  R   ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "MCLEO904139HL9MT",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558324,
+        "start": "2019-02-21T14:00:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38220035,
+          "bookingSequence": 1,
+          "checkDigits": 0,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": null,
+          "vehicleLength": null,
+          "vehicleSeats": 0,
+          "vehicleWidth": null,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": "5 R      A     ",
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": "EOHAEHHIOA",
+            "addressLine5": "I              ",
+            "postcode": "DA13 9DC"
+          },
+          "businessId": 10306693,
+          "businessName": "Adrian Punchard ADI",
+          "telephone": "88888888888"
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "21 REIWHSPNBTWONA ROAHALG",
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": "EIOEIOUL",
+            "postcode": "UD881AL"
+          },
+          "candidateId": 22020476,
+          "candidateName": {
+            "firstName": "RNLN ESIODT",
+            "lastName": "ARSFACD",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "MCKLI906169EP9MR",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": null,
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558325,
+        "start": "2019-02-21T14:57:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38042011,
+          "bookingSequence": 1,
+          "checkDigits": 8,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "89 R     E   ",
+            "addressLine2": "Y   ",
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "EL75 2AS"
+          },
+          "candidateId": 22241038,
+          "candidateName": {
+            "firstName": "I    ",
+            "lastName": "N     ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "WILSO053030E99WJ",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558354,
+        "start": "2019-02-22T08:40:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 37869316,
+          "bookingSequence": 1,
+          "checkDigits": 4,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "01 F        L     ",
+            "addressLine2": null,
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "IO46 3RO"
+          },
+          "candidateId": 22187393,
+          "candidateName": {
+            "firstName": "L    ",
+            "lastName": "E  ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "IFI99001010LC9GR",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558355,
+        "start": "2019-02-22T09:37:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 37915791,
+          "bookingSequence": 1,
+          "checkDigits": 5,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": null,
+          "vehicleLength": null,
+          "vehicleSeats": 0,
+          "vehicleWidth": null,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": "7 CECO AIPNTN",
+            "addressLine2": "OTALCETE",
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": "EIOEIOULKWURC",
+            "postcode": "EO42 7HD"
+          },
+          "businessId": 53732,
+          "businessName": "ABERDEEN LEARNER DRIVING",
+          "telephone": "88888888888"
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "LUNU E",
+            "addressLine2": "6 CEAMDAADNI FISUA",
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": "OTALCETE",
+            "postcode": "UH073II"
+          },
+          "candidateId": 21117173,
+          "candidateName": {
+            "firstName": "WOSTIIERO",
+            "lastName": "HAREERNTWLA",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "NALLA655118S99BL",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": null,
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558356,
+        "start": "2019-02-22T10:44:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38141029,
+          "bookingSequence": 1,
+          "checkDigits": 7,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "24 T           A    ",
+            "addressLine2": null,
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "OR98 6WN"
+          },
+          "candidateId": 22241354,
+          "candidateName": {
+            "firstName": "A     ",
+            "lastName": "H     ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "BIALA809130TP9EL",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558357,
+        "start": "2019-02-22T11:41:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 37829765,
+          "bookingSequence": 1,
+          "checkDigits": 0,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "934 H      R    ",
+            "addressLine2": null,
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "EO76 7SH"
+          },
+          "candidateId": 20531029,
+          "candidateName": {
+            "firstName": "E      ",
+            "lastName": "S     ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "MCLEO960142CW9ES",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558358,
+        "start": "2019-02-22T13:03:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": null,
+          "bookingSequence": null,
+          "checkDigits": null,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": null,
+          "vehicleGearbox": null,
+          "vehicleHeight": null,
+          "vehicleLength": null,
+          "vehicleSeats": 0,
+          "vehicleWidth": null,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "candidateId": null,
+          "candidateName": {
+            "firstName": null,
+            "lastName": null,
+            "secondName": null,
+            "thirdName": null,
+            "title": null
+          },
+          "driverNumber": null,
+          "emailAddress": null,
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": null,
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558359,
+        "start": "2019-02-22T14:00:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 38152321,
+          "bookingSequence": 1,
+          "checkDigits": 8,
+          "entitlementCheck": false,
+          "extendedTest": false,
+          "meetingPlace": null,
+          "progressiveAccess": false,
+          "specialNeeds": "",
+          "testCategory": "B",
+          "vehicleGearbox": "Manual",
+          "vehicleHeight": 0,
+          "vehicleLength": 0,
+          "vehicleSeats": 0,
+          "vehicleWidth": 0,
+          "welshTest": false
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": null,
+            "addressLine2": null,
+            "addressLine3": null,
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": null
+          },
+          "businessId": null,
+          "businessName": null,
+          "telephone": null
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "5 R         E     ",
+            "addressLine2": "R         ",
+            "addressLine3": "N       ",
+            "addressLine4": null,
+            "addressLine5": null,
+            "postcode": "RO40 5RA"
+          },
+          "candidateId": 22247899,
+          "candidateName": {
+            "firstName": "N    ",
+            "lastName": "A    ",
+            "secondName": null,
+            "thirdName": null,
+            "title": "Mr"
+          },
+          "driverNumber": "SERLE001070P99EC",
+          "emailAddress": "test@example.com",
+          "mobileTelephone": null,
+          "previousADITests": null,
+          "primaryTelephone": "88888888888",
+          "prn": null,
+          "secondaryTelephone": null
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 66558360,
+        "start": "2019-02-22T14:57:00+00:00"
+      },
+      "testCentre": {
+        "centreId": 1878,
+        "centreName": "Aberdeen South (Cove)",
+        "costCode": "307320"
+      },
+      "vehicleSlotType": "B57mins"
     }
   ]
 }
