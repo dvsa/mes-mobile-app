@@ -31,7 +31,6 @@ export class JournalEffects {
     private journalProvider: JournalProvider,
     private slotProvider: SlotProvider,
     private store$: Store<StoreModel>,
-    // private analytics: AnalyticsProvider,
     public appConfig: AppConfigProvider,
     public networkStateProvider: NetworkStateProvider,
   ) {
@@ -70,6 +69,7 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
         catchError((err) => {
+          // TODO: We don't need to use the store here, just return the action wrapped in an Observable
           this.store$.dispatch(new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
           console.log(err);
           return of();
@@ -84,6 +84,7 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
         catchError((err) => {
+          // TODO: We don't need to use the store here, just return the action wrapped in an Observable
           this.store$.dispatch(new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
           return of(new journalActions.LoadJournalFailure(err));
         }),
@@ -94,7 +95,7 @@ export class JournalEffects {
   @Effect()
   pollingSetup$ = this.actions$.pipe(
     ofType(journalActions.SETUP_POLLING),
-    switchMap((action$: journalActions.SetupPolling) => {
+    switchMap(() => {
       // Switch map the manual refreshes so they restart the timer.
       const manualRefreshes$ = this.actions$.pipe(
         ofType(journalActions.LOAD_JOURNAL),
@@ -137,6 +138,8 @@ export class JournalEffects {
         return of();
       }
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
+
+      // TODO: We don't need to use the store here, just return the action wrapped in an Observable
       this.store$.dispatch(new journalActions.JournalNavigateDay(previousDay));
       return of(new journalActions.SetSelectedDate(previousDay));
     }),
@@ -160,6 +163,8 @@ export class JournalEffects {
         return of();
       }
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
+
+      // TODO: We don't need to use the store here, just return the action wrapped in an Observable
       this.store$.dispatch(new journalActions.JournalNavigateDay(nextDay));
       return of(new journalActions.SetSelectedDate(nextDay));
     }),

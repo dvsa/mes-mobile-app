@@ -6,6 +6,8 @@ import {
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { map } from 'rxjs/operators';
+
 import { BasePageComponent } from '../../classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
@@ -16,7 +18,6 @@ import {
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../common/mes-error.model';
-import { map } from 'rxjs/operators';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';
@@ -50,8 +51,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
-
-  // private selectedDate: string;
 
   constructor(
     public navController: NavController,
