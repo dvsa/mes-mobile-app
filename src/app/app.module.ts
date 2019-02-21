@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MSAdal } from '@ionic-native/ms-adal';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AppVersion } from '@ionic-native/app-version';
+import { AppPreferences } from '@ionic-native/app-preferences';
 
 import { App } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -24,6 +25,8 @@ import { Device } from '@ionic-native/device';
 import { LoggingProvider } from '../providers/logging/logging';
 import { AppInfoModule } from '../modules/app-info/app-info.module';
 import { AppInfoProvider } from '../providers/app-info/app-info';
+import { AirwatchConfigProvider } from '../providers/airwatch-config/airwatch-config';
+import { AirwatchConfigModule } from '../modules/airwatch-config/airwatch-config.module';
 
 @NgModule({
   declarations: [App],
@@ -35,6 +38,7 @@ import { AppInfoProvider } from '../providers/app-info/app-info';
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
     AppInfoModule,
+    AirwatchConfigModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
@@ -45,6 +49,7 @@ import { AppInfoProvider } from '../providers/app-info/app-info';
       multi: true,
     },
     AppVersion,
+    AppPreferences,
     StatusBar,
     SplashScreen,
     MSAdal,
@@ -60,6 +65,7 @@ import { AppInfoProvider } from '../providers/app-info/app-info';
     Device,
     LoggingProvider,
     AppInfoProvider,
+    AirwatchConfigProvider,
   ],
 })
 export class AppModule {}

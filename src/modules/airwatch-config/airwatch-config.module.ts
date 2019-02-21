@@ -15,4 +15,4 @@ import { AirwatchConfigEffects } from './airwatch-config.effects';
     AppPreferences,
   ],
 })
-export class AppInfoModule {}
+export class AirwatchConfigModule {}
