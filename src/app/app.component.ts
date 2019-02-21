@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { Store } from '@ngrx/store';
 
-import { AppInfoModel } from '../modules/app-info/app-info.model';
+import { StoreModel } from '../common/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
 
 @Component({
@@ -14,7 +13,7 @@ export class App {
   rootPage: any = 'LoginPage';
 
   constructor(
-    private store$: Store<AppInfoModel>,
+    private store$: Store<StoreModel>,
     private statusBar: StatusBar,
     platform: Platform,
   ) {
