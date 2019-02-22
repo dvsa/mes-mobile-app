@@ -10,12 +10,12 @@
 </ion-header>
 
 <ion-content padding>
-  <h1>
+  <h2>
     {{ pageState.name$ | async }}
     <span class="test-start-time">
       {{ pageState.time$ | async | date: "HH:mm" }}
     </span>
-  </h1>
+  </h2>
   
   <ion-card>
     <ion-card-header>
