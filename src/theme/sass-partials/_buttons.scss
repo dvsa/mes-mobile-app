@@ -6,7 +6,11 @@
   height: initial;
   h3 {
     color: map-get($colors, mes-white);
-    line-height: 2em;
+    .text-zoom-regular &, 
+    .text-zoom-large &, 
+    .text-zoom-x-large & {
+      line-height: 2em;
+    }
   }
 }
 

@@ -4,6 +4,14 @@ indicators {
     img {
       width: 29px;
       height: 25px;
+      .text-zoom-large & {
+        height: 28.5px;
+        width: 33px;
+      }
+      .text-zoom-x-large & {
+        height: 31px;
+        width: 36px;
+      }
     }
   }
 }

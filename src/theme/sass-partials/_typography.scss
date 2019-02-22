@@ -36,7 +36,7 @@ html .text-zoom-regular {
   h3 {
     @extend .semibold-font-family;
     font-size: 20px;
-    line-height: 25px;
+    line-height: 26px;
   }
   h4 {
     @extend .heavy-font-family;
@@ -47,7 +47,7 @@ html .text-zoom-regular {
     @extend .heavy-font-family;
     font-weight: 700;
     font-size: 20px;
-    line-height: 25px;
+    line-height: 26px;
   }
   h6 {
     @extend .regular-font-family;
@@ -58,79 +58,81 @@ html .text-zoom-regular {
   a:hover {
     @extend .semibold-font-family;
     font-size: 20px;
-    line-height: 25px;
+    line-height: 26px;
   }    
   label {
     @extend .semibold-font-family;
     font-size: 20px;
-    line-height: 25px;
+    line-height: 26px;
   }
   p,
   .mes-data {
     @extend .regular-font-family;
     font-size: 20px;
-    line-height: 25px;
+    line-height: 26px;
   }
   div {
     font-size: 20px;
-    line-height: 25px;
+    line-height: 26px;
   }
 }
 
 .text-zoom-large {
   h1 {
     @extend .heavy-font-family;
-    font-size: 40px;
-    line-height: 56px;
+    font-size: 48px;
+    line-height: 68px;
   }
   h2 {
     @extend .heavy-font-family;
-    font-size: 28px;
-    line-height: 40px;
+    font-size: 32px;
+    line-height: 44px;
   }
   h3 {
     @extend .semibold-font-family;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 24px;
+    line-height: 30px;
   }
   h4 {
     @extend .heavy-font-family;
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 28px;
+    line-height: 34px;
   }
   h5 {
     @extend .heavy-font-family;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 24px;
+    line-height: 30px;
   }
   h6 {
     @extend .regular-font-family;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 22px;
   }
   a,
   a:hover {
     @extend .semibold-font-family;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 24px;
+    line-height: 30px;
   }    
   label {
     @extend .semibold-font-family;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 24px;
+    line-height: 30px;
   }
   p,
   .mes-data {
     @extend .regular-font-family;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 22px;
+    line-height: 30px;
+  }
+  div {
+    font-size: 22px;
+    line-height: 28px;
   }
 }
 
 .text-zoom-x-large {
-  color: red;
-  $toolbar-ios-title-font-weight: 1000;
   h1 {
     @extend .heavy-font-family;
     font-size: 58px;
@@ -149,8 +151,8 @@ html .text-zoom-regular {
   }
   h4 {
     @extend .heavy-font-family;
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 32px;
+    line-height: 40px;
   }
   h5 {
     @extend .heavy-font-family;
@@ -166,8 +168,8 @@ html .text-zoom-regular {
   a,
   a:hover {
     @extend .semibold-font-family;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 28px;
+    line-height: 36px;
   }    
   label {
     @extend .semibold-font-family;
@@ -182,7 +184,7 @@ html .text-zoom-regular {
   }
   div {
     font-size: 24px;
-    line-height: 36px;
+    line-height: 32px;
   }
 }
 
