@@ -1,16 +1,3 @@
-<ion-grid class="vehicle-details-grid">
-  <ion-row>
-    <ion-col col-auto *ngIf="showDimensions">
-      <span>Length: </span><span class="bold">{{ length }}</span>
-    </ion-col>
-    <ion-col col-auto *ngIf="showDimensions">
-      <span>Width: </span><span class="bold">{{ width }}</span>
-    </ion-col>
-    <ion-col col-auto *ngIf="showDimensions">
-      <span>Height: </span><span class="bold">{{ height }}</span>
-    </ion-col>
-    <ion-col col-auto *ngIf="showNumberOfSeats">
-      <span>Seats: </span><span class="bold">{{ seats }}</span>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div *ngIf="showDimensions">
+  <p><span>Length: </span><span class="bold">{{ length }}</span> …</p>
+</div>

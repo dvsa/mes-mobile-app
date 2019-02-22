@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-buttons start>
       <button ion-button (click)="logout()">Logout</button>
-      <div class="version-number">Version {{pageState.appVersion$ | async}}</div>
+      <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
     </ion-buttons>
     <ion-title>Journal</ion-title>
@@ -11,7 +11,7 @@
         <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
         <span>Refresh</span>
       </button>
-      <div class="last-sync">Last sync: {{pageState.lastRefreshedTime$ | async}}</div>
+      <h6 class="last-sync">Last sync: {{pageState.lastRefreshedTime$ | async}}</h6>
     </ion-buttons>
   </ion-navbar>
 </ion-header>

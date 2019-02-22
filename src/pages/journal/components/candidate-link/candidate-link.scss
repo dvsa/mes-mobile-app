@@ -1,7 +1,7 @@
 candidate-link {
   & > div {
-    .candidate-name {
-      font-weight: bold;
+    h3.candidate-name {
+      text-align: left;
       overflow: hidden;
       text-overflow: ellipsis;
       &.candidate-name-short {

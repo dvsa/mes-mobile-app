@@ -1,6 +1,5 @@
-test-category {
-  & div {
-    font-size: 22px;
-    font-weight: bold;
-  }
+test-category h2 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

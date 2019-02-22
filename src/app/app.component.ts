@@ -6,20 +6,25 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../common/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
 
+declare let window: any;
+
 @Component({
   templateUrl: 'app.html',
 })
 export class App {
   rootPage: any = 'LoginPage';
+  textZoom: number = 100;
+  increasedContrast: Boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
     private statusBar: StatusBar,
-    platform: Platform,
+    private platform: Platform,
   ) {
     platform.ready()
       .then(() => {
         this.configureStatusBar();
+        this.configureAccessibility();
         this.loadAppInfo();
       });
   }
@@ -32,5 +37,40 @@ export class App {
 
   loadAppInfo() {
     this.store$.dispatch(new LoadAppInfo());
+  }
+
+  configureAccessibility() {
+    if (this.platform.is('ios') && window && window.MobileAccessibility) {
+      window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+      window.MobileAccessibility.isDarkerSystemColorsEnabled(
+        (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
+    }
+    if (typeof this.platform.resume.subscribe === 'function') {
+      this.platform.resume.subscribe(() => {
+        window.MobileAccessibility.usePreferredTextZoom(true);
+        window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+      });
+    }
+  }
+
+  getTextZoomCallback = (zoomLevel: number) => {
+    // Default iOS zoom levels are: 88%, 94%, 100%, 106%, 119%, 131%, 144%
+    this.textZoom = zoomLevel;
+    window.MobileAccessibility.usePreferredTextZoom(false);
+  }
+
+  public getTextZoom(zoom: number): string {
+    if (!zoom) return 'regular';
+    if (zoom >= 131) return 'x-large';
+    if (zoom >= 106) return 'large';
+    return 'regular';
+  }
+
+  public getTextZoomClass(): string {
+    return `text-zoom-${this.getTextZoom(this.textZoom)}`;
+  }
+
+  public getIncreasedContrastClass(): string {
+    return this.increasedContrast ? 'increased-contrast' : '';
   }
 }
