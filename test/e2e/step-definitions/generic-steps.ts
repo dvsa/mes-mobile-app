@@ -109,7 +109,7 @@ export const logInToApplication = (username, password) => {
 // Checks whether the user is logged in. This will need updating as it checks for the existance of the logout button.
 export const loggedInAs = (staffNumber) => {
   browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-  const logout = element(by.xpath(`//button/span[contains(text(), "Logout (Employee ID: ${staffNumber}")]`));
+  const logout = element(by.xpath(`//input[@id="employeeId"][@value="${staffNumber}"]`));
   return logout.isPresent();
 };
 
