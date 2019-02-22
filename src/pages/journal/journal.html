@@ -3,6 +3,7 @@
     <ion-buttons start>
       <button ion-button (click)="logout()">Logout</button>
       <div class="version-number">Version {{pageState.appVersion$ | async}}</div>
+      <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
     </ion-buttons>
     <ion-title>Journal</ion-title>
     <ion-buttons end>
