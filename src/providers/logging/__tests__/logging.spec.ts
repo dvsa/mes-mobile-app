@@ -32,6 +32,7 @@ describe('LoggingProvider', () => {
       const testLog: Log = {
         type: LogType.DEBUG,
         message: 'Successfully logged one log',
+        timestamp: new Date().getTime(),
       };
 
       loggingProvider.logMultiple =
@@ -48,6 +49,7 @@ describe('LoggingProvider', () => {
       loggingProvider.logMultiple([{
         type: LogType.DEBUG,
         message: 'Successfully logged multiple',
+        timestamp: new Date().getTime(),
       }]);
 
       httpMock.expectOne('https://www.example.com/api/v1/logs');

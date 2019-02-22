@@ -7,4 +7,6 @@ export enum  LogType {
 export type Log = {
   type: LogType,
   message: string,
+  timestamp: number,
+  [propName: string]: any,
 };
