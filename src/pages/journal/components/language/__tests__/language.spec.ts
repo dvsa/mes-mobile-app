@@ -44,14 +44,14 @@ describe('LanguageComponent', () => {
       it('should render text when the language is Welsh', () => {
         component.welshLanguage = true;
         fixture.detectChanges();
-        const renderedText = fixture.debugElement.query(By.css('div.language-description'))
+        const renderedText = fixture.debugElement.query(By.css('h6.language-description'))
           .nativeElement;
         expect(renderedText.textContent).toBe('Cymraeg');
       });
       it('should not render text when the language is not Welsh', () => {
         component.welshLanguage = false;
         fixture.detectChanges();
-        const renderedText = fixture.debugElement.queryAll(By.css('div.language-description'));
+        const renderedText = fixture.debugElement.queryAll(By.css('h6.language-description'));
         expect(renderedText.length).toBe(0);
       });
     });
