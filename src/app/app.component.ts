@@ -45,10 +45,12 @@ export class App {
       window.MobileAccessibility.isDarkerSystemColorsEnabled(
         (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
     }
-    this.platform.resume.subscribe(() => {
-      window.MobileAccessibility.usePreferredTextZoom(true);
-      window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
-    });
+    if (typeof this.platform.resume.subscribe === 'function') {
+      this.platform.resume.subscribe(() => {
+        window.MobileAccessibility.usePreferredTextZoom(true);
+        window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+      });
+    }
   }
 
   getTextZoomCallback = (zoomLevel: number) => {
