@@ -11,7 +11,6 @@ import {
   getCandidateId,
   isCandidateSpecialNeeds,
   isCandidateCheckNeeded,
-  getEntitlementCheckText,
   getSlotChanged,
 } from '../candidate-details.selector';
 import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
@@ -202,13 +201,6 @@ describe('Candidate Details Selector', () => {
       };
       const result = isCandidateCheckNeeded(slot);
       expect(result).toBeTruthy();
-    });
-  });
-
-  describe('getEntitlementCheckText', () => {
-    it('returns the correct entitlement check text', () => {
-      const result = getEntitlementCheckText();
-      expect(result).toBe('Entitlement check is required. Call deployment');
     });
   });
 

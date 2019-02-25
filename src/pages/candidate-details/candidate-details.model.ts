@@ -19,7 +19,6 @@ export type Details = {
   },
   entitlementCheck: {
     show: boolean,
-    text: string,
   }
   phoneNumber: string,
   email: string,

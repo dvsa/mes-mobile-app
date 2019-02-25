@@ -65,7 +65,6 @@ export const getDetails = (slot: any): Details => {
     },
     entitlementCheck: {
       show: isCandidateCheckNeeded(slot),
-      text: getEntitlementCheckText(),
     },
     phoneNumber: getPhoneNumber(slot.booking.candidate),
 
