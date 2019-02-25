@@ -1,5 +1,5 @@
 #!/bin/sh
 rm -rf platforms/ plugins/
-cordova rm platform ios
-cordova add platform ios
+cordova platform rm ios
+cordova platform add ios
 ionic cordova build ios
