@@ -46,8 +46,6 @@ export class AppConfigProvider {
         resourceUrl: data.authentication.resourceUrl,
         clientId: data.authentication.clientId,
         logoutUrl: data.authentication.logoutUrl,
-        openIdConnectUrl: data.authentication.openIdConnectUrl,
-        identityPoolId: data.authentication.identityPoolId,
         employeeIdKey: data.authentication.employeeIdKey,
       },
     } as AppConfig)
