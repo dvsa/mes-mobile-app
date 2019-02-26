@@ -17,6 +17,9 @@ export type Details = {
     specialNeeds: string,
     previousCancellations: { initiator: string }[],
   },
+  entitlementCheck: {
+    show: boolean,
+  }
   phoneNumber: string,
   email: string,
   address: {
