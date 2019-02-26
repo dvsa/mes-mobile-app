@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthenticationProvider } from '../authentication/authentication';
 import { UrlProvider } from '../url/url';
-import { DateTime } from '../../common/date-time';
+import { DateTime } from '../../shared/helpers/date-time';
 
 @Injectable()
 export class JournalProvider {

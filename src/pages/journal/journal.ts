@@ -8,16 +8,16 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators';
 
-import { BasePageComponent } from '../../classes/base-page';
+import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as journalActions from './journal.actions';
-import { StoreModel } from '../../common/store.model';
+import { StoreModel } from '../../shared/models/store.model';
 import {
   getError, getIsLoading, getSelectedDate, getLastRefreshed,
   getLastRefreshedTime, getSlotsOnSelectedDate,
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
-import { MesError } from '../../common/mes-error.model';
+import { MesError } from '../../shared/models/mes-error.model';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from './components/slot/slot';
 import { merge } from 'rxjs/observable/merge';

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { Platform, NavController } from 'ionic-angular';
 import { PlatformMock, NavControllerMock } from 'ionic-mocks';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../providers/authentication/__mocks__/authentication.mock';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { BasePageComponent } from '../base-page';
 
 describe('Base Page', () => {

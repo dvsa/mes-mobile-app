@@ -5,11 +5,11 @@ import { ConfigMock } from 'ionic-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { journalReducer } from '../../../journal.reducer';
 import { DebugElement } from '@angular/core';
-import { StoreModel } from '../../../../../common/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { LoadJournalSuccess, SetSelectedDate } from '../../../journal.actions';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
-import { DateTime, Duration } from '../../../../../common/date-time';
+import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 
 describe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;

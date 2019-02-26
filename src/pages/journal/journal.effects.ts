@@ -10,10 +10,10 @@ import { groupBy } from 'lodash';
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../common/store.model';
+import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from './journal.reducer';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
+import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
@@ -22,7 +22,7 @@ import {
   canNavigateToPreviousDay, canNavigateToNextDay,
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-import { DateTime, Duration } from '../../common/date-time';
+import { DateTime, Duration } from '../../shared/helpers/date-time';
 
 @Injectable()
 export class JournalEffects {

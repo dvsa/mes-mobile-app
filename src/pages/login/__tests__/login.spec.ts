@@ -2,7 +2,7 @@ import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks';
 import { Store , StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../common/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import { AppModule } from '../../../app/app.module';
 import { LoginPage } from '../login';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';

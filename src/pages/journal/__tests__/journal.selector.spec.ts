@@ -4,8 +4,8 @@ import {
   getError, getLastRefreshedTime, isToday,
   canNavigateToNextDay, canNavigateToPreviousDay,
 } from '../journal.selector';
-import { MesError } from '../../../common/mes-error.model';
-import { DateTime, Duration } from '../../../common/date-time';
+import { MesError } from '../../../shared/models/mes-error.model';
+import { DateTime, Duration } from '../../../shared/helpers/date-time';
 
 describe('JournalSelector', () => {
 

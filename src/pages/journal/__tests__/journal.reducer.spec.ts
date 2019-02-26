@@ -1,7 +1,7 @@
 import { initialState, journalReducer } from '../journal.reducer';
 import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError, ClearChangedSlot } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
-import { DateTime, Duration } from '../../../common/date-time';
+import { DateTime, Duration } from '../../../shared/helpers/date-time';
 
 const today = DateTime.now().format('YYYY-MM-DD');
 

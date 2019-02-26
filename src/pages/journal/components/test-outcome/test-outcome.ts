@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../../../common/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { TestOutcomeStartTest } from './test-outcome.actions';
 
 @Component({

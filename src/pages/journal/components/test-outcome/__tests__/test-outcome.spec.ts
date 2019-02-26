@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { TestOutcomeComponent } from '../test-outcome';
-import { StoreModel } from '../../../../../common/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store , StoreModule } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';

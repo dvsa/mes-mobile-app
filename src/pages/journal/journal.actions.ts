@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { MesError } from '../../common/mes-error.model';
+import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';

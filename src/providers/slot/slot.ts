@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
 import { flatten, times } from 'lodash';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../common/store.model';
+import { StoreModel } from '../../shared/models/store.model';
 import { SlotItem } from '../slot-selector/slot-item';
-import { ExaminerWorkSchedule } from '../../common/domain/DJournal';
+import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
 import { AppConfigProvider } from '../app-config/app-config';
-import { DateTime, Duration } from '../../common/date-time';
+import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotHasChanged } from './slot.actions';
 
 @Injectable()

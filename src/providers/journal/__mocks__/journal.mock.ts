@@ -1,7 +1,7 @@
-import { ExaminerWorkSchedule } from './../../../common/domain/DJournal';
+import { ExaminerWorkSchedule } from './../../../shared/models/DJournal';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { DateTime } from '../../../common/date-time';
+import { DateTime } from '../../../shared/helpers/date-time';
 
 export class JournalProviderMock {
 

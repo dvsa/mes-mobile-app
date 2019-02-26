@@ -21,8 +21,8 @@ import { MockedJournalModule } from '../__mocks__/journal.module.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../components/test-slot/__mocks__/screen-orientation.mock';
 import { UnloadJournal, LoadJournal, LoadJournalSuccess } from '../journal.actions';
-import { BasePageComponent } from '../../../classes/base-page';
-import { StoreModel } from '../../../common/store.model';
+import { BasePageComponent } from '../../../shared/classes/base-page';
+import { StoreModel } from '../../../shared/models/store.model';
 
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';

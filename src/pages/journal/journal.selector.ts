@@ -1,7 +1,7 @@
 
 import { JournalModel } from './journal.model';
 import { isNil } from 'lodash';
-import { DateTime, Duration } from '../../common/date-time';
+import { DateTime, Duration } from '../../shared/helpers/date-time';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
