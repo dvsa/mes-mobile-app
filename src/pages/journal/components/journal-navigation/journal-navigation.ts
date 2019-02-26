@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../../../common/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { getJournalState } from '../../journal.reducer';
 import { map } from 'rxjs/operators';
 import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay, isToday } from '../../journal.selector';

@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as moment from 'moment';
-import { ExaminerWorkSchedule } from '../src/common/domain/DJournal';
+import { ExaminerWorkSchedule } from '../src/shared/models/DJournal';
 
 /**
  *  The class below is also found in MES-Journal-Service in src/functions/getJournal/application/service/FindJournal.ts
@@ -16,14 +16,14 @@ class DateUpdater {
   constructor(public data: ExaminerWorkSchedule) { }
 
   public updateTestSlots = (): DateUpdater => {
-    if (!this.data.testSlots) { return this }
+    if (!this.data.testSlots) { return this; }
 
     this.updateSlots(this.data.testSlots);
     return this;
   }
 
   public updateNonTestActivities = (): DateUpdater => {
-    if (!this.data.nonTestActivities) { return this };
+    if (!this.data.nonTestActivities) { return this; }
 
     this.updateSlots(this.data.nonTestActivities);
     return this;
@@ -31,7 +31,7 @@ class DateUpdater {
 
   public updatePersonalCommitments = (): DateUpdater => {
 
-    if (!this.data.personalCommitments || this.data.personalCommitments.length === 0) { return this };
+    if (!this.data.personalCommitments || this.data.personalCommitments.length === 0) { return this; }
 
     const newDate = this.createMoment();
 
@@ -53,17 +53,16 @@ class DateUpdater {
     });
     return this;
 
-
   }
 
   public updateAdvancedTestSlots = (): DateUpdater => {
-    if (!this.data.advanceTestSlots || this.data.advanceTestSlots.length === 0) { return this };
+    if (!this.data.advanceTestSlots || this.data.advanceTestSlots.length === 0) { return this; }
 
     const newDate = this.createMoment();
     let dateProcessing = this.createMoment(this.data.advanceTestSlots[0].start);
 
     this.data.advanceTestSlots.forEach(slot => {
-      const slotDate = this.createMoment(slot.start)
+      const slotDate = this.createMoment(slot.start);
 
       dateProcessing =
         this.caculateNewProcessingDate(dateProcessing, slotDate, newDate);
@@ -88,51 +87,51 @@ class DateUpdater {
     let dateProcessing = this.createMoment(slots[0].slotDetail.start);
 
     slots.forEach(slot => {
-      if (!slot.slotDetail || !slot.slotDetail.start) { return }
+      if (!slot.slotDetail || !slot.slotDetail.start) { return; }
 
-      const slotDate = this.createMoment(slot.slotDetail.start)
+      const slotDate = this.createMoment(slot.slotDetail.start);
 
       dateProcessing = this.caculateNewProcessingDate(dateProcessing, slotDate, newDate);
 
       slot.slotDetail.start = this.updateDate(slotDate, newDate);
     });
-  };
+  }
 
   private doesMatch = (a: moment.Moment, b: moment.Moment): boolean => {
     return a.isSame(b, 'day');
-  };
+  }
 
   private caculateDiffInDays = (a: moment.Moment, b: moment.Moment): number => {
     return this.createMoment(a).startOf('day').diff(this.createMoment(b).startOf('day'), 'days');
-  };
+  }
 
   private createMoment = (date?: string | moment.Moment): moment.Moment => {
     if (date) {
       return moment(date, this.dateFormat, true);
     }
     return moment();
-  };
+  }
 
   private updateDate = (currentDate: moment.Moment, newDate: moment.Moment): string => {
     const daysToAdd = this.caculateDiffInDays(newDate, currentDate);
     return currentDate.add(daysToAdd, 'days').format(this.dateFormat);
-  };
+  }
 
   private caculateNewProcessingDate =
     (dateProcessing: moment.Moment, itemDate: moment.Moment, newDate: moment.Moment): moment.Moment => {
       if (this.doesMatch(dateProcessing, itemDate)) { return dateProcessing; }
 
-      const daysToAdd = this.caculateDiffInDays(itemDate, dateProcessing)
+      const daysToAdd = this.caculateDiffInDays(itemDate, dateProcessing);
       newDate.add(daysToAdd, 'days');
 
       // Skip Sunday's
       const sunday = 0;
-      if(newDate.day() === sunday || this.hasSkippedSunday) {
+      if (newDate.day() === sunday || this.hasSkippedSunday) {
         newDate.add(1, 'day');
         this.hasSkippedSunday = true;
       }
       return this.createMoment(itemDate);
-    };
+    }
 
   private formatDate = (startDate: string, startTime: String): string => {
     if (startTime) {
@@ -155,12 +154,12 @@ function updateLocalJournal() {
     .getData();
 
   saveData(path, updatedData);
-};
+}
 
 function getData(path: string): ExaminerWorkSchedule {
   return JSON.parse(fs.readFileSync(path).toString());
-};
+}
 
 function saveData(path: string, data: ExaminerWorkSchedule) {
   fs.writeFileSync(path, JSON.stringify(data, null, 2));
-};
+}

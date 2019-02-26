@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Name } from '../../../../common/domain/DJournal';
+import { Name } from '../../../../shared/models/DJournal';
 import { NavController } from 'ionic-angular';
 
 @Component({

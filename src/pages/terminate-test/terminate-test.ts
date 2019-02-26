@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponent } from '../../classes/base-page';
+import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../common/store.model';
+import { StoreModel } from '../../shared/models/store.model';
 import { TerminateTestViewDidEnter } from './terminate-test.actions';
 
 @IonicPage()

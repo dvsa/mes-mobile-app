@@ -3,7 +3,7 @@ import { createFeatureSelector } from '@ngrx/store';
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 import { has } from 'lodash';
-import { DateTime } from '../../common/date-time';
+import { DateTime } from '../../shared/helpers/date-time';
 
 export const initialState: JournalModel = {
   isLoading: false,

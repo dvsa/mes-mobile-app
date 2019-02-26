@@ -4,7 +4,7 @@ import { IAnalyticsProvider, AnalyticsEventCategories, AnalyticsDimensionIndices
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Platform } from 'ionic-angular';
 import { Device } from '@ionic-native/device';
-import { DateTime } from '../../common/date-time';
+import { DateTime } from '../../shared/helpers/date-time';
 import { createHash } from 'crypto';
 
 @Injectable()

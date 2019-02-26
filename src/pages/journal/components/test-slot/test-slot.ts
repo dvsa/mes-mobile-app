@@ -3,7 +3,7 @@ import { get, isNil } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
-import { TestCategory } from '../../../../common/test-category';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 @Component({
   selector: 'test-slot',

@@ -1,5 +1,5 @@
 import { Platform, NavController } from 'ionic-angular';
-import { AuthenticationProvider } from '../providers/authentication/authentication';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 export abstract class BasePageComponent {
 

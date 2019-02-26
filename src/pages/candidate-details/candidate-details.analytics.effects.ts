@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../common/store.model';
+import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from '../journal/journal.reducer';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {

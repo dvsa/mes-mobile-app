@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TestCategory, testCategoryIcons } from '../../common/test-category';
+import { TestCategory, testCategoryIcons } from '../../shared/models/test-category';
 
 @Component({
   selector: 'test-category-icon',

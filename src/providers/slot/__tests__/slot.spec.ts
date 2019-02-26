@@ -3,13 +3,13 @@ import { cloneDeep } from 'lodash';
 
 import { SlotProvider } from '../slot';
 import { Store , StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../common/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
-import { DateTime } from '../../../common/date-time';
+import { DateTime } from '../../../shared/helpers/date-time';
 
 const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
