@@ -10,7 +10,5 @@ export const environment: EnvironmentFile = {
     redirectUrl: '',
     logoutUrl: '',
     employeeIdKey: '',
-    openIdConnectUrl: '',
-    identityPoolId: '',
   },
 };

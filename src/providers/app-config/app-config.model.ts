@@ -7,8 +7,6 @@ export type AppConfig = {
     clientId: string,
     redirectUrl: string,
     logoutUrl: string,
-    openIdConnectUrl: string,
-    identityPoolId: string,
     employeeIdKey: string,
   },
   journal: {

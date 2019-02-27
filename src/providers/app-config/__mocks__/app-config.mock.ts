@@ -21,8 +21,6 @@ export class AppConfigProviderMock {
         redirectUrl: localEnvironmentMock.authentication.redirectUrl,
         resourceUrl: localEnvironmentMock.authentication.resourceUrl,
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
-        openIdConnectUrl: localEnvironmentMock.authentication.openIdConnectUrl,
-        identityPoolId: localEnvironmentMock.authentication.identityPoolId,
         employeeIdKey: localEnvironmentMock.authentication.employeeIdKey,
       },
       journal: {

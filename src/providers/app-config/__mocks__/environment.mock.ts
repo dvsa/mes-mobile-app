@@ -9,8 +9,6 @@ export const remoteEnvironmentMock: EnvironmentFile = {
     clientId: 'remote-authentication-client-id',
     redirectUrl: 'remote-authentication-redirect-url',
     logoutUrl: 'remote-logout-url',
-    openIdConnectUrl: 'remote-openIdConnectUrl',
-    identityPoolId: 'remote-identityPoolId',
     employeeIdKey: 'remote-employeeIdKey',
   },
 };
@@ -25,8 +23,6 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     clientId: 'local-authentication-client-id',
     redirectUrl: 'local-authentication-redirect-url',
     logoutUrl: 'local-logout-url',
-    openIdConnectUrl: 'local-openIdConnectUrl',
-    identityPoolId: 'local-identityPoolId',
     employeeIdKey: 'local-employeeIdKey',
   },
   journal: {

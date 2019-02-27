@@ -9,8 +9,6 @@ export const environment: EnvironmentFile = {
     clientId: '',
     redirectUrl: '',
     logoutUrl: '',
-    openIdConnectUrl: '',
-    identityPoolId: '',
     employeeIdKey: '',
   },
 };
