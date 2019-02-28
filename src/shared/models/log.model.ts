@@ -1,7 +1,8 @@
 export enum  LogType {
-  DEBUG= 'debug',
-  WARNING= 'warning',
-  ERROR= 'error',
+  DEBUG = 'debug',
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error',
 }
 
 export type Log = {

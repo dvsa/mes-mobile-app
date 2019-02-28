@@ -5,6 +5,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { CandidateDetailsPage } from './candidate-details';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.effects';
+import { CandidateDetailsLogsEffects } from './candidate-details.logs.effects';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,10 @@ import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.
   ],
   imports: [
     IonicPageModule.forChild(CandidateDetailsPage),
-    EffectsModule.forFeature([CandidateDetailsAnalyticsEffects]),
+    EffectsModule.forFeature([
+      CandidateDetailsAnalyticsEffects,
+      CandidateDetailsLogsEffects,
+    ]),
     ComponentsModule,
   ],
   providers: [

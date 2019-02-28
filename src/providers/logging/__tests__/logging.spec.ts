@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { UrlProvider } from '../../url/url';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { LoggingProvider } from '../logging';
-import { LogType, Log } from '../logging.constants';
+import { LogType, Log } from '../../../shared/models/log.model';
 
 describe('LoggingProvider', () => {
   let loggingProvider: LoggingProvider;

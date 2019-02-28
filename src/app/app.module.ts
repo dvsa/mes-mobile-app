@@ -25,6 +25,7 @@ import { Device } from '@ionic-native/device';
 import { LoggingProvider } from '../providers/logging/logging';
 import { AppInfoModule } from '../modules/app-info/app-info.module';
 import { AppInfoProvider } from '../providers/app-info/app-info';
+import { LogsModule } from '../modules/logs/logs.module';
 
 @NgModule({
   declarations: [App],
@@ -36,6 +37,7 @@ import { AppInfoProvider } from '../providers/app-info/app-info';
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
     AppInfoModule,
+    LogsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
