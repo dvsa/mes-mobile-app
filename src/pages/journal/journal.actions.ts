@@ -6,8 +6,8 @@ export const LOAD_JOURNAL = '[JournalPage] Load Journal';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
 export const LOAD_JOURNAL_FAILURE = '[JournalEffects] Load Journal Failure';
 
-export const LOAD_JOURNAL_SILENT = '[JournalPage] Load Journal Silent';
-export const LOAD_JOURNAL_SILENT_FAILURE = '[JournalPage] Load Journal Silent Failure';
+export const LOAD_JOURNAL_SILENT = '[JournalEffect] Load Journal Silent';
+export const LOAD_JOURNAL_SILENT_FAILURE = '[JournalEffect] Load Journal Silent Failure';
 
 export const SETUP_JOURNAL_POLLING = '[JournalPage] Setup Journal Polling';
 export const STOP_JOURNAL_POLLING = '[JournalPage] Stop Journal Polling';
