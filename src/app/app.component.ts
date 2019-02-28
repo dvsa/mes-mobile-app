@@ -48,7 +48,7 @@ export class App {
       translate.setDefaultLang(DEFAULT_LANG);
 
       if (platform.is('cordova')) {
-        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT_SECONDARY);
         insomnia.keepAwake();
         globalization.getPreferredLanguage().then((res) => {
           this.setDefaultLanguage(res.value);
