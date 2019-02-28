@@ -14,8 +14,7 @@ export class JournalLogsEffects {
 
   constructor(
     private actions$: Actions,
-    private authenticationProvider: AuthenticationProvider,
-    ) {}
+    private authenticationProvider: AuthenticationProvider) {}
 
   @Effect()
   loadJournalLogEffect$ = this.actions$.pipe(
