@@ -1,2 +1,3 @@
+import { Log } from '../../shared/models/log.model';
 
-export type LogsModel = any[];
+export type LogsModel = Log[];

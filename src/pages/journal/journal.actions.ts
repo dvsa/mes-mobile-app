@@ -3,11 +3,14 @@ import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
-export const LOAD_JOURNAL_SILENT = '[JournalPage] Load Journal Silently';
-export const SETUP_POLLING = '[JournalPage] Setup Polling';
-export const STOP_POLLING = '[JournalPage] Stop Polling';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
 export const LOAD_JOURNAL_FAILURE = '[JournalEffects] Load Journal Failure';
+
+export const LOAD_JOURNAL_SILENT = '[JournalPage] Load Journal Silent';
+export const LOAD_JOURNAL_SILENT_FAILURE = '[JournalPage] Load Journal Silent Failure';
+
+export const SETUP_JOURNAL_POLLING = '[JournalPage] Setup Journal Polling';
+export const STOP_JOURNAL_POLLING = '[JournalPage] Stop Journal Polling';
 export const UNLOAD_JOURNAL = '[JournalPage] Unload Journal';
 export const CLEAR_CHANGED_SLOT = '[JournalPage] Clear Changed Slot';
 export const UNSET_ERROR = '[JournalPage] Unset Error';
@@ -42,6 +45,11 @@ export class LoadJournalFailure implements Action {
   constructor(public payload: MesError) {}
 }
 
+export class LoadJournalSilentFailure implements Action {
+  readonly type = LOAD_JOURNAL_SILENT_FAILURE;
+  constructor(public payload: MesError) {}
+}
+
 export class UnloadJournal implements Action {
   readonly type = UNLOAD_JOURNAL;
 }
@@ -69,11 +77,11 @@ export class SetSelectedDate implements Action {
 }
 
 export class SetupPolling implements Action {
-  readonly type = SETUP_POLLING;
+  readonly type = SETUP_JOURNAL_POLLING;
 }
 
 export class StopPolling implements Action {
-  readonly type = STOP_POLLING;
+  readonly type = STOP_JOURNAL_POLLING;
 }
 
 export class JournalViewDidEnter implements Action {

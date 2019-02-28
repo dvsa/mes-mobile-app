@@ -1,12 +1,11 @@
 import { Action } from '@ngrx/store';
+import { Log } from '../../shared/models/log.model';
 
 export const SAVE_LOG = 'Save Log';
 
 export class SaveLog implements Action {
   readonly type = SAVE_LOG;
-
-  // TODO: specify the type
-  constructor(public payload: any) {}
+  constructor(public payload: Log) {}
 }
 
 export type Types =

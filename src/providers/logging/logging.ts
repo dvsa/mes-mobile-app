@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Log } from './logging.constants';
+import { Log } from '../../shared/models/log.model';
 import { UrlProvider } from '../url/url';
 
 @Injectable()

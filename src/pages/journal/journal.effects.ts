@@ -72,7 +72,7 @@ export class JournalEffects {
           // TODO: We don't need to use the store here, just return the action wrapped in an Observable
           this.store$.dispatch(new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
           console.log(err);
-          return of();
+          return of(new journalActions.LoadJournalSilentFailure(err));
         }),
       ),
     ),
@@ -94,7 +94,7 @@ export class JournalEffects {
 
   @Effect()
   pollingSetup$ = this.actions$.pipe(
-    ofType(journalActions.SETUP_POLLING),
+    ofType(journalActions.SETUP_JOURNAL_POLLING),
     switchMap(() => {
       // Switch map the manual refreshes so they restart the timer.
       const manualRefreshes$ = this.actions$.pipe(
@@ -114,7 +114,7 @@ export class JournalEffects {
 
       return pollsWhileOnline$
         .pipe(
-          takeUntil(this.actions$.pipe(ofType(journalActions.STOP_POLLING))),
+          takeUntil(this.actions$.pipe(ofType(journalActions.STOP_JOURNAL_POLLING))),
           mapTo({ type: journalActions.LOAD_JOURNAL_SILENT }),
         );
     }),
