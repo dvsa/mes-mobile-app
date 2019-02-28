@@ -9,10 +9,10 @@ import { TranslateService } from 'ng2-translate';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Globalization } from '@ionic-native/globalization';
-import { WelcomePage } from '../pages/welcome-page/welcome-page';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AnalyticsEventCategories, AnalyticsEvents } from '../providers/analytics/analytics.model';
+import { AllOnOneV2Page } from '../pages/all-on-one-v2/all-on-one-v2';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,7 +24,7 @@ export class App {
   ionContent: Content;
   @ViewChild('ionContent')
   header: Content;
-  rootPage: any = WelcomePage;
+  rootPage: any = AllOnOneV2Page;
 
   constructor(
     public platform: Platform,
