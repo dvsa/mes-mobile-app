@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
-      <button ion-button (click)="logout()">Logout</button>
+    <ion-buttons start (click)="logout()">
+      <button ion-button>Logout</button>
       <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
     </ion-buttons>
     <ion-title>Journal</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="refreshJournal()">
+    <ion-buttons end (click)="refreshJournal()">
+      <button ion-button>
         <ion-icon name="md-sync" class="refresh-button-icon"></ion-icon>
         <span>Refresh</span>
       </button>
