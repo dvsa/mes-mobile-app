@@ -17,7 +17,7 @@ export enum manoeuvre {
   OBSERVATION = 'Obs'
 }
 
-// declare let window: any;
+declare var CameraPreview: any;
 
 @Component({
   selector: 'page-all-on-one-v2',
@@ -96,6 +96,7 @@ export class AllOnOneV2Page implements AfterViewInit {
   ionViewDidEnter() {
     this.logging.setCurrentPage(AnalyticsScreenNames.TEST);
     this.menuCtrl.swipeEnable(false);
+    this.showCamera();
   }
 
   ionViewDidLeave() {
@@ -227,4 +228,19 @@ export class AllOnOneV2Page implements AfterViewInit {
     }
     return 'Practice Mode - Test Report';
   }
+
+  showCamera = () => {
+    const el: HTMLElement = this.container.nativeElement;
+
+    CameraPreview.startCamera({
+      x: 0,
+      y: el.getBoundingClientRect().top,
+      width: 275,
+      height: 175,
+      camera: CameraPreview.CAMERA_DIRECTION.FRONT,
+      tapPhoto: false,
+      previewDrag: false,
+      toBack: false
+    });
+  };
 }
