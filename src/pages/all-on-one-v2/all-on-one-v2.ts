@@ -97,7 +97,7 @@ export class AllOnOneV2Page implements AfterViewInit {
   ionViewDidEnter() {
     this.logging.setCurrentPage(AnalyticsScreenNames.TEST);
     this.menuCtrl.swipeEnable(false);
-    this.showCamera();
+    // this.showCamera();
   }
 
   ionViewDidLeave() {
