@@ -12,6 +12,8 @@ import { IJournal } from '../../providers/journal/journal-model';
  * Components.
  */
 
+declare let window: any;
+
 @Component({
   selector: 'report-header-v2',
   templateUrl: 'report-header-v2.html'
@@ -56,6 +58,9 @@ export class ReportHeaderV2Component {
   }
 
   dButtonClicked() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Clicked Danagerous Fault Button');
+    }
     this.hazardRecorderProvider.resetHazardRecording();
     if (this.isDButtonPressed) {
       this.isDButtonPressed = false;
@@ -73,6 +78,9 @@ export class ReportHeaderV2Component {
   }
 
   sButtonClicked() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Clicked Serious Fault Button');
+    }
     this.hazardRecorderProvider.resetHazardRecording();
     if (this.isSButtonPressed) {
       this.isSButtonPressed = false;

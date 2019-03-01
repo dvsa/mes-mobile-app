@@ -9,6 +9,8 @@ import { FaultStoreProvider } from '../../providers/fault-store/fault-store';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+declare let window: any;
+
 @Component({
   selector: 'totals',
   templateUrl: 'totals.html'
@@ -20,7 +22,8 @@ export class TotalsComponent {
   numDangerous: number = 0;
   numSerious: number = 0;
 
-  @Input() options;
+  @Input()
+  options;
 
   isRemoveButtonPressed = false;
 
@@ -73,6 +76,9 @@ export class TotalsComponent {
   }
 
   enableRemovingFaults() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Clicked Remove Dirving Faults Button');
+    }
     this.isRemoveButtonPressed = !this.isRemoveButtonPressed;
     this.hazardProvider.enableRemovingFaults(() => (this.isRemoveButtonPressed = false));
   }

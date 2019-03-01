@@ -18,6 +18,7 @@ export enum manoeuvre {
 }
 
 declare var CameraPreview: any;
+declare let window: any;
 
 @Component({
   selector: 'page-all-on-one-v2',
@@ -152,6 +153,9 @@ export class AllOnOneV2Page implements AfterViewInit {
   }
 
   showMePress() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Show Me Press');
+    }
     if (this.isShowMeDone) return;
     if (this.showMeEl.faultCounter > 0) return;
 
@@ -164,6 +168,9 @@ export class AllOnOneV2Page implements AfterViewInit {
   }
 
   showMeTap() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Show Me Tap');
+    }
     if (this.isShowMeDone && this.showMeEl.faultCounter > 0) return;
 
     const { serious, dangerous } = this.showMeEl;
@@ -177,6 +184,9 @@ export class AllOnOneV2Page implements AfterViewInit {
   // Controlled stop button actions
 
   controlledStopPress() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Controlled Stop Press');
+    }
     if (this.isControlledStopDone) return;
     if (this.controlledStopEl.faultCounter > 0) return;
 
@@ -189,6 +199,9 @@ export class AllOnOneV2Page implements AfterViewInit {
   }
 
   controlledStopTap() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Controlled Stop Tap');
+    }
     if (this.controlledStopEl.faultCounter > 0) return;
 
     const { serious, dangerous } = this.controlledStopEl;
@@ -200,11 +213,17 @@ export class AllOnOneV2Page implements AfterViewInit {
   }
 
   etaClick() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('ETA Click');
+    }
     this.summaryMetaDataService.updateETA('physical', this.etaPhysicalOption.isEnabled);
     this.summaryMetaDataService.updateETA('verbal', this.etaVerbalOption.isEnabled);
   }
 
   selectManoeuvre(manoeuvreName: string, $event: any) {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Selected Manoeuvre');
+    }
     this.selectedManoeuvre = $event.target.checked ? manoeuvreName : '';
     this.summaryMetaDataService.updateManoeuvre(this.manoeuvreBtns[this.selectedManoeuvre]);
 

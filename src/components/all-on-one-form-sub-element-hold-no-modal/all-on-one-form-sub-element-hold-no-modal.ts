@@ -6,6 +6,8 @@ import { CustomHammerConfigProvider } from '../../providers/custom-hammer-config
 import { AoopCustomHammerConfigPage } from '../../pages/aoop-custom-hammer-config/aoop-custom-hammer-config';
 
 declare const Hammer: any;
+declare let window: any;
+
 @Component({
   selector: 'all-on-one-form-sub-element-hold-no-modal',
   templateUrl: 'all-on-one-form-sub-element-hold-no-modal.html'
@@ -74,6 +76,9 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
   }
 
   addDrivingFault() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Added Driving Fault');
+    }
     // prevent fault marking
     if (this.hazardRecorderProvider.isRecordingOrRemoving() || this.dangerous || this.serious) {
       return;
@@ -114,6 +119,9 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
   }
 
   addSeriousFault() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Added Serious Fault');
+    }
     if (this.serious || this.dangerous) return;
     if (this.isManoeuvre() && (this.faultCounter > 0 || this.dangerous)) return;
     this.serious = true;
@@ -121,12 +129,18 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
   }
 
   removeSeriousFault() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Removed Serious Fault');
+    }
     if (!this.serious) return;
     this.serious = false;
     this.faultStore.removeFault(this.section, 'serious');
   }
 
   addDangerousFault() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Added Dangerous Fault');
+    }
     if (this.dangerous) return;
     if (this.isManoeuvre() && (this.faultCounter > 0 || this.serious)) return;
     this.dangerous = true;
@@ -134,6 +148,9 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
   }
 
   removeDangerousFault() {
+    if (window && window.UXCam) {
+      window.UXCam.logEvent('Removed Dangerous Fault');
+    }
     if (!this.dangerous) return;
     this.dangerous = false;
     this.faultStore.removeFault(this.section, 'dangerous');
