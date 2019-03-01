@@ -37,6 +37,7 @@ export class JournalEffects {
   }
 
   callJournalProvider$ = (mode: string) => {
+    console.log('######## calling callJournalProvider$ ############');
     this.store$.dispatch(new journalActions.JournalRefresh(mode));
     return of(null).pipe(
       withLatestFrom(
@@ -50,6 +51,8 @@ export class JournalEffects {
         ),
       ),
       switchMap(([action, lastRefreshed, slots]) => {
+        console.log('####### callJournalProvider$ switchMap ########');
+        console.log(action, lastRefreshed);
         return this.journalProvider
           .getJournal(lastRefreshed)
           .pipe(
@@ -57,7 +60,10 @@ export class JournalEffects {
             map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.extendWithEmptyDays(slots)),
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantSlots(slots)),
-            map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
+            map((slots: {[k: string]: SlotItem[]}) => {
+              console.log('##### END OF MAPPING ######');
+              return new journalActions.LoadJournalSuccess(slots);
+            }),
           );
       }),
     );
@@ -71,7 +77,6 @@ export class JournalEffects {
         catchError((err) => {
           // TODO: We don't need to use the store here, just return the action wrapped in an Observable
           this.store$.dispatch(new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
-          console.log(err);
           return of(new journalActions.LoadJournalSilentFailure(err));
         }),
       ),
@@ -82,13 +87,17 @@ export class JournalEffects {
   loadJournal$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL),
     switchMap(
-      () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
-        catchError((err) => {
-          // TODO: We don't need to use the store here, just return the action wrapped in an Observable
-          this.store$.dispatch(new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
-          return of(new journalActions.LoadJournalFailure(err));
-        }),
-      ),
+      () => {
+        console.log('##### IN SWITCHMAP ######');
+        return this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
+          catchError((err) => {
+            console.log('######## err calling callJournalProvider$ ############');
+            // TODO: We don't need to use the store here, just return the action wrapped in an Observable
+            this.store$.dispatch(new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
+            return of(new journalActions.LoadJournalFailure(err));
+          }),
+        );
+      },
     ),
   );
 

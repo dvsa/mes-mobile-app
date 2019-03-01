@@ -1,6 +1,6 @@
 
 import { TestBed } from '@angular/core/testing';
-// import { cold, hot } from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { JournalEffects } from '../journal.effects';
@@ -18,7 +18,9 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
-import { LoadJournal, JournalActionTypes, LoadJournalSuccess, LoadJournalFailure } from '../journal.actions';
+import { LoadJournal, LoadJournalSuccess, LoadJournalFailure } from '../journal.actions';
+import { map } from 'rxjs/operators';
+import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -33,7 +35,7 @@ export class TestActions extends Actions {
 fdescribe('Journal Effects', () => {
 
   let effects: JournalEffects;
-  let actions$: ReplaySubject<JournalActionTypes>;
+  let actions$: any;
   let journalProvider: JournalProvider;
 
   beforeEach(() => {
@@ -52,7 +54,7 @@ fdescribe('Journal Effects', () => {
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
-        { provide: Store, useClass: Store },
+        Store,
         SlotProvider,
       ],
     });
@@ -64,18 +66,44 @@ fdescribe('Journal Effects', () => {
     expect(effects).toBeTruthy();
   });
 
-  it('should dispatch the success action when the journal loads successfully', (done) => {
+  it('simple marble test', () => {
+    const source$ = cold('--a--b--c|', { a: 5, b: 10, c: 15 });
+    const expected$ = cold('--x--y--z|', { x: 10, y: 20, z: 30 });
+
+    const result$ = source$.pipe(map((x: number) => x * 2));
+    expect(result$).toBeObservable(expected$);
+  });
+
+  it('[Marble] should dispatch the success action when the journal loads successfully', () => {
+    const action = new LoadJournal();
+    const completion = new LoadJournalSuccess(journalSlotsDataMock);
+    spyOn(journalProvider, 'getJournal').and.callThrough();
+
+    actions$ = hot('--a-', { a: action });
+    const expected$ = cold('--b-', { b: completion });
+
+    // expect(effects.loadJournal$).toBeObservable(expected$);
+    effects.loadJournal$.subscribe((result) => {
+      expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(result instanceof LoadJournalSuccess).toBe(true);
+    });
+  });
+
+  // it('[Marble] should dispatch the failure action when the journal fails to load', (done) => {
+
+  // });
+
+  it('[ReplaySubject] should dispatch the success action when the journal loads successfully', (done) => {
     actions$.next(new LoadJournal());
     spyOn(journalProvider, 'getJournal').and.callThrough();
     effects.loadJournal$.subscribe((result) => {
       expect(journalProvider.getJournal).toHaveBeenCalled();
       expect(result instanceof LoadJournalSuccess).toBe(true);
-      actions$.next(result);
       done();
     });
   });
 
-  it('should dispatch the failure action when the journal fails to load', (done) => {
+  it('[ReplaySubject] should dispatch the failure action when the journal fails to load', (done) => {
     actions$.next(new LoadJournal());
     spyOn(journalProvider, 'getJournal').and.throwError;
     effects.loadJournal$.subscribe((result) => {
