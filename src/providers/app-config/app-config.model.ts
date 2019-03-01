@@ -13,6 +13,9 @@ export type AppConfig = {
     journalUrl: string,
     autoRefreshInterval: number
     numberOfDaysToView: number,
-  }
-  loggingUrl: string;
+  },
+  logging: {
+    url: string,
+    autoSendInterval: number,
+  },
 };

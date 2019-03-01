@@ -15,7 +15,7 @@ export class UrlProvider {
   }
 
   getLoggingServiceUrl(): any {
-    return this.appConfigProvider.getAppConfig().loggingUrl;
+    return this.appConfigProvider.getAppConfig().logging.url;
   }
 
 }

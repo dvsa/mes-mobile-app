@@ -30,5 +30,8 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     autoRefreshInterval: 1000 * 60 * 15,
     numberOfDaysToView: 7,
   },
-  loggingUrl: 'https://www.example.com/api/v1/logs',
+  logging: {
+    url: 'https://www.example.com/api/v1/logs',
+    autoSendInterval: 1000 * 60,
+  },
 };

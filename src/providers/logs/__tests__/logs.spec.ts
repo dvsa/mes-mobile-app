@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UrlProvider } from '../../url/url';
-import { UrlProviderMock } from '../../url/__mocks__/url.mock';
+import { UrlProviderMock, LOGGING_SERVICE_URL } from '../../url/__mocks__/url.mock';
 import { LogsProvider } from '../logs';
 import { LogType, Log } from '../../../shared/models/log.model';
 
@@ -52,7 +52,7 @@ describe('LogsProvider', () => {
         timestamp: new Date().getTime(),
       }]).subscribe();
 
-      httpMock.expectOne('https://www.example.com/api/v1/logs');
+      httpMock.expectOne(LOGGING_SERVICE_URL);
       expect(urlProviderMock.getLoggingServiceUrl).toHaveBeenCalled();
     });
   });

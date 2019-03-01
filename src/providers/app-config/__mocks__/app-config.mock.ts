@@ -28,6 +28,9 @@ export class AppConfigProviderMock {
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
       },
-      loggingUrl: localEnvironmentMock.loggingUrl,
+      logging: {
+        url: localEnvironmentMock.logging.url,
+        autoSendInterval: localEnvironmentMock.logging.autoSendInterval,
+      },
     } as AppConfig);
 }
