@@ -12,7 +12,7 @@ export const initialState: JournalModel = {
   selectedDate: DateTime.now().format('YYYY-MM-DD'),
 };
 
-export function journalReducer(state = initialState, action: journalActions.Types): JournalModel {
+export function journalReducer(state = initialState, action: journalActions.JournalActionTypes): JournalModel {
   switch (action.type) {
     case journalActions.LOAD_JOURNAL:
       return {
