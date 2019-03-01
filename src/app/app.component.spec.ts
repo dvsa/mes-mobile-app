@@ -9,10 +9,10 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { Globalization } from '@ionic-native/globalization';
 
 import { App } from './app.component';
-import { WelcomePage } from '../pages/welcome-page/welcome-page';
 import { Device } from '@ionic-native/device';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { AppConfigProvider } from '../providers/app-config/app-config';
+import { AllOnOneV2Page } from '../pages/all-on-one-v2/all-on-one-v2';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -92,8 +92,8 @@ describe('App', () => {
     expect(component).toBeDefined();
   });
 
-  it('should have WelcomePage as the root page', () => {
-    expect(component.rootPage).toBe(WelcomePage);
+  it('should have TestReportPage as the root page', () => {
+    expect(component.rootPage).toBe(AllOnOneV2Page);
   });
 
   it('should call the styleDefault method on statusBar', () => {

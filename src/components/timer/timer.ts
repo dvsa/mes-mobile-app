@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+declare let window: any;
+
 /**
  * Generated class for the TimerComponent component.
  *
@@ -23,6 +25,11 @@ export class TimerComponent {
   }
 
   startTimer() {
+    if (window && window.UXCam) {
+      window.UXCam.startWithKey('3r69p8gxk3v80m8');
+      console.log('UX Cam Fired');
+    }
+
     this.timerStarted = true;
 
     setInterval(() => {
