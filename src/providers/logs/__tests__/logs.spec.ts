@@ -50,7 +50,7 @@ describe('LogsProvider', () => {
         type: LogType.DEBUG,
         message: 'Successfully logged multiple',
         timestamp: new Date().getTime(),
-      }]);
+      }]).subscribe();
 
       httpMock.expectOne('https://www.example.com/api/v1/logs');
       expect(urlProviderMock.getLoggingServiceUrl).toHaveBeenCalled();
