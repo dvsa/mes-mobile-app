@@ -18,7 +18,7 @@
     "serve:local": "run-s update-mock-data copy-mock-data config:local ionic:serve",
     "ionic:deploy": "git push ionic master",
     "format:all": "npx prettier --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
-    "prepush": "gitSecrets scanRepo",
+    "prepush": "run-s gitSecrets scanRepo",
     "precommit": "",
     "test": "npm run update-mock-data && npm run test:jasmine",
     "test:jasmine": "karma start ./test-config/karma.conf.js",
