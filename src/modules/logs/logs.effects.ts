@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, mapTo } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -22,7 +22,10 @@ export class LogsEffects {
   startSendingLogsEffect$ = this.actions$.pipe(
     ofType(logsActions.START_SENDING_LOGS),
     switchMap(() => {
-      return interval(this.appConfigProvider.getAppConfig().logging.autoSendInterval);
+      return interval(this.appConfigProvider.getAppConfig().logging.autoSendInterval)
+        .pipe(
+          mapTo(new logsActions.SendLogs()),
+        );
     }),
   );
 

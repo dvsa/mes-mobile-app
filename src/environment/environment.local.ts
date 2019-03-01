@@ -19,6 +19,6 @@ export const environment: LocalEnvironmentFile = {
   },
   logging: {
     url: '',
-    autoSendInterval: 1000,
+    autoSendInterval: 1000 * 60,
   },
 };
