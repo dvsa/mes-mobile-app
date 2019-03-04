@@ -11,6 +11,8 @@
     .text-zoom-x-large & {
       line-height: 2em;
     }
+    height: 44px;
+    padding-top: 1px
   }
 }
 
@@ -41,6 +43,7 @@
 }
 
 .bar-button-ios {
+  height: 44px;
   padding: 10px 8px;
   .text-zoom-large & {
     font-size: 20px;
