@@ -1,6 +1,5 @@
 
 import { TestBed } from '@angular/core/testing';
-import { cold, hot } from 'jasmine-marbles';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { JournalEffects } from '../journal.effects';
@@ -19,8 +18,6 @@ import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/a
 import { NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import { LoadJournal, LoadJournalSuccess, LoadJournalFailure } from '../journal.actions';
-import { map } from 'rxjs/operators';
-import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -32,11 +29,12 @@ export class TestActions extends Actions {
   }
 }
 
-fdescribe('Journal Effects', () => {
+describe('Journal Effects', () => {
 
   let effects: JournalEffects;
   let actions$: any;
   let journalProvider: JournalProvider;
+  let slotProvider: SlotProvider;
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -60,56 +58,49 @@ fdescribe('Journal Effects', () => {
     });
     journalProvider = TestBed.get(JournalProvider);
     effects = TestBed.get(JournalEffects);
+    slotProvider = TestBed.get(SlotProvider);
   });
 
   it('should create the journal effects', () => {
     expect(effects).toBeTruthy();
   });
 
-  it('simple marble test', () => {
-    const source$ = cold('--a--b--c|', { a: 5, b: 10, c: 15 });
-    const expected$ = cold('--x--y--z|', { x: 10, y: 20, z: 30 });
-
-    const result$ = source$.pipe(map((x: number) => x * 2));
-    expect(result$).toBeObservable(expected$);
-  });
-
-  it('[Marble] should dispatch the success action when the journal loads successfully', () => {
-    const action = new LoadJournal();
-    const completion = new LoadJournalSuccess(journalSlotsDataMock);
-    spyOn(journalProvider, 'getJournal').and.callThrough();
-
-    actions$ = hot('--a-', { a: action });
-    const expected$ = cold('--b-', { b: completion });
-
-    // expect(effects.loadJournal$).toBeObservable(expected$);
-    effects.loadJournal$.subscribe((result) => {
-      expect(journalProvider.getJournal).toHaveBeenCalled();
-      expect(result instanceof LoadJournalSuccess).toBe(true);
-    });
-  });
-
-  // it('[Marble] should dispatch the failure action when the journal fails to load', (done) => {
-
-  // });
-
   it('[ReplaySubject] should dispatch the success action when the journal loads successfully', (done) => {
+
     actions$.next(new LoadJournal());
     spyOn(journalProvider, 'getJournal').and.callThrough();
+    spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
+    spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
+    spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+
     effects.loadJournal$.subscribe((result) => {
       expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(slotProvider.detectSlotChanges).toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
+      expect(slotProvider.extendWithEmptyDays).toHaveBeenCalled();
+      expect(slotProvider.getRelevantSlots).toHaveBeenCalled();
       expect(result instanceof LoadJournalSuccess).toBe(true);
       done();
     });
+
   });
 
   it('[ReplaySubject] should dispatch the failure action when the journal fails to load', (done) => {
+
     actions$.next(new LoadJournal());
     spyOn(journalProvider, 'getJournal').and.throwError;
+    spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
+    spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
+    spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+
     effects.loadJournal$.subscribe((result) => {
       expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(slotProvider.detectSlotChanges).toHaveBeenCalledTimes(0);
+      expect(slotProvider.extendWithEmptyDays).toHaveBeenCalledTimes(0);
+      expect(slotProvider.getRelevantSlots).toHaveBeenCalledTimes(0);
       expect(result instanceof LoadJournalFailure).toBe(true);
       done();
     });
+
   });
+
 });
