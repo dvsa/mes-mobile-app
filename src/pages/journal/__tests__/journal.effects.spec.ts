@@ -79,9 +79,8 @@ describe('Journal Effects', () => {
     spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
     // ACT
     actions$.next(new journalActions.LoadJournal());
-
+    // ASSERT
     effects.loadJournal$.subscribe((result) => {
-      // ASSERT
       expect(journalProvider.getJournal).toHaveBeenCalled();
       expect(slotProvider.detectSlotChanges).toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
       expect(slotProvider.extendWithEmptyDays).toHaveBeenCalled();
@@ -100,9 +99,8 @@ describe('Journal Effects', () => {
     spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
     // ACT
     actions$.next(new journalActions.LoadJournal());
-
+    // ASSERT
     effects.loadJournal$.subscribe((result) => {
-      // ASSERT
       expect(journalProvider.getJournal).toHaveBeenCalled();
       expect(slotProvider.detectSlotChanges).toHaveBeenCalledTimes(0);
       expect(slotProvider.extendWithEmptyDays).toHaveBeenCalledTimes(0);
@@ -121,8 +119,8 @@ describe('Journal Effects', () => {
     spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectNextDay());
+    // ASSERT
     effects.selectNextDayEffect$.subscribe((result) => {
-      // ASSERT
       expect(store$.dispatch).toHaveBeenCalledWith(new journalActions.JournalNavigateDay(nextDay));
       expect(result).toEqual(new journalActions.SetSelectedDate(nextDay));
       done();
@@ -139,9 +137,8 @@ describe('Journal Effects', () => {
     spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectPreviousDay());
-
+    // ASSERT
     effects.selectPreviousDayEffect$.subscribe((result) => {
-      // ASSERT
       expect(store$.dispatch).toHaveBeenCalledWith(new journalActions.JournalNavigateDay(selectedDate));
       expect(result).toEqual(new journalActions.SetSelectedDate(selectedDate));
       done();
