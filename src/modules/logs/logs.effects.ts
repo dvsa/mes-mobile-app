@@ -8,7 +8,7 @@ import { Store, select } from '@ngrx/store';
 
 import * as logsActions from './logs.actions';
 import { LogsProvider } from '../../providers/logs/logs';
-// import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { getLogsState } from './logs.reducer';
 
@@ -18,15 +18,14 @@ export class LogsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
     private logsProvider: LogsProvider,
-    // private appConfigProvider: AppConfigProvider,
+    private appConfigProvider: AppConfigProvider,
   ) {}
 
   @Effect()
   startSendingLogsEffect$ = this.actions$.pipe(
     ofType(logsActions.START_SENDING_LOGS),
     switchMap(() => {
-      // return interval(this.appConfigProvider.getAppConfig().logging.autoSendInterval)
-      return interval(60000)
+      return interval(this.appConfigProvider.getAppConfig().logging.autoSendInterval)
         .pipe(
           mapTo(new logsActions.SendLogs()),
         );

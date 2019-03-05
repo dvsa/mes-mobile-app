@@ -2,7 +2,7 @@ import { LocalEnvironmentFile } from './models/environment.model';
 
 export const environment: LocalEnvironmentFile = {
   isRemote: false,
-  configUrl: 'https://yvqsvwe4nh.execute-api.eu-west-1.amazonaws.com/szabi/configuration/{scope}',
+  configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   googleAnalyticsId: 'UA-129489007-3',
   authentication: {
     context: 'https://login.windows.net/common',
