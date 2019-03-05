@@ -8,7 +8,6 @@ import { TimeComponent } from '../components/time/time';
 import { CandidateLinkComponent } from '../components/candidate-link/candidate-link';
 import { TestOutcomeComponent } from '../components/test-outcome/test-outcome';
 import { TestCategoryComponent } from '../components/test-category/test-category';
-import { TestCategoryIconComponent } from '../../../components/test-category-icon/test-category-icon';
 import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-details';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-d
     LocationComponent,
     TestOutcomeComponent,
     TestCategoryComponent,
-    TestCategoryIconComponent,
     VehicleDetailsComponent,
   ],
   entryComponents: [

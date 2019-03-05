@@ -28,8 +28,7 @@
             <label>Test category</label>
           </ion-col>
           <ion-col col-8>
-            <span class="mes-data">{{(pageState.details$ | async).testCategory.text}}</span>
-            <img class="test-category-icon" src={{getCategoryIcon()}} />
+            <span class="mes-data">{{(pageState.details$ | async).testCategory}}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
