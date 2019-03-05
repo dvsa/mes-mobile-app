@@ -117,7 +117,7 @@ export const loggedInAs = (staffNumber) => {
 export const logout = () => {
   browser.sleep(TEST_CONFIG.ACTION_WAIT);
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-  const logout = element(by.xpath('//button/span[contains(text(), "Logout")]'));
+  const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
     if (result) {
       logout.click().then(() => {

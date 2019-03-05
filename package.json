@@ -24,7 +24,6 @@
     "test:jasmine": "karma start ./test-config/karma.conf.js",
     "test:jasmine-ci": "karma start ./test-config/karma.conf.js --single-run",
     "test:jasmine-coverage": "karma start ./test-config/karma.conf.js --coverage",
-    "test:e2e-browser-bdd": "protractor e2e-browser-bdd.conf.js",
     "test:e2e-simulator-bdd": "protractor e2e-simulator-bdd.conf.js",
     "test:generate-report": "node generateTestReport.js",
     "gitSecrets": "git secrets --scan",
