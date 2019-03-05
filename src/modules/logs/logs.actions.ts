@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Log } from '../../shared/models/log.model';
 
-export const SAVE_LOG = '[Anywhere] Save Log';
+export const SAVE_LOG = '[GLOBAL] Save Log';
 export const START_SENDING_LOGS = '[AppComponent] Start Sending Logs';
 export const SEND_LOGS = '[LogsEffects] Send Logs';
 export const SEND_LOGS_SUCCESS = '[LogsEffects] Send Logs Success';
