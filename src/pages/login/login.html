@@ -17,8 +17,12 @@
       <h3><span class="link" (click)="login()">Sign in</span> to continue.</h3>
     </div>
     <div *ngIf="isUnknownError()">
-        <h2>Sorry, something went wrong</h2>
-        <h3>Please try again later.</h3>
+      <h2>Sorry, something went wrong</h2>
+      <h3>Please try again later.</h3>
+    </div>
+    <div *ngIf="isDeviceInvalid()">
+      <h2>Unsupported device</h2>
+      <h3>Install the application on an approved device</h3>
     </div>
   </div>
 </ion-content>

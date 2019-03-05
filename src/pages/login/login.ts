@@ -4,9 +4,11 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
+import { DeviceError } from '../../providers/device/device.constants';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { DeviceProvider } from '../../providers/device/device';
 
 @IonicPage()
 @Component({
@@ -16,6 +18,7 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 export class LoginPage extends BasePageComponent {
 
   authenticationError: AuthenticationError;
+  deviceTypeError: DeviceError;
   hasUserLoggedOut: boolean = false;
 
   constructor(
@@ -26,6 +29,8 @@ export class LoginPage extends BasePageComponent {
     public splashScreen: SplashScreen,
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
+    public device: DeviceProvider,
+
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -45,7 +50,11 @@ export class LoginPage extends BasePageComponent {
 
   login = (): Promise<any> =>
     this.platform.ready()
-      .then(() =>
+    .then(() => {
+      const validDevice = this.device.validDeviceType();
+      if (!validDevice) {
+        this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
+      } else {
         this.authenticationProvider
           .login()
           .then(() => this.appConfigProvider.loadRemoteConfig())
@@ -56,10 +65,22 @@ export class LoginPage extends BasePageComponent {
               this.analytics.logException(error, true);
             }
             this.authenticationError = error;
-          }),
-      )
-      .then(() => this.hasUserLoggedOut = false)
-      .then(() => this.splashScreen.hide())
+          })
+          .then(() => this.hasUserLoggedOut = false)
+          .then(() => this.splashScreen.hide());
+      }
+    },
+    )
+    .then(() => this.appConfigProvider.loadRemoteConfig())
+    .then(() => this.analytics.initialiseAnalytics())
+    .then(() => this.hasUserLoggedOut = false)
+    .then(() => this.splashScreen.hide())
+
+  isDeviceInvalid = (): boolean => {
+    return !this.hasUserLoggedOut &&
+      this.deviceTypeError &&
+      this.deviceTypeError === DeviceError.UNSUPPORTED_DEVICE;
+  }
 
   isInternetConnectionError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;
@@ -75,5 +96,4 @@ export class LoginPage extends BasePageComponent {
       this.authenticationError.valueOf() !== AuthenticationError.USER_CANCELLED &&
       this.authenticationError.valueOf() !== AuthenticationError.NO_INTERNET;
   }
-
 }
