@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
-import { StartSendingLogs } from '../modules/logs/logs.actions';
 
 declare let window: any;
 
@@ -27,7 +26,6 @@ export class App {
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();
-        this.startSendingLogs();
       });
   }
 
@@ -39,10 +37,6 @@ export class App {
 
   loadAppInfo() {
     this.store$.dispatch(new LoadAppInfo());
-  }
-
-  startSendingLogs() {
-    this.store$.dispatch(new StartSendingLogs());
   }
 
   configureAccessibility() {

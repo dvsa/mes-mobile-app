@@ -47,12 +47,10 @@ export class LogsEffects {
         .logMultiple(logs)
         .pipe(
           map((response: any) => {
-            console.log('logMultiple, response', response);
             const timestamps = logs.map(log => log.timestamp);
             return of(new logsActions.SendLogsSuccess(timestamps));
           }),
           catchError((err: any) => {
-            console.log('logMultiple, error', err);
             return of(new logsActions.SendLogsFailure(err));
           }),
         );
