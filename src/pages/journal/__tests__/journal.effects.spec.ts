@@ -32,7 +32,7 @@ export class TestActions extends Actions {
   }
 }
 
-fdescribe('Journal Effects', () => {
+describe('Journal Effects', () => {
 
   let effects: JournalEffects;
   let actions$: any;
