@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { ComponentsModule } from '../../components/components.module';
 import { JournalPage } from './journal';
 import { journalReducer } from './journal.reducer';
 import { JournalEffects } from './journal.effects';
@@ -49,7 +48,6 @@ import { JournalLogsEffects } from './journal.logs.effects';
       JournalAnalyticsEffects,
       JournalLogsEffects,
     ]),
-    ComponentsModule,
   ],
   entryComponents: [
     TestSlotComponent,

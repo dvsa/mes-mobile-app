@@ -8,7 +8,7 @@ import { merge } from 'rxjs/observable/merge';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../../shared/models/store.model';
-import { TestCategory, testCategoryIcons } from '../../shared/models/test-category';
+import { TestCategory } from '../../shared/models/test-category';
 import { getJournalState } from '../journal/journal.reducer';
 import { Details } from './candidate-details.model';
 import { ClearChangedSlot } from '../journal/journal.actions';
@@ -40,7 +40,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   subscription: Subscription;
   slotId: number;
   slotChanged: boolean = false;
-  testCategoryIcons = testCategoryIcons;
   testCategory = TestCategory.B;
 
   constructor(
@@ -86,7 +85,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       name$,
       time$,
       details$.pipe(
-        map(details => this.testCategory = details.testCategory.icon as TestCategory),
+        map(details => this.testCategory = details.testCategory as TestCategory),
       ),
     );
 
@@ -107,9 +106,5 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
 
   handleDoneButtonClick(): void {
     this.navController.pop();
-  }
-
-  getCategoryIcon(): string {
-    return this.testCategoryIcons[this.testCategory];
   }
 }
