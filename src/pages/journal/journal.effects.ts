@@ -133,10 +133,8 @@ export class JournalEffects {
         map(canNavigateToPreviousDay),
       ),
     ),
+    filter(([action, selectedDate, canNavigateToPreviousDay]) => canNavigateToPreviousDay),
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
-      if (!canNavigateToPreviousDay) {
-        return of();
-      }
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
 
       // TODO: We don't need to use the store here, just return the action wrapped in an Observable
@@ -158,10 +156,8 @@ export class JournalEffects {
         map(canNavigateToNextDay),
       ),
     ),
+    filter(([action, selectedDate, canNavigateToNextDay]) => canNavigateToNextDay),
     switchMap(([action, selectedDate, canNavigateToNextDay]) => {
-      if (!canNavigateToNextDay) {
-        return of();
-      }
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
 
       // TODO: We don't need to use the store here, just return the action wrapped in an Observable
