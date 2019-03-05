@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Device } from '@ionic-native/device';
 
 const supportedDevices: string[] = [
-//   'iPad7,4',
-  '10.5',
+  'iPad7,4',
 ];
 
 @Injectable()
