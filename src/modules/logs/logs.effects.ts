@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 
-import { switchMap, map, catchError, mapTo, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 import { Store, select } from '@ngrx/store';
@@ -27,7 +27,7 @@ export class LogsEffects {
     switchMap(() => {
       return interval(this.appConfigProvider.getAppConfig().logging.autoSendInterval)
         .pipe(
-          mapTo(new logsActions.SendLogs()),
+          map(() => new logsActions.SendLogs()),
         );
     }),
   );
@@ -41,13 +41,12 @@ export class LogsEffects {
       ),
     ),
     switchMap(([action, logs]) => {
-      console.log(logs);
       return this.logsProvider
         .logMultiple(logs)
         .pipe(
           map((response: any) => {
             const timestamps = logs.map(log => log.timestamp);
-            return of(new logsActions.SendLogsSuccess(timestamps));
+            return new logsActions.SendLogsSuccess(timestamps);
           }),
           catchError((err: any) => {
             return of(new logsActions.SendLogsFailure(err));
