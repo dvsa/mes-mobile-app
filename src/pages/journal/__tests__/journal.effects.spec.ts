@@ -17,7 +17,10 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
-import { LoadJournal, LoadJournalSuccess, LoadJournalFailure } from '../journal.actions';
+import * as journalActions from '../journal.actions';
+import { JournalModel } from '../journal.model';
+import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
+import { DateTime, Duration } from '../../../shared/helpers/date-time';
 
 export class TestActions extends Actions {
   constructor() {
@@ -29,14 +32,16 @@ export class TestActions extends Actions {
   }
 }
 
-describe('Journal Effects', () => {
+fdescribe('Journal Effects', () => {
 
   let effects: JournalEffects;
   let actions$: any;
   let journalProvider: JournalProvider;
   let slotProvider: SlotProvider;
+  let store$: Store<JournalModel>;
 
   beforeEach(() => {
+    // ARRANGE
     actions$ = new ReplaySubject(1);
     TestBed.configureTestingModule({
       imports: [
@@ -59,45 +64,86 @@ describe('Journal Effects', () => {
     journalProvider = TestBed.get(JournalProvider);
     effects = TestBed.get(JournalEffects);
     slotProvider = TestBed.get(SlotProvider);
+    store$ = TestBed.get(Store);
   });
 
   it('should create the journal effects', () => {
     expect(effects).toBeTruthy();
   });
 
-  it('[ReplaySubject] should dispatch the success action when the journal loads successfully', (done) => {
-
-    actions$.next(new LoadJournal());
+  it('should dispatch the success action when the journal loads successfully', (done) => {
+    // ARRANGE
     spyOn(journalProvider, 'getJournal').and.callThrough();
     spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
     spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
     spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+    // ACT
+    actions$.next(new journalActions.LoadJournal());
 
     effects.loadJournal$.subscribe((result) => {
+      // ASSERT
       expect(journalProvider.getJournal).toHaveBeenCalled();
       expect(slotProvider.detectSlotChanges).toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
       expect(slotProvider.extendWithEmptyDays).toHaveBeenCalled();
       expect(slotProvider.getRelevantSlots).toHaveBeenCalled();
-      expect(result instanceof LoadJournalSuccess).toBe(true);
+      expect(result instanceof journalActions.LoadJournalSuccess).toBe(true);
       done();
     });
 
   });
 
-  it('[ReplaySubject] should dispatch the failure action when the journal fails to load', (done) => {
-
-    actions$.next(new LoadJournal());
+  it('should dispatch the failure action when the journal fails to load', (done) => {
+    // ARRANGE
     spyOn(journalProvider, 'getJournal').and.throwError;
     spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
     spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
     spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+    // ACT
+    actions$.next(new journalActions.LoadJournal());
 
     effects.loadJournal$.subscribe((result) => {
+      // ASSERT
       expect(journalProvider.getJournal).toHaveBeenCalled();
       expect(slotProvider.detectSlotChanges).toHaveBeenCalledTimes(0);
       expect(slotProvider.extendWithEmptyDays).toHaveBeenCalledTimes(0);
       expect(slotProvider.getRelevantSlots).toHaveBeenCalledTimes(0);
-      expect(result instanceof LoadJournalFailure).toBe(true);
+      expect(result instanceof journalActions.LoadJournalFailure).toBe(true);
+      done();
+    });
+
+  });
+
+  it('should dispatch the SetSelectedDate action with the correct date in the select next day effect', (done) => {
+    // ARRANGE
+    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
+    const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
+    store$.dispatch(new journalActions.LoadJournalSuccess(journalSlotsDataMock)); // Load in mock journal state
+    spyOn(store$, 'dispatch');
+    // ACT
+    actions$.next(new journalActions.SelectNextDay());
+    effects.selectNextDayEffect$.subscribe((result) => {
+      // ASSERT
+      expect(store$.dispatch).toHaveBeenCalledWith(new journalActions.JournalNavigateDay(nextDay));
+      expect(result).toEqual(new journalActions.SetSelectedDate(nextDay));
+      done();
+    });
+
+  });
+
+  it('should dispatch the SetSelectedDate action with the correct date in the select previous day effect', (done) => {
+    // ARRANGE
+    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
+    const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
+    store$.dispatch(new journalActions.LoadJournalSuccess(journalSlotsDataMock)); // Load in mock journal state
+    store$.dispatch(new journalActions.SetSelectedDate(nextDay));
+    spyOn(store$, 'dispatch');
+    // ACT
+    actions$.next(new journalActions.SelectPreviousDay());
+
+    effects.selectPreviousDayEffect$.subscribe((result) => {
+      // ASSERT
+      expect(store$.dispatch).toHaveBeenCalledWith(new journalActions.JournalNavigateDay(selectedDate));
+      expect(result).toEqual(new journalActions.SetSelectedDate(selectedDate));
       done();
     });
 
