@@ -1,7 +1,3 @@
-export class LoggingProviderMock {
-
-  log = jasmine.createSpy('log');
-
-  logMultiple = jasmine.createSpy('logMultiple');
-
+export class LogsProviderMock {
+  sendLogs = jasmine.createSpy('sendLogs');
 }

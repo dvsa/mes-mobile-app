@@ -17,7 +17,7 @@ export const environment: LocalEnvironmentFile = {
     autoRefreshInterval: 100000,
     numberOfDaysToView: 7,
   },
-  logging: {
+  logs: {
     url: '',
     autoSendInterval: 1000 * 60,
   },

@@ -14,7 +14,7 @@ export type AppConfig = {
     autoRefreshInterval: number
     numberOfDaysToView: number,
   },
-  logging: {
+  logs: {
     url: string,
     autoSendInterval: number,
   },

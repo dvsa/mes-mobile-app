@@ -1,5 +1,5 @@
 
-export const LOGGING_SERVICE_URL = 'https://www.example.com/api/v1/logs';
+export const LOGS_SERVICE_URL = 'https://www.example.com/api/v1/logs';
 
 export class UrlProviderMock {
 
@@ -8,9 +8,9 @@ export class UrlProviderMock {
     .and
     .returnValue('https://www.example.com/api/v1/journals/12345678/personal');
 
-  getLoggingServiceUrl =
-      jasmine.createSpy('getLoggingServiceUrl')
+  getLogsServiceUrl =
+      jasmine.createSpy('getLogsServiceUrl')
       .and
-      .returnValue(LOGGING_SERVICE_URL);
+      .returnValue(LOGS_SERVICE_URL);
 
 }

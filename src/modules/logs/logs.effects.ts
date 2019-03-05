@@ -25,7 +25,7 @@ export class LogsEffects {
   startSendingLogsEffect$ = this.actions$.pipe(
     ofType(logsActions.START_SENDING_LOGS),
     switchMap(() => {
-      return interval(this.appConfigProvider.getAppConfig().logging.autoSendInterval)
+      return interval(this.appConfigProvider.getAppConfig().logs.autoSendInterval)
         .pipe(
           map(() => new logsActions.SendLogs()),
         );
@@ -42,7 +42,7 @@ export class LogsEffects {
     ),
     switchMap(([action, logs]) => {
       return this.logsProvider
-        .logMultiple(logs)
+        .sendLogs(logs)
         .pipe(
           map((response: any) => {
             const timestamps = logs.map(log => log.timestamp);

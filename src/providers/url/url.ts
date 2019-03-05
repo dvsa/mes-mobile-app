@@ -14,8 +14,8 @@ export class UrlProvider {
     return urlTemplate.replace('{staffNumber}', isNil(staffNumber) ? '00000000' : staffNumber);
   }
 
-  getLoggingServiceUrl(): any {
-    return this.appConfigProvider.getAppConfig().logging.url;
+  getLogsServiceUrl(): any {
+    return this.appConfigProvider.getAppConfig().logs.url;
   }
 
 }

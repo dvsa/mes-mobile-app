@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UrlProvider } from '../../url/url';
-import { UrlProviderMock, LOGGING_SERVICE_URL } from '../../url/__mocks__/url.mock';
+import { UrlProviderMock, LOGS_SERVICE_URL } from '../../url/__mocks__/url.mock';
 import { LogsProvider } from '../logs';
-import { LogType, Log } from '../../../shared/models/log.model';
+import { LogType } from '../../../shared/models/log.model';
 
 describe('LogsProvider', () => {
   let logsProvider: LogsProvider;
@@ -26,34 +26,16 @@ describe('LogsProvider', () => {
     urlProviderMock = TestBed.get(UrlProvider);
   });
 
-  describe('log' , () => {
-    it('should successfully send a log', () => {
-
-      const testLog: Log = {
-        type: LogType.DEBUG,
-        message: 'Successfully logged one log',
-        timestamp: new Date().getTime(),
-      };
-
-      logsProvider.logMultiple =
-          jasmine.createSpy('logMultiple', logsProvider.logMultiple);
-
-      logsProvider.log(testLog);
-
-      expect(logsProvider.logMultiple).toHaveBeenCalledWith([testLog]);
-    });
-  });
-
-  describe('logMultiple', () => {
+  describe('sendLogs', () => {
     it('should sucessfully send the logs', () => {
-      logsProvider.logMultiple([{
+      logsProvider.sendLogs([{
         type: LogType.DEBUG,
         message: 'Successfully logged multiple',
         timestamp: new Date().getTime(),
       }]).subscribe();
 
-      httpMock.expectOne(LOGGING_SERVICE_URL);
-      expect(urlProviderMock.getLoggingServiceUrl).toHaveBeenCalled();
+      httpMock.expectOne(LOGS_SERVICE_URL);
+      expect(urlProviderMock.getLogsServiceUrl).toHaveBeenCalled();
     });
   });
 });

@@ -9,12 +9,8 @@ export class LogsProvider {
 
   constructor(public http: HttpClient, public urlProvider: UrlProvider) {}
 
-  public log = (log: Log): Observable<Object> => {
-    return this.logMultiple([log]);
-  }
-
-  public logMultiple = (logs : Log[]): Observable<Object> => {
-    const loggingServiceUrl = this.urlProvider.getLoggingServiceUrl();
-    return this.http.post(loggingServiceUrl, logs);
+  public sendLogs = (logs : Log[]): Observable<Object> => {
+    const logsServiceUrl = this.urlProvider.getLogsServiceUrl();
+    return this.http.post(logsServiceUrl, logs);
   }
 }
