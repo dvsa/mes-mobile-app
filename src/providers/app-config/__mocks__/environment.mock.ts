@@ -3,6 +3,7 @@ import { EnvironmentFile, LocalEnvironmentFile } from '../../../environment/mode
 export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
   configUrl: 'remote-url',
+  approvedDeviceIdentifiers: ['iPad7,4'],
   authentication: {
     context: 'remote-authentication-context',
     resourceUrl: 'remote-authentication-resource-url',
@@ -17,6 +18,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://www.example.com/api/v1/config/dev',
   googleAnalyticsId: 'local-ga-id',
+  approvedDeviceIdentifiers: ['iPad7,4'],
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',

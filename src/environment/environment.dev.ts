@@ -3,6 +3,7 @@ import { EnvironmentFile } from './models/environment.model';
 export const environment: EnvironmentFile = {
   isRemote: true,
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
+  approvedDeviceIdentifiers: ['iPad7,4'],
   authentication: {
     context: 'https://login.windows.net/common',
     resourceUrl: '09fdd68c-4f2f-45c2-be55-dd98104d4f74',

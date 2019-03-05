@@ -23,6 +23,7 @@ export class AppConfigProviderMock {
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
         employeeIdKey: localEnvironmentMock.authentication.employeeIdKey,
       },
+      approvedDeviceIdentifiers: localEnvironmentMock.approvedDeviceIdentifiers,
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,

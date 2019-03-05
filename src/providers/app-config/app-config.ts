@@ -40,6 +40,7 @@ export class AppConfigProvider {
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
       configUrl: data.configUrl,
+      approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,
@@ -53,6 +54,7 @@ export class AppConfigProvider {
   private mapRemoteConfig = (data: any) =>
     this.appConfig = merge({}, this.appConfig, {
       googleAnalyticsId: data.googleAnalyticsId,
+      approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       journal: {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,

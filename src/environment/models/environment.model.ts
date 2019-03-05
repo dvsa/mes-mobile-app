@@ -1,6 +1,7 @@
 export interface EnvironmentFile {
   isRemote: boolean;
   configUrl: string;
+  approvedDeviceIdentifiers: string[];
   authentication: {
     context: string;
     resourceUrl: string;

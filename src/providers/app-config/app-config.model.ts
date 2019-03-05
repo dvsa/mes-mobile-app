@@ -9,6 +9,7 @@ export type AppConfig = {
     logoutUrl: string,
     employeeIdKey: string,
   },
+  approvedDeviceIdentifiers: string[],
   journal: {
     journalUrl: string,
     autoRefreshInterval: number

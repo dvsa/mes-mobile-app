@@ -12,7 +12,7 @@ export class DeviceProvider implements IDeviceProvider {
     private device: Device,
     ) { }
 
-  validDeviceType = () => {
+  validDeviceType = (): boolean => {
     const model = this.device.model;
     if (supportedDevices.findIndex(device => device === model) > -1) {
       return true;
@@ -20,7 +20,7 @@ export class DeviceProvider implements IDeviceProvider {
     return false;
   }
 
-  getDeviceType = () => {
+  getDeviceType = (): string => {
     return this.device.model;
   }
 
