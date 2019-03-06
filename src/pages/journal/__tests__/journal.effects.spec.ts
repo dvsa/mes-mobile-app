@@ -163,6 +163,7 @@ describe('Journal Effects', () => {
       expect(appConfigProvider.getAppConfig).toHaveBeenCalled();
       expect(networkStateProvider.onNetworkChange).toHaveBeenCalled();
       expect(result).toEqual({ type: journalActions.LOAD_JOURNAL_SILENT });
+      actions$.next(new journalActions.StopPolling());
       done();
     });
   });
