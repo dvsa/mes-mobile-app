@@ -35,6 +35,7 @@
           <ion-col col-4>
             <label>Slot type</label>
             <img 
+              alt="Exclamation Indicator"
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
               *ngIf="(pageState.details$ | async).slotType.icon == 'ExclamationIndicator'"
@@ -80,7 +81,8 @@
         <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row">
           <ion-col col-4>
             <label>Entitlement Check</label>
-            <img 
+            <img
+              alt="Exclamation Indicator" 
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
             />
