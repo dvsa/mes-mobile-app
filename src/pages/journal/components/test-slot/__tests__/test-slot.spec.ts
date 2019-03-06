@@ -13,7 +13,6 @@ import { TestCategoryComponent } from '../../test-category/test-category';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
-import { TestCategoryIconComponent } from '../../../../../components/test-category-icon/test-category-icon';
 import { LanguageComponent } from '../../language/language';
 import { LocationComponent } from '../../location/location';
 
@@ -92,7 +91,6 @@ describe('TestSlotComponent', () => {
         MockComponent(TestOutcomeComponent),
         MockComponent(VehicleDetailsComponent),
         MockComponent(CandidateLinkComponent),
-        MockComponent(TestCategoryIconComponent),
       ],
       imports: [IonicModule],
       providers: [

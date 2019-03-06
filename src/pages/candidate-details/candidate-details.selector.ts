@@ -51,10 +51,7 @@ export const getCity = (address: any): string => {
 
 export const getDetails = (slot: any): Details => {
   const details: Details = {
-    testCategory: {
-      text: `Category ${slot.booking.application.testCategory}`,
-      icon: slot.booking.application.testCategory,
-    },
+    testCategory: `Category ${slot.booking.application.testCategory}`,
     slotType: getSlotTypeView(slot),
     driverNumber: slot.booking.candidate.driverNumber,
     applicationRef: slot.booking.application.applicationId,
