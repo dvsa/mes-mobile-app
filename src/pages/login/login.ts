@@ -62,7 +62,6 @@ export class LoginPage extends BasePageComponent {
       .then(() => this.analytics.initialiseAnalytics())
       .then(() => this.store$.dispatch(new StartSendingLogs()))
       .then(() => {
-        console.log(`checking device ${this.appConfigProvider.getAppConfig().approvedDeviceIdentifiers}`);
         const validDevice = this.deviceProvider.validDeviceType();
         if (!validDevice) {
           this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
