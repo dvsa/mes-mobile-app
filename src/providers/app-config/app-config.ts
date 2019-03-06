@@ -40,7 +40,6 @@ export class AppConfigProvider {
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
       configUrl: data.configUrl,
-      approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,

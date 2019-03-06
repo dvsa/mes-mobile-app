@@ -34,7 +34,7 @@ export class LoginPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
-    public device: DeviceProvider,
+    public deviceProvider: DeviceProvider,
 
   ) {
     super(platform, navCtrl, authenticationProvider, false);
@@ -56,48 +56,33 @@ export class LoginPage extends BasePageComponent {
   login = (): Promise<any> =>
     this.platform.ready()
     .then(() => {
-      if (this.deviceIsValid()) {
-        this.performLogin();
-      }
+      this.authenticationProvider
+      .login()
+      .then(() => this.appConfigProvider.loadRemoteConfig())
+      .then(() => this.analytics.initialiseAnalytics())
+      .then(() => this.store$.dispatch(new StartSendingLogs()))
+      .then(() => {
+        console.log(`checking device ${this.appConfigProvider.getAppConfig().approvedDeviceIdentifiers}`);
+        const validDevice = this.deviceProvider.validDeviceType();
+        if (!validDevice) {
+          this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
+          this.hasDeviceTypeError = true;
+          this.analytics.logException(`${this.deviceTypeError}-${this.deviceProvider.getDeviceType()}`, true);
+        } else {
+          this.navController.setRoot('JournalPage');
+        }
+      })
+      .catch((error: AuthenticationError) => {
+        if (error === AuthenticationError.USER_CANCELLED) {
+          this.analytics.logException(error, true);
+        }
+        this.authenticationError = error;
+        console.log(error);
+      })
+      .then(() => this.hasUserLoggedOut = false)
+      .then(() => this.splashScreen.hide());
     },
     )
-    .then(() => this.appConfigProvider.loadRemoteConfig())
-    .then(() => this.analytics.initialiseAnalytics())
-    .then(() => this.logAnyDeviceErrors())
-    .then(() => this.hasUserLoggedOut = false)
-    .then(() => this.splashScreen.hide())
-
-  deviceIsValid = (): boolean => {
-    const validDevice = this.device.validDeviceType();
-    if (!validDevice) {
-      this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
-      this.hasDeviceTypeError = true;
-    }
-    return validDevice;
-  }
-
-  logAnyDeviceErrors = (): void => {
-    if (this.hasDeviceTypeError) {
-      this.analytics.logException(`${this.deviceTypeError}-${this.device.getDeviceType()}`, true);
-    }
-  }
-
-  performLogin = (): void => {
-    this.authenticationProvider
-    .login()
-    .then(() => this.appConfigProvider.loadRemoteConfig())
-    .then(() => this.analytics.initialiseAnalytics())
-    .then(() => this.store$.dispatch(new StartSendingLogs()))
-    .then(() => this.navController.setRoot('JournalPage'))
-    .catch((error: AuthenticationError) => {
-      if (error === AuthenticationError.USER_CANCELLED) {
-        this.analytics.logException(error, true);
-      }
-      this.authenticationError = error;
-    })
-    .then(() => this.hasUserLoggedOut = false)
-    .then(() => this.splashScreen.hide());
-  }
 
   isInternetConnectionError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;

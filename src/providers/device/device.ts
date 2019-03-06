@@ -9,13 +9,13 @@ export class DeviceProvider implements IDeviceProvider {
 
   constructor(
     public appConfig: AppConfigProvider,
-    private device: Device,
+    public device: Device,
     ) {
-    this.supportedDevices = this.appConfig.getAppConfig().approvedDeviceIdentifiers;
   }
 
   validDeviceType = (): boolean => {
     const model = this.getDeviceType();
+    this.supportedDevices = this.appConfig.getAppConfig().approvedDeviceIdentifiers;
     if (this.supportedDevices.findIndex(device => device === model) > -1) {
       return true;
     }

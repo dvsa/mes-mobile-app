@@ -4,7 +4,6 @@ export const environment: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   googleAnalyticsId: 'UA-129489007-3',
-  approvedDeviceIdentifiers: ['iPad7,4'],
   authentication: {
     context: 'https://login.windows.net/common',
     resourceUrl: '09fdd68c-4f2f-45c2-be55-dd98104d4f74',

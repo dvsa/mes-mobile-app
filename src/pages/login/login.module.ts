@@ -14,6 +14,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   ],
   providers: [
     AnalyticsProvider,
+
   ],
 })
 export class LoginPageModule {}
