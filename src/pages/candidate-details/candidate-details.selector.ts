@@ -39,6 +39,23 @@ export const getPhoneNumber = (candidate: any): string => {
 export const getSlotTypeView = (slot: any): string => {
   const specialNeedsExtendedTest = slot.booking.application.specialNeedsExtendedTest;
   const specialNeedsCode = slot.booking.application.specialNeedsCode;
+  const vehicleSlotTypeCode = slot.vehicleSlotTypeCode;
+
+  // Check special case
+  // Jira ticket is available here for more details: https://jira.i-env.net/browse/MES-1698
+  if (vehicleSlotTypeCode === 6) {
+    if (specialNeedsCode !== SpecialNeedsCode.NONE) {
+      return 'Double Slot (Special Needs)';
+    }
+  }
+
+  if (vehicleSlotTypeCode === 14) {
+    if (specialNeedsCode !== SpecialNeedsCode.NONE) {
+      return 'Single Slot (Special Needs)';
+    }
+  }
+
+  // These are the non special cases
 
   if (specialNeedsExtendedTest) {
     if (specialNeedsCode === SpecialNeedsCode.NONE) {
