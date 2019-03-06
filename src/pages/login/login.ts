@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { Store } from '@ngrx/store';
 
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationError } from '../../providers/authentication/authentication.constants';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { StoreModel } from '../../shared/models/store.model';
+import { StartSendingLogs } from '../../modules/logs/logs.actions';
 
 @IonicPage()
 @Component({
@@ -22,8 +25,9 @@ export class LoginPage extends BasePageComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public authenticationProvider: AuthenticationProvider,
     public splashScreen: SplashScreen,
+    private store$: Store<StoreModel>,
+    public authenticationProvider: AuthenticationProvider,
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
   ) {
@@ -50,6 +54,7 @@ export class LoginPage extends BasePageComponent {
           .login()
           .then(() => this.appConfigProvider.loadRemoteConfig())
           .then(() => this.analytics.initialiseAnalytics())
+          .then(() => this.store$.dispatch(new StartSendingLogs()))
           .then(() => this.navController.setRoot('JournalPage'))
           .catch((error: AuthenticationError) => {
             if (error === AuthenticationError.USER_CANCELLED) {
