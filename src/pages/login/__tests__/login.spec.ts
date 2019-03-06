@@ -14,6 +14,8 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -23,6 +25,7 @@ describe('LoginPage', () => {
   let authenticationProvider: AuthenticationProvider;
   let appConfigProvider: AppConfigProvider;
   let store$: Store<StoreModel>;
+  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,6 +41,7 @@ describe('LoginPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -48,6 +52,7 @@ describe('LoginPage', () => {
         splashScreen = TestBed.get(SplashScreen);
         authenticationProvider = TestBed.get(AuthenticationProvider);
         appConfigProvider = TestBed.get(AppConfigProvider);
+        deviceProvider = TestBed.get(DeviceProvider);
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
@@ -65,6 +70,7 @@ describe('LoginPage', () => {
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.login();
       tick();
+      console.log(`device id ${deviceProvider.getDeviceType()}`);
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();

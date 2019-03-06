@@ -20,6 +20,7 @@ export class LoginPage extends BasePageComponent {
   authenticationError: AuthenticationError;
   deviceTypeError: DeviceError;
   hasUserLoggedOut: boolean = false;
+  hasDeviceTypeError: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -54,6 +55,7 @@ export class LoginPage extends BasePageComponent {
       const validDevice = this.device.validDeviceType();
       if (!validDevice) {
         this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
+        this.hasDeviceTypeError = true;
       } else {
         this.authenticationProvider
           .login()
@@ -77,7 +79,7 @@ export class LoginPage extends BasePageComponent {
     .then(() => this.splashScreen.hide())
 
   isDeviceInvalid = (): boolean => {
-    return !this.hasUserLoggedOut &&
+    return !this.hasDeviceTypeError &&
       this.deviceTypeError &&
       this.deviceTypeError === DeviceError.UNSUPPORTED_DEVICE;
   }
