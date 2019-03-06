@@ -20,7 +20,7 @@
       <h2>Sorry, something went wrong</h2>
       <h3>Please try again later.</h3>
     </div>
-    <div *ngIf="isDeviceInvalid()">
+    <div *ngIf="hasDeviceTypeError">
       <h2>Unsupported device</h2>
       <h3>Install the application on an approved device</h3>
     </div>

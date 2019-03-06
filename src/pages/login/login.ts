@@ -52,36 +52,46 @@ export class LoginPage extends BasePageComponent {
   login = (): Promise<any> =>
     this.platform.ready()
     .then(() => {
-      const validDevice = this.device.validDeviceType();
-      if (!validDevice) {
-        this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
-        this.hasDeviceTypeError = true;
-      } else {
-        this.authenticationProvider
-          .login()
-          .then(() => this.appConfigProvider.loadRemoteConfig())
-          .then(() => this.analytics.initialiseAnalytics())
-          .then(() => this.navController.setRoot('JournalPage'))
-          .catch((error: AuthenticationError) => {
-            if (error === AuthenticationError.USER_CANCELLED) {
-              this.analytics.logException(error, true);
-            }
-            this.authenticationError = error;
-          })
-          .then(() => this.hasUserLoggedOut = false)
-          .then(() => this.splashScreen.hide());
+      if (this.deviceIsValid()) {
+        this.performLogin();
       }
     },
     )
     .then(() => this.appConfigProvider.loadRemoteConfig())
     .then(() => this.analytics.initialiseAnalytics())
+    .then(() => this.logAnyDeviceErrors())
     .then(() => this.hasUserLoggedOut = false)
     .then(() => this.splashScreen.hide())
 
-  isDeviceInvalid = (): boolean => {
-    return !this.hasDeviceTypeError &&
-      this.deviceTypeError &&
-      this.deviceTypeError === DeviceError.UNSUPPORTED_DEVICE;
+  deviceIsValid = (): boolean => {
+    const validDevice = this.device.validDeviceType();
+    if (!validDevice) {
+      this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
+      this.hasDeviceTypeError = true;
+    }
+    return validDevice;
+  }
+
+  logAnyDeviceErrors = (): void => {
+    if (this.hasDeviceTypeError) {
+      this.analytics.logException(`${this.deviceTypeError}-${this.device.getDeviceType()}`, true);
+    }
+  }
+
+  performLogin = (): void => {
+    this.authenticationProvider
+    .login()
+    .then(() => this.appConfigProvider.loadRemoteConfig())
+    .then(() => this.analytics.initialiseAnalytics())
+    .then(() => this.navController.setRoot('JournalPage'))
+    .catch((error: AuthenticationError) => {
+      if (error === AuthenticationError.USER_CANCELLED) {
+        this.analytics.logException(error, true);
+      }
+      this.authenticationError = error;
+    })
+    .then(() => this.hasUserLoggedOut = false)
+    .then(() => this.splashScreen.hide());
   }
 
   isInternetConnectionError = (): boolean => {
