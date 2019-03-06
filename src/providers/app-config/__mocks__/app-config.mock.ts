@@ -10,9 +10,8 @@ export class AppConfigProviderMock {
     .and
     .returnValue(Promise.resolve());
 
-  public getAppConfig = jasmine.createSpy('getAppConfig')
-    .and
-    .returnValue({
+  public getAppConfig(): AppConfig {
+    return {
       configUrl: localEnvironmentMock.configUrl,
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
       authentication: {
@@ -32,5 +31,6 @@ export class AppConfigProviderMock {
         url: localEnvironmentMock.logs.url,
         autoSendInterval: localEnvironmentMock.logs.autoSendInterval,
       },
-    } as AppConfig);
+    };
+  }
 }
