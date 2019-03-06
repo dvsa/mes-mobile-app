@@ -18,7 +18,7 @@ export const environment: LocalEnvironmentFile = {
     numberOfDaysToView: 7,
   },
   logs: {
-    url: '',
+    url: 'https://szabi.mes.dev-dvsacloud.uk/v1/logs',
     autoSendInterval: 1000 * 60,
   },
 };

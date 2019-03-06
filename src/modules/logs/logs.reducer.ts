@@ -12,6 +12,8 @@ export function logsReducer(state = initialState, action: logsActions.Types) {
         ...state,
         action.payload,
       ];
+    case logsActions.SEND_LOGS_SUCCESS:
+      return state.filter(log => !action.timestamps.includes(log.timestamp));
     default:
       return state;
   }
