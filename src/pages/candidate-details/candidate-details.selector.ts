@@ -1,8 +1,7 @@
 import { isEmpty } from 'lodash';
 
 import { JournalModel } from '../journal/journal.model';
-import { Details, SlotTypeView } from './candidate-details.model';
-import { carStandardSlotType, carSpecialNeedsSlotType } from './candidate-details.constants';
+import { Details } from './candidate-details.model';
 
 export const getSlots = (journal: JournalModel) => {
   return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);
@@ -35,8 +34,32 @@ export const getPhoneNumber = (candidate: any): string => {
   return 'No phone number provided';
 };
 
-export const getSlotTypeView = (slot: any): SlotTypeView => {
-  return isEmpty(slot.booking.application.specialNeeds) ? carStandardSlotType : carSpecialNeedsSlotType;
+export const getSlotTypeView = (slot: any): string => {
+  const specialNeedsExtendedTest = slot.booking.application.specialNeedsExtendedTest;
+  const specialNeedsCode = slot.booking.application.specialNeedsCode;
+  const specialNeeds = slot.booking.application.specialNeeds;
+
+  if (specialNeedsExtendedTest === 0) {
+    if (isEmpty(specialNeeds)) {
+      return 'Standard Test';
+    }
+    if (specialNeedsCode === 'YES') {
+      return 'Standard Test';
+    }
+    return 'Special Needs Extra Time';
+  }
+
+  if (specialNeedsExtendedTest === 1) {
+    if (isEmpty(specialNeedsCode)) {
+      return 'Extended Test';
+    }
+    if (specialNeedsCode === 'YES') {
+      return 'Extended Test Special Needs';
+    }
+    return 'Extended Test Special Needs';
+  }
+
+  return 'Standard Test';
 };
 
 export const getCity = (address: any): string => {

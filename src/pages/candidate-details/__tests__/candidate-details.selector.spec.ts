@@ -5,7 +5,6 @@ import {
   getTime,
   getCandidateName,
   getPhoneNumber,
-  getSlotTypeView,
   getCity,
   isCandidateCommentsEmpty,
   getCandidateId,
@@ -13,7 +12,6 @@ import {
   isCandidateCheckNeeded,
   getSlotChanged,
 } from '../candidate-details.selector';
-import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
 
 describe('Candidate Details Selector', () => {
 
@@ -263,36 +261,6 @@ describe('Candidate Details Selector', () => {
       const result = getPhoneNumber(candidate);
 
       expect(result).toEqual('No phone number provided');
-    });
-  });
-
-  describe('getSlotTypeView', () => {
-    it('should return carStandardSlotType when no special needs is provided', () => {
-      const slot = {
-        booking: {
-          application: {
-            specialNeeds: '',
-          },
-        },
-      };
-
-      const result = getSlotTypeView(slot);
-
-      expect(result).toEqual(carStandardSlotType);
-    });
-
-    it('should return a double slot type when special needs are provided', () => {
-      const slot = {
-        booking: {
-          application: {
-            specialNeeds: 'Candidate has dyslexia',
-          },
-        },
-      };
-
-      const result = getSlotTypeView(slot);
-
-      expect(result).toEqual(carSpecialNeedsSlotType);
     });
   });
 
