@@ -5,8 +5,8 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { IonicModule, NavController } from 'ionic-angular';
-import { NavControllerMock } from 'ionic-mocks';
+import { IonicModule, ModalController } from 'ionic-angular';
+import { ModalControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import { CandidateLinkComponent } from '../candidate-link';
 
@@ -14,14 +14,14 @@ describe('CandidateLinkComponent', () => {
   let component: CandidateLinkComponent;
   let fixture: ComponentFixture<CandidateLinkComponent>;
 
-  const navControllerMock = NavControllerMock.instance();
+  const modalControllerMock = ModalControllerMock.instance();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CandidateLinkComponent],
       imports: [IonicModule.forRoot(CandidateLinkComponent)],
       providers: [
-        { provide: NavController, useFactory: () => navControllerMock },
+        { provide: ModalController, useFactory: () => modalControllerMock },
       ],
     })
       .compileComponents()
@@ -43,12 +43,13 @@ describe('CandidateLinkComponent', () => {
       expect(component).toBeDefined();
     });
 
-    it('should call the push function of navController and pass the right slotId', () => {
-      component.navigateToCandidateDetails();
+    it('should call the create function of navController and pass the right slotId', () => {
+      component.openCandidateDetailsModal();
 
-      expect(component.navController.push).toHaveBeenCalledWith(
+      expect(component.modalController.create).toHaveBeenCalledWith(
         'CandidateDetailsPage',
         { slotId: component.slotId, slotChanged: false },
+        { cssClass: 'modal-fullscreen' },
       );
     });
   });
@@ -106,14 +107,14 @@ describe('CandidateLinkComponent', () => {
       expect(renderedImages.length).toBe(0);
     });
 
-    it('should call navigateToCandidateDetails when the main div component is clicked', fakeAsync(() => {
+    it('should call openCandidateDetailsModal when the main div component is clicked', fakeAsync(() => {
       fixture.detectChanges();
-      spyOn(component, 'navigateToCandidateDetails');
+      spyOn(component, 'openCandidateDetailsModal');
       const button = fixture.debugElement.query(By.css('button'));
       button.triggerEventHandler('click', null);
       tick();
       fixture.detectChanges();
-      expect(component.navigateToCandidateDetails).toHaveBeenCalled();
+      expect(component.openCandidateDetailsModal).toHaveBeenCalled();
     }));
   });
 });
