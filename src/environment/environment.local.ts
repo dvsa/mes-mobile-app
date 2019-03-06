@@ -15,8 +15,11 @@ export const environment: LocalEnvironmentFile = {
   },
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
-    autoRefreshInterval: 20000,
+    autoRefreshInterval: 100000,
     numberOfDaysToView: 7,
   },
-  loggingUrl: '',
+  logs: {
+    url: 'https://dev.mes.dev-dvsacloud.uk/v1/logs/dev',
+    autoSendInterval: 1000 * 60,
+  },
 };

@@ -28,7 +28,7 @@ Given('I am on the journal page as {string}', (username) => {
   });
 
     // If the journal page is loaded we should have a refresh button
-  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//button/span/span[text() = "Refresh"]'))));
+  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//button/span/span/span[text() = "Refresh"]'))));
 });
 
 When('I view candidate details for {string}', (candidateName) => {
@@ -58,6 +58,6 @@ Then('I have a welsh slot for {string}', (candidateName) => {
 });
 
 When('I refresh the journal', () => {
-  const refreshButton = getElement(by.xpath('//button/span/span[text() = "Refresh"]'));
+  const refreshButton = getElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
   return clickElement(refreshButton);
 });

@@ -60,6 +60,9 @@ export class AppConfigProvider {
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
         numberOfDaysToView: data.journal.numberOfDaysToView,
       },
-      loggingUrl: data.loggingUrl,
+      logs: {
+        url: data.logs.url,
+        autoSendInterval: data.logs.autoSendInterval,
+      },
     } as AppConfig)
 }

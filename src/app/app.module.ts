@@ -22,7 +22,7 @@ import { Network } from '@ionic-native/network';
 import { NetworkStateProvider } from '../providers/network-state/network-state';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Device } from '@ionic-native/device';
-import { LoggingProvider } from '../providers/logging/logging';
+import { LogsProvider } from '../providers/logs/logs';
 import { AppInfoModule } from '../modules/app-info/app-info.module';
 import { AppInfoProvider } from '../providers/app-info/app-info';
 import { LogsModule } from '../modules/logs/logs.module';
@@ -63,7 +63,7 @@ import { DeviceProvider } from '../providers/device/device';
     NetworkStateProvider,
     GoogleAnalytics,
     Device,
-    LoggingProvider,
+    LogsProvider,
     AppInfoProvider,
     DeviceProvider,
   ],

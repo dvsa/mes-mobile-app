@@ -33,9 +33,9 @@ describe('UrlProvider', () => {
     });
   });
 
-  describe('getLoggingServiceUrl', () => {
+  describe('getLogsServiceUrl', () => {
     it('should return the correct url', () => {
-      const url = urlProvider.getLoggingServiceUrl();
+      const url = urlProvider.getLogsServiceUrl();
       expect(url).toBe('https://www.example.com/api/v1/logs');
     });
   });

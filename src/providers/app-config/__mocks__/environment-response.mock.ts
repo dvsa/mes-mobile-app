@@ -6,5 +6,8 @@ export const environmentResponseMock = {
     autoRefreshInterval: 5000,
     numberOfDaysToView: 7,
   },
-  loggingUrl: 'https://example.com/api/vi/logs',
+  logs: {
+    url: 'https://example.com/api/vi/logs',
+    autoSendInterval: 60000,
+  },
 };
