@@ -15,12 +15,13 @@ import { StoreModule, Store } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
-import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProvider, ConnectionStatus } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import * as journalActions from '../journal.actions';
 import { JournalModel } from '../journal.model';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
+import { of } from 'rxjs/observable/of';
 
 export class TestActions extends Actions {
   constructor() {
@@ -39,6 +40,8 @@ describe('Journal Effects', () => {
   let journalProvider: JournalProvider;
   let slotProvider: SlotProvider;
   let store$: Store<JournalModel>;
+  let networkStateProvider: NetworkStateProvider;
+  let appConfigProvider: AppConfigProvider;
 
   beforeEach(() => {
     // ARRANGE
@@ -50,7 +53,6 @@ describe('Journal Effects', () => {
         }),
       ],
       providers: [
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         JournalEffects,
         provideMockActions(() => actions$),
         { provide: JournalProvider, useClass: JournalProviderMock },
@@ -65,6 +67,8 @@ describe('Journal Effects', () => {
     effects = TestBed.get(JournalEffects);
     slotProvider = TestBed.get(SlotProvider);
     store$ = TestBed.get(Store);
+    networkStateProvider = TestBed.get(NetworkStateProvider);
+    appConfigProvider = TestBed.get(AppConfigProvider);
   });
 
   it('should create the journal effects', () => {
@@ -144,6 +148,23 @@ describe('Journal Effects', () => {
       done();
     });
 
+  });
+
+  it('should call the relevant methods and return correctly in the pollingSetup effect', (done) => {
+    // ARRANGE
+    spyOn(networkStateProvider, 'onNetworkChange').and.returnValue(of(ConnectionStatus.ONLINE)); // Force to online
+    spyOn(appConfigProvider, 'getAppConfig').and.returnValue({
+      journal: { autoRefreshInterval: 200 },
+    }); // Set autoRefreshInterval to 200ms for test
+    // ACT
+    actions$.next(new journalActions.SetupPolling());
+    // ASSERT
+    effects.pollingSetup$.subscribe((result) => {
+      expect(appConfigProvider.getAppConfig).toHaveBeenCalled();
+      expect(networkStateProvider.onNetworkChange).toHaveBeenCalled();
+      expect(result).toEqual({ type: journalActions.LOAD_JOURNAL_SILENT });
+      done();
+    });
   });
 
 });
