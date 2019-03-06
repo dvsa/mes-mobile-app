@@ -3,9 +3,9 @@ import { AppConfigProvider } from '../app-config/app-config';
 import { IAnalyticsProvider, AnalyticsEventCategories, AnalyticsDimensionIndices } from './analytics.model';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Platform } from 'ionic-angular';
-import { Device } from '@ionic-native/device';
 import { DateTime } from '../../shared/helpers/date-time';
 import { createHash } from 'crypto';
+import { DeviceProvider } from '../device/device';
 
 @Injectable()
 export class AnalyticsProvider implements IAnalyticsProvider {
@@ -16,7 +16,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     private appConfig: AppConfigProvider,
     public ga: GoogleAnalytics,
     public platform: Platform,
-    private device: Device,
+    private device: DeviceProvider,
   ) { }
 
   initialiseAnalytics = (): Promise<any> =>
@@ -24,7 +24,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
       this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
       this.platform.ready().then(() => {
         this.uniqueDeviceId = createHash('sha256')
-          .update(this.device.uuid ? this.device.uuid : 'defaultDevice').digest('hex');
+          .update(this.device.getUniqueDeviceId() ? this.device.getUniqueDeviceId() : 'defaultDevice').digest('hex');
         this.setUserId(this.uniqueDeviceId);
         this.enableExceptionReporting();
       });
