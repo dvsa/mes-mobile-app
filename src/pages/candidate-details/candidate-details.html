@@ -4,7 +4,7 @@
           <button ion-button center class="nav-close-text">Close <img class="close-cross" src="assets/imgs/journal/closebt2x.png"/></button>
       </ion-buttons>
     <ion-title>
-      Candidate Details
+      Test details - {{ pageState.name$ | async }}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -28,14 +28,14 @@
             <label>Test category</label>
           </ion-col>
           <ion-col col-8>
-            <span class="mes-data">{{(pageState.details$ | async).testCategory.text}}</span>
-            <img class="test-category-icon" src={{getCategoryIcon()}} />
+            <span class="mes-data">{{(pageState.details$ | async).testCategory}}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-4>
             <label>Slot type</label>
             <img 
+              alt="Exclamation Indicator"
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
               *ngIf="(pageState.details$ | async).slotType.icon == 'ExclamationIndicator'"
@@ -55,7 +55,7 @@
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-4>
-            <label>Application Ref.</label>
+            <label>Application number</label>
           </ion-col>
           <ion-col col-8>
             <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
@@ -81,15 +81,15 @@
         <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row">
           <ion-col col-4>
             <label>Entitlement Check</label>
-            <img 
+            <img
+              alt="Exclamation Indicator" 
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
             />
           </ion-col>
           <ion-col col-8>
             <div class="mes-data">
-              <div>Entitlement check is required.</div>
-              <div>Call deployment - 0191 201 8118</div>
+              <div>Entitlement check is required. Call deployment</div>
             </div>
           </ion-col>
         </ion-row>

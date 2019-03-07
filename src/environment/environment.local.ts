@@ -18,7 +18,7 @@ export const environment: LocalEnvironmentFile = {
     numberOfDaysToView: 7,
   },
   logs: {
-    url: '',
+    url: 'https://dev.mes.dev-dvsacloud.uk/v1/logs/dev',
     autoSendInterval: 1000 * 60,
   },
 };
