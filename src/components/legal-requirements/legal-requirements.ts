@@ -5,6 +5,8 @@ interface ILegals {
   name: string;
   complete: boolean;
 }
+
+declare let window: any;
 @Component({
   selector: 'legal-requirements',
   templateUrl: 'legal-requirements.html'
@@ -43,6 +45,9 @@ export class LegalRequirementsComponent {
     const updatedRequirements: any = this.requirements.map((req) => {
       if (req.id === reqId) {
         req.complete = req.complete ? false : true;
+      }
+      if (window && window.UXCam) {
+        window.UXCam.logEvent(`Toggle legal requirement: ${reqId}`);
       }
 
       return req;
