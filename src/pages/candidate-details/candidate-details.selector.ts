@@ -36,7 +36,7 @@ export const getPhoneNumber = (candidate: any): string => {
   return 'No phone number provided';
 };
 
-export const getSlotTypeView = (slot: any): string => {
+export const getSlotType = (slot: any): string => {
   const specialNeedsExtendedTest = slot.booking.application.specialNeedsExtendedTest;
   const specialNeedsCode = slot.booking.application.specialNeedsCode;
   const vehicleSlotTypeCode = slot.vehicleSlotTypeCode;
@@ -86,7 +86,7 @@ export const getCity = (address: any): string => {
 export const getDetails = (slot: any): Details => {
   const details: Details = {
     testCategory: `Category ${slot.booking.application.testCategory}`,
-    slotType: getSlotTypeView(slot),
+    slotType: getSlotType(slot),
     driverNumber: slot.booking.candidate.driverNumber,
     applicationRef: slot.booking.application.applicationId,
     candidateComments: {
