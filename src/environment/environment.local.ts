@@ -12,6 +12,10 @@ export const environment: LocalEnvironmentFile = {
     logoutUrl: 'https://login.windows.net/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/logout',
     employeeIdKey: 'extn.employeeId',
   },
+  approvedDeviceIdentifiers: [
+    'iPad7,4',
+    'x86_64',
+  ],
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
     autoRefreshInterval: 100000,
