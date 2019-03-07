@@ -1,5 +1,6 @@
 export const environmentResponseMock = {
   googleAnalyticsId: 'TEST-GA-ID',
+  approvedDeviceIdentifiers: ['iPad7,4'],
   journal: {
     journalUrl: 'remote-journal-url',
     autoRefreshInterval: 5000,

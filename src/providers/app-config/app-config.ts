@@ -53,6 +53,7 @@ export class AppConfigProvider {
   private mapRemoteConfig = (data: any) =>
     this.appConfig = merge({}, this.appConfig, {
       googleAnalyticsId: data.googleAnalyticsId,
+      approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       journal: {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
