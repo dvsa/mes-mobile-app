@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Name } from '../../../../shared/models/DJournal';
-import { NavController } from 'ionic-angular';
-
+import { ModalController } from 'ionic-angular';
+import { App } from '../../../../app/app.component';
 @Component({
   selector: 'candidate-link',
   templateUrl: 'candidate-link.html',
@@ -22,10 +22,17 @@ export class CandidateLinkComponent {
   @Input()
   isPortrait: boolean;
 
-  constructor(public navController: NavController) {
+  constructor(public modalController: ModalController, private app: App) {
   }
 
-  navigateToCandidateDetails() {
-    this.navController.push('CandidateDetailsPage', { slotId: this.slotId, slotChanged: this.slotChanged });
+  openCandidateDetailsModal() {
+    // Modals are at the same level as the ion-nav so are not getting the zoom level class,
+    // this needs to be passed in the create options.
+    const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
+    const profileModal = this.modalController.create(
+      'CandidateDetailsPage',
+      { slotId: this.slotId, slotChanged: this.slotChanged },
+      { cssClass: zoomClass });
+    profileModal.present();
   }
 }
