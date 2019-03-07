@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AuthenticationProvider } from '../authentication/authentication';
 import { UrlProvider } from '../url/url';
 import { DateTime } from '../../shared/helpers/date-time';
+import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class JournalProvider {
@@ -13,7 +15,7 @@ export class JournalProvider {
     public authProvider: AuthenticationProvider,
   ) {}
 
-  getJournal(lastRefreshed: Date) {
+  getJournal(lastRefreshed: Date): Observable<ExaminerWorkSchedule> {
     const staffNumber = this.authProvider.getEmployeeId();
     const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
     if (lastRefreshed === null) {

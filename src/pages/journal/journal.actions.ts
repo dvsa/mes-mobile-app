@@ -103,7 +103,7 @@ export class JournalRefresh implements Action {
   constructor(public mode: string) {}
 }
 
-export type Types =
+export type JournalActionTypes =
   | LoadJournal
   | LoadJournalSilent
   | LoadJournalSuccess
