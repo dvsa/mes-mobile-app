@@ -1,12 +1,5 @@
-
-import { SlotTypeView } from './candidate-details.model';
-
-export const carStandardSlotType: SlotTypeView = {
-  text: 'Single slot',
-  icon: 'NoIndicator',
-};
-
-export const carSpecialNeedsSlotType: SlotTypeView = {
-  text: 'Double slot (special needs)',
-  icon: 'ExclamationIndicator',
-};
+export enum SpecialNeedsCode {
+  NONE = 'NONE',
+  YES = 'YES',
+  EXTRA = 'EXTRA',
+}

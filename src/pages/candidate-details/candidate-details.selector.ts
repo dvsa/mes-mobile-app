@@ -1,8 +1,9 @@
 import { isEmpty } from 'lodash';
 
 import { JournalModel } from '../journal/journal.model';
-import { Details, SlotTypeView } from './candidate-details.model';
-import { carStandardSlotType, carSpecialNeedsSlotType } from './candidate-details.constants';
+import { Details } from './candidate-details.model';
+
+import { SpecialNeedsCode } from './candidate-details.constants';
 
 export const getSlots = (journal: JournalModel) => {
   return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);
@@ -35,8 +36,41 @@ export const getPhoneNumber = (candidate: any): string => {
   return 'No phone number provided';
 };
 
-export const getSlotTypeView = (slot: any): SlotTypeView => {
-  return isEmpty(slot.booking.application.specialNeeds) ? carStandardSlotType : carSpecialNeedsSlotType;
+export const getSlotType = (slot: any): string => {
+  const specialNeedsExtendedTest = slot.booking.application.specialNeedsExtendedTest;
+  const specialNeedsCode = slot.booking.application.specialNeedsCode;
+  const vehicleSlotTypeCode = slot.vehicleSlotTypeCode;
+
+  // Check special case
+  // Jira ticket is available here for more details: https://jira.i-env.net/browse/MES-1698
+  if (vehicleSlotTypeCode === 6) {
+    if (specialNeedsCode !== SpecialNeedsCode.NONE) {
+      return 'Double Slot (Special Needs)';
+    }
+  }
+
+  if (vehicleSlotTypeCode === 14) {
+    if (specialNeedsCode !== SpecialNeedsCode.NONE) {
+      return 'Single Slot (Special Needs)';
+    }
+  }
+
+  // These are the non special cases
+
+  if (specialNeedsExtendedTest) {
+    if (specialNeedsCode === SpecialNeedsCode.NONE) {
+      return 'Extended Test';
+    }
+    return 'Extended Test Special Needs';
+  }
+
+  if (specialNeedsCode === SpecialNeedsCode.NONE) {
+    return 'Standard Test';
+  }
+  if (specialNeedsCode === SpecialNeedsCode.YES) {
+    return 'Standard Test';
+  }
+  return 'Special Needs Extra Time';
 };
 
 export const getCity = (address: any): string => {
@@ -52,7 +86,7 @@ export const getCity = (address: any): string => {
 export const getDetails = (slot: any): Details => {
   const details: Details = {
     testCategory: `Category ${slot.booking.application.testCategory}`,
-    slotType: getSlotTypeView(slot),
+    slotType: getSlotType(slot),
     driverNumber: slot.booking.candidate.driverNumber,
     applicationRef: slot.booking.application.applicationId,
     candidateComments: {

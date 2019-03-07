@@ -1,12 +1,6 @@
-
-export type SlotTypeView = {
-  text: string,
-  icon: string,
-};
-
 export type Details = {
   testCategory: string,
-  slotType: SlotTypeView,
+  slotType: string,
   driverNumber: string,
   applicationRef: string,
   candidateComments: {

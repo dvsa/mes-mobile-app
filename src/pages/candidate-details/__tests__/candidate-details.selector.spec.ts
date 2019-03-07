@@ -1,19 +1,18 @@
-
 import {
   getSlots,
   getSlotById,
   getTime,
   getCandidateName,
   getPhoneNumber,
-  getSlotTypeView,
   getCity,
   isCandidateCommentsEmpty,
   getCandidateId,
   isCandidateSpecialNeeds,
   isCandidateCheckNeeded,
   getSlotChanged,
+  getSlotType,
 } from '../candidate-details.selector';
-import { carStandardSlotType, carSpecialNeedsSlotType } from '../candidate-details.constants';
+import { SpecialNeedsCode } from '../candidate-details.constants';
 
 describe('Candidate Details Selector', () => {
 
@@ -189,6 +188,148 @@ describe('Candidate Details Selector', () => {
     });
   });
 
+  describe('getSlotType', () => {
+    describe('vehicleSlotTypeCode is 6 and specialNeedsCode not NONE', () => {
+      it('should return Double Slot (Special Needs)', () => {
+        const slot = {
+          vehicleSlotTypeCode: 6,
+          booking: {
+            application: {
+              specialNeedsCode: SpecialNeedsCode.YES,
+            },
+          },
+        };
+        const result = getSlotType(slot);
+        expect(result).toBe('Double Slot (Special Needs)');
+      });
+    });
+
+    describe('vehicleSlotTypeCode is 14 and specialNeedsCode not NONE', () => {
+      it('should return Single Slot (Special Needs)', () => {
+        const slot = {
+          vehicleSlotTypeCode: 14,
+          booking: {
+            application: {
+              specialNeedsCode: SpecialNeedsCode.YES,
+            },
+          },
+        };
+        const result = getSlotType(slot);
+        expect(result).toBe('Single Slot (Special Needs)');
+      });
+    });
+
+    describe('specialNeedsExtendedTest is true', () => {
+      const specialNeedsExtendedTest = true;
+
+      describe('specialNeedsCode is NONE', () => {
+        const specialNeedsCode = SpecialNeedsCode.NONE;
+
+        it('should return Extended Test', () => {
+          const slot = {
+            booking: {
+              application: {
+                specialNeedsExtendedTest,
+                specialNeedsCode,
+              },
+            },
+          };
+          const result = getSlotType(slot);
+          expect(result).toBe('Extended Test');
+        });
+      });
+
+      describe('specialNeedsCode is YES', () => {
+        const specialNeedsCode = SpecialNeedsCode.YES;
+
+        it('should return Extended Test Special Needs', () => {
+          const slot = {
+            booking: {
+              application: {
+                specialNeedsExtendedTest,
+                specialNeedsCode,
+              },
+            },
+          };
+          const result = getSlotType(slot);
+          expect(result).toBe('Extended Test Special Needs');
+        });
+      });
+
+      describe('specialNeedsCode is EXTRA', () => {
+        const specialNeedsCode = SpecialNeedsCode.EXTRA;
+
+        it('should return Extended Test Special Needs', () => {
+          const slot = {
+            booking: {
+              application: {
+                specialNeedsExtendedTest,
+                specialNeedsCode,
+              },
+            },
+          };
+          const result = getSlotType(slot);
+          expect(result).toBe('Extended Test Special Needs');
+        });
+      });
+    });
+
+    describe('specialNeedsExtendedTest is false', () => {
+      const specialNeedsExtendedTest = false;
+
+      describe('specialNeedsCode is NONE', () => {
+        const specialNeedsCode = SpecialNeedsCode.NONE;
+
+        it('should return Standard Test', () => {
+          const slot = {
+            booking: {
+              application: {
+                specialNeedsExtendedTest,
+                specialNeedsCode,
+              },
+            },
+          };
+          const result = getSlotType(slot);
+          expect(result).toBe('Standard Test');
+        });
+      });
+
+      describe('specialNeedsCode is YES', () => {
+        const specialNeedsCode = SpecialNeedsCode.YES;
+
+        it('should return Standard Test', () => {
+          const slot = {
+            booking: {
+              application: {
+                specialNeedsExtendedTest,
+                specialNeedsCode,
+              },
+            },
+          };
+          const result = getSlotType(slot);
+          expect(result).toBe('Standard Test');
+        });
+      });
+
+      describe('specialNeedsCode is EXTRA', () => {
+        const specialNeedsCode = SpecialNeedsCode.EXTRA;
+
+        it('should return Special Needs Extra Time', () => {
+          const slot = {
+            booking: {
+              application: {
+                specialNeedsExtendedTest,
+                specialNeedsCode,
+              },
+            },
+          };
+          const result = getSlotType(slot);
+          expect(result).toBe('Special Needs Extra Time');
+        });
+      });
+    });
+  });
+
   describe('isCandidateCheckNeeded', () => {
     it('returns true if entitlement check needed', () => {
       const slot = {
@@ -263,36 +404,6 @@ describe('Candidate Details Selector', () => {
       const result = getPhoneNumber(candidate);
 
       expect(result).toEqual('No phone number provided');
-    });
-  });
-
-  describe('getSlotTypeView', () => {
-    it('should return carStandardSlotType when no special needs is provided', () => {
-      const slot = {
-        booking: {
-          application: {
-            specialNeeds: '',
-          },
-        },
-      };
-
-      const result = getSlotTypeView(slot);
-
-      expect(result).toEqual(carStandardSlotType);
-    });
-
-    it('should return a double slot type when special needs are provided', () => {
-      const slot = {
-        booking: {
-          application: {
-            specialNeeds: 'Candidate has dyslexia',
-          },
-        },
-      };
-
-      const result = getSlotTypeView(slot);
-
-      expect(result).toEqual(carSpecialNeedsSlotType);
     });
   });
 
