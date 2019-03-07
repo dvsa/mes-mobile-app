@@ -51,6 +51,7 @@ export class ReportHeaderV2Component {
   }
 
   goToTestResultPage() {
+    window.UXCam.stopSessionAndUploadData();
     if (this.options.trainingMode) {
       return this.navCtrl.popToRoot();
     }
