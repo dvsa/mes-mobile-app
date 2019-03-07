@@ -59,15 +59,15 @@ class DateUpdater {
     if (!this.data.advanceTestSlots || this.data.advanceTestSlots.length === 0) { return this; }
 
     const newDate = this.createMoment();
-    let dateProcessing = this.createMoment(this.data.advanceTestSlots[0].start);
+    let dateProcessing = this.createMoment(this.data.advanceTestSlots[0].slotDetail.start);
 
     this.data.advanceTestSlots.forEach(slot => {
-      const slotDate = this.createMoment(slot.start);
+      const slotDate = this.createMoment(slot.slotDetail.start);
 
       dateProcessing =
         this.caculateNewProcessingDate(dateProcessing, slotDate, newDate);
 
-      slot.start = this.updateDate(slotDate, newDate);
+      slot.slotDetail.start = this.updateDate(slotDate, newDate);
     });
 
     return this;
