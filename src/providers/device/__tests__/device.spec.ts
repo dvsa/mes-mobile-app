@@ -37,4 +37,12 @@ describe('Device Provider', () => {
       expect(deviceValid).toBeFalsy();
     });
   });
+
+  describe('getUniqueDeviceId', () => {
+    it('should return the unique device id', () => {
+      const deviceId = device.getUniqueDeviceId();
+      expect(deviceId).toBe('A1234');
+    });
+  });
+
 });
