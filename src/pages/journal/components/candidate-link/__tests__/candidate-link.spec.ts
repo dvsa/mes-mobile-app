@@ -7,7 +7,7 @@ import {
   tick,
 } from '@angular/core/testing';
 import { IonicModule, ModalController } from 'ionic-angular';
-import { ModalControllerMock, StatusBarMock} from 'ionic-mocks';
+import { ModalControllerMock, StatusBarMock } from 'ionic-mocks';
 import { StatusBar } from '@ionic-native/status-bar';
 import { By } from '@angular/platform-browser';
 import { CandidateLinkComponent } from '../candidate-link';
