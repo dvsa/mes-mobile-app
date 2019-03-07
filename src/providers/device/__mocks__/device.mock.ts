@@ -1,6 +1,5 @@
 import { IDeviceProvider } from '../device.model';
 import { Injectable } from '@angular/core';
-// import { Device } from '@ionic-native/device';
 
 const supportedDevices: string[] = [
   'iPad7,4',
@@ -9,7 +8,6 @@ const supportedDevices: string[] = [
 @Injectable()
 export class DeviceProviderMock implements IDeviceProvider {
   constructor(
-    // private device: Device,
     ) { }
 
   validDeviceType = (): boolean => {
