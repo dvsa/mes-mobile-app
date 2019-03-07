@@ -77,7 +77,7 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
 
   addDrivingFault() {
     if (window && window.UXCam) {
-      window.UXCam.logEvent('Added Driving Fault');
+      window.UXCam.logEvent(`Added Driving Fault: ${this.section}`);
     }
     // prevent fault marking
     if (this.hazardRecorderProvider.isRecordingOrRemoving() || this.dangerous || this.serious) {
