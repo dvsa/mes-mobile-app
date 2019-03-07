@@ -61,16 +61,7 @@ export class LoginPage extends BasePageComponent {
       .then(() => this.appConfigProvider.loadRemoteConfig())
       .then(() => this.analytics.initialiseAnalytics())
       .then(() => this.store$.dispatch(new StartSendingLogs()))
-      .then(() => {
-        const validDevice = this.deviceProvider.validDeviceType();
-        if (!validDevice) {
-          this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
-          this.hasDeviceTypeError = true;
-          this.analytics.logException(`${this.deviceTypeError}-${this.deviceProvider.getDeviceType()}`, true);
-        } else {
-          this.navController.setRoot('JournalPage');
-        }
-      })
+      .then(() => this.validateDeviceType())
       .catch((error: AuthenticationError) => {
         if (error === AuthenticationError.USER_CANCELLED) {
           this.analytics.logException(error, true);
@@ -83,6 +74,16 @@ export class LoginPage extends BasePageComponent {
     },
     )
 
+  validateDeviceType = (): void => {
+    const validDevice = this.deviceProvider.validDeviceType();
+    if (!validDevice) {
+      this.deviceTypeError = DeviceError.UNSUPPORTED_DEVICE;
+      this.hasDeviceTypeError = true;
+      this.analytics.logException(`${this.deviceTypeError}-${this.deviceProvider.getDeviceType()}`, true);
+    } else {
+      this.navController.setRoot('JournalPage');
+    }
+  }
   isInternetConnectionError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;
   }
