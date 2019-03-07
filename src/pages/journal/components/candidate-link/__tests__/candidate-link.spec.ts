@@ -1,3 +1,4 @@
+import { App } from './../../../../../app/app.component';
 import {
   async,
   ComponentFixture,
@@ -6,9 +7,18 @@ import {
   tick,
 } from '@angular/core/testing';
 import { IonicModule, ModalController } from 'ionic-angular';
-import { ModalControllerMock } from 'ionic-mocks';
+import { ModalControllerMock, StatusBarMock} from 'ionic-mocks';
+import { StatusBar } from '@ionic-native/status-bar';
 import { By } from '@angular/platform-browser';
 import { CandidateLinkComponent } from '../candidate-link';
+import { Store } from '@ngrx/store';
+
+class MockAppService extends App {
+  getTextZoomClass() {
+    return 'text-zoom-regular';
+  }
+}
+class MockStore{}
 
 describe('CandidateLinkComponent', () => {
   let component: CandidateLinkComponent;
@@ -21,7 +31,10 @@ describe('CandidateLinkComponent', () => {
       declarations: [CandidateLinkComponent],
       imports: [IonicModule.forRoot(CandidateLinkComponent)],
       providers: [
+        { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
         { provide: ModalController, useFactory: () => modalControllerMock },
+        { provide: App, useClass: MockAppService },
+        { provide: Store, useClass: MockStore },
       ],
     })
       .compileComponents()
@@ -43,13 +56,13 @@ describe('CandidateLinkComponent', () => {
       expect(component).toBeDefined();
     });
 
-    it('should call the create function of navController and pass the right slotId', () => {
+    it('should call the create function of modalController and pass the right slotId', () => {
       component.openCandidateDetailsModal();
 
       expect(component.modalController.create).toHaveBeenCalledWith(
         'CandidateDetailsPage',
         { slotId: component.slotId, slotChanged: false },
-        { cssClass: 'modal-fullscreen' },
+        { cssClass: 'modal-fullscreen text-zoom-regular' },
       );
     });
   });

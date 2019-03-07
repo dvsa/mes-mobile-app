@@ -23,6 +23,7 @@
 @import '../theme/sass-partials/_toast.scss';
 @import '../theme/sass-partials/_box.scss';
 @import '../theme/sass-partials/_row.scss';
+@import '../theme/sass-partials/_modal.scss';
 @import '../theme/sass-partials/buttons.scss';
 
 @import '../theme/sass-modules/_typography.scss';
@@ -34,14 +35,4 @@ img {
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-}
-.modal-fullscreen {
-  .modal-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-  }
 }
