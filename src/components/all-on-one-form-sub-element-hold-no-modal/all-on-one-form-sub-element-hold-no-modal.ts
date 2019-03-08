@@ -107,6 +107,9 @@ export class AllOnOneFormSubElementHoldNoModalComponent {
       ) {
         this.removeSeriousFault();
       } else if (this.faultCounter > 0) {
+        if (window && window.UXCam) {
+          window.UXCam.logEvent(`Removed Driving Fault: ${this.section}`);
+        }
         this.faultStore.removeFault(this.section, 'fault');
       }
     } else if (this.hazardRecorderProvider.isDangerousRecordingEnabled) {
