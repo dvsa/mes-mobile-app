@@ -13,6 +13,7 @@ export interface EnvironmentFile {
 
 export interface LocalEnvironmentFile extends EnvironmentFile {
   googleAnalyticsId: string;
+  approvedDeviceIdentifiers: string[];
   journal: {
     journalUrl: string;
     autoRefreshInterval: number;
