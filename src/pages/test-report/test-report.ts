@@ -5,6 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { TestReportViewDidEnter } from './test-report.actions';
+import { DeviceProvider } from '../../providers/device/device';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class TestReportPage extends BasePageComponent {
 
   constructor(
     private store$: Store<StoreModel>,
+    private deviceProvider: DeviceProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -25,6 +27,10 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
+    this.deviceProvider.enableSingleAppMode();
   }
 
+  ionViewDidLeave(): void {
+    this.deviceProvider.disableSingleAppMode();
+  }
 }
