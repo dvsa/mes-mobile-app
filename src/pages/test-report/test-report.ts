@@ -27,10 +27,10 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
-    this.deviceProvider.enableSingleAppMode(true);
+    this.deviceProvider.enableSingleAppMode();
   }
 
   ionViewDidLeave(): void {
-    this.deviceProvider.enableSingleAppMode(false);
+    this.deviceProvider.disableSingleAppMode();
   }
 }

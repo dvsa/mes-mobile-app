@@ -32,12 +32,25 @@ export class DeviceProvider implements IDeviceProvider {
     return this.device.uuid;
   }
 
-  enableSingleAppMode = (enabled: boolean):  void => {
-    if (cordova && cordova.plugins && cordova.plugins.ASAM) {
-      cordova.plugins.ASAM.toggle(enabled, (didSucceed: Boolean) => {
-        console.log(`Call to ${enabled ? 'enable' : 'disable'} ASAM ${didSucceed ? 'succeeded' : 'failed'}`);
-      });
-    }
+  enableSingleAppMode = async (): Promise<boolean> => {
+    return await this.setSingleAppMode(true);
+  }
+
+  disableSingleAppMode = async (): Promise<boolean> => {
+    return await this.setSingleAppMode(false);
+  }
+
+  setSingleAppMode = (enabled: boolean): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+      if (cordova && cordova.plugins && cordova.plugins.ASAM) {
+        cordova.plugins.ASAM.toggle(enabled, (didSucceed: boolean) => {
+          console.log(`Call to ${enabled ? 'enable' : 'disable'} ASAM ${didSucceed ? 'succeeded' : 'failed'}`);
+          return resolve(didSucceed);
+        });
+      } else {
+        return reject(false);
+      }
+    });
   }
 
 }
