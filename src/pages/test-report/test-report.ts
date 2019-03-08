@@ -5,8 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { TestReportViewDidEnter } from './test-report.actions';
-
-declare let cordova: any;
+import { DeviceProvider } from '../../providers/device/device';
 
 @IonicPage()
 @Component({
@@ -17,6 +16,7 @@ export class TestReportPage extends BasePageComponent {
 
   constructor(
     private store$: Store<StoreModel>,
+    private deviceProvider: DeviceProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -27,18 +27,10 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
-    this.toggleASAM(true);
+    this.deviceProvider.enableSingleAppMode(true);
   }
 
   ionViewDidLeave(): void {
-    this.toggleASAM(false);
-  }
-
-  toggleASAM(enabled: boolean) {
-    if (cordova && cordova.plugins && cordova.plugins.ASAM) {
-      cordova.plugins.ASAM.toggle(enabled, (didSucceed: Boolean) => {
-        console.log(`Call to ${enabled ? 'enable' : 'disable'} ASAM ${didSucceed ? 'succeeded' : 'failed'}`);
-      });
-    }
+    this.deviceProvider.enableSingleAppMode(false);
   }
 }
