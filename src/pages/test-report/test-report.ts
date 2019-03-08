@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { TestReportViewDidEnter } from './test-report.actions';
 
+declare let cordova: any;
+
 @IonicPage()
 @Component({
   selector: 'page-test-report',
@@ -25,6 +27,18 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
+    this.toggleASAM(true);
   }
 
+  ionViewDidLeave(): void {
+    this.toggleASAM(false);
+  }
+
+  toggleASAM(enabled: boolean) {
+    if (cordova && cordova.plugins && cordova.plugins.ASAM) {
+      cordova.plugins.ASAM.toggle(enabled, (didSucceed: Boolean) => {
+        console.log(`Call to ${enabled ? 'enable' : 'disable'} ASAM ${didSucceed ? 'succeeded' : 'failed'}`);
+      });
+    }
+  }
 }
