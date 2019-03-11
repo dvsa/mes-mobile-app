@@ -52,6 +52,7 @@
     "@ionic-native/device": "^4.18.0",
     "@ionic-native/google-analytics": "^4.20.0",
     "@ionic-native/in-app-browser": "^4.18.0",
+    "@ionic-native/insomnia": "^4.20.0",
     "@ionic-native/mobile-accessibility": "^5.1.0",
     "@ionic-native/ms-adal": "^4.18.0",
     "@ionic-native/network": "^4.20.0",
@@ -156,7 +157,8 @@
       "cordova-plugin-google-analytics": {},
       "cordova-plugin-app-version": {},
       "phonegap-plugin-mobile-accessibility": {},
-      "cordova-plugin-autonomous-single-app-mode": {}
+      "cordova-plugin-autonomous-single-app-mode": {},
+      "cordova-plugin-insomnia": {}
     },
     "platforms": [
       "ios"
