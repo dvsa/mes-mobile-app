@@ -52,6 +52,7 @@
     "@ionic-native/device": "^4.18.0",
     "@ionic-native/google-analytics": "^4.20.0",
     "@ionic-native/in-app-browser": "^4.18.0",
+    "@ionic-native/insomnia": "^4.20.0",
     "@ionic-native/mobile-accessibility": "^5.1.0",
     "@ionic-native/ms-adal": "^4.18.0",
     "@ionic-native/network": "^4.20.0",
@@ -64,6 +65,7 @@
     "asam-plugin": "git+https://github.com/dvsa/cordova-plugin-autonomous-single-app-mode.git",
     "cordova-ios": "^4.5.5",
     "cordova-plugin-app-version": "^0.1.9",
+    "cordova-plugin-autonomous-single-app-mode": "git+https://github.com/dvsa/cordova-plugin-autonomous-single-app-mode.git",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-google-analytics": "^1.8.6",
@@ -155,7 +157,8 @@
       "cordova-plugin-google-analytics": {},
       "cordova-plugin-app-version": {},
       "phonegap-plugin-mobile-accessibility": {},
-      "cordova-plugin-autonomous-single-app-mode": {}
+      "cordova-plugin-autonomous-single-app-mode": {},
+      "cordova-plugin-insomnia": {}
     },
     "platforms": [
       "ios"

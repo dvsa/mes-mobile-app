@@ -12,7 +12,7 @@ import { CandidateLinkComponent } from '../../candidate-link/candidate-link';
 import { TestCategoryComponent } from '../../test-category/test-category';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../__mocks__/screen-orientation.mock';
+import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
 import { LanguageComponent } from '../../language/language';
 import { LocationComponent } from '../../location/location';
 

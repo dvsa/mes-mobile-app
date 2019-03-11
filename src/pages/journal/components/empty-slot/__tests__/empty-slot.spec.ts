@@ -7,7 +7,7 @@ import { ConfigMock } from 'ionic-mocks';
 import { cloneDeep } from 'lodash';
 import { TimeComponent } from '../../time/time';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../test-slot/__mocks__/screen-orientation.mock';
+import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
 
 describe('EmptySlotComponent', () => {
   let fixture: ComponentFixture<EmptySlotComponent>;

@@ -92,4 +92,5 @@
     <plugin name="phonegap-plugin-mobile-accessibility" spec="^1.0.5" />
     <plugin name="cordova-plugin-autonomous-single-app-mode" spec="https://github.com/dvsa/cordova-plugin-autonomous-single-app-mode" />
     <engine name="ios" spec="^4.5.5" />
+    <plugin name="cordova-plugin-insomnia" spec="~4.3.0" />
 </widget>
