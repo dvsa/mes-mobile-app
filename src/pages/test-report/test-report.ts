@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { DeviceProvider } from '../../providers/device/device';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class TestReportPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public screenOrientation : ScreenOrientation,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
@@ -28,9 +30,11 @@ export class TestReportPage extends BasePageComponent {
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
     this.deviceProvider.enableSingleAppMode();
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
   }
 
   ionViewDidLeave(): void {
     this.deviceProvider.disableSingleAppMode();
+    this.screenOrientation.unlock();
   }
 }
