@@ -100,6 +100,13 @@ describe('EmptySlotComponent', () => {
         const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TimeComponent))).componentInstance;
         expect(subByDirective.time).toBe('2018-12-10T09:07:00+00:00');
       });
+      it('should pass something to sub-component location input', () => {
+        component.showLocation = true;
+        fixture.detectChanges();
+        const subByDirective = fixture.debugElement.query(
+          By.directive(MockComponent(LocationComponent))).componentInstance;
+        expect(subByDirective.location).toBe('Example Test Centre');
+      });
     });
   });
 });

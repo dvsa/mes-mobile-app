@@ -86,5 +86,20 @@ describe('ActivitySlotComponent', () => {
         .query(By.directive(MockComponent(TimeComponent))).componentInstance as TimeComponent;
       expect(timeSubComponent.time).toBe(12345);
     });
+    it('should pass something to sub-component location input', () => {
+      component.showLocation = true;
+      component.slot = {
+        slotDetail: {
+          start: 12345,
+        },
+        testCentre: {
+          centreName: 'Example Test Centre',
+        },
+      };
+      fixture.detectChanges();
+      const subByDirective = fixture.debugElement.query(
+        By.directive(MockComponent(LocationComponent))).componentInstance;
+      expect(subByDirective.location).toBe('Example Test Centre');
+    });
   });
 });
