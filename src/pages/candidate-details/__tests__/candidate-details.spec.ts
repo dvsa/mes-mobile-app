@@ -39,7 +39,7 @@ describe('CandidateDetailsPage', () => {
     });
   });
 
-  describe('specialNeedsIsPopulated', () =>{
+  describe('specialNeedsIsPopulated', () => {
     it('returns true for a populated array', () => {
       const specialNeedsString: string[] = ['one', 'two', 'three', 'four'];
       const result = component.specialNeedsIsPopulated(specialNeedsString);
