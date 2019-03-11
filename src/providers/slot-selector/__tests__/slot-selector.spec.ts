@@ -102,7 +102,7 @@ describe('Slot Selector', () => {
         expectNonTestActivitySlotComponentResolvedForActivityCode('142');
       });
 
-      it('should proivde the EmptySlotComponent for slots that have no booking or activity code', () => {
+      it('should provide the EmptySlotComponent for slots that have no booking or activity code', () => {
         const slot = {};
         const journalSlots = [
           new SlotItem(slot, false),
