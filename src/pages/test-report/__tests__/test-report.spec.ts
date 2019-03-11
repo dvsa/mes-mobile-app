@@ -6,10 +6,13 @@ import { AppModule } from '../../../app/app.module';
 import { TestReportPage } from '../test-report';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
+  let screenOrientation: ScreenOrientation;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,19 +24,33 @@ describe('TestReportPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(TestReportPage);
         component = fixture.componentInstance;
+        screenOrientation = TestBed.get(ScreenOrientation);
       });
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+    describe('ionViewDidEnter', () => {
+      it('should lock the screen orientation to Portrait Primary', () => {
+        component.ionViewDidEnter();
+        expect(screenOrientation.lock)
+          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      });
+      describe('ionViewDidLeave', () => {
+        it('should unlock the screen orientation', () => {
+          component.ionViewDidLeave();
+          expect(screenOrientation.unlock).toHaveBeenCalled();
+        });
+      });
     });
   });
 
