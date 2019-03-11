@@ -63,7 +63,6 @@
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
               *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)"
-              id="candidate-details-special-needs-indicator"
             />
           </ion-col>
           <ion-col col-8>
@@ -120,7 +119,7 @@
             <label>Phone number</label>
           </ion-col>
           <ion-col col-8>
-            <span id="contact-details-phonenumber" class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
+            <span class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
@@ -128,7 +127,7 @@
             <label>Email</label>
           </ion-col>
           <ion-col col-8>
-            <span id="contact-details-email" class="mes-data">{{ (pageState.details$ | async).email }}</span>
+            <span class="mes-data">{{ (pageState.details$ | async).email }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row">
@@ -136,9 +135,9 @@
             <label>Address</label>
           </ion-col>
           <ion-col col-8>
-            <div id="contact-details-address-street"class="mes-data">{{ (pageState.details$ | async).address.street }}</div>
-            <div id="contact-details-address-city" class="mes-data">{{ (pageState.details$ | async).address.city }}</div>
-            <div id="contact-details-address-postcode" class="mes-data">{{ (pageState.details$ | async).address.postcode }}</div>
+            <div class="mes-data">{{ (pageState.details$ | async).address.street }}</div>
+            <div class="mes-data">{{ (pageState.details$ | async).address.city }}</div>
+            <div class="mes-data">{{ (pageState.details$ | async).address.postcode }}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
