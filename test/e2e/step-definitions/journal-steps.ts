@@ -43,6 +43,11 @@ When('I start the test for {string}', (candidateName) => {
   return clickElement(buttonElement);
 });
 
+When('I navigate to next day', () => {
+  const nextDayButtonElement = getElement(by.id('next-day-container'));
+  return clickElement(nextDayButtonElement);
+});
+
 Then('I have a special needs slot for {string}', (candidateName) => {
   const exclamationIndicator = getElement(by.xpath(`//indicators/div/img[@class = "exclamation-indicator"]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
