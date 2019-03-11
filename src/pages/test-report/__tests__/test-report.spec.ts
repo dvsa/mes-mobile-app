@@ -8,11 +8,14 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { Insomnia } from '@ionic-native/insomnia';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
   let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,6 +28,7 @@ describe('TestReportPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
       ],
     })
       .compileComponents()
@@ -32,6 +36,7 @@ describe('TestReportPage', () => {
         fixture = TestBed.createComponent(TestReportPage);
         component = fixture.componentInstance;
         screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
       });
   }));
 
@@ -49,6 +54,17 @@ describe('TestReportPage', () => {
         it('should unlock the screen orientation', () => {
           component.ionViewDidLeave();
           expect(screenOrientation.unlock).toHaveBeenCalled();
+        });
+      });
+
+      it('should keep the device awake', () => {
+        component.ionViewDidEnter();
+        expect(insomnia.keepAwake).toHaveBeenCalled();
+      });
+      describe('ionViewDidLeave', () => {
+        it('should allow the device to sleep', () => {
+          component.ionViewDidLeave();
+          expect(insomnia.allowSleepAgain).toHaveBeenCalled();
         });
       });
     });

@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { TestReportAnalyticsEffects } from './test-report.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
   providers: [
     AnalyticsProvider,
     ScreenOrientation,
+    Insomnia,
   ],
 })
 export class TestReportPageModule {}
