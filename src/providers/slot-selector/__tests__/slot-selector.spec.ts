@@ -3,6 +3,7 @@ import { SlotSelectorProvider } from '../slot-selector';
 import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
 import { SlotItem } from '../slot-item';
 import { ActivitySlotComponent } from '../../../pages/journal/components/activity-slot/activity-slot';
+import { EmptySlotComponent } from '../../../pages/journal/components/empty-slot/empty-slot';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
@@ -35,6 +36,31 @@ describe('Slot Selector', () => {
     expect(response[0].component).toBe(ActivitySlotComponent);
   };
 
+  const singleSlotItemWithVehicleSlotType = (code):SlotItem[] => {
+    const slot = {
+      vehicleSlotType: code,
+      booking: {
+        application: {
+          applicationId: '1234567',
+        },
+      },
+    };
+    const journalSlots = [
+      new SlotItem(slot, false),
+    ];
+    return journalSlots;
+  };
+
+  const expectTestSlotComponentResolvedForVehicleSlotType = (code) => {
+    const journalSlots = singleSlotItemWithVehicleSlotType(code);
+    const response = slotSelector.getSlotTypes(journalSlots);
+
+    expect(response.length).toBe(1);
+    expect(response[0].component).toBe(TestSlotComponent);
+    expect(response[0].slotData).toBe(journalSlots[0].slotData);
+    expect(response[0].hasSlotChanged).toBe(false);
+  };
+
   describe('SlotSelectorProvider', () => {
 
     it('should compile', () => {
@@ -48,25 +74,25 @@ describe('Slot Selector', () => {
         expect(slotSelector.getSlotTypes(undefined).length).toBe(0);
       });
 
-      it('should provide correct component when test type is B57mins', () => {
-        const slot = {
-          vehicleSlotType: 'B57mins',
-          booking: {
-            application: {
-              applicationId: '1234567',
-            },
-          },
-        };
-        const journalSlots = [
-          new SlotItem(slot, false),
-        ];
-
-        const response = slotSelector.getSlotTypes(journalSlots);
-
-        expect(response.length).toBe(1);
-        expect(response[0].component).toBe(TestSlotComponent);
-        expect(response[0].slotData).toBe(slot);
-        expect(response[0].hasSlotChanged).toBe(false);
+      it('should provide correct component when test type is in vehicleSlotType codes', () => {
+        expectTestSlotComponentResolvedForVehicleSlotType('B57mins');
+        expectTestSlotComponentResolvedForVehicleSlotType('B86mins');
+        expectTestSlotComponentResolvedForVehicleSlotType('B114mins');
+        expectTestSlotComponentResolvedForVehicleSlotType('Voc90mins');
+        expectTestSlotComponentResolvedForVehicleSlotType('HomeTest');
+        expectTestSlotComponentResolvedForVehicleSlotType('ADI2-90mins');
+        expectTestSlotComponentResolvedForVehicleSlotType('ADI3-90mins');
+        expectTestSlotComponentResolvedForVehicleSlotType('CPCBUS30');
+        expectTestSlotComponentResolvedForVehicleSlotType('M1Bike30m');
+        expectTestSlotComponentResolvedForVehicleSlotType('M1BikSNX45m');
+        expectTestSlotComponentResolvedForVehicleSlotType('M2Bike57min');
+        expectTestSlotComponentResolvedForVehicleSlotType('M2BikSNEX86');
+        expectTestSlotComponentResolvedForVehicleSlotType('M2BikeEx114');
+        expectTestSlotComponentResolvedForVehicleSlotType('M1BikeEx30m');
+        expectTestSlotComponentResolvedForVehicleSlotType('CPCLORRY30');
+        expectTestSlotComponentResolvedForVehicleSlotType('OffRdTr30m');
+        expectTestSlotComponentResolvedForVehicleSlotType('CPC30');
+        expectTestSlotComponentResolvedForVehicleSlotType('Sc');
       });
 
       it('should provide the NonTestActivitySlotComponent for NTA activity codes', () => {
@@ -75,6 +101,20 @@ describe('Slot Selector', () => {
         expectNonTestActivitySlotComponentResolvedForActivityCode('096');
         expectNonTestActivitySlotComponentResolvedForActivityCode('142');
       });
+
+      it('should proivde the EmptySlotComponent for slots that have no booking or activity code', () => {
+        const slot = {};
+        const journalSlots = [
+          new SlotItem(slot, false),
+        ];
+        const response = slotSelector.getSlotTypes(journalSlots);
+
+        expect(response.length).toBe(1);
+        expect(response[0].component).toBe(EmptySlotComponent);
+        expect(response[0].slotData).toBe(journalSlots[0].slotData);
+        expect(response[0].hasSlotChanged).toBe(false);
+      });
+
     });
   });
 });
