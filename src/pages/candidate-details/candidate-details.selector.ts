@@ -20,7 +20,7 @@ export const getCandidateName = (slot: any): string => {
 export const getTime = (slot: any): string => slot.slotDetail.start;
 
 export const isCandidateCommentsEmpty = (slot: any): boolean => {
-  return isEmpty(slot.booking.application.specialNeeds) && isEmpty(slot.booking.previousCancellation);
+  return isEmpty(slot.booking.previousCancellation);
 };
 
 export const getCandidateId = (slot: any): string => slot.booking.candidate.candidateId;
@@ -89,9 +89,9 @@ export const getDetails = (slot: any): Details => {
     slotType: getSlotType(slot),
     driverNumber: slot.booking.candidate.driverNumber,
     applicationRef: slot.booking.application.applicationId,
+    specialNeeds: processSpecialNeeds(slot),
     candidateComments: {
       isSectionEmpty: isCandidateCommentsEmpty(slot),
-      specialNeeds: slot.booking.application.specialNeeds,
       previousCancellations: slot.booking.previousCancellation,
     },
     entitlementCheck: {
@@ -108,4 +108,7 @@ export const getDetails = (slot: any): Details => {
     },
   };
   return details;
+};
+export const processSpecialNeeds = (slot: any): string | string[] => {
+  return slot.booking.application.specialNeeds ? slot.booking.application.specialNeeds.split(';') : 'None';
 };

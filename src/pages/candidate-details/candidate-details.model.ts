@@ -3,9 +3,9 @@ export type Details = {
   slotType: string,
   driverNumber: string,
   applicationRef: string,
+  specialNeeds: string | string[],
   candidateComments: {
     isSectionEmpty: boolean,
-    specialNeeds: string,
     previousCancellations: { initiator: string }[],
   },
   entitlementCheck: {

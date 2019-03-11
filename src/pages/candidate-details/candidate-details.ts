@@ -95,7 +95,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     }
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
   }
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -107,4 +106,8 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   handleDoneButtonClick(): void {
     this.navController.pop();
   }
+  public specialNeedsIsPopulated(specialNeeds: string | string[]): boolean {
+    return Array.isArray(specialNeeds);
+  }
+
 }
