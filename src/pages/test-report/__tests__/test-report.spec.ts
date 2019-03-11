@@ -7,9 +7,7 @@ import { TestReportPage } from '../test-report';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../journal/components/test-slot/__mocks__/screen-orientation.mock';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -27,7 +25,6 @@ describe('TestReportPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
