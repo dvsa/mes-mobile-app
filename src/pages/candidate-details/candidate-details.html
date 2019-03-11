@@ -67,7 +67,7 @@
           </ion-col>
           <ion-col col-8>
             <div class="mes-data" *ngIf="!specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
-              None
+              {{(pageState.details$ | async).specialNeeds}}
             </div>
             <div *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
               <div *ngFor="let specialNeed of (pageState.details$ | async).specialNeeds" class="mes-data">- {{specialNeed}}.</div>

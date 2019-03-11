@@ -37,14 +37,16 @@ describe('CandidateDetailsPage', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+  });
 
-    it('specialNeedsIsPopulated returns true for a populated array', () => {
+  describe('specialNeedsIsPopulated', () =>{
+    it('returns true for a populated array', () => {
       const specialNeedsString: string[] = ['one', 'two', 'three', 'four'];
       const result = component.specialNeedsIsPopulated(specialNeedsString);
       expect(result).toEqual(true);
     });
 
-    it('specialNeedsIsPopulated returns false for string', () => {
+    it('returns false for string', () => {
       const specialNeedsString: string = 'No details supplied';
       const result = component.specialNeedsIsPopulated(specialNeedsString);
       expect(result).toEqual(false);
