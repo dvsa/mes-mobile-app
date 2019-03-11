@@ -11,10 +11,84 @@ import {
   isCandidateCheckNeeded,
   getSlotChanged,
   getSlotType,
+  processSpecialNeeds,
 } from '../candidate-details.selector';
 import { SpecialNeedsCode } from '../candidate-details.constants';
 
 describe('Candidate Details Selector', () => {
+  describe('processSpecialNeeds', () => {
+    it('returns single item array for string.', () => {
+      const slot = {
+        booking: {
+          application: {
+            specialNeeds: 'there are some special needs',
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = processSpecialNeeds(slot);
+
+      expect(result).toEqual(['there are some special needs']);
+      expect(result.length).toBe(1);
+    });
+    it('returns multiple element array for semicolon seperated string', () => {
+      const slot = {
+        booking: {
+          application: {
+            specialNeeds: 'one;two;three',
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = processSpecialNeeds(slot);
+
+      expect(result).toEqual(['one', 'two', 'three']);
+      expect(result.length).toBe(3);
+    });
+    it('returns None string for falsey propery', () => {
+      const slot = {
+        booking: {
+          application: {
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = processSpecialNeeds(slot);
+
+      expect(result).toEqual('None');
+    });
+    it('returns None string for empty property', () => {
+      const slot = {
+        booking: {
+          application: {
+            specialNeeds: '',
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = processSpecialNeeds(slot);
+
+      expect(result).toEqual('None');
+    });
+    it('returns None string for null property', () => {
+      const slot = {
+        booking: {
+          application: {
+            specialNeeds: null,
+          },
+          previousCancellation: [],
+        },
+      };
+
+      const result = processSpecialNeeds(slot);
+
+      expect(result).toEqual('None');
+    });
+  });
 
   describe('getSlots', () => {
     it('returns the correct test slot array from the journal data', () => {
@@ -102,21 +176,6 @@ describe('Candidate Details Selector', () => {
       const result = isCandidateCommentsEmpty(slot);
 
       expect(result).toBe(true);
-    });
-
-    it('returns false if the specialNeeds is provided', () => {
-      const slot = {
-        booking: {
-          application: {
-            specialNeeds: 'there are some special needs',
-          },
-          previousCancellation: [],
-        },
-      };
-
-      const result = isCandidateCommentsEmpty(slot);
-
-      expect(result).toBe(false);
     });
 
     it('returns false if the previousCancellation is not empty', () => {
@@ -427,15 +486,18 @@ describe('Candidate Details Selector', () => {
             addressLine1: '23 Canal str',
             addressLine2: 'some place',
             addressLine3: 'some other place',
-            addressLine4: 'here' },
+            addressLine4: 'here',
+          },
           expected: 'some place, some other place, here',
         },
         {
-          input: { addressLine1: '23 Canal str',
+          input: {
+            addressLine1: '23 Canal str',
             addressLine2: 'some place',
             addressLine3: 'some other place',
             addressLine4: 'here',
-            addressLine5: 'there' },
+            addressLine5: 'there',
+          },
           expected: 'some place, some other place, here, there',
         },
       ];
