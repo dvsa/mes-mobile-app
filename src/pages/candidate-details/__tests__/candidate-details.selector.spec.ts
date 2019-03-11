@@ -190,7 +190,7 @@ describe('Candidate Details Selector', () => {
 
   describe('getSlotType', () => {
     describe('vehicleSlotTypeCode is 6 and specialNeedsCode not NONE', () => {
-      it('should return Double Slot (Special Needs)', () => {
+      it('should return Single Slot (Special Needs)', () => {
         const slot = {
           vehicleSlotTypeCode: 6,
           booking: {
@@ -200,7 +200,7 @@ describe('Candidate Details Selector', () => {
           },
         };
         const result = getSlotType(slot);
-        expect(result).toBe('Double Slot (Special Needs)');
+        expect(result).toBe('Single Slot (Special Needs)');
       });
     });
 
