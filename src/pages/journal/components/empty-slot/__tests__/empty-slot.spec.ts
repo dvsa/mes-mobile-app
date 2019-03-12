@@ -8,6 +8,7 @@ import { cloneDeep } from 'lodash';
 import { TimeComponent } from '../../time/time';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
+import { LocationComponent } from '../../location/location';
 
 describe('EmptySlotComponent', () => {
   let fixture: ComponentFixture<EmptySlotComponent>;
@@ -77,6 +78,7 @@ describe('EmptySlotComponent', () => {
       declarations: [
         EmptySlotComponent,
         MockComponent(TimeComponent),
+        MockComponent(LocationComponent),
       ],
       imports: [IonicModule],
       providers: [
@@ -97,6 +99,13 @@ describe('EmptySlotComponent', () => {
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TimeComponent))).componentInstance;
         expect(subByDirective.time).toBe('2018-12-10T09:07:00+00:00');
+      });
+      it('should pass something to sub-component location input', () => {
+        component.showLocation = true;
+        fixture.detectChanges();
+        const subByDirective = fixture.debugElement.query(
+          By.directive(MockComponent(LocationComponent))).componentInstance;
+        expect(subByDirective.location).toBe('Example Test Centre');
       });
     });
   });

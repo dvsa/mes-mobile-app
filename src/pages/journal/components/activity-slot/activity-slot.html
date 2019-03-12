@@ -1,3 +1,6 @@
+<location *ngIf="showLocation"
+  [location]="slot.testCentre.centreName">
+</location>
 <ion-card class="activity-slot" [ngClass]="{ 'travel-slot': isTravelSlot() }">
   <ion-row class="slot-row" align-items-center nowrap>
     <ion-col class="time-column">
