@@ -72,9 +72,7 @@ describe('TestSlotComponent', () => {
         vehicleGearbox: 'Manual',
       },
       previousCancellation: [
-        {
-          initiator: 'Act of nature',
-        },
+        'Act of nature',
       ],
     },
   };
