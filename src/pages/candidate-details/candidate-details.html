@@ -55,24 +55,26 @@
             <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
           </ion-col>
         </ion-row>
-        <ion-row [ngClass]="(pageState.details$ | async).entitlementCheck.show ? 'mes-data-row-with-separator': 'mes-data-row'">
+        <ion-row class="mes-data-row-with-separator">
           <ion-col col-4>
-            <label>Comments</label>
+            <label>Special requirements</label>
+            <img 
+              alt="Exclamation Indicator"
+              src="assets/imgs/journal/exclamation-indicator.png"
+              class="exclamation-indicator"
+              *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)"
+            />
           </ion-col>
           <ion-col col-8>
-            <div class="mes-data" *ngIf="(pageState.details$ | async).candidateComments.isSectionEmpty">
-              None
+            <div class="mes-data" *ngIf="!specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
+              {{(pageState.details$ | async).specialNeeds}}
             </div>
-            <div *ngIf="!(pageState.details$ | async).candidateComments.isSectionEmpty">
-              <div class="mes-data">{{ (pageState.details$ | async).candidateComments.specialNeeds }}</div>
-              <div *ngIf="(pageState.details$ | async).candidateComments.previousCancellations?.length > 0">
-                <div class="mes-data previous-cancellation-title"><i>Previous cancellations</i></div>
-                <div *ngFor="let previousCancellation of (pageState.details$ | async).candidateComments.previousCancellations" class="mes-data">{{previousCancellation.initiator}}</div>
-              </div>
+            <div *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
+              <div *ngFor="let specialNeed of (pageState.details$ | async).specialNeeds" class="mes-data">- {{specialNeed}}</div>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row">
+        <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row-with-separator">
           <ion-col col-4>
             <label>Entitlement Check</label>
             <img
@@ -87,6 +89,22 @@
             </div>
           </ion-col>
         </ion-row>
+        <ion-row class="mes-data-row">
+            <ion-col col-4>
+              <label>Additional information</label>
+            </ion-col>
+            <ion-col col-8>
+              <div class="mes-data" *ngIf="(pageState.details$ | async).candidateComments.isSectionEmpty">
+                None
+              </div>
+              <div *ngIf="!(pageState.details$ | async).candidateComments.isSectionEmpty">
+                <div *ngIf="(pageState.details$ | async).candidateComments.previousCancellations?.length > 0">
+                  <div class="mes-data">Previous cancellations</div>
+                  <div *ngFor="let previousCancellation of (pageState.details$ | async).candidateComments.previousCancellations" class="mes-data">- {{previousCancellation.initiator}}</div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>

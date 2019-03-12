@@ -59,9 +59,13 @@ You can run the Appium testsuite either against a web based version of the appli
 Pre-requisites
 
 - Appium (`npm install -g appium` - https://www.npmjs.com/package/appium)
+- Notes : if you hit EACCES: permission denied, mkdir '/usr/local/lib/node_modules/appium/node_modules/appium-chromedriver/201928-81324-fhqpz.jct6jq'
+          try: sudo npm install -g appium --unsafe-perm=true --allow-root
+
 - WebDriver-Manager (`npm install -g webdriver-manager` - https://www.npmjs.com/package/webdriver-manager)
 - Carthage (`brew install carthage` - https://github.com/appium/appium/blob/HEAD/docs/en/drivers/ios-xcuitest.md - dependancy of XCUITest driver)
-
+- Notes : if you get /usr/local/share/man issues 
+          try: sudo chown -R $(whoami):admin /usr/local/share/man (don't sudo brew)
 To run against the simulator
 
 - Build the application `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0"`

@@ -39,6 +39,20 @@ describe('CandidateDetailsPage', () => {
     });
   });
 
+  describe('specialNeedsIsPopulated', () => {
+    it('returns true for a populated array', () => {
+      const specialNeedsString: string[] = ['one', 'two', 'three', 'four'];
+      const result = component.specialNeedsIsPopulated(specialNeedsString);
+      expect(result).toEqual(true);
+    });
+
+    it('returns false for string', () => {
+      const specialNeedsString: string = 'No details supplied';
+      const result = component.specialNeedsIsPopulated(specialNeedsString);
+      expect(result).toEqual(false);
+    });
+  });
+
   describe('DOM', () => {
     // Unit tests for the components template
   });
