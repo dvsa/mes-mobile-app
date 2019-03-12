@@ -63,7 +63,7 @@ export class SlotSelectorProvider {
       return EmptySlotComponent;
     }
 
-    if (has(slot, 'vehicleSlotType') && slot.vehicleSlotType === 'B57mins') {
+    if (has(slot, 'vehicleSlotType')) {
       return TestSlotComponent;
     }
     return ActivitySlotComponent;
