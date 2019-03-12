@@ -45,7 +45,7 @@ export const getSlotType = (slot: any): string => {
   // Jira ticket is available here for more details: https://jira.i-env.net/browse/MES-1698
   if (vehicleSlotTypeCode === 6) {
     if (specialNeedsCode !== SpecialNeedsCode.NONE) {
-      return 'Double Slot (Special Needs)';
+      return 'Single Slot (Special Needs)';
     }
   }
 
