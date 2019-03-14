@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { WaitingRoomViewDidEnter } from './waiting-room.actions';
+import { MesSignaturePadComponent } from './components/mes-signature-pad';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,8 @@ import { WaitingRoomViewDidEnter } from './waiting-room.actions';
   templateUrl: 'waiting-room.html',
 })
 export class WaitingRoomPage extends BasePageComponent {
+  @ViewChild(MesSignaturePadComponent)
+  signaturePad: MesSignaturePadComponent;
 
   constructor(
     private store$: Store<StoreModel>,
