@@ -5,6 +5,8 @@ import { merge } from 'lodash';
 import { AppConfig } from './app-config.model';
 import { environment } from '../../environment/environment';
 import { EnvironmentFile } from '../../environment/models/environment.model';
+import { DataStoreProvider } from '../data-store/data-store';
+import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 
 @Injectable()
 export class AppConfigProvider {
@@ -13,7 +15,11 @@ export class AppConfigProvider {
 
   private appConfig: AppConfig;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    public networkState: NetworkStateProvider,
+    public dataStore: DataStoreProvider,
+    ) {
     this.mapInAppConfig(this.environmentFile);
 
     if (!this.environmentFile.isRemote) {
@@ -30,11 +36,31 @@ export class AppConfigProvider {
 
   private getRemoteData = (): Promise<any> =>
     new Promise((resolve, reject) => {
-      this.httpClient.get<any>(this.environmentFile.configUrl)
+      if (this.networkState.getNetworkState() === ConnectionStatus.ONLINE) {
+        this.httpClient.get<any>(this.environmentFile.configUrl)
         .subscribe(
-          data => resolve(data),
+          (data) => {
+            this.dataStore.setItem('CONFIG', JSON.stringify(data));
+            resolve(data);
+          },
           error => reject(error),
         );
+      } else {
+        this.getOfflineConfig()
+        .then(data => resolve(data))
+        .catch(error => reject(error));
+      }
+    })
+
+  private getOfflineConfig = (): Promise<any> =>
+    new Promise((resolve, reject) => {
+      this.dataStore.getItem('CONFIG')
+      .then((response) => {
+        let jsonString: string;
+        jsonString = response;
+        resolve(JSON.parse(jsonString));
+      })
+      .catch(error => reject(error));
     })
 
   private mapInAppConfig = (data: EnvironmentFile) =>
