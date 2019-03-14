@@ -184,7 +184,7 @@ describe('Candidate Details Selector', () => {
           application: {
             specialNeeds: '',
           },
-          previousCancellation: [{ initiator: 'one' }],
+          previousCancellation: ['Act of nature'],
         },
       };
 

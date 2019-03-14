@@ -6,7 +6,7 @@ export type Details = {
   specialNeeds: string | string[],
   candidateComments: {
     isSectionEmpty: boolean,
-    previousCancellations: { initiator: string }[],
+    previousCancellations: string[],
   },
   entitlementCheck: {
     show: boolean,

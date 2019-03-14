@@ -41,15 +41,13 @@
           "secondaryTelephone": "04321 098765"
         },
         "previousCancellation": [
-          {
-            "initiator": "Act of nature"
-          }
+          "Act of nature"
         ]
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1001,
-        "start": "2019-03-11T08:10:00+00:00"
+        "start": "2019-03-13T08:10:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -90,18 +88,14 @@
           "mobileTelephone": "07654 123456"
         },
         "previousCancellation": [
-          {
-            "initiator": "DSA"
-          },
-          {
-            "initiator": "Act of nature"
-          }
+          "DSA",
+          "Act of nature"
         ]
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1003,
-        "start": "2019-03-11T10:14:00+00:00"
+        "start": "2019-03-13T10:14:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -150,7 +144,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1004,
-        "start": "2019-03-11T11:11:00+00:00"
+        "start": "2019-03-13T11:11:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -201,7 +195,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1005,
-        "start": "2019-03-11T12:38:00+00:00"
+        "start": "2019-03-13T12:38:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -254,7 +248,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1006,
-        "start": "2019-03-11T13:35:00+00:00"
+        "start": "2019-03-13T13:35:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -299,7 +293,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1007,
-        "start": "2019-03-12T14:32:00+00:00"
+        "start": "2019-03-14T14:32:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
