@@ -28,6 +28,7 @@ import { AppInfoProvider } from '../providers/app-info/app-info';
 import { LogsModule } from '../modules/logs/logs.module';
 import { DeviceProvider } from '../providers/device/device';
 import { DataStoreProvider } from '../providers/data-store/data-store';
+import { SecureStorage } from '@ionic-native/secure-storage';
 
 @NgModule({
   declarations: [App],
@@ -67,6 +68,7 @@ import { DataStoreProvider } from '../providers/data-store/data-store';
     LogsProvider,
     AppInfoProvider,
     DeviceProvider,
+    SecureStorage,
     DataStoreProvider,
   ],
 })

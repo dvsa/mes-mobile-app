@@ -6,8 +6,8 @@ import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
 import { Observable } from 'rxjs/Observable';
 import { DataStoreProvider } from '../data-store/data-store';
-import { of } from 'rxjs/observable/of';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
+import { from } from 'rxjs/observable/from';
 
 @Injectable()
 export class JournalProvider {
@@ -24,8 +24,10 @@ export class JournalProvider {
     const staffNumber = this.authProvider.getEmployeeId();
     const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
     const networkStatus = this.networkStateProvider.getNetworkState();
+    console.log(networkStatus);
     if (lastRefreshed === null) {
       if (networkStatus === ConnectionStatus.ONLINE) {
+        console.log('getting journal');
         return this.http.get(journalUrl);
       }
       return this.getOfflineJournal();
@@ -42,14 +44,14 @@ export class JournalProvider {
   }
 
   getOfflineJournal(): Observable<ExaminerWorkSchedule> {
-    return of(this.getAndConvertOfflineJournal());
+    return from(this.getAndConvertOfflineJournal());
   }
 
-  getAndConvertOfflineJournal(): ExaminerWorkSchedule {
-    let jsonString: string;
-    this.dataStore.getItem('JOURNAL').then((response) => {
-      jsonString = response;
+  getAndConvertOfflineJournal(): Promise<ExaminerWorkSchedule> {
+    return new Promise<ExaminerWorkSchedule>((resolve, reject) => {
+      this.dataStore.getItem('JOURNAL').then((data) => {
+        resolve(JSON.parse(data));
+      }).catch(error => reject(error));
     });
-    return JSON.parse(jsonString);
   }
 }
