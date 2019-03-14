@@ -1,22 +1,27 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Waiting Room</ion-title>
-    <ion-buttons end>
-        <button ion-button (click)="logout()">Logout</button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Waiting Room
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-header>
-      <button ion-button navPush="WaitingRoomToCarPage">Waiting Room to Car</button>
-      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
-    </ion-card-header>
-  </ion-card>
+<ion-content>
+  <div>
+    <h4>I declare that:</h4>
+    <ul>
+      <li>
+        The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which satisfies the requirements of the legislation.
+        <div class="declaration-checkbox-row">
+          <input type="checkbox" class="gds-checkbox" id="insurance-declaration-checkbox">
+          <label for="insurance-declaration-checkbox">I confirm</label>
+        </div>
+      </li>
+      <li>
+        I normally live/have lived in the UK for at least 185 days in the last 12 months.
+        <div class="declaration-checkbox-row">
+          <input type="checkbox" class="gds-checkbox" id="residency-declaration-checkbox">
+          <label for="residency-declaration-checkbox">I confirm</label>
+        </div>
+      </li>
+    </ul>
+  </div>
 </ion-content>
