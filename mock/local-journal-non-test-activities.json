@@ -78,9 +78,9 @@
           "vehicleGearbox": "Manual"
         },
         "previousCancellation": [
-          { "initiator": "Act of nature" },
-          { "initiator": "DSA" },
-          { "initiator": "DSA" }
+          "Act of nature",
+          "DSA", 
+          "DSA"
         ],
         "business": {
           "businessId": 1000,

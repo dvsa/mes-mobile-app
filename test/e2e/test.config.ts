@@ -9,7 +9,7 @@ export const TEST_CONFIG = {
     mobexaminer6: { username: '<USERNAME-HERE>', password: '<PASSWORD-HERE>', employeeId: '78471231' },
     mobexaminer7: { username: '<USERNAME-HERE>', password: '<PASSWORD-HERE>', employeeId: '67128492' },
   },
-  PAGE_LOAD_WAIT: 2000,
-  ACTION_WAIT: 300,
+  PAGE_LOAD_WAIT: 3000,
+  ACTION_WAIT: 500,
   DEFAULT_TIMEOUT: 30000,
 };

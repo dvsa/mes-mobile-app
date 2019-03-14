@@ -41,9 +41,7 @@
           "secondaryTelephone": "04321 098765"
         },
         "previousCancellation": [
-          {
-            "initiator": "Act of nature"
-          }
+          "Act of nature"
         ]
       },
       "slotDetail": {
@@ -90,12 +88,8 @@
           "mobileTelephone": "07654 123456"
         },
         "previousCancellation": [
-          {
-            "initiator": "DSA"
-          },
-          {
-            "initiator": "Act of nature"
-          }
+          "DSA",
+          "Act of nature"
         ]
       },
       "slotDetail": {
