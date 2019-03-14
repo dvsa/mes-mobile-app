@@ -67,7 +67,7 @@ Then('I should see the {string} page', (pageTitle) => {
 
 Then('I should see the {string} contains {string}', (rowName, rowValue) => {
   const dataRow = getElement(by.xpath(`//ion-col/label[text()= "${rowName}"]
-    [parent::ion-col/parent::ion-row//*[text() = "${rowValue}"]]`));
+    [parent::ion-col/parent::ion-row//*[normalize-space(text()) = "${rowValue}"]]`));
   return expect(dataRow.isPresent()).to.eventually.be.true;
 });
 
