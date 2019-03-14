@@ -24,5 +24,9 @@
       <h2>Unsupported device</h2>
       <h3>Install the application on an approved device</h3>
     </div>
+    <div *ngIf="isUserNotAuthorised()">
+      <h2>You're not authorised to use this app</h2>
+      <h3>If you think you should have access,<br/> you can try to <span class="link" (click)="login()">sign in</span> again.</h3>
+    </div>
   </div>
 </ion-content>

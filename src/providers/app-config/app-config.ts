@@ -32,7 +32,12 @@ export class AppConfigProvider {
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
       .then(data => this.mapRemoteConfig(data))
-      .catch(error => console.log('Error Getting Remote Config', error))
+      .catch((error) => {
+        console.log('Error Getting Remote Config', JSON.stringify(error));
+        // if (error.Message === 'User is not authorized to access this resource with an explicit deny') {
+        return Promise.reject('user not authorised');
+        // }
+      })
 
   private getRemoteData = (): Promise<any> =>
     new Promise((resolve, reject) => {
