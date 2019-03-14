@@ -1,7 +1,12 @@
 page-waiting-room {
   ion-content > div {
-    padding: 0 66px;
     background-color: map-get($colors, 'mes-white');
+
+    #candidate-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     .declaration-checkbox-row {
       margin: 22px 0;
