@@ -140,9 +140,7 @@ export const clickElement = (fieldElement) => {
 
 // Goes to the home page which will be the journal for logged in Examiners
 export const loadApplication = () => {
-  browser.ignoreSynchronization = false;
-  const promise = browser.get('');
-  browser.ignoreSynchronization = true;
+  const promise = browser.get('ionic://localhost');
   return isReady(promise);
 };
 
