@@ -37,7 +37,7 @@ export class JournalProvider {
     };
     if (networkStatus === ConnectionStatus.ONLINE) {
       return this.http.get(journalUrl, options);
-    } 
+    }
     return this.getOfflineJournal();
   }
 
