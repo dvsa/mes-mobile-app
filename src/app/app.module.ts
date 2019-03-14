@@ -27,6 +27,7 @@ import { AppInfoModule } from '../modules/app-info/app-info.module';
 import { AppInfoProvider } from '../providers/app-info/app-info';
 import { LogsModule } from '../modules/logs/logs.module';
 import { DeviceProvider } from '../providers/device/device';
+import { DataStoreProvider } from '../providers/data-store/data-store';
 
 @NgModule({
   declarations: [App],
@@ -66,6 +67,7 @@ import { DeviceProvider } from '../providers/device/device';
     LogsProvider,
     AppInfoProvider,
     DeviceProvider,
+    DataStoreProvider,
   ],
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -23,6 +23,7 @@ import {
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
+import { DataStoreProvider } from '../../providers/data-store/data-store';
 
 @Injectable()
 export class JournalEffects {
@@ -33,6 +34,7 @@ export class JournalEffects {
     private store$: Store<StoreModel>,
     public appConfig: AppConfigProvider,
     public networkStateProvider: NetworkStateProvider,
+    public dataStoreprovider: DataStoreProvider,
   ) {
   }
 
@@ -53,6 +55,7 @@ export class JournalEffects {
         return this.journalProvider
           .getJournal(lastRefreshed)
           .pipe(
+            tap((journalData: ExaminerWorkSchedule) => this.saveJournalForOffline(journalData)),
             map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
             map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.extendWithEmptyDays(slots)),
@@ -61,6 +64,15 @@ export class JournalEffects {
           );
       }),
     );
+  }
+
+  saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
+    if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {
+      this.dataStoreprovider.setItem('JOURNAL', JSON.stringify(journalData)).then((response) => {
+        console.log(response);
+      },
+    );
+    }
   }
 
   @Effect()
