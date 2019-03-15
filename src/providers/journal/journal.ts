@@ -44,13 +44,10 @@ export class JournalProvider {
     return from(this.getAndConvertOfflineJournal());
   }
 
-  getAndConvertOfflineJournal(): Promise<ExaminerWorkSchedule> {
-    return new Promise<ExaminerWorkSchedule>((resolve, reject) => {
-      this.dataStore.getItem('JOURNAL').then((data) => {
-        resolve(JSON.parse(data));
-      }).catch(error => reject(error));
-    });
-  }
+  getAndConvertOfflineJournal = (): Promise<ExaminerWorkSchedule> =>
+    this.dataStore.getItem('JOURNAL')
+      .then(data => JSON.parse(data))
+      .catch(error => error)
 
   saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
     if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {

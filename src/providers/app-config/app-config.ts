@@ -46,18 +46,16 @@ export class AppConfigProvider {
           error => reject(error),
         );
       } else {
-        this.getOfflineConfig()
+        this.getCachedRemoteConfig()
         .then(data => resolve(data))
         .catch(error => reject(error));
       }
     })
 
-  private getOfflineConfig = (): Promise<any> =>
-    new Promise((resolve, reject) => {
-      this.dataStore.getItem('CONFIG')
-      .then(response => resolve(JSON.parse(response)))
-      .catch(error => reject(error));
-    })
+  private getCachedRemoteConfig = (): Promise<any> =>
+    this.dataStore.getItem('CONFIG')
+      .then(response => JSON.parse(response))
+      .catch(error => error)
 
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {

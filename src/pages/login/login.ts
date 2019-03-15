@@ -42,7 +42,6 @@ export class LoginPage extends BasePageComponent {
 
     // Trigger Authentication if this isn't a logout and is an ios device
     if (!this.hasUserLoggedOut && this.isIos()) {
-      console.log('trying to login');
       this.login();
     }
 

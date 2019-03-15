@@ -19,37 +19,58 @@ export class DataStoreProvider {
   getSecureContainer(): SecureStorageObject {
     return this.secureContainer;
   }
-
-  getKeys(): any {
+  /**
+   * Get all stored keys
+   * NOTE: secureContainer guard clause allows app to run in browser
+   * @returns Promise
+   */
+  getKeys(): Promise<string[]> {
     if (!this.secureContainer) {
-      return Promise.resolve('getKeys');
+      return Promise.resolve(['']);
     }
     return this.secureContainer.keys().then((response: string[]) => {
       return response;
     });
   }
+  /**
+   * Gets the specified item for the given key
+   * NOTE: secureContainer guard clause allows app to run in browser
 
-  getItem(key: string) {
+   * @param  {string} key
+   * @returns Promise
+   */
+  getItem(key: string): Promise<string> {
     if (!this.secureContainer) {
-      return Promise.resolve('getItem');
+      return Promise.resolve('');
     }
-    return this.secureContainer.get(key).then((response) => {
+    return this.secureContainer.get(key).then((response: string) => {
       return response;
     });
   }
-
-  setItem(key: string, value: any) {
+  /**
+   * sets the value for specified key
+   * NOTE: secureContainer guard clause allows app to run in browser
+   * @param  {string} key
+   * @param  {any} value
+   * @returns Promise
+   */
+  setItem(key: string, value: any): Promise<string> {
     if (!this.secureContainer) {
-      return Promise.resolve('setItem');
+      return Promise.resolve('');
     }
-    return this.secureContainer.set(key, value).then((response) => {
+    return this.secureContainer.set(key, value).then((response: string) => {
       return response;
     });
   }
-
-  removeItem(key: string) {
+  /**
+   * removes the item for a given key
+   * NOTE: secureContainer guard clause allows app to run in browser
+   * @param  {string} key
+   * @returns Promise
+   */
+  removeItem(key: string): Promise<string> {
     if (!this.secureContainer) {
-      return Promise.resolve('removeItem');
+      return Promise.resolve('');
     }
     return this.secureContainer.remove(key);
   }
