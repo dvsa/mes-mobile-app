@@ -2,9 +2,19 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { WaitingRoomViewDidEnter } from './waiting-room.actions';
+import * as waitingRoomActions from './waiting-room.actions';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { getWaitingRoomState } from './waiting-room.reducer';
+import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from './waiting-room.selector';
+
+interface WaitingRoomPageState {
+  insuranceDeclarationAccepted$: Observable<boolean>;
+  residencyDeclarationAccepted$: Observable<boolean>;
+  signature$: Observable<string>;
+}
 
 @IonicPage()
 @Component({
@@ -12,6 +22,8 @@ import { WaitingRoomViewDidEnter } from './waiting-room.actions';
   templateUrl: 'waiting-room.html',
 })
 export class WaitingRoomPage extends BasePageComponent {
+
+  pageState: WaitingRoomPageState;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -24,7 +36,29 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.store$.dispatch(new WaitingRoomViewDidEnter());
+    this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
+  }
+
+  ngOnInit(): void {
+    this.pageState = {
+      insuranceDeclarationAccepted$: this.store$.pipe(
+        select(getWaitingRoomState),
+        select(getInsuranceDeclarationStatus),
+      ),
+      residencyDeclarationAccepted$: this.store$.pipe(
+        select(getWaitingRoomState),
+        select(getResidencyDeclarationStatus),
+      ),
+      signature$: of(''),
+    };
+  }
+
+  insuranceDeclarationChanged(): void {
+    this.store$.dispatch(new waitingRoomActions.ToggleInsuranceDeclaration());
+  }
+
+  residencyDeclarationChanged(): void {
+    this.store$.dispatch(new waitingRoomActions.ToggleResidencyDeclaration());
   }
 
 }
