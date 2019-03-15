@@ -21,8 +21,13 @@ page-waiting-room {
       }
     }
 
-    .declaration-checkbox-row {
-      margin: 32px 0;
+    #declaration-section {
+      p {
+        font-size: 23px;
+      }
+      .declaration-checkbox-row {
+        margin: 32px 0;
+      }
     }
   }
 }
