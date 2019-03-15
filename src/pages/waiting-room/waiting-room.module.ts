@@ -4,6 +4,8 @@ import { WaitingRoomPage } from './waiting-room';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from './waiting-room.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { StoreModule } from '@ngrx/store';
+import { waitingRoomReducer } from './waiting-room.reducer';
 
 @NgModule({
   declarations: [
@@ -11,6 +13,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomPage),
+    StoreModule.forFeature('waitingRoom', waitingRoomReducer),
     EffectsModule.forFeature([WaitingRoomAnalyticsEffects]),
   ],
   providers: [
