@@ -27,9 +27,11 @@ export class App {
   ) {
     platform.ready()
       .then(() => {
-        this.secureStorage.create('MES').then((storage: SecureStorageObject) => {
-          this.dataStore.setSecureContainer(storage);
-        });
+        if (this.platform.is('ios')) {
+          this.secureStorage.create('MES').then((storage: SecureStorageObject) => {
+            this.dataStore.setSecureContainer(storage);
+          });
+        }
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();

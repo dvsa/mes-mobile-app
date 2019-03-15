@@ -43,6 +43,9 @@ export class NetworkStateProvider {
   }
 
   public getNetworkState(): ConnectionStatus {
+    if (!this.networkStatus$) {
+      return ConnectionStatus.ONLINE;
+    }
     return this.networkStatus$.getValue();
   }
 
