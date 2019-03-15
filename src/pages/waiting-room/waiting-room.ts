@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -26,11 +26,7 @@ interface WaitingRoomPageState {
   templateUrl: 'waiting-room.html',
 })
 export class WaitingRoomPage extends BasePageComponent {
-  @ViewChild(MesSignaturePadComponent)
-  signaturePad: MesSignaturePadComponent;
-
-  pageState: WaitingRoomPageState;
-
+  pageState: WaitingRoomPageState;.
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
@@ -40,7 +36,6 @@ export class WaitingRoomPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
-
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
   }

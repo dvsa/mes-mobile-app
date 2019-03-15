@@ -1,0 +1,14 @@
+<div class="mes-signature-pad">
+    <span *ngIf="signAreaHeaderText" mes-header-md>{{signAreaHeaderText? signAreaHeaderText : "Sign Here"}}</span>
+    <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
+        <button (click)="clear()" class="retry-button" [disabled]="!signature">
+            <div class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
+            <div class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</div>
+        </button>
+    <div class="sign-here-wrapper">
+        <div class="image" [ngStyle]="{'background-image':'url(' + signHereImage + ')'}">
+            <div class="text">{{signHereText? signHereText : "Sign here"}}</div>
+        </div>
+        <div class="signature-line"></div>
+    </div>
+</div>
