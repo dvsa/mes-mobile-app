@@ -27,6 +27,8 @@ export class AppConfigProviderMock {
         journalUrl: localEnvironmentMock.journal.journalUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
+        allowTests: localEnvironmentMock.journal.allowTests,
+        allowedTestCategories: localEnvironmentMock.journal.allowedTestCategories,
       },
       logs: {
         url: localEnvironmentMock.logs.url,

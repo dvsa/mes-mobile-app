@@ -44,49 +44,64 @@ describe('Test Outcome', () => {
   });
 
   describe('DOM', () => {
-    // Unit tests for the components template
-    it('should show start test button when canStartTest is true', () => {
-      component.canStartTest = true;
-      fixture.detectChanges();
-      const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
-      expect(startButton.length).toBe(1);
+
+    describe('show start test button', () => {
+      it('should show the start test button when there is no outcome and user can not submit test', () => {
+        component.canSubmitTest = false;
+        component.outcome = undefined;
+        fixture.detectChanges();
+        const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
+        expect(startButton.length).toBe(1);
+      });
+
+      it('should not show the start test button when the test has an outcome', () => {
+        component.outcome = '12345';
+        component.canSubmitTest = false;
+        fixture.detectChanges();
+        const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
+        expect(startButton.length).toBe(0);
+      });
+      it('should not show start test button when the user can submit the test', () => {
+        component.outcome = undefined;
+        component.canSubmitTest = true;
+        fixture.detectChanges();
+        const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
+        expect(startButton.length).toBe(0);
+      });
     });
 
-    it('should not show start test button when canStartTest is false', () => {
-      component.canStartTest = false;
-      fixture.detectChanges();
-      const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
-      expect(startButton.length).toBe(0);
+    describe('show submit test button', () => {
+      it('should show submit test button when canSubmitTest is true', () => {
+        component.canSubmitTest = true;
+        fixture.detectChanges();
+        const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
+        expect(submitButton.length).toBe(1);
+      });
+
+      it('should not show submit test button when canSubmitTest is false', () => {
+        component.canSubmitTest = false;
+        fixture.detectChanges();
+        const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
+        expect(submitButton.length).toBe(0);
+      });
     });
 
-    it('should show submit test button when canSubmitTest is true', () => {
-      component.canSubmitTest = true;
-      fixture.detectChanges();
-      const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
-      expect(submitButton.length).toBe(1);
+    describe('show outcome', () => {
+      it('should show activity code when an outcome is provided', () => {
+        component.outcome = '1234';
+        fixture.detectChanges();
+        const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
+        expect(outcome.length) .toBe(1);
+      });
+
+      it('should not show activity code when an outcome is not provided', () => {
+        component.outcome = undefined;
+        fixture.detectChanges();
+        const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
+        expect(outcome.length).toBe(0);
+      });
+
     });
 
-    it('should show submit test button when canSubmitTest is false', () => {
-      component.canSubmitTest = false;
-      fixture.detectChanges();
-      const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
-      expect(submitButton.length).toBe(0);
-    });
-
-    it('should show activity code when canSubmitTest and canStartTest are false', () => {
-      component.canStartTest = false;
-      component.canSubmitTest = false;
-      fixture.detectChanges();
-      const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
-      expect(outcome.length).toBe(1);
-    });
-
-    it('should not show activity code when canSubmitTest or canStartTest are true', () => {
-      component.canStartTest = true;
-      component.canSubmitTest = false;
-      fixture.detectChanges();
-      const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
-      expect(outcome.length).toBe(0);
-    });
   });
 });

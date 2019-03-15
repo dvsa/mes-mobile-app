@@ -15,6 +15,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
 import { LanguageComponent } from '../../language/language';
 import { LocationComponent } from '../../location/location';
+import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -94,6 +96,7 @@ describe('TestSlotComponent', () => {
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
 
       ],
     }).compileComponents().then(() => {
@@ -177,6 +180,25 @@ describe('TestSlotComponent', () => {
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE;
         expect(component.isPortrait()).toBeFalsy();
       });
+      it('should not allow the starting of tests if allowTests is false', () => {
+        component.appConfig.getAppConfig =
+          jasmine.createSpy('getAppConfig').and.returnValue({ journal: { allowTests: false } });
+        expect(component.canStartTest()).toBeFalsy();
+      });
+      it('should not allow the starting of tests if the testCategory is not allowedTestCategories', () => {
+        component.appConfig.getAppConfig =
+          jasmine.createSpy('getAppConfig')
+          .and
+          .returnValue({ journal: { allowTests: true, allowedTestCategories: ['C'] } });
+        expect(component.canStartTest()).toBeFalsy();
+      });
+      it('should allow the starting of tests if the testCategory is in allowedTestCategories', () => {
+        component.appConfig.getAppConfig =
+          jasmine.createSpy('getAppConfig')
+          .and
+          .returnValue({ journal: { allowTests: true, allowedTestCategories: ['B'] } });
+        expect(component.canStartTest()).toBeTruthy();
+      });
     });
 
     describe('isSpecialNeedsSlot', () => {
@@ -235,6 +257,7 @@ describe('TestSlotComponent', () => {
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
         expect(subByDirective.slot).toEqual(mockSlot);
+        expect(subByDirective.canStartTest).toEqual(true);
       });
 
       it('should pass something to sub-component vehicle-details  input', () => {
