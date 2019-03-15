@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
@@ -10,6 +10,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { waitingRoomReducer } from '../waiting-room.reducer';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ToggleResidencyDeclaration, ToggleInsuranceDeclaration } from '../waiting-room.actions';
+import { By } from '@angular/platform-browser';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -66,6 +67,25 @@ describe('WaitingRoomPage', () => {
   });
 
   describe('DOM', () => {
-    // Unit tests for the components template
+    describe('Declaration checkboxes', () => {
+      it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
+        fixture.detectChanges();
+        spyOn(component, 'residencyDeclarationChanged');
+        const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
+        residencyCb.triggerEventHandler('click', null);
+        tick();
+        fixture.detectChanges();
+        expect(component.residencyDeclarationChanged).toHaveBeenCalled();
+      }));
+      it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
+        fixture.detectChanges();
+        spyOn(component, 'insuranceDeclarationChanged');
+        const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
+        insuranceCb.triggerEventHandler('click', null);
+        tick();
+        fixture.detectChanges();
+        expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
+      }));
+    });
   });
 });
