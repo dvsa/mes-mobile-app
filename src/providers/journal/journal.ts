@@ -11,7 +11,6 @@ import { from } from 'rxjs/observable/from';
 
 @Injectable()
 export class JournalProvider {
-
   constructor(
     public http: HttpClient,
     public urlProvider: UrlProvider,

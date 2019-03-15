@@ -4,7 +4,6 @@ import { SecureStorageObject } from '@ionic-native/secure-storage';
 @Injectable()
 export class DataStoreProvider {
 
-  // todo - only temporary
   defaultStoreName: string = 'MES';
 
   secureContainer: SecureStorageObject = null;
