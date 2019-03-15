@@ -5,6 +5,8 @@ export const environmentResponseMock = {
     journalUrl: 'remote-journal-url',
     autoRefreshInterval: 5000,
     numberOfDaysToView: 7,
+    allowTests: true,
+    allowedTestCategories: ['B'],
   },
   logs: {
     url: 'https://example.com/api/vi/logs',

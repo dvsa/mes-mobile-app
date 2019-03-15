@@ -4,6 +4,7 @@ import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
 import { TestCategory } from '../../../../shared/models/test-category';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 
 @Component({
   selector: 'test-slot',
@@ -19,7 +20,10 @@ export class TestSlotComponent implements SlotComponent {
   @Input()
   showLocation: boolean;
 
-  constructor(public screenOrientation: ScreenOrientation) {}
+  constructor(
+    public screenOrientation: ScreenOrientation,
+    public appConfig: AppConfigProvider,
+  ) {}
 
   isIndicatorNeededForSlot(): boolean {
     const specialNeeds: boolean = this.isSpecialNeedsSlot();
@@ -40,5 +44,20 @@ export class TestSlotComponent implements SlotComponent {
 
   showVehicleDetails(): boolean {
     return vehicleDetails[this.slot.booking.application.testCategory as TestCategory];
+  }
+
+  canStartTest(): boolean {
+    if (!this.appConfig.getAppConfig().journal.allowTests) {
+      return false;
+    }
+
+    const testCategory = this.slot.booking.application.testCategory;
+    const allowedTestCategories = this.appConfig.getAppConfig().journal.allowedTestCategories;
+
+    if (allowedTestCategories.includes(testCategory)) {
+      return true;
+    }
+
+    return false;
   }
 }

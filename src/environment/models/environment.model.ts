@@ -18,6 +18,8 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     journalUrl: string;
     autoRefreshInterval: number;
     numberOfDaysToView: number;
+    allowTests: boolean;
+    allowedTestCategories: string[];
   };
   logs: {
     url: string,
