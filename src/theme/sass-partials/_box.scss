@@ -13,5 +13,5 @@
 
 .mes-full-width-card-separator {
   height: 2px;
-  background-color: #EFEFEE;
+  background-color: map-get($colors-gds, 'gds-grey-5');
 }
