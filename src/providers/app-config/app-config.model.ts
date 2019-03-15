@@ -12,6 +12,7 @@ export type AppConfig = {
     employeeIdKey: string,
   },
   approvedDeviceIdentifiers: string[],
+  timeTravelDate: string,
   journal: {
     journalUrl: string,
     autoRefreshInterval: number

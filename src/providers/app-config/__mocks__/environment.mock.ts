@@ -21,6 +21,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
   daysToCacheJournalData: 7,
   daysToCacheLogs: 7,
   googleAnalyticsId: 'local-ga-id',
+  timeTravelDate: '2019-01-13',
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',
