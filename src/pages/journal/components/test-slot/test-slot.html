@@ -5,7 +5,7 @@
   <ion-row class="slot-row" align-items-center nowrap>
     <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>
     <ion-grid>
-      <ion-row class="slot-header" 
+      <ion-row class="slot-header"
         [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center
       >
         <language align-items-center
@@ -52,10 +52,10 @@
           </ion-grid>
         </ion-col>
         <ion-col class="test-outcome-col" no-padding padding-right>
-          <test-outcome [slot]="slot"></test-outcome>
+          <test-outcome [slot]="slot" [canStartTest]="canStartTest()"></test-outcome>
         </ion-col>
       </ion-row>
-      <ion-row class="slot-footer" 
+      <ion-row class="slot-footer"
         [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center
       >
         <ion-col class="vehicle-details-col" no-padding>

@@ -12,14 +12,28 @@ export class TestOutcomeComponent {
   @Input()
   slot: any;
 
-  canStartTest: boolean = true;
+  @Input()
+  canStartTest: boolean;
+
   canSubmitTest: boolean = false;
-  outcome: string = '0';
+  outcome: string;
 
   constructor(
     private store$: Store<StoreModel>,
     public navController: NavController,
   ) {}
+
+  showOutcome(): boolean {
+    return this.outcome !== undefined || this.outcome != null;
+  }
+
+  showStartTestButton(): boolean {
+    return (this.outcome === undefined || this.outcome == null) && !this.canSubmitTest;
+  }
+
+  showSubmitTestButton(): boolean {
+    return this.canSubmitTest;
+  }
 
   startTest() {
     this.store$.dispatch(new TestOutcomeStartTest());
