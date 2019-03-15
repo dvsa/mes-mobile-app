@@ -124,7 +124,10 @@ describe('Journal Effects', () => {
     // ARRANGE
     const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
-    store$.dispatch(new journalActions.LoadJournalSuccess(journalSlotsDataMock)); // Load in mock journal state
+    store$.dispatch(new journalActions.LoadJournalSuccess(
+      journalSlotsDataMock,
+      ConnectionStatus.ONLINE,
+      new Date())); // Load in mock journal state
     spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectNextDay());
@@ -141,7 +144,10 @@ describe('Journal Effects', () => {
     // ARRANGE
     const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
-    store$.dispatch(new journalActions.LoadJournalSuccess(journalSlotsDataMock)); // Load in mock journal state
+    store$.dispatch(new journalActions.LoadJournalSuccess(
+      journalSlotsDataMock,
+      ConnectionStatus.ONLINE,
+      new Date())); // Load in mock journal state
     store$.dispatch(new journalActions.SetSelectedDate(nextDay));
     spyOn(store$, 'dispatch');
     // ACT

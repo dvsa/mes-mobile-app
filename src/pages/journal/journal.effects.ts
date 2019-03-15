@@ -60,7 +60,10 @@ export class JournalEffects {
             map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.extendWithEmptyDays(slots)),
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantSlots(slots)),
-            map((slots: {[k: string]: SlotItem[]}) => new journalActions.LoadJournalSuccess(slots)),
+            map((slots: {[k: string]: SlotItem[]}) =>
+              new journalActions.LoadJournalSuccess(slots,
+                                                    this.networkStateProvider.getNetworkState(),
+                                                    lastRefreshed)),
           );
       }),
     );

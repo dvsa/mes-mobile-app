@@ -10,6 +10,7 @@ import { LoadJournalSuccess, SetSelectedDate } from '../../../journal.actions';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
+import { ConnectionStatus } from '../../../../../providers/network-state/network-state';
 
 describe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
@@ -48,7 +49,9 @@ describe('JournalNavigationComponent', () => {
     beforeEach(() => {
       componentEl = fixture.debugElement;
 
-      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
+      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock,
+                                             ConnectionStatus.ONLINE,
+                                             new Date()));
     });
 
     describe('selected date is today', () => {

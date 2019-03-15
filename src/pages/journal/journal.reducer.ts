@@ -4,6 +4,7 @@ import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 import { has } from 'lodash';
 import { DateTime } from '../../shared/helpers/date-time';
+import { ConnectionStatus } from '../../providers/network-state/network-state';
 
 export const initialState: JournalModel = {
   isLoading: false,
@@ -27,7 +28,8 @@ export function journalReducer(state = initialState, action: journalActions.Jour
 
       return {
         ...state,
-        lastRefreshed: new Date(),
+        lastRefreshed: action.onlineOffline === ConnectionStatus.ONLINE ?
+        new Date() : action.lastRefreshed,
         selectedDate: date,
         isLoading: false,
         slots: action.payload,

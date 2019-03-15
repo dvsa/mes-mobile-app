@@ -29,6 +29,7 @@ import { JournalNavigationComponent } from '../components/journal-navigation/jou
 import { By } from '@angular/platform-browser';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import { ConnectionStatus } from '../../../providers/network-state/network-state';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -101,7 +102,9 @@ describe('JournalPage', () => {
       componentEl = fixture.debugElement;
 
       // Manually dispatching an action which loads slots to the store
-      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock));
+      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock,
+                                             ConnectionStatus.ONLINE,
+                                             new Date()));
     });
 
     // TODO - Come back and look at this test

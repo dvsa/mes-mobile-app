@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { ConnectionStatus } from '../../providers/network-state/network-state';
 
 export const LOAD_JOURNAL = '[JournalPage] Load Journal';
 export const LOAD_JOURNAL_SUCCESS = '[JournalEffects] Load Journal Success';
@@ -37,7 +38,10 @@ export class LoadJournalSuccess implements Action {
   readonly type = LOAD_JOURNAL_SUCCESS;
 
   // TODO: declare payload with the correct type when we have a slot type in place
-  constructor(public payload: {[k: string]: SlotItem[]}) {}
+  constructor(
+    public payload: {[k: string]: SlotItem[]},
+    public onlineOffline: ConnectionStatus,
+    public lastRefreshed: Date) {}
 }
 
 export class LoadJournalFailure implements Action {

@@ -2,6 +2,7 @@ import { initialState, journalReducer } from '../journal.reducer';
 import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError, ClearChangedSlot } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
+import { ConnectionStatus } from '../../../providers/network-state/network-state';
 
 const today = DateTime.now().format('YYYY-MM-DD');
 
@@ -38,7 +39,9 @@ describe('Journal Reducer', () => {
         },
         ],
       };
-      const action = new LoadJournalSuccess(actionPayload);
+      const action = new LoadJournalSuccess(actionPayload,
+                                            ConnectionStatus.ONLINE,
+                                            new Date());
       const result = journalReducer(initialState, action);
 
       expect(result).toEqual({
@@ -71,7 +74,9 @@ describe('Journal Reducer', () => {
         },
         selectedDate: yesterday,
       };
-      const action = new LoadJournalSuccess(actionPayload);
+      const action = new LoadJournalSuccess(actionPayload,
+                                            ConnectionStatus.ONLINE,
+                                            new Date());
       const result = journalReducer(stateWithYesterdaysDate, action);
       expect(result.selectedDate).toEqual(today);
     });
