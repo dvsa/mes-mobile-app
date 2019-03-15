@@ -7,6 +7,8 @@ import { environment } from '../../environment/environment';
 import { EnvironmentFile } from '../../environment/models/environment.model';
 import { DataStoreProvider } from '../data-store/data-store';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
+import { AppConfigError } from './app-config.constants';
+import { AuthenticationError } from './../authentication/authentication.constants';
 
 @Injectable()
 export class AppConfigProvider {
@@ -34,9 +36,9 @@ export class AppConfigProvider {
       .then(data => this.mapRemoteConfig(data))
       .catch((error) => {
         if (error && error.status === 403) {
-          return Promise.reject('user not authorised');
+          return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
         }
-        return Promise.reject('error getting remote config');
+        return Promise.reject(AppConfigError.UNKNOWN_ERROR);
       })
 
   private getRemoteData = (): Promise<any> =>
