@@ -8,13 +8,15 @@ import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
 import { AppConfigProvider } from '../app-config/app-config';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotHasChanged } from './slot.actions';
+import { DateTimeProvider } from '../date-time/date-time';
 
 @Injectable()
 export class SlotProvider {
 
   constructor(
     private store$: Store<StoreModel>,
-    public appConfigProvider: AppConfigProvider) {}
+    public appConfigProvider: AppConfigProvider,
+    private dateTimeProvider: DateTimeProvider) {}
 
   detectSlotChanges(slots: {[k: string]: SlotItem[]}, newJournal: ExaminerWorkSchedule): SlotItem[] {
     const newSlots = flatten([
@@ -55,7 +57,7 @@ export class SlotProvider {
 
     const days = times(
       numberOfDaysToView,
-      (d: number): string => DateTime.now().add(d, Duration.DAY).format('YYYY-MM-DD'),
+      (d: number): string => this.dateTimeProvider.now().add(d, Duration.DAY).format('YYYY-MM-DD'),
     );
     const emptyDays = days.reduce((days: {[k: string]: SlotItem[]}, day: string) => ({ ...days, [day]: [] }), {});
 
@@ -80,7 +82,7 @@ export class SlotProvider {
     // otherwise we just go to next day
     const friday = 5;
     const saturday = 6;
-    const today = DateTime.now().day();
+    const today = this.dateTimeProvider.now().day();
     const daysAhead = today === friday ? 4 : today === saturday ? 3 : 2;
 
     return Object.keys(slots)
