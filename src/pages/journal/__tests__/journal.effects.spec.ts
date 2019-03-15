@@ -22,6 +22,8 @@ import { JournalModel } from '../journal.model';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { of } from 'rxjs/observable/of';
+import { DataStoreProvider } from '../../../providers/data-store/data-store';
+import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -59,6 +61,7 @@ describe('Journal Effects', () => {
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
+        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         Store,
         SlotProvider,
       ],
@@ -78,6 +81,7 @@ describe('Journal Effects', () => {
   it('should dispatch the success action when the journal loads successfully', (done) => {
     // ARRANGE
     spyOn(journalProvider, 'getJournal').and.callThrough();
+    spyOn(journalProvider, 'saveJournalForOffline').and.callThrough();
     spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
     spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
     spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
@@ -86,6 +90,7 @@ describe('Journal Effects', () => {
     // ASSERT
     effects.loadJournal$.subscribe((result) => {
       expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(journalProvider.saveJournalForOffline).toHaveBeenCalled();
       expect(slotProvider.detectSlotChanges).toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
       expect(slotProvider.extendWithEmptyDays).toHaveBeenCalled();
       expect(slotProvider.getRelevantSlots).toHaveBeenCalled();
@@ -119,7 +124,10 @@ describe('Journal Effects', () => {
     // ARRANGE
     const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
-    store$.dispatch(new journalActions.LoadJournalSuccess(journalSlotsDataMock)); // Load in mock journal state
+    store$.dispatch(new journalActions.LoadJournalSuccess(
+      journalSlotsDataMock,
+      ConnectionStatus.ONLINE,
+      new Date())); // Load in mock journal state
     spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectNextDay());
@@ -136,7 +144,10 @@ describe('Journal Effects', () => {
     // ARRANGE
     const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
-    store$.dispatch(new journalActions.LoadJournalSuccess(journalSlotsDataMock)); // Load in mock journal state
+    store$.dispatch(new journalActions.LoadJournalSuccess(
+      journalSlotsDataMock,
+      ConnectionStatus.ONLINE,
+      new Date())); // Load in mock journal state
     store$.dispatch(new journalActions.SetSelectedDate(nextDay));
     spyOn(store$, 'dispatch');
     // ACT

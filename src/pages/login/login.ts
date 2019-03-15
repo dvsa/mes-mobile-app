@@ -12,7 +12,6 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs } from '../../modules/logs/logs.actions';
-
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -35,7 +34,6 @@ export class LoginPage extends BasePageComponent {
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
     public deviceProvider: DeviceProvider,
-
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -84,6 +82,7 @@ export class LoginPage extends BasePageComponent {
       this.navController.setRoot('JournalPage');
     }
   }
+
   isInternetConnectionError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;
   }
