@@ -38,7 +38,7 @@
     // Accommodate for the extra border
     $checkbox-width-height-invalid: $checkbox-width-height - $checkbox-border-invalid;
 
-    border: $checkbox-border-invalid solid #B12025;
+    border: $checkbox-border-invalid solid map-get($colors, 'mes-validation-error');
     width: $checkbox-width-height-invalid;
     height: $checkbox-width-height-invalid;
   }

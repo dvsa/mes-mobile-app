@@ -1,8 +1,17 @@
 .mes-box-grey {
-    border-radius: 23px;
-    background-color: map-get($colors, mesBoxGrey);
-    padding: 20px;
-    ion-icon[name='alert'] {
-      font-size: 2em;
-    }
+  border-radius: 23px;
+  background-color: map-get($colors, mesBoxGrey);
+  padding: 20px;
+  ion-icon[name='alert'] {
+    font-size: 2em;
   }
+}
+
+.mes-full-width-card {
+  padding: 32px;
+}
+
+.mes-full-width-card-separator {
+  height: 2px;
+  background-color: map-get($colors-gds, 'gds-grey-5');
+}
