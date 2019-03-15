@@ -11,7 +11,7 @@ export class MesSignaturePadComponent {
   public isvalid: boolean;
   public required: boolean;
   public retryImage: string;
-  public signAreaHeaderText: string;
+  public notValidHeaderText: string;
   public retryButtonText: string;
   public signHereText: string;
   public signHereImage: string;
@@ -36,9 +36,19 @@ export class MesSignaturePadComponent {
   clear() {
     this.signaturePad.clear();
     this.signature = null;
+    this.isvalid = false;
+  }
+
+  checkAndSetValidation() {
+    if (this.signature) {
+      this.isvalid = true;
+    } else {
+      this.isvalid = false;
+    }
   }
 
   drawComplete() {
+    this.isvalid = true;
     this.signature = this.signaturePad.toDataURL();
   }
 }

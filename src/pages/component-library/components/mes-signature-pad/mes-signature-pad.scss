@@ -1,6 +1,18 @@
 mes-signature-pad {
+  .not-valid-header {
+    height: 40px;
+    .not-valid-text {
+      color: #b12025;
+    }
+  }
   .mes-signature-pad {
     background-color: #f8f8f8;
+    &.is-not-valid {
+      canvas {
+        border-color: #b12025 !important;
+        box-shadow: inset 0 0px 0px 0 #a5a2a2;
+      }
+    }
   }
   .retry-button {
     .retry-icon {
