@@ -17,8 +17,6 @@ describe('JournalProvider', () => {
     let httpMock;
     let authProviderMock;
     let urlProviderMock;
-    let dataStoreProviderMock;
-    let networkStateProviderMock;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -38,10 +36,6 @@ describe('JournalProvider', () => {
       journalProvider = TestBed.get(JournalProvider);
       authProviderMock = TestBed.get(AuthenticationProvider);
       urlProviderMock = TestBed.get(UrlProvider);
-      dataStoreProviderMock = TestBed.get(DataStoreProvider);
-      networkStateProviderMock = TestBed.get(NetworkStateProvider);
-      console.log(networkStateProviderMock);
-      console.log(dataStoreProviderMock);
     });
 
     it('should obtain the personal journal URL from the journal provider, passing the cached employee ID', () => {

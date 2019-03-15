@@ -11,5 +11,5 @@ export class JournalProviderMock {
   public getJournal(): Observable<ExaminerWorkSchedule> {
     return of(JournalProviderMock.mockJournal);
   }
-
+  public saveJournalForOffline = () => {};
 }

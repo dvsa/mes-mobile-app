@@ -12,6 +12,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { By } from '@angular/platform-browser';
 import { CandidateLinkComponent } from '../candidate-link';
 import { Store } from '@ngrx/store';
+import { SecureStorage } from '@ionic-native/secure-storage';
+import { DataStoreProvider } from '../../../../../providers/data-store/data-store';
+import { DataStoreProviderMock } from '../../../../../providers/data-store/__mocks__/data-store.mock';
+import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 
 class MockAppService extends App {
   getTextZoomClass() {
@@ -35,6 +39,8 @@ describe('CandidateLinkComponent', () => {
         { provide: ModalController, useFactory: () => modalControllerMock },
         { provide: App, useClass: MockAppService },
         { provide: Store, useClass: MockStore },
+        { provide: SecureStorage, useClass: SecureStorageMock },
+        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
       ],
     })
       .compileComponents()

@@ -11,4 +11,5 @@ export class DataStoreProviderMock {
     // logout = jasmine.createSpy('logout').and.returnValue(Promise.resolve());
   setItem = jasmine.createSpy('setItem').and.returnValue('set');
   getItem = jasmine.createSpy('getItem').and.returnValue('get');
+  setSecureContainer = jasmine.createSpy('setSecureContainer').and.returnValue(Promise.resolve());
 }

@@ -5,6 +5,10 @@ import { AppConfigProvider } from '../app-config';
 
 import { environmentResponseMock } from '../__mocks__/environment-response.mock';
 import { remoteEnvironmentMock } from '../__mocks__/environment.mock';
+import { NetworkStateProvider } from '../../network-state/network-state';
+import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
+import { DataStoreProvider } from '../../data-store/data-store';
+import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 
 describe('App Config Provider', () => {
 
@@ -15,6 +19,8 @@ describe('App Config Provider', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
+        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
       ],
     });

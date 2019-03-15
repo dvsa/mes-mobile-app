@@ -27,9 +27,7 @@ export class App {
   ) {
     platform.ready()
       .then(() => {
-        console.log('setting up secure storage');
         this.secureStorage.create('MES').then((storage: SecureStorageObject) => {
-          console.log('secure storage initialised', storage);
           this.dataStore.setSecureContainer(storage);
         });
         this.configureStatusBar();

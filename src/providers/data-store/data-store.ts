@@ -13,32 +13,27 @@ export class DataStoreProvider {
   }
 
   setSecureContainer(container: SecureStorageObject): void {
-    console.log('setting secureContainer');
     this.secureContainer = container;
   }
 
   getSecureContainer(): SecureStorageObject {
-    console.log('getting secureContainer');
     return this.secureContainer;
   }
 
   getKeys(): any {
     return this.secureContainer.keys().then((response: string[]) => {
-      console.log('response from getKeys', response);
       return response;
     });
   }
 
   getItem(key: string) {
     return this.secureContainer.get(key).then((response) => {
-      console.log('response from get', response);
       return response;
     });
   }
 
   setItem(key: string, value: any) {
     return this.secureContainer.set(key, value).then((response) => {
-      console.log('response from set item', response);
       return response;
     });
   }

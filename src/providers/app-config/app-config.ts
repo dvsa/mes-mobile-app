@@ -40,15 +40,12 @@ export class AppConfigProvider {
         this.httpClient.get<any>(this.environmentFile.configUrl)
         .subscribe(
           (data) => {
-            console.log(`trying to set CONFIG ${JSON.stringify(data)}`);
             this.dataStore.setItem('CONFIG', JSON.stringify(data));
-            console.log('datastore updated');
             resolve(data);
           },
           error => reject(error),
         );
       } else {
-        console.log('get offline config');
         this.getOfflineConfig()
         .then(data => resolve(data))
         .catch(error => reject(error));
@@ -57,13 +54,8 @@ export class AppConfigProvider {
 
   private getOfflineConfig = (): Promise<any> =>
     new Promise((resolve, reject) => {
-      console.log('getting offline CONFIG');
       this.dataStore.getItem('CONFIG')
-      .then((response) => {
-        let jsonString: string;
-        jsonString = response;
-        resolve(JSON.parse(jsonString));
-      })
+      .then(response => resolve(JSON.parse(response)))
       .catch(error => reject(error));
     })
 

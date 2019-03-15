@@ -15,6 +15,10 @@ import { AuthenticationProviderMock } from '../__mocks__/authentication.mock';
 import { UrlProvider } from '../../url/url';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { of } from 'rxjs/observable/of';
+import { DataStoreProvider } from '../../data-store/data-store';
+import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
+import { NetworkStateProvider } from '../../network-state/network-state';
+import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
 
 describe('Authentication interceptor', () => {
   let httpMock: HttpTestingController;
@@ -34,6 +38,8 @@ describe('Authentication interceptor', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: UrlProvider, useClass: UrlProviderMock },
+        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptor,

@@ -24,10 +24,8 @@ export class JournalProvider {
     const staffNumber = this.authProvider.getEmployeeId();
     const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
     const networkStatus = this.networkStateProvider.getNetworkState();
-    console.log(networkStatus);
     if (lastRefreshed === null) {
       if (networkStatus === ConnectionStatus.ONLINE) {
-        console.log('getting journal');
         return this.http.get(journalUrl);
       }
       return this.getOfflineJournal();
@@ -54,4 +52,11 @@ export class JournalProvider {
       }).catch(error => reject(error));
     });
   }
+
+  saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
+    if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {
+      this.dataStore.setItem('JOURNAL', JSON.stringify(journalData)).then((response) => {});
+    }
+  }
+
 }

@@ -55,7 +55,7 @@ export class JournalEffects {
         return this.journalProvider
           .getJournal(lastRefreshed)
           .pipe(
-            tap((journalData: ExaminerWorkSchedule) => this.saveJournalForOffline(journalData)),
+            tap((journalData: ExaminerWorkSchedule) => this.journalProvider.saveJournalForOffline(journalData)),
             map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
             map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
             map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.extendWithEmptyDays(slots)),
@@ -64,15 +64,6 @@ export class JournalEffects {
           );
       }),
     );
-  }
-
-  saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
-    if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {
-      this.dataStoreprovider.setItem('JOURNAL', JSON.stringify(journalData)).then((response) => {
-        console.log(response);
-      },
-    );
-    }
   }
 
   @Effect()

@@ -9,7 +9,7 @@ export class NetworkStateProviderMock {
   }
 
   public getNetworkState(): ConnectionStatus {
-    return ConnectionStatus.OFFLINE;
+    return ConnectionStatus.ONLINE;
   }
 
 }
