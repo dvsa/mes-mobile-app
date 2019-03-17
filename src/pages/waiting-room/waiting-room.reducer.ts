@@ -1,14 +1,14 @@
-import { WaitingRoom } from '@dvsa/mes-test-schema/CatBTest';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
 import * as waitingRoomActions from './waiting-room.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
-export const initialState: WaitingRoom = {
+export const initialState: PreTestDeclarations = {
   insuranceDeclarationAccepted: false,
   residencyDeclarationAccepted: false,
   signature: '',
 };
 
-export function waitingRoomReducer(state = initialState, action: waitingRoomActions.Types): WaitingRoom {
+export function waitingRoomReducer(state = initialState, action: waitingRoomActions.Types): PreTestDeclarations {
   switch (action.type) {
     case waitingRoomActions.TOGGLE_INSURANCE_DECLARATION:
       return {
@@ -25,4 +25,4 @@ export function waitingRoomReducer(state = initialState, action: waitingRoomActi
   }
 }
 
-export const getWaitingRoomState = createFeatureSelector<WaitingRoom>('waitingRoom');
+export const getPreTestDeclarationsState = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');

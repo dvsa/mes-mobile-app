@@ -13,7 +13,7 @@ import { waitingRoomReducer } from './waiting-room.reducer';
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomPage),
-    StoreModule.forFeature('waitingRoom', waitingRoomReducer),
+    StoreModule.forFeature('preTestDeclarations', waitingRoomReducer),
     EffectsModule.forFeature([WaitingRoomAnalyticsEffects]),
   ],
   providers: [

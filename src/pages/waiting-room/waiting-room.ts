@@ -7,7 +7,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { getWaitingRoomState } from './waiting-room.reducer';
+import { getPreTestDeclarationsState } from './waiting-room.reducer';
 import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from './waiting-room.selector';
 
 interface WaitingRoomPageState {
@@ -42,11 +42,11 @@ export class WaitingRoomPage extends BasePageComponent {
   ngOnInit(): void {
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
-        select(getWaitingRoomState),
+        select(getPreTestDeclarationsState),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: this.store$.pipe(
-        select(getWaitingRoomState),
+        select(getPreTestDeclarationsState),
         select(getResidencyDeclarationStatus),
       ),
       signature$: of(''),

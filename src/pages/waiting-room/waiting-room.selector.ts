@@ -1,4 +1,4 @@
-import { WaitingRoom } from '@dvsa/mes-test-schema/CatBTest';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
 
-export const getInsuranceDeclarationStatus = (wr: WaitingRoom) => wr.insuranceDeclarationAccepted;
-export const getResidencyDeclarationStatus = (wr: WaitingRoom) => wr.residencyDeclarationAccepted;
+export const getInsuranceDeclarationStatus = (decs: PreTestDeclarations) => decs.insuranceDeclarationAccepted;
+export const getResidencyDeclarationStatus = (decs: PreTestDeclarations) => decs.residencyDeclarationAccepted;

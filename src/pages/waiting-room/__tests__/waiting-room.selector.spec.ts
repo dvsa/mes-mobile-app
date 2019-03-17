@@ -1,8 +1,8 @@
 import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from '../waiting-room.selector';
-import { WaitingRoom } from '@dvsa/mes-test-schema/CatBTest';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
 
 describe('Waiting room selector', () => {
-  const state: WaitingRoom = {
+  const state: PreTestDeclarations = {
     insuranceDeclarationAccepted: true,
     residencyDeclarationAccepted: false,
     signature: 'sig',
