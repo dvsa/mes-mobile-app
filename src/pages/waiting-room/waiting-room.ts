@@ -7,8 +7,12 @@ import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { getPreTestDeclarationsState } from './waiting-room.reducer';
-import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from './waiting-room.selector';
+import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
+import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
+import {
+  getInsuranceDeclarationStatus,
+  getResidencyDeclarationStatus,
+} from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -54,11 +58,11 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   insuranceDeclarationChanged(): void {
-    this.store$.dispatch(new waitingRoomActions.ToggleInsuranceDeclaration());
+    this.store$.dispatch(new preTestDeclarationsActions.ToggleInsuranceDeclaration());
   }
 
   residencyDeclarationChanged(): void {
-    this.store$.dispatch(new waitingRoomActions.ToggleResidencyDeclaration());
+    this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
 
 }

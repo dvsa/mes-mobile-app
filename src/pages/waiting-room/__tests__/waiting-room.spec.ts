@@ -6,11 +6,13 @@ import { AppModule } from '../../../app/app.module';
 import { WaitingRoomPage } from '../waiting-room';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { StoreModule, Store } from '@ngrx/store';
-import { waitingRoomReducer } from '../waiting-room.reducer';
+import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { ToggleResidencyDeclaration, ToggleInsuranceDeclaration } from '../waiting-room.actions';
 import { By } from '@angular/platform-browser';
+import {
+  ToggleResidencyDeclaration,
+  ToggleInsuranceDeclaration,
+} from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -24,9 +26,6 @@ describe('WaitingRoomPage', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({
-          waitingRoom: waitingRoomReducer,
-        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

@@ -1,4 +1,4 @@
-import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from '../waiting-room.selector';
+import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from '../pre-test-declarations.selector';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
 
 describe('Waiting room selector', () => {

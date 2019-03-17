@@ -29,6 +29,7 @@ import { LogsModule } from '../modules/logs/logs.module';
 import { DeviceProvider } from '../providers/device/device';
 import { DataStoreProvider } from '../providers/data-store/data-store';
 import { SecureStorage } from '@ionic-native/secure-storage';
+import { TestModule } from '../modules/test/test.module';
 
 @NgModule({
   declarations: [App],
@@ -41,6 +42,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
     EffectsModule.forRoot([]),
     AppInfoModule,
     LogsModule,
+    TestModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],

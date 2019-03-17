@@ -1,5 +1,5 @@
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
-import * as waitingRoomActions from './waiting-room.actions';
+import * as preTestDeclarationActions from './pre-test-declarations.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
 export const initialState: PreTestDeclarations = {
@@ -8,14 +8,17 @@ export const initialState: PreTestDeclarations = {
   signature: '',
 };
 
-export function waitingRoomReducer(state = initialState, action: waitingRoomActions.Types): PreTestDeclarations {
+export function preTestDeclarationsReducer(
+  state = initialState,
+  action: preTestDeclarationActions.Types,
+): PreTestDeclarations {
   switch (action.type) {
-    case waitingRoomActions.TOGGLE_INSURANCE_DECLARATION:
+    case preTestDeclarationActions.TOGGLE_INSURANCE_DECLARATION:
       return {
         ...state,
         insuranceDeclarationAccepted: !state.insuranceDeclarationAccepted,
       };
-    case waitingRoomActions.TOGGLE_RESIDENCY_DECLARATION:
+    case preTestDeclarationActions.TOGGLE_RESIDENCY_DECLARATION:
       return {
         ...state,
         residencyDeclarationAccepted: !state.residencyDeclarationAccepted,
