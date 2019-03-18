@@ -33,5 +33,3 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
 
   return availableDays.includes(nextDay);
 };
-
-export const isToday = (selectedDate: string): boolean => DateTime.now().format('YYYY-MM-DD') === selectedDate;

@@ -48,6 +48,7 @@ describe('Journal Effects', () => {
   let store$: Store<JournalModel>;
   let networkStateProvider: NetworkStateProvider;
   let appConfigProvider: AppConfigProvider;
+  let dateTimeProvider: DateTimeProvider;
 
   beforeEach(() => {
     // ARRANGE
@@ -78,6 +79,7 @@ describe('Journal Effects', () => {
     store$ = TestBed.get(Store);
     networkStateProvider = TestBed.get(NetworkStateProvider);
     appConfigProvider = TestBed.get(AppConfigProvider);
+    dateTimeProvider = TestBed.get(DateTimeProvider);
   });
 
   it('should create the journal effects', () => {
@@ -128,7 +130,7 @@ describe('Journal Effects', () => {
 
   it('should dispatch the SetSelectedDate action with the correct date in the select next day effect', (done) => {
     // ARRANGE
-    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
+    const selectedDate: string = dateTimeProvider.now().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
@@ -150,7 +152,7 @@ describe('Journal Effects', () => {
 
   it('should dispatch the SetSelectedDate action with the correct date in the select previous day effect', (done) => {
     // ARRANGE
-    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
+    const selectedDate: string = dateTimeProvider.now().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,

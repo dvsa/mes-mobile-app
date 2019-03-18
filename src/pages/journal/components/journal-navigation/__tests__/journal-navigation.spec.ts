@@ -16,7 +16,7 @@ import { AppConfigProviderMock } from '../../../../../providers/app-config/__moc
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
-describe('JournalNavigationComponent', () => {
+fdescribe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
@@ -72,16 +72,16 @@ describe('JournalNavigationComponent', () => {
         expect(previousDayContainer).toBeNull();
       });
 
-      it('shows Friday as header', () => {
+      it('shows Today as header', () => {
         fixture.detectChanges();
         const mainHeader: HTMLElement = componentEl.query(By.css('h1')).nativeElement;
-        expect(mainHeader.textContent).toBe('Friday');
+        expect(mainHeader.textContent).toBe('Today');
       });
 
       it('shows correct date format as sub header', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
-        expect(subHeader.textContent).toBe(dateTimeProvider.now().format('D MMMM YYYY'));
+        expect(subHeader.textContent).toBe(dateTimeProvider.now().format('dddd D MMMM YYYY'));
       });
 
       it('shows next day button', () => {
