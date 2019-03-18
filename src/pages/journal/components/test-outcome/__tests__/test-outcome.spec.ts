@@ -9,6 +9,7 @@ import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mock
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 import { TestOutcomeStartTest } from '../test-outcome.actions';
 import { TestSlot } from '../../../../../shared/models/DJournal';
+import { Mock } from 'typemoq';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -44,12 +45,11 @@ describe('Test Outcome', () => {
     });
 
     describe('startTest', () => {
-      it('should dispatch a start test action with the slot ID', () => {
-        const dummySlot = { slotDetail: { slotId: '123' }, booking: { candidate: {} } };
-        component.slot = dummySlot;
+      it('should dispatch a start test action with the slot', () => {
+        const moqSlot = Mock.ofType<TestSlot>();
+        component.slot = moqSlot.object;
         component.startTest();
-        // @ts-ignore
-        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest(dummySlot as TestSlot));
+        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest(moqSlot.object));
       });
     });
   });
