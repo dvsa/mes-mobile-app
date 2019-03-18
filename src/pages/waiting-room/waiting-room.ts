@@ -1,4 +1,3 @@
-
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -7,13 +6,13 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { MesSignaturePadComponent } from './../../components/mes-signature-pad/mes-signature-pad';
 import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
+  getResidencySignatureStatus,
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
 
 interface WaitingRoomPageState {
@@ -45,9 +44,6 @@ export class WaitingRoomPage extends BasePageComponent {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
   }
 
-  ngAfterViewInit() {
-  }
-
   ngOnInit(): void {
     this.signaturePad.retryImage = '/assets/imgs/waiting-room/retry.png';
     this.signaturePad.signHereImage = '/assets/imgs/waiting-room/sign-here.png';
@@ -64,16 +60,35 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getPreTestDeclarationsState),
         select(getResidencyDeclarationStatus),
       ),
-      signature$: of(''),
+      signature$: this.store$.pipe(
+        select(getPreTestDeclarationsState),
+        select(getResidencySignatureStatus),
+      ),
     };
   }
 
+  ngAfterViewInit() {
+    this.pageState.signature$.subscribe((sig) => {
+      if (sig) {
+        this.signaturePad.setSignature(sig);
+      }
+    });
+  }
+  
   insuranceDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleInsuranceDeclaration());
   }
 
   residencyDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
+  }
+
+  signatureDataChanged($event: any) {
+    this.store$.dispatch(new preTestDeclarationsActions.SignatureDataChanged($event));
+  }
+
+  signatureDataCleared($event: any) {
+    this.store$.dispatch(new preTestDeclarationsActions.SignatureDataCleared());
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 
 @Component({
@@ -6,6 +6,8 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
   templateUrl: 'mes-signature-pad.html',
 })
 export class MesSignaturePadComponent {
+  @Output() changedDataEvent = new EventEmitter<string>();
+  @Output() dataClearedEvent = new EventEmitter<string>();
   public signature: string;
   public isvalid: boolean;
   public required: boolean;
@@ -43,6 +45,7 @@ export class MesSignaturePadComponent {
     this.signaturePad.clear();
     this.signature = null;
     this.isvalid = false;
+    this.dataClearedEvent.emit();
   }
 
   checkAndSetValidation() {
@@ -56,5 +59,6 @@ export class MesSignaturePadComponent {
   drawComplete() {
     this.isvalid = true;
     this.signature = this.signaturePad.toDataURL('image/png');
+    this.changedDataEvent.emit(this.signature);
   }
 }

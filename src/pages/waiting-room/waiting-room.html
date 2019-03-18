@@ -54,7 +54,10 @@
       </li>
 
       <div class="declaration-signature-row">
-        <mes-signature-pad></mes-signature-pad>
+        <mes-signature-pad 
+        (changedDataEvent)="signatureDataChanged($event)"
+        (dataClearedEvent)="signatureDataCleared()"
+        ></mes-signature-pad>
       </div>
 
     </ul>
