@@ -12,6 +12,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs } from '../../modules/logs/logs.actions';
+import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+// import { SetUnauthenticatedMode } from '../../providers/network-state/network-state.actions';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -23,6 +25,7 @@ export class LoginPage extends BasePageComponent {
   deviceTypeError: DeviceError;
   hasUserLoggedOut: boolean = false;
   hasDeviceTypeError: boolean = false;
+  unauthenticatedMode: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -34,18 +37,27 @@ export class LoginPage extends BasePageComponent {
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
     public deviceProvider: DeviceProvider,
+    public networkStateProvider: NetworkStateProvider,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
+
+    // this.store$.select(s => s.networkState).subscribe(data => this.unauthenticatedMode = data.unauthenticatedMode);
 
     // Check to see if redirect to page was from a logout
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
 
     // Trigger Authentication if this isn't a logout and is an ios device
     if (!this.hasUserLoggedOut && this.isIos()) {
-      this.login();
+      // TODO check network state, and if not connected dispatch an event to set unauthenticated mode
+      console.log(`in login ${networkStateProvider.getNetworkState}`);
+      if (networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE) {
+        console.log('offline dispatching set unauthenticatedmode');
+       // this.store$.dispatch(new SetUnauthenticatedMode(true));
+      } else {
+        this.login();
+      }
     }
-
-    if (!this.isIos()) {
+    if (!this.isIos() || this.unauthenticatedMode) {
       this.navController.setRoot('JournalPage');
       this.splashScreen.hide();
     }
