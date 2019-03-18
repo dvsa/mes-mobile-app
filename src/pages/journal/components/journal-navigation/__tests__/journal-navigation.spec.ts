@@ -16,7 +16,7 @@ import { AppConfigProviderMock } from '../../../../../providers/app-config/__moc
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
-fdescribe('JournalNavigationComponent', () => {
+describe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
@@ -61,6 +61,7 @@ fdescribe('JournalNavigationComponent', () => {
                                              ConnectionStatus.ONLINE,
                                              false,
                                              new Date()));
+      console.log('################ date time now', dateTimeProvider.now().format('YYYY-MM-DD'));
       store$.dispatch(new SetSelectedDate(dateTimeProvider.now().format('YYYY-MM-DD')));
     });
 
@@ -71,16 +72,16 @@ fdescribe('JournalNavigationComponent', () => {
         expect(previousDayContainer).toBeNull();
       });
 
-      it('shows Today as header', () => {
+      it('shows Friday as header', () => {
         fixture.detectChanges();
         const mainHeader: HTMLElement = componentEl.query(By.css('h1')).nativeElement;
-        expect(mainHeader.textContent).toBe('Today');
+        expect(mainHeader.textContent).toBe('Friday');
       });
 
       it('shows correct date format as sub header', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
-        expect(subHeader.textContent).toBe(DateTime.now().format('dddd D MMMM YYYY'));
+        expect(subHeader.textContent).toBe(dateTimeProvider.now().format('D MMMM YYYY'));
       });
 
       it('shows next day button', () => {
@@ -91,8 +92,9 @@ fdescribe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is day in the middle', () => {
-      const nextDay = DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD');
+      let nextDay: string;
       beforeEach(() => {
+        nextDay = dateTimeProvider.now().add(1, Duration.DAY).format('YYYY-MM-DD');
         store$.dispatch(new SetSelectedDate(nextDay));
       });
 
@@ -122,8 +124,9 @@ fdescribe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is the last available date', () => {
-      const selectedDay = DateTime.now().add(2, Duration.DAY).format('YYYY-MM-DD');
+      let selectedDay: string;
       beforeEach(() => {
+        selectedDay = dateTimeProvider.now().add(2, Duration.DAY).format('YYYY-MM-DD');
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
 
