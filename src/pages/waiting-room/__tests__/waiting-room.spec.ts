@@ -1,3 +1,4 @@
+
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
@@ -9,6 +10,8 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
+import { ComponentsModule } from './../../../components/components.module';
+
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
@@ -28,6 +31,7 @@ describe('WaitingRoomPage', () => {
         IonicModule,
         PreTestDeclarationsModule,
         AppModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
