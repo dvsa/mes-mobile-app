@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { TestOutcomeStartTest } from './test-outcome.actions';
-import { ChangeActiveCandidate } from '../../../../modules/test/candidate/candidate.actions';
 
 @Component({
   selector: 'test-outcome',
@@ -37,8 +36,7 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
-    this.store$.dispatch(new TestOutcomeStartTest(this.slot));
-    this.store$.dispatch(new ChangeActiveCandidate(this.slot.booking.candidate));
     this.navController.push('WaitingRoomPage');
+    this.store$.dispatch(new TestOutcomeStartTest(this.slot));
   }
 }

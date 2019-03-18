@@ -7,9 +7,9 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
-import { TestOutcomeStartTest } from '../test-outcome.actions';
 import { TestSlot } from '../../../../../shared/models/DJournal';
 import { Mock } from 'typemoq';
+import { TestOutcomeStartTest } from '../test-outcome.actions';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -38,7 +38,7 @@ describe('Test Outcome', () => {
 
   }));
 
-  fdescribe('Class', () => {
+  describe('Class', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
