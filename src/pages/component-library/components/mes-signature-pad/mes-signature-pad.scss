@@ -33,11 +33,12 @@ mes-signature-pad {
       width: 100%;
       position: relative;
       z-index: 10;
+      margin-bottom: -6px;
     }
   }
   .sign-here-wrapper {
     position: relative;
-    bottom: 71px;
+    bottom: 115px;
     left: 40px;
     width: 486px;
     float: left;
