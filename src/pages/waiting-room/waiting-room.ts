@@ -27,11 +27,11 @@ interface WaitingRoomPageState {
   selector: 'page-waiting-room',
   templateUrl: 'waiting-room.html',
 })
-
 export class WaitingRoomPage extends BasePageComponent {
   @ViewChild(MesSignaturePadComponent)
   signaturePad: MesSignaturePadComponent;
   pageState: WaitingRoomPageState;
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,

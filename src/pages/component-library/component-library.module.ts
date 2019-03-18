@@ -7,6 +7,7 @@ import { DataRowsComponent } from './components/data-rows/data-rows';
 import { ColorPaletteComponent } from './components/color-palette/color-palette';
 import { FormItemsComponent } from './components/form-items/form-items';
 import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   declarations: [
     ComponentLibraryPage,
