@@ -1,7 +1,7 @@
 import { preTestDeclarationsReducer, initialState } from '../pre-test-declarations.reducer';
 import { ToggleInsuranceDeclaration, ToggleResidencyDeclaration } from '../pre-test-declarations.actions';
 
-describe('Waiting Room reducer', () => {
+describe('PreTestDeclarations reducer', () => {
   it('should toggle the residency status when the toggle action is received', () => {
     const result = preTestDeclarationsReducer(initialState, new ToggleInsuranceDeclaration());
     expect(result.insuranceDeclarationAccepted).toBe(true);
