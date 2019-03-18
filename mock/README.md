@@ -1,0 +1,1 @@
+*NOTE:* In order for the unit tests to pass, the local-journal.json file must include one test slot for _tomorrow_.
