@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from './waiting-room.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { PreTestDeclarationsModule } from '../../modules/test/pre-test-declarations/pre-test-declarations.module';
+import { CandidateModule } from '../../modules/test/candidate/candidate.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { PreTestDeclarationsModule } from '../../modules/test/pre-test-declarati
     IonicPageModule.forChild(WaitingRoomPage),
     EffectsModule.forFeature([WaitingRoomAnalyticsEffects]),
     PreTestDeclarationsModule,
+    CandidateModule,
   ],
   providers: [
     AnalyticsProvider,
