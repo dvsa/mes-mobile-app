@@ -23,6 +23,9 @@ export function journalReducer(state = initialState, action: journalActions.Jour
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
         ...state,
+
+        // TODO: The reducer has to get the lastRefreshed date from the action
+        // And should not do any logic
         lastRefreshed: (action.onlineOffline ===
           ConnectionStatus.ONLINE  && !action.unAuthenticatedMode) ? new Date() : action.lastRefreshed,
         isLoading: false,
@@ -67,7 +70,6 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         },
       };
     case journalActions.SET_SELECTED_DAY:
-      console.log('journal reducer - set selected date', JSON.stringify(action));
       return {
         ...state,
         selectedDate: action.payload,

@@ -29,7 +29,6 @@ describe('LoginPage', () => {
   let authenticationProvider: AuthenticationProvider;
   let appConfigProvider: AppConfigProvider;
   let store$: Store<StoreModel>;
-  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -58,7 +57,6 @@ describe('LoginPage', () => {
         splashScreen = TestBed.get(SplashScreen);
         authenticationProvider = TestBed.get(AuthenticationProvider);
         appConfigProvider = TestBed.get(AppConfigProvider);
-        deviceProvider = TestBed.get(DeviceProvider);
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
@@ -76,7 +74,6 @@ describe('LoginPage', () => {
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.login();
       tick();
-      console.log(`device id ${deviceProvider.getDeviceType()}`);
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();

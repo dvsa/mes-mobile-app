@@ -27,6 +27,7 @@ import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/d
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -66,9 +67,9 @@ describe('Journal Effects', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         Store,
         SlotProvider,
-        DateTimeProvider,
       ],
     });
     journalProvider = TestBed.get(JournalProvider);
@@ -134,6 +135,7 @@ describe('Journal Effects', () => {
       ConnectionStatus.ONLINE,
       false,
       new Date())); // Load in mock journal state
+    store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
     spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectNextDay());
