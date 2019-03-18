@@ -13,6 +13,7 @@ import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
 } from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
+import { PreTestDeclarationsModule } from '../../../modules/test/pre-test-declarations/pre-test-declarations.module';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -25,6 +26,7 @@ describe('WaitingRoomPage', () => {
       declarations: [WaitingRoomPage],
       imports: [
         IonicModule,
+        PreTestDeclarationsModule,
         AppModule,
       ],
       providers: [

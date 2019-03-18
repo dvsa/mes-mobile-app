@@ -42,7 +42,6 @@ import { TestModule } from '../modules/test/test.module';
     EffectsModule.forRoot([]),
     AppInfoModule,
     LogsModule,
-    TestModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
