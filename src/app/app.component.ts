@@ -50,6 +50,7 @@ export class App {
 
   configureAccessibility() {
     if (this.platform.is('ios') && window && window.MobileAccessibility) {
+      window.MobileAccessibility.updateTextZoom();
       window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
       window.MobileAccessibility.isDarkerSystemColorsEnabled(
         (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
