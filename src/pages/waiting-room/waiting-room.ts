@@ -15,7 +15,7 @@ import {
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
 import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
 import {
-  getCandidateName, getCandidateDriverNumber, formatDriverNumber,
+  getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/test/candidate/candidate.selector';
 
 interface WaitingRoomPageState {
@@ -23,6 +23,7 @@ interface WaitingRoomPageState {
   residencyDeclarationAccepted$: Observable<boolean>;
   signature$: Observable<string>;
   candidateName$: Observable<string>;
+  candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
 }
 
@@ -63,6 +64,10 @@ export class WaitingRoomPage extends BasePageComponent {
       candidateName$: this.store$.pipe(
         select(getCurrentCandidate),
         select(getCandidateName),
+      ),
+      candidateUntitledName$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
         select(getCurrentCandidate),

@@ -45,7 +45,7 @@ describe('Test Outcome', () => {
 
     describe('startTest', () => {
       it('should dispatch a start test action with the slot ID', () => {
-        const dummySlot = { slotDetail: { slotId: '123' } };
+        const dummySlot = { slotDetail: { slotId: '123' }, booking: { candidate: {} } };
         component.slot = dummySlot;
         component.startTest();
         // @ts-ignore

@@ -5,6 +5,11 @@ export const getCandidateName = (candidate: Candidate): string => {
   return `${title} ${firstName} ${lastName}`;
 };
 
+export const getUntitledCandidateName = (candidate: Candidate): string => {
+  const { firstName, lastName } = candidate.candidateName;
+  return `${firstName} ${lastName}`;
+};
+
 export const getCandidateDriverNumber = (candidate: Candidate) => candidate.driverNumber;
 
 export const formatDriverNumber = (driverNumber: string) => {
