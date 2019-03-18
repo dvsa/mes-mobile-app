@@ -16,7 +16,7 @@ import { AppConfigProviderMock } from '../../../../../providers/app-config/__moc
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
-fdescribe('JournalNavigationComponent', () => {
+describe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
