@@ -5,9 +5,9 @@ import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 // The days can be empty because we don't care about the actual slots
 
 const emptyDays = {
-  [DateTime.now().add(0, Duration.DAY).format('YYYY-MM-DD')]: [],
-  [DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD')]: [],
-  [DateTime.now().add(2, Duration.DAY).format('YYYY-MM-DD')]: [],
+  [DateTime.at('2019-02-01').add(0, Duration.DAY).format('YYYY-MM-DD')]: [],
+  [DateTime.at('2019-02-01').add(1, Duration.DAY).format('YYYY-MM-DD')]: [],
+  [DateTime.at('2019-02-01').add(2, Duration.DAY).format('YYYY-MM-DD')]: [],
 };
 
 const slots: {[k: string]: SlotItem[]} = emptyDays;

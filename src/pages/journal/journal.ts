@@ -25,6 +25,7 @@ import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
+import { DateTimeProvider } from '../../providers/date-time/date-time';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -66,11 +67,13 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
     public analytics: AnalyticsProvider,
+    public dateTimeProvider: DateTimeProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
     this.employeeId = this.authenticationProvider.getEmployeeId();
     this.isUnauthenticated = this.authenticationProvider.isInUnAuthenticatedMode();
+    this.store$.dispatch(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
   }
 
   ngOnInit(): void {

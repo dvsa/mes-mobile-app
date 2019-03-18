@@ -143,7 +143,7 @@ describe('JournalSelector', () => {
         selectedDate: DateTime.now().format('YYYY-MM-DD'),
       };
 
-      const result = canNavigateToPreviousDay(journal);
+      const result = canNavigateToPreviousDay(journal, DateTime.now());
 
       expect(result).toBe(false);
     });
@@ -169,7 +169,7 @@ describe('JournalSelector', () => {
         selectedDate: DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD'),
       };
 
-      const result = canNavigateToPreviousDay(journal);
+      const result = canNavigateToPreviousDay(journal, DateTime.now());
 
       expect(result).toBe(true);
     });

@@ -26,6 +26,7 @@ import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
 
 export class TestActions extends Actions {
   constructor() {
@@ -67,6 +68,7 @@ describe('Journal Effects', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         Store,
         SlotProvider,
+        DateTimeProvider,
       ],
     });
     journalProvider = TestBed.get(JournalProvider);

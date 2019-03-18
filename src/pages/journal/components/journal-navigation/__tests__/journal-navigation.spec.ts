@@ -11,11 +11,16 @@ import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { ConnectionStatus } from '../../../../../providers/network-state/network-state';
+import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
-describe('JournalNavigationComponent', () => {
+fdescribe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
+  let dateTimeProvider: DateTimeProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,6 +33,8 @@ describe('JournalNavigationComponent', () => {
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(JournalNavigationComponent);
@@ -35,6 +42,7 @@ describe('JournalNavigationComponent', () => {
     });
 
     store$ = TestBed.get(Store);
+    dateTimeProvider = TestBed.get(DateTimeProvider);
   }));
 
   describe('Class', () => {
@@ -53,6 +61,7 @@ describe('JournalNavigationComponent', () => {
                                              ConnectionStatus.ONLINE,
                                              false,
                                              new Date()));
+      store$.dispatch(new SetSelectedDate(dateTimeProvider.now().format('YYYY-MM-DD')));
     });
 
     describe('selected date is today', () => {

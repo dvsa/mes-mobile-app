@@ -7,6 +7,7 @@ import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay, isToda
 import { Observable } from 'rxjs/Observable';
 
 import { SelectPreviousDay, SelectNextDay } from '../../journal.actions';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 
 interface JournalNavigationPageState {
   selectedDate$: Observable<string>;
@@ -23,7 +24,9 @@ export class JournalNavigationComponent implements OnInit {
 
   pageState: JournalNavigationPageState;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(
+    private store$: Store<StoreModel>,
+    private dateTimeProvider: DateTimeProvider) {}
 
   ngOnInit(): void {
     this.pageState = {
@@ -33,7 +36,7 @@ export class JournalNavigationComponent implements OnInit {
       ),
       canNavigateToPreviousDay$: this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToPreviousDay),
+        map(journal => canNavigateToPreviousDay(journal, this.dateTimeProvider.now())),
       ),
       canNavigateToNextDay$: this.store$.pipe(
         select(getJournalState),

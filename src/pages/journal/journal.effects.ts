@@ -25,6 +25,7 @@ import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { DateTimeProvider } from '../../providers/date-time/date-time';
 
 @Injectable()
 export class JournalEffects {
@@ -37,6 +38,7 @@ export class JournalEffects {
     public networkStateProvider: NetworkStateProvider,
     public dataStoreprovider: DataStoreProvider,
     public authProvider: AuthenticationProvider,
+    public dateTimeProvider: DateTimeProvider,
   ) {
   }
 
@@ -130,6 +132,22 @@ export class JournalEffects {
   );
 
   @Effect()
+  loadJournalSuccessEffect$ = this.actions$.pipe(
+    ofType(journalActions.LOAD_JOURNAL_SUCCESS),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        map(getSelectedDate),
+      ),
+    ),
+    switchMap(([action, selectedDate]) => {
+      if (this.dateTimeProvider.now().daysDiff(selectedDate) < 0) {
+        return of(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
+      }
+    }),
+  );
+
+  @Effect()
   selectPreviousDayEffect$ = this.actions$.pipe(
     ofType(journalActions.SELECT_PREVIOUS_DAY),
     withLatestFrom(
@@ -139,7 +157,7 @@ export class JournalEffects {
       ),
       this.store$.pipe(
         select(getJournalState),
-        map(canNavigateToPreviousDay),
+        map(journal => canNavigateToPreviousDay(journal, this.dateTimeProvider.now())),
       ),
     ),
     filter(([action, selectedDate, canNavigateToPreviousDay]) => canNavigateToPreviousDay),
