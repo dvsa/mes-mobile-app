@@ -8,6 +8,7 @@ import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 import { TestOutcomeStartTest } from '../test-outcome.actions';
+import { TestSlot } from '../../../../../shared/models/DJournal';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -44,9 +45,11 @@ describe('Test Outcome', () => {
 
     describe('startTest', () => {
       it('should dispatch a start test action with the slot ID', () => {
-        component.slot = { slotDetail: { slotId: '123' } };
+        const dummySlot = { slotDetail: { slotId: '123' } };
+        component.slot = dummySlot;
         component.startTest();
-        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest('123'));
+        // @ts-ignore
+        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest(dummySlot as TestSlot));
       });
     });
   });
