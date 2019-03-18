@@ -1,6 +1,7 @@
+
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MesSignaturePadComponent } from './components/mes-signature-pad/mes-signature-pad';
+import { MesSignaturePadComponent } from './../../components/mes-signature-pad/mes-signature-pad';
 
 @IonicPage()
 @Component({

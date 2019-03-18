@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 
 @Component({
   selector: 'mes-signature-pad',
@@ -19,7 +18,7 @@ export class MesSignaturePadComponent {
   @ViewChild(SignaturePad)
   signaturePad: SignaturePad;
 
-  constructor(public configService: AppConfigProvider) {
+  constructor() {
     this.isvalid = null;
   }
 
