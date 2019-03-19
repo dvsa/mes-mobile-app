@@ -5,6 +5,7 @@ import { AppConfigProvider } from '../app-config/app-config';
 import jwtDecode from 'jwt-decode';
 import { AuthenticationError } from './authentication.constants';
 import { MsAdalError } from './authentication.models';
+import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -13,22 +14,41 @@ export class AuthenticationProvider {
   private employeeIdKey: string;
   private employeeId: string;
   private isUserAuthenticated: boolean;
+  private inUnAuthenticatedMode: boolean;
   public jwtDecode: any;
 
   constructor(
     private msAdal: MSAdal,
     private inAppBrowser: InAppBrowser,
-    appConfig: AppConfigProvider) {
-    this.authenticationSettings = appConfig.getAppConfig().authentication;
-    this.employeeIdKey = appConfig.getAppConfig().authentication.employeeIdKey;
-    this.jwtDecode = jwtDecode;
-    this.isUserAuthenticated = false;
+    private networkState: NetworkStateProvider,
+    private appConfig: AppConfigProvider) {
   }
 
+  public initialiseAuthentication = ():void => {
+    this.authenticationSettings = this.appConfig.getAppConfig().authentication;
+    this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
+    this.jwtDecode = jwtDecode;
+    this.isUserAuthenticated = false;
+    this.inUnAuthenticatedMode = false;
+  }
+  public isInUnAuthenticatedMode = (): boolean => {
+    return this.inUnAuthenticatedMode;
+  }
   public isAuthenticated = (): boolean => {
     return this.isUserAuthenticated;
   }
 
+  public setUnAuthenticatedMode = (mode: boolean): void => {
+    this.inUnAuthenticatedMode = mode;
+  }
+
+  public determineAuthenticationMode = (): void => {
+    let mode:boolean = false;
+    if (this.networkState.getNetworkState() === ConnectionStatus.OFFLINE) {
+      mode = true;
+    }
+    this.setUnAuthenticatedMode(mode);
+  }
   public getAuthenticationToken = async (): Promise<string> => {
     const response = await this.aquireTokenSilently();
     return response.accessToken;
@@ -39,8 +59,9 @@ export class AuthenticationProvider {
   }
 
   public login = () => {
-    return new Promise((resolve, reject) => {
-      this.aquireTokenSilently()
+    if (!this.isInUnAuthenticatedMode()) {
+      return new Promise((resolve, reject) => {
+        this.aquireTokenSilently()
         .then((authResponse: AuthenticationResult) => {
           this.successfulLogin(authResponse);
           resolve();
@@ -50,6 +71,11 @@ export class AuthenticationProvider {
             .then(() => resolve())
             .catch((error: AuthenticationError) => reject(error));
         });
+      });
+    }
+    return new Promise((resolve) => {
+      this.isUserAuthenticated = true;
+      resolve();
     });
   }
 

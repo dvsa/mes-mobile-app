@@ -15,6 +15,9 @@ export class NetworkStateProvider {
   private networkStatus$: BehaviorSubject<ConnectionStatus> = new BehaviorSubject(ConnectionStatus.OFFLINE);
 
   constructor(private network: Network, private platform: Platform) {
+  }
+
+  initialiseNetworkState():void {
     this.platform.ready().then(() => {
       this.initialiseNetworkEvents();
       const status = this.network.type !== 'none' ? ConnectionStatus.ONLINE : ConnectionStatus.OFFLINE;
@@ -24,12 +27,10 @@ export class NetworkStateProvider {
 
   private initialiseNetworkEvents(): void {
     this.network.onDisconnect().subscribe(() => {
-      console.log('network type', this.network.type);
       this.updateNetworkStatus(ConnectionStatus.OFFLINE);
     });
 
     this.network.onConnect().subscribe(() => {
-      console.log('network type', this.network.type);
       this.updateNetworkStatus(ConnectionStatus.ONLINE);
     });
   }

@@ -12,8 +12,10 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs } from '../../modules/logs/logs.actions';
-import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-// import { SetUnauthenticatedMode } from '../../providers/network-state/network-state.actions';
+import { NetworkStateProvider } from '../../providers/network-state/network-state';
+import { SecureStorageObject, SecureStorage } from '@ionic-native/secure-storage';
+import { DataStoreProvider } from '../../providers/data-store/data-store';
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -33,11 +35,14 @@ export class LoginPage extends BasePageComponent {
     public platform: Platform,
     public splashScreen: SplashScreen,
     private store$: Store<StoreModel>,
+    public networkStateProvider: NetworkStateProvider,
     public authenticationProvider: AuthenticationProvider,
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
     public deviceProvider: DeviceProvider,
-    public networkStateProvider: NetworkStateProvider,
+    private secureStorage: SecureStorage,
+    public dataStore: DataStoreProvider,
+
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -45,28 +50,32 @@ export class LoginPage extends BasePageComponent {
 
     // Check to see if redirect to page was from a logout
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
+    this.networkStateProvider.initialiseNetworkState();
 
     // Trigger Authentication if this isn't a logout and is an ios device
     if (!this.hasUserLoggedOut && this.isIos()) {
-      // TODO check network state, and if not connected dispatch an event to set unauthenticated mode
-      console.log(`in login ${networkStateProvider.getNetworkState}`);
-      if (networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE) {
-        console.log('offline dispatching set unauthenticatedmode');
-       // this.store$.dispatch(new SetUnauthenticatedMode(true));
-      } else {
-        this.login();
-      }
+      this.login();
     }
-    if (!this.isIos() || this.unauthenticatedMode) {
+    if (!this.isIos()) {
+      this.appConfigProvider.initialiseAppConfig();
+      this.appConfigProvider.loadRemoteConfig();
       this.navController.setRoot('JournalPage');
       this.splashScreen.hide();
     }
   }
 
-  login = (): Promise<any> =>
+  login = async (): Promise<any> => {
+    await this.platform.ready();
+    if (this.platform.is('ios')) {
+      const storage = await this.initialiseStorage();
+      this.dataStore.setSecureContainer(storage);
+    }
+
     this.platform.ready()
-    .then(() => {
-      this.authenticationProvider
+    .then(() => this.appConfigProvider.initialiseAppConfig())
+    .then(() => this.authenticationProvider.initialiseAuthentication())
+    .then(() => this.authenticationProvider.determineAuthenticationMode())
+    .then(() => this.authenticationProvider
       .login()
       .then(() => this.appConfigProvider.loadRemoteConfig())
       .then(() => this.analytics.initialiseAnalytics())
@@ -80,9 +89,13 @@ export class LoginPage extends BasePageComponent {
         console.log(error);
       })
       .then(() => this.hasUserLoggedOut = false)
-      .then(() => this.splashScreen.hide());
-    },
-    )
+      .then(() => this.splashScreen.hide()),
+  );
+  }
+
+  initialiseStorage = async (): Promise<SecureStorageObject> => {
+    return this.secureStorage.create('MES');
+  }
 
   validateDeviceType = (): void => {
     const validDevice = this.deviceProvider.validDeviceType();
