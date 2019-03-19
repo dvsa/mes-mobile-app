@@ -14,8 +14,6 @@ import {
   ToggleInsuranceDeclaration,
 } from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import { PreTestDeclarationsModule } from '../../../modules/test/pre-test-declarations/pre-test-declarations.module';
-import { Candidate } from '../../../shared/models/DJournal';
-import { Mock } from 'typemoq';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -23,9 +21,13 @@ describe('WaitingRoomPage', () => {
   let store$: Store<StoreModel>;
   let storeDispatchSpy: jasmine.Spy;
 
-  const moqCandidate = Mock.ofType<Candidate>();
-  moqCandidate.setup((x: Candidate) => x.driverNumber).returns(() => '123');
-  moqCandidate.setup((x: Candidate) => x.candidateName).returns(() => ({ firstName: 'Joe', lastName: 'Bloggs' }));
+  const mockCandidate = {
+    driverNumber: '123',
+    candidateName: {
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+    },
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,7 +36,7 @@ describe('WaitingRoomPage', () => {
         IonicModule,
         PreTestDeclarationsModule,
         AppModule,
-        StoreModule.forFeature('candidate', () => moqCandidate.object),
+        StoreModule.forFeature('candidate', () => mockCandidate),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

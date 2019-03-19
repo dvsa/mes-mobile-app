@@ -8,7 +8,6 @@ import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 import { TestSlot } from '../../../../../shared/models/DJournal';
-import { Mock } from 'typemoq';
 import { TestOutcomeStartTest } from '../test-outcome.actions';
 
 describe('Test Outcome', () => {
@@ -46,10 +45,11 @@ describe('Test Outcome', () => {
 
     describe('startTest', () => {
       it('should dispatch a start test action with the slot', () => {
-        const moqSlot = Mock.ofType<TestSlot>();
-        component.slot = moqSlot.object;
+        const dummySlot = { slotDetail: { slotId: '123' } };
+        component.slot = dummySlot;
         component.startTest();
-        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest(moqSlot.object));
+        // @ts-ignore
+        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest(dummySlot as TestSlot));
       });
     });
   });
