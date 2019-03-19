@@ -47,7 +47,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1001,
-        "start": "2019-03-18T08:10:00+00:00"
+        "start": "2019-03-19T08:10:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -65,7 +65,7 @@
           "entitlementCheck": false,
           "extendedTest": false,
           "progressiveAccess": false,
-          "testCategory": "B1",
+          "testCategory": "B",
           "vehicleGearbox": "Automatic",
           "welshTest": false
         },
@@ -95,7 +95,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1003,
-        "start": "2019-03-18T10:14:00+00:00"
+        "start": "2019-03-19T10:14:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -144,7 +144,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1004,
-        "start": "2019-03-18T11:11:00+00:00"
+        "start": "2019-03-19T11:11:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -195,7 +195,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1005,
-        "start": "2019-03-18T12:38:00+00:00"
+        "start": "2019-03-19T12:38:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -248,7 +248,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1006,
-        "start": "2019-03-18T13:35:00+00:00"
+        "start": "2019-03-19T13:35:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -293,7 +293,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1007,
-        "start": "2019-03-19T14:32:00+00:00"
+        "start": "2019-03-20T14:32:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,

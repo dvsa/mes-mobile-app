@@ -5,6 +5,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { DateTime } from '../../../../shared/helpers/date-time';
 
 @Component({
   selector: 'test-slot',
@@ -48,6 +49,11 @@ export class TestSlotComponent implements SlotComponent {
 
   canStartTest(): boolean {
     if (!this.appConfig.getAppConfig().journal.allowTests) {
+      return false;
+    }
+
+    const startDate = new DateTime(this.slot.slotDetail.start);
+    if (startDate.daysDiff(DateTime.now()) !== 0) {
       return false;
     }
 
