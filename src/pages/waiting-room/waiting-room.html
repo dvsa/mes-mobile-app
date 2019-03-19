@@ -23,7 +23,9 @@
       <h3>PEARS 7879789</h3>
     </div>
     <div>
-      <button id="continue-button" class="mes-primary-button" ion-button><h3>Continue</h3></button>
+      <button id="continue-button" class="mes-primary-button" navPush="WaitingRoomToCarPage" ion-button>
+        <h3>Continue</h3>
+      </button>
     </div>
   </div>
 
@@ -37,7 +39,13 @@
           The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which satisfies the requirements of the legislation.
         </p>
         <div class="declaration-checkbox-row">
-          <input type="checkbox" class="gds-checkbox" id="insurance-declaration-checkbox">
+          <input
+            type="checkbox"
+            class="gds-checkbox"
+            id="insurance-declaration-checkbox"
+            [checked]="pageState.insuranceDeclarationAccepted$ | async"
+            (click)="insuranceDeclarationChanged()"
+          >
           <label for="insurance-declaration-checkbox">I confirm</label>
         </div>
       </li>
@@ -46,7 +54,13 @@
           I normally live/have lived in the UK for at least 185 days in the last 12 months.
         </p>
         <div class="declaration-checkbox-row">
-          <input type="checkbox" class="gds-checkbox" id="residency-declaration-checkbox">
+          <input
+            type="checkbox"
+            class="gds-checkbox"
+            id="residency-declaration-checkbox"
+            [checked]="pageState.residencyDeclarationAccepted$ | async"
+            (click)="residencyDeclarationChanged()"
+          >
           <label for="residency-declaration-checkbox">I confirm</label>
         </div>
       </li>

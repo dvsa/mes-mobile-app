@@ -85,6 +85,9 @@ export class LoginPage extends BasePageComponent {
         if (error === AuthenticationError.USER_CANCELLED) {
           this.analytics.logException(error, true);
         }
+        if (error === AuthenticationError.USER_NOT_AUTHORISED) {
+          this.authenticationProvider.logout();
+        }
         this.authenticationError = error;
         console.log(error);
       })
@@ -120,6 +123,11 @@ export class LoginPage extends BasePageComponent {
     return !this.hasUserLoggedOut &&
       this.authenticationError &&
       this.authenticationError.valueOf() !== AuthenticationError.USER_CANCELLED &&
-      this.authenticationError.valueOf() !== AuthenticationError.NO_INTERNET;
+      this.authenticationError.valueOf() !== AuthenticationError.NO_INTERNET &&
+      this.authenticationError.valueOf() !== AuthenticationError.USER_NOT_AUTHORISED;
+  }
+
+  isUserNotAuthorised = (): boolean => {
+    return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.USER_NOT_AUTHORISED;
   }
 }
