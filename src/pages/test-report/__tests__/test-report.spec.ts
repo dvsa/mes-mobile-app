@@ -11,12 +11,15 @@ import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { CompetencyComponent } from '../components/competency/competency';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
+  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,6 +33,7 @@ describe('TestReportPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -38,6 +42,7 @@ describe('TestReportPage', () => {
         component = fixture.componentInstance;
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);
+        deviceProvider = TestBed.get(DeviceProvider);
       });
   }));
 
@@ -45,28 +50,40 @@ describe('TestReportPage', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+
     describe('ionViewDidEnter', () => {
       it('should lock the screen orientation to Portrait Primary', () => {
         component.ionViewDidEnter();
         expect(screenOrientation.lock)
           .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       });
-      describe('ionViewDidLeave', () => {
-        it('should unlock the screen orientation', () => {
-          component.ionViewDidLeave();
-          expect(screenOrientation.unlock).toHaveBeenCalled();
-        });
-      });
 
       it('should keep the device awake', () => {
         component.ionViewDidEnter();
         expect(insomnia.keepAwake).toHaveBeenCalled();
       });
-      describe('ionViewDidLeave', () => {
-        it('should allow the device to sleep', () => {
-          component.ionViewDidLeave();
-          expect(insomnia.allowSleepAgain).toHaveBeenCalled();
-        });
+
+      it('should enable singleAppMode', () => {
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('ionViewDidLeave', () => {
+      it('should unlock the screen orientation', () => {
+        component.ionViewDidLeave();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
+      });
+
+      it('should allow the device to sleep', () => {
+        component.ionViewDidLeave();
+        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+
+      it('should disable singleAppMode', () => {
+        component.ionViewDidLeave();
+        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
       });
     });
   });
