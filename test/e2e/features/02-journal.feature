@@ -47,5 +47,11 @@ Feature: Journal
    Scenario: Examiner goes to the waiting room to meet the candidate
     Given I am on the journal page as "mobexaminer1"
      When I refresh the journal
-     And I start the test for "Captain Montague Smythe"
+      And I start the test for "Captain Montague Smythe"
      Then I should see the "Declaration - Montague Smythe" page
+
+  Scenario: Examiner cannot start a test that isn't today
+    Given I am on the journal page as "mobexaminer1"
+    When I navigate to next day
+     And I start the test for "Miss Alice Cooper"
+    Then I should see the "Journal" page
