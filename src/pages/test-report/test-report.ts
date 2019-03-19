@@ -31,14 +31,18 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
-    this.deviceProvider.enableSingleAppMode();
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-    this.insomnia.keepAwake();
+    if (super.isIos()) {
+      this.deviceProvider.enableSingleAppMode();
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.insomnia.keepAwake();
+    }
   }
 
   ionViewDidLeave(): void {
-    this.deviceProvider.disableSingleAppMode();
-    this.screenOrientation.unlock();
-    this.insomnia.allowSleepAgain();
+    if (super.isIos) {
+      this.deviceProvider.disableSingleAppMode();
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+    }
   }
 }
