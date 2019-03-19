@@ -75,6 +75,13 @@ To run against the simulator
 
 You can run individual features e.g. `npm run test:e2e-simulator-bdd -- --specs='test/e2e/features/01-login.feature'`
 
+#### Troubleshooting
+
+##### Bad app... paths need to be absolute
+
+This error is due to the `mes-mobile-app.app` file not being found when trying to run the tests. Make sure you have the app built.
+If you have an iPad plugged into your laptop, you may find that the `emulator` platform is missing from `platforms/ios/build` - try unplugging the iPad and rebuilding.
+
 ### Building & signing the app using Fastlane
 N.B. this assumes you have Fastlane installed along with the required DVSA distribution certificate & provisioning profile. This is done via the Mac OS Jenkins slave so these steps are only for information only. 
 
