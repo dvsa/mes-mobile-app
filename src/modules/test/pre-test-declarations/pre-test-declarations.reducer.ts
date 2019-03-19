@@ -23,6 +23,8 @@ export function preTestDeclarationsReducer(
         ...state,
         residencyDeclarationAccepted: !state.residencyDeclarationAccepted,
       };
+    case preTestDeclarationActions.CLEAR_PRE_TEST_DECLARATIONS:
+      return initialState;
     default:
       return state;
   }

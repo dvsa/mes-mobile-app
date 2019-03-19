@@ -62,6 +62,10 @@ export class WaitingRoomPage extends BasePageComponent {
     }
   }
 
+  ionViewWillUnload(): void {
+    this.store$.dispatch(new preTestDeclarationsActions.ClearPreTestDeclarations());
+  }
+
   ngOnInit(): void {
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
