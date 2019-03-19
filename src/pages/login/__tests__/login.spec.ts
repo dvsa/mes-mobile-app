@@ -90,6 +90,22 @@ describe('LoginPage', () => {
       expect(splashScreen.hide).toHaveBeenCalled();
     }));
 
+    it('should login successfully but display a message when the user is not authorised ', fakeAsync(() => {
+      component.platform.ready =
+        jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
+      component.authenticationProvider.login =
+        jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
+      component.appConfigProvider.loadRemoteConfig =
+        jasmine.createSpy('appConfigProvider.loadRemoteConfig')
+          .and.returnValue(Promise.reject('user not authorised'));
+      component.login();
+      tick();
+      expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
+      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(component.authenticationError === AuthenticationError.USER_NOT_AUTHORISED);
+      expect(splashScreen.hide).toHaveBeenCalled();
+    }));
+
     it('should return true for isInternetConnectError when criteria is met', () => {
       component.authenticationError = AuthenticationError.NO_INTERNET;
       component.hasUserLoggedOut = false;
@@ -146,6 +162,13 @@ describe('LoginPage', () => {
 
       expect(component.isUnknownError()).toBeFalsy();
     });
+
+    it('should return true for isUserNotAuthorised when criteria is met', () => {
+      component.authenticationError = AuthenticationError.USER_NOT_AUTHORISED;
+      component.hasUserLoggedOut = false;
+
+      expect(component.isUserNotAuthorised()).toBeTruthy();
+    });
   });
 
   describe('DOM', () => {
@@ -186,6 +209,16 @@ describe('LoginPage', () => {
       const tags = fixture.debugElement.queryAll(By.css('h2'));
       expect(tags.length).toBe(1);
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('Sorry, something went wrong');
+    });
+
+    it('should show the correct div if user is not authorised to use the app', () => {
+      component.hasUserLoggedOut = false;
+      component.authenticationError = AuthenticationError.USER_NOT_AUTHORISED;
+      fixture.detectChanges();
+
+      const tags = fixture.debugElement.queryAll(By.css('h2'));
+      expect(tags.length).toBe(1);
+      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('not authorised to use this app');
     });
 
   });

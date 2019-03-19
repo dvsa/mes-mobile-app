@@ -7,7 +7,7 @@ import { AppModule } from '../../../app/app.module';
 import { WaitingRoomPage } from '../waiting-room';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from './../../../components/components.module';
@@ -24,6 +24,14 @@ describe('WaitingRoomPage', () => {
   let store$: Store<StoreModel>;
   let storeDispatchSpy: jasmine.Spy;
 
+  const mockCandidate = {
+    driverNumber: '123',
+    candidateName: {
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+    },
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [WaitingRoomPage],
@@ -32,6 +40,7 @@ describe('WaitingRoomPage', () => {
         PreTestDeclarationsModule,
         AppModule,
         ComponentsModule,
+        StoreModule.forFeature('candidate', () => mockCandidate),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

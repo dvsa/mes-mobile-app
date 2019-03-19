@@ -14,11 +14,19 @@ import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
+import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+import {
+  getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
+} from '../../modules/test/candidate/candidate.selector';
+import { map } from 'rxjs/operators';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
   residencyDeclarationAccepted$: Observable<boolean>;
   signature$: Observable<string>;
+  candidateName$: Observable<string>;
+  candidateUntitledName$: Observable<string>;
+  candidateDriverNumber$: Observable<string>;
 }
 
 @IonicPage()
@@ -61,6 +69,19 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getResidencyDeclarationStatus),
       ),
       signature$: of(''),
+      candidateName$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getCandidateName),
+      ),
+      candidateUntitledName$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getUntitledCandidateName),
+      ),
+      candidateDriverNumber$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getCandidateDriverNumber),
+        map(formatDriverNumber),
+      ),
     };
   }
 

@@ -17,14 +17,16 @@ import { LanguageComponent } from '../../language/language';
 import { LocationComponent } from '../../location/location';
 import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
   let component: TestSlotComponent;
+  const startTime = DateTime.now().format('YYYY-MM-DDTHH:mm:ss+00:00');
   const mockSlot = {
     slotDetail: {
       slotId: 1001,
-      start: '2018-12-10T09:07:00+00:00',
+      start: startTime,
       duration: 57,
     },
     vehicleSlotType: 'B57mins',
@@ -180,6 +182,9 @@ describe('TestSlotComponent', () => {
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE;
         expect(component.isPortrait()).toBeFalsy();
       });
+    });
+
+    describe('canStartTest', () => {
       it('should not allow the starting of tests if allowTests is false', () => {
         component.appConfig.getAppConfig =
           jasmine.createSpy('getAppConfig').and.returnValue({ journal: { allowTests: false } });
@@ -198,6 +203,10 @@ describe('TestSlotComponent', () => {
           .and
           .returnValue({ journal: { allowTests: true, allowedTestCategories: ['B'] } });
         expect(component.canStartTest()).toBeTruthy();
+      });
+      it('should disallow starting of tests that arent today', () => {
+        component.slot.slotDetail.start = DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
+        expect(component.canStartTest()).toBeFalsy();
       });
     });
 
@@ -232,7 +241,7 @@ describe('TestSlotComponent', () => {
       it('should pass something to sub-component time input', () => {
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(By.directive(MockComponent(TimeComponent))).componentInstance;
-        expect(subByDirective.time).toBe('2018-12-10T09:07:00+00:00');
+        expect(subByDirective.time).toBe(startTime);
       });
 
       it('should pass something to sub-component candidate input', () => {
