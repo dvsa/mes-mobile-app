@@ -26,4 +26,7 @@ export class DeviceProviderMock implements IDeviceProvider {
     return 'A1234';
   }
 
+  enableSingleAppMode = jasmine.createSpy('enableSingleAppMode').and.returnValue(Promise.resolve(true));
+
+  disableSingleAppMode = jasmine.createSpy('disableSingleAppMode').and.returnValue(Promise.resolve(true));
 }
