@@ -51,11 +51,15 @@ export class WaitingRoomPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
-    this.deviceProvider.enableSingleAppMode();
+    if (super.isIos()) {
+      this.deviceProvider.enableSingleAppMode();
+    }
   }
 
   ionViewDidLeave(): void {
-    this.deviceProvider.disableSingleAppMode();
+    if (super.isIos()) {
+      this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   ngOnInit(): void {
