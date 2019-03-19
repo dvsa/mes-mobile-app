@@ -7,6 +7,8 @@ import { AuthenticationProvider } from '../authentication';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
+import { NetworkStateProvider } from '../../network-state/network-state';
+import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
@@ -18,6 +20,7 @@ describe('Authentication', () => {
         { provide: MSAdal, useClass: MSAdalMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
       ],
     });
 

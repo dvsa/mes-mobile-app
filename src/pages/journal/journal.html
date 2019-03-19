@@ -21,6 +21,12 @@
 </ion-header>
 
 <ion-content no-padding>
+  <div *ngIf="isUnauthenticated" id="unauthenticated-mode-indicator">
+        <div>
+          <label id="unauth-text">You are offline. Some features may be unavailable.</label>
+        </div>
+  </div>
+    
   <ion-refresher (ionRefresh)="pullRefreshJournal($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"

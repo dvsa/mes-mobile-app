@@ -104,6 +104,7 @@ describe('JournalPage', () => {
       // Manually dispatching an action which loads slots to the store
       store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock,
                                              ConnectionStatus.ONLINE,
+                                             false,
                                              new Date()));
     });
 

@@ -127,6 +127,7 @@ describe('Journal Effects', () => {
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
       ConnectionStatus.ONLINE,
+      false,
       new Date())); // Load in mock journal state
     spyOn(store$, 'dispatch');
     // ACT
@@ -147,6 +148,7 @@ describe('Journal Effects', () => {
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
       ConnectionStatus.ONLINE,
+      false,
       new Date())); // Load in mock journal state
     store$.dispatch(new journalActions.SetSelectedDate(nextDay));
     spyOn(store$, 'dispatch');

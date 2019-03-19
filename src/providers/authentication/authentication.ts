@@ -42,6 +42,8 @@ export class AuthenticationProvider {
     this.inUnAuthenticatedMode = mode;
   }
 
+  public getUnAuthenticatedMode = (): boolean => this.inUnAuthenticatedMode;
+
   public determineAuthenticationMode = (): void => {
     let mode:boolean = false;
     if (this.networkState.getNetworkState() === ConnectionStatus.OFFLINE) {

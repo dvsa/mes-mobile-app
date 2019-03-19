@@ -28,8 +28,8 @@ export function journalReducer(state = initialState, action: journalActions.Jour
 
       return {
         ...state,
-        lastRefreshed: action.onlineOffline ===
-          ConnectionStatus.ONLINE ? new Date() : action.lastRefreshed,
+        lastRefreshed: (action.onlineOffline ===
+          ConnectionStatus.ONLINE  && action.unAuthenticatedMode === false) ? new Date() : action.lastRefreshed,
         selectedDate: date,
         isLoading: false,
         slots: action.payload,
