@@ -2,22 +2,30 @@
   <ion-navbar>
     <ion-title>Test Report</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="logout()">Logout</button>
+      <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Test Report
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button navPush="DebriefPage">Debrief</button>
-      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
-      <competency></competency>
-    </ion-card-content>
-  </ion-card>
+  <ion-grid no-padding>
+    <ion-row>
+      <!-- Column 1-->
+      <ion-col col-4>
+        <competency label="Traffic Controllers"></competency>
+      </ion-col>
+      <!-- Column 2-->
+      <ion-col col-4>
+        <competency label="Gears"></competency>
+      </ion-col>
+      <!-- Column 3-->
+      <ion-col col-4>
+        <competency label="Crossing"></competency>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <br />
+  <br />
+  <button ion-button navPush="DebriefPage">Debrief</button>
+  <button ion-button navPush="TerminateTestPage">Terminate Test</button>
 </ion-content>
