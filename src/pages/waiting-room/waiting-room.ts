@@ -17,6 +17,7 @@ import { getCurrentCandidate } from '../../modules/test/candidate/candidate.redu
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/test/candidate/candidate.selector';
+import { map } from 'rxjs/operators';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -72,7 +73,7 @@ export class WaitingRoomPage extends BasePageComponent {
       candidateDriverNumber$: this.store$.pipe(
         select(getCurrentCandidate),
         select(getCandidateDriverNumber),
-        select(formatDriverNumber),
+        map(formatDriverNumber),
       ),
     };
   }
