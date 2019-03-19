@@ -25,6 +25,7 @@ describe('Authentication', () => {
     });
 
     authenticationProvider = TestBed.get(AuthenticationProvider);
+    authenticationProvider.initialiseAuthentication();
     authenticationProvider.jwtDecode = () => ({
       'local-employeeIdKey': ['a'],
     });

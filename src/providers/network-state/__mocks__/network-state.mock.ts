@@ -8,6 +8,8 @@ export class NetworkStateProviderMock {
     return of(ConnectionStatus.OFFLINE);
   }
 
+  public initialiseNetworkState():void {}
+
   public getNetworkState(): ConnectionStatus {
     return ConnectionStatus.ONLINE;
   }

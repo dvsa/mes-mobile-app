@@ -6,6 +6,8 @@ export class AppConfigProviderMock {
 
   environmentFile: EnvironmentFile = localEnvironmentMock;
 
+  public initialiseAppConfig = jasmine.createSpy('initialiseAppConfig');
+
   public loadRemoteConfig = jasmine.createSpy('loadRemoteConfig')
     .and
     .returnValue(Promise.resolve());

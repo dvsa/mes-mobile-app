@@ -58,7 +58,7 @@ export class LoginPage extends BasePageComponent {
     }
     if (!this.isIos()) {
       this.appConfigProvider.initialiseAppConfig();
-      this.appConfigProvider.loadRemoteConfig();
+      // this.appConfigProvider.loadRemoteConfig();
       this.navController.setRoot('JournalPage');
       this.splashScreen.hide();
     }

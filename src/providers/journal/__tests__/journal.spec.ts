@@ -9,6 +9,10 @@ import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { NetworkStateProvider } from '../../network-state/network-state';
 import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
+import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
+import { SecureStorage } from '@ionic-native/secure-storage';
+import { Network } from '@ionic-native/network';
+import { NetworkMock } from 'ionic-mocks';
 
 describe('JournalProvider', () => {
   describe('getJournal', () => {
@@ -17,6 +21,7 @@ describe('JournalProvider', () => {
     let httpMock;
     let authProviderMock;
     let urlProviderMock;
+  //  let dataStoreProviderMock;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -29,6 +34,8 @@ describe('JournalProvider', () => {
           { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
           { provide: DataStoreProvider, useClass: DataStoreProviderMock },
           { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
+          { provide: SecureStorage, useClass: SecureStorageMock },
+          { provide: Network, useClass: NetworkMock },
         ],
       });
 
@@ -36,6 +43,7 @@ describe('JournalProvider', () => {
       journalProvider = TestBed.get(JournalProvider);
       authProviderMock = TestBed.get(AuthenticationProvider);
       urlProviderMock = TestBed.get(UrlProvider);
+//      dataStoreProviderMock = TestBed.get(DataStoreProvider);
     });
 
     it('should obtain the personal journal URL from the journal provider, passing the cached employee ID', () => {
@@ -43,6 +51,8 @@ describe('JournalProvider', () => {
 
       httpMock.expectOne('https://www.example.com/api/v1/journals/12345678/personal');
       expect(authProviderMock.getEmployeeId).toHaveBeenCalled();
+      expect(authProviderMock.isInUnAuthenticatedMode).toHaveBeenCalled();
+//      expect(dataStoreProviderMock.getItem).toHaveBeenCalled();
       expect(urlProviderMock.getPersonalJournalUrl).toHaveBeenCalledWith('12345678');
     });
 
