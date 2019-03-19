@@ -18,6 +18,7 @@ import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/test/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
+import { DeviceProvider } from '../../providers/device/device';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -43,12 +44,22 @@ export class WaitingRoomPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
+    if (super.isIos()) {
+      this.deviceProvider.enableSingleAppMode();
+    }
+  }
+
+  ionViewDidLeave(): void {
+    if (super.isIos()) {
+      this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   ngOnInit(): void {

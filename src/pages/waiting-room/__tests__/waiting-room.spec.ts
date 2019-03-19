@@ -14,12 +14,15 @@ import {
   ToggleInsuranceDeclaration,
 } from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import { PreTestDeclarationsModule } from '../../../modules/test/pre-test-declarations/pre-test-declarations.module';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
   let storeDispatchSpy: jasmine.Spy;
+  let deviceProvider: DeviceProvider;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -44,6 +47,7 @@ describe('WaitingRoomPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -52,6 +56,7 @@ describe('WaitingRoomPage', () => {
         component = fixture.componentInstance;
       });
 
+    deviceProvider = TestBed.get(DeviceProvider);
     store$ = TestBed.get(Store);
     storeDispatchSpy = spyOn(store$, 'dispatch');
   }));
@@ -74,11 +79,23 @@ describe('WaitingRoomPage', () => {
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleInsuranceDeclaration());
       });
     });
-  });
 
-  describe('DOM', () => {
-    describe('Declaration checkboxes', () => {
-      it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
+    describe('ionViewDidEnter', () => {
+      it('should enable single app mode if on ios', () => {
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
+      describe('ionViewDidLeave', () => {
+        it('should disable single app mode if on ios', () => {
+          component.ionViewDidLeave();
+          expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('DOM', () => {
+      describe('Declaration checkboxes', () => {
+        it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
         fixture.detectChanges();
         spyOn(component, 'residencyDeclarationChanged');
         const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
@@ -87,7 +104,7 @@ describe('WaitingRoomPage', () => {
         fixture.detectChanges();
         expect(component.residencyDeclarationChanged).toHaveBeenCalled();
       }));
-      it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
+        it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
         fixture.detectChanges();
         spyOn(component, 'insuranceDeclarationChanged');
         const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
@@ -96,6 +113,7 @@ describe('WaitingRoomPage', () => {
         fixture.detectChanges();
         expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
       }));
+      });
     });
   });
 });
