@@ -13,6 +13,7 @@ import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
+import { DeviceProvider } from '../../providers/device/device';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -35,12 +36,18 @@ export class WaitingRoomPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
+    this.deviceProvider.enableSingleAppMode();
+  }
+
+  ionViewDidLeave(): void {
+    this.deviceProvider.disableSingleAppMode();
   }
 
   ngOnInit(): void {
