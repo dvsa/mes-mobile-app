@@ -23,7 +23,6 @@ import { SlotProvider } from '../../providers/slot/slot';
 import { JournalAnalyticsEffects } from './journal.analytics.effects';
 import { LanguageComponent } from './components/language/language';
 import { JournalLogsEffects } from './journal.logs.effects';
-import { CandidateModule } from '../../modules/test/candidate/candidate.module';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,6 @@ import { CandidateModule } from '../../modules/test/candidate/candidate.module';
       JournalAnalyticsEffects,
       JournalLogsEffects,
     ]),
-    CandidateModule,
   ],
   entryComponents: [
     TestSlotComponent,
