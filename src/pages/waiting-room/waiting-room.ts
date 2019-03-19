@@ -6,13 +6,13 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 import { MesSignaturePadComponent } from './../../components/mes-signature-pad/mes-signature-pad';
 import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
-  getResidencySignatureStatus,
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
 
 interface WaitingRoomPageState {
@@ -60,21 +60,10 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getPreTestDeclarationsState),
         select(getResidencyDeclarationStatus),
       ),
-      signature$: this.store$.pipe(
-        select(getPreTestDeclarationsState),
-        select(getResidencySignatureStatus),
-      ),
+      signature$: of(''),
     };
   }
 
-  ngAfterViewInit() {
-    this.pageState.signature$.subscribe((sig) => {
-      if (sig) {
-        this.signaturePad.setSignature(sig);
-      }
-    });
-  }
-  
   insuranceDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleInsuranceDeclaration());
   }

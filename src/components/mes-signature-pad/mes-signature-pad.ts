@@ -32,7 +32,6 @@ export class MesSignaturePadComponent {
     // loading the signature from initial value does not set the internal signature stucture, so setting here.
     this.signature = initialValue;
     this.isvalid = true;
-    console.log('signature set');
   }
 
   ngAfterViewInit() {

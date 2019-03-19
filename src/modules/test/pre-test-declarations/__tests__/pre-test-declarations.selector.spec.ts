@@ -1,4 +1,8 @@
-import { getInsuranceDeclarationStatus, getResidencyDeclarationStatus } from '../pre-test-declarations.selector';
+import {
+  getInsuranceDeclarationStatus,
+  getResidencyDeclarationStatus,
+  getSignatureStatus,
+} from '../pre-test-declarations.selector';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
 
 describe('PreTestDeclarations selector', () => {
@@ -17,6 +21,12 @@ describe('PreTestDeclarations selector', () => {
   describe('getResidencyDeclarationStatus', () => {
     it('should return the residency declaration status', () => {
       expect(getResidencyDeclarationStatus(state)).toBe(false);
+    });
+  });
+
+  describe('getSignatureStatus', () => {
+    it('should return the signature status', () => {
+      expect(getSignatureStatus(state)).toEqual('sig');
     });
   });
 });
