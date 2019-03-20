@@ -1,13 +1,23 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Store } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { TestReportViewDidEnter } from './test-report.actions';
-import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
+import { BasePageComponent } from '../../shared/classes/base-page';
+
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { DeviceProvider } from '../../providers/device/device';
+
+import { StoreModel } from '../../shared/models/store.model';
+import { getUntitledCandidateName } from '../../modules/test/candidate/candidate.selector';
+import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+import { TestReportViewDidEnter } from './test-report.actions';
+
+interface TestReportPageState {
+  candidateUntitledName$: Observable<string>;
+}
 
 @IonicPage()
 @Component({
@@ -15,6 +25,8 @@ import { Insomnia } from '@ionic-native/insomnia';
   templateUrl: 'test-report.html',
 })
 export class TestReportPage extends BasePageComponent {
+
+  pageState: TestReportPageState;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -29,6 +41,15 @@ export class TestReportPage extends BasePageComponent {
     super(platform, navCtrl, authenticationProvider);
   }
 
+  ngOnInit(): void {
+    this.pageState = {
+      candidateUntitledName$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getUntitledCandidateName),
+      ),
+    };
+  }
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
     if (super.isIos()) {
@@ -39,7 +60,7 @@ export class TestReportPage extends BasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    if (super.isIos) {
+    if (super.isIos()) {
       this.deviceProvider.disableSingleAppMode();
       this.screenOrientation.unlock();
       this.insomnia.allowSleepAgain();
