@@ -34,7 +34,7 @@ export const testReducer = (
 
   const existingStateForSlot = state[slotId];
 
-  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, state, slotId);
+  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, state, slotId, testAction.action);
 
   return {
     ...state,
@@ -43,17 +43,15 @@ export const testReducer = (
         preTestDeclarationsReducer,
         'preTestDeclarations',
         preTestDeclarationsInitialState,
-        testAction.action,
       ),
     },
   };
 };
 
-const existingOrDefaultStateAndActionToReducer = (slotExists: boolean, state, slotId) => (
+const existingOrDefaultStateAndActionToReducer = (slotExists: boolean, state, slotId, action) => (
   reducer,
   keyInState: string,
   initialState,
-  action,
 ) => {
   const stateToReduce = slotExists ? state[slotId][keyInState] : initialState;
   return reducer(stateToReduce, action);
