@@ -19,8 +19,8 @@
 
   <div class="mes-full-width-card" id="candidate-section">
     <div>
-      <h2>{{pageState.candidateName$ | async}}</h2>
-      <h3>{{pageState.candidateDriverNumber$ | async}}</h3>
+      <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
+      <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
     </div>
     <div>
       <button id="continue-button" class="mes-primary-button" navPush="WaitingRoomToCarPage" ion-button>
