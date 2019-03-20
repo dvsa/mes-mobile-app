@@ -110,19 +110,33 @@ describe('SignatureAreaComponent', () => {
     });
 
     describe('image source', () => {
-      it('retryImage, when set, should change the retry image source attrubute', () => {
+      it('retryImage, when set, should change the retry image source attribute', () => {
         component.retryImage = '/some/path';
         fixture.detectChanges();
         const retryImageElement: HTMLElement = fixture.debugElement.query(
               By.css('#retry-icon')).nativeElement;
         expect(retryImageElement.getAttribute('style')).toEqual('background-image: url("/some/path");');
       });
-      it('signHereImage, when set, should change the sign here image source attrubute', () => {
+      it('retryImage, when not set, should defualt the retry image source attrubute', () => {
+        fixture.detectChanges();
+        const retryImageElement: HTMLElement = fixture.debugElement.query(
+              By.css('#retry-icon')).nativeElement;
+        expect(retryImageElement.getAttribute('style'))
+        .toEqual('background-image: url("/assets/imgs/waiting-room/retry.png");');
+      });
+      it('signHereImage, when set, should change the sign here image source attribute', () => {
         component.signHereImage = '/some/path';
         fixture.detectChanges();
         const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
               By.css('#sign-here-image')).nativeElement;
         expect(notValidHeaderElement.getAttribute('style')).toEqual('background-image: url("/some/path");');
+      });
+      it('signHereImage, when not set, should default the sign here image source attribute', () => {
+        fixture.detectChanges();
+        const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
+              By.css('#sign-here-image')).nativeElement;
+        expect(notValidHeaderElement.getAttribute('style'))
+        .toEqual('background-image: url("/assets/imgs/waiting-room/sign-here.png");');
       });
     });
   });

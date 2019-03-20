@@ -14,8 +14,6 @@ export class ComponentLibraryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
   ngAfterViewInit() {
-    this.signaturePad.retryImage = '/assets/imgs/waiting-room/retry.png';
-    this.signaturePad.signHereImage = '/assets/imgs/waiting-room/sign-here.png';
     this.signaturePad.signHereText = 'Sign here';
     this.signaturePad.retryButtonText = 'Retry';
     this.signaturePad.notValidHeaderText = 'Enter a signature';

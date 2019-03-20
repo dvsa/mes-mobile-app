@@ -22,6 +22,8 @@ export class SignatureAreaComponent {
 
   constructor() {
     this.isvalid = null;
+    this.signHereImage = '/assets/imgs/waiting-room/sign-here.png';
+    this.retryImage = '/assets/imgs/waiting-room/retry.png';
   }
 
   public getSignature() {

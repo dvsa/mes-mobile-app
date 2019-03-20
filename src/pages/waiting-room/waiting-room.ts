@@ -53,8 +53,6 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-    this.signaturePad.retryImage = '/assets/imgs/waiting-room/retry.png';
-    this.signaturePad.signHereImage = '/assets/imgs/waiting-room/sign-here.png';
     this.signaturePad.signHereText = 'Sign here';
     this.signaturePad.retryButtonText = 'Retry';
     this.signaturePad.notValidHeaderText = 'Enter a signature';
