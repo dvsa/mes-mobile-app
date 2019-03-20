@@ -13,11 +13,20 @@ import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
+import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+import {
+  getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
+} from '../../modules/test/candidate/candidate.selector';
+import { map } from 'rxjs/operators';
+import { DeviceProvider } from '../../providers/device/device';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
   residencyDeclarationAccepted$: Observable<boolean>;
   signature$: Observable<string>;
+  candidateName$: Observable<string>;
+  candidateUntitledName$: Observable<string>;
+  candidateDriverNumber$: Observable<string>;
 }
 
 @IonicPage()
@@ -35,12 +44,22 @@ export class WaitingRoomPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
+    if (super.isIos()) {
+      this.deviceProvider.enableSingleAppMode();
+    }
+  }
+
+  ionViewDidLeave(): void {
+    if (super.isIos()) {
+      this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   ngOnInit(): void {
@@ -54,6 +73,19 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getResidencyDeclarationStatus),
       ),
       signature$: of(''),
+      candidateName$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getCandidateName),
+      ),
+      candidateUntitledName$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getUntitledCandidateName),
+      ),
+      candidateDriverNumber$: this.store$.pipe(
+        select(getCurrentCandidate),
+        select(getCandidateDriverNumber),
+        map(formatDriverNumber),
+      ),
     };
   }
 

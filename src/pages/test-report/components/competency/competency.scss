@@ -1,0 +1,14 @@
+competency {
+  button {
+    width: 254px;
+    height: 44px;
+    background: map-get($colors, 'mes-white');
+    border: 1px solid rgba(11, 12, 12, 0.4);
+    box-shadow: 0 1px 0 0 map-get($colors-gds, 'gds-grey-1');
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 25px;
+    letter-spacing: -0.26px;
+  }
+}

@@ -7,6 +7,8 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
+import { TestSlot } from '../../../../../shared/models/DJournal';
+import { TestOutcomeStartTest } from '../test-outcome.actions';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -21,9 +23,8 @@ describe('Test Outcome', () => {
         StoreModule.forRoot({}),
       ],
       providers: [
-        { provide: NavController, useFactory: () => NavControllerMock.instance },
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
-
       ],
     })
       .compileComponents()
@@ -40,6 +41,16 @@ describe('Test Outcome', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    describe('startTest', () => {
+      it('should dispatch a start test action with the slot', () => {
+        const dummySlot = { slotDetail: { slotId: '123' } };
+        component.slot = dummySlot;
+        component.startTest();
+        // @ts-ignore
+        expect(store$.dispatch).toHaveBeenCalledWith(new TestOutcomeStartTest(dummySlot as TestSlot));
+      });
     });
   });
 
