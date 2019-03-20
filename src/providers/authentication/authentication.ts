@@ -95,7 +95,7 @@ export class AuthenticationProvider {
     });
   }
 
-  private aquireTokenSilently = async (): Promise<AuthenticationResult> => {
+  aquireTokenSilently = async (): Promise<AuthenticationResult> => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
     return authenticationContext
       .acquireTokenSilentAsync(this.authenticationSettings.resourceUrl, this.authenticationSettings.clientId, '');
