@@ -68,10 +68,8 @@ export class LoginPage extends BasePageComponent {
       this.dataStore.setSecureContainer(storage);
     }
 
-    this.platform.ready()
-    .then(() => this.appConfigProvider.initialiseAppConfig())
-    .then(() => this.authenticationProvider.initialiseAuthentication())
-    .then(() => this.authenticationProvider.determineAuthenticationMode())
+    this.initialiseAppConfig()
+    .then(() => this.initialiseAuthentication())
     .then(() => this.authenticationProvider
       .login()
       .then(() => this.appConfigProvider.loadRemoteConfig())
@@ -91,6 +89,21 @@ export class LoginPage extends BasePageComponent {
       .then(() => this.hasUserLoggedOut = false)
       .then(() => this.splashScreen.hide()),
   );
+  }
+
+  initialiseAppConfig = (): Promise<void> => {
+    return new Promise((resolve) => {
+      this.appConfigProvider.initialiseAppConfig();
+      resolve();
+    });
+  }
+
+  initialiseAuthentication = (): Promise<void> => {
+    return new Promise((resolve) => {
+      this.authenticationProvider.initialiseAuthentication();
+      this.authenticationProvider.determineAuthenticationMode();
+      resolve();
+    });
   }
 
   initialiseStorage = async (): Promise<SecureStorageObject> => {

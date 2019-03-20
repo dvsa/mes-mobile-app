@@ -43,10 +43,7 @@ export class AuthenticationProvider {
   }
 
   public determineAuthenticationMode = (): void => {
-    let mode:boolean = false;
-    if (this.networkState.getNetworkState() === ConnectionStatus.OFFLINE) {
-      mode = true;
-    }
+    const mode = this.networkState.getNetworkState() === ConnectionStatus.OFFLINE;
     this.setUnAuthenticatedMode(mode);
   }
   public getAuthenticationToken = async (): Promise<string> => {
