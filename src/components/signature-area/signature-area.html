@@ -3,7 +3,7 @@
         <label id="not-valid-header-label" class="not-valid-text">{{notValidHeaderText}}</label>
     </span>
 </div>
-<div class="mes-signature-pad" (blur)="checkAndSetValidation()" [class.is-not-valid]="isvalid === false  && required">
+<div class="signature-area" (blur)="checkAndSetValidation()" [class.is-not-valid]="isvalid === false  && required">
     <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
     <button (click)="clear()" class="retry-button" [disabled]="isvalid === false ">
         <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>

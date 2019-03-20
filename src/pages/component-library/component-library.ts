@@ -1,7 +1,6 @@
-
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MesSignaturePadComponent } from './../../components/mes-signature-pad/mes-signature-pad';
+import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 
 @IonicPage()
 @Component({
@@ -9,8 +8,8 @@ import { MesSignaturePadComponent } from './../../components/mes-signature-pad/m
   templateUrl: 'component-library.html',
 })
 export class ComponentLibraryPage {
-  @ViewChild(MesSignaturePadComponent)
-  signaturePad: MesSignaturePadComponent;
+  @ViewChild(SignatureAreaComponent)
+  signaturePad: SignatureAreaComponent;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

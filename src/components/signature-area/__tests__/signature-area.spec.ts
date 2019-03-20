@@ -1,23 +1,23 @@
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { MesSignaturePadComponent } from '../mes-signature-pad';
+import { SignatureAreaComponent } from '../signature-area';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MockComponent } from 'ng-mocks';
 
-describe('MesSignaturePadComponent', () => {
-  let fixture: ComponentFixture<MesSignaturePadComponent>;
-  let component: MesSignaturePadComponent;
+describe('SignatureAreaComponent', () => {
+  let fixture: ComponentFixture<SignatureAreaComponent>;
+  let component: SignatureAreaComponent;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MesSignaturePadComponent,
+        SignatureAreaComponent,
         MockComponent(SignaturePad),
       ],
       imports: [],
       providers: [],
     }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(MesSignaturePadComponent);
+      fixture = TestBed.createComponent(SignatureAreaComponent);
       component = fixture.componentInstance;
     });
   }));

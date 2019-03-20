@@ -7,7 +7,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { MesSignaturePadComponent } from './../../components/mes-signature-pad/mes-signature-pad';
+import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import {
@@ -35,8 +35,8 @@ interface WaitingRoomPageState {
   templateUrl: 'waiting-room.html',
 })
 export class WaitingRoomPage extends BasePageComponent {
-  @ViewChild(MesSignaturePadComponent)
-  signaturePad: MesSignaturePadComponent;
+  @ViewChild(SignatureAreaComponent)
+  signaturePad: SignatureAreaComponent;
   pageState: WaitingRoomPageState;
 
   constructor(

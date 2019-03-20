@@ -2,10 +2,10 @@ import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 
 @Component({
-  selector: 'mes-signature-pad',
-  templateUrl: 'mes-signature-pad.html',
+  selector: 'signature-area',
+  templateUrl: 'signature-area.html',
 })
-export class MesSignaturePadComponent {
+export class SignatureAreaComponent {
   @Output() changedDataEvent = new EventEmitter<string>();
   @Output() dataClearedEvent = new EventEmitter<string>();
   public signature: string;
