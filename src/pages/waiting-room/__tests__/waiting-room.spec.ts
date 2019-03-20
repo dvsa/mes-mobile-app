@@ -96,23 +96,23 @@ describe('WaitingRoomPage', () => {
     describe('DOM', () => {
       describe('Declaration checkboxes', () => {
         it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
-        fixture.detectChanges();
-        spyOn(component, 'residencyDeclarationChanged');
-        const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
-        residencyCb.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(component.residencyDeclarationChanged).toHaveBeenCalled();
-      }));
+          fixture.detectChanges();
+          spyOn(component, 'residencyDeclarationChanged');
+          const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
+          residencyCb.triggerEventHandler('click', null);
+          tick();
+          fixture.detectChanges();
+          expect(component.residencyDeclarationChanged).toHaveBeenCalled();
+        }));
         it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
-        fixture.detectChanges();
-        spyOn(component, 'insuranceDeclarationChanged');
-        const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
-        insuranceCb.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
-      }));
+          fixture.detectChanges();
+          spyOn(component, 'insuranceDeclarationChanged');
+          const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
+          insuranceCb.triggerEventHandler('click', null);
+          tick();
+          fixture.detectChanges();
+          expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
+        }));
       });
     });
   });
