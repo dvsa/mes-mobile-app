@@ -46,8 +46,6 @@ export class LoginPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
-    // this.store$.select(s => s.networkState).subscribe(data => this.unauthenticatedMode = data.unauthenticatedMode);
-
     // Check to see if redirect to page was from a logout
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
     this.networkStateProvider.initialiseNetworkState();
@@ -58,7 +56,6 @@ export class LoginPage extends BasePageComponent {
     }
     if (!this.isIos()) {
       this.appConfigProvider.initialiseAppConfig();
-      // this.appConfigProvider.loadRemoteConfig();
       this.navController.setRoot('JournalPage');
       this.splashScreen.hide();
     }

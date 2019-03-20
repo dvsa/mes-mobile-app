@@ -21,7 +21,6 @@ describe('JournalProvider', () => {
     let httpMock;
     let authProviderMock;
     let urlProviderMock;
-  //  let dataStoreProviderMock;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -43,7 +42,6 @@ describe('JournalProvider', () => {
       journalProvider = TestBed.get(JournalProvider);
       authProviderMock = TestBed.get(AuthenticationProvider);
       urlProviderMock = TestBed.get(UrlProvider);
-//      dataStoreProviderMock = TestBed.get(DataStoreProvider);
     });
 
     it('should obtain the personal journal URL from the journal provider, passing the cached employee ID', () => {
@@ -52,7 +50,6 @@ describe('JournalProvider', () => {
       httpMock.expectOne('https://www.example.com/api/v1/journals/12345678/personal');
       expect(authProviderMock.getEmployeeId).toHaveBeenCalled();
       expect(authProviderMock.isInUnAuthenticatedMode).toHaveBeenCalled();
-//      expect(dataStoreProviderMock.getItem).toHaveBeenCalled();
       expect(urlProviderMock.getPersonalJournalUrl).toHaveBeenCalledWith('12345678');
     });
 
