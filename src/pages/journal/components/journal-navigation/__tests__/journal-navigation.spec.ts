@@ -51,6 +51,7 @@ describe('JournalNavigationComponent', () => {
 
       store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock,
                                              ConnectionStatus.ONLINE,
+                                             false,
                                              new Date()));
     });
 

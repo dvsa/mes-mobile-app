@@ -24,6 +24,7 @@ import {
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 @Injectable()
 export class JournalEffects {
@@ -35,6 +36,7 @@ export class JournalEffects {
     public appConfig: AppConfigProvider,
     public networkStateProvider: NetworkStateProvider,
     public dataStoreprovider: DataStoreProvider,
+    public authProvider: AuthenticationProvider,
   ) {
   }
 
@@ -63,6 +65,7 @@ export class JournalEffects {
             map((slots: {[k: string]: SlotItem[]}) =>
               new journalActions.LoadJournalSuccess(slots,
                                                     this.networkStateProvider.getNetworkState(),
+                                                    this.authProvider.isInUnAuthenticatedMode(),
                                                     lastRefreshed)),
           );
       }),

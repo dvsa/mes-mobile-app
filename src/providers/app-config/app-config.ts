@@ -21,7 +21,9 @@ export class AppConfigProvider {
     private httpClient: HttpClient,
     public networkState: NetworkStateProvider,
     public dataStore: DataStoreProvider,
-    ) {
+    ) {}
+
+  public initialiseAppConfig = (): void => {
     this.mapInAppConfig(this.environmentFile);
 
     if (!this.environmentFile.isRemote) {
@@ -59,11 +61,11 @@ export class AppConfigProvider {
       }
     })
 
-  private getCachedRemoteConfig = (): Promise<any> =>
-    this.dataStore.getItem('CONFIG')
+  private getCachedRemoteConfig = (): Promise<any> => {
+    return this.dataStore.getItem('CONFIG')
       .then(response => JSON.parse(response))
-      .catch(error => error)
-
+      .catch(error => error);
+  }
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
       configUrl: data.configUrl,

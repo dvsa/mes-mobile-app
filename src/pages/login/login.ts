@@ -12,6 +12,10 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs } from '../../modules/logs/logs.actions';
+import { NetworkStateProvider } from '../../providers/network-state/network-state';
+import { SecureStorageObject, SecureStorage } from '@ionic-native/secure-storage';
+import { DataStoreProvider } from '../../providers/data-store/data-store';
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -23,6 +27,7 @@ export class LoginPage extends BasePageComponent {
   deviceTypeError: DeviceError;
   hasUserLoggedOut: boolean = false;
   hasDeviceTypeError: boolean = false;
+  unauthenticatedMode: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -30,31 +35,42 @@ export class LoginPage extends BasePageComponent {
     public platform: Platform,
     public splashScreen: SplashScreen,
     private store$: Store<StoreModel>,
+    public networkStateProvider: NetworkStateProvider,
     public authenticationProvider: AuthenticationProvider,
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
     public deviceProvider: DeviceProvider,
+    private secureStorage: SecureStorage,
+    public dataStore: DataStoreProvider,
+
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
     // Check to see if redirect to page was from a logout
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
+    this.networkStateProvider.initialiseNetworkState();
 
     // Trigger Authentication if this isn't a logout and is an ios device
     if (!this.hasUserLoggedOut && this.isIos()) {
       this.login();
     }
-
     if (!this.isIos()) {
+      this.appConfigProvider.initialiseAppConfig();
       this.navController.setRoot('JournalPage');
       this.splashScreen.hide();
     }
   }
 
-  login = (): Promise<any> =>
-    this.platform.ready()
-    .then(() => {
-      this.authenticationProvider
+  login = async (): Promise<any> => {
+    await this.platform.ready();
+    if (this.platform.is('ios')) {
+      const storage = await this.initialiseStorage();
+      this.dataStore.setSecureContainer(storage);
+    }
+
+    this.initialiseAppConfig()
+    .then(() => this.initialiseAuthentication())
+    .then(() => this.authenticationProvider
       .login()
       .then(() => this.appConfigProvider.loadRemoteConfig())
       .then(() => this.analytics.initialiseAnalytics())
@@ -71,9 +87,28 @@ export class LoginPage extends BasePageComponent {
         console.log(error);
       })
       .then(() => this.hasUserLoggedOut = false)
-      .then(() => this.splashScreen.hide());
-    },
-    )
+      .then(() => this.splashScreen.hide()),
+  );
+  }
+
+  initialiseAppConfig = (): Promise<void> => {
+    return new Promise((resolve) => {
+      this.appConfigProvider.initialiseAppConfig();
+      resolve();
+    });
+  }
+
+  initialiseAuthentication = (): Promise<void> => {
+    return new Promise((resolve) => {
+      this.authenticationProvider.initialiseAuthentication();
+      this.authenticationProvider.determineAuthenticationMode();
+      resolve();
+    });
+  }
+
+  initialiseStorage = async (): Promise<SecureStorageObject> => {
+    return this.secureStorage.create('MES');
+  }
 
   validateDeviceType = (): void => {
     const validDevice = this.deviceProvider.validDeviceType();

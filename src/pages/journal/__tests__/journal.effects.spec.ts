@@ -24,6 +24,8 @@ import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { of } from 'rxjs/observable/of';
 import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -62,6 +64,7 @@ describe('Journal Effects', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         Store,
         SlotProvider,
       ],
@@ -127,6 +130,7 @@ describe('Journal Effects', () => {
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
       ConnectionStatus.ONLINE,
+      false,
       new Date())); // Load in mock journal state
     spyOn(store$, 'dispatch');
     // ACT
@@ -147,6 +151,7 @@ describe('Journal Effects', () => {
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
       ConnectionStatus.ONLINE,
+      false,
       new Date())); // Load in mock journal state
     store$.dispatch(new journalActions.SetSelectedDate(nextDay));
     spyOn(store$, 'dispatch');

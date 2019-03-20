@@ -41,6 +41,7 @@ export class LoadJournalSuccess implements Action {
   constructor(
     public payload: {[k: string]: SlotItem[]},
     public onlineOffline: ConnectionStatus,
+    public unAuthenticatedMode: boolean,
     public lastRefreshed: Date) {}
 }
 

@@ -41,6 +41,7 @@ describe('Journal Reducer', () => {
       };
       const action = new LoadJournalSuccess(actionPayload,
                                             ConnectionStatus.ONLINE,
+                                            false,
                                             new Date());
       const result = journalReducer(initialState, action);
 
@@ -76,6 +77,7 @@ describe('Journal Reducer', () => {
       };
       const action = new LoadJournalSuccess(actionPayload,
                                             ConnectionStatus.ONLINE,
+                                            false,
                                             new Date());
       const result = journalReducer(stateWithYesterdaysDate, action);
       expect(result.selectedDate).toEqual(today);

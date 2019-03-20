@@ -5,8 +5,6 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
-import { SecureStorageObject, SecureStorage } from '@ionic-native/secure-storage';
-import { DataStoreProvider } from '../providers/data-store/data-store';
 
 declare let window: any;
 
@@ -22,16 +20,9 @@ export class App {
     private store$: Store<StoreModel>,
     private statusBar: StatusBar,
     private platform: Platform,
-    private secureStorage: SecureStorage,
-    private dataStore: DataStoreProvider,
   ) {
     platform.ready()
       .then(() => {
-        if (this.platform.is('ios')) {
-          this.secureStorage.create('MES').then((storage: SecureStorageObject) => {
-            this.dataStore.setSecureContainer(storage);
-          });
-        }
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();

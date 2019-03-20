@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks';
 import { Store , StoreModule } from '@ngrx/store';
@@ -16,6 +16,8 @@ import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { SecureStorage } from '@ionic-native/secure-storage';
+import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -42,6 +44,7 @@ describe('LoginPage', () => {
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: SecureStorage, useClass: SecureStorageMock },
       ],
     })
       .compileComponents()

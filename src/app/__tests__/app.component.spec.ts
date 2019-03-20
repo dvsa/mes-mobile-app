@@ -9,10 +9,6 @@ import { App } from '../app.component';
 import { LoadAppInfo } from '../../modules/app-info/app-info.actions';
 import { AppInfoModel } from '../../modules/app-info/app-info.model';
 import { Spied } from '../../../test/helpers/spy-generic';
-import { SecureStorage } from '@ionic-native/secure-storage';
-import { DataStoreProvider } from '../../providers/data-store/data-store';
-import { DataStoreProviderMock } from '../../providers/data-store/__mocks__/data-store.mock';
-import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -30,8 +26,6 @@ describe('App', () => {
       providers: [
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
-        { provide: SecureStorage, useClass: SecureStorageMock },
-        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
       ],
     })
       .compileComponents()

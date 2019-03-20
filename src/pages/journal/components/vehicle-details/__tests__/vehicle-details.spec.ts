@@ -13,7 +13,6 @@ describe('VehicleDetailsComponent', () => {
         VehicleDetailsComponent,
       ],
       imports: [IonicModule],
-
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(VehicleDetailsComponent);
       component = fixture.componentInstance;
