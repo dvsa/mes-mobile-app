@@ -59,9 +59,15 @@ export class AuthenticationProvider {
   }
 
   public login = () => {
-    if (!this.isInUnAuthenticatedMode()) {
-      return new Promise((resolve, reject) => {
-        this.aquireTokenSilently()
+
+    if (this.isInUnAuthenticatedMode()) {
+      return new Promise((resolve) => {
+        this.isUserAuthenticated = true;
+        resolve();
+      });
+    }
+    return new Promise((resolve, reject) => {
+      this.aquireTokenSilently()
         .then((authResponse: AuthenticationResult) => {
           this.successfulLogin(authResponse);
           resolve();
@@ -71,11 +77,6 @@ export class AuthenticationProvider {
             .then(() => resolve())
             .catch((error: AuthenticationError) => reject(error));
         });
-      });
-    }
-    return new Promise((resolve) => {
-      this.isUserAuthenticated = true;
-      resolve();
     });
   }
 

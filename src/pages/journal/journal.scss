@@ -15,7 +15,7 @@ page-journal {
     padding: 16px 0;
     background: map-get($colors-gds, 'gds-red');
     #unauth-text {
-      color: #FFFFFF;
+      color: map-get($colors, 'mes-white');
       font-family: SFProDisplay-Regular;
       font-size: 20px;
       font-weight: normal;

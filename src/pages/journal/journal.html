@@ -22,9 +22,7 @@
 
 <ion-content no-padding>
   <div *ngIf="isUnauthenticated" id="unauthenticated-mode-indicator">
-        <div>
-          <label id="unauth-text">You are offline. Some features may be unavailable.</label>
-        </div>
+    <label id="unauth-text">You are offline. Some features may be unavailable.</label>
   </div>
     
   <ion-refresher (ionRefresh)="pullRefreshJournal($event)">

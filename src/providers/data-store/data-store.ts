@@ -8,7 +8,6 @@ export class DataStoreProvider {
 
   defaultStoreName: string = 'MES';
   secureContainer: SecureStorageObject = null;
-  readyIndicator: string = null;
 
   constructor(
     public platform: Platform,
