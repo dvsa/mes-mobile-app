@@ -45,7 +45,7 @@ describe('Authentication', () => {
       expect(authenticationProvider.isInUnAuthenticatedMode()).toEqual(true);
     });
 
-    it('determineAuthenticationMode() should set unauthenticated mode to flase if online', async () => {
+    it('determineAuthenticationMode() should set unauthenticated mode to false if online', async () => {
       spyOn(networkStateProvider, 'getNetworkState').and.returnValue(ConnectionStatus.ONLINE);
       authenticationProvider.determineAuthenticationMode();
       expect(authenticationProvider.isInUnAuthenticatedMode()).toEqual(false);
@@ -74,7 +74,7 @@ describe('Authentication', () => {
       expect(authenticationProvider.aquireTokenSilently).toHaveBeenCalledTimes(0);
     });
 
-    it('should login without authenticating in unauthenticated mode', async () => {
+    it('should login with authenticating in unauthenticated mode', async () => {
       spyOn(authenticationProvider, 'isInUnAuthenticatedMode').and.returnValue(false);
       spyOn(authenticationProvider, 'aquireTokenSilently').and.callThrough();
       await authenticationProvider.login();
