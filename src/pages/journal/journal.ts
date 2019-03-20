@@ -70,7 +70,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
     this.employeeId = this.authenticationProvider.getEmployeeId();
-    this.isUnauthenticated = this.authenticationProvider.getUnAuthenticatedMode();
+    this.isUnauthenticated = this.authenticationProvider.isInUnAuthenticatedMode();
   }
 
   ngOnInit(): void {
