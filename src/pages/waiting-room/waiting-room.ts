@@ -20,6 +20,7 @@ import {
 } from '../../modules/test/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
+import { testActionForSlot } from '../../modules/test/test.reducer';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -97,11 +98,11 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   insuranceDeclarationChanged(): void {
-    this.store$.dispatch(new preTestDeclarationsActions.ToggleInsuranceDeclaration());
+    this.store$.dispatch(testActionForSlot('111', new preTestDeclarationsActions.ToggleInsuranceDeclaration()));
   }
 
   residencyDeclarationChanged(): void {
-    this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
+    this.store$.dispatch(testActionForSlot('111', new preTestDeclarationsActions.ToggleResidencyDeclaration()));
   }
 
 }

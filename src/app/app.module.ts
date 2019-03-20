@@ -30,6 +30,7 @@ import { DeviceProvider } from '../providers/device/device';
 import { DataStoreProvider } from '../providers/data-store/data-store';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { CandidateModule } from '../modules/test/candidate/candidate.module';
+import { TestModule } from '../modules/test/test.module';
 
 @NgModule({
   declarations: [App],
@@ -43,6 +44,7 @@ import { CandidateModule } from '../modules/test/candidate/candidate.module';
     AppInfoModule,
     LogsModule,
     CandidateModule,
+    TestModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
