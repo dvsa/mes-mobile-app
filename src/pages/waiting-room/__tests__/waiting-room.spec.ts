@@ -18,6 +18,9 @@ import {
 } from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import {
+  initialState as preTestDeclarationInitialState,
+} from '../../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -41,7 +44,15 @@ describe('WaitingRoomPage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forFeature('candidate', () => mockCandidate),
+        StoreModule.forFeature('tests', () => ({
+          current: {
+            slotId: '123',
+          },
+          123: {
+            candidate: mockCandidate,
+            preTestDeclarations: preTestDeclarationInitialState,
+          },
+        })),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
