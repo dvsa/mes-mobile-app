@@ -28,7 +28,7 @@ describe('CompetencyComponent', () => {
   });
 
   describe('DOM', () => {
-    it('should show provided label', () => {
+    xit('should show provided label', () => {
       component.label = 'Gears';
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('span'));

@@ -1,5 +1,6 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { HammerJsProvider } from '../../../../providers/hammer/hammer';
+import { Component, Input, ViewChild, ElementRef, RendererFactory2, Renderer2 } from '@angular/core';
+
+declare const Hammer: any;
 
 @Component({
   selector: 'competency',
@@ -10,19 +11,39 @@ export class CompetencyComponent {
   @Input()
   label: string;
 
+  faultCount: number = 0;
+
+  private hammerManager: any;
+  private renderer: Renderer2;
+  private pressTime = 300;
+
   @ViewChild('competencyButton')
   button: ElementRef;
 
-  hammerManager : any;
-
-  constructor(private hammerJsProvider: HammerJsProvider) {}
+  constructor(rendererFactory: RendererFactory2) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
 
   ngOnInit() {
-    this.hammerJsProvider.init(this.button, this.recordFault);
+    this.init(this.button, this.recordFault);
   }
 
-  recordFault() {
+  init(element: ElementRef, action: Function) {
+    this.hammerManager = new Hammer.Manager(element.nativeElement);
+
+    this.hammerManager.add(new Hammer.Press({
+      event: 'pressAndHold',
+      time: this.pressTime,
+    }));
+
+    this.hammerManager.on('pressAndHold', () => {
+      this.recordFault();
+      this.renderer.removeClass(element.nativeElement, 'press');
+    });
+  }
+
+  recordFault = () => {
     console.log('I AM RECORDING A FAULT');
+    this.faultCount = this.faultCount + 1;
   }
-
 }

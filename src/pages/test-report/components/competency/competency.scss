@@ -11,5 +11,15 @@ competency {
     line-height: 25px;
     letter-spacing: -0.26px;
     font-weight: 500;
+
+    &.activated {
+      background: #eee;
+      border-bottom: 1px solid #666;
+      margin: 1px 0 -1px 0;
+
+    }
+
+    &.press {
+    }
   }
 }

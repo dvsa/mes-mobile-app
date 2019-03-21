@@ -7,7 +7,6 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
-import { HammerJsProvider } from '../../providers/hammer/hammer';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { HammerJsProvider } from '../../providers/hammer/hammer';
     AnalyticsProvider,
     ScreenOrientation,
     Insomnia,
-    HammerJsProvider,
   ],
 })
 export class TestReportPageModule {}
