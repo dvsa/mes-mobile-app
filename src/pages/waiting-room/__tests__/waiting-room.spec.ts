@@ -16,7 +16,6 @@ import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
 } from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
-import { PreTestDeclarationsModule } from '../../../modules/test/pre-test-declarations/pre-test-declarations.module';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 
@@ -40,7 +39,6 @@ describe('WaitingRoomPage', () => {
       declarations: [WaitingRoomPage],
       imports: [
         IonicModule,
-        PreTestDeclarationsModule,
         AppModule,
         ComponentsModule,
         StoreModule.forFeature('candidate', () => mockCandidate),
