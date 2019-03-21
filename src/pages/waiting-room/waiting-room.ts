@@ -68,6 +68,24 @@ export class WaitingRoomPage extends BasePageComponent {
     }
   }
 
+  clickContinue = async (): Promise<boolean> => {
+
+    const returnVal =  await this.deviceProvider.triggerLockScreen();
+    console.log(returnVal);
+    return returnVal;
+
+    //   .then(() => {
+    //     console.log('click continue resolved');
+    //     this.navCtrl.push('WaitingRoomToCarPage');
+    //     return resolve(true);
+    //   })
+    //   .catch(() => {
+    //     console.log('catched ...');
+    //     return reject(false);
+    //   });
+    // });
+  }
+
   ngOnInit(): void {
     this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;

@@ -12,7 +12,7 @@ export class DeviceProvider implements IDeviceProvider {
   constructor(
     public appConfig: AppConfigProvider,
     public device: Device,
-    ) {
+  ) {
   }
 
   validDeviceType = (): boolean => {
@@ -50,6 +50,44 @@ export class DeviceProvider implements IDeviceProvider {
       } else {
         return reject(false);
       }
+    });
+  }
+
+  triggerLockScreen = (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+
+      if (cordova && cordova.plugins && cordova.plugins.DeviceAuthentication) {
+        console.log('start ');
+
+        if (typeof cordova.plugins.DeviceAuthentication.runAuthentication === 'function') {
+          console.log('is a function');
+        }
+
+        cordova.plugins.DeviceAuthentication.runAuthentication('Please enter your passcode')
+        .then(() => {
+          console.log('Successfully authenticated.');
+        })
+        .catch((errorMsg: string) => {
+          console.log('Error msg: ' + errorMsg);
+        });
+
+        // .then((retVal: boolean) => {
+          //   console.log("Boolean returned: " + retVal);
+          // });
+
+        // .then((isAuthenticated: boolean ) => {
+        //     console.log(`${isAuthenticated} - is authenticated`);
+        //     return resolve(isAuthenticated);
+        // })
+        // .catch((errorMsg: string) => {
+        //     console.log('is not authenticated');
+        //     return reject(false);
+        // });
+      } else {
+        console.log('not cordova');
+        return reject(false);
+      }
+
     });
   }
 
