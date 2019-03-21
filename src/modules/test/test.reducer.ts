@@ -12,6 +12,12 @@ type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
 
 const initialState = {};
 
+/**
+ * Handles actions relating to a particular test by finding which test the actions apply to
+ * and applying a test capture domain concept reducer against that test's portion of the state.
+ * @param state Test state for all tests
+ * @param action The action to modify the state
+ */
 export const testReducer = (
   state = initialState,
   action: TestAction,
