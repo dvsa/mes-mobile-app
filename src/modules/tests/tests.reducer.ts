@@ -18,7 +18,7 @@ const initialState = {};
  * @param state Test state for all tests
  * @param action The action to modify the state
  */
-export const testReducer = (
+export const testsReducer = (
   state = initialState,
   action: TestAction,
 ) => {

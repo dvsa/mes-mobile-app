@@ -15,12 +15,12 @@ import { ComponentsModule } from './../../../components/components.module';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;

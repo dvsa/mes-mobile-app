@@ -1,9 +1,9 @@
-import { testReducer } from '../test.reducer';
+import { testsReducer } from '../tests.reducer';
 import * as testOutcomeActions from '../../../pages/journal/components/test-outcome/test-outcome.actions';
 import { TestSlot } from '../../../shared/models/DJournal';
 import * as candidateReducer from '../candidate/candidate.reducer';
 
-describe('testReducer', () => {
+describe('testsReducer', () => {
   it('use the payload of a test started action to setup state for a new test', () => {
     const state = {};
     const startTestPayload: TestSlot = {
@@ -18,7 +18,7 @@ describe('testReducer', () => {
     };
     const action = new testOutcomeActions.TestOutcomeStartTest(startTestPayload);
 
-    const output = testReducer(state, action);
+    const output = testsReducer(state, action);
 
     // @ts-ignore
     expect(output.current.slotId).toBe('123');
@@ -35,7 +35,7 @@ describe('testReducer', () => {
       },
     };
 
-    const result = testReducer(state, new testOutcomeActions.TestOutcomeStartTest({ slotDetail: { slotId: 123 } }));
+    const result = testsReducer(state, new testOutcomeActions.TestOutcomeStartTest({ slotDetail: { slotId: 123 } }));
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     // @ts-ignore

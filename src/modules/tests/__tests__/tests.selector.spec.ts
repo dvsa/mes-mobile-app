@@ -1,6 +1,6 @@
-import { getCurrentTest } from '../test.selector';
+import { getCurrentTest } from '../tests.selector';
 
-describe('testSelector', () => {
+describe('testsSelector', () => {
   describe('getCurrentTest', () => {
     it('should return whichever test is the current one', () => {
       const test = {

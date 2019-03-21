@@ -11,8 +11,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { DeviceProvider } from '../../providers/device/device';
 
 import { StoreModel } from '../../shared/models/store.model';
-import { getUntitledCandidateName } from '../../modules/test/candidate/candidate.selector';
-import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
+import { getCurrentCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 
 interface TestReportPageState {

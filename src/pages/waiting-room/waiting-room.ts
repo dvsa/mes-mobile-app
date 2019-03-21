@@ -7,20 +7,20 @@ import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
-import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
-import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
+import { getPreTestDeclarationsState } from '../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import * as preTestDeclarationsActions from '../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
-} from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
-import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+} from '../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
+import { getCurrentCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../modules/test/candidate/candidate.selector';
+} from '../../modules/tests/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
-import { getCurrentTest } from '../../modules/test/test.selector';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
