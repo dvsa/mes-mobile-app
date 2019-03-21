@@ -4,7 +4,7 @@ import {
   formatDriverNumber,
   getUntitledCandidateName,
 } from '../candidate.selector';
-import { Candidate } from '../../../../shared/models/DJournal';
+import { Candidate } from '@dvsa/mes-test-schema/CatBTest';
 
 describe('candidate selector', () => {
   const candidate: Candidate = {
