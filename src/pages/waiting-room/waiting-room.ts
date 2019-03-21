@@ -6,13 +6,13 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
+  getSignatureStatus,
 } from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
 import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
 import {
@@ -82,7 +82,10 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getPreTestDeclarationsState),
         select(getResidencyDeclarationStatus),
       ),
-      signature$: of(''),
+      signature$: this.store$.pipe(
+        select(getCurrentTest),
+        select(getSignatureStatus),
+      ),
       candidateName$: this.store$.pipe(
         select(getCurrentTest),
         select(getCurrentCandidate),
