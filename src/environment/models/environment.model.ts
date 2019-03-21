@@ -1,6 +1,8 @@
 export interface EnvironmentFile {
   isRemote: boolean;
   configUrl: string;
+  daysToCacheJournalData: number;
+  daysToCacheLogs: number;
   authentication: {
     context: string;
     resourceUrl: string;

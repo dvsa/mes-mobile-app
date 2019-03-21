@@ -69,6 +69,8 @@ export class AppConfigProvider {
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
       configUrl: data.configUrl,
+      daysToCacheJournalData: data.daysToCacheJournalData,
+      daysToCacheLogs: data.daysToCacheLogs,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,
