@@ -5,6 +5,7 @@ import {
   preTestDeclarationsReducer,
 } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer, initialState as candidateInitialState } from './candidate/candidate.reducer';
+import { has } from 'lodash';
 
 // Extend this with any new test domain action types
 type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
@@ -29,17 +30,29 @@ export const testReducer = (
   state = initialState,
   testAction: SlotTestAction<TestAction>,
 ) => {
-  const { slotId } = testAction;
-  if (!slotId) {
-    return state;
+  let newState = state;
+  if (testAction.action instanceof testOutcomeActions.TestOutcomeStartTest) {
+    const slotIdToSave = testAction.action.payload.slotDetail.slotId;
+    newState = {
+      ...newState,
+      current: {
+        slotId: slotIdToSave,
+      },
+    };
   }
 
-  const existingStateForSlot = state[slotId];
+  if (!has(newState, 'current.slotId') || !testAction.action) {
+    return newState;
+  }
 
-  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, state, slotId, testAction.action);
+  // @ts-ignore
+  const slotId = newState.current.slotId;
+  const existingStateForSlot = newState[slotId];
+
+  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, newState, slotId, testAction.action);
 
   return {
-    ...state,
+    ...newState,
     [slotId]: {
       preTestDeclarations: bound(
         preTestDeclarationsReducer,
@@ -53,6 +66,7 @@ export const testReducer = (
       ),
     },
   };
+
 };
 
 const existingOrDefaultStateAndActionToReducer = (slotExists: boolean, state, slotId, action) => (
