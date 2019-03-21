@@ -14,6 +14,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCurrentCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -44,6 +45,7 @@ export class TestReportPage extends BasePageComponent {
   ngOnInit(): void {
     this.pageState = {
       candidateUntitledName$: this.store$.pipe(
+        select(getCurrentTest),
         select(getCurrentCandidate),
         select(getUntitledCandidateName),
       ),
