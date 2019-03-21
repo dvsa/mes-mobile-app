@@ -23,7 +23,7 @@
       <h3>{{pageState.candidateDriverNumber$ | async}}</h3>
     </div>
     <div>
-      <button id="continue-button" class="mes-primary-button" navPush="WaitingRoomToCarPage" ion-button>
+      <button id="continue-button" class="mes-primary-button" (click)="clickContinue()" ion-button>
         <h3>Continue</h3>
       </button>
     </div>
