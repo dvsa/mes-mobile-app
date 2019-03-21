@@ -20,7 +20,6 @@ import {
 } from '../../modules/test/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
-import { testActionForSlot } from '../../modules/test/test.reducer';
 import { getCurrentTest } from '../../modules/test/test.selector';
 
 interface WaitingRoomPageState {
@@ -104,11 +103,11 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   insuranceDeclarationChanged(): void {
-    this.store$.dispatch(testActionForSlot('111', new preTestDeclarationsActions.ToggleInsuranceDeclaration()));
+    this.store$.dispatch(new preTestDeclarationsActions.ToggleInsuranceDeclaration());
   }
 
   residencyDeclarationChanged(): void {
-    this.store$.dispatch(testActionForSlot('111', new preTestDeclarationsActions.ToggleResidencyDeclaration()));
+    this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
 
 }

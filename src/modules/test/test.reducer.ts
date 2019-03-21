@@ -10,29 +10,15 @@ import { has } from 'lodash';
 // Extend this with any new test domain action types
 type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
 
-interface SlotTestAction<T extends TestAction> {
-  type: string;
-  slotId: string;
-  action: T;
-}
-
-export function testActionForSlot<T extends TestAction>(slotId: string, action: T): SlotTestAction<T> {
-  return {
-    slotId,
-    action,
-    type: `[${slotId}] ${action.type}`,
-  };
-}
-
 const initialState = {};
 
 export const testReducer = (
   state = initialState,
-  testAction: SlotTestAction<TestAction>,
+  action: TestAction,
 ) => {
   let newState = state;
-  if (testAction.action instanceof testOutcomeActions.TestOutcomeStartTest) {
-    const slotIdToSave = testAction.action.payload.slotDetail.slotId;
+  if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
+    const slotIdToSave = action.payload.slotDetail.slotId;
     newState = {
       ...newState,
       current: {
@@ -41,7 +27,7 @@ export const testReducer = (
     };
   }
 
-  if (!has(newState, 'current.slotId') || !testAction.action) {
+  if (!has(newState, 'current.slotId') || !action) {
     return newState;
   }
 
@@ -49,7 +35,7 @@ export const testReducer = (
   const slotId = newState.current.slotId;
   const existingStateForSlot = newState[slotId];
 
-  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, newState, slotId, testAction.action);
+  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, newState, slotId, action);
 
   return {
     ...newState,

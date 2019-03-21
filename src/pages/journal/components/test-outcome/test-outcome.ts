@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { TestOutcomeStartTest } from './test-outcome.actions';
-import { testActionForSlot } from '../../../../modules/test/test.reducer';
 
 @Component({
   selector: 'test-outcome',
@@ -37,7 +36,7 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
-    this.store$.dispatch(testActionForSlot('111', new TestOutcomeStartTest(this.slot)));
+    this.store$.dispatch(new TestOutcomeStartTest(this.slot));
     this.navController.push('WaitingRoomPage');
   }
 }
