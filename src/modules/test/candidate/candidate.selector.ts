@@ -1,4 +1,4 @@
-import { Candidate } from '../../../shared/models/DJournal';
+import { Candidate } from '@dvsa/mes-test-schema/CatBTest';
 
 export const getCandidateName = (candidate: Candidate): string => {
   const { title, firstName, lastName } = candidate.candidateName;

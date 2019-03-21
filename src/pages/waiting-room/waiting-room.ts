@@ -21,6 +21,7 @@ import {
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
 import { testActionForSlot } from '../../modules/test/test.reducer';
+import { getCurrentTest } from '../../modules/test/test.selector';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -73,23 +74,28 @@ export class WaitingRoomPage extends BasePageComponent {
 
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
+        select(getCurrentTest),
         select(getPreTestDeclarationsState),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: this.store$.pipe(
+        select(getCurrentTest),
         select(getPreTestDeclarationsState),
         select(getResidencyDeclarationStatus),
       ),
       signature$: of(''),
       candidateName$: this.store$.pipe(
+        select(getCurrentTest),
         select(getCurrentCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: this.store$.pipe(
+        select(getCurrentTest),
         select(getCurrentCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
+        select(getCurrentTest),
         select(getCurrentCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),

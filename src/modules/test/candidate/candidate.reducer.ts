@@ -1,4 +1,4 @@
-import { Candidate } from '../../../shared/models/DJournal';
+import { Candidate } from '@dvsa/mes-test-schema/CatBTest';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testOutcomeActions from '../../../pages/journal/components/test-outcome/test-outcome.actions';
 import { has } from 'lodash';

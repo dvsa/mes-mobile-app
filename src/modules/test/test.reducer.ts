@@ -1,11 +1,13 @@
 import * as preTestDeclarationActions from './pre-test-declarations/pre-test-declarations.actions';
+import * as testOutcomeActions from '../../pages/journal/components/test-outcome/test-outcome.actions';
 import {
   initialState as preTestDeclarationsInitialState,
   preTestDeclarationsReducer,
 } from './pre-test-declarations/pre-test-declarations.reducer';
+import { candidateReducer, initialState as candidateInitialState } from './candidate/candidate.reducer';
 
 // Extend this with any new test domain action types
-type TestAction = preTestDeclarationActions.Types;
+type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
 
 interface SlotTestAction<T extends TestAction> {
   type: string;
@@ -43,6 +45,11 @@ export const testReducer = (
         preTestDeclarationsReducer,
         'preTestDeclarations',
         preTestDeclarationsInitialState,
+      ),
+      candidate: bound(
+        candidateReducer,
+        'candidate',
+        candidateInitialState,
       ),
     },
   };

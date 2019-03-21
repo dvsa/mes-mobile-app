@@ -29,7 +29,6 @@ import { LogsModule } from '../modules/logs/logs.module';
 import { DeviceProvider } from '../providers/device/device';
 import { DataStoreProvider } from '../providers/data-store/data-store';
 import { SecureStorage } from '@ionic-native/secure-storage';
-import { CandidateModule } from '../modules/test/candidate/candidate.module';
 import { TestModule } from '../modules/test/test.module';
 
 @NgModule({
@@ -43,7 +42,6 @@ import { TestModule } from '../modules/test/test.module';
     EffectsModule.forRoot([]),
     AppInfoModule,
     LogsModule,
-    CandidateModule,
     TestModule,
   ],
   bootstrap: [IonicApp],
