@@ -9,14 +9,17 @@ import { SignatureAreaComponent } from './../../components/signature-area/signat
 })
 export class ComponentLibraryPage {
   @ViewChild(SignatureAreaComponent)
-  signaturePad: SignatureAreaComponent;
+  signatureArea: SignatureAreaComponent;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
   ngAfterViewInit() {
-    this.signaturePad.signHereText = 'Sign here';
-    this.signaturePad.retryButtonText = 'Retry';
-    this.signaturePad.notValidHeaderText = 'Enter a signature';
-    this.signaturePad.required = true;
+    this.signatureArea.actionLess = true;
+    this.signatureArea.signHereText = 'Sign here';
+    this.signatureArea.retryButtonText = 'Retry';
+    this.signatureArea.notValidHeaderText = 'Enter a signature';
+  }
+  toggleIsValid() {
+    this.signatureArea.isvalid = !this.signatureArea.isvalid;
   }
 }

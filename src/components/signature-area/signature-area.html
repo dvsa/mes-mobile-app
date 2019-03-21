@@ -1,11 +1,11 @@
 <div class="not-valid-header">
-    <span class="mes-header-md" *ngIf="isvalid === false && notValidHeaderText && required">
+    <span class="mes-header-md" *ngIf="isvalid === false && notValidHeaderText">
         <label id="not-valid-header-label" class="not-valid-text">{{notValidHeaderText}}</label>
     </span>
 </div>
-<div class="signature-area" (blur)="checkAndSetValidation()" [class.is-not-valid]="isvalid === false  && required">
+<div class="signature-area" [class.is-not-valid]="isvalid === false">
     <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
-    <button (click)="clear()" class="retry-button" [disabled]="isvalid === false ">
+    <button (click)="clear()" class="retry-button" [disabled]="!signature">
         <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
         <label id="retry-button-label" class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</label>
     </button>

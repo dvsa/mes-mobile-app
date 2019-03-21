@@ -3,8 +3,9 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { SignatureAreaComponent } from '../signature-area';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-
+class TestStore {}
 describe('SignatureAreaComponent', () => {
   let fixture: ComponentFixture<SignatureAreaComponent>;
   let component: SignatureAreaComponent;
@@ -14,8 +15,11 @@ describe('SignatureAreaComponent', () => {
         SignatureAreaComponent,
         MockComponent(SignaturePad),
       ],
-      imports: [],
-      providers: [],
+      imports: [
+      ],
+      providers: [
+        { provide: Store, useClass: TestStore },
+      ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(SignatureAreaComponent);
       component = fixture.componentInstance;
@@ -27,25 +31,24 @@ describe('SignatureAreaComponent', () => {
       expect(component).toBeDefined();
     });
     describe('signature', () => {
-      it('setSignature should update the signature property', () => {
+      it('setSignature should update the signature property and call signatureDataChangedDispatch', () => {
+        spyOn(component, 'signatureDataChangedDispatch');
         component.signature = undefined;
         component.setSignature('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyEAAAD');
         expect(component.signature).toEqual('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyEAAAD');
-        expect(component.isvalid).toBeTruthy();
+        expect(component.signatureDataChangedDispatch).toHaveBeenCalled();
       });
-      it('clear should clear the signature property', () => {
-        spyOn(component.dataClearedEvent, 'emit');
+      it('clear should clear the signature property and call signatureDataClearedDispatch', () => {
+        spyOn(component, 'signatureDataClearedDispatch');
         component.signature = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyEAAAD';
         component.clear();
         expect(component.signature).toBeNull();
-        expect(component.isvalid).toBeFalsy();
-        expect(component.dataClearedEvent.emit).toHaveBeenCalled();
+        expect(component.signatureDataClearedDispatch).toHaveBeenCalled();
       });
-      it('drawComplete should emit the signature property', () => {
-        spyOn(component.changedDataEvent, 'emit');
+      it('drawComplete should call signatureDataChangedDispatch', () => {
+        spyOn(component, 'signatureDataChangedDispatch');
         component.drawComplete();
-        expect(component.isvalid).toBeTruthy();
-        expect(component.changedDataEvent.emit).toHaveBeenCalled();
+        expect(component.signatureDataChangedDispatch).toHaveBeenCalled();
       });
     });
   });
@@ -58,7 +61,7 @@ describe('SignatureAreaComponent', () => {
         const signHereElement: HTMLElement = fixture.debugElement.query(By.css('#sign-here-label')).nativeElement;
         expect(signHereElement.textContent).toEqual('sign here for millions');
       });
-      it('sign line text should default when the signHereText property is falsy' , () => {
+      it('sign line text should default when the signHereText property is falsy', () => {
         component.signHereText = undefined;
         fixture.detectChanges();
         const signHereElement: HTMLElement = fixture.debugElement.query(By.css('#sign-here-label')).nativeElement;
@@ -81,30 +84,20 @@ describe('SignatureAreaComponent', () => {
       });
     });
 
-    describe('require validation ', () => {
-      it('notValidHeaderText, when set, should display when isvalid is false and required is true', () => {
-        component.required = true;
+    describe('validation ', () => {
+      it('notValidHeaderText, when set, should display when isvalid is false', () => {
         component.isvalid = false;
         component.notValidHeaderText = 'please enter your details';
         fixture.detectChanges();
         const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
-            By.css('#not-valid-header-label')).nativeElement;
+          By.css('#not-valid-header-label')).nativeElement;
         expect(notValidHeaderElement.textContent).toEqual('please enter your details');
       });
-      it('notValidHeaderText, when not set, should not display when isvalid is false and required is true', () => {
-        component.required = true;
+      it('notValidHeaderText, when not set, should not display when isvalid is false', () => {
         component.isvalid = false;
         component.notValidHeaderText = undefined;
         const notValidHeaderElement: DebugElement = fixture.debugElement.query(
-            By.css('#not-valid-header-label'));
-        expect(notValidHeaderElement).toBeNull();
-      });
-      it('notValidHeaderText, when set, should not display when isvalid is false and required is false', () => {
-        component.required = false;
-        component.isvalid = false;
-        component.notValidHeaderText = 'please enter your details';
-        const notValidHeaderElement: DebugElement = fixture.debugElement.query(
-            By.css('#not-valid-header-label'));
+          By.css('#not-valid-header-label'));
         expect(notValidHeaderElement).toBeNull();
       });
     });
@@ -114,29 +107,29 @@ describe('SignatureAreaComponent', () => {
         component.retryImage = '/some/path';
         fixture.detectChanges();
         const retryImageElement: HTMLElement = fixture.debugElement.query(
-              By.css('#retry-icon')).nativeElement;
+          By.css('#retry-icon')).nativeElement;
         expect(retryImageElement.getAttribute('style')).toEqual('background-image: url("/some/path");');
       });
       it('retryImage, when not set, should defualt the retry image source attrubute', () => {
         fixture.detectChanges();
         const retryImageElement: HTMLElement = fixture.debugElement.query(
-              By.css('#retry-icon')).nativeElement;
+          By.css('#retry-icon')).nativeElement;
         expect(retryImageElement.getAttribute('style'))
-        .toEqual('background-image: url("/assets/imgs/waiting-room/retry.png");');
+          .toEqual('background-image: url("/assets/imgs/waiting-room/retry.png");');
       });
       it('signHereImage, when set, should change the sign here image source attribute', () => {
         component.signHereImage = '/some/path';
         fixture.detectChanges();
         const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
-              By.css('#sign-here-image')).nativeElement;
+          By.css('#sign-here-image')).nativeElement;
         expect(notValidHeaderElement.getAttribute('style')).toEqual('background-image: url("/some/path");');
       });
       it('signHereImage, when not set, should default the sign here image source attribute', () => {
         fixture.detectChanges();
         const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
-              By.css('#sign-here-image')).nativeElement;
+          By.css('#sign-here-image')).nativeElement;
         expect(notValidHeaderElement.getAttribute('style'))
-        .toEqual('background-image: url("/assets/imgs/waiting-room/sign-here.png");');
+          .toEqual('background-image: url("/assets/imgs/waiting-room/sign-here.png");');
       });
     });
   });

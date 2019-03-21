@@ -1,27 +1,31 @@
-import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { StoreModel } from '../../shared/models/store.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'signature-area',
   templateUrl: 'signature-area.html',
 })
 export class SignatureAreaComponent {
-  @Output() changedDataEvent = new EventEmitter<string>();
-  @Output() dataClearedEvent = new EventEmitter<string>();
   public signature: string;
   public isvalid: boolean;
-  public required: boolean;
   public retryImage: string;
   public notValidHeaderText: string;
   public retryButtonText: string;
   public signHereText: string;
   public signHereImage: string;
+  public drawCompleteAction: string;
+  public clearAction: string;
+  public actionLess: boolean;
 
   @ViewChild(SignaturePad)
   signaturePad: SignaturePad;
 
-  constructor() {
+  constructor(private store$: Store<StoreModel>) {
+    this.signature = null;
     this.isvalid = null;
+    this.actionLess = false;
     this.signHereImage = '/assets/imgs/waiting-room/sign-here.png';
     this.retryImage = '/assets/imgs/waiting-room/retry.png';
   }
@@ -33,7 +37,7 @@ export class SignatureAreaComponent {
     this.signaturePad.fromDataURL(initialValue);
     // loading the signature from initial value does not set the internal signature stucture, so setting here.
     this.signature = initialValue;
-    this.isvalid = true;
+    this.signatureDataChangedDispatch(initialValue);
   }
 
   ngAfterViewInit() {
@@ -45,21 +49,22 @@ export class SignatureAreaComponent {
   clear() {
     this.signaturePad.clear();
     this.signature = null;
-    this.isvalid = false;
-    this.dataClearedEvent.emit();
-  }
-
-  checkAndSetValidation() {
-    if (this.signature) {
-      this.isvalid = true;
-    } else {
-      this.isvalid = false;
-    }
+    this.signatureDataClearedDispatch();
   }
 
   drawComplete() {
-    this.isvalid = true;
     this.signature = this.signaturePad.toDataURL('image/png');
-    this.changedDataEvent.emit(this.signature);
+    this.signatureDataChangedDispatch(this.signature);
+  }
+
+  signatureDataChangedDispatch(signatureData: string) {
+    if (!this.actionLess) {
+      this.store$.dispatch({ payload: signatureData, type: this.drawCompleteAction });
+    }
+  }
+  signatureDataClearedDispatch() {
+    if (!this.actionLess) {
+      this.store$.dispatch({ type: this.clearAction });
+    }
   }
 }

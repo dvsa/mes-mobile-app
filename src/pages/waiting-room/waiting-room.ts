@@ -36,7 +36,7 @@ interface WaitingRoomPageState {
 })
 export class WaitingRoomPage extends BasePageComponent {
   @ViewChild(SignatureAreaComponent)
-  signaturePad: SignatureAreaComponent;
+  signatureArea: SignatureAreaComponent;
   pageState: WaitingRoomPageState;
 
   constructor(
@@ -53,10 +53,12 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-    this.signaturePad.signHereText = 'Sign here';
-    this.signaturePad.retryButtonText = 'Retry';
-    this.signaturePad.notValidHeaderText = 'Enter a signature';
-    this.signaturePad.required = true;
+    this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
+    this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
+    this.signatureArea.signHereText = 'Sign here';
+    this.signatureArea.retryButtonText = 'Retry';
+    this.signatureArea.notValidHeaderText = 'Enter a signature';
+
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
         select(getPreTestDeclarationsState),
@@ -89,14 +91,6 @@ export class WaitingRoomPage extends BasePageComponent {
 
   residencyDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
-  }
-
-  signatureDataChanged($event: any) {
-    this.store$.dispatch(new preTestDeclarationsActions.SignatureDataChanged($event));
-  }
-
-  signatureDataCleared($event: any) {
-    this.store$.dispatch(new preTestDeclarationsActions.SignatureDataCleared());
   }
 
 }
