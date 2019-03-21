@@ -5,7 +5,7 @@ import {
   preTestDeclarationsReducer,
 } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer, initialState as candidateInitialState } from './candidate/candidate.reducer';
-import { has } from 'lodash';
+import { get } from 'lodash';
 
 // Extend this with any new test domain action types
 type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
@@ -16,46 +16,42 @@ export const testReducer = (
   state = initialState,
   action: TestAction,
 ) => {
-  let newState = state;
-  if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
-    const slotIdToSave = action.payload.slotDetail.slotId;
-    newState = {
-      ...newState,
-      current: {
-        slotId: slotIdToSave,
-      },
-    };
+  const slotId = deriveSlotId(state, action);
+  if (!slotId) {
+    return state;
   }
 
-  if (!has(newState, 'current.slotId') || !action) {
-    return newState;
-  }
-
-  // @ts-ignore
-  const slotId = newState.current.slotId;
-  const existingStateForSlot = newState[slotId];
-
-  const bound = existingOrDefaultStateAndActionToReducer(existingStateForSlot, newState, slotId, action);
+  const existingStateForSlot = state[slotId];
+  const applyReducer = makeReducerApplyer(existingStateForSlot, state, slotId, action);
 
   return {
-    ...newState,
+    ...state,
     [slotId]: {
-      preTestDeclarations: bound(
+      preTestDeclarations: applyReducer(
         preTestDeclarationsReducer,
         'preTestDeclarations',
         preTestDeclarationsInitialState,
       ),
-      candidate: bound(
+      candidate: applyReducer(
         candidateReducer,
         'candidate',
         candidateInitialState,
       ),
     },
+    current: {
+      slotId,
+    },
   };
-
 };
 
-const existingOrDefaultStateAndActionToReducer = (slotExists: boolean, state, slotId, action) => (
+const deriveSlotId = (state, action): string | null => {
+  if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
+    return `${action.payload.slotDetail.slotId}`;
+  }
+  return get(state, 'current.slotId', null);
+};
+
+const makeReducerApplyer = (slotExists: boolean, state, slotId, action) => (
   reducer,
   keyInState: string,
   initialState,
