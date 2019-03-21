@@ -101,7 +101,7 @@ export const logInToApplication = (username, password) => {
     passFld.sendKeys(password);
     const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
     signInButtonElement.click();
-    browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+    browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
@@ -117,7 +117,7 @@ export const loggedInAs = (staffNumber) => {
 
 // Logs out of the application and takes them to the login page if they were logged in else returns current page
 export const logout = () => {
-  browser.sleep(TEST_CONFIG.ACTION_WAIT);
+  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
