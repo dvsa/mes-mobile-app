@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -7,6 +7,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
 import {
@@ -35,7 +36,8 @@ interface WaitingRoomPageState {
   templateUrl: 'waiting-room.html',
 })
 export class WaitingRoomPage extends BasePageComponent {
-
+  @ViewChild(SignatureAreaComponent)
+  signatureArea: SignatureAreaComponent;
   pageState: WaitingRoomPageState;
 
   constructor(
@@ -48,7 +50,6 @@ export class WaitingRoomPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
-
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
     if (super.isIos()) {
@@ -63,6 +64,12 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
+    this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
+    this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
+    this.signatureArea.signHereText = 'Sign here';
+    this.signatureArea.retryButtonText = 'Retry';
+    this.signatureArea.notValidHeaderText = 'Enter a signature';
+
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
         select(getPreTestDeclarationsState),

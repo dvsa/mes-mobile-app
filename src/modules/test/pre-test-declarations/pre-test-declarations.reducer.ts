@@ -23,6 +23,17 @@ export function preTestDeclarationsReducer(
         ...state,
         residencyDeclarationAccepted: !state.residencyDeclarationAccepted,
       };
+    case preTestDeclarationActions.SIGNATURE_DATA_CHANGED:
+      return {
+        ...state,
+        signature: action.payload,
+      };
+    case preTestDeclarationActions.SIGNATURE_DATA_CLEARED:
+      return {
+        ...state,
+        signature: '',
+      };
+
     default:
       return state;
   }
