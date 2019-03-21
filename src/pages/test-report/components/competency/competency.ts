@@ -38,12 +38,15 @@ export class CompetencyComponent {
 
     this.hammerManager.on('pressAndHold', () => {
       this.recordFault();
-      this.renderer.removeClass(element.nativeElement, 'press');
     });
   }
 
   recordFault = () => {
     console.log('I AM RECORDING A FAULT');
     this.faultCount = this.faultCount + 1;
+    if (this.faultCount === 1) {
+      this.renderer.addClass(this.button.nativeElement , 'driving_fault');
+      this.renderer.addClass(this.button.nativeElement , 'cbutton--click');
+    }
   }
 }
