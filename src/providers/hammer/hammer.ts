@@ -5,7 +5,7 @@ declare const Hammer: any;
 @Injectable()
 export class HammerProvider {
 
-  hammerManager: any;
+  hammerManager: any ;
   pressTime: number = 300;
 
   constructor() {}
@@ -28,7 +28,7 @@ export class HammerProvider {
       time: 1,
     }));
 
-    this.hammerManager.on('pressAndHold', () => action());
+    this.hammerManager.on('press', () => action());
   }
 
 }
