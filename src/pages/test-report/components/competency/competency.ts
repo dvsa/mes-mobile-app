@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { HammerProvider } from '../../../../providers/hammer/hammer';
 
 @Component({
@@ -17,7 +17,7 @@ export class CompetencyComponent {
   @ViewChild('competencyButton')
   button: ElementRef;
 
-  constructor(public hammerProvider : HammerProvider) {}
+  constructor(public hammerProvider : HammerProvider, private renderer: Renderer2) {}
 
   ngOnInit() : void {
     this.hammerProvider.init(this.button);
@@ -27,16 +27,16 @@ export class CompetencyComponent {
   recordFault = (): void => {
     // TODO - Dispatch ADD_FAULT Action Here
     this.faultCount = this.faultCount + 1;
+    this.manageClasses();
   }
 
-  caculateClass = () : any => {
+  manageClasses = (): any => {
     if (this.faultCount > 0) {
-      return {
-        driving_fault : true,
-        'cbutton--click': true,
-      };
+      this.renderer.addClass(this.button.nativeElement, 'driving-fault');
+      this.renderer.addClass(this.button.nativeElement, 'ripple-effect');
+      setTimeout(() => {
+        this.renderer.removeClass(this.button.nativeElement, 'ripple-effect');
+      },         300);
     }
-
-    return {};
   }
 }

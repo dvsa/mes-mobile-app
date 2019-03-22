@@ -14,12 +14,12 @@ competency {
     &.activated {
       background: #eee;
     }
-    &.driving_fault {
+    &.driving-fault {
       color: #0B0C0C;
     }
     // Ripple animation effect
-    &.ripple_effect {
-      animation: ripple 0.3s forwards;
+    &.ripple-effect {
+      animation: ripple 0.4s forwards;
     }
     @-webkit-keyframes ripple {
       0% {
