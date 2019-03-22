@@ -54,7 +54,7 @@ export class WaitingRoomPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation(),
-      { updateOn: 'submit' },
+                              { updateOn: 'submit' },
     );
   }
   ionViewDidEnter(): void {
