@@ -36,7 +36,7 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
-    this.navController.push('WaitingRoomPage');
     this.store$.dispatch(new TestOutcomeStartTest(this.slot));
+    this.navController.push('WaitingRoomPage');
   }
 }

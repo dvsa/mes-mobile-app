@@ -15,10 +15,12 @@ import { ComponentsModule } from './../../../components/components.module';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
-import { PreTestDeclarationsModule } from '../../../modules/test/pre-test-declarations/pre-test-declarations.module';
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import {
+  initialState as preTestDeclarationInitialState,
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -40,10 +42,19 @@ describe('WaitingRoomPage', () => {
       declarations: [WaitingRoomPage],
       imports: [
         IonicModule,
-        PreTestDeclarationsModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forFeature('candidate', () => mockCandidate),
+        StoreModule.forFeature('tests', () => ({
+          currentTest: {
+            slotId: '123',
+          },
+          startedTests: {
+            123: {
+              candidate: mockCandidate,
+              preTestDeclarations: preTestDeclarationInitialState,
+            },
+          },
+        })),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

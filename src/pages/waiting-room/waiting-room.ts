@@ -6,20 +6,21 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
-import { getPreTestDeclarationsState } from '../../modules/test/pre-test-declarations/pre-test-declarations.reducer';
-import * as preTestDeclarationsActions from '../../modules/test/pre-test-declarations/pre-test-declarations.actions';
+import { getPreTestDeclarations } from '../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import * as preTestDeclarationsActions from '../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
-} from '../../modules/test/pre-test-declarations/pre-test-declarations.selector';
-import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+  getSignatureStatus,
+} from '../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../modules/test/candidate/candidate.selector';
+} from '../../modules/tests/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -72,24 +73,33 @@ export class WaitingRoomPage extends BasePageComponent {
 
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
-        select(getPreTestDeclarationsState),
+        select(getCurrentTest),
+        select(getPreTestDeclarations),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: this.store$.pipe(
-        select(getPreTestDeclarationsState),
+        select(getCurrentTest),
+        select(getPreTestDeclarations),
         select(getResidencyDeclarationStatus),
       ),
-      signature$: of(''),
+      signature$: this.store$.pipe(
+        select(getCurrentTest),
+        select(getPreTestDeclarations),
+        select(getSignatureStatus),
+      ),
       candidateName$: this.store$.pipe(
-        select(getCurrentCandidate),
+        select(getCurrentTest),
+        select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: this.store$.pipe(
-        select(getCurrentCandidate),
+        select(getCurrentTest),
+        select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
-        select(getCurrentCandidate),
+        select(getCurrentTest),
+        select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),

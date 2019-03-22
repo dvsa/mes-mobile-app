@@ -11,9 +11,10 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { DeviceProvider } from '../../providers/device/device';
 
 import { StoreModel } from '../../shared/models/store.model';
-import { getUntitledCandidateName } from '../../modules/test/candidate/candidate.selector';
-import { getCurrentCandidate } from '../../modules/test/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -44,7 +45,8 @@ export class TestReportPage extends BasePageComponent {
   ngOnInit(): void {
     this.pageState = {
       candidateUntitledName$: this.store$.pipe(
-        select(getCurrentCandidate),
+        select(getCurrentTest),
+        select(getCandidate),
         select(getUntitledCandidateName),
       ),
     };

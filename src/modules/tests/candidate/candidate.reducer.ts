@@ -1,4 +1,4 @@
-import { Candidate } from '../../../shared/models/DJournal';
+import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testOutcomeActions from '../../../pages/journal/components/test-outcome/test-outcome.actions';
 import { has } from 'lodash';
@@ -19,4 +19,4 @@ export function candidateReducer(
   return state;
 }
 
-export const getCurrentCandidate = createFeatureSelector<Candidate>('candidate');
+export const getCandidate = createFeatureSelector<Candidate>('candidate');

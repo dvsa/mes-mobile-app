@@ -1,4 +1,4 @@
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/CatBTest';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
 import * as preTestDeclarationActions from './pre-test-declarations.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -39,4 +39,4 @@ export function preTestDeclarationsReducer(
   }
 }
 
-export const getPreTestDeclarationsState = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');
+export const getPreTestDeclarations = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');
