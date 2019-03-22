@@ -3,6 +3,7 @@ import { IonicModule } from 'ionic-angular';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
+import { HammerProvider } from '../../../../../providers/hammer/hammer';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -12,7 +13,9 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CompetencyComponent],
       imports: [IonicModule, AppModule],
-      providers: [],
+      providers: [
+        HammerProvider,
+      ],
     })
       .compileComponents()
       .then(() => {
@@ -28,10 +31,10 @@ describe('CompetencyComponent', () => {
   });
 
   describe('DOM', () => {
-    xit('should show provided label', () => {
+    it('should show provided label', () => {
       component.label = 'Gears';
       fixture.detectChanges();
-      const label = fixture.debugElement.query(By.css('span'));
+      const label = fixture.debugElement.query(By.css('#competencyLabel'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
 
     });

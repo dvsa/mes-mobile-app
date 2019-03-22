@@ -1,6 +1,5 @@
-import { Component, Input, ViewChild, ElementRef, RendererFactory2, Renderer2 } from '@angular/core';
-
-declare const Hammer: any;
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { HammerProvider } from '../../../../providers/hammer/hammer';
 
 @Component({
   selector: 'competency',
@@ -11,42 +10,32 @@ export class CompetencyComponent {
   @Input()
   label: string;
 
+  // TODO - This needs to be gotten from the store
   faultCount: number = 0;
-
-  private hammerManager: any;
-  private renderer: Renderer2;
-  private pressTime = 300;
 
   @ViewChild('competencyButton')
   button: ElementRef;
 
-  constructor(rendererFactory: RendererFactory2) {
-    this.renderer = rendererFactory.createRenderer(null, null);
+  constructor(public hammerProvider : HammerProvider) {}
+
+  ngOnInit() : void {
+    this.hammerProvider.init(this.button);
+    this.hammerProvider.addPressAndHoldEvent(this.recordFault);
   }
 
-  ngOnInit() {
-    this.init(this.button, this.recordFault);
-  }
-
-  init(element: ElementRef, action: Function) {
-    this.hammerManager = new Hammer.Manager(element.nativeElement);
-
-    this.hammerManager.add(new Hammer.Press({
-      event: 'pressAndHold',
-      time: this.pressTime,
-    }));
-
-    this.hammerManager.on('pressAndHold', () => {
-      this.recordFault();
-    });
-  }
-
-  recordFault = () => {
-    console.log('I AM RECORDING A FAULT');
+  recordFault = (): void => {
+    // TODO - Dispatch ADD_FAULT Action Here
     this.faultCount = this.faultCount + 1;
-    if (this.faultCount === 1) {
-      this.renderer.addClass(this.button.nativeElement , 'driving_fault');
-      this.renderer.addClass(this.button.nativeElement , 'cbutton--click');
+  }
+
+  caculateClass = () : any => {
+    if (this.faultCount > 0) {
+      return {
+        driving_fault : true,
+        'cbutton--click': true,
+      };
     }
+
+    return {};
   }
 }

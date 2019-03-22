@@ -1,4 +1,4 @@
-<button #competencyButton class="effect-boris">
-  <span> {{ faultCount }} </span>
-  <span>{{ label }}</span>
+<button #competencyButton [ngClass]="caculateClass()">
+  <span id='competencyCount'> {{ faultCount }} </span>
+  <span id='competencyLabel'>{{ label }}</span>
 </button>
