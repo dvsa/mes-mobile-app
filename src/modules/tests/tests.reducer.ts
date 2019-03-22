@@ -37,11 +37,15 @@ export const testsReducer = (
     return state;
   }
 
-  const res = {
+  return {
     ...state,
     startedTests: {
       ...state.startedTests,
       [slotId]: {
+        // Each sub-reducer deals with state scoped to a specific test and has no knowledge of
+        // the context of which test contains it that state.
+        // Here, combineReducers delegates management of the sub-state navigated here for a given
+        // slotId to the relevant sub-reducer
         ...combineReducers(
           {
             preTestDeclarations: preTestDeclarationsReducer,
@@ -54,7 +58,6 @@ export const testsReducer = (
       slotId,
     },
   };
-  return res;
 };
 
 const deriveSlotId = (state: TestsModel, action): string | null => {
