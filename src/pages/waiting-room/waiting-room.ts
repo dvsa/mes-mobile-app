@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -41,6 +42,8 @@ export class WaitingRoomPage extends BasePageComponent {
   signatureArea: SignatureAreaComponent;
   pageState: WaitingRoomPageState;
 
+  form: FormGroup;
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
@@ -50,6 +53,9 @@ export class WaitingRoomPage extends BasePageComponent {
     private deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.form = new FormGroup(this.getFormValidation(),
+      { updateOn: 'submit' },
+    );
   }
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
@@ -112,6 +118,20 @@ export class WaitingRoomPage extends BasePageComponent {
 
   residencyDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
+  }
+  onSubmit() {
+    this.form.markAsTouched();
+    this.form.markAsDirty();
+    this.signatureArea.isvalid = !!this.form.value['signatureAreaCtrl'];
+    console.log(this.form);
+  }
+
+  getFormValidation(): { [key: string]: FormControl } {
+    return {
+      insuranceCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      signatureAreaCtrl: new FormControl(null, [Validators.required]),
+    };
   }
 
 }
