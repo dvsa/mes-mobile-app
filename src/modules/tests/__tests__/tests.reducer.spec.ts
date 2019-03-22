@@ -1,4 +1,4 @@
-import { testsReducer } from '../tests.reducer';
+import { testsReducer, TestsModel } from '../tests.reducer';
 import * as testOutcomeActions from '../../../pages/journal/components/test-outcome/test-outcome.actions';
 import { TestSlot } from '../../../shared/models/DJournal';
 import * as candidateReducer from '../candidate/candidate.reducer';
@@ -15,7 +15,7 @@ describe('testsReducer', () => {
   });
 
   it('use the payload of a test started action to setup state for a new test', () => {
-    const state = {};
+    const state = { currentTest: { slotId: null }, startedTests: {} };
     const startTestPayload: TestSlot = {
       slotDetail: {
         slotId: 123,
@@ -25,22 +25,20 @@ describe('testsReducer', () => {
 
     const output = testsReducer(state, action);
 
-    // @ts-ignore
-    expect(output.current.slotId).toBe('123');
+    expect(output.currentTest.slotId).toBe('123');
   });
 
   it('should derive the sub-states from sub-reducers', () => {
-    const state = {
-      candidate: {
-        candidateId: 789,
-      },
+    const state: TestsModel = {
+      currentTest: { slotId: null },
+      startedTests: {},
     };
 
     const result = testsReducer(state, new testOutcomeActions.TestOutcomeStartTest({ slotDetail: { slotId: 123 } }));
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
-    expect(result['123'].candidate).toBe(newCandidate);
-    expect(result['123'].preTestDeclarations).toBe(preTestDeclarations);
+    expect(result.startedTests['123'].candidate).toBe(newCandidate);
+    expect(result.startedTests['123'].preTestDeclarations).toBe(preTestDeclarations);
   });
 });

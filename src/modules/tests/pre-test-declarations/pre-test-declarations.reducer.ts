@@ -39,4 +39,4 @@ export function preTestDeclarationsReducer(
   }
 }
 
-export const getPreTestDeclarationsState = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');
+export const getPreTestDeclarations = createFeatureSelector<PreTestDeclarations>('preTestDeclarations');

@@ -7,14 +7,14 @@ import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
-import { getPreTestDeclarationsState } from '../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import { getPreTestDeclarations } from '../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
-import { getCurrentCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
@@ -74,31 +74,32 @@ export class WaitingRoomPage extends BasePageComponent {
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
         select(getCurrentTest),
-        select(getPreTestDeclarationsState),
+        select(getPreTestDeclarations),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: this.store$.pipe(
         select(getCurrentTest),
-        select(getPreTestDeclarationsState),
+        select(getPreTestDeclarations),
         select(getResidencyDeclarationStatus),
       ),
       signature$: this.store$.pipe(
         select(getCurrentTest),
+        select(getPreTestDeclarations),
         select(getSignatureStatus),
       ),
       candidateName$: this.store$.pipe(
         select(getCurrentTest),
-        select(getCurrentCandidate),
+        select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: this.store$.pipe(
         select(getCurrentTest),
-        select(getCurrentCandidate),
+        select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
         select(getCurrentTest),
-        select(getCurrentCandidate),
+        select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),

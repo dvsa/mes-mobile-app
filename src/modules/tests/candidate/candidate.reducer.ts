@@ -19,4 +19,4 @@ export function candidateReducer(
   return state;
 }
 
-export const getCurrentCandidate = createFeatureSelector<Candidate>('candidate');
+export const getCandidate = createFeatureSelector<Candidate>('candidate');

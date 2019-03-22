@@ -12,7 +12,7 @@ import { DeviceProvider } from '../../providers/device/device';
 
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
-import { getCurrentCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 
@@ -46,7 +46,7 @@ export class TestReportPage extends BasePageComponent {
     this.pageState = {
       candidateUntitledName$: this.store$.pipe(
         select(getCurrentTest),
-        select(getCurrentCandidate),
+        select(getCandidate),
         select(getUntitledCandidateName),
       ),
     };
