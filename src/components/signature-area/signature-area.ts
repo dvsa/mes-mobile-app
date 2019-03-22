@@ -1,4 +1,4 @@
-import { Component, ViewChild, forwardRef  } from '@angular/core';
+import { Component, ViewChild, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { StoreModel } from '../../shared/models/store.model';
@@ -66,6 +66,7 @@ export class SignatureAreaComponent implements ControlValueAccessor {
     this.signature = this.signaturePad.toDataURL('image/png');
     this.signatureDataChangedDispatch(this.signature);
     this.propagateChange(this.signature);
+    this.touchChange(null);
   }
 
   signatureDataChangedDispatch(signatureData: string) {
@@ -80,6 +81,7 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   }
   // we use it to emit changes back to the form
   private propagateChange = (_: any) => { };
+  private touchChange = (_: any) => { };
 
   public writeValue(value: any) {
     if (value !== undefined) {
@@ -90,6 +92,10 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
-
-  registerOnTouched() { }
+  onTouched(){
+    this.touchChange(null);
+  }
+  registerOnTouched(fn: any) {
+    this.touchChange = fn;
+  }
 }

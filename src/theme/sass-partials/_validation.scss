@@ -2,7 +2,7 @@
     border-color: transparent;
     border-left-style: solid;
     border-left-width: 8px;
-    &.invalid {
+    &.ng-invalid {
       border-color: #b10e1e;;
     }
   }
@@ -13,7 +13,7 @@
     letter-spacing: -0.49px;
     line-height: 32px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
-    &.invalid {
+    &.ng-invalid {
       color: #b10e1e;
     }
   }
