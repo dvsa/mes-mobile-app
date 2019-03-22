@@ -45,12 +45,14 @@ describe('WaitingRoomPage', () => {
         AppModule,
         ComponentsModule,
         StoreModule.forFeature('tests', () => ({
-          current: {
+          currentTest: {
             slotId: '123',
           },
-          123: {
-            candidate: mockCandidate,
-            preTestDeclarations: preTestDeclarationInitialState,
+          startedTests: {
+            123: {
+              candidate: mockCandidate,
+              preTestDeclarations: preTestDeclarationInitialState,
+            },
           },
         })),
       ],
