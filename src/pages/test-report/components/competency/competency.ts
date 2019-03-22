@@ -4,6 +4,7 @@ import { HammerProvider } from '../../../../providers/hammer/hammer';
 @Component({
   selector: 'competency',
   templateUrl: 'competency.html',
+  providers: [HammerProvider],
 })
 export class CompetencyComponent {
 
