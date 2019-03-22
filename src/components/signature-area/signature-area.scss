@@ -7,9 +7,9 @@ signature-area {
   }
   .signature-area {
     background-color: map-get($colors, gds-grey-4);
-    &.is-not-valid {
+    &.invalid {
       canvas {
-        border-color: map-get($colors, mes-validation-error)!important;
+        border: 4px solid map-get($colors, mes-validation-error)!important;
         box-shadow: inset 0 0px 0px 0 #a5a2a2;
       }
     }

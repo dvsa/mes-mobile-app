@@ -1,0 +1,23 @@
+.validation-bar{
+    border-color: transparent;
+    border-left-style: solid;
+    border-left-width: 8px;
+    &.invalid {
+      border-color: #b10e1e;;
+    }
+  }
+.validation-text {
+    color:transparent;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.49px;
+    line-height: 32px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
+    &.invalid {
+      color: #b10e1e;
+    }
+  }
+  .validation-text-with-row-spacing {
+    @extend .validation-text;
+    margin: 0 28px;
+  }
