@@ -1,3 +1,4 @@
+
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
@@ -9,13 +10,17 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
+import { ComponentsModule } from './../../../components/components.module';
+
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../modules/test/pre-test-declarations/pre-test-declarations.actions';
-import { PreTestDeclarationsModule } from '../../../modules/test/pre-test-declarations/pre-test-declarations.module';
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import {
+  initialState as preTestDeclarationInitialState,
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -37,9 +42,19 @@ describe('WaitingRoomPage', () => {
       declarations: [WaitingRoomPage],
       imports: [
         IonicModule,
-        PreTestDeclarationsModule,
         AppModule,
-        StoreModule.forFeature('candidate', () => mockCandidate),
+        ComponentsModule,
+        StoreModule.forFeature('tests', () => ({
+          currentTest: {
+            slotId: '123',
+          },
+          startedTests: {
+            123: {
+              candidate: mockCandidate,
+              preTestDeclarations: preTestDeclarationInitialState,
+            },
+          },
+        })),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
