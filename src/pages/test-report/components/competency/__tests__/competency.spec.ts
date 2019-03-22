@@ -15,15 +15,12 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CompetencyComponent],
       imports: [IonicModule, AppModule],
-      providers: [
-        HammerProvider,
-      ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(CompetencyComponent);
         component = fixture.componentInstance;
-        hammerProvider = TestBed.get(HammerProvider);
+        hammerProvider = component.hammerProvider;
         spyOn(hammerProvider, 'addPressAndHoldEvent');
         spyOn(hammerProvider, 'init');
       });
