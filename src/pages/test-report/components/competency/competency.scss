@@ -10,47 +10,40 @@ competency {
     text-align: center;
     line-height: 25px;
     letter-spacing: -0.26px;
-    font-weight: 500;
-    // ANIMATION STUFF
-    &.cbutton--click {
-      animation: pulse 0.3s forwards;
-    }
-
+    font-weight: 500; 
     &.activated {
       background: #eee;
-      // border: 2px solid #0B0C0C;
-      // margin: 1px 0 -1px 0;
     }
-
     &.driving_fault {
       color: #0B0C0C;
-      font-weight: bold;
-      border: 2px solid #0B0C0C;
     }
-
-    @-webkit-keyframes pulse {
+    // Ripple animation effect
+    &.ripple_effect {
+      animation: ripple 0.3s forwards;
+    }
+    @-webkit-keyframes ripple {
       0% {
-        -webkit-box-shadow: 0 0 0 0 lighten(map-get($colors-gds, 'gds-grey-1'), 0%);
+        -webkit-box-shadow: 0 0 5px 0 rgba(65, 60, 60, 1);
       }
-      70% {
-          -webkit-box-shadow: 0 0 0 7px lighten(map-get($colors-gds, 'gds-grey-1'), 25%);
+      50% {
+        -webkit-box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
       }
       100% {
-          -webkit-box-shadow: 0 0 0 0 lighten(map-get($colors-gds, 'gds-grey-1'), 50%);
+        -webkit-box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
       }
     }
-    @keyframes pulse {
+    @keyframes ripple {
       0% {
-        -moz-box-shadow: 0 0 0 0 lighten(map-get($colors-gds, 'gds-grey-1'), 0%);
-        box-shadow: 0 0 0 0 lighten(map-get($colors-gds, 'gds-grey-1'), 0%);
+        -moz-box-shadow: 0 0 0 0 0 0 5px 0 rgba(65, 60, 60, 1);
+        box-shadow: 0 0 0 0 0 0 5px 0 rgba(65, 60, 60, 1);
       }
-      70% {
-          -moz-box-shadow: 0 0 0 7px lighten(map-get($colors-gds, 'gds-grey-1'), 25%);
-          box-shadow: 0 0 0 7px lighten(map-get($colors-gds, 'gds-grey-1'), 25%);
+      50% {
+        -moz-box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
+        box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
       }
       100% {
-          -moz-box-shadow: 0 0 0 0 lighten(map-get($colors-gds, 'gds-grey-1'), 50%);
-          box-shadow: 0 0 0 0 lighten(map-get($colors-gds, 'gds-grey-1'), 50%);
+        -moz-box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
+        box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
       }
     }
   }
