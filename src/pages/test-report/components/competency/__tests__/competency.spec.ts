@@ -5,16 +5,22 @@ import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { HammerProvider } from '../../../../../providers/hammer/hammer';
 import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
+import { Renderer2 } from '@angular/core';
 
-describe('CompetencyComponent', () => {
+fdescribe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
   let hammerProvider: HammerProvider;
+  let renderer: Renderer2;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CompetencyComponent],
       imports: [IonicModule, AppModule],
+      providers: [
+        HammerProvider,
+        Renderer2,
+      ],
     })
       .compileComponents()
       .then(() => {
@@ -23,6 +29,7 @@ describe('CompetencyComponent', () => {
         hammerProvider = component.hammerProvider;
         spyOn(hammerProvider, 'addPressAndHoldEvent');
         spyOn(hammerProvider, 'init');
+        renderer = TestBed.get(Renderer2);
       });
   }));
 
@@ -48,6 +55,31 @@ describe('CompetencyComponent', () => {
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('#competencyLabel'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
+    });
+  });
+
+  describe('Ripple effect', () => {
+
+    it('should have added no classes to the competency button', () => {
+      expect(component.button.nativeElement.className).toEqual('');
+    });
+
+    it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
+      // Arrange
+      renderer = fixture.componentRef.injector.get(Renderer2);
+      renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
+      renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
+      // Act
+      component.recordFault();
+      component.manageClasses();
+      // Assert
+      expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'driving-fault');
+      expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
+
+      setTimeout(() => {
+        expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
+        done();
+      },         component.rippleEffectAnimationDuration);
     });
   });
 });
