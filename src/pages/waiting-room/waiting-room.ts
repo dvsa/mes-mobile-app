@@ -54,7 +54,6 @@ export class WaitingRoomPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation(),
-                              { updateOn: 'submit' },
     );
   }
   ionViewDidEnter(): void {
@@ -75,7 +74,6 @@ export class WaitingRoomPage extends BasePageComponent {
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
     this.signatureArea.signHereText = 'Sign here';
     this.signatureArea.retryButtonText = 'Retry';
-    this.signatureArea.notValidHeaderText = 'Enter a signature';
 
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
@@ -120,10 +118,10 @@ export class WaitingRoomPage extends BasePageComponent {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
   onSubmit() {
-    this.form.markAsTouched();
-    this.form.markAsDirty();
-    this.signatureArea.isvalid = !!this.form.value['signatureAreaCtrl'];
-    console.log(this.form);
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsTouched());
+    if (this.form.valid) {
+      this.navController.push('WaitingRoomToCarPage');
+    }
   }
 
   getFormValidation(): { [key: string]: FormControl } {

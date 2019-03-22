@@ -33,8 +33,9 @@
   &:checked + label:before {
     background: #fcf8c8;
   }
-  
-    &.invalid + label:before {
+
+  &.ng-touched {
+    &.ng-invalid + label:before {
       // Accommodate for the extra border
       $checkbox-width-height-invalid: $checkbox-width-height - $checkbox-border-invalid;
 
@@ -42,7 +43,7 @@
       width: $checkbox-width-height-invalid;
       height: $checkbox-width-height-invalid;
     }
-  
+  }
 
   &:checked + label:after {
     $checkmark-size: 24px;

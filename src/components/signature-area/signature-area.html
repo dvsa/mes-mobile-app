@@ -1,9 +1,5 @@
-<div class="not-valid-header">
-    <span class="mes-header-md" *ngIf="isvalid === false && notValidHeaderText">
-        <div id="not-valid-header-label" class="validation-text invalid">{{notValidHeaderText}}</div>
-    </span>
-</div>
-<div class="signature-area" [class.invalid]="isvalid === false">
+
+<div class="signature-area" [class.ng-invalid]="isvalid === false" (blur)="onTouched($event)">
     <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
     <button (click)="clear()" class="retry-button" [disabled]="!signature">
         <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
