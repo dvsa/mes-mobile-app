@@ -7,7 +7,7 @@ import { HammerProvider } from '../../../../../providers/hammer/hammer';
 import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
 import { Renderer2 } from '@angular/core';
 
-fdescribe('CompetencyComponent', () => {
+describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
   let hammerProvider: HammerProvider;
