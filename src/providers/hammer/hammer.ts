@@ -1,20 +1,20 @@
 import { Injectable, ElementRef } from '@angular/core';
-
-declare const Hammer: any;
+import * as hammerjs from 'hammerjs';
 
 @Injectable()
 export class HammerProvider {
 
-  hammerManager: any ;
+  hammerManager: HammerManager;
   pressTime: number = 300;
 
   constructor() {}
 
-  init = (element: ElementRef): void =>
-    this.hammerManager = new Hammer.Manager(element.nativeElement)
+  init = (element: ElementRef) => {
+    this.hammerManager = new hammerjs.Manager(element.nativeElement);
+  }
 
   addPressAndHoldEvent = (action: Function): void => {
-    this.hammerManager.add(new Hammer.Press({
+    this.hammerManager.add(new hammerjs.Press({
       event: 'pressAndHold',
       time: this.pressTime,
     }));
@@ -23,7 +23,7 @@ export class HammerProvider {
   }
 
   addPressEvent = (action: Function): void => {
-    this.hammerManager.add(new Hammer.Press({
+    this.hammerManager.add(new hammerjs.Press({
       event: 'press',
       time: 1,
     }));
