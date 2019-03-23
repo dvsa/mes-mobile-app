@@ -118,7 +118,7 @@ export class WaitingRoomPage extends BasePageComponent {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
   onSubmit() {
-    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsTouched());
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.navController.push('WaitingRoomToCarPage');
     }

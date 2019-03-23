@@ -49,12 +49,12 @@
       </ion-row>
       <ion-row>
         <div class="validation-bar"
-          [class.ng-invalid]="!form.value['insuranceCheckboxCtrl'] && form.get('insuranceCheckboxCtrl').touched"></div>
+          [class.ng-invalid]="!form.value['insuranceCheckboxCtrl'] && form.get('insuranceCheckboxCtrl').dirty"></div>
         <ion-col>
           <ion-row>
             <ion-col>
               <div class="validation-text-with-row-spacing"
-                [class.ng-invalid]="!form.value['insuranceCheckboxCtrl']  && form.get('insuranceCheckboxCtrl').touched">
+                [class.ng-invalid]="!form.value['insuranceCheckboxCtrl']  && form.get('insuranceCheckboxCtrl').dirty">
                 Confirm that the vehicle is insured for the purpose of the test
               </div>
             </ion-col>
@@ -73,8 +73,7 @@
       <ion-row>
         <ion-col></ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
+      <div>
           <ul>
             <li>
               <p>
@@ -82,16 +81,15 @@
               </p>
             </li>
           </ul>
-        </ion-col>
-      </ion-row>
+      </div>
       <ion-row>
         <div class="validation-bar"
-          [class.ng-invalid]="!form.value['residencyCheckboxCtrl']  && form.get('residencyCheckboxCtrl').touched"></div>
+          [class.ng-invalid]="!form.value['residencyCheckboxCtrl']  && form.get('residencyCheckboxCtrl').dirty"></div>
         <ion-col>
           <ion-row>
             <ion-col>
               <div class="validation-text-with-row-spacing"
-                [class.ng-invalid.withRowMargin]="!form.value['residencyCheckboxCtrl']  && form.get('residencyCheckboxCtrl').touched">
+                [class.ng-invalid.withRowMargin]="!form.value['residencyCheckboxCtrl']  && form.get('residencyCheckboxCtrl').dirty">
                 Confirm that you live in the UK
               </div>
             </ion-col>
@@ -115,12 +113,12 @@
       </div>
       <ion-row>
         <div class="validation-bar"
-          [class.ng-invalid]="!form.value['signatureAreaCtrl']  && form.get('signatureAreaCtrl').touched"></div>
+          [class.ng-invalid]="!form.value['signatureAreaCtrl']  && form.get('signatureAreaCtrl').dirty"></div>
         <ion-col>
           <ion-row>
             <ion-col>
               <div class="validation-text-with-row-spacing"
-                [class.ng-invalid]="!form.value['signatureAreaCtrl']  && form.get('signatureAreaCtrl').touched">
+                [class.ng-invalid]="!form.value['signatureAreaCtrl']  && form.get('signatureAreaCtrl').dirty">
                 Enter a signature
               </div>
             </ion-col>
