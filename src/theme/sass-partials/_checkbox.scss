@@ -34,7 +34,7 @@
     background: #fcf8c8;
   }
 
-  &.ng-touched {
+  &.ng-dirty {
     &.ng-invalid + label:before {
       // Accommodate for the extra border
       $checkbox-width-height-invalid: $checkbox-width-height - $checkbox-border-invalid;

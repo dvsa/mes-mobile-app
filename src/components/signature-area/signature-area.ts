@@ -19,7 +19,6 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   public signature: string;
   public isvalid: boolean;
   public retryImage: string;
-  public notValidHeaderText: string;
   public retryButtonText: string;
   public signHereText: string;
   public signHereImage: string;
@@ -92,7 +91,7 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
-  onTouched(){
+  onTouched() {
     this.touchChange(null);
   }
   registerOnTouched(fn: any) {

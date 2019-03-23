@@ -2,7 +2,6 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { SignatureAreaComponent } from '../signature-area';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 class TestStore {}
@@ -81,24 +80,6 @@ describe('SignatureAreaComponent', () => {
         fixture.detectChanges();
         const retryButtonElement: HTMLElement = fixture.debugElement.query(By.css('#retry-button-label')).nativeElement;
         expect(retryButtonElement.textContent).toEqual('Retry');
-      });
-    });
-
-    describe('validation ', () => {
-      it('notValidHeaderText, when set, should display when isvalid is false', () => {
-        component.isvalid = false;
-        component.notValidHeaderText = 'please enter your details';
-        fixture.detectChanges();
-        const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
-          By.css('#not-valid-header-label')).nativeElement;
-        expect(notValidHeaderElement.textContent).toEqual('please enter your details');
-      });
-      it('notValidHeaderText, when not set, should not display when isvalid is false', () => {
-        component.isvalid = false;
-        component.notValidHeaderText = undefined;
-        const notValidHeaderElement: DebugElement = fixture.debugElement.query(
-          By.css('#not-valid-header-label'));
-        expect(notValidHeaderElement).toBeNull();
       });
     });
 
