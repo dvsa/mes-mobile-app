@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store } from '@ngrx/store';
@@ -6,12 +7,18 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'signature-area',
   templateUrl: 'signature-area.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SignatureAreaComponent),
+      multi: true,
+    },
+  ],
 })
-export class SignatureAreaComponent {
+export class SignatureAreaComponent implements ControlValueAccessor {
   public signature: string;
   public isvalid: boolean;
   public retryImage: string;
-  public notValidHeaderText: string;
   public retryButtonText: string;
   public signHereText: string;
   public signHereImage: string;
@@ -38,6 +45,7 @@ export class SignatureAreaComponent {
     // loading the signature from initial value does not set the internal signature stucture, so setting here.
     this.signature = initialValue;
     this.signatureDataChangedDispatch(initialValue);
+    this.propagateChange(this.signature);
   }
 
   ngAfterViewInit() {
@@ -50,11 +58,14 @@ export class SignatureAreaComponent {
     this.signaturePad.clear();
     this.signature = null;
     this.signatureDataClearedDispatch();
+    this.propagateChange(this.signature);
   }
 
   drawComplete() {
     this.signature = this.signaturePad.toDataURL('image/png');
     this.signatureDataChangedDispatch(this.signature);
+    this.propagateChange(this.signature);
+    this.touchChange(null);
   }
 
   signatureDataChangedDispatch(signatureData: string) {
@@ -66,5 +77,24 @@ export class SignatureAreaComponent {
     if (!this.actionLess) {
       this.store$.dispatch({ type: this.clearAction });
     }
+  }
+  // we use it to emit changes back to the form
+  private propagateChange = (_: any) => { };
+  private touchChange = (_: any) => { };
+
+  public writeValue(value: any) {
+    if (value !== undefined) {
+      this.signature = value;
+    }
+  }
+
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+  onTouched() {
+    this.touchChange(null);
+  }
+  registerOnTouched(fn: any) {
+    this.touchChange = fn;
   }
 }
