@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -41,6 +42,8 @@ export class WaitingRoomPage extends BasePageComponent {
   signatureArea: SignatureAreaComponent;
   pageState: WaitingRoomPageState;
 
+  form: FormGroup;
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
@@ -50,6 +53,7 @@ export class WaitingRoomPage extends BasePageComponent {
     private deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.form = new FormGroup(this.getFormValidation());
   }
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
@@ -69,7 +73,6 @@ export class WaitingRoomPage extends BasePageComponent {
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
     this.signatureArea.signHereText = 'Sign here';
     this.signatureArea.retryButtonText = 'Retry';
-    this.signatureArea.notValidHeaderText = 'Enter a signature';
 
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
@@ -112,6 +115,23 @@ export class WaitingRoomPage extends BasePageComponent {
 
   residencyDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
+  }
+  onSubmit() {
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navController.push('WaitingRoomToCarPage');
+    }
+  }
+
+  getFormValidation(): { [key: string]: FormControl } {
+    return {
+      insuranceCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      signatureAreaCtrl: new FormControl(null, [Validators.required]),
+    };
+  }
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
   }
 
 }

@@ -90,16 +90,18 @@ export const logInToApplication = (username, password) => {
 
     // Fill in username and click Next
     const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+    browser.wait(ExpectedConditions.presenceOf(usernameField));
     usernameField.sendKeys(username);
     const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
     nextButtonElement.click();
-    browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
     // Fill in password and click Sign in
     const passFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
+    browser.wait(ExpectedConditions.presenceOf(passFld));
     passFld.sendKeys(password);
     const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
     signInButtonElement.click();
+    browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
     // Switch back to WEBVIEW context
     browser.driver.selectContext(webviewContext);
@@ -115,7 +117,7 @@ export const loggedInAs = (staffNumber) => {
 
 // Logs out of the application and takes them to the login page if they were logged in else returns current page
 export const logout = () => {
-  browser.sleep(TEST_CONFIG.ACTION_WAIT);
+  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
@@ -123,6 +125,7 @@ export const logout = () => {
       logout.click().then(() => {
         // After logout click sign in to get us to the login screen
         const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
+        browser.wait(ExpectedConditions.presenceOf(signIn));
         signIn.click();
       });
     } else {
@@ -133,6 +136,7 @@ export const logout = () => {
 
 // A framework safe click method
 export const clickElement = (fieldElement) => {
+  browser.wait(ExpectedConditions.presenceOf(fieldElement));
   fieldElement.click().then((promise) => {
     return isReady(promise);
   });

@@ -15,49 +15,116 @@
       <label>Device locked</label>
     </div>
   </div>
-
-  <div class="mes-full-width-card" id="candidate-section">
-    <div>
-      <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
-      <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
-    </div>
-    <div>
-      <button id="continue-button" class="mes-primary-button" navPush="WaitingRoomToCarPage" ion-button>
-        <h3>Continue</h3>
-      </button>
-    </div>
-  </div>
-  <div class="mes-full-width-card-separator"></div>
-  <div class="mes-full-width-card" id="declaration-section">
-    <h4>I declare that:</h4>
-    <ul>
-      <li>
-        <p>
-          The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which
-          satisfies the requirements of the legislation.
-        </p>
-        <div class="declaration-checkbox-row">
-          <input type="checkbox" class="gds-checkbox" id="insurance-declaration-checkbox"
-            [checked]="pageState.insuranceDeclarationAccepted$ | async" (click)="insuranceDeclarationChanged()">
-          <label for="insurance-declaration-checkbox">I confirm</label>
-        </div>
-      </li>
-      <li>
-        <p>
-          I normally live/have lived in the UK for at least 185 days in the last 12 months.
-        </p>
-        <div class="declaration-checkbox-row">
-          <input type="checkbox" class="gds-checkbox" id="residency-declaration-checkbox"
-            [checked]="pageState.residencyDeclarationAccepted$ | async" (click)="residencyDeclarationChanged()">
-          <label for="residency-declaration-checkbox">I confirm</label>
-        </div>
-      </li>
-
-      <div class="declaration-signature-row">
-        <signature-area></signature-area>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-row class="mes-full-width-card" id="candidate-section">
+      <ion-col>
+        <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
+        <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
+      </ion-col>
+      <ion-col>
+        <button type="submit" id="continue-button" class="mes-primary-button" float-right ion-button>
+          <h3>Continue</h3>
+        </button>
+      </ion-col>
+    </ion-row>
+    <div class="mes-full-width-card-separator"></div>
+    <div class="mes-full-width-card" id="declaration-section">
+      <ion-row>
+        <ion-col>
+          <h4>I declare that:</h4>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ul>
+            <li>
+              <p>
+                The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance
+                which
+                satisfies the requirements of the legislation.
+              </p>
+            </li>
+          </ul>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <div class="validation-bar"
+          [class.ng-invalid]="isCtrlDirtyAndInvalid('insuranceCheckboxCtrl')"></div>
+        <ion-col>
+          <ion-row>
+            <ion-col class="declaration-checkbox-row">
+              <input formControlName="insuranceCheckboxCtrl" type="checkbox" class="gds-checkbox"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('insuranceCheckboxCtrl')"
+                id="insurance-declaration-checkbox" [checked]="pageState.insuranceDeclarationAccepted$ | async"
+                (click)="insuranceDeclarationChanged()">
+              <label for="insurance-declaration-checkbox">I confirm</label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('insuranceCheckboxCtrl')">
+                Confirm that the vehicle is insured for the purpose of the test
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col></ion-col>
+      </ion-row>
+      <div>
+          <ul>
+            <li>
+              <p>
+                I normally live/have lived in the UK for at least 185 days in the last 12 months.
+              </p>
+            </li>
+          </ul>
       </div>
-
-    </ul>
-  </div>
-
+      <ion-row>
+        <div class="validation-bar"
+          [class.ng-invalid]="isCtrlDirtyAndInvalid('residencyCheckboxCtrl')"></div>
+        <ion-col>
+          <ion-row>
+            <ion-col class="declaration-checkbox-row">
+              <input formControlName="residencyCheckboxCtrl" type="checkbox" class="gds-checkbox" 
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('residencyCheckboxCtrl')"
+                id="residency-declaration-checkbox" [checked]="pageState.residencyDeclarationAccepted$ | async"
+                (click)="residencyDeclarationChanged()">
+              <label for="residency-declaration-checkbox">I confirm</label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div class="validation-text-with-row-spacing"
+                [class.ng-invalid.withRowMargin]="isCtrlDirtyAndInvalid('residencyCheckboxCtrl')">
+                Confirm that you live in the UK
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <div class="signature-area-padding"></div>
+      <ion-row>
+        <div class="validation-bar"
+          [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')"></div>
+        <ion-col>
+          <ion-row>
+            <ion-col>
+              <div class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
+                Enter a signature
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="declaration-signature-row">
+              <signature-area formControlName="signatureAreaCtrl"></signature-area>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
 </ion-content>

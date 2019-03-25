@@ -17,7 +17,6 @@ export class ComponentLibraryPage {
     this.signatureArea.actionLess = true;
     this.signatureArea.signHereText = 'Sign here';
     this.signatureArea.retryButtonText = 'Retry';
-    this.signatureArea.notValidHeaderText = 'Enter a signature';
   }
   toggleIsValid() {
     this.signatureArea.isvalid = !this.signatureArea.isvalid;
