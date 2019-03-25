@@ -62,7 +62,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <div class="validation-text-with-row-spacing"
+              <div id="waiting-room-insurance-validation-text" class="validation-text-with-row-spacing"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('insuranceCheckboxCtrl')">
                 Confirm that the vehicle is insured for the purpose of the test
               </div>
@@ -97,7 +97,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <div class="validation-text-with-row-spacing"
+              <div id="waiting-room-residency-validation-text" class="validation-text-with-row-spacing"
                 [class.ng-invalid.withRowMargin]="isCtrlDirtyAndInvalid('residencyCheckboxCtrl')">
                 Confirm that you live in the UK
               </div>
@@ -112,7 +112,7 @@
         <ion-col>
           <ion-row>
             <ion-col>
-              <div class="validation-text-with-row-spacing"
+              <div id="waiting-room-signature-validation-text" class="validation-text-with-row-spacing"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
                 Enter a signature
               </div>
