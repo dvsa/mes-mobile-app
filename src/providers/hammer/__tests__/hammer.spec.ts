@@ -1,15 +1,15 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HammerProvider } from '../hammer';
-import { CompetencyComponent } from '../../../pages/test-report/components/competency/competency';
+import { MockComponent } from '../__mocks__/component.mock';
 
 describe('HammerProvider', () => {
-  let fixture: ComponentFixture<CompetencyComponent>;
+  let fixture: ComponentFixture<MockComponent>;
   let hammerProvider: HammerProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CompetencyComponent,
+        MockComponent,
       ],
       providers: [
         HammerProvider,
@@ -18,7 +18,7 @@ describe('HammerProvider', () => {
       .compileComponents()
       .then(() => {
         hammerProvider = TestBed.get(HammerProvider);
-        fixture = TestBed.createComponent(CompetencyComponent);
+        fixture = TestBed.createComponent(MockComponent);
       });
   }));
 
