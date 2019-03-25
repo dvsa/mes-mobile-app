@@ -125,7 +125,7 @@ describe('Logs Effects', () => {
   });
 
   describe('getAndConvertPersistedLogs', () => {
-    it('should empty cached data if cache is too old', () => {
+    it('should empty cached data if cache is too old', (done) => {
       const log: Log = { ['test']: 'xyz', type: LogType.DEBUG, message: 'test', timestamp: 1234567 };
 
       const agedCache = {
@@ -143,10 +143,11 @@ describe('Logs Effects', () => {
         expect(effects.emptyCachedData).toHaveBeenCalled();
         expect(dataStoreMock.setItem).toHaveBeenCalled();
         expect(data).toEqual([] as Log[]);
+        done();
       });
     });
 
-    it('should return data without emptying cache if data is not too old', () => {
+    it('should return data without emptying cache if data is not too old', (done) => {
       const log: Log = { ['test']: 'xyz', type: LogType.DEBUG, message: 'test', timestamp: 1234567 };
       const dataWthinWindowCache = {
         dateStored: new DateTime().add(cacheDays, Duration.DAY).format('YYYY/MM/DD'),
@@ -163,22 +164,25 @@ describe('Logs Effects', () => {
         expect(effects.emptyCachedData).toHaveBeenCalledTimes(0);
         expect(dataStoreMock.setItem).toHaveBeenCalledTimes(0);
         expect(data).toEqual(dataWthinWindowCache.data);
+        done();
       });
     });
 
   });
 
   describe('isCacheTooOld', () => {
-    it(`should return true if date is greater than cacheDays days ago`, () => {
+    it(`should return true if date is greater than cacheDays days ago`, (done) => {
       const today = new DateTime();
       const tooOld = new DateTime().add(-(cacheDays + 1), Duration.DAY);
       expect(effects.isCacheTooOld(tooOld, today)).toBe(true);
+      done();
     });
 
-    it(`should return true if date is less than or equal to cacheDays days ago`, () => {
+    it(`should return true if date is less than or equal to cacheDays days ago`, (done) => {
       const today = new DateTime();
       const withinWindow = new DateTime().add(-cacheDays, Duration.DAY);
       expect(effects.isCacheTooOld(withinWindow, today)).toBe(false);
+      done();
     });
   });
 
