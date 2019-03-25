@@ -16,6 +16,8 @@ export class AppConfigProviderMock {
     return {
       configUrl: localEnvironmentMock.configUrl,
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
+      daysToCacheJournalData: localEnvironmentMock.daysToCacheJournalData,
+      daysToCacheLogs: localEnvironmentMock.daysToCacheLogs,
       authentication: {
         clientId: localEnvironmentMock.authentication.clientId,
         context: localEnvironmentMock.authentication.context,

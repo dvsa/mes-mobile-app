@@ -3,6 +3,8 @@ import { EnvironmentFile, LocalEnvironmentFile } from '../../../environment/mode
 export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
   configUrl: 'remote-url',
+  daysToCacheJournalData: 7,
+  daysToCacheLogs: 7,
   authentication: {
     context: 'remote-authentication-context',
     resourceUrl: 'remote-authentication-resource-url',
@@ -16,6 +18,8 @@ export const remoteEnvironmentMock: EnvironmentFile = {
 export const localEnvironmentMock: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://www.example.com/api/v1/config/dev',
+  daysToCacheJournalData: 7,
+  daysToCacheLogs: 7,
   googleAnalyticsId: 'local-ga-id',
   authentication: {
     context: 'local-authentication-context',

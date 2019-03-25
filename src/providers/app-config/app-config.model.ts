@@ -1,6 +1,8 @@
 export type AppConfig = {
   configUrl: string
   googleAnalyticsId: string,
+  daysToCacheJournalData: number,
+  daysToCacheLogs: number,
   authentication: {
     context: string,
     resourceUrl: string,

@@ -11,6 +11,17 @@ import { LogsProvider } from '../../providers/logs/logs';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { getLogsState } from './logs.reducer';
+import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { DataStoreProvider } from '../../providers/data-store/data-store';
+import { Log } from '../../shared/models/log.model';
+import { DateTime } from '../../shared/helpers/date-time';
+import { Observable } from 'rxjs/Observable';
+import { from } from 'rxjs/observable/from';
+
+type LogCache = {
+  dateStored: string,
+  data: Log[],
+};
 
 @Injectable()
 export class LogsEffects {
@@ -19,6 +30,8 @@ export class LogsEffects {
     private store$: Store<StoreModel>,
     private logsProvider: LogsProvider,
     private appConfigProvider: AppConfigProvider,
+    private dataStore: DataStoreProvider,
+    private networkStateProvider: NetworkStateProvider,
   ) {}
 
   @Effect()
@@ -33,6 +46,46 @@ export class LogsEffects {
   );
 
   @Effect()
+  persistLogEffect$ = this.actions$.pipe(
+    ofType(logsActions.PERSIST_LOG),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getLogsState),
+      ),
+    ),
+    switchMap(([action, logs]) => {
+      this.saveLogs(logs);
+      return of();
+    }),
+  );
+
+  @Effect()
+  loadLogEffect$ = this.actions$.pipe(
+    ofType(logsActions.LOAD_LOG),
+    switchMap(() => {
+      return this.getPersistedLogs()
+        .pipe(
+          map((logs: Log[]) => new logsActions.LoadLogState(logs)));
+    }),
+  );
+
+  @Effect()
+  saveLogEffect$ = this.actions$.pipe(
+    ofType(logsActions.SAVE_LOG),
+    switchMap(() => {
+      return of(new logsActions.PersistLog());
+    }),
+  );
+
+  @Effect()
+  sendLogsSuccessEffect$ = this.actions$.pipe(
+    ofType(logsActions.SEND_LOGS_SUCCESS),
+    switchMap(() => {
+      return of(new logsActions.PersistLog());
+    }),
+  );
+
+  @Effect()
   sendLogsEffect$ = this.actions$.pipe(
     ofType(logsActions.SEND_LOGS),
     withLatestFrom(
@@ -41,6 +94,9 @@ export class LogsEffects {
       ),
     ),
     switchMap(([action, logs]) => {
+      if (this.networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE) {
+        return of();
+      }
       return this.logsProvider
         .sendLogs(logs)
         .pipe(
@@ -54,4 +110,46 @@ export class LogsEffects {
         );
     }),
   );
+
+  getPersistedLogs = () : Observable<Log[]> => {
+    return from(this.getAndConvertPersistedLogs());
+  }
+
+  getAndConvertPersistedLogs = (): Promise<Log[]> =>
+    this.dataStore.getItem('LOGS')
+      .then((data) => {
+        const logCache: LogCache = JSON.parse(data);
+        const cachedDate = DateTime.at(logCache.dateStored);
+        if (this.isCacheTooOld(cachedDate, new DateTime())) {
+          return this.emptyCachedData();
+        }
+        return logCache.data;
+      })
+      .catch(() => {
+        const emptyLogData: Log[] = [];
+        return emptyLogData;
+      })
+
+  saveLogs = (logData: Log[]) => {
+    const logDataToStore: LogCache = {
+      dateStored: DateTime.now().format('YYYY/MM/DD'),
+      data: logData,
+    };
+    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then((response) => {});
+  }
+
+  isCacheTooOld = (dateStored: DateTime, now: DateTime):boolean => {
+    return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().daysToCacheLogs;
+  }
+
+  emptyCachedData = () => {
+    const emptyLogData: Log[] = [];
+    const logDataToStore: LogCache = {
+      dateStored: DateTime.now().format('YYYY/MM/DD'),
+      data: emptyLogData,
+    };
+    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then(() => {});
+    return emptyLogData;
+  }
+
 }

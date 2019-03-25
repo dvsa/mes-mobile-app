@@ -11,7 +11,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
-import { StartSendingLogs } from '../../modules/logs/logs.actions';
+import { StartSendingLogs, LoadLog } from '../../modules/logs/logs.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
 import { SecureStorageObject, SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
@@ -72,6 +72,7 @@ export class LoginPage extends BasePageComponent {
     .then(() => this.initialiseAuthentication())
     .then(() => this.authenticationProvider
       .login()
+      .then(() => this.store$.dispatch(new LoadLog()))
       .then(() => this.appConfigProvider.loadRemoteConfig())
       .then(() => this.analytics.initialiseAnalytics())
       .then(() => this.store$.dispatch(new StartSendingLogs()))
