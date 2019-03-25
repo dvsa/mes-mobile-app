@@ -3,7 +3,7 @@
     border-left-style: solid;
     border-left-width: 8px;
     &.ng-invalid {
-      border-color: #b10e1e;;
+      border-color: map-get($colors, mes-validation-error)10e1e;;
     }
   }
 .validation-text {
@@ -14,7 +14,7 @@
     line-height: 32px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto";
     &.ng-invalid {
-      color: #b10e1e;
+      color: map-get($colors, mes-validation-error);
     }
   }
   .validation-text-with-row-spacing {

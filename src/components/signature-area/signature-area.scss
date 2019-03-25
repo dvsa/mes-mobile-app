@@ -1,10 +1,4 @@
 signature-area {
-  .not-valid-header {
-    height: 40px;
-    .not-valid-text {
-      color: map-get($colors, mes-validation-error);
-    }
-  }
 
   canvas {
     background: transparent;
