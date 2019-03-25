@@ -25,17 +25,20 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
 @Plugin({
   pluginName: 'DeviceAuthentication',
   plugin: 'device-authentication-plugin',
-  pluginRef: 'cordova.plugins.DeviceAuthentication', // the variable reference to call the plugin, example: navigator.geolocation
+  // the variable reference to call the plugin, example: navigator.geolocation
+  pluginRef: 'cordova.plugins.DeviceAuthentication',
   repo: 'https://github.com/dvsa/cordova-plugin-device-authentication',
   platforms: ['iOS'],
 })
 @Injectable()
 export class DeviceAuthentication extends IonicNativePlugin {
   /**
-   * Run device authentication prompt. If FaceId/TouchId is set it shows prompt to use either one of them. If none of them are set it show passcode screen.
+   * Run device authentication prompt. If FaceId/TouchId is set it shows prompt
+   * to use either one of them. If none of them are set it show passcode screen.
    * @param message {string} Message that is show in authentication prompt
    * @return {Promise<boolean>} Returns a promise that resolves when user tried to authenticate
-   * @throws {Promise<string>} Returns a promise that rejects when there are some errors. Returned string contains localized message
+   * @throws {Promise<string>} Returns a promise that rejects when there are some errors.
+   * Returned string contains localized message
    */
   /* istanbul ignore next */
   @Cordova()
