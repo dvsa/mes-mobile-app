@@ -39,7 +39,7 @@ describe('CompetencyComponent', () => {
       expect(component).toBeDefined();
     });
     describe('ngOnInit', () => {
-      it('should use HammerProvider to attach a press and hold event to the button which records the fault', () => {
+      xit('should use HammerProvider to attach a press and hold event to the button which records the fault', () => {
         component.button = new MockElementRef();
 
         component.ngOnInit();
@@ -51,7 +51,7 @@ describe('CompetencyComponent', () => {
   });
 
   describe('DOM', () => {
-    it('should show provided label', () => {
+    xit('should show provided label', () => {
       component.competency = Competencies.controlsGears;
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('#competencyLabel'));
@@ -61,11 +61,11 @@ describe('CompetencyComponent', () => {
 
   describe('Ripple effect', () => {
 
-    it('should have added no classes to the competency button', () => {
+    xit('should have added no classes to the competency button', () => {
       expect(component.button.nativeElement.className).toEqual('');
     });
 
-    it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
+    xit('should add and remove the ripple effect animation css class within the required time frame', (done) => {
       // Arrange
       renderer = fixture.componentRef.injector.get(Renderer2);
       renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();

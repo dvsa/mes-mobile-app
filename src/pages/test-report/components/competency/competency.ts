@@ -1,12 +1,28 @@
 import { Component, Input, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { map } from 'rxjs/operators';
+
+import { StoreModel } from '../../../../shared/models/store.model';
+import { AddDrivingFault } from '../../../../modules/tests/test_data/test-data.actions';
 import { HammerProvider } from '../../../../providers/hammer/hammer';
 import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
+import { getDrivingFaultCount } from '../../../../modules/tests/test_data/test-data.selector';
 
 enum CssClassesEnum {
   DRIVING_FAULT = 'driving-fault',
   RIPPLE_EFFECT = 'ripple-effect',
 }
+
+interface ComptencyState {
+  drivingFaultCount$: Observable<number>;
+}
+
 @Component({
   selector: 'competency',
   templateUrl: 'competency.html',
@@ -22,14 +38,38 @@ export class CompetencyComponent {
 
   rippleEffectAnimationDuration: number = 300;
 
-  // TODO - This needs to be gotten from the store
-  faultCount: number = 0;
+  competencyState: ComptencyState;
+  subscription: Subscription;
+  faultCount: number;
 
-  constructor(public hammerProvider : HammerProvider, private renderer: Renderer2) {}
+  constructor(
+    public hammerProvider : HammerProvider,
+    private renderer: Renderer2,
+    private store$: Store<StoreModel>,
+    ) {}
 
   ngOnInit() : void {
     this.hammerProvider.init(this.button);
     this.hammerProvider.addPressAndHoldEvent(this.recordFault);
+
+    this.competencyState = {
+      drivingFaultCount$: this.store$.pipe(
+        select(getCurrentTest),
+        select(getTestData),
+        select(testData => getDrivingFaultCount(testData, this.competency))),
+    };
+
+    const { drivingFaultCount$ } = this.competencyState;
+
+    const merged$ = merge(
+      drivingFaultCount$.pipe(map(count => this.faultCount = count)),
+    );
+
+    this.subscription = merged$.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getLabel = (): string => competencyLabels[this.competency];
@@ -39,8 +79,10 @@ export class CompetencyComponent {
    * @returns void
    */
   recordFault = (): void => {
-    // TODO - Dispatch ADD_FAULT Action Here
-    this.faultCount = this.faultCount + 1;
+    this.store$.dispatch(new AddDrivingFault({
+      competency: this.competency,
+      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+    }));
     this.manageClasses();
   }
 

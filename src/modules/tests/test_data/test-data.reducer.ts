@@ -16,9 +16,11 @@ export function testDataReducer(
 ): TestData {
   switch (action.type) {
     case testDataActions.ADD_DRIVING_FAULT:
-    // TODO
       return {
         ...state,
+        drivingFaults: Object.assign({}, state.drivingFaults, {
+          [action.payload.competency] : action.payload.newFaultCount,
+        }),
       };
 
     default:
