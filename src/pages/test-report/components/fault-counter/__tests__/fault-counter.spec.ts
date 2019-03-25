@@ -37,7 +37,7 @@ describe('FaultCounterComponent', () => {
   });
 
   it('should not be visible when the fault count is 0', () => {
-    const divsInContainer = fixture.debugElement.queryAll(By.css('div'));
+    const divsInContainer = fixture.debugElement.queryAll(By.css('#counter-background'));
 
     expect(divsInContainer.length).toBe(0);
   });

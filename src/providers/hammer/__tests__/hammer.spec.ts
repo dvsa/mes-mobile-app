@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 class DummyComponent {}
 
-fdescribe('HammerProvider', () => {
+describe('HammerProvider', () => {
   let fixture: ComponentFixture<DummyComponent>;
   let hammerProvider: HammerProvider;
 
