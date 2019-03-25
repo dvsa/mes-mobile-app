@@ -62,19 +62,14 @@ export class DeviceProvider implements IDeviceProvider {
         cordova.plugins.DeviceAuthentication.runAuthentication(
           'Please enter your passcode',
           (successful: boolean) => {
-            if (successful) {
-              console.log('Successful Authentication!');
-              return resolve(true);
-            }
+            return successful ? resolve(true) : reject(false);
           },
           () => {
-            console.log('Unable to load auth prompt');
             return reject(false);
           },
         );
 
       } else {
-        console.log('Cordova error');
         return reject(false);
       }
     });
