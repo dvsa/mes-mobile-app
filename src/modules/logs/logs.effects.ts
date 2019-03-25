@@ -141,11 +141,11 @@ export class LogsEffects {
 
   emptyCachedData = () => {
     const emptyLogData: Log[] = [];
-    const journalDataToStore: LogCache = {
+    const logDataToStore: LogCache = {
       dateStored: DateTime.now().format('YYYY/MM/DD'),
       data: emptyLogData,
     };
-    this.dataStore.setItem('LOGS', JSON.stringify(journalDataToStore)).then(() => {});
+    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then(() => {});
     return emptyLogData;
   }
 
