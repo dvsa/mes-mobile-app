@@ -1,10 +1,9 @@
 fault-counter {
-  >div {
+  div {
     width: 22px;
     height: 22px;
     min-width: 22px;
     #counter-background {
-      height: inherit;
       background-color: #0B0C0C;
       color: map-get($colors, 'mes-white');
       border-radius: 13px;
