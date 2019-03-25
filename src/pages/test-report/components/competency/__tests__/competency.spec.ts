@@ -6,17 +6,37 @@ import { By } from '@angular/platform-browser';
 import { HammerProvider } from '../../../../../providers/hammer/hammer';
 import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
 import { Renderer2 } from '@angular/core';
+import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
+import { StoreModule, Store } from '@ngrx/store';
+import { initialState } from '../../../../../modules/tests/test_data/test-data.reducer';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
   let hammerProvider: HammerProvider;
   let renderer: Renderer2;
+  let store$: Store<StoreModel>;
+  let storeDispatchSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CompetencyComponent],
-      imports: [IonicModule, AppModule],
+      imports: [
+        IonicModule,
+        AppModule,
+        StoreModule.forFeature('tests', () => ({
+          currentTest: {
+            slotId: '123',
+          },
+          startedTests: {
+            123: {
+              testData: initialState,
+            },
+          },
+        })),
+      ],
       providers: [
         HammerProvider,
         Renderer2,
@@ -30,6 +50,8 @@ describe('CompetencyComponent', () => {
         spyOn(hammerProvider, 'addPressAndHoldEvent');
         spyOn(hammerProvider, 'init');
         renderer = TestBed.get(Renderer2);
+        store$ = TestBed.get(Store);
+        storeDispatchSpy = spyOn(store$, 'dispatch');
       });
   }));
 
@@ -47,11 +69,29 @@ describe('CompetencyComponent', () => {
         expect(hammerProvider.addPressAndHoldEvent).toHaveBeenCalledWith(component.recordFault);
       });
     });
+    describe('getLabel', () => {
+      it('should get the correct label for a competency', () => {
+        component.competency = Competencies.controlsSteering;
+        expect(component.getLabel()).toBe('Steering');
+      });
+    });
+    describe('recordFault', () => {
+      it('should dispatch a ADD_DRIVING_FAULT action', () => {
+        component.competency = Competencies.controlsSteering;
+
+        component.recordFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
+          competency: Competencies.controlsSteering,
+          newFaultCount: 1,
+        }));
+      });
+    });
   });
 
   describe('DOM', () => {
     it('should show provided label', () => {
-      component.label = 'Gears';
+      component.competency = Competencies.controlsGears;
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('#competencyLabel'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
@@ -70,7 +110,7 @@ describe('CompetencyComponent', () => {
       renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
       renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
       // Act
-      component.recordFault();
+      component.faultCount = 1;
       component.manageClasses();
       // Assert
       expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'driving-fault');

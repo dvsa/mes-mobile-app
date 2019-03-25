@@ -87,32 +87,32 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Accelerator"></competency>
+            <competency [competency]="competencies.controlsAccelerator"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Clutch"></competency>
+            <competency [competency]="competencies.controlsClutch"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Gears"></competency>
+            <competency [competency]="competencies.controlsGears"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Footbrake"></competency>
+            <competency [competency]="competencies.controlsFootbrake"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Parking brake"></competency>
+            <competency [competency]="competencies.controlsParkingBrake"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Steering"></competency>
+            <competency [competency]="competencies.controlsSteering"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -122,7 +122,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Precautions"></competency>
+            <competency [competency]="competencies.precautions"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -132,7 +132,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Ancillary controls"></competency>
+            <competency [competency]="competencies.ancillaryControls"></competency>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -145,12 +145,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Safety"></competency>
+            <competency [competency]="competencies.moveOffSafety"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Control"></competency>
+            <competency [competency]="competencies.moveOffControl"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -160,17 +160,17 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Signalling"></competency>
+            <competency [competency]="competencies.useOfMirrorsSignalling"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Change direction"></competency>
+            <competency [competency]="competencies.useOfMirrorsChangeDirection"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Change speed"></competency>
+            <competency [competency]="competencies.useOfMirrorsChangeSpeed"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -180,17 +180,17 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Necessary"></competency>
+            <competency [competency]="competencies.signalsNecessary"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Correctly"></competency>
+            <competency [competency]="competencies.signalsCorrectly"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Timed"></competency>
+            <competency [competency]="competencies.signalsTimed"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -200,27 +200,27 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Approach speed"></competency>
+            <competency [competency]="competencies.junctionsApproachSpeed"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Observation"></competency>
+            <competency [competency]="competencies.junctionsObservation"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Turning right"></competency>
+            <competency [competency]="competencies.junctionsTurningRight"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Turning left"></competency>
+            <competency [competency]="competencies.junctionsTurningLeft"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Cutting corners"></competency>
+            <competency [competency]="competencies.junctionsCuttingCorners"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -230,17 +230,17 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Overtaking"></competency>
+            <competency [competency]="competencies.judgementOvertaking"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Meeting"></competency>
+            <competency [competency]="competencies.judgementMeeting"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Crossing"></competency>
+            <competency [competency]="competencies.judgementCrossing"></competency>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -253,12 +253,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Normal driving"></competency>
+            <competency [competency]="competencies.positioningNormalDriving"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Lane discipline"></competency>
+            <competency [competency]="competencies.positioningLaneDiscipline"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -268,7 +268,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Pedestrian crossings"></competency>
+            <competency [competency]="competencies.pedestrianCrossings"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -278,7 +278,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Position/normal stop"></competency>
+            <competency [competency]="competencies.positionNormalStops"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -288,7 +288,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Awareness planning"></competency>
+            <competency [competency]="competencies.awarenessPlanning"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -298,7 +298,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Clearance"></competency>
+            <competency [competency]="competencies.clearance"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -308,7 +308,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Following distance"></competency>
+            <competency [competency]="competencies.followingDistance"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -318,7 +318,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Use of speed"></competency>
+            <competency [competency]="competencies.useOfSpeed"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -328,12 +328,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Appropriate speed"></competency>
+            <competency [competency]="competencies.progressAppropriateSpeed"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Undue hesitation"></competency>
+            <competency [competency]="competencies.progressUndueHesitation"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -343,27 +343,27 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Traffic signs"></competency>
+            <competency [competency]="competencies.responseToSignsTrafficSigns"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Road markings"></competency>
+            <competency [competency]="competencies.responseToSignsRoadMarkings"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Traffic lights"></competency>
+            <competency [competency]="competencies.responseToSignsTrafficLights"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Traffic controllers"></competency>
+            <competency [competency]="competencies.responseToSignsTrafficControllers"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency label="Other road users"></competency>
+            <competency [competency]="competencies.responseToSignsOtherRoadUsers"></competency>
           </ion-col>
         </ion-row>
       </ion-col>

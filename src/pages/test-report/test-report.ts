@@ -15,6 +15,7 @@ import { getUntitledCandidateName } from '../../modules/tests/candidate/candidat
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { Competencies } from '../../modules/tests/test_data/test-data.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -28,6 +29,8 @@ interface TestReportPageState {
 export class TestReportPage extends BasePageComponent {
 
   pageState: TestReportPageState;
+
+  competencies = Competencies;
 
   constructor(
     private store$: Store<StoreModel>,
