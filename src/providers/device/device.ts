@@ -57,7 +57,7 @@ export class DeviceProvider implements IDeviceProvider {
 
     if (cordova && cordova.plugins && cordova.plugins.DeviceAuthentication) {
 
-        cordova.plugins.DeviceAuthentication.runAuthentication(
+      cordova.plugins.DeviceAuthentication.runAuthentication(
           'Please enter your passcode',
           () => {
             console.log('Path 1');
@@ -68,7 +68,7 @@ export class DeviceProvider implements IDeviceProvider {
             return Promise.resolve(false);
           },
         );
-      }
+    }
   }
 
 }
