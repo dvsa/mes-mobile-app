@@ -25,7 +25,7 @@ export enum competencyLabels  {
   judgementMeeting = 'Meeting',
   judgementCrossing = 'Crossing',
   positioningNormalDriving  = 'Normal driving',
-  positioningLaneDiscipline  = 'Lane Discipline',
+  positioningLaneDiscipline  = 'Lane discipline',
   clearance  = 'Clearance',
   followingDistance  = 'Following distance',
   useOfSpeed  = 'Use of speed',
