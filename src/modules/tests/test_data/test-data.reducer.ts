@@ -18,9 +18,10 @@ export function testDataReducer(
     case testDataActions.ADD_DRIVING_FAULT:
       return {
         ...state,
-        drivingFaults: Object.assign({}, state.drivingFaults, {
+        drivingFaults: {
+          ...state.drivingFaults,
           [action.payload.competency] : action.payload.newFaultCount,
-        }),
+        },
       };
 
     default:
