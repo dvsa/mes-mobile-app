@@ -7,11 +7,13 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
+import { FaultCounterComponent } from './components/fault-counter/fault-counter';
 
 @NgModule({
   declarations: [
     TestReportPage,
     CompetencyComponent,
+    FaultCounterComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),
