@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { HammerProvider } from '../../../../../providers/hammer/hammer';
 import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
 import { Renderer2 } from '@angular/core';
+import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -51,7 +52,7 @@ describe('CompetencyComponent', () => {
 
   describe('DOM', () => {
     it('should show provided label', () => {
-      component.label = 'Gears';
+      component.competency = Competencies.controlsGears;
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('#competencyLabel'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
