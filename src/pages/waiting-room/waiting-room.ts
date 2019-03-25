@@ -53,8 +53,7 @@ export class WaitingRoomPage extends BasePageComponent {
     private deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
-    this.form = new FormGroup(this.getFormValidation(),
-    );
+    this.form = new FormGroup(this.getFormValidation());
   }
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
@@ -130,6 +129,9 @@ export class WaitingRoomPage extends BasePageComponent {
       residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
       signatureAreaCtrl: new FormControl(null, [Validators.required]),
     };
+  }
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
   }
 
 }
