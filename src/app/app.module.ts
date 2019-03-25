@@ -30,6 +30,7 @@ import { DeviceProvider } from '../providers/device/device';
 import { DataStoreProvider } from '../providers/data-store/data-store';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { TestsModule } from '../modules/tests/tests.module';
+import { LockScreenProvider } from '../providers/lock-screen/lock-screen';
 
 @NgModule({
   declarations: [App],
@@ -72,6 +73,9 @@ import { TestsModule } from '../modules/tests/tests.module';
     LogsProvider,
     AppInfoProvider,
     DeviceProvider,
+    SecureStorage,
+    DataStoreProvider,
+    LockScreenProvider,
   ],
 })
 export class AppModule {}
