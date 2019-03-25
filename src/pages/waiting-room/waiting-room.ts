@@ -19,6 +19,7 @@ import {
 } from '../../modules/test/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
+import { LockScreenProvider } from '../../providers/lock-screen/lock-screen';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -47,6 +48,7 @@ export class WaitingRoomPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
+    private lockscreenProvider: LockScreenProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
@@ -68,7 +70,7 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   clickContinue(): void {
-    this.deviceProvider.triggerLockScreen()
+    this.lockscreenProvider.triggerLockScreen()
       .then(() => {
         this.navCtrl.push('WaitingRoomToCarPage');
       })
@@ -78,7 +80,7 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   clickBack(): void {
-    this.deviceProvider.triggerLockScreen()
+    this.lockscreenProvider.triggerLockScreen()
       .then(() => {
         this.navCtrl.pop();
       })
