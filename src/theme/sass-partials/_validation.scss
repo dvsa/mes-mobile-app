@@ -3,7 +3,7 @@
     border-left-style: solid;
     border-left-width: 8px;
     &.ng-invalid {
-      border-color: map-get($colors, mes-validation-error)10e1e;;
+      border-color: map-get($colors, mes-validation-error);
     }
   }
 .validation-text {
