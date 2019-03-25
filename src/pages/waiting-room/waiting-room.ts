@@ -69,19 +69,13 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   clickContinue(): void {
-
     this.deviceProvider.triggerLockScreen()
-      .then((isSuccessful: boolean) => {
-        if (isSuccessful) {
-          console.log('Successfully authenticated');
-          this.navCtrl.push('WaitingRoomToCarPage');
-        }else {
-          console.log('Unsuccessful authentication');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then(() => {
+      this.navCtrl.push('WaitingRoomToCarPage');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   ngOnInit(): void {

@@ -55,20 +55,29 @@ export class DeviceProvider implements IDeviceProvider {
 
   triggerLockScreen = async (): Promise<any> => {
 
-    if (cordova && cordova.plugins && cordova.plugins.DeviceAuthentication) {
+    return new Promise((resolve, reject) => {
 
-      cordova.plugins.DeviceAuthentication.runAuthentication(
+      if (cordova && cordova.plugins && cordova.plugins.DeviceAuthentication) {
+
+        cordova.plugins.DeviceAuthentication.runAuthentication(
           'Please enter your passcode',
-          () => {
-            console.log('Path 1');
-            return Promise.resolve(true);
+          (successful: boolean) => {
+            if (successful) {
+              console.log('Successful Authentication!');
+              return resolve(true);
+            }
           },
           () => {
-            console.log('Path 2');
-            return Promise.resolve(false);
+            console.log('Unable to load auth prompt');
+            return reject(false);
           },
         );
-    }
+
+      } else {
+        console.log('Cordova error');
+        return reject(false);
+      }
+    });
   }
 
 }
