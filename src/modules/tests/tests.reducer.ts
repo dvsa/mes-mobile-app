@@ -4,6 +4,7 @@ import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-dec
 import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { testDataReducer } from './test_data/test-data.reducer';
 
 // Extend this with any new test domain action types
 type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
@@ -50,6 +51,7 @@ export const testsReducer = (
           {
             preTestDeclarations: preTestDeclarationsReducer,
             candidate: candidateReducer,
+            testData: testDataReducer,
           },
         )(state.startedTests[slotId], action),
       },
