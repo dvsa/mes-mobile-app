@@ -7,17 +7,36 @@ import { HammerProvider } from '../../../../../providers/hammer/hammer';
 import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
 import { Renderer2 } from '@angular/core';
 import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
+import { StoreModule, Store } from '@ngrx/store';
+import { initialState } from '../../../../../modules/tests/test_data/test-data.reducer';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
   let hammerProvider: HammerProvider;
   let renderer: Renderer2;
+  let store$: Store<StoreModel>;
+  let storeDispatchSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CompetencyComponent],
-      imports: [IonicModule, AppModule],
+      imports: [
+        IonicModule,
+        AppModule,
+        StoreModule.forFeature('tests', () => ({
+          currentTest: {
+            slotId: '123',
+          },
+          startedTests: {
+            123: {
+              testData: initialState,
+            },
+          },
+        })),
+      ],
       providers: [
         HammerProvider,
         Renderer2,
@@ -31,6 +50,8 @@ describe('CompetencyComponent', () => {
         spyOn(hammerProvider, 'addPressAndHoldEvent');
         spyOn(hammerProvider, 'init');
         renderer = TestBed.get(Renderer2);
+        store$ = TestBed.get(Store);
+        storeDispatchSpy = spyOn(store$, 'dispatch');
       });
   }));
 
@@ -39,7 +60,7 @@ describe('CompetencyComponent', () => {
       expect(component).toBeDefined();
     });
     describe('ngOnInit', () => {
-      xit('should use HammerProvider to attach a press and hold event to the button which records the fault', () => {
+      it('should use HammerProvider to attach a press and hold event to the button which records the fault', () => {
         component.button = new MockElementRef();
 
         component.ngOnInit();
@@ -48,10 +69,28 @@ describe('CompetencyComponent', () => {
         expect(hammerProvider.addPressAndHoldEvent).toHaveBeenCalledWith(component.recordFault);
       });
     });
+    describe('getLabel', () => {
+      it('should get the correct label for a competency', () => {
+        component.competency = Competencies.controlsSteering;
+        expect(component.getLabel()).toBe('Steering');
+      });
+    });
+    describe('recordFault', () => {
+      it('should dispatch a ADD_DRIVING_FAULT action', () => {
+        component.competency = Competencies.controlsSteering;
+
+        component.recordFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
+          competency: Competencies.controlsSteering,
+          newFaultCount: 1,
+        }));
+      });
+    });
   });
 
   describe('DOM', () => {
-    xit('should show provided label', () => {
+    it('should show provided label', () => {
       component.competency = Competencies.controlsGears;
       fixture.detectChanges();
       const label = fixture.debugElement.query(By.css('#competencyLabel'));
@@ -61,17 +100,17 @@ describe('CompetencyComponent', () => {
 
   describe('Ripple effect', () => {
 
-    xit('should have added no classes to the competency button', () => {
+    it('should have added no classes to the competency button', () => {
       expect(component.button.nativeElement.className).toEqual('');
     });
 
-    xit('should add and remove the ripple effect animation css class within the required time frame', (done) => {
+    it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
       // Arrange
       renderer = fixture.componentRef.injector.get(Renderer2);
       renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
       renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
       // Act
-      component.recordFault();
+      component.faultCount = 1;
       component.manageClasses();
       // Assert
       expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'driving-fault');
