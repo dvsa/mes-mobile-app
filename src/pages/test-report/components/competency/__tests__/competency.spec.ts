@@ -104,12 +104,12 @@ describe('CompetencyComponent', () => {
   });
 
   it('should pass the number of driving faults to the fault counter component', () => {
+    fixture.detectChanges();
     const drivingFaultCounter = fixture.debugElement.query(By.css('#drivingFaults'))
       .componentInstance as FaultCounterComponent;
     component.faultCount = 5;
 
     fixture.detectChanges();
-
     expect(drivingFaultCounter.count).toBe(5);
   });
 
