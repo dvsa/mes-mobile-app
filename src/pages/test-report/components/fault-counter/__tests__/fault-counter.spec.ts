@@ -35,4 +35,10 @@ describe('FaultCounterComponent', () => {
       expect(renderedCount).toBe('5');
     });
   });
+
+  it('should not be visible when the fault count is 0', () => {
+    const divsInContainer = fixture.debugElement.queryAll(By.css('div'));
+
+    expect(divsInContainer.length).toBe(0);
+  });
 });
