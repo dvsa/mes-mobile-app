@@ -1,15 +1,21 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HammerProvider } from '../hammer';
-import { MockComponent } from '../__mocks__/component.mock';
+import { Component } from '@angular/core';
 
-describe('HammerProvider', () => {
-  let fixture: ComponentFixture<MockComponent>;
+@Component({
+  selector: 'dummy-component',
+  template: '<p>dummy</p>',
+})
+class DummyComponent {}
+
+fdescribe('HammerProvider', () => {
+  let fixture: ComponentFixture<DummyComponent>;
   let hammerProvider: HammerProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MockComponent,
+        DummyComponent,
       ],
       providers: [
         HammerProvider,
@@ -18,7 +24,7 @@ describe('HammerProvider', () => {
       .compileComponents()
       .then(() => {
         hammerProvider = TestBed.get(HammerProvider);
-        fixture = TestBed.createComponent(MockComponent);
+        fixture = TestBed.createComponent(DummyComponent);
       });
   }));
 
