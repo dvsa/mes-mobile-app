@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -40,6 +40,9 @@ interface WaitingRoomPageState {
 export class WaitingRoomPage extends BasePageComponent {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
+
+  @ViewChild(Navbar) navBar: Navbar;
+
   pageState: WaitingRoomPageState;
 
   form: FormGroup;
@@ -60,6 +63,9 @@ export class WaitingRoomPage extends BasePageComponent {
     if (super.isIos()) {
       this.deviceProvider.enableSingleAppMode();
     }
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.clickBack();
+    };
   }
 
   ionViewDidLeave(): void {
@@ -70,12 +76,22 @@ export class WaitingRoomPage extends BasePageComponent {
 
   clickContinue(): void {
     this.deviceProvider.triggerLockScreen()
-    .then(() => {
-      this.navCtrl.push('WaitingRoomToCarPage');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(() => {
+        this.navCtrl.push('WaitingRoomToCarPage');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  clickBack(): void {
+    this.deviceProvider.triggerLockScreen()
+      .then(() => {
+        this.navCtrl.pop();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   ngOnInit(): void {
