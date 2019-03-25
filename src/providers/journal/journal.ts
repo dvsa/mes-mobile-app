@@ -48,10 +48,21 @@ export class JournalProvider {
     return this.getOfflineJournal();
   }
 
+  /**
+   * getOfflineJournal
+   * retrieves the journal from local store when network offline
+   * @returns Observable
+   */
   getOfflineJournal(): Observable<ExaminerWorkSchedule> {
     return from(this.getAndConvertOfflineJournal());
   }
 
+  /**
+   * getAndconvertOfflineJournal
+   * retrieves the journal data or empties the cache data
+   * and returns empty collection if cached data is too old
+   * @returns Promise<ExaminerWorkSchedule>
+   */
   getAndConvertOfflineJournal = (): Promise<ExaminerWorkSchedule> =>
     this.dataStore.getItem('JOURNAL')
       .then((data) => {
@@ -64,6 +75,14 @@ export class JournalProvider {
       })
       .catch(error => error)
 
+  /**
+   * saveJournalForOffline
+   * routine to save the retrieved journal data
+   * only saves the data if we have retrieved the data
+   * while online
+   * @returns Observable
+   */
+
   saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
     if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {
       const journalDataToStore: JournalCache = {
@@ -74,9 +93,21 @@ export class JournalProvider {
     }
   }
 
+  /**
+   * isCacheTooOld
+   * Helper method to determine if the cache data is too old
+   * @returns boolean
+   */
+
   isCacheTooOld = (dateStored: DateTime, now: DateTime):boolean => {
     return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().daysToCacheJournalData;
   }
+
+  /**
+   * emptyCachedData
+   * overwrites the local storage with empty data
+   * and returns empty collection
+   */
 
   emptyCachedData = () => {
     const emptyJournalData: ExaminerWorkSchedule = {};

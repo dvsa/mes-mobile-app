@@ -9,7 +9,7 @@ export const SEND_LOGS_FAILURE = '[LogsEffects] Send Logs Failure';
 
 export const LOAD_LOG = '[GLOBAL] Load Logs';
 export const LOAD_LOG_STATE = '[GLOBAL] Load Log State';
-export const PERSIST_LOG = 'LogsEffects] Persist Logs';
+export const PERSIST_LOG = '[LogsEffects] Persist Logs';
 
 export class SaveLog implements Action {
   readonly type = SAVE_LOG;
