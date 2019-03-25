@@ -1,4 +1,4 @@
 <button #competencyButton>
-  <span id='competencyCount'> {{ faultCount }} </span>
+  <fault-counter id="drivingFaults" [count]="faultCount"></fault-counter>
   <span id='competencyLabel'>{{ getLabel() }}</span>
 </button>
