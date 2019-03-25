@@ -125,7 +125,10 @@ export class LogsEffects {
         }
         return logCache.data;
       })
-      .catch(error => error)
+      .catch(() => {
+        const emptyLogData: Log[] = [];
+        return emptyLogData;
+      })
 
   saveLogs = (logData: Log[]) => {
     const logDataToStore: LogCache = {
