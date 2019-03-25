@@ -1,6 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { MockComponent } from 'ng-mocks';
 
 import { AppModule } from '../../../app/app.module';
 import { TestReportPage } from '../test-report';
@@ -23,7 +24,7 @@ describe('TestReportPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestReportPage, CompetencyComponent],
+      declarations: [TestReportPage, MockComponent(CompetencyComponent)],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
