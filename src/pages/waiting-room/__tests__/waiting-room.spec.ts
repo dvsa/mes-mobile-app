@@ -22,8 +22,10 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import {
   initialState as preTestDeclarationInitialState,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
-import { LockScreenProvider } from '../../../providers/lock-screen/lock-screen';
-import { LockScreenProviderMock } from '../../../providers/lock-screen/__mocks__/lock-screen.mock';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+import {
+  DeviceAuthenticationProviderMock,
+} from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
@@ -32,7 +34,7 @@ describe('WaitingRoomPage', () => {
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
   let deviceProvider: DeviceProvider;
-  let lockScreenProvider: LockScreenProvider;
+  let deviceAuthenticationProvider: DeviceAuthenticationProvider;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -68,7 +70,7 @@ describe('WaitingRoomPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
-        { provide: LockScreenProvider, useClass: LockScreenProviderMock },
+        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
@@ -79,7 +81,7 @@ describe('WaitingRoomPage', () => {
       });
 
     deviceProvider = TestBed.get(DeviceProvider);
-    lockScreenProvider = TestBed.get(LockScreenProvider);
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
@@ -125,7 +127,7 @@ describe('WaitingRoomPage', () => {
     describe('clickBack', () => {
       it('should should trigger the lock screen', () => {
         component.clickBack();
-        expect(lockScreenProvider.triggerLockScreen).toHaveBeenCalled();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
     });
   });

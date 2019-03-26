@@ -4,7 +4,7 @@ import { Platform } from 'ionic-angular';
 declare let cordova: any;
 
 @Injectable()
-export class LockScreenProvider {
+export class DeviceAuthenticationProvider {
 
   constructor(
     private platform: Platform,
