@@ -70,7 +70,7 @@
           <ion-col>
             <ion-row>
               <ion-col>
-                <input type="checkbox" id="school-car" class="gds-checkbox">
+                <input type="checkbox" id="school-car" class="gds-checkbox" [checked]="pageState.schoolCar$ | async" (click)="schoolCarToggled()">
                 <label for="school-car">School car</label>
               </ion-col>
               <ion-col>

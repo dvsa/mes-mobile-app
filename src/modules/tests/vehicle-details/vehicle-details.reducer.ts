@@ -9,5 +9,13 @@ const initialState: VehicleDetails = {
 };
 
 export const vehicleDetailsReducer = (state = initialState, action: vehicleDetailsActions.Types) => {
-  return initialState;
+  switch (action.type) {
+    case vehicleDetailsActions.SCHOOL_CAR_TOGGLED:
+      return {
+        ...state,
+        schoolCar: !state.schoolCar,
+      };
+    default:
+      return initialState;
+  }
 };
