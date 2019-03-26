@@ -24,8 +24,12 @@ page-waiting-room {
       margin: 0 28px;
     }
     .declaration-signature-row {
-      margin: 0 28px;
-      margin-bottom: -50px;
+      height: 250px;
+      .declaration-signature-col {
+        height: inherit;
+        margin: 0 28px;
+        margin-bottom: -50px;
+      }
     }
     .signature-area-padding{
       height: 18px;

@@ -1,9 +1,14 @@
 import { Action } from '@ngrx/store';
 
+export const CLEAR_DECLARATIONS = '[PreTestDeclarations] Clear declarations';
 export const TOGGLE_INSURANCE_DECLARATION = '[PreTestDeclarations] Insurance declaration toggled';
 export const TOGGLE_RESIDENCY_DECLARATION = '[PreTestDeclarations] Residency declaration toggled';
 export const SIGNATURE_DATA_CHANGED = '[PreTestDeclarations] Signature data changed';
 export const SIGNATURE_DATA_CLEARED = '[PreTestDeclarations] Signature data cleared';
+
+export class ClearPreTestDeclarations implements Action {
+  readonly type = CLEAR_DECLARATIONS;
+}
 
 export class ToggleInsuranceDeclaration implements Action {
   readonly type = TOGGLE_INSURANCE_DECLARATION;
@@ -22,6 +27,7 @@ export class SignatureDataCleared implements Action {
 }
 
 export type Types =
+  | ClearPreTestDeclarations
   | ToggleInsuranceDeclaration
   | ToggleResidencyDeclaration
   | SignatureDataChanged
