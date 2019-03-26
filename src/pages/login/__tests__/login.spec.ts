@@ -18,6 +18,8 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
+import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -45,6 +47,7 @@ describe('LoginPage', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: SecureStorage, useClass: SecureStorageMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
       ],
     })
       .compileComponents()
