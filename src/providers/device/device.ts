@@ -12,7 +12,7 @@ export class DeviceProvider implements IDeviceProvider {
   constructor(
     public appConfig: AppConfigProvider,
     public device: Device,
-    ) {
+  ) {
   }
 
   validDeviceType = (): boolean => {
