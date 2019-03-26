@@ -127,8 +127,8 @@ describe('Journal Effects', () => {
 
   it('should dispatch the SetSelectedDate action with the correct date in the select next day effect', (done) => {
     // ARRANGE
-    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
-    const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
+    const selectedDate: string = new DateTime().format('YYYY-MM-DD');
+    const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
     store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
@@ -149,7 +149,7 @@ describe('Journal Effects', () => {
 
   it('should dispatch the SetSelectedDate action with the correct date in the select previous day effect', (done) => {
     // ARRANGE
-    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
+    const selectedDate: string = new DateTime().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,

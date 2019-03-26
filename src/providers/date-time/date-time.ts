@@ -12,7 +12,7 @@ export class DateTimeProvider {
   public now(): DateTime {
     const timeTravelDate = this.appConfigProvider.getAppConfig().timeTravelDate;
     if (isEmpty(timeTravelDate)) {
-      return DateTime.now();
+      return new DateTime();
     }
     return DateTime.at(timeTravelDate);
   }

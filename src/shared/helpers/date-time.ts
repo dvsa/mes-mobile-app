@@ -13,10 +13,6 @@ export class DateTime {
     }
   }
 
-  static now(): DateTime {
-    return new DateTime();
-  }
-
   static at(sourceDateTime: DateTime | string | Date): DateTime {
     return new DateTime(sourceDateTime);
   }
