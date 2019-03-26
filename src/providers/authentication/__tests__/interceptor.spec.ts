@@ -19,6 +19,8 @@ import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { NetworkStateProvider } from '../../network-state/network-state';
 import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
+import { DateTimeProvider } from '../../date-time/date-time';
+import { DateTimeProviderMock } from '../../date-time/__mocks__/date-time.mock';
 
 describe('Authentication interceptor', () => {
   let httpMock: HttpTestingController;
@@ -45,6 +47,7 @@ describe('Authentication interceptor', () => {
           useClass: AuthInterceptor,
           multi: true,
         },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock},
       ],
     });
     platform = TestBed.get(Platform);

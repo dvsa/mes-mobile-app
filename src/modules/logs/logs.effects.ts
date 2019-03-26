@@ -17,6 +17,7 @@ import { Log } from '../../shared/models/log.model';
 import { DateTime } from '../../shared/helpers/date-time';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
+import { DateTimeProvider } from '../../providers/date-time/date-time';
 
 type LogCache = {
   dateStored: string,
@@ -32,6 +33,7 @@ export class LogsEffects {
     private appConfigProvider: AppConfigProvider,
     private dataStore: DataStoreProvider,
     private networkStateProvider: NetworkStateProvider,
+    private dateTimeProvider: DateTimeProvider,
   ) {}
 
   @Effect()
@@ -132,7 +134,7 @@ export class LogsEffects {
 
   saveLogs = (logData: Log[]) => {
     const logDataToStore: LogCache = {
-      dateStored: DateTime.now().format('YYYY/MM/DD'),
+      dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
       data: logData,
     };
     this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then((response) => {});
@@ -145,7 +147,7 @@ export class LogsEffects {
   emptyCachedData = () => {
     const emptyLogData: Log[] = [];
     const logDataToStore: LogCache = {
-      dateStored: DateTime.now().format('YYYY/MM/DD'),
+      dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
       data: emptyLogData,
     };
     this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then(() => {});

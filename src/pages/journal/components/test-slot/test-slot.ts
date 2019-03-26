@@ -6,6 +6,7 @@ import { vehicleDetails } from './test-slot.constants';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTime } from '../../../../shared/helpers/date-time';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 
 @Component({
   selector: 'test-slot',
@@ -24,6 +25,7 @@ export class TestSlotComponent implements SlotComponent {
   constructor(
     public screenOrientation: ScreenOrientation,
     public appConfig: AppConfigProvider,
+    public dateTimeProvider: DateTimeProvider,
   ) {}
 
   isIndicatorNeededForSlot(): boolean {
@@ -53,7 +55,7 @@ export class TestSlotComponent implements SlotComponent {
     }
 
     const startDate = new DateTime(this.slot.slotDetail.start);
-    if (startDate.daysDiff(DateTime.now()) !== 0) {
+    if (startDate.daysDiff(this.dateTimeProvider.now()) !== 0) {
       return false;
     }
 

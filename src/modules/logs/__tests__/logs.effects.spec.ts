@@ -20,6 +20,8 @@ import { LogsProviderMock } from '../../../providers/logs/__mocks__/log.mock';
 import { Log, LogType } from '../../../shared/models/log.model';
 import { of } from 'rxjs/observable/of';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -55,6 +57,7 @@ describe('Logs Effects', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: LogsProvider, useClass: LogsProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         Store,
       ],
     });
