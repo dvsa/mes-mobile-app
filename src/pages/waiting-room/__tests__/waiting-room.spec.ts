@@ -138,6 +138,20 @@ describe('WaitingRoomPage', () => {
           expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
         }));
       });
+
+      describe('Declaration Validation', () => {
+        it('form should only be valid when all fields are set', () => {
+          const form = component.form;
+          form.get('insuranceCheckboxCtrl').setValue(true);
+          expect(form.get('insuranceCheckboxCtrl').status).toEqual('VALID');
+          form.get('residencyCheckboxCtrl').setValue(true);
+          expect(form.get('residencyCheckboxCtrl').status).toEqual('VALID');
+          expect(form.valid).toEqual(false);
+          form.get('signatureAreaCtrl').setValue('any date you like.');
+          expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
+          expect(form.valid).toEqual(true);
+        });
+      });
     });
   });
 });
