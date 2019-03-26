@@ -7,6 +7,13 @@ describe('TestDataSelectors', () => {
     drivingFaults: {
       controlsGears: 1,
     },
+    testRequirements: {
+      normalStart1: false,
+      normalStart2: false,
+      angledStart: false,
+      hillStart: false,
+    },
+    eco: {},
   };
 
   describe('getDrivingFaultCount', () => {

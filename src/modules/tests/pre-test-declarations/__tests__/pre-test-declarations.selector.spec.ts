@@ -9,7 +9,7 @@ describe('PreTestDeclarations selector', () => {
   const state: PreTestDeclarations = {
     insuranceDeclarationAccepted: true,
     residencyDeclarationAccepted: false,
-    signature: 'sig',
+    preTestSignature: 'sig',
   };
 
   describe('getInsuranceDeclarationStatus', () => {

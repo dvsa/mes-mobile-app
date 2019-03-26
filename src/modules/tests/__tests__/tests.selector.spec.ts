@@ -13,8 +13,24 @@ describe('testsSelector', () => {
       const currentTest: StandardCarTestCATBSchema = {
         category: 'B',
         id: 'abc123',
+        slotId: 123,
+        activityCode: 'x',
         candidate: {},
-        testData: {},
+        applicationReference: {
+          applicationId: 999,
+          bookingSequence: 3,
+          checkDigit: 5,
+        },
+        eyesightTestResult: 'P',
+        testData: {
+          testRequirements: {
+            angledStart: false,
+            hillStart: false,
+            normalStart1: false,
+            normalStart2: false,
+          },
+          eco: {},
+        },
         preTestDeclarations: preTestDeclarationsInitialState,
       };
       const journal: JournalModel = { isLoading: false, lastRefreshed: new Date(), slots: {}, selectedDate: 'dummy' };
