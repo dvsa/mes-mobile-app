@@ -71,6 +71,27 @@ Then('I should see the {string} contains {string}', (rowName, rowValue) => {
   return expect(dataRow.isPresent()).to.eventually.be.true;
 });
 
+When('I click on the {string} button', (buttonId) => {
+  const buttonElement = getElement(by.css(`#${buttonId}`));
+  return clickElement(buttonElement);
+});
+
+Then('validation item {string} should be visible', (validationId: string) => {
+  const validationElement = getElement(by.css(`#${validationId}`));
+  return expect(validationElement.getAttribute('class')).to.eventually.contain('ng-invalid');
+});
+
+Then('validation item {string} should not be visible', (validationId: string) => {
+  const validationElement = getElement(by.css(`#${validationId}`));
+  return expect(validationElement.getAttribute('class')).to.eventually.not.contain('ng-invalid');
+});
+
+Then('validation item {string} should be {string}', (validationId: string, validationText: string) => {
+  const validationElement = getElement(by.css(`#${validationId}`));
+  return expect(validationElement.getText()).to.eventually.equal(validationText);
+});
+
+
 // After hook to take screenshots of page
 After(function (testCase) {
   return browser.driver.takeScreenshot().then((screenShot) => {
