@@ -113,13 +113,6 @@ describe('WaitingRoomPage', () => {
       });
     });
 
-    describe('clickContinue', () => {
-      it('should trigger the lock screen', () => {
-        component.clickContinue();
-        expect(lockScreenProvider.triggerLockScreen).toHaveBeenCalled();
-      });
-    });
-
     describe('clickBack', () => {
       it('should should trigger the lock screen', () => {
         component.clickBack();

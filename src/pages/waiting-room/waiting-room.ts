@@ -76,16 +76,6 @@ export class WaitingRoomPage extends BasePageComponent {
     }
   }
 
-  clickContinue(): void {
-    this.lockscreenProvider.triggerLockScreen()
-      .then(() => {
-        this.navCtrl.push('WaitingRoomToCarPage');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   clickBack(): void {
     this.lockscreenProvider.triggerLockScreen()
       .then(() => {
@@ -147,7 +137,13 @@ export class WaitingRoomPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push('WaitingRoomToCarPage');
+      this.lockscreenProvider.triggerLockScreen()
+      .then(() => {
+        this.navCtrl.push('WaitingRoomToCarPage');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   }
 
