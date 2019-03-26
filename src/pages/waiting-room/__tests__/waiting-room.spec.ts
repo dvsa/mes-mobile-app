@@ -22,6 +22,8 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import {
   initialState as preTestDeclarationInitialState,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -63,6 +65,7 @@ describe('WaitingRoomPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()

@@ -1,10 +1,7 @@
 import { initialState, journalReducer } from '../journal.reducer';
 import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError, ClearChangedSlot } from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
-import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
-
-const today = DateTime.now().format('YYYY-MM-DD');
 
 describe('Journal Reducer', () => {
 
@@ -33,24 +30,31 @@ describe('Journal Reducer', () => {
   describe('[JournalPage] Load Journal Success', () => {
     it('should toggle loading state and populate slots', () => {
       const actionPayload = {
-        [`${today}`]: [{
+        ['2019-01-13']: [{
           hasSlotChanged: false,
           slotData: {},
         },
         ],
       };
+
       const action = new LoadJournalSuccess(actionPayload,
                                             ConnectionStatus.ONLINE,
                                             false,
                                             new Date());
-      const result = journalReducer(initialState, action);
+
+      const state = {
+        ...initialState,
+        selectedDate: '2019-01-13',
+      };
+
+      const result = journalReducer(state, action);
 
       expect(result).toEqual({
-        ...initialState,
+        ...state,
         isLoading: false,
         lastRefreshed: jasmine.any(Date),
         slots: {
-          [`${today}`]: [{
+          ['2019-01-13']: [{
             hasSlotChanged: false,
             slotData: {},
           },
@@ -58,35 +62,11 @@ describe('Journal Reducer', () => {
         },
       });
     });
-
-    it('should set the selected date to today if it was yesterday', () => {
-      const yesterday = DateTime.now().add(-1, Duration.DAY).format('YYYY-MM-DD');
-      const actionPayload = {
-        [`${today}`]: [{
-          hasSlotChanged: false,
-          slotData: {},
-        },
-        ],
-      };
-      const stateWithYesterdaysDate = {
-        ...initialState,
-        slots: {
-          [`${yesterday}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)],
-        },
-        selectedDate: yesterday,
-      };
-      const action = new LoadJournalSuccess(actionPayload,
-                                            ConnectionStatus.ONLINE,
-                                            false,
-                                            new Date());
-      const result = journalReducer(stateWithYesterdaysDate, action);
-      expect(result.selectedDate).toEqual(today);
-    });
   });
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: { [`${today}`]: [new SlotItem({}, false)] } };
+      const stateWithJournals = { ...initialState, slots: { ['2019-01-13']: [new SlotItem({}, false)] } };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toEqual({});
@@ -104,9 +84,10 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Clear Changed Slot', () => {
     it('should clear hasChangedState flag on specified slot', () => {
-      const slotDate = DateTime.now().format('YYYY-MM-DD');
+      const slotDate = '2019-01-13';
       const stateWithChangedSlot = {
         ...initialState,
+        selectedDate: slotDate,
         slots: {
           [`${slotDate}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)],
         },

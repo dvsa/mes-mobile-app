@@ -31,9 +31,11 @@ export class AuthenticationProvider {
     this.isUserAuthenticated = false;
     this.inUnAuthenticatedMode = false;
   }
+
   public isInUnAuthenticatedMode = (): boolean => {
     return this.inUnAuthenticatedMode;
   }
+
   public isAuthenticated = (): boolean => {
     return this.isUserAuthenticated;
   }
@@ -46,6 +48,7 @@ export class AuthenticationProvider {
     const mode = this.networkState.getNetworkState() === ConnectionStatus.OFFLINE;
     this.setUnAuthenticatedMode(mode);
   }
+
   public getAuthenticationToken = async (): Promise<string> => {
     const response = await this.aquireTokenSilently();
     return response.accessToken;
@@ -56,7 +59,6 @@ export class AuthenticationProvider {
   }
 
   public login = () => {
-
     if (this.isInUnAuthenticatedMode()) {
       return new Promise((resolve) => {
         this.isUserAuthenticated = true;

@@ -18,11 +18,13 @@ import { LocationComponent } from '../../location/location';
 import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
+import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
   let component: TestSlotComponent;
-  const startTime = DateTime.now().format('YYYY-MM-DDTHH:mm:ss+00:00');
+  const startTime = '2019-02-01T11:22:33+00:00';
   const mockSlot = {
     slotDetail: {
       slotId: 1001,
@@ -99,7 +101,7 @@ describe('TestSlotComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(TestSlotComponent);
@@ -205,7 +207,8 @@ describe('TestSlotComponent', () => {
         expect(component.canStartTest()).toBeTruthy();
       });
       it('should disallow starting of tests that arent today', () => {
-        component.slot.slotDetail.start = DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
+        component.slot.slotDetail.start =
+          DateTime.at(startTime).add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
         expect(component.canStartTest()).toBeFalsy();
       });
     });

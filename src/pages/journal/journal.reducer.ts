@@ -3,14 +3,13 @@ import { createFeatureSelector } from '@ngrx/store';
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
 import { has } from 'lodash';
-import { DateTime } from '../../shared/helpers/date-time';
 import { ConnectionStatus } from '../../providers/network-state/network-state';
 
 export const initialState: JournalModel = {
   isLoading: false,
   lastRefreshed: null,
   slots: {},
-  selectedDate: DateTime.now().format('YYYY-MM-DD'),
+  selectedDate: '',
 };
 
 export function journalReducer(state = initialState, action: journalActions.JournalActionTypes): JournalModel {
@@ -22,15 +21,13 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         error: { message: '', status: 0, statusText: '' },
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
-      const date = DateTime.now().daysDiff(state.selectedDate) < 0
-      ? DateTime.now().format('YYYY-MM-DD')
-      : state.selectedDate;
-
       return {
         ...state,
+
+        // TODO: The reducer has to get the lastRefreshed date from the action
+        // And should not do any logic
         lastRefreshed: (action.onlineOffline ===
           ConnectionStatus.ONLINE  && !action.unAuthenticatedMode) ? new Date() : action.lastRefreshed,
-        selectedDate: date,
         isLoading: false,
         slots: action.payload,
       };
@@ -51,6 +48,8 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         ...stateWithoutError,
       };
     case journalActions.CLEAR_CHANGED_SLOT:
+
+      // TODO: This should be moved out to an effect
       const slots = state.slots[state.selectedDate].map((slot) => {
         if (has(slot.slotData, 'slotDetail') &&
           has(slot.slotData.slotDetail, 'slotId') &&

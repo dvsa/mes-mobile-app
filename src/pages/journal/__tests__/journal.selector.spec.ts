@@ -1,11 +1,11 @@
 import { JournalModel } from '../journal.model';
 import {
   getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
-  getError, getLastRefreshedTime, isToday,
+  getError, getLastRefreshedTime,
   canNavigateToNextDay, canNavigateToPreviousDay,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
-import { DateTime, Duration } from '../../../shared/helpers/date-time';
+import { DateTime } from '../../../shared/helpers/date-time';
 
 describe('JournalSelector', () => {
 
@@ -67,18 +67,6 @@ describe('JournalSelector', () => {
     });
   });
 
-  describe('isToday', () => {
-    it('should return true if its today', () => {
-      const result = isToday(DateTime.now().format('YYYY-MM-DD'));
-      expect(result).toBe(true);
-    });
-
-    it('should return false if its not today', () => {
-      const result = isToday('2019-01-28');
-      expect(result).toBe(false);
-    });
-  });
-
   describe('canNavigateToNextDay', () => {
     it('should return true if there are any next days', () => {
       const journal: JournalModel = {
@@ -133,17 +121,17 @@ describe('JournalSelector', () => {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          [DateTime.now().format('YYYY-MM-DD')]: [
+          ['2019-01-13']: [
             {
               hasSlotChanged: false,
               slotData: {},
             },
           ],
         },
-        selectedDate: DateTime.now().format('YYYY-MM-DD'),
+        selectedDate: '2019-01-13',
       };
 
-      const result = canNavigateToPreviousDay(journal);
+      const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
 
       expect(result).toBe(false);
     });
@@ -153,23 +141,23 @@ describe('JournalSelector', () => {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          [DateTime.now().format('YYYY-MM-DD')]: [
+          ['2019-01-13']: [
             {
               hasSlotChanged: false,
               slotData: {},
             },
           ],
-          [DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD')]: [
+          ['2019-01-14']: [
             {
               hasSlotChanged: false,
               slotData: {},
             },
           ],
         },
-        selectedDate: DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD'),
+        selectedDate: '2019-01-14',
       };
 
-      const result = canNavigateToPreviousDay(journal);
+      const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
 
       expect(result).toBe(true);
     });

@@ -85,6 +85,7 @@ export class AppConfigProvider {
     this.appConfig = merge({}, this.appConfig, {
       googleAnalyticsId: data.googleAnalyticsId,
       approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
+      timeTravelDate: data.timeTravelDate,
       journal: {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,

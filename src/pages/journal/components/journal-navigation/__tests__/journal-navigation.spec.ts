@@ -11,11 +11,16 @@ import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { ConnectionStatus } from '../../../../../providers/network-state/network-state';
+import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('JournalNavigationComponent', () => {
   let component: JournalNavigationComponent;
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
+  let dateTimeProvider: DateTimeProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,6 +33,8 @@ describe('JournalNavigationComponent', () => {
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(JournalNavigationComponent);
@@ -35,6 +42,7 @@ describe('JournalNavigationComponent', () => {
     });
 
     store$ = TestBed.get(Store);
+    dateTimeProvider = TestBed.get(DateTimeProvider);
   }));
 
   describe('Class', () => {
@@ -53,6 +61,7 @@ describe('JournalNavigationComponent', () => {
                                              ConnectionStatus.ONLINE,
                                              false,
                                              new Date()));
+      store$.dispatch(new SetSelectedDate(dateTimeProvider.now().format('YYYY-MM-DD')));
     });
 
     describe('selected date is today', () => {
@@ -71,7 +80,7 @@ describe('JournalNavigationComponent', () => {
       it('shows correct date format as sub header', () => {
         fixture.detectChanges();
         const subHeader: HTMLElement = componentEl.query(By.css('h3')).nativeElement;
-        expect(subHeader.textContent).toBe(DateTime.now().format('dddd D MMMM YYYY'));
+        expect(subHeader.textContent).toBe(dateTimeProvider.now().format('dddd D MMMM YYYY'));
       });
 
       it('shows next day button', () => {
@@ -82,8 +91,9 @@ describe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is day in the middle', () => {
-      const nextDay = DateTime.now().add(1, Duration.DAY).format('YYYY-MM-DD');
+      let nextDay: string;
       beforeEach(() => {
+        nextDay = dateTimeProvider.now().add(1, Duration.DAY).format('YYYY-MM-DD');
         store$.dispatch(new SetSelectedDate(nextDay));
       });
 
@@ -113,8 +123,9 @@ describe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is the last available date', () => {
-      const selectedDay = DateTime.now().add(2, Duration.DAY).format('YYYY-MM-DD');
+      let selectedDay: string;
       beforeEach(() => {
+        selectedDay = dateTimeProvider.now().add(2, Duration.DAY).format('YYYY-MM-DD');
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
 

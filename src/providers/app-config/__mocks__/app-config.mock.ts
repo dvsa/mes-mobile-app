@@ -27,6 +27,7 @@ export class AppConfigProviderMock {
         employeeIdKey: localEnvironmentMock.authentication.employeeIdKey,
       },
       approvedDeviceIdentifiers: localEnvironmentMock.approvedDeviceIdentifiers,
+      timeTravelDate: localEnvironmentMock.timeTravelDate,
       journal: {
         journalUrl: localEnvironmentMock.journal.journalUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
