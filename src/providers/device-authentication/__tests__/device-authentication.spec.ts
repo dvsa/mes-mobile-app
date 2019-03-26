@@ -1,18 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { DeviceAuthenticationProvider } from '../device-authentication';
-import { DeviceAuthenticationProviderMock } from '../__mocks__/device-authentication.mock';
+import { Platform } from 'ionic-angular';
+import { PlatformMock } from 'ionic-mocks';
 
-describe('Lock Screen Provider', () => {
+describe('Device Authentication Provider', () => {
 
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
+        DeviceAuthenticationProvider,
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
       ],
     });
-
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
   });
 
