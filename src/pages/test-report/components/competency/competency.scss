@@ -34,8 +34,8 @@ competency {
     }
     @keyframes ripple {
       0% {
-        -moz-box-shadow: 0 0 0 0 0 0 5px 0 rgba(65, 60, 60, 1);
-        box-shadow: 0 0 0 0 0 0 5px 0 rgba(65, 60, 60, 1);
+        -moz-box-shadow: 0 0 5px 0 rgba(65, 60, 60, 1);
+        box-shadow: 0 0 5px 0 rgba(65, 60, 60, 1);
       }
       50% {
         -moz-box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
