@@ -13,6 +13,8 @@ export function preTestDeclarationsReducer(
   action: preTestDeclarationActions.Types,
 ): PreTestDeclarations {
   switch (action.type) {
+    case preTestDeclarationActions.CLEAR_DECLARATIONS:
+      return initialState;
     case preTestDeclarationActions.TOGGLE_INSURANCE_DECLARATION:
       return {
         ...state,

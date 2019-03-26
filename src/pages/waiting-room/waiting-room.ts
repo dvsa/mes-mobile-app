@@ -68,6 +68,10 @@ export class WaitingRoomPage extends BasePageComponent {
     }
   }
 
+  ionViewWillUnload(): void {
+    this.store$.dispatch(new preTestDeclarationsActions.ClearPreTestDeclarations());
+  }
+
   ngOnInit(): void {
     this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;

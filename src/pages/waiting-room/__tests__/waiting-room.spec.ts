@@ -15,6 +15,7 @@ import { ComponentsModule } from './../../../components/components.module';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
+  ClearPreTestDeclarations,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
@@ -26,7 +27,6 @@ describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
-  let storeDispatchSpy: jasmine.Spy;
   let deviceProvider: DeviceProvider;
 
   const mockCandidate = {
@@ -73,7 +73,7 @@ describe('WaitingRoomPage', () => {
 
     deviceProvider = TestBed.get(DeviceProvider);
     store$ = TestBed.get(Store);
-    storeDispatchSpy = spyOn(store$, 'dispatch');
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -86,12 +86,12 @@ describe('WaitingRoomPage', () => {
       it('should emit a residency declaration toggle action when changed', () => {
         component.residencyDeclarationChanged();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleResidencyDeclaration());
+        expect(store$.dispatch).toHaveBeenCalledWith(new ToggleResidencyDeclaration());
       });
       it('should emit an insurance declaration toggle action when changed', () => {
         component.insuranceDeclarationChanged();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleInsuranceDeclaration());
+        expect(store$.dispatch).toHaveBeenCalledWith(new ToggleInsuranceDeclaration());
       });
     });
 
@@ -104,6 +104,12 @@ describe('WaitingRoomPage', () => {
         it('should disable single app mode if on ios', () => {
           component.ionViewDidLeave();
           expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+        });
+      });
+      describe('ionViewWillUnload', () => {
+        it('should dispatch a clear declarations action', () => {
+          component.ionViewWillUnload();
+          expect(store$.dispatch).toHaveBeenCalledWith(new ClearPreTestDeclarations());
         });
       });
     });
