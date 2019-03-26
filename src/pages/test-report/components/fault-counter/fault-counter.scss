@@ -1,0 +1,18 @@
+fault-counter {
+  div {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    #counter-background {
+      background-color: #0B0C0C;
+      color: map-get($colors, 'mes-white');
+      border-radius: 13px;
+      span {
+        font-size: 15px;
+        font-weight: bold;
+        position: relative;
+        top: -5px;
+      }
+    }
+  }
+}

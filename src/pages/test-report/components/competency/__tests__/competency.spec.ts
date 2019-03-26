@@ -11,6 +11,8 @@ import { StoreModule, Store } from '@ngrx/store';
 import { initialState } from '../../../../../modules/tests/test_data/test-data.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
+import { MockComponent } from 'ng-mocks';
+import { FaultCounterComponent } from '../../fault-counter/fault-counter';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -22,7 +24,10 @@ describe('CompetencyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CompetencyComponent],
+      declarations: [
+        CompetencyComponent,
+        MockComponent(FaultCounterComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,
@@ -96,6 +101,16 @@ describe('CompetencyComponent', () => {
       const label = fixture.debugElement.query(By.css('#competencyLabel'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
     });
+  });
+
+  it('should pass the number of driving faults to the fault counter component', () => {
+    fixture.detectChanges();
+    const drivingFaultCounter = fixture.debugElement.query(By.css('#drivingFaults'))
+      .componentInstance as FaultCounterComponent;
+    component.faultCount = 5;
+
+    fixture.detectChanges();
+    expect(drivingFaultCounter.count).toBe(5);
   });
 
   describe('Ripple effect', () => {

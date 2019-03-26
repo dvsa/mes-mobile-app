@@ -69,7 +69,9 @@ export class CompetencyComponent {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   getLabel = (): string => competencyLabels[this.competency];
