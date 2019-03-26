@@ -2,21 +2,56 @@
   <ion-navbar>
     <ion-title>Waiting Room To Car</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="logout()">Logout</button>
+      <button ion-button navPush="DebriefPage">End test</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Waiting Room To Car
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button navPush="TestReportPage">Test Report Page</button>
-      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
-    </ion-card-content>
-  </ion-card>
+<ion-content>
+  <div>
+    <form>
+      <ion-grid>
+        <ion-row class="mes-full-width-card" id="eyesight-test-card">
+          <ion-col col-4>
+            <label>Eyesight test</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="tell-me-card">
+          <ion-col col-4>
+            <label>Tell me question</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="accompaniment-card">
+          <ion-col col-4>
+            <label>Accompanied by (optional)</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="registration-card">
+          <ion-col col-4>
+            <label>Registration number</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="transmission-card">
+          <ion-col col-4>
+            <label>Transmission</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="vehicle-details-card">
+          <ion-col col-4>
+            <label>Vehicle details (optional)</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="instructor-registration-card">
+          <ion-col col-4>
+            <label>Instructor registration number (optional)</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="instructor-cert-number-card">
+          <ion-col col-4>
+            <label>Instructor certification number (optional)</label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
 </ion-content>
