@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 
 declare let cordova: any;
 
 @Injectable()
 export class LockScreenProvider {
 
-  constructor() { }
+  constructor(
+    private platform: Platform,
+  ) { }
 
   triggerLockScreen = async (): Promise<any> => {
 
     return new Promise((resolve, reject) => {
 
-      if (cordova && cordova.plugins && cordova.plugins.DeviceAuthentication) {
+      this.platform.ready().then(() => {
 
-        cordova.plugins.DeviceAuthentication.runAuthentication(
+        if (!this.platform.is('ios')) {
+          return(resolve(true));
+        }
+        if (cordova && cordova.plugins && cordova.plugins.DeviceAuthentication) {
+
+          cordova.plugins.DeviceAuthentication.runAuthentication(
           'Please enter your passcode',
           (successful: boolean) => {
             return successful ? resolve(true) : reject(false);
@@ -23,9 +31,10 @@ export class LockScreenProvider {
           },
         );
 
-      } else {
-        return reject(false);
-      }
+        } else {
+          return reject(false);
+        }
+      });
     });
   }
 }
