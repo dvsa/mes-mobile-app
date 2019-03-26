@@ -61,7 +61,6 @@ describe('JournalNavigationComponent', () => {
                                              ConnectionStatus.ONLINE,
                                              false,
                                              new Date()));
-      console.log('################ date time now', dateTimeProvider.now().format('YYYY-MM-DD'));
       store$.dispatch(new SetSelectedDate(dateTimeProvider.now().format('YYYY-MM-DD')));
     });
 
