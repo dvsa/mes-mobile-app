@@ -10,9 +10,9 @@ export class LockScreenProvider {
     private platform: Platform,
   ) { }
 
-  triggerLockScreen = async (): Promise<any> => {
+  triggerLockScreen = async (): Promise<boolean> => {
 
-    return new Promise((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
 
       this.platform.ready().then(() => {
 

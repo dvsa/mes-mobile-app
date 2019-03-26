@@ -9,7 +9,7 @@ describe('Lock Screen Provider', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-                { provide: LockScreenProvider, useClass: LockScreenProviderMock },
+        { provide: LockScreenProvider, useClass: LockScreenProviderMock },
       ],
     });
 
