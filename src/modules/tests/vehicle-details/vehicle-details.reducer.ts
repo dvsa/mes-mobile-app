@@ -20,6 +20,11 @@ export const vehicleDetailsReducer = (state = initialState, action: vehicleDetai
         ...state,
         dualControls: !state.dualControls,
       };
+    case vehicleDetailsActions.GEARBOX_CATEGORY_CHANGED:
+      return {
+        ...state,
+        gearboxCategory: action.gearboxCategory,
+      };
     default:
       return initialState;
   }

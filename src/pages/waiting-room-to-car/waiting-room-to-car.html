@@ -55,11 +55,11 @@
             <label>Transmission</label>
           </ion-col>
           <ion-col>
-            <input type="radio" id="transmission-manual" class="gds-radio-button">
+            <input type="radio" name="transmission" id="transmission-manual" class="gds-radio-button" (click)="manualTransmission()">
             <label for="transmission-manual" class="radio-label">Manual</label>
           </ion-col>
           <ion-col>
-            <input type="radio" id="transmission-automatic" class="gds-radio-button">
+            <input type="radio" name="transmission" id="transmission-automatic" class="gds-radio-button" (click)="automaticTransmission()">
             <label for="transmission-automatic" class="radio-label">Automatic</label>
           </ion-col>
         </ion-row>

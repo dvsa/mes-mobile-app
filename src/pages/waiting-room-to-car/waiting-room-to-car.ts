@@ -8,7 +8,11 @@ import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { SchoolCarToggled, DualControlsToggled } from '../../modules/tests/vehicle-details/vehicle-details.actions';
+import {
+  SchoolCarToggled,
+  DualControlsToggled,
+  GearboxCategoryChanged,
+} from '../../modules/tests/vehicle-details/vehicle-details.actions';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
@@ -70,5 +74,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   dualControlsToggled(): void {
     this.store$.dispatch(new DualControlsToggled());
+  }
+
+  manualTransmission(): void {
+    this.store$.dispatch(new GearboxCategoryChanged('Manual'));
+  }
+
+  automaticTransmission(): void {
+    this.store$.dispatch(new GearboxCategoryChanged('Automatic'));
   }
 }
