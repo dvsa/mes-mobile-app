@@ -25,6 +25,22 @@
           <ion-col col-4>
             <label>Accompanied by (optional)</label>
           </ion-col>
+          <ion-col>
+            <ion-row justify-content-between>
+              <ion-col>
+                <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox">
+                <label for="accompaniment-instructor">Ins</label>
+              </ion-col>
+              <ion-col>
+                <input type="checkbox" id="accompaniment-suplementary" class="gds-checkbox">
+                <label for="accompaniment-suplementary">Sup</label>
+              </ion-col>
+              <ion-col>
+                <input type="checkbox" id="accompaniment-other" class="gds-checkbox">
+                <label for="accompaniment-other">Other</label>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="registration-card">
           <ion-col col-4>
@@ -40,15 +56,22 @@
           <ion-col col-4>
             <label>Vehicle details (optional)</label>
           </ion-col>
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <input type="checkbox" id="school-car" class="gds-checkbox">
+                <label for="school-car">School car</label>
+              </ion-col>
+              <ion-col>
+                <input type="checkbox" id="dual-control" class="gds-checkbox">
+                <label for="dual-control">Dual control</label>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="instructor-registration-card">
           <ion-col col-4>
             <label>Instructor registration number (optional)</label>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-full-width-card" id="instructor-cert-number-card">
-          <ion-col col-4>
-            <label>Instructor certification number (optional)</label>
           </ion-col>
         </ion-row>
       </ion-grid>
