@@ -65,6 +65,9 @@ export class WaitingRoomPage extends BasePageComponent {
     if (super.isIos()) {
       this.deviceProvider.enableSingleAppMode();
     }
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.clickBack();
+    };
   }
 
   ionViewDidLeave(): void {
@@ -84,8 +87,6 @@ export class WaitingRoomPage extends BasePageComponent {
   }
 
   ionViewWillUnload(): void {
-    this.lockscreenProvider.triggerLockScreen()
-    .then(() => {});
     this.store$.dispatch(new preTestDeclarationsActions.ClearPreTestDeclarations());
   }
 
