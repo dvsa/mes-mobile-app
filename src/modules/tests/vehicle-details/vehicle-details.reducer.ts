@@ -15,6 +15,11 @@ export const vehicleDetailsReducer = (state = initialState, action: vehicleDetai
         ...state,
         schoolCar: !state.schoolCar,
       };
+    case vehicleDetailsActions.DUAL_CONTROLS_TOGGLED:
+      return {
+        ...state,
+        dualControls: !state.dualControls,
+      };
     default:
       return initialState;
   }

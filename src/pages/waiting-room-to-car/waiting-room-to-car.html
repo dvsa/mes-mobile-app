@@ -74,7 +74,7 @@
                 <label for="school-car">School car</label>
               </ion-col>
               <ion-col>
-                <input type="checkbox" id="dual-control" class="gds-checkbox">
+                <input type="checkbox" id="dual-control" class="gds-checkbox" [checked]="pageState.dualControls$ | async" (click)="dualControlsToggled()">
                 <label for="dual-control">Dual control</label>
               </ion-col>
             </ion-row>
