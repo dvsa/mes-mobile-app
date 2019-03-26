@@ -47,7 +47,7 @@ describe('Authentication interceptor', () => {
           useClass: AuthInterceptor,
           multi: true,
         },
-        { provide: DateTimeProvider, useClass: DateTimeProviderMock},
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     });
     platform = TestBed.get(Platform);
