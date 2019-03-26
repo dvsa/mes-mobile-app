@@ -20,6 +20,8 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -29,7 +31,6 @@ describe('LoginPage', () => {
   let authenticationProvider: AuthenticationProvider;
   let appConfigProvider: AppConfigProvider;
   let store$: Store<StoreModel>;
-  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -48,6 +49,7 @@ describe('LoginPage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()
@@ -58,7 +60,6 @@ describe('LoginPage', () => {
         splashScreen = TestBed.get(SplashScreen);
         authenticationProvider = TestBed.get(AuthenticationProvider);
         appConfigProvider = TestBed.get(AppConfigProvider);
-        deviceProvider = TestBed.get(DeviceProvider);
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
@@ -76,7 +77,6 @@ describe('LoginPage', () => {
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.login();
       tick();
-      console.log(`device id ${deviceProvider.getDeviceType()}`);
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();

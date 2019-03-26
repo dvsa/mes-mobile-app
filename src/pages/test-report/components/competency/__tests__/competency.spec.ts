@@ -13,6 +13,8 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
 import { FaultCounterComponent } from '../../fault-counter/fault-counter';
+import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -45,6 +47,7 @@ describe('CompetencyComponent', () => {
       providers: [
         HammerProvider,
         Renderer2,
+        { provide: DateTimeProvider, useCalss: DateTimeProviderMock },
       ],
     })
       .compileComponents()

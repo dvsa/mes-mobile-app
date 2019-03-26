@@ -14,6 +14,8 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { CompetencyComponent } from '../components/competency/competency';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -35,6 +37,7 @@ describe('TestReportPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()

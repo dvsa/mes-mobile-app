@@ -17,6 +17,8 @@ import { ExaminerWorkSchedule } from '../../../shared/models/DJournal';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../date-time/date-time';
+import { DateTimeProviderMock } from '../../date-time/__mocks__/date-time.mock';
 
 describe('JournalProvider', () => {
 
@@ -42,6 +44,7 @@ describe('JournalProvider', () => {
         { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: Network, useClass: NetworkMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     });
 

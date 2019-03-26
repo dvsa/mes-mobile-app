@@ -19,12 +19,12 @@ export const getLastRefreshedTime = (date: Date) => isNil(date) ? '--:--' : Date
 
 export const getSelectedDate = (journal: JournalModel) => journal.selectedDate;
 
-export const canNavigateToPreviousDay = (journal: JournalModel): boolean => {
+export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime): boolean => {
   const selectedDate = journal.selectedDate;
   const availableDays = getAvailableDays(journal);
   const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
 
-  return !isToday(selectedDate) && availableDays.includes(previousDay);
+  return selectedDate !== today.format('YYYY-MM-DD') && availableDays.includes(previousDay);
 };
 
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
@@ -33,5 +33,3 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
 
   return availableDays.includes(nextDay);
 };
-
-export const isToday = (selectedDate: string): boolean => DateTime.now().format('YYYY-MM-DD') === selectedDate;

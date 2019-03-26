@@ -20,7 +20,7 @@ export const environment: LocalEnvironmentFile = {
   ],
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
-    autoRefreshInterval: 100000,
+    autoRefreshInterval: 1000 * 60 * 10,
     numberOfDaysToView: 7,
     allowTests: true,
     allowedTestCategories: ['B'],

@@ -23,6 +23,7 @@ import { SlotProvider } from '../../providers/slot/slot';
 import { JournalAnalyticsEffects } from './journal.analytics.effects';
 import { LanguageComponent } from './components/language/language';
 import { JournalLogsEffects } from './journal.logs.effects';
+import { DateTimeProvider } from '../../providers/date-time/date-time';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { JournalLogsEffects } from './journal.logs.effects';
     SlotProvider,
     SlotSelectorProvider,
     AnalyticsProvider,
+    DateTimeProvider,
   ],
 })
 export class JournalPageModule {}

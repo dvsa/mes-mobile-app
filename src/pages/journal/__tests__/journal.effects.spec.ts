@@ -1,4 +1,3 @@
-
 import { TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -26,6 +25,8 @@ import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -65,6 +66,7 @@ describe('Journal Effects', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         Store,
         SlotProvider,
       ],
@@ -125,8 +127,9 @@ describe('Journal Effects', () => {
 
   it('should dispatch the SetSelectedDate action with the correct date in the select next day effect', (done) => {
     // ARRANGE
-    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
-    const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
+    const selectedDate: string = new DateTime().format('YYYY-MM-DD');
+    const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
+    store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,
       ConnectionStatus.ONLINE,
@@ -146,7 +149,7 @@ describe('Journal Effects', () => {
 
   it('should dispatch the SetSelectedDate action with the correct date in the select previous day effect', (done) => {
     // ARRANGE
-    const selectedDate: string = DateTime.now().format('YYYY-MM-DD'); // Today
+    const selectedDate: string = new DateTime().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
     store$.dispatch(new journalActions.LoadJournalSuccess(
       journalSlotsDataMock,

@@ -24,6 +24,8 @@ import {
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import { LockScreenProvider } from '../../../providers/lock-screen/lock-screen';
 import { LockScreenProviderMock } from '../../../providers/lock-screen/__mocks__/lock-screen.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -67,6 +69,7 @@ describe('WaitingRoomPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: LockScreenProvider, useClass: LockScreenProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()

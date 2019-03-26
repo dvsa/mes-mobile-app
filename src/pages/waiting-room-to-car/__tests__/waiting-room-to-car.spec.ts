@@ -6,6 +6,8 @@ import { AppModule } from '../../../app/app.module';
 import { WaitingRoomToCarPage } from '../waiting-room-to-car';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -21,6 +23,7 @@ describe('WaitingRoomToCarPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()

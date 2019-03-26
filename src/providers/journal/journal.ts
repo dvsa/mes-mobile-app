@@ -9,6 +9,7 @@ import { DataStoreProvider } from '../data-store/data-store';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 import { from } from 'rxjs/observable/from';
 import { AppConfigProvider } from '../app-config/app-config';
+import { DateTimeProvider } from '../date-time/date-time';
 
 type JournalCache = {
   dateStored: string,
@@ -24,6 +25,7 @@ export class JournalProvider {
     public dataStore: DataStoreProvider,
     public networkStateProvider: NetworkStateProvider,
     private appConfigProvider: AppConfigProvider,
+    private dateTimeProvider: DateTimeProvider,
   ) {}
 
   getJournal(lastRefreshed: Date): Observable<ExaminerWorkSchedule> {
@@ -86,7 +88,7 @@ export class JournalProvider {
   saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
     if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {
       const journalDataToStore: JournalCache = {
-        dateStored: DateTime.now().format('YYYY/MM/DD'),
+        dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
         data: journalData,
       };
       this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then((response) => {});
@@ -112,7 +114,7 @@ export class JournalProvider {
   emptyCachedData = () => {
     const emptyJournalData: ExaminerWorkSchedule = {};
     const journalDataToStore: JournalCache = {
-      dateStored: DateTime.now().format('YYYY/MM/DD'),
+      dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
       data: emptyJournalData,
     };
     this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then(() => {});

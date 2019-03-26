@@ -30,6 +30,8 @@ import { By } from '@angular/platform-browser';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -58,6 +60,7 @@ describe('JournalPage', () => {
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()
