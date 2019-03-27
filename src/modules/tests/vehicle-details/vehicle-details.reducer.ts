@@ -1,5 +1,6 @@
 import * as vehicleDetailsActions from './vehicle-details.actions';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/B';
+import { createFeatureSelector } from '@ngrx/store';
 
 const initialState: VehicleDetails = {};
 
@@ -34,3 +35,5 @@ export const vehicleDetailsReducer = (state = initialState, action: vehicleDetai
       return state;
   }
 };
+
+export const getVehicleDetails = createFeatureSelector<VehicleDetails>('vehicleDetails');

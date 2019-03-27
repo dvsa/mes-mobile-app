@@ -23,6 +23,8 @@ import {
   OtherAccompanimentToggled,
   SupervisorAccompanimentToggled,
 } from '../../modules/tests/accompaniment/accompaniment.actions';
+import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getAccompaniment } from '../../modules/tests/accompaniment/accompaniment.reducer';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
@@ -64,37 +66,37 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     this.pageState = {
       registrationNumber$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.vehicleDetails),
+        select(getVehicleDetails),
         select(vd => vd.registrationNumber),
       ),
       transmission$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.vehicleDetails),
+        select(getVehicleDetails),
         select(vd => vd.gearboxCategory),
       ),
       schoolCar$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.vehicleDetails),
+        select(getVehicleDetails),
         select(vd => vd.schoolCar),
       ),
       dualControls$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.vehicleDetails),
+        select(getVehicleDetails),
         select(vd => vd.dualControls),
       ),
       instructorAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.accompaniment),
+        select(getAccompaniment),
         select(a => a.ADI),
       ),
       supervisorAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.accompaniment),
+        select(getAccompaniment),
         select(a => a.supervisor),
       ),
       otherAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
-        select(t => t.accompaniment),
+        select(getAccompaniment),
         select(a => a.other),
       ),
     };

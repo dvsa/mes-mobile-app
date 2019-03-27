@@ -1,5 +1,6 @@
 import * as accompanimentActions from './accompaniment.actions';
 import { Accompaniment } from '@dvsa/mes-test-schema/categories/B';
+import { createFeatureSelector } from '@ngrx/store';
 
 const initialState: Accompaniment = {};
 
@@ -23,3 +24,5 @@ export const accompanimentReducer = (state = initialState, action: accompaniment
   }
   return state;
 };
+
+export const getAccompaniment = createFeatureSelector<Accompaniment>('accompaniment');
