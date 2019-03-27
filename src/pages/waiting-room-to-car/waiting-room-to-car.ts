@@ -31,6 +31,11 @@ import {
   getSchoolCar,
   getDualControls,
 } from '../../modules/tests/vehicle-details/vehicle-details.selector';
+import {
+  getInstructorAccompaniment,
+  getSupervisorAccompaniment,
+  getOtherAccompaniment,
+} from '../../modules/tests/accompaniment/accompaniment.selector';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
@@ -93,17 +98,17 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       instructorAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
         select(getAccompaniment),
-        select(a => a.ADI),
+        select(getInstructorAccompaniment),
       ),
       supervisorAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
         select(getAccompaniment),
-        select(a => a.supervisor),
+        select(getSupervisorAccompaniment),
       ),
       otherAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
         select(getAccompaniment),
-        select(a => a.other),
+        select(getOtherAccompaniment),
       ),
     };
     this.inputSubscriptions = [
