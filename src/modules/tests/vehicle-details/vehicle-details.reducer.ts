@@ -5,6 +5,16 @@ const initialState: VehicleDetails = {};
 
 export const vehicleDetailsReducer = (state = initialState, action: vehicleDetailsActions.Types) => {
   switch (action.type) {
+    case vehicleDetailsActions.VEHICLE_REGISTRATION_CHANGED:
+      return {
+        ...state,
+        registrationNumber: action.vehicleRegistration,
+      };
+    case vehicleDetailsActions.INSTRUCTOR_VEHICLE_REGISTRATION_CHANGED:
+      return {
+        ...state,
+        instructorRegistrationNumber: action.instructorVehicleRegistration,
+      };
     case vehicleDetailsActions.SCHOOL_CAR_TOGGLED:
       return {
         ...state,

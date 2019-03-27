@@ -2,12 +2,19 @@ import { Action } from '@ngrx/store';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 
 export const VEHICLE_REGISTRATION_CHANGED = '[Vehicle Details] Registration changed';
+export const INSTRUCTOR_VEHICLE_REGISTRATION_CHANGED = '[Vehicle Details] Instructor registration changed';
 export const SCHOOL_CAR_TOGGLED = '[Vehicle Details] School car toggled';
 export const DUAL_CONTROLS_TOGGLED = '[Vehicle Details] Dual controls toggled';
 export const GEARBOX_CATEGORY_CHANGED = '[Vehicle Details] Gearbox category changed';
 
 export class VehicleRegistrationChanged implements Action {
   readonly type = VEHICLE_REGISTRATION_CHANGED;
+  constructor(public vehicleRegistration: string) {}
+}
+
+export class InstructorVehicleRegistrationChanged implements Action {
+  readonly type = INSTRUCTOR_VEHICLE_REGISTRATION_CHANGED;
+  constructor(public instructorVehicleRegistration: string) {}
 }
 
 export class SchoolCarToggled implements Action {
@@ -25,6 +32,7 @@ export class GearboxCategoryChanged implements Action {
 
 export type Types =
   | VehicleRegistrationChanged
+  | InstructorVehicleRegistrationChanged
   | SchoolCarToggled
   | DualControlsToggled
   | GearboxCategoryChanged;

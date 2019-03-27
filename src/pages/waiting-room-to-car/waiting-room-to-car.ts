@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -12,7 +12,12 @@ import {
   SchoolCarToggled,
   DualControlsToggled,
   GearboxCategoryChanged,
+  VehicleRegistrationChanged,
+  InstructorVehicleRegistrationChanged,
 } from '../../modules/tests/vehicle-details/vehicle-details.actions';
+import { fromEvent } from 'rxjs/Observable/fromEvent';
+import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
@@ -28,6 +33,14 @@ interface WaitingRoomToCarPageState {
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   pageState: WaitingRoomToCarPageState;
+
+  @ViewChild('registrationInput')
+  regisrationInput: ElementRef;
+
+  @ViewChild('instructorRegistrationInput')
+  instructorRegisrationInput: ElementRef;
+
+  inputSubscriptions: Subscription[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -62,6 +75,18 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(vd => vd.dualControls),
       ),
     };
+    this.inputSubscriptions = [
+      fromEvent(this.regisrationInput.nativeElement, 'keyup').pipe(
+        map((event: any) => event.target.value),
+        debounceTime(1000),
+        distinctUntilChanged(),
+      ).subscribe((regNo: string) => this.store$.dispatch(new VehicleRegistrationChanged(regNo))),
+      fromEvent(this.instructorRegisrationInput.nativeElement, 'keyup').pipe(
+        map((event: any) => event.target.value),
+        debounceTime(1000),
+        distinctUntilChanged(),
+      ).subscribe((regNo: string) => this.store$.dispatch(new InstructorVehicleRegistrationChanged(regNo))),
+    ];
   }
 
   ionViewDidEnter(): void {
