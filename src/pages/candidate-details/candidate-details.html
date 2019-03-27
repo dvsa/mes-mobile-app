@@ -24,39 +24,39 @@
     <ion-card-content>
       <ion-grid>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Test category</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <span class="mes-data">{{(pageState.details$ | async).testCategory}}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Slot type</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <span class="mes-data">{{ (pageState.details$ | async).slotType }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Driver number</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <span class="mes-data">{{ (pageState.details$ | async).driverNumber }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Application number</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Special requirements</label>
             <img 
               alt="Exclamation Indicator"
@@ -65,7 +65,7 @@
               *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)"
             />
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <div class="mes-data" *ngIf="!specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
               {{(pageState.details$ | async).specialNeeds}}
             </div>
@@ -75,7 +75,7 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Entitlement Check</label>
             <img
               alt="Exclamation Indicator" 
@@ -83,15 +83,15 @@
               class="exclamation-indicator"
             />
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <div class="mes-data">Entitlement check is required. Call deployment</div>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row">
-            <ion-col col-4>
+            <ion-col col-5>
               <label>Additional information</label>
             </ion-col>
-            <ion-col col-8>
+            <ion-col col-7>
               <div class="mes-data" *ngIf="(pageState.details$ | async).candidateComments.isSectionEmpty">
                 None
               </div>
@@ -115,26 +115,26 @@
     <ion-card-content>
       <ion-grid>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Phone number</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <span class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Email</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <span class="mes-data">{{ (pageState.details$ | async).email }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row">
-          <ion-col col-4>
+          <ion-col col-5>
             <label>Address</label>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-7>
             <div class="mes-data">{{ (pageState.details$ | async).address.street }}</div>
             <div class="mes-data">{{ (pageState.details$ | async).address.city }}</div>
             <div class="mes-data">{{ (pageState.details$ | async).address.postcode }}</div>
