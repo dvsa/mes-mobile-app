@@ -21,27 +21,6 @@
             <label>Tell me question</label>
           </ion-col>
         </ion-row>
-        <ion-row class="mes-full-width-card" id="accompaniment-card">
-          <ion-col col-4>
-            <label>Accompanied by (optional)</label>
-          </ion-col>
-          <ion-col>
-            <ion-row justify-content-between>
-              <ion-col>
-                <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox" [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
-                <label for="accompaniment-instructor">Ins</label>
-              </ion-col>
-              <ion-col>
-                <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox" [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
-                <label for="accompaniment-supervisor">Sup</label>
-              </ion-col>
-              <ion-col>
-                <input type="checkbox" id="accompaniment-other" class="gds-checkbox" [checked]="pageState.otherAccompaniment$ | async" (click)="otherAccompanimentToggled()">
-                <label for="accompaniment-other">Other</label>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row>
         <ion-row class="mes-full-width-card" id="registration-card">
           <ion-col col-4>
             <label>Registration number</label>
@@ -61,6 +40,27 @@
           <ion-col>
             <input type="radio" name="transmission" id="transmission-automatic" class="gds-radio-button" (click)="automaticTransmission()">
             <label for="transmission-automatic" class="radio-label">Automatic</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="accompaniment-card">
+          <ion-col col-4>
+            <label>Accompanied by (optional)</label>
+          </ion-col>
+          <ion-col>
+            <ion-row justify-content-between>
+              <ion-col>
+                <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox" [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
+                <label for="accompaniment-instructor">Ins</label>
+              </ion-col>
+              <ion-col>
+                <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox" [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
+                <label for="accompaniment-supervisor">Sup</label>
+              </ion-col>
+              <ion-col>
+                <input type="checkbox" id="accompaniment-other" class="gds-checkbox" [checked]="pageState.otherAccompaniment$ | async" (click)="otherAccompanimentToggled()">
+                <label for="accompaniment-other">Other</label>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="vehicle-details-card">
