@@ -13,7 +13,6 @@ import {
   DualControlsToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
-  InstructorVehicleRegistrationChanged,
 } from '../../modules/tests/vehicle-details/vehicle-details.actions';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
@@ -25,6 +24,7 @@ import {
 } from '../../modules/tests/accompaniment/accompaniment.actions';
 import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
 import { getAccompaniment } from '../../modules/tests/accompaniment/accompaniment.reducer';
+import { InstructorRegistrationNumberChanged } from '../../modules/tests/instructor-details/instructor-details.actions';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
@@ -110,7 +110,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         map((event: any) => event.target.value),
         debounceTime(1000),
         distinctUntilChanged(),
-      ).subscribe((regNo: string) => this.store$.dispatch(new InstructorVehicleRegistrationChanged(regNo))),
+      ).subscribe((regNo: string) => this.store$.dispatch(new InstructorRegistrationNumberChanged(regNo))),
     ];
   }
 
