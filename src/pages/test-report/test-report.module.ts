@@ -13,6 +13,8 @@ import { FaultCounterComponent } from './components/fault-counter/fault-counter'
 import { TickIndicatorComponent } from './components/tick-indicator/tick-indicator';
 import { DrivingFaultSummaryComponent } from './components/driving-fault-summary/driving-fault-summary';
 import { ToolbarComponent } from './components/toolbar/toolbar';
+import { StoreModule } from '@ngrx/store';
+import { testReportReducer } from './test-report.reducer';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar';
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),
+    StoreModule.forFeature('testReport', testReportReducer),
     EffectsModule.forFeature([TestReportAnalyticsEffects]),
   ],
   providers: [
