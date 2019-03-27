@@ -25,6 +25,12 @@ import {
 import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
 import { getAccompaniment } from '../../modules/tests/accompaniment/accompaniment.reducer';
 import { InstructorRegistrationNumberChanged } from '../../modules/tests/instructor-details/instructor-details.actions';
+import {
+  getRegistrationNumber,
+  getGearboxCategory,
+  getSchoolCar,
+  getDualControls,
+} from '../../modules/tests/vehicle-details/vehicle-details.selector';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
@@ -67,22 +73,22 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       registrationNumber$: this.store$.pipe(
         select(getCurrentTest),
         select(getVehicleDetails),
-        select(vd => vd.registrationNumber),
+        select(getRegistrationNumber),
       ),
       transmission$: this.store$.pipe(
         select(getCurrentTest),
         select(getVehicleDetails),
-        select(vd => vd.gearboxCategory),
+        select(getGearboxCategory),
       ),
       schoolCar$: this.store$.pipe(
         select(getCurrentTest),
         select(getVehicleDetails),
-        select(vd => vd.schoolCar),
+        select(getSchoolCar),
       ),
       dualControls$: this.store$.pipe(
         select(getCurrentTest),
         select(getVehicleDetails),
-        select(vd => vd.dualControls),
+        select(getDualControls),
       ),
       instructorAccompaniment$: this.store$.pipe(
         select(getCurrentTest),
