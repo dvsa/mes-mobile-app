@@ -7,6 +7,7 @@ export const initialState: TestData = {
   drivingFaults: {},
   manoeuvres: {},
   seriousFaults: {},
+  testRequirements: {},
 };
 
 export function testDataReducer(
