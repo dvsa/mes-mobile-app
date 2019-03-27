@@ -12,17 +12,17 @@
     <form>
       <ion-grid>
         <ion-row class="mes-full-width-card" id="eyesight-test-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Eyesight test</label>
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="tell-me-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Tell me question</label>
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="registration-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Registration number</label>
           </ion-col>
           <ion-col>
@@ -30,10 +30,10 @@
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="transmission-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Transmission</label>
           </ion-col>
-          <ion-col>
+          <ion-col col-23>
             <input type="radio" name="transmission" id="transmission-manual" class="gds-radio-button" (click)="manualTransmission()">
             <label for="transmission-manual" class="radio-label">Manual</label>
           </ion-col>
@@ -43,16 +43,16 @@
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="accompaniment-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Accompanied by (optional)</label>
           </ion-col>
           <ion-col>
-            <ion-row justify-content-between>
-              <ion-col>
+            <ion-row>
+              <ion-col col-34>
                 <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox" [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
                 <label for="accompaniment-instructor">Ins</label>
               </ion-col>
-              <ion-col>
+              <ion-col col-34>
                 <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox" [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
                 <label for="accompaniment-supervisor">Sup</label>
               </ion-col>
@@ -64,12 +64,12 @@
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="vehicle-details-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Vehicle details (optional)</label>
           </ion-col>
           <ion-col>
             <ion-row>
-              <ion-col>
+              <ion-col col-34>
                 <input type="checkbox" id="school-car" class="gds-checkbox" [checked]="pageState.schoolCar$ | async" (click)="schoolCarToggled()">
                 <label for="school-car">School car</label>
               </ion-col>
@@ -81,7 +81,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="instructor-registration-card">
-          <ion-col col-4>
+          <ion-col col-32>
             <label>Instructor registration number (optional)</label>
           </ion-col>
           <ion-col>
