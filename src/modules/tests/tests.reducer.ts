@@ -1,16 +1,11 @@
-import * as preTestDeclarationActions from './pre-test-declarations/pre-test-declarations.actions';
 import * as testOutcomeActions from '../../pages/journal/components/test-outcome/test-outcome.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
-import { combineReducers } from '@ngrx/store';
+import { combineReducers, Action } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { testDataReducer } from './test_data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
-import * as vehicleDetailsActions from './vehicle-details/vehicle-details.actions';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-
-// Extend this with any new test domain action types
-type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types | vehicleDetailsActions.Types;
 
 export interface CurrentTest {
   slotId: string;
@@ -34,7 +29,7 @@ const initialState: TestsModel = {
  */
 export const testsReducer = (
   state = initialState,
-  action: TestAction,
+  action: Action,
 ) => {
   const slotId = deriveSlotId(state, action);
   if (!slotId) {
