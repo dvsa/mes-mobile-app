@@ -31,6 +31,6 @@ export const vehicleDetailsReducer = (state = initialState, action: vehicleDetai
         gearboxCategory: action.gearboxCategory,
       };
     default:
-      return initialState;
+      return state;
   }
 };
