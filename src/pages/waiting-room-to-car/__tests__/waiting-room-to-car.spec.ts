@@ -73,44 +73,51 @@ describe('WaitingRoomToCarPage', () => {
   describe('DOM', () => {
     describe('changing transmission', () => {
       it('should dispatch a change to manual gearbox category action when manual is clicked', () => {
-        const manualRadio = fixture.debugElement.query(By.css('#transmission-manual')).nativeElement;
-        manualRadio.click();
+        const manualRadio = fixture.debugElement.query(By.css('#transmission-manual'));
+        manualRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
       });
       it('should dispatch a change to automatic gearbox category action when automatic is clicked', () => {
-        const automaticRadio = fixture.debugElement.query(By.css('#transmission-automatic')).nativeElement;
-        automaticRadio.click();
+        const automaticRadio = fixture.debugElement.query(By.css('#transmission-automatic'));
+        automaticRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Automatic'));
       });
     });
 
     describe('changing accompaniment status', () => {
       it('should dispatch a toggle instructor accompaniment action when Ins is clicked', () => {
-        const instructorCb = fixture.debugElement.query(By.css('#accompaniment-instructor')).nativeElement;
-        instructorCb.click();
+        const instructorCb = fixture.debugElement.query(By.css('#accompaniment-instructor'));
+        instructorCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new InstructorAccompanimentToggled());
       });
       it('should dispatch a toggle supervisor accompaniment action when Sup is clicked', () => {
-        const supervisorCb = fixture.debugElement.query(By.css('#accompaniment-supervisor')).nativeElement;
-        supervisorCb.click();
+        const supervisorCb = fixture.debugElement.query(By.css('#accompaniment-supervisor'));
+        supervisorCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new SupervisorAccompanimentToggled());
       });
       it('should dispatch a toggle other accompaniment action when Other is clicked', () => {
-        const otherCb = fixture.debugElement.query(By.css('#accompaniment-other')).nativeElement;
-        otherCb.click();
+        const otherCb = fixture.debugElement.query(By.css('#accompaniment-other'));
+        otherCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new OtherAccompanimentToggled());
       });
     });
 
     describe('setting optional vehicle details', () => {
       it('should dispatch a toggle school car action when school car is selected', () => {
-        const schoolCarCb = fixture.debugElement.query(By.css('#school-car')).nativeElement;
-        schoolCarCb.click();
+        const schoolCarCb = fixture.debugElement.query(By.css('#school-car'));
+        schoolCarCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new SchoolCarToggled());
       });
       it('should dispatch a toggle dual controls action when dual controls is selected', () => {
-        const dualControlCb = fixture.debugElement.query(By.css('#dual-control')).nativeElement;
-        dualControlCb.click();
+        const dualControlCb = fixture.debugElement.query(By.css('#dual-control'));
+        dualControlCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new DualControlsToggled());
       });
     });

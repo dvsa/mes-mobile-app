@@ -48,7 +48,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   @ViewChild('instructorRegistrationInput')
   instructorRegisrationInput: ElementRef;
 
-  inputSubscriptions: Subscription[];
+  inputSubscriptions: Subscription[] = [];
 
   constructor(
     private store$: Store<StoreModel>,
