@@ -23,6 +23,14 @@ export function testDataReducer(
           [action.payload.competency] : action.payload.newFaultCount,
         },
       };
+    case testDataActions.ADD_SERIOUS_FAULT:
+      return {
+        ...state,
+        seriousFaults: {
+          ...state.seriousFaults,
+          [action.payload.competency]: action.payload.newFaultCount,
+        },
+      };
 
     default:
       return state;
