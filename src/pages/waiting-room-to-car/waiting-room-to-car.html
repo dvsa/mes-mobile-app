@@ -42,6 +42,14 @@
             <label for="transmission-automatic" class="radio-label">Automatic</label>
           </ion-col>
         </ion-row>
+        <ion-row class="mes-full-width-card" id="instructor-registration-card" align-items-center>
+          <ion-col col-32>
+            <label>Instructor registration number (optional)</label>
+          </ion-col>
+          <ion-col>
+            <input #instructorRegistrationInput type="text" id="instructor-registration" class="vehicle-reg-input">
+          </ion-col>
+        </ion-row>
         <ion-row class="mes-full-width-card" id="accompaniment-card" align-items-center>
           <ion-col col-32>
             <label>Accompanied by (optional)</label>
@@ -78,14 +86,6 @@
                 <label for="dual-control">Dual control</label>
               </ion-col>
             </ion-row>
-          </ion-col>
-        </ion-row>
-        <ion-row class="mes-full-width-card" id="instructor-registration-card" align-items-center>
-          <ion-col col-32>
-            <label>Instructor registration number (optional)</label>
-          </ion-col>
-          <ion-col>
-            <input #instructorRegistrationInput type="text" id="instructor-registration" class="vehicle-reg-input">
           </ion-col>
         </ion-row>
       </ion-grid>
