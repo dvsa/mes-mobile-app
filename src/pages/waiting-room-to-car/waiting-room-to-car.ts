@@ -18,12 +18,20 @@ import {
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
+import {
+  InstructorAccompanimentToggled,
+  OtherAccompanimentToggled,
+  SupervisorAccompanimentToggled,
+} from '../../modules/tests/accompaniment/accompaniment.actions';
 
 interface WaitingRoomToCarPageState {
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
   schoolCar$: Observable<boolean>;
   dualControls$: Observable<boolean>;
+  instructorAccompaniment$: Observable<boolean>;
+  supervisorAccompaniment$: Observable<boolean>;
+  otherAccompaniment$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -74,6 +82,21 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(t => t.vehicleDetails),
         select(vd => vd.dualControls),
       ),
+      instructorAccompaniment$: this.store$.pipe(
+        select(getCurrentTest),
+        select(t => t.accompaniment),
+        select(a => a.ADI),
+      ),
+      supervisorAccompaniment$: this.store$.pipe(
+        select(getCurrentTest),
+        select(t => t.accompaniment),
+        select(a => a.supervisor),
+      ),
+      otherAccompaniment$: this.store$.pipe(
+        select(getCurrentTest),
+        select(t => t.accompaniment),
+        select(a => a.other),
+      ),
     };
     this.inputSubscriptions = [
       fromEvent(this.regisrationInput.nativeElement, 'keyup').pipe(
@@ -107,5 +130,17 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   automaticTransmission(): void {
     this.store$.dispatch(new GearboxCategoryChanged('Automatic'));
+  }
+
+  instructorAccompanimentToggled(): void {
+    this.store$.dispatch(new InstructorAccompanimentToggled());
+  }
+
+  supervisorAccompanimentToggled(): void {
+    this.store$.dispatch(new SupervisorAccompanimentToggled());
+  }
+
+  otherAccompanimentToggled(): void {
+    this.store$.dispatch(new OtherAccompanimentToggled());
   }
 }

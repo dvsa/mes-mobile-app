@@ -28,15 +28,15 @@
           <ion-col>
             <ion-row justify-content-between>
               <ion-col>
-                <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox">
+                <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox" [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
                 <label for="accompaniment-instructor">Ins</label>
               </ion-col>
               <ion-col>
-                <input type="checkbox" id="accompaniment-suplementary" class="gds-checkbox">
-                <label for="accompaniment-suplementary">Sup</label>
+                <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox" [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
+                <label for="accompaniment-supervisor">Sup</label>
               </ion-col>
               <ion-col>
-                <input type="checkbox" id="accompaniment-other" class="gds-checkbox">
+                <input type="checkbox" id="accompaniment-other" class="gds-checkbox" [checked]="pageState.otherAccompaniment$ | async" (click)="otherAccompanimentToggled()">
                 <label for="accompaniment-other">Other</label>
               </ion-col>
             </ion-row>

@@ -7,6 +7,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { testDataReducer } from './test_data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import * as vehicleDetailsActions from './vehicle-details/vehicle-details.actions';
+import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 
 // Extend this with any new test domain action types
 type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types | vehicleDetailsActions.Types;
@@ -55,6 +56,7 @@ export const testsReducer = (
             candidate: candidateReducer,
             testData: testDataReducer,
             vehicleDetails: vehicleDetailsReducer,
+            accompaniment: accompanimentReducer,
           },
         // @ts-ignore
         )(state.startedTests[slotId], action),
