@@ -15,6 +15,7 @@ import { MockComponent } from 'ng-mocks';
 import { FaultCounterComponent } from '../../fault-counter/fault-counter';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
+import { SeriousFaultBadgeComponent } from '../../serious-fault-badge/serious-fault-badge';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -29,6 +30,7 @@ describe('CompetencyComponent', () => {
       declarations: [
         CompetencyComponent,
         MockComponent(FaultCounterComponent),
+        MockComponent(SeriousFaultBadgeComponent),
       ],
       imports: [
         AppModule,
@@ -41,6 +43,9 @@ describe('CompetencyComponent', () => {
               testData: initialState,
             },
           },
+        })),
+        StoreModule.forFeature('testReport', () => ({
+          seriousMode: false,
         })),
       ],
       providers: [

@@ -15,6 +15,7 @@ import { DrivingFaultSummaryComponent } from './components/driving-fault-summary
 import { ToolbarComponent } from './components/toolbar/toolbar';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from './test-report.reducer';
+import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/serious-fault-badge';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { testReportReducer } from './test-report.reducer';
     CompetencyWithModalComponent,
     ManoeuvresPopoverComponent,
     ToolbarComponent,
+    SeriousFaultBadgeComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),

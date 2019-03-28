@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
+import { Competencies } from './test-data.constants';
 
 export const ADD_DRIVING_FAULT = '[TestData] Add Driving Fault';
 
@@ -11,7 +12,7 @@ export class AddDrivingFault implements Action {
 }
 
 export class AddSeriousFault implements Action {
-  constructor(public payload: FaultPayload) { }
+  constructor(public payload: Competencies) { }
   readonly type = ADD_SERIOUS_FAULT;
 }
 

@@ -78,4 +78,11 @@ page-test-report {
     padding: 12px 17px;
     background: map-get($colors, 'mes-white');
   }
+
+  ion-grid {
+    border: 6px solid map-get($colors-gds, 'gds-grey-3');
+  }
+  .seriousMode {
+    border: 6px solid #FFBF47;
+  }
 }

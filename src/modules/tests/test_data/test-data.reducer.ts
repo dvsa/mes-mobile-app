@@ -28,7 +28,7 @@ export function testDataReducer(
         ...state,
         seriousFaults: {
           ...state.seriousFaults,
-          [action.payload.competency]: action.payload.newFaultCount,
+          [action.payload]: true,
         },
       };
 
