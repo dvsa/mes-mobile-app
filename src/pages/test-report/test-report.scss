@@ -7,7 +7,7 @@ page-test-report {
     box-sizing: border-box;
     border: 6px solid map-get($colors-gds, 'gds-grey-3');
     &.serious-mode {
-      border: 6px solid #FFBF47;
+      border: 6px solid map-get($colors-gds, 'gds-yellow');
     }
   }
 
@@ -88,17 +88,10 @@ page-test-report {
     background: map-get($colors, 'mes-white');
   }
 
-  ion-grid {
-    border: 6px solid map-get($colors-gds, 'gds-grey-3');
-  }
-  .seriousMode {
-    border: 6px solid #FFBF47;
-  }
-
   .serious-button{
     width: 88px;
     height: 43px;
-    border: 3.5px solid #FFBF47;
+    border: 3.5px solid map-get($colors-gds, 'gds-yellow');
     border-radius: 10px;
     color: #0B0C0C;
     font-size: 24px;
@@ -107,11 +100,11 @@ page-test-report {
     letter-spacing: -0.26px;
     line-height: 25px;
      &.inactive {
-      background: #FFFFFF;
-      box-shadow: 0 1px 0 0 #6F777B;
+      background: map-get($colors, 'mes-white');
+      box-shadow: 0 1px 0 0 map-get($colors-gds, 'gds-grey-1');
     }
     &.active {
-      background: #FFBF47;
+      background: map-get($colors-gds, 'gds-yellow');
     }
   }
 }
