@@ -12,7 +12,7 @@ import { TestOutcomeStartTest } from '../../../../journal/components/test-outcom
 import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
 
-fdescribe('DrivingFaultSummary', () => {
+describe('DrivingFaultSummary', () => {
   let fixture: ComponentFixture<DrivingFaultSummaryComponent>;
   let component: DrivingFaultSummaryComponent;
   let store$: Store<StoreModel>;
