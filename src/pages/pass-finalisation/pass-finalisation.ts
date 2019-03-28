@@ -6,12 +6,10 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
-  PassCertificateNumberChanged,
 } from './pass-finalisation.actions';
-import { getPassCompletion } from './pass-finalisation.reducer';
-import {
-  getPassCertificateNumber,
-} from './pass-finalisation.selector';
+import { PassCertificateNumberChanged } from '../../modules/tests/pass-completion/pass-completion.actions';
+import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
+import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -87,16 +85,29 @@ export class PassFinalisationPage extends BasePageComponent {
       ),
     };
     this.inputSubscriptions = [
-      fromEvent(this.passCertificateNumberInput.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      ).subscribe((certNumber: string) => this.store$.dispatch(new PassCertificateNumberChanged(certNumber))),
+      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
     ];
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
+  }
+
+  /**
+   * Returns a subscription to the debounced changes of a particular input fields.
+   * Dispatches the provided action type to the store when a new value is yielded.
+   * @param inputRef The input to listen for changes on.
+   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
+   */
+  inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
+    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
+        map((event: any) => event.target.value),
+        debounceTime(1000),
+        distinctUntilChanged(),
+      );
+    const subscription = changeStream$
+      .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
+    return subscription;
   }
 
 }

@@ -1,4 +1,4 @@
-import * as passFinalisationActions from './pass-finalisation.actions';
+import * as passCompletionActions from './pass-completion.actions';
 import { PassCompletion } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -7,9 +7,9 @@ const initialState: PassCompletion = {
   passCertificateNumber: null,
 };
 
-export const passFinalisationReducer = (state = initialState, action: passFinalisationActions.Types) => {
+export const passCompletionReducer = (state = initialState, action: passCompletionActions.Types) => {
   switch (action.type) {
-    case passFinalisationActions.PASS_CERTIFICATE_NUMBER_CHANGED:
+    case passCompletionActions.PASS_CERTIFICATE_NUMBER_CHANGED:
       return {
         ...state,
         passCertificateNumber: action.passCertificateNumber,

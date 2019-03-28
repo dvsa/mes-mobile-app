@@ -32,13 +32,13 @@
             <label>Pass certificate number</label>
           </ion-col>
           <ion-col>
-            <input #passCertificateNumberInput type="text" id="pass-certificate-number" class="pass-cert-input" >
+            <input #passCertificateNumberInput type="text" value="{{pageState.passCertificateNumber$ | async}}" id="pass-certificate-number" class="pass-cert-input" >
           </ion-col>
         </ion-row>
       </ion-grid>
       <ion-footer>
         <ion-row class="mes-full-width-card">
-          <button type="submit" class="mes-primary-button" ion-button>
+          <button type="submit" class="mes-primary-button" navPush="HealthDeclarationPage" ion-button>
             <h3>Continue</h3>
           </button>
         </ion-row>
