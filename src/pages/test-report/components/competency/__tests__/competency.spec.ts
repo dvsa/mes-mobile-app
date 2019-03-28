@@ -1,3 +1,4 @@
+import { TickIndicatorComponent } from './../../tick-indicator/tick-indicator';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { CompetencyComponent } from '../competency';
@@ -28,6 +29,7 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyComponent,
+        TickIndicatorComponent,
         MockComponent(FaultCounterComponent),
       ],
       imports: [
@@ -101,14 +103,14 @@ describe('CompetencyComponent', () => {
     it('should show provided label', () => {
       component.competency = Competencies.controlsGears;
       fixture.detectChanges();
-      const label = fixture.debugElement.query(By.css('#competencyLabel'));
+      const label = fixture.debugElement.query(By.css('.competency-label'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
     });
   });
 
   it('should pass the number of driving faults to the fault counter component', () => {
     fixture.detectChanges();
-    const drivingFaultCounter = fixture.debugElement.query(By.css('#drivingFaults'))
+    const drivingFaultCounter = fixture.debugElement.query(By.css('.drivingFaults'))
       .componentInstance as FaultCounterComponent;
     component.faultCount = 5;
 
@@ -138,6 +140,25 @@ describe('CompetencyComponent', () => {
         expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
         done();
       },         component.rippleEffectAnimationDuration);
+    });
+
+    describe('competency control type', () => {
+      it('should display popover type control content when hasPopoverContent is true', () => {
+        component.hasPopoverContent = true;
+        fixture.detectChanges();
+        let tickDe = fixture.debugElement.query(By.css('.popover'));
+        expect(tickDe).toBeDefined();
+        tickDe = fixture.debugElement.query(By.css('.popover-label'));
+        expect(tickDe).toBeDefined();
+      });
+      it('should not display popover type control content when hasPopoverContent is false', () => {
+        component.hasPopoverContent = false;
+        fixture.detectChanges();
+        let tickDe = fixture.debugElement.query(By.css('.popover'));
+        expect(tickDe).toBeNull();
+        tickDe = fixture.debugElement.query(By.css('.popover-label'));
+        expect(tickDe).toBeNull();
+      });
     });
   });
 });

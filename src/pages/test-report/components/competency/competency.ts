@@ -13,6 +13,7 @@ import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getDrivingFaultCount } from '../../../../modules/tests/test_data/test-data.selector';
+import { ParentCallback } from '../../test-report';
 
 enum CssClassesEnum {
   DRIVING_FAULT = 'driving-fault',
@@ -32,6 +33,10 @@ export class CompetencyComponent {
 
   @Input()
   competency: Competencies;
+  @Input()
+  clickCallback: ParentCallback;
+  @Input()
+  hasPopoverContent: boolean;
 
   @ViewChild('competencyButton')
   button: ElementRef;
@@ -41,14 +46,27 @@ export class CompetencyComponent {
   competencyState: ComptencyState;
   subscription: Subscription;
   faultCount: number;
-
+  promoted: boolean;
   constructor(
-    public hammerProvider : HammerProvider,
+    public hammerProvider: HammerProvider,
     private renderer: Renderer2,
     private store$: Store<StoreModel>,
-    ) {}
+  ) {
+    this.promoted = false;
+  }
 
-  ngOnInit() : void {
+  togglePromote() {
+    if (this.hasPopoverContent) {
+      this.promoted = !this.promoted;
+      this.toggleOverlay();
+    }
+  }
+  toggleOverlay() {
+    if (this.clickCallback) {
+      this.clickCallback.callbackMethod();
+    }
+  }
+  ngOnInit(): void {
     this.hammerProvider.init(this.button);
     this.hammerProvider.addPressAndHoldEvent(this.recordFault);
 
@@ -97,7 +115,7 @@ export class CompetencyComponent {
       this.renderer.addClass(this.button.nativeElement, CssClassesEnum.DRIVING_FAULT);
       this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
       setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
-                 this.rippleEffectAnimationDuration,
+        this.rippleEffectAnimationDuration,
       );
     }
   }

@@ -1,23 +1,76 @@
 page-test-report {
   .content-ios {
-    background-color: map-get($colors-gds, 'gds-grey-3');
+    background-color: map-get($colors-gds, "gds-grey-3");
   }
   .section-header {
-    color: map-get($colors-gds, 'gds-black');
+    color: map-get($colors-gds, "gds-black");
     font-size: 17px;
     font-weight: 500;
     line-height: 25px;
     margin-left: 4px;
   }
   .divider {
-    border-top: 1px solid map-get($colors-gds, 'gds-grey-1');
+    border-top: 1px solid map-get($colors-gds, "gds-grey-1");
     margin: 4px 8px;
   }
 
   .dark-divider {
-    border-top: 1px solid #2F3233;
-    box-shadow: 0 1px 0 0 map-get($colors, 'mes-white');
+    border-top: 1px solid #2f3233;
+    box-shadow: 0 1px 0 0 map-get($colors, "mes-white");
     margin: 4px 8px;
   }
+  .report-overlay {
+    background-color: rgba(0, 0, 0, 0.68);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 120;
+    visibility: hidden;
+  }
+  @keyframes showAnimation {
+    0% {
+      opacity: 0;
+      visibility: hidden;
+    }
+    10% {
+      opacity: 0.3;
+      visibility: visible;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 
+  @keyframes hideAnimation {
+    0% {
+      opacity: 1;
+      visibility: visible;
+    }
+    30% {
+      opacity: 0.5;
+      visibility: visible;
+    }
+    99% {
+      opacity: 0;
+      visibility: visible;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  .show-overlay {
+    animation-name: showAnimation;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+  }
+  .hide-overlay {
+    animation-name: hideAnimation;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+  }
 }

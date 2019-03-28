@@ -31,6 +31,7 @@ export class TestReportPage extends BasePageComponent {
   pageState: TestReportPageState;
 
   competencies = Competencies;
+  displayOverlay: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -39,12 +40,19 @@ export class TestReportPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public screenOrientation : ScreenOrientation,
+    public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.displayOverlay = false;
   }
-
+  getCallback(): ParentCallback {
+    return {
+      callbackMethod: () => {
+        this.toggleReportOverlay();
+      },
+    };
+  }
   ngOnInit(): void {
     this.pageState = {
       candidateUntitledName$: this.store$.pipe(
@@ -63,7 +71,9 @@ export class TestReportPage extends BasePageComponent {
       this.insomnia.keepAwake();
     }
   }
-
+  toggleReportOverlay(): void {
+    this.displayOverlay = !this.displayOverlay;
+  }
   ionViewDidLeave(): void {
     if (super.isIos()) {
       this.deviceProvider.disableSingleAppMode();
@@ -71,4 +81,7 @@ export class TestReportPage extends BasePageComponent {
       this.insomnia.allowSleepAgain();
     }
   }
+}
+export interface ParentCallback {
+  callbackMethod: () => void;
 }

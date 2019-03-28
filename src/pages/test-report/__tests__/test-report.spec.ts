@@ -1,3 +1,4 @@
+import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
@@ -26,7 +27,10 @@ describe('TestReportPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestReportPage, MockComponent(CompetencyComponent)],
+      declarations: [TestReportPage,
+        MockComponent(CompetencyComponent),
+        ManoeuvresPopoverComponent,
+      ],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

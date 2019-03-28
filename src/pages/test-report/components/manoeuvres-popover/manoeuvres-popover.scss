@@ -1,0 +1,9 @@
+.popover {
+  background-color: map-get($colors, "mes-white");
+  width: 100vw;
+  height: 240px;  
+  left: 0px;
+  margin-top: 9px;
+  position: fixed;
+  z-index: 170;
+}

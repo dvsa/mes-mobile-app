@@ -1,3 +1,4 @@
+import { ManoeuvresPopoverComponent } from './components/manoeuvres-popover/manoeuvres-popover';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TestReportPage } from './test-report';
@@ -8,12 +9,15 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
 import { FaultCounterComponent } from './components/fault-counter/fault-counter';
+import { TickIndicatorComponent } from './components/tick-indicator/tick-indicator';
 
 @NgModule({
   declarations: [
     TestReportPage,
     CompetencyComponent,
     FaultCounterComponent,
+    ManoeuvresPopoverComponent,
+    TickIndicatorComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),
