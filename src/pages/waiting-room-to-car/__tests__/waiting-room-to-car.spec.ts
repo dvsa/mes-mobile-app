@@ -41,6 +41,9 @@ describe('WaitingRoomToCarPage', () => {
             123: {
               vehicleDetails: {},
               accompaniment: {},
+              candidate: {
+                candidateName: 'Joe Bloggs',
+              },
             },
           },
         })),

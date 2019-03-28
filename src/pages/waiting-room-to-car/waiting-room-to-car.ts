@@ -36,8 +36,11 @@ import {
   getSupervisorAccompaniment,
   getOtherAccompaniment,
 } from '../../modules/tests/accompaniment/accompaniment.selector';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 
 interface WaitingRoomToCarPageState {
+  candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
   transmission$: Observable<GearboxCategory>;
   schoolCar$: Observable<boolean>;
@@ -75,6 +78,11 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   ngOnInit(): void {
     this.pageState = {
+      candidateName$: this.store$.pipe(
+        select(getCurrentTest),
+        select(getCandidate),
+        select(getUntitledCandidateName),
+      ),
       registrationNumber$: this.store$.pipe(
         select(getCurrentTest),
         select(getVehicleDetails),
