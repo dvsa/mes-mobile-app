@@ -14,7 +14,7 @@ import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
 export class DebriefPage extends BasePageComponent {
 
   // Used for now to test displaying pass/fail ngIf messages
-  public passed: boolean = false;
+  public passed: boolean = true;
 
   constructor(
     private store$: Store<StoreModel>,
