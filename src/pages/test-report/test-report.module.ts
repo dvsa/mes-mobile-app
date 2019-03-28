@@ -9,6 +9,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
 import { FaultCounterComponent } from './components/fault-counter/fault-counter';
 import { DrivingFaultSummaryComponent } from './components/driving-fault-summary/driving-fault-summary';
+import { ToolbarComponent } from './components/toolbar/toolbar';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DrivingFaultSummaryComponent } from './components/driving-fault-summary
     CompetencyComponent,
     FaultCounterComponent,
     DrivingFaultSummaryComponent,
+    ToolbarComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),
