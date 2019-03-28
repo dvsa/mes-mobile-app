@@ -2,12 +2,24 @@
   <ion-navbar>
     <ion-title>Pass Finalisation</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="logout()">Logout</button>
-      </ion-buttons>
+      <button ion-button (click)="logout()">Logout</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  
+  <div id="test-outcome-background">
+    <div class="test-outcome-container passed" *ngIf="passed">
+      <h4>Test outcome</h4>
+      <h1>passed</h1>
+    </div>
+    <div class="test-outcome-container failed" *ngIf="!passed">
+      <h4>Test outcome</h4>
+      <h1>unsuccessful</h1>
+    </div>
+  </div>
+
   <ion-card>
     <ion-card-header>
       <ion-card-title>
