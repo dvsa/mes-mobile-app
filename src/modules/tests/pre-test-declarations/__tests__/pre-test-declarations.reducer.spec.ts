@@ -21,20 +21,20 @@ describe('PreTestDeclarations reducer', () => {
 
   it('should set the signature when the SignatureDataChanged action is received', () => {
     const result = preTestDeclarationsReducer(initialState, new SignatureDataChanged('ImSomeNewSignatureData'));
-    expect(result.signature).toEqual('ImSomeNewSignatureData');
+    expect(result.preTestSignature).toEqual('ImSomeNewSignatureData');
   });
 
   it('should clear the signature when the SignatureDataChanged action is received', () => {
-    initialState.signature = 'SomeSignatureData';
+    initialState.preTestSignature = 'SomeSignatureData';
     const result = preTestDeclarationsReducer(initialState, new SignatureDataCleared());
-    expect(result.signature).toEqual('');
+    expect(result.preTestSignature).toEqual('');
   });
 
   it('should reset the default state when the clear action is received', () => {
     const dirtyState: PreTestDeclarations = {
       insuranceDeclarationAccepted: true,
       residencyDeclarationAccepted: true,
-      signature: 'somesig',
+      preTestSignature: 'somesig',
     };
 
     const result = preTestDeclarationsReducer(dirtyState, new ClearPreTestDeclarations());
