@@ -54,13 +54,13 @@ describe('DrivingFaultSummary', () => {
       store$.dispatch(new TestOutcomeStartTest({ slotDetail: { slotId: 103 } }));
     });
 
-    it('should display 0 driving faults', () => {
+    it('should display 0 driving faults for a new test', () => {
       fixture.detectChanges();
       const summaryCount: HTMLElement = componentEl.query(By.css('#summary-count')).nativeElement;
       expect(summaryCount.textContent).toBe('0');
     });
 
-    it('should display 3 driving faults', () => {
+    it('should display 3 driving faults when 3 driving faults have been marked', () => {
       store$.dispatch(new AddDrivingFault({ competency: Competencies.clearance, newFaultCount: 1 }));
       store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsSteering, newFaultCount: 1 }));
       store$.dispatch(new AddDrivingFault({ competency: Competencies.moveOffControl, newFaultCount: 1 }));

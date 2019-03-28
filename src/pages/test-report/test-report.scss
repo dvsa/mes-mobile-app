@@ -22,8 +22,8 @@ page-test-report {
 
   #test-report-header {
     height: 68px;
-    padding: 12px 17px 12px 17px;
-    background: white;
+    padding: 12px 17px;
+    background: map-get($colors, 'mes-white');
   }
 
 }

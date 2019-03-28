@@ -8,7 +8,7 @@ driving-fault-summary {
     padding-top: 9px;
     border-radius: 30px;
     
-    background-color: #0B0C0C;
+    background-color: map-get($colors-gds, 'gds-black');;
     color: map-get($colors, 'mes-white');
     text-align: center;
 
