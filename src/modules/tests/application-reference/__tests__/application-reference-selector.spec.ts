@@ -3,7 +3,7 @@ import {
 } from '../application-reference.selector';
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
 
-fdescribe('application reference selector', () => {
+describe('application reference selector', () => {
   const applicationReference: ApplicationReference = {
     applicationId: 1234567,
     bookingSequence: 8,

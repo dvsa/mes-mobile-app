@@ -27,4 +27,4 @@ export function applicationReferenceReducer(
   return state;
 }
 
-export const getApplicationReference = createFeatureSelector<ApplicationReference>('application');
+export const getApplicationReference = createFeatureSelector<ApplicationReference>('applicationReference');

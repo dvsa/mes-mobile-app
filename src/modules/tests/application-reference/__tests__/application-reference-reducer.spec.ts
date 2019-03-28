@@ -2,7 +2,7 @@ import { applicationReferenceReducer } from '../application-reference.reducer';
 import { TestOutcomeStartTest } from '../../../../pages/journal/components/test-outcome/test-outcome.actions';
 import { TestSlot } from '../../../../shared/models/DJournal';
 
-fdescribe('application reference reducer', () => {
+describe('application reference reducer', () => {
   it('should return the application reference from a start test action', () => {
     const mockApplication = {
       applicationId: 1234567,
