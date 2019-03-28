@@ -115,7 +115,7 @@ export class CompetencyComponent {
       this.renderer.addClass(this.button.nativeElement, CssClassesEnum.DRIVING_FAULT);
       this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
       setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
-        this.rippleEffectAnimationDuration,
+                 this.rippleEffectAnimationDuration,
       );
     }
   }
