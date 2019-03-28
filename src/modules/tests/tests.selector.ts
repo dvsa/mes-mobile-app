@@ -1,6 +1,6 @@
-import { StoreModel } from '../../shared/models/store.model';
+import { TestsModel } from './tests.reducer';
 
-export const getCurrentTest = (rootState: StoreModel) => {
-  const currentTestSlotId = rootState.tests.currentTest.slotId;
-  return rootState.tests.startedTests[currentTestSlotId];
+export const getCurrentTest = (tests: TestsModel) => {
+  const currentTestSlotId = tests.currentTest.slotId;
+  return tests.startedTests[currentTestSlotId];
 };

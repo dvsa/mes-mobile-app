@@ -16,6 +16,7 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -26,7 +27,11 @@ describe('TestReportPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestReportPage, MockComponent(CompetencyComponent)],
+      declarations: [
+        TestReportPage,
+        MockComponent(CompetencyComponent),
+        MockComponent(DrivingFaultSummaryComponent),
+      ],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

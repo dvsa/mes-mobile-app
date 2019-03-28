@@ -16,6 +16,7 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies } from '../../modules/tests/test_data/test-data.constants';
+import { getTests } from '../../modules/tests/tests.reducer';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -48,6 +49,7 @@ export class TestReportPage extends BasePageComponent {
   ngOnInit(): void {
     this.pageState = {
       candidateUntitledName$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getUntitledCandidateName),

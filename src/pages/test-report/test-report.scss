@@ -20,4 +20,10 @@ page-test-report {
     margin: 4px 8px;
   }
 
+  #test-report-header {
+    height: 68px;
+    padding: 12px 17px;
+    background: map-get($colors, 'mes-white');
+  }
+
 }

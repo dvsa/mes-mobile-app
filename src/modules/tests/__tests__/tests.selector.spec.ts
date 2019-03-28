@@ -30,7 +30,7 @@ describe('testsSelector', () => {
         tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' } },
       };
 
-      const result = getCurrentTest(state);
+      const result = getCurrentTest(state.tests);
 
       expect(result).toBe(currentTest);
     });
