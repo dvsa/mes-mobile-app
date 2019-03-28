@@ -16,6 +16,7 @@ toolbar {
     text-align: center;
     letter-spacing: -0.26px;
     line-height: 25px;
+    margin: 0;
      &.inactive {
       background: map-get($colors, 'mes-white');
       box-shadow: 0 1px 0 0 map-get($colors-gds, 'gds-grey-1');

@@ -1,11 +1,35 @@
 <div id="wrapper">
-    <button
-    id="serious-button"
-    ion-button
-    (click)="toggleSeriousMode()"
-    [ngClass]="isSeriousMode ? 'active' : 'inactive'"
-  >
-  S
-</button>
-  <driving-fault-summary></driving-fault-summary>
+  <ion-row no-padding>
+    <ion-col col-24 no-padding>
+      R
+    </ion-col>
+    <ion-col col-12 no-padding style="padding-right:16px">
+        <button
+        id="serious-button"
+        ion-button
+        no-padding
+        (click)="toggleSeriousMode()"
+        [ngClass]="isSeriousMode ? 'active' : 'inactive'"
+      >
+      S
+    </button>
+    </ion-col>
+    <ion-col col-12 no-padding style="padding-right:16px">
+        <button
+        id="serious-button"
+        ion-button
+        no-padding
+        (click)="toggleSeriousMode()"
+        [ngClass]="isSeriousMode ? 'active' : 'inactive'"
+      >
+      S
+    </button>
+    </ion-col>
+    <ion-col col-12>
+        <driving-fault-summary></driving-fault-summary>
+    </ion-col>
+    <ion-col style="text-align: right">
+      Timer
+    </ion-col>
+  </ion-row>
 </div>
