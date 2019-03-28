@@ -62,7 +62,7 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   }
 
   drawComplete() {
-    this.signature = this.signaturePad.toDataURL('image/png');
+    this.signature = this.signaturePad.toDataURL('image/svg+xml');
     this.signatureDataChangedDispatch(this.signature);
     this.propagateChange(this.signature);
     this.touchChange(null);

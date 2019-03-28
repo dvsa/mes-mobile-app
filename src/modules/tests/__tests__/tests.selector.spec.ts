@@ -10,7 +10,7 @@ describe('testsSelector', () => {
       const currentTest: StandardCarTestCATBSchema = {
         category: 'B',
         id: 'abc123',
-        slotId:123,
+        slotId: 123,
         welshTest: false,
         activityCode: 'x',
         candidate: {},
@@ -27,8 +27,7 @@ describe('testsSelector', () => {
         journal,
         appInfo,
         logs,
-        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' },
-        },
+        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' } },
       };
 
       const result = getCurrentTest(state);

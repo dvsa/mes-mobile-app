@@ -47,7 +47,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1001,
-        "start": "2019-03-26T08:10:00+00:00"
+        "start": "2019-03-27T08:10:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -62,7 +62,7 @@
           "applicationId": 1234569,
           "bookingSequence": 1,
           "checkDigits": 9,
-          "entitlementCheck": false,
+          "entitlementCheck": true,
           "extendedTest": false,
           "progressiveAccess": false,
           "testCategory": "B",
@@ -95,7 +95,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1003,
-        "start": "2019-03-26T10:14:00+00:00"
+        "start": "2019-03-27T10:14:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -144,7 +144,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1004,
-        "start": "2019-03-26T11:11:00+00:00"
+        "start": "2019-03-27T11:11:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -195,7 +195,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1005,
-        "start": "2019-03-26T12:38:00+00:00"
+        "start": "2019-03-27T12:38:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -248,7 +248,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1006,
-        "start": "2019-03-26T13:35:00+00:00"
+        "start": "2019-03-27T13:35:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -293,7 +293,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1007,
-        "start": "2019-03-27T14:32:00+00:00"
+        "start": "2019-03-28T14:32:00+00:00"
       },
       "testCentre": {
         "centreId": 54321,

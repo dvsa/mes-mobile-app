@@ -4,6 +4,9 @@ import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers, Action } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { testDataReducer } from './test_data/test-data.reducer';
+import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
+import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 
 export interface CurrentTest {
   slotId: string;
@@ -48,8 +51,11 @@ export const testsReducer = (
             preTestDeclarations: preTestDeclarationsReducer,
             candidate: candidateReducer,
             testData: testDataReducer,
+            vehicleDetails: vehicleDetailsReducer,
+            accompaniment: accompanimentReducer,
+            instructorDetails: instructorDetailsReducer,
           },
-          // @ts-ignore
+        // @ts-ignore
         )(state.startedTests[slotId], action),
       },
     },
