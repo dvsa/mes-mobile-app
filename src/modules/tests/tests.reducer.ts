@@ -65,7 +65,7 @@ export const testsReducer = (
   };
 };
 
-const deriveSlotId = (state: TestsModel, action): string | null => {
+const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
     return `${action.payload.slotDetail.slotId}`;
   }
