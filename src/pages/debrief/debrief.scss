@@ -2,7 +2,7 @@ page-debrief {
   #test-outcome-background {
     text-align: center;
     padding: 16px 0;
-    background: #ffffff;
+    background: map-get($colors, 'mes-white');
     height: 201px;
   }
   .test-outcome-container {
@@ -16,9 +16,9 @@ page-debrief {
     }
   }
   .passed {
-    border: 8px solid #28a197;
+    border: 8px solid map-get($colors-gds, 'gds-turquoise');
   }
   .failed {
-    border: 8px solid #b10e1e;
+    border: 8px solid map-get($colors-gds, 'gds-red');
   }
 }

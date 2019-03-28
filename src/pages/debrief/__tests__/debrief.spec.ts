@@ -8,6 +8,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { By } from '@angular/platform-browser';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -42,5 +43,20 @@ describe('DebriefPage', () => {
 
   describe('DOM', () => {
     // Unit tests for the components template
+
+    it('should display passed container if passed is true', () => {
+      component.passed = true;
+
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('.passed'))).toBeDefined();
+    });
+    it('should display failed container if passed is false', () => {
+      component.passed = false;
+
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('.failed'))).toBeDefined();
+    });
   });
 });
