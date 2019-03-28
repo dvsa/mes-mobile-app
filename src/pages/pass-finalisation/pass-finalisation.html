@@ -14,26 +14,34 @@
             <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
           </ion-col>
         </ion-row>
-        <ion-row class="mes-full-width-card" id="tell-me-card" align-items-center>
-          <ion-col col-32>
-            <label>Application number</label>
+        <ion-row class="mes-full-width-card" id="application-reference-card" align-items-center>
+          <ion-col col-36>
+            <label>Application reference</label>
           </ion-col>
+          <ion-col>
+              <span class="mes-data">{{pageState.applicationNumber$ | async }}</span>
+            </ion-col>
         </ion-row>
-        <ion-row class="mes-full-width-card" id="tell-me-card" align-items-center>
-          <ion-col col-32>
+        <ion-row class="mes-full-width-card" id="provisional-license-card" align-items-center>
+          <ion-col col-36>
             <label>Provisional license received</label>
           </ion-col>
         </ion-row>
-        <ion-row class="mes-full-width-card" id="tell-me-card" align-items-center>
-          <ion-col col-32>
-            <label>Pass certificate mumber</label>
+        <ion-row class="mes-full-width-card" id="pass-certificate-number-card" align-items-center>
+          <ion-col col-36>
+            <label>Pass certificate number</label>
+          </ion-col>
+          <ion-col>
+            <input #passCertificateNumberInput type="text" id="pass-certificate-number" class="pass-cert-input" >
           </ion-col>
         </ion-row>
       </ion-grid>
       <ion-footer>
-        <button type="submit" id="continue-button" class="mes-primary-button" ion-button>
-          <h3>Continue</h3>
-        </button>
+        <ion-row class="mes-full-width-card">
+          <button type="submit" class="mes-primary-button" ion-button>
+            <h3>Continue</h3>
+          </button>
+        </ion-row>
       </ion-footer>
     </form>
   </div>
