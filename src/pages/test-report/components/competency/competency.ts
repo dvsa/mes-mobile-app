@@ -12,7 +12,6 @@ import { Competencies } from '../../../../modules/tests/test_data/test-data.cons
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { getDrivingFaultCount } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getDrivingFaultCount, hasSeriousFault } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
@@ -72,6 +71,7 @@ export class CompetencyComponent {
           select(getTestReportState),
           select(isSeriousMode)),
       hasSeriousFault$: this.store$.pipe(
+          select(getTests),
           select(getCurrentTest),
           select(getTestData),
           select(testData => hasSeriousFault(testData, this.competency)),

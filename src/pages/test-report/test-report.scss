@@ -2,6 +2,15 @@ page-test-report {
   .content-ios {
     background-color: map-get($colors-gds, 'gds-grey-3');
   }
+
+  ion-grid {
+    box-sizing: border-box;
+    border: 6px solid map-get($colors-gds, 'gds-grey-3');
+    &.serious-mode {
+      border: 6px solid #FFBF47;
+    }
+  }
+
   .section-header {
     color: map-get($colors-gds, 'gds-black');
     font-size: 17px;
@@ -84,5 +93,25 @@ page-test-report {
   }
   .seriousMode {
     border: 6px solid #FFBF47;
+  }
+
+  .serious-button{
+    width: 88px;
+    height: 43px;
+    border: 3.5px solid #FFBF47;
+    border-radius: 10px;
+    color: #0B0C0C;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: -0.26px;
+    line-height: 25px;
+     &.inactive {
+      background: #FFFFFF;
+      box-shadow: 0 1px 0 0 #6F777B;
+    }
+    &.active {
+      background: #FFBF47;
+    }
   }
 }
