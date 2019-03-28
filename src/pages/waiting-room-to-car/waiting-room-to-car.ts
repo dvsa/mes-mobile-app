@@ -120,16 +120,11 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       ),
     };
     this.inputSubscriptions = [
-      fromEvent(this.regisrationInput.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      ).subscribe((regNo: string) => this.store$.dispatch(new VehicleRegistrationChanged(regNo))),
-      fromEvent(this.instructorRegisrationInput.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      ).subscribe((regNo: string) => this.store$.dispatch(new InstructorRegistrationNumberChanged(regNo))),
+      this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
+      this.inputChangeSubscriptionDispatchingAction(
+        this.instructorRegisrationInput,
+        InstructorRegistrationNumberChanged,
+      ),
     ];
   }
 
@@ -167,5 +162,22 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   otherAccompanimentToggled(): void {
     this.store$.dispatch(new OtherAccompanimentToggled());
+  }
+
+  /**
+   * Returns a subscription to the debounced changes of a particular input fields.
+   * Dispatches the provided action type to the store when a new value is yielded.
+   * @param inputRef The input to listen for changes on.
+   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
+   */
+  inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
+    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
+        map((event: any) => event.target.value),
+        debounceTime(1000),
+        distinctUntilChanged(),
+      );
+    const subscription = changeStream$
+      .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
+    return subscription;
   }
 }
