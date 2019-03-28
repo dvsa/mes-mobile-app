@@ -5,7 +5,7 @@ import { createFeatureSelector } from '@ngrx/store';
 export const initialState: PreTestDeclarations = {
   insuranceDeclarationAccepted: false,
   residencyDeclarationAccepted: false,
-  signature: '',
+  preTestSignature: '',
 };
 
 export function preTestDeclarationsReducer(
@@ -28,12 +28,12 @@ export function preTestDeclarationsReducer(
     case preTestDeclarationActions.SIGNATURE_DATA_CHANGED:
       return {
         ...state,
-        signature: action.payload,
+        preTestSignature: action.payload,
       };
     case preTestDeclarationActions.SIGNATURE_DATA_CLEARED:
       return {
         ...state,
-        signature: '',
+        preTestSignature: '',
       };
 
     default:

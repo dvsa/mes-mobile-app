@@ -36,7 +36,7 @@
         <ion-col class="candidate-details-col" no-padding>
           <ion-grid no-padding>
             <ion-row align-items-center>
-              <ion-col col-8>
+              <ion-col col-64>
                 <candidate-link
                   [slotId]="slot.slotDetail.slotId"
                   [slotChanged]="hasSlotChanged"
@@ -45,7 +45,7 @@
                 >
                 </candidate-link>
               </ion-col>
-              <ion-col col-4 text-end>
+              <ion-col col-32 text-end>
                 <test-category [category]="slot.booking.application.testCategory"></test-category>
               </ion-col>
             </ion-row>

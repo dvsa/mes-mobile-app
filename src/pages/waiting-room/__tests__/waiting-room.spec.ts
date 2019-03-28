@@ -22,6 +22,10 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import {
   initialState as preTestDeclarationInitialState,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+import {
+  DeviceAuthenticationProviderMock,
+} from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
@@ -30,6 +34,7 @@ describe('WaitingRoomPage', () => {
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
   let deviceProvider: DeviceProvider;
+  let deviceAuthenticationProvider: DeviceAuthenticationProvider;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -65,6 +70,7 @@ describe('WaitingRoomPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
@@ -75,6 +81,7 @@ describe('WaitingRoomPage', () => {
       });
 
     deviceProvider = TestBed.get(DeviceProvider);
+    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
@@ -117,26 +124,10 @@ describe('WaitingRoomPage', () => {
       });
     });
 
-    describe('DOM', () => {
-      describe('Declaration checkboxes', () => {
-        it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
-          fixture.detectChanges();
-          spyOn(component, 'residencyDeclarationChanged');
-          const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
-          residencyCb.triggerEventHandler('click', null);
-          tick();
-          fixture.detectChanges();
-          expect(component.residencyDeclarationChanged).toHaveBeenCalled();
-        }));
-        it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
-          fixture.detectChanges();
-          spyOn(component, 'insuranceDeclarationChanged');
-          const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
-          insuranceCb.triggerEventHandler('click', null);
-          tick();
-          fixture.detectChanges();
-          expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
-        }));
+    describe('clickBack', () => {
+      it('should should trigger the lock screen', () => {
+        component.clickBack();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
 
       describe('Declaration Validation', () => {
@@ -152,6 +143,29 @@ describe('WaitingRoomPage', () => {
           expect(form.valid).toEqual(true);
         });
       });
+    });
+  });
+
+  describe('DOM', () => {
+    describe('Declaration checkboxes', () => {
+      it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
+        fixture.detectChanges();
+        spyOn(component, 'residencyDeclarationChanged');
+        const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
+        residencyCb.triggerEventHandler('click', null);
+        tick();
+        fixture.detectChanges();
+        expect(component.residencyDeclarationChanged).toHaveBeenCalled();
+      }));
+      it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
+        fixture.detectChanges();
+        spyOn(component, 'insuranceDeclarationChanged');
+        const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
+        insuranceCb.triggerEventHandler('click', null);
+        tick();
+        fixture.detectChanges();
+        expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
+      }));
     });
   });
 });

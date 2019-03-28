@@ -10,6 +10,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
 import { FaultCounterComponent } from './components/fault-counter/fault-counter';
 import { TickIndicatorComponent } from './components/tick-indicator/tick-indicator';
+import { DrivingFaultSummaryComponent } from './components/driving-fault-summary/driving-fault-summary';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TickIndicatorComponent } from './components/tick-indicator/tick-indicat
     FaultCounterComponent,
     ManoeuvresPopoverComponent,
     TickIndicatorComponent,
+    DrivingFaultSummaryComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),

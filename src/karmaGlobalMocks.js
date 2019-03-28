@@ -22,6 +22,12 @@ const cordova = {
         cb(true);
       },
     },
+    DeviceAuthentication: {
+      runAuthentication: (prompt, successCB, failedCB) => {
+        console.log('Calling Device Auth plugin mock');
+        successCB(true);
+      },
+    },
   },
 };
 

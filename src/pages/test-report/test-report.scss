@@ -73,4 +73,9 @@ page-test-report {
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
   }
+  #test-report-header {
+    height: 68px;
+    padding: 12px 17px;
+    background: map-get($colors, 'mes-white');
+  }
 }
