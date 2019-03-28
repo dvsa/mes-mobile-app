@@ -16,6 +16,27 @@
             <label>Eyesight test</label>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="showEyesightFailureConfirmation()">
+          <ion-col id="eyesight-failure-confirmation">
+            <ion-row>
+              <ion-col col-auto>
+              </ion-col>
+                <ion-icon name="alert" id="eyesight-failure-icon"></ion-icon>
+              <ion-col>
+                <ion-row>
+                  <h2 id="eyesight-failure-title">The candidate failed the eyesight test</h2>
+                </ion-row>
+                <ion-row>
+                  <p>Do you want to continue?</p>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row justify-content-center>
+              <button>Continue to debrief</button>
+              <button>Cancel</button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
         <ion-row class="mes-full-width-card" id="tell-me-card" align-items-center>
           <ion-col col-32>
             <label>Tell me question</label>

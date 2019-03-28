@@ -189,4 +189,8 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
   }
+
+  showEyesightFailureConfirmation(): boolean {
+    return true;
+  }
 }
