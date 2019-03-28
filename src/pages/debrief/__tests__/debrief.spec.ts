@@ -50,6 +50,7 @@ describe('DebriefPage', () => {
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.passed'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
     it('should display failed container if passed is false', () => {
       component.passed = false;
@@ -57,6 +58,7 @@ describe('DebriefPage', () => {
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.failed'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
     });
   });
 });
