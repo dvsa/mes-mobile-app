@@ -1,7 +1,7 @@
 import * as testOutcomeActions from '../../pages/journal/components/test-outcome/test-outcome.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
-import { combineReducers, Action } from '@ngrx/store';
+import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { testDataReducer } from './test_data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
@@ -71,3 +71,5 @@ const deriveSlotId = (state: TestsModel, action): string | null => {
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };
+
+export const getTests = createFeatureSelector<TestsModel>('tests');

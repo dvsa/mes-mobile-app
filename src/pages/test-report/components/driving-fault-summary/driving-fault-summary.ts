@@ -6,6 +6,7 @@ import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getDrivingFaultSummaryCount } from '../../../../modules/tests/test_data/test-data.selector';
 import { Subscription } from 'rxjs/Subscription';
+import { getTests } from '../../../../modules/tests/tests.reducer';
 
 interface DrivingFaultSummaryState {
   count$: Observable<number>;
@@ -15,7 +16,7 @@ interface DrivingFaultSummaryState {
   selector: 'driving-fault-summary',
   templateUrl: 'driving-fault-summary.html',
 })
-export class DrivingFaultSummary implements OnInit, OnDestroy {
+export class DrivingFaultSummaryComponent implements OnInit, OnDestroy {
 
   componentState: DrivingFaultSummaryState;
   subscription: Subscription;
@@ -25,6 +26,7 @@ export class DrivingFaultSummary implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.componentState = {
       count$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getTestData),
         select(getDrivingFaultSummaryCount),
