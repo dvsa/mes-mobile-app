@@ -8,18 +8,5 @@ page-waiting-room-to-car {
         height: 56px;
       }
     }
-    #eyesight-failure-confirmation {
-      margin: 18px;
-      padding: 40px 75px;
-      background: map-get($colors-gds, 'gds-blue');
-      color: map-get($colors, 'mes-white');
-      #eyesight-failure-icon {
-        font-size: 70px;
-        margin-right: 32px;
-      }
-      #eyesight-failure-title {
-        color: inherit;
-      }
-    }
   }
 }
