@@ -67,6 +67,8 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   inputSubscriptions: Subscription[] = [];
 
+  showEyesightFailureConfirmation: boolean = false;
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
@@ -190,7 +192,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     return subscription;
   }
 
-  showEyesightFailureConfirmation(): boolean {
-    return true;
+  setEyesightFailureVisibility(show: boolean) {
+    this.showEyesightFailureConfirmation = show;
   }
 }
