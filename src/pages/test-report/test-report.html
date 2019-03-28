@@ -9,7 +9,7 @@
 
 <ion-content no-padding no-bounce>
   <toolbar></toolbar>
-  <ion-grid no-padding padding-left padding-right>
+  <ion-grid no-padding padding-left padding-right [ngClass]="{'serious-mode': isSeriousMode}">
     <ion-row>
       <!-- Column 1-->
       <ion-col col-32>

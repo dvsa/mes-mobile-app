@@ -1,3 +1,11 @@
 <div id="wrapper">
+    <button
+    id="serious-button"
+    ion-button
+    (click)="toggleSeriousMode()"
+    [ngClass]="isSeriousMode ? 'active' : 'inactive'"
+  >
+  S
+</button>
   <driving-fault-summary></driving-fault-summary>
 </div>

@@ -13,7 +13,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
-import { TestReportViewDidEnter, ToggleSeriousFaultMode } from './test-report.actions';
+import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies } from '../../modules/tests/test_data/test-data.constants';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -111,11 +111,6 @@ export class TestReportPage extends BasePageComponent {
       this.subscription.unsubscribe();
     }
   }
-
-  toggleSeriousMode(): void {
-    this.store$.dispatch(new ToggleSeriousFaultMode());
-  }
-
 }
 export interface OverlayCallback {
   callbackMethod: () => void;
