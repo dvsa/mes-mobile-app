@@ -17,6 +17,7 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
+import { ToolbarComponent } from '../components/toolbar/toolbar';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -31,6 +32,7 @@ describe('TestReportPage', () => {
         TestReportPage,
         MockComponent(CompetencyComponent),
         MockComponent(DrivingFaultSummaryComponent),
+        MockComponent(ToolbarComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
