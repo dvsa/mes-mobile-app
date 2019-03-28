@@ -13,6 +13,7 @@ import { By } from '@angular/platform-browser';
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
   let component: DebriefPage;
+  let navController: NavController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,6 +32,7 @@ describe('DebriefPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(DebriefPage);
         component = fixture.componentInstance;
+        navController = TestBed.get(NavController);
       });
   }));
 
@@ -60,5 +62,20 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.failed'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
     });
+
+    describe('endDebrief', () => {
+      it('should navigate to PassFinalisationPage when passed = true', () => {
+        component.passed = true;
+        component.endDebrief();
+        expect(navController.push).toHaveBeenCalledWith('PassFinalisationPage');
+      });
+      it('should navigate to OfficePage when passed = false', () => {
+        component.passed = false;
+        component.endDebrief();
+        expect(navController.push).toHaveBeenCalledWith('OfficePage');
+      });
+
+    });
   });
+
 });
