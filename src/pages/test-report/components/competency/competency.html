@@ -1,15 +1,15 @@
 <button #competencyButton>
   <ion-row no-padding>
-    <ion-col style="width:22px" >
+    <ion-col col-10 >
         <fault-counter id="drivingFaults" [count]="faultCount"></fault-counter>
     </ion-col>
-    <ion-col col-8>
+    <ion-col col-66>
         <span id='competencyLabel'>{{ getLabel() }}</span>
     </ion-col>
-    <ion-col style="width:22px">
+    <ion-col col-10>
       <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
     </ion-col>
-    <ion-col style="width:22px">
+    <ion-col col-10>
       <fault-counter id="dangerous" [count]="0"></fault-counter>
     </ion-col>
   </ion-row>
