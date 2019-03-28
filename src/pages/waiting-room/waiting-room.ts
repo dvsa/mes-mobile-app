@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -22,6 +22,8 @@ import {
 import { map } from 'rxjs/operators';
 import { DeviceProvider } from '../../providers/device/device';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
+import { getTests } from '../../modules/tests/tests.reducer';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -40,6 +42,9 @@ interface WaitingRoomPageState {
 export class WaitingRoomPage extends BasePageComponent {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
+
+  @ViewChild(Navbar) navBar: Navbar;
+
   pageState: WaitingRoomPageState;
 
   form: FormGroup;
@@ -51,6 +56,7 @@ export class WaitingRoomPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
+    private deviceAuthenticationProvider: DeviceAuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -60,12 +66,25 @@ export class WaitingRoomPage extends BasePageComponent {
     if (super.isIos()) {
       this.deviceProvider.enableSingleAppMode();
     }
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.clickBack();
+    };
   }
 
   ionViewDidLeave(): void {
     if (super.isIos()) {
       this.deviceProvider.disableSingleAppMode();
     }
+  }
+
+  clickBack(): void {
+    this.deviceAuthenticationProvider.triggerLockScreen()
+      .then(() => {
+        this.navCtrl.pop();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   ionViewWillUnload(): void {
@@ -80,31 +99,37 @@ export class WaitingRoomPage extends BasePageComponent {
 
     this.pageState = {
       insuranceDeclarationAccepted$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getPreTestDeclarations),
         select(getInsuranceDeclarationStatus),
       ),
       residencyDeclarationAccepted$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getPreTestDeclarations),
         select(getResidencyDeclarationStatus),
       ),
       signature$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getPreTestDeclarations),
         select(getSignatureStatus),
       ),
       candidateName$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getCandidateDriverNumber),
@@ -123,7 +148,13 @@ export class WaitingRoomPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push('WaitingRoomToCarPage');
+      this.deviceAuthenticationProvider.triggerLockScreen()
+      .then(() => {
+        this.navCtrl.push('WaitingRoomToCarPage');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   }
 

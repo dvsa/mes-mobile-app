@@ -8,15 +8,46 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { StoreModule, Store } from '@ngrx/store';
+import { StoreModel } from '../../../shared/models/store.model';
+import { By } from '@angular/platform-browser';
+import {
+  GearboxCategoryChanged,
+  SchoolCarToggled,
+  DualControlsToggled,
+} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+import {
+  InstructorAccompanimentToggled,
+  SupervisorAccompanimentToggled,
+  OtherAccompanimentToggled,
+} from '../../../modules/tests/accompaniment/accompaniment.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
   let component: WaitingRoomToCarPage;
+  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [WaitingRoomToCarPage],
-      imports: [IonicModule, AppModule],
+      imports: [
+        IonicModule,
+        AppModule,
+        StoreModule.forFeature('tests', () => ({
+          currentTest: {
+            slotId: '123',
+          },
+          startedTests: {
+            123: {
+              vehicleDetails: {},
+              accompaniment: {},
+              candidate: {
+                candidateName: 'Joe Bloggs',
+              },
+            },
+          },
+        })),
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
@@ -31,6 +62,8 @@ describe('WaitingRoomToCarPage', () => {
         fixture = TestBed.createComponent(WaitingRoomToCarPage);
         component = fixture.componentInstance;
       });
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -41,6 +74,55 @@ describe('WaitingRoomToCarPage', () => {
   });
 
   describe('DOM', () => {
-    // Unit tests for the components template
+    describe('changing transmission', () => {
+      it('should dispatch a change to manual gearbox category action when manual is clicked', () => {
+        const manualRadio = fixture.debugElement.query(By.css('#transmission-manual'));
+        manualRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
+      });
+      it('should dispatch a change to automatic gearbox category action when automatic is clicked', () => {
+        const automaticRadio = fixture.debugElement.query(By.css('#transmission-automatic'));
+        automaticRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Automatic'));
+      });
+    });
+
+    describe('changing accompaniment status', () => {
+      it('should dispatch a toggle instructor accompaniment action when Ins is clicked', () => {
+        const instructorCb = fixture.debugElement.query(By.css('#accompaniment-instructor'));
+        instructorCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new InstructorAccompanimentToggled());
+      });
+      it('should dispatch a toggle supervisor accompaniment action when Sup is clicked', () => {
+        const supervisorCb = fixture.debugElement.query(By.css('#accompaniment-supervisor'));
+        supervisorCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new SupervisorAccompanimentToggled());
+      });
+      it('should dispatch a toggle other accompaniment action when Other is clicked', () => {
+        const otherCb = fixture.debugElement.query(By.css('#accompaniment-other'));
+        otherCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new OtherAccompanimentToggled());
+      });
+    });
+
+    describe('setting optional vehicle details', () => {
+      it('should dispatch a toggle school car action when school car is selected', () => {
+        const schoolCarCb = fixture.debugElement.query(By.css('#school-car'));
+        schoolCarCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new SchoolCarToggled());
+      });
+      it('should dispatch a toggle dual controls action when dual controls is selected', () => {
+        const dualControlCb = fixture.debugElement.query(By.css('#dual-control'));
+        dualControlCb.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new DualControlsToggled());
+      });
+    });
   });
 });

@@ -1,13 +1,12 @@
-import * as preTestDeclarationActions from './pre-test-declarations/pre-test-declarations.actions';
 import * as testOutcomeActions from '../../pages/journal/components/test-outcome/test-outcome.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
-import { combineReducers } from '@ngrx/store';
+import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { testDataReducer } from './test_data/test-data.reducer';
-
-// Extend this with any new test domain action types
-type TestAction = preTestDeclarationActions.Types | testOutcomeActions.Types;
+import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
+import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 
 export interface CurrentTest {
   slotId: string;
@@ -31,7 +30,7 @@ const initialState: TestsModel = {
  */
 export const testsReducer = (
   state = initialState,
-  action: TestAction,
+  action: Action,
 ) => {
   const slotId = deriveSlotId(state, action);
   if (!slotId) {
@@ -52,7 +51,11 @@ export const testsReducer = (
             preTestDeclarations: preTestDeclarationsReducer,
             candidate: candidateReducer,
             testData: testDataReducer,
+            vehicleDetails: vehicleDetailsReducer,
+            accompaniment: accompanimentReducer,
+            instructorDetails: instructorDetailsReducer,
           },
+        // @ts-ignore
         )(state.startedTests[slotId], action),
       },
     },
@@ -62,9 +65,11 @@ export const testsReducer = (
   };
 };
 
-const deriveSlotId = (state: TestsModel, action): string | null => {
+const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
     return `${action.payload.slotDetail.slotId}`;
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };
+
+export const getTests = createFeatureSelector<TestsModel>('tests');
