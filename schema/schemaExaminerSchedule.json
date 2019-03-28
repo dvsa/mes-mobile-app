@@ -275,7 +275,7 @@
           "description": "The application's booking sequence number",
           "type": "integer"
         },
-        "checkDigits": {
+        "checkDigit": {
           "description": "The application's reference checksum",
           "type": "integer"
         },

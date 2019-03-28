@@ -221,7 +221,7 @@ export interface Application {
   /**
    * The application's reference checksum
    */
-  checkDigits?: number;
+  checkDigit?: number;
   /**
    * Whether the test is to be conducted using the welsh language
    */
