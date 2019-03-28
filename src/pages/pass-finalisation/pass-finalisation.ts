@@ -13,9 +13,6 @@ import { PassFinalisationViewDidEnter } from './pass-finalisation.actions';
 })
 export class PassFinalisationPage extends BasePageComponent {
 
-  // Used for now to test displaying pass/fail ngIf messages
-  public passed: boolean = false;
-
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
