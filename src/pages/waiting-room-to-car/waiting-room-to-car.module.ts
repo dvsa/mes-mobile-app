@@ -8,14 +8,16 @@ import { InputRestrictionNumbersDirective } from '../../directives/input-restric
 import {
   InputRestrictionUppercaseAlphanumDirective,
 } from '../../directives/input-restriction-uppercasealphanum.directive';
-import { EyesightFailureConfirmation } from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+import {
+  EyesightFailureConfirmationComponent,
+} from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 
 @NgModule({
   declarations: [
     WaitingRoomToCarPage,
     InputRestrictionNumbersDirective,
     InputRestrictionUppercaseAlphanumDirective,
-    EyesightFailureConfirmation,
+    EyesightFailureConfirmationComponent,
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),

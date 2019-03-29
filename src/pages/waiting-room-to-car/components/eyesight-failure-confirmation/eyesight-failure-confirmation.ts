@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'eyesight-failure-confirmation',
   templateUrl: 'eyesight-failure-confirmation.html',
 })
-export class EyesightFailureConfirmation {
+export class EyesightFailureConfirmationComponent {
 
 }

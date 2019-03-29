@@ -22,7 +22,9 @@ import {
   OtherAccompanimentToggled,
 } from '../../../modules/tests/accompaniment/accompaniment.actions';
 import { MockComponent } from 'ng-mocks';
-import { EyesightFailureConfirmation } from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+import {
+  EyesightFailureConfirmationComponent,
+} from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -33,7 +35,7 @@ describe('WaitingRoomToCarPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomToCarPage,
-        MockComponent(EyesightFailureConfirmation),
+        MockComponent(EyesightFailureConfirmationComponent),
       ],
       imports: [
         IonicModule,
