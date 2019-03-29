@@ -37,16 +37,9 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency 
-            [competency]="competencies.manoeuvres" 
-            [hasPopoverContent]="true"
-            [clickCallback]="getCallback()">
-            <ion-row>
-              <ion-col>
+            <competency-with-modal [controlLabel]="'Manoeuvres'" [clickCallback]="getCallback()">
                 <manoeuvres-popover></manoeuvres-popover>
-              </ion-col>
-            </ion-row>
-            </competency>
+            </competency-with-modal>
           </ion-col>
         </ion-row>
         <ion-row>

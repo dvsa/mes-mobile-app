@@ -1,6 +1,5 @@
 
 export enum competencyLabels  {
-  manoeuvres = 'Manoeuvres',
   controlsAccelerator = 'Accelerator',
   controlsClutch  = 'Clutch',
   controlsGears  = 'Gears',

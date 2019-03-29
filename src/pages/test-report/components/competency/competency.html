@@ -1,27 +1,11 @@
-<button #competencyButton (click)="togglePromote()" [class.promoted]="promoted">
-  <fault-counter *ngIf="!hasPopoverContent" class="drivingFaults" [count]="faultCount"></fault-counter>
-  <div class="tickwrapper" *ngIf="hasPopoverContent">
-    <tick-indicator [ticked]="true"></tick-indicator>
+<button #competencyButton>
+  <fault-counter class="drivingFaults" [count]="faultCount"></fault-counter>
+  <div class="label">
+    <span class='competency-label'>{{ getLabel() }}</span>
   </div>
-  <div class="labelWrapper">
-    <div class="label">
-      <ion-icon *ngIf="hasPopoverContent" class="popover-arrow" [class.arrow-down]="hasPopoverContent && promoted" name="md-arrow-dropright"></ion-icon>
-      <span class='competency-label' [class.popover-label]="hasPopoverContent">{{ getLabel() }}</span>
-    </div>
-  </div>
-  <div class="fault-wrapper" *ngIf="!hasPopoverContent">
+  <div class="fault-wrapper">
     <!-- Placeholder for serious/dangerous -->
     <fault-counter></fault-counter>
     <fault-counter></fault-counter>
   </div>
-
 </button>
-<div class="popover" *ngIf="promoted && hasPopoverContent">
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ng-content></ng-content>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</div>

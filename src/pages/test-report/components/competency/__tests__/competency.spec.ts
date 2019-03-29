@@ -1,6 +1,5 @@
-import { TickIndicatorComponent } from './../../tick-indicator/tick-indicator';
+
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
@@ -29,11 +28,9 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyComponent,
-        TickIndicatorComponent,
         MockComponent(FaultCounterComponent),
       ],
       imports: [
-        IonicModule,
         AppModule,
         StoreModule.forFeature('tests', () => ({
           currentTest: {
@@ -140,25 +137,6 @@ describe('CompetencyComponent', () => {
         expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
         done();
       },         component.rippleEffectAnimationDuration);
-    });
-
-    describe('competency control type', () => {
-      it('should display popover type control content when hasPopoverContent is true', () => {
-        component.hasPopoverContent = true;
-        fixture.detectChanges();
-        let tickDe = fixture.debugElement.query(By.css('.popover'));
-        expect(tickDe).toBeDefined();
-        tickDe = fixture.debugElement.query(By.css('.popover-label'));
-        expect(tickDe).toBeDefined();
-      });
-      it('should not display popover type control content when hasPopoverContent is false', () => {
-        component.hasPopoverContent = false;
-        fixture.detectChanges();
-        let tickDe = fixture.debugElement.query(By.css('.popover'));
-        expect(tickDe).toBeNull();
-        tickDe = fixture.debugElement.query(By.css('.popover-label'));
-        expect(tickDe).toBeNull();
-      });
     });
   });
 });

@@ -3,15 +3,18 @@ fault-counter {
     width: 22px;
     height: 22px;
     min-width: 22px;
-    #counter-background {
+    .counter-background {
+      display: flex;
+      justify-content: center;
       background-color: #0B0C0C;
       color: map-get($colors, 'mes-white');
       border-radius: 13px;
-      span {
+      .count {
         font-size: 15px;
         font-weight: bold;
         position: relative;
-        top: -5px;
+        align-self: center;
+        top: -1px;
       }
     }
   }

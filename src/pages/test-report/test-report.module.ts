@@ -1,4 +1,5 @@
 import { ManoeuvresPopoverComponent } from './components/manoeuvres-popover/manoeuvres-popover';
+import { CompetencyWithModalComponent } from './components/competency-with-modal/competency-with-modal';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TestReportPage } from './test-report';
@@ -17,9 +18,10 @@ import { DrivingFaultSummaryComponent } from './components/driving-fault-summary
     TestReportPage,
     CompetencyComponent,
     FaultCounterComponent,
-    ManoeuvresPopoverComponent,
     TickIndicatorComponent,
     DrivingFaultSummaryComponent,
+    CompetencyWithModalComponent,
+    ManoeuvresPopoverComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),

@@ -47,7 +47,7 @@ export class TestReportPage extends BasePageComponent {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
   }
-  getCallback(): ParentCallback {
+  getCallback(): OverlayCallback {
     return {
       callbackMethod: () => {
         this.toggleReportOverlay();
@@ -84,6 +84,6 @@ export class TestReportPage extends BasePageComponent {
     }
   }
 }
-export interface ParentCallback {
+export interface OverlayCallback {
   callbackMethod: () => void;
 }
