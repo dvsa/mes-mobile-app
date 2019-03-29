@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
-  EyesightFailCancelPressed,
+  EyesightFailCancelled,
   EyesightFailConfirmed,
 } from '../../waiting-room-to-car.actions';
 
@@ -18,6 +18,6 @@ export class EyesightFailureConfirmationComponent {
   }
 
   onCancel(): void {
-    this.store$.dispatch(new EyesightFailCancelPressed());
+    this.store$.dispatch(new EyesightFailCancelled());
   }
 }

@@ -30,7 +30,7 @@ export const waitingRoomToCarReducer = (
         ...state,
         eyesightRadioState: EyesightRadioState.FailSelected,
       };
-    case waitingRoomToCarActions.EYESIGHT_FAIL_CANCEL_PRESSED:
+    case waitingRoomToCarActions.EYESIGHT_FAIL_CANCELLED:
       return {
         ...state,
         eyesightRadioState: EyesightRadioState.Unselected,
