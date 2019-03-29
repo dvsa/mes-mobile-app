@@ -31,6 +31,7 @@ import { DataStoreProvider } from '../providers/data-store/data-store';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { TestsModule } from '../modules/tests/tests.module';
 import { DeviceAuthenticationProvider } from '../providers/device-authentication/device-authentication';
+import { UiStateModule } from '../modules/ui-state/ui-state.module';
 
 @NgModule({
   declarations: [App],
@@ -44,6 +45,7 @@ import { DeviceAuthenticationProvider } from '../providers/device-authentication
     AppInfoModule,
     LogsModule,
     TestsModule,
+    UiStateModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],

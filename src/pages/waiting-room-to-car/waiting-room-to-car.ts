@@ -39,6 +39,10 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
+import {
+  EyesightPassPressed,
+  EyesightFailPressed,
+} from '../../modules/ui-state/waiting-room-to-car/waiting-room-to-car.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -49,6 +53,8 @@ interface WaitingRoomToCarPageState {
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
+  eyesightPassRadioChecked$: Observable<boolean>;
+  eyesightFailRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -129,6 +135,20 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getAccompaniment),
         select(getOtherAccompaniment),
       ),
+      eyesightPassRadioChecked$: this.store$.pipe(
+        select(root => root.ui),
+        // @ts-ignore
+        select(ui => ui.waitingRoomToCar),
+        select(wrtc => wrtc.eyesightRadioState),
+        map(eyesightRadioState => eyesightRadioState === 'pass'),
+      ),
+      eyesightFailRadioChecked$: this.store$.pipe(
+        select(root => root.ui),
+        // @ts-ignore
+        select(ui => ui.waitingRoomToCar),
+        select(wrtc => wrtc.eyesightRadioState),
+        map(eyesightRadioState => eyesightRadioState === 'fail'),
+      ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
@@ -194,5 +214,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   setEyesightFailureVisibility(show: boolean) {
     this.showEyesightFailureConfirmation = show;
+  }
+
+  eyesightPassPressed(): void {
+    this.store$.dispatch(new EyesightPassPressed());
+  }
+
+  eyesightFailPressed(): void {
+    this.store$.dispatch(new EyesightFailPressed());
   }
 }

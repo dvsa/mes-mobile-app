@@ -16,18 +16,18 @@
             <label>Eyesight test</label>
           </ion-col>
           <ion-col col-23>
-            <input type="radio" name="eyesight" id="eyesight-pass" class="gds-radio-button" (click)="setEyesightFailureVisibility(false)">
+            <input type="radio" name="eyesight" id="eyesight-pass" class="gds-radio-button" (click)="eyesightPassPressed()" [checked]="pageState.eyesightPassRadioChecked$ | async">
             <label for="eyesight-pass" class="radio-label">Pass</label>
           </ion-col>
           <ion-col>
-            <input type="radio" name="eyesight" id="eyesight-fail" class="gds-radio-button" (click)="setEyesightFailureVisibility(true)">
+            <input type="radio" name="eyesight" id="eyesight-fail" class="gds-radio-button" (click)="eyesightFailPressed()" [checked]="pageState.eyesightFailRadioChecked$ | async">
             <label for="eyesight-fail" class="radio-label">Fail</label>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="showEyesightFailureConfirmation">
+        <ion-row *ngIf="pageState.eyesightFailRadioChecked$ | async">
           <eyesight-failure-confirmation></eyesight-failure-confirmation>
         </ion-row>
-        <ion-row [hidden]="showEyesightFailureConfirmation" id="post-eyesight-form-content">
+        <ion-row [hidden]="pageState.eyesightFailConfirmationVisible$ | async" id="post-eyesight-form-content">
           <ion-col>
             <ion-row class="mes-full-width-card" id="tell-me-card" align-items-center>
               <ion-col col-32>

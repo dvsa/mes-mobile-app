@@ -8,4 +8,5 @@ export type StoreModel = {
   appInfo: AppInfoModel,
   logs: LogsModel,
   tests: TestsModel;
+  ui: {},
 };
