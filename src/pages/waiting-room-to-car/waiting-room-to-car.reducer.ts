@@ -18,7 +18,7 @@ const initialState: WaitingRoomToCarModel = {
 export const waitingRoomToCarReducer = (
   state = initialState,
   action: Action,
-) => {
+): WaitingRoomToCarModel => {
   switch (action.type) {
     case waitingRoomToCarActions.EYESIGHT_PASS_PRESSED:
       return {
