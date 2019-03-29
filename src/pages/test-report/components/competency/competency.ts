@@ -16,6 +16,7 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getDrivingFaultCount, hasSeriousFault } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isSeriousMode } from '../../test-report.selector';
+import { ToggleSeriousFaultMode } from '../../test-report.actions';
 
 enum CssClassesEnum {
   DRIVING_FAULT = 'driving-fault',
@@ -97,14 +98,16 @@ export class CompetencyComponent {
 
   getLabel = (): string => competencyLabels[this.competency];
 
-  /**
-   * Increments the fault count of the competency
-   * @returns void
-   */
   recordFault = (): void => {
+    // Record Serious Faults
+    // Must be in serious mode
+    // Unable to mark a serious fault if there is already a dangerous fault on button
     if (this.isSeriousMode) {
       this.store$.dispatch(new AddSeriousFault(this.competency));
-    } else {
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+    // Record Driving Faults
+    // Unable to mark a DF if there is already a Serious or Dangerous Fault on Butotn
+    } else if (!this.hasSeriousFault) {
       this.store$.dispatch(new AddDrivingFault({
         competency: this.competency,
         newFaultCount: this.faultCount ? this.faultCount + 1 : 1,

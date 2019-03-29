@@ -16,6 +16,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from './test-report.reducer';
 import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/serious-fault-badge';
+import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/ser
     ManoeuvresPopoverComponent,
     ToolbarComponent,
     SeriousFaultBadgeComponent,
+    SeriousTooltipComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),

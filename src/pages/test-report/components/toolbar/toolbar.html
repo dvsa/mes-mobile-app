@@ -14,7 +14,7 @@
       S
     </button>
     </ion-col>
-    <ion-col col-12 no-padding style="padding-right:16px">
+    <ion-col col-12 no-padding style="padding-right:16px" *ngIf="!isSeriousMode">
         <button
         id="serious-button"
         ion-button
@@ -25,11 +25,14 @@
       S
     </button>
     </ion-col>
-    <ion-col col-12>
+    <ion-col col-12 *ngIf="!isSeriousMode">
         <driving-fault-summary></driving-fault-summary>
     </ion-col>
-    <ion-col style="text-align: right">
+    <ion-col style="text-align: right" *ngIf="!isSeriousMode">
       Timer
+    </ion-col>
+    <ion-col *ngIf="isSeriousMode" no-padding>
+      <serious-tooltip></serious-tooltip>
     </ion-col>
   </ion-row>
 </div>

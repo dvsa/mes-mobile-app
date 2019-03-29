@@ -5,6 +5,8 @@ import { IonicModule, Config, NavController } from 'ionic-angular';
 import { StoreModule } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { ConfigMock, NavControllerMock } from 'ionic-mocks';
+import { MockComponent } from 'ng-mocks';
+import { SeriousTooltipComponent } from '../../serious-tooltip/serious-tooltip';
 
 describe('ToolbarComponent', () => {
   let fixture: ComponentFixture<ToolbarComponent>;
@@ -14,7 +16,8 @@ describe('ToolbarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ToolbarComponent,
-        DrivingFaultSummaryComponent,
+        MockComponent(DrivingFaultSummaryComponent),
+        MockComponent(SeriousTooltipComponent),
       ],
       imports: [
         IonicModule,
