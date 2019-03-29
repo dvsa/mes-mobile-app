@@ -3,4 +3,12 @@
   <span id="summary-count-badge">
     <span id="summary-count">{{ componentState.count$ | async }}</span>
   </span>
+  <span id="test-pass-fail">
+    <button id="test-pass-button" (click)="pass()" class="mes-primary-button" >
+      <h3>Pass</h3>
+  </button>
+  <button id="test-fail-button" (click)="fail()" class="mes-primary-button" >
+      <h3>Fail</h3>
+  </button>
+  </span>
 </span>

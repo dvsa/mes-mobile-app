@@ -1,22 +1,48 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Pass Finalisation</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="logout()">Logout</button>
-    </ion-buttons>
+    <ion-title>Test debrief - {{pageState.candidateUntitledName$ | async}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Pass Finalisation
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button navPush="HealthDeclarationPage">Health Declaration</button>
-      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
-    </ion-card-content>
-  </ion-card>
+  <div>
+    <form>
+      <ion-grid>
+        <ion-row class="mes-full-width-card" id="candidate-section" align-items-center>
+          <ion-col>
+            <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
+            <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="application-reference-card" align-items-center>
+          <ion-col col-36>
+            <label>Application reference</label>
+          </ion-col>
+          <ion-col>
+              <span class="mes-data">{{pageState.applicationNumber$ | async }}</span>
+            </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="provisional-license-card" align-items-center>
+          <ion-col col-36>
+            <label>Provisional license received</label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-full-width-card" id="pass-certificate-number-card" align-items-center>
+          <ion-col col-36>
+            <label>Pass certificate number</label>
+          </ion-col>
+          <ion-col>
+            <input #passCertificateNumberInput type="text" value="{{pageState.passCertificateNumber$ | async}}" id="pass-certificate-number" class="pass-cert-input" >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-footer>
+        <ion-row class="mes-full-width-card">
+          <button type="submit" class="mes-primary-button" navPush="HealthDeclarationPage" ion-button>
+            <h3>Continue</h3>
+          </button>
+        </ion-row>
+      </ion-footer>
+    </form>
+  </div>
 </ion-content>

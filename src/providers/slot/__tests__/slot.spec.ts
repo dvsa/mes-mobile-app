@@ -79,7 +79,7 @@ describe('SlotProvider', () => {
               application: {
                 applicationId: 1234567,
                 bookingSequence: 3,
-                checkDigits: 1,
+                checkDigit: 1,
                 welshTest: false,
                 extendedTest: false,
                 meetingPlace: '',
@@ -134,7 +134,7 @@ describe('SlotProvider', () => {
               application: {
                 applicationId: 1234568,
                 bookingSequence: 1,
-                checkDigits: 4,
+                checkDigit: 4,
                 welshTest: false,
                 extendedTest: false,
                 meetingPlace: '',

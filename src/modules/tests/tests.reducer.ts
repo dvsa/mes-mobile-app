@@ -7,6 +7,8 @@ import { testDataReducer } from './test_data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
+import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
+import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 
 export interface CurrentTest {
   slotId: string;
@@ -54,6 +56,8 @@ export const testsReducer = (
             vehicleDetails: vehicleDetailsReducer,
             accompaniment: accompanimentReducer,
             instructorDetails: instructorDetailsReducer,
+            applicationReference: applicationReferenceReducer,
+            passCompletion: passCompletionReducer,
           },
         // @ts-ignore
         )(state.startedTests[slotId], action),

@@ -24,10 +24,20 @@ export class DebriefPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.passed = this.navParams.get('outcome') === 'pass';
+
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new DebriefViewDidEnter());
+  }
+
+  endDebrief(): void {
+    if (this.passed) {
+      this.navController.push('PassFinalisationPage');
+      return;
+    }
+    this.navController.push('OfficePage');
   }
 
 }

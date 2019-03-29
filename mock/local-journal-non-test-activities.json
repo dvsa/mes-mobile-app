@@ -63,7 +63,7 @@
         "application": {
           "applicationId": 1234567,
           "bookingSequence": 3,
-          "checkDigits": 1,
+          "checkDigit": 1,
           "welshTest": false,
           "extendedTest": true,
           "meetingPlace": "Some meeting place",
@@ -115,7 +115,7 @@
         "application": {
           "applicationId": 1234568,
           "bookingSequence": 3,
-          "checkDigits": 1,
+          "checkDigit": 1,
           "welshTest": false,
           "extendedTest": true,
           "progressiveAccess": false,
@@ -138,7 +138,7 @@
         "application": {
           "applicationId": 1234569,
           "bookingSequence": 1,
-          "checkDigits": 6,
+          "checkDigit": 6,
           "welshTest": false,
           "extendedTest": true,
           "progressiveAccess": false,
