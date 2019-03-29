@@ -23,6 +23,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
+import { getTests } from '../../modules/tests/tests.reducer';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -58,27 +59,32 @@ export class PassFinalisationPage extends BasePageComponent {
   ngOnInit(): void {
     this.pageState = {
       candidateName$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
       applicationNumber$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
       passCertificateNumber$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getPassCompletion),
         select(getPassCertificateNumber),
