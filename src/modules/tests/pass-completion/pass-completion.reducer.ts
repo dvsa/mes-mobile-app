@@ -2,7 +2,7 @@ import * as passCompletionActions from './pass-completion.actions';
 import { PassCompletion } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 
-const initialState: PassCompletion = {
+export const initialState: PassCompletion = {
   provisionalLicenceProvided: null,
   passCertificateNumber: null,
 };
@@ -13,6 +13,16 @@ export const passCompletionReducer = (state = initialState, action: passCompleti
       return {
         ...state,
         passCertificateNumber: action.passCertificateNumber,
+      };
+    case passCompletionActions.PROVISIONAL_LICENSE_RECEIVED:
+      return {
+        ...state,
+        provisionalLicenceProvided: true,
+      };
+    case passCompletionActions.PROVISIONAL_LICENSE_NOT_RECEIVED:
+      return {
+        ...state,
+        provisionalLicenceProvided: false,
       };
     default:
       return state;
