@@ -13,13 +13,13 @@ export class CompetencyWithModalComponent {
   @Input()
   clickCallback: OverlayCallback;
 
-  promoted: boolean;
+  displayPopover: boolean;
   constructor() {
-    this.promoted = false;
+    this.displayPopover = false;
   }
 
   togglePromote() {
-    this.promoted = !this.promoted;
+    this.displayPopover = !this.displayPopover;
     this.toggleOverlay();
   }
   toggleOverlay() {

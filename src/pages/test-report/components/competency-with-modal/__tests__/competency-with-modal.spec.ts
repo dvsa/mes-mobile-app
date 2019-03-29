@@ -52,7 +52,7 @@ describe('CompetencyWithModalComponent', () => {
     });
     describe('Button', () => {
       it('should display popover type control content when promoted is true', () => {
-        component.promoted = true;
+        component.displayPopover = true;
         fixture.detectChanges();
         const tickDe = fixture.debugElement.query(By.css('.popover'));
         expect(tickDe).toBeDefined();
