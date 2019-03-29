@@ -39,7 +39,12 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getWaitingRoomToCarState, EyesightRadioState } from './waiting-room-to-car.reducer';
+import { getWaitingRoomToCarState } from './waiting-room-to-car.reducer';
+import {
+  getEyesightRadioState,
+  isEyesightPassRadioSelected,
+  isEyesightFailRadioSelected,
+} from './waiting-room-to-car.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -134,15 +139,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       ),
       eyesightPassRadioChecked$: this.store$.pipe(
         select(getWaitingRoomToCarState),
-        // @ts-ignore
-        select(wrtc => wrtc.eyesightRadioState),
-        map(eyesightRadioState => eyesightRadioState === EyesightRadioState.PassSelected),
+        select(getEyesightRadioState),
+        map(isEyesightPassRadioSelected),
       ),
       eyesightFailRadioChecked$: this.store$.pipe(
         select(getWaitingRoomToCarState),
-        // @ts-ignore
-        select(wrtc => wrtc.eyesightRadioState),
-        map(eyesightRadioState => eyesightRadioState === EyesightRadioState.FailSelected),
+        select(getEyesightRadioState),
+        map(isEyesightFailRadioSelected),
       ),
     };
     this.inputSubscriptions = [
