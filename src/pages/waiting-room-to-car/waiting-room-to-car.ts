@@ -207,6 +207,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     return {
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
+      eyesightCtrl: new FormControl('', [Validators.required]),
       // residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
       // signatureAreaCtrl: new FormControl(null, [Validators.required]),
     };
