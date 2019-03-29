@@ -40,20 +40,25 @@ describe('WaitingRoomToCarPage', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forFeature('tests', () => ({
-          currentTest: {
-            slotId: '123',
-          },
-          startedTests: {
-            123: {
-              vehicleDetails: {},
-              accompaniment: {},
-              candidate: {
-                candidateName: 'Joe Bloggs',
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                candidate: {
+                  candidateName: 'Joe Bloggs',
+                },
               },
             },
-          },
-        })),
+          }),
+          waitingRoomToCar: () => ({
+            eyesightRadioState: null,
+          }),
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
