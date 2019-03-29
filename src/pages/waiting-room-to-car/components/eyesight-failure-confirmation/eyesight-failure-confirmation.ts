@@ -4,7 +4,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import {
   EyesightFailCancelPressed,
   EyesightFailConfirmed,
-} from '../../../../modules/ui-state/waiting-room-to-car/waiting-room-to-car.actions';
+} from '../../waiting-room-to-car.actions';
 
 @Component({
   selector: 'eyesight-failure-confirmation',

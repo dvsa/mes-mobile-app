@@ -11,6 +11,8 @@ import {
 import {
   EyesightFailureConfirmationComponent,
 } from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+import { StoreModule } from '@ngrx/store';
+import { waitingRoomToCarReducer } from './waiting-room-to-car.reducer';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import {
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),
+    StoreModule.forFeature('waitingRoomToCar', waitingRoomToCarReducer),
     EffectsModule.forFeature([WaitingRoomToCarAnalyticsEffects]),
   ],
   providers: [

@@ -4,7 +4,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
+import { WaitingRoomToCarViewDidEnter, EyesightPassPressed, EyesightFailPressed } from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
@@ -39,10 +39,7 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import {
-  EyesightPassPressed,
-  EyesightFailPressed,
-} from '../../modules/ui-state/waiting-room-to-car/waiting-room-to-car.actions';
+import { getWaitingRoomToCarState } from './waiting-room-to-car.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -136,16 +133,14 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getOtherAccompaniment),
       ),
       eyesightPassRadioChecked$: this.store$.pipe(
-        select(root => root.ui),
+        select(getWaitingRoomToCarState),
         // @ts-ignore
-        select(ui => ui.waitingRoomToCar),
         select(wrtc => wrtc.eyesightRadioState),
         map(eyesightRadioState => eyesightRadioState === 'pass'),
       ),
       eyesightFailRadioChecked$: this.store$.pipe(
-        select(root => root.ui),
+        select(getWaitingRoomToCarState),
         // @ts-ignore
-        select(ui => ui.waitingRoomToCar),
         select(wrtc => wrtc.eyesightRadioState),
         map(eyesightRadioState => eyesightRadioState === 'fail'),
       ),

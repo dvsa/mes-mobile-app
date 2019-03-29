@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createFeatureSelector } from '@ngrx/store';
 import * as waitingRoomToCarActions from './waiting-room-to-car.actions';
 
 const initialState = {
@@ -31,3 +31,5 @@ export const waitingRoomToCarReducer = (
       return state;
   }
 };
+
+export const getWaitingRoomToCarState = createFeatureSelector('waitingRoomToCar');
