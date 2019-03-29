@@ -1,5 +1,4 @@
 export enum Competencies {
-  manoeuvres = 'manoeuvres',
   controlsAccelerator = 'controlsAccelerator',
   controlsClutch = 'controlsClutch',
   controlsGears = 'controlsGears',
