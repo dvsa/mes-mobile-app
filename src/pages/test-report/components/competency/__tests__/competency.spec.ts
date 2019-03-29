@@ -10,7 +10,7 @@ import { Competencies } from '../../../../../modules/tests/test_data/test-data.c
 import { StoreModule, Store } from '@ngrx/store';
 import { initialState } from '../../../../../modules/tests/test_data/test-data.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
+import { AddDrivingFault, AddSeriousFault } from '../../../../../modules/tests/test_data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
 import { FaultCounterComponent } from '../../fault-counter/fault-counter';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
@@ -97,6 +97,22 @@ describe('CompetencyComponent', () => {
           competency: Competencies.controlsSteering,
           newFaultCount: 1,
         }));
+      });
+      it('should not dispatch a ADD_DRIVING_FAULT action if there is a serious fault', () => {
+        component.competency = Competencies.awarenessPlanning;
+        component.hasSeriousFault = true;
+
+        component.recordFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledTimes(0);
+      });
+      it('should dispatch a ADD_SERIOUS_FAULT action if serious mode is active', () => {
+        component.competency = Competencies.clearance;
+        component.isSeriousMode = true;
+
+        component.recordFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddSeriousFault(Competencies.clearance));
       });
     });
   });

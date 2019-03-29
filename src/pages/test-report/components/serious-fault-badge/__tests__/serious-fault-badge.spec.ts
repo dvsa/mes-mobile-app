@@ -2,7 +2,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SeriousFaultBadgeComponent } from '../serious-fault-badge';
 
-describe('FaultCounterComponent', () => {
+describe('SeriousFaultBadgeComponenet', () => {
   let fixture: ComponentFixture<SeriousFaultBadgeComponent>;
   let component: SeriousFaultBadgeComponent;
 
@@ -31,14 +31,14 @@ describe('FaultCounterComponent', () => {
 
       fixture.detectChanges();
 
-      expect(fixture.debugElement.query(By.css('#background'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('.background'))).toBeDefined();
     });
     it('should not display badge if showBadge is false', () => {
       component.showBadge = false;
 
       fixture.detectChanges();
 
-      expect(fixture.debugElement.query(By.css('#background'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.background'))).toBeNull();
     });
   });
 });

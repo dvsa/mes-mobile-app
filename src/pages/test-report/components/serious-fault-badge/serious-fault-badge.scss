@@ -4,12 +4,12 @@ serious-fault-badge {
     height: 22px;
     min-width: 22px;
 
-    div {
+    .background {
       background: map-get($colors-gds, 'gds-yellow');
       color: #000000;
       border-radius: 13px;
 
-      span {
+      .label {
         font-size: 15px;
         font-weight: bold;
         position: relative;
