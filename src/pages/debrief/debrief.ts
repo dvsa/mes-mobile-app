@@ -32,4 +32,12 @@ export class DebriefPage extends BasePageComponent {
     this.store$.dispatch(new DebriefViewDidEnter());
   }
 
+  endDebrief(): void {
+    if (this.passed) {
+      this.navController.push('PassFinalisationPage');
+      return;
+    }
+    this.navController.push('OfficePage');
+  }
+
 }
