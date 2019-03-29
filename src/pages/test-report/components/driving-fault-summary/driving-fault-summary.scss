@@ -1,0 +1,21 @@
+driving-fault-summary {
+  #summary-count-badge {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    
+    padding-top: 9px;
+    border-radius: 30px;
+    
+    background-color: map-get($colors-gds, 'gds-black');;
+    color: map-get($colors, 'mes-white');
+    text-align: center;
+
+    #summary-count {
+      font-size: 21px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+  }
+}

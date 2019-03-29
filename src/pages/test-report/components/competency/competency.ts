@@ -13,6 +13,7 @@ import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getDrivingFaultCount } from '../../../../modules/tests/test_data/test-data.selector';
+import { getTests } from '../../../../modules/tests/tests.reducer';
 
 enum CssClassesEnum {
   DRIVING_FAULT = 'driving-fault',
@@ -54,6 +55,7 @@ export class CompetencyComponent {
 
     this.competencyState = {
       drivingFaultCount$: this.store$.pipe(
+        select(getTests),
         select(getCurrentTest),
         select(getTestData),
         select(testData => getDrivingFaultCount(testData, this.competency))),
