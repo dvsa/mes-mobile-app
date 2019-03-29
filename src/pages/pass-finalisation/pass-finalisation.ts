@@ -7,9 +7,16 @@ import { StoreModel } from '../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
 } from './pass-finalisation.actions';
-import { PassCertificateNumberChanged } from '../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  PassCertificateNumberChanged,
+  ProvisionalLicenseReceived,
+  ProvisionalLicenseNotReceived,
+} from '../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
-import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
+import {
+  getPassCertificateNumber,
+  getProvisionalLicenseProvided,
+} from '../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -30,6 +37,7 @@ interface PassFinalisationPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   applicationNumber$: Observable<string>;
+  provisionalLicenseProvided$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
 }
 
@@ -83,6 +91,12 @@ export class PassFinalisationPage extends BasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
+      provisionalLicenseProvided$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getPassCompletion),
+        select(getProvisionalLicenseProvided),
+      ),
       passCertificateNumber$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
@@ -101,6 +115,14 @@ export class PassFinalisationPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
+  }
+
+  provisionalLicenseReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseReceived());
+  }
+
+  provisionalLicenseNotReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
   /**
