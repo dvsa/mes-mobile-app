@@ -89,6 +89,10 @@ export class PassFinalisationPage extends BasePageComponent {
     ];
   }
 
+  ngOnDestroy(): void {
+    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  }
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
   }
