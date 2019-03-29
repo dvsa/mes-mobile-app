@@ -39,7 +39,7 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getWaitingRoomToCarState } from './waiting-room-to-car.reducer';
+import { getWaitingRoomToCarState, EyesightRadioState } from './waiting-room-to-car.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -136,13 +136,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getWaitingRoomToCarState),
         // @ts-ignore
         select(wrtc => wrtc.eyesightRadioState),
-        map(eyesightRadioState => eyesightRadioState === 'pass'),
+        map(eyesightRadioState => eyesightRadioState === EyesightRadioState.PassSelected),
       ),
       eyesightFailRadioChecked$: this.store$.pipe(
         select(getWaitingRoomToCarState),
         // @ts-ignore
         select(wrtc => wrtc.eyesightRadioState),
-        map(eyesightRadioState => eyesightRadioState === 'fail'),
+        map(eyesightRadioState => eyesightRadioState === EyesightRadioState.FailSelected),
       ),
     };
     this.inputSubscriptions = [

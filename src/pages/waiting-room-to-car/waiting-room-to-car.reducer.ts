@@ -1,8 +1,18 @@
 import { Action, createFeatureSelector } from '@ngrx/store';
 import * as waitingRoomToCarActions from './waiting-room-to-car.actions';
 
-const initialState = {
-  eyesightRadioState: null,
+export enum EyesightRadioState {
+  Unselected = 'Unselected',
+  PassSelected = 'PassSelected',
+  FailSelected = 'FailSelected',
+}
+
+export interface WaitingRoomToCarModel {
+  eyesightRadioState: EyesightRadioState;
+}
+
+const initialState: WaitingRoomToCarModel = {
+  eyesightRadioState: EyesightRadioState.Unselected,
 };
 
 export const waitingRoomToCarReducer = (
@@ -13,17 +23,17 @@ export const waitingRoomToCarReducer = (
     case waitingRoomToCarActions.EYESIGHT_PASS_PRESSED:
       return {
         ...state,
-        eyesightRadioState: 'pass',
+        eyesightRadioState: EyesightRadioState.PassSelected,
       };
     case waitingRoomToCarActions.EYESIGHT_FAIL_PRESSED:
       return {
         ...state,
-        eyesightRadioState: 'fail',
+        eyesightRadioState: EyesightRadioState.FailSelected,
       };
     case waitingRoomToCarActions.EYESIGHT_FAIL_CANCEL_PRESSED:
       return {
         ...state,
-        eyesightRadioState: null,
+        eyesightRadioState: EyesightRadioState.Unselected,
       };
     case waitingRoomToCarActions.EYESIGHT_FAIL_CONFIRMED:
       return initialState;
