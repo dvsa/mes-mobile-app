@@ -44,12 +44,12 @@ export class CompetencyComponent {
   faultCount: number;
 
   constructor(
-    public hammerProvider : HammerProvider,
+    public hammerProvider: HammerProvider,
     private renderer: Renderer2,
     private store$: Store<StoreModel>,
-    ) {}
+  ) {}
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.hammerProvider.init(this.button);
     this.hammerProvider.addPressAndHoldEvent(this.recordFault);
 

@@ -1,5 +1,5 @@
+
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
@@ -31,7 +31,6 @@ describe('CompetencyComponent', () => {
         MockComponent(FaultCounterComponent),
       ],
       imports: [
-        IonicModule,
         AppModule,
         StoreModule.forFeature('tests', () => ({
           currentTest: {
@@ -101,14 +100,14 @@ describe('CompetencyComponent', () => {
     it('should show provided label', () => {
       component.competency = Competencies.controlsGears;
       fixture.detectChanges();
-      const label = fixture.debugElement.query(By.css('#competencyLabel'));
+      const label = fixture.debugElement.query(By.css('.competency-label'));
       expect(label.nativeElement.innerHTML).toBe('Gears');
     });
   });
 
   it('should pass the number of driving faults to the fault counter component', () => {
     fixture.detectChanges();
-    const drivingFaultCounter = fixture.debugElement.query(By.css('#drivingFaults'))
+    const drivingFaultCounter = fixture.debugElement.query(By.css('.drivingFaults'))
       .componentInstance as FaultCounterComponent;
     component.faultCount = 5;
 

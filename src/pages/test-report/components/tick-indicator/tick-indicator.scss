@@ -1,0 +1,25 @@
+tick-indicator {
+  div {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    .tick-background {
+      background-color: map-get($colors-gds, 'gds-grey-3');
+      color: map-get($colors, mes-white);
+      border-radius: 13px;
+      &.ticked{
+        background-color: map-get($colors-gds, 'gds-green');
+      }
+      span {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        .tick-icon{
+          font-size: 25px;
+          font-weight: 700;
+          align-self: center; 
+        }
+      }
+    }
+  }
+}

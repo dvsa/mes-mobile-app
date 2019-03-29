@@ -35,7 +35,9 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency></competency>
+            <competency-with-modal [controlLabel]="'Manoeuvres'" [clickCallback]="getCallback()">
+                <manoeuvres-popover></manoeuvres-popover>
+            </competency-with-modal>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -367,4 +369,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <div  class="report-overlay" [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>
 </ion-content>

@@ -1,3 +1,5 @@
+import { CompetencyWithModalComponent } from './../components/competency-with-modal/competency-with-modal';
+import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
@@ -17,6 +19,7 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
+import { TickIndicatorComponent } from '../components/tick-indicator/tick-indicator';
 import { ToolbarComponent } from '../components/toolbar/toolbar';
 
 describe('TestReportPage', () => {
@@ -28,7 +31,10 @@ describe('TestReportPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      declarations: [TestReportPage,
+        MockComponent(ManoeuvresPopoverComponent),
+        MockComponent(CompetencyWithModalComponent),
+        MockComponent(TickIndicatorComponent),
         TestReportPage,
         MockComponent(CompetencyComponent),
         MockComponent(DrivingFaultSummaryComponent),
