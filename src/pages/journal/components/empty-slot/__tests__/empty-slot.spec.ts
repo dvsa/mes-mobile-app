@@ -51,7 +51,7 @@ describe('EmptySlotComponent', () => {
       application: {
         applicationId: 1234567,
         bookingSequence: 3,
-        checkDigits: 1,
+        checkDigit: 1,
         welshTest: false,
         extendedTest: false,
         meetingPlace: '',
