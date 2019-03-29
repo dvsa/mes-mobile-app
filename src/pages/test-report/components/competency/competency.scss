@@ -62,12 +62,9 @@ competency {
       justify-content: center;
     }
     .competency-label {
-      font-size: 15px;
-      text-align: center;
-      line-height: 25px;
-      letter-spacing: -0.26px;
-      font-weight: 500;
-      margin-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-self: center;
     }
 
     .fault-wrapper {

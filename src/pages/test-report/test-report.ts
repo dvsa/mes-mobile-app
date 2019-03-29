@@ -111,6 +111,16 @@ export class TestReportPage extends BasePageComponent {
       this.subscription.unsubscribe();
     }
   }
+
+  pass(): void {
+    this.navCtrl.push('DebriefPage', { outcome: 'pass' });
+
+  }
+
+  fail(): void {
+    this.navCtrl.push('DebriefPage', { outcome: 'fail' });
+
+  }
 }
 export interface OverlayCallback {
   callbackMethod: () => void;

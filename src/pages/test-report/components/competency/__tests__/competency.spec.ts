@@ -16,6 +16,7 @@ import { FaultCounterComponent } from '../../fault-counter/fault-counter';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { SeriousFaultBadgeComponent } from '../../serious-fault-badge/serious-fault-badge';
+import { IonicModule } from 'ionic-angular';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -34,6 +35,7 @@ describe('CompetencyComponent', () => {
       ],
       imports: [
         AppModule,
+        IonicModule,
         StoreModule.forFeature('tests', () => ({
           currentTest: {
             slotId: '123',
@@ -128,7 +130,7 @@ describe('CompetencyComponent', () => {
 
   it('should pass the number of driving faults to the fault counter component', () => {
     fixture.detectChanges();
-    const drivingFaultCounter = fixture.debugElement.query(By.css('.drivingFaults'))
+    const drivingFaultCounter = fixture.debugElement.query(By.css('.driving-faults'))
       .componentInstance as FaultCounterComponent;
     component.faultCount = 5;
 
