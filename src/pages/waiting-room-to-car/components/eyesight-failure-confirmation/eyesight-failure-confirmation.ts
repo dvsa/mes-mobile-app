@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
   EyesightFailCancelPressed,
+  EyesightFailConfirmed,
 } from '../../../../modules/ui-state/waiting-room-to-car/waiting-room-to-car.actions';
 
 @Component({
@@ -10,8 +11,12 @@ import {
   templateUrl: 'eyesight-failure-confirmation.html',
 })
 export class EyesightFailureConfirmationComponent {
-  constructor(private store$: Store<StoreModel>) {
+  constructor(private store$: Store<StoreModel>) {}
+
+  onConfirm(): void {
+    this.store$.dispatch(new EyesightFailConfirmed());
   }
+
   onCancel(): void {
     this.store$.dispatch(new EyesightFailCancelPressed());
   }

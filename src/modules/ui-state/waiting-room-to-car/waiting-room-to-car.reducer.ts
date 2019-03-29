@@ -25,6 +25,8 @@ export const waitingRoomToCarReducer = (
         ...state,
         eyesightRadioState: null,
       };
+    case waitingRoomToCarActions.EYESIGHT_FAIL_CONFIRMED:
+      return initialState;
     default:
       return state;
   }
