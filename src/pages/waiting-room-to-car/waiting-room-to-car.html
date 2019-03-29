@@ -87,47 +87,96 @@
           <ion-col>
             <input #instructorRegistrationInput type="number" id="instructor-registration" class="vehicle-reg-input" numbersOnly>
           </ion-col>
-        </ion-row>
-        <ion-row class="mes-full-width-card" id="accompaniment-card" align-items-center>
-          <ion-col col-32>
-            <label>Accompanied by (optional)</label>
+          <ion-col col-23>
+            <input type="radio" name="eyesight" id="eyesight-pass" class="gds-radio-button" (click)="setEyesightFailureVisibility(false)">
+            <label for="eyesight-pass" class="radio-label">Pass</label>
           </ion-col>
           <ion-col>
-            <ion-row>
-              <ion-col col-34>
-                <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox" [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
-                <label for="accompaniment-instructor">Ins</label>
-              </ion-col>
-              <ion-col col-34>
-                <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox" [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
-                <label for="accompaniment-supervisor">Sup</label>
-              </ion-col>
-              <ion-col>
-                <input type="checkbox" id="accompaniment-other" class="gds-checkbox" [checked]="pageState.otherAccompaniment$ | async" (click)="otherAccompanimentToggled()">
-                <label for="accompaniment-other">Other</label>
-              </ion-col>
-            </ion-row>
+            <input type="radio" name="eyesight" id="eyesight-fail" class="gds-radio-button" (click)="setEyesightFailureVisibility(true)">
+            <label for="eyesight-fail" class="radio-label">Fail</label>
           </ion-col>
         </ion-row>
-        <ion-row class="mes-full-width-card" id="vehicle-details-card" align-items-center>
-          <ion-col col-32>
-            <label>Vehicle details (optional)</label>
-          </ion-col>
+        <ion-row *ngIf="showEyesightFailureConfirmation">
+          <eyesight-failure-confirmation></eyesight-failure-confirmation>
+        </ion-row>
+        <ion-row [hidden]="showEyesightFailureConfirmation" id="post-eyesight-form-content">
           <ion-col>
-            <ion-row>
-              <ion-col col-34>
-                <input type="checkbox" id="school-car" class="gds-checkbox" [checked]="pageState.schoolCar$ | async" (click)="schoolCarToggled()">
-                <label for="school-car">School car</label>
-              </ion-col>
-              <ion-col>
-                <input type="checkbox" id="dual-control" class="gds-checkbox" [checked]="pageState.dualControls$ | async" (click)="dualControlsToggled()">
-                <label for="dual-control">Dual control</label>
+            <ion-row class="mes-full-width-card" id="tell-me-card" align-items-center>
+              <ion-col col-32>
+                <label>Tell me question</label>
               </ion-col>
             </ion-row>
+            <ion-row class="mes-full-width-card" id="registration-card" align-items-center>
+              <ion-col col-32>
+                <label>Registration number</label>
+              </ion-col>
+              <ion-col>
+                <input #registrationInput type="text" id="registration" autocapitalize="characters" uppercaseAlphanumOnly>
+              </ion-col>
+            </ion-row>
+            <ion-row class="mes-full-width-card" id="transmission-card" align-items-center>
+              <ion-col col-32>
+                <label>Transmission</label>
+              </ion-col>
+              <ion-col col-23>
+                <input type="radio" name="transmission" id="transmission-manual" class="gds-radio-button" (click)="manualTransmission()">
+                <label for="transmission-manual" class="radio-label">Manual</label>
+              </ion-col>
+              <ion-col>
+                <input type="radio" name="transmission" id="transmission-automatic" class="gds-radio-button" (click)="automaticTransmission()">
+                <label for="transmission-automatic" class="radio-label">Automatic</label>
+              </ion-col>
+            </ion-row>
+            <ion-row class="mes-full-width-card" id="instructor-registration-card" align-items-center>
+              <ion-col col-32>
+                <label>Instructor registration number (optional)</label>
+              </ion-col>
+              <ion-col>
+                <input #instructorRegistrationInput type="number" id="instructor-registration" numbersOnly>
+              </ion-col>
+            </ion-row>
+            <ion-row class="mes-full-width-card" id="accompaniment-card" align-items-center>
+              <ion-col col-32>
+                <label>Accompanied by (optional)</label>
+              </ion-col>
+              <ion-col>
+                <ion-row>
+                  <ion-col col-35>
+                    <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox" [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
+                    <label for="accompaniment-instructor">Ins</label>
+                  </ion-col>
+                  <ion-col col-35>
+                    <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox" [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
+                    <label for="accompaniment-supervisor">Sup</label>
+                  </ion-col>
+                  <ion-col>
+                    <input type="checkbox" id="accompaniment-other" class="gds-checkbox" [checked]="pageState.otherAccompaniment$ | async" (click)="otherAccompanimentToggled()">
+                    <label for="accompaniment-other">Other</label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row class="mes-full-width-card" id="vehicle-details-card" align-items-center>
+              <ion-col col-32>
+                <label>Vehicle details (optional)</label>
+              </ion-col>
+              <ion-col>
+                <ion-row>
+                  <ion-col col-35>
+                    <input type="checkbox" id="school-car" class="gds-checkbox" [checked]="pageState.schoolCar$ | async" (click)="schoolCarToggled()">
+                    <label for="school-car">School car</label>
+                  </ion-col>
+                  <ion-col>
+                    <input type="checkbox" id="dual-control" class="gds-checkbox" [checked]="pageState.dualControls$ | async" (click)="dualControlsToggled()">
+                    <label for="dual-control">Dual control</label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row class="mes-full-width-card">
+                <button type="submit" class="mes-primary-button" id="continue-to-test-report" ion-button>Continue to test report</button>
+              </ion-row>
           </ion-col>
-        </ion-row>
-        <ion-row class="mes-full-width-card">
-          <button type="submit" class="mes-primary-button" id="continue-to-test-report" ion-button>Continue to test report</button>
         </ion-row>
       </ion-grid>
     </form>

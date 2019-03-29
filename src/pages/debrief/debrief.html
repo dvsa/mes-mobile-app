@@ -5,10 +5,6 @@
       <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-
   <div id="test-outcome-background">
     <div class="test-outcome-container passed" *ngIf="passed">
       <h4>Test outcome</h4>
@@ -19,6 +15,9 @@
       <h1>unsuccessful</h1>
     </div>
   </div>
+</ion-header>
+
+<ion-content>
 
   <ion-card>
     <ion-card-header>
@@ -32,4 +31,15 @@
       <button ion-button navPush="TerminateTestPage">Terminate Test</button>
     </ion-card-content>
   </ion-card>
+
 </ion-content>
+<ion-footer>
+  <div id="end-debrief-background">
+    <button ion-button 
+    id="end-debrief-button" 
+    class="mes-primary-button"
+    (click)="endDebrief()">
+      <h3>End debrief</h3>
+    </button>
+  </div>
+</ion-footer>

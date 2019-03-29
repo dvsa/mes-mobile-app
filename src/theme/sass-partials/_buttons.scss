@@ -26,6 +26,15 @@
   }
 }
 
+.mes-neutral-button {
+  background: map-get($colors, mes-white);
+  border-radius: 10px;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
+  h3 {
+    color : map-get($colors, mes-black);
+  }
+}
+
 .mes-transparent-button {
   background: map-get($colors, mes-white);
   color: map-get($colors-gds, gds-black);

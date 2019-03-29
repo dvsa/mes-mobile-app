@@ -15,9 +15,67 @@ page-test-report {
   }
 
   .dark-divider {
-    border-top: 1px solid #2F3233;
+    border-top: 1px solid #2f3233;
     box-shadow: 0 1px 0 0 map-get($colors, 'mes-white');
     margin: 4px 8px;
   }
+  .report-overlay {
+    background-color: rgba(0, 0, 0, 0.68);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 120;
+    visibility: hidden;
+  }
+  @keyframes showAnimation {
+    0% {
+      opacity: 0;
+      visibility: hidden;
+    }
+    10% {
+      opacity: 0.3;
+      visibility: visible;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 
+  @keyframes hideAnimation {
+    0% {
+      opacity: 1;
+      visibility: visible;
+    }
+    30% {
+      opacity: 0.5;
+      visibility: visible;
+    }
+    99% {
+      opacity: 0;
+      visibility: visible;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  .show-overlay {
+    animation-name: showAnimation;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+  }
+  .hide-overlay {
+    animation-name: hideAnimation;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+  }
+  #test-report-header {
+    height: 68px;
+    padding: 12px 17px;
+    background: map-get($colors, 'mes-white');
+  }
 }
