@@ -22,10 +22,10 @@ describe('TestDataSelectors', () => {
   });
 
   describe('hasSeriousFault', () => {
-    it('should return true if a comptency has a serious fault', () => {
+    it('should return true if a competency has a serious fault', () => {
       expect(hasSeriousFault(state, Competencies.awarenessPlanning)).toBeTruthy();
     });
-    it('should return false if a comptency does not have a serious fault', () => {
+    it('should return false if a competency does not have a serious fault', () => {
       expect(hasSeriousFault(state, Competencies.controlsClutch)).toBeFalsy();
     });
   });

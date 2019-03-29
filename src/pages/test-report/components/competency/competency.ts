@@ -24,7 +24,7 @@ enum CssClassesEnum {
   SERIOUS_FAULT = 'serious-fault',
 }
 
-interface ComptencyState {
+interface CompetencyState {
   drivingFaultCount$: Observable<number>;
   isSeriousMode$: Observable<boolean>;
   hasSeriousFault$: Observable<boolean>;
@@ -45,7 +45,7 @@ export class CompetencyComponent {
 
   rippleEffectAnimationDuration: number = 300;
 
-  competencyState: ComptencyState;
+  competencyState: CompetencyState;
   subscription: Subscription;
 
   faultCount: number;

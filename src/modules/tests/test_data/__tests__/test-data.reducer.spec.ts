@@ -25,7 +25,7 @@ describe('TestDataReducer reducer', () => {
       }));
       expect(result.drivingFaults.controlsGears).toBe(2);
     });
-    it('should not remove an exisiting driving fault when a new one is added', () => {
+    it('should not remove an existing driving fault when a new one is added', () => {
       const state: TestData = {
         drivingFaults: {
           controlsParkingBrake: 1,
@@ -55,7 +55,7 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(state, new AddSeriousFault(Competencies.followingDistance));
       expect(result.seriousFaults.followingDistance).toBeTruthy();
     });
-    it('should not remove an exisiting serious fault when a new one is added', () => {
+    it('should not remove an existing serious fault when a new one is added', () => {
       const state: TestData = {
         seriousFaults: {
           followingDistance: true,

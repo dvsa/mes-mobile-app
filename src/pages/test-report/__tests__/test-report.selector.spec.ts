@@ -1,7 +1,7 @@
 import { TestReportModel } from '../test-report.model';
 import { isSeriousMode } from '../test-report.selector';
 
-describe('TestReportSelectros', () => {
+describe('TestReportSelectors', () => {
   const state: TestReportModel = {
     seriousMode: true,
     dangerousMode: true,
