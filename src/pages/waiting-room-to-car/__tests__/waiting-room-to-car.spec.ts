@@ -25,6 +25,9 @@ import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
 } from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+import { EyesightPassPressed, EyesightFailPressed } from '../waiting-room-to-car.actions';
+import { EyesightRadioState } from '../waiting-room-to-car.reducer';
+import { of } from 'rxjs/observable/of';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -56,7 +59,7 @@ describe('WaitingRoomToCarPage', () => {
             },
           }),
           waitingRoomToCar: () => ({
-            eyesightRadioState: null,
+            eyesightRadioState: EyesightRadioState.Unselected,
           }),
         }),
       ],
@@ -134,6 +137,41 @@ describe('WaitingRoomToCarPage', () => {
         dualControlCb.triggerEventHandler('click', null);
         fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new DualControlsToggled());
+      });
+    });
+
+    describe('eyesight failure confirmation', () => {
+      it('should dispatch an EyesightPassPressed action when Pass is pressed', () => {
+        const passEyesightRadio = fixture.debugElement.query(By.css('#eyesight-pass'));
+        passEyesightRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightPassPressed());
+      });
+      it('should dispatch an EyesightFailPressed action when Fail is pressed', () => {
+        const failEyesightRadio = fixture.debugElement.query(By.css('#eyesight-fail'));
+        failEyesightRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailPressed());
+      });
+      // tslint:disable-next-line:max-line-length
+      it('should hide the rest of the form and show eyesight failure confirmation when page state indicates fail is selected', () => {
+        fixture.detectChanges();
+        component.pageState.eyesightFailRadioChecked$ = of(true);
+        fixture.detectChanges();
+        const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
+        const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
+        expect(eyesightFailureConfirmation).toBeTruthy();
+        expect(formAfterEyesight.nativeElement.hidden).toBeTruthy();
+      });
+      // tslint:disable-next-line:max-line-length
+      it('should show the rest of the form and not render eyesight failure confirmation when page state indicates pass is selected', () => {
+        fixture.detectChanges();
+        component.pageState.eyesightPassRadioChecked$ = of(true);
+        fixture.detectChanges();
+        const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
+        const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
+        expect(eyesightFailureConfirmation).toBeNull();
+        expect(formAfterEyesight.nativeElement.hidden).toBeFalsy();
       });
     });
   });
