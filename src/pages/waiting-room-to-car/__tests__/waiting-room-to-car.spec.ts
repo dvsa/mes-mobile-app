@@ -131,38 +131,5 @@ describe('WaitingRoomToCarPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new DualControlsToggled());
       });
     });
-
-    describe('eyesight failure confirmation', () => {
-      // tslint:disable-next-line:max-line-length
-      it('should not render the eyesight failure confirmation and show the rest of the form when showEyesightFailureConfirmation is false', () => {
-        component.showEyesightFailureConfirmation = false;
-        fixture.detectChanges();
-        const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
-        const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
-        expect(eyesightFailureConfirmation).toBeNull();
-        expect(formAfterEyesight.nativeElement.hidden).toBeFalsy();
-      });
-      // tslint:disable-next-line:max-line-length
-      it('should render the eyesight failure confirmation and hide the rest of the form when showEyesightFailureConfirmation is true', () => {
-        component.showEyesightFailureConfirmation = true;
-        fixture.detectChanges();
-        const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
-        const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
-        expect(eyesightFailureConfirmation).toBeTruthy();
-        expect(formAfterEyesight.nativeElement.hidden).toBeTruthy();
-      });
-      it('should setShowEyesightFailureConfirmation to true when Fail is pressed', () => {
-        const failEyesightRadio = fixture.debugElement.query(By.css('#eyesight-fail'));
-        failEyesightRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(component.showEyesightFailureConfirmation).toBe(true);
-      });
-      it('should setShowEyesightFailureConfirmation to false when Pass is pressed', () => {
-        const passEyesightRadio = fixture.debugElement.query(By.css('#eyesight-pass'));
-        passEyesightRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(component.showEyesightFailureConfirmation).toBe(false);
-      });
-    });
   });
 });
