@@ -31,10 +31,9 @@ describe('TestReportPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportPage,
-        MockComponent(CompetencyComponent),
-        ManoeuvresPopoverComponent,
-        CompetencyWithModalComponent,
-        TickIndicatorComponent,
+        MockComponent(ManoeuvresPopoverComponent),
+        MockComponent(CompetencyWithModalComponent),
+        MockComponent(TickIndicatorComponent),
         TestReportPage,
         MockComponent(CompetencyComponent),
         MockComponent(DrivingFaultSummaryComponent),
