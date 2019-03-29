@@ -5,7 +5,7 @@
       <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
   </ion-navbar>
-  <div id="test-outcome-background" class="shadow">
+  <div id="test-outcome-background">
     <div class="test-outcome-container passed" *ngIf="passed">
       <h4>Test outcome</h4>
       <h1>passed</h1>
@@ -34,8 +34,11 @@
 
 </ion-content>
 <ion-footer>
-  <div id="end-debrief-background" class="shadow">
-    <button ion-button id="end-debrief-button" class="mes-primary-button">
+  <div id="end-debrief-background">
+    <button ion-button 
+    id="end-debrief-button" 
+    class="mes-primary-button"
+    (click)="endDebrief()">
       <h3>End debrief</h3>
     </button>
   </div>
