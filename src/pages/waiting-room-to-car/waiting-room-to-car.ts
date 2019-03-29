@@ -39,6 +39,7 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -58,6 +59,7 @@ interface WaitingRoomToCarPageState {
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   pageState: WaitingRoomToCarPageState;
+  form: FormGroup;
 
   @ViewChild('registrationInput')
   regisrationInput: ElementRef;
@@ -75,6 +77,8 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.form = new FormGroup(this.getFormValidation());
+
   }
 
   ngOnInit(): void {
@@ -189,4 +193,24 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
   }
+
+  onSubmit() {
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navCtrl.push('TestReportPage');
+    }
+  }
+
+  getFormValidation(): { [key: string]: FormControl } {
+    return {
+      transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
+      registrationNumberCtrl: new FormControl('', [Validators.required]),
+      // residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      // signatureAreaCtrl: new FormControl(null, [Validators.required]),
+    };
+  }
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+  }
+
 }

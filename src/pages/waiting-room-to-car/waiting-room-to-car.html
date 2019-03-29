@@ -9,8 +9,8 @@
 
 <ion-content no-bounce>
   <div>
-    <form>
-      <ion-grid>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <ion-grid>
         <ion-row class="mes-full-width-card" id="eyesight-test-card" align-items-center>
           <ion-col col-32>
             <label>Eyesight test</label>
@@ -21,27 +21,65 @@
             <label>Tell me question</label>
           </ion-col>
         </ion-row>
-        <ion-row class="mes-full-width-card" id="registration-card" align-items-center>
-          <ion-col col-32>
-            <label>Registration number</label>
-          </ion-col>
+
+        <ion-row>     
+          <div class="validation-bar"
+          [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')"></div>
           <ion-col>
-            <input #registrationInput type="text" id="registration" class="vehicle-reg-input" autocapitalize="characters" uppercaseAlphanumOnly>
+           <ion-row class="mes-full-width-card" id="registration-card" align-items-center>
+             <ion-col col-32>
+               <label>Registration number</label>
+             </ion-col>
+             <ion-col>
+               <input #registrationInput type="text" id="registration" formControlName="registrationNumberCtrl" class="vehicle-reg-input"
+               autocapitalize="characters" uppercaseAlphanumOnly
+               [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')"
+               >
+             </ion-col>
+           </ion-row>
           </ion-col>
         </ion-row>
+        <ion-row>
+            <ion-col>
+              <div id="waiting-room-insurance-validation-text" class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')">
+                Registration number must be entered
+              </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+          <div class="validation-bar"
+          [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')"></div>
+        <ion-col>
         <ion-row class="mes-full-width-card" id="transmission-card" align-items-center>
           <ion-col col-32>
             <label>Transmission</label>
           </ion-col>
           <ion-col col-23>
-            <input type="radio" name="transmission" id="transmission-manual" class="gds-radio-button" (click)="manualTransmission()">
+            <input type="radio" formControlName="transmissionRadioGroupCtrl" name="transmissionRadioGroupCtrl" id="transmission-manual" class="gds-radio-button"
+            [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')"
+            (click)="manualTransmission()"
+            value='manual'>
             <label for="transmission-manual" class="radio-label">Manual</label>
           </ion-col>
           <ion-col>
-            <input type="radio" name="transmission" id="transmission-automatic" class="gds-radio-button" (click)="automaticTransmission()">
+            <input type="radio" formControlName="transmissionRadioGroupCtrl" name="transmissionRadioGroupCtrl" id="transmission-automatic" class="gds-radio-button"
+            [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')"
+            (click)="automaticTransmission()"
+            value='automatic'>
             <label for="transmission-automatic" class="radio-label">Automatic</label>
           </ion-col>
         </ion-row>
+      </ion-col>
+      </ion-row>
+        <ion-row>
+            <ion-col>
+              <div id="waiting-room-insurance-validation-text" class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')">
+                Transmission must be selected
+              </div>
+            </ion-col>
+          </ion-row>
         <ion-row class="mes-full-width-card" id="instructor-registration-card" align-items-center>
           <ion-col col-32>
             <label>Instructor registration number (optional)</label>
@@ -89,7 +127,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card">
-          <button class="mes-primary-button" id="continue-to-test-report" ion-button navPush="TestReportPage">Continue to test report</button>
+          <button type="submit" class="mes-primary-button" id="continue-to-test-report" ion-button>Continue to test report</button>
         </ion-row>
       </ion-grid>
     </form>
