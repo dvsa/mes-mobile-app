@@ -1,10 +1,10 @@
 import { ToolbarComponent } from '../toolbar';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { DrivingFaultSummaryComponent } from '../../driving-fault-summary/driving-fault-summary';
-import { IonicModule, Config } from 'ionic-angular';
+import { IonicModule, Config, NavController } from 'ionic-angular';
 import { StoreModule } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { ConfigMock } from 'ionic-mocks';
+import { ConfigMock, NavControllerMock } from 'ionic-mocks';
 
 describe('ToolbarComponent', () => {
   let fixture: ComponentFixture<ToolbarComponent>;
@@ -22,6 +22,7 @@ describe('ToolbarComponent', () => {
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
     })
       .compileComponents()
