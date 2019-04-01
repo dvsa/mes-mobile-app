@@ -25,6 +25,8 @@ import {
 } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { map } from 'rxjs/operators';
+import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
+import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -141,7 +143,12 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      passCertificateNumber$: undefined,
+      passCertificateNumber$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getPassCompletion),
+        select(getPassCertificateNumber),
+      ),
     };
   }
   healthDeclarationChanged(): void {
