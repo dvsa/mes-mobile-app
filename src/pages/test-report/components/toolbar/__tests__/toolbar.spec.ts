@@ -10,6 +10,7 @@ import { SeriousTooltipComponent } from '../../serious-tooltip/serious-tooltip';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
 import { testReportReducer } from '../../../test-report.reducer';
+import { DangerousTooltipComponent } from '../../dangerous-tooltip/dangerous-tooltip';
 
 describe('ToolbarComponent', () => {
   let fixture: ComponentFixture<ToolbarComponent>;
@@ -23,6 +24,7 @@ describe('ToolbarComponent', () => {
         ToolbarComponent,
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(SeriousTooltipComponent),
+        MockComponent(DangerousTooltipComponent),
       ],
       imports: [
         IonicModule,

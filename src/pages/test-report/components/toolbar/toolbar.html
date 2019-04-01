@@ -25,14 +25,17 @@
       D
     </button>
     </ion-col>
-    <ion-col col-12 *ngIf="!isSeriousMode">
+    <ion-col col-12 *ngIf="!isSeriousMode && !isDangerousMode">
         <driving-fault-summary></driving-fault-summary>
     </ion-col>
-    <ion-col *ngIf="!isSeriousMode">
+    <ion-col *ngIf="!isSeriousMode && !isDangerousMode">
       <!-- Placeholder for Timer -->
     </ion-col>
     <ion-col *ngIf="isSeriousMode" no-padding>
       <serious-tooltip></serious-tooltip>
+    </ion-col>
+    <ion-col *ngIf="isDangerousMode" no-padding>
+      <dangerous-tooltip></dangerous-tooltip>
     </ion-col>
   </ion-row>
 </div>
