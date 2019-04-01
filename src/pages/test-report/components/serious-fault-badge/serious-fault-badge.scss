@@ -3,17 +3,16 @@ serious-fault-badge {
     width: 22px;
     height: 22px;
     min-width: 22px;
-
     .background {
+      display: flex;
+      justify-content: center;
       background: map-get($colors-gds, 'gds-yellow');
-      color: #000000;
+      color: map-get($colors-gds, 'gds-black');
       border-radius: 13px;
-
       .label {
         font-size: 15px;
         font-weight: bold;
-        position: relative;
-        top: -4px;
+        align-self: center;
       }
     }
   }
