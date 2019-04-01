@@ -7,9 +7,17 @@ import { StoreModel } from '../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
 } from './pass-finalisation.actions';
-import { PassCertificateNumberChanged } from '../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  PassCertificateNumberChanged,
+  ProvisionalLicenseReceived,
+  ProvisionalLicenseNotReceived,
+} from '../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
-import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
+import {
+  getPassCertificateNumber,
+  isProvisionalLicenseProvided,
+  isProvisionalLicenseNotProvided,
+} from '../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -30,6 +38,8 @@ interface PassFinalisationPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   applicationNumber$: Observable<string>;
+  provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
+  provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
 }
 
@@ -45,6 +55,7 @@ export class PassFinalisationPage extends BasePageComponent {
   passCertificateNumberInput: ElementRef;
 
   inputSubscriptions: Subscription[] = [];
+  initialStateSubscriptions: Subscription[] = [];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -57,35 +68,39 @@ export class PassFinalisationPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateName),
       ),
-      candidateUntitledName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateUntitledName$: currentTest$.pipe(
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      candidateDriverNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateDriverNumber$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      applicationNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      applicationNumber$: currentTest$.pipe(
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      passCertificateNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      provisionalLicenseProvidedRadioChecked$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseProvided),
+      ),
+      provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseNotProvided),
+      ),
+      passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
@@ -97,10 +112,19 @@ export class PassFinalisationPage extends BasePageComponent {
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    this.initialStateSubscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
+  }
+
+  provisionalLicenseReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseReceived());
+  }
+
+  provisionalLicenseNotReceived(): void {
+    this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
   /**
