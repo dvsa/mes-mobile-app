@@ -4,7 +4,7 @@
       <ion-row>
         <ion-col>
           <input type="radio" name="manoeuvres" 
-          [checked]="manoeuvres.selectedReverseRight$ | async" 
+          [checked]="(manoeuvres$ | async).selectedReverseRight" 
           (click)="recordManoeuvreSelection('selectedReverseRight')" 
           id="manoeuvres-reverse-right-radio" class="gds-radio-button">
           <label for="manoeuvres-reverse-right-radio" class="radio-label">Reverse/ Right</label>
@@ -13,7 +13,7 @@
       <ion-row>
         <ion-col>
           <input type="radio" name="manoeuvres" 
-          [checked]="manoeuvres.selectedReverseParkRoad$ | async" 
+          [checked]="(manoeuvres$ | async).selectedReverseParkRoad" 
           (click)="recordManoeuvreSelection('selectedReverseParkRoad')" 
           id="manoeuvres-reverse-park-road-radio" class="gds-radio-button">
           <label for="manoeuvres-reverse-park-road-radio" class="radio-label">Reverse Park (Road)</label>
@@ -25,7 +25,7 @@
       <ion-row>
         <ion-col>
           <input type="radio" name="manoeuvres" 
-          [checked]="manoeuvres.selectedReverseParkCarpark$ | async" 
+          [checked]="(manoeuvres$ | async).selectedReverseParkCarpark" 
           (click)="recordManoeuvreSelection('selectedReverseParkCarpark')" 
           id="manoeuvres-reverse-park-carpark-radio" class="gds-radio-button">
           <label for="manoeuvres-reverse-park-carpark-radio" class="radio-label">Reverse Park (Car park)</label>
@@ -37,7 +37,7 @@
       <ion-row>
         <ion-col>
           <input type="radio" name="manoeuvres" 
-          [checked]="manoeuvres.selectedForwardPark$ | async" 
+          [checked]="(manoeuvres$ | async).selectedForwardPark" 
           (click)="recordManoeuvreSelection('selectedForwardPark')" 
           id="manoeuvres-forward-park-radio" class="gds-radio-button">
           <label for="manoeuvres-forward-park-radio" class="radio-label">Forward Park</label>

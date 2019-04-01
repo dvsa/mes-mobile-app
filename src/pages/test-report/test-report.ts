@@ -21,6 +21,8 @@ import { isSeriousMode } from './test-report.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { Subscription } from 'rxjs/Subscription';
+
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isSeriousMode$: Observable<boolean>;
@@ -33,7 +35,7 @@ interface TestReportPageState {
 })
 export class TestReportPage extends BasePageComponent {
 
-  menoeuvres$: Observable<Manoeuvres>;
+  manoeuvres$: Observable<Manoeuvres>;
   pageState: TestReportPageState;
   subscription: Subscription;
   manoeuvresSubscription: Subscription;
@@ -83,12 +85,13 @@ export class TestReportPage extends BasePageComponent {
     );
     this.subscription = merged$.subscribe();
 
-    this.menoeuvres$ = this.store$.pipe(
+    this.manoeuvres$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
       select('manoeuvres'),
     );
+
     this.manoeuvresSubscription = this.menoeuvres$.subscribe((result) => {
       this.menoeuvresComplete = Object.values(result)[0];
     });
@@ -118,6 +121,7 @@ export class TestReportPage extends BasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
     if (this.manoeuvresSubscription) {
       this.manoeuvresSubscription.unsubscribe();
     }
@@ -129,6 +133,7 @@ export class TestReportPage extends BasePageComponent {
 
   fail(): void {
     this.navCtrl.push('DebriefPage', { outcome: 'fail' });
+
   }
 }
 export interface OverlayCallback {

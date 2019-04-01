@@ -1,5 +1,5 @@
 import { testDataReducer, initialState } from '../test-data.reducer';
-import { AddDrivingFault, AddSeriousFault } from '../test-data.actions';
+import { AddDrivingFault, RecordManoeuvresSelection, AddSeriousFault } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 
@@ -65,6 +65,13 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(state, new AddSeriousFault(Competencies.judgementCrossing));
       expect(result.seriousFaults.followingDistance).toBeTruthy();
       expect(result.seriousFaults.judgementCrossing).toBeTruthy();
+    });
+  });
+  describe('manoeuvres', () => {
+    it('should update selectyed manoeuvre', () => {
+      const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
+      expect(result.manoeuvres['ManoeuverName']).toEqual(true);
+
     });
   });
 });
