@@ -10,6 +10,7 @@ Feature: Journal
       And I should see the "Additional information" contains "- DSA"
       And I should see the "Additional information" contains "- Act of nature"
 
+   @smoke
    Scenario: Examiner is informed of a special needs slot
     Given I am on the journal page as "mobexaminer1"
      Then I have a special needs slot for "Miss Theresa Shaw"
@@ -43,13 +44,13 @@ Feature: Journal
       And I view candidate details for "Mr Buxton Phil"
      Then I should see the "Slot type" contains "Single Slot (Special Needs)"
 
-   # Note that for the Journal release this should NOT be possible
    Scenario: Examiner goes to the waiting room to meet the candidate
     Given I am on the journal page as "mobexaminer1"
      When I refresh the journal
       And I start the test for "Captain Montague Smythe"
      Then I should see the "Declaration - Montague Smythe" page
 
+  @smoke
   Scenario: Examiner cannot start a test that isn't today
     Given I am on the journal page as "mobexaminer1"
     When I navigate to next day
