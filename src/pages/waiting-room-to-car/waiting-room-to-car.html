@@ -35,10 +35,9 @@
               </ion-col>
               <ion-col>
                 <ion-select value="tell-me-question" okText="Submit" cancelText="Cancel" placeholder="Select a question">
-                  <ion-option value="t1">T1</ion-option>
-                  <ion-option value="t2">T2</ion-option>
-                  <ion-option value="t3">T3</ion-option>
-                  <ion-option value="t4">T4</ion-option>
+                  <ion-option value="tellMeQuestion.tellMeQuestionCode" *ngFor="let tellMeQuestion of tellMeQuestions">
+                    {{tellMeQuestion.tellMeQuestionCode}} - {{tellMeQuestion.tellMeQuestionShortName}}
+                  </ion-option>
                 </ion-select>
               </ion-col>
             </ion-row>
