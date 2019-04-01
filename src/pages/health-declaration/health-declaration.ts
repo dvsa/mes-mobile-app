@@ -141,7 +141,7 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      passCertificateNumber$: null,
+      passCertificateNumber$: undefined,
     };
   }
   healthDeclarationChanged(): void {

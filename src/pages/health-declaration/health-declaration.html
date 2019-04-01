@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Health Declaration - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-title>Test debrief - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
         <button ion-button (click)="logout()">Logout</button>
       </ion-buttons>
@@ -33,9 +33,8 @@
             <ul>
               <li>
                 <p>
-                  The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance
-                  which
-                  satisfies the requirements of the legislation.
+                  There has been no change in my health status since I last
+                  applied for a license
                 </p>
               </li>
             </ul>
@@ -54,9 +53,9 @@
             </ion-row>
             <ion-row>
               <ion-col>
-                <div id="waiting-room-insurance-validation-text" class="validation-text-with-row-spacing"
+                <div id="health-change-validation-text" class="validation-text-with-row-spacing"
                   [class.ng-invalid]="isCtrlDirtyAndInvalid('healthCheckboxCtrl')">
-                  Confirm that the vehicle is insured for the purpose of the test
+                  Confirm that your health status has not changedthe vehicle is insured for the purpose of the test
                 </div>
               </ion-col>
             </ion-row>
@@ -69,7 +68,7 @@
           <ul>
             <li>
               <p>
-                I normally live/have lived in the UK for at least 185 days in the last 12 months.
+                I acknowledge receipt of the pass certificate number: {{pageState.passCertificateNumber$ | async}}
               </p>
             </li>
           </ul>
@@ -87,7 +86,7 @@
             </ion-row>
             <ion-row>
               <ion-col>
-                <div id="waiting-room-residency-validation-text" class="validation-text-with-row-spacing"
+                <div id="pass-certificate-receipt-validation-text" class="validation-text-with-row-spacing"
                   [class.ng-invalid.withRowMargin]="isCtrlDirtyAndInvalid('receiptCheckboxCtrl')">
                   Confirm that you live in the UK
                 </div>
@@ -101,7 +100,7 @@
           <ion-col>
             <ion-row>
               <ion-col>
-                <div id="waiting-room-signature-validation-text" class="validation-text-with-row-spacing"
+                <div id="health-declaration-signature-validation-text" class="validation-text-with-row-spacing"
                   [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
                   Enter a signature
                 </div>
