@@ -20,7 +20,14 @@ export function testDataReducer(
         ...state,
         drivingFaults: {
           ...state.drivingFaults,
-          [action.payload.competency] : action.payload.newFaultCount,
+          [action.payload.competency]: action.payload.newFaultCount,
+        },
+      };
+    case testDataActions.RECORD_MENOEUVRES_SELECTION:
+      return {
+        ...state,
+        manoeuvres: {
+          [action.payload]: true,
         },
       };
     case testDataActions.ADD_SERIOUS_FAULT:
