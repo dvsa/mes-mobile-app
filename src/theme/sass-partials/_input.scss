@@ -10,6 +10,8 @@ ion-select {
 
 // Don't dim select placeholders
 ion-select.select {
+  max-width: 100%;
+  align-items: center;
   .select-placeholder {
     color: inherit;
   }

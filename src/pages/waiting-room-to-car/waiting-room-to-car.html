@@ -33,7 +33,7 @@
               <ion-col col-32>
                 <label>Tell me question</label>
               </ion-col>
-              <ion-col>
+              <ion-col col-42>
                 <ion-select value="tell-me-question" okText="Submit" cancelText="Cancel" placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)">
                   <ion-option [value]="tellMeQuestion.tellMeQuestionCode" *ngFor="let tellMeQuestion of tellMeQuestions">
                     {{tellMeQuestion.tellMeQuestionCode}} - {{tellMeQuestion.tellMeQuestionShortName}}
