@@ -8,6 +8,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { ComponentsModule } from './../../../components/components.module';
 
 describe('HealthDeclarationPage', () => {
   let fixture: ComponentFixture<HealthDeclarationPage>;
@@ -16,7 +17,7 @@ describe('HealthDeclarationPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HealthDeclarationPage],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule, ComponentsModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
