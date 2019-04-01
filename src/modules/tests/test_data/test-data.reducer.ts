@@ -31,6 +31,26 @@ export function testDataReducer(
           [action.payload]: true,
         },
       };
+    case testDataActions.TOGGLE_NORMAL_START_1:
+      console.log(`${testDataActions.TOGGLE_NORMAL_START_1} has been dispatched`);
+      return {
+        ...state,
+      };
+    case testDataActions.TOGGLE_NORMAL_START_2:
+      console.log(`${testDataActions.TOGGLE_NORMAL_START_2} has been dispatched`);
+      return {
+        ...state,
+      };
+    case testDataActions.TOGGLE_ANGLED_START:
+      console.log(`${testDataActions.TOGGLE_ANGLED_START} has been dispatched`);
+      return {
+        ...state,
+      };
+    case testDataActions.TOGGLE_HILL_START:
+      console.log(`${testDataActions.TOGGLE_HILL_START} has been dispatched`);
+      return {
+        ...state,
+      };
 
     default:
       return state;

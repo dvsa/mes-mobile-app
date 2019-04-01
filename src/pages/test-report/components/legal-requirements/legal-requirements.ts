@@ -8,6 +8,12 @@ import { getTestData } from '../../../../modules/tests/test_data/test-data.reduc
 import { getTestRequirements } from '../../../../modules/tests/test_data/test-data.selector';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
+import {
+  ToggleNormalStart1,
+  ToggleNormalStart2,
+  ToggleAngledStart,
+  ToggleHillStart,
+} from '../../../../modules/tests/test_data/test-data.actions';
 
 interface LegalRequirementsComponentState {
   normalStart1$: Observable<boolean>;
@@ -50,6 +56,22 @@ export class LegalRequirementsComponent implements OnInit {
         map(testRequirements => testRequirements.hillStart),
       ),
     };
+  }
+
+  toggleNormalStart1(): void {
+    this.store$.dispatch(new ToggleNormalStart1());
+  }
+
+  toggleNormalStart2(): void {
+    this.store$.dispatch(new ToggleNormalStart2());
+  }
+
+  toggleAngledStart(): void {
+    this.store$.dispatch(new ToggleAngledStart());
+  }
+
+  toggleHillStart(): void {
+    this.store$.dispatch(new ToggleHillStart());
   }
 
 }
