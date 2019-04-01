@@ -5,10 +5,14 @@ page-test-report {
 
   ion-grid {
     box-sizing: border-box;
-    border: 6px solid map-get($colors-gds, 'gds-grey-3');
+    border: 4px solid map-get($colors-gds, 'gds-grey-3');
     &.serious-mode {
-      border: 6px solid map-get($colors-gds, 'gds-yellow');
+      border: 4px solid map-get($colors-gds, 'gds-yellow');
     }
+  }
+
+  ion-row:first-of-type {
+    margin: -2px 0;
   }
 
   .section-header {

@@ -23,7 +23,7 @@ competency {
       background: #eee;
     }
     &.serious-fault {
-      background:rgba(255, 191, 71, 0.25);
+      background: #FFEFD1;
       border: 2px solid map-get($colors-gds, 'gds-black');
       font-weight: bold;
     }
@@ -62,9 +62,8 @@ competency {
       justify-content: center;
     }
     .competency-label {
-      display: flex;
-      flex-direction: column;
-      justify-self: center;
+      text-align: center;
+      margin-left: 20px;
     }
 
     .fault-wrapper {

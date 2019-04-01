@@ -6,15 +6,13 @@ fault-counter {
     .counter-background {
       display: flex;
       justify-content: center;
-      background-color: #0B0C0C;
+      background-color: map-get($colors-gds, 'gds-black');
       color: map-get($colors, 'mes-white');
       border-radius: 13px;
       .count {
         font-size: 15px;
         font-weight: bold;
-        position: relative;
         align-self: center;
-        top: -1px;
       }
     }
   }
