@@ -16,6 +16,11 @@ export function testReportReducer(state = initialState, action: testReportAction
         ...state,
         seriousMode: !state.seriousMode,
       };
+    case testReportActions.TOGGLE_DANGEROUS_FAULT_MODE:
+      return {
+        ...state,
+        dangerousMode: !state.dangerousMode,
+      };
 
     default:
       return state;

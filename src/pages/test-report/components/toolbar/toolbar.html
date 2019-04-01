@@ -15,7 +15,15 @@
     </button>
     </ion-col>
     <ion-col col-12 no-padding class="padding-right-16" *ngIf="!isSeriousMode">
-      <!-- Placeholder for Dangerous Fault Button -->
+        <button
+        id="dangerous-button"
+        ion-button
+        no-padding
+        (click)="toggleDangerousMode()"
+        [ngClass]="isDangerousMode ? 'active' : 'inactive'"
+      >
+      D
+    </button>
     </ion-col>
     <ion-col col-12 *ngIf="!isSeriousMode">
         <driving-fault-summary></driving-fault-summary>

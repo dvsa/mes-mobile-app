@@ -8,7 +8,7 @@ import { ConfigMock, NavControllerMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 import { SeriousTooltipComponent } from '../../serious-tooltip/serious-tooltip';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ToggleSeriousFaultMode } from '../../../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
 import { testReportReducer } from '../../../test-report.reducer';
 
 describe('ToolbarComponent', () => {
@@ -52,6 +52,20 @@ describe('ToolbarComponent', () => {
         component.toggleSeriousMode();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+      });
+      it('should dispatch a TOGGLE_DANGEROUS_FAULT_MODE action if dangerous mode is active', () => {
+        component.isDangerousMode = true;
+        component.toggleSeriousMode();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+      });
+    });
+
+    describe('toggleDangerousMode', () => {
+      it('should dispatch a TOGGLE_DANGEROUS_FAULT_MODE action', () => {
+        component.toggleDangerousMode();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
       });
     });
   });
