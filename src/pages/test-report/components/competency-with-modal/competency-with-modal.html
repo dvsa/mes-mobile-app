@@ -1,6 +1,6 @@
 <button #competencyButton (click)="togglePromote()" [class.promoted]="displayPopover">
   <div class="tickwrapper">
-    <tick-indicator [ticked]="popoverComplete"></tick-indicator>
+    <tick-indicator [ticked]="completed"></tick-indicator>
   </div>
     <div class="label-wrapper">
       <ion-icon class="popover-arrow" [class.arrow-down]="displayPopover" name="md-arrow-dropright"></ion-icon>

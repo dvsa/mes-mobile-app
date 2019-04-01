@@ -16,7 +16,9 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies } from '../../modules/tests/test_data/test-data.constants';
+import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -29,11 +31,11 @@ interface TestReportPageState {
 })
 export class TestReportPage extends BasePageComponent {
 
+  menoeuvres$: Observable<Manoeuvres>;
   pageState: TestReportPageState;
-
   competencies = Competencies;
   displayOverlay: boolean;
-
+  menoeuvresComplete: boolean = false;
   constructor(
     private store$: Store<StoreModel>,
     private deviceProvider: DeviceProvider,
@@ -63,6 +65,16 @@ export class TestReportPage extends BasePageComponent {
         select(getUntitledCandidateName),
       ),
     };
+
+    this.menoeuvres$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getTestData),
+      select('manoeuvres'),
+    );
+    this.menoeuvres$.subscribe((result) => {
+      this.menoeuvresComplete = Object.values(result)[0];
+    });
   }
 
   ionViewDidEnter(): void {
