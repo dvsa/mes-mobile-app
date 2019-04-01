@@ -57,7 +57,7 @@ export class ToolbarComponent {
   }
 
   toggleSeriousMode(): void {
-    if (isDangerousMode) {
+    if (this.isDangerousMode) {
       this.store$.dispatch(new ToggleDangerousFaultMode());
     }
     this.store$.dispatch(new ToggleSeriousFaultMode());
