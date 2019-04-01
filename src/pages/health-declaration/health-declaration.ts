@@ -91,6 +91,10 @@ export class HealthDeclarationPage extends BasePageComponent {
       });
   }
 
+  ionViewWillUnload(): void {
+    this.store$.dispatch(new postTestDeclarationsActions.ClearPostTestDeclarations());
+  }
+
   getFormValidation(): { [key: string]: FormControl } {
     return {
       healthCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
