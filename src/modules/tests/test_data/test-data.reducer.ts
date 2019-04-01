@@ -32,24 +32,36 @@ export function testDataReducer(
         },
       };
     case testDataActions.TOGGLE_NORMAL_START_1:
-      console.log(`${testDataActions.TOGGLE_NORMAL_START_1} has been dispatched`);
       return {
         ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          normalStart1: !state.testRequirements.normalStart1,
+        },
       };
     case testDataActions.TOGGLE_NORMAL_START_2:
-      console.log(`${testDataActions.TOGGLE_NORMAL_START_2} has been dispatched`);
       return {
         ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          normalStart2: !state.testRequirements.normalStart2,
+        },
       };
     case testDataActions.TOGGLE_ANGLED_START:
-      console.log(`${testDataActions.TOGGLE_ANGLED_START} has been dispatched`);
       return {
         ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          angledStart: !state.testRequirements.angledStart,
+        },
       };
     case testDataActions.TOGGLE_HILL_START:
-      console.log(`${testDataActions.TOGGLE_HILL_START} has been dispatched`);
       return {
         ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          hillStart: !state.testRequirements.hillStart,
+        },
       };
 
     default:
