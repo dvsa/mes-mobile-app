@@ -34,12 +34,4 @@ describe('eyesight failure confirmation component', () => {
     cancelButton.triggerEventHandler('click', null);
     expect(cancelSpy).toHaveBeenCalled();
   });
-
-  it('should call the confirm function when cancel is pressed', () => {
-    const confirmSpy = jasmine.createSpy('onConfirm');
-    component.confirmFn = confirmSpy;
-    const confirmButton = fixture.debugElement.query(By.css('#confirm-eyesight-failure'));
-    confirmButton.triggerEventHandler('click', null);
-    expect(confirmSpy).toHaveBeenCalled();
-  });
 });

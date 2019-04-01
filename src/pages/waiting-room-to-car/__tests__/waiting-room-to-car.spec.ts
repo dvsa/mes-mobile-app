@@ -29,7 +29,6 @@ import {
   EyesightPassPressed,
   EyesightFailPressed,
   EyesightFailCancelled,
-  EyesightFailConfirmed,
 } from '../waiting-room-to-car.actions';
 import { EyesightRadioState } from '../waiting-room-to-car.reducer';
 import { of } from 'rxjs/observable/of';
@@ -181,10 +180,6 @@ describe('WaitingRoomToCarPage', () => {
       it('should dispatch an eyesight failure cancelled action when the when the method is called', () => {
         component.eyesightFailCancelled();
         expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailCancelled());
-      });
-      it('should dispatch an eyesight failure confirm action when the when the method is called', () => {
-        component.eyesightFailConfirmed();
-        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailConfirmed());
       });
     });
   });

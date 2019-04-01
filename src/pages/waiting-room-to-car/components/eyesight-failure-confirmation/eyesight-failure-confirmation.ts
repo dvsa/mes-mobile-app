@@ -8,14 +8,7 @@ export class EyesightFailureConfirmationComponent {
   constructor() {}
 
   @Input()
-  confirmFn: Function;
-
-  @Input()
   cancelFn: Function;
-
-  onConfirm(): void {
-    this.confirmFn();
-  }
 
   onCancel(): void {
     this.cancelFn();

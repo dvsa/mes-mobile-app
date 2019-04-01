@@ -3,7 +3,7 @@ import { EyesightTestResult } from '@dvsa/mes-test-schema/categories/B';
 import {
   EYESIGHT_PASS_PRESSED,
   EYESIGHT_FAIL_PRESSED,
-  EYESIGHT_FAIL_CONFIRMED,
+  EYESIGHT_FAIL_CANCELLED,
 } from '../../../pages/waiting-room-to-car/waiting-room-to-car.actions';
 
 export const initialState: EyesightTestResult = null;
@@ -16,9 +16,9 @@ export const eyesightTestResultReducer = (
     case EYESIGHT_PASS_PRESSED:
       return 'P';
     case EYESIGHT_FAIL_PRESSED:
-      return initialState;
-    case EYESIGHT_FAIL_CONFIRMED:
       return 'F';
+    case EYESIGHT_FAIL_CANCELLED:
+      return initialState;
     default:
       return state;
   }

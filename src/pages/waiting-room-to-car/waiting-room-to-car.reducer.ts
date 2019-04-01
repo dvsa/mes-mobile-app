@@ -35,8 +35,6 @@ export const waitingRoomToCarReducer = (
         ...state,
         eyesightRadioState: EyesightRadioState.Unselected,
       };
-    case waitingRoomToCarActions.EYESIGHT_FAIL_CONFIRMED:
-      return initialState;
     default:
       return state;
   }

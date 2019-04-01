@@ -9,7 +9,6 @@ import {
   EyesightPassPressed,
   EyesightFailPressed,
   EyesightFailCancelled,
-  EyesightFailConfirmed,
 } from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
@@ -230,9 +229,5 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   eyesightFailCancelled = () => {
     this.store$.dispatch(new EyesightFailCancelled());
-  }
-
-  eyesightFailConfirmed = () => {
-    this.store$.dispatch(new EyesightFailConfirmed());
   }
 }

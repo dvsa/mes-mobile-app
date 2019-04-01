@@ -4,7 +4,6 @@ export const WAITING_ROOM_TO_CAR_VIEW_DID_ENTER = '[WaitingRoomToCarPage] Waitin
 export const EYESIGHT_PASS_PRESSED = '[WaitingRoomToCar] Eyesight pass pressed';
 export const EYESIGHT_FAIL_PRESSED = '[WaitingRoomToCar] Eyesight fail pressed';
 export const EYESIGHT_FAIL_CANCELLED = '[WaitingRoomToCar] Eyesight fail cancelled';
-export const EYESIGHT_FAIL_CONFIRMED = '[WaitingRoomToCar] Eyesight fail confirmed';
 
 export class WaitingRoomToCarViewDidEnter implements Action {
   readonly type = WAITING_ROOM_TO_CAR_VIEW_DID_ENTER;
@@ -22,13 +21,8 @@ export class EyesightFailCancelled implements Action {
   readonly type = EYESIGHT_FAIL_CANCELLED;
 }
 
-export class EyesightFailConfirmed implements Action {
-  readonly type = EYESIGHT_FAIL_CONFIRMED;
-}
-
 export type Types =
   | WaitingRoomToCarViewDidEnter
   | EyesightPassPressed
   | EyesightFailPressed
-  | EyesightFailCancelled
-  | EyesightFailConfirmed;
+  | EyesightFailCancelled;

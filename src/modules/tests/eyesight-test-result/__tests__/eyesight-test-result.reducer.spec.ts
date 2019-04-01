@@ -1,8 +1,8 @@
 import { eyesightTestResultReducer } from '../eyesight-test-result.reducer';
 import {
   EyesightPassPressed,
-  EyesightFailConfirmed,
   EyesightFailPressed,
+  EyesightFailCancelled,
 } from '../../../../pages/waiting-room-to-car/waiting-room-to-car.actions';
 
 describe('eyesight test result reducer', () => {
@@ -11,13 +11,13 @@ describe('eyesight test result reducer', () => {
     expect(result).toBe('P');
   });
 
-  it('should add fail to the state when fail is confirmed', () => {
-    const result = eyesightTestResultReducer(null, new EyesightFailConfirmed());
+  it('should add fail to the state when fail is pressed', () => {
+    const result = eyesightTestResultReducer(null, new EyesightFailPressed());
     expect(result).toBe('F');
   });
 
-  it('should clear the eyesight test state when fail is pressed but not yet confirmed', () => {
-    const result = eyesightTestResultReducer('P', new EyesightFailPressed());
+  it('should reset the eyesight test result when failure is cancelled', () => {
+    const result = eyesightTestResultReducer('F', new EyesightFailCancelled());
     expect(result).toBeNull();
   });
 });
