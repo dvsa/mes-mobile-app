@@ -4,7 +4,13 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { WaitingRoomToCarViewDidEnter, EyesightPassPressed, EyesightFailPressed } from './waiting-room-to-car.actions';
+import {
+  WaitingRoomToCarViewDidEnter,
+  EyesightPassPressed,
+  EyesightFailPressed,
+  EyesightFailCancelled,
+  EyesightFailConfirmed,
+} from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
@@ -220,5 +226,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   eyesightFailPressed(): void {
     this.store$.dispatch(new EyesightFailPressed());
+  }
+
+  eyesightFailCancelled = () => {
+    this.store$.dispatch(new EyesightFailCancelled());
+  }
+
+  eyesightFailConfirmed = () => {
+    this.store$.dispatch(new EyesightFailConfirmed());
   }
 }

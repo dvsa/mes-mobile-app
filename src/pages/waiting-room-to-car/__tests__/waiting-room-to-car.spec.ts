@@ -25,7 +25,12 @@ import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
 } from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
-import { EyesightPassPressed, EyesightFailPressed } from '../waiting-room-to-car.actions';
+import {
+  EyesightPassPressed,
+  EyesightFailPressed,
+  EyesightFailCancelled,
+  EyesightFailConfirmed,
+} from '../waiting-room-to-car.actions';
 import { EyesightRadioState } from '../waiting-room-to-car.reducer';
 import { of } from 'rxjs/observable/of';
 
@@ -172,6 +177,14 @@ describe('WaitingRoomToCarPage', () => {
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
         expect(eyesightFailureConfirmation).toBeNull();
         expect(formAfterEyesight.nativeElement.hidden).toBeFalsy();
+      });
+      it('should dispatch an eyesight failure cancelled action when the when the method is called', () => {
+        component.eyesightFailCancelled();
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailCancelled());
+      });
+      it('should dispatch an eyesight failure confirm action when the when the method is called', () => {
+        component.eyesightFailConfirmed();
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailConfirmed());
       });
     });
   });

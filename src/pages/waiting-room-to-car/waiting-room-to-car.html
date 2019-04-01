@@ -25,7 +25,7 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="pageState.eyesightFailRadioChecked$ | async">
-          <eyesight-failure-confirmation></eyesight-failure-confirmation>
+          <eyesight-failure-confirmation [confirmFn]="eyesightFailConfirmed" [cancelFn]="eyesightFailCancelled"></eyesight-failure-confirmation>
         </ion-row>
         <ion-row [hidden]="pageState.eyesightFailRadioChecked$ | async" id="post-eyesight-form-content">
           <ion-col>
