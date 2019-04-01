@@ -15,8 +15,8 @@ import {
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
-  provisionalLicenseProvided,
-  provisionalLicenseNotProvided,
+  isProvisionalLicenseProvided,
+  isProvisionalLicenseNotProvided,
 } from '../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
@@ -98,13 +98,13 @@ export class PassFinalisationPage extends BasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getPassCompletion),
-        map(provisionalLicenseProvided),
+        map(isProvisionalLicenseProvided),
       ),
       provisionalLicenseNotProvidedRadioChecked$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getPassCompletion),
-        map(provisionalLicenseNotProvided),
+        map(isProvisionalLicenseNotProvided),
       ),
       passCertificateNumber$: this.store$.pipe(
         select(getTests),

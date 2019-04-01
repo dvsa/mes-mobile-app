@@ -1,8 +1,8 @@
 import { PassCompletion } from '@dvsa/mes-test-schema/categories/B';
 import {
   getPassCertificateNumber,
-  provisionalLicenseProvided,
-  provisionalLicenseNotProvided,
+  isProvisionalLicenseProvided,
+  isProvisionalLicenseNotProvided,
 } from '../pass-completion.selector';
 
 describe('pass completion selector', () => {
@@ -19,13 +19,13 @@ describe('pass completion selector', () => {
 
   describe('provisionalLicenseProvided', () => {
     it('should retrieve whether the provisional license was provided', () => {
-      expect(provisionalLicenseProvided(state)).toBe(true);
+      expect(isProvisionalLicenseProvided(state)).toBe(true);
     });
   });
 
   describe('provisionalLicenseNotProvided', () => {
     it('should retrieve whether the provisional license was provided', () => {
-      expect(provisionalLicenseNotProvided(state)).toBe(false);
+      expect(isProvisionalLicenseNotProvided(state)).toBe(false);
     });
   });
 });
