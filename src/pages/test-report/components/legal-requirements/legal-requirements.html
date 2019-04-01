@@ -1,6 +1,6 @@
 <ion-row>
   <ion-col>
-    <button (click)=(toggleNormalStart1())>
+    <button (click)=(toggleNormalStart1()) [ngClass]="{ complete: componentState.normalStart1$ | async }">
       <div class='tickwrapper'>
         <tick-indicator [ticked]="componentState.normalStart1$ | async"></tick-indicator>
       </div>
@@ -10,7 +10,7 @@
     </button>
   </ion-col>
   <ion-col>
-    <button (click)=(toggleNormalStart2())>
+    <button (click)=(toggleNormalStart2()) [ngClass]="{ complete: componentState.normalStart2$ | async }">
       <div class='tickwrapper'>
         <tick-indicator [ticked]="componentState.normalStart2$ | async"></tick-indicator>
       </div>
@@ -22,7 +22,7 @@
 </ion-row>
 <ion-row>
   <ion-col>
-    <button (click)=(toggleAngledStart())>
+    <button (click)=(toggleAngledStart()) [ngClass]="{ complete: componentState.angledStart$ | async }">
       <div class='tickwrapper'>
         <tick-indicator [ticked]="componentState.angledStart$ | async"></tick-indicator>
       </div>
@@ -32,7 +32,7 @@
     </button>
   </ion-col>
   <ion-col>
-    <button (click)=(toggleHillStart())>
+    <button (click)=(toggleHillStart()) [ngClass]="{ complete: componentState.hillStart$ | async }">
       <div class='tickwrapper'>
         <tick-indicator [ticked]="componentState.hillStart$ | async"></tick-indicator>
       </div>
