@@ -1,5 +1,5 @@
 import { testDataReducer, initialState } from '../test-data.reducer';
-import { AddDrivingFault } from '../test-data.actions';
+import { AddDrivingFault, RecordManoeuvresSelection } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 
@@ -38,5 +38,10 @@ describe('TestDataReducer reducer', () => {
     expect(result.drivingFaults.controlsGears).toBe(1);
     expect(result.drivingFaults.controlsParkingBrake).toBe(1);
   });
-
+  describe('manoeuvres', () => {
+    it('should update selectyed manoeuvre', () => {
+      const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
+      expect(result.manoeuvres['ManoeuverName']).toEqual(true);
+    });
+  });
 });

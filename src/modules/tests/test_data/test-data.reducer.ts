@@ -23,7 +23,7 @@ export function testDataReducer(
           [action.payload.competency]: action.payload.newFaultCount,
         },
       };
-    case testDataActions.RECORD_MENOEUVRES_SELECTION:
+    case testDataActions.RECORD_MANOEUVRES_SELECTION:
       return {
         ...state,
         manoeuvres: {

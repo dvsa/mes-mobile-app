@@ -19,6 +19,7 @@ import { Competencies } from '../../modules/tests/test_data/test-data.constants'
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { Subscription } from 'rxjs/Subscription';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -31,11 +32,12 @@ interface TestReportPageState {
 })
 export class TestReportPage extends BasePageComponent {
 
-  menoeuvres$: Observable<Manoeuvres>;
+  manoeuvres$: Observable<Manoeuvres>;
   pageState: TestReportPageState;
   competencies = Competencies;
   displayOverlay: boolean;
-  menoeuvresComplete: boolean = false;
+  manoeuvresComplete: boolean = false;
+  subscription: Subscription;
   constructor(
     private store$: Store<StoreModel>,
     private deviceProvider: DeviceProvider,
@@ -66,14 +68,15 @@ export class TestReportPage extends BasePageComponent {
       ),
     };
 
-    this.menoeuvres$ = this.store$.pipe(
+    this.manoeuvres$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
       select('manoeuvres'),
     );
-    this.menoeuvres$.subscribe((result) => {
-      this.menoeuvresComplete = Object.values(result)[0];
+
+    this.subscription = this.manoeuvres$.subscribe((result) => {
+      this.manoeuvresComplete = Object.values(result)[0];
     });
   }
 
@@ -93,6 +96,11 @@ export class TestReportPage extends BasePageComponent {
       this.deviceProvider.disableSingleAppMode();
       this.screenOrientation.unlock();
       this.insomnia.allowSleepAgain();
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }
