@@ -40,6 +40,13 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  EyesightResultPasssed,
+  EyesightResultFailed,
+  EyesightResultReset,
+} from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
+import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
+import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -50,6 +57,8 @@ interface WaitingRoomToCarPageState {
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
+  eyesightPassRadioChecked$: Observable<boolean>;
+  eyesightFailRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -84,54 +93,56 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   ngOnInit(): void {
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      registrationNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      registrationNumber$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getRegistrationNumber),
       ),
-      transmission$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      transmission$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getGearboxCategory),
       ),
-      schoolCar$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      schoolCar$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getSchoolCar),
       ),
-      dualControls$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      dualControls$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getDualControls),
       ),
-      instructorAccompaniment$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      instructorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getInstructorAccompaniment),
       ),
-      supervisorAccompaniment$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      supervisorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getSupervisorAccompaniment),
       ),
-      otherAccompaniment$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      otherAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getOtherAccompaniment),
+      ),
+      eyesightPassRadioChecked$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getEyesightTestResult),
+        map(isPassed),
+      ),
+      eyesightFailRadioChecked$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getEyesightTestResult),
+        map(isFailed),
       ),
     };
     this.inputSubscriptions = [
@@ -218,5 +229,17 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   setEyesightFailureVisibility(show: boolean) {
     this.showEyesightFailureConfirmation = show;
+  }
+
+  eyesightPassPressed(): void {
+    this.store$.dispatch(new EyesightResultPasssed());
+  }
+
+  eyesightFailPressed(): void {
+    this.store$.dispatch(new EyesightResultFailed());
+  }
+
+  eyesightFailCancelled = () => {
+    this.store$.dispatch(new EyesightResultReset());
   }
 }

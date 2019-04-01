@@ -13,6 +13,7 @@ Feature: Waiting Room
       And validation item "waiting-room-residency-validation-text" should not be visible
       And validation item "waiting-room-signature-validation-text" should not be visible
 
+   @smoke
    Scenario: Waiting room submit validation
       Given I am on the journal page as "mobexaminer1"
       When I start the test for "Captain Montague Smythe"

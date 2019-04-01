@@ -2,6 +2,19 @@ page-test-report {
   .content-ios {
     background-color: map-get($colors-gds, 'gds-grey-3');
   }
+
+  ion-grid {
+    box-sizing: border-box;
+    border: 4px solid map-get($colors-gds, 'gds-grey-3');
+    &.serious-mode {
+      border: 4px solid map-get($colors-gds, 'gds-yellow');
+    }
+  }
+
+  ion-row:first-of-type {
+    margin: -2px 0;
+  }
+
   .section-header {
     color: map-get($colors-gds, 'gds-black');
     font-size: 17px;
@@ -20,9 +33,9 @@ page-test-report {
     margin: 4px 8px;
   }
   .report-overlay {
-    background-color: rgba(0, 0, 0, 0.68);
+    background-color: rgba(0, 0, 0, 0.80);
     position: absolute;
-    top: 0px;
+    top: 68px;
     left: 0px;
     width: 100%;
     height: 100%;
@@ -72,10 +85,5 @@ page-test-report {
     animation-name: hideAnimation;
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
-  }
-  #test-report-header {
-    height: 68px;
-    padding: 12px 17px;
-    background: map-get($colors, 'mes-white');
   }
 }

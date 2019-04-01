@@ -17,9 +17,15 @@ import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies } from '../../modules/tests/test_data/test-data.constants';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { Subscription } from 'rxjs/Subscription';
+import { getTestReportState } from './test-report.reducer';
+import { isSeriousMode } from './test-report.selector';
+import { merge } from 'rxjs/observable/merge';
+import { map } from 'rxjs/operators';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
+  isSeriousMode$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -30,9 +36,12 @@ interface TestReportPageState {
 export class TestReportPage extends BasePageComponent {
 
   pageState: TestReportPageState;
+  subscription: Subscription;
 
   competencies = Competencies;
   displayOverlay: boolean;
+
+  isSeriousMode: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -62,7 +71,20 @@ export class TestReportPage extends BasePageComponent {
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
+      isSeriousMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isSeriousMode),
+      ),
     };
+
+    const { candidateUntitledName$, isSeriousMode$ } = this.pageState;
+
+    const merged$ = merge(
+      candidateUntitledName$,
+      isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
+    );
+
+    this.subscription = merged$.subscribe();
   }
 
   ionViewDidEnter(): void {
@@ -82,6 +104,22 @@ export class TestReportPage extends BasePageComponent {
       this.screenOrientation.unlock();
       this.insomnia.allowSleepAgain();
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  pass(): void {
+    this.navCtrl.push('DebriefPage', { outcome: 'pass' });
+
+  }
+
+  fail(): void {
+    this.navCtrl.push('DebriefPage', { outcome: 'fail' });
+
   }
 }
 export interface OverlayCallback {

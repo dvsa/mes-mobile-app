@@ -22,13 +22,13 @@
               <ion-col col-32>
                   <input type="radio" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-pass"
                   class="gds-radio-button" [class.ng-invalid]="isCtrlDirtyAndInvalid('eyesightCtrl')"
-                  (click)="setEyesightFailureVisibility(false)" value='pass'>
+                  (click)="eyesightPassPressed()" [checked]="pageState.eyesightPassRadioChecked$ | async">
                 <label for="eyesight-pass" class="radio-label">Pass</label>
               </ion-col>
               <ion-col col-32>
                   <input type="radio" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-fail"
                   class="gds-radio-button" [class.ng-invalid]="isCtrlDirtyAndInvalid('eyesightCtrl')"
-                  (click)="setEyesightFailureVisibility(true)" value='fail'>
+                  (click)="eyesightFailPressed()" [checked] = "pageState.eyesightFailRadioChecked$ | async">
                 <label for="eyesight-fail" class="radio-label">Fail</label>
               </ion-col>
               <ion-col></ion-col>
@@ -41,10 +41,10 @@
           </ion-row>
         </ion-col>
       </ion-row>
-        <ion-row *ngIf="showEyesightFailureConfirmation">
-          <eyesight-failure-confirmation></eyesight-failure-confirmation>
+        <ion-row *ngIf="pageState.eyesightFailRadioChecked$ | async">
+          <eyesight-failure-confirmation [ cancelFn]="eyesightFailCancelled"></eyesight-failure-confirmation>
         </ion-row>
-        <ion-row no-padding [hidden]="showEyesightFailureConfirmation" id="post-eyesight-form-content">
+        <ion-row no-padding [hidden]="pageState.eyeSightFailRadioChecked$ | aysnc" id="post-eyesight-form-content">
           <ion-col class="no-padded-col">
             <ion-row class="mes-validated-row" id="tell-me-card" align-items-center justify-content-start>
               <div class="row-validation-bar"></div>

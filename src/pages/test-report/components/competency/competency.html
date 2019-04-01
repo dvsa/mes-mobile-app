@@ -1,11 +1,9 @@
 <button #competencyButton>
-  <fault-counter class="drivingFaults" [count]="faultCount"></fault-counter>
-  <div class="label">
-    <span class='competency-label'>{{ getLabel() }}</span>
-  </div>
+  <fault-counter class="driving-faults" [count]="faultCount"></fault-counter>
+  <span class='competency-label'>{{ getLabel() }}</span>
   <div class="fault-wrapper">
-    <!-- Placeholder for serious/dangerous -->
-    <fault-counter></fault-counter>
-    <fault-counter></fault-counter>
+    <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
+    <fault-counter class="dangerous" [count]="0"></fault-counter>
   </div>
+
 </button>

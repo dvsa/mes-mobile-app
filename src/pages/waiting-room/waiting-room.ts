@@ -97,40 +97,33 @@ export class WaitingRoomPage extends BasePageComponent {
     this.signatureArea.signHereText = 'Sign here';
     this.signatureArea.retryButtonText = 'Retry';
 
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      insuranceDeclarationAccepted$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      insuranceDeclarationAccepted$: currentTest$.pipe(
         select(getPreTestDeclarations),
         select(getInsuranceDeclarationStatus),
       ),
-      residencyDeclarationAccepted$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      residencyDeclarationAccepted$: currentTest$.pipe(
         select(getPreTestDeclarations),
         select(getResidencyDeclarationStatus),
       ),
-      signature$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      signature$: currentTest$.pipe(
         select(getPreTestDeclarations),
         select(getSignatureStatus),
       ),
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateName),
       ),
-      candidateUntitledName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateUntitledName$: currentTest$.pipe(
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      candidateDriverNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateDriverNumber$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),

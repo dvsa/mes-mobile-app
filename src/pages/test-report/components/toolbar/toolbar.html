@@ -1,3 +1,30 @@
 <div id="wrapper">
-  <driving-fault-summary></driving-fault-summary>
+  <ion-row no-padding>
+    <ion-col col-24 no-padding>
+      <!-- Placeholder for Remove Fault Button -->
+    </ion-col>
+    <ion-col col-12 no-padding class="padding-right-16">
+        <button
+        id="serious-button"
+        ion-button
+        no-padding
+        (click)="toggleSeriousMode()"
+        [ngClass]="isSeriousMode ? 'active' : 'inactive'"
+      >
+      S
+    </button>
+    </ion-col>
+    <ion-col col-12 no-padding class="padding-right-16" *ngIf="!isSeriousMode">
+      <!-- Placeholder for Dangerous Fault Button -->
+    </ion-col>
+    <ion-col col-12 *ngIf="!isSeriousMode">
+        <driving-fault-summary></driving-fault-summary>
+    </ion-col>
+    <ion-col *ngIf="!isSeriousMode">
+      <!-- Placeholder for Timer -->
+    </ion-col>
+    <ion-col *ngIf="isSeriousMode" no-padding>
+      <serious-tooltip></serious-tooltip>
+    </ion-col>
+  </ion-row>
 </div>

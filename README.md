@@ -75,6 +75,8 @@ To run against the simulator
 
 You can run individual features e.g. `npm run test:e2e-simulator-bdd -- --specs='test/e2e/features/01-login.feature'`
 
+You can also run an individual tag e.g. `npm run test:e2e-simulator-bdd -- --cucumberOpts.tags='@smoke'`
+
 #### Troubleshooting
 
 ##### Bad app... paths need to be absolute
