@@ -224,4 +224,8 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   eyesightFailCancelled = () => {
     this.store$.dispatch(new EyesightResultReset());
   }
+
+  tellMeQuestionChanged(e): void {
+    console.log(e);
+  }
 }

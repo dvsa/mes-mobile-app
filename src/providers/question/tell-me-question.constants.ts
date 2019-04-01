@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { TellMeQuestion } from './tell-me-question.model';
 
-const tellMeQuestions: TellMeQuestion[] = [
+export default [
   {
     tellMeQuestionCode: 'T1',
     tellMeQuestionDescription: 'Tell me how you would check that the brakes are working before starting a journey.',
@@ -72,6 +72,4 @@ const tellMeQuestions: TellMeQuestion[] = [
     tellMeQuestionDescription: 'Open the bonnet and tell me how you would check that you have a safe level of hydraulic brake fluid.',
     tellMeQuestionShortName: 'Brake fluid',
   },
-];
-
-export default tellMeQuestions;
+] as TellMeQuestion[];
