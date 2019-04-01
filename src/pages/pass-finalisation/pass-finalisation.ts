@@ -15,7 +15,8 @@ import {
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
-  getProvisionalLicenseProvided,
+  provisionalLicenseProvided,
+  provisionalLicenseNotProvided,
 } from '../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
@@ -37,7 +38,8 @@ interface PassFinalisationPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   applicationNumber$: Observable<string>;
-  provisionalLicenseValue: string;
+  provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
+  provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
 }
 
@@ -92,19 +94,27 @@ export class PassFinalisationPage extends BasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
+      provisionalLicenseProvidedRadioChecked$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getPassCompletion),
+        map(provisionalLicenseProvided),
+      ),
+      provisionalLicenseNotProvidedRadioChecked$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getPassCompletion),
+        map(provisionalLicenseNotProvided),
+      ),
       passCertificateNumber$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
-      provisionalLicenseValue: null,
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
-    ];
-    this.initialStateSubscriptions = [
-      this.provisionalLicenseSubscription(),
     ];
   }
 
@@ -125,11 +135,6 @@ export class PassFinalisationPage extends BasePageComponent {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
-  setProvisionalLicenseValue = (provisionalLicenseValue: boolean): void => {
-    if (provisionalLicenseValue === null) return;
-    this.pageState.provisionalLicenseValue = provisionalLicenseValue ? 'yes' : 'no';
-  }
-
   /**
    * Returns a subscription to the debounced changes of a particular input fields.
    * Dispatches the provided action type to the store when a new value is yielded.
@@ -144,16 +149,6 @@ export class PassFinalisationPage extends BasePageComponent {
       );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
-    return subscription;
-  }
-
-  provisionalLicenseSubscription(): Subscription {
-    const subscription = this.store$
-      .select(getTests)
-      .select(getCurrentTest)
-      .select(getPassCompletion)
-      .select(getProvisionalLicenseProvided)
-      .subscribe(this.setProvisionalLicenseValue);
     return subscription;
   }
 
