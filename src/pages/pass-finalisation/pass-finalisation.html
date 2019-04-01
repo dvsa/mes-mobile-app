@@ -20,6 +20,7 @@
           </ion-col>
           <ion-col>
               <span class="mes-data">{{pageState.applicationNumber$ | async }}</span>
+              <!-- <span class="mes-data">{{pageState.provisionalLicenseProvided$ | async}}</span> -->
             </ion-col>
         </ion-row>
         <ion-row class="mes-full-width-card" id="provisional-license-card" align-items-center>
@@ -27,11 +28,11 @@
             <label>Provisional license received</label>
           </ion-col>
           <ion-col col-23>
-            <input type="radio" name="license" id="license-received" class="gds-radio-button" (click)="provisionalLicenseReceived()">
+            <input type="radio" name="license" id="license-received" value="yes" [(ngModel)]="pageState.provisionalLicenseValue" class="gds-radio-button" (click)="provisionalLicenseReceived()">
             <label for="license-received" class="radio-label">Yes</label>
           </ion-col>
           <ion-col>
-            <input type="radio" name="license" id="license-not-received" class="gds-radio-button" (click)="provisionalLicenseNotReceived()">
+            <input type="radio" name="license" id="license-not-received" value="no" [(ngModel)]="pageState.provisionalLicenseValue" class="gds-radio-button" (click)="provisionalLicenseNotReceived()">
             <label for="license-not-received" class="radio-label">No</label>
           </ion-col>
         </ion-row>

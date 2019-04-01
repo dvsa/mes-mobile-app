@@ -37,7 +37,7 @@ interface PassFinalisationPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   applicationNumber$: Observable<string>;
-  provisionalLicenseProvided$: Observable<boolean>;
+  provisionalLicenseValue: string;
   passCertificateNumber$: Observable<string>;
 }
 
@@ -53,6 +53,7 @@ export class PassFinalisationPage extends BasePageComponent {
   passCertificateNumberInput: ElementRef;
 
   inputSubscriptions: Subscription[] = [];
+  initialStateSubscriptions: Subscription[] = [];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -91,26 +92,25 @@ export class PassFinalisationPage extends BasePageComponent {
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      provisionalLicenseProvided$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getPassCompletion),
-        select(getProvisionalLicenseProvided),
-      ),
       passCertificateNumber$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
+      provisionalLicenseValue: null,
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
+    ];
+    this.initialStateSubscriptions = [
+      this.provisionalLicenseSubscription(),
     ];
   }
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    this.initialStateSubscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ionViewDidEnter(): void {
@@ -123,6 +123,11 @@ export class PassFinalisationPage extends BasePageComponent {
 
   provisionalLicenseNotReceived(): void {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
+  }
+
+  setProvisionalLicenseValue = (provisionalLicenseValue: boolean): void => {
+    if (provisionalLicenseValue === null) return;
+    this.pageState.provisionalLicenseValue = provisionalLicenseValue ? 'yes' : 'no';
   }
 
   /**
@@ -139,6 +144,16 @@ export class PassFinalisationPage extends BasePageComponent {
       );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
+    return subscription;
+  }
+
+  provisionalLicenseSubscription(): Subscription {
+    const subscription = this.store$
+      .select(getTests)
+      .select(getCurrentTest)
+      .select(getPassCompletion)
+      .select(getProvisionalLicenseProvided)
+      .subscribe(this.setProvisionalLicenseValue);
     return subscription;
   }
 
