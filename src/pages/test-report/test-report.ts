@@ -4,25 +4,23 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-
 import { BasePageComponent } from '../../shared/classes/base-page';
-
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DeviceProvider } from '../../providers/device/device';
-
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies } from '../../modules/tests/test_data/test-data.constants';
+import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from './test-report.reducer';
 import { isSeriousMode } from './test-report.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
-
+import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isSeriousMode$: Observable<boolean>;
@@ -35,13 +33,14 @@ interface TestReportPageState {
 })
 export class TestReportPage extends BasePageComponent {
 
+  menoeuvres$: Observable<Manoeuvres>;
   pageState: TestReportPageState;
   subscription: Subscription;
-
+  manoeuvresSubscription: Subscription;
   competencies = Competencies;
   displayOverlay: boolean;
-
   isSeriousMode: boolean = false;
+  menoeuvresComplete: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -78,13 +77,21 @@ export class TestReportPage extends BasePageComponent {
     };
 
     const { candidateUntitledName$, isSeriousMode$ } = this.pageState;
-
     const merged$ = merge(
       candidateUntitledName$,
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
     );
-
     this.subscription = merged$.subscribe();
+
+    this.menoeuvres$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getTestData),
+      select('manoeuvres'),
+    );
+    this.manoeuvresSubscription = this.menoeuvres$.subscribe((result) => {
+      this.menoeuvresComplete = Object.values(result)[0];
+    });
   }
 
   ionViewDidEnter(): void {
@@ -98,6 +105,7 @@ export class TestReportPage extends BasePageComponent {
   toggleReportOverlay(): void {
     this.displayOverlay = !this.displayOverlay;
   }
+
   ionViewDidLeave(): void {
     if (super.isIos()) {
       this.deviceProvider.disableSingleAppMode();
@@ -110,16 +118,17 @@ export class TestReportPage extends BasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    if (this.manoeuvresSubscription) {
+      this.manoeuvresSubscription.unsubscribe();
+    }
   }
 
   pass(): void {
     this.navCtrl.push('DebriefPage', { outcome: 'pass' });
-
   }
 
   fail(): void {
     this.navCtrl.push('DebriefPage', { outcome: 'fail' });
-
   }
 }
 export interface OverlayCallback {
