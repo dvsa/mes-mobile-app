@@ -9,9 +9,23 @@ competency {
     border: 1px solid rgba(11, 12, 12, 0.4);
     box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
     border-radius: 10px;
-
+    font-size: 15px;
+    text-align: center;
+    line-height: 25px;
+    letter-spacing: -0.26px;
+    font-weight: 500;
+    padding-left: 3px;
+    padding-right: 5px;
+    & ion-row {
+      width: 100%
+    }
     &.activated {
       background: #eee;
+    }
+    &.serious-fault {
+      background:rgba(255, 191, 71, 0.25);
+      border: 2px solid map-get($colors-gds, 'gds-black');
+      font-weight: bold;
     }
     // Ripple animation effect
     &.ripple-effect {
@@ -48,12 +62,9 @@ competency {
       justify-content: center;
     }
     .competency-label {
-      font-size: 15px;
-      text-align: center;
-      line-height: 25px;
-      letter-spacing: -0.26px;
-      font-weight: 500;
-      margin-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-self: center;
     }
 
     .fault-wrapper {

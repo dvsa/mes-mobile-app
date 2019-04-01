@@ -4,4 +4,25 @@ toolbar {
     padding: 12px 17px;
     background: map-get($colors, 'mes-white');
   }
+
+  #serious-button{
+    width: 88px;
+    height: 43px;
+    border: 3.5px solid map-get($colors-gds, 'gds-yellow');
+    border-radius: 10px;
+    color: #0B0C0C;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: -0.26px;
+    line-height: 25px;
+    margin: 0;
+     &.inactive {
+      background: map-get($colors, 'mes-white');
+      box-shadow: 0 1px 0 0 map-get($colors-gds, 'gds-grey-1');
+    }
+    &.active {
+      background: map-get($colors-gds, 'gds-yellow');
+    }
+  }
 }

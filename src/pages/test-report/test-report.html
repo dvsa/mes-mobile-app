@@ -2,14 +2,15 @@
   <ion-navbar hideBackButton>
     <ion-title>Test Report - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
-      <button ion-button navPush="DebriefPage">End test</button>
+      <button ion-button (click)="pass()">Pass Test</button>
+      <button ion-button (click)="fail()">Fail Test</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content no-padding no-bounce>
   <toolbar></toolbar>
-  <ion-grid no-padding padding-left padding-right>
+  <ion-grid no-padding padding-left padding-right [ngClass]="{'serious-mode': isSeriousMode}">
     <ion-row>
       <!-- Column 1-->
       <ion-col col-32>

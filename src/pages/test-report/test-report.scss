@@ -2,6 +2,15 @@ page-test-report {
   .content-ios {
     background-color: map-get($colors-gds, 'gds-grey-3');
   }
+
+  ion-grid {
+    box-sizing: border-box;
+    border: 6px solid map-get($colors-gds, 'gds-grey-3');
+    &.serious-mode {
+      border: 6px solid map-get($colors-gds, 'gds-yellow');
+    }
+  }
+
   .section-header {
     color: map-get($colors-gds, 'gds-black');
     font-size: 17px;
@@ -72,10 +81,5 @@ page-test-report {
     animation-name: hideAnimation;
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
-  }
-  #test-report-header {
-    height: 68px;
-    padding: 12px 17px;
-    background: map-get($colors, 'mes-white');
   }
 }

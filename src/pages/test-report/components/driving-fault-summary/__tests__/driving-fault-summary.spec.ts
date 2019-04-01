@@ -2,10 +2,10 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { DrivingFaultSummaryComponent } from '../driving-fault-summary';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { IonicModule, Config, NavController } from 'ionic-angular';
+import { IonicModule, Config } from 'ionic-angular';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ConfigMock, NavControllerMock } from 'ionic-mocks';
+import { ConfigMock } from 'ionic-mocks';
 import { Subscription } from 'rxjs/Subscription';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { TestOutcomeStartTest } from '../../../../journal/components/test-outcome/test-outcome.actions';
@@ -28,7 +28,6 @@ describe('DrivingFaultSummary', () => {
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
-        { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
     }).compileComponents()
       .then(() => {

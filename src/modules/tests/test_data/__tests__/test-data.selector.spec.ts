@@ -1,11 +1,14 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import { getDrivingFaultCount } from '../test-data.selector';
+import { getDrivingFaultCount, hasSeriousFault } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
 describe('TestDataSelectors', () => {
   const state: TestData = {
     drivingFaults: {
       controlsGears: 1,
+    },
+    seriousFaults: {
+       awarenessPlanning: true,
     },
   };
 
@@ -15,6 +18,15 @@ describe('TestDataSelectors', () => {
     });
     it('should return undefined when there hasnt been any driving faults', () => {
       expect(getDrivingFaultCount(state, Competencies.controlsParkingBrake)).toBeUndefined();
+    });
+  });
+
+  describe('hasSeriousFault', () => {
+    it('should return true if a competency has a serious fault', () => {
+      expect(hasSeriousFault(state, Competencies.awarenessPlanning)).toBeTruthy();
+    });
+    it('should return false if a competency does not have a serious fault', () => {
+      expect(hasSeriousFault(state, Competencies.controlsClutch)).toBeFalsy();
     });
   });
 });

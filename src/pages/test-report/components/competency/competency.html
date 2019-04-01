@@ -1,11 +1,16 @@
 <button #competencyButton>
-  <fault-counter class="drivingFaults" [count]="faultCount"></fault-counter>
-  <div class="label">
-    <span class='competency-label'>{{ getLabel() }}</span>
-  </div>
-  <div class="fault-wrapper">
-    <!-- Placeholder for serious/dangerous -->
-    <fault-counter></fault-counter>
-    <fault-counter></fault-counter>
-  </div>
+  <ion-row no-padding>
+    <ion-col col-10 >
+        <fault-counter class="driving-faults" [count]="faultCount"></fault-counter>
+    </ion-col>
+    <ion-col col-66>
+        <span class='competency-label'>{{ getLabel() }}</span>
+    </ion-col>
+    <ion-col col-10>
+      <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
+    </ion-col>
+    <ion-col col-10>
+      <fault-counter class="dangerous" [count]="0"></fault-counter>
+    </ion-col>
+  </ion-row>
 </button>

@@ -7,7 +7,6 @@ import { getTestData } from '../../../../modules/tests/test_data/test-data.reduc
 import { getDrivingFaultSummaryCount } from '../../../../modules/tests/test_data/test-data.selector';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { NavController } from 'ionic-angular';
 
 interface DrivingFaultSummaryState {
   count$: Observable<number>;
@@ -23,8 +22,7 @@ export class DrivingFaultSummaryComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private store$: Store<StoreModel>,
-    private navController: NavController) {}
+    private store$: Store<StoreModel>) {}
 
   ngOnInit(): void {
     this.componentState = {
@@ -39,16 +37,6 @@ export class DrivingFaultSummaryComponent implements OnInit, OnDestroy {
     const { count$ } = this.componentState;
 
     this.subscription = count$.subscribe();
-  }
-
-  pass(): void {
-    this.navController.push('DebriefPage', { outcome: 'pass' });
-
-  }
-
-  fail(): void {
-    this.navController.push('DebriefPage', { outcome: 'fail' });
-
   }
 
   ngOnDestroy(): void {

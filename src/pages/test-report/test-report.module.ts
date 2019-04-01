@@ -13,6 +13,10 @@ import { FaultCounterComponent } from './components/fault-counter/fault-counter'
 import { TickIndicatorComponent } from './components/tick-indicator/tick-indicator';
 import { DrivingFaultSummaryComponent } from './components/driving-fault-summary/driving-fault-summary';
 import { ToolbarComponent } from './components/toolbar/toolbar';
+import { StoreModule } from '@ngrx/store';
+import { testReportReducer } from './test-report.reducer';
+import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/serious-fault-badge';
+import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
 
 @NgModule({
   declarations: [
@@ -24,9 +28,12 @@ import { ToolbarComponent } from './components/toolbar/toolbar';
     CompetencyWithModalComponent,
     ManoeuvresPopoverComponent,
     ToolbarComponent,
+    SeriousFaultBadgeComponent,
+    SeriousTooltipComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),
+    StoreModule.forFeature('testReport', testReportReducer),
     EffectsModule.forFeature([TestReportAnalyticsEffects]),
   ],
   providers: [
