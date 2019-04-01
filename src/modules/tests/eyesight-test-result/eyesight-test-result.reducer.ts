@@ -1,10 +1,6 @@
 import { Action, createFeatureSelector } from '@ngrx/store';
 import { EyesightTestResult } from '@dvsa/mes-test-schema/categories/B';
-import {
-  EYESIGHT_PASS_PRESSED,
-  EYESIGHT_FAIL_PRESSED,
-  EYESIGHT_FAIL_CANCELLED,
-} from '../../../pages/waiting-room-to-car/waiting-room-to-car.actions';
+import { EYESIGHT_RESULT_PASSED, EYESIGHT_RESULT_FAILED, EYESIGHT_RESULT_RESET } from './eyesight-test-result.actions';
 
 export const initialState: EyesightTestResult = null;
 
@@ -13,11 +9,11 @@ export const eyesightTestResultReducer = (
   action: Action,
 ): EyesightTestResult => {
   switch (action.type) {
-    case EYESIGHT_PASS_PRESSED:
+    case EYESIGHT_RESULT_PASSED:
       return 'P';
-    case EYESIGHT_FAIL_PRESSED:
+    case EYESIGHT_RESULT_FAILED:
       return 'F';
-    case EYESIGHT_FAIL_CANCELLED:
+    case EYESIGHT_RESULT_RESET:
       return initialState;
     default:
       return state;

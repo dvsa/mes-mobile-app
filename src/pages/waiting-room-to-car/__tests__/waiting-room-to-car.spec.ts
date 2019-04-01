@@ -25,13 +25,12 @@ import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
 } from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
-import {
-  EyesightPassPressed,
-  EyesightFailPressed,
-  EyesightFailCancelled,
-} from '../waiting-room-to-car.actions';
-import { EyesightRadioState } from '../waiting-room-to-car.reducer';
 import { of } from 'rxjs/observable/of';
+import {
+  EyesightResultFailed,
+  EyesightResultPasssed,
+  EyesightResultReset,
+} from '../../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -61,9 +60,6 @@ describe('WaitingRoomToCarPage', () => {
                 },
               },
             },
-          }),
-          waitingRoomToCar: () => ({
-            eyesightRadioState: EyesightRadioState.Unselected,
           }),
         }),
       ],
@@ -145,17 +141,17 @@ describe('WaitingRoomToCarPage', () => {
     });
 
     describe('eyesight failure confirmation', () => {
-      it('should dispatch an EyesightPassPressed action when Pass is pressed', () => {
+      it('should dispatch an EyesightResultPassed action when Pass is pressed', () => {
         const passEyesightRadio = fixture.debugElement.query(By.css('#eyesight-pass'));
         passEyesightRadio.triggerEventHandler('click', null);
         fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightPassPressed());
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightResultPasssed());
       });
-      it('should dispatch an EyesightFailPressed action when Fail is pressed', () => {
+      it('should dispatch an EyesightResultFailed action when Fail is pressed', () => {
         const failEyesightRadio = fixture.debugElement.query(By.css('#eyesight-fail'));
         failEyesightRadio.triggerEventHandler('click', null);
         fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailPressed());
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightResultFailed());
       });
       // tslint:disable-next-line:max-line-length
       it('should hide the rest of the form and show eyesight failure confirmation when page state indicates fail is selected', () => {
@@ -177,9 +173,9 @@ describe('WaitingRoomToCarPage', () => {
         expect(eyesightFailureConfirmation).toBeNull();
         expect(formAfterEyesight.nativeElement.hidden).toBeFalsy();
       });
-      it('should dispatch an eyesight failure cancelled action when the when the method is called', () => {
+      it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();
-        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightFailCancelled());
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightResultReset());
       });
     });
   });

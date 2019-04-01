@@ -4,12 +4,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import {
-  WaitingRoomToCarViewDidEnter,
-  EyesightPassPressed,
-  EyesightFailPressed,
-  EyesightFailCancelled,
-} from './waiting-room-to-car.actions';
+import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
@@ -44,12 +39,13 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getWaitingRoomToCarState } from './waiting-room-to-car.reducer';
 import {
-  getEyesightRadioState,
-  isEyesightPassRadioSelected,
-  isEyesightFailRadioSelected,
-} from './waiting-room-to-car.selector';
+  EyesightResultPasssed,
+  EyesightResultFailed,
+  EyesightResultReset,
+} from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
+import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
+import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -143,14 +139,16 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getOtherAccompaniment),
       ),
       eyesightPassRadioChecked$: this.store$.pipe(
-        select(getWaitingRoomToCarState),
-        select(getEyesightRadioState),
-        map(isEyesightPassRadioSelected),
+        select(getTests),
+        select(getCurrentTest),
+        select(getEyesightTestResult),
+        map(isPassed),
       ),
       eyesightFailRadioChecked$: this.store$.pipe(
-        select(getWaitingRoomToCarState),
-        select(getEyesightRadioState),
-        map(isEyesightFailRadioSelected),
+        select(getTests),
+        select(getCurrentTest),
+        select(getEyesightTestResult),
+        map(isFailed),
       ),
     };
     this.inputSubscriptions = [
@@ -220,14 +218,14 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   eyesightPassPressed(): void {
-    this.store$.dispatch(new EyesightPassPressed());
+    this.store$.dispatch(new EyesightResultPasssed());
   }
 
   eyesightFailPressed(): void {
-    this.store$.dispatch(new EyesightFailPressed());
+    this.store$.dispatch(new EyesightResultFailed());
   }
 
   eyesightFailCancelled = () => {
-    this.store$.dispatch(new EyesightFailCancelled());
+    this.store$.dispatch(new EyesightResultReset());
   }
 }
