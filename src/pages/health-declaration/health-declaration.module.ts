@@ -4,6 +4,8 @@ import { HealthDeclarationPage } from './health-declaration';
 import { EffectsModule } from '@ngrx/effects';
 import { HealthDeclarationAnalyticsEffects } from './health-declaration.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { ComponentsModule } from '../../components/components.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   imports: [
     IonicPageModule.forChild(HealthDeclarationPage),
     EffectsModule.forFeature([HealthDeclarationAnalyticsEffects]),
+    ComponentsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AnalyticsProvider,
