@@ -68,47 +68,39 @@ export class PassFinalisationPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateName),
       ),
-      candidateUntitledName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateUntitledName$: currentTest$.pipe(
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      candidateDriverNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateDriverNumber$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      applicationNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      applicationNumber$: currentTest$.pipe(
         select(getApplicationReference),
         select(getApplicationNumber),
       ),
-      provisionalLicenseProvidedRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      provisionalLicenseProvidedRadioChecked$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
       ),
-      provisionalLicenseNotProvidedRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseNotProvided),
       ),
-      passCertificateNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),

@@ -89,52 +89,42 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   ngOnInit(): void {
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.pageState = {
-      candidateName$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      candidateName$: currentTest$.pipe(
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      registrationNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      registrationNumber$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getRegistrationNumber),
       ),
-      transmission$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      transmission$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getGearboxCategory),
       ),
-      schoolCar$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      schoolCar$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getSchoolCar),
       ),
-      dualControls$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      dualControls$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getDualControls),
       ),
-      instructorAccompaniment$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      instructorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getInstructorAccompaniment),
       ),
-      supervisorAccompaniment$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      supervisorAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getSupervisorAccompaniment),
       ),
-      otherAccompaniment$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      otherAccompaniment$: currentTest$.pipe(
         select(getAccompaniment),
         select(getOtherAccompaniment),
       ),
