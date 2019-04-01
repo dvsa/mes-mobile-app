@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -55,7 +56,8 @@ export class PassFinalisationPage extends BasePageComponent {
   passCertificateNumberInput: ElementRef;
 
   inputSubscriptions: Subscription[] = [];
-  initialStateSubscriptions: Subscription[] = [];
+
+  form: FormGroup;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -65,12 +67,14 @@ export class PassFinalisationPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.form = new FormGroup(this.getFormValidation());
   }
 
   ngOnInit(): void {
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
+      // map(val => dummy),
       select(getCurrentTest),
     );
 
@@ -112,7 +116,6 @@ export class PassFinalisationPage extends BasePageComponent {
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
-    this.initialStateSubscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ionViewDidEnter(): void {
@@ -125,6 +128,25 @@ export class PassFinalisationPage extends BasePageComponent {
 
   provisionalLicenseNotReceived(): void {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
+  }
+
+  onSubmit() {
+    console.log('onSubmit');
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navCtrl.push('HealthDeclarationPage');
+    }
+  }
+
+  getFormValidation(): { [key: string]: FormControl } {
+    console.log('validate');
+    return {
+      provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.requiredTrue]),
+      passCertificateNumberCtrl: new FormControl(null, [Validators.requiredTrue]),
+    };
+  }
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
   }
 
   /**
