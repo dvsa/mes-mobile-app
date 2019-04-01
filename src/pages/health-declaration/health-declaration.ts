@@ -11,7 +11,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceProvider } from '../../providers/device/device';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import * as postTestDeclarationsActions
-from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
+  from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getPostTestDeclarations } from '../../modules/tests/post-test-declarations/post-test-declarations.reducer';
@@ -162,17 +162,17 @@ export class HealthDeclarationPage extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.navCtrl.push('OfficePage');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(() => {
+          this.navCtrl.push('OfficePage');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
 }
