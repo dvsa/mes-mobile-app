@@ -24,6 +24,7 @@ import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../test-report.reducer';
+import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -48,6 +49,7 @@ describe('TestReportPage', () => {
         MockComponent(TickIndicatorComponent),
         TestReportPage,
         MockComponent(CompetencyComponent),
+        MockComponent(LegalRequirementsComponent),
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
       ],
