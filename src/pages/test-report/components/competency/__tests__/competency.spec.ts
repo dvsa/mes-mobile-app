@@ -153,7 +153,6 @@ describe('CompetencyComponent', () => {
       component.faultCount = 1;
       component.manageClasses();
       // Assert
-      expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'driving-fault');
       expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
 
       setTimeout(() => {

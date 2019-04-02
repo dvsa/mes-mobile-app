@@ -22,11 +22,6 @@ competency {
     &.activated {
       background: #eee;
     }
-    &.serious-fault {
-      background: #FFEFD1;
-      border: 2px solid map-get($colors-gds, 'gds-black');
-      font-weight: bold;
-    }
     // Ripple animation effect
     &.ripple-effect {
       animation: ripple 0.4s forwards;
