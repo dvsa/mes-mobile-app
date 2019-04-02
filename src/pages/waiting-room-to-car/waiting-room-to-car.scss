@@ -1,7 +1,7 @@
 page-waiting-room-to-car {
   ion-content > div {
     background-color: map-get($colors, "mes-white");
-    .mes-row {
+    .mesgi-row {
       position: relative;
       min-height: 120px;
       border-bottom: 2px solid map-get($colors-gds, 'gds-grey-5');
@@ -29,9 +29,6 @@ page-waiting-room-to-car {
         width: 100%;
         height: 56px;
       }
-    }
-    .no-padded-col {
-      padding: 0;
     }
   }
 }
