@@ -31,6 +31,8 @@ import {
   EyesightResultPasssed,
   EyesightResultReset,
 } from '../../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
+import { QuestionProvider } from '../../../providers/question/question';
+import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -70,6 +72,7 @@ describe('WaitingRoomToCarPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: QuestionProvider, useClass: QuestionProviderMock },
       ],
     })
       .compileComponents()
@@ -85,6 +88,9 @@ describe('WaitingRoomToCarPage', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+    it('should get tell me question from the question provider', () => {
+      expect(component.tellMeQuestions.length).toBe(2);
     });
   });
 

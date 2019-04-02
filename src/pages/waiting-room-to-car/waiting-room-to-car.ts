@@ -49,6 +49,8 @@ import {
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
 import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
+import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
 import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
 
@@ -86,16 +88,19 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   showEyesightFailureConfirmation: boolean = false;
 
+  tellMeQuestions: TellMeQuestion[];
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public questionProvider: QuestionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions();
     this.form = new FormGroup(this.getFormValidation());
-
   }
 
   ngOnInit(): void {
@@ -230,6 +235,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
+      tellMeQuestionCtrl: new FormControl('', [Validators.required]),
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
       eyesightCtrl: new FormControl('', [Validators.required]),
@@ -254,5 +260,8 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   eyesightFailCancelled = () => {
     this.form.value['eyesightCtrl'] = '';
     this.store$.dispatch(new EyesightResultReset());
+  }
+
+  tellMeQuestionChanged(e): void {
   }
 }

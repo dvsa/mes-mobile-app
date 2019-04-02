@@ -1,6 +1,6 @@
 input[type="text"],
-input[type="number"] {
-
+input[type="number"],
+ion-select {
   $input-border: 2px;
   $input-border-invalid: 4px;
   $input-height: 52px;
@@ -25,5 +25,13 @@ input[type="number"] {
       height: $input-height-invalid;
     }
   }
+}
 
+// Don't dim select placeholders
+ion-select.select {
+  max-width: 100%;
+  align-items: center;
+  .select-placeholder {
+    color: inherit;
+  }
 }
