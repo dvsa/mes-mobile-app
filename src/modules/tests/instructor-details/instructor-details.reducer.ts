@@ -1,5 +1,5 @@
 import * as instructorDetailsActions from './instructor-details.actions';
-import { Accompaniment, InstructorDetails } from '@dvsa/mes-test-schema/categories/B';
+import { InstructorDetails } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 
 const initialState: InstructorDetails = {};
@@ -16,4 +16,4 @@ export const instructorDetailsReducer = (state = initialState, action: instructo
   }
 };
 
-export const getInstructorDetails = createFeatureSelector<Accompaniment>('instructorDetails');
+export const getInstructorDetails = createFeatureSelector<InstructorDetails>('instructorDetails');

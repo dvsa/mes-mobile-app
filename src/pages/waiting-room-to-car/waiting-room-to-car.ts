@@ -30,6 +30,8 @@ import {
   getGearboxCategory,
   getSchoolCar,
   getDualControls,
+  isAutomatic,
+  isManual,
 } from '../../modules/tests/vehicle-details/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
@@ -39,6 +41,7 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   EyesightResultPasssed,
   EyesightResultFailed,
@@ -46,10 +49,13 @@ import {
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
 import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
+import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
+  instructorRegistrationNumber$: Observable<number>;
   transmission$: Observable<GearboxCategory>;
   schoolCar$: Observable<boolean>;
   dualControls$: Observable<boolean>;
@@ -58,6 +64,8 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
+  gearboxAutomaticRadioChecked$: Observable<boolean>;
+  gearboxManualRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -67,13 +75,13 @@ interface WaitingRoomToCarPageState {
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   pageState: WaitingRoomToCarPageState;
+  form: FormGroup;
 
   @ViewChild('registrationInput')
   regisrationInput: ElementRef;
 
   @ViewChild('instructorRegistrationInput')
-  instructorRegisrationInput: ElementRef;
-
+  instructorRegistrationInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
 
   showEyesightFailureConfirmation: boolean = false;
@@ -86,6 +94,8 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.form = new FormGroup(this.getFormValidation());
+
   }
 
   ngOnInit(): void {
@@ -103,6 +113,10 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       registrationNumber$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getRegistrationNumber),
+      ),
+      instructorRegistrationNumber$: currentTest$.pipe(
+        select(getInstructorDetails),
+        map(getInstructorRegistrationNumber),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -128,23 +142,27 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getAccompaniment),
         select(getOtherAccompaniment),
       ),
-      eyesightPassRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      eyesightPassRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isPassed),
       ),
-      eyesightFailRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      eyesightFailRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isFailed),
+      ),
+      gearboxAutomaticRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isAutomatic),
+      ),
+      gearboxManualRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isManual),
       ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
       this.inputChangeSubscriptionDispatchingAction(
-        this.instructorRegisrationInput,
+        this.instructorRegistrationInput,
         InstructorRegistrationNumberChanged,
       ),
     ];
@@ -203,6 +221,24 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     return subscription;
   }
 
+  onSubmit() {
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navCtrl.push('TestReportPage');
+    }
+  }
+
+  getFormValidation(): { [key: string]: FormControl } {
+    return {
+      transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
+      registrationNumberCtrl: new FormControl('', [Validators.required]),
+      eyesightCtrl: new FormControl('', [Validators.required]),
+    };
+  }
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+  }
+
   setEyesightFailureVisibility(show: boolean) {
     this.showEyesightFailureConfirmation = show;
   }
@@ -216,6 +252,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   eyesightFailCancelled = () => {
+    this.form.value['eyesightCtrl'] = '';
     this.store$.dispatch(new EyesightResultReset());
   }
 }

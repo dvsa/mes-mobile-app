@@ -1,12 +1,37 @@
 page-waiting-room-to-car {
   ion-content > div {
     background-color: map-get($colors, "mes-white");
-    .mes-full-width-card {
+    .mes-validated-row {
+      position: relative;
+      min-height: 120px;
       border-bottom: 2px solid map-get($colors-gds, 'gds-grey-5');
+      .spacing-row {
+        height: 32px;
+      }
+      .validation-message-row {
+        height:32px;
+      }
+      .component-label {
+        padding: 24px;
+      }
+      .row-validation-bar {
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        &.ng-invalid {
+          background-color: map-get($colors, mes-validation-error);
+        }
+      }
+    }
+    .mes-full-width-card {
+      height: 120px;
       #continue-to-test-report {
         width: 100%;
         height: 56px;
       }
+    }
+    .no-padded-col {
+      padding: 0;
     }
   }
 }
