@@ -31,7 +31,6 @@
                   (click)="eyesightFailPressed()" [checked] = "pageState.eyesightFailRadioChecked$ | async" value="F">
                 <label for="eyesight-fail" class="radio-label">Fail</label>
               </ion-col>
-              <ion-col></ion-col>
           </ion-row>
           <ion-row class="validation-message-row" align-Items-centre justify-content-start>
                   <div id="waiting-room-insurance-validation-text" class="validation-text"
@@ -54,9 +53,6 @@
               <ion-col>
                   <ion-row class="spacing-row"></ion-row>
                   <ion-row class="component-row" align-items-centre justify-content-start >
-                      <ion-col></ion-col>
-                      <ion-col></ion-col>
-                      <ion-col></ion-col>
                   </ion-row>
                   <ion-row class="validation-message-row" align-items-centre justify-content-start>
                   </ion-row>
@@ -77,8 +73,6 @@
                         [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')"
                         [value]="pageState.registrationNumber$ | async">
                       </ion-col>
-                    <ion-col></ion-col>
-                    <ion-col></ion-col>
                 </ion-row>
                 <ion-row class="validation-message-row" align-items-centre justify-content-start>
                         <div id="waiting-room-insurance-validation-text" class="validation-text"
@@ -113,8 +107,7 @@
                         value='Automatic'>
                       <label for="transmission-automatic" class="radio-label">Automatic</label>
                       </ion-col>
-                    <ion-col></ion-col>
-                </ion-row>
+                    </ion-row>
                 <ion-row class="validation-message-row" align-Items-centre justify-content-start>
                         <div id="waiting-room-insurance-validation-text" class="validation-text"
                         [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')">
@@ -134,8 +127,6 @@
                     <ion-row class="component-row" align-items-centre justify-content-start>
                         <ion-col><input #instructorRegistrationInput type="number" id="instructor-registration" numbersOnly
                           [value]="pageState.instructorRegistrationNumber$ | async"></ion-col>
-                        <ion-col></ion-col>
-                        <ion-col></ion-col>
                     </ion-row>
                     <ion-row class="validation-message-row" align-items-centre justify-content-start>
                     </ion-row>
