@@ -74,7 +74,8 @@
                     <ion-col col-32>
                         <input #registrationInput type="text" id="registration" formControlName="registrationNumberCtrl"
                         class="vehicle-reg-input" autocapitalize="characters" uppercaseAlphanumOnly
-                        [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')">
+                        [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')"
+                        [value]="pageState.registrationNumber$ | async">
                       </ion-col>
                     <ion-col></ion-col>
                     <ion-col></ion-col>
@@ -100,14 +101,16 @@
                         <input type="radio" formControlName="transmissionRadioGroupCtrl" name="transmissionRadioGroupCtrl"
                         id="transmission-manual" class="gds-radio-button"
                         [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')"
-                        (click)="manualTransmission()" value='manual'>
+                        (click)="manualTransmission()" [checked]="pageState.gearboxManualRadioChecked$ | async"
+                        value='Manual'>
                       <label for="transmission-manual" class="radio-label">Manual</label>
                       </ion-col>
                     <ion-col col-32>
                         <input type="radio" formControlName="transmissionRadioGroupCtrl" name="transmissionRadioGroupCtrl"
                         id="transmission-automatic" class="gds-radio-button"
                         [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')"
-                        (click)="automaticTransmission()" value='automatic'>
+                        (click)="automaticTransmission()" [checked]="pageState.gearboxAutomaticRadioChecked$ | async"
+                        value='Automatic'>
                       <label for="transmission-automatic" class="radio-label">Automatic</label>
                       </ion-col>
                     <ion-col></ion-col>
@@ -129,7 +132,8 @@
               <ion-col>
                   <ion-row class="spacing-row"></ion-row>
                     <ion-row class="component-row" align-items-centre justify-content-start>
-                        <ion-col><input #instructorRegistrationInput type="number" id="instructor-registration" numbersOnly></ion-col>
+                        <ion-col><input #instructorRegistrationInput type="number" id="instructor-registration" numbersOnly
+                          [value]="pageState.instructorRegistrationNumber$ | async"></ion-col>
                         <ion-col></ion-col>
                         <ion-col></ion-col>
                     </ion-row>

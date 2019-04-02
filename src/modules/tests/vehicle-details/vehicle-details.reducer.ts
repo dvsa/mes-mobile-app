@@ -2,7 +2,7 @@ import * as vehicleDetailsActions from './vehicle-details.actions';
 import { VehicleDetails } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 
-const initialState: VehicleDetails = {};
+const initialState: VehicleDetails = { registrationNumber: '' };
 
 export const vehicleDetailsReducer = (state = initialState, action: vehicleDetailsActions.Types) => {
   switch (action.type) {

@@ -30,6 +30,8 @@ import {
   getGearboxCategory,
   getSchoolCar,
   getDualControls,
+  isAutomatic,
+  isManual,
 } from '../../modules/tests/vehicle-details/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
@@ -47,10 +49,13 @@ import {
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
 import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
+import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
+  instructorRegistrationNumber$: Observable<number>;
   transmission$: Observable<GearboxCategory>;
   schoolCar$: Observable<boolean>;
   dualControls$: Observable<boolean>;
@@ -59,6 +64,8 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
+  gearboxAutomaticRadioChecked$: Observable<boolean>;
+  gearboxManualRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -74,8 +81,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   regisrationInput: ElementRef;
 
   @ViewChild('instructorRegistrationInput')
-  instructorRegisrationInput: ElementRef;
-
+  instructorRegistrationInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
 
   showEyesightFailureConfirmation: boolean = false;
@@ -108,6 +114,10 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getVehicleDetails),
         select(getRegistrationNumber),
       ),
+      instructorRegistrationNumber$: currentTest$.pipe(
+        select(getInstructorDetails),
+        map(getInstructorRegistrationNumber),
+      ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getGearboxCategory),
@@ -132,23 +142,27 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getAccompaniment),
         select(getOtherAccompaniment),
       ),
-      eyesightPassRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      eyesightPassRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isPassed),
       ),
-      eyesightFailRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      eyesightFailRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isFailed),
+      ),
+      gearboxAutomaticRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isAutomatic),
+      ),
+      gearboxManualRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isManual),
       ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
       this.inputChangeSubscriptionDispatchingAction(
-        this.instructorRegisrationInput,
+        this.instructorRegistrationInput,
         InstructorRegistrationNumberChanged,
       ),
     ];
