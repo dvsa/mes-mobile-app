@@ -11,7 +11,6 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from './../../../components/components.module';
-
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
