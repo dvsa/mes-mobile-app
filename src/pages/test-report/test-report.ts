@@ -21,7 +21,6 @@ import { isSeriousMode } from './test-report.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
-import { Subscription } from 'rxjs/Subscription';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -42,7 +41,7 @@ export class TestReportPage extends BasePageComponent {
   competencies = Competencies;
   displayOverlay: boolean;
   isSeriousMode: boolean = false;
-  menoeuvresComplete: boolean = false;
+  manoeuvresComplete: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -92,8 +91,8 @@ export class TestReportPage extends BasePageComponent {
       select('manoeuvres'),
     );
 
-    this.manoeuvresSubscription = this.menoeuvres$.subscribe((result) => {
-      this.menoeuvresComplete = Object.values(result)[0];
+    this.manoeuvresSubscription = this.manoeuvres$.subscribe((result) => {
+      this.manoeuvresComplete = Object.values(result)[0];
     });
   }
 
