@@ -1,0 +1,77 @@
+legal-requirements {
+  button {
+    width: 118px;
+    height: 44px;
+    display: flex;
+    
+    background: map-get($colors, "mes-white");
+    border: 1px solid rgba(11, 12, 12, 0.4);
+    box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
+    border-radius: 10px;
+
+    &.activated {
+      background: #eee;
+    }
+    // Ripple animation effect
+    &.ripple-effect {
+      animation: ripple 0.4s forwards;
+    }
+
+    @-webkit-keyframes ripple {
+      0% {
+        -webkit-box-shadow: 0 0 5px 0 rgba(65, 60, 60, 1);
+      }
+      50% {
+        -webkit-box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
+      }
+      100% {
+        -webkit-box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
+      }
+    }
+
+    @keyframes ripple {
+      0% {
+        -moz-box-shadow: 0 0 5px 0 rgba(65, 60, 60, 1);
+        box-shadow: 0 0 5px 0 rgba(65, 60, 60, 1);
+      }
+      50% {
+        -moz-box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
+        box-shadow: 0 0 5px 3.5px rgba(65, 60, 60, 0.5);
+      }
+      100% {
+        -moz-box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
+        box-shadow: 0 0 5px 7px rgba(65, 60, 60, 0);
+      }
+    }
+
+    .label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .competency-label {
+      font-size: 15px;
+      text-align: center;
+      line-height: 25px;
+      letter-spacing: -0.26px;
+      font-weight: 500;
+    }
+
+    .tickwrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    &.complete {
+      border: 2px solid map-get($colors-gds, "gds-green");
+      color: map-get($colors-gds, "gds-green");
+      
+      .competency-label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  
+}
