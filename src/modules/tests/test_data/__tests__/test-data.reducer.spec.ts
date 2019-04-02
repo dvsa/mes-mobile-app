@@ -6,11 +6,12 @@ import {
   ToggleNormalStart2,
   ToggleAngledStart,
   ToggleHillStart,
+  AddDangerousFault,
 } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 
-describe('TestDataReducer reducer', () => {
+fdescribe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
     it('should add a driving fault when no driving faults exist', () => {
       const result = testDataReducer(initialState, new AddDrivingFault({
@@ -47,6 +48,7 @@ describe('TestDataReducer reducer', () => {
       expect(result.drivingFaults.controlsParkingBrake).toBe(1);
     });
   });
+
   describe('ADD SERIOUS FAULT', () => {
     it('should add a serious fault when none exist', () => {
       const result = testDataReducer(initialState, new AddSeriousFault(Competencies.followingDistance));
@@ -72,6 +74,36 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(state, new AddSeriousFault(Competencies.judgementCrossing));
       expect(result.seriousFaults.followingDistance).toBeTruthy();
       expect(result.seriousFaults.judgementCrossing).toBeTruthy();
+    });
+  });
+
+  describe('ADD_DANGEROUS_FAULT', () => {
+    it('should add a dangerous fault when none exists', () => {
+      const result = testDataReducer(initialState, new AddDangerousFault(Competencies.followingDistance));
+      expect(result.dangerousFaults.followingDistance).toBeTruthy();
+    });
+
+    it('should update dangerous fault which already exists', () => {
+      const state: TestData = {
+        dangerousFaults: {
+          followingDistance: true,
+        },
+      };
+
+      const result = testDataReducer(state, new AddDangerousFault(Competencies.followingDistance));
+      expect(result.dangerousFaults.followingDistance).toBeTruthy();
+    });
+
+    it('should not remove an existing dangerous fault when a new one is added', () => {
+      const state: TestData = {
+        dangerousFaults: {
+          followingDistance: true,
+        },
+      };
+
+      const result = testDataReducer(state, new AddDangerousFault(Competencies.judgementCrossing));
+      expect(result.dangerousFaults.followingDistance).toBeTruthy();
+      expect(result.dangerousFaults.judgementCrossing).toBeTruthy();
     });
   });
 
