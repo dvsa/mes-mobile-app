@@ -1,5 +1,4 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-// import { By } from '@angular/platform-browser';
 import { LegalRequirementsComponent } from '../legal-requirements';
 import { MockComponent } from 'ng-mocks';
 import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
@@ -14,10 +13,11 @@ import {
   ToggleHillStart,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 
-fdescribe('LegalRequirementsComponent', () => {
+describe('LegalRequirementsComponent', () => {
   let fixture: ComponentFixture<LegalRequirementsComponent>;
   let component: LegalRequirementsComponent;
   let store$: Store<StoreModel>;
+  let storeDispatchSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,6 +35,7 @@ fdescribe('LegalRequirementsComponent', () => {
         fixture = TestBed.createComponent(LegalRequirementsComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
+        storeDispatchSpy = spyOn(store$, 'dispatch');
       });
   }));
 
@@ -44,32 +45,24 @@ fdescribe('LegalRequirementsComponent', () => {
     });
 
     it('should dispatch a TOGGLE_NORMAL_START_1 action', () => {
-      const storeDispatchSpy = spyOn(store$, 'dispatch');
-
       component.toggleNormalStart1();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleNormalStart1());
     });
 
     it('should dispatch a TOGGLE_NORMAL_START_2 action', () => {
-      const storeDispatchSpy = spyOn(store$, 'dispatch');
-
       component.toggleNormalStart2();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleNormalStart2());
     });
 
     it('should dispatch a TOGGLE_ANGLED_START action', () => {
-      const storeDispatchSpy = spyOn(store$, 'dispatch');
-
       component.toggleAngledStart();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleAngledStart());
     });
 
     it('should dispatch a TOGGLE_HILL_START action', () => {
-      const storeDispatchSpy = spyOn(store$, 'dispatch');
-
       component.toggleHillStart();
 
       expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleHillStart());
