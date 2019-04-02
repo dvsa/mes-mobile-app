@@ -44,8 +44,8 @@ describe('ManoeuvresPopoverComponent', () => {
   });
 
   describe('DOM', () => {
-    describe('Button', () => {
-      it('should dispatch a ADD_DRIVING_FAULT action', () => {
+    describe('recordManoeuvreSelection ', () => {
+      it('should dispatch a RECORD_MANOEUVRES_SELECTION action', () => {
         component.recordManoeuvreSelection('Manoeuver Name');
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordManoeuvresSelection('Manoeuver Name'));
       });

@@ -39,9 +39,15 @@ describe('TestDataReducer reducer', () => {
     expect(result.drivingFaults.controlsParkingBrake).toBe(1);
   });
   describe('manoeuvres', () => {
-    it('should update selectyed manoeuvre', () => {
+    it('should add selected manoeuvre', () => {
       const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
       expect(result.manoeuvres['ManoeuverName']).toEqual(true);
+    });
+    it('should replace current with selected manoeuvre', () => {
+      initialState.manoeuvres = { selectedReverseParkCarpark: true };
+      const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
+      expect(result.manoeuvres['ManoeuverName']).toEqual(true);
+      expect(result.manoeuvres).toEqual({ ManoeuverName: true });
     });
   });
 });
