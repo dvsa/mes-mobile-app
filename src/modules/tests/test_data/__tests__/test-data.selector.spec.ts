@@ -1,5 +1,5 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import { getDrivingFaultCount,hasSeriousFault } from '../test-data.selector';
+import { getDrivingFaultCount, hasSeriousFault } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
 describe('TestDataSelectors', () => {
