@@ -10,7 +10,11 @@
 
 <ion-content no-padding no-bounce>
   <toolbar></toolbar>
-  <ion-grid no-padding padding-left padding-right [ngClass]="{'serious-mode': isSeriousMode}">
+  <ion-grid
+    no-padding
+    padding-left
+    padding-right
+    [ngClass]="isSeriousMode ? 'serious-mode' : isDangerousMode ? 'dangerous-mode' : ''">
     <ion-row>
       <!-- Column 1-->
       <ion-col col-32>
