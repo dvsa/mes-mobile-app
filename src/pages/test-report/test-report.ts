@@ -90,7 +90,6 @@ export class TestReportPage extends BasePageComponent {
       select(getTestData),
       select('manoeuvres'),
     );
-
     this.manoeuvresSubscription = this.manoeuvres$.subscribe((result) => {
       this.manoeuvresComplete = Object.values(result)[0];
     });
@@ -115,7 +114,6 @@ export class TestReportPage extends BasePageComponent {
       this.insomnia.allowSleepAgain();
     }
   }
-
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

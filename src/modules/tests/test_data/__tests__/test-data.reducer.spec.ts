@@ -71,7 +71,6 @@ describe('TestDataReducer reducer', () => {
     it('should add selected manoeuvre', () => {
       const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
       expect(result.manoeuvres['ManoeuverName']).toEqual(true);
-
     });
     it('should replace current with selected manoeuvre', () => {
       initialState.manoeuvres = { selectedReverseParkCarpark: true };
