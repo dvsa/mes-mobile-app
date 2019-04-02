@@ -226,6 +226,5 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   tellMeQuestionChanged(e): void {
-    console.log(e);
   }
 }
