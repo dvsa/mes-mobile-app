@@ -235,6 +235,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
+      tellMeQuestionCtrl: new FormControl('', [Validators.required]),
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
       eyesightCtrl: new FormControl('', [Validators.required]),
