@@ -13,9 +13,13 @@ import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { getDrivingFaultCount, hasSeriousFault } from '../../../../modules/tests/test_data/test-data.selector';
+import {
+  getDrivingFaultCount,
+  hasSeriousFault,
+  hasDangerousFault,
+} from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
-import { isSeriousMode } from '../../test-report.selector';
+import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleSeriousFaultMode } from '../../test-report.actions';
 
 enum CssClassesEnum {
@@ -23,9 +27,12 @@ enum CssClassesEnum {
 }
 
 interface CompetencyState {
-  drivingFaultCount$: Observable<number>;
   isSeriousMode$: Observable<boolean>;
+  isDangerousMode$: Observable<boolean>;
+
+  drivingFaultCount$: Observable<number>;
   hasSeriousFault$: Observable<boolean>;
+  hasDangerousFault$: Observable<boolean>;
 }
 
 @Component({
@@ -47,8 +54,12 @@ export class CompetencyComponent {
   subscription: Subscription;
 
   faultCount: number;
+
   isSeriousMode: boolean = false;
   hasSeriousFault: boolean = false;
+
+  isDangerousMode: boolean = false;
+  hasDangerousMode: boolean = false;
 
   constructor(
     public hammerProvider: HammerProvider,
@@ -60,29 +71,44 @@ export class CompetencyComponent {
     this.hammerProvider.init(this.button);
     this.hammerProvider.addPressAndHoldEvent(this.recordFault);
 
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.competencyState = {
-      drivingFaultCount$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      isSeriousMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isSeriousMode)),
+      isDangerousMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isDangerousMode)),
+      drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         select(testData => getDrivingFaultCount(testData, this.competency))),
-      isSeriousMode$: this.store$.pipe(
-          select(getTestReportState),
-          select(isSeriousMode)),
-      hasSeriousFault$: this.store$.pipe(
-          select(getTests),
-          select(getCurrentTest),
-          select(getTestData),
-          select(testData => hasSeriousFault(testData, this.competency)),
-        ),
+      hasSeriousFault$: currentTest$.pipe(
+        select(getTestData),
+        select(testData => hasSeriousFault(testData, this.competency))),
+      hasDangerousFault$: currentTest$.pipe(
+        select(getTestData),
+        select(testData => hasDangerousFault(testData, this.competency)),
+      ),
     };
 
-    const { drivingFaultCount$, isSeriousMode$, hasSeriousFault$ } = this.competencyState;
+    const {
+      drivingFaultCount$,
+      isSeriousMode$,
+      hasSeriousFault$,
+      isDangerousMode$,
+      hasDangerousFault$,
+    } = this.competencyState;
 
     const merged$ = merge(
       drivingFaultCount$.pipe(map(count => this.faultCount = count)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
+      isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
+      hasDangerousFault$.pipe(map(toggle => this.hasDangerousMode = toggle)),
     );
 
     this.subscription = merged$.subscribe();
