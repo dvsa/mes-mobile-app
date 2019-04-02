@@ -43,15 +43,15 @@ page-test-report {
     position: absolute;
     top: $toolbar-height;
     left: 0px;
-    width: calc(100%);
+    width: 100%;
     height: calc(100% - #{$toolbar-height});
     z-index: 120;
     visibility: hidden;
     &.contract{
       top: $toolbar-height + $report-mode-border-width;
       left: 6px;
-      width: calc(100% - $report-mode-border-width *2);
-      height: calc(100% - $toolbar-height - $report-mode-border-width*2);
+      width: calc(100% - #{$report-mode-border-width *2});
+      height: calc(100% - #{$toolbar-height - $report-mode-border-width*2});
     }
   }
   @keyframes showAnimation {
