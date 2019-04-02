@@ -21,6 +21,10 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
 import { TickIndicatorComponent } from '../components/tick-indicator/tick-indicator';
 import { ToolbarComponent } from '../components/toolbar/toolbar';
+import { By } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
+import { testReportReducer } from '../test-report.reducer';
+import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -28,6 +32,14 @@ describe('TestReportPage', () => {
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
   let deviceProvider: DeviceProvider;
+
+  const mockCandidate = {
+    driverNumber: '123',
+    candidateName: {
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+    },
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,10 +49,25 @@ describe('TestReportPage', () => {
         MockComponent(TickIndicatorComponent),
         TestReportPage,
         MockComponent(CompetencyComponent),
+        MockComponent(LegalRequirementsComponent),
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
       ],
-      imports: [IonicModule, AppModule],
+      imports: [
+        IonicModule,
+        AppModule,
+        StoreModule.forFeature('tests', () => ({
+          currentTest: {
+            slotId: '123',
+          },
+          startedTests: {
+            123: {
+              candidate: mockCandidate,
+            },
+          },
+        })),
+        StoreModule.forFeature('testReport', testReportReducer),
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
@@ -106,6 +133,35 @@ describe('TestReportPage', () => {
   });
 
   describe('DOM', () => {
-    // Unit tests for the components template
+
+    describe('Fault Modes Styling', () => {
+      it('should not have any fault mode styles applied when serious and dangerous mode is disabled', () => {
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeNull();
+      });
+      it('should have serious fault mode styles applied when serious mode is enabled', () => {
+        fixture.detectChanges();
+
+        component.isSeriousMode = true;
+
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeDefined();
+        expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeNull();
+      });
+      it('should have dangerous fault mode styles applied when dangerous mode is enabled', () => {
+        fixture.detectChanges();
+
+        component.isDangerousMode = true;
+
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
+      });
+    });
+
   });
 });

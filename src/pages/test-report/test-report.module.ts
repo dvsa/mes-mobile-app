@@ -17,6 +17,8 @@ import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from './test-report.reducer';
 import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/serious-fault-badge';
 import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
+import { DangerousTooltipComponent } from './components/dangerous-tooltip/dangerous-tooltip';
+import { LegalRequirementsComponent } from './components/legal-requirements/legal-requirements';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { SeriousTooltipComponent } from './components/serious-tooltip/serious-to
     ToolbarComponent,
     SeriousFaultBadgeComponent,
     SeriousTooltipComponent,
+    DangerousTooltipComponent,
+    LegalRequirementsComponent,
   ],
   imports: [
     IonicPageModule.forChild(TestReportPage),

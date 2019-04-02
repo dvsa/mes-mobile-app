@@ -9,6 +9,9 @@ page-test-report {
     &.serious-mode {
       border: 4px solid map-get($colors-gds, 'gds-yellow');
     }
+    &.dangerous-mode {
+      border: 4px solid map-get($colors-gds, 'gds-red');
+    }
   }
 
   ion-row:first-of-type {

@@ -1,5 +1,5 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import { getDrivingFaultCount, hasSeriousFault } from '../test-data.selector';
+import { getDrivingFaultCount, hasSeriousFault, getTestRequirements } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
 describe('TestDataSelectors', () => {
@@ -8,10 +8,13 @@ describe('TestDataSelectors', () => {
       controlsGears: 1,
     },
     seriousFaults: {
-       awarenessPlanning: true,
+      awarenessPlanning: true,
     },
-    manoeuvres: {
-      selectedReverseParkCarpark: true,
+    testRequirements: {
+      normalStart1: true,
+      normalStart2: true,
+      angledStart: true,
+      hillStart: true,
     },
   };
 
@@ -30,6 +33,17 @@ describe('TestDataSelectors', () => {
     });
     it('should return false if a competency does not have a serious fault', () => {
       expect(hasSeriousFault(state, Competencies.controlsClutch)).toBeFalsy();
+    });
+  });
+
+  describe('getTestRequirements', () => {
+    it('should return all the properties of testRequirements', () => {
+      const result = getTestRequirements(state);
+
+      expect(result.normalStart1).toBeTruthy();
+      expect(result.normalStart2).toBeTruthy();
+      expect(result.angledStart).toBeTruthy();
+      expect(result.hillStart).toBeTruthy();
     });
   });
 });
