@@ -5,6 +5,9 @@ page-waiting-room-to-car {
       position: relative;
       min-height: 120px;
       border-bottom: 2px solid map-get($colors-gds, 'gds-grey-5');
+      ion-select {
+        width: 100%;
+      }
       .spacing-row {
         height: 32px;
       }

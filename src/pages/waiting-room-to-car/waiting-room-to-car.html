@@ -19,7 +19,7 @@
         <ion-col>
           <ion-row class="spacing-row"></ion-row>
           <ion-row class="component-row" align-items-center justify-content-start >
-              <ion-col col-32>
+              <ion-col col-37>
                   <input type="radio" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-pass"
                   class="gds-radio-button" [class.ng-invalid]="isCtrlDirtyAndInvalid('eyesightCtrl')"
                   (click)="eyesightPassPressed()" [checked]="pageState.eyesightPassRadioChecked$ | async" value="P">
@@ -50,7 +50,7 @@
               <ion-col class="component-label" col-32>
                 <label>Tell me question</label>
               </ion-col>
-              <ion-col col-42>
+              <ion-col col-37>
                   <ion-row class="spacing-row"></ion-row>
                   <ion-row class="component-row" align-items-center justify-content-start >
                     <ion-select value="tell-me-question" okText="Submit" cancelText="Cancel" placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)">
