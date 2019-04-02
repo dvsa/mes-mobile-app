@@ -19,13 +19,14 @@ import { Competencies } from '../../modules/tests/test_data/test-data.constants'
 import { getTests } from '../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from './test-report.reducer';
-import { isSeriousMode } from './test-report.selector';
+import { isSeriousMode, isDangerousMode } from './test-report.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isSeriousMode$: Observable<boolean>;
+  isDangerousMode$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -42,6 +43,7 @@ export class TestReportPage extends BasePageComponent {
   displayOverlay: boolean;
 
   isSeriousMode: boolean = false;
+  isDangerousMode: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -75,13 +77,18 @@ export class TestReportPage extends BasePageComponent {
         select(getTestReportState),
         select(isSeriousMode),
       ),
+      isDangerousMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isDangerousMode),
+      ),
     };
 
-    const { candidateUntitledName$, isSeriousMode$ } = this.pageState;
+    const { candidateUntitledName$, isSeriousMode$, isDangerousMode$ } = this.pageState;
 
     const merged$ = merge(
       candidateUntitledName$,
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
+      isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
     );
 
     this.subscription = merged$.subscribe();
