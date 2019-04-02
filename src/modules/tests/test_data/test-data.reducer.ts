@@ -31,6 +31,38 @@ export function testDataReducer(
           [action.payload]: true,
         },
       };
+    case testDataActions.TOGGLE_NORMAL_START_1:
+      return {
+        ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          normalStart1: !state.testRequirements.normalStart1,
+        },
+      };
+    case testDataActions.TOGGLE_NORMAL_START_2:
+      return {
+        ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          normalStart2: !state.testRequirements.normalStart2,
+        },
+      };
+    case testDataActions.TOGGLE_ANGLED_START:
+      return {
+        ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          angledStart: !state.testRequirements.angledStart,
+        },
+      };
+    case testDataActions.TOGGLE_HILL_START:
+      return {
+        ...state,
+        testRequirements: {
+          ...state.testRequirements,
+          hillStart: !state.testRequirements.hillStart,
+        },
+      };
 
     default:
       return state;

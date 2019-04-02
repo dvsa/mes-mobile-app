@@ -2,10 +2,10 @@
   <div class="tickwrapper">
     <tick-indicator [ticked]="true"></tick-indicator>
   </div>
-    <div class="label-wrapper">
-      <ion-icon class="popover-arrow" [class.arrow-down]="displayPopover" name="md-arrow-dropright"></ion-icon>
-      <span class='label'>{{controlLabel}}</span>
-    </div>
+  <div class="label-wrapper">
+    <ion-icon class="popover-arrow" [class.arrow-down]="displayPopover" name="md-arrow-dropright"></ion-icon>
+    <span class='label'>{{controlLabel}}</span>
+  </div>
 </button>
 <div class="popover" *ngIf="displayPopover">
   <ion-grid>
