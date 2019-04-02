@@ -219,8 +219,6 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
       eyesightCtrl: new FormControl('', [Validators.required]),
-      // residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
-      // signatureAreaCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
@@ -240,6 +238,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   eyesightFailCancelled = () => {
+    this.form.value['eyesightCtrl'] = '';
     this.store$.dispatch(new EyesightResultReset());
   }
 }
