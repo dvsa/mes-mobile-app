@@ -20,7 +20,7 @@ export class CompetencyWithModalComponent {
     this.displayPopover = false;
   }
 
-  togglePromote(): void {
+  togglePopoverDisplay(): void {
     this.displayPopover = !this.displayPopover;
     this.toggleOverlay();
   }
