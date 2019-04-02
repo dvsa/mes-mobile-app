@@ -167,7 +167,7 @@ export class HealthDeclarationPage extends BasePageComponent {
     if (this.form.valid) {
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
-          this.navCtrl.push('OfficePage');
+          this.navCtrl.push('BackToOfficePage');
         })
         .catch((err) => {
           console.log(err);

@@ -3,20 +3,20 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
-import { OfficePage } from '../office';
+import { BackToOfficePage } from '../back-to-office';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
-describe('OfficePage', () => {
-  let fixture: ComponentFixture<OfficePage>;
-  let component: OfficePage;
+describe('BackToOfficePage', () => {
+  let fixture: ComponentFixture<BackToOfficePage>;
+  let component: BackToOfficePage;
   let navCtrl: NavController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OfficePage],
+      declarations: [BackToOfficePage],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -29,7 +29,7 @@ describe('OfficePage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(OfficePage);
+        fixture = TestBed.createComponent(BackToOfficePage);
         component = fixture.componentInstance;
         navCtrl = TestBed.get(NavController);
       });

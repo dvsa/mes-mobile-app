@@ -30,6 +30,7 @@ export enum AnalyticsScreenNames {
     CANDIDATE_DETAILS = 'candidate details screen',
     DEBRIEF = 'debrief screen',
     LOGIN = 'login screen',
+    BACK_TO_OFFICE = 'back to office screen',
   }
 
 export enum AnalyticsEventCategories {
