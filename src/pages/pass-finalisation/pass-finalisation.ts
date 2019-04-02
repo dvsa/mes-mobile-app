@@ -29,7 +29,7 @@ import {
   getApplicationNumber,
 } from '../../modules/tests/application-reference/application-reference.selector';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -74,7 +74,6 @@ export class PassFinalisationPage extends BasePageComponent {
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
-      // map(val => dummy),
       select(getCurrentTest),
     );
 
@@ -99,14 +98,21 @@ export class PassFinalisationPage extends BasePageComponent {
       provisionalLicenseProvidedRadioChecked$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
+        tap((val) => {
+          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('yes');
+        }),
       ),
       provisionalLicenseNotProvidedRadioChecked$: currentTest$.pipe(
         select(getPassCompletion),
         map(isProvisionalLicenseNotProvided),
+        tap((val) => {
+          if (val) this.form.controls['provisionalLicenseProvidedCtrl'].setValue('no');
+        }),
       ),
       passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
+        tap(val => this.form.controls['passCertificateNumberCtrl'].setValue(val)),
       ),
     };
     this.inputSubscriptions = [
@@ -131,7 +137,6 @@ export class PassFinalisationPage extends BasePageComponent {
   }
 
   onSubmit() {
-    console.log('onSubmit');
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.navCtrl.push('HealthDeclarationPage');
@@ -139,10 +144,9 @@ export class PassFinalisationPage extends BasePageComponent {
   }
 
   getFormValidation(): { [key: string]: FormControl } {
-    console.log('validate');
     return {
-      provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.requiredTrue]),
-      passCertificateNumberCtrl: new FormControl(null, [Validators.requiredTrue]),
+      provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
+      passCertificateNumberCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
