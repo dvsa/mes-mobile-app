@@ -8,12 +8,14 @@ import { getTestData } from '../../../../modules/tests/test_data/test-data.reduc
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
+import { ManoeuvreTypes } from './manoeuvres-popover.constants';
 
 @Component({
   selector: 'manoeuvres-popover',
   templateUrl: 'manoeuvres-popover.html',
 })
 export class ManoeuvresPopoverComponent {
+  public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
   subscription: Subscription;
   constructor(private store$: Store<StoreModel>) { }

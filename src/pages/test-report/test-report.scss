@@ -51,7 +51,7 @@ page-test-report {
       top: $toolbar-height + $report-mode-border-width;
       left: 6px;
       width: calc(100% - #{$report-mode-border-width *2});
-      height: calc(100% - #{$toolbar-height - $report-mode-border-width*2});
+      height: calc(100% - #{$toolbar-height + $report-mode-border-width*2});
     }
   }
   @keyframes showAnimation {

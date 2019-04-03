@@ -1,9 +1,10 @@
 .popover {
+
   ion-grid {
-    border: 0px none #fdfeff !important;
+    border: 0 none map-get($colors, "mes-white") !important;
   }
   background-color: map-get($colors, "mes-white");
-  height: 235px;
+  height: 220px;
   width: calc(100% - 12px);
   left: 6px;
   margin-top: 9px;
@@ -15,5 +16,8 @@
       width: 40px;
       height: 40px;
     }
+  }
+  .popover-content {
+    margin-left: 65px;
   }
 }

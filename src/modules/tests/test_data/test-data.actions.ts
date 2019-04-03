@@ -2,9 +2,9 @@ import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
 import { Competencies } from './test-data.constants';
 
-export const ADD_DRIVING_FAULT = '[TestData] Add Driving Fault';
-export const RECORD_MANOEUVRES_SELECTION = '[TestData] Record Manoeuvres Selection';
-export const ADD_SERIOUS_FAULT = '[TestData] Add Serious Fault';
+export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
+export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
+export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const TOGGLE_NORMAL_START_1 = '[Legal Requirements] Toggle Normal Start 1';
 export const TOGGLE_NORMAL_START_2 = '[Legal Requirements] Toggle Normal Start 2';
 export const TOGGLE_ANGLED_START = '[Legal Requirements] Toggle Angled Start';

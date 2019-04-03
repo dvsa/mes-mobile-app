@@ -26,6 +26,7 @@ interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
+  manoeuvres$: Observable<Manoeuvres>;
 }
 
 @IonicPage()
@@ -35,7 +36,6 @@ interface TestReportPageState {
 })
 export class TestReportPage extends BasePageComponent {
 
-  manoeuvres$: Observable<Manoeuvres>;
   pageState: TestReportPageState;
   subscription: Subscription;
   manoeuvresSubscription: Subscription;
@@ -81,6 +81,12 @@ export class TestReportPage extends BasePageComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
+      manoeuvres$: this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getTestData),
+      select('manoeuvres'),
+      ),
     };
 
     const { candidateUntitledName$, isSeriousMode$, isDangerousMode$ } = this.pageState;
@@ -91,13 +97,7 @@ export class TestReportPage extends BasePageComponent {
     );
     this.subscription = merged$.subscribe();
 
-    this.manoeuvres$ = this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-      select(getTestData),
-      select('manoeuvres'),
-    );
-    this.manoeuvresSubscription = this.manoeuvres$.subscribe((result) => {
+    this.manoeuvresSubscription = this.pageState.manoeuvres$.subscribe((result) => {
       this.manoeuvresComplete = Object.values(result)[0];
     });
   }
