@@ -5,7 +5,7 @@
     <dict>
         <string keyName="configUrl">
             <defaultValue>
-                <value>https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev</value>
+                <value>https://perf.mes.dev-dvsacloud.uk/v1/configuration/dev</value>
             </defaultValue>
         </string>
         <string keyName="authenticationContext">
@@ -38,5 +38,15 @@
             <value>extn.employeeId</value>
           </defaultValue>
         </string>
+        <integer keyName="daysToCacheJournalData">
+          <defaultValue>
+            <value>7</value>
+          </defaultValue>
+        </integer>
+        <integer keyName="daysToCacheLogs">
+          <defaultValue>
+            <value>7</value>
+          </defaultValue>
+        </integer>
     </dict>
 </managedApplicationConfiguration>
