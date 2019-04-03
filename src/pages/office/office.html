@@ -1,14 +1,22 @@
-<ion-content no-bounce>
-  <ion-grid>
-    <ion-row>
-      <img id='dvsa-logo' src='../../assets/imgs/office/logo.png' />
-    </ion-row>
-    <ion-row>
-      <button ion-button class="mes-neutral-button office-button top-button">Continue to write up</button>
-    </ion-row>
-    <ion-row>
-      <button ion-button class="mes-neutral-button office-button bottom-button" (click)="popToRoot()">Return to journal
-      </button>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+<ion-header>
+    <ion-navbar>
+      <ion-title>Office</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)="logout()">Logout</button>
+        </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Office
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <button ion-button (click)="popToRoot()">Journal Page</button>
+        <button ion-button navPush="TerminateTestPage">Terminate Test</button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
