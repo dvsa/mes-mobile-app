@@ -6,7 +6,11 @@ import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
-import { AddDrivingFault, AddSeriousFault } from '../../../../modules/tests/test_data/test-data.actions';
+import {
+  AddDrivingFault,
+  AddSeriousFault,
+  AddDangerousFault,
+} from '../../../../modules/tests/test_data/test-data.actions';
 import { HammerProvider } from '../../../../providers/hammer/hammer';
 import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
@@ -20,7 +24,7 @@ import {
 } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
-import { ToggleSeriousFaultMode } from '../../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 
 enum CssClassesEnum {
   RIPPLE_EFFECT = 'ripple-effect',
@@ -59,7 +63,7 @@ export class CompetencyComponent {
   hasSeriousFault: boolean = false;
 
   isDangerousMode: boolean = false;
-  hasDangerousMode: boolean = false;
+  hasDangerousFault: boolean = false;
 
   constructor(
     public hammerProvider: HammerProvider,
@@ -108,7 +112,7 @@ export class CompetencyComponent {
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
-      hasDangerousFault$.pipe(map(toggle => this.hasDangerousMode = toggle)),
+      hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
     );
 
     this.subscription = merged$.subscribe();
@@ -123,21 +127,32 @@ export class CompetencyComponent {
   getLabel = (): string => competencyLabels[this.competency];
 
   recordFault = (): void => {
-    // Record Serious Faults
-    // Must be in serious mode
-    // Unable to mark a serious fault if there is already a dangerous fault on button
+    this.manageClasses();
+
+    if (this.hasDangerousFault) {
+      return;
+    }
+
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new AddDangerousFault(this.competency));
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
+    if (this.hasSeriousFault) {
+      return;
+    }
+
     if (this.isSeriousMode) {
       this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
-    // Record Driving Faults
-    // Unable to mark a DF if there is already a Serious or Dangerous Fault on Butotn
-    } else if (!this.hasSeriousFault) {
-      this.store$.dispatch(new AddDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-      }));
+      return;
     }
-    this.manageClasses();
+
+    this.store$.dispatch(new AddDrivingFault({
+      competency: this.competency,
+      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+    }));
   }
 
   /**
