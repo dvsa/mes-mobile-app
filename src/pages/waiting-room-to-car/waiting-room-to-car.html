@@ -73,7 +73,7 @@
                   </div>
                 </ion-row>
                 <ion-row align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
-                  <ion-col col-37>
+                  <ion-col col-32>
                     <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct"
                       formControlName="tellMeQuestionOutcomeCtrl"
                       [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
