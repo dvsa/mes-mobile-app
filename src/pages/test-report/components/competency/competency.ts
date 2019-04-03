@@ -19,9 +19,7 @@ import { isSeriousMode } from '../../test-report.selector';
 import { ToggleSeriousFaultMode } from '../../test-report.actions';
 
 enum CssClassesEnum {
-  DRIVING_FAULT = 'driving-fault',
   RIPPLE_EFFECT = 'ripple-effect',
-  SERIOUS_FAULT = 'serious-fault',
 }
 
 interface CompetencyState {
@@ -121,15 +119,9 @@ export class CompetencyComponent {
    * @returns any
    */
   manageClasses = (): any => {
-    if (this.hasSeriousFault) {
-      this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.DRIVING_FAULT);
-      this.renderer.addClass(this.button.nativeElement, CssClassesEnum.SERIOUS_FAULT);
-    }else if (this.faultCount > 0) {
-      this.renderer.addClass(this.button.nativeElement, CssClassesEnum.DRIVING_FAULT);
-      this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
-      setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
-                 this.rippleEffectAnimationDuration,
+    this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
+    setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
+               this.rippleEffectAnimationDuration,
       );
-    }
   }
 }

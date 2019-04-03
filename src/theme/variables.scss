@@ -54,6 +54,7 @@ $colors-gds: (
   gds-light-green: #85994b,
   gds-green: #006435,
   gds-dark-green: #00823b,
+  gds-dark-green-2: #006f4b,
   gds-turquoise: #28a197,
   gds-light-blue: #2b8cc4,
   gds-blue: #005ea5,
@@ -77,6 +78,8 @@ $toolbar-background: map-get($colors, mes-toolbar-background);
 
 $grid-padding-width: 8px;
 $grid-columns: 96;
+
+$alert-min-width: 400px;
 
 // App iOS Variables
 // --------------------------------------------------

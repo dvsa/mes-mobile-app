@@ -108,7 +108,7 @@ describe('DebriefPage', () => {
       it('should navigate to OfficePage when passed = false', () => {
         component.passed = false;
         component.endDebrief();
-        expect(navController.push).toHaveBeenCalledWith('OfficePage');
+        expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });
 
     });
