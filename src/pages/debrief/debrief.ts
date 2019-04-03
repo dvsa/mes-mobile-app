@@ -37,7 +37,7 @@ export class DebriefPage extends BasePageComponent {
       this.navController.push('PassFinalisationPage');
       return;
     }
-    this.navController.push('OfficePage');
+    this.navController.push('BackToOfficePage');
   }
 
 }
