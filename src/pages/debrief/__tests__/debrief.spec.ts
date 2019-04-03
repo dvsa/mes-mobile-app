@@ -9,16 +9,52 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
+import { ComponentsModule } from '../../../components/components.module';
+// import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModule } from '@ngrx/store';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
   let component: DebriefPage;
   let navController: NavController;
+//  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefPage],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule, ComponentsModule,
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                candidate: {
+                  candidateName: 'Joe Bloggs',
+                },
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {
+                    pedestrianCrossings: 3,
+                    progressAppropriateSpeed: 1,
+                    junctionsTurningRight: 2,
+                  },
+                  manoeuvres: {},
+                  seriousFaults: {
+                    useOfMirrorsSignalling: true,
+                    useOfMirrorsChangeSpeed: true,
+                    followingDistance: true,
+                  },
+                  testRequirements: {},
+                },
+              },
+            },
+          }),
+        }),
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },

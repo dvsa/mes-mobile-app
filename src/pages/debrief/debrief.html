@@ -19,6 +19,61 @@
 
 <ion-content>
 
+  <ion-card *ngIf="(pageState.dangerousFaults$ | async).length > 0">
+    <ion-card-header>
+      <ion-card-title>
+        <h1 style="display:inline">{{(pageState.dangerousFaults$ | async).length}}</h1> <h4 style="display:inline">Dangerous</h4>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)" class="mes-data">{{dangerousFault}}</div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="(pageState.seriousFaults$ | async).length > 0">
+    <ion-card-header>
+      <ion-card-title>
+        <h1 style="display:inline">{{(pageState.seriousFaults$ | async).length}}</h1> <h4 style="display:inline">Serious</h4>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-grid>
+            <ion-row align-items-center *ngFor="let seriousFault of (pageState.seriousFaults$ | async)" class="mes-data">
+              <ion-col col-32></ion-col>
+              <ion-col col-2>
+              <div class="counter-icon">
+                <serious-fault-badge [showBadge]="true"></serious-fault-badge>
+              </div>
+            </ion-col>
+             <ion-col col-3></ion-col>
+              <ion-col><div class="counter-label">{{seriousFault}}</div></ion-col>
+            </ion-row>
+          </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="(pageState.drivingFaultCount$ | async) > 0">
+    <ion-card-header>
+      <ion-card-title>
+        <h1 style="display:inline">{{pageState.drivingFaultCount$ | async}}</h1> <h4 style="display:inline">Driving Faults</h4>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+      <ion-row align-items-center *ngFor="let drivingFault of (pageState.drivingFaults$ | async)" class="mes-data">
+        <ion-col col-32></ion-col>
+        <ion-col col-2>
+        <div class="counter-icon">
+          <fault-counter class="counter driving-faults" [count]="drivingFault.count"></fault-counter>
+        </div>
+      </ion-col>
+       <ion-col col-3></ion-col>
+        <ion-col><div class="counter-label">{{drivingFault.name}}</div></ion-col>
+      </ion-row>
+    </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -35,10 +90,7 @@
 </ion-content>
 <ion-footer>
   <div id="end-debrief-background">
-    <button ion-button 
-    id="end-debrief-button" 
-    class="mes-primary-button"
-    (click)="endDebrief()">
+    <button ion-button id="end-debrief-button" class="mes-primary-button" (click)="endDebrief()">
       <h3>End debrief</h3>
     </button>
   </div>

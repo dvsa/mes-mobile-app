@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { CompetencyWithModalComponent } from '../competency-with-modal';
 import { AppModule } from '../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
-import { FaultCounterComponent } from '../../fault-counter/fault-counter';
+import { FaultCounterComponent } from '../../../../../components/fault-counter/fault-counter';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 

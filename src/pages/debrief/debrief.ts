@@ -1,17 +1,37 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, IonicPage } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { Observable } from 'rxjs/Observable';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { map } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { getSeriousOrDangerousFaults, getDrivingFaults } from './debrief.selector';
+import { FaultCount } from '../../shared/constants/competencies/catb-competencies';
+
+interface DebriefPageState {
+  seriousFaults$: Observable<string[]>;
+  dangerousFaults$: Observable<string[]>;
+  drivingFaults$: Observable<FaultCount[]>;
+  drivingFaultCount$: Observable<number>;
+}
 
 @IonicPage()
 @Component({
   selector: 'page-debrief',
   templateUrl: 'debrief.html',
 })
+
 export class DebriefPage extends BasePageComponent {
+
+  pageState: DebriefPageState;
+  subscription: Subscription;
 
   // Used for now to test displaying pass/fail ngIf messages
   public passed: boolean = true;
@@ -25,6 +45,49 @@ export class DebriefPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.passed = this.navParams.get('outcome') === 'pass';
+
+  }
+
+  ngOnInit(): void {
+    this.pageState = {
+      seriousFaults$:  this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map(data => getSeriousOrDangerousFaults(data.seriousFaults)),
+      ),
+      dangerousFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
+      ),
+      drivingFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map(data => getDrivingFaults(data.drivingFaults)),
+      ),
+      drivingFaultCount$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map((data) =>  {
+          const faults = getDrivingFaults(data.drivingFaults);
+          return faults.reduce((sum, c) => sum + c.count, 0);
+        }),
+      ),
+    };
+
+    const { seriousFaults$, dangerousFaults$, drivingFaults$ } = this.pageState;
+
+    const merged$ = merge(
+      seriousFaults$,
+      dangerousFaults$,
+      drivingFaults$,
+    );
+
+    this.subscription = merged$.subscribe();
 
   }
 
