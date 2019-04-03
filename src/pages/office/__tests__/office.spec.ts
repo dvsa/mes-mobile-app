@@ -42,12 +42,10 @@ describe('OfficePage', () => {
     });
   });
 
-  describe('DOM', () => {
-    describe('popToRoot', () => {
-      it('should call the popToRoot method in the navcontroller', () => {
-        component.popToRoot();
-        expect(navCtrl.popToRoot).toHaveBeenCalled();
-      });
+  describe('popToRoot', () => {
+    it('should call the popToRoot method in the navcontroller', () => {
+      component.popToRoot();
+      expect(navCtrl.popToRoot).toHaveBeenCalled();
     });
   });
 });

@@ -1,6 +1,6 @@
 page-back-to-office {
   div {
-    background-color: #006f4b;
+    background-color: map-get($colors-gds, gds-dark-green);
   }
   .office-button {
     width: 488px;

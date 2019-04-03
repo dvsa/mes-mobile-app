@@ -18,7 +18,6 @@ export class BackToOfficeAnalyticsEffects {
     private actions$: Actions,
   ) {
     this.analytics.initialiseAnalytics()
-          .then(() => {})
           .catch(() => {
             console.log('error initialising analytics');
           },
