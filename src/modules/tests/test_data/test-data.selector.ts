@@ -17,4 +17,6 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
 
 export const hasSeriousFault = (data: TestData, competency: Competencies) => data.seriousFaults[competency];
 
+export const hasDangerousFault = (data: TestData, competency: Competencies) => data.dangerousFaults[competency];
+
 export const getTestRequirements = (data: TestData) => data.testRequirements;

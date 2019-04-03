@@ -1,0 +1,19 @@
+dangerous-fault-badge {
+  div {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    .background {
+      display: flex;
+      justify-content: center;
+      background: map-get($colors-gds, 'gds-red');
+      border-radius: 13px;
+      .label {
+        color: map-get($colors, 'mes-white');
+        font-size: 15px;
+        font-weight: bold;
+        align-self: center;
+      }
+    }
+  }
+}

@@ -1,31 +1,6 @@
 page-pass-finalisation {
   ion-content > div {
     background-color: map-get($colors, "mes-white");
-    .mes-full-width-card {
-      border-bottom: 2px solid map-get($colors-gds, 'gds-grey-5');
-    }
-    .mes-row {
-      position: relative;
-      min-height: 120px;
-      border-bottom: 2px solid map-get($colors-gds, 'gds-grey-5');
-      .spacing-row {
-        height: 32px;
-      }
-      .validation-message-row {
-        height:32px;
-      }
-      .component-label {
-        padding: 36px 4px 36px 36px;
-      }
-      .row-validation-bar {
-        position: absolute;
-        width: 8px;
-        height: 100%;
-        &.ng-invalid {
-          background-color: map-get($colors, mes-validation-error);
-        }
-      }
-    }
     ion-footer button {
       width: 100%;
       height: 56px;

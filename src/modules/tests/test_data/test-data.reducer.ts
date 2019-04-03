@@ -31,6 +31,14 @@ export function testDataReducer(
           [action.payload]: true,
         },
       };
+    case testDataActions.ADD_DANGEROUS_FAULT:
+      return {
+        ...state,
+        dangerousFaults: {
+          ...state.dangerousFaults,
+          [action.payload]: true,
+        },
+      };
     case testDataActions.TOGGLE_NORMAL_START_1:
       return {
         ...state,
