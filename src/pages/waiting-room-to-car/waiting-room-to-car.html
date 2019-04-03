@@ -77,13 +77,25 @@
                 </ion-row>
                 <ion-row align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
                   <ion-col col-32>
-                    <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct">
+                    <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct"
+                      [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
+                      (click)="tellMeQuestionCorrect()" [checked]="pageState.tellMeQuestionCorrect$ | async"
+                    >
                     <label for="tell-me-correct" class="radio-label">Correct</label>
                   </ion-col>
                   <ion-col>
-                    <input type="radio" id="tell-me-fault" class="gds-radio-button" value="Fault">
+                    <input type="radio" id="tell-me-fault" class="gds-radio-button" value="Fault"
+                      [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
+                      (click)="tellMeQuestionDrivingFault()" [checked]="pageState.tellMeQuestionDrivingFault$ | async"
+                    >
                     <label for="tell-me-fault" class="radio-label">1 Driving fault</label>
                   </ion-col>
+                </ion-row>
+                <ion-row class="validation-message-row" align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
+                  <div id="waiting-room-insurance-validation-text" class="validation-text"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')">
+                    Select a 'Tell me' question outcome
+                  </div>
                 </ion-row>
               </ion-col>
             </ion-row>
