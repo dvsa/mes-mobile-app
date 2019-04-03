@@ -291,6 +291,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   tellMeQuestionChanged(newTellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
+    this.form.controls['tellMeQuestionOutcomeCtrl'].setValue('');
   }
 
   tellMeQuestionCorrect(): void {
