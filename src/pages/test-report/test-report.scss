@@ -6,8 +6,9 @@ page-test-report {
     background-color: map-get($colors-gds, 'gds-grey-3');
   }
 
-  ion-grid {
+  .grid-layout {
     box-sizing: border-box;
+    height: calc(100% - #{$toolbar-height});
     border: $report-mode-border-width solid map-get($colors-gds, 'gds-grey-3');
     &.serious-mode {
       border: $report-mode-border-width solid map-get($colors-gds, 'gds-yellow');
@@ -18,7 +19,7 @@ page-test-report {
   }
 
   ion-row:first-of-type {
-    margin: -3px 0;
+    margin: -2px 0;
   }
 
   .section-header {
