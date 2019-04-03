@@ -51,23 +51,39 @@
               <ion-col class="component-label" col-32>
                 <label>Tell me question</label>
               </ion-col>
-              <ion-col col-40>
-                <ion-row class="spacing-row"></ion-row>
-                <ion-row class="component-row" align-items-center justify-content-start>
-                  <ion-select id="tell-me-selector" value="tell-me-question" okText="Submit" cancelText="Cancel"
-                    placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)"
-                    formControlName="tellMeQuestionCtrl">
-                    <ion-option [value]="tellMeQuestion"
-                      *ngFor="let tellMeQuestion of tellMeQuestions">
-                      {{tellMeQuestion.tellMeQuestionCode}} - {{tellMeQuestion.tellMeQuestionShortName}}
-                    </ion-option>
-                  </ion-select>
+              <ion-col>
+                <ion-row>
+                  <ion-col>
+                    <ion-row class="spacing-row"></ion-row>
+                    <ion-row class="component-row" align-items-center justify-content-start>
+                      <ion-col col-60>
+                        <ion-select value="tell-me-question" okText="Submit" cancelText="Cancel"
+                          placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)"
+                          formControlName="tellMeQuestionCtrl">
+                          <ion-option [value]="tellMeQuestion"
+                            *ngFor="let tellMeQuestion of tellMeQuestions">
+                            {{tellMeQuestion.tellMeQuestionCode}} - {{tellMeQuestion.tellMeQuestionShortName}}
+                          </ion-option>
+                        </ion-select>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
                 </ion-row>
                 <ion-row class="validation-message-row" align-items-center justify-content-start>
                   <div id="waiting-room-insurance-validation-text" class="validation-text"
                     [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl')">
                     Select a 'Tell me' question
                   </div>
+                </ion-row>
+                <ion-row align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
+                  <ion-col col-32>
+                    <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct">
+                    <label for="tell-me-correct" class="radio-label">Correct</label>
+                  </ion-col>
+                  <ion-col>
+                    <input type="radio" id="tell-me-fault" class="gds-radio-button" value="Fault">
+                    <label for="tell-me-fault" class="radio-label">1 Driving fault</label>
+                  </ion-col>
                 </ion-row>
               </ion-col>
             </ion-row>

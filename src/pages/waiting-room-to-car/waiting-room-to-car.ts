@@ -54,6 +54,8 @@ import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
 import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
 import { TellMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
+import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
+import { isTellMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -69,6 +71,7 @@ interface WaitingRoomToCarPageState {
   eyesightFailRadioChecked$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
+  tellMeQuestionSelected$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -163,6 +166,10 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       gearboxManualRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
         map(isManual),
+      ),
+      tellMeQuestionSelected$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionSelected),
       ),
     };
     this.inputSubscriptions = [
