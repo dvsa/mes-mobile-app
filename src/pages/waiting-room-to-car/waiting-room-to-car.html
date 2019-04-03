@@ -47,7 +47,8 @@
           <ion-col no-padding>
 
             <ion-row class="mes-row" id="tell-me-card" align-items-center justify-content-start>
-              <div class="row-validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl')"></div>
+              <div class="row-validation-bar"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl') || isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"></div>
               <ion-col class="component-label" col-32>
                 <label>Tell me question</label>
               </ion-col>
@@ -76,16 +77,16 @@
                   </div>
                 </ion-row>
                 <ion-row align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
-                  <ion-col col-32>
+                  <ion-col col-37>
                     <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct"
-                      [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
+                      formControlName="tellMeQuestionOutcomeCtrl" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
                       (click)="tellMeQuestionCorrect()" [checked]="pageState.tellMeQuestionCorrect$ | async"
                     >
                     <label for="tell-me-correct" class="radio-label">Correct</label>
                   </ion-col>
                   <ion-col>
                     <input type="radio" id="tell-me-fault" class="gds-radio-button" value="Fault"
-                      [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
+                      formControlName="tellMeQuestionOutcomeCtrl" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
                       (click)="tellMeQuestionDrivingFault()" [checked]="pageState.tellMeQuestionDrivingFault$ | async"
                     >
                     <label for="tell-me-fault" class="radio-label">1 Driving fault</label>

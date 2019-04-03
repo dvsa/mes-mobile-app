@@ -269,7 +269,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
   setEyesightFailureVisibility(show: boolean) {
