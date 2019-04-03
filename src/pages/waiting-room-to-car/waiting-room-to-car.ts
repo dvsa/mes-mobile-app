@@ -53,6 +53,7 @@ import { TellMeQuestion } from '../../providers/question/tell-me-question.model'
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
 import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
+import { TellMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -262,6 +263,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     this.store$.dispatch(new EyesightResultReset());
   }
 
-  tellMeQuestionChanged(e): void {
+  tellMeQuestionChanged(newTellMeQuestion): void {
+    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
   }
 }
