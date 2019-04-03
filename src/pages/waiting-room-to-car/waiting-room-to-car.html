@@ -48,7 +48,9 @@
         <ion-row no-padding [hidden]="pageState.eyesightFailRadioChecked$ | async" id="post-eyesight-form-content">
           <ion-col no-padding>
             <ion-row class="mes-validated-row mes-row-separator" id="tell-me-card" justify-content-start>
-              <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl') || isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"></div>
+              <div class="validation-bar"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl') || isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')">
+              </div>
               <ion-col class="component-label" align-self-center col-32>
                 <label>Tell me question</label>
               </ion-col>
@@ -58,8 +60,7 @@
                   <ion-select id="tell-me-selector" value="tell-me-question" okText="Submit" cancelText="Cancel"
                     placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)"
                     formControlName="tellMeQuestionCtrl">
-                    <ion-option [value]="tellMeQuestion"
-                      *ngFor="let tellMeQuestion of tellMeQuestions">
+                    <ion-option [value]="tellMeQuestion" *ngFor="let tellMeQuestion of tellMeQuestions">
                       {{tellMeQuestion.tellMeQuestionCode}} - {{tellMeQuestion.tellMeQuestionShortName}}
                     </ion-option>
                   </ion-select>
@@ -72,20 +73,21 @@
                 <ion-row align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
                   <ion-col col-37>
                     <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct"
-                      formControlName="tellMeQuestionOutcomeCtrl" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
-                      (click)="tellMeQuestionCorrect()" [checked]="pageState.tellMeQuestionCorrect$ | async"
-                    >
+                      formControlName="tellMeQuestionOutcomeCtrl"
+                      [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
+                      (click)="tellMeQuestionCorrect()" [checked]="pageState.tellMeQuestionCorrect$ | async">
                     <label for="tell-me-correct" class="radio-label">Correct</label>
                   </ion-col>
                   <ion-col>
                     <input type="radio" id="tell-me-fault" class="gds-radio-button" value="Fault"
-                      formControlName="tellMeQuestionOutcomeCtrl" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
-                      (click)="tellMeQuestionDrivingFault()" [checked]="pageState.tellMeQuestionDrivingFault$ | async"
-                    >
+                      formControlName="tellMeQuestionOutcomeCtrl"
+                      [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')"
+                      (click)="tellMeQuestionDrivingFault()" [checked]="pageState.tellMeQuestionDrivingFault$ | async">
                     <label for="tell-me-fault" class="radio-label">1 Driving fault</label>
                   </ion-col>
                 </ion-row>
-                <ion-row class="validation-message-row" align-items-center justify-content-start *ngIf="pageState.tellMeQuestionSelected$ | async">
+                <ion-row class="validation-message-row" align-items-center justify-content-start
+                  *ngIf="pageState.tellMeQuestionSelected$ | async">
                   <div id="waiting-room-insurance-validation-text" class="validation-text"
                     [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionOutcomeCtrl')">
                     Select a 'Tell me' question outcome
@@ -111,14 +113,15 @@
                 </ion-row>
                 <ion-row class="validation-message-row" align-items-center>
                   <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('registrationNumberCtrl')">
-                      Enter the registration number
+                    Enter the registration number
                   </div>
                 </ion-row>
               </ion-col>
             </ion-row>
-            
+
             <ion-row class="mes-validated-row mes-row-separator" id="transmission-card">
-              <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')"></div>
+              <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')">
+              </div>
               <ion-col class="component-label" col-32 align-self-center>
                 <label>Transmission</label>
               </ion-col>
@@ -144,7 +147,7 @@
                 </ion-row>
                 <ion-row class="validation-message-row" align-items-center>
                   <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionRadioGroupCtrl')">
-                      Select the transmission of the vehicle
+                    Select the transmission of the vehicle
                   </div>
                 </ion-row>
               </ion-col>
@@ -166,9 +169,9 @@
 
             <ion-row class="mes-component-row mes-row-separator" id="accompaniment-card">
               <ion-col class="component-label" col-32 align-self-center>
-                  <label>Accompanied by (optional)</label>
+                <label>Accompanied by (optional)</label>
               </ion-col>
-              <ion-col  align-self-center>
+              <ion-col align-self-center>
                 <ion-row>
                   <ion-col col-32>
                     <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox"
@@ -191,7 +194,7 @@
 
             <ion-row class="mes-component-row mes-row-separator" id="vehicle-details-card">
               <ion-col class="component-label" col-32 align-self-center>
-                  <label>Vehicle details (optional)</label>
+                <label>Vehicle details (optional)</label>
               </ion-col>
               <ion-col align-self-center>
                 <ion-row>
