@@ -30,6 +30,8 @@ import {
   getGearboxCategory,
   getSchoolCar,
   getDualControls,
+  isAutomatic,
+  isManual,
 } from '../../modules/tests/vehicle-details/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
@@ -39,6 +41,7 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   EyesightResultPasssed,
   EyesightResultFailed,
@@ -46,10 +49,26 @@ import {
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
 import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
+import { QuestionProvider } from '../../providers/question/question';
+import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
+import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
+import {
+  TellMeQuestionSelected,
+  TellMeQuestionCorrect,
+  TellMeQuestionDrivingFault,
+} from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
+import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
+import {
+  isTellMeQuestionSelected,
+  isTellMeQuestionDrivingFault,
+  isTellMeQuestionCorrect,
+} from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
   registrationNumber$: Observable<string>;
+  instructorRegistrationNumber$: Observable<number>;
   transmission$: Observable<GearboxCategory>;
   schoolCar$: Observable<boolean>;
   dualControls$: Observable<boolean>;
@@ -58,6 +77,11 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
+  gearboxAutomaticRadioChecked$: Observable<boolean>;
+  gearboxManualRadioChecked$: Observable<boolean>;
+  tellMeQuestionSelected$: Observable<boolean>;
+  tellMeQuestionCorrect$: Observable<boolean>;
+  tellMeQuestionDrivingFault$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -67,16 +91,18 @@ interface WaitingRoomToCarPageState {
 })
 export class WaitingRoomToCarPage extends BasePageComponent{
   pageState: WaitingRoomToCarPageState;
+  form: FormGroup;
 
   @ViewChild('registrationInput')
   regisrationInput: ElementRef;
 
   @ViewChild('instructorRegistrationInput')
-  instructorRegisrationInput: ElementRef;
-
+  instructorRegistrationInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
 
   showEyesightFailureConfirmation: boolean = false;
+
+  tellMeQuestions: TellMeQuestion[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -84,8 +110,11 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public questionProvider: QuestionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions();
+    this.form = new FormGroup(this.getFormValidation());
   }
 
   ngOnInit(): void {
@@ -103,6 +132,10 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       registrationNumber$: currentTest$.pipe(
         select(getVehicleDetails),
         select(getRegistrationNumber),
+      ),
+      instructorRegistrationNumber$: currentTest$.pipe(
+        select(getInstructorDetails),
+        map(getInstructorRegistrationNumber),
       ),
       transmission$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -128,23 +161,39 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getAccompaniment),
         select(getOtherAccompaniment),
       ),
-      eyesightPassRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      eyesightPassRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isPassed),
       ),
-      eyesightFailRadioChecked$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      eyesightFailRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isFailed),
+      ),
+      gearboxAutomaticRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isAutomatic),
+      ),
+      gearboxManualRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isManual),
+      ),
+      tellMeQuestionSelected$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionSelected),
+      ),
+      tellMeQuestionCorrect$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionCorrect),
+      ),
+      tellMeQuestionDrivingFault$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionDrivingFault),
       ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
       this.inputChangeSubscriptionDispatchingAction(
-        this.instructorRegisrationInput,
+        this.instructorRegistrationInput,
         InstructorRegistrationNumberChanged,
       ),
     ];
@@ -203,6 +252,26 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     return subscription;
   }
 
+  onSubmit() {
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navCtrl.push('TestReportPage');
+    }
+  }
+
+  getFormValidation(): { [key: string]: FormControl } {
+    return {
+      tellMeQuestionCtrl: new FormControl('', [Validators.required]),
+      tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
+      transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
+      registrationNumberCtrl: new FormControl('', [Validators.required]),
+      eyesightCtrl: new FormControl('', [Validators.required]),
+    };
+  }
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  }
+
   setEyesightFailureVisibility(show: boolean) {
     this.showEyesightFailureConfirmation = show;
   }
@@ -216,6 +285,19 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   eyesightFailCancelled = () => {
+    this.form.value['eyesightCtrl'] = '';
     this.store$.dispatch(new EyesightResultReset());
+  }
+
+  tellMeQuestionChanged(newTellMeQuestion): void {
+    this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
+  }
+
+  tellMeQuestionCorrect(): void {
+    this.store$.dispatch(new TellMeQuestionCorrect());
+  }
+
+  tellMeQuestionDrivingFault(): void {
+    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 }

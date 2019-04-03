@@ -3,7 +3,7 @@ import { InstructorRegistrationNumberChanged } from '../instructor-details.actio
 
 describe('instructor details reducer', () => {
   it('should place the registration number from the change action into the state', () => {
-    const result = instructorDetailsReducer({}, new InstructorRegistrationNumberChanged('123'));
-    expect(result.registrationNumber).toBe('123');
+    const result = instructorDetailsReducer({}, new InstructorRegistrationNumberChanged(123));
+    expect(result.registrationNumber).toBe(123);
   });
 });

@@ -17,6 +17,7 @@ import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { SeriousFaultBadgeComponent } from '../../serious-fault-badge/serious-fault-badge';
 import { IonicModule } from 'ionic-angular';
+import { DangerousFaultBadgeComponent } from '../../dangerous-fault-badge/dangerous-fault-badge';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -32,6 +33,7 @@ describe('CompetencyComponent', () => {
         CompetencyComponent,
         MockComponent(FaultCounterComponent),
         MockComponent(SeriousFaultBadgeComponent),
+        MockComponent(DangerousFaultBadgeComponent),
       ],
       imports: [
         AppModule,
@@ -153,7 +155,6 @@ describe('CompetencyComponent', () => {
       component.faultCount = 1;
       component.manageClasses();
       // Assert
-      expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'driving-fault');
       expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
 
       setTimeout(() => {

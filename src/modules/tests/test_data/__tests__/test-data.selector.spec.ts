@@ -1,5 +1,5 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import { getDrivingFaultCount, hasSeriousFault, getTestRequirements } from '../test-data.selector';
+import { getDrivingFaultCount, hasSeriousFault, getTestRequirements, hasDangerousFault } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
 describe('TestDataSelectors', () => {
@@ -9,6 +9,9 @@ describe('TestDataSelectors', () => {
     },
     seriousFaults: {
       awarenessPlanning: true,
+    },
+    dangerousFaults: {
+      useOfSpeed: true,
     },
     testRequirements: {
       normalStart1: true,
@@ -33,6 +36,15 @@ describe('TestDataSelectors', () => {
     });
     it('should return false if a competency does not have a serious fault', () => {
       expect(hasSeriousFault(state, Competencies.controlsClutch)).toBeFalsy();
+    });
+  });
+
+  describe('hasDangerousFault', () => {
+    it('should return true if a competency has a dangerous fault', () => {
+      expect(hasDangerousFault(state, Competencies.useOfSpeed)).toBeTruthy();
+    });
+    it('should return false if a competency does not have a dangerous fault', () => {
+      expect(hasDangerousFault(state, Competencies.useOfMirrorsSignalling)).toBeFalsy();
     });
   });
 

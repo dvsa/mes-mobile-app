@@ -4,7 +4,7 @@ export const INSTRUCTOR_REGISTRATION_NUMBER_CHANGED = '[Vehicle Details] Instruc
 
 export class InstructorRegistrationNumberChanged implements Action {
   readonly type = INSTRUCTOR_REGISTRATION_NUMBER_CHANGED;
-  constructor(public instructorRegistrationNumber: string) {}
+  constructor(public instructorRegistrationNumber: number) {}
 }
 
 export type Types =

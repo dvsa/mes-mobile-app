@@ -8,6 +8,7 @@ import { Competencies } from './test-data.constants';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
+export const ADD_DANGEROUS_FAULT = '[Competency] Add Dangerous Fault';
 export const TOGGLE_NORMAL_START_1 = '[Legal Requirements] Toggle Normal Start 1';
 export const TOGGLE_NORMAL_START_2 = '[Legal Requirements] Toggle Normal Start 2';
 export const TOGGLE_ANGLED_START = '[Legal Requirements] Toggle Angled Start';
@@ -24,6 +25,11 @@ export class RecordManoeuvresSelection implements Action {
 export class AddSeriousFault implements Action {
   constructor(public payload: Competencies) { }
   readonly type = ADD_SERIOUS_FAULT;
+}
+
+export class AddDangerousFault implements Action {
+  constructor(public payload: Competencies) { }
+  readonly type = ADD_DANGEROUS_FAULT;
 }
 
 export class ToggleNormalStart1 implements Action {
@@ -46,6 +52,7 @@ export type Types =
   | AddDrivingFault
   | AddSeriousFault
   | RecordManoeuvresSelection
+  | AddDangerousFault
   | ToggleNormalStart1
   | ToggleNormalStart2
   | ToggleAngledStart

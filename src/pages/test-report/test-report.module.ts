@@ -19,6 +19,7 @@ import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/ser
 import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
 import { DangerousTooltipComponent } from './components/dangerous-tooltip/dangerous-tooltip';
 import { LegalRequirementsComponent } from './components/legal-requirements/legal-requirements';
+import { DangerousFaultBadgeComponent } from './components/dangerous-fault-badge/dangerous-fault-badge';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LegalRequirementsComponent } from './components/legal-requirements/lega
     ToolbarComponent,
     SeriousFaultBadgeComponent,
     SeriousTooltipComponent,
+    DangerousFaultBadgeComponent,
     DangerousTooltipComponent,
     LegalRequirementsComponent,
   ],

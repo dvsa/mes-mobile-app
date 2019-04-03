@@ -6,28 +6,37 @@ import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
-import { AddDrivingFault, AddSeriousFault } from '../../../../modules/tests/test_data/test-data.actions';
+import {
+  AddDrivingFault,
+  AddSeriousFault,
+  AddDangerousFault,
+} from '../../../../modules/tests/test_data/test-data.actions';
 import { HammerProvider } from '../../../../providers/hammer/hammer';
 import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { getDrivingFaultCount, hasSeriousFault } from '../../../../modules/tests/test_data/test-data.selector';
+import {
+  getDrivingFaultCount,
+  hasSeriousFault,
+  hasDangerousFault,
+} from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
-import { isSeriousMode } from '../../test-report.selector';
-import { ToggleSeriousFaultMode } from '../../test-report.actions';
+import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 
 enum CssClassesEnum {
-  DRIVING_FAULT = 'driving-fault',
   RIPPLE_EFFECT = 'ripple-effect',
-  SERIOUS_FAULT = 'serious-fault',
 }
 
 interface CompetencyState {
-  drivingFaultCount$: Observable<number>;
   isSeriousMode$: Observable<boolean>;
+  isDangerousMode$: Observable<boolean>;
+
+  drivingFaultCount$: Observable<number>;
   hasSeriousFault$: Observable<boolean>;
+  hasDangerousFault$: Observable<boolean>;
 }
 
 @Component({
@@ -49,8 +58,12 @@ export class CompetencyComponent {
   subscription: Subscription;
 
   faultCount: number;
+
   isSeriousMode: boolean = false;
   hasSeriousFault: boolean = false;
+
+  isDangerousMode: boolean = false;
+  hasDangerousFault: boolean = false;
 
   constructor(
     public hammerProvider: HammerProvider,
@@ -62,29 +75,44 @@ export class CompetencyComponent {
     this.hammerProvider.init(this.button);
     this.hammerProvider.addPressAndHoldEvent(this.recordFault);
 
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
     this.competencyState = {
-      drivingFaultCount$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      isSeriousMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isSeriousMode)),
+      isDangerousMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isDangerousMode)),
+      drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         select(testData => getDrivingFaultCount(testData, this.competency))),
-      isSeriousMode$: this.store$.pipe(
-          select(getTestReportState),
-          select(isSeriousMode)),
-      hasSeriousFault$: this.store$.pipe(
-          select(getTests),
-          select(getCurrentTest),
-          select(getTestData),
-          select(testData => hasSeriousFault(testData, this.competency)),
-        ),
+      hasSeriousFault$: currentTest$.pipe(
+        select(getTestData),
+        select(testData => hasSeriousFault(testData, this.competency))),
+      hasDangerousFault$: currentTest$.pipe(
+        select(getTestData),
+        select(testData => hasDangerousFault(testData, this.competency)),
+      ),
     };
 
-    const { drivingFaultCount$, isSeriousMode$, hasSeriousFault$ } = this.competencyState;
+    const {
+      drivingFaultCount$,
+      isSeriousMode$,
+      hasSeriousFault$,
+      isDangerousMode$,
+      hasDangerousFault$,
+    } = this.competencyState;
 
     const merged$ = merge(
       drivingFaultCount$.pipe(map(count => this.faultCount = count)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
+      isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
+      hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
     );
 
     this.subscription = merged$.subscribe();
@@ -99,21 +127,32 @@ export class CompetencyComponent {
   getLabel = (): string => competencyLabels[this.competency];
 
   recordFault = (): void => {
-    // Record Serious Faults
-    // Must be in serious mode
-    // Unable to mark a serious fault if there is already a dangerous fault on button
+    this.manageClasses();
+
+    if (this.hasDangerousFault) {
+      return;
+    }
+
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new AddDangerousFault(this.competency));
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
+    if (this.hasSeriousFault) {
+      return;
+    }
+
     if (this.isSeriousMode) {
       this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
-    // Record Driving Faults
-    // Unable to mark a DF if there is already a Serious or Dangerous Fault on Butotn
-    } else if (!this.hasSeriousFault) {
-      this.store$.dispatch(new AddDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-      }));
+      return;
     }
-    this.manageClasses();
+
+    this.store$.dispatch(new AddDrivingFault({
+      competency: this.competency,
+      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+    }));
   }
 
   /**
@@ -121,15 +160,9 @@ export class CompetencyComponent {
    * @returns any
    */
   manageClasses = (): any => {
-    if (this.hasSeriousFault) {
-      this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.DRIVING_FAULT);
-      this.renderer.addClass(this.button.nativeElement, CssClassesEnum.SERIOUS_FAULT);
-    }else if (this.faultCount > 0) {
-      this.renderer.addClass(this.button.nativeElement, CssClassesEnum.DRIVING_FAULT);
-      this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
-      setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
-                 this.rippleEffectAnimationDuration,
+    this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
+    setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
+               this.rippleEffectAnimationDuration,
       );
-    }
   }
 }

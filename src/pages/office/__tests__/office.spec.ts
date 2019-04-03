@@ -12,6 +12,7 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
   let component: OfficePage;
+  let navCtrl: NavController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,6 +31,7 @@ describe('OfficePage', () => {
       .then(() => {
         fixture = TestBed.createComponent(OfficePage);
         component = fixture.componentInstance;
+        navCtrl = TestBed.get(NavController);
       });
   }));
 
@@ -40,7 +42,10 @@ describe('OfficePage', () => {
     });
   });
 
-  describe('DOM', () => {
-    // Unit tests for the components template
+  describe('popToRoot', () => {
+    it('should call the popToRoot method in the navcontroller', () => {
+      component.popToRoot();
+      expect(navCtrl.popToRoot).toHaveBeenCalled();
+    });
   });
 });
