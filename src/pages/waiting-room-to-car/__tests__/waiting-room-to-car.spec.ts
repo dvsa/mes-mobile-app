@@ -36,7 +36,7 @@ import { QuestionProviderMock } from '../../../providers/question/__mocks__/ques
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 import { TellMeQuestionSelected } from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
 
-fdescribe('WaitingRoomToCarPage', () => {
+describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
   let component: WaitingRoomToCarPage;
   let store$: Store<StoreModel>;

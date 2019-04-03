@@ -9,7 +9,17 @@ export function vehicleChecksReducer(
   state = initialState,
   action: vehicleChecksActions.Types,
 ): VehicleChecks {
-  return state;
+  switch (action.type) {
+    case vehicleChecksActions.TELL_ME_QUESTION_SELECTED:
+      const { tellMeQuestionOutcome, ...nonOutcomeState } = state;
+      return {
+        ...nonOutcomeState,
+        tellMeQuestionCode: action.tellMeQuestion.tellMeQuestionCode,
+        tellMeQuestionDescription: action.tellMeQuestion.tellMeQuestionDescription,
+      };
+    default:
+      return state;
+  }
 }
 
 export const getVehicleChecks = createFeatureSelector<VehicleChecks>('vehicleChecks');
