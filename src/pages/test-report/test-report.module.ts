@@ -17,7 +17,6 @@ import { testReportReducer } from './test-report.reducer';
 import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
 import { DangerousTooltipComponent } from './components/dangerous-tooltip/dangerous-tooltip';
 import { LegalRequirementsComponent } from './components/legal-requirements/legal-requirements';
-import { DangerousFaultBadgeComponent } from './components/dangerous-fault-badge/dangerous-fault-badge';
 import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
@@ -30,7 +29,6 @@ import { ComponentsModule } from '../../components/components.module';
     ManoeuvresPopoverComponent,
     ToolbarComponent,
     SeriousTooltipComponent,
-    DangerousFaultBadgeComponent,
     DangerousTooltipComponent,
     LegalRequirementsComponent,
   ],
