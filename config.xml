@@ -89,6 +89,6 @@
     <plugin name="cordova-plugin-network-information" spec="2.0.1" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-app-version" spec="0.1.9" />
-    <plugin name="cordova-plugin-app-preferences" spec="0.99.3" />
+    <plugin name="cordova-plugin-app-preferences" spec="^0.99.3" />
     <engine name="ios" spec="4.5.5" />
 </widget>

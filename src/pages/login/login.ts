@@ -13,8 +13,14 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../common/store.model';
 import { LoadAirwatchConfig } from '../../modules/airwatch-config/airwatch-config.actions';
 import { getAirwatchConfigState } from '../../modules/airwatch-config/airwatch-config.reducer';
-import { getAirwatchConfig } from '../../modules/airwatch-config/airwatch-config.selector';
-import { AirwatchConfigStateModel } from '../../modules/airwatch-config/airwatch-config.model';
+import { getAirwatchConfig, getAirwatchError } from '../../modules/airwatch-config/airwatch-config.selector';
+import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+
+interface PageState {
+  airwatchError$: Observable<any>;
+  airWatchConfig$: Observable<any>;
+}
 
 @IonicPage()
 @Component({
@@ -26,6 +32,10 @@ export class LoginPage extends BasePageComponent implements OnDestroy {
   subscription: Subscription;
   authenticationError: AuthenticationError;
   hasUserLoggedOut: boolean = false;
+
+  pageState: PageState;
+  error: string;
+  config: string;
 
   constructor(
     public navCtrl: NavController,
@@ -43,28 +53,53 @@ export class LoginPage extends BasePageComponent implements OnDestroy {
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
 
     // Trigger Authentication if this isn't a logout and is an ios device
-    if (!this.hasUserLoggedOut && this.isIos()) {
+   // if (!this.hasUserLoggedOut && this.isIos()) {
+
+    platform.ready().then(() => {
       this.store$.dispatch(new LoadAirwatchConfig());
+    });
 
-      this.subscription = this.store$.pipe(
-        select(getAirwatchConfigState),
-        map(getAirwatchConfig),
-        map(this.login),
-      ).subscribe();
-    }
+   // }
 
-    if (!this.isIos()) {
+  /*  if (!this.isIos()) {
       this.navController.setRoot('JournalPage');
       this.splashScreen.hide();
-    }
+    } */
+  }
+
+  ngOnInit():void {
+    this.pageState = {
+      airwatchError$: this.store$.pipe(
+        select(getAirwatchConfigState),
+        select(getAirwatchError),
+      ),
+      airWatchConfig$: this.store$.pipe(
+        select(getAirwatchConfigState),
+        select(getAirwatchConfig),
+      ),
+    };
+
+    const { airwatchError$ , airWatchConfig$ } = this.pageState;
+
+    const merged$ = merge(
+      airwatchError$.pipe(map((result) => {
+        this.error = JSON.stringify(result);
+        this.splashScreen.hide();
+      })),
+      airWatchConfig$.pipe(map((result) => {
+        this.config = JSON.stringify(result);
+        this.splashScreen.hide();
+      })),
+    );
+
+    this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy():void {
     if (this.isIos()) {
       this.subscription.unsubscribe();
     }
-  }
-
+  }/*
   login = (config: AirwatchConfigStateModel): Promise<any> =>
     this.platform.ready()
       .then(() =>
@@ -83,6 +118,7 @@ export class LoginPage extends BasePageComponent implements OnDestroy {
       .then(() => this.hasUserLoggedOut = false)
       .then(() => this.splashScreen.hide())
 
+      */
   isInternetConnectionError = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;
   }
