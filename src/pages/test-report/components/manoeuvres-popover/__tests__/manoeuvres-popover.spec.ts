@@ -9,12 +9,12 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { FaultCounterComponent } from '../../fault-counter/fault-counter';
+import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
   let component: ManoeuvresPopoverComponent;
   let store$: Store<StoreModel>;
-  let storeDispatchSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,22 +32,21 @@ describe('ManoeuvresPopoverComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(ManoeuvresPopoverComponent);
         component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        storeDispatchSpy = spyOn(store$, 'dispatch');
       });
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
-  });
-
-  describe('DOM', () => {
-    describe('recordManoeuvreSelection ', () => {
+    describe('record manoeuvre', () => {
       it('should dispatch a RECORD_MANOEUVRES_SELECTION action', () => {
-        component.recordManoeuvreSelection('Manoeuver Name');
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RecordManoeuvresSelection('Manoeuver Name'));
+        component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
+        expect(store$.dispatch).toHaveBeenCalledWith(
+          new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+        );
       });
     });
   });

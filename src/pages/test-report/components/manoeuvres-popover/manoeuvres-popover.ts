@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
+import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
@@ -24,10 +25,10 @@ export class ManoeuvresPopoverComponent {
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
-      select('manoeuvres'),
+      select(getManoeuvres),
     );
   }
-  recordManoeuvreSelection(name: string): void {
-    this.store$.dispatch(new RecordManoeuvresSelection(name));
+  recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
+    this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
   }
 }

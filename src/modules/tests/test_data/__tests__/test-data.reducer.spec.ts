@@ -10,6 +10,9 @@ import {
 } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
+import {
+  ManoeuvreTypes,
+} from '../../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 
 describe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
@@ -78,14 +81,20 @@ describe('TestDataReducer reducer', () => {
 
   describe('manoeuvres', () => {
     it('should add selected manoeuvre', () => {
-      const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
-      expect(result.manoeuvres['ManoeuverName']).toEqual(true);
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+      );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
     });
     it('should replace current with selected manoeuvre', () => {
       initialState.manoeuvres = { selectedReverseParkCarpark: true };
-      const result = testDataReducer(initialState, new RecordManoeuvresSelection('ManoeuverName'));
-      expect(result.manoeuvres['ManoeuverName']).toEqual(true);
-      expect(result.manoeuvres).toEqual({ ManoeuverName: true });
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+        );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
     });
   });
 

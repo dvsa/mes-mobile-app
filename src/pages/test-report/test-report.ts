@@ -18,6 +18,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from './test-report.reducer';
 import { isSeriousMode, isDangerousMode } from './test-report.selector';
+import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
@@ -38,11 +39,10 @@ export class TestReportPage extends BasePageComponent {
 
   pageState: TestReportPageState;
   subscription: Subscription;
-  manoeuvresSubscription: Subscription;
   competencies = Competencies;
   displayOverlay: boolean;
   isSeriousMode: boolean = false;
-  manoeuvresComplete: boolean = false;
+  manoeuvresCompleted: boolean = false;
   isDangerousMode: boolean = false;
 
   constructor(
@@ -82,24 +82,21 @@ export class TestReportPage extends BasePageComponent {
         select(isDangerousMode),
       ),
       manoeuvres$: this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-      select(getTestData),
-      select('manoeuvres'),
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getManoeuvres),
       ),
     };
 
-    const { candidateUntitledName$, isSeriousMode$, isDangerousMode$ } = this.pageState;
+    const { candidateUntitledName$, isSeriousMode$, isDangerousMode$, manoeuvres$ } = this.pageState;
     const merged$ = merge(
       candidateUntitledName$,
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
+      manoeuvres$.pipe(map(manoeuvres => this.manoeuvresCompleted = Object.values(manoeuvres)[0])),
     );
     this.subscription = merged$.subscribe();
-
-    this.manoeuvresSubscription = this.pageState.manoeuvres$.subscribe((result) => {
-      this.manoeuvresComplete = Object.values(result)[0];
-    });
   }
 
   ionViewDidEnter(): void {
@@ -124,10 +121,6 @@ export class TestReportPage extends BasePageComponent {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
-    }
-
-    if (this.manoeuvresSubscription) {
-      this.manoeuvresSubscription.unsubscribe();
     }
   }
 

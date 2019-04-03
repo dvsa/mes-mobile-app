@@ -1,3 +1,6 @@
+import {
+   ManoeuvreTypes,
+} from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
 import { Competencies } from './test-data.constants';
@@ -15,7 +18,7 @@ export class AddDrivingFault implements Action {
   readonly type = ADD_DRIVING_FAULT;
 }
 export class RecordManoeuvresSelection implements Action {
-  constructor(public payload: string) { }
+  constructor(public manoeuvre: ManoeuvreTypes) { }
   readonly type = RECORD_MANOEUVRES_SELECTION;
 }
 export class AddSeriousFault implements Action {

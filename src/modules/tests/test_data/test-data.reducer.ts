@@ -27,7 +27,7 @@ export function testDataReducer(
       return {
         ...state,
         manoeuvres: {
-          [action.payload]: true,
+          [action.manoeuvre]: true,
         },
       };
     case testDataActions.ADD_SERIOUS_FAULT:
