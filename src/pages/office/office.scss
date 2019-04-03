@@ -1,5 +1,26 @@
 page-office {
-    div{
-        text-align: center;
-    }
+  div {
+    background-color: #006f4b;
+  }
+  .office-button {
+    width: 488px;
+    height: 56px;
+    margin-left: 165px;
+    color: map-get($colors-gds, gds-dark-green);
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .top-button {
+    margin-top: 160px;
+  }
+  .bottom-button {
+    margin-top: 64px;
+  }
+
+  #dvsa-logo {
+    width: 50%;
+    height: 50%;
+    margin-top: 209px;
+    margin-left: 129px;
+  }
 }
