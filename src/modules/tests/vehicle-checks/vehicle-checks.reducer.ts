@@ -17,6 +17,16 @@ export function vehicleChecksReducer(
         tellMeQuestionCode: action.tellMeQuestion.tellMeQuestionCode,
         tellMeQuestionDescription: action.tellMeQuestion.tellMeQuestionDescription,
       };
+    case vehicleChecksActions.TELL_ME_QUESTION_CORRECT:
+      return {
+        ...state,
+        tellMeQuestionOutcome: 'P',
+      };
+    case vehicleChecksActions.TELL_ME_QUESTION_DRIVING_FAULT:
+      return {
+        ...state,
+        tellMeQuestionOutcome: 'DF',
+      };
     default:
       return state;
   }
