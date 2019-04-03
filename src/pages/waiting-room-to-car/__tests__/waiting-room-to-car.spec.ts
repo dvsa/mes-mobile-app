@@ -33,6 +33,8 @@ import {
 } from '../../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { QuestionProvider } from '../../../providers/question/question';
 import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
+import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
+import { TellMeQuestionSelected } from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -91,6 +93,17 @@ describe('WaitingRoomToCarPage', () => {
     });
     it('should get tell me question from the question provider', () => {
       expect(component.tellMeQuestions.length).toBe(2);
+    });
+    describe('selecting a tell me question', () => {
+      it('should dispatch an action when the tell me question change handler is called', () => {
+        const question: TellMeQuestion = {
+          tellMeQuestionCode: 'T1',
+          tellMeQuestionDescription: 'desc',
+          tellMeQuestionShortName: 'name',
+        };
+        component.tellMeQuestionChanged(question);
+        expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
+      });
     });
   });
 

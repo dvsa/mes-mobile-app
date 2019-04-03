@@ -54,10 +54,10 @@
               <ion-col col-40>
                 <ion-row class="spacing-row"></ion-row>
                 <ion-row class="component-row" align-items-center justify-content-start>
-                  <ion-select value="tell-me-question" okText="Submit" cancelText="Cancel"
+                  <ion-select id="tell-me-selector" value="tell-me-question" okText="Submit" cancelText="Cancel"
                     placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)"
                     formControlName="tellMeQuestionCtrl">
-                    <ion-option [value]="tellMeQuestion.tellMeQuestionCode"
+                    <ion-option [value]="tellMeQuestion"
                       *ngFor="let tellMeQuestion of tellMeQuestions">
                       {{tellMeQuestion.tellMeQuestionCode}} - {{tellMeQuestion.tellMeQuestionShortName}}
                     </ion-option>
