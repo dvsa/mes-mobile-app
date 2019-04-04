@@ -43,6 +43,8 @@ import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -50,6 +52,7 @@ describe('WaitingRoomToCarPage', () => {
   let store$: Store<StoreModel>;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
+  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -92,6 +95,7 @@ describe('WaitingRoomToCarPage', () => {
         { provide: QuestionProvider, useClass: QuestionProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -103,6 +107,7 @@ describe('WaitingRoomToCarPage', () => {
     spyOn(store$, 'dispatch');
     screenOrientation = TestBed.get(ScreenOrientation);
     insomnia = TestBed.get(Insomnia);
+    deviceProvider = TestBed.get(DeviceProvider);
   }));
 
   describe('Class', () => {
@@ -134,6 +139,10 @@ describe('WaitingRoomToCarPage', () => {
         component.ionViewDidEnter();
         expect(insomnia.keepAwake).toHaveBeenCalled();
       });
+      it('should enter single app mode', () => {
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
     });
 
     describe('ionViewDidLeave', () => {
@@ -144,6 +153,10 @@ describe('WaitingRoomToCarPage', () => {
       it('should prevent the device from staying awake', () => {
         component.ionViewDidLeave();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+      it('should leave single app mode', () => {
+        component.ionViewDidLeave();
+        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
       });
     });
   });
