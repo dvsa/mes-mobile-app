@@ -19,82 +19,97 @@
 
 <ion-content>
 
+  <ion-card id="ETA" *ngIf="(pageState.etaVerbal$ | async) || (pageState.etaPhysical$ | async)">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row align-items-start class="mes-data">
+          <ion-col col-3></ion-col>
+          <ion-col col-34>
+            <h4 class="fault-heading">ETA</h4>
+          </ion-col>
+          <ion-col align-self-start>
+            <div *ngIf="!(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical</div>
+            <div *ngIf="(pageState.etaVerbal$ | async) && !(pageState.etaPhysical$ | async)">Verbal</div>
+            <div *ngIf="(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical and Verbal</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
     <ion-card-header>
       <ion-card-title>
-        <h1 class="fault-heading">{{(pageState.dangerousFaults$ | async).length}}</h1> <h4 class="fault-heading">Dangerous</h4>
+        <h1 class="fault-heading">{{(pageState.dangerousFaults$ | async).length}}</h1>
+        <h4 class="fault-heading">Dangerous</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-        <ion-grid>
-            <ion-row align-items-center *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)" class="mes-data">
-              <ion-col col-32></ion-col>
-              <ion-col col-2>
-              <div class="counter-icon">
-                <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
-              </div>
-            </ion-col>
-             <ion-col col-3></ion-col>
-              <ion-col><div class="counter-label">{{dangerousFault}}</div></ion-col>
-            </ion-row>
-          </ion-grid>
+      <ion-grid>
+        <ion-row align-items-center *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)"
+          class="mes-data">
+          <ion-col col-32></ion-col>
+          <ion-col col-2>
+            <div class="counter-icon">
+              <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
+            </div>
+          </ion-col>
+          <ion-col col-3></ion-col>
+          <ion-col>
+            <div class="counter-label">{{dangerousFault}}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 
   <ion-card id="serious-fault" *ngIf="(pageState.seriousFaults$ | async).length > 0">
     <ion-card-header>
       <ion-card-title>
-        <h1 class="fault-heading">{{(pageState.seriousFaults$ | async).length}}</h1> <h4 class="fault-heading">Serious</h4>
+        <h1 class="fault-heading">{{(pageState.seriousFaults$ | async).length}}</h1>
+        <h4 class="fault-heading">Serious</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-        <ion-grid>
-            <ion-row align-items-center *ngFor="let seriousFault of (pageState.seriousFaults$ | async)" class="mes-data">
-              <ion-col col-32></ion-col>
-              <ion-col col-2>
-              <div class="counter-icon">
-                <serious-fault-badge [showBadge]="true"></serious-fault-badge>
-              </div>
-            </ion-col>
-             <ion-col col-3></ion-col>
-              <ion-col><div class="counter-label">{{seriousFault}}</div></ion-col>
-            </ion-row>
-          </ion-grid>
+      <ion-grid>
+        <ion-row align-items-center *ngFor="let seriousFault of (pageState.seriousFaults$ | async)" class="mes-data">
+          <ion-col col-32></ion-col>
+          <ion-col col-2>
+            <div class="counter-icon">
+              <serious-fault-badge [showBadge]="true"></serious-fault-badge>
+            </div>
+          </ion-col>
+          <ion-col col-3></ion-col>
+          <ion-col>
+            <div class="counter-label">{{seriousFault}}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 
   <ion-card id="driving-fault" *ngIf="(pageState.drivingFaultCount$ | async) > 0">
     <ion-card-header>
       <ion-card-title>
-        <h1 class="fault-heading">{{pageState.drivingFaultCount$ | async}}</h1> <h4 class="fault-heading">Driving Faults</h4>
+        <h1 class="fault-heading">{{pageState.drivingFaultCount$ | async}}</h1>
+        <h4 class="fault-heading">Driving Faults</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-      <ion-row align-items-center *ngFor="let drivingFault of (pageState.drivingFaults$ | async)" class="mes-data">
-        <ion-col col-32></ion-col>
-        <ion-col col-2>
-        <div class="counter-icon">
-          <fault-counter class="counter driving-faults" [count]="drivingFault.count"></fault-counter>
-        </div>
-      </ion-col>
-       <ion-col col-3></ion-col>
-        <ion-col><div class="counter-label">{{drivingFault.name}}</div></ion-col>
-      </ion-row>
-    </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Debrief
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button navPush="PassFinalisationPage">Pass Test</button>
-      <button ion-button navPush="OfficePage">Fail Test</button>
-      <button ion-button navPush="TerminateTestPage">Terminate Test</button>
+        <ion-row align-items-center *ngFor="let drivingFault of (pageState.drivingFaults$ | async)" class="mes-data">
+          <ion-col col-32></ion-col>
+          <ion-col col-2>
+            <div class="counter-icon">
+              <fault-counter class="counter driving-faults" [count]="drivingFault.count"></fault-counter>
+            </div>
+          </ion-col>
+          <ion-col col-3></ion-col>
+          <ion-col>
+            <div class="counter-label">{{drivingFault.name}}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 

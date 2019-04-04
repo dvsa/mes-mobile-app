@@ -8,6 +8,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { getETAVerbal, getETAPhysical, getETA } from '../../modules/tests/test_data/test-data.selector';
 import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -20,6 +21,8 @@ interface DebriefPageState {
   dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<FaultCount[]>;
   drivingFaultCount$: Observable<number>;
+  etaVerbal$: Observable<boolean>;
+  etaPhysical$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -50,7 +53,7 @@ export class DebriefPage extends BasePageComponent {
 
   ngOnInit(): void {
     this.pageState = {
-      seriousFaults$:  this.store$.pipe(
+      seriousFaults$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
@@ -72,19 +75,36 @@ export class DebriefPage extends BasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        map((data) =>  {
+        map((data) => {
           const faults = getDrivingFaults(data.drivingFaults);
           return faults.reduce((sum, c) => sum + c.count, 0);
         }),
       ),
+      etaPhysical$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getETA),
+        select(getETAPhysical),
+      ),
+      etaVerbal$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getETA),
+        select(getETAVerbal),
+      ),
+
     };
 
-    const { seriousFaults$, dangerousFaults$, drivingFaults$ } = this.pageState;
+    const { seriousFaults$, dangerousFaults$, drivingFaults$, etaPhysical$, etaVerbal$ } = this.pageState;
 
     const merged$ = merge(
       seriousFaults$,
       dangerousFaults$,
       drivingFaults$,
+      etaPhysical$,
+      etaVerbal$,
     );
 
     this.subscription = merged$.subscribe();
