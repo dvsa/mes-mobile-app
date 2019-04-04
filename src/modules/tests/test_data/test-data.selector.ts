@@ -25,3 +25,9 @@ export const getTestRequirements = (data: TestData) => data.testRequirements;
 export const getETA = (data: TestData) => data.ETA;
 export const getETAVerbal = (data: ETA) => data.verbal;
 export const getETAPhysical = (data: ETA) => data.physical;
+export const getETAFaultText = (data: ETA) => {
+  if (data.physical && !data.verbal) return 'Physical';
+  if (!data.physical && data.verbal) return 'Verbal';
+  if (data.physical && data.verbal) return 'Physical and Verbal';
+  return;
+};

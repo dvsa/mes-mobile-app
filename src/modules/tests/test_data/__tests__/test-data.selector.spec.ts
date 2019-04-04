@@ -1,5 +1,11 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import { getDrivingFaultCount, hasSeriousFault, getTestRequirements, hasDangerousFault } from '../test-data.selector';
+import {
+  getDrivingFaultCount,
+  hasSeriousFault,
+  getTestRequirements,
+  hasDangerousFault,
+  getETAFaultText,
+} from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
 describe('TestDataSelectors', () => {
@@ -18,6 +24,10 @@ describe('TestDataSelectors', () => {
       normalStart2: true,
       angledStart: true,
       hillStart: true,
+    },
+    ETA: {
+      physical: false,
+      verbal: false,
     },
   };
 
@@ -56,6 +66,31 @@ describe('TestDataSelectors', () => {
       expect(result.normalStart2).toBeTruthy();
       expect(result.angledStart).toBeTruthy();
       expect(result.hillStart).toBeTruthy();
+    });
+  });
+
+  describe('getETAFaultText', () => {
+    it('should return null if no ETA faults', () => {
+      const result = getETAFaultText(state.ETA);
+      expect(result).toBeUndefined();
+    });
+    it('should return `Physical and Verbal` if both ETA faults', () => {
+      state.ETA.physical = true;
+      state.ETA.verbal = true;
+      const result = getETAFaultText(state.ETA);
+      expect(result).toEqual('Physical and Verbal');
+    });
+    it('should return `Physical` if just physical ETA fault', () => {
+      state.ETA.physical = true;
+      state.ETA.verbal = false;
+      const result = getETAFaultText(state.ETA);
+      expect(result).toEqual('Physical');
+    });
+    it('should return `Verbal` if just verbal ETA fault', () => {
+      state.ETA.physical = false;
+      state.ETA.verbal = true;
+      const result = getETAFaultText(state.ETA);
+      expect(result).toEqual('Verbal');
     });
   });
 });

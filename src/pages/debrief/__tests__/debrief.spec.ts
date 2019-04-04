@@ -16,6 +16,7 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   AddDrivingFault,
+  TogglePhysicalEta,
 } from '../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../modules/tests/test_data/test-data.constants';
 
@@ -47,6 +48,7 @@ describe('DebriefPage', () => {
                   manoeuvres: {},
                   seriousFaults: {},
                   testRequirements: {},
+                  ETA: {},
                 },
               },
             },
@@ -98,6 +100,11 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
     });
 
+    it('should not display ETA fault container if there are no ETA faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+    });
+
     it('should not display dangerous faults container if there are no dangerous faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
@@ -111,6 +118,13 @@ describe('DebriefPage', () => {
     it('should not display driving faults container if there are no driving faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
+    });
+
+    it('should display the ETA faults are any', () => {
+      store$.dispatch(new TogglePhysicalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
     });
 
     it('should display dangerous faults container if there are dangerous faults', () => {

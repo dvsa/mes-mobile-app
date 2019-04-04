@@ -8,6 +8,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { getETA, getETAFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -20,6 +21,7 @@ interface DebriefPageState {
   dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<FaultCount[]>;
   drivingFaultCount$: Observable<number>;
+  etaFaults$: Observable<string>;
 }
 
 @IonicPage()
@@ -50,7 +52,7 @@ export class DebriefPage extends BasePageComponent {
 
   ngOnInit(): void {
     this.pageState = {
-      seriousFaults$:  this.store$.pipe(
+      seriousFaults$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
@@ -72,19 +74,28 @@ export class DebriefPage extends BasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        map((data) =>  {
+        map((data) => {
           const faults = getDrivingFaults(data.drivingFaults);
           return faults.reduce((sum, c) => sum + c.count, 0);
         }),
       ),
+      etaFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getETA),
+        select(getETAFaultText),
+      ),
+
     };
 
-    const { seriousFaults$, dangerousFaults$, drivingFaults$ } = this.pageState;
+    const { seriousFaults$, dangerousFaults$, drivingFaults$, etaFaults$ } = this.pageState;
 
     const merged$ = merge(
       seriousFaults$,
       dangerousFaults$,
       drivingFaults$,
+      etaFaults$,
     );
 
     this.subscription = merged$.subscribe();
