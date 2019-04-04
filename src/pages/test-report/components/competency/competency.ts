@@ -126,6 +126,14 @@ export class CompetencyComponent {
 
   getLabel = (): string => competencyLabels[this.competency];
 
+  recordSerious = (): void => {
+    this.store$.dispatch(new AddSeriousFault(this.competency));
+  }
+
+  recordDangerous = (): void => {
+    this.store$.dispatch(new AddDangerousFault(this.competency));
+  }
+
   buttonClick = (): void => {
     if (!this.isDangerousMode && !this.isSeriousMode) {
       return;
