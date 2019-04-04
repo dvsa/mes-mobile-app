@@ -1,11 +1,14 @@
+import {
+   ManoeuvreTypes,
+} from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
 import { Competencies } from './test-data.constants';
 
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
+export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_DANGEROUS_FAULT = '[Competency] Add Dangerous Fault';
-
 export const TOGGLE_NORMAL_START_1 = '[Legal Requirements] Toggle Normal Start 1';
 export const TOGGLE_NORMAL_START_2 = '[Legal Requirements] Toggle Normal Start 2';
 export const TOGGLE_ANGLED_START = '[Legal Requirements] Toggle Angled Start';
@@ -15,7 +18,10 @@ export class AddDrivingFault implements Action {
   constructor(public payload: FaultPayload) { }
   readonly type = ADD_DRIVING_FAULT;
 }
-
+export class RecordManoeuvresSelection implements Action {
+  constructor(public manoeuvre: ManoeuvreTypes) { }
+  readonly type = RECORD_MANOEUVRES_SELECTION;
+}
 export class AddSeriousFault implements Action {
   constructor(public payload: Competencies) { }
   readonly type = ADD_SERIOUS_FAULT;
@@ -45,6 +51,7 @@ export class ToggleHillStart implements Action {
 export type Types =
   | AddDrivingFault
   | AddSeriousFault
+  | RecordManoeuvresSelection
   | AddDangerousFault
   | ToggleNormalStart1
   | ToggleNormalStart2

@@ -34,7 +34,11 @@ import {
 import { QuestionProvider } from '../../../providers/question/question';
 import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
-import { TellMeQuestionSelected } from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
+import {
+  TellMeQuestionSelected,
+  TellMeQuestionCorrect,
+  TellMeQuestionDrivingFault,
+} from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -61,6 +65,11 @@ describe('WaitingRoomToCarPage', () => {
                 accompaniment: {},
                 candidate: {
                   candidateName: 'Joe Bloggs',
+                },
+                vehicleChecks: {
+                  tellMeQuestionCode: 'T1',
+                  tellMeQuestionDescription: 'desc',
+                  tellMeQuestionOutcome: 'P',
                 },
               },
             },
@@ -195,6 +204,21 @@ describe('WaitingRoomToCarPage', () => {
       it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();
         expect(store$.dispatch).toHaveBeenCalledWith(new EyesightResultReset());
+      });
+    });
+
+    describe('marking tell me question', () => {
+      it('should dispatch a TellMeQuestionCorrect action when marked as correct', () => {
+        fixture.detectChanges();
+        const tellMeCorrectRadio = fixture.debugElement.query(By.css('#tell-me-correct'));
+        tellMeCorrectRadio.triggerEventHandler('click', null);
+        expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionCorrect());
+      });
+      it('should dispatch a TellMeQuestionDrivingFault action when marked as a driving fault', () => {
+        fixture.detectChanges();
+        const tellMeFaultRadio = fixture.debugElement.query(By.css('#tell-me-fault'));
+        tellMeFaultRadio.triggerEventHandler('click', null);
+        expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionDrivingFault());
       });
     });
   });

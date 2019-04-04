@@ -14,8 +14,9 @@
     no-padding
     padding-left
     padding-right
+    class="grid-layout"
     [ngClass]="isSeriousMode ? 'serious-mode' : isDangerousMode ? 'dangerous-mode' : ''">
-    <ion-row>
+    <ion-row class="first-row-adjust">
       <!-- Column 1-->
       <ion-col col-32>
         <ion-row>
@@ -31,7 +32,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency-with-modal [controlLabel]="'Manoeuvres'" [clickCallback]="getCallback()">
+            <competency-with-modal [completed]="manoeuvresCompleted" [controlLabel]="'Manoeuvres'" [clickCallback]="getCallback()">
                 <manoeuvres-popover></manoeuvres-popover>
             </competency-with-modal>
           </ion-col>
@@ -365,5 +366,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div  class="report-overlay" [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>
+  <div  class="report-overlay" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>
 </ion-content>

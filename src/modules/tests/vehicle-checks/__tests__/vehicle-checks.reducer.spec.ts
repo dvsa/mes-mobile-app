@@ -1,5 +1,5 @@
 import { vehicleChecksReducer } from '../vehicle-checks.reducer';
-import { TellMeQuestionSelected } from '../vehicle-checks.actions';
+import { TellMeQuestionSelected, TellMeQuestionCorrect, TellMeQuestionDrivingFault } from '../vehicle-checks.actions';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 
 describe('vehicle checks reducer', () => {
@@ -18,5 +18,15 @@ describe('vehicle checks reducer', () => {
     expect(result.tellMeQuestionCode).toBe('T1');
     expect(result.tellMeQuestionDescription).toBe('desc');
     expect(result.tellMeQuestionOutcome).toBeUndefined();
+  });
+
+  it('should mark tell me question as pass when the action is received', () => {
+    const result = vehicleChecksReducer({}, new TellMeQuestionCorrect());
+    expect(result.tellMeQuestionOutcome).toBe('P');
+  });
+
+  it('should mark tell me question as driving fault when the action is received', () => {
+    const result = vehicleChecksReducer({}, new TellMeQuestionDrivingFault());
+    expect(result.tellMeQuestionOutcome).toBe('DF');
   });
 });

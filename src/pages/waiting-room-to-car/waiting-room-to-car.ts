@@ -53,7 +53,17 @@ import { TellMeQuestion } from '../../providers/question/tell-me-question.model'
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
 import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
-import { TellMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
+import {
+  TellMeQuestionSelected,
+  TellMeQuestionCorrect,
+  TellMeQuestionDrivingFault,
+} from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
+import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
+import {
+  isTellMeQuestionSelected,
+  isTellMeQuestionDrivingFault,
+  isTellMeQuestionCorrect,
+} from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -69,6 +79,9 @@ interface WaitingRoomToCarPageState {
   eyesightFailRadioChecked$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
+  tellMeQuestionSelected$: Observable<boolean>;
+  tellMeQuestionCorrect$: Observable<boolean>;
+  tellMeQuestionDrivingFault$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -164,6 +177,18 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         select(getVehicleDetails),
         map(isManual),
       ),
+      tellMeQuestionSelected$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionSelected),
+      ),
+      tellMeQuestionCorrect$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionCorrect),
+      ),
+      tellMeQuestionDrivingFault$: currentTest$.pipe(
+        select(getVehicleChecks),
+        map(isTellMeQuestionDrivingFault),
+      ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
@@ -237,13 +262,14 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   getFormValidation(): { [key: string]: FormControl } {
     return {
       tellMeQuestionCtrl: new FormControl('', [Validators.required]),
+      tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
       eyesightCtrl: new FormControl('', [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
   setEyesightFailureVisibility(show: boolean) {
@@ -265,5 +291,13 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   tellMeQuestionChanged(newTellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
+  }
+
+  tellMeQuestionCorrect(): void {
+    this.store$.dispatch(new TellMeQuestionCorrect());
+  }
+
+  tellMeQuestionDrivingFault(): void {
+    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 }
