@@ -91,6 +91,12 @@ export class DebriefPage extends BasePageComponent {
 
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new DebriefViewDidEnter());
   }
