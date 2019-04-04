@@ -126,6 +126,35 @@ export class CompetencyComponent {
 
   getLabel = (): string => competencyLabels[this.competency];
 
+  buttonClick = (): void => {
+    if (!this.isDangerousMode && !this.isSeriousMode) {
+      return;
+    }
+
+    this.manageClasses();
+
+    if (this.hasDangerousFault) {
+      return;
+    }
+
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new AddDangerousFault(this.competency));
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
+    if (this.hasSeriousFault) {
+      return;
+    }
+
+    if (this.isSeriousMode) {
+      this.store$.dispatch(new AddSeriousFault(this.competency));
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+      return;
+    }
+
+  }
+
   recordFault = (): void => {
     this.manageClasses();
 
