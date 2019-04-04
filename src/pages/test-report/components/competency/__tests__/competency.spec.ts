@@ -55,7 +55,7 @@ describe('CompetencyComponent', () => {
       providers: [
         HammerProvider,
         Renderer2,
-        { provide: DateTimeProvider, useCalss: DateTimeProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
       .compileComponents()

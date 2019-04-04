@@ -1,10 +1,48 @@
-<ion-grid>
+<ion-grid class="popover-content">
   <ion-row>
     <ion-col>
-      <ion-row><ion-col>Reverse/ Right</ion-col></ion-row>
-      <ion-row><ion-col>Reverse Park (Road)</ion-col></ion-row>
-      <ion-row><ion-col>Reverse Park (Car park)</ion-col></ion-row>
-      <ion-row><ion-col>Forward Park</ion-col></ion-row>
+      <ion-row>
+        <ion-col>
+          <input type="radio" name="manoeuvres" 
+          [checked]="(manoeuvres$ | async).selectedReverseRight" 
+          (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseRight)" 
+          id="manoeuvres-reverse-right-radio" class="gds-radio-button">
+          <label for="manoeuvres-reverse-right-radio" class="radio-label">Reverse/ Right</label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <input type="radio" name="manoeuvres" 
+          [checked]="(manoeuvres$ | async).selectedReverseParkRoad" 
+          (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseParkRoad)" 
+          id="manoeuvres-reverse-park-road-radio" class="gds-radio-button">
+          <label for="manoeuvres-reverse-park-road-radio" class="radio-label">Reverse Park (Road)</label>
+        </ion-col>
+        <ion-col>
+
+          </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <input type="radio" name="manoeuvres" 
+          [checked]="(manoeuvres$ | async).selectedReverseParkCarpark" 
+          (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseParkCarpark)" 
+          id="manoeuvres-reverse-park-carpark-radio" class="gds-radio-button">
+          <label for="manoeuvres-reverse-park-carpark-radio" class="radio-label">Reverse Park (Car park)</label>
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <input type="radio" name="manoeuvres" 
+          [checked]="(manoeuvres$ | async).selectedForwardPark" 
+          (click)="recordManoeuvreSelection(manoeuvreTypes.selectedForwardPark)" 
+          id="manoeuvres-forward-park-radio" class="gds-radio-button">
+          <label for="manoeuvres-forward-park-radio" class="radio-label">Forward Park</label>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
 </ion-grid>

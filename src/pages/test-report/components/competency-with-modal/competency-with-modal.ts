@@ -9,20 +9,22 @@ export class CompetencyWithModalComponent {
 
   @Input()
   controlLabel: String;
+  @Input()
+  completed:boolean;
 
   @Input()
   clickCallback: OverlayCallback;
-
   displayPopover: boolean;
+
   constructor() {
     this.displayPopover = false;
   }
 
-  togglePromote() {
+  togglePopoverDisplay(): void {
     this.displayPopover = !this.displayPopover;
     this.toggleOverlay();
   }
-  toggleOverlay() {
+  toggleOverlay(): void {
     if (this.clickCallback) {
       this.clickCallback.callbackMethod();
     }

@@ -8,7 +8,7 @@ describe('TestDataSelectors', () => {
       controlsGears: 1,
     },
     seriousFaults: {
-       awarenessPlanning: true,
+      awarenessPlanning: true,
     },
     dangerousFaults: {
       useOfSpeed: true,

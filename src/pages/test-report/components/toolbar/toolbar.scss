@@ -2,34 +2,37 @@ toolbar {
   #wrapper {
     height: 68px;
     padding: 12px;
-    background: map-get($colors, 'mes-white');
+    background: map-get($colors, "mes-white");
   }
-
-  #serious-button{
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  #serious-button {
     width: 88px;
     height: 43px;
-    border: 3.5px solid map-get($colors-gds, 'gds-yellow');
+    border: 3.5px solid map-get($colors-gds, "gds-yellow");
     border-radius: 10px;
-    color: #0B0C0C;
+    color: #0b0c0c;
     font-size: 24px;
     font-weight: 900;
     text-align: center;
     letter-spacing: -0.26px;
     line-height: 25px;
     margin: 0;
-     &.inactive {
-      background: map-get($colors, 'mes-white');
-      box-shadow: 0 1px 0 0 map-get($colors-gds, 'gds-grey-1');
+    align-self: center;
+    &.inactive {
+      background: map-get($colors, "mes-white");
+      box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
     }
     &.active {
-      background: map-get($colors-gds, 'gds-yellow');
+      background: map-get($colors-gds, "gds-yellow");
     }
   }
-
-  #dangerous-button{
+  #dangerous-button {
     width: 88px;
     height: 43px;
-    border: 3.5px solid map-get($colors-gds, 'gds-red');
+    border: 3.5px solid map-get($colors-gds, "gds-red");
     border-radius: 10px;
     font-size: 24px;
     font-weight: 900;
@@ -37,14 +40,15 @@ toolbar {
     letter-spacing: -0.33px;
     line-height: 25px;
     margin: 0;
+    align-self: center;
     &.inactive {
-      background: map-get($colors, 'mes-white');
-      box-shadow: 0 1px 0 0 map-get($colors-gds, 'gds-grey-1');
-      color: map-get($colors-gds, 'gds-black');
+      background: map-get($colors, "mes-white");
+      box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
+      color: map-get($colors-gds, "gds-black");
     }
     &.active {
-      background: map-get($colors-gds, 'gds-red');
-      color: map-get($colors, 'mes-white');
+      background: map-get($colors-gds, "gds-red");
+      color: map-get($colors, "mes-white");
     }
   }
 }

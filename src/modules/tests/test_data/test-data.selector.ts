@@ -1,8 +1,9 @@
+
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies } from './test-data.constants';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
-
+export const getManoeuvres = (data: TestData) => data.manoeuvres;
 export const getDrivingFaultSummaryCount = (data: TestData): number => {
 
   // The way how we store the driving faults differs for certain competencies

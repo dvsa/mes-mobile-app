@@ -25,6 +25,7 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../test-report.reducer';
 import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
+import { initialState } from '../../../modules/tests/test_data/test-data.reducer';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -47,7 +48,6 @@ describe('TestReportPage', () => {
         MockComponent(ManoeuvresPopoverComponent),
         MockComponent(CompetencyWithModalComponent),
         MockComponent(TickIndicatorComponent),
-        TestReportPage,
         MockComponent(CompetencyComponent),
         MockComponent(LegalRequirementsComponent),
         MockComponent(DrivingFaultSummaryComponent),
@@ -56,16 +56,18 @@ describe('TestReportPage', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forFeature('tests', () => ({
-          currentTest: {
-            slotId: '123',
-          },
-          startedTests: {
-            123: {
-              candidate: mockCandidate,
+        StoreModule.forFeature('tests', () => (
+          {
+            currentTest: {
+              slotId: '123',
             },
-          },
-        })),
+            startedTests: {
+              123: {
+                testData: initialState,
+                candidate: mockCandidate,
+              },
+            },
+          })),
         StoreModule.forFeature('testReport', testReportReducer),
       ],
       providers: [
@@ -136,28 +138,18 @@ describe('TestReportPage', () => {
 
     describe('Fault Modes Styling', () => {
       it('should not have any fault mode styles applied when serious and dangerous mode is disabled', () => {
-        fixture.detectChanges();
-
         expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeNull();
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeNull();
       });
       it('should have serious fault mode styles applied when serious mode is enabled', () => {
-        fixture.detectChanges();
-
         component.isSeriousMode = true;
-
         fixture.detectChanges();
-
         expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeDefined();
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeNull();
       });
       it('should have dangerous fault mode styles applied when dangerous mode is enabled', () => {
-        fixture.detectChanges();
-
         component.isDangerousMode = true;
-
         fixture.detectChanges();
-
         expect(fixture.debugElement.query(By.css('.serious-mode'))).toBeNull();
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
       });

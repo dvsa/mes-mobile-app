@@ -2,6 +2,7 @@ import { testDataReducer, initialState } from '../test-data.reducer';
 import {
   AddDrivingFault,
   AddSeriousFault,
+  RecordManoeuvresSelection,
   ToggleNormalStart1,
   ToggleNormalStart2,
   ToggleAngledStart,
@@ -10,6 +11,9 @@ import {
 } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
+import {
+  ManoeuvreTypes,
+} from '../../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 
 describe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
@@ -77,6 +81,24 @@ describe('TestDataReducer reducer', () => {
     });
   });
 
+  describe('manoeuvres', () => {
+    it('should add selected manoeuvre', () => {
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+      );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+    });
+    it('should replace current with selected manoeuvre', () => {
+      initialState.manoeuvres = { selectedReverseParkCarpark: true };
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+      );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
+    });
+  });
   describe('ADD_DANGEROUS_FAULT', () => {
     it('should add a dangerous fault when none exists', () => {
       const result = testDataReducer(initialState, new AddDangerousFault(Competencies.followingDistance));
@@ -196,6 +218,7 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(modifiedState, new ToggleHillStart());
 
       expect(result.testRequirements.hillStart).toBeFalsy();
+
     });
   });
 });
