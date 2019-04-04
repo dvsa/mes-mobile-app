@@ -11,6 +11,7 @@ import {
 import {
   EyesightFailureConfirmationComponent,
 } from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {
   ],
   providers: [
     AnalyticsProvider,
+    Insomnia,
   ],
 })
 export class WaitingRoomToCarPageModule {}

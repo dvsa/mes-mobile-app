@@ -64,6 +64,9 @@ import {
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
 } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
+import { DeviceProvider } from '../../providers/device/device';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -111,6 +114,9 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public questionProvider: QuestionProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
+    public deviceProvider: DeviceProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
@@ -205,6 +211,19 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
+    if (super.isIos()) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.insomnia.keepAwake();
+      this.deviceProvider.enableSingleAppMode();
+    }
+  }
+
+  ionViewDidLeave(): void {
+    if (super.isIos()) {
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+      this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   schoolCarToggled(): void {
@@ -291,6 +310,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
 
   tellMeQuestionChanged(newTellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
+    this.form.controls['tellMeQuestionOutcomeCtrl'].setValue('');
   }
 
   tellMeQuestionCorrect(): void {
