@@ -4,6 +4,7 @@ import { DebriefPage } from './debrief';
 import { EffectsModule } from '@ngrx/effects';
 import { DebriefAnalyticsEffects } from './debrief.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   imports: [
     IonicPageModule.forChild(DebriefPage),
     EffectsModule.forFeature([DebriefAnalyticsEffects]),
+    ComponentsModule,
   ],
   providers: [
     AnalyticsProvider,

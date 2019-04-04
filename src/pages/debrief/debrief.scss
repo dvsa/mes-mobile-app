@@ -34,4 +34,18 @@ page-debrief > * {
     width: 746px;
     margin-top: 11px;
   }
+  .counter-icon {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+  }
+  .counter-label {
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .fault-heading {
+    display:inline;
+  }
 }

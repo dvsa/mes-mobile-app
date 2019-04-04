@@ -9,31 +9,26 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
-import { FaultCounterComponent } from './components/fault-counter/fault-counter';
 import { TickIndicatorComponent } from './components/tick-indicator/tick-indicator';
 import { DrivingFaultSummaryComponent } from './components/driving-fault-summary/driving-fault-summary';
 import { ToolbarComponent } from './components/toolbar/toolbar';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from './test-report.reducer';
-import { SeriousFaultBadgeComponent } from './components/serious-fault-badge/serious-fault-badge';
 import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
 import { DangerousTooltipComponent } from './components/dangerous-tooltip/dangerous-tooltip';
 import { LegalRequirementsComponent } from './components/legal-requirements/legal-requirements';
-import { DangerousFaultBadgeComponent } from './components/dangerous-fault-badge/dangerous-fault-badge';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
     TestReportPage,
     CompetencyComponent,
-    FaultCounterComponent,
     TickIndicatorComponent,
     DrivingFaultSummaryComponent,
     CompetencyWithModalComponent,
     ManoeuvresPopoverComponent,
     ToolbarComponent,
-    SeriousFaultBadgeComponent,
     SeriousTooltipComponent,
-    DangerousFaultBadgeComponent,
     DangerousTooltipComponent,
     LegalRequirementsComponent,
   ],
@@ -41,6 +36,7 @@ import { DangerousFaultBadgeComponent } from './components/dangerous-fault-badge
     IonicPageModule.forChild(TestReportPage),
     StoreModule.forFeature('testReport', testReportReducer),
     EffectsModule.forFeature([TestReportAnalyticsEffects]),
+    ComponentsModule,
   ],
   providers: [
     AnalyticsProvider,

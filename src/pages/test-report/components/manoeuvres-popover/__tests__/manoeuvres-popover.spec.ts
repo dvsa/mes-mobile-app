@@ -8,8 +8,8 @@ import { RecordManoeuvresSelection } from '../../../../../modules/tests/test_dat
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-import { FaultCounterComponent } from '../../fault-counter/fault-counter';
 import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
+import { FaultCounterComponent } from '../../../../../components/fault-counter/fault-counter';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
