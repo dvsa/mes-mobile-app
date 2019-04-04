@@ -19,7 +19,7 @@
 
 <ion-content>
 
-  <ion-card *ngIf="(pageState.dangerousFaults$ | async).length > 0">
+  <ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
     <ion-card-header>
       <ion-card-title>
         <h1 style="display:inline">{{(pageState.dangerousFaults$ | async).length}}</h1> <h4 style="display:inline">Dangerous</h4>
@@ -41,7 +41,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="(pageState.seriousFaults$ | async).length > 0">
+  <ion-card id="serious-fault" *ngIf="(pageState.seriousFaults$ | async).length > 0">
     <ion-card-header>
       <ion-card-title>
         <h1 style="display:inline">{{(pageState.seriousFaults$ | async).length}}</h1> <h4 style="display:inline">Serious</h4>
@@ -63,7 +63,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="(pageState.drivingFaultCount$ | async) > 0">
+  <ion-card id="driving-fault" *ngIf="(pageState.drivingFaultCount$ | async) > 0">
     <ion-card-header>
       <ion-card-title>
         <h1 style="display:inline">{{pageState.drivingFaultCount$ | async}}</h1> <h4 style="display:inline">Driving Faults</h4>

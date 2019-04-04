@@ -10,14 +10,20 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../components/components.module';
-// import { StoreModel } from '../../../shared/models/store.model';
-import { StoreModule } from '@ngrx/store';
+import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModule, Store } from '@ngrx/store';
+import {
+  AddDangerousFault,
+  AddSeriousFault,
+  AddDrivingFault,
+} from '../../../modules/tests/test_data/test-data.actions';
+import { Competencies } from '../../../modules/tests/test_data/test-data.constants';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
   let component: DebriefPage;
   let navController: NavController;
-//  let store$: Store<StoreModel>;
+  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,17 +43,9 @@ describe('DebriefPage', () => {
                 },
                 testData: {
                   dangerousFaults: {},
-                  drivingFaults: {
-                    pedestrianCrossings: 3,
-                    progressAppropriateSpeed: 1,
-                    junctionsTurningRight: 2,
-                  },
+                  drivingFaults: {},
                   manoeuvres: {},
-                  seriousFaults: {
-                    useOfMirrorsSignalling: true,
-                    useOfMirrorsChangeSpeed: true,
-                    followingDistance: true,
-                  },
+                  seriousFaults: {},
                   testRequirements: {},
                 },
               },
@@ -69,6 +67,7 @@ describe('DebriefPage', () => {
         fixture = TestBed.createComponent(DebriefPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
+        store$ = TestBed.get(Store);
       });
   }));
 
@@ -97,6 +96,39 @@ describe('DebriefPage', () => {
 
       expect(fixture.debugElement.query(By.css('.failed'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
+    });
+
+    it('should not display dangerous faults container if there are no dangerous faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
+    });
+
+    it('should not display serious faults container if there are no serious faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#serious-fault'))).toBeNull();
+    });
+
+    it('should not display driving faults container if there are no driving faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
+    });
+
+    it('should display dangerous faults container if there are dangerous faults', () => {
+      store$.dispatch(new AddDangerousFault(Competencies.controlsClutch));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeDefined();
+    });
+
+    it('should display serious faults container if there are serious faults', () => {
+      store$.dispatch(new AddSeriousFault(Competencies.controlsClutch));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#serious-fault'))).toBeDefined();
+    });
+
+    it('should display driving faults container if there are driving faults', () => {
+      store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsClutch, newFaultCount: 1 }));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeDefined();
     });
 
     describe('endDebrief', () => {
