@@ -16,7 +16,6 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   AddDrivingFault,
-  ToggleVerbalEta,
   TogglePhysicalEta,
 } from '../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../modules/tests/test_data/test-data.constants';
@@ -121,35 +120,11 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
     });
 
-    it('should display ETA fault container if there are ETA faults', () => {
+    it('should display the ETA faults are any', () => {
       store$.dispatch(new TogglePhysicalEta());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
-    });
-
-    it('should display `Physical` text if there is a phyiscal ETA fault', () => {
-      store$.dispatch(new TogglePhysicalEta());
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#physical'))).toBeDefined();
-      expect(fixture.debugElement.query(By.css('#verbal'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#physicalverbal'))).toBeNull();
-    });
-
-    it('should display `Verbal` text if there is a phyiscal ETA fault', () => {
-      store$.dispatch(new ToggleVerbalEta());
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#verbal'))).toBeDefined();
-      expect(fixture.debugElement.query(By.css('#physical'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#physicalverbal'))).toBeNull();
-    });
-
-    it('should display `Physical and Verbal` text if there are phyiscal & verbal ETA faults', () => {
-      store$.dispatch(new TogglePhysicalEta());
-      store$.dispatch(new ToggleVerbalEta());
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#physicalverbal'))).toBeDefined();
-      expect(fixture.debugElement.query(By.css('#verbal'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#physical'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
     });
 
     it('should display dangerous faults container if there are dangerous faults', () => {

@@ -19,7 +19,7 @@
 
 <ion-content>
 
-  <ion-card id="ETA" *ngIf="(pageState.etaVerbal$ | async) || (pageState.etaPhysical$ | async)">
+  <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-start class="mes-data">
@@ -28,9 +28,7 @@
             <h4 class="fault-heading">ETA</h4>
           </ion-col>
           <ion-col align-self-start>
-            <div id="physical" *ngIf="!(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical</div>
-            <div id="verbal" *ngIf="(pageState.etaVerbal$ | async) && !(pageState.etaPhysical$ | async)">Verbal</div>
-            <div id="physicalverbal" *ngIf="(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical and Verbal</div>
+            <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
