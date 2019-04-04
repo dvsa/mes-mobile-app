@@ -65,6 +65,7 @@ import {
   isTellMeQuestionCorrect,
 } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -113,6 +114,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     public authenticationProvider: AuthenticationProvider,
     public questionProvider: QuestionProvider,
     public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
@@ -209,12 +211,14 @@ export class WaitingRoomToCarPage extends BasePageComponent{
     this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
     if (super.isIos()) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.insomnia.keepAwake();
     }
   }
 
   ionViewDidLeave(): void {
     if (super.isIos()) {
       this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
     }
   }
 
