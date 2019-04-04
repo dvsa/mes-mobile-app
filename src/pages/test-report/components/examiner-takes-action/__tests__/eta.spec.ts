@@ -6,7 +6,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { ToggleVerbalEta, TogglePhysicalEta } from '../../../../../modules/tests/test_data/test-data.actions';
 
-describe('LegalRequirementsComponent', () => {
+describe('Examiner Takes Action Component', () => {
   let fixture: ComponentFixture<EtaComponent>;
   let component: EtaComponent;
   let store$: Store<StoreModel>;
