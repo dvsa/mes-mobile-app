@@ -8,6 +8,7 @@ export const initialState: TestData = {
   manoeuvres: {},
   seriousFaults: {},
   testRequirements: {},
+  ETA:{},
 };
 
 export function testDataReducer(
@@ -76,6 +77,22 @@ export function testDataReducer(
         testRequirements: {
           ...state.testRequirements,
           hillStart: !state.testRequirements.hillStart,
+        },
+      };
+    case testDataActions.TOGGLE_VERBAL_ETA:
+      return {
+        ...state,
+        ETA: {
+          ...state.ETA,
+          verbal: !state.ETA.verbal,
+        },
+      };
+    case testDataActions.TOGGLE_PHYSICAL_ETA:
+      return {
+        ...state,
+        ETA: {
+          ...state.ETA,
+          physical: !state.ETA.physical,
         },
       };
 

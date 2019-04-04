@@ -21,3 +21,5 @@ export const hasSeriousFault = (data: TestData, competency: Competencies) => dat
 export const hasDangerousFault = (data: TestData, competency: Competencies) => data.dangerousFaults[competency];
 
 export const getTestRequirements = (data: TestData) => data.testRequirements;
+
+export const getETA = (data: TestData) => data.ETA;
