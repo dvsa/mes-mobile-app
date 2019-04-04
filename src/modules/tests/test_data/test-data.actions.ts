@@ -13,6 +13,8 @@ export const TOGGLE_NORMAL_START_1 = '[Legal Requirements] Toggle Normal Start 1
 export const TOGGLE_NORMAL_START_2 = '[Legal Requirements] Toggle Normal Start 2';
 export const TOGGLE_ANGLED_START = '[Legal Requirements] Toggle Angled Start';
 export const TOGGLE_HILL_START = '[Legal Requirements] Toggle Hill Start';
+export const TOGGLE_VERBAL_ETA = '[Eta] Toggle Verbal Eta';
+export const TOGGLE_PHYSICAL_ETA = '[Eta] Toggle Physical Eta';
 
 export class AddDrivingFault implements Action {
   constructor(public payload: FaultPayload) { }
@@ -47,6 +49,12 @@ export class ToggleAngledStart implements Action {
 export class ToggleHillStart implements Action {
   readonly type = TOGGLE_HILL_START;
 }
+export class ToggleVerbalEta implements Action {
+  readonly type = TOGGLE_VERBAL_ETA;
+}
+export class TogglePhysicalEta implements Action {
+  readonly type = TOGGLE_PHYSICAL_ETA;
+}
 
 export type Types =
   | AddDrivingFault
@@ -56,4 +64,6 @@ export type Types =
   | ToggleNormalStart1
   | ToggleNormalStart2
   | ToggleAngledStart
-  | ToggleHillStart;
+  | ToggleHillStart
+  | ToggleVerbalEta
+  | TogglePhysicalEta;

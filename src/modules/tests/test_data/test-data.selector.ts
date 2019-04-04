@@ -1,5 +1,5 @@
 
-import { TestData } from '@dvsa/mes-test-schema/categories/B';
+import { TestData, ETA } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies } from './test-data.constants';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
@@ -21,3 +21,7 @@ export const hasSeriousFault = (data: TestData, competency: Competencies) => dat
 export const hasDangerousFault = (data: TestData, competency: Competencies) => data.dangerousFaults[competency];
 
 export const getTestRequirements = (data: TestData) => data.testRequirements;
+
+export const getETA = (data: TestData) => data.ETA;
+export const getETAVerbal = (data: ETA) => data.verbal;
+export const getETAPhysical = (data: ETA) => data.physical;

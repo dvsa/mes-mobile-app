@@ -1,18 +1,20 @@
-import { ManoeuvresPopoverComponent } from './components/manoeuvres-popover/manoeuvres-popover';
-import { CompetencyWithModalComponent } from './components/competency-with-modal/competency-with-modal';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TestReportPage } from './test-report';
 import { EffectsModule } from '@ngrx/effects';
+import { Insomnia } from '@ionic-native/insomnia';
+import { StoreModule } from '@ngrx/store';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
+import { EtaComponent } from './components/examiner-takes-action/eta';
+import { ManoeuvresPopoverComponent } from './components/manoeuvres-popover/manoeuvres-popover';
+import { CompetencyWithModalComponent } from './components/competency-with-modal/competency-with-modal';
 import { TestReportAnalyticsEffects } from './test-report.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Insomnia } from '@ionic-native/insomnia';
 import { CompetencyComponent } from './components/competency/competency';
 import { TickIndicatorComponent } from './components/tick-indicator/tick-indicator';
 import { DrivingFaultSummaryComponent } from './components/driving-fault-summary/driving-fault-summary';
 import { ToolbarComponent } from './components/toolbar/toolbar';
-import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from './test-report.reducer';
 import { SeriousTooltipComponent } from './components/serious-tooltip/serious-tooltip';
 import { DangerousTooltipComponent } from './components/dangerous-tooltip/dangerous-tooltip';
@@ -27,6 +29,7 @@ import { ComponentsModule } from '../../components/components.module';
     DrivingFaultSummaryComponent,
     CompetencyWithModalComponent,
     ManoeuvresPopoverComponent,
+    EtaComponent,
     ToolbarComponent,
     SeriousTooltipComponent,
     DangerousTooltipComponent,

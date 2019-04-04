@@ -1,3 +1,4 @@
+
 import { CompetencyWithModalComponent } from './../components/competency-with-modal/competency-with-modal';
 import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
@@ -25,6 +26,7 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../test-report.reducer';
 import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
+import { EtaComponent } from '../components/examiner-takes-action/eta';
 import { initialState } from '../../../modules/tests/test_data/test-data.reducer';
 
 describe('TestReportPage', () => {
@@ -50,6 +52,7 @@ describe('TestReportPage', () => {
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),
         MockComponent(LegalRequirementsComponent),
+        MockComponent(EtaComponent),
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
       ],

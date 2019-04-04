@@ -1,0 +1,16 @@
+<ion-row>
+  <ion-col>
+    <button (click)=(toggleVerbal()) [ngClass]="{ complete: componentState.verbal$ | async }">
+      <div class="label">  
+        <span class='competency-label'>ETA: Verbal</span>
+      </div>
+    </button>
+  </ion-col>
+  <ion-col>
+    <button (click)=(togglePhysical()) [ngClass]="{ complete: componentState.physical$ | async }">
+      <div class="label">
+        <span class='competency-label'>ETA: Physical</span>
+      </div>
+    </button>
+  </ion-col>
+</ion-row>
