@@ -16,6 +16,8 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   AddDrivingFault,
+  ToggleVerbalEta,
+  TogglePhysicalEta,
 } from '../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../modules/tests/test_data/test-data.constants';
 
@@ -47,6 +49,7 @@ describe('DebriefPage', () => {
                   manoeuvres: {},
                   seriousFaults: {},
                   testRequirements: {},
+                  ETA: {},
                 },
               },
             },
@@ -98,6 +101,11 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
     });
 
+    it('should not display ETA fault container if there are no ETA faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+    });
+
     it('should not display dangerous faults container if there are no dangerous faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
@@ -111,6 +119,37 @@ describe('DebriefPage', () => {
     it('should not display driving faults container if there are no driving faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
+    });
+
+    it('should display ETA fault container if there are ETA faults', () => {
+      store$.dispatch(new TogglePhysicalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
+    });
+
+    it('should display `Physical` text if there is a phyiscal ETA fault', () => {
+      store$.dispatch(new TogglePhysicalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#physical'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#verbal'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#physicalverbal'))).toBeNull();
+    });
+
+    it('should display `Verbal` text if there is a phyiscal ETA fault', () => {
+      store$.dispatch(new ToggleVerbalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#verbal'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#physical'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#physicalverbal'))).toBeNull();
+    });
+
+    it('should display `Physical and Verbal` text if there are phyiscal & verbal ETA faults', () => {
+      store$.dispatch(new TogglePhysicalEta());
+      store$.dispatch(new ToggleVerbalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#physicalverbal'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#verbal'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#physical'))).toBeNull();
     });
 
     it('should display dangerous faults container if there are dangerous faults', () => {

@@ -28,9 +28,9 @@
             <h4 class="fault-heading">ETA</h4>
           </ion-col>
           <ion-col align-self-start>
-            <div *ngIf="!(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical</div>
-            <div *ngIf="(pageState.etaVerbal$ | async) && !(pageState.etaPhysical$ | async)">Verbal</div>
-            <div *ngIf="(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical and Verbal</div>
+            <div id="physical" *ngIf="!(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical</div>
+            <div id="verbal" *ngIf="(pageState.etaVerbal$ | async) && !(pageState.etaPhysical$ | async)">Verbal</div>
+            <div id="physicalverbal" *ngIf="(pageState.etaVerbal$ | async) && (pageState.etaPhysical$ | async)">Physical and Verbal</div>
           </ion-col>
         </ion-row>
       </ion-grid>
