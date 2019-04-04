@@ -10,7 +10,6 @@ describe('Examiner Takes Action Component', () => {
   let fixture: ComponentFixture<EtaComponent>;
   let component: EtaComponent;
   let store$: Store<StoreModel>;
-  let storeDispatchSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,9 +25,9 @@ describe('Examiner Takes Action Component', () => {
       .then(() => {
         fixture = TestBed.createComponent(EtaComponent);
         component = fixture.componentInstance;
-        store$ = TestBed.get(Store);
-        storeDispatchSpy = spyOn(store$, 'dispatch');
       });
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -38,12 +37,12 @@ describe('Examiner Takes Action Component', () => {
 
     it('should dispatch a TOGGLE_ETA_VERBAL action', () => {
       component.toggleVerbal();
-      expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleVerbalEta());
+      expect(store$.dispatch).toHaveBeenCalledWith(new ToggleVerbalEta());
     });
 
     it('should dispatch a TOGGLE_ETA_PHYSICAL action', () => {
       component.togglePhysical();
-      expect(storeDispatchSpy).toHaveBeenCalledWith(new TogglePhysicalEta());
+      expect(store$.dispatch).toHaveBeenCalledWith(new TogglePhysicalEta());
     });
   });
 });

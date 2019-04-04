@@ -10,7 +10,7 @@ eta {
     border-radius: 10px;
     &.complete {
       background-color:	#F2E8E7;
-      border:2px solid #b10e1e;
+      border:2px solid map-get($colors-gds, "gds-red");
       &.competency-label {
         font-weight: bold;
       }
@@ -18,7 +18,7 @@ eta {
     &.activated {
       background: #eee;
     }
-    
+
     .label {
       width: 100%;
       display: flex;

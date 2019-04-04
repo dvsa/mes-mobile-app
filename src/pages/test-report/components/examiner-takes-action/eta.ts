@@ -7,7 +7,7 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { ToggleVerbalEta, TogglePhysicalEta } from '../../../../modules/tests/test_data/test-data.actions';
-import { getETA } from '../../../../modules/tests/test_data/test-data.selector';
+import { getETA, getETAVerbal, getETAPhysical } from '../../../../modules/tests/test_data/test-data.selector';
 
 interface ETAComponentState {
   verbal$: Observable<boolean>;
@@ -30,8 +30,8 @@ export class EtaComponent implements OnInit {
       select(getETA),
     );
     this.componentState = {
-      verbal$: eta$.pipe(map(eta => eta.verbal)),
-      physical$: eta$.pipe(map(eta => eta.physical)),
+      verbal$: eta$.pipe(map(getETAVerbal)),
+      physical$: eta$.pipe(map(getETAPhysical)),
     };
   }
   toggleVerbal() {
