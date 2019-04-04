@@ -39,11 +39,14 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
 } from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
   let component: WaitingRoomToCarPage;
   let store$: Store<StoreModel>;
+  let screenOrientation: ScreenOrientation;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -84,6 +87,7 @@ describe('WaitingRoomToCarPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: QuestionProvider, useClass: QuestionProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
       ],
     })
       .compileComponents()
@@ -93,6 +97,7 @@ describe('WaitingRoomToCarPage', () => {
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
+    screenOrientation = TestBed.get(ScreenOrientation);
   }));
 
   describe('Class', () => {
@@ -112,6 +117,20 @@ describe('WaitingRoomToCarPage', () => {
         };
         component.tellMeQuestionChanged(question);
         expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
+      });
+    });
+
+    describe('ionViewDidEnter', () => {
+      it('should lock the screen orientation', () => {
+        component.ionViewDidEnter();
+        expect(screenOrientation.lock).toHaveBeenCalled();
+      });
+    });
+
+    describe('ionViewDidLeave', () => {
+      it('should unlock the screen orientation', () => {
+        component.ionViewDidLeave();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
       });
     });
   });
