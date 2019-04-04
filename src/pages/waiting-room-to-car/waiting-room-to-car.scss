@@ -12,5 +12,11 @@ page-waiting-room-to-car {
       width: 100%;
       height: 56px;
     }
+    .manual-label-top-spacing {
+      label {
+        display: block;
+        margin-top: 42px;
+      }
+    }
   }
 }
