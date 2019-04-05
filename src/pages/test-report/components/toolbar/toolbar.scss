@@ -8,6 +8,30 @@ toolbar {
     display: flex;
     justify-content: center;
   }
+  #remove-button {
+    width: 96px;
+    height: 43px;
+    border: 3.5px solid map-get($colors-gds, "gds-black");
+    border-radius: 10px;
+    background-color: map-get($colors, "mes-white");
+    color: map-get($colors-gds, "gds-black");
+    font-size: 19px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.32px;
+    line-height: 25px;
+    margin: 0;
+    align-self: center;
+    &.inactive {
+      background-color: map-get($colors, "mes-white");
+      color: map-get($colors-gds, "gds-black");
+      box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
+    }
+    &.active {
+      background-color: map-get($colors-gds, "gds-black");
+      color: map-get($colors, "mes-white");
+    }
+  }
   #serious-button {
     width: 88px;
     height: 43px;
@@ -22,7 +46,7 @@ toolbar {
     margin: 0;
     align-self: center;
     &.inactive {
-      background: map-get($colors, "mes-white");
+      background-color: map-get($colors, "mes-white");
       box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
     }
     &.active {
@@ -42,12 +66,12 @@ toolbar {
     margin: 0;
     align-self: center;
     &.inactive {
-      background: map-get($colors, "mes-white");
+      background-color: map-get($colors, "mes-white");
       box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
       color: map-get($colors-gds, "gds-black");
     }
     &.active {
-      background: map-get($colors-gds, "gds-red");
+      background-color: map-get($colors-gds, "gds-red");
       color: map-get($colors, "mes-white");
     }
   }

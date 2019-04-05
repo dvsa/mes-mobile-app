@@ -11,6 +11,11 @@ export const initialState: TestReportModel = {
 
 export function testReportReducer(state = initialState, action: testReportActions.Types): TestReportModel {
   switch (action.type) {
+    case testReportActions.TOGGLE_REMOVE_FAULT_MODE:
+      return {
+        ...state,
+        removeFaultMode: !state.removeFaultMode,
+      };
     case testReportActions.TOGGLE_SERIOUS_FAULT_MODE:
       return {
         ...state,

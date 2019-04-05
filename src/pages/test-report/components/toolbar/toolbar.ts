@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from '../../test-report.reducer';
-import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 
 interface ToolbarComponentState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
+  isRemoveFaultMode$: Observable<boolean>;
 }
 
 @Component({
@@ -23,13 +24,18 @@ export class ToolbarComponent {
   componenetState: ToolbarComponentState;
   subscription: Subscription;
 
+  isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
     this.componenetState = {
+      isRemoveFaultMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isRemoveFaultMode),
+      ),
       isSeriousMode$: this.store$.pipe(
         select(getTestReportState),
         select(isSeriousMode),
@@ -40,9 +46,10 @@ export class ToolbarComponent {
       ),
     };
 
-    const { isSeriousMode$, isDangerousMode$ } = this.componenetState;
+    const { isRemoveFaultMode$, isSeriousMode$, isDangerousMode$ } = this.componenetState;
 
     const merged$ = merge(
+      isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
     );
@@ -55,8 +62,20 @@ export class ToolbarComponent {
       this.subscription.unsubscribe();
     }
   }
+  toggleremoveFaultMode(): void {
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+    }
+    if (this.isSeriousMode) {
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+    }
+    this.store$.dispatch(new ToggleRemoveFaultMode());
+  }
 
   toggleSeriousMode(): void {
+    if (this.isRemoveFaultMode) {
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+    }
     if (this.isDangerousMode) {
       this.store$.dispatch(new ToggleDangerousFaultMode());
     }
@@ -64,6 +83,9 @@ export class ToolbarComponent {
   }
 
   toggleDangerousMode(): void {
+    if (this.isRemoveFaultMode) {
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+    }
     this.store$.dispatch(new ToggleDangerousFaultMode());
   }
 
