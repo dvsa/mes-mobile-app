@@ -51,9 +51,9 @@ describe('ToolbarComponent', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
-    describe('toggleremoveFaultMode', () => {
+    describe('togglRemoveFaultMode', () => {
       it('should dispatch a TOGGLE_REMOVE_FAULT_MODE action', () => {
-        component.toggleremoveFaultMode();
+        component.toggleRemoveFaultMode();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });

@@ -62,7 +62,7 @@ export class ToolbarComponent {
       this.subscription.unsubscribe();
     }
   }
-  toggleremoveFaultMode(): void {
+  toggleRemoveFaultMode(): void {
     this.store$.dispatch(new ToggleRemoveFaultMode());
   }
 
