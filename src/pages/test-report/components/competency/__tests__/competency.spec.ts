@@ -2,7 +2,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
-// import { By } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { HammerProvider } from '../../../../../providers/hammer/hammer';
 import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
 import { Renderer2 } from '@angular/core';
@@ -30,7 +30,7 @@ describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
   let hammerProvider: HammerProvider;
-  // let renderer: Renderer2;
+  let renderer: Renderer2;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
@@ -59,20 +59,18 @@ describe('CompetencyComponent', () => {
         hammerProvider = component.hammerProvider;
         spyOn(hammerProvider, 'addPressAndHoldEvent');
         spyOn(hammerProvider, 'init');
-        // renderer = TestBed.get(Renderer2);
+        renderer = TestBed.get(Renderer2);
         store$ = TestBed.get(Store);
+
+        store$.dispatch(new TestOutcomeStartTest({ slotDetail: { slotId: 103 } }));
       });
   }));
 
   describe('Class', () => {
-
-    beforeEach(() => {
-      store$.dispatch(new TestOutcomeStartTest({ slotDetail: { slotId: 103 } }));
-    });
-
     it('should create', () => {
       expect(component).toBeDefined();
     });
+
     describe('ngOnInit', () => {
       it('should use HammerProvider to attach a press and hold event to the button which records the fault', () => {
         component.button = new MockElementRef();
@@ -83,6 +81,7 @@ describe('CompetencyComponent', () => {
         expect(hammerProvider.addPressAndHoldEvent).toHaveBeenCalledWith(component.recordFault);
       });
     });
+
     describe('getLabel', () => {
       it('should get the correct label for a competency', () => {
         component.competency = Competencies.controlsSteering;
@@ -250,46 +249,47 @@ describe('CompetencyComponent', () => {
     });
   });
 
-  // describe('DOM', () => {
-  //   it('should show provided label', () => {
-  //     component.competency = Competencies.controlsGears;
-  //     fixture.detectChanges();
-  //     const label = fixture.debugElement.query(By.css('.competency-label'));
-  //     expect(label.nativeElement.innerHTML).toBe('Gears');
-  //   });
-  // });
+  describe('DOM', () => {
+    it('should show provided label', () => {
+      component.competency = Competencies.controlsGears;
+      fixture.detectChanges();
+      const label = fixture.debugElement.query(By.css('.competency-label'));
+      expect(label.nativeElement.innerHTML).toBe('Gears');
+    });
 
-  // it('should pass the number of driving faults to the fault counter component', () => {
-  //   fixture.detectChanges();
-  //   const drivingFaultCounter = fixture.debugElement.query(By.css('.driving-faults'))
-  //     .componentInstance as FaultCounterComponent;
-  //   component.faultCount = 5;
+    it('should pass the number of driving faults to the fault counter component', () => {
+      fixture.detectChanges();
+      const drivingFaultCounter = fixture.debugElement.query(By.css('.driving-faults'))
+        .componentInstance as FaultCounterComponent;
+      component.faultCount = 5;
 
-  //   fixture.detectChanges();
-  //   expect(drivingFaultCounter.count).toBe(5);
-  // });
+      fixture.detectChanges();
+      expect(drivingFaultCounter.count).toBe(5);
+    });
+  });
 
-  // describe('Ripple effect', () => {
+  describe('Ripple effect', () => {
+    it('should have added no classes to the competency button', () => {
+      expect(component.button.nativeElement.className).toEqual('');
+    });
 
-  //   it('should have added no classes to the competency button', () => {
-  //     expect(component.button.nativeElement.className).toEqual('');
-  //   });
+    it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
+      // Arrange
+      renderer = fixture.componentRef.injector.get(Renderer2);
+      renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
+      renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
+      // Act
+      component.faultCount = 1;
+      component.manageClasses();
+      // Assert
+      expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
 
-  //   it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
-  //     // Arrange
-  //     renderer = fixture.componentRef.injector.get(Renderer2);
-  //     renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
-  //     renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
-  //     // Act
-  //     component.faultCount = 1;
-  //     component.manageClasses();
-  //     // Assert
-  //     expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
-
-  //     setTimeout(() => {
-  //       expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
-  //       done();
-  //     },         component.rippleEffectAnimationDuration);
-  //   });
-  // });
+      setTimeout(
+        () => {
+          expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
+          done();
+        },
+        component.rippleEffectAnimationDuration);
+    });
+  });
 });
