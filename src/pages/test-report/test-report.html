@@ -15,12 +15,12 @@
     padding-left
     padding-right
     class="grid-layout"
-    [ngClass]="isSeriousMode ? 'serious-mode' : isDangerousMode ? 'dangerous-mode' : isRemoveFaultMode ? 'remove-mode' : ''">
+    [ngClass]="isRemoveFaultMode ? 'remove-mode' : isSeriousMode ? 'serious-mode' : isDangerousMode ? 'dangerous-mode' : ''">
     <ion-row class="first-row-adjust">
       <!-- Column 1-->
       <ion-col col-32>
         <ion-row>
-          <ion-col no-padding>
+          <ion-col no-padding>z
             <span class="section-header">Test requirements</span>
           </ion-col>
         </ion-row>
