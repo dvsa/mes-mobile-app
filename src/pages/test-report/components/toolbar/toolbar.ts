@@ -63,19 +63,10 @@ export class ToolbarComponent {
     }
   }
   toggleremoveFaultMode(): void {
-    if (this.isDangerousMode) {
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-    }
-    if (this.isSeriousMode) {
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-    }
     this.store$.dispatch(new ToggleRemoveFaultMode());
   }
 
   toggleSeriousMode(): void {
-    if (this.isRemoveFaultMode) {
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-    }
     if (this.isDangerousMode) {
       this.store$.dispatch(new ToggleDangerousFaultMode());
     }
@@ -83,9 +74,6 @@ export class ToolbarComponent {
   }
 
   toggleDangerousMode(): void {
-    if (this.isRemoveFaultMode) {
-      this.store$.dispatch(new ToggleRemoveFaultMode());
-    }
     this.store$.dispatch(new ToggleDangerousFaultMode());
   }
 

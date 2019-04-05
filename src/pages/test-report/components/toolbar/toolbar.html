@@ -33,7 +33,7 @@
       D
     </button>
     </ion-col>
-    <ion-col col-12 *ngIf="!isSeriousMode && !isDangerousMode">
+    <ion-col class="fault-summary" col-12 *ngIf="!isSeriousMode && !isDangerousMode">
         <driving-fault-summary></driving-fault-summary>
     </ion-col>
     <ion-col *ngIf="!isSeriousMode && !isDangerousMode">
