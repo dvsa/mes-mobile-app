@@ -1,17 +1,19 @@
-import { ToolbarComponent } from '../toolbar';
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { DrivingFaultSummaryComponent } from '../../driving-fault-summary/driving-fault-summary';
+
 import { IonicModule, Config, NavController } from 'ionic-angular';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { ConfigMock, NavControllerMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
+
+import { ToolbarComponent } from '../toolbar';
+import { DrivingFaultSummaryComponent } from '../../driving-fault-summary/driving-fault-summary';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { SeriousTooltipComponent } from '../../serious-tooltip/serious-tooltip';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
+import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
 import { testReportReducer } from '../../../test-report.reducer';
 import { DangerousTooltipComponent } from '../../dangerous-tooltip/dangerous-tooltip';
-import { By } from '@angular/platform-browser';
 
 describe('ToolbarComponent', () => {
   let fixture: ComponentFixture<ToolbarComponent>;
@@ -49,7 +51,13 @@ describe('ToolbarComponent', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+    describe('togglRemoveFaultMode', () => {
+      it('should dispatch a TOGGLE_REMOVE_FAULT_MODE action', () => {
+        component.toggleRemoveFaultMode();
 
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+      });
+    });
     describe('toggleSeriousMode', () => {
       it('should dispatch a TOGGLE_SERIOUS_FAULT_MODE action', () => {
         component.toggleSeriousMode();
@@ -62,6 +70,7 @@ describe('ToolbarComponent', () => {
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
       });
+
     });
 
     describe('toggleDangerousMode', () => {
@@ -97,6 +106,7 @@ describe('ToolbarComponent', () => {
 
       expect(component.isSeriousMode).toBeTruthy();
       expect(component.isDangerousMode).toBeFalsy();
+      expect(component.isRemoveFaultMode).toBeFalsy();
 
       expect(fixture.debugElement.query(By.css('#serious-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeDefined();
@@ -112,7 +122,7 @@ describe('ToolbarComponent', () => {
       component.isDangerousMode = true;
 
       fixture.detectChanges();
-
+      expect(component.isRemoveFaultMode).toBeFalsy();
       expect(component.isSeriousMode).toBeFalsy();
       expect(component.isDangerousMode).toBeTruthy();
 

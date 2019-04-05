@@ -10,6 +10,9 @@ page-test-report {
     box-sizing: border-box;
     height: calc(100% - #{$toolbar-height});
     border: $report-mode-border-width solid map-get($colors-gds, 'gds-grey-3');
+    &.remove-mode {
+      border: $report-mode-border-width solid map-get($colors-gds, 'gds-black');
+    }
     &.serious-mode {
       border: $report-mode-border-width solid map-get($colors-gds, 'gds-yellow');
     }

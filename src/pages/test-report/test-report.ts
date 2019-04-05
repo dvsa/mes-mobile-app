@@ -17,7 +17,7 @@ import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from './test-report.reducer';
-import { isSeriousMode, isDangerousMode } from './test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
 import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
@@ -25,6 +25,7 @@ import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
+  isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<Manoeuvres>;
@@ -41,10 +42,10 @@ export class TestReportPage extends BasePageComponent {
   subscription: Subscription;
   competencies = Competencies;
   displayOverlay: boolean;
+  isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
-  manoeuvresCompleted: boolean = false;
   isDangerousMode: boolean = false;
-
+  manoeuvresCompleted: boolean = false;
   constructor(
     private store$: Store<StoreModel>,
     private deviceProvider: DeviceProvider,
@@ -73,6 +74,10 @@ export class TestReportPage extends BasePageComponent {
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
+      isRemoveFaultMode$: this.store$.pipe(
+        select(getTestReportState),
+        select(isRemoveFaultMode),
+      ),
       isSeriousMode$: this.store$.pipe(
         select(getTestReportState),
         select(isSeriousMode),
@@ -89,9 +94,17 @@ export class TestReportPage extends BasePageComponent {
       ),
     };
 
-    const { candidateUntitledName$, isSeriousMode$, isDangerousMode$, manoeuvres$ } = this.pageState;
+    const {
+      candidateUntitledName$,
+      isRemoveFaultMode$,
+      isSeriousMode$,
+      isDangerousMode$,
+      manoeuvres$,
+    } = this.pageState;
+
     const merged$ = merge(
       candidateUntitledName$,
+      isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
       manoeuvres$.pipe(map(manoeuvres => this.manoeuvresCompleted = Object.values(manoeuvres)[0])),
@@ -131,6 +144,12 @@ export class TestReportPage extends BasePageComponent {
   fail(): void {
     this.navCtrl.push('DebriefPage', { outcome: 'fail' });
 
+  }
+
+  getBorderModeCSS(): string {
+    return this.isRemoveFaultMode ? 'remove-mode'
+    : this.isSeriousMode ? 'serious-mode'
+    : this.isDangerousMode ? 'dangerous-mode' : '';
   }
 }
 export interface OverlayCallback {
