@@ -57,18 +57,6 @@ describe('ToolbarComponent', () => {
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });
-      it('should dispatch a TOGGLE_SERIOUS_FAULT_MODE action if serious mode is active', () => {
-        component.isSeriousMode = true;
-        component.toggleremoveFaultMode();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
-      });
-      it('should dispatch a TOGGLE_DANGEROUS_FAULT_MODE action if dangerous mode is active', () => {
-        component.isDangerousMode = true;
-        component.toggleremoveFaultMode();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
-      });
     });
     describe('toggleSeriousMode', () => {
       it('should dispatch a TOGGLE_SERIOUS_FAULT_MODE action', () => {
@@ -82,12 +70,7 @@ describe('ToolbarComponent', () => {
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
       });
-      it('should dispatch a TOGGLE_REMOVE_FAULT_MODE action if remove mode is active', () => {
-        component.isRemoveFaultMode = true;
-        component.toggleSeriousMode();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
-      });
     });
 
     describe('toggleDangerousMode', () => {
@@ -95,12 +78,6 @@ describe('ToolbarComponent', () => {
         component.toggleDangerousMode();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
-      });
-      it('should dispatch a TOGGLE_REMOVE_FAULT_MODE action if remove mode is active', () => {
-        component.isRemoveFaultMode = true;
-        component.toggleDangerousMode();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });
     });
   });
