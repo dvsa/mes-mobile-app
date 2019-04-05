@@ -14,7 +14,7 @@ competency {
     line-height: 25px;
     letter-spacing: -0.26px;
     font-weight: 500;
-    padding-left: 3px;
+    padding-left: 5px;
     padding-right: 5px;
     & ion-row {
       width: 100%
@@ -63,6 +63,11 @@ competency {
 
     .fault-wrapper {
       display: flex;
+    }
+
+    .serious-fault-badge {
+      display: inline-block;
+      margin-right: 3px;
     }
   }
 }
