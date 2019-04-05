@@ -134,7 +134,7 @@ export class CompetencyComponent {
     this.store$.dispatch(new AddDangerousFault(this.competency));
   }
 
-  buttonClick = (): void => {
+  competencyClick = (): void => {
     if (!this.isDangerousMode && !this.isSeriousMode) {
       return;
     }

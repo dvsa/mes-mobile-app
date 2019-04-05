@@ -224,6 +224,30 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
       });
     });
+
+    describe('buttonClick', () => {
+      it('should dispatch ADD_DANGEROUS_FAULT action if dangerous mode is active', () => {
+        component.competency = Competencies.clearance;
+        component.isDangerousMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.recordFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDangerousFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+      });
+
+      it('should dispatch ADD_SERIOUS_FAULT action if serious mode is active', () => {
+        component.competency = Competencies.clearance;
+        component.isSeriousMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.recordFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddSeriousFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+      });
+    });
   });
 
   // describe('DOM', () => {
