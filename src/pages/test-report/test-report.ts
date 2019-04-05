@@ -145,6 +145,12 @@ export class TestReportPage extends BasePageComponent {
     this.navCtrl.push('DebriefPage', { outcome: 'fail' });
 
   }
+
+  getBorderModeCSS(): string {
+    return this.isRemoveFaultMode ? 'remove-mode'
+    : this.isSeriousMode ? 'serious-mode'
+    : this.isDangerousMode ? 'dangerous-mode' : '';
+  }
 }
 export interface OverlayCallback {
   callbackMethod: () => void;
