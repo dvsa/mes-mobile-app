@@ -21,7 +21,7 @@ interface ToolbarComponentState {
 })
 export class ToolbarComponent {
 
-  componenetState: ToolbarComponentState;
+  componentState: ToolbarComponentState;
   subscription: Subscription;
 
   isRemoveFaultMode: boolean = false;
@@ -31,7 +31,7 @@ export class ToolbarComponent {
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
-    this.componenetState = {
+    this.componentState = {
       isRemoveFaultMode$: this.store$.pipe(
         select(getTestReportState),
         select(isRemoveFaultMode),
@@ -46,7 +46,7 @@ export class ToolbarComponent {
       ),
     };
 
-    const { isRemoveFaultMode$, isSeriousMode$, isDangerousMode$ } = this.componenetState;
+    const { isRemoveFaultMode$, isSeriousMode$, isDangerousMode$ } = this.componentState;
 
     const merged$ = merge(
       isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
@@ -74,6 +74,9 @@ export class ToolbarComponent {
   }
 
   toggleDangerousMode(): void {
+    if (this.isSeriousMode) {
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+    }
     this.store$.dispatch(new ToggleDangerousFaultMode());
   }
 

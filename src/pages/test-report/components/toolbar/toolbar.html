@@ -40,10 +40,10 @@
       <!-- Placeholder for Timer -->
     </ion-col>
     <ion-col *ngIf="isSeriousMode" no-padding>
-      <serious-tooltip></serious-tooltip>
+      <serious-tooltip [isRemoveMode]="isRemoveFaultMode"></serious-tooltip>
     </ion-col>
     <ion-col *ngIf="isDangerousMode" no-padding>
-      <dangerous-tooltip></dangerous-tooltip>
+      <dangerous-tooltip [isRemoveMode]="isRemoveFaultMode"></dangerous-tooltip>
     </ion-col>
   </ion-row>
 </div>
