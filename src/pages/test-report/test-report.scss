@@ -1,4 +1,4 @@
-$report-mode-border-width: 6px;
+$report-mode-border-width: 4px;
 $toolbar-height: 68px;
 page-test-report {
 
@@ -22,7 +22,7 @@ page-test-report {
   }
 
   .first-row-adjust {
-    margin: -2px 0;
+    margin: -6px 0;
   }
 
   .section-header {
@@ -53,7 +53,7 @@ page-test-report {
     visibility: hidden;
     &.contract{
       top: $toolbar-height + $report-mode-border-width;
-      left: 6px;
+      left: 4px;
       width: calc(100% - #{$report-mode-border-width *2});
       height: calc(100% - #{$toolbar-height + $report-mode-border-width*2});
     }
