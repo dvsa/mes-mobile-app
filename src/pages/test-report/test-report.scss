@@ -43,7 +43,7 @@ page-test-report {
     margin: 4px 8px;
   }
   .report-overlay {
-    background-color: rgba(0, 0, 0, 0.80);
+    background-color: rgba(0, 0, 0, 0.90);
     position: absolute;
     top: $toolbar-height;
     left: 0px;
@@ -94,7 +94,7 @@ page-test-report {
 
   .show-overlay {
     animation-name: showAnimation;
-    animation-duration: 0.6s;
+    animation-duration: 0.4s;
     animation-fill-mode: forwards;
   }
   .hide-overlay {
