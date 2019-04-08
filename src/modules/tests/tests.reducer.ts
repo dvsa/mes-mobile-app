@@ -12,6 +12,7 @@ import { passCompletionReducer } from './pass-completion/pass-completion.reducer
 import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-result.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
+import { testSummaryReducer } from './test-summary/test-summary.reducer';
 
 export interface CurrentTest {
   slotId: string;
@@ -64,6 +65,7 @@ export const testsReducer = (
             eyesightTestResult: eyesightTestResultReducer,
             postTestDeclarations: postTestDeclarationsReducer,
             vehicleChecks: vehicleChecksReducer,
+            testSummary: testSummaryReducer,
           },
         // @ts-ignore
         )(state.startedTests[slotId], action),
