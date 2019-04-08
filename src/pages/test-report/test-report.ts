@@ -24,7 +24,6 @@ import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
 import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
 
-
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
   isRemoveFaultMode$: Observable<boolean>;
