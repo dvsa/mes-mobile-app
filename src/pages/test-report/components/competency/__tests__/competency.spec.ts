@@ -196,17 +196,6 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDangerousFault(component.competency));
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
       });
-      it('should not dispatch a ADD_DANGEROUS_FAULT action if there is a dangerous fault', () => {
-        component.competency = Competencies.clearance;
-        component.hasDangerousFault = true;
-        component.isDangerousMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
-
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDangerousFault(component.competency));
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
-      });
     });
 
     describe('addSeriousFault', () => {
