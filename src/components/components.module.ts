@@ -3,7 +3,7 @@ import { SignatureAreaComponent } from './signature-area/signature-area';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { CommonModule } from '@angular/common';
 import { LockScreenIndicator } from './screen-lock-indicator/lock-screen-indicator';
-import { FaultCounterComponent } from './fault-counter/fault-counter';
+import { DrivingFaultsBadgeComponent } from './driving-faults-badge/driving-faults-badge';
 import { SeriousFaultBadgeComponent } from './serious-fault-badge/serious-fault-badge';
 import { DangerousFaultBadgeComponent } from './dangerous-fault-badge/dangerous-fault-badge';
 
@@ -11,7 +11,7 @@ import { DangerousFaultBadgeComponent } from './dangerous-fault-badge/dangerous-
   declarations: [
     SignatureAreaComponent,
     LockScreenIndicator,
-    FaultCounterComponent,
+    DrivingFaultsBadgeComponent,
     SeriousFaultBadgeComponent,
     DangerousFaultBadgeComponent,
   ],
@@ -22,7 +22,7 @@ import { DangerousFaultBadgeComponent } from './dangerous-fault-badge/dangerous-
   exports:[
     SignatureAreaComponent,
     LockScreenIndicator,
-    FaultCounterComponent,
+    DrivingFaultsBadgeComponent,
     SeriousFaultBadgeComponent,
     DangerousFaultBadgeComponent,
   ],

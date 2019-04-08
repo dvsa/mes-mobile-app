@@ -1,6 +1,6 @@
 <button #competencyButton (tap)="this.addOrRemoveFault(true)">
 
-  <fault-counter class="driving-faults" [count]="faultCount"></fault-counter>
+  <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
 
   <span class='competency-label'>{{ getLabel() }}</span>
 

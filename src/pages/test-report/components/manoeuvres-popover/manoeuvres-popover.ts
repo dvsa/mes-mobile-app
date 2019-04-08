@@ -16,10 +16,13 @@ import { ManoeuvreTypes } from './manoeuvres-popover.constants';
   templateUrl: 'manoeuvres-popover.html',
 })
 export class ManoeuvresPopoverComponent {
+
   public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
   subscription: Subscription;
+
   constructor(private store$: Store<StoreModel>) { }
+
   ngOnInit(): void {
     this.manoeuvres$ = this.store$.pipe(
       select(getTests),
@@ -28,6 +31,7 @@ export class ManoeuvresPopoverComponent {
       select(getManoeuvres),
     );
   }
+
   recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
     this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
   }

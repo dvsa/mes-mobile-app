@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { CompetencyWithModalComponent } from '../competency-with-modal';
 import { AppModule } from '../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
-import { FaultCounterComponent } from '../../../../../components/fault-counter/fault-counter';
+import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
@@ -18,7 +18,7 @@ describe('CompetencyWithModalComponent', () => {
       declarations: [
         CompetencyWithModalComponent,
         TickIndicatorComponent,
-        MockComponent(FaultCounterComponent),
+        MockComponent(DrivingFaultsBadgeComponent),
       ],
       imports: [
         IonicModule,

@@ -3,10 +3,10 @@ import { Component, Input } from '@angular/core';
 // TODO: This has to be renamed to driving-faults-badge
 
 @Component({
-  selector: 'fault-counter',
-  templateUrl: 'fault-counter.html',
+  selector: 'driving-faults-badge',
+  templateUrl: 'driving-faults-badge.html',
 })
-export class FaultCounterComponent {
+export class DrivingFaultsBadgeComponent {
   @Input()
   count: number;
 }

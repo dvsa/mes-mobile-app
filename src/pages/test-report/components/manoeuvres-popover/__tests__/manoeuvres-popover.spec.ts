@@ -9,7 +9,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
-import { FaultCounterComponent } from '../../../../../components/fault-counter/fault-counter';
+import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
@@ -21,7 +21,7 @@ describe('ManoeuvresPopoverComponent', () => {
       declarations: [
         ManoeuvresPopoverComponent,
         MockComponent(CompetencyComponent),
-        MockComponent(FaultCounterComponent),
+        MockComponent(DrivingFaultsBadgeComponent),
       ],
       imports: [
         IonicModule,
