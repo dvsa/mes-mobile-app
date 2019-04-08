@@ -14,6 +14,8 @@ export function applicationReferenceReducer(
   action: testOutcomeActions.Types,
 ): ApplicationReference {
   switch (action.type) {
+
+    // TODO: Deal with a more specific action here so that we don't need to introduce logic to the reducer
     case testOutcomeActions.TEST_OUTCOME_START_TEST:
       if (!has(action, 'payload.booking.application')) {
         return null;
