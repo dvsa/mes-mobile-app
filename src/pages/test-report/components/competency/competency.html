@@ -1,4 +1,4 @@
-<button #competencyButton (click)="competencyClick()">
+<button #competencyButton (tap)="this.addOrRemoveFault(true)">
 
   <fault-counter class="driving-faults" [count]="faultCount"></fault-counter>
 
