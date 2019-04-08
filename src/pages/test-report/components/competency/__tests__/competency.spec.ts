@@ -1,4 +1,3 @@
-
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
@@ -27,7 +26,7 @@ import { DangerousFaultBadgeComponent } from '../../../../../components/dangerou
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
 import { TestOutcomeStartTest } from '../../../../journal/components/test-outcome/test-outcome.actions';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -358,6 +357,20 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
 
+      it('should remove serious mode after removal attempt on competency with no serious fault', () => {
+        component.competency = Competencies.controlsSteering;
+        component.hasSeriousFault = false;
+        component.isSeriousMode = true;
+        component.isRemoveFaultMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        fixture.detectChanges();
+        expect(component.isSeriousMode).toEqual(false);
+      });
+
     });
 
     describe('removeDangerousFault', () => {
@@ -405,7 +418,19 @@ describe('CompetencyComponent', () => {
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
+      it('should remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
+        component.competency = Competencies.controlsSteering;
+        component.hasDangerousFault = false;
+        component.isDangerousMode = true;
+        component.isRemoveFaultMode = true;
 
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        fixture.detectChanges();
+        expect(component.isDangerousMode).toEqual(false);
+      });
     });
 
     describe('buttonClick', () => {

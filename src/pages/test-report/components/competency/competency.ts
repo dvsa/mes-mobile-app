@@ -198,6 +198,13 @@ export class CompetencyComponent {
     }
 
     this.store$.dispatch(new ToggleRemoveFaultMode());
+    //  S and D can remain on in some conditions.
+    if (this.isSeriousMode) {
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+    }
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+    }
   }
 
   /**
