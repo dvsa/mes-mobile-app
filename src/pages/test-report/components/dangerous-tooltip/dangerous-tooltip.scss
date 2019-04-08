@@ -9,7 +9,7 @@ dangerous-tooltip {
     height: 44px;
     background: map-get($colors, 'mes-white');
     border: 4px solid map-get($colors-gds, 'gds-red');
-    color: #505151;
+    color: map-get($colors-gds, "gds-black");
     font-weight: bold;
     text-align: center;
     letter-spacing: -0.33px;
