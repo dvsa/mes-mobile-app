@@ -14,7 +14,10 @@ tick-indicator {
         display: flex;
         justify-content: center;
         height: 100%;
-        .tick-icon{
+        .tick-icon {
+          &.icon-ios {
+            margin: 2px 0 0 2px;
+          }
           font-size: 25px;
           font-weight: 700;
           align-self: center; 
