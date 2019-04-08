@@ -2,15 +2,16 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { TestOutcomeStartTest } from './test-outcome.actions';
+import { StartTest } from '../../journal.actions';
 
 @Component({
   selector: 'test-outcome',
   templateUrl: 'test-outcome.html',
 })
 export class TestOutcomeComponent {
+
   @Input()
-  slot: any;
+  slotId: string;
 
   @Input()
   canStartTest: boolean;
@@ -36,7 +37,7 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
-    this.store$.dispatch(new TestOutcomeStartTest(this.slot));
+    this.store$.dispatch(new StartTest(this.slotId));
     this.navController.push('WaitingRoomPage');
   }
 }

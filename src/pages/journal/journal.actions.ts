@@ -19,6 +19,8 @@ export const SELECT_PREVIOUS_DAY = '[JournalPage] Select Previous Day';
 export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
 export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 
+export const START_TEST = '[TestOutcomeComponent] Start Test';
+
 // Analytic actions
 
 export const JOURNAL_VIEW_DID_ENTER = '[JournalPage] Journal view did enter';
@@ -108,6 +110,11 @@ export class JournalRefresh implements Action {
   constructor(public mode: string) {}
 }
 
+export class StartTest implements Action {
+  readonly type = START_TEST;
+  constructor(public slotId: string) {}
+}
+
 export type JournalActionTypes =
   | LoadJournal
   | LoadJournalSilent
@@ -124,4 +131,5 @@ export type JournalActionTypes =
   | JournalViewDidEnter
   | JournalNavigateDay
   | JournalRefreshError
-  | JournalRefresh;
+  | JournalRefresh
+  | StartTest;

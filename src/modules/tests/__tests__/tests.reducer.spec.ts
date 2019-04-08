@@ -1,6 +1,5 @@
 import { testsReducer, TestsModel } from '../tests.reducer';
-import * as testOutcomeActions from '../../../pages/journal/components/test-outcome/test-outcome.actions';
-import { TestSlot } from '../../../shared/models/DJournal';
+import * as journalActions from '../../../pages/journal/journal.actions';
 import * as candidateReducer from '../candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
@@ -22,12 +21,8 @@ describe('testsReducer', () => {
       startedTests: {},
       testLifecycles: {},
     };
-    const startTestPayload: TestSlot = {
-      slotDetail: {
-        slotId: 123,
-      },
-    };
-    const action = new testOutcomeActions.TestOutcomeStartTest(startTestPayload);
+    const slotId = '123';
+    const action = new journalActions.StartTest(slotId);
 
     const output = testsReducer(state, action);
 
@@ -41,7 +36,7 @@ describe('testsReducer', () => {
       testLifecycles: {},
     };
 
-    const result = testsReducer(state, new testOutcomeActions.TestOutcomeStartTest({ slotDetail: { slotId: 123 } }));
+    const result = testsReducer(state, new journalActions.StartTest('123'));
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();

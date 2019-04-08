@@ -19,13 +19,15 @@ import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
   getSelectedDate, getLastRefreshed, getSlots,
-  canNavigateToPreviousDay, canNavigateToNextDay,
+  canNavigateToPreviousDay, canNavigateToNextDay, getSlotsOnSelectedDate,
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
+import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -145,6 +147,27 @@ export class JournalEffects {
         return of(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
       }
       return of();
+    }),
+  );
+
+  @Effect()
+  startTestEffect$ = this.actions$.pipe(
+    ofType(journalActions.START_TEST),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        map(getSlotsOnSelectedDate),
+      ),
+    ),
+    switchMap(([action, slots]) => {
+      const startTestAction = action as journalActions.StartTest;
+
+      const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
+
+      return [
+        new PopulateApplicationReference(slot.slotData.booking.application),
+        new PopulateCandidateDetails(slot.slotData.booking.candidate),
+      ];
     }),
   );
 

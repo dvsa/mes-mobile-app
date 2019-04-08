@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { Subscription } from 'rxjs/Subscription';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { TestOutcomeStartTest } from '../../../../journal/components/test-outcome/test-outcome.actions';
+import { StartTest } from '../../../../journal/journal.actions';
 import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
 
@@ -51,7 +51,7 @@ describe('DrivingFaultSummary', () => {
     beforeEach(() => {
       componentEl = fixture.debugElement;
 
-      store$.dispatch(new TestOutcomeStartTest({ slotDetail: { slotId: 103 } }));
+      store$.dispatch(new StartTest('103'));
     });
 
     it('should display 0 driving faults for a new test', () => {

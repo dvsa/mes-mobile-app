@@ -25,8 +25,8 @@ import { IonicModule } from 'ionic-angular';
 import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
-import { TestOutcomeStartTest } from '../../../../journal/components/test-outcome/test-outcome.actions';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
+import { StartTest } from '../../../../journal/journal.actions';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -64,7 +64,7 @@ describe('CompetencyComponent', () => {
         renderer = TestBed.get(Renderer2);
         store$ = TestBed.get(Store);
 
-        store$.dispatch(new TestOutcomeStartTest({ slotDetail: { slotId: 103 } }));
+        store$.dispatch(new StartTest('103'));
       });
   }));
 
