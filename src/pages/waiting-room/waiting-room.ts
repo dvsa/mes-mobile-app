@@ -24,6 +24,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -143,6 +144,7 @@ export class WaitingRoomPage extends BasePageComponent {
     if (this.form.valid) {
       this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
+        this.store$.dispatch(new TestStatusStarted());
         this.navCtrl.push('WaitingRoomToCarPage');
       })
       .catch((err) => {
