@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTest } from '../../journal.actions';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 
 @Component({
   selector: 'test-outcome',
@@ -15,6 +16,9 @@ export class TestOutcomeComponent {
 
   @Input()
   canStartTest: boolean;
+
+  @Input()
+  testStatus: TestStatus;
 
   canSubmitTest: boolean = false;
   outcome: string;
@@ -29,7 +33,7 @@ export class TestOutcomeComponent {
   }
 
   showStartTestButton(): boolean {
-    return (this.outcome === undefined || this.outcome == null) && !this.canSubmitTest;
+    return (this.outcome === undefined || this.outcome == null) && !this.canSubmitTest && !this.needsFinalisation();
   }
 
   showSubmitTestButton(): boolean {
@@ -39,5 +43,9 @@ export class TestOutcomeComponent {
   startTest() {
     this.store$.dispatch(new StartTest(this.slotId));
     this.navController.push('WaitingRoomPage');
+  }
+
+  needsFinalisation(): boolean {
+    return this.testStatus === TestStatus.Decided;
   }
 }

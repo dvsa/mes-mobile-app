@@ -7,6 +7,7 @@ import { TestCategory } from '../../../../shared/models/test-category';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 
 @Component({
   selector: 'test-slot',
@@ -21,6 +22,9 @@ export class TestSlotComponent implements SlotComponent {
 
   @Input()
   showLocation: boolean;
+
+  @Input()
+  slotStatus: TestStatus;
 
   constructor(
     public screenOrientation: ScreenOrientation,

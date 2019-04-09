@@ -19,6 +19,9 @@
       <ion-col *ngIf="showSubmitTestButton()">
         <span><button class="mes-secondary-button" ion-button><h3>Submit</h3></button></span>
       </ion-col>
+      <ion-col *ngIf="needsFinalisation()">
+        <span><button class="mes-secondary-button needs-finalisation" ion-button><h3>Finalise</h3></button></span>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </div>
