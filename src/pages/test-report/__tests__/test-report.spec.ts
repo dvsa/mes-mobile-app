@@ -64,6 +64,7 @@ describe('TestReportPage', () => {
             currentTest: {
               slotId: '123',
             },
+            testLifecycles: {},
             startedTests: {
               123: {
                 testData: initialState,

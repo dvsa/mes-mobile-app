@@ -27,7 +27,7 @@ describe('testsSelector', () => {
         journal,
         appInfo,
         logs,
-        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' } },
+        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' }, testLifecycles: {} },
       };
 
       const result = getCurrentTest(state.tests);

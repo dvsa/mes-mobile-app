@@ -6,7 +6,7 @@ export const initialState = TestStatus.NotStarted;
 
 export function testStatusReducer(
   state = initialState,
-  action: testStatusActions.Types,
+  action,
 ): TestStatus {
   switch (action.type) {
     case testStatusActions.TEST_STATUS_STARTED:
