@@ -111,6 +111,22 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async)">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row align-items-start class="mes-data">
+          <ion-col col-3></ion-col>
+          <ion-col col-34>
+            <h4 class="fault-heading">ECO</h4>
+          </ion-col>
+          <ion-col align-self-start>
+            <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 <ion-footer>
   <div id="end-debrief-background">

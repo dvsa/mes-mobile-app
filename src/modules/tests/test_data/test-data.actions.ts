@@ -1,5 +1,5 @@
 import {
-   ManoeuvreTypes,
+  ManoeuvreTypes,
 } from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
@@ -18,6 +18,8 @@ export const TOGGLE_ANGLED_START = '[Legal Requirements] Toggle Angled Start';
 export const TOGGLE_HILL_START = '[Legal Requirements] Toggle Hill Start';
 export const TOGGLE_VERBAL_ETA = '[Eta] Toggle Verbal Eta';
 export const TOGGLE_PHYSICAL_ETA = '[Eta] Toggle Physical Eta';
+export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
+export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
 
 export class RecordManoeuvresSelection implements Action {
   constructor(public manoeuvre: ManoeuvreTypes) { }
@@ -68,6 +70,12 @@ export class ToggleVerbalEta implements Action {
 export class TogglePhysicalEta implements Action {
   readonly type = TOGGLE_PHYSICAL_ETA;
 }
+export class ToggleControlEco implements Action {
+  readonly type = TOGGLE_CONTROL_ECO;
+}
+export class TogglePlanningEco implements Action {
+  readonly type = TOGGLE_PLANNING_ECO;
+}
 
 export type Types =
   | RecordManoeuvresSelection
@@ -82,4 +90,6 @@ export type Types =
   | ToggleAngledStart
   | ToggleHillStart
   | ToggleVerbalEta
-  | TogglePhysicalEta;
+  | TogglePhysicalEta
+  | ToggleControlEco
+  | TogglePlanningEco;
