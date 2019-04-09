@@ -43,11 +43,11 @@
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
               <ion-col col-64>
-                <ion-textarea #routeInput  rows=5 id="physical-description" formControlName="candidateDescriptionCtrl"
+                <textarea type="textarea" class="text-area" #routeInput id="physical-description" formControlName="candidateDescriptionCtrl"
                   class="vehicle-reg-input"
                   [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"
                   [value]="pageState.candidateDescription$ | async">
-                  </ion-textarea>
+                </textarea>
               </ion-col>
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
@@ -70,14 +70,14 @@
               <ion-col col-32>
                 <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
                   id="debrief-witnessed-yes" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="manualTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefWitnessed()"
                   [checked]="pageState.debriefWitnessedYesRadioChecked$ | async" value='Yes'>
                 <label for="debrief-witnessed-yes" class="radio-label">Yes</label>
               </ion-col>
               <ion-col col-32>
                 <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
                   id="debrief-witnessed-no" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="automaticTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefUnwitnessed()"
                   [checked]="pageState.debriefWitnessedNoRadioChecked$ | async" value='No'>
                 <label for="debrief-witnessed-no" class="radio-label">No</label>
               </ion-col>
@@ -102,14 +102,14 @@
               <ion-col col-32>
                 <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
                   id="identification-license" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="manualTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationLicense()"
                   [checked]="pageState.identificationLicenseRadioChecked$ | async" value='License'>
                 <label for="identification-license" class="radio-label">Yes</label>
               </ion-col>
               <ion-col col-32>
                 <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
                   id="identification-passport" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="automaticTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationPassport()"
                   [checked]="pageState.identificationPassportRadioChecked$ | async" value='Passport'>
                 <label for="identification-passport" class="radio-label">Passport</label>
               </ion-col>
@@ -138,7 +138,7 @@
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
               <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl')">
-                Enter the tell me questionroute number
+                Enter the tell me question
               </div>
             </ion-row>
           </ion-col>
@@ -156,14 +156,14 @@
               <ion-col col-32>
                 <input type="radio" formControlName="independentDrivingCtrl" name="independentDrivingCtrl"
                   id="independent-driving-satnav" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')" (click)="manualTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')" (click)="satNavUsed()"
                   [checked]="pageState.independentDrivingSatNavRadioChecked$ | async" value='Sat nav'>
                 <label for="independent-driving-satnav" class="radio-label">Sat Nav</label>
               </ion-col>
               <ion-col col-32>
                 <input type="radio" formControlName="independentDrivingCtrl" name="independentDrivingCtrl"
                   id="independent-driving-trafficsigns" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')" (click)="automaticTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')" (click)="trafficSignsUsed()"
                   [checked]="pageState.independentDrivingTrafficSignsRadioChecked$ | async" value='Traffic signs'>
                 <label for="independent-driving-trafficsigns" class="radio-label">Traffic signs</label>
               </ion-col>
@@ -187,13 +187,13 @@
             <ion-row>
               <ion-col col-32>
                 <input type="radio" formControlName="d255Ctrl" name="d255Ctrl" id="d255-yes" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="manualTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="d255Yes()"
                   [checked]="pageState.d255YesRadioChecked$ | async" value='Yes'>
                 <label for="d255-yes" class="radio-label">Yes</label>
               </ion-col>
               <ion-col col-32>
                 <input type="radio" formControlName="d255Ctrl" name="d255Ctrl" id="d255-no" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="automaticTransmission()"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="d255No()"
                   [checked]="pageState.d255NoRadioChecked$ | async" value='No'>
                 <label for="d255-no" class="radio-label">No</label>
               </ion-col>
@@ -213,25 +213,28 @@
           <ion-col align-self-center>
             <ion-row>
               <ion-col col-32>
-                <input #additionalInformationInput type="textarea" id="additional-information"
+                <textarea #additionalInformationInput  id="additional-information"
                   [value]="pageState.additionalInformation$ | async">
+                </textarea>
               </ion-col>
             </ion-row>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-footer>
-        <ion-row class="mes-full-width-card">
-          <ion-col col-90>
-            <span>Save and continue later</span>
-          </ion-col>
-          <ion-col col-6>
-            <button type="submit" class="mes-primary-button" ion-button>
-              <h3>Submit</h3>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-footer>
+
     </form>
   </div>
 </ion-content>
+<ion-footer>
+  <ion-row class="mes-full-width-card">
+    <ion-col col-12>
+      <span>Save and continue later</span>
+    </ion-col>
+    <ion-col col-72></ion-col>
+    <ion-col col-12>
+      <button type="submit" class="mes-primary-button" ion-button>
+        <h3>Submit</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

@@ -25,6 +25,26 @@ export function testSummaryReducer(
         ...state,
         routeNumber: action.routeNumber,
       };
+    case testSummaryActions.DEBRIEF_WITNESSED_CHANGED:
+      return {
+        ...state,
+        // TODO needs added to schema debriefWitnessed: action.witnessed,
+      };
+    case testSummaryActions.IDENTIFICATION_USED_CHANGED:
+      return {
+        ...state,
+        // TODO needs added to schema debriefWitnessed: action.identification,
+      };
+    case testSummaryActions.INDEPENDENT_DRIVING_TYPE_CHANGED:
+      return {
+        ...state,
+        // TODO needs added to schema debriefWitnessed: action.drivingType,
+      };
+    case testSummaryActions.D255_CHANGED:
+      return {
+        ...state,
+        // TODO needs added to schema debriefWitnessed: action.change,
+      };
     default:
       return state;
   }

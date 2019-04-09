@@ -22,6 +22,10 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import {
   AdditionalInformationChanged,
   RouteNumberChanged,
+  D255Changed,
+  IndependentDrivingTypeChanged,
+  IdentificationUsedChanged,
+  DebriefWitnessedChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 
 interface OfficePageState {
@@ -179,6 +183,34 @@ export class OfficePage extends BasePageComponent {
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  }
+
+  debriefWitnessed(): void {
+    this.store$.dispatch(new DebriefWitnessedChanged('Yes'));
+  }
+  debriefUnwitnessed(): void {
+    this.store$.dispatch(new DebriefWitnessedChanged('No'));
+  }
+
+  identificationLicense(): void {
+    this.store$.dispatch(new IdentificationUsedChanged('License'));
+  }
+  identificationPassport(): void {
+    this.store$.dispatch(new IdentificationUsedChanged('Passport'));
+  }
+
+  satNavUsed(): void {
+    this.store$.dispatch(new IndependentDrivingTypeChanged('Sat nav'));
+  }
+  trafficSignsUsed(): void {
+    this.store$.dispatch(new IndependentDrivingTypeChanged('Traffic signs'));
+  }
+
+  d255Yes(): void {
+    this.store$.dispatch(new D255Changed('Yes'));
+  }
+  d255No(): void {
+    this.store$.dispatch(new D255Changed('No'));
   }
 
 }
