@@ -1,5 +1,5 @@
 
-import { TestData, ETA } from '@dvsa/mes-test-schema/categories/B';
+import { TestData, ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies } from './test-data.constants';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
@@ -26,8 +26,17 @@ export const getETA = (data: TestData) => data.ETA;
 export const getETAVerbal = (data: ETA) => data.verbal;
 export const getETAPhysical = (data: ETA) => data.physical;
 export const getETAFaultText = (data: ETA) => {
+  if (!data) return;
   if (data.physical && !data.verbal) return 'Physical';
   if (!data.physical && data.verbal) return 'Verbal';
   if (data.physical && data.verbal) return 'Physical and Verbal';
+  return;
+};
+export const getEco = (data: TestData) => data.eco;
+export const getEcoFaultText = (data: Eco) => {
+  if (!data) return;
+  if (data.adviceGivenControl && !data.adviceGivenPlanning) return 'Control';
+  if (!data.adviceGivenControl && data.adviceGivenPlanning) return 'Planning';
+  if (data.adviceGivenControl && data.adviceGivenPlanning) return 'Control and Planning';
   return;
 };

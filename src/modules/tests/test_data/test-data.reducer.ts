@@ -8,7 +8,8 @@ export const initialState: TestData = {
   manoeuvres: {},
   seriousFaults: {},
   testRequirements: {},
-  ETA:{},
+  ETA: {},
+  eco: {},
 };
 
 export function testDataReducer(
@@ -93,6 +94,22 @@ export function testDataReducer(
         ETA: {
           ...state.ETA,
           physical: !state.ETA.physical,
+        },
+      };
+    case testDataActions.TOGGLE_CONTROL_ECO:
+      return {
+        ...state,
+        eco: {
+          ...state.eco,
+          adviceGivenControl: !state.eco.adviceGivenControl,
+        },
+      };
+    case testDataActions.TOGGLE_PLANNING_ECO:
+      return {
+        ...state,
+        eco: {
+          ...state.eco,
+          adviceGivenPlanning: !state.eco.adviceGivenPlanning,
         },
       };
 

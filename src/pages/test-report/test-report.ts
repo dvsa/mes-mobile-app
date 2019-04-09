@@ -22,6 +22,7 @@ import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector'
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { ToggleControlEco, TogglePlanningEco } from '../../modules/tests/test_data/test-data.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -131,6 +132,13 @@ export class TestReportPage extends BasePageComponent {
   fail(): void {
     this.navCtrl.push('DebriefPage', { outcome: 'fail' });
 
+  }
+
+  toggleControl(): void {
+    this.store$.dispatch(new ToggleControlEco());
+  }
+  togglePlanning(): void {
+    this.store$.dispatch(new TogglePlanningEco());
   }
 }
 export interface OverlayCallback {
