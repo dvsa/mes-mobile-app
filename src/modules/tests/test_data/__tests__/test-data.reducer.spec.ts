@@ -8,6 +8,8 @@ import {
   ToggleAngledStart,
   ToggleHillStart,
   AddDangerousFault,
+  ToggleControlEco,
+  TogglePlanningEco,
 } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
@@ -218,6 +220,46 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(modifiedState, new ToggleHillStart());
 
       expect(result.testRequirements.hillStart).toBeFalsy();
+
+    });
+  });
+
+  describe('TOGGLE_CONTROL_ECO', () => {
+    it('should toggle control eco fault (true when dispatched first time)', () => {
+      const state: TestData = {
+        eco: {},
+      };
+      const result = testDataReducer(state, new ToggleControlEco());
+      expect(result.eco.adviceGivenControl).toBeTruthy();
+    });
+
+    it('should toggle control eco fault (false when dispatched second time)', () => {
+      const state: TestData = {
+        eco: {},
+      };
+      const modifiedState = testDataReducer(state, new ToggleControlEco());
+      const result = testDataReducer(modifiedState, new ToggleControlEco());
+      expect(result.eco.adviceGivenControl).toBeFalsy();
+    });
+  });
+
+  describe('TOGGLE_PLANNING_ECO', () => {
+    it('should toggle the planning eco fault (true when dispatched first time)', () => {
+      const state: TestData = {
+        eco: {},
+      };
+      const result = testDataReducer(state, new TogglePlanningEco());
+      expect(result.eco.adviceGivenPlanning).toBeTruthy();
+    });
+
+    it('should toggle planning eco fault (false when dispatched second time)', () => {
+      const state: TestData = {
+        eco: {},
+      };
+      const modifiedState = testDataReducer(state, new TogglePlanningEco());
+      const result = testDataReducer(modifiedState, new TogglePlanningEco());
+
+      expect(result.eco.adviceGivenPlanning).toBeFalsy();
 
     });
   });

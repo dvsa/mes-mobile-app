@@ -8,7 +8,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
-import { getETA, getETAFaultText } from '../../modules/tests/test_data/test-data.selector';
+import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -22,6 +22,7 @@ interface DebriefPageState {
   drivingFaults$: Observable<FaultCount[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<string>;
+  ecoFaults$: Observable<string>;
 }
 
 @IonicPage()
@@ -86,16 +87,23 @@ export class DebriefPage extends BasePageComponent {
         select(getETA),
         select(getETAFaultText),
       ),
-
+      ecoFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getEco),
+        select(getEcoFaultText),
+      ),
     };
 
-    const { seriousFaults$, dangerousFaults$, drivingFaults$, etaFaults$ } = this.pageState;
+    const { seriousFaults$, dangerousFaults$, drivingFaults$, etaFaults$, ecoFaults$ } = this.pageState;
 
     const merged$ = merge(
       seriousFaults$,
       dangerousFaults$,
       drivingFaults$,
       etaFaults$,
+      ecoFaults$,
     );
 
     this.subscription = merged$.subscribe();

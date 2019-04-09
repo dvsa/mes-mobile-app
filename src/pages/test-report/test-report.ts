@@ -23,6 +23,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
 import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
+import { ToggleControlEco, TogglePlanningEco } from '../../modules/tests/test_data/test-data.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -153,6 +154,12 @@ export class TestReportPage extends BasePageComponent {
     return this.isRemoveFaultMode ? 'remove-mode'
     : this.isSeriousMode ? 'serious-mode'
     : this.isDangerousMode ? 'dangerous-mode' : '';
+  }
+  toggleControl(): void {
+    this.store$.dispatch(new ToggleControlEco());
+  }
+  togglePlanning(): void {
+    this.store$.dispatch(new TogglePlanningEco());
   }
 }
 export interface OverlayCallback {

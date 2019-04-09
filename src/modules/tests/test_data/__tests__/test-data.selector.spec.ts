@@ -5,6 +5,7 @@ import {
   getTestRequirements,
   hasDangerousFault,
   getETAFaultText,
+  getEcoFaultText,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
@@ -28,6 +29,10 @@ describe('TestDataSelectors', () => {
     ETA: {
       physical: false,
       verbal: false,
+    },
+    eco: {
+      adviceGivenControl: false,
+      adviceGivenPlanning: false,
     },
   };
 
@@ -91,6 +96,31 @@ describe('TestDataSelectors', () => {
       state.ETA.verbal = true;
       const result = getETAFaultText(state.ETA);
       expect(result).toEqual('Verbal');
+    });
+  });
+
+  describe('getEcoFaultText', () => {
+    it('should return null if no eco faults', () => {
+      const result = getEcoFaultText(state.eco);
+      expect(result).toBeUndefined();
+    });
+    it('should return `Control and Planning` if both eco faults', () => {
+      state.eco.adviceGivenControl = true;
+      state.eco.adviceGivenPlanning = true;
+      const result = getEcoFaultText(state.eco);
+      expect(result).toEqual('Control and Planning');
+    });
+    it('should return `Control` if just control eco fault', () => {
+      state.eco.adviceGivenControl = true;
+      state.eco.adviceGivenPlanning = false;
+      const result = getEcoFaultText(state.eco);
+      expect(result).toEqual('Control');
+    });
+    it('should return `Planning` if just planning eco fault', () => {
+      state.eco.adviceGivenControl = false;
+      state.eco.adviceGivenPlanning = true;
+      const result = getEcoFaultText(state.eco);
+      expect(result).toEqual('Planning');
     });
   });
 });
