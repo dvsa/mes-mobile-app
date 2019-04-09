@@ -7,8 +7,11 @@ export const initialState : TestSummary = {
   routeNumber: null,
   independentDriving: null,
   candidateDescription: null,
+  additionalInformation: null,
   weatherConditions: [],
-
+  debriefWitnessed: null,
+  D255: null,
+  identification: null,
 };
 
 export function testSummaryReducer(
@@ -19,32 +22,49 @@ export function testSummaryReducer(
     case testSummaryActions.ADDITIONAL_INFORMATION_CHANGED:
       return {
         ...state,
+        additionalInformation: action.additionalInformation,
+      };
+    case testSummaryActions.CANDIDATE_DESCRIPTION_CHANGED:
+      return {
+        ...state,
+        candidateDescription: action.description,
       };
     case testSummaryActions.ROUTE_NUMBER_CHANGED:
       return {
         ...state,
         routeNumber: action.routeNumber,
       };
-    case testSummaryActions.DEBRIEF_WITNESSED_CHANGED:
+    case testSummaryActions.DEBRIEF_WITNESSED:
       return {
         ...state,
-        // TODO needs added to schema debriefWitnessed: action.witnessed,
+        debriefWitnessed: true,
+      };
+    case testSummaryActions.DEBRIEF_UNWITNESSED:
+      return {
+        ...state,
+        debriefWitnessed: false,
       };
     case testSummaryActions.IDENTIFICATION_USED_CHANGED:
       return {
         ...state,
-        // TODO needs added to schema debriefWitnessed: action.identification,
+        identification: action.identification,
       };
     case testSummaryActions.INDEPENDENT_DRIVING_TYPE_CHANGED:
       return {
         ...state,
-        // TODO needs added to schema debriefWitnessed: action.drivingType,
+        independentDriving: action.drivingType,
       };
-    case testSummaryActions.D255_CHANGED:
+    case testSummaryActions.D255_YES:
       return {
         ...state,
-        // TODO needs added to schema debriefWitnessed: action.change,
+        D255: true,
       };
+    case testSummaryActions.D255_NO:
+      return {
+        ...state,
+        D255: false,
+      };
+
     default:
       return state;
   }

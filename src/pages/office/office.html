@@ -43,7 +43,7 @@
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
               <ion-col col-64>
-                <textarea type="textarea" class="text-area" #routeInput id="physical-description" formControlName="candidateDescriptionCtrl"
+                <textarea  class="text-area" #candidateDescriptionInput id="physical-description" formControlName="candidateDescriptionCtrl"
                   class="vehicle-reg-input"
                   [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"
                   [value]="pageState.candidateDescription$ | async">
@@ -102,8 +102,8 @@
               <ion-col col-32>
                 <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
                   id="identification-license" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationLicense()"
-                  [checked]="pageState.identificationLicenseRadioChecked$ | async" value='License'>
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationLicence()"
+                  [checked]="pageState.identificationLicenseRadioChecked$ | async" value='Licence'>
                 <label for="identification-license" class="radio-label">Yes</label>
               </ion-col>
               <ion-col col-32>

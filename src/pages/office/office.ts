@@ -15,6 +15,13 @@ import {
   getCandidateDescription,
   wasSatNavUsed,
   wereTrafficSignsUsed,
+  debriefWasWitnessed,
+  debriefWasUnwitnessed,
+  wasIdentificationLicense,
+  wasIdentificationPassport,
+  wasD255Yes,
+  wasD255No,
+  getAdditionalInformation,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -22,10 +29,13 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import {
   AdditionalInformationChanged,
   RouteNumberChanged,
-  D255Changed,
   IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
-  DebriefWitnessedChanged,
+  DebriefWitnessed,
+  DebriefUnwitnessed,
+  D255Yes,
+  D255No,
+  CandidateDescriptionChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 
 interface OfficePageState {
@@ -53,6 +63,9 @@ export class OfficePage extends BasePageComponent {
 
   @ViewChild('routeInput')
   routeInput: ElementRef;
+
+  @ViewChild('candidateDescriptionInput')
+  candidateDescriptionInput: ElementRef;
 
   @ViewChild('additionalInformationInput')
   additionalInformationInput: ElementRef;
@@ -98,33 +111,33 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(wereTrafficSignsUsed),
       ),
-      // TODO MOCKED - create real ones
       debriefWitnessedYesRadioChecked$ : currentTest$.pipe(
         select(getTestSummary),
-        map(() => true),
+        select(debriefWasWitnessed),
       ),
       debriefWitnessedNoRadioChecked$ : currentTest$.pipe(
         select(getTestSummary),
-        map(() => false),
+        select(debriefWasUnwitnessed),
      ),
       identificationLicenseRadioChecked$: currentTest$.pipe(
-      select(getTestSummary),
-      map(() => true),
-    ), identificationPassportRadioChecked$: currentTest$.pipe(
-      select(getTestSummary),
-      map(() => false),
+        select(getTestSummary),
+        select(wasIdentificationLicense),
+    ),
+      identificationPassportRadioChecked$: currentTest$.pipe(
+        select(getTestSummary),
+        select(wasIdentificationPassport),
     ),
       d255YesRadioChecked$: currentTest$.pipe(
       select(getTestSummary),
-      map(() => true),
+      select(wasD255Yes),
       ),
       d255NoRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
-        map(() => false),
+        select(wasD255No),
       ),
       additionalInformation$: currentTest$.pipe(
         select(getTestSummary),
-        map(() => ''),
+        select(getAdditionalInformation),
       ),
     };
     this.inputSubscriptions = [
@@ -133,6 +146,7 @@ export class OfficePage extends BasePageComponent {
         this.additionalInformationInput,
         AdditionalInformationChanged,
       ),
+      this.inputChangeSubscriptionDispatchingAction(this.candidateDescriptionInput, CandidateDescriptionChanged),
     ];
   }
 
@@ -186,14 +200,14 @@ export class OfficePage extends BasePageComponent {
   }
 
   debriefWitnessed(): void {
-    this.store$.dispatch(new DebriefWitnessedChanged('Yes'));
+    this.store$.dispatch(new DebriefWitnessed());
   }
   debriefUnwitnessed(): void {
-    this.store$.dispatch(new DebriefWitnessedChanged('No'));
+    this.store$.dispatch(new DebriefUnwitnessed());
   }
 
-  identificationLicense(): void {
-    this.store$.dispatch(new IdentificationUsedChanged('License'));
+  identificationLicence(): void {
+    this.store$.dispatch(new IdentificationUsedChanged('Licence'));
   }
   identificationPassport(): void {
     this.store$.dispatch(new IdentificationUsedChanged('Passport'));
@@ -207,10 +221,10 @@ export class OfficePage extends BasePageComponent {
   }
 
   d255Yes(): void {
-    this.store$.dispatch(new D255Changed('Yes'));
+    this.store$.dispatch(new D255Yes());
   }
   d255No(): void {
-    this.store$.dispatch(new D255Changed('No'));
+    this.store$.dispatch(new D255No());
   }
 
 }

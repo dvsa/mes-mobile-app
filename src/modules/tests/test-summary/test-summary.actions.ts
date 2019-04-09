@@ -1,15 +1,22 @@
 import { Action } from '@ngrx/store';
 
+export const CANDIDATE_DESCRIPTION_CHANGED = '[Test Summary] Candidate description changed';
 export const ADDITIONAL_INFORMATION_CHANGED = '[Test Summary] Additional Information changed';
 export const ROUTE_NUMBER_CHANGED = '[Test Summary] Route Number changed';
-export const DEBRIEF_WITNESSED_CHANGED = '[Test Summary] Debrief Witnessed changed';
+export const DEBRIEF_WITNESSED = '[Test Summary] Debrief Witnessed';
+export const DEBRIEF_UNWITNESSED = '[Test Summary] Debrief Unwitnessed';
 export const IDENTIFICATION_USED_CHANGED = '[Test Summary] Identification used changed';
 export const INDEPENDENT_DRIVING_TYPE_CHANGED = '[Test Summary] Independent driving changed';
-export const D255_CHANGED = '[Test Summary] D255 changed';
+export const D255_YES = '[Test Summary] D255 Yes';
+export const D255_NO = '[Test Summary] D255 No';
 
 export class AdditionalInformationChanged implements Action {
   readonly type = ADDITIONAL_INFORMATION_CHANGED;
   constructor(public additionalInformation: string) {}
+}
+export class CandidateDescriptionChanged implements Action {
+  readonly type = CANDIDATE_DESCRIPTION_CHANGED;
+  constructor(public description: string) {}
 }
 
 export class RouteNumberChanged implements Action {
@@ -17,29 +24,42 @@ export class RouteNumberChanged implements Action {
   constructor(public routeNumber: number) {}
 }
 
-export class DebriefWitnessedChanged implements Action {
-  readonly type = DEBRIEF_WITNESSED_CHANGED;
-  constructor(public witnessed: string) {}
+export class DebriefWitnessed implements Action {
+  readonly type = DEBRIEF_WITNESSED;
+  constructor() {}
+}
+
+export class DebriefUnwitnessed implements Action {
+  readonly type = DEBRIEF_UNWITNESSED;
+  constructor() {}
 }
 
 export class IdentificationUsedChanged implements Action {
   readonly type = IDENTIFICATION_USED_CHANGED;
-  constructor(public identification: string) {}
+  constructor(public identification: any) {}
 }
 
 export class IndependentDrivingTypeChanged implements Action {
   readonly type = INDEPENDENT_DRIVING_TYPE_CHANGED;
-  constructor(public drivingType: string) {}
+  constructor(public drivingType: any) {}
 }
 
-export class D255Changed implements Action {
-  readonly type = D255_CHANGED;
-  constructor(public change: string) {}
+export class D255Yes implements Action {
+  readonly type = D255_YES;
+  constructor() {}
 }
+export class D255No implements Action {
+  readonly type = D255_NO;
+  constructor() {}
+}
+
 export type Types =
   | AdditionalInformationChanged
+  | CandidateDescriptionChanged
   | RouteNumberChanged
-  | DebriefWitnessedChanged
+  | DebriefWitnessed
+  | DebriefUnwitnessed
   | IdentificationUsedChanged
   | IndependentDrivingTypeChanged
-  | D255Changed;
+  | D255Yes
+  | D255No;
