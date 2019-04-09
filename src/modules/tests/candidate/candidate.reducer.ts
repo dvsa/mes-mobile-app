@@ -9,10 +9,7 @@ export function candidateReducer(
   action: candidateActions.Types,
 ): Candidate {
   switch (action.type) {
-
-    // TODO: Deal with a more specific action here so that we don't need to introduce logic to the reducer
     case candidateActions.POPULATE_CANDIDATE_DETAILS:
-      console.log('Candidate', action);
       return action.payload;
   }
   return state;
