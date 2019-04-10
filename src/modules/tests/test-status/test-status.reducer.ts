@@ -11,6 +11,8 @@ export function testStatusReducer(
   switch (action.type) {
     case testStatusActions.TEST_STATUS_STARTED:
       return TestStatus.Started;
+    case testStatusActions.TEST_STATUS_DECIDED:
+      return TestStatus.Decided;
     default:
       return state;
   }
