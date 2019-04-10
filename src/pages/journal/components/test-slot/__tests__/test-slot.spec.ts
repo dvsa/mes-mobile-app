@@ -280,7 +280,7 @@ describe('TestSlotComponent', () => {
 
       it('should pass something to sub-component test-outcome input', () => {
         fixture.detectChanges();
-        component.slotStatus$ = of(TestStatus.Booked);
+        component.componentState = { testStatus$: of(TestStatus.Booked) };
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(TestOutcomeComponent))).componentInstance;

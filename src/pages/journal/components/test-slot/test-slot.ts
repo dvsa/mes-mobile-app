@@ -13,6 +13,11 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+
+interface TestSlotComponentState {
+  testStatus$: Observable<TestStatus>;
+}
 
 @Component({
   selector: 'test-slot',
@@ -28,7 +33,7 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
   @Input()
   showLocation: boolean;
 
-  slotStatus$: Observable<TestStatus>;
+  componentState: TestSlotComponentState;
 
   subscription: Subscription;
 
@@ -41,12 +46,16 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
 
   ngOnInit(): void {
     const { slotId } = this.slot.slotDetail;
-    this.slotStatus$ = this.store$.pipe(
-      select(getTests),
-      select(t => t.testLifecycles[slotId]),
-    );
+    this.componentState = {
+      testStatus$: this.store$.pipe(
+        select(getTests),
+        select(t => t.testLifecycles[slotId]),
+      ),
+    };
 
-    this.subscription = this.slotStatus$.subscribe();
+    const { testStatus$ } = this.componentState;
+
+    this.subscription = merge(testStatus$).subscribe();
   }
 
   ngOnDestroy(): void {
