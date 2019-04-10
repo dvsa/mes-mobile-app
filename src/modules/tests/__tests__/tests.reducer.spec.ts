@@ -21,7 +21,7 @@ describe('testsReducer', () => {
       startedTests: {},
       testLifecycles: {},
     };
-    const slotId = '123';
+    const slotId = 123;
     const action = new journalActions.StartTest(slotId);
 
     const output = testsReducer(state, action);
@@ -36,7 +36,7 @@ describe('testsReducer', () => {
       testLifecycles: {},
     };
 
-    const result = testsReducer(state, new journalActions.StartTest('123'));
+    const result = testsReducer(state, new journalActions.StartTest(123));
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();

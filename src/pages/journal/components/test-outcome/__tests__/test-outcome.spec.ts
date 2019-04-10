@@ -44,7 +44,7 @@ describe('Test Outcome', () => {
 
     describe('startTest', () => {
       it('should dispatch a start test action with the slot', () => {
-        component.slotId = '123';
+        component.slotId = 123;
         component.startTest();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotId));

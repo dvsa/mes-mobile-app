@@ -51,7 +51,7 @@ describe('DrivingFaultSummary', () => {
     beforeEach(() => {
       componentEl = fixture.debugElement;
 
-      store$.dispatch(new StartTest('103'));
+      store$.dispatch(new StartTest(103));
     });
 
     it('should display 0 driving faults for a new test', () => {

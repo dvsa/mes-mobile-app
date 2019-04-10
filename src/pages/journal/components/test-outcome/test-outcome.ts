@@ -11,7 +11,7 @@ import { StartTest } from '../../journal.actions';
 export class TestOutcomeComponent {
 
   @Input()
-  slotId: string;
+  slotId: number;
 
   @Input()
   canStartTest: boolean;

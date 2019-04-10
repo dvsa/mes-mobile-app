@@ -64,7 +64,7 @@ describe('CompetencyComponent', () => {
         renderer = TestBed.get(Renderer2);
         store$ = TestBed.get(Store);
 
-        store$.dispatch(new StartTest('103'));
+        store$.dispatch(new StartTest(103));
       });
   }));
 
