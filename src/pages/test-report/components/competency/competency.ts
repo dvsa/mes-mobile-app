@@ -151,6 +151,7 @@ export class CompetencyComponent {
     }
 
     if (this.isDangerousMode) {
+      if (!wasClick) this.manageClasses();
       this.store$.dispatch(new AddDangerousFault(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
@@ -161,6 +162,7 @@ export class CompetencyComponent {
     }
 
     if (this.isSeriousMode) {
+      if (!wasClick) this.manageClasses();
       this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
