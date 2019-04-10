@@ -1,5 +1,5 @@
 export enum TestStatus {
-  NotStarted = 'NotStarted',
+  Booked = 'Booked',
   Started = 'Started',
   Decided = 'Decided',
 }

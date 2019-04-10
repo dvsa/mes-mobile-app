@@ -2,7 +2,7 @@ import { TestStatus } from './test-status.model';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testStatusActions from './test-status.actions';
 
-export const initialState = TestStatus.NotStarted;
+export const initialState = TestStatus.Booked;
 
 export function testStatusReducer(
   state = initialState,
