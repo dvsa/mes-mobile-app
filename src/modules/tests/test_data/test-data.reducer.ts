@@ -136,6 +136,14 @@ export function testDataReducer(
           adviceGivenPlanning: !state.eco.adviceGivenPlanning,
         },
       };
+    case testDataActions.TOGGLE_CONTROLLED_STOP:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          selectedControlledStop: !state.manoeuvres.selectedControlledStop,
+        },
+      };
 
     default:
       return state;

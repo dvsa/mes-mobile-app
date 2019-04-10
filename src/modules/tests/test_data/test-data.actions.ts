@@ -20,6 +20,7 @@ export const TOGGLE_VERBAL_ETA = '[Eta] Toggle Verbal Eta';
 export const TOGGLE_PHYSICAL_ETA = '[Eta] Toggle Physical Eta';
 export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
 export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
+export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
 
 export class RecordManoeuvresSelection implements Action {
   constructor(public manoeuvre: ManoeuvreTypes) { }
@@ -77,6 +78,10 @@ export class TogglePlanningEco implements Action {
   readonly type = TOGGLE_PLANNING_ECO;
 }
 
+export class ToggleControlledStop implements Action {
+  readonly type = TOGGLE_CONTROLLED_STOP;
+}
+
 export type Types =
   | RecordManoeuvresSelection
   | AddDrivingFault
@@ -92,4 +97,5 @@ export type Types =
   | ToggleVerbalEta
   | TogglePhysicalEta
   | ToggleControlEco
-  | TogglePlanningEco;
+  | TogglePlanningEco
+  | ToggleControlledStop;
