@@ -1,8 +1,10 @@
-import { getCurrentTest } from '../tests.selector';
+import { getCurrentTest, getTestStatus } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
 import { LogsModel } from '../../logs/logs.model';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { TestsModel } from '../tests.reducer';
+import { TestStatus } from '../test-status/test-status.model';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -33,6 +35,32 @@ describe('testsSelector', () => {
       const result = getCurrentTest(state.tests);
 
       expect(result).toBe(currentTest);
+    });
+  });
+
+  describe('getTestStatus', () => {
+    it('should retrieve the status of the test with the given slotId', () => {
+      const testState: TestsModel = {
+        currentTest: { slotId: null },
+        startedTests: {},
+        testLifecycles: { 12345: TestStatus.Decided },
+      };
+
+      const result = getTestStatus(testState, 12345);
+
+      expect(result).toBe(TestStatus.Decided);
+    });
+
+    it('should default to booked if the test with the given slot ID does not have a status yet', () => {
+      const testState: TestsModel = {
+        currentTest: { slotId: null },
+        startedTests: {},
+        testLifecycles: {},
+      };
+
+      const result = getTestStatus(testState, 12345);
+
+      expect(result).toBe(TestStatus.Booked);
     });
   });
 });

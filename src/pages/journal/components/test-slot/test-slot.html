@@ -52,7 +52,7 @@
           </ion-grid>
         </ion-col>
         <ion-col class="test-outcome-col" no-padding padding-right>
-          <test-outcome [slotId]="slot.slotDetail.slotId" [canStartTest]="canStartTest()"></test-outcome>
+          <test-outcome [slotId]="slot.slotDetail.slotId" [canStartTest]="canStartTest()" [testStatus]="componentState.testStatus$ | async"></test-outcome>
         </ion-col>
       </ion-row>
       <ion-row class="slot-footer"
