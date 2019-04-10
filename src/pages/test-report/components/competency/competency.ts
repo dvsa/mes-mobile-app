@@ -151,7 +151,7 @@ export class CompetencyComponent {
     }
 
     if (this.isDangerousMode) {
-      if (!wasClick) this.manageClasses();
+      if (!wasClick) this.applyRippleEffect();
       this.store$.dispatch(new AddDangerousFault(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
@@ -162,13 +162,13 @@ export class CompetencyComponent {
     }
 
     if (this.isSeriousMode) {
-      if (!wasClick) this.manageClasses();
+      if (!wasClick) this.applyRippleEffect();
       this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
     if (!wasClick) {
-      this.manageClasses();
+      this.applyRippleEffect();
       this.store$.dispatch(new AddDrivingFault({
         competency: this.competency,
         newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
@@ -212,7 +212,7 @@ export class CompetencyComponent {
    * Manages the addition and removal of the ripple effect animation css class
    * @returns any
    */
-  manageClasses = (): any => {
+  applyRippleEffect = (): any => {
     this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
     setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
                this.rippleEffectAnimationDuration,

@@ -478,7 +478,7 @@ describe('CompetencyComponent', () => {
       renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
       // Act
       component.faultCount = 1;
-      component.manageClasses();
+      component.applyRippleEffect();
       // Assert
       expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
 
