@@ -28,7 +28,6 @@ import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { TestSlotComponent } from './components/test-slot/test-slot';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -196,15 +195,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
-      const { slotId } = slot.slotData.slotDetail;
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
       lastLocation = slot.slotData.testCentre.centreName;
-      if (componentRef.instance instanceof TestSlotComponent) {
-        const slotStatus = slotStatuses[slotId] || null;
-        (<TestSlotComponent>componentRef.instance).slotStatus = slotStatus;
-      }
     }
   }
 
