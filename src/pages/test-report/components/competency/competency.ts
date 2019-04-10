@@ -146,7 +146,6 @@ export class CompetencyComponent {
   }
 
   addFault = (wasClick: boolean): void => {
-    this.manageClasses();
     if (this.hasDangerousFault) {
       return;
     }
@@ -167,6 +166,7 @@ export class CompetencyComponent {
       return;
     }
     if (!wasClick) {
+      this.manageClasses();
       this.store$.dispatch(new AddDrivingFault({
         competency: this.competency,
         newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
@@ -175,7 +175,6 @@ export class CompetencyComponent {
   }
 
   removeFault = (): void => {
-    this.manageClasses();
 
     if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
       this.store$.dispatch(new RemoveDangerousFault(this.competency));
