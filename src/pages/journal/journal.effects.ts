@@ -19,13 +19,15 @@ import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
   getSelectedDate, getLastRefreshed, getSlots,
-  canNavigateToPreviousDay, canNavigateToNextDay,
+  canNavigateToPreviousDay, canNavigateToNextDay, getSlotsOnSelectedDate,
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
+import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -149,6 +151,27 @@ export class JournalEffects {
   );
 
   @Effect()
+  startTestEffect$ = this.actions$.pipe(
+    ofType(journalActions.START_TEST),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getJournalState),
+        map(getSlotsOnSelectedDate),
+      ),
+    ),
+    switchMap(([action, slots]) => {
+      const startTestAction = action as journalActions.StartTest;
+
+      const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
+
+      return [
+        new PopulateApplicationReference(slot.slotData.booking.application),
+        new PopulateCandidateDetails(slot.slotData.booking.candidate),
+      ];
+    }),
+  );
+
+  @Effect()
   selectPreviousDayEffect$ = this.actions$.pipe(
     ofType(journalActions.SELECT_PREVIOUS_DAY),
     withLatestFrom(
@@ -165,9 +188,10 @@ export class JournalEffects {
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
 
-      // TODO: We don't need to use the store here, just return the action wrapped in an Observable
-      this.store$.dispatch(new journalActions.JournalNavigateDay(previousDay));
-      return of(new journalActions.SetSelectedDate(previousDay));
+      return [
+        new journalActions.SetSelectedDate(previousDay),
+        new journalActions.JournalNavigateDay(previousDay),
+      ];
     }),
   );
 
@@ -188,9 +212,10 @@ export class JournalEffects {
     switchMap(([action, selectedDate, canNavigateToNextDay]) => {
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
 
-      // TODO: We don't need to use the store here, just return the action wrapped in an Observable
-      this.store$.dispatch(new journalActions.JournalNavigateDay(nextDay));
-      return of(new journalActions.SetSelectedDate(nextDay));
+      return [
+        new journalActions.SetSelectedDate(nextDay),
+        new journalActions.JournalNavigateDay(nextDay),
+      ];
     }),
   );
 }

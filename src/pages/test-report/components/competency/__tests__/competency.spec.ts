@@ -17,7 +17,7 @@ import {
   RemoveSeriousFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
-import { FaultCounterComponent } from '../../../../../components/fault-counter/fault-counter';
+import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
@@ -25,8 +25,8 @@ import { IonicModule } from 'ionic-angular';
 import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
-import { TestOutcomeStartTest } from '../../../../journal/components/test-outcome/test-outcome.actions';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
+import { StartTest } from '../../../../journal/journal.actions';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -39,7 +39,7 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyComponent,
-        MockComponent(FaultCounterComponent),
+        MockComponent(DrivingFaultsBadgeComponent),
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
       ],
@@ -64,7 +64,7 @@ describe('CompetencyComponent', () => {
         renderer = TestBed.get(Renderer2);
         store$ = TestBed.get(Store);
 
-        store$.dispatch(new TestOutcomeStartTest({ slotDetail: { slotId: 103 } }));
+        store$.dispatch(new StartTest(103));
       });
   }));
 
@@ -455,14 +455,14 @@ describe('CompetencyComponent', () => {
       expect(label.nativeElement.innerHTML).toBe('Gears');
     });
 
-    it('should pass the number of driving faults to the fault counter component', () => {
+    it('should pass the number of driving faults to the driving faults badge component', () => {
       fixture.detectChanges();
-      const drivingFaultCounter = fixture.debugElement.query(By.css('.driving-faults'))
-        .componentInstance as FaultCounterComponent;
+      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
+        .componentInstance as DrivingFaultsBadgeComponent;
       component.faultCount = 5;
 
       fixture.detectChanges();
-      expect(drivingFaultCounter.count).toBe(5);
+      expect(drivingFaultsBadge.count).toBe(5);
     });
   });
 

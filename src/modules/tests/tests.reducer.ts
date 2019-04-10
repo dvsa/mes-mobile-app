@@ -1,4 +1,4 @@
-import * as testOutcomeActions from '../../pages/journal/components/test-outcome/test-outcome.actions';
+import * as journalActions from '../../pages/journal/journal.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
@@ -84,8 +84,8 @@ export const testsReducer = (
 };
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
-    return `${action.payload.slotDetail.slotId}`;
+  if (action instanceof journalActions.StartTest) {
+    return `${action.slotId}`;
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };

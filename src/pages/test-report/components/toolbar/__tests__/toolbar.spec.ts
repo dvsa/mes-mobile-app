@@ -91,7 +91,7 @@ describe('ToolbarComponent', () => {
 
       expect(fixture.debugElement.query(By.css('#serious-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeDefined();
-      expect(fixture.debugElement.query(By.css('fault-counter'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('driving-faults-badge'))).toBeDefined();
 
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeNull();
       expect(fixture.debugElement.query(By.css('dangerous-tooltip'))).toBeNull();
@@ -112,7 +112,7 @@ describe('ToolbarComponent', () => {
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeDefined();
 
       expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('fault-counter'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('driving-faults-badge'))).toBeNull();
       expect(fixture.debugElement.query(By.css('dangerous-tooltip'))).toBeNull();
     });
     it('should show the correct components when dangerous mode is actived', () => {
@@ -130,7 +130,7 @@ describe('ToolbarComponent', () => {
       expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('dangerous-tooltip'))).toBeDefined();
 
-      expect(fixture.debugElement.query(By.css('fault-counter'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('driving-faults-badge'))).toBeNull();
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeNull();
 
     });
