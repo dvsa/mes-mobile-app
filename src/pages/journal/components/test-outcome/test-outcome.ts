@@ -45,7 +45,7 @@ export class TestOutcomeComponent {
     this.navController.push('WaitingRoomPage');
   }
 
-  needsFinalisation(): boolean {
+  needsWriteUp(): boolean {
     return this.testStatus === TestStatus.Decided;
   }
 }
