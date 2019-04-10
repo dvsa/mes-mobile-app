@@ -25,7 +25,7 @@ import {
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import {
   AdditionalInformationChanged,
   RouteNumberChanged,
