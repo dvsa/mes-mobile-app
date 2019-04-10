@@ -6,7 +6,7 @@ import {
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -26,8 +26,6 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
-import { TestStatus } from '../../modules/tests/test-status/test-status.model';
-import { getTests } from '../../modules/tests/tests.reducer';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -36,7 +34,6 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
-  testStatuses$: Observable<{[slotId: string]: TestStatus}>;
 }
 
 @IonicPage()
@@ -107,19 +104,14 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getAppInfoState),
         map(getVersionNumber),
       ),
-      testStatuses$: this.store$.pipe(
-        select(getTests),
-        select(t => t.testLifecycles),
-      ),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$, testStatuses$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
       slots$.pipe(
-        withLatestFrom(testStatuses$),
-        map(([slots, statuses]) => this.createSlots(slots, statuses)),
+        map(this.createSlots),
       ),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
@@ -182,7 +174,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.toast.present();
   }
 
-  private createSlots = (emission: any, slotStatuses: { [slotId: string]: TestStatus }) => {
+  private createSlots = (emission: any) => {
     if (!Array.isArray(emission)) return;
 
     // Clear any dynamically created slots before adding the latest
