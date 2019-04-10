@@ -8,7 +8,7 @@ import { OfficeViewDidEnter } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
@@ -25,7 +25,7 @@ import {
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import {
   AdditionalInformationChanged,
   RouteNumberChanged,
@@ -37,8 +37,21 @@ import {
   D255No,
   CandidateDescriptionChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import {
+  getCandidateName,
+  getCandidateDriverNumber,
+  formatDriverNumber,
+} from '../../modules/tests/candidate/candidate.selector';
+import { getJournalState } from '../journal/journal.reducer';
+import { getSlotById, getTime } from '../candidate-details/candidate-details.selector';
+import { getSlots } from '../journal/journal.selector';
+import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 interface OfficePageState {
+  startTime$: Observable<string>;
+  candidateName$: Observable<string>;
+  candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
   debriefWitnessedYesRadioChecked$ : Observable<boolean>;
   debriefWitnessedNoRadioChecked$ : Observable<boolean>;
@@ -95,6 +108,15 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
+      candidateName$: currentTest$.pipe(
+        select(getCandidate),
+        select(getCandidateName),
+      ),
+      candidateDriverNumber$: currentTest$.pipe(
+        select(getCandidate),
+        select(getCandidateDriverNumber),
+        map(formatDriverNumber),
+      ),
       routeNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
@@ -138,6 +160,19 @@ export class OfficePage extends BasePageComponent {
       additionalInformation$: currentTest$.pipe(
         select(getTestSummary),
         select(getAdditionalInformation),
+      ),
+      startTime$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTestSlotId),
+        switchMap((slotId) => {
+          return this.store$.pipe(
+            tap(() => console.log(`slot id in tap ${slotId}`)),
+            select(getJournalState),
+            select(getSlots),
+            map((slots: {[k: string]: SlotItem[]}) => getSlotById(Object.values(slots), Number.parseInt(slotId, 10))),
+            select(getTime),
+          );
+        }),
       ),
     };
     this.inputSubscriptions = [

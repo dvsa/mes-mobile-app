@@ -9,6 +9,17 @@
 
 <ion-content no-bounce>
   <div>
+      <ion-row class="mes-full-width-card" id="candidate-section">
+          <ion-col>
+            <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
+            <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
+          </ion-col>
+          <ion-col col-auto>
+              <h3>{{pageState.startTime$ | async}}</h3>
+              test outcome: Unsuccessful
+          </ion-col>
+      </ion-row>
+    
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
         <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
