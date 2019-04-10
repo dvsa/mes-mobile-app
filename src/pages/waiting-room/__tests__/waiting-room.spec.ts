@@ -54,6 +54,7 @@ describe('WaitingRoomPage', () => {
           currentTest: {
             slotId: '123',
           },
+          testLifecycles: {},
           startedTests: {
             123: {
               candidate: mockCandidate,

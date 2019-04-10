@@ -12,6 +12,8 @@ import { passCompletionReducer } from './pass-completion/pass-completion.reducer
 import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-result.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
+import { testStatusReducer } from './test-status/test-status.reducer';
+import { TestStatus } from './test-status/test-status.model';
 
 export interface CurrentTest {
   slotId: string;
@@ -20,11 +22,13 @@ export interface CurrentTest {
 export interface TestsModel {
   currentTest: CurrentTest;
   startedTests: { [slotId: string]: StandardCarTestCATBSchema };
+  testLifecycles: { [slotId: string]: TestStatus };
 }
 
 const initialState: TestsModel = {
   currentTest: { slotId: null },
   startedTests: {},
+  testLifecycles: {},
 };
 
 /**
@@ -71,6 +75,10 @@ export const testsReducer = (
     },
     currentTest: {
       slotId,
+    },
+    testLifecycles: {
+      ...state.testLifecycles,
+      [slotId]: testStatusReducer(state.testLifecycles[slotId], action),
     },
   };
 };
