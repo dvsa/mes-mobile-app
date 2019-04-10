@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TestReportPage } from './test-report';
 import { EffectsModule } from '@ngrx/effects';
-import { Insomnia } from '@ionic-native/insomnia';
 import { StoreModule } from '@ngrx/store';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { EtaComponent } from './components/examiner-takes-action/eta';
 import { ManoeuvresPopoverComponent } from './components/manoeuvres-popover/manoeuvres-popover';
@@ -43,8 +41,6 @@ import { ComponentsModule } from '../../components/components.module';
   ],
   providers: [
     AnalyticsProvider,
-    ScreenOrientation,
-    Insomnia,
   ],
 })
 export class TestReportPageModule {}

@@ -25,6 +25,8 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
+import { Insomnia } from '@ionic-native/insomnia';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -58,24 +60,24 @@ export class WaitingRoomPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private screenOrientation : ScreenOrientation,
+    private insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
   }
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
+
     if (super.isIos()) {
       this.deviceProvider.enableSingleAppMode();
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.insomnia.keepAwake();
     }
+
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.clickBack();
     };
-  }
-
-  ionViewDidLeave(): void {
-    if (super.isIos()) {
-      this.deviceProvider.disableSingleAppMode();
-    }
   }
 
   clickBack(): void {

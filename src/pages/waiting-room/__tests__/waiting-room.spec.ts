@@ -27,6 +27,10 @@ import {
 } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { Insomnia } from '@ionic-native/insomnia';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -34,6 +38,8 @@ describe('WaitingRoomPage', () => {
   let store$: Store<StoreModel>;
   let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
+  let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -72,6 +78,8 @@ describe('WaitingRoomPage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
       ],
     })
       .compileComponents()
@@ -81,6 +89,8 @@ describe('WaitingRoomPage', () => {
       });
 
     deviceProvider = TestBed.get(DeviceProvider);
+    screenOrientation = TestBed.get(ScreenOrientation);
+    insomnia = TestBed.get(Insomnia);
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
@@ -110,38 +120,45 @@ describe('WaitingRoomPage', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
       });
-      describe('ionViewDidLeave', () => {
-        it('should disable single app mode if on ios', () => {
-          component.ionViewDidLeave();
-          expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
-        });
+
+      it('should lock the screen orientation to Portrait Primary', () => {
+        component.ionViewDidEnter();
+        expect(screenOrientation.lock)
+            .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       });
-      describe('ionViewWillUnload', () => {
-        it('should dispatch a clear declarations action', () => {
-          component.ionViewWillUnload();
-          expect(store$.dispatch).toHaveBeenCalledWith(new ClearPreTestDeclarations());
-        });
+
+      it('should keep the device awake', () => {
+        component.ionViewDidEnter();
+        expect(insomnia.keepAwake).toHaveBeenCalled();
       });
+
+    });
+  });
+
+  describe('ionViewWillUnload', () => {
+    it('should dispatch a clear declarations action', () => {
+      component.ionViewWillUnload();
+      expect(store$.dispatch).toHaveBeenCalledWith(new ClearPreTestDeclarations());
+    });
+  });
+
+  describe('clickBack', () => {
+    it('should should trigger the lock screen', () => {
+      component.clickBack();
+      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
     });
 
-    describe('clickBack', () => {
-      it('should should trigger the lock screen', () => {
-        component.clickBack();
-        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
-      });
-
-      describe('Declaration Validation', () => {
-        it('form should only be valid when all fields are set', () => {
-          const form = component.form;
-          form.get('insuranceCheckboxCtrl').setValue(true);
-          expect(form.get('insuranceCheckboxCtrl').status).toEqual('VALID');
-          form.get('residencyCheckboxCtrl').setValue(true);
-          expect(form.get('residencyCheckboxCtrl').status).toEqual('VALID');
-          expect(form.valid).toEqual(false);
-          form.get('signatureAreaCtrl').setValue('any date you like.');
-          expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
-          expect(form.valid).toEqual(true);
-        });
+    describe('Declaration Validation', () => {
+      it('form should only be valid when all fields are set', () => {
+        const form = component.form;
+        form.get('insuranceCheckboxCtrl').setValue(true);
+        expect(form.get('insuranceCheckboxCtrl').status).toEqual('VALID');
+        form.get('residencyCheckboxCtrl').setValue(true);
+        expect(form.get('residencyCheckboxCtrl').status).toEqual('VALID');
+        expect(form.valid).toEqual(false);
+        form.get('signatureAreaCtrl').setValue('any date you like.');
+        expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
+        expect(form.valid).toEqual(true);
       });
     });
   });

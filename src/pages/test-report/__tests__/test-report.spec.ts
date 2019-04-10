@@ -101,25 +101,6 @@ describe('TestReportPage', () => {
       expect(component).toBeDefined();
     });
 
-    describe('ionViewDidEnter', () => {
-      it('should lock the screen orientation to Portrait Primary', () => {
-        component.ionViewDidEnter();
-        expect(screenOrientation.lock)
-          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      });
-
-      it('should keep the device awake', () => {
-        component.ionViewDidEnter();
-        expect(insomnia.keepAwake).toHaveBeenCalled();
-      });
-
-      it('should enable singleAppMode', () => {
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
-
-    });
-
     describe('ionViewDidLeave', () => {
       it('should unlock the screen orientation', () => {
         component.ionViewDidLeave();

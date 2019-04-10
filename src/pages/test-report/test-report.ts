@@ -118,12 +118,8 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
-    if (super.isIos()) {
-      this.deviceProvider.enableSingleAppMode();
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      this.insomnia.keepAwake();
-    }
   }
+
   toggleReportOverlay(): void {
     this.displayOverlay = !this.displayOverlay;
   }
