@@ -1,7 +1,6 @@
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
-import * as testOutcomeActions from '../../../pages/journal/components/test-outcome/test-outcome.actions';
-import { has } from 'lodash';
+import * as applicationReferenceActions from './application-reference.actions';
 
 export const initialState: ApplicationReference = {
   applicationId: null,
@@ -11,17 +10,14 @@ export const initialState: ApplicationReference = {
 
 export function applicationReferenceReducer(
   state = initialState,
-  action: testOutcomeActions.Types,
+  action: applicationReferenceActions.Types,
 ): ApplicationReference {
   switch (action.type) {
-    case testOutcomeActions.TEST_OUTCOME_START_TEST:
-      if (!has(action, 'payload.booking.application')) {
-        return null;
-      }
+    case applicationReferenceActions.POPULATE_APPLICATION_REFERENCE:
       return {
-        applicationId: action.payload.booking.application.applicationId,
-        bookingSequence: action.payload.booking.application.bookingSequence,
-        checkDigit: action.payload.booking.application.checkDigit,
+        applicationId: action.payload.applicationId,
+        bookingSequence: action.payload.bookingSequence,
+        checkDigit: action.payload.checkDigit,
       };
   }
   return state;

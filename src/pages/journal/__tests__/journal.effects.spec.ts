@@ -135,13 +135,16 @@ describe('Journal Effects', () => {
       ConnectionStatus.ONLINE,
       false,
       new Date())); // Load in mock journal state
-    spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectNextDay());
     // ASSERT
     effects.selectNextDayEffect$.subscribe((result) => {
-      expect(store$.dispatch).toHaveBeenCalledWith(new journalActions.JournalNavigateDay(nextDay));
-      expect(result).toEqual(new journalActions.SetSelectedDate(nextDay));
+      if (result instanceof journalActions.SetSelectedDate)  {
+        expect(result).toEqual(new journalActions.SetSelectedDate(nextDay));
+      }
+      if (result instanceof journalActions.JournalNavigateDay) {
+        expect(result).toEqual(new journalActions.JournalNavigateDay(nextDay));
+      }
       done();
     });
 
@@ -157,13 +160,16 @@ describe('Journal Effects', () => {
       false,
       new Date())); // Load in mock journal state
     store$.dispatch(new journalActions.SetSelectedDate(nextDay));
-    spyOn(store$, 'dispatch');
     // ACT
     actions$.next(new journalActions.SelectPreviousDay());
     // ASSERT
     effects.selectPreviousDayEffect$.subscribe((result) => {
-      expect(store$.dispatch).toHaveBeenCalledWith(new journalActions.JournalNavigateDay(selectedDate));
-      expect(result).toEqual(new journalActions.SetSelectedDate(selectedDate));
+      if (result instanceof journalActions.SetSelectedDate)  {
+        expect(result).toEqual(new journalActions.SetSelectedDate(selectedDate));
+      }
+      if (result instanceof journalActions.JournalNavigateDay) {
+        expect(result).toEqual(new journalActions.JournalNavigateDay(selectedDate));
+      }
       done();
     });
 

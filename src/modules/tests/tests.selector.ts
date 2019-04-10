@@ -1,4 +1,5 @@
 import { TestsModel } from './tests.reducer';
+import { TestStatus } from './test-status/test-status.model';
 
 export const getCurrentTest = (tests: TestsModel) => {
   const currentTestSlotId = tests.currentTest.slotId;
@@ -6,7 +7,6 @@ export const getCurrentTest = (tests: TestsModel) => {
 };
 
 export const getCurrentTestSlotId = (tests: TestsModel): string => {
-  console.log(JSON.stringify(tests));
-  console.log(`testslot id ${tests.currentTest.slotId}`);
   return tests.currentTest.slotId;
 };
+export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testLifecycles[slotId] || TestStatus.Booked;

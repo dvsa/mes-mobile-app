@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { get, isNil } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -7,12 +7,24 @@ import { TestCategory } from '../../../../shared/models/test-category';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { Store, select } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { Observable } from 'rxjs/Observable';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { getTestStatus } from '../../../../modules/tests/tests.selector';
+
+interface TestSlotComponentState {
+  testStatus$: Observable<TestStatus>;
+}
 
 @Component({
   selector: 'test-slot',
   templateUrl: 'test-slot.html',
 })
-export class TestSlotComponent implements SlotComponent {
+export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
   @Input()
   slot: any;
 
@@ -22,11 +34,36 @@ export class TestSlotComponent implements SlotComponent {
   @Input()
   showLocation: boolean;
 
+  componentState: TestSlotComponentState;
+
+  subscription: Subscription;
+
   constructor(
     public screenOrientation: ScreenOrientation,
     public appConfig: AppConfigProvider,
     public dateTimeProvider: DateTimeProvider,
+    public store$: Store<StoreModel>,
   ) {}
+
+  ngOnInit(): void {
+    const { slotId } = this.slot.slotDetail;
+    this.componentState = {
+      testStatus$: this.store$.pipe(
+        select(getTests),
+        select(tests => getTestStatus(tests, slotId)),
+      ),
+    };
+
+    const { testStatus$ } = this.componentState;
+
+    this.subscription = merge(testStatus$).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   isIndicatorNeededForSlot(): boolean {
     const specialNeeds: boolean = this.isSpecialNeedsSlot();

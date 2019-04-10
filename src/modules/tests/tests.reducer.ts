@@ -1,4 +1,4 @@
-import * as testOutcomeActions from '../../pages/journal/components/test-outcome/test-outcome.actions';
+import * as journalActions from '../../pages/journal/journal.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
@@ -13,6 +13,8 @@ import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
+import { testStatusReducer } from './test-status/test-status.reducer';
+import { TestStatus } from './test-status/test-status.model';
 
 export interface CurrentTest {
   slotId: string;
@@ -21,11 +23,13 @@ export interface CurrentTest {
 export interface TestsModel {
   currentTest: CurrentTest;
   startedTests: { [slotId: string]: StandardCarTestCATBSchema };
+  testLifecycles: { [slotId: string]: TestStatus };
 }
 
 const initialState: TestsModel = {
   currentTest: { slotId: null },
   startedTests: {},
+  testLifecycles: {},
 };
 
 /**
@@ -74,12 +78,16 @@ export const testsReducer = (
     currentTest: {
       slotId,
     },
+    testLifecycles: {
+      ...state.testLifecycles,
+      [slotId]: testStatusReducer(state.testLifecycles[slotId], action),
+    },
   };
 };
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof testOutcomeActions.TestOutcomeStartTest) {
-    return `${action.payload.slotDetail.slotId}`;
+  if (action instanceof journalActions.StartTest) {
+    return `${action.slotId}`;
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };

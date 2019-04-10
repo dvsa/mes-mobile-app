@@ -32,6 +32,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { TestsModule } from '../modules/tests/tests.module';
 import { DeviceAuthenticationProvider } from '../providers/device-authentication/device-authentication';
 import { QuestionProvider } from '../providers/question/question';
+import { Insomnia } from '@ionic-native/insomnia';
 
 @NgModule({
   declarations: [App],
@@ -78,6 +79,7 @@ import { QuestionProvider } from '../providers/question/question';
     DataStoreProvider,
     DeviceAuthenticationProvider,
     QuestionProvider,
+    Insomnia,
   ],
 })
 export class AppModule {}

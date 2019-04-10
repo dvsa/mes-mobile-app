@@ -4,6 +4,11 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
+import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DeviceProvider } from '../../providers/device/device';
@@ -15,13 +20,10 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies } from '../../modules/tests/test_data/test-data.constants';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
 import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
-import { merge } from 'rxjs/observable/merge';
-import { map } from 'rxjs/operators';
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { ToggleControlEco, TogglePlanningEco } from '../../modules/tests/test_data/test-data.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -42,10 +44,12 @@ export class TestReportPage extends BasePageComponent {
   subscription: Subscription;
   competencies = Competencies;
   displayOverlay: boolean;
+
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
+
   constructor(
     private store$: Store<StoreModel>,
     private deviceProvider: DeviceProvider,
@@ -114,12 +118,8 @@ export class TestReportPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
-    if (super.isIos()) {
-      this.deviceProvider.enableSingleAppMode();
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      this.insomnia.keepAwake();
-    }
   }
+
   toggleReportOverlay(): void {
     this.displayOverlay = !this.displayOverlay;
   }
@@ -150,6 +150,12 @@ export class TestReportPage extends BasePageComponent {
     return this.isRemoveFaultMode ? 'remove-mode'
     : this.isSeriousMode ? 'serious-mode'
     : this.isDangerousMode ? 'dangerous-mode' : '';
+  }
+  toggleControl(): void {
+    this.store$.dispatch(new ToggleControlEco());
+  }
+  togglePlanning(): void {
+    this.store$.dispatch(new TogglePlanningEco());
   }
 }
 export interface OverlayCallback {

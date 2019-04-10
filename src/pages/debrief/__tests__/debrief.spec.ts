@@ -17,6 +17,7 @@ import {
   AddSeriousFault,
   AddDrivingFault,
   TogglePhysicalEta,
+  TogglePlanningEco,
 } from '../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../modules/tests/test_data/test-data.constants';
 
@@ -35,6 +36,7 @@ describe('DebriefPage', () => {
             currentTest: {
               slotId: '123',
             },
+            testLifecycles: {},
             startedTests: {
               123: {
                 vehicleDetails: {},
@@ -49,6 +51,7 @@ describe('DebriefPage', () => {
                   seriousFaults: {},
                   testRequirements: {},
                   ETA: {},
+                  eco: {},
                 },
               },
             },
@@ -120,7 +123,12 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
     });
 
-    it('should display the ETA faults are any', () => {
+    it('should not display eco fault container if there are no eco faults', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#eco'))).toBeNull();
+    });
+
+    it('should display the ETA faults if there are any', () => {
       store$.dispatch(new TogglePhysicalEta());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
@@ -143,6 +151,13 @@ describe('DebriefPage', () => {
       store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsClutch, newFaultCount: 1 }));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeDefined();
+    });
+
+    it('should display the eco faults if there are any', () => {
+      store$.dispatch(new TogglePlanningEco());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#eco'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#ecoFaults'))).toBeDefined();
     });
 
     describe('endDebrief', () => {

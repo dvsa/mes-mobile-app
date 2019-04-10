@@ -8,7 +8,8 @@ export const initialState: TestData = {
   manoeuvres: {},
   seriousFaults: {},
   testRequirements: {},
-  ETA:{},
+  ETA: {},
+  eco: {},
 };
 
 export function testDataReducer(
@@ -16,19 +17,19 @@ export function testDataReducer(
   action: testDataActions.Types,
 ): TestData {
   switch (action.type) {
+    case testDataActions.RECORD_MANOEUVRES_SELECTION:
+      return {
+        ...state,
+        manoeuvres: {
+          [action.manoeuvre]: true,
+        },
+      };
     case testDataActions.ADD_DRIVING_FAULT:
       return {
         ...state,
         drivingFaults: {
           ...state.drivingFaults,
           [action.payload.competency]: action.payload.newFaultCount,
-        },
-      };
-    case testDataActions.RECORD_MANOEUVRES_SELECTION:
-      return {
-        ...state,
-        manoeuvres: {
-          [action.manoeuvre]: true,
         },
       };
     case testDataActions.ADD_SERIOUS_FAULT:
@@ -45,6 +46,30 @@ export function testDataReducer(
         dangerousFaults: {
           ...state.dangerousFaults,
           [action.payload]: true,
+        },
+      };
+    case testDataActions.REMOVE_DRIVING_FAULT:
+      return {
+        ...state,
+        drivingFaults: {
+          ...state.drivingFaults,
+          [action.payload.competency]: action.payload.newFaultCount,
+        },
+      };
+    case testDataActions.REMOVE_SERIOUS_FAULT:
+      return {
+        ...state,
+        seriousFaults: {
+          ...state.seriousFaults,
+          [action.payload]: false,
+        },
+      };
+    case testDataActions.REMOVE_DANGEROUS_FAULT:
+      return {
+        ...state,
+        dangerousFaults: {
+          ...state.dangerousFaults,
+          [action.payload]: false,
         },
       };
     case testDataActions.TOGGLE_NORMAL_START_1:
@@ -93,6 +118,22 @@ export function testDataReducer(
         ETA: {
           ...state.ETA,
           physical: !state.ETA.physical,
+        },
+      };
+    case testDataActions.TOGGLE_CONTROL_ECO:
+      return {
+        ...state,
+        eco: {
+          ...state.eco,
+          adviceGivenControl: !state.eco.adviceGivenControl,
+        },
+      };
+    case testDataActions.TOGGLE_PLANNING_ECO:
+      return {
+        ...state,
+        eco: {
+          ...state.eco,
+          adviceGivenPlanning: !state.eco.adviceGivenPlanning,
         },
       };
 

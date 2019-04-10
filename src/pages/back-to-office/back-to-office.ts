@@ -5,6 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { BackToOfficeViewDidEnter } from './back-to-office.actions';
+import { TestStatusDecided } from '../../modules/tests/test-status/test-status.actions';
 
 @IonicPage()
 @Component({
@@ -24,6 +25,7 @@ export class BackToOfficePage extends BasePageComponent {
   }
 
   ionViewDidEnter(): void {
+    this.store$.dispatch(new TestStatusDecided());
     this.store$.dispatch(new BackToOfficeViewDidEnter());
   }
 

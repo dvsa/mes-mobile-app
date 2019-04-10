@@ -1,20 +1,20 @@
-import { FaultCounterComponent } from '../fault-counter';
+import { DrivingFaultsBadgeComponent } from '../driving-faults-badge';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-describe('FaultCounterComponent', () => {
-  let fixture: ComponentFixture<FaultCounterComponent>;
-  let component: FaultCounterComponent;
+describe('DrivingFaultsBadgeComponent', () => {
+  let fixture: ComponentFixture<DrivingFaultsBadgeComponent>;
+  let component: DrivingFaultsBadgeComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        FaultCounterComponent,
+        DrivingFaultsBadgeComponent,
       ],
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(FaultCounterComponent);
+        fixture = TestBed.createComponent(DrivingFaultsBadgeComponent);
         component = fixture.componentInstance;
       });
   }));

@@ -10,6 +10,8 @@ import {
   JOURNAL_REFRESH,
   JournalRefresh,
   JOURNAL_REFRESH_ERROR,
+  START_TEST,
+  StartTest,
   JournalRefreshError } from '../../pages/journal/journal.actions';
 import {
     AnalyticsDimensionIndices,
@@ -18,7 +20,6 @@ import {
     AnalyticsEvents,
   } from '../../providers/analytics/analytics.model';
 import { SLOT_HAS_CHANGED, SlotHasChanged } from '../../providers/slot/slot.actions';
-import { TEST_OUTCOME_START_TEST, TestOutcomeStartTest } from './components/test-outcome/test-outcome.actions';
 
 @Injectable()
 export class JournalAnalyticsEffects {
@@ -106,8 +107,8 @@ export class JournalAnalyticsEffects {
 
   @Effect()
   testOutcomeStartTest$ = this.actions$.pipe(
-    ofType(TEST_OUTCOME_START_TEST),
-    switchMap((action: TestOutcomeStartTest) => {
+    ofType(START_TEST),
+    switchMap((action: StartTest) => {
       this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
       return of();
     }),

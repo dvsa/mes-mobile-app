@@ -64,6 +64,7 @@ describe('TestReportPage', () => {
             currentTest: {
               slotId: '123',
             },
+            testLifecycles: {},
             startedTests: {
               123: {
                 testData: initialState,
@@ -98,25 +99,6 @@ describe('TestReportPage', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
-    });
-
-    describe('ionViewDidEnter', () => {
-      it('should lock the screen orientation to Portrait Primary', () => {
-        component.ionViewDidEnter();
-        expect(screenOrientation.lock)
-          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      });
-
-      it('should keep the device awake', () => {
-        component.ionViewDidEnter();
-        expect(insomnia.keepAwake).toHaveBeenCalled();
-      });
-
-      it('should enable singleAppMode', () => {
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
-
     });
 
     describe('ionViewDidLeave', () => {

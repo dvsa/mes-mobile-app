@@ -20,11 +20,19 @@ import { AppConfigProviderMock } from '../../../../../providers/app-config/__moc
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
+import { StoreModule, Store } from '@ngrx/store';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { TestStatusDecided } from '../../../../../modules/tests/test-status/test-status.actions';
+import { of } from 'rxjs/observable/of';
+import { StartTest } from '../../../journal.actions';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
   let component: TestSlotComponent;
   const startTime = '2019-02-01T11:22:33+00:00';
+  let store$: Store<StoreModel>;
   const mockSlot = {
     slotDetail: {
       slotId: 1001,
@@ -96,7 +104,12 @@ describe('TestSlotComponent', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(CandidateLinkComponent),
       ],
-      imports: [IonicModule],
+      imports: [
+        IonicModule,
+        StoreModule.forRoot({
+          tests: testsReducer,
+        }),
+      ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
@@ -108,6 +121,7 @@ describe('TestSlotComponent', () => {
       component = fixture.componentInstance;
       component.slot = cloneDeep(mockSlot);
       component.showLocation = true;
+      store$ = TestBed.get(Store);
     });
   }));
 
@@ -257,22 +271,39 @@ describe('TestSlotComponent', () => {
         expect(subByDirective.isPortrait).toBeFalsy();
       });
 
-      it('should pass something to sub-component test-category  input', () => {
+      it('should pass something to sub-component test-category input', () => {
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(TestCategoryComponent))).componentInstance;
         expect(subByDirective.category).toBe('B');
       });
 
-      it('should pass something to sub-component test-outcome  input', () => {
+      it('should pass something to sub-component test-outcome input', () => {
+        fixture.detectChanges();
+        component.componentState = { testStatus$: of(TestStatus.Booked) };
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
-        expect(subByDirective.slot).toEqual(mockSlot);
+
+        expect(subByDirective.slotId).toEqual(mockSlot.slotDetail.slotId);
         expect(subByDirective.canStartTest).toEqual(true);
+        expect(subByDirective.testStatus).toBe(TestStatus.Booked);
       });
 
-      it('should pass something to sub-component vehicle-details  input', () => {
+      it('should pass test status decided to the test-outcome component when the outcome observable changes', () => {
+        fixture.detectChanges();
+        store$.dispatch(new StartTest(mockSlot.slotDetail.slotId));
+        store$.dispatch(new TestStatusDecided());
+        fixture.detectChanges();
+
+        const testOutcomeSubComponent = fixture.debugElement.query(
+          By.directive(MockComponent(TestOutcomeComponent)),
+        ).componentInstance;
+
+        expect(testOutcomeSubComponent.testStatus).toBe(TestStatus.Decided);
+      });
+
+      it('should pass something to sub-component vehicle-details input', () => {
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(VehicleDetailsComponent))).componentInstance;
@@ -285,7 +316,7 @@ describe('TestSlotComponent', () => {
         expect(subByDirective.showVehicleDetails).toBeFalsy();
       });
 
-      it('should pass something to sub-component language  input', () => {
+      it('should pass something to sub-component language input', () => {
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(LanguageComponent))).componentInstance;

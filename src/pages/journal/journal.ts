@@ -110,7 +110,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     // Merge observables into one
     const merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
-      slots$.pipe(map(this.createSlots)),
+      slots$.pipe(
+        map(this.createSlots),
+      ),
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),

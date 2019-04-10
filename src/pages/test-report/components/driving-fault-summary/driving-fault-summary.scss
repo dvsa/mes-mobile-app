@@ -12,6 +12,7 @@ driving-fault-summary {
     border-radius: 30px;
     background-color: map-get($colors-gds, "gds-black");
     color: map-get($colors, "mes-white");
+    margin-left: 4px;
     .summary-label {
       align-self: center;
     }
