@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { get, isNil } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -8,14 +8,17 @@ import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
+import { Observable } from 'rxjs/Observable';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'test-slot',
   templateUrl: 'test-slot.html',
 })
-export class TestSlotComponent implements SlotComponent {
+export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
   @Input()
   slot: any;
 
@@ -25,8 +28,9 @@ export class TestSlotComponent implements SlotComponent {
   @Input()
   showLocation: boolean;
 
-  @Input()
-  slotStatus: TestStatus;
+  slotStatus$: Observable<TestStatus>;
+
+  subscription: Subscription;
 
   constructor(
     public screenOrientation: ScreenOrientation,
@@ -34,6 +38,22 @@ export class TestSlotComponent implements SlotComponent {
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
   ) {}
+
+  ngOnInit(): void {
+    const { slotId } = this.slot.slotDetail;
+    this.slotStatus$ = this.store$.pipe(
+      select(getTests),
+      select(t => t.testLifecycles[slotId]),
+    );
+
+    this.subscription = this.slotStatus$.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   isIndicatorNeededForSlot(): boolean {
     const specialNeeds: boolean = this.isSpecialNeedsSlot();
