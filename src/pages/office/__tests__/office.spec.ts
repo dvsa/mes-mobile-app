@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
-
+import { ComponentsModule } from '../../../components/components.module';
 import { AppModule } from '../../../app/app.module';
 import { OfficePage } from '../office';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -10,8 +10,8 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { ToggleETA, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
-import { ExaminerActions } from '../../../modules/tests/test_data/test-data.constants';
+import { ToggleETA, TogglePlanningEco, AddDangerousFault } from '../../../modules/tests/test_data/test-data.actions';
+import { ExaminerActions, Competencies } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 
@@ -24,7 +24,7 @@ describe('OfficePage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OfficePage],
-      imports: [IonicModule, AppModule,
+      imports: [IonicModule, AppModule, ComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
@@ -107,6 +107,17 @@ describe('OfficePage', () => {
       store$.dispatch(new TogglePlanningEco());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ecoFaults'))).toBeDefined();
+    });
+    it('should not display dangerous fault comment textbox if there are not any', () => {
+      fixture.detectChanges();
+      component.ngAfterViewInit();
+      expect(fixture.debugElement.query(By.css('#dangerousFaultComment'))).toBeNull();
+    });
+    it('should display dangerous fault comment textbox if there are any', () => {
+      store$.dispatch(new AddDangerousFault(Competencies.judgementCrossing));
+      fixture.detectChanges();
+      component.ngAfterViewInit();
+      expect(fixture.debugElement.query(By.css('#dangerousFaultComment'))).toBeDefined();
     });
     describe('deferring the write up', () => {
       it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {

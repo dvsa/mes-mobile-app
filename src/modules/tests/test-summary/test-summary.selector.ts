@@ -18,9 +18,3 @@ export const isDebriefWitnessed = (testSummary: TestSummary): boolean => testSum
 export const isDebriefUnwitnessed = (testSummary: TestSummary): boolean => {
   return (testSummary.debriefWitnessed != null && !testSummary.debriefWitnessed) || false;
 };
-export const debriefWasWitnessed = (testSummary: TestSummary): boolean => {
-  return (testSummary.debriefWitnessed) || false;
-};
-export const debriefWasUnwitnessed = (testSummary: TestSummary): boolean => {
-  return (testSummary.debriefWitnessed != null && !testSummary.debriefWitnessed) || false;
-};
