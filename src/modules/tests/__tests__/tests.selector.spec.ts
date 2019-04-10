@@ -41,7 +41,7 @@ describe('testsSelector', () => {
   describe('getTestStatus', () => {
     it('should retrieve the status of the test with the given slotId', () => {
       const testState: TestsModel = {
-        currentTest: { slotId: '0' },
+        currentTest: { slotId: null },
         startedTests: {},
         testLifecycles: { 12345: TestStatus.Decided },
       };
@@ -49,6 +49,18 @@ describe('testsSelector', () => {
       const result = getTestStatus(testState, 12345);
 
       expect(result).toBe(TestStatus.Decided);
+    });
+
+    it('should default to booked if the test with the given slot ID does not have a status yet', () => {
+      const testState: TestsModel = {
+        currentTest: { slotId: null },
+        startedTests: {},
+        testLifecycles: {},
+      };
+
+      const result = getTestStatus(testState, 12345);
+
+      expect(result).toBe(TestStatus.Booked);
     });
   });
 });

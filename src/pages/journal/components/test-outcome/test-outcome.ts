@@ -33,7 +33,7 @@ export class TestOutcomeComponent {
   }
 
   showStartTestButton(): boolean {
-    return (this.outcome === undefined || this.outcome == null) && !this.canSubmitTest && !this.needsFinalisation();
+    return this.testStatus === TestStatus.Booked;
   }
 
   showSubmitTestButton(): boolean {

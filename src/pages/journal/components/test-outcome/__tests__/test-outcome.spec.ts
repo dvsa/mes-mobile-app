@@ -8,6 +8,7 @@ import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 import { StartTest } from '../../../journal.actions';
+import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -55,24 +56,15 @@ describe('Test Outcome', () => {
   describe('DOM', () => {
 
     describe('show start test button', () => {
-      it('should show the start test button when there is no outcome and user can not submit test', () => {
-        component.canSubmitTest = false;
-        component.outcome = undefined;
+      it('should show the start test button when the test status is Booked', () => {
+        component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
         const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
         expect(startButton.length).toBe(1);
       });
 
-      it('should not show the start test button when the test has an outcome', () => {
-        component.outcome = '12345';
-        component.canSubmitTest = false;
-        fixture.detectChanges();
-        const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
-        expect(startButton.length).toBe(0);
-      });
-      it('should not show start test button when the user can submit the test', () => {
-        component.outcome = undefined;
-        component.canSubmitTest = true;
+      it('should not show the start test button when the test has a status other than booked', () => {
+        component.testStatus = TestStatus.Started;
         fixture.detectChanges();
         const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
         expect(startButton.length).toBe(0);
