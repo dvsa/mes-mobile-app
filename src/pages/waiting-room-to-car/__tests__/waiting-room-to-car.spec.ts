@@ -39,20 +39,11 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
 } from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Insomnia } from '@ionic-native/insomnia';
-import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
   let component: WaitingRoomToCarPage;
   let store$: Store<StoreModel>;
-  let screenOrientation: ScreenOrientation;
-  let insomnia: Insomnia;
-  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -94,9 +85,6 @@ describe('WaitingRoomToCarPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: QuestionProvider, useClass: QuestionProviderMock },
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
-        { provide: Insomnia, useClass: InsomniaMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -106,9 +94,6 @@ describe('WaitingRoomToCarPage', () => {
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
-    screenOrientation = TestBed.get(ScreenOrientation);
-    insomnia = TestBed.get(Insomnia);
-    deviceProvider = TestBed.get(DeviceProvider);
   }));
 
   describe('Class', () => {
@@ -128,36 +113,6 @@ describe('WaitingRoomToCarPage', () => {
         };
         component.tellMeQuestionChanged(question);
         expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
-      });
-    });
-
-    describe('ionViewDidEnter', () => {
-      it('should lock the screen orientation', () => {
-        component.ionViewDidEnter();
-        expect(screenOrientation.lock).toHaveBeenCalled();
-      });
-      it('should keep the device awake', () => {
-        component.ionViewDidEnter();
-        expect(insomnia.keepAwake).toHaveBeenCalled();
-      });
-      it('should enter single app mode', () => {
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
-    });
-
-    describe('ionViewDidLeave', () => {
-      it('should unlock the screen orientation', () => {
-        component.ionViewDidLeave();
-        expect(screenOrientation.unlock).toHaveBeenCalled();
-      });
-      it('should prevent the device from staying awake', () => {
-        component.ionViewDidLeave();
-        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
-      });
-      it('should leave single app mode', () => {
-        component.ionViewDidLeave();
-        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
       });
     });
   });
