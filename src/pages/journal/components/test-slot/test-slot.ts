@@ -14,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
+import { getTestStatus } from '../../../../modules/tests/tests.selector';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -49,7 +50,7 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
     this.componentState = {
       testStatus$: this.store$.pipe(
         select(getTests),
-        select(t => t.testLifecycles[slotId]),
+        select(tests => getTestStatus(tests, slotId)),
       ),
     };
 
