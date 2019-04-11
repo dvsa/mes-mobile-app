@@ -6,6 +6,9 @@ import {
   hasDangerousFault,
   getETAFaultText,
   getEcoFaultText,
+  getManoeuvres,
+  hasManoeuvreBeenCompleted,
+  hasControlledStopBeenCompleted,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
@@ -33,6 +36,10 @@ describe('TestDataSelectors', () => {
     eco: {
       adviceGivenControl: false,
       adviceGivenPlanning: false,
+    },
+    manoeuvres: {
+      selectedForwardPark: true,
+      selectedControlledStop: true,
     },
   };
 
@@ -121,6 +128,49 @@ describe('TestDataSelectors', () => {
       state.eco.adviceGivenPlanning = true;
       const result = getEcoFaultText(state.eco);
       expect(result).toEqual('Planning');
+    });
+  });
+
+  describe('getManoeuvres', () => {
+    it('should retrive the manoeuvres data when requested', () => {
+      const result = getManoeuvres(state);
+      expect(result).toEqual(state.manoeuvres);
+    });
+  });
+
+  describe('hasManoeuvreBeenCompleted', () => {
+    it('should return false when no manoeuvres have been completed', () => {
+      const state: TestData = {
+        manoeuvres: {},
+      };
+      expect(hasManoeuvreBeenCompleted(state)).toBeFalsy();
+    });
+    it('should return true when a manoeuvre has been completed', () => {
+      const state: TestData = {
+        manoeuvres: {
+          selectedForwardPark: true,
+        },
+      };
+      expect(hasManoeuvreBeenCompleted(state)).toBeTruthy();
+    });
+    it('should return false when only a controlled stop has been completed', () => {
+      const state: TestData = {
+        manoeuvres: {
+          selectedControlledStop: true,
+        },
+      };
+      expect(hasManoeuvreBeenCompleted(state)).toBeFalsy();
+    });
+  });
+
+  describe('hasControlledStopBeenCompleted', () => {
+    it('should return true if a controlled stop has been completed', () => {
+      expect(hasControlledStopBeenCompleted(state)).toBeTruthy();
+    });
+    it('should return false if a controlled stop has not been completed', () => {
+      expect(hasControlledStopBeenCompleted({
+        manoeuvres: {},
+      })).toBeFalsy();
     });
   });
 });

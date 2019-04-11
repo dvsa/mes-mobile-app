@@ -22,6 +22,8 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           [action.manoeuvre]: true,
+          selectedControlledStop: state.manoeuvres.selectedControlledStop,
+          outcomeControlledStop: state.manoeuvres.outcomeControlledStop,
         },
       };
     case testDataActions.ADD_DRIVING_FAULT:
@@ -134,6 +136,14 @@ export function testDataReducer(
         eco: {
           ...state.eco,
           adviceGivenPlanning: !state.eco.adviceGivenPlanning,
+        },
+      };
+    case testDataActions.TOGGLE_CONTROLLED_STOP:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          selectedControlledStop: !state.manoeuvres.selectedControlledStop,
         },
       };
 

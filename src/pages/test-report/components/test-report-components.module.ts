@@ -13,6 +13,7 @@ import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { SeriousTooltipComponent } from '../components/serious-tooltip/serious-tooltip';
 import { DangerousTooltipComponent } from '../components/dangerous-tooltip/dangerous-tooltip';
 import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
+import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LegalRequirementsComponent } from '../components/legal-requirements/leg
     SeriousTooltipComponent,
     DangerousTooltipComponent,
     LegalRequirementsComponent,
+    ControlledStopComponent,
   ],
   imports: [
     ComponentsModule,
@@ -43,6 +45,7 @@ import { LegalRequirementsComponent } from '../components/legal-requirements/leg
     SeriousTooltipComponent,
     DangerousTooltipComponent,
     LegalRequirementsComponent,
+    ControlledStopComponent,
   ],
 })
 export class TestReportComponentsModule {}

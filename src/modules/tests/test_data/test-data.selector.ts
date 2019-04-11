@@ -3,7 +3,7 @@ import { TestData, ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies } from './test-data.constants';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
-export const getManoeuvres = (data: TestData) => data.manoeuvres;
+
 export const getDrivingFaultSummaryCount = (data: TestData): number => {
 
   // The way how we store the driving faults differs for certain competencies
@@ -40,3 +40,16 @@ export const getEcoFaultText = (data: Eco) => {
   if (data.adviceGivenControl && data.adviceGivenPlanning) return 'Control and Planning';
   return;
 };
+
+export const getManoeuvres = (data: TestData) => data.manoeuvres;
+
+export const hasManoeuvreBeenCompleted = (data: TestData) => {
+  return (
+    data.manoeuvres.selectedForwardPark ||
+    data.manoeuvres.selectedReverseLeft ||
+    data.manoeuvres.selectedReverseParkCarpark ||
+    data.manoeuvres.selectedReverseParkRoad ||
+    data.manoeuvres.selectedReverseRight);
+};
+
+export const hasControlledStopBeenCompleted = (data: TestData) => data.manoeuvres.selectedControlledStop;
