@@ -6,6 +6,8 @@ import { JournalPage } from './journal';
 import { journalReducer } from './journal.reducer';
 import { JournalEffects } from './journal.effects';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
+import { ActivitySlotComponent } from './components/activity-slot/activity-slot';
+import { EmptySlotComponent } from './components/empty-slot/empty-slot';
 import { JournalProvider } from '../../providers/journal/journal';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { SlotProvider } from '../../providers/slot/slot';
@@ -27,6 +29,10 @@ import { JournalComponentsModule } from './components/journal-components.module'
       JournalAnalyticsEffects,
       JournalLogsEffects,
     ]),
+  ],
+  entryComponents: [
+    ActivitySlotComponent,
+    EmptySlotComponent,
   ],
   providers: [
     JournalProvider,
