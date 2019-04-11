@@ -12,15 +12,23 @@ describe('testsSelector', () => {
       const currentTest: StandardCarTestCATBSchema = {
         category: 'B',
         id: 'abc123',
-        slotId: 123,
-        welshTest: false,
-        activityCode: 'x',
-        candidate: {},
-        applicationReference: {
-          applicationId: 999,
-          bookingSequence: 3,
-          checkDigit: 5,
+        journalData: {
+          welshTest: false,
+          slotId: 123,
+          start: '11:34',
+          staffNumber: '',
+          costCode: '',
+          testCategory: '',
+          vehicleSlotType: 'B57mins',
+          extendedTest: false,
+          candidate: {},
+          applicationReference: {
+            applicationId: 999,
+            bookingSequence: 3,
+            checkDigit: 5,
+          },
         },
+        activityCode: 'x',
       };
       const journal: JournalModel = { isLoading: false, lastRefreshed: new Date(), slots: {}, selectedDate: 'dummy' };
       const appInfo: AppInfoModel = { versionNumber: '0.0.0' };

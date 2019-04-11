@@ -28,6 +28,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
+import { PopulateJournalData } from '../../modules/tests/journal-data/journal-data.actions';
+import { JournalData } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class JournalEffects {
@@ -167,6 +169,7 @@ export class JournalEffects {
       return [
         new PopulateApplicationReference(slot.slotData.booking.application),
         new PopulateCandidateDetails(slot.slotData.booking.candidate),
+        new PopulateJournalData(this.convertToJournalData(slot.slotData)),
       ];
     }),
   );
@@ -218,4 +221,25 @@ export class JournalEffects {
       ];
     }),
   );
+
+  convertToJournalData = (slotData): JournalData => {
+    console.log(` slotdata ${JSON.stringify(slotData)}`);
+    return {
+      welshTest: slotData.booking.welshTest,
+      slotId: slotData.slotDetail.slotId,
+      start: slotData.slotDetail.start,
+      staffNumber: '',
+      costCode: slotData.testCentre.costCode,
+      testCategory: '',
+      vehicleSlotType: slotData.slotDetail.vehicleSlotType,
+      extendedTest: false,
+      candidate: {},
+      applicationReference: {
+        applicationId: null,
+        bookingSequence: null,
+        checkDigit: null,
+      },
+    };
+
+  }
 }

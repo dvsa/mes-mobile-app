@@ -43,13 +43,15 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../modules/tests/candidate/candidate.selector';
+import { getTestTime } from '../../modules/tests/journal-data/journal-data.selector';
+import { getJournalData } from '../../modules/tests/journal-data/journal-data.reducer';
 // import { getJournalState } from '../journal/journal.reducer';
 // import { getSlotById, getTime } from '../candidate-details/candidate-details.selector';
 // import { getSlots } from '../journal/journal.selector';
 // import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 interface OfficePageState {
-  // startTime$: Observable<string>;
+  startTime$: Observable<string>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
@@ -108,6 +110,11 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
+
+      startTime$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestTime),
+      ),
       candidateName$: currentTest$.pipe(
         select(getCandidate),
         select(getCandidateName),
@@ -161,20 +168,6 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getAdditionalInformation),
       ),
-      // startTime$: this.store$.pipe(
-      //   select(getTests),
-      //   select(getCurrentTestSlotId),
-      //   switchMap((slotId) => {
-      //     return this.store$.pipe(
-      //       tap(() => console.log(`slot id in tap ${slotId}`)),
-      //       select(getJournalState),
-      //       select(getSlots),
-      //       map((slots: {[k: string]: SlotItem[]}) =>
-      //               getSlotById(Object.values(slots), Number.parseInt(slotId, 10))),
-      //       select(getTime),
-      //     );
-      //   }),
-      // ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
