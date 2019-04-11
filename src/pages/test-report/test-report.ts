@@ -110,8 +110,6 @@ export class TestReportPage extends BasePageComponent {
       isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
-
-      // TODO: [MES-2046] Not correct, controlled stop is not part of the manoeuvres
       manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
     );
     this.subscription = merged$.subscribe();
