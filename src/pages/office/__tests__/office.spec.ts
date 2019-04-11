@@ -8,7 +8,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ToggleVerbalEta, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
 import { By } from '@angular/platform-browser';
@@ -22,7 +22,34 @@ describe('OfficePage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OfficePage],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule,
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testLifecycles: {},
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                candidate: {
+                  candidateName: 'Joe Bloggs',
+                },
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                },
+              },
+            },
+          }),
+        }),
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
