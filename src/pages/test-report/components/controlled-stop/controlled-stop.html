@@ -1,13 +1,20 @@
 <ion-row>
-  <ion-col>
-    <button (click)="toggleControlledStop()" class="tick-button">
+  <ion-col no-padding>
+    <button
+      (click)="toggleControlledStop()"
+      class="tick-button"
+      [ngClass]="{'checked' : componentState.selectedControlledStop$ | async}"
+    >
       <div class='tickwrapper'>
         <tick-indicator [ticked]="componentState.selectedControlledStop$ | async"></tick-indicator>
       </div>
     </button>
   </ion-col>
-  <ion-col>
-    <button class="label-button">
+  <ion-col no-padding>
+    <button
+      class="label-button"
+      [ngClass]="{'checked' : componentState.selectedControlledStop$ | async}"
+    >
       <div class="label">
         Controlled Stop
       </div>

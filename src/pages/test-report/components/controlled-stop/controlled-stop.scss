@@ -1,8 +1,9 @@
 controlled-stop {
+
   button {
     height: 44px;
     display: flex;
-    
+
     background: map-get($colors, "mes-white");
     border: 1px solid rgba(11, 12, 12, 0.4);
     box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
@@ -11,7 +12,7 @@ controlled-stop {
     &.activated {
       background: #eee;
     }
-    // Ripple animation effect
+
     &.ripple-effect {
       animation: ripple 0.4s forwards;
     }
@@ -43,39 +44,36 @@ controlled-stop {
       }
     }
 
-    .label {
-      width: 100%;
-      display: flex;
-      justify-content: center;
+    &.tick-button {
+      width: 56px;
 
-      font-size: 15px;
-      text-align: center;
-      line-height: 25px;
-      letter-spacing: -0.26px;
-      font-weight: 500;
-    }
-
-    .tickwrapper {
-      display: flex;
-      justify-content: center;
-    }
-
-    &.complete {
-      border: 2px solid map-get($colors-gds, "gds-green");
-      color: map-get($colors-gds, "gds-green");
-      
-      .competency-label {
-        font-weight: bold;
+      &.checked {
+        border: 2px solid map-get($colors-gds, "gds-dark-green");
+      }
+      .tickwrapper {
+        margin: auto;
       }
     }
-  }
 
-  .tick-button {
-    width: 44px;
-    padding-left: 10px;
-  }
-  
-  .label-button {
-    width: 195px;
+    &.label-button {
+      width: 192px;
+      color: rgb(11, 12, 12);
+
+      .label {
+        width: 100%;
+        font-size: 15px;
+        text-align: center;
+        line-height: 25px;
+        letter-spacing: -0.26px;
+    }
+
+      &.checked {
+        border: 2px solid map-get($colors-gds, "gds-dark-green");
+
+        .label {
+            color: map-get($colors-gds, "gds-dark-green");
+        }
+      }
+    }
   }
 }
