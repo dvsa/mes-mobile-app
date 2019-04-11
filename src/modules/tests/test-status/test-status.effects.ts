@@ -15,8 +15,6 @@ export class TestStatusEffects {
   @Effect({ dispatch: false })
   testDecidedEffect$ = this.actions$.pipe(
     ofType(testStatusActions.TEST_STATUS_DECIDED),
-    switchMap(() => {
-      return this.testPersistenceProvider.persistAllTests();
-    }),
+    switchMap(() => this.testPersistenceProvider.persistAllTests()),
   );
 }
