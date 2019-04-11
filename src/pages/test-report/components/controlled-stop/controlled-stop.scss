@@ -65,14 +65,7 @@ controlled-stop {
         text-align: center;
         line-height: 25px;
         letter-spacing: -0.26px;
-    }
-
-      &.checked {
-        border: 2px solid map-get($colors-gds, "gds-dark-green");
-
-        .label {
-            color: map-get($colors-gds, "gds-dark-green");
-        }
+        font-weight: 500;
       }
     }
   }
