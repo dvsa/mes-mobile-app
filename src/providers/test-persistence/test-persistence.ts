@@ -21,8 +21,7 @@ export class TestPersistenceProvider {
       take(1),
       switchMap(tests => this.dataStoreProvider.setItem(this.testKeychainKey, JSON.stringify(tests))),
       mapTo(undefined),
-    ).toPromise()
-      .catch(err => console.log(`Error persisting tests: ${err}`));
+    ).toPromise();
   }
 
 }
