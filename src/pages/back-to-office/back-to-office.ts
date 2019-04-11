@@ -6,6 +6,9 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { BackToOfficeViewDidEnter } from './back-to-office.actions';
 import { TestStatusDecided } from '../../modules/tests/test-status/test-status.actions';
+import { DeviceProvider } from '../../providers/device/device';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 @IonicPage()
 @Component({
@@ -16,15 +19,23 @@ export class BackToOfficePage extends BasePageComponent {
 
   constructor(
     private store$: Store<StoreModel>,
+    private deviceProvider: DeviceProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ionViewDidEnter(): void {
+    if (super.isIos()) {
+      this.deviceProvider.disableSingleAppMode();
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+    }
     this.store$.dispatch(new TestStatusDecided());
     this.store$.dispatch(new BackToOfficeViewDidEnter());
   }

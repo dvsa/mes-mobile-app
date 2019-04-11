@@ -10,13 +10,7 @@ import { AppModule } from '../../../app/app.module';
 import { TestReportPage } from '../test-report';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
-import { Insomnia } from '@ionic-native/insomnia';
-import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { CompetencyComponent } from '../components/competency/competency';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
@@ -33,9 +27,6 @@ import { ControlledStopComponent } from '../components/controlled-stop/controlle
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
-  let screenOrientation: ScreenOrientation;
-  let insomnia: Insomnia;
-  let deviceProvider: DeviceProvider;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -82,9 +73,6 @@ describe('TestReportPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
-        { provide: Insomnia, useClass: InsomniaMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
@@ -92,32 +80,12 @@ describe('TestReportPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(TestReportPage);
         component = fixture.componentInstance;
-        screenOrientation = TestBed.get(ScreenOrientation);
-        insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
       });
   }));
 
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
-    });
-
-    describe('ionViewDidLeave', () => {
-      it('should unlock the screen orientation', () => {
-        component.ionViewDidLeave();
-        expect(screenOrientation.unlock).toHaveBeenCalled();
-      });
-
-      it('should allow the device to sleep', () => {
-        component.ionViewDidLeave();
-        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
-      });
-
-      it('should disable singleAppMode', () => {
-        component.ionViewDidLeave();
-        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
-      });
     });
   });
 
