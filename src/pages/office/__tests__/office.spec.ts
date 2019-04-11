@@ -11,7 +11,7 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ToggleVerbalEta, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
-import { By } from '@angular/platform-browser/src/dom/debug/by';
+import { By } from '@angular/platform-browser';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
