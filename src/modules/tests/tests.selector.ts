@@ -6,4 +6,7 @@ export const getCurrentTest = (tests: TestsModel) => {
   return tests.startedTests[currentTestSlotId];
 };
 
+export const getCurrentTestSlotId = (tests: TestsModel): string => {
+  return tests.currentTest.slotId;
+};
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testLifecycles[slotId] || TestStatus.Booked;
