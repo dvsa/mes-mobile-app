@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -22,7 +21,7 @@ import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
-import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
+import { hasManoeuvreBeenCompleted } from '../../modules/tests/test_data/test-data.selector';
 import { ToggleControlEco, TogglePlanningEco } from '../../modules/tests/test_data/test-data.actions';
 
 interface TestReportPageState {
@@ -30,7 +29,7 @@ interface TestReportPageState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  manoeuvres$: Observable<Manoeuvres>;
+  manoeuvres$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -94,7 +93,7 @@ export class TestReportPage extends BasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        select(getManoeuvres),
+        select(hasManoeuvreBeenCompleted),
       ),
     };
 
@@ -113,7 +112,7 @@ export class TestReportPage extends BasePageComponent {
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
 
       // TODO: [MES-2046] Not correct, controlled stop is not part of the manoeuvres
-      manoeuvres$.pipe(map(manoeuvres => this.manoeuvresCompleted = Object.values(manoeuvres)[0])),
+      manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
     );
     this.subscription = merged$.subscribe();
   }

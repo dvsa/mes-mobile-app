@@ -22,6 +22,8 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           [action.manoeuvre]: true,
+          selectedControlledStop: state.manoeuvres.selectedControlledStop,
+          outcomeControlledStop: state.manoeuvres.outcomeControlledStop,
         },
       };
     case testDataActions.ADD_DRIVING_FAULT:

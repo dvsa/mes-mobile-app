@@ -5,8 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.selector';
-import { map } from 'rxjs/operators';
+import { hasControlledStopBeenCompleted } from '../../../../modules/tests/test_data/test-data.selector';
 import { ToggleControlledStop } from '../../../../modules/tests/test_data/test-data.actions';
 
 interface ControlledStopComponentState {
@@ -24,16 +23,12 @@ export class ControlledStopComponent implements OnInit {
   constructor(private store$: Store<StoreModel>) {}
 
   ngOnInit(): void {
-    const manoeuvres$ = this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-      select(getTestData),
-      select(getManoeuvres),
-    );
-
     this.componentState = {
-      selectedControlledStop$: manoeuvres$.pipe(
-        map(manoeuvres => manoeuvres.selectedControlledStop),
+      selectedControlledStop$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(hasControlledStopBeenCompleted),
       ),
     };
   }
