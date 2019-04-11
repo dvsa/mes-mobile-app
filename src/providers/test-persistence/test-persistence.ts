@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, take } from 'rxjs/operators';
 import { DataStoreProvider } from '../data-store/data-store';
 import { from } from 'rxjs/observable/from';
 
@@ -18,6 +18,7 @@ export class TestPersistenceProvider {
   persistAllTests(): Observable<string> {
     return this.store$.pipe(
       select(getTests),
+      take(1),
       tap(tests => console.log(`trying to persist tests: ${JSON.stringify(tests)}`)),
       switchMap(tests => from(this.dataStoreProvider.setItem('TESTS', JSON.stringify(tests)).then(x => x))),
       tap(tests => console.log(`PERSISTED: ${tests}`)),
