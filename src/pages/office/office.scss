@@ -1,6 +1,6 @@
 page-office {
-    ion-content > div {
-        background-color: map-get($colors, "mes-white");
+    ion-content {
+        // background-color: map-get($colors, "mes-white");
         .mes-full-width-card {
           height: 120px;
           #continue-to-test-report {
@@ -22,6 +22,19 @@ page-office {
         //   margin: 10px 0 0 0;
         // }
       }
+      .unsuccessful {
+        color: map-get($colors, "mes-red");
+      }
+      .inline-mode {
+        display: inline;
+      }
+      .card-content-ios{
+        padding: 0;
+      }    
+      .grid{
+        padding: 0;
+      }
+    
 }
 ion-footer {
   background-color: map-get($colors, "mes-white");
