@@ -7,7 +7,7 @@ import {
   NavControllerMock, NavParamsMock, ConfigMock,
   PlatformMock, LoadingControllerMock, ToastControllerMock,
 } from 'ionic-mocks';
-
+import { JournalComponentsModule } from './../components/journal-components.module';
 import { AppModule } from '../../../app/app.module';
 import { JournalPage } from '../journal';
 import { DebugElement } from '@angular/core';
@@ -25,7 +25,6 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { StoreModel } from '../../../shared/models/store.model';
 
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
-import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 import { By } from '@angular/platform-browser';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -40,8 +39,9 @@ describe('JournalPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalPage, JournalNavigationComponent],
+      declarations: [JournalPage],
       imports: [
+        JournalComponentsModule,
         IonicModule,
         AppModule,
         StoreModule.forRoot({
