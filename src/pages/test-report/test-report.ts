@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Insomnia } from '@ionic-native/insomnia';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
@@ -10,7 +8,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { DeviceProvider } from '../../providers/device/device';
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
@@ -51,13 +48,10 @@ export class TestReportPage extends BasePageComponent {
 
   constructor(
     private store$: Store<StoreModel>,
-    private deviceProvider: DeviceProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public screenOrientation: ScreenOrientation,
-    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -123,13 +117,6 @@ export class TestReportPage extends BasePageComponent {
     this.displayOverlay = !this.displayOverlay;
   }
 
-  ionViewDidLeave(): void {
-    if (super.isIos()) {
-      this.deviceProvider.disableSingleAppMode();
-      this.screenOrientation.unlock();
-      this.insomnia.allowSleepAgain();
-    }
-  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
