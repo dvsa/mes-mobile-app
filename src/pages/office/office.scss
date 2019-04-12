@@ -1,6 +1,9 @@
 page-office {
     ion-content {
         // background-color: map-get($colors, "mes-white");
+        ion-select{
+          width:452px;
+        }
         .mes-full-width-card {
           height: 120px;
           #continue-to-test-report {

@@ -4,7 +4,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { OfficeViewDidEnter } from './office.actions';
+import { OfficeViewDidEnter, ShowMeQuestionSelected } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
@@ -43,6 +43,8 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../modules/tests/candidate/candidate.selector';
+import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
+import { QuestionProvider } from '../../providers/question/question';
 // import { getJournalState } from '../journal/journal.reducer';
 // import { getSlotById, getTime } from '../candidate-details/candidate-details.selector';
 // import { getSlots } from '../journal/journal.selector';
@@ -84,16 +86,19 @@ export class OfficePage extends BasePageComponent {
   additionalInformationInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
 
+  showMeQuestions: ShowMeQuestion[];
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public questionProvider: QuestionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
-
+    this.showMeQuestions = questionProvider.getShowMeQuestions();
   }
 
   ionViewDidEnter(): void {
@@ -217,6 +222,10 @@ export class OfficePage extends BasePageComponent {
       // TODO go to the correct page
       this.navCtrl.push('JournalPage');
     }
+  }
+  showMeQuestionChanged(newShowMeQuestion): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(newShowMeQuestion));
+    this.form.controls['ShowMeQuestionOutcomeCtrl'].setValue('');
   }
 
   getFormValidation(): { [key: string]: FormControl } {

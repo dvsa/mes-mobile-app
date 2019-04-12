@@ -179,8 +179,32 @@
             </ion-row>
           </ion-col>
         </ion-row>
-
         <!-- TODO this may just be a text output not an input so change this row to remove validation etc -->
+        <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
+          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl')"></div>
+          <ion-col class="component-label" col-32 align-self-center>
+            <label>Show me question</label>
+          </ion-col>
+          <ion-col align-self-center>
+            <ion-row class="spacing-row"></ion-row>
+            <ion-row>
+            <ion-select (ionChange)="showMeQuestionChanged($event)" placeholder="Select a question" 
+            id="show-me-selector" 
+            value="show-me-question" 
+            okText="Submit" 
+            cancelText="Cancel">
+              <ion-option [value]="showMeQuestion" *ngFor="let showMeQuestion of showMeQuestions">
+                {{showMeQuestion.showMeQuestionCode}} - {{showMeQuestion.showMeQuestionShortName}}
+              </ion-option>
+            </ion-select>
+            </ion-row>
+            <ion-row class="validation-message-row" align-items-center>
+              <div class="validation-text">
+                Enter the show me question
+              </div>
+            </ion-row>
+          </ion-col>
+        </ion-row>
         <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('tellMeQuestionCtrl')"></div>
           <ion-col class="component-label" col-32 align-self-center>
