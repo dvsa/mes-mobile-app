@@ -13,15 +13,15 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
   getCandidateDescription,
-  wasSatNavUsed,
-  wereTrafficSignsUsed,
-  debriefWasWitnessed,
-  debriefWasUnwitnessed,
-  wasIdentificationLicense,
-  wasIdentificationPassport,
-  wasD255Yes,
-  wasD255No,
+  isIdentificationLicense,
+  isIdentificationPassport,
+  isD255Yes,
+  isD255No,
   getAdditionalInformation,
+  getSatNavUsed,
+  getTrafficSignsUsed,
+  isDebriefWitnessed,
+  isDebriefUnwitnessed,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -146,35 +146,35 @@ export class OfficePage extends BasePageComponent {
       ),
       independentDrivingSatNavRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
-        select(wasSatNavUsed),
+        select(getSatNavUsed),
       ),
       independentDrivingTrafficSignsRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
-        select(wereTrafficSignsUsed),
+        select(getTrafficSignsUsed),
       ),
       debriefWitnessedYesRadioChecked$ : currentTest$.pipe(
         select(getTestSummary),
-        select(debriefWasWitnessed),
+        select(isDebriefWitnessed),
       ),
       debriefWitnessedNoRadioChecked$ : currentTest$.pipe(
         select(getTestSummary),
-        select(debriefWasUnwitnessed),
+        select(isDebriefUnwitnessed),
      ),
       identificationLicenseRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
-        select(wasIdentificationLicense),
+        select(isIdentificationLicense),
     ),
       identificationPassportRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
-        select(wasIdentificationPassport),
+        select(isIdentificationPassport),
     ),
       d255YesRadioChecked$: currentTest$.pipe(
       select(getTestSummary),
-      select(wasD255Yes),
+      select(isD255Yes),
       ),
       d255NoRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
-        select(wasD255No),
+        select(isD255No),
       ),
       additionalInformation$: currentTest$.pipe(
         select(getTestSummary),
@@ -243,7 +243,6 @@ export class OfficePage extends BasePageComponent {
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
-
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
