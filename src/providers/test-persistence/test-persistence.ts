@@ -24,4 +24,8 @@ export class TestPersistenceProvider {
     ).toPromise();
   }
 
+  clearPersistedTests(): Promise<void> {
+    return Promise.resolve();
+  }
+
 }

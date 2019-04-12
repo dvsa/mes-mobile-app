@@ -71,6 +71,7 @@ export class AppConfigProvider {
       configUrl: data.configUrl,
       daysToCacheJournalData: data.daysToCacheJournalData,
       daysToCacheLogs: data.daysToCacheLogs,
+      logoutClearsTestPersistence: data.logoutClearsTestPersistence,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,

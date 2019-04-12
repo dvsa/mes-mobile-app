@@ -3,6 +3,7 @@ export interface EnvironmentFile {
   configUrl: string;
   daysToCacheJournalData: number;
   daysToCacheLogs: number;
+  logoutClearsTestPersistence?: boolean;
   authentication: {
     context: string;
     resourceUrl: string;

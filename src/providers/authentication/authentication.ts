@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { AuthenticationError } from './authentication.constants';
 import { MsAdalError } from './authentication.models';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
+import { TestPersistenceProvider } from '../test-persistence/test-persistence';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -21,7 +22,9 @@ export class AuthenticationProvider {
     private msAdal: MSAdal,
     private inAppBrowser: InAppBrowser,
     private networkState: NetworkStateProvider,
-    private appConfig: AppConfigProvider) {
+    private appConfig: AppConfigProvider,
+    private testPersistenceProvider: TestPersistenceProvider,
+  ) {
   }
 
   public initialiseAuthentication = ():void => {
@@ -95,6 +98,10 @@ export class AuthenticationProvider {
     browser.on('loadstop').subscribe(() => {
       browser.close();
     });
+
+    if (this.appConfig.getAppConfig().logoutClearsTestPersistence) {
+      this.testPersistenceProvider.clearPersistedTests();
+    }
   }
 
   aquireTokenSilently = async (): Promise<AuthenticationResult> => {
