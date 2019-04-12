@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ToastController, Toast } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -8,7 +8,7 @@ import { OfficeViewDidEnter } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getTestOutcome, getTestOutcomeClass, isPassed } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
@@ -43,15 +43,16 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../modules/tests/candidate/candidate.selector';
-import { getTestTime } from '../../modules/tests/journal-data/journal-data.selector';
-import { getJournalData } from '../../modules/tests/journal-data/journal-data.reducer';
-// import { getJournalState } from '../journal/journal.reducer';
-// import { getSlotById, getTime } from '../candidate-details/candidate-details.selector';
-// import { getSlots } from '../journal/journal.selector';
-// import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
+import { getSelectedTellMeQuestionText } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
 
 interface OfficePageState {
   startTime$: Observable<string>;
+  testOutcome$: Observable<string>;
+  testOutcomeClass$: Observable<string>;
+  isPassed$: Observable<boolean>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
@@ -65,6 +66,7 @@ interface OfficePageState {
   d255NoRadioChecked$: Observable<boolean>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
+  tellMeQuestionText$: Observable<string>;
 }
 
 @IonicPage()
@@ -75,6 +77,7 @@ interface OfficePageState {
 export class OfficePage extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
+  toast: Toast;
 
   @ViewChild('routeInput')
   routeInput: ElementRef;
@@ -88,6 +91,7 @@ export class OfficePage extends BasePageComponent {
 
   constructor(
     private store$: Store<StoreModel>,
+    public toastController: ToastController,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -110,9 +114,17 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
-
+      testOutcome$: currentTest$.pipe(
+        select(getTestOutcome),
+      ),
+      testOutcomeClass$: currentTest$.pipe(
+        select(getTestOutcomeClass),
+      ),
+      isPassed$: currentTest$.pipe(
+        select(isPassed),
+      ),
       startTime$: currentTest$.pipe(
-        select(getJournalData),
+        select(getTestSlotAttributes),
         select(getTestTime),
       ),
       candidateName$: currentTest$.pipe(
@@ -168,6 +180,10 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getAdditionalInformation),
       ),
+      tellMeQuestionText$: currentTest$.pipe(
+        select(getVehicleChecks),
+        select(getSelectedTellMeQuestionText),
+      ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
@@ -185,6 +201,10 @@ export class OfficePage extends BasePageComponent {
 
   popToRoot() {
     this.navCtrl.popToRoot();
+  }
+
+  defer() {
+    this.popToRoot();
   }
 
   /**
@@ -208,7 +228,10 @@ export class OfficePage extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       // TODO go to the correct page
-      this.navCtrl.push('JournalPage');
+      this.popToRoot();
+    } else {
+      this.createToast('Fill all mandatory fields');
+      this.toast.present();
     }
   }
 
@@ -218,7 +241,6 @@ export class OfficePage extends BasePageComponent {
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
       debriefWitnessedCtrl: new FormControl('', [Validators.required]),
       identificationCtrl: new FormControl('', [Validators.required]),
-      tellMeQuestionCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
 
@@ -256,4 +278,17 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new D255No());
   }
 
+  private createToast = (errorMessage: string) => {
+
+    this.toast = this.toastController.create({
+      message: errorMessage,
+      position: 'top',
+      dismissOnPageChange: true,
+      cssClass: 'mes-toast-message-error',
+      duration: 5000,
+      showCloseButton: true,
+      closeButtonText: 'X',
+    });
+
+  }
 }

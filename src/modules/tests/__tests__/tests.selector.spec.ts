@@ -13,14 +13,20 @@ describe('testsSelector', () => {
         category: 'B',
         id: 'abc123',
         journalData: {
-          welshTest: false,
-          slotId: 123,
-          start: '11:34',
-          staffNumber: '',
-          costCode: '',
-          testCategory: '',
-          vehicleSlotType: 'B57mins',
-          extendedTest: false,
+          testSlotAttributes: {
+            welshTest: false,
+            slotId: 123,
+            start: '11:34',
+            vehicleSlotType: 'B57mins',
+            extendedTest: false,
+            specialNeeds: false,
+          },
+          examiner: {
+            staffNumber: '',
+          },
+          testCentre: {
+            costCode: '',
+          },
           candidate: {},
           applicationReference: {
             applicationId: 999,

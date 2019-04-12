@@ -11,7 +11,7 @@ export const initialState : TestSummary = {
   weatherConditions: [],
   debriefWitnessed: null,
   D255: null,
-  identification: null,
+  identification:  'Licence',
 };
 
 export function testSummaryReducer(

@@ -28,8 +28,9 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
-import { PopulateJournalData } from '../../modules/tests/journal-data/journal-data.actions';
-import { JournalData } from '@dvsa/mes-test-schema/categories/B';
+import { TestSlotAttributes, TestCentre } from '@dvsa/mes-test-schema/categories/B';
+import { PopulateTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -169,7 +170,8 @@ export class JournalEffects {
       return [
         new PopulateApplicationReference(slot.slotData.booking.application),
         new PopulateCandidateDetails(slot.slotData.booking.candidate),
-        new PopulateJournalData(this.convertToJournalData(slot.slotData)),
+        new PopulateTestSlotAttributes(this.extractTestSlotAttributes(slot.slotData)),
+        new PopulateTestCentre(this.extractTestCentre(slot.slotData)),
       ];
     }),
   );
@@ -222,24 +224,22 @@ export class JournalEffects {
     }),
   );
 
-  convertToJournalData = (slotData): JournalData => {
+  extractTestSlotAttributes = (slotData): TestSlotAttributes => {
     console.log(` slotdata ${JSON.stringify(slotData)}`);
     return {
-      welshTest: slotData.booking.welshTest,
+      welshTest: slotData.booking.application.welshTest,
       slotId: slotData.slotDetail.slotId,
       start: slotData.slotDetail.start,
-      staffNumber: '',
-      costCode: slotData.testCentre.costCode,
-      testCategory: '',
-      vehicleSlotType: slotData.slotDetail.vehicleSlotType,
-      extendedTest: false,
-      candidate: {},
-      applicationReference: {
-        applicationId: null,
-        bookingSequence: null,
-        checkDigit: null,
-      },
+      specialNeeds: slotData.booking.application.specialNeeds,
+      vehicleSlotType: slotData.vehicleSlotType,
+      extendedTest: slotData.booking.application.extendedTest,
     };
+  }
 
+  extractTestCentre = (slotData): TestCentre => {
+    console.log(`slotdata ${JSON.stringify(slotData)}`);
+    return {
+      costCode: slotData.testCentre.costCode,
+    };
   }
 }
