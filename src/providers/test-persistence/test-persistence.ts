@@ -24,8 +24,8 @@ export class TestPersistenceProvider {
     ).toPromise();
   }
 
-  clearPersistedTests(): Promise<void> {
-    return Promise.resolve();
+  async clearPersistedTests(): Promise<void> {
+    await this.dataStoreProvider.removeItem(this.testKeychainKey);
   }
 
 }
