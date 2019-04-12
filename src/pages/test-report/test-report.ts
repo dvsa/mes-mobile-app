@@ -13,7 +13,7 @@ import { getUntitledCandidateName } from '../../modules/tests/candidate/candidat
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { Competencies } from '../../modules/tests/test_data/test-data.constants';
+import { Competencies, LegalRequirements } from '../../modules/tests/test_data/test-data.constants';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
@@ -39,6 +39,7 @@ export class TestReportPage extends BasePageComponent {
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;
+  legalRequirements = LegalRequirements;
   displayOverlay: boolean;
 
   isRemoveFaultMode: boolean = false;

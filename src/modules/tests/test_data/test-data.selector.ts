@@ -1,6 +1,6 @@
 
-import { TestData, ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
-import { Competencies } from './test-data.constants';
+import { TestData, TestRequirements, ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
+import { Competencies, LegalRequirements } from './test-data.constants';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -53,3 +53,7 @@ export const hasManoeuvreBeenCompleted = (data: TestData) => {
 };
 
 export const hasControlledStopBeenCompleted = (data: TestData) => data.manoeuvres.selectedControlledStop;
+
+export const hasLegalRequirementBeenCompleted = (data: TestRequirements, legalRequirement: LegalRequirements) => {
+  return data[legalRequirement];
+};

@@ -19,7 +19,7 @@ import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../test-report.reducer';
-import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
+import { LegalRequirementComponent } from '../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../components/examiner-takes-action/eta';
 import { initialState } from '../../../modules/tests/test_data/test-data.reducer';
 import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
@@ -43,7 +43,7 @@ describe('TestReportPage', () => {
         MockComponent(CompetencyWithModalComponent),
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),
-        MockComponent(LegalRequirementsComponent),
+        MockComponent(LegalRequirementComponent),
         MockComponent(EtaComponent),
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),

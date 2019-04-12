@@ -3,16 +3,13 @@ import {
   AddDrivingFault,
   AddSeriousFault,
   RecordManoeuvresSelection,
-  ToggleNormalStart1,
-  ToggleNormalStart2,
-  ToggleAngledStart,
-  ToggleHillStart,
   AddDangerousFault,
   ToggleControlEco,
   TogglePlanningEco,
   ToggleControlledStop,
+  ToggleLegalRequirement,
 } from '../test-data.actions';
-import { Competencies } from '../test-data.constants';
+import { Competencies, LegalRequirements } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
   ManoeuvreTypes,
@@ -153,7 +150,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleNormalStart1());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
 
       expect(result.testRequirements.normalStart1).toBeTruthy();
     });
@@ -163,8 +160,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleNormalStart1());
-      const result = testDataReducer(modifiedState, new ToggleNormalStart1());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart1));
 
       expect(result.testRequirements.normalStart1).toBeFalsy();
     });
@@ -176,7 +173,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleNormalStart2());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart2));
 
       expect(result.testRequirements.normalStart2).toBeTruthy();
     });
@@ -186,8 +183,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleNormalStart2());
-      const result = testDataReducer(modifiedState, new ToggleNormalStart2());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart2));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart2));
 
       expect(result.testRequirements.normalStart2).toBeFalsy();
     });
@@ -199,7 +196,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleAngledStart());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.angledStart));
 
       expect(result.testRequirements.angledStart).toBeTruthy();
     });
@@ -209,8 +206,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleAngledStart());
-      const result = testDataReducer(modifiedState, new ToggleAngledStart());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.angledStart));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.angledStart));
 
       expect(result.testRequirements.angledStart).toBeFalsy();
     });
@@ -222,7 +219,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleHillStart());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.hillStart));
 
       expect(result.testRequirements.hillStart).toBeTruthy();
     });
@@ -232,8 +229,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleHillStart());
-      const result = testDataReducer(modifiedState, new ToggleHillStart());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.hillStart));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.hillStart));
 
       expect(result.testRequirements.hillStart).toBeFalsy();
 
