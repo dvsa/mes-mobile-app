@@ -94,6 +94,16 @@ describe('OfficePage', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#eco'))).toBeDefined();
     });
+    it('should display eta fault details if there are any', () => {
+      store$.dispatch(new ToggleVerbalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
+    });
+    it('should display eco fault details if there are any', () => {
+      store$.dispatch(new TogglePlanningEco());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ecoFaults'))).toBeDefined();
+    });
   });
 
   describe('popToRoot', () => {
