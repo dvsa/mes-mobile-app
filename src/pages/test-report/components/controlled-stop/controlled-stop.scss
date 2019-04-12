@@ -1,0 +1,22 @@
+controlled-stop {
+
+  .tick-button {
+    width: 56px;
+
+    &.checked {
+      border: 2px solid map-get($colors-gds, "gds-dark-green");
+    }
+    .tickwrapper {
+      margin: auto;
+    }
+  }
+
+  .label-button {
+    width: 192px;
+    color: rgb(11, 12, 12);
+
+    .label {
+      width: 100%;
+    }
+  }
+}

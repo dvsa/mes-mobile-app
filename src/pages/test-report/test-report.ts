@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Insomnia } from '@ionic-native/insomnia';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { DeviceProvider } from '../../providers/device/device';
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
@@ -22,7 +18,7 @@ import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
-import { getManoeuvres } from '../../modules/tests/test_data/test-data.selector';
+import { hasManoeuvreBeenCompleted } from '../../modules/tests/test_data/test-data.selector';
 import { ToggleControlEco, TogglePlanningEco } from '../../modules/tests/test_data/test-data.actions';
 
 interface TestReportPageState {
@@ -30,7 +26,7 @@ interface TestReportPageState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  manoeuvres$: Observable<Manoeuvres>;
+  manoeuvres$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -52,13 +48,10 @@ export class TestReportPage extends BasePageComponent {
 
   constructor(
     private store$: Store<StoreModel>,
-    private deviceProvider: DeviceProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    public screenOrientation: ScreenOrientation,
-    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -94,7 +87,7 @@ export class TestReportPage extends BasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        select(getManoeuvres),
+        select(hasManoeuvreBeenCompleted),
       ),
     };
 
@@ -111,7 +104,7 @@ export class TestReportPage extends BasePageComponent {
       isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
-      manoeuvres$.pipe(map(manoeuvres => this.manoeuvresCompleted = Object.values(manoeuvres)[0])),
+      manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
     );
     this.subscription = merged$.subscribe();
   }
@@ -124,13 +117,6 @@ export class TestReportPage extends BasePageComponent {
     this.displayOverlay = !this.displayOverlay;
   }
 
-  ionViewDidLeave(): void {
-    if (super.isIos()) {
-      this.deviceProvider.disableSingleAppMode();
-      this.screenOrientation.unlock();
-      this.insomnia.allowSleepAgain();
-    }
-  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

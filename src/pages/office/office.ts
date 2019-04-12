@@ -47,6 +47,8 @@ import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/
 import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
 import { getSelectedTellMeQuestionText } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
+import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -67,6 +69,8 @@ interface OfficePageState {
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   tellMeQuestionText$: Observable<string>;
+  etaFaults$: Observable<string>;
+  ecoFaults$: Observable<string>;
 }
 
 @IonicPage()
@@ -99,7 +103,6 @@ export class OfficePage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
-
   }
 
   ionViewDidEnter(): void {
@@ -183,6 +186,20 @@ export class OfficePage extends BasePageComponent {
       tellMeQuestionText$: currentTest$.pipe(
         select(getVehicleChecks),
         select(getSelectedTellMeQuestionText),
+      ),
+      etaFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getETA),
+        select(getETAFaultText),
+      ),
+      ecoFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getEco),
+        select(getEcoFaultText),
       ),
     };
     this.inputSubscriptions = [

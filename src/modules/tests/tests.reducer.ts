@@ -41,10 +41,10 @@ const initialState: TestsModel = {
  * @param state Test state for all tests
  * @param action The action to modify the state
  */
-export const testsReducer = (
+export function testsReducer(
   state = initialState,
   action: Action,
-) => {
+) {
   const slotId = deriveSlotId(state, action);
   if (!slotId) {
     return state;
@@ -77,7 +77,7 @@ export const testsReducer = (
             examiner: examinerReducer,
             testCentre: testCentreReducer,
           },
-        // @ts-ignore
+          // @ts-ignore
         )(state.startedTests[slotId], action),
       },
     },
@@ -89,7 +89,7 @@ export const testsReducer = (
       [slotId]: testStatusReducer(state.testLifecycles[slotId], action),
     },
   };
-};
+}
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   if (action instanceof journalActions.StartTest) {

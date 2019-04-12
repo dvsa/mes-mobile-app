@@ -1,6 +1,13 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HammerProvider } from '../hammer';
-import { MockComponent } from '../__mocks__/component.mock';
+import { Component } from '@angular/core';
+@Component({
+  selector: 'mock-component',
+  template: '<button>Test</button>',
+})
+class MockComponent  {
+  constructor() {}
+}
 
 describe('HammerProvider', () => {
   let fixture: ComponentFixture<MockComponent>;

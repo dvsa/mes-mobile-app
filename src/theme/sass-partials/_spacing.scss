@@ -9,6 +9,11 @@
 .padding-top-22 {
   padding-top: 22px;
 }
+
+.padding-right-10 {
+  padding-right: 10px;
+}
+
 .padding-right-16 {
   padding-right: 16px;
 }
@@ -17,4 +22,10 @@
   padding-left: 0;
   padding-bottom: 0;
   padding-right: 0;
+}
+
+.only-right-padding {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0
 }

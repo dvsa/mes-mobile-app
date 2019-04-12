@@ -10,6 +10,7 @@ import {
   AddDangerousFault,
   ToggleControlEco,
   TogglePlanningEco,
+  ToggleControlledStop,
 } from '../test-data.actions';
 import { Competencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
@@ -99,6 +100,21 @@ describe('TestDataReducer reducer', () => {
       );
       expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
       expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
+    });
+    it('should keep any controlled stop data when changing selected manoeuvre', () => {
+      initialState.manoeuvres = {
+        selectedReverseParkCarpark: true,
+        selectedControlledStop: true,
+        outcomeControlledStop: 'S',
+      };
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+      );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
+      expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
+      expect(result.manoeuvres.outcomeControlledStop).toBe('S');
     });
   });
   describe('ADD_DANGEROUS_FAULT', () => {
@@ -260,6 +276,26 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(modifiedState, new TogglePlanningEco());
 
       expect(result.eco.adviceGivenPlanning).toBeFalsy();
+
+    });
+  });
+  describe('TOGGLE_CONTROLLED_STOP', () => {
+    it('should toggle the controlled stop (true when dispatched first time)', () => {
+      const state: TestData = {
+        manoeuvres: {},
+      };
+      const result = testDataReducer(state, new ToggleControlledStop());
+      expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
+    });
+
+    it('should toggle the controlled stop (false when dispatched second time)', () => {
+      const state: TestData = {
+        manoeuvres: {},
+      };
+      const modifiedState = testDataReducer(state, new ToggleControlledStop());
+      const result = testDataReducer(modifiedState, new ToggleControlledStop());
+
+      expect(result.manoeuvres.selectedControlledStop).toBeFalsy();
 
     });
   });
