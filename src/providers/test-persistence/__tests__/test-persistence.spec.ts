@@ -39,4 +39,12 @@ describe('TestPersistenceProvider', () => {
       expect(JSON.parse(dataStoreProvider.setItem.calls.first().args[1])).toEqual(testState);
     });
   });
+
+  describe('clearPersistedTests', () => {
+    it('should remove item on the data stores test key', async () => {
+      await testPersistenceProvider.clearPersistedTests();
+
+      expect(dataStoreProvider.removeItem).toHaveBeenCalledWith('TESTS');
+    });
+  });
 });

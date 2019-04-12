@@ -3,6 +3,7 @@ export type AppConfig = {
   googleAnalyticsId: string,
   daysToCacheJournalData: number,
   daysToCacheLogs: number,
+  logoutClearsTestPersistence?: boolean;
   authentication: {
     context: string,
     resourceUrl: string,
