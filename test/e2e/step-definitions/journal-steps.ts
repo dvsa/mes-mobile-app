@@ -27,8 +27,10 @@ Given('I am on the journal page as {string}', (username) => {
     browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
   });
 
-    // If the journal page is loaded we should have a refresh button
-  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//button/span/span/span[text() = "Refresh"]'))));
+  // If the journal page is loaded we should have a refresh button
+  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+  browser.wait(ExpectedConditions.presenceOf(refreshButton));
+  return expect(refreshButton.isPresent()).to.eventually.be.true;
 });
 
 When('I view candidate details for {string}', (candidateName) => {
