@@ -30,7 +30,7 @@ import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-re
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 
 enum CssClassesEnum {
-  RIPPLE_EFFECT = 'ripple-effect',
+  RIPPLE_EFFECT = 'mes-test-report-button-ripple-effect',
 }
 
 interface CompetencyState {
