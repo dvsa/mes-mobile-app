@@ -26,7 +26,6 @@ export class TestPersistenceProvider {
 
   async loadPersistedTests(): Promise<TestsModel | null> {
     const persistedTestJson = await this.dataStoreProvider.getItem(this.testKeychainKey);
-    console.log(`GOT TESTS FROM KEYCHAIN: ${persistedTestJson}`);
     return persistedTestJson.length > 0 ? JSON.parse(persistedTestJson) : null;
   }
 
