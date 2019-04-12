@@ -42,7 +42,6 @@
     "@angular/animations": "5.2.11",
     "@angular/common": "5.2.11",
     "@angular/compiler": "5.2.11",
-    "@angular/compiler-cli": "5.2.11",
     "@angular/core": "5.2.11",
     "@angular/forms": "5.2.11",
     "@angular/http": "5.2.11",
@@ -99,6 +98,7 @@
   },
   "devDependencies": {
     "@angular/cli": "1.4.8",
+    "@angular/compiler-cli": "^5.2.11",
     "@ionic-native-mocks/device": "^2.0.12",
     "@ionic-native-mocks/secure-storage": "^2.0.12",
     "@ionic/app-scripts": "3.2.1",
