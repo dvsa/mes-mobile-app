@@ -1,6 +1,5 @@
 page-office {
     ion-content {
-        // background-color: map-get($colors, "mes-white");
         .mes-full-width-card {
           height: 120px;
           #continue-to-test-report {
@@ -14,13 +13,6 @@ page-office {
             margin-top: 42px;
           }
         }
-        // ion-textarea {
-        //   padding: 10px;
-        //   display: block;
-        //   border: thick solid map-get($colors, divider);
-        //   width: 100%;
-        //   margin: 10px 0 0 0;
-        // }
       }
       .unsuccessful {
         color: map-get($colors, "mes-red");
