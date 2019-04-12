@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
-import { TestStatusLoad } from '../modules/tests/test-status/test-status.actions';
+import { LoadPersistedTests } from '../modules/tests/tests.actions';
 import { DataStoreProvider } from '../providers/data-store/data-store';
 import { SecureStorage } from '@ionic-native/secure-storage';
 
@@ -50,7 +50,7 @@ export class App {
       const storage = await this.secureStorage.create('MES');
       this.dataStore.setSecureContainer(storage);
 
-      this.store$.dispatch(new TestStatusLoad());
+      this.store$.dispatch(new LoadPersistedTests());
     }
   }
 
