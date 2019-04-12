@@ -18,6 +18,7 @@ import { TestStatus } from './test-status/test-status.model';
 import { testCentreReducer } from './test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
 import { examinerReducer } from './examiner/examiner.reducer';
+import { TEST_STATUS_RESTORE, TestStatusRestore } from './test-status/test-status.actions';
 
 export interface CurrentTest {
   slotId: string;
@@ -45,6 +46,10 @@ export function testsReducer(
   state = initialState,
   action: Action,
 ) {
+  if (action.type === TEST_STATUS_RESTORE) {
+    return (<TestStatusRestore>action).tests;
+  }
+
   const slotId = deriveSlotId(state, action);
   if (!slotId) {
     return state;
