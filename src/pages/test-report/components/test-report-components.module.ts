@@ -7,6 +7,7 @@ import { EtaComponent } from '../components/examiner-takes-action/eta';
 import { ManoeuvresPopoverComponent } from '../components/manoeuvres-popover/manoeuvres-popover';
 import { CompetencyWithModalComponent } from '../components/competency-with-modal/competency-with-modal';
 import { CompetencyComponent } from '../components/competency/competency';
+import { CompetencyNewComponent } from '../components/competency-new/competency-new';
 import { TickIndicatorComponent } from '../components/tick-indicator/tick-indicator';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
 import { ToolbarComponent } from '../components/toolbar/toolbar';
@@ -21,6 +22,7 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
     ManoeuvresPopoverComponent,
     CompetencyWithModalComponent,
     CompetencyComponent,
+    CompetencyNewComponent,
     TickIndicatorComponent,
     DrivingFaultSummaryComponent,
     ToolbarComponent,
@@ -39,6 +41,7 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
     ManoeuvresPopoverComponent,
     CompetencyWithModalComponent,
     CompetencyComponent,
+    CompetencyNewComponent,
     TickIndicatorComponent,
     DrivingFaultSummaryComponent,
     ToolbarComponent,
