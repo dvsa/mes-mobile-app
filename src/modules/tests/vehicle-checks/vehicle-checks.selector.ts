@@ -7,5 +7,8 @@ export const isTellMeQuestionDrivingFault = (state: VehicleChecks) => state.tell
 export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
   const tellMeQuestionText =
     tellMeQuestions.find(question => question.tellMeQuestionCode === state.tellMeQuestionCode);
+  if (!tellMeQuestionText) {
+    return '';
+  }
   return `${state.tellMeQuestionCode} - ${tellMeQuestionText.tellMeQuestionShortName}`;
 };
