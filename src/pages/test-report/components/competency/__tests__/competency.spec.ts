@@ -468,7 +468,7 @@ describe('CompetencyComponent', () => {
 
   describe('Ripple effect', () => {
     it('should have added no classes to the competency button', () => {
-      expect(component.button.nativeElement.className).toEqual('');
+      expect(component.button.nativeElement.className).toEqual('mes-test-report-button');
     });
 
     it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
@@ -480,11 +480,13 @@ describe('CompetencyComponent', () => {
       component.faultCount = 1;
       component.applyRippleEffect();
       // Assert
-      expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
+      expect(renderer.addClass)
+        .toHaveBeenCalledWith(component.button.nativeElement, 'mes-test-report-button-ripple-effect');
 
       setTimeout(
         () => {
-          expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
+          expect(renderer.removeClass)
+            .toHaveBeenCalledWith(component.button.nativeElement, 'mes-test-report-button-ripple-effect');
           done();
         },
         component.rippleEffectAnimationDuration);

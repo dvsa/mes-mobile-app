@@ -1,16 +1,12 @@
 <ion-row>
-  <ion-col>
-    <button (click)=(toggleVerbal()) [ngClass]="{ complete: componentState.verbal$ | async }">
-      <div class="label">  
+  <ion-col class="only-right-padding  padding-right-10">
+    <button class="mes-test-report-button verbal-eta-button" (click)=(toggleVerbal()) [ngClass]="{ complete: componentState.verbal$ | async }">
         <span class='competency-label'>ETA: Verbal</span>
-      </div>
     </button>
   </ion-col>
-  <ion-col>
-    <button (click)=(togglePhysical()) [ngClass]="{ complete: componentState.physical$ | async }">
-      <div class="label">
+  <ion-col no-padding>
+    <button class="mes-test-report-button physical-eta-button" (click)=(togglePhysical()) [ngClass]="{ complete: componentState.physical$ | async }">
         <span class='competency-label'>ETA: Physical</span>
-      </div>
     </button>
   </ion-col>
 </ion-row>
