@@ -40,6 +40,30 @@ describe('TestPersistenceProvider', () => {
     });
   });
 
+  describe('loadPersistedTests', () => {
+    it('should return the test JSON from the data store parsed into a TestsModel', async () => {
+      const persistedTestsModel: TestsModel = {
+        currentTest: { slotId: '1' },
+        startedTests: {},
+        testLifecycles: {},
+      };
+      dataStoreProvider.getItem.and.returnValue(JSON.stringify(persistedTestsModel));
+
+      const result = await testPersistenceProvider.loadPersistedTests();
+
+      expect(dataStoreProvider.getItem).toHaveBeenCalledWith('TESTS');
+      expect(result).toEqual(persistedTestsModel);
+    });
+    it('should return null if the data store provider throws', async () => {
+      dataStoreProvider.getItem.and.throwError('test error');
+
+      const result = await testPersistenceProvider.loadPersistedTests();
+
+      expect(dataStoreProvider.getItem).toHaveBeenCalledWith('TESTS');
+      expect(result).toBeNull();
+    });
+  });
+
   describe('clearPersistedTests', () => {
     it('should remove item on the data stores test key', async () => {
       await testPersistenceProvider.clearPersistedTests();

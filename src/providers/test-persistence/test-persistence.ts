@@ -25,8 +25,16 @@ export class TestPersistenceProvider {
   }
 
   async loadPersistedTests(): Promise<TestsModel | null> {
-    const persistedTestJson = await this.dataStoreProvider.getItem(this.testKeychainKey);
-    return persistedTestJson.length > 0 ? JSON.parse(persistedTestJson) : null;
+    let testsModel: TestsModel | null = null;
+    try {
+      const persistedTestJson = await this.dataStoreProvider.getItem(this.testKeychainKey);
+      testsModel = persistedTestJson.length > 0 ? JSON.parse(persistedTestJson) : null;
+    } catch (err) {
+      if (!/The specified item could not be found in the keychain/.test(err)) {
+        console.error(`Error loading persisted tests: ${err}`);
+      }
+    }
+    return testsModel;
   }
 
   async clearPersistedTests(): Promise<void> {

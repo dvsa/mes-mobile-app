@@ -7,7 +7,7 @@ import * as testActions from './tests.actions';
 import { of } from 'rxjs/observable/of';
 
 @Injectable()
-export class TestStatusEffects {
+export class TestsEffects {
   constructor(
     private actions$: Actions,
     private testPersistenceProvider: TestPersistenceProvider,
