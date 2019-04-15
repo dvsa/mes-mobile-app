@@ -9,6 +9,38 @@ import { DataStoreProvider } from '../data-store/data-store';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
 import { AppConfigError } from './app-config.constants';
 import { AuthenticationError } from './../authentication/authentication.constants';
+import { Platform } from 'ionic-angular';
+
+declare let cordova: any;
+
+/**
+ *  How Loading Config Works
+ *
+ *  IOS Devices
+ *
+ *  If the device is IOS it will attempt to create a Enviroment file in from configuration provided from MDM
+ *  using loadManagedConfig().
+ *
+ *  If this fails then it will use the Enviroment configuration
+ *  provided by the enviroment file at ../../enviroment/enviroment which is required for the app to build
+ *
+ *  In the Login page for an IOS device the App Config initialiseAppConfig() is ran
+ *  followed by loadRemoteConfig() which makes an api call to the configuration microservice
+ *  and then calls mapRemoteConfig()
+ *
+ *  If loading the remote config fails we fall back to getCachedRemoteConfig() which should load
+ *  the configuration from a previous run of the app from the on device database.
+ *
+ *  Non IOS Devices
+ *
+ *  Non ios devcies will always use the enviroment file at ../../enviroment/enviroment
+ *
+ *  In the Login page for a non IOS device initialiseAppConfig() is run which also calls mapRemoteConfig() to
+ *  load more config from the enviroment file.
+ *
+ *  As on non-IOS devices we can't authenticate with AWS so the enviroment file should always have the setting
+ *  isRemote set to false
+ */
 
 @Injectable()
 export class AppConfigProvider {
@@ -21,9 +53,16 @@ export class AppConfigProvider {
     private httpClient: HttpClient,
     public networkState: NetworkStateProvider,
     public dataStore: DataStoreProvider,
+    public platform: Platform,
     ) {}
 
   public initialiseAppConfig = (): void => {
+
+    if (this.platform.is('ios')) {
+      this.loadManagedConfig();
+      console.log('Loaded MDM Config');
+    }
+
     this.mapInAppConfig(this.environmentFile);
 
     if (!this.environmentFile.isRemote) {
@@ -42,6 +81,33 @@ export class AppConfigProvider {
         }
         return Promise.reject(AppConfigError.UNKNOWN_ERROR);
       })
+
+  public loadManagedConfig = () : void => {
+
+    if (cordova && cordova.plugins.AppConfig) {
+      const appConfigPlugin = cordova.plugins.AppConfig;
+
+      const newEnvFile = {
+        configUrl: appConfigPlugin.getValue('configUrl'),
+        daysToCacheJournalData: appConfigPlugin.getValue('daysToCacheJournalData'),
+        daysToCacheLogs: appConfigPlugin.getValue('daysToCacheLogs'),
+        isRemote: true,
+        authentication: {
+          clientId: appConfigPlugin.getValue('clientId'),
+          context : appConfigPlugin.getValue('authenticationContext'),
+          employeeIdKey : appConfigPlugin.getValue('employeeIdKey'),
+          logoutUrl : appConfigPlugin.getValue('logoutUrl'),
+          redirectUrl : appConfigPlugin.getValue('redirectUrl'),
+          resourceUrl: appConfigPlugin.getValue('resourceUrl'),
+        },
+      } as EnvironmentFile;
+
+      // Check to see if we have any config
+      if (newEnvFile.configUrl) {
+        this.environmentFile = newEnvFile;
+      }
+    }
+  }
 
   private getRemoteData = (): Promise<any> =>
     new Promise((resolve, reject) => {
@@ -66,6 +132,7 @@ export class AppConfigProvider {
       .then(response => JSON.parse(response))
       .catch(error => error);
   }
+
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
       configUrl: data.configUrl,

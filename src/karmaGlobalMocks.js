@@ -28,6 +28,12 @@ const cordova = {
         successCB(true);
       },
     },
+    AppConfig: {
+      getValue: (key) => {
+        console.log('Calling App Config plugin mock')
+        return 'AppConfigMock';
+      }
+    }
   },
 };
 
