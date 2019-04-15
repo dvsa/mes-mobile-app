@@ -2,7 +2,6 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
-// import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
 import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
