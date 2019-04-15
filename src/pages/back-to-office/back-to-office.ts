@@ -9,6 +9,7 @@ import { TestStatusDecided } from '../../modules/tests/test-status/test-status.a
 import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 @IonicPage()
 @Component({
@@ -37,6 +38,7 @@ export class BackToOfficePage extends BasePageComponent {
       this.insomnia.allowSleepAgain();
     }
     this.store$.dispatch(new TestStatusDecided());
+    this.store$.dispatch(new PersistTests());
     this.store$.dispatch(new BackToOfficeViewDidEnter());
   }
 

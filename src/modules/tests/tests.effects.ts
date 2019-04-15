@@ -13,6 +13,16 @@ export class TestsEffects {
     private testPersistenceProvider: TestPersistenceProvider,
   ) {}
 
+  @Effect({ dispatch: false })
+  persistTestsEffect$ = this.actions$.pipe(
+    ofType(testActions.PERSIST_TESTS),
+    switchMap(() => this.testPersistenceProvider.persistAllTests()),
+    catchError((err) => {
+      console.log(`Error persisting tests: ${err}`);
+      return of();
+    }),
+  );
+
   @Effect()
   loadPersistedTestsEffect$ = this.actions$.pipe(
     ofType(testActions.LOAD_PERSISTED_TESTS),

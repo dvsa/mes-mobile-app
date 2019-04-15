@@ -26,6 +26,20 @@ describe('Tests Effects', () => {
     testPersistenceProviderMock = TestBed.get(TestPersistenceProvider);
   });
 
+  describe('persistTestsEffect', () => {
+    it('should respond to a PERSIST_TESTS action and delegate to the persistence provider', (done) => {
+      // ARRANGE
+      testPersistenceProviderMock.persistAllTests.and.returnValue(Promise.resolve());
+      // ACT
+      actions$.next(new testsActions.PersistTests());
+      // ASSERT
+      effects.persistTestsEffect$.subscribe(() => {
+        expect(testPersistenceProviderMock.persistAllTests).toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+
   describe('loadPersistedTestsEffect', () => {
     it('should respond to a LOAD_PERSISTED_TESTS action by loading tests and dispatching a success action', (done) => {
       // ARRANGE

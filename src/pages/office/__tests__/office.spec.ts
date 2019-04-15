@@ -12,6 +12,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { ToggleVerbalEta, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
 import { By } from '@angular/platform-browser';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -66,6 +67,7 @@ describe('OfficePage', () => {
         component = fixture.componentInstance;
         navCtrl = TestBed.get(NavController);
         store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch').and.callThrough();
       });
   }));
 
@@ -104,6 +106,16 @@ describe('OfficePage', () => {
       store$.dispatch(new TogglePlanningEco());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ecoFaults'))).toBeDefined();
+    });
+    describe('deferring the write up', () => {
+      it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {
+        const saveAndContinueButton = fixture.debugElement.query(By.css('.defer-button'));
+        saveAndContinueButton.triggerEventHandler('click', null);
+        fixture.detectChanges();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+        expect(navCtrl.popToRoot).toHaveBeenCalled();
+      });
     });
   });
 
