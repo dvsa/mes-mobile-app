@@ -64,7 +64,7 @@ describe('ManoeuvresPopoverComponent', () => {
     spyOn(store$, 'dispatch');
   }));
 
-  fdescribe('Class', () => {
+  describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
