@@ -137,8 +137,10 @@ const preserveOutcomesAndGenerateNewManoeuvresState = (
   manoeuvre: ManoeuvreTypes,
 ): Manoeuvres => {
   const savedOutcomes = pickBy(currentState, (value, key) => startsWith(key, 'outcome'));
+  const { selectedControlledStop } = currentState;
   return {
     ...savedOutcomes,
+    selectedControlledStop,
     [manoeuvre]: true,
   };
 };
