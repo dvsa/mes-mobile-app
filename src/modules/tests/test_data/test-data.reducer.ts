@@ -130,7 +130,7 @@ export function testDataReducer(
  * @param  {ManoeuvreTypes} manoeuvre
  * @returns Manoeuvres
  * Generate the manoeuvres slice of state when recording a new manoeuvre
- * Needs a separate function to due to the need to preserve the outcomes of other manoeuvres
+ * Needs a separate function due to the need to preserve the outcomes of other manoeuvres
  */
 const preserveOutcomesAndGenerateNewManoeuvresState = (
   currentState: Manoeuvres,
