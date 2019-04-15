@@ -70,13 +70,24 @@ describe('CompetencyComponent', () => {
     });
 
     describe('addDrivingFault', () => {
-      it('should dispatch an ADD_DRIVING_FAULT action for press and hold', () => {
+      it('should dispatch an ADD_DRIVING_FAULT action for press', () => {
+        component.competency = Competencies.controlsSteering;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
+          competency: component.competency,
+          newFaultCount: 1,
+        }));
+      });
+      it('should not dispatch an ADD_DRIVING_FAULT action for tap', () => {
         component.competency = Competencies.controlsSteering;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
           newFaultCount: 1,
         }));
@@ -395,7 +406,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addFault();
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDangerousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
@@ -406,7 +417,7 @@ describe('CompetencyComponent', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addFault();
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddSeriousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
@@ -466,7 +477,7 @@ describe('CompetencyComponent', () => {
     });
 
     it('should add the ripple effect animation css class', () => {
-      component.onPress();
+      component.addOrRemoveFault(true);
       fixture.detectChanges();
       const button = fixture.debugElement.query(By.css('.competency-button'));
 
@@ -475,7 +486,7 @@ describe('CompetencyComponent', () => {
     });
 
     it('should remove the ripple effect animation css class within the required time frame', (done) => {
-      component.onPress();
+      component.addOrRemoveFault(true);
       fixture.detectChanges();
       const button = fixture.debugElement.query(By.css('.competency-button'));
       setTimeout(

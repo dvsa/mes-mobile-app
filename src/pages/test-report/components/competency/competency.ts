@@ -131,15 +131,18 @@ export class CompetencyComponent {
 
   getLabel = (): string => competencyLabels[this.competency];
 
-  addOrRemoveFault = (): void => {
+  addOrRemoveFault = (wasPress: boolean = false): void => {
+    if (wasPress) {
+      this.applyRippleEffect();
+    }
     if (this.isRemoveFaultMode) {
       this.removeFault();
     } else {
-      this.addFault();
+      this.addFault(wasPress);
     }
   }
 
-  addFault = (): void => {
+  addFault = (wasPress: boolean): void => {
     if (this.hasDangerousFault) {
       return;
     }
@@ -160,10 +163,12 @@ export class CompetencyComponent {
       return;
     }
 
-    this.store$.dispatch(new AddDrivingFault({
-      competency: this.competency,
-      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-    }));
+    if (wasPress) {
+      this.store$.dispatch(new AddDrivingFault({
+        competency: this.competency,
+        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+      }));
+    }
   }
 
   removeFault = (): void => {
@@ -210,11 +215,6 @@ export class CompetencyComponent {
   removeRippleEffect = (): any => {
     this.rippleState = false;
     clearTimeout(this.rippleTimeout);
-  }
-
-  onPress(): void {
-    this.applyRippleEffect();
-    this.addOrRemoveFault();
   }
 
   onTouchStart():void {
