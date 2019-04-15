@@ -1,7 +1,6 @@
 import { TestSummary } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
-// import { has } from 'lodash';
 
 export const initialState : TestSummary = {
   routeNumber: null,

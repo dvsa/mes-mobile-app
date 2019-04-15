@@ -11,8 +11,8 @@
         <ion-row class="mes-full-width-card" id="candidate-section">
             <ion-col col-64><h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2><h3  id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3></ion-col>
             <ion-col></ion-col>
-            <ion-col col-auto style="float:right; text-align:right"><h2>{{pageState.startTime$ | async}}</h2><h3>test outcome: 
-              <span [class.mes-green]="pageState.isPassed$ | async" [class.mes-red]="!(pageState.isPassed$ | async)">{{pageState.testOutcome$ | async}}</span></h3>
+            <ion-col col-auto class="align-col-right"><h2>{{pageState.startTime$ | async}}</h2><h3>test outcome: 
+              <span [ngClass]="(pageState.isPassed$ | async) ? 'mes-green' : 'mes-red'">{{pageState.testOutcome$ | async}}</span></h3>
             </ion-col>
         </ion-row>
 
