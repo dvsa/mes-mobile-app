@@ -52,7 +52,6 @@ export class CompetencyComponent {
   touchState: boolean = false;
   rippleState: boolean = false;
 
-  pressTimeout: any;
   rippleTimeout: any;
   touchTimeout: any;
 
@@ -210,7 +209,7 @@ export class CompetencyComponent {
 
   removeRippleEffect = (): any => {
     this.rippleState = false;
-    clearTimeout(this.pressTimeout);
+    clearTimeout(this.rippleTimeout);
   }
 
   onPress(): void {

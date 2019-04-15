@@ -82,17 +82,6 @@ describe('CompetencyComponent', () => {
           newFaultCount: 1,
         }));
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action for press', () => {
-        component.competency = Competencies.controlsSteering;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
-      });
       it('should not dispatch an ADD_DRIVING_FAULT action if there is a serious fault', () => {
         component.competency = Competencies.awarenessPlanning;
         component.hasSeriousFault = true;
@@ -446,27 +435,59 @@ describe('CompetencyComponent', () => {
   });
 
   describe('Ripple effect', () => {
-    // it('should have added no classes to the competency button', () => {
-    //   expect(component.button.nativeElement.className).toEqual('');
-    // });
+    it('should have added no classes to the competency button', () => {
+      const competencyButton = fixture.debugElement.query(By.css('.competency-button'));
+      expect(competencyButton.nativeElement.className).toEqual('competency-button');
+    });
 
-    // it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
-    //   // Arrange
-    //   renderer = fixture.componentRef.injector.get(Renderer2);
-    //   renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
-    //   renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
-    //   // Act
-    //   component.faultCount = 1;
-    //   component.applyRippleEffect();
-    //   // Assert
-    //   expect(renderer.addClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
+    it('should add the activated class when the button is pressed', () => {
+      component.onTouchStart();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
 
-    //   setTimeout(
-    //     () => {
-    //       expect(renderer.removeClass).toHaveBeenCalledWith(component.button.nativeElement, 'ripple-effect');
-    //       done();
-    //     },
-    //     component.rippleEffectAnimationDuration);
-    // });
+      expect(button).toBeDefined();
+      expect(button.nativeElement.className).toContain('activated');
+      expect(component.touchState).toBeTruthy();
+    });
+
+    it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
+      component.onTouchEnd();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
+      setTimeout(
+        () => {
+          fixture.detectChanges();
+
+          expect(button).toBeDefined();
+          expect(button.nativeElement.className).not.toContain('activated');
+          expect(component.touchState).toBeFalsy();
+          done();
+        },
+        component.touchStateDelay);
+    });
+
+    it('should add the ripple effect animation css class', () => {
+      component.onPress();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
+
+      expect(button).toBeDefined();
+      expect(button.nativeElement.className).toContain('ripple-effect');
+    });
+
+    it('should remove the ripple effect animation css class within the required time frame', (done) => {
+      component.onPress();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
+      setTimeout(
+        () => {
+          fixture.detectChanges();
+
+          expect(button).toBeDefined();
+          expect(button.nativeElement.className).not.toContain('ripple-effect');
+          done();
+        },
+        component.rippleEffectAnimationDuration);
+    });
   });
 });
