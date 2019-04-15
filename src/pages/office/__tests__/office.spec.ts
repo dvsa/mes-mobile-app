@@ -10,7 +10,8 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { ToggleVerbalEta, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
+import { ToggleETA, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
+import { ExaminerActions } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 
@@ -84,7 +85,7 @@ describe('OfficePage', () => {
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
     });
     it('should display ETA faults container if there are any', () => {
-      store$.dispatch(new ToggleVerbalEta());
+      store$.dispatch(new ToggleETA(ExaminerActions.verbal));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
     });
@@ -98,7 +99,7 @@ describe('OfficePage', () => {
       expect(fixture.debugElement.query(By.css('#eco'))).toBeDefined();
     });
     it('should display eta fault details if there are any', () => {
-      store$.dispatch(new ToggleVerbalEta());
+      store$.dispatch(new ToggleETA(ExaminerActions.verbal));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
     });

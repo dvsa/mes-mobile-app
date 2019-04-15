@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { ToggleVerbalEta, TogglePhysicalEta } from '../../../../modules/tests/test_data/test-data.actions';
-import { getETA, getETAVerbal, getETAPhysical } from '../../../../modules/tests/test_data/test-data.selector';
+import { ToggleETA } from '../../../../modules/tests/test_data/test-data.actions';
+import { getETA, hasExaminerTakenAction } from '../../../../modules/tests/test_data/test-data.selector';
+import { ExaminerActions } from '../../../../modules/tests/test_data/test-data.constants';
+import { etaLabels } from './eta.constants';
 
 interface ETAComponentState {
-  verbal$: Observable<boolean>;
-  physical$: Observable<boolean>;
+  actionTaken$: Observable<boolean>;
 }
 @Component({
   selector: 'eta',
@@ -19,25 +19,42 @@ interface ETAComponentState {
 })
 export class EtaComponent implements OnInit {
 
+  @Input()
+  eta: ExaminerActions;
+
+  touchStateDelay: number = 100;
+
+  touchState: boolean = false;
+  touchTimeout: any;
+
   componentState: ETAComponentState;
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
-    const eta$ = this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-      select(getTestData),
-      select(getETA),
-    );
     this.componentState = {
-      verbal$: eta$.pipe(map(getETAVerbal)),
-      physical$: eta$.pipe(map(getETAPhysical)),
+      actionTaken$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getETA),
+        select(eta => hasExaminerTakenAction(eta, this.eta)),
+      ),
     };
   }
-  toggleVerbal() {
-    this.store$.dispatch(new ToggleVerbalEta());
+
+  getLabel = (): string => etaLabels[this.eta];
+
+  toggleETA(): void {
+    this.store$.dispatch(new ToggleETA(this.eta));
   }
-  togglePhysical() {
-    this.store$.dispatch(new TogglePhysicalEta());
+
+  onTouchStart():void {
+    clearTimeout(this.touchTimeout);
+    this.touchState = true;
+  }
+
+  onTouchEnd():void {
+    // defer the removal of the touch state to allow the page to render
+    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }
 }

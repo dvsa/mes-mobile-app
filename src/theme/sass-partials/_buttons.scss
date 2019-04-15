@@ -69,7 +69,21 @@
     padding: 22px 8px;
   }
 }
+
 .mes-test-report-button {
+
+  text-rendering: auto;
+  color: initial;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  text-align: start;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 0em;
+
   height: 44px;
 
   display: flex;
@@ -88,10 +102,20 @@
   &.activated {
     background: #eee;
   }
+
+  .competency-label {
+    font-size: 15px;
+    text-align: center;
+    line-height: 25px;
+    letter-spacing: -0.26px;
+    font-weight: 500;
+  }
 }
 
 .mes-test-report-button-ripple-effect {
-  animation: ripple 0.4s forwards;
+  &.ripple-effect {
+    animation: ripple 0.4s forwards;
+  }
 
   @-webkit-keyframes ripple {
     0% {

@@ -1,12 +1,19 @@
-<button #competencyButton (tap)="addOrRemoveFault(true)" class="mes-test-report-button">
-
+<div class="competency-button"
+  (press)="onPress()"
+  (touchstart)="onTouchStart()"
+  (touchend)="onTouchEnd()"
+  [ngClass]="{
+    'activated': touchState,
+    'ripple-effect': rippleState
+  }"
+>
   <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
 
   <span class='competency-label'>{{ getLabel() }}</span>
 
   <div class="fault-wrapper">
-    <serious-fault-badge class="serious-fault-badge" [showBadge]="hasSeriousFault"></serious-fault-badge>
+    <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
     <dangerous-fault-badge [showBadge]="hasDangerousFault"></dangerous-fault-badge>
   </div>
 
-</button>
+</div>

@@ -50,3 +50,15 @@ export enum Competencies {
   forwardParkObservation = 'forwardParkObservation',
   controlledStop = 'controlledStop',
 }
+
+export enum LegalRequirements {
+  normalStart1 = 'normalStart1',
+  normalStart2 = 'normalStart2',
+  angledStart = 'angledStart',
+  hillStart = 'hillStart',
+}
+
+export enum ExaminerActions {
+  physical = 'physical',
+  verbal = 'verbal',
+}

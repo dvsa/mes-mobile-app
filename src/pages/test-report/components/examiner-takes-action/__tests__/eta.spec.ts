@@ -4,7 +4,8 @@ import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ToggleVerbalEta, TogglePhysicalEta } from '../../../../../modules/tests/test_data/test-data.actions';
+import { ToggleETA } from '../../../../../modules/tests/test_data/test-data.actions';
+import { ExaminerActions } from '../../../../../modules/tests/test_data/test-data.constants';
 
 describe('Examiner Takes Action Component', () => {
   let fixture: ComponentFixture<EtaComponent>;
@@ -36,13 +37,15 @@ describe('Examiner Takes Action Component', () => {
     });
 
     it('should dispatch a TOGGLE_ETA_VERBAL action', () => {
-      component.toggleVerbal();
-      expect(store$.dispatch).toHaveBeenCalledWith(new ToggleVerbalEta());
+      component.eta = ExaminerActions.verbal;
+      component.toggleETA();
+      expect(store$.dispatch).toHaveBeenCalledWith(new ToggleETA(ExaminerActions.verbal));
     });
 
     it('should dispatch a TOGGLE_ETA_PHYSICAL action', () => {
-      component.togglePhysical();
-      expect(store$.dispatch).toHaveBeenCalledWith(new TogglePhysicalEta());
+      component.eta = ExaminerActions.physical;
+      component.toggleETA();
+      expect(store$.dispatch).toHaveBeenCalledWith(new ToggleETA(ExaminerActions.physical));
     });
   });
 });

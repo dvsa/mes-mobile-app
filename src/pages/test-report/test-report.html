@@ -28,7 +28,26 @@
             <span class="section-header">Test requirements</span>
           </ion-col>
         </ion-row>
-        <legal-requirements></legal-requirements>
+        <ion-row>
+          <ion-col>
+            <legal-requirement [legalRequirement]="legalRequirements.normalStart1">
+            </legal-requirement>
+          </ion-col>
+          <ion-col>
+            <legal-requirement [legalRequirement]="legalRequirements.normalStart2">
+            </legal-requirement>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <legal-requirement [legalRequirement]="legalRequirements.angledStart">
+            </legal-requirement>
+          </ion-col>
+          <ion-col>
+            <legal-requirement [legalRequirement]="legalRequirements.hillStart">
+            </legal-requirement>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col class="padding-top-18 only-top-padding">
             <div class="dark-divider"></div>
@@ -79,7 +98,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <eta></eta>
+            <eta [eta]="eta.verbal">
+            </eta>
+          </ion-col>
+          <ion-col>
+            <eta [eta]="eta.physical">
+            </eta>
           </ion-col>
         </ion-row>
         <ion-row>
