@@ -1,33 +1,14 @@
 legal-requirement {
   div.legal-button {
-    // width: 118px;
-    height: 44px;
-    display: flex;
+    @extend .mes-test-report-button;
+    
     margin-right: 3px;
     padding: 1px 7px 2px;
-    align-items: center;
-    
-    background: map-get($colors, "mes-white");
-    border: 1px solid rgba(11, 12, 12, 0.4);
-    box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
-    border-radius: 10px;
-
-    &.activated {
-      background: #eee;
-    }
 
     .label {
       width: 100%;
       display: flex;
       justify-content: center;
-    }
-
-    .competency-label {
-      font-size: 15px;
-      text-align: center;
-      line-height: 25px;
-      letter-spacing: -0.26px;
-      font-weight: 500;
     }
 
     .tickwrapper {
