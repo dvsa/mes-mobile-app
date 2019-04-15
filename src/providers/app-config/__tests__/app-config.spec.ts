@@ -9,6 +9,8 @@ import { NetworkStateProvider } from '../../network-state/network-state';
 import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
 import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
+import { Platform } from 'ionic-angular';
+import { PlatformMock } from 'ionic-mocks';
 
 describe('App Config Provider', () => {
 
@@ -22,6 +24,7 @@ describe('App Config Provider', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
       ],
     });
 
