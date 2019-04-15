@@ -281,6 +281,7 @@ export class OfficePage extends BasePageComponent {
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
+      weatherConditions: new FormControl([], [Validators.minLength(1)]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
