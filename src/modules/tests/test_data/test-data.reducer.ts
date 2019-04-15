@@ -82,20 +82,12 @@ export function testDataReducer(
           [action.payload]: !state.testRequirements[action.payload],
         },
       };
-    case testDataActions.TOGGLE_VERBAL_ETA:
+    case testDataActions.TOGGLE_ETA:
       return {
         ...state,
         ETA: {
           ...state.ETA,
-          verbal: !state.ETA.verbal,
-        },
-      };
-    case testDataActions.TOGGLE_PHYSICAL_ETA:
-      return {
-        ...state,
-        ETA: {
-          ...state.ETA,
-          physical: !state.ETA.physical,
+          [action.payload]: !state.ETA[action.payload],
         },
       };
     case testDataActions.TOGGLE_CONTROL_ECO:

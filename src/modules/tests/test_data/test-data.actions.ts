@@ -3,7 +3,7 @@ import {
 } from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
-import { Competencies, LegalRequirements } from './test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
@@ -13,8 +13,7 @@ export const REMOVE_DRIVING_FAULT = '[Competency] Remove Driving Fault';
 export const REMOVE_SERIOUS_FAULT = '[Competency] Remove Serious Fault';
 export const REMOVE_DANGEROUS_FAULT = '[Competency] Remove Dangerous Fault';
 export const TOGGLE_LEGAL_REQUIREMENT = '[Legal Requirements] Toggle Legal Requirement';
-export const TOGGLE_VERBAL_ETA = '[Eta] Toggle Verbal Eta';
-export const TOGGLE_PHYSICAL_ETA = '[Eta] Toggle Physical Eta';
+export const TOGGLE_ETA = '[Eta] Toggle Eta';
 export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
 export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
 export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
@@ -54,12 +53,11 @@ export class ToggleLegalRequirement implements Action {
   readonly type = TOGGLE_LEGAL_REQUIREMENT;
 }
 
-export class ToggleVerbalEta implements Action {
-  readonly type = TOGGLE_VERBAL_ETA;
+export class ToggleETA implements Action {
+  constructor(public payload: ExaminerActions) { }
+  readonly type = TOGGLE_ETA;
 }
-export class TogglePhysicalEta implements Action {
-  readonly type = TOGGLE_PHYSICAL_ETA;
-}
+
 export class ToggleControlEco implements Action {
   readonly type = TOGGLE_CONTROL_ECO;
 }
@@ -80,8 +78,7 @@ export type Types =
   | RemoveSeriousFault
   | RemoveDangerousFault
   | ToggleLegalRequirement
-  | ToggleVerbalEta
-  | TogglePhysicalEta
+  | ToggleETA
   | ToggleControlEco
   | TogglePlanningEco
   | ToggleControlledStop;

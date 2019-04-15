@@ -8,8 +8,9 @@ import {
   TogglePlanningEco,
   ToggleControlledStop,
   ToggleLegalRequirement,
+  ToggleETA,
 } from '../test-data.actions';
-import { Competencies, LegalRequirements } from '../test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
   ManoeuvreTypes,
@@ -294,6 +295,52 @@ describe('TestDataReducer reducer', () => {
 
       expect(result.manoeuvres.selectedControlledStop).toBeFalsy();
 
+    });
+  });
+
+  describe('TOGGLE ETA VERBAL', () => {
+    it('should toggle ETA verbal to true when dispatched first time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const result = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
+
+      expect(result.ETA.verbal).toBeTruthy();
+    });
+
+    it('should toggle ETA verbal to false when dispatched second time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
+      const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.verbal));
+
+      expect(result.ETA.verbal).toBeFalsy();
+    });
+  });
+
+  describe('TOGGLE ETA PHYSICAL', () => {
+    it('should toggle ETA physical to true when dispatched first time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const result = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
+
+      expect(result.ETA.physical).toBeTruthy();
+    });
+
+    it('should toggle ETA physical to false when dispatched second time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
+      const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.physical));
+
+      expect(result.ETA.physical).toBeFalsy();
     });
   });
 });

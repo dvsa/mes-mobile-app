@@ -57,3 +57,8 @@ export enum LegalRequirements {
   angledStart = 'angledStart',
   hillStart = 'hillStart',
 }
+
+export enum ExaminerActions {
+  physical = 'physical',
+  verbal = 'verbal',
+}
