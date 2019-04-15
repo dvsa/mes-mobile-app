@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
+import { By } from '@angular/platform-browser';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
@@ -40,6 +41,17 @@ describe('ManoeuvresPopoverComponent', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+    it('should display the correct competencies against each manoeuvre', () => {
+      component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
+      expect(fixture.debugElement.query(By.css('#reverseParkRoadControl'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#reverseParkRoadObservation'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#reverseRightControl'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseRightObservation'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseParkCarparkControl'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseParkCarparkObservation'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#forwardParkControl'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#forwardParkObservation'))).toBeNull();
     });
     describe('record manoeuvre', () => {
       it('should dispatch a RECORD_MANOEUVRES_SELECTION action', () => {

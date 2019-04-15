@@ -16,8 +16,6 @@ import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
-import { SecureStorage } from '@ionic-native/secure-storage';
-import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { NetworkStateProvider } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
@@ -35,7 +33,10 @@ describe('LoginPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule, AppModule, StoreModule.forRoot({}),
+      imports: [
+        IonicModule,
+        AppModule,
+        StoreModule.forRoot({}),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -47,7 +48,6 @@ describe('LoginPage', () => {
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
-        { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],

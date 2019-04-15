@@ -12,7 +12,7 @@ import { DrivingFaultSummaryComponent } from '../components/driving-fault-summar
 import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { SeriousTooltipComponent } from '../components/serious-tooltip/serious-tooltip';
 import { DangerousTooltipComponent } from '../components/dangerous-tooltip/dangerous-tooltip';
-import { LegalRequirementsComponent } from '../components/legal-requirements/legal-requirements';
+import { LegalRequirementComponent } from '../components/legal-requirement/legal-requirement';
 import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 
 @NgModule({
@@ -26,7 +26,7 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
     ToolbarComponent,
     SeriousTooltipComponent,
     DangerousTooltipComponent,
-    LegalRequirementsComponent,
+    LegalRequirementComponent,
     ControlledStopComponent,
   ],
   imports: [
@@ -44,7 +44,7 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
     ToolbarComponent,
     SeriousTooltipComponent,
     DangerousTooltipComponent,
-    LegalRequirementsComponent,
+    LegalRequirementComponent,
     ControlledStopComponent,
   ],
 })

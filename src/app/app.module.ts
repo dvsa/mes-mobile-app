@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,6 +34,7 @@ import { DeviceAuthenticationProvider } from '../providers/device-authentication
 import { QuestionProvider } from '../providers/question/question';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TestPersistenceProvider } from '../providers/test-persistence/test-persistence';
+import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 
 @NgModule({
   declarations: [App],
@@ -81,6 +82,7 @@ import { TestPersistenceProvider } from '../providers/test-persistence/test-pers
     QuestionProvider,
     Insomnia,
     TestPersistenceProvider,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
   ],
 })
 export class AppModule {}

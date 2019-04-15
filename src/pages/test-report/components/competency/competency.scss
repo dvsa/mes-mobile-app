@@ -1,27 +1,23 @@
 competency {
-  .mes-test-report-button {
+  div.competency-button {
+    @extend .mes-test-report-button;
+    @extend .mes-test-report-button-ripple-effect;
+
     width: 254px;
+
     padding-left: 5px;
     padding-right: 5px;
 
-    justify-content: space-between;
-    align-items: center;
-
-    & ion-row {
-      width: 100%
+    .label {
+      width: 100%;
+      justify-content: center;
     }
-
     .competency-label {
       margin-left: 20px;
     }
 
     .fault-wrapper {
       display: flex;
-    }
-
-    .serious-fault-badge {
-      display: inline-block;
-      margin-right: 3px;
     }
   }
 }

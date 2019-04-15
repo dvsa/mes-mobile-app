@@ -2,9 +2,6 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyComponent } from '../competency';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
-import { HammerProvider } from '../../../../../providers/hammer/hammer';
-import { MockElementRef } from '../../../../../shared/mocks/element-ref.mock';
-import { Renderer2 } from '@angular/core';
 import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
@@ -31,8 +28,6 @@ import { StartTest } from '../../../../journal/journal.actions';
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
   let component: CompetencyComponent;
-  let hammerProvider: HammerProvider;
-  let renderer: Renderer2;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
@@ -49,8 +44,6 @@ describe('CompetencyComponent', () => {
         StoreModule.forRoot({ tests: testsReducer, testReport : testReportReducer }),
       ],
       providers: [
-        HammerProvider,
-        Renderer2,
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
       ],
     })
@@ -58,10 +51,6 @@ describe('CompetencyComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(CompetencyComponent);
         component = fixture.componentInstance;
-        hammerProvider = component.hammerProvider;
-        spyOn(hammerProvider, 'addPressAndHoldEvent');
-        spyOn(hammerProvider, 'init');
-        renderer = TestBed.get(Renderer2);
         store$ = TestBed.get(Store);
 
         store$.dispatch(new StartTest(103));
@@ -71,17 +60,6 @@ describe('CompetencyComponent', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
-    });
-
-    describe('ngOnInit', () => {
-      it('should use HammerProvider to attach a press and hold event to the button which records the fault', () => {
-        component.button = new MockElementRef();
-
-        component.ngOnInit();
-
-        expect(hammerProvider.init).toHaveBeenCalledWith(component.button);
-        expect(hammerProvider.addPressAndHoldEvent).toHaveBeenCalledWith(component.addOrRemoveFault);
-      });
     });
 
     describe('getLabel', () => {
@@ -96,20 +74,9 @@ describe('CompetencyComponent', () => {
         component.competency = Competencies.controlsSteering;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
-      });
-      it('should not dispatch an ADD_DRIVING_FAULT action for press', () => {
-        component.competency = Competencies.controlsSteering;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
-
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
           newFaultCount: 1,
         }));
@@ -119,7 +86,7 @@ describe('CompetencyComponent', () => {
         component.hasSeriousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
@@ -131,7 +98,7 @@ describe('CompetencyComponent', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
@@ -143,7 +110,7 @@ describe('CompetencyComponent', () => {
         component.hasDangerousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
@@ -155,7 +122,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
@@ -170,7 +137,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDangerousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
@@ -180,7 +147,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDangerousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
@@ -191,7 +158,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDangerousFault(component.competency));
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
@@ -204,7 +171,7 @@ describe('CompetencyComponent', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddSeriousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
@@ -215,7 +182,7 @@ describe('CompetencyComponent', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddSeriousFault(component.competency));
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleSeriousFaultMode());
@@ -225,7 +192,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddSeriousFault(component.competency));
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleSeriousFaultMode());
@@ -236,7 +203,7 @@ describe('CompetencyComponent', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddSeriousFault(component.competency));
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleSeriousFaultMode());
@@ -308,7 +275,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = false;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
@@ -319,7 +286,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
@@ -330,7 +297,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
@@ -341,7 +308,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
@@ -353,7 +320,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
@@ -370,7 +337,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = false;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
@@ -381,7 +348,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
@@ -392,7 +359,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
@@ -403,7 +370,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
@@ -414,7 +381,7 @@ describe('CompetencyComponent', () => {
         component.isRemoveFaultMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault(true);
+        component.addOrRemoveFault();
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
@@ -428,7 +395,7 @@ describe('CompetencyComponent', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addFault(true);
+        component.addFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDangerousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
@@ -439,7 +406,7 @@ describe('CompetencyComponent', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addFault(true);
+        component.addFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddSeriousFault(component.competency));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
@@ -468,25 +435,55 @@ describe('CompetencyComponent', () => {
 
   describe('Ripple effect', () => {
     it('should have added no classes to the competency button', () => {
-      expect(component.button.nativeElement.className).toEqual('mes-test-report-button');
+      const competencyButton = fixture.debugElement.query(By.css('.competency-button'));
+      expect(competencyButton.nativeElement.className).toEqual('competency-button');
     });
 
-    it('should add and remove the ripple effect animation css class within the required time frame', (done) => {
-      // Arrange
-      renderer = fixture.componentRef.injector.get(Renderer2);
-      renderer.removeClass = jasmine.createSpy('removeClass').and.callThrough();
-      renderer.addClass = jasmine.createSpy('addClass').and.callThrough();
-      // Act
-      component.faultCount = 1;
-      component.applyRippleEffect();
-      // Assert
-      expect(renderer.addClass)
-        .toHaveBeenCalledWith(component.button.nativeElement, 'mes-test-report-button-ripple-effect');
+    it('should add the activated class when the button is pressed', () => {
+      component.onTouchStart();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
 
+      expect(button).toBeDefined();
+      expect(button.nativeElement.className).toContain('activated');
+      expect(component.touchState).toBeTruthy();
+    });
+
+    it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
+      component.onTouchEnd();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
       setTimeout(
         () => {
-          expect(renderer.removeClass)
-            .toHaveBeenCalledWith(component.button.nativeElement, 'mes-test-report-button-ripple-effect');
+          fixture.detectChanges();
+
+          expect(button).toBeDefined();
+          expect(button.nativeElement.className).not.toContain('activated');
+          expect(component.touchState).toBeFalsy();
+          done();
+        },
+        component.touchStateDelay);
+    });
+
+    it('should add the ripple effect animation css class', () => {
+      component.onPress();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
+
+      expect(button).toBeDefined();
+      expect(button.nativeElement.className).toContain('ripple-effect');
+    });
+
+    it('should remove the ripple effect animation css class within the required time frame', (done) => {
+      component.onPress();
+      fixture.detectChanges();
+      const button = fixture.debugElement.query(By.css('.competency-button'));
+      setTimeout(
+        () => {
+          fixture.detectChanges();
+
+          expect(button).toBeDefined();
+          expect(button.nativeElement.className).not.toContain('ripple-effect');
           done();
         },
         component.rippleEffectAnimationDuration);

@@ -74,52 +74,20 @@ export function testDataReducer(
           [action.payload]: false,
         },
       };
-    case testDataActions.TOGGLE_NORMAL_START_1:
+    case testDataActions.TOGGLE_LEGAL_REQUIREMENT:
       return {
         ...state,
         testRequirements: {
           ...state.testRequirements,
-          normalStart1: !state.testRequirements.normalStart1,
+          [action.payload]: !state.testRequirements[action.payload],
         },
       };
-    case testDataActions.TOGGLE_NORMAL_START_2:
-      return {
-        ...state,
-        testRequirements: {
-          ...state.testRequirements,
-          normalStart2: !state.testRequirements.normalStart2,
-        },
-      };
-    case testDataActions.TOGGLE_ANGLED_START:
-      return {
-        ...state,
-        testRequirements: {
-          ...state.testRequirements,
-          angledStart: !state.testRequirements.angledStart,
-        },
-      };
-    case testDataActions.TOGGLE_HILL_START:
-      return {
-        ...state,
-        testRequirements: {
-          ...state.testRequirements,
-          hillStart: !state.testRequirements.hillStart,
-        },
-      };
-    case testDataActions.TOGGLE_VERBAL_ETA:
+    case testDataActions.TOGGLE_ETA:
       return {
         ...state,
         ETA: {
           ...state.ETA,
-          verbal: !state.ETA.verbal,
-        },
-      };
-    case testDataActions.TOGGLE_PHYSICAL_ETA:
-      return {
-        ...state,
-        ETA: {
-          ...state.ETA,
-          physical: !state.ETA.physical,
+          [action.payload]: !state.ETA[action.payload],
         },
       };
     case testDataActions.TOGGLE_CONTROL_ECO:

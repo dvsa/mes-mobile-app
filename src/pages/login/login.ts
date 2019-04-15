@@ -13,8 +13,6 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs, LoadLog } from '../../modules/logs/logs.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
-import { SecureStorageObject, SecureStorage } from '@ionic-native/secure-storage';
-import { DataStoreProvider } from '../../providers/data-store/data-store';
 
 @IonicPage()
 @Component({
@@ -40,9 +38,6 @@ export class LoginPage extends BasePageComponent {
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
     public deviceProvider: DeviceProvider,
-    private secureStorage: SecureStorage,
-    public dataStore: DataStoreProvider,
-
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -63,10 +58,6 @@ export class LoginPage extends BasePageComponent {
 
   login = async (): Promise<any> => {
     await this.platform.ready();
-    if (this.platform.is('ios')) {
-      const storage = await this.initialiseStorage();
-      this.dataStore.setSecureContainer(storage);
-    }
 
     this.initialiseAppConfig()
     .then(() => this.initialiseAuthentication())
@@ -105,10 +96,6 @@ export class LoginPage extends BasePageComponent {
       this.authenticationProvider.determineAuthenticationMode();
       resolve();
     });
-  }
-
-  initialiseStorage = async (): Promise<SecureStorageObject> => {
-    return this.secureStorage.create('MES');
   }
 
   validateDeviceType = (): void => {

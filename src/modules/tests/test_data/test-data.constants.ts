@@ -38,4 +38,27 @@ export enum Competencies {
   pedestrianCrossings = 'pedestrianCrossings',
   positionNormalStops = 'positionNormalStops',
   awarenessPlanning = 'awarenessPlanning',
+  reverseLeftControl = 'reverseLeftControl',
+  reverseLeftObservation = 'reverseLeftObservation',
+  reverseRightControl = 'reverseRightControl',
+  reverseRightObservation = 'reverseRightObservation',
+  reverseParkRoadControl = 'reverseParkRoadControl',
+  reverseParkRoadObservation = 'reverseParkRoadObservation',
+  reverseParkCarparkControl = 'reverseParkCarparkControl',
+  reverseParkCarparkObservation = 'reverseParkCarparkObservation',
+  forwardParkControl = 'forwardParkControl',
+  forwardParkObservation = 'forwardParkObservation',
+  controlledStop = 'controlledStop',
+}
+
+export enum LegalRequirements {
+  normalStart1 = 'normalStart1',
+  normalStart2 = 'normalStart2',
+  angledStart = 'angledStart',
+  hillStart = 'hillStart',
+}
+
+export enum ExaminerActions {
+  physical = 'physical',
+  verbal = 'verbal',
 }

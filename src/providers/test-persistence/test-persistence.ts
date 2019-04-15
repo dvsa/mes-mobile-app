@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { getTests } from '../../modules/tests/tests.reducer';
+import { getTests, TestsModel } from '../../modules/tests/tests.reducer';
 import { switchMap, take, mapTo } from 'rxjs/operators';
 import { DataStoreProvider } from '../data-store/data-store';
 
@@ -22,6 +22,19 @@ export class TestPersistenceProvider {
       switchMap(tests => this.dataStoreProvider.setItem(this.testKeychainKey, JSON.stringify(tests))),
       mapTo(undefined),
     ).toPromise();
+  }
+
+  async loadPersistedTests(): Promise<TestsModel | null> {
+    let testsModel: TestsModel | null = null;
+    try {
+      const persistedTestJson = await this.dataStoreProvider.getItem(this.testKeychainKey);
+      testsModel = persistedTestJson.length > 0 ? JSON.parse(persistedTestJson) : null;
+    } catch (err) {
+      if (!/The specified item could not be found in the keychain/.test(err)) {
+        console.error(`Error loading persisted tests: ${err}`);
+      }
+    }
+    return testsModel;
   }
 
   async clearPersistedTests(): Promise<void> {

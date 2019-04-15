@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,7 +14,6 @@ import {
   RemoveSeriousFault,
   RemoveDangerousFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
-import { HammerProvider } from '../../../../providers/hammer/hammer';
 import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
@@ -29,10 +28,6 @@ import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 
-enum CssClassesEnum {
-  RIPPLE_EFFECT = 'mes-test-report-button-ripple-effect',
-}
-
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
@@ -46,15 +41,19 @@ interface CompetencyState {
 @Component({
   selector: 'competency',
   templateUrl: 'competency.html',
-  providers: [HammerProvider],
 })
 export class CompetencyComponent {
 
   @Input()
   competency: Competencies;
 
-  @ViewChild('competencyButton')
-  button: ElementRef;
+  touchStateDelay: number = 100;
+
+  touchState: boolean = false;
+  rippleState: boolean = false;
+
+  rippleTimeout: any;
+  touchTimeout: any;
 
   rippleEffectAnimationDuration: number = 300;
 
@@ -72,15 +71,10 @@ export class CompetencyComponent {
   hasDangerousFault: boolean = false;
 
   constructor(
-    public hammerProvider: HammerProvider,
-    private renderer: Renderer2,
     private store$: Store<StoreModel>,
   ) { }
 
   ngOnInit(): void {
-    this.hammerProvider.init(this.button);
-    this.hammerProvider.addPressAndHoldEvent(this.addOrRemoveFault);
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -137,21 +131,20 @@ export class CompetencyComponent {
 
   getLabel = (): string => competencyLabels[this.competency];
 
-  addOrRemoveFault = (wasClick: boolean = false): void => {
+  addOrRemoveFault = (): void => {
     if (this.isRemoveFaultMode) {
       this.removeFault();
     } else {
-      this.addFault(wasClick);
+      this.addFault();
     }
   }
 
-  addFault = (wasClick: boolean): void => {
+  addFault = (): void => {
     if (this.hasDangerousFault) {
       return;
     }
 
     if (this.isDangerousMode) {
-      if (!wasClick) this.applyRippleEffect();
       this.store$.dispatch(new AddDangerousFault(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
@@ -162,18 +155,15 @@ export class CompetencyComponent {
     }
 
     if (this.isSeriousMode) {
-      if (!wasClick) this.applyRippleEffect();
       this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
-    if (!wasClick) {
-      this.applyRippleEffect();
-      this.store$.dispatch(new AddDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-      }));
-    }
+
+    this.store$.dispatch(new AddDrivingFault({
+      competency: this.competency,
+      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+    }));
   }
 
   removeFault = (): void => {
@@ -213,9 +203,27 @@ export class CompetencyComponent {
    * @returns any
    */
   applyRippleEffect = (): any => {
-    this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
-    setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
-               this.rippleEffectAnimationDuration,
-    );
+    this.rippleState = true;
+    this.rippleTimeout = setTimeout(() => this.removeRippleEffect(), this.rippleEffectAnimationDuration);
+  }
+
+  removeRippleEffect = (): any => {
+    this.rippleState = false;
+    clearTimeout(this.rippleTimeout);
+  }
+
+  onPress(): void {
+    this.applyRippleEffect();
+    this.addOrRemoveFault();
+  }
+
+  onTouchStart():void {
+    clearTimeout(this.touchTimeout);
+    this.touchState = true;
+  }
+
+  onTouchEnd():void {
+    // defer the removal of the touch state to allow the page to render
+    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }
 }

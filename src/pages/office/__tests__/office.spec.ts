@@ -10,8 +10,10 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { ToggleVerbalEta, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
+import { ToggleETA, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
+import { ExaminerActions } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -66,6 +68,7 @@ describe('OfficePage', () => {
         component = fixture.componentInstance;
         navCtrl = TestBed.get(NavController);
         store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch').and.callThrough();
       });
   }));
 
@@ -82,7 +85,7 @@ describe('OfficePage', () => {
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
     });
     it('should display ETA faults container if there are any', () => {
-      store$.dispatch(new ToggleVerbalEta());
+      store$.dispatch(new ToggleETA(ExaminerActions.verbal));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
     });
@@ -96,7 +99,7 @@ describe('OfficePage', () => {
       expect(fixture.debugElement.query(By.css('#eco'))).toBeDefined();
     });
     it('should display eta fault details if there are any', () => {
-      store$.dispatch(new ToggleVerbalEta());
+      store$.dispatch(new ToggleETA(ExaminerActions.verbal));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
     });
@@ -104,6 +107,16 @@ describe('OfficePage', () => {
       store$.dispatch(new TogglePlanningEco());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ecoFaults'))).toBeDefined();
+    });
+    describe('deferring the write up', () => {
+      it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {
+        const saveAndContinueButton = fixture.debugElement.query(By.css('.defer-button'));
+        saveAndContinueButton.triggerEventHandler('click', null);
+        fixture.detectChanges();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+        expect(navCtrl.popToRoot).toHaveBeenCalled();
+      });
     });
   });
 
