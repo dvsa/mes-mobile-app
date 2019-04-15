@@ -225,7 +225,6 @@ export class OfficePage extends BasePageComponent {
   }
   showMeQuestionChanged(newShowMeQuestion): void {
     this.store$.dispatch(new ShowMeQuestionSelected(newShowMeQuestion));
-    this.form.controls['ShowMeQuestionOutcomeCtrl'].setValue('');
   }
 
   getFormValidation(): { [key: string]: FormControl } {
