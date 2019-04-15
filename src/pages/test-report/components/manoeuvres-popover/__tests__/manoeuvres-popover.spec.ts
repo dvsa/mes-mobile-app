@@ -6,7 +6,7 @@ import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
 import { AppModule } from '../../../../../app/app.module';
 import { RecordManoeuvresSelection } from '../../../../../modules/tests/test_data/test-data.actions';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
@@ -27,32 +27,6 @@ describe('ManoeuvresPopoverComponent', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({
-          tests: () => ({
-            currentTest: {
-              slotId: '123',
-            },
-            testLifecycles: {},
-            startedTests: {
-              123: {
-                vehicleDetails: {},
-                accompaniment: {},
-                candidate: {
-                  candidateName: 'Joe Bloggs',
-                },
-                testData: {
-                  dangerousFaults: {},
-                  drivingFaults: {},
-                  manoeuvres: { selectedReverseParkRoad: true },
-                  seriousFaults: {},
-                  testRequirements: {},
-                  ETA: {},
-                  eco: {},
-                },
-              },
-            },
-          }),
-        }),
       ],
     })
       .compileComponents()
@@ -69,6 +43,7 @@ describe('ManoeuvresPopoverComponent', () => {
       expect(component).toBeDefined();
     });
     it('should display the correct competencies against each manoeuvre', () => {
+      component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
       expect(fixture.debugElement.query(By.css('#reverseParkRoadControl'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('#reverseParkRoadObservation'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('#reverseRightControl'))).toBeNull();
