@@ -12,6 +12,7 @@ import {
   RemoveDrivingFault,
   RemoveDangerousFault,
   RemoveSeriousFault,
+  AddManoeuvreDrivingFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
@@ -75,7 +76,9 @@ describe('CompetencyComponent', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
+        const dispatchAddDrivingFaultSpy = spyOn(component, 'dispatchAddDrivingFault').and.callThrough();
 
+        expect(dispatchAddDrivingFaultSpy).toHaveBeenCalledTimes(1);
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
           newFaultCount: 1,
@@ -499,5 +502,38 @@ describe('CompetencyComponent', () => {
         },
         component.rippleEffectAnimationDuration);
     });
+
+    describe('Manoeuvre competency', () => {
+      it('should set the isManoeuvreCompetency flag to true when the competency is a manoeuvre competency', () => {
+        component.competency = Competencies.outcomeReverseLeftControl;
+        fixture.detectChanges();
+        expect(component.isManoeuvreCompetency).toBe(true);
+      });
+      it('should set the isManoeuvreCompetency to false when the competency is not a manoeuvre competency', () => {
+        component.competency = Competencies.moveOffControl;
+        fixture.detectChanges();
+        expect(component.isManoeuvreCompetency).toBe(false);
+      });
+      it('should get the competency label from the correct object', () => {
+        component.competency = Competencies.outcomeReverseLeftControl;
+        fixture.detectChanges();
+        const result = component.getLabel();
+        const expected = 'Control';
+        expect(result).toEqual(expected);
+      });
+      describe('AddManoeuvreDrivingFault', () => {
+        it('should dispatch the correct action when the competency is a manoeuvre', () => {
+          component.competency = Competencies.outcomeReverseLeftControl;
+          fixture.detectChanges();
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          const dispatchAddDrivingFaultSpy = spyOn(component, 'dispatchAddDrivingFault').and.callThrough();
+          component.addOrRemoveFault(false);
+
+          expect(dispatchAddDrivingFaultSpy).toHaveBeenCalledTimes(1);
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
+        });
+      });
+    });
+
   });
 });
