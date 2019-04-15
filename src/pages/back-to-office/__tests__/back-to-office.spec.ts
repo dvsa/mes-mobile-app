@@ -17,6 +17,7 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;
@@ -66,12 +67,16 @@ describe('BackToOfficePage', () => {
       expect(component).toBeDefined();
     });
     describe('ionViewDidEnter', () => {
-      it('should dispatch a TestStatusDecided action', () => {
+      it('should disable test inhibitions', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+      it('should dispatch actions to change the test status and to persist the tests', () => {
+        component.ionViewDidEnter();
         expect(store$.dispatch).toHaveBeenCalledWith(new TestStatusDecided());
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
       });
     });
   });
