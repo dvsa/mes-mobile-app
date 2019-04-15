@@ -11,7 +11,7 @@
         <ion-row class="mes-full-width-card" id="candidate-section">
             <ion-col col-64><h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2><h3  id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3></ion-col>
             <ion-col></ion-col>
-            <ion-col col-auto class="align-col-right"><h2>{{pageState.startTime$ | async}}</h2><h3>test outcome: 
+            <ion-col col-auto class="align-col-right"><h2>{{pageState.startTime$ | async}}</h2><h3>test outcome:
               <span [ngClass]="(pageState.isPassed$ | async) ? 'mes-green' : 'mes-red'">{{pageState.testOutcome$ | async}}</span></h3>
             </ion-col>
         </ion-row>
@@ -21,7 +21,7 @@
       <h4>Test Summary</h4>
     </ion-card-header>
 
-    
+
 <ion-card-content class="card-content-ios" no-bounce>
     <form [formGroup]="form">
       <ion-grid class="grid">
@@ -79,7 +79,6 @@
               </ion-row>
             </ion-col>
           </ion-row>
-  
         <ion-row class="mes-validated-row mes-row-separator" id="candidate-description-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"></div>
           <ion-col class="component-label" col-32 align-self-center>
@@ -262,6 +261,32 @@
         </ion-grid>
       </ion-card-content>
     </ion-card>
+
+<ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
+  <ion-card-header>
+    <h4>Dangerous defects</h4>
+  </ion-card-header>
+  <ion-card-content>
+      <ion-row class="mes-component-row mes-row-separator" id="dangerous-commentary-label"
+        *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)">
+        <ion-col class="component-label" align-self-center col-1>
+          <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
+        </ion-col>
+        <ion-col class="component-label" col-29 align-self-center>
+          <label class="fault-label">{{dangerousFault}}</label>
+        </ion-col>
+        <ion-col>
+          <ion-row class="spacing-row"></ion-row>
+          <ion-row>
+            <textarea #dangerousFaultComment id="dangerous-commentary-text" row="5" class="mes-data"
+            [value]="pageState.dangerousFaultComments$ | async">
+          </textarea>
+          </ion-row>
+          <ion-row class="spacing-row"></ion-row>
+        </ion-col>
+      </ion-row>
+  </ion-card-content>
+</ion-card>
 
 </ion-content>
 <ion-footer>
