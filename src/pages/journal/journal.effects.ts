@@ -225,7 +225,6 @@ export class JournalEffects {
   );
 
   extractTestSlotAttributes = (slotData): TestSlotAttributes => {
-    console.log(` slotdata ${JSON.stringify(slotData)}`);
     return {
       welshTest: slotData.booking.application.welshTest,
       slotId: slotData.slotDetail.slotId,
@@ -237,7 +236,6 @@ export class JournalEffects {
   }
 
   extractTestCentre = (slotData): TestCentre => {
-    console.log(`slotdata ${JSON.stringify(slotData)}`);
     return {
       costCode: slotData.testCentre.costCode,
     };
