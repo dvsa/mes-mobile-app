@@ -8,7 +8,9 @@
     'ripple-effect': rippleState
   }"
 >
-  <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
+
+  <driving-faults-badge *ngIf="!isManoeuvreCompetency" class="driving-faults" [count]="faultCount"></driving-faults-badge>
+  <driving-faults-badge *ngIf="isManoeuvreCompetency" class="driving-faults" [count]="manoeuvreCompetencyOutcome === 'DF' ? 1 : 0"></driving-faults-badge>
 
   <span class='competency-label'>{{ getLabel() }}</span>
 
