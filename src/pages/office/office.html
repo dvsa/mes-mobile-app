@@ -225,10 +225,10 @@
               <ion-row class="spacing-row"></ion-row>
               <ion-row>
                 <ion-select id="weather-selector" value="weather" multiple="true" okText="Submit" cancelText="Cancel"
-                  placeholder="Select weather conditions"
-                  formControlName="weatherConditions">
-                  <ion-option [value]="1">1</ion-option>
-                  <ion-option [value]="2">2</ion-option>
+                  placeholder="Select weather conditions" formControlName="weatherConditions">
+                  <ion-option [value]="weatherCondition.weatherConditionDescription" *ngFor="let weatherCondition of weatherConditions">
+                    {{weatherCondition.weatherConditionNumber}} - {{weatherCondition.weatherConditionDescription}}
+                  </ion-option>
                 </ion-select>
               </ion-row>
               <ion-row class="spacing-row"></ion-row>

@@ -26,6 +26,8 @@
     }
   }
   div.alert-checkbox-group {
+    // Ensure the buttons in the radio group occupy all available space
+    max-height: 100%;
     .mes-multiselect-dialog-checkbox {
       width: 38px;
       height: 38px;

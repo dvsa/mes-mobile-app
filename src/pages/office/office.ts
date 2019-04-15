@@ -51,6 +51,8 @@ import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
+import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
+import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -99,6 +101,8 @@ export class OfficePage extends BasePageComponent {
   dangerousFaultComment: QueryList<ElementRef>;
   inputSubscriptions: Subscription[] = [];
 
+  weatherConditions: WeatherConditionSelection[];
+
   constructor(
     private store$: Store<StoreModel>,
     public toastController: ToastController,
@@ -106,9 +110,11 @@ export class OfficePage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private weatherConditionProvider: WeatherConditionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
+    this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
   }
 
   ionViewDidEnter(): void {
