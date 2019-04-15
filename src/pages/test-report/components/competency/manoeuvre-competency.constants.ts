@@ -3,14 +3,14 @@ interface ManoeuvreCompetencyLabel {
 }
 
 export const manoeuvreCompetencyLabels: ManoeuvreCompetencyLabel = {
-  reverseLeftControl: 'Control',
-  reverseLeftObservation: 'Observation',
-  reverseRightControl: 'Control',
-  reverseRightObservation: 'Observation',
-  reverseParkRoadControl: 'Control',
-  reverseParkRoadObservation: 'Observation',
-  reverseParkCarparkControl: 'Control',
-  reverseParkCarparkObservation: 'Observation',
-  forwardParkControl: 'Control',
-  forwardParkObservation: 'Observation',
+  outcomeReverseLeftControl: 'Control',
+  outcomeReverseLeftObservation: 'Observation',
+  outcomeReverseRightControl: 'Control',
+  outcomeReverseRightObservation: 'Observation',
+  outcomeReverseParkRoadControl: 'Control',
+  outcomeReverseParkRoadObservation: 'Observation',
+  outcomeReverseParkCarparkControl: 'Control',
+  outcomeReverseParkCarparkObservation: 'Observation',
+  outcomeForwardParkControl: 'Control',
+  outcomeForwardParkObservation: 'Observation',
 };
