@@ -82,7 +82,7 @@ export class AppConfigProvider {
         return Promise.reject(AppConfigError.UNKNOWN_ERROR);
       })
 
-  private loadManagedConfig = () : void => {
+  public loadManagedConfig = () : void => {
 
     if (cordova && cordova.plugins.AppConfig) {
       const appConfigPlugin = cordova.plugins.AppConfig;
