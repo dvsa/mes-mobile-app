@@ -49,6 +49,7 @@ import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-che
 import { getSelectedTellMeQuestionText } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
 import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -222,6 +223,7 @@ export class OfficePage extends BasePageComponent {
 
   defer() {
     this.popToRoot();
+    this.store$.dispatch(new PersistTests());
   }
 
   /**
