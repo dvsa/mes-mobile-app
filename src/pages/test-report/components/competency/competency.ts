@@ -27,6 +27,7 @@ import {
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -61,14 +62,12 @@ export class CompetencyComponent {
   subscription: Subscription;
 
   isRemoveFaultMode: boolean = false;
-
   faultCount: number;
-
   isSeriousMode: boolean = false;
   hasSeriousFault: boolean = false;
-
   isDangerousMode: boolean = false;
   hasDangerousFault: boolean = false;
+  isManoeuvreCompetency: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -79,6 +78,8 @@ export class CompetencyComponent {
       select(getTests),
       select(getCurrentTest),
     );
+
+    this.isManoeuvreCompetency = this.checkIfManoeuvre();
 
     this.competencyState = {
       isRemoveFaultMode$: this.store$.pipe(
@@ -129,7 +130,10 @@ export class CompetencyComponent {
     }
   }
 
-  getLabel = (): string => competencyLabels[this.competency];
+  checkIfManoeuvre = (): boolean => Object.keys(manoeuvreCompetencyLabels).includes(this.competency);
+
+  getLabel = (): string => this.checkIfManoeuvre() ?
+    manoeuvreCompetencyLabels[this.competency] : competencyLabels[this.competency]
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (wasPress) {
