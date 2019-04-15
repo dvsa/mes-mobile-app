@@ -35,6 +35,7 @@ describe('OfficePage', () => {
                 accompaniment: {},
                 candidate: {
                   candidateName: 'Joe Bloggs',
+                  driverNumber: '123',
                 },
                 testData: {
                   dangerousFaults: {},

@@ -41,6 +41,7 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
+    console.log(`starting test ${this.slotId}`);
     this.store$.dispatch(new StartTest(this.slotId));
     this.navController.push('WaitingRoomPage');
   }
