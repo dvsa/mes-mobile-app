@@ -5,4 +5,4 @@ export const getTestTime = (attributes: TestSlotAttributes) => DateTime.at(attri
 export const getVehicleSlotType = (attributes: TestSlotAttributes) => attributes.vehicleSlotType || '';
 export const getExtendedTest = (attributes: TestSlotAttributes) => attributes.extendedTest || false;
 export const getSpecialNeeds = (attributes: TestSlotAttributes) => attributes.specialNeeds || '';
-export const getSlotId = (attributes: TestSlotAttributes) => attributes.specialNeeds || '';
+export const getSlotId = (attributes: TestSlotAttributes) =>  attributes.slotId;
