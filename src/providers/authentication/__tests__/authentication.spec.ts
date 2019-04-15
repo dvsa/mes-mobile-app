@@ -9,10 +9,15 @@ import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.moc
 import { InAppBrowserMock } from '../__mocks__/in-app-browser.mock';
 import { NetworkStateProvider, ConnectionStatus } from '../../network-state/network-state';
 import { NetworkStateProviderMock } from '../../network-state/__mocks__/network-state.mock';
+import { TestPersistenceProvider } from '../../test-persistence/test-persistence';
+import { TestPersistenceProviderMock } from '../../test-persistence/__mocks__/test-persistence.mock';
+import { AppConfig } from '../../app-config/app-config.model';
 
 describe('Authentication', () => {
   let authenticationProvider: AuthenticationProvider;
   let networkStateProvider: NetworkStateProvider;
+  let appConfigProvider: AppConfigProvider;
+  let testPersistenceProvider: TestPersistenceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,11 +27,14 @@ describe('Authentication', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
+        { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
       ],
     });
 
     networkStateProvider = TestBed.get(NetworkStateProvider);
     authenticationProvider = TestBed.get(AuthenticationProvider);
+    appConfigProvider = TestBed.get(AppConfigProvider);
+    testPersistenceProvider = TestBed.get(TestPersistenceProvider);
     authenticationProvider.initialiseAuthentication();
     authenticationProvider.jwtDecode = () => ({
       'local-employeeIdKey': ['a'],
@@ -88,14 +96,28 @@ describe('Authentication', () => {
       expect(authenticationProvider.getEmployeeId()).toEqual('a');
     });
 
-    it('should logout successfully', async () => {
-      await authenticationProvider.login();
+    describe('logout', () => {
+      it('should logout successfully', async () => {
+        await authenticationProvider.login();
 
-      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+        expect(authenticationProvider.isAuthenticated()).toEqual(true);
 
-      await authenticationProvider.logout();
+        await authenticationProvider.logout();
 
-      expect(authenticationProvider.isAuthenticated()).toEqual(false);
+        expect(authenticationProvider.isAuthenticated()).toEqual(false);
+        expect(testPersistenceProvider.clearPersistedTests).not.toHaveBeenCalled();
+      });
+      it('should clear the persisted tests when the configuration to do so is enabled', async () => {
+        const configWithPersistenceClearing: AppConfig = {
+          ...appConfigProvider.getAppConfig(),
+          logoutClearsTestPersistence: true,
+        };
+        spyOn(appConfigProvider, 'getAppConfig').and.returnValue(configWithPersistenceClearing);
+
+        await authenticationProvider.logout();
+
+        expect(testPersistenceProvider.clearPersistedTests).toHaveBeenCalled();
+      });
     });
 
   });

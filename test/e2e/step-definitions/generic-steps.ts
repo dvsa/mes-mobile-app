@@ -57,7 +57,12 @@ Then('I should see the Microsoft login page', () => {
 });
 
 When('I log in to the application as {string}', (username) => {
-  return logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+  logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+
+  // If the journal page is loaded we should have a refresh button
+  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+  browser.wait(ExpectedConditions.presenceOf(refreshButton));
+  return expect(refreshButton.isPresent()).to.eventually.be.true;
 });
 
 Then('I should see the {string} page', (pageTitle) => {
@@ -90,7 +95,6 @@ Then('validation item {string} should be {string}', (validationId: string, valid
   const validationElement = getElement(by.css(`#${validationId}`));
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
-
 
 // After hook to take screenshots of page
 After(function (testCase) {
@@ -145,9 +149,10 @@ export const logout = () => {
     if (result) {
       logout.click().then(() => {
         // After logout click sign in to get us to the login screen
+        browser.sleep(TEST_CONFIG.ACTION_WAIT);
+        browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
         const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
-        browser.wait(ExpectedConditions.presenceOf(signIn));
-        signIn.click();
+        clickElement(signIn);
       });
     } else {
       return Promise.resolve();

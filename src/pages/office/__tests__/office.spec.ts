@@ -8,16 +8,49 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { Store, StoreModule } from '@ngrx/store';
+import { StoreModel } from '../../../shared/models/store.model';
+import { ToggleVerbalEta, TogglePlanningEco } from '../../../modules/tests/test_data/test-data.actions';
+import { By } from '@angular/platform-browser';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
   let component: OfficePage;
   let navCtrl: NavController;
+  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OfficePage],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule,
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testLifecycles: {},
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                candidate: {
+                  candidateName: 'Joe Bloggs',
+                  driverNumber: '123',
+                },
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                },
+              },
+            },
+          }),
+        }),
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
@@ -32,6 +65,7 @@ describe('OfficePage', () => {
         fixture = TestBed.createComponent(OfficePage);
         component = fixture.componentInstance;
         navCtrl = TestBed.get(NavController);
+        store$ = TestBed.get(Store);
       });
   }));
 
@@ -39,6 +73,37 @@ describe('OfficePage', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+  });
+
+  describe('DOM', () => {
+    it('should hide ETA faults container if there are none', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+    });
+    it('should display ETA faults container if there are any', () => {
+      store$.dispatch(new ToggleVerbalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
+    });
+    it('should hide eco faults container if there are none', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#eco'))).toBeNull();
+    });
+    it('should display eco faults container if there are any', () => {
+      store$.dispatch(new TogglePlanningEco());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#eco'))).toBeDefined();
+    });
+    it('should display eta fault details if there are any', () => {
+      store$.dispatch(new ToggleVerbalEta());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
+    });
+    it('should display eco fault details if there are any', () => {
+      store$.dispatch(new TogglePlanningEco());
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ecoFaults'))).toBeDefined();
     });
   });
 

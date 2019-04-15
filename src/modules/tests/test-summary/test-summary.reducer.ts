@@ -1,7 +1,6 @@
 import { TestSummary } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
-// import { has } from 'lodash';
 
 export const initialState : TestSummary = {
   routeNumber: null,
@@ -11,7 +10,7 @@ export const initialState : TestSummary = {
   weatherConditions: [],
   debriefWitnessed: null,
   D255: null,
-  identification: null,
+  identification:  'Licence',
 };
 
 export function testSummaryReducer(
@@ -63,6 +62,12 @@ export function testSummaryReducer(
       return {
         ...state,
         D255: false,
+      };
+    case testSummaryActions.SHOW_ME_QUESTION_SELECTED:
+      return {
+        ...state,
+        showMeQuestionCode: action.showMeQuestion.showMeQuestionCode,
+        showMeQuestionDescription: action.showMeQuestion.showMeQuestionDescription,
       };
 
     default:

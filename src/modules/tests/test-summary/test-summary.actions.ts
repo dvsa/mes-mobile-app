@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 
 export const CANDIDATE_DESCRIPTION_CHANGED = '[Test Summary] Candidate description changed';
 export const ADDITIONAL_INFORMATION_CHANGED = '[Test Summary] Additional Information changed';
@@ -9,6 +10,7 @@ export const IDENTIFICATION_USED_CHANGED = '[Test Summary] Identification used c
 export const INDEPENDENT_DRIVING_TYPE_CHANGED = '[Test Summary] Independent driving changed';
 export const D255_YES = '[Test Summary] D255 Yes';
 export const D255_NO = '[Test Summary] D255 No';
+export const SHOW_ME_QUESTION_SELECTED = '[Test Summary] Show me question changed';
 
 export class AdditionalInformationChanged implements Action {
   readonly type = ADDITIONAL_INFORMATION_CHANGED;
@@ -53,6 +55,11 @@ export class D255No implements Action {
   constructor() {}
 }
 
+export class ShowMeQuestionSelected implements Action {
+  constructor(public showMeQuestion: ShowMeQuestion) {}
+  readonly type = SHOW_ME_QUESTION_SELECTED;
+}
+
 export type Types =
   | AdditionalInformationChanged
   | CandidateDescriptionChanged
@@ -62,4 +69,5 @@ export type Types =
   | IdentificationUsedChanged
   | IndependentDrivingTypeChanged
   | D255Yes
-  | D255No;
+  | D255No
+  | ShowMeQuestionSelected;

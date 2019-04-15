@@ -7,7 +7,6 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getTestRequirements } from '../../../../modules/tests/test_data/test-data.selector';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 import {
   ToggleNormalStart1,
   ToggleNormalStart2,
@@ -29,7 +28,6 @@ interface LegalRequirementsComponentState {
 export class LegalRequirementsComponent implements OnInit {
 
   componentState: LegalRequirementsComponentState;
-  subscription: Subscription;
 
   constructor(private store$: Store<StoreModel>) {}
 

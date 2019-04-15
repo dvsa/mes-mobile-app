@@ -17,13 +17,6 @@ page-office {
             margin-top: 42px;
           }
         }
-        // ion-textarea {
-        //   padding: 10px;
-        //   display: block;
-        //   border: thick solid map-get($colors, divider);
-        //   width: 100%;
-        //   margin: 10px 0 0 0;
-        // }
       }
       .unsuccessful {
         color: map-get($colors, "mes-red");
@@ -37,7 +30,30 @@ page-office {
       .grid{
         padding: 0;
       }
-    
+      .align-col-right {
+        float: right;
+        text-align: right;
+      }
+    .defer-button {
+      background: map-get($colors-gds, gds-grey-3);
+      box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      margin: 0 0.2rem;
+      height: initial;
+      h3 {
+        color: map-get($colors, mes-black);
+        .text-zoom-regular &, 
+        .text-zoom-large &, 
+        .text-zoom-x-large & {
+          line-height: 2em;
+        }
+        min-height: 44px;
+        padding-top: 1px
+      }
+    }
+    .fault-heading{
+      padding-left: 20px;
+  }
 }
 ion-footer {
   background-color: map-get($colors, "mes-white");

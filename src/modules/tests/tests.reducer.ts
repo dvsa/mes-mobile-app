@@ -15,6 +15,9 @@ import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { testStatusReducer } from './test-status/test-status.reducer';
 import { TestStatus } from './test-status/test-status.model';
+import { testCentreReducer } from './test-centre/test-centre.reducer';
+import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
+import { examinerReducer } from './examiner/examiner.reducer';
 
 export interface CurrentTest {
   slotId: string;
@@ -70,6 +73,9 @@ export function testsReducer(
             postTestDeclarations: postTestDeclarationsReducer,
             vehicleChecks: vehicleChecksReducer,
             testSummary: testSummaryReducer,
+            testSlotAttributes: testSlotsAttributesReducer,
+            examiner: examinerReducer,
+            testCentre: testCentreReducer,
           },
           // @ts-ignore
         )(state.startedTests[slotId], action),

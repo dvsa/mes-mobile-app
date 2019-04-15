@@ -33,6 +33,7 @@ import { TestsModule } from '../modules/tests/tests.module';
 import { DeviceAuthenticationProvider } from '../providers/device-authentication/device-authentication';
 import { QuestionProvider } from '../providers/question/question';
 import { Insomnia } from '@ionic-native/insomnia';
+import { TestPersistenceProvider } from '../providers/test-persistence/test-persistence';
 
 @NgModule({
   declarations: [App],
@@ -76,10 +77,10 @@ import { Insomnia } from '@ionic-native/insomnia';
     AppInfoProvider,
     DeviceProvider,
     SecureStorage,
-    DataStoreProvider,
     DeviceAuthenticationProvider,
     QuestionProvider,
     Insomnia,
+    TestPersistenceProvider,
   ],
 })
 export class AppModule {}
