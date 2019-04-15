@@ -228,6 +228,8 @@ export class CompetencyComponent {
     }
   }
 
+  getManoeuvreCompetencyOutcomeCount = (): number => this.manoeuvreCompetencyOutcome === 'DF' ? 1 : 0;
+
   /**
    * Manages the addition and removal of the ripple effect animation css class
    * @returns any
