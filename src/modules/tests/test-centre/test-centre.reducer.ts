@@ -12,7 +12,6 @@ export function testCentreReducer(
 ): TestCentre {
   switch (action.type) {
     case testCentreActions.POPULATE_TEST_CENTRE:
-      console.log(`payload ${JSON.stringify(action.payload)}`);
       return action.payload;
   }
   return state;

@@ -12,7 +12,6 @@ export function examinerReducer(
 ): Examiner {
   switch (action.type) {
     case examinerActions.POPULATE_EXAMINER:
-      console.log(`payload ${JSON.stringify(action.payload)}`);
       return action.payload;
   }
   return state;

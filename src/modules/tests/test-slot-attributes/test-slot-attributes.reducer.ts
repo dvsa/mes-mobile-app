@@ -17,7 +17,6 @@ export function testSlotsAttributesReducer(
 ): TestSlotAttributes {
   switch (action.type) {
     case testSlotAttributesActions.POPULATE_TEST_SLOT_ATTRIBUTES:
-      console.log(`payload ${JSON.stringify(action.payload)}`);
       return action.payload;
   }
   return state;
