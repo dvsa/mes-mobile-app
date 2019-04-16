@@ -43,47 +43,47 @@
         </ion-row>
       </ion-col>
       <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedReverseRight">
-        <competency 
+        <manoeuvre-competency 
           [competency]="competencies.outcomeReverseRightControl"
           [attr.id]="competencies.outcomeReverseRightControl"
-        ></competency>
-        <competency 
+        ></manoeuvre-competency>
+        <manoeuvre-competency 
           class="second"
           [attr.id]="competencies.outcomeReverseRightObservation"
           [competency]="competencies.outcomeReverseRightObservation"
-          ></competency>
+          ></manoeuvre-competency>
       </ion-col>
       <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedForwardPark">
-        <competency 
+        <manoeuvre-competency 
           [competency]="competencies.outcomeForwardParkControl"
           [attr.id]="competencies.outcomeForwardParkControl"
-        ></competency>
-        <competency 
+        ></manoeuvre-competency>
+        <manoeuvre-competency 
           class="second" [competency]="competencies.outcomeForwardParkObservation"
           [attr.id]="competencies.outcomeForwardParkObservation"
-        ></competency>
+        ></manoeuvre-competency>
       </ion-col>
         <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedReverseParkCarpark">
-          <competency 
+          <manoeuvre-competency 
             [competency]="competencies.outcomeReverseParkCarparkControl"
             [attr.id]="competencies.outcomeReverseParkCarparkControl"
-          ></competency>
-          <competency 
+          ></manoeuvre-competency>
+          <manoeuvre-competency 
             class="second"
             [attr.id]="competencies.outcomeReverseParkCarparkObservation"
             [competency]="competencies.outcomeReverseParkCarparkObservation"
-          ></competency>
+          ></manoeuvre-competency>
         </ion-col>
       <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedReverseParkRoad">
-        <competency 
+        <manoeuvre-competency 
           [competency]="competencies.outcomeReverseParkRoadControl"
           [attr.id]="competencies.outcomeReverseParkRoadControl"
-        ></competency>
-        <competency 
+        ></manoeuvre-competency>
+        <manoeuvre-competency 
           class="second" 
           [competency]="competencies.outcomeReverseParkRoadObservation"
           [attr.id]="competencies.outcomeReverseParkRoadObservation"
-        ></competency>
+        ></manoeuvre-competency>
       </ion-col>
     </ion-row>
   </ion-grid>

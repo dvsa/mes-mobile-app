@@ -501,6 +501,7 @@ describe('CompetencyComponent', () => {
         component.rippleEffectAnimationDuration);
     });
   });
+
   describe('Manoeuvre competency', () => {
     it('should set the isManoeuvreCompetency flag to true when the competency is a manoeuvre competency', () => {
       component.competency = Competencies.outcomeReverseRightControl;
