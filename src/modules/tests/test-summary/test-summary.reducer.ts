@@ -63,13 +63,6 @@ export function testSummaryReducer(
         ...state,
         D255: false,
       };
-    case testSummaryActions.SHOW_ME_QUESTION_SELECTED:
-      return {
-        ...state,
-        showMeQuestionCode: action.showMeQuestion.showMeQuestionCode,
-        showMeQuestionDescription: action.showMeQuestion.showMeQuestionDescription,
-      };
-
     default:
       return state;
   }

@@ -37,7 +37,6 @@ import {
   D255Yes,
   D255No,
   CandidateDescriptionChanged,
-  ShowMeQuestionSelected,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -50,7 +49,11 @@ import { QuestionProvider } from '../../providers/question/question';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
-import { getSelectedTellMeQuestionText } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+import {
+  getSelectedTellMeQuestionText,
+  getShowMeQuestion,
+} from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+import { ShowMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
 import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 
@@ -62,8 +65,8 @@ interface OfficePageState {
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
-  debriefWitnessedYesRadioChecked$ : Observable<boolean>;
-  debriefWitnessedNoRadioChecked$ : Observable<boolean>;
+  debriefWitnessedYesRadioChecked$: Observable<boolean>;
+  debriefWitnessedNoRadioChecked$: Observable<boolean>;
   identificationLicenseRadioChecked$: Observable<boolean>;
   identificationPassportRadioChecked$: Observable<boolean>;
   independentDrivingSatNavRadioChecked$: Observable<boolean>;
@@ -72,10 +75,10 @@ interface OfficePageState {
   d255NoRadioChecked$: Observable<boolean>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
+  showMeQuestion$: Observable<ShowMeQuestion>;
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-
 }
 
 @IonicPage()
@@ -99,6 +102,7 @@ export class OfficePage extends BasePageComponent {
   inputSubscriptions: Subscription[] = [];
 
   showMeQuestions: ShowMeQuestion[];
+  showMeQuestion: ShowMeQuestion;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -119,7 +123,6 @@ export class OfficePage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -151,7 +154,7 @@ export class OfficePage extends BasePageComponent {
       routeNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
-     ),
+      ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
@@ -164,25 +167,25 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getTrafficSignsUsed),
       ),
-      debriefWitnessedYesRadioChecked$ : currentTest$.pipe(
+      debriefWitnessedYesRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isDebriefWitnessed),
       ),
-      debriefWitnessedNoRadioChecked$ : currentTest$.pipe(
+      debriefWitnessedNoRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isDebriefUnwitnessed),
-     ),
+      ),
       identificationLicenseRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isIdentificationLicense),
-    ),
+      ),
       identificationPassportRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isIdentificationPassport),
-    ),
+      ),
       d255YesRadioChecked$: currentTest$.pipe(
-      select(getTestSummary),
-      select(isD255Yes),
+        select(getTestSummary),
+        select(isD255Yes),
       ),
       d255NoRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
@@ -191,6 +194,10 @@ export class OfficePage extends BasePageComponent {
       additionalInformation$: currentTest$.pipe(
         select(getTestSummary),
         select(getAdditionalInformation),
+      ),
+      showMeQuestion$: currentTest$.pipe(
+        select(getVehicleChecks),
+        select(getShowMeQuestion),
       ),
       tellMeQuestionText$: currentTest$.pipe(
         select(getVehicleChecks),
@@ -211,7 +218,9 @@ export class OfficePage extends BasePageComponent {
         select(getEcoFaultText),
       ),
     };
+
     this.inputSubscriptions = [
+      this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
       this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
       this.inputChangeSubscriptionDispatchingAction(
         this.additionalInformationInput,
@@ -241,10 +250,10 @@ export class OfficePage extends BasePageComponent {
    */
   inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
     const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      );
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
@@ -273,6 +282,7 @@ export class OfficePage extends BasePageComponent {
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
+      showMeQuestionCtrl: new FormControl('', [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
