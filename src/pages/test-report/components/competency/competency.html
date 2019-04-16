@@ -1,5 +1,6 @@
 <div class="competency-button"
-  (press)="onPress()"
+  (tap)="addOrRemoveFault()"
+  (press)="addOrRemoveFault(true)"
   (touchstart)="onTouchStart()"
   (touchend)="onTouchEnd()"
   [ngClass]="{
