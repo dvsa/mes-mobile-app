@@ -1,5 +1,10 @@
 import { vehicleChecksReducer } from '../vehicle-checks.reducer';
-import { TellMeQuestionSelected, TellMeQuestionCorrect, TellMeQuestionDrivingFault } from '../vehicle-checks.actions';
+import {
+  ShowMeQuestionSelected,
+  TellMeQuestionSelected,
+  TellMeQuestionCorrect,
+  TellMeQuestionDrivingFault,
+} from '../vehicle-checks.actions';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 
 describe('vehicle checks reducer', () => {
@@ -28,5 +33,34 @@ describe('vehicle checks reducer', () => {
   it('should mark tell me question as driving fault when the action is received', () => {
     const result = vehicleChecksReducer({}, new TellMeQuestionDrivingFault());
     expect(result.tellMeQuestionOutcome).toBe('DF');
+  });
+
+  it('it should set the show me question details', () => {
+    const newQuestionPayload = {
+      showMeQuestionCode: 'S1',
+      showMeQuestionDescription: 'desc',
+      showMeQuestionShortName: 'name',
+    };
+
+    const result = vehicleChecksReducer({}, new ShowMeQuestionSelected(newQuestionPayload));
+    expect(result.showMeQuestionCode).toBe('S1');
+    expect(result.showMeQuestionDescription).toBe('desc');
+  });
+
+  it('it should update the question details show me question is selected', () => {
+    const newQuestionPayload = {
+      showMeQuestionCode: 'S1',
+      showMeQuestionDescription: 'desc',
+      showMeQuestionShortName: 'name',
+    };
+
+    const oldState: VehicleChecks = {
+      showMeQuestionCode: 'S2',
+      showMeQuestionDescription: 'desc2',
+    };
+
+    const result = vehicleChecksReducer(oldState, new ShowMeQuestionSelected(newQuestionPayload));
+    expect(result.showMeQuestionCode).toBe('S1');
+    expect(result.showMeQuestionDescription).toBe('desc');
   });
 });
