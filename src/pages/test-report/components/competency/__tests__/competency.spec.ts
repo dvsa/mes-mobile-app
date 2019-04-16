@@ -533,19 +533,18 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
       });
     });
-    // describe('DOM', () => {
-    //   it('should display the correct driving fault badge with a count of 1', () => {
-    //     component.competency = Competencies.outcomeReverseRightControl;
-    //     component.isManoeuvreCompetency = true;
-    //     fixture.detectChanges();
-    //     component.manoeuvreCompetencyOutcome = 'DF';
-    //     const manoeuvreDrivingFaultsBadge = fixture.debugElement.query(By.css('.manoeuvre-driving-fault-badge'))
-    //     .componentInstance;
-    //     console.log('### manoeuvreDrivingFaultsBadge count ###');
-    //     console.log(manoeuvreDrivingFaultsBadge.count);
-    //     expect(manoeuvreDrivingFaultsBadge).toBeDefined();
-    //     expect(manoeuvreDrivingFaultsBadge.count).toBe(1);
-    //   });
-    // });
+    describe('DOM', () => {
+      it('should display the correct driving fault badge with a count of 1', () => {
+        component.competency = Competencies.outcomeReverseRightControl;
+        component.isManoeuvreCompetency = true;
+        component.manoeuvreCompetencyOutcome = 'DF';
+        const result = component.getManoeuvreCompetencyOutcomeCount();
+        fixture.detectChanges();
+        const manoeuvreDrivingFaultsBadge = fixture.debugElement.query(By.css('.manoeuvre-driving-fault-badge'))
+        .componentInstance;
+        expect(manoeuvreDrivingFaultsBadge).toBeDefined();
+        expect(result).toEqual(1);
+      });
+    });
   });
 });
