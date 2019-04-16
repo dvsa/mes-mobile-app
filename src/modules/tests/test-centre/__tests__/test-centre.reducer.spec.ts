@@ -3,7 +3,7 @@ import { testCentreReducer } from '../test-centre.reducer';
 import { PopulateTestCentre } from '../test-centre.actions';
 
 describe('testCentre reducer', () => {
-  it('should return the tetcentre from a populate test centre action', () => {
+  it('should return the testcentre from a populate test centre action', () => {
     const mockTestCentre: TestCentre = {
       costCode: '1234',
     };
