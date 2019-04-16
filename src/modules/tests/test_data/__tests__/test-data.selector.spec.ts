@@ -9,6 +9,7 @@ import {
   getManoeuvres,
   hasManoeuvreBeenCompleted,
   hasControlledStopBeenCompleted,
+  getDrivingFaultSummaryCount,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 
@@ -40,6 +41,7 @@ describe('TestDataSelectors', () => {
     manoeuvres: {
       selectedForwardPark: true,
       selectedControlledStop: true,
+      outcomeForwardParkControl: 'DF',
     },
   };
 
@@ -49,6 +51,12 @@ describe('TestDataSelectors', () => {
     });
     it('should return undefined when there hasnt been any driving faults', () => {
       expect(getDrivingFaultCount(state, Competencies.controlsParkingBrake)).toBeUndefined();
+    });
+  });
+
+  describe('getDrivingFaultSummaryCount', () => {
+    it('should return the driving fault count correctly', () => {
+      expect(getDrivingFaultSummaryCount(state)).toBe(2);
     });
   });
 
