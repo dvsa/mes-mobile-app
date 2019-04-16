@@ -15,4 +15,3 @@ export class OfficeViewAddDangerousFaultComment implements Action {
 export type OfficeActionTypes =
   | OfficeViewDidEnter
   | OfficeViewAddDangerousFaultComment;
-
