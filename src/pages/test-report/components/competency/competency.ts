@@ -31,6 +31,7 @@ import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-re
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
 import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -228,7 +229,7 @@ export class CompetencyComponent {
     }
   }
 
-  getManoeuvreCompetencyOutcomeCount = (): number => this.manoeuvreCompetencyOutcome === 'DF' ? 1 : 0;
+  getManoeuvreCompetencyOutcomeCount = (): number => this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF ? 1 : 0;
 
   /**
    * Manages the addition and removal of the ripple effect animation css class
