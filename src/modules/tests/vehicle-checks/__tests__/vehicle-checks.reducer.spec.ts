@@ -8,7 +8,7 @@ import {
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 
 describe('vehicle checks reducer', () => {
-  it('it should set the question details and reset outcome when a tell me question is selected', () => {
+  it('should set the question details and reset outcome when a tell me question is selected', () => {
     const newQuestionPayload = {
       tellMeQuestionCode: 'T1',
       tellMeQuestionDescription: 'desc',
@@ -35,7 +35,7 @@ describe('vehicle checks reducer', () => {
     expect(result.tellMeQuestionOutcome).toBe('DF');
   });
 
-  it('it should set the show me question details', () => {
+  it('should set the show me question details', () => {
     const newQuestionPayload = {
       showMeQuestionCode: 'S1',
       showMeQuestionDescription: 'desc',
@@ -47,7 +47,7 @@ describe('vehicle checks reducer', () => {
     expect(result.showMeQuestionDescription).toBe('desc');
   });
 
-  it('it should update the show me question details', () => {
+  it('should update the show me question details', () => {
     const newQuestionPayload = {
       showMeQuestionCode: 'S1',
       showMeQuestionDescription: 'desc',
