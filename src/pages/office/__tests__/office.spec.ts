@@ -14,6 +14,14 @@ import { ToggleETA, TogglePlanningEco, AddDangerousFault } from '../../../module
 import { ExaminerActions, Competencies } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import {
+  IndependentDrivingTypeChanged,
+  DebriefWitnessed,
+  DebriefUnwitnessed,
+  IdentificationUsedChanged,
+  D255Yes,
+  D255No,
+} from '../../../modules/tests/test-summary/test-summary.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -129,6 +137,67 @@ describe('OfficePage', () => {
         expect(navCtrl.popToRoot).toHaveBeenCalled();
       });
     });
+
+    describe('changing debrief witnessed', () => {
+      it('should dispatch a change to debrief witnessed action when Yes is clicked', () => {
+        const witnessedRadio = fixture.debugElement.query(By.css('#debrief-witnessed-yes'));
+        witnessedRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefWitnessed());
+      });
+      it('should dispatch a change to debrief unwitnessed when No is clicked', () => {
+        const unwitnessedRadio = fixture.debugElement.query(By.css('#debrief-witnessed-no'));
+        unwitnessedRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefUnwitnessed());
+      });
+    });
+
+    describe('changing independent driving', () => {
+      it('should dispatch a change to independent driving action when Yes is clicked', () => {
+        const satNavRadio = fixture.debugElement.query(By.css('#independent-driving-satnav'));
+        satNavRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new IndependentDrivingTypeChanged('Sat nav'));
+      });
+      it('should dispatch a change to independent driving action when Traffic signs is clicked', () => {
+        const trafficSignsRadio = fixture.debugElement.query(By.css('#independent-driving-trafficsigns'));
+        trafficSignsRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new IndependentDrivingTypeChanged('Traffic signs'));
+      });
+    });
+
+    describe('changing identification', () => {
+      it('should dispatch a change to identification action when Licence is clicked', () => {
+        const licenceRadio = fixture.debugElement.query(By.css('#identification-license'));
+        licenceRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged('Licence'));
+      });
+      it('should dispatch a change to identification action when Passport is clicked', () => {
+        const passportRadio = fixture.debugElement.query(By.css('#identification-passport'));
+        passportRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged('Passport'));
+      });
+    });
+
+    describe('changing D255', () => {
+      it('should dispatch a change to D255 action when Yes is clicked', () => {
+        const d255YesRadio = fixture.debugElement.query(By.css('#d255-yes'));
+        d255YesRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new D255Yes());
+      });
+      it('should dispatch a change to D255 action when No is clicked', () => {
+        const d255NoRadio = fixture.debugElement.query(By.css('#d255-no'));
+        d255NoRadio.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).toHaveBeenCalledWith(new D255No());
+      });
+    });
+
   });
 
   describe('popToRoot', () => {
