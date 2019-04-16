@@ -37,12 +37,15 @@
       background-color: map-get($colors-gds, gds-grey-5);
       border: none;
     }
+    $alert-checkbox-button-padding: 4px 0;
     button {
+      padding: $alert-checkbox-button-padding;
       div.alert-checkbox-icon {
         @extend .mes-multiselect-dialog-checkbox;
       }
     }
     button[aria-checked="true"] {
+      padding: $alert-checkbox-button-padding;
       div.alert-checkbox-icon {
         @extend .mes-multiselect-dialog-checkbox;
         background-color: map-get($colors-gds, gds-dark-green);
@@ -52,6 +55,9 @@
           margin-left: 5px;
           border-width: 0 5px 5px 0;
         }
+      }
+      div.alert-checkbox-label {
+        font-weight: bold;
       }
     }
   }
