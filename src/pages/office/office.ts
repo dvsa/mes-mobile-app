@@ -4,7 +4,11 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { OfficeViewDidEnter, OfficeViewAddDangerousFaultComment } from './office.actions';
+import {
+  OfficeViewDidEnter,
+  OfficeViewAddDangerousFaultComment,
+  OfficeViewAddDrivingFaultComment,
+} from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
@@ -50,7 +54,12 @@ import { getSelectedTellMeQuestionText } from '../../modules/tests/vehicle-check
 import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
-import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
+import {
+  getSeriousOrDangerousFaults,
+  getDrivingFaults,
+  displayDrivingFaultComments,
+} from '../debrief/debrief.selector';
+import { FaultCount } from '../../shared/constants/competencies/catb-competencies';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -74,6 +83,9 @@ interface OfficePageState {
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
   dangerousFaults$: Observable<string[]>;
+  drivingFaults$: Observable<FaultCount[]>;
+  drivingFaultCount$: Observable<number>;
+  displayDrivingFaultComments$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -97,6 +109,10 @@ export class OfficePage extends BasePageComponent {
 
   @ViewChildren('dangerousFaultComment')
   dangerousFaultComment: QueryList<ElementRef>;
+
+  @ViewChildren('drivingFaultComment')
+  drivingFaultComment: QueryList<ElementRef>;
+
   inputSubscriptions: Subscription[] = [];
 
   constructor(
@@ -213,6 +229,27 @@ export class OfficePage extends BasePageComponent {
         select(getTestData),
         map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
       ),
+      drivingFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map(data => getDrivingFaults(data.drivingFaults)),
+      ),
+      drivingFaultCount$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map((data) => {
+          const faults = getDrivingFaults(data.drivingFaults);
+          return faults.reduce((sum, c) => sum + c.count, 0);
+        }),
+      ),
+      displayDrivingFaultComments$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map(data => displayDrivingFaultComments(data)),
+      ),
     };
 
     this.inputSubscriptions = [
@@ -229,6 +266,10 @@ export class OfficePage extends BasePageComponent {
     this.dangerousFaultComment.forEach((comment) => {
       this.inputSubscriptions
       .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
+    });
+    this.drivingFaultComment.forEach((comment) => {
+      this.inputSubscriptions
+      .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDrivingFaultComment));
     });
   }
 

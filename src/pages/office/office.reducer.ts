@@ -3,6 +3,7 @@ import { OfficeModel } from './office.model';
 
 export const initialState: OfficeModel = {
   dangerousFaultComments: [],
+  drivingFaultComments: [],
 };
 
 export function officeReducer(state = initialState, action: officeActions.OfficeActionTypes): OfficeModel {
@@ -11,6 +12,11 @@ export function officeReducer(state = initialState, action: officeActions.Office
       return {
         ...state,
         dangerousFaultComments: [...state.dangerousFaultComments, action.payload],
+      };
+    case officeActions.OFFICE_VIEW_ADD_DRIVING_FAULT_COMMENT:
+      return {
+        ...state,
+        drivingFaultComments: [...state.drivingFaultComments, action.payload],
       };
     default:
       return state;

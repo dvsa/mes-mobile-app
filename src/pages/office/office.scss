@@ -1,5 +1,15 @@
 page-office {
-    ion-content {
+  .driving-fault-no-commentary-row {
+    padding: 0;
+    padding-bottom: 22px;
+    .col {
+      padding: 0;
+    }
+    .component-label {
+      padding-left: 32px;
+    }
+  }  
+  ion-content {
         .mes-full-width-card {
           height: 120px;
           #continue-to-test-report {
