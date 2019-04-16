@@ -76,9 +76,7 @@ describe('CompetencyComponent', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
-        const dispatchAddDrivingFaultSpy = spyOn(component, 'dispatchAddDrivingFault').and.callThrough();
 
-        expect(dispatchAddDrivingFaultSpy).toHaveBeenCalledTimes(1);
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
           competency: component.competency,
           newFaultCount: 1,
@@ -527,7 +525,7 @@ describe('CompetencyComponent', () => {
         fixture.detectChanges();
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         const dispatchAddDrivingFaultSpy = spyOn(component, 'dispatchAddDrivingFault').and.callThrough();
-        component.addOrRemoveFault(false);
+        component.addOrRemoveFault(true);
 
         expect(dispatchAddDrivingFaultSpy).toHaveBeenCalledTimes(1);
         expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
