@@ -63,4 +63,3 @@ export type Types =
   | IndependentDrivingTypeChanged
   | D255Yes
   | D255No;
-
