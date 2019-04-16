@@ -26,12 +26,10 @@ export class RouteNumberChanged implements Action {
 
 export class DebriefWitnessed implements Action {
   readonly type = DEBRIEF_WITNESSED;
-  constructor() {}
 }
 
 export class DebriefUnwitnessed implements Action {
   readonly type = DEBRIEF_UNWITNESSED;
-  constructor() {}
 }
 
 export class IdentificationUsedChanged implements Action {
@@ -46,11 +44,9 @@ export class IndependentDrivingTypeChanged implements Action {
 
 export class D255Yes implements Action {
   readonly type = D255_YES;
-  constructor() {}
 }
 export class D255No implements Action {
   readonly type = D255_NO;
-  constructor() {}
 }
 
 export type Types =
