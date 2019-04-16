@@ -69,7 +69,7 @@
                     [checked]="pageState.independentDrivingSatNavRadioChecked$ | async" value='Sat nav'>
                   <label for="independent-driving-satnav" class="radio-label">Sat Nav</label>
                 </ion-col>
-                <ion-col col-32>
+                <ion-col col-auto>
                   <input type="radio" formControlName="independentDrivingCtrl" name="independentDrivingCtrl"
                     id="independent-driving-trafficsigns" class="gds-radio-button"
                     [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')" (click)="trafficSignsUsed()"
