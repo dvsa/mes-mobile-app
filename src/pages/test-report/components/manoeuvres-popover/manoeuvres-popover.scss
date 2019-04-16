@@ -1,5 +1,5 @@
 .popover {
-  background-color: map-get($colors, "mes-white");
+  background-color: #f9f9f9;
   height: 220px;
   width: calc(100% - 12px);
   left: 6px;
@@ -28,5 +28,11 @@
   .popover-content {
     margin-left: 68px;
     border: 0 none map-get($colors, "mes-white");
+  }
+  .manoeuvre-competencies-container {
+    margin-top: 40px;
+    .competency-button {
+      margin-bottom: 10px;
+    }
   }
 }

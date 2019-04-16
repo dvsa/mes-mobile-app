@@ -3,16 +3,15 @@ import {
   AddDrivingFault,
   AddSeriousFault,
   RecordManoeuvresSelection,
-  ToggleNormalStart1,
-  ToggleNormalStart2,
-  ToggleAngledStart,
-  ToggleHillStart,
   AddDangerousFault,
   ToggleControlEco,
   TogglePlanningEco,
   ToggleControlledStop,
+  ToggleLegalRequirement,
+  ToggleETA,
+  AddManoeuvreDrivingFault,
 } from '../test-data.actions';
-import { Competencies } from '../test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
   ManoeuvreTypes,
@@ -116,6 +115,32 @@ describe('TestDataReducer reducer', () => {
       expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
       expect(result.manoeuvres.outcomeControlledStop).toBe('S');
     });
+    it('should keep any outcome data from other manoeuvres when changing selected manoeuvre', () => {
+      initialState.manoeuvres = {
+        selectedReverseParkCarpark: true,
+        outcomeForwardParkControl: 'DF',
+      };
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+      );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
+      expect(result.manoeuvres.outcomeForwardParkControl).toBe('DF');
+    });
+    describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
+      it('should add a "DF" outcome to the selected manoeuvre', () => {
+        // Arrange
+        initialState.manoeuvres = { selectedReverseParkRoad: true };
+        // Act
+        const result = testDataReducer(
+          initialState,
+          new AddManoeuvreDrivingFault(Competencies.outcomeReverseParkRoadControl),
+        );
+        // Assert
+        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual('DF');
+      });
+    });
   });
   describe('ADD_DANGEROUS_FAULT', () => {
     it('should add a dangerous fault when none exists', () => {
@@ -153,7 +178,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleNormalStart1());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
 
       expect(result.testRequirements.normalStart1).toBeTruthy();
     });
@@ -163,8 +188,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleNormalStart1());
-      const result = testDataReducer(modifiedState, new ToggleNormalStart1());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart1));
 
       expect(result.testRequirements.normalStart1).toBeFalsy();
     });
@@ -176,7 +201,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleNormalStart2());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart2));
 
       expect(result.testRequirements.normalStart2).toBeTruthy();
     });
@@ -186,8 +211,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleNormalStart2());
-      const result = testDataReducer(modifiedState, new ToggleNormalStart2());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart2));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart2));
 
       expect(result.testRequirements.normalStart2).toBeFalsy();
     });
@@ -199,7 +224,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleAngledStart());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.angledStart));
 
       expect(result.testRequirements.angledStart).toBeTruthy();
     });
@@ -209,8 +234,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleAngledStart());
-      const result = testDataReducer(modifiedState, new ToggleAngledStart());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.angledStart));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.angledStart));
 
       expect(result.testRequirements.angledStart).toBeFalsy();
     });
@@ -222,7 +247,7 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const result = testDataReducer(state, new ToggleHillStart());
+      const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.hillStart));
 
       expect(result.testRequirements.hillStart).toBeTruthy();
     });
@@ -232,8 +257,8 @@ describe('TestDataReducer reducer', () => {
         testRequirements: {},
       };
 
-      const modifiedState = testDataReducer(state, new ToggleHillStart());
-      const result = testDataReducer(modifiedState, new ToggleHillStart());
+      const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.hillStart));
+      const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.hillStart));
 
       expect(result.testRequirements.hillStart).toBeFalsy();
 
@@ -297,6 +322,52 @@ describe('TestDataReducer reducer', () => {
 
       expect(result.manoeuvres.selectedControlledStop).toBeFalsy();
 
+    });
+  });
+
+  describe('TOGGLE ETA VERBAL', () => {
+    it('should toggle ETA verbal to true when dispatched first time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const result = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
+
+      expect(result.ETA.verbal).toBeTruthy();
+    });
+
+    it('should toggle ETA verbal to false when dispatched second time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
+      const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.verbal));
+
+      expect(result.ETA.verbal).toBeFalsy();
+    });
+  });
+
+  describe('TOGGLE ETA PHYSICAL', () => {
+    it('should toggle ETA physical to true when dispatched first time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const result = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
+
+      expect(result.ETA.physical).toBeTruthy();
+    });
+
+    it('should toggle ETA physical to false when dispatched second time', () => {
+      const state: TestData = {
+        ETA: {},
+      };
+
+      const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
+      const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.physical));
+
+      expect(result.ETA.physical).toBeFalsy();
     });
   });
 });

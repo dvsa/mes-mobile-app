@@ -1,12 +1,14 @@
-<ion-row>
-  <ion-col class="only-right-padding  padding-right-10">
-    <button class="mes-test-report-button verbal-eta-button" (click)="toggleVerbal()" [ngClass]="{ complete: componentState.verbal$ | async }">
-        <span class='competency-label'>ETA: Verbal</span>
-    </button>
-  </ion-col>
-  <ion-col no-padding>
-    <button class="mes-test-report-button physical-eta-button" (click)="togglePhysical()" [ngClass]="{ complete: componentState.physical$ | async }">
-        <span class='competency-label'>ETA: Physical</span>
-    </button>
-  </ion-col>
-</ion-row>
+<div class="eta-button" 
+  (tap)="toggleETA()"
+  (press)="toggleETA()"
+  (touchstart)="onTouchStart()"
+  (touchend)="onTouchEnd()"
+  [ngClass]="{
+    'activated': touchState,
+    'complete': componentState.actionTaken$ | async
+  }"
+>
+  <div class="label">  
+    <span class='competency-label'>{{ getLabel() }}</span>
+  </div>
+</div>

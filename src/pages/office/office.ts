@@ -1,10 +1,10 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, Toast } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { OfficeViewDidEnter } from './office.actions';
+import { OfficeViewDidEnter, OfficeViewAddDangerousFaultComment } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
@@ -55,6 +55,8 @@ import {
 import { ShowMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
 import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { PersistTests } from '../../modules/tests/tests.actions';
+import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -78,6 +80,7 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
+  dangerousFaults$: Observable<string[]>;
 }
 
 @IonicPage()
@@ -98,6 +101,9 @@ export class OfficePage extends BasePageComponent {
 
   @ViewChild('additionalInformationInput')
   additionalInformationInput: ElementRef;
+
+  @ViewChildren('dangerousFaultComment')
+  dangerousFaultComment: QueryList<ElementRef>;
   inputSubscriptions: Subscription[] = [];
 
   showMeQuestions: ShowMeQuestion[];
@@ -216,6 +222,12 @@ export class OfficePage extends BasePageComponent {
         select(getEco),
         select(getEcoFaultText),
       ),
+      dangerousFaults$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
+      ),
     };
 
     this.inputSubscriptions = [
@@ -229,6 +241,13 @@ export class OfficePage extends BasePageComponent {
     ];
   }
 
+  ngAfterViewInit(): void {
+    this.dangerousFaultComment.forEach((comment) => {
+      this.inputSubscriptions
+      .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
+    });
+  }
+
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }
@@ -239,6 +258,7 @@ export class OfficePage extends BasePageComponent {
 
   defer() {
     this.popToRoot();
+    this.store$.dispatch(new PersistTests());
   }
 
   /**

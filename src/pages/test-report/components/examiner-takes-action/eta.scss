@@ -1,24 +1,23 @@
 eta {
-  .mes-test-report-button {
-    display: flex;
-    justify-content: center;
+  div.eta-button {
+    @extend .mes-test-report-button;
+
+    margin-right: 3px;
+    padding: 1px 7px 2px;
 
     &.complete {
       background-color:	#F2E8E7;
       border:2px solid map-get($colors-gds, "gds-red");
-
       &.competency-label {
         font-weight: bold;
       }
     }
-  }
 
-  .physical-eta-button {
-    width: 118px;
-    padding: 0;
-  }
-
-  .verbal-eta-button {
-    width: 126px;
+    .label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  
   }
 }

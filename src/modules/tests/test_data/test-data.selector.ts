@@ -1,6 +1,8 @@
 
-import { TestData, ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
-import { Competencies } from './test-data.constants';
+import { TestData, TestRequirements, ETA, Eco, ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
+import { pickBy, startsWith } from 'lodash';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -8,11 +10,16 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
 
   // The way how we store the driving faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
+  const { drivingFaults, manoeuvres } = data;
 
   const drivingFaultSumOfSimpleCompetencies =
-    Object.values(data.drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
+    Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
 
-  const result = drivingFaultSumOfSimpleCompetencies;
+  const manoeuvreOutcomes = pickBy(manoeuvres, (value, key) => startsWith(key, 'outcome'));
+  const manoeuvreDrivingFaults = pickBy(manoeuvreOutcomes, (value: ManoeuvreOutcome) => value === CompetencyOutcome.DF);
+  const sumManoeuvreDrivingFaults = Object.keys(manoeuvreDrivingFaults).length;
+
+  const result = drivingFaultSumOfSimpleCompetencies + sumManoeuvreDrivingFaults;
   return result;
 };
 
@@ -23,8 +30,6 @@ export const hasDangerousFault = (data: TestData, competency: Competencies) => d
 export const getTestRequirements = (data: TestData) => data.testRequirements;
 
 export const getETA = (data: TestData) => data.ETA;
-export const getETAVerbal = (data: ETA) => data.verbal;
-export const getETAPhysical = (data: ETA) => data.physical;
 export const getETAFaultText = (data: ETA) => {
   if (!data) return;
   if (data.physical && !data.verbal) return 'Physical';
@@ -32,6 +37,10 @@ export const getETAFaultText = (data: ETA) => {
   if (data.physical && data.verbal) return 'Physical and Verbal';
   return;
 };
+export const hasExaminerTakenAction = (data: ETA, action: ExaminerActions) => {
+  return data[action];
+};
+
 export const getEco = (data: TestData) => data.eco;
 export const getEcoFaultText = (data: Eco) => {
   if (!data) return;
@@ -53,3 +62,7 @@ export const hasManoeuvreBeenCompleted = (data: TestData) => {
 };
 
 export const hasControlledStopBeenCompleted = (data: TestData) => data.manoeuvres.selectedControlledStop;
+
+export const hasLegalRequirementBeenCompleted = (data: TestRequirements, legalRequirement: LegalRequirements) => {
+  return data[legalRequirement];
+};

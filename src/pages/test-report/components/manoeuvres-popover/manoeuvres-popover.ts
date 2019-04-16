@@ -1,7 +1,6 @@
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
@@ -10,6 +9,7 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
 import { ManoeuvreTypes } from './manoeuvres-popover.constants';
+import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 
 @Component({
   selector: 'manoeuvres-popover',
@@ -19,7 +19,7 @@ export class ManoeuvresPopoverComponent {
 
   public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
-  subscription: Subscription;
+  competencies = Competencies;
 
   constructor(private store$: Store<StoreModel>) { }
 

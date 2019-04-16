@@ -5,6 +5,9 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
+import { LoadPersistedTests } from '../modules/tests/tests.actions';
+import { DataStoreProvider } from '../providers/data-store/data-store';
+import { SecureStorage } from '@ionic-native/secure-storage';
 
 declare let window: any;
 
@@ -20,12 +23,15 @@ export class App {
     private store$: Store<StoreModel>,
     private statusBar: StatusBar,
     private platform: Platform,
+    private dataStore: DataStoreProvider,
+    private secureStorage: SecureStorage,
   ) {
     platform.ready()
       .then(() => {
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();
+        this.initialisePersistentStorage();
       });
   }
 
@@ -37,6 +43,15 @@ export class App {
 
   loadAppInfo() {
     this.store$.dispatch(new LoadAppInfo());
+  }
+
+  async initialisePersistentStorage() {
+    if (this.platform.is('ios')) {
+      const storage = await this.secureStorage.create('MES');
+      this.dataStore.setSecureContainer(storage);
+
+      this.store$.dispatch(new LoadPersistedTests());
+    }
   }
 
   configureAccessibility() {

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -13,8 +13,8 @@ import {
   RemoveDrivingFault,
   RemoveSeriousFault,
   RemoveDangerousFault,
+  AddManoeuvreDrivingFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
-import { HammerProvider } from '../../../../providers/hammer/hammer';
 import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
@@ -24,20 +24,20 @@ import {
   getDrivingFaultCount,
   hasSeriousFault,
   hasDangerousFault,
+  getManoeuvres,
 } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
-
-enum CssClassesEnum {
-  RIPPLE_EFFECT = 'mes-test-report-button-ripple-effect',
-}
+import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
+import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-
+  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome>;
   drivingFaultCount$: Observable<number>;
   hasSeriousFault$: Observable<boolean>;
   hasDangerousFault$: Observable<boolean>;
@@ -46,15 +46,19 @@ interface CompetencyState {
 @Component({
   selector: 'competency',
   templateUrl: 'competency.html',
-  providers: [HammerProvider],
 })
 export class CompetencyComponent {
 
   @Input()
   competency: Competencies;
 
-  @ViewChild('competencyButton')
-  button: ElementRef;
+  touchStateDelay: number = 100;
+
+  touchState: boolean = false;
+  rippleState: boolean = false;
+
+  rippleTimeout: any;
+  touchTimeout: any;
 
   rippleEffectAnimationDuration: number = 300;
 
@@ -62,29 +66,26 @@ export class CompetencyComponent {
   subscription: Subscription;
 
   isRemoveFaultMode: boolean = false;
-
   faultCount: number;
-
   isSeriousMode: boolean = false;
   hasSeriousFault: boolean = false;
-
   isDangerousMode: boolean = false;
   hasDangerousFault: boolean = false;
+  manoeuvreCompetencyOutcome: ManoeuvreOutcome;
+
+  isManoeuvreCompetency: boolean;
 
   constructor(
-    public hammerProvider: HammerProvider,
-    private renderer: Renderer2,
     private store$: Store<StoreModel>,
   ) { }
 
   ngOnInit(): void {
-    this.hammerProvider.init(this.button);
-    this.hammerProvider.addPressAndHoldEvent(this.addOrRemoveFault);
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
     );
+
+    this.isManoeuvreCompetency = this.checkIfManoeuvre();
 
     this.competencyState = {
       isRemoveFaultMode$: this.store$.pipe(
@@ -106,6 +107,11 @@ export class CompetencyComponent {
         select(getTestData),
         select(testData => hasDangerousFault(testData, this.competency)),
       ),
+      manoeuvreCompetencyOutcome$: currentTest$.pipe(
+        select(getTestData),
+        select(getManoeuvres),
+        select(manoeuvres => manoeuvres[this.competency]),
+      ),
     };
 
     const {
@@ -115,6 +121,7 @@ export class CompetencyComponent {
       hasSeriousFault$,
       isDangerousMode$,
       hasDangerousFault$,
+      manoeuvreCompetencyOutcome$,
     } = this.competencyState;
 
     const merged$ = merge(
@@ -124,6 +131,7 @@ export class CompetencyComponent {
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
+      manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
     );
 
     this.subscription = merged$.subscribe();
@@ -135,23 +143,40 @@ export class CompetencyComponent {
     }
   }
 
-  getLabel = (): string => competencyLabels[this.competency];
+  checkIfManoeuvre = (): boolean => Object.keys(manoeuvreCompetencyLabels).includes(this.competency);
 
-  addOrRemoveFault = (wasClick: boolean = false): void => {
+  getLabel = (): string => this.checkIfManoeuvre() ?
+    manoeuvreCompetencyLabels[this.competency] : competencyLabels[this.competency]
+
+  addOrRemoveFault = (wasPress: boolean = false): void => {
+    if (wasPress) {
+      this.applyRippleEffect();
+    }
     if (this.isRemoveFaultMode) {
       this.removeFault();
     } else {
-      this.addFault(wasClick);
+      this.addFault(wasPress);
     }
   }
 
-  addFault = (wasClick: boolean): void => {
+  dispatchAddDrivingFault(): void {
+    const competency = this.competency;
+
+    if (this.isManoeuvreCompetency) {
+      return this.store$.dispatch(new AddManoeuvreDrivingFault(competency));
+    }
+    return this.store$.dispatch(new AddDrivingFault({
+      competency,
+      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+    }));
+  }
+
+  addFault = (wasPress: boolean): void => {
     if (this.hasDangerousFault) {
       return;
     }
 
     if (this.isDangerousMode) {
-      if (!wasClick) this.applyRippleEffect();
       this.store$.dispatch(new AddDangerousFault(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
@@ -162,17 +187,13 @@ export class CompetencyComponent {
     }
 
     if (this.isSeriousMode) {
-      if (!wasClick) this.applyRippleEffect();
       this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
-    if (!wasClick) {
-      this.applyRippleEffect();
-      this.store$.dispatch(new AddDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-      }));
+
+    if (wasPress) {
+      this.dispatchAddDrivingFault();
     }
   }
 
@@ -208,14 +229,29 @@ export class CompetencyComponent {
     }
   }
 
+  getManoeuvreCompetencyOutcomeCount = (): number => this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF ? 1 : 0;
+
   /**
    * Manages the addition and removal of the ripple effect animation css class
    * @returns any
    */
   applyRippleEffect = (): any => {
-    this.renderer.addClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT);
-    setTimeout(() => this.renderer.removeClass(this.button.nativeElement, CssClassesEnum.RIPPLE_EFFECT),
-               this.rippleEffectAnimationDuration,
-    );
+    this.rippleState = true;
+    this.rippleTimeout = setTimeout(() => this.removeRippleEffect(), this.rippleEffectAnimationDuration);
+  }
+
+  removeRippleEffect = (): any => {
+    this.rippleState = false;
+    clearTimeout(this.rippleTimeout);
+  }
+
+  onTouchStart():void {
+    clearTimeout(this.touchTimeout);
+    this.touchState = true;
+  }
+
+  onTouchEnd():void {
+    // defer the removal of the touch state to allow the page to render
+    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }
 }

@@ -16,10 +16,10 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   AddDrivingFault,
-  TogglePhysicalEta,
+  ToggleETA,
   TogglePlanningEco,
 } from '../../../modules/tests/test_data/test-data.actions';
-import { Competencies } from '../../../modules/tests/test_data/test-data.constants';
+import { Competencies, ExaminerActions } from '../../../modules/tests/test_data/test-data.constants';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -129,7 +129,7 @@ describe('DebriefPage', () => {
     });
 
     it('should display the ETA faults if there are any', () => {
-      store$.dispatch(new TogglePhysicalEta());
+      store$.dispatch(new ToggleETA(ExaminerActions.physical));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('#etaFaults'))).toBeDefined();
