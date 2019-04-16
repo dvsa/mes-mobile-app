@@ -63,6 +63,7 @@ export function testSummaryReducer(
         ...state,
         D255: false,
       };
+
     default:
       return state;
   }

@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { getCurrentTest, getTestOutcome, getTestOutcomeClass, isPassed } from '../../modules/tests/tests.selector';
-
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,

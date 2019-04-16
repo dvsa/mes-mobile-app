@@ -47,7 +47,7 @@ describe('vehicle checks reducer', () => {
     expect(result.showMeQuestionDescription).toBe('desc');
   });
 
-  it('it should update the question details show me question is selected', () => {
+  it('it should update the show me question details', () => {
     const newQuestionPayload = {
       showMeQuestionCode: 'S1',
       showMeQuestionDescription: 'desc',
