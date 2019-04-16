@@ -36,6 +36,7 @@ import {
   D255Yes,
   D255No,
   CandidateDescriptionChanged,
+  WeatherConditionsChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -53,6 +54,7 @@ import { PersistTests } from '../../modules/tests/tests.actions';
 import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -320,6 +322,10 @@ export class OfficePage extends BasePageComponent {
   }
   d255No(): void {
     this.store$.dispatch(new D255No());
+  }
+
+  weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
+    this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
   }
 
   private createToast = (errorMessage: string) => {

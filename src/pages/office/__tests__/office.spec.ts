@@ -21,7 +21,9 @@ import {
   IdentificationUsedChanged,
   D255Yes,
   D255No,
+  WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -84,6 +86,14 @@ describe('OfficePage', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    describe('weatherConditionsChanged', () => {
+      it('should dispatch a weather conditions changed action with the weather condition values', () => {
+        const conditions: WeatherConditions[] = ['Showers'];
+        component.weatherConditionsChanged(conditions);
+        expect(store$.dispatch).toHaveBeenCalledWith(new WeatherConditionsChanged(conditions));
+      });
     });
   });
 
