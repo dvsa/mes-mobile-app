@@ -39,7 +39,7 @@ export enum fullCompetencyLabels  {
     pedestrianCrossings  = 'Pedestrian crossings',
     positionNormalStops  = 'Position/normal stop',
     awarenessPlanning  = 'Awareness planning',
-    outcomeControlledStop = 'Controlled Stop',
+    outcomeControlledStop = 'Controlled stop',
   }
 
 export type FaultCount = { name: string, count: number };
