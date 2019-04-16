@@ -43,3 +43,4 @@ export enum fullCompetencyLabels  {
   }
 
 export type FaultCount = { propertyName: string, name: string, count: number };
+export type SeriousFaultsContainer = { propertyName: string, name: string };

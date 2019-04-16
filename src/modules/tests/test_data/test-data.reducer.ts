@@ -87,12 +87,28 @@ export function testDataReducer(
           [action.payload]: true,
         },
       };
+    case testDataActions.ADD_SERIOUS_FAULT_COMMENT:
+      return {
+        ...state,
+        seriousFaults: {
+          ...state.seriousFaults,
+          [action.competencyName]: action.comment,
+        },
+      };
     case testDataActions.ADD_DANGEROUS_FAULT:
       return {
         ...state,
         dangerousFaults: {
           ...state.dangerousFaults,
           [action.payload]: true,
+        },
+      };
+    case testDataActions.ADD_DANGEROUS_FAULT_COMMENT:
+      return {
+        ...state,
+        dangerousFaults: {
+          ...state.dangerousFaults,
+          [action.competencyName]: action.comment,
         },
       };
     case testDataActions.REMOVE_DRIVING_FAULT:

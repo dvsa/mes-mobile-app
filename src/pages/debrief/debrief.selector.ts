@@ -1,7 +1,8 @@
 import { forOwn } from 'lodash';
 import { SeriousFaults, DrivingFaults, DangerousFaults, TestData } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
-import { FaultCount, fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
+import { FaultCount, fullCompetencyLabels, SeriousFaultsContainer }
+ from '../../shared/constants/competencies/catb-competencies';
 
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];
@@ -42,6 +43,48 @@ export const displayDrivingFaultComments = (data: TestData) : boolean => {
   return drivingFaultCount > 15;
 };
 
-export const getDrivingFaultComment = (faults: DrivingFaults, competency: string): string => {
+/**
+ * @param faults
+ *
+ * Returns a container of array holding the propertyName and fullCompetencyLabel for each dangerous
+ * fault recorded against a candidate.
+ *
+ * Is used to populate properties in dangerous-fault-comment.html for the entry of comments
+ * relating to each dangerous fault.
+ */
+export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContainer[] => {
+  const faultsEncountered: SeriousFaultsContainer[] = [];
+  forOwn(faults, (value, key) => {
+    if (value && !key.endsWith('Comments')) {
+      const label = key as keyof typeof competencyLabels;
+      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label] });
+    }
+  });
+  return faultsEncountered;
+};
+
+/**
+ * @param faults
+ *
+ * Returns a container of array holding the propertyName and fullCompetencyLabel for each serious
+ * fault recorded against a candidate.
+ *
+ * Is used to populate properties in serious-fault-comment.html for the entry of comments
+ * relating to each dangerous fault.
+ */
+export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[] => {
+  const faultsEncountered: SeriousFaultsContainer[] = [];
+  forOwn(faults, (value, key) => {
+    if (value && !key.endsWith('Comments')) {
+      const label = key as keyof typeof competencyLabels;
+      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label] });
+    }
+  });
+  return faultsEncountered;
+};
+
+export const getDrivingFaultComment = (
+  faults: DrivingFaults | DangerousFaults | SeriousFaults, competency: string,
+  ): string => {
   return faults[competency] || '';
 };

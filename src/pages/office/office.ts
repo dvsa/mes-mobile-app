@@ -1,12 +1,11 @@
-import { Component, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController, Toast } from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, ToastController, Toast, Keyboard } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
-  OfficeViewAddDangerousFaultComment,
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -60,11 +59,12 @@ import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import {
-  getSeriousOrDangerousFaults,
   getDrivingFaults,
   displayDrivingFaultComments,
+  getDangerousFaults,
+  getSeriousFaults,
 } from '../debrief/debrief.selector';
-import { FaultCount } from '../../shared/constants/competencies/catb-competencies';
+import { FaultCount, SeriousFaultsContainer } from '../../shared/constants/competencies/catb-competencies';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
@@ -90,11 +90,12 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<FaultCount[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
+  dangerousFaults$: Observable<SeriousFaultsContainer[]>;
+  seriousFaults$: Observable<SeriousFaultsContainer[]>;
 }
 
 @IonicPage()
@@ -107,16 +108,17 @@ export class OfficePage extends BasePageComponent {
   form: FormGroup;
   toast: Toast;
   drivingFaultCtrl: String = 'drivingFaultCtrl';
+  seriousFaultCtrl: String = 'seriousFaultCtrl';
+  dangerousFaultCtrl: String = 'dangerousFaultCtrl';
 
   @ViewChild('additionalInformationInput')
   additionalInformationInput: ElementRef;
 
-  @ViewChildren('dangerousFaultComment')
-  dangerousFaultComment: QueryList<ElementRef>;
-
   inputSubscriptions: Subscription[] = [];
   storeSubscription: Subscription;
   drivingFaultSubscription: Subscription;
+  dangerousFaultSubscription: Subscription;
+  seriousFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
@@ -130,6 +132,7 @@ export class OfficePage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     private weatherConditionProvider: WeatherConditionProvider,
     public questionProvider: QuestionProvider,
+    public keyboard: Keyboard,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -226,7 +229,11 @@ export class OfficePage extends BasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
+        map(data => getDangerousFaults(data.dangerousFaults)),
+      ),
+      seriousFaults$: currentTest$.pipe(
+        select(getTestData),
+        map(data => getSeriousFaults(data.seriousFaults)),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
@@ -271,12 +278,16 @@ export class OfficePage extends BasePageComponent {
       ),
     ];
 
-  }
+    this.dangerousFaultSubscription = this.pageState.dangerousFaults$.subscribe((dangerousFault) => {
+      if (dangerousFault) {
+        this.getDangerousFaultCtrls();
+      }
+    });
 
-  ngAfterViewInit(): void {
-    this.dangerousFaultComment.forEach((comment) => {
-      this.inputSubscriptions
-        .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
+    this.seriousFaultSubscription = this.pageState.seriousFaults$.subscribe((seriousFault) => {
+      if (seriousFault) {
+        this.getSeriousFaultCtrls();
+      }
     });
   }
 
@@ -284,6 +295,8 @@ export class OfficePage extends BasePageComponent {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
     this.drivingFaultSubscription.unsubscribe();
     this.storeSubscription.unsubscribe();
+    this.dangerousFaultSubscription.unsubscribe();
+    this.seriousFaultSubscription.unsubscribe();
   }
 
   popToRoot() {
@@ -406,4 +419,25 @@ export class OfficePage extends BasePageComponent {
       });
     });
   }
+
+  getDangerousFaultCtrls(): void {
+    this.pageState.dangerousFaults$.forEach((fault) => {
+      fault.forEach((faultIndex) => {
+        this.form.addControl(
+          this.dangerousFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
+          new FormControl('', Validators.required));
+      });
+    });
+  }
+
+  getSeriousFaultCtrls(): void {
+    this.pageState.seriousFaults$.forEach((fault) => {
+      fault.forEach((faultIndex) => {
+        this.form.addControl(
+          this.seriousFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
+          new FormControl('', Validators.required));
+      });
+    });
+  }
+
 }

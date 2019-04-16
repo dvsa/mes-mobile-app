@@ -11,7 +11,12 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { ToggleETA, TogglePlanningEco, AddDangerousFault } from '../../../modules/tests/test_data/test-data.actions';
+import {
+  ToggleETA,
+  TogglePlanningEco,
+  AddDangerousFault,
+  AddSeriousFault,
+} from '../../../modules/tests/test_data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import {
@@ -166,14 +171,21 @@ describe('OfficePage', () => {
     });
     it('should not display dangerous fault comment textbox if there are not any', () => {
       fixture.detectChanges();
-      component.ngAfterViewInit();
       expect(fixture.debugElement.query(By.css('#dangerousFaultComment'))).toBeNull();
     });
     it('should display dangerous fault comment textbox if there are any', () => {
       store$.dispatch(new AddDangerousFault(Competencies.judgementCrossing));
       fixture.detectChanges();
-      component.ngAfterViewInit();
       expect(fixture.debugElement.query(By.css('#dangerousFaultComment'))).toBeDefined();
+    });
+    it('should not display serious fault comment textbox if there are not any', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeNull();
+    });
+    it('should display serious fault comment textbox if there are any', () => {
+      store$.dispatch(new AddSeriousFault(Competencies.judgementOvertaking));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
     });
     describe('deferring the write up', () => {
       it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {

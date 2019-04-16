@@ -1,28 +1,30 @@
-import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getDrivingFaultComment } from '../../../debrief/debrief.selector';
 import { map } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
+import { getDrivingFaultComment } from '../../../debrief/debrief.selector';
 import { Subscription } from 'rxjs/Subscription';
-import { AddDrivingFaultComment } from '../../../../modules/tests/test_data/test-data.actions';
+import { AddSeriousFaultComment } from '../../../../modules/tests/test_data/test-data.actions';
 import { InputSubscriptionActionDispatcher } from '../../../../shared/classes/input-area-action-dispatcher';
 
-interface DrivingFaultCommentComponentState {
+interface SeriousFaultCommentComponentState {
   competencyComment$: Observable<string>;
 }
 
 @Component({
-  selector: 'driving-fault-comment',
-  templateUrl: 'driving-fault-comment.html',
+  selector: 'serious-fault-comment',
+  templateUrl: 'serious-fault-comment.html',
 })
-export class DrivingFaultCommentComponent extends InputSubscriptionActionDispatcher implements OnInit {
-  pageState: DrivingFaultCommentComponentState;
+export class SeriousFaultCommentComponent extends InputSubscriptionActionDispatcher implements OnInit {
+  pageState: SeriousFaultCommentComponentState;
+
   @Input()
   parentForm: FormGroup;
+
   @Input()
   invalidIndicator: boolean;
 
@@ -33,12 +35,10 @@ export class DrivingFaultCommentComponent extends InputSubscriptionActionDispatc
   competency: string;
 
   @Input()
-  faultCount: number;
-
-  @Input()
   faultName: string;
-  @ViewChild('drivingFaultComment')
-  drivingFaultComment: ElementRef;
+
+  @ViewChild('seriousFaultComment')
+  seriousFaultComment: ElementRef;
 
   inputSubscription$: Subscription;
 
@@ -54,18 +54,19 @@ export class DrivingFaultCommentComponent extends InputSubscriptionActionDispatc
 
     this.pageState = {
       competencyComment$: currentTest$.pipe(
-        map(data => getDrivingFaultComment(data.testData.drivingFaults, `${this.competency}Comments`)),
+        map(data => getDrivingFaultComment(data.testData.seriousFaults, `${this.competency}Comments`)),
       ),
     };
   }
 
   ngAfterViewInit(): void {
     this.inputSubscription$ = super.inputAreaChangeSubscriptionDispatchingAction(
-      this.drivingFaultComment,
-      this.drivingFaultComment.nativeElement.id,
-      AddDrivingFaultComment);
-
+      this.seriousFaultComment,
+      this.seriousFaultComment.nativeElement.id,
+      AddSeriousFaultComment,
+    );
   }
+
   ngOnDestroy(): void {
     this.inputSubscription$.unsubscribe();
   }
