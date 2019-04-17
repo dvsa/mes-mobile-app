@@ -41,7 +41,7 @@ platform :ios do
    build_ios_app(
     export_options: {
       provisioningProfiles: {
-        "uk.gov.dvsa.mobile-examiner" => "Mobile Examiner",
+        "uk.gov.dvsa.mobile-examiner-app" => "Mobile Examiner App",
       }
     },
     project:  "platforms/ios/mes-mobile-app.xcodeproj",
