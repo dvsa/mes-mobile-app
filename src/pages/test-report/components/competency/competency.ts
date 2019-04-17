@@ -26,6 +26,7 @@ import {
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -43,7 +44,7 @@ interface CompetencyState {
 export class CompetencyComponent {
 
   @Input()
-  competency: any;
+  competency: Competencies;
 
   touchStateDelay: number = 100;
 

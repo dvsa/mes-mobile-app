@@ -1,12 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
-import { map } from 'rxjs/operators';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { AddManoeuvreDrivingFault } from '../../../../modules/tests/test_data/test-data.actions';
-import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -14,8 +9,13 @@ import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.sel
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode  } from '../../test-report.selector';
 import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
-import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { Component, Input } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { map } from 'rxjs/operators';
+import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
 
 interface ManoeuvreCompetencyComponentState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -29,7 +29,7 @@ interface ManoeuvreCompetencyComponentState {
 export class ManoeuvreCompetencyComponent {
 
   @Input()
-  competency: Competencies;
+  competency: ManoeuvreCompetencies;
 
   touchStateDelay: number = 100;
 
