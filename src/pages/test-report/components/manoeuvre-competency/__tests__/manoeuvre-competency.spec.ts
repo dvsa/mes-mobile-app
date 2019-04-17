@@ -10,15 +10,20 @@ import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
 import { StartTest } from '../../../../journal/journal.actions';
 import { ManoeuvreCompetencyComponent } from '../manoeuvre-competency';
-import { AddManoeuvreDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
+import {
+  AddManoeuvreDrivingFault,
+  AddManoeuvreDangerousFault,
+  AddManoeuvreSeriousFault,
+} from '../../../../../modules/tests/test_data/test-data.actions';
 import { By } from '@angular/platform-browser';
 import { IonicModule } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { ToggleDangerousFaultMode, ToggleSeriousFaultMode } from '../../../test-report.actions';
 
-fdescribe('ManoeuvreCompetencyComponent', () => {
+describe('ManoeuvreCompetencyComponent', () => {
   let fixture: ComponentFixture<ManoeuvreCompetencyComponent>;
   let component: ManoeuvreCompetencyComponent;
   let store$: Store<StoreModel>;
@@ -126,6 +131,40 @@ fdescribe('ManoeuvreCompetencyComponent', () => {
         expect(result).toBe(true);
       });
     });
+
+    describe('addFault', () => {
+      it('should dispatch a ADD_MANOEUVRE_DANGEROUS_FAULT action if dangerous mode is active on press', () => {
+        component.competency = Competencies.outcomeReverseRightControl;
+        component.isDangerousMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDangerousFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+      });
+
+      it('should dispatch a ADD_MANOEUVRE_SERIOUS_FAULT action if serious mode is active on press', () => {
+        component.competency = Competencies.outcomeReverseRightControl;
+        component.isSeriousMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreSeriousFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+      });
+
+      it('should dispatch a ADD_MANOEUVRE_DRIVING_FAULT action if simple driving fault mode is active on press', () => {
+        component.competency = Competencies.outcomeReverseRightControl;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
+      });
+    });
+
     describe('AddManoeuvreDrivingFault', () => {
       it('should dispatch the correct action when the competency is a manoeuvre', () => {
         component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
