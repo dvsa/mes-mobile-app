@@ -64,8 +64,8 @@ interface OfficePageState {
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
-  debriefWitnessedYesRadioChecked$ : Observable<boolean>;
-  debriefWitnessedNoRadioChecked$ : Observable<boolean>;
+  debriefWitnessedYesRadioChecked$: Observable<boolean>;
+  debriefWitnessedNoRadioChecked$: Observable<boolean>;
   identificationLicenseRadioChecked$: Observable<boolean>;
   identificationPassportRadioChecked$: Observable<boolean>;
   independentDrivingSatNavRadioChecked$: Observable<boolean>;
@@ -156,7 +156,7 @@ export class OfficePage extends BasePageComponent {
       routeNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
-     ),
+      ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
@@ -169,25 +169,25 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getTrafficSignsUsed),
       ),
-      debriefWitnessedYesRadioChecked$ : currentTest$.pipe(
+      debriefWitnessedYesRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isDebriefWitnessed),
       ),
-      debriefWitnessedNoRadioChecked$ : currentTest$.pipe(
+      debriefWitnessedNoRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isDebriefUnwitnessed),
-     ),
+      ),
       identificationLicenseRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isIdentificationLicense),
-    ),
+      ),
       identificationPassportRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
         select(isIdentificationPassport),
-    ),
+      ),
       d255YesRadioChecked$: currentTest$.pipe(
-      select(getTestSummary),
-      select(isD255Yes),
+        select(getTestSummary),
+        select(isD255Yes),
       ),
       d255NoRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
@@ -236,7 +236,7 @@ export class OfficePage extends BasePageComponent {
   ngAfterViewInit(): void {
     this.dangerousFaultComment.forEach((comment) => {
       this.inputSubscriptions
-      .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
+        .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
     });
   }
 
@@ -261,10 +261,10 @@ export class OfficePage extends BasePageComponent {
    */
   inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
     const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      );
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;

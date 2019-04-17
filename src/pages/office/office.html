@@ -197,7 +197,8 @@
               <ion-row>
                 <ion-col>
                   <ion-select id="weather-selector" value="weather" multiple="true" okText="Submit" cancelText="Cancel"
-                    placeholder="Select weather conditions" formControlName="weatherConditionsCtrl" [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"
+                    placeholder="Select weather conditions" formControlName="weatherConditionsCtrl"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"
                     (ionChange)="weatherConditionsChanged($event)">
                     <ion-option [value]="weatherCondition.weatherConditionDescription"
                       *ngFor="let weatherCondition of weatherConditions">
