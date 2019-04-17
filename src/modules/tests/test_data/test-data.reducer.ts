@@ -33,6 +33,22 @@ export function testDataReducer(
           [action.payload]: 'DF',
         },
       };
+    case testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          [action.payload]: 'S',
+        },
+      };
+    case testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          [action.payload]: 'D',
+        },
+      };
     case testDataActions.ADD_DRIVING_FAULT:
       return {
         ...state,
