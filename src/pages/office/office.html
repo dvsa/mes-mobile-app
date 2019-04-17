@@ -8,46 +8,52 @@
 </ion-header>
 
 <ion-content>
-        <ion-row class="mes-full-width-card" id="candidate-section">
-            <ion-col col-60><h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2><h3  id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3></ion-col>
-            <ion-col col-36 class="align-col-right"><h2>{{pageState.startTime$ | async}}</h2><h3>test outcome:
-              <span [ngClass]="(pageState.isPassed$ | async) ? 'mes-green' : 'mes-red'">{{pageState.testOutcome$ | async}}</span></h3>
-            </ion-col>
-        </ion-row>
+  <ion-row class="mes-full-width-card" id="candidate-section">
+    <ion-col col-60>
+      <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
+      <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
+    </ion-col>
+    <ion-col col-36 class="align-col-right">
+      <h2>{{pageState.startTime$ | async}}</h2>
+      <h3>test outcome:
+        <span
+          [ngClass]="(pageState.isPassed$ | async) ? 'mes-green' : 'mes-red'">{{pageState.testOutcome$ | async}}</span>
+      </h3>
+    </ion-col>
+  </ion-row>
 
-<ion-card>
+  <ion-card>
     <ion-card-header>
       <h4>Test Summary</h4>
     </ion-card-header>
+    <ion-card-content class="card-content-ios" no-bounce>
+      <form [formGroup]="form">
+        <ion-grid class="grid">
 
+          <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"></div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Route number</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-32>
+                  <input #routeInput type="text" id="route" formControlName="routeNumberCtrl"
+                    class="vehicle-reg-input mes-data" numberonly
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"
+                    [value]="pageState.routeNumber$ | async">
+                </ion-col>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')">
+                  Enter the route number
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
 
-<ion-card-content class="card-content-ios" no-bounce>
-    <form [formGroup]="form">
-      <ion-grid class="grid">
-        <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"></div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Route number</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-32>
-                <input #routeInput type="text" id="route" formControlName="routeNumberCtrl"
-                  class="vehicle-reg-input mes-data" numberonly
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"
-                  [value]="pageState.routeNumber$ | async">
-              </ion-col>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')">
-                Enter the route number
-              </div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card">
+          <ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')">
             </div>
             <ion-col class="component-label" col-32 align-self-center>
@@ -78,160 +84,182 @@
               </ion-row>
             </ion-col>
           </ion-row>
-        <ion-row class="mes-validated-row mes-row-separator" id="candidate-description-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"></div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Physical description of the candidate</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-64>
-                <textarea #candidateDescriptionInput id="physical-description" formControlName="candidateDescriptionCtrl"
-                  class="vehicle-reg-input mes-data"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"
-                  [value]="pageState.candidateDescription$ | async">
+          <ion-row class="mes-validated-row mes-row-separator" id="candidate-description-card">
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')">
+            </div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Physical description of the candidate</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-64>
+                  <textarea #candidateDescriptionInput id="physical-description"
+                    formControlName="candidateDescriptionCtrl" class="vehicle-reg-input mes-data"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"
+                    [value]="pageState.candidateDescription$ | async">
+                        </textarea>
+                </ion-col>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')">
+                  Describe the candidate
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="mes-validated-row mes-row-separator" id="debrief-card">
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')">
+            </div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Debrief witnessed?</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-32>
+                  <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
+                    id="debrief-witnessed-yes" class="gds-radio-button"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefWitnessed()"
+                    [checked]="pageState.debriefWitnessedYesRadioChecked$ | async" value='Yes'>
+                  <label for="debrief-witnessed-yes" class="radio-label">Yes</label>
+                </ion-col>
+                <ion-col col-32>
+                  <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
+                    id="debrief-witnessed-no" class="gds-radio-button"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefUnwitnessed()"
+                    [checked]="pageState.debriefWitnessedNoRadioChecked$ | async" value='No'>
+                  <label for="debrief-witnessed-no" class="radio-label">No</label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')">
+                  Was the debrief witnessed?
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="mes-validated-row mes-row-separator" id="identification-card">
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')">
+            </div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Identification</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-32>
+                  <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
+                    id="identification-license" class="gds-radio-button"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationLicence()"
+                    [checked]="pageState.identificationLicenseRadioChecked$ | async" value='Licence'>
+                  <label for="identification-license" class="radio-label">Licence</label>
+                </ion-col>
+                <ion-col col-32>
+                  <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
+                    id="identification-passport" class="gds-radio-button"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationPassport()"
+                    [checked]="pageState.identificationPassportRadioChecked$ | async" value='Passport'>
+                  <label for="identification-passport" class="radio-label">Passport</label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')">
+                  Select the proof of identity
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')"></div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Show me question</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-select (ionChange)="showMeQuestionChanged($event)" placeholder="Select a question"
+                  id="show-me-selector" [(ngModel)]="showMeQuestion" okText="Submit" cancelText="Cancel"
+                  formControlName="showMeQuestionCtrl">
+                  <ion-option [value]="showMeQuestion" *ngFor="let showMeQuestion of showMeQuestions">
+                    {{showMeQuestion.showMeQuestionCode}} - {{showMeQuestion.showMeQuestionShortName}}
+                  </ion-option>
+                </ion-select>
+              </ion-row>
+              <ion-row class="validation-message-row" align-it ems-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')">
+                    Select the show me question
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
+            <div class="validation-bar"></div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Tell me question</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-64 class="mes-data">{{pageState.tellMeQuestionText$ | async}}</ion-col>
+              </ion-row>
+              <ion-row class="spacing-row"></ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="mes-validated-row mes-row-separator" id="d255-card">
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')">
+            </div>
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>D255?</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-32>
+                  <input type="radio" formControlName="d255Ctrl" name="d255Ctrl" id="d255-yes" class="gds-radio-button"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="d255Yes()"
+                    [checked]="pageState.d255YesRadioChecked$ | async" value='Yes'>
+                  <label for="d255-yes" class="radio-label">Yes</label>
+                </ion-col>
+                <ion-col col-32>
+                  <input type="radio" formControlName="d255Ctrl" name="d255Ctrl" id="d255-no" class="gds-radio-button"
+                    [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="d255No()"
+                    [checked]="pageState.d255NoRadioChecked$ | async" value='No'>
+                  <label for="d255-no" class="radio-label">No</label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')">
+                  Select D255
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="mes-component-row mes-row-separator" id="additional-information-card">
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Additional information (optional)</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-32>
+                  <textarea #additionalInformationInput id="additional-information" class="mes-data"
+                    [value]="pageState.additionalInformation$ | async">
                 </textarea>
-              </ion-col>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')">
-                Describe the candidate
-              </div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="mes-validated-row mes-row-separator" id="debrief-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')">
-          </div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Debrief witnessed?</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-32>
-                <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
-                  id="debrief-witnessed-yes" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefWitnessed()"
-                  [checked]="pageState.debriefWitnessedYesRadioChecked$ | async" value='Yes'>
-                <label for="debrief-witnessed-yes" class="radio-label">Yes</label>
-              </ion-col>
-              <ion-col col-32>
-                <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
-                  id="debrief-witnessed-no" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefUnwitnessed()"
-                  [checked]="pageState.debriefWitnessedNoRadioChecked$ | async" value='No'>
-                <label for="debrief-witnessed-no" class="radio-label">No</label>
-              </ion-col>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')">
-                Was the debrief witnessed?
-              </div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="mes-validated-row mes-row-separator" id="identification-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')">
-          </div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Identification</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-32>
-                <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
-                  id="identification-license" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationLicence()"
-                  [checked]="pageState.identificationLicenseRadioChecked$ | async" value='Licence'>
-                <label for="identification-license" class="radio-label">Licence</label>
-              </ion-col>
-              <ion-col col-32>
-                <input type="radio" formControlName="identificationCtrl" name="identificationCtrl"
-                  id="identification-passport" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')" (click)="identificationPassport()"
-                  [checked]="pageState.identificationPassportRadioChecked$ | async" value='Passport'>
-                <label for="identification-passport" class="radio-label">Passport</label>
-              </ion-col>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')">
-                Select the proof of identity
-              </div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-
-        <!-- TODO this may just be a text output not an input so change this row to remove validation etc -->
-        <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
-          <div class="validation-bar"></div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Tell me question</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-64 class="mes-data">{{pageState.tellMeQuestionText$ | async}}</ion-col>
-            </ion-row>
-            <ion-row class="spacing-row"></ion-row>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="mes-validated-row mes-row-separator" id="d255-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')">
-          </div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>D255?</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-32>
-                <input type="radio" formControlName="d255Ctrl" name="d255Ctrl" id="d255-yes" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="d255Yes()"
-                  [checked]="pageState.d255YesRadioChecked$ | async" value='Yes'>
-                <label for="d255-yes" class="radio-label">Yes</label>
-              </ion-col>
-              <ion-col col-32>
-                <input type="radio" formControlName="d255Ctrl" name="d255Ctrl" id="d255-no" class="gds-radio-button"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')" (click)="d255No()"
-                  [checked]="pageState.d255NoRadioChecked$ | async" value='No'>
-                <label for="d255-no" class="radio-label">No</label>
-              </ion-col>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('d255Ctrl')">
-                Select D255
-              </div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="mes-component-row mes-row-separator" id="additional-information-card">
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Additional information (optional)</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-32>
-                <textarea #additionalInformationInput  id="additional-information" class="mes-data"
-                  [value]="pageState.additionalInformation$ | async">
-                </textarea>
-              </ion-col>
-            </ion-row>
-            <ion-row class="spacing-row"></ion-row>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </form>
-</ion-card-content>
-</ion-card>
-<ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
+                </ion-col>
+              </ion-row>
+              <ion-row class="spacing-row"></ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-start class="mes-data">
@@ -247,25 +275,25 @@
   </ion-card>
 
   <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async)">
-      <ion-card-content>
-        <ion-grid>
-          <ion-row align-items-start class="mes-data">
-            <ion-col col-34>
-              <h4 class="fault-heading">ECO</h4>
-            </ion-col>
-            <ion-col align-self-start>
-              <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row align-items-start class="mes-data">
+          <ion-col col-34>
+            <h4 class="fault-heading">ECO</h4>
+          </ion-col>
+          <ion-col align-self-start>
+            <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
-<ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
-  <ion-card-header>
-    <h4>Dangerous defects</h4>
-  </ion-card-header>
-  <ion-card-content>
+  <ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
+    <ion-card-header>
+      <h4>Dangerous defects</h4>
+    </ion-card-header>
+    <ion-card-content>
       <ion-row class="mes-component-row mes-row-separator" id="dangerous-commentary-label"
         *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)">
         <ion-col class="component-label" align-self-center col-1>
@@ -278,24 +306,25 @@
           <ion-row class="spacing-row"></ion-row>
           <ion-row>
             <textarea #dangerousFaultComment id="dangerous-commentary-text" row="5" class="mes-data"
-            [value]="pageState.dangerousFaultComments$ | async">
+              [value]="pageState.dangerousFaultComments$ | async">
           </textarea>
           </ion-row>
           <ion-row class="spacing-row"></ion-row>
         </ion-col>
       </ion-row>
-  </ion-card-content>
-</ion-card>
-
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 <ion-footer>
   <ion-row class="mes-full-width-card">
     <ion-col col-36>
-      <button  class="defer-button" ion-button  (click)="defer()"><h3>Save and continue later</h3></button>
+      <button class="defer-button" ion-button (click)="defer()">
+        <h3>Save and continue later</h3>
+      </button>
     </ion-col>
     <ion-col col-48></ion-col>
     <ion-col col-12>
-      <button  class="mes-primary-button" ion-button (click)="onSubmit()">
+      <button class="mes-primary-button" ion-button (click)="onSubmit()">
         <h3>Submit</h3>
       </button>
     </ion-col>

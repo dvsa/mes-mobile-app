@@ -27,6 +27,12 @@ export function vehicleChecksReducer(
         ...state,
         tellMeQuestionOutcome: 'DF',
       };
+    case vehicleChecksActions.SHOW_ME_QUESTION_SELECTED:
+      return {
+        ...state,
+        showMeQuestionCode: action.showMeQuestion.showMeQuestionCode,
+        showMeQuestionDescription: action.showMeQuestion.showMeQuestionDescription,
+      };
     default:
       return state;
   }
