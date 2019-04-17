@@ -63,7 +63,11 @@ export function testSummaryReducer(
         ...state,
         D255: false,
       };
-
+    case testSummaryActions.WEATHER_CONDITIONS_CHANGED:
+      return {
+        ...state,
+        weatherConditions: action.weatherConditions,
+      };
     default:
       return state;
   }

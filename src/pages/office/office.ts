@@ -36,6 +36,7 @@ import {
   D255Yes,
   D255No,
   CandidateDescriptionChanged,
+  WeatherConditionsChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -57,6 +58,9 @@ import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
+import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
+import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -106,6 +110,7 @@ export class OfficePage extends BasePageComponent {
   dangerousFaultComment: QueryList<ElementRef>;
   inputSubscriptions: Subscription[] = [];
 
+  weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
   showMeQuestion: ShowMeQuestion;
 
@@ -116,10 +121,12 @@ export class OfficePage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private weatherConditionProvider: WeatherConditionProvider,
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
+    this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
   }
 
@@ -244,7 +251,7 @@ export class OfficePage extends BasePageComponent {
   ngAfterViewInit(): void {
     this.dangerousFaultComment.forEach((comment) => {
       this.inputSubscriptions
-      .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
+        .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDangerousFaultComment));
     });
   }
 
@@ -301,6 +308,7 @@ export class OfficePage extends BasePageComponent {
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
+      weatherConditionsCtrl: new FormControl([], [Validators.required]),
       showMeQuestionCtrl: new FormControl('', [Validators.required]),
     };
   }
@@ -334,6 +342,10 @@ export class OfficePage extends BasePageComponent {
   }
   d255No(): void {
     this.store$.dispatch(new D255No());
+  }
+
+  weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
+    this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
   }
 
   private createToast = (errorMessage: string) => {
