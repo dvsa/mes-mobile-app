@@ -10,8 +10,11 @@ import {
   ToggleLegalRequirement,
   ToggleETA,
   AddManoeuvreDrivingFault,
+  RemoveDrivingFault,
+  RemoveSeriousFault,
+  RemoveDangerousFault,
 } from '../test-data.actions';
-import { Competencies, LegalRequirements, ExaminerActions } from '../test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
   ManoeuvreTypes,
@@ -135,7 +138,7 @@ describe('TestDataReducer reducer', () => {
         // Act
         const result = testDataReducer(
           initialState,
-          new AddManoeuvreDrivingFault(Competencies.outcomeReverseParkRoadControl),
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
         );
         // Assert
         expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual('DF');
@@ -370,4 +373,65 @@ describe('TestDataReducer reducer', () => {
       expect(result.ETA.physical).toBeFalsy();
     });
   });
+
+  describe(('REMOVE_DRIVING_FAULT'), () => {
+    it('should remove a fault if the fault count is higher then 0', () => {
+      const state: TestData = {
+        drivingFaults: {
+          awarenessPlanning: 2,
+        },
+      };
+
+      const result = testDataReducer(state, new RemoveDrivingFault({
+        competency: Competencies.awarenessPlanning,
+        newFaultCount: 1,
+      }));
+
+      expect(result.drivingFaults.awarenessPlanning).toBe(1);
+    });
+
+    it('should remove the competency from the state if the fault count is 0', () => {
+      const state: TestData = {
+        drivingFaults: {
+          awarenessPlanning: 1,
+        },
+      };
+
+      const result = testDataReducer(state, new RemoveDrivingFault({
+        competency: Competencies.awarenessPlanning,
+        newFaultCount: 0,
+      }));
+
+      expect(result.drivingFaults.awarenessPlanning).toBeUndefined();
+    });
+  });
+
+  describe(('REMOVE_SERIOUS_FAULT'), () => {
+    it('should remove the competency from the state when a fault is removed', () => {
+      const state: TestData = {
+        seriousFaults: {
+          controlsGears: true,
+        },
+      };
+
+      const result = testDataReducer(state, new RemoveSeriousFault(Competencies.controlsGears));
+
+      expect(result.seriousFaults.controlsGears).toBeUndefined();
+    });
+  });
+
+  describe(('REMOVE_DANGEROUS_FAULT'), () => {
+    it('should remove the competency from the state when a fault is removed', () => {
+      const state: TestData = {
+        dangerousFaults: {
+          controlsGears: true,
+        },
+      };
+
+      const result = testDataReducer(state, new RemoveDangerousFault(Competencies.controlsGears));
+
+      expect(result.dangerousFaults.controlsGears).toBeUndefined();
+    });
+  });
+
 });

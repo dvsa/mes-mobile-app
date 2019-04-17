@@ -11,24 +11,25 @@ import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import {
   hasControlledStopBeenCompleted,
-  getDrivingFaultCount,
-  hasSeriousFault,
-  hasDangerousFault,
+ // getDrivingFaultCount,
+  // hasSeriousFault,
+  // hasDangerousFault,
 } from '../../../../modules/tests/test_data/test-data.selector';
 import {
   ToggleControlledStop,
-  AddDrivingFault,
-  AddSeriousFault,
-  AddDangerousFault,
-  RemoveDrivingFault,
-  RemoveSeriousFault,
-  RemoveDangerousFault,
+  // AddDrivingFault,
+  // AddSeriousFault,
+  // AddDangerousFault,
+  // RemoveDrivingFault,
+  // RemoveSeriousFault,
+  // RemoveDangerousFault,
   ControlledStopComplete,
+  AddManoeuvreDrivingFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
-import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
 
 interface ControlledStopComponentState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -36,9 +37,9 @@ interface ControlledStopComponentState {
   isDangerousMode$: Observable<boolean>;
 
   selectedControlledStop$: Observable<boolean>;
-  drivingFaultCount$: Observable<number>;
-  hasSeriousFault$: Observable<boolean>;
-  hasDangerousFault$: Observable<boolean>;
+  // drivingFaultCount$: Observable<number>;
+  // hasSeriousFault$: Observable<boolean>;
+  // hasDangerousFault$: Observable<boolean>;
 }
 
 @Component({
@@ -47,7 +48,7 @@ interface ControlledStopComponentState {
 })
 export class ControlledStopComponent implements OnInit {
 
-  competency: Competencies = Competencies.outcomeControlledStop;
+  competency: ManoeuvreCompetencies = ManoeuvreCompetencies.outcomeControlledStop;
 
   componentState: ControlledStopComponentState;
   subscription: Subscription;
@@ -98,35 +99,37 @@ export class ControlledStopComponent implements OnInit {
         select(getTestData),
         select(hasControlledStopBeenCompleted),
       ),
-      drivingFaultCount$: currentTest$.pipe(
-        select(getTestData),
-        select(testData => getDrivingFaultCount(testData, this.competency))),
-      hasSeriousFault$: currentTest$.pipe(
-        select(getTestData),
-        select(testData => hasSeriousFault(testData, this.competency))),
-      hasDangerousFault$: currentTest$.pipe(
-        select(getTestData),
-        select(testData => hasDangerousFault(testData, this.competency)),
-      ),
+      // TODO - This needs to use the get fault actions for Manoeuvres
+
+      // drivingFaultCount$: currentTest$.pipe(
+        // select(getTestData),
+        // select(testData => getDrivingFaultCount(testData, this.competency))),
+      // hasSeriousFault$: currentTest$.pipe(
+        // select(getTestData),
+        // select(testData => hasSeriousFault(testData, this.competency))),
+      // hasDangerousFault$: currentTest$.pipe(
+        // select(getTestData),
+        // select(testData => hasDangerousFault(testData, this.competency)),
+      // ),
     };
 
     const {
-      drivingFaultCount$,
+     // drivingFaultCount$,
       isRemoveFaultMode$,
       isSeriousMode$,
-      hasSeriousFault$,
+      // hasSeriousFault$,
       isDangerousMode$,
-      hasDangerousFault$,
+      // hasDangerousFault$,
       selectedControlledStop$,
     } = this.componentState;
 
     const merged$ = merge(
-      drivingFaultCount$.pipe(map(count => this.faultCount = count)),
+      // drivingFaultCount$.pipe(map(count => this.faultCount = count)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
-      hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
+      // hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
-      hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
+      // hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
       selectedControlledStop$.pipe(map(toggle => this.controlledStopCompleted = toggle)),
     );
 
@@ -166,24 +169,23 @@ export class ControlledStopComponent implements OnInit {
 
     if (this.isDangerousMode) {
       this.store$.dispatch(new ControlledStopComplete());
-      this.store$.dispatch(new AddDangerousFault(this.competency));
+      // TODO - Refactor to use Add Manoeuvres Dangerous Faults
+      // this.store$.dispatch(new AddDangerousFault(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
       this.store$.dispatch(new ControlledStopComplete());
-      this.store$.dispatch(new AddSeriousFault(this.competency));
+      // TODO - Refactor to use Add Manoeuvres Serious Fault
+      // this.store$.dispatch(new AddSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
       this.store$.dispatch(new ControlledStopComplete());
-      this.store$.dispatch(new AddDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-      }));
+      this.store$.dispatch(new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
     }
   }
 
@@ -194,23 +196,26 @@ export class ControlledStopComponent implements OnInit {
     }
 
     if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveDangerousFault(this.competency));
+      // TODO - Refactor to use Remove Maneourves Fault Action
+      // this.store$.dispatch(new RemoveDangerousFault(this.competency));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveSeriousFault(this.competency));
+      // TODO - Refactor to use Remove Maneourves Fault Action
+      // this.store$.dispatch(new RemoveSeriousFault(this.competency));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount - 1 : 0,
-      }));
+      // TODO - Refactor to use Remove Maneourves Fault Action
+      // this.store$.dispatch(new RemoveDrivingFault({
+        // competency: this.competency,
+        // newFaultCount: this.faultCount ? this.faultCount - 1 : 0,
+      // }));
     }
 
     this.store$.dispatch(new ToggleRemoveFaultMode());
