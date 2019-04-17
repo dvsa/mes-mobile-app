@@ -89,7 +89,7 @@ interface WaitingRoomToCarPageState {
   selector: 'page-waiting-room-to-car',
   templateUrl: 'waiting-room-to-car.html',
 })
-export class WaitingRoomToCarPage extends BasePageComponent{
+export class WaitingRoomToCarPage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
@@ -103,6 +103,9 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   showEyesightFailureConfirmation: boolean = false;
 
   tellMeQuestions: TellMeQuestion[];
+
+  subscription: Subscription;
+  eyesightFail: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -190,6 +193,16 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         map(isTellMeQuestionDrivingFault),
       ),
     };
+
+    // tremporary fix for mes-2066
+    // there a bigger issue of binding changed store values to the form validation
+    const { eyesightFailRadioChecked$ } = this.pageState;
+    this.subscription = eyesightFailRadioChecked$.subscribe((value) => {
+      if (!value) {
+        this.eyesightFail = null;
+      }
+    });
+
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
       this.inputChangeSubscriptionDispatchingAction(
@@ -243,10 +256,10 @@ export class WaitingRoomToCarPage extends BasePageComponent{
    */
   inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
     const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      );
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;

@@ -27,7 +27,7 @@
                 <label for="eyesight-pass" class="radio-label">Pass</label>
               </ion-col>
               <ion-col col-32>
-                <input type="radio" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-fail"
+                <input type="radio" [(ngModel)]="eyesightFail" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-fail"
                   class="gds-radio-button" [class.ng-invalid]="isCtrlDirtyAndInvalid('eyesightCtrl')"
                   (click)="eyesightFailPressed()" [checked]="pageState.eyesightFailRadioChecked$ | async" value="F">
                 <label for="eyesight-fail" class="radio-label">Fail</label>
