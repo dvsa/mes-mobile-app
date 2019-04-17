@@ -1,22 +1,44 @@
 controlled-stop {
 
   .tick-button {
+    @extend .mes-test-report-button;
     width: 56px;
+
+    padding: 1px 7px 2px;
 
     &.checked {
       border: 2px solid map-get($colors-gds, "gds-dark-green");
     }
     .tickwrapper {
       margin: auto;
+      display: flex;
+      justify-content: center;
     }
   }
 
-  .label-button {
-    width: 192px;
-    color: rgb(11, 12, 12);
+  .competency-button {
+    @extend .mes-test-report-button;
+    @extend .mes-test-report-button-ripple-effect;
 
-    .label {
-      width: 100%;
+    width: 188px;
+    margin-right: 3px;
+
+    padding-left: 5px;
+    padding-right: 5px;
+
+    driving-faults-badge {
+      width: 30px;
+    }
+
+    .fault-wrapper {
+      display: flex;
+      width: 30px;
+      justify-content: flex-end;
+      align-items: center;
+      
+      dangerous-fault-badge {
+        margin-left: -22px;
+      }
     }
   }
 }

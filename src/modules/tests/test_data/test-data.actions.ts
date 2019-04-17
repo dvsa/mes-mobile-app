@@ -18,6 +18,8 @@ export const TOGGLE_ETA = '[Eta] Toggle Eta';
 export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
 export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
 export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
+export const CONTROLLED_STOP_COMPLETE = '[ControlledStop] Controlled Stop Complete';
+export const CONTROLLED_STOP_PENDING = '[ControlledStop] Controlled Stop Pending';
 
 export class RecordManoeuvresSelection implements Action {
   constructor(public manoeuvre: ManoeuvreTypes) { }
@@ -75,6 +77,12 @@ export class TogglePlanningEco implements Action {
 export class ToggleControlledStop implements Action {
   readonly type = TOGGLE_CONTROLLED_STOP;
 }
+export class ControlledStopComplete implements Action {
+  readonly type = CONTROLLED_STOP_COMPLETE;
+}
+export class ControlledStopPending implements Action {
+  readonly type = CONTROLLED_STOP_PENDING;
+}
 
 export type Types =
   | RecordManoeuvresSelection
@@ -89,4 +97,6 @@ export type Types =
   | ToggleETA
   | ToggleControlEco
   | TogglePlanningEco
-  | ToggleControlledStop;
+  | ToggleControlledStop
+  | ControlledStopComplete
+  | ControlledStopPending;

@@ -120,7 +120,22 @@ export function testDataReducer(
           selectedControlledStop: !state.manoeuvres.selectedControlledStop,
         },
       };
-
+    case testDataActions.CONTROLLED_STOP_COMPLETE:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          selectedControlledStop: true,
+        },
+      };
+    case testDataActions.CONTROLLED_STOP_PENDING:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          selectedControlledStop: false,
+        },
+      };
     default:
       return state;
   }
