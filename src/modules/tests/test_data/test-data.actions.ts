@@ -34,12 +34,12 @@ export class AddManoeuvreDrivingFault implements Action {
 }
 
 export class AddManoeuvreSeriousFault implements Action {
-  constructor(public payload: Competencies) { }
+  constructor(public payload: ManoeuvreCompetencies) { }
   readonly type = ADD_MANOEUVRE_SERIOUS_FAULT;
 }
 
 export class AddManoeuvreDangerousFault implements Action {
-  constructor(public payload: Competencies) { }
+  constructor(public payload: ManoeuvreCompetencies) { }
   readonly type = ADD_MANOEUVRE_DANGEROUS_FAULT;
 }
 

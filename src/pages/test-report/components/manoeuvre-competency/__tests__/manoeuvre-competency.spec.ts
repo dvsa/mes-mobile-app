@@ -57,7 +57,7 @@ describe('ManoeuvreCompetencyComponent', () => {
 
   describe('DOM', () => {
     it('should display the correct driving fault badge with a count of 1', () => {
-      component.competency = Competencies.outcomeReverseRightControl;
+      component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
       component.manoeuvreCompetencyOutcome = 'DF';
       const result = component.hasDrivingFault();
       fixture.detectChanges();
@@ -134,7 +134,7 @@ describe('ManoeuvreCompetencyComponent', () => {
 
     describe('addFault', () => {
       it('should dispatch a ADD_MANOEUVRE_DANGEROUS_FAULT action if dangerous mode is active on press', () => {
-        component.competency = Competencies.outcomeReverseRightControl;
+        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
@@ -145,7 +145,7 @@ describe('ManoeuvreCompetencyComponent', () => {
       });
 
       it('should dispatch a ADD_MANOEUVRE_SERIOUS_FAULT action if serious mode is active on press', () => {
-        component.competency = Competencies.outcomeReverseRightControl;
+        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
@@ -156,7 +156,7 @@ describe('ManoeuvreCompetencyComponent', () => {
       });
 
       it('should dispatch a ADD_MANOEUVRE_DRIVING_FAULT action if simple driving fault mode is active on press', () => {
-        component.competency = Competencies.outcomeReverseRightControl;
+        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
