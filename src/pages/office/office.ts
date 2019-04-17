@@ -28,7 +28,6 @@ import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import {
   AdditionalInformationChanged,
-  RouteNumberChanged,
   IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
   DebriefWitnessed,
@@ -37,6 +36,7 @@ import {
   D255No,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
+  RouteNumberChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -97,8 +97,8 @@ export class OfficePage extends BasePageComponent {
   form: FormGroup;
   toast: Toast;
 
-  @ViewChild('routeInput')
-  routeInput: ElementRef;
+  // @ViewChild('routeInput')
+  // routeInput: ElementRef;
 
   @ViewChild('candidateDescriptionInput')
   candidateDescriptionInput: ElementRef;
@@ -237,9 +237,11 @@ export class OfficePage extends BasePageComponent {
       ),
     };
 
+    this.pageState.routeNumber$.subscribe();
+
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
-      this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
+      // this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
       this.inputChangeSubscriptionDispatchingAction(
         this.additionalInformationInput,
         AdditionalInformationChanged,
@@ -302,7 +304,7 @@ export class OfficePage extends BasePageComponent {
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      routeNumberCtrl: new FormControl('', [Validators.required]),
+      routeNumber: new FormControl(null, [Validators.required]),
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
       debriefWitnessedCtrl: new FormControl('', [Validators.required]),
       identificationCtrl: new FormControl('', [Validators.required]),
@@ -361,5 +363,10 @@ export class OfficePage extends BasePageComponent {
       closeButtonText: 'X',
     });
 
+  }
+
+  routeNumberChanged(newValue) {
+    console.log(`RN: ${newValue}`);
+    this.store$.dispatch(new RouteNumberChanged(newValue));
   }
 }

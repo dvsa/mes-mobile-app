@@ -5,9 +5,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { OfficeAnalyticsEffects } from './office.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
+import { RouteNumberComponent } from './components/route-number/route-number';
 @NgModule({
   declarations: [
     OfficePage,
+    RouteNumberComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
@@ -18,4 +20,4 @@ import { ComponentsModule } from '../../components/components.module';
     AnalyticsProvider,
   ],
 })
-export class OfficePageModule {}
+export class OfficePageModule { }
