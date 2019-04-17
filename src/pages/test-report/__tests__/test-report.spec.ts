@@ -23,6 +23,7 @@ import { LegalRequirementComponent } from '../components/legal-requirement/legal
 import { EtaComponent } from '../components/examiner-takes-action/eta';
 import { initialState } from '../../../modules/tests/test_data/test-data.reducer';
 import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
+import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -48,6 +49,7 @@ describe('TestReportPage', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
         MockComponent(ControlledStopComponent),
+        MockComponent(ManoeuvreCompetencyComponent),
       ],
       imports: [
         IonicModule,
