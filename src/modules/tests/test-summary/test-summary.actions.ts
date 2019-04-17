@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 
 export const CANDIDATE_DESCRIPTION_CHANGED = '[Test Summary] Candidate description changed';
 export const ADDITIONAL_INFORMATION_CHANGED = '[Test Summary] Additional Information changed';
@@ -9,6 +10,7 @@ export const IDENTIFICATION_USED_CHANGED = '[Test Summary] Identification used c
 export const INDEPENDENT_DRIVING_TYPE_CHANGED = '[Test Summary] Independent driving changed';
 export const D255_YES = '[Test Summary] D255 Yes';
 export const D255_NO = '[Test Summary] D255 No';
+export const WEATHER_CONDITIONS_CHANGED = '[Test Summary] Weather conditions changed';
 
 export class AdditionalInformationChanged implements Action {
   readonly type = ADDITIONAL_INFORMATION_CHANGED;
@@ -49,6 +51,11 @@ export class D255No implements Action {
   readonly type = D255_NO;
 }
 
+export class WeatherConditionsChanged implements Action {
+  readonly type = WEATHER_CONDITIONS_CHANGED;
+  constructor(public weatherConditions: WeatherConditions[]) {}
+}
+
 export type Types =
   | AdditionalInformationChanged
   | CandidateDescriptionChanged
@@ -58,4 +65,5 @@ export type Types =
   | IdentificationUsedChanged
   | IndependentDrivingTypeChanged
   | D255Yes
-  | D255No;
+  | D255No
+  | WeatherConditionsChanged;

@@ -1,3 +1,4 @@
+import { ShowMeQuestion } from './../../../providers/question/show-me-question.model';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
@@ -13,6 +14,9 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { ToggleETA, TogglePlanningEco, AddDangerousFault } from '../../../modules/tests/test_data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
+import {
+  ShowMeQuestionSelected,
+} from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   IndependentDrivingTypeChanged,
@@ -21,7 +25,9 @@ import {
   IdentificationUsedChanged,
   D255Yes,
   D255No,
+  WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -56,6 +62,10 @@ describe('OfficePage', () => {
                   ETA: {},
                   eco: {},
                 },
+                vehicleChecks: {
+                  showMeQuestionCode: 'S3',
+                  showMeQuestionDescription: '',
+                },
               },
             },
           }),
@@ -75,9 +85,9 @@ describe('OfficePage', () => {
         fixture = TestBed.createComponent(OfficePage);
         component = fixture.componentInstance;
         navCtrl = TestBed.get(NavController);
-        store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch').and.callThrough();
       });
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -85,9 +95,33 @@ describe('OfficePage', () => {
     it('should create', () => {
       expect(component).toBeDefined();
     });
+
+    describe('weatherConditionsChanged', () => {
+      it('should dispatch a weather conditions changed action with the weather condition values', () => {
+        const conditions: WeatherConditions[] = ['Showers'];
+        component.weatherConditionsChanged(conditions);
+        expect(store$.dispatch).toHaveBeenCalledWith(new WeatherConditionsChanged(conditions));
+      });
+    });
+    describe('selecting a show me question', () => {
+      it('should dispatch an action when show me question change handler is called', () => {
+        const question: ShowMeQuestion = {
+          showMeQuestionCode: 'S1',
+          showMeQuestionDescription: 'desc',
+          showMeQuestionShortName: 'name',
+        };
+        component.showMeQuestionChanged(question);
+        expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
+      });
+    });
   });
 
   describe('DOM', () => {
+    it('should display the description for stored show me question code', () => {
+      fixture.detectChanges();
+      const showMeElement: HTMLElement = fixture.debugElement.query(By.css('ion-select .select-text')).nativeElement;
+      expect(showMeElement.innerText).toEqual('S3 - Dipped headlights');
+    });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();

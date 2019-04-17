@@ -35,6 +35,7 @@ import { QuestionProvider } from '../providers/question/question';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TestPersistenceProvider } from '../providers/test-persistence/test-persistence';
 import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
+import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
 
 @NgModule({
   declarations: [App],
@@ -80,6 +81,7 @@ import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
     SecureStorage,
     DeviceAuthenticationProvider,
     QuestionProvider,
+    WeatherConditionProvider,
     Insomnia,
     TestPersistenceProvider,
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },

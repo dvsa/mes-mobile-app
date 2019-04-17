@@ -9,6 +9,7 @@ import {
   ToggleControlledStop,
   ToggleLegalRequirement,
   ToggleETA,
+  AddManoeuvreDrivingFault,
 } from '../test-data.actions';
 import { Competencies, LegalRequirements, ExaminerActions } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
@@ -113,6 +114,32 @@ describe('TestDataReducer reducer', () => {
       expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
       expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
       expect(result.manoeuvres.outcomeControlledStop).toBe('S');
+    });
+    it('should keep any outcome data from other manoeuvres when changing selected manoeuvre', () => {
+      initialState.manoeuvres = {
+        selectedReverseParkCarpark: true,
+        outcomeForwardParkControl: 'DF',
+      };
+      const result = testDataReducer(
+        initialState,
+        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+      );
+      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
+      expect(result.manoeuvres.outcomeForwardParkControl).toBe('DF');
+    });
+    describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
+      it('should add a "DF" outcome to the selected manoeuvre', () => {
+        // Arrange
+        initialState.manoeuvres = { selectedReverseParkRoad: true };
+        // Act
+        const result = testDataReducer(
+          initialState,
+          new AddManoeuvreDrivingFault(Competencies.outcomeReverseParkRoadControl),
+        );
+        // Assert
+        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual('DF');
+      });
     });
   });
   describe('ADD_DANGEROUS_FAULT', () => {

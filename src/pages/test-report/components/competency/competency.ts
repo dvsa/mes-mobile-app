@@ -13,6 +13,7 @@ import {
   RemoveDrivingFault,
   RemoveSeriousFault,
   RemoveDangerousFault,
+  AddManoeuvreDrivingFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
 import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
@@ -23,16 +24,20 @@ import {
   getDrivingFaultCount,
   hasSeriousFault,
   hasDangerousFault,
+  getManoeuvres,
 } from '../../../../modules/tests/test_data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
+import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-
+  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome>;
   drivingFaultCount$: Observable<number>;
   hasSeriousFault$: Observable<boolean>;
   hasDangerousFault$: Observable<boolean>;
@@ -61,14 +66,14 @@ export class CompetencyComponent {
   subscription: Subscription;
 
   isRemoveFaultMode: boolean = false;
-
   faultCount: number;
-
   isSeriousMode: boolean = false;
   hasSeriousFault: boolean = false;
-
   isDangerousMode: boolean = false;
   hasDangerousFault: boolean = false;
+  manoeuvreCompetencyOutcome: ManoeuvreOutcome;
+
+  isManoeuvreCompetency: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -79,6 +84,8 @@ export class CompetencyComponent {
       select(getTests),
       select(getCurrentTest),
     );
+
+    this.isManoeuvreCompetency = this.checkIfManoeuvre();
 
     this.competencyState = {
       isRemoveFaultMode$: this.store$.pipe(
@@ -100,6 +107,11 @@ export class CompetencyComponent {
         select(getTestData),
         select(testData => hasDangerousFault(testData, this.competency)),
       ),
+      manoeuvreCompetencyOutcome$: currentTest$.pipe(
+        select(getTestData),
+        select(getManoeuvres),
+        select(manoeuvres => manoeuvres[this.competency]),
+      ),
     };
 
     const {
@@ -109,6 +121,7 @@ export class CompetencyComponent {
       hasSeriousFault$,
       isDangerousMode$,
       hasDangerousFault$,
+      manoeuvreCompetencyOutcome$,
     } = this.competencyState;
 
     const merged$ = merge(
@@ -118,6 +131,7 @@ export class CompetencyComponent {
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
+      manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
     );
 
     this.subscription = merged$.subscribe();
@@ -129,7 +143,10 @@ export class CompetencyComponent {
     }
   }
 
-  getLabel = (): string => competencyLabels[this.competency];
+  checkIfManoeuvre = (): boolean => Object.keys(manoeuvreCompetencyLabels).includes(this.competency);
+
+  getLabel = (): string => this.checkIfManoeuvre() ?
+    manoeuvreCompetencyLabels[this.competency] : competencyLabels[this.competency]
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (wasPress) {
@@ -140,6 +157,18 @@ export class CompetencyComponent {
     } else {
       this.addFault(wasPress);
     }
+  }
+
+  dispatchAddDrivingFault(): void {
+    const competency = this.competency;
+
+    if (this.isManoeuvreCompetency) {
+      return this.store$.dispatch(new AddManoeuvreDrivingFault(competency));
+    }
+    return this.store$.dispatch(new AddDrivingFault({
+      competency,
+      newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
+    }));
   }
 
   addFault = (wasPress: boolean): void => {
@@ -164,10 +193,7 @@ export class CompetencyComponent {
     }
 
     if (wasPress) {
-      this.store$.dispatch(new AddDrivingFault({
-        competency: this.competency,
-        newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
-      }));
+      this.dispatchAddDrivingFault();
     }
   }
 
@@ -202,6 +228,8 @@ export class CompetencyComponent {
       this.store$.dispatch(new ToggleDangerousFaultMode());
     }
   }
+
+  getManoeuvreCompetencyOutcomeCount = (): number => this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF ? 1 : 0;
 
   /**
    * Manages the addition and removal of the ripple effect animation css class

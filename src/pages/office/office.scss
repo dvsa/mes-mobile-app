@@ -10,6 +10,9 @@ page-office {
     }
   }  
   ion-content {
+        ion-select{
+          width:452px;
+        }
         .mes-full-width-card {
           height: 120px;
           #continue-to-test-report {
@@ -57,9 +60,12 @@ page-office {
         padding-top: 1px
       }
     }
-    .fault-heading{
+    #weather-selector {
+      width: 85%;
+    }
+    .fault-heading {
       padding-left: 20px;
-  }
+    }
 }
 ion-footer {
   background-color: map-get($colors, "mes-white");

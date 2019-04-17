@@ -6,6 +6,7 @@ import { FaultPayload } from './test-data.models';
 import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
+export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
 export const ADD_DANGEROUS_FAULT = '[Competency] Add Dangerous Fault';
@@ -22,6 +23,12 @@ export class RecordManoeuvresSelection implements Action {
   constructor(public manoeuvre: ManoeuvreTypes) { }
   readonly type = RECORD_MANOEUVRES_SELECTION;
 }
+
+export class AddManoeuvreDrivingFault implements Action {
+  constructor(public payload: Competencies) { }
+  readonly type = ADD_MANOEUVRE_DRIVING_FAULT;
+}
+
 export class AddDrivingFault implements Action {
   constructor(public payload: FaultPayload) { }
   readonly type = ADD_DRIVING_FAULT;
@@ -71,6 +78,7 @@ export class ToggleControlledStop implements Action {
 
 export type Types =
   | RecordManoeuvresSelection
+  | AddManoeuvreDrivingFault
   | AddDrivingFault
   | AddSeriousFault
   | AddDangerousFault
