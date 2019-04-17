@@ -1,10 +1,8 @@
-<div class="legal-button" 
-  (tap)="toggleLegalRequirement()"
-  (press)="toggleLegalRequirement()"
-  (touchstart)="onTouchStart()"
-  (touchend)="onTouchEnd()"
+<competency-button class="legal-button"
+  [onTap]="toggleLegalRequirement"
+  [onPress]="toggleLegalRequirement"
+  [ripple]="false"
   [ngClass]="{
-    'activated': touchState,
     'complete': componentState.ticked$ | async
   }"
 >
@@ -14,4 +12,4 @@
   <div class="label">  
     <span class='competency-label'>{{ getLabel() }}</span>
   </div>
-</div>
+</competency-button>
