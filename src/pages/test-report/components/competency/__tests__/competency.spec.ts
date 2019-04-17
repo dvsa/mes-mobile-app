@@ -14,6 +14,7 @@ import {
   RemoveSeriousFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
+import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
@@ -34,6 +35,7 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyComponent,
+        MockComponent(CompetencyButtonComponent),
         MockComponent(DrivingFaultsBadgeComponent),
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
@@ -444,60 +446,48 @@ describe('CompetencyComponent', () => {
     });
   });
 
-  describe('Ripple effect', () => {
-    it('should have added no classes to the competency button', () => {
-      const competencyButton = fixture.debugElement.query(By.css('.competency-button'));
-      expect(competencyButton.nativeElement.className).toEqual('competency-button');
-    });
-
-    it('should add the activated class when the button is pressed', () => {
-      component.onTouchStart();
+  describe('Manoeuvre competency', () => {
+    it('should set the isManoeuvreCompetency flag to true when the competency is a manoeuvre competency', () => {
+      component.competency = Competencies.outcomeReverseRightControl;
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('activated');
-      expect(component.touchState).toBeTruthy();
+      expect(component.isManoeuvreCompetency).toBe(true);
     });
-
-    it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
-      component.onTouchEnd();
+    it('should set the isManoeuvreCompetency to false when the competency is not a manoeuvre competency', () => {
+      component.competency = Competencies.moveOffControl;
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
-
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('activated');
-          expect(component.touchState).toBeFalsy();
-          done();
-        },
-        component.touchStateDelay);
+      expect(component.isManoeuvreCompetency).toBe(false);
     });
-
-    it('should add the ripple effect animation css class', () => {
-      component.addOrRemoveFault(true);
+    it('should get the competency label from the correct object', () => {
+      component.competency = Competencies.outcomeReverseRightControl;
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('ripple-effect');
+      const result = component.getLabel();
+      const expected = 'Control';
+      expect(result).toEqual(expected);
     });
+    describe('AddManoeuvreDrivingFault', () => {
+      it('should dispatch the correct action when the competency is a manoeuvre', () => {
+        component.competency = Competencies.outcomeReverseRightControl;
+        fixture.detectChanges();
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        const dispatchAddDrivingFaultSpy = spyOn(component, 'dispatchAddDrivingFault').and.callThrough();
+        component.addOrRemoveFault(true);
 
-    it('should remove the ripple effect animation css class within the required time frame', (done) => {
-      component.addOrRemoveFault(true);
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
-
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('ripple-effect');
-          done();
-        },
-        component.rippleEffectAnimationDuration);
+        expect(dispatchAddDrivingFaultSpy).toHaveBeenCalledTimes(1);
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
+      });
+    });
+    describe('DOM', () => {
+      it('should display the correct driving fault badge with a count of 1', () => {
+        component.competency = Competencies.outcomeReverseRightControl;
+        component.isManoeuvreCompetency = true;
+        component.manoeuvreCompetencyOutcome = 'DF';
+        const result = component.getManoeuvreCompetencyOutcomeCount();
+        fixture.detectChanges();
+        const manoeuvreDrivingFaultsBadge = fixture.debugElement.query(By.css('.manoeuvre-driving-fault-badge'))
+        .componentInstance;
+        expect(manoeuvreDrivingFaultsBadge).toBeDefined();
+        expect(result).toEqual(1);
+      });
     });
   });
 });
