@@ -126,6 +126,7 @@ export class OfficePage extends BasePageComponent {
   drivingFaultComment: QueryList<ElementRef>;
 
   inputSubscriptions: Subscription[] = [];
+  drivingFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
@@ -275,6 +276,12 @@ export class OfficePage extends BasePageComponent {
       ),
     };
 
+    this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
+      if (display) {
+        this.getDrivingFaultCtrls();
+      }
+    });
+
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
       this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
@@ -285,9 +292,6 @@ export class OfficePage extends BasePageComponent {
       this.inputChangeSubscriptionDispatchingAction(this.candidateDescriptionInput, CandidateDescriptionChanged),
     ];
 
-    if (this.pageState.displayDrivingFaultComments$) {
-      this.getDrivingFaultCtrls();
-    }
   }
 
   ngAfterViewInit(): void {
@@ -299,10 +303,12 @@ export class OfficePage extends BasePageComponent {
       this.inputSubscriptions
       .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDrivingFaultComment));
     });
+
   }
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    this.drivingFaultSubscription.unsubscribe();
   }
 
   popToRoot() {
@@ -358,6 +364,7 @@ export class OfficePage extends BasePageComponent {
       showMeQuestionCtrl: new FormControl('', [Validators.required]),
     };
   }
+
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
@@ -365,6 +372,7 @@ export class OfficePage extends BasePageComponent {
   debriefWitnessed(): void {
     this.store$.dispatch(new DebriefWitnessed());
   }
+
   debriefUnwitnessed(): void {
     this.store$.dispatch(new DebriefUnwitnessed());
   }
@@ -372,6 +380,7 @@ export class OfficePage extends BasePageComponent {
   identificationLicence(): void {
     this.store$.dispatch(new IdentificationUsedChanged('Licence'));
   }
+
   identificationPassport(): void {
     this.store$.dispatch(new IdentificationUsedChanged('Passport'));
   }
@@ -379,6 +388,7 @@ export class OfficePage extends BasePageComponent {
   satNavUsed(): void {
     this.store$.dispatch(new IndependentDrivingTypeChanged('Sat nav'));
   }
+
   trafficSignsUsed(): void {
     this.store$.dispatch(new IndependentDrivingTypeChanged('Traffic signs'));
   }
@@ -386,6 +396,7 @@ export class OfficePage extends BasePageComponent {
   d255Yes(): void {
     this.store$.dispatch(new D255Yes());
   }
+
   d255No(): void {
     this.store$.dispatch(new D255No());
   }

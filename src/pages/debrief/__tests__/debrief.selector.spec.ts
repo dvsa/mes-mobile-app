@@ -1,5 +1,5 @@
-import { SeriousFaults, DangerousFaults, DrivingFaults } from '@dvsa/mes-test-schema/categories/B';
-import { getSeriousOrDangerousFaults, getDrivingFaults } from '../debrief.selector';
+import { SeriousFaults, DangerousFaults, DrivingFaults, TestData } from '@dvsa/mes-test-schema/categories/B';
+import { getSeriousOrDangerousFaults, getDrivingFaults, displayDrivingFaultComments } from '../debrief.selector';
 
 describe('debriefSelector', () => {
   const dangerousFaults: DangerousFaults = {};
@@ -56,4 +56,89 @@ describe('debriefSelector', () => {
     });
 
   });
+
+  describe('displayDrivingFaultComments', () => {
+    let localDangerousFaults: DangerousFaults = {};
+    let localSeriousFaults: SeriousFaults = {};
+    let localDrivingFaults: DrivingFaults = {};
+
+    it('should return false if there are less than 16 driving faults', () => {
+      localDangerousFaults = {};
+      localSeriousFaults = {};
+      localDrivingFaults.ancillaryControls = 1;
+      const testData: TestData = {
+        dangerousFaults: localDangerousFaults,
+        seriousFaults: localSeriousFaults,
+        drivingFaults: localDrivingFaults,
+      };
+      const result = displayDrivingFaultComments(testData);
+      expect(result).toBeFalsy();
+    });
+
+    it('should return true if there are more than 15 driving faults and no serious or dangerous faults', () => {
+      localDrivingFaults = {
+        controlsAccelerator: 2,
+        controlsClutch: 3,
+        controlsGears: 1,
+        controlsFootbrake: 4,
+        controlsParkingBrake: 3,
+        controlsSteering: 2,
+        precautions: 1,
+      };
+      const testData: TestData = {
+        dangerousFaults: localDangerousFaults,
+        seriousFaults: localSeriousFaults,
+        drivingFaults: localDrivingFaults,
+      };
+      const result = displayDrivingFaultComments(testData);
+      expect(result).toBeTruthy();
+    });
+
+    it('should return false if there are more than 15 driving faults and a serious fault', () => {
+      localDangerousFaults = {};
+      localDrivingFaults = {
+        controlsAccelerator: 2,
+        controlsClutch: 3,
+        controlsGears: 1,
+        controlsFootbrake: 4,
+        controlsParkingBrake: 3,
+        controlsSteering: 2,
+        precautions: 1,
+      };
+      localSeriousFaults.useOfSpeed = true;
+      localSeriousFaults.controlsSteering = true;
+      const testData: TestData = {
+        dangerousFaults: localDangerousFaults,
+        seriousFaults: localSeriousFaults,
+        drivingFaults: localDrivingFaults,
+      };
+      const result = displayDrivingFaultComments(testData);
+      expect(result).toBeFalsy();
+    });
+
+    it('should return false if there are more than 15 driving faults and a dangerous fault', () => {
+      localSeriousFaults = {};
+      localDrivingFaults = {
+        controlsAccelerator: 2,
+        controlsClutch: 3,
+        controlsGears: 1,
+        controlsFootbrake: 4,
+        controlsParkingBrake: 3,
+        controlsSteering: 2,
+        precautions: 1,
+      };
+      localDangerousFaults.useOfSpeed = true;
+      localDangerousFaults.controlsSteering = true;
+      const testData: TestData = {
+        dangerousFaults: localDangerousFaults,
+        seriousFaults: localSeriousFaults,
+        drivingFaults: localDrivingFaults,
+      };
+      const result = displayDrivingFaultComments(testData);
+      expect(result).toBeFalsy();
+
+    });
+
+  });
+
 });

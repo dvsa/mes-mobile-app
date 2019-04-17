@@ -22,14 +22,14 @@
     </ion-col>
   </ion-row>
 
-<form [formGroup]="form">
+  <form [formGroup]="form">
 
-<ion-card>
-    <ion-card-header>
-      <h4>Test Summary</h4>
-    </ion-card-header>
-    <ion-card-content class="card-content-ios" no-bounce>
-      <form [formGroup]="form">
+    <ion-card>
+      <ion-card-header>
+        <h4>Test Summary</h4>
+      </ion-card-header>
+
+      <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
           <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"></div>
@@ -54,33 +54,7 @@
             </ion-col>
           </ion-row>
 
-
-<ion-card-content class="card-content-ios" no-bounce>
-        <ion-grid class="grid">
-        <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"></div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Route number</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-32>
-                <input #routeInput type="text" id="route" formControlName="routeNumberCtrl"
-                  class="vehicle-reg-input mes-data" numberonly
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"
-                  [value]="pageState.routeNumber$ | async">
-              </ion-col>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')">
-                Enter the route number
-              </div>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card">
+          <ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')">
             </div>
             <ion-col class="component-label" col-32 align-self-center>
@@ -200,29 +174,6 @@
             </ion-col>
           </ion-row>
           <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
-            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')"></div>
-            <ion-col class="component-label" col-32 align-self-center>
-              <label>Show me question</label>
-            </ion-col>
-            <ion-col align-self-center>
-              <ion-row class="spacing-row"></ion-row>
-              <ion-row>
-                <ion-select (ionChange)="showMeQuestionChanged($event)" placeholder="Select a question"
-                  id="show-me-selector" [(ngModel)]="showMeQuestion" okText="Submit" cancelText="Cancel"
-                  formControlName="showMeQuestionCtrl">
-                  <ion-option [value]="showMeQuestion" *ngFor="let showMeQuestion of showMeQuestions">
-                    {{showMeQuestion.showMeQuestionCode}} - {{showMeQuestion.showMeQuestionShortName}}
-                  </ion-option>
-                </ion-select>
-              </ion-row>
-              <ion-row class="validation-message-row" align-it ems-center>
-                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')">
-                  Select the show me question
-                </div>
-              </ion-row>
-            </ion-col>
-          </ion-row>
-          <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
             <div class="validation-bar"></div>
             <ion-col class="component-label" col-32 align-self-center>
               <label>Tell me question</label>
@@ -236,19 +187,30 @@
             </ion-col>
           </ion-row>
 
-        <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
-          <div class="validation-bar"></div>
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Tell me question</label>
-          </ion-col>
-          <ion-col align-self-center>
-            <ion-row class="spacing-row"></ion-row>
-            <ion-row>
-              <ion-col col-64 class="mes-data">{{pageState.tellMeQuestionText$ | async}}</ion-col>
+          <ion-row class="mes-validated-row mes-row-separator" id="show-me-question-card">
+              <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')"></div>
+              <ion-col class="component-label" col-32 align-self-center>
+                <label>Show me question</label>
+              </ion-col>
+              <ion-col align-self-center>
+                <ion-row class="spacing-row"></ion-row>
+                <ion-row>
+                  <ion-select (ionChange)="showMeQuestionChanged($event)" placeholder="Select a question"
+                    id="show-me-selector" [(ngModel)]="showMeQuestion" okText="Submit" cancelText="Cancel"
+                    formControlName="showMeQuestionCtrl">
+                    <ion-option [value]="showMeQuestion" *ngFor="let showMeQuestion of showMeQuestions">
+                      {{showMeQuestion.showMeQuestionCode}} - {{showMeQuestion.showMeQuestionShortName}}
+                    </ion-option>
+                  </ion-select>
+                </ion-row>
+                <ion-row class="validation-message-row" align-it ems-center>
+                  <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')">
+                    Select the show me question
+                  </div>
+                </ion-row>
+              </ion-col>
             </ion-row>
-            <ion-row class="spacing-row"></ion-row>
-          </ion-col>
-        </ion-row>
+  
           <ion-row class="mes-validated-row mes-row-separator" id="weather-conditions-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"></div>
             <ion-col class="component-label" col-32 align-self-center>
@@ -303,136 +265,137 @@
             </ion-col>
           </ion-row>
 
-        <ion-row class="mes-component-row mes-row-separator" id="additional-information-card">
-          <ion-col class="component-label" col-32 align-self-center>
-            <label>Additional information (optional)</label>
+          <ion-row class="mes-component-row mes-row-separator" id="additional-information-card">
+            <ion-col class="component-label" col-32 align-self-center>
+              <label>Additional information (optional)</label>
+            </ion-col>
+            <ion-col align-self-center>
+              <ion-row class="spacing-row"></ion-row>
+              <ion-row>
+                <ion-col col-32>
+                  <textarea #additionalInformationInput id="additional-information" class="mes-data"
+                    [value]="pageState.additionalInformation$ | async">
+                </textarea>
+                </ion-col>
+              </ion-row>
+              <ion-row class="spacing-row"></ion-row>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row align-items-start class="mes-data">
+            <ion-col col-34>
+              <h4 class="fault-heading">ETA</h4>
+            </ion-col>
+            <ion-col align-self-start>
+              <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async)">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row align-items-start class="mes-data">
+            <ion-col col-34>
+              <h4 class="fault-heading">ECO</h4>
+            </ion-col>
+            <ion-col align-self-start>
+              <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
+      <ion-card-header>
+        <h4>Dangerous defects</h4>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row class="mes-component-row mes-row-separator" id="dangerous-commentary-label"
+          *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)">
+          <ion-col class="component-label" align-self-center col-1>
+            <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
           </ion-col>
-          <ion-col align-self-center>
+          <ion-col class="component-label" col-29 align-self-center>
+            <label class="fault-label">{{dangerousFault}}</label>
+          </ion-col>
+          <ion-col>
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
-              <ion-col col-32>
-                <textarea #additionalInformationInput  id="additional-information" class="mes-data"
-                  [value]="pageState.additionalInformation$ | async">
-                </textarea>
-              </ion-col>
+              <textarea #dangerousFaultComment id="dangerous-commentary-text" row="5" class="mes-data"
+                [value]="pageState.dangerousFaultComments$ | async">
+            </textarea>
             </ion-row>
             <ion-row class="spacing-row"></ion-row>
           </ion-col>
         </ion-row>
-      </ion-grid>
-</ion-card-content>
-</ion-card>
-<ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-start class="mes-data">
-          <ion-col col-34>
-            <h4 class="fault-heading">ETA</h4>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="driving-fault-with-commentary" *ngIf="pageState.displayDrivingFaultComments$ | async">
+      <ion-card-header>
+        <h4>Driving faults</h4>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row class="mes-validated-row mes-row-separator" id="driving-fault-commentary-label"
+          *ngFor="let drivingFault of (pageState.drivingFaults$ | async); let $i = index;">
+          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl'+$i)"></div>
+          <ion-col class="component-label" align-self-center col-1>
+            <div class="counter-icon">
+              <driving-faults-badge class="counter driving-faults" [count]="drivingFault.count"></driving-faults-badge>
+            </div>
           </ion-col>
-          <ion-col align-self-start>
-            <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
+          <ion-col class="component-label" col-29 align-self-center>
+            <label class="fault-label">{{drivingFault.name}}</label>
+          </ion-col>
+          <ion-col>
+            <ion-row class="spacing-row"></ion-row>
+            <ion-row>
+              <textarea #drivingFaultComment id="driving-fault-commentary-text" row="5" class="mes-data"
+                [formControlName]="'drivingFaultCtrl' + $i"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)"
+                [value]="pageState.drivingFaultComments$ | async">
+              </textarea>
+            </ion-row>
+            <ion-row class="validation-message-row" align-items-center>
+              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)">
+                Provide a comment
+              </div>
+            </ion-row>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async)">
-    <ion-card-content>
-      <ion-grid>
-        <ion-row align-items-start class="mes-data">
-          <ion-col col-34>
-            <h4 class="fault-heading">ECO</h4>
+    <ion-card id="driving-fault-no-commentary" *ngIf="!(pageState.displayDrivingFaultComments$ | async)">
+      <ion-card-header>
+        <h4>Driving faults</h4>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label"
+          *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">
+          <ion-col class="component-label" align-self-center col-1>
+            <div class="counter-icon">
+              <driving-faults-badge class="counter driving-faults" [count]="drivingFault.count"></driving-faults-badge>
+            </div>
           </ion-col>
-          <ion-col align-self-start>
-            <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
+          <ion-col class="component-label" col-58 align-self-center>
+            <label class="fault-label">{{drivingFault.name}}</label>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card id="dangerous-fault" *ngIf="(pageState.dangerousFaults$ | async).length > 0">
-    <ion-card-header>
-      <h4>Dangerous defects</h4>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row class="mes-component-row mes-row-separator" id="dangerous-commentary-label"
-        *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)">
-        <ion-col class="component-label" align-self-center col-1>
-          <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
-        </ion-col>
-        <ion-col class="component-label" col-29 align-self-center>
-          <label class="fault-label">{{dangerousFault}}</label>
-        </ion-col>
-        <ion-col>
-          <ion-row class="spacing-row"></ion-row>
-          <ion-row>
-            <textarea #dangerousFaultComment id="dangerous-commentary-text" row="5" class="mes-data"
-              [value]="pageState.dangerousFaultComments$ | async">
-            </textarea>
-          </ion-row>
-          <ion-row class="spacing-row"></ion-row>
-        </ion-col>
-      </ion-row>
-  </ion-card-content>
-</ion-card>
-
-<ion-card id="driving-fault-with-commentary" *ngIf="pageState.displayDrivingFaultComments$ | async">
-  <ion-card-header>
-    <h4>Driving faults</h4>
-  </ion-card-header>
-  <ion-card-content>
-      <ion-row class="mes-validated-row mes-row-separator" id="driving-fault-commentary-label"
-        *ngFor="let drivingFault of (pageState.drivingFaults$ | async); let $i = index;">
-        <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl'+$i)"></div>
-        <ion-col class="component-label" align-self-center col-1>
-          <div class="counter-icon">
-            <driving-faults-badge class="counter driving-faults" [count]="drivingFault.count"></driving-faults-badge>
-          </div>
-      </ion-col>
-        <ion-col class="component-label" col-29 align-self-center>
-          <label class="fault-label">{{drivingFault.name}}</label>
-        </ion-col>
-        <ion-col>
-          <ion-row class="spacing-row"></ion-row>
-          <ion-row>
-            <textarea #drivingFaultComment id="driving-fault-commentary-text" row="5" class="mes-data"
-            [formControlName]="'drivingFaultCtrl' + $i"
-            [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)"
-            [value]="pageState.drivingFaultComments$ | async">
-          </textarea>
-          </ion-row>
-          <ion-row class="validation-message-row" align-items-center>
-            <div class="validation-text"
-            [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)">
-            Provide a comment
-          </div>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-  </ion-card-content>
-</ion-card>
-
-<ion-card id="driving-fault-no-commentary" *ngIf="!(pageState.displayDrivingFaultComments$ | async)">
-  <ion-card-header>
-    <h4>Driving faults</h4>
-  </ion-card-header>
-  <ion-card-content>
-      <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label"
-        *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">
-        <ion-col class="component-label" align-self-center col-1>
-          <div class="counter-icon">
-            <driving-faults-badge class="counter driving-faults" [count]="drivingFault.count"></driving-faults-badge>
-          </div>
-      </ion-col>
-        <ion-col class="component-label" col-58 align-self-center>
-          <label class="fault-label">{{drivingFault.name}}</label>
-        </ion-col>
-      </ion-row>
-  </ion-card-content>
-</ion-card>
-</form>
+      </ion-card-content>
+    </ion-card>
+  </form>
 </ion-content>
 <ion-footer>
   <ion-row class="mes-full-width-card">
