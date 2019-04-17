@@ -44,10 +44,16 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../modules/tests/candidate/candidate.selector';
+import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
+import { QuestionProvider } from '../../providers/question/question';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
-import { getSelectedTellMeQuestionText } from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+import {
+  getSelectedTellMeQuestionText,
+  getShowMeQuestion,
+} from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+import { ShowMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
 import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -74,6 +80,7 @@ interface OfficePageState {
   d255NoRadioChecked$: Observable<boolean>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
+  showMeQuestion$: Observable<ShowMeQuestion>;
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
@@ -104,6 +111,8 @@ export class OfficePage extends BasePageComponent {
   inputSubscriptions: Subscription[] = [];
 
   weatherConditions: WeatherConditionSelection[];
+  showMeQuestions: ShowMeQuestion[];
+  showMeQuestion: ShowMeQuestion;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -113,10 +122,12 @@ export class OfficePage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private weatherConditionProvider: WeatherConditionProvider,
+    public questionProvider: QuestionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
+    this.showMeQuestions = questionProvider.getShowMeQuestions();
   }
 
   ionViewDidEnter(): void {
@@ -124,7 +135,6 @@ export class OfficePage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -197,6 +207,10 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getAdditionalInformation),
       ),
+      showMeQuestion$: currentTest$.pipe(
+        select(getVehicleChecks),
+        select(getShowMeQuestion),
+      ),
       tellMeQuestionText$: currentTest$.pipe(
         select(getVehicleChecks),
         select(getSelectedTellMeQuestionText),
@@ -224,6 +238,7 @@ export class OfficePage extends BasePageComponent {
     };
 
     this.inputSubscriptions = [
+      this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
       this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
       this.inputChangeSubscriptionDispatchingAction(
         this.additionalInformationInput,
@@ -281,6 +296,10 @@ export class OfficePage extends BasePageComponent {
     }
   }
 
+  showMeQuestionChanged(newShowMeQuestion): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(newShowMeQuestion));
+  }
+
   getFormValidation(): { [key: string]: FormControl } {
     return {
       routeNumberCtrl: new FormControl('', [Validators.required]),
@@ -290,6 +309,7 @@ export class OfficePage extends BasePageComponent {
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
       weatherConditionsCtrl: new FormControl([], [Validators.required]),
+      showMeQuestionCtrl: new FormControl('', [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
