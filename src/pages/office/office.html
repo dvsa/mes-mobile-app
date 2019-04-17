@@ -68,7 +68,7 @@
                     [checked]="pageState.independentDrivingSatNavRadioChecked$ | async" value='Sat nav'>
                   <label for="independent-driving-satnav" class="radio-label">Sat Nav</label>
                 </ion-col>
-                <ion-col col-32>
+                <ion-col>
                   <input type="radio" formControlName="independentDrivingCtrl" name="independentDrivingCtrl"
                     id="independent-driving-trafficsigns" class="gds-radio-button"
                     [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')" (click)="trafficSignsUsed()"
@@ -208,7 +208,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row class="mes-validated-row mes-row-separator" id="weather-conditions-card">
+          <ion-row class="mes-validated-row mes-row-separator" id="weather-conditions-card" nowrap>
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"></div>
             <ion-col class="component-label" col-32 align-self-center>
               <label>Weather conditions</label>
@@ -216,19 +216,21 @@
             <ion-col align-self-center>
               <ion-row class="spacing-row"></ion-row>
               <ion-row>
-                <ion-col>
-                  <ion-select id="weather-selector" value="weather" multiple="true" okText="Submit" cancelText="Cancel"
-                    placeholder="Select weather conditions" formControlName="weatherConditionsCtrl"
-                    [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"
-                    (ionChange)="weatherConditionsChanged($event)">
-                    <ion-option [value]="weatherCondition.weatherConditionDescription"
-                      *ngFor="let weatherCondition of weatherConditions">
-                      {{weatherCondition.weatherConditionNumber}} - {{weatherCondition.weatherConditionDescription}}
-                    </ion-option>
-                  </ion-select>
-                </ion-col>
+                <ion-select value="weather" multiple="true" okText="Submit" cancelText="Cancel"
+                  placeholder="Select weather conditions" formControlName="weatherConditionsCtrl"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"
+                  (ionChange)="weatherConditionsChanged($event)">
+                  <ion-option [value]="weatherCondition.weatherConditionDescription"
+                    *ngFor="let weatherCondition of weatherConditions">
+                    {{weatherCondition.weatherConditionNumber}} - {{weatherCondition.weatherConditionDescription}}
+                  </ion-option>
+                </ion-select>
               </ion-row>
-              <ion-row class="spacing-row"></ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')">
+                  Select weather conditions
+                </div>
+              </ion-row>
             </ion-col>
           </ion-row>
 
