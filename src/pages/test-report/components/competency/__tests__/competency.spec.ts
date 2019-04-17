@@ -237,7 +237,7 @@ describe('CompetencyComponent', () => {
           newFaultCount: 0,
         }));
       });
-      it('should dispatch a REMOVE_DRIVING_FAULT limit zero', () => {
+      it('should not dispatch a REMOVE_DRIVING_FAULT when limit is zero', () => {
         component.competency = Competencies.controlsSteering;
         component.faultCount = 0;
         component.isRemoveFaultMode = true;
@@ -245,7 +245,7 @@ describe('CompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDrivingFault({
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDrivingFault({
           competency: component.competency,
           newFaultCount: 0,
         }));

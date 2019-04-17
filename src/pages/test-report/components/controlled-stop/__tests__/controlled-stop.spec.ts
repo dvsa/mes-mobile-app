@@ -7,6 +7,7 @@ import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
+import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
 import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
@@ -31,6 +32,7 @@ describe('ControlledStopComponent', () => {
         MockComponent(DrivingFaultsBadgeComponent),
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
+        MockComponent(CompetencyButtonComponent),
       ],
       imports: [
         IonicModule,
@@ -438,95 +440,50 @@ describe('ControlledStopComponent', () => {
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(1);
     });
+
+    it('should pass the allow ripple value to the competency button component', () => {
+      fixture.detectChanges();
+      const competencyButton = fixture.debugElement.query(By.css('competency-button'))
+        .componentInstance as CompetencyButtonComponent;
+      component.allowRipple = false;
+
+      fixture.detectChanges();
+      expect(competencyButton.ripple).toBeFalsy(1);
+    });
   });
 
-  describe('Competency button effects', () => {
-    it('should have added no classes to the competency button', () => {
-      const competencyButton = fixture.debugElement.query(By.css('.competency-button'));
-      expect(competencyButton.nativeElement.className).toEqual('competency-button');
-    });
+  describe('Competency button ripple effects', () => {
 
-    it('should add the activated class when the button is pressed', () => {
-      component.onTouchStart('competency');
+    it('should allow the ripple effect when no faults exist', () => {
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
 
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('activated');
-      expect(component.touchState).toBeTruthy();
+      expect(component.allowRipple).toBeTruthy();
     });
 
-    it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
-      component.onTouchEnd('competency');
+    it('should not allow the ripple effect when faults do exist', () => {
+      component.onPress();
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
 
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('activated');
-          expect(component.touchState).toBeFalsy();
-          done();
-        },
-        component.touchStateDelay);
+      expect(component.allowRipple).toBeFalsy();
     });
 
-    it('should add the ripple effect animation css class', () => {
-      component.addOrRemoveFault(true);
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('ripple-effect');
-    });
-
-    it('should remove the ripple effect animation css class within the required time frame', (done) => {
-      component.addOrRemoveFault(true);
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
-
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('ripple-effect');
-          done();
-        },
-        component.rippleEffectAnimationDuration);
-    });
   });
 
   describe('Tick button effects', () => {
     it('should have added no classes to the tick button', () => {
-      const tickButton = fixture.debugElement.query(By.css('.tick-button'));
-      expect(tickButton.nativeElement.className).toEqual('tick-button');
-    });
+      const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
 
-    it('should add the activated class when the button is pressed', () => {
-      component.onTouchStart('tick');
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.tick-button'));
-
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('activated');
-      expect(component.touchStateTick).toBeTruthy();
+      expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick');
     });
 
-    it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
-      component.onTouchEnd('tick');
+    it('should have added a complete class to the tick button', () => {
+      component.toggleControlledStop();
+      const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
+
       fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.tick-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
-
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('activated');
-          expect(component.touchStateTick).toBeFalsy();
-          done();
-        },
-        component.touchStateDelay);
+      expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick checked');
     });
+
   });
 });
