@@ -28,6 +28,7 @@ import {
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { of } from 'rxjs/observable/of';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -229,6 +230,27 @@ describe('OfficePage', () => {
         d255NoRadio.triggerEventHandler('click', null);
         fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new D255No());
+      });
+    });
+
+    describe('driving fault commentary', () => {
+      it('should display the card with commentary fields when displayDrivingFaultComments is true', () => {
+        fixture.detectChanges();
+        component.pageState.displayDrivingFaultComments$ = of(true);
+        fixture.detectChanges();
+        const drivingFaultWithCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-with-commentary'));
+        const drivingFaultNoCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-no-commentary'));
+        expect(drivingFaultWithCommentary.length).toBe(1);
+        expect(drivingFaultNoCommentary.length).toBe(0);
+      });
+      it('should display the card with no commentary fields when displayDrivingFaultComments is false', () => {
+        fixture.detectChanges();
+        component.pageState.displayDrivingFaultComments$ = of(false);
+        fixture.detectChanges();
+        const drivingFaultWithCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-with-commentary'));
+        const drivingFaultNoCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-no-commentary'));
+        expect(drivingFaultWithCommentary.length).toBe(0);
+        expect(drivingFaultNoCommentary.length).toBe(1);
       });
     });
 
