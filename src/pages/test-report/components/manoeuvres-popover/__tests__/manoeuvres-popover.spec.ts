@@ -11,6 +11,7 @@ import { MockComponent } from 'ng-mocks';
 import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { By } from '@angular/platform-browser';
+import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
@@ -23,6 +24,7 @@ describe('ManoeuvresPopoverComponent', () => {
         ManoeuvresPopoverComponent,
         MockComponent(CompetencyComponent),
         MockComponent(DrivingFaultsBadgeComponent),
+        MockComponent(ManoeuvreCompetencyComponent),
       ],
       imports: [
         IonicModule,
