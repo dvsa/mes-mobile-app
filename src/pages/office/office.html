@@ -41,7 +41,7 @@
               <ion-row>
                 <ion-col col-32>
                   <input #routeInput type="text" id="route" formControlName="routeNumberCtrl"
-                    class="vehicle-reg-input mes-data" numberonly
+                    class="mes-data" numberonly
                     [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"
                     [value]="pageState.routeNumber$ | async">
                 </ion-col>
@@ -96,7 +96,7 @@
               <ion-row>
                 <ion-col col-64>
                   <textarea #candidateDescriptionInput id="physical-description"
-                    formControlName="candidateDescriptionCtrl" class="vehicle-reg-input mes-data"
+                    formControlName="candidateDescriptionCtrl" class="mes-data"
                     [class.ng-invalid]="isCtrlDirtyAndInvalid('candidateDescriptionCtrl')"
                     [value]="pageState.candidateDescription$ | async">
                           </textarea>
@@ -379,7 +379,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="driving-fault-no-commentary" *ngIf="!(pageState.displayDrivingFaultComments$ | async)">
+    <ion-card id="driving-fault-no-commentary" *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0">
       <ion-card-header>
         <h4>Driving faults</h4>
       </ion-card-header>
