@@ -173,7 +173,7 @@
             </ion-col>
           </ion-row>
           <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
-            <div class="validation-bar"></div>
+            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')"></div>
             <ion-col class="component-label" col-32 align-self-center>
               <label>Show me question</label>
             </ion-col>
@@ -190,7 +190,7 @@
               </ion-row>
               <ion-row class="validation-message-row" align-it ems-center>
                 <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')">
-                  Enter the show me question
+                    Select the show me question
                 </div>
               </ion-row>
             </ion-col>
