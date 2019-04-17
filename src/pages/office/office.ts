@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewChildren, QueryList, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, Toast } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -110,6 +110,8 @@ export class OfficePage extends BasePageComponent {
   toast: Toast;
   drivingFaultCtrl: String = 'drivingFaultCtrl';
 
+  @Input()
+  mesvalue: string;
   @ViewChild('routeInput')
   routeInput: ElementRef;
 
@@ -301,7 +303,10 @@ export class OfficePage extends BasePageComponent {
     });
     this.drivingFaultComment.forEach((comment) => {
       this.inputSubscriptions
-      .push(this.inputChangeSubscriptionDispatchingAction(comment, OfficeViewAddDrivingFaultComment));
+      .push(this.inputAreaChangeSubscriptionDispatchingAction(
+        comment,
+        this.mesvalue,
+        OfficeViewAddDrivingFaultComment));
     });
 
   }
@@ -334,6 +339,27 @@ export class OfficePage extends BasePageComponent {
     );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
+    return subscription;
+  }
+
+    /**
+   * Returns a subscription to the debounced changes of a particular input fields.
+   * Dispatches the provided action type to the store when a new value is yielded.
+   * @param inputRef The input to listen for changes on.
+   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
+   */
+  inputAreaChangeSubscriptionDispatchingAction(
+    inputRef: ElementRef,
+    propertyName: string,
+    actionType: any): Subscription {
+    console.log(`propertyname ${propertyName}`);
+    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
+    const subscription = changeStream$
+      .subscribe((newVal: string) => this.store$.dispatch(new actionType(propertyName, newVal)));
     return subscription;
   }
 

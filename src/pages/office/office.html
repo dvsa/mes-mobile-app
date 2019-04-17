@@ -363,7 +363,8 @@
           <ion-col>
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
-              <textarea #drivingFaultComment id="driving-fault-commentary-text" row="5" class="mes-data"
+              <textarea #drivingFaultComment [id]="drivingFault.propertyName" row="5" class="mes-data"
+                [attr.blah]="drivingFault.propertyName"
                 [formControlName]="'drivingFaultCtrl' + $i"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)"
                 [value]="pageState.drivingFaultComments$ | async">

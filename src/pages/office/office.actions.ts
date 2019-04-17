@@ -13,7 +13,7 @@ export class OfficeViewAddDangerousFaultComment implements Action {
 }
 export class OfficeViewAddDrivingFaultComment implements Action {
   readonly type = OFFICE_VIEW_ADD_DRIVING_FAULT_COMMENT;
-  constructor(public payload: string) {}
+  constructor(public propertyName, public payload: string) {}
 }
 
 export type OfficeActionTypes =

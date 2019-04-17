@@ -19,7 +19,8 @@ export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
   forOwn(faults, (value, key) => {
     if (value > 0) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ name: fullCompetencyLabels[label], count: value });
+      console.log(`key = ${key}`);
+      faultsEncountered.push({ propName: key, name: fullCompetencyLabels[label], count: value });
     }
   });
   return faultsEncountered.sort((a, b) => b.count - a.count);
