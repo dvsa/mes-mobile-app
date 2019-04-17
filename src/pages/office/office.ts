@@ -309,11 +309,12 @@ export class OfficePage extends BasePageComponent {
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
       weatherConditionsCtrl: new FormControl([], [Validators.required]),
-      showMeQuestionCtrl: new FormControl('', [Validators.required]),
+      showMeQuestionCtrl: new FormControl([], [Validators.required]),
     };
   }
+
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName] && this.form.get(controlName).dirty;
+    return this.form.controls[controlName].invalid && this.form.get(controlName).dirty;
   }
 
   debriefWitnessed(): void {
