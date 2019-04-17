@@ -97,6 +97,7 @@ export class OfficePage extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
+  drivingFaultCtrl: String = 'drivingFaultCtrl';
 
   @ViewChild('routeInput')
   routeInput: ElementRef;
@@ -260,6 +261,10 @@ export class OfficePage extends BasePageComponent {
       ),
       this.inputChangeSubscriptionDispatchingAction(this.candidateDescriptionInput, CandidateDescriptionChanged),
     ];
+
+    if (this.pageState.displayDrivingFaultComments$) {
+      this.getDrivingFaultCtrls();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -368,5 +373,15 @@ export class OfficePage extends BasePageComponent {
       closeButtonText: 'X',
     });
 
+  }
+
+  getDrivingFaultCtrls(): void {
+    this.pageState.drivingFaults$.forEach((fault) => {
+      fault.forEach((faultIndex) => {
+        this.form.addControl(
+            this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
+            new FormControl('', Validators.required));
+      });
+    });
   }
 }

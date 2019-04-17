@@ -15,6 +15,8 @@
             </ion-col>
         </ion-row>
 
+<form [formGroup]="form">
+
 <ion-card>
     <ion-card-header>
       <h4>Test Summary</h4>
@@ -22,8 +24,7 @@
 
 
 <ion-card-content class="card-content-ios" no-bounce>
-    <form [formGroup]="form">
-      <ion-grid class="grid">
+        <ion-grid class="grid">
         <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"></div>
           <ion-col class="component-label" col-32 align-self-center>
@@ -166,7 +167,6 @@
           </ion-col>
         </ion-row>
 
-        <!-- TODO this may just be a text output not an input so change this row to remove validation etc -->
         <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
           <div class="validation-bar"></div>
           <ion-col class="component-label" col-32 align-self-center>
@@ -228,7 +228,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </form>
 </ion-card-content>
 </ion-card>
 <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
@@ -292,8 +291,9 @@
     <h4>Driving faults</h4>
   </ion-card-header>
   <ion-card-content>
-      <ion-row class="mes-component-row mes-row-separator" id="driving-fault-commentary-label"
-        *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">
+      <ion-row class="mes-validated-row mes-row-separator" id="driving-fault-commentary-label"
+        *ngFor="let drivingFault of (pageState.drivingFaults$ | async); let $i = index;">
+        <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl'+$i)"></div>
         <ion-col class="component-label" align-self-center col-1>
           <div class="counter-icon">
             <driving-faults-badge class="counter driving-faults" [count]="drivingFault.count"></driving-faults-badge>
@@ -306,10 +306,17 @@
           <ion-row class="spacing-row"></ion-row>
           <ion-row>
             <textarea #drivingFaultComment id="driving-fault-commentary-text" row="5" class="mes-data"
+            [formControlName]="'drivingFaultCtrl' + $i"
+            [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)"
             [value]="pageState.drivingFaultComments$ | async">
           </textarea>
           </ion-row>
-          <ion-row class="spacing-row"></ion-row>
+          <ion-row class="validation-message-row" align-items-center>
+            <div class="validation-text"
+            [class.ng-invalid]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)">
+            Provide a comment
+          </div>
+          </ion-row>
         </ion-col>
       </ion-row>
   </ion-card-content>
@@ -333,7 +340,7 @@
       </ion-row>
   </ion-card-content>
 </ion-card>
-
+</form>
 </ion-content>
 <ion-footer>
   <ion-row class="mes-full-width-card">
