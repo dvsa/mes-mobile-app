@@ -11,7 +11,7 @@ import {
   ToggleETA,
   AddManoeuvreDrivingFault,
 } from '../test-data.actions';
-import { Competencies, LegalRequirements, ExaminerActions } from '../test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
   ManoeuvreTypes,
@@ -135,7 +135,7 @@ describe('TestDataReducer reducer', () => {
         // Act
         const result = testDataReducer(
           initialState,
-          new AddManoeuvreDrivingFault(Competencies.outcomeReverseParkRoadControl),
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
         );
         // Assert
         expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual('DF');

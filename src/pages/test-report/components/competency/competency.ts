@@ -14,7 +14,6 @@ import {
   RemoveSeriousFault,
   RemoveDangerousFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
-import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
@@ -44,7 +43,7 @@ interface CompetencyState {
 export class CompetencyComponent {
 
   @Input()
-  competency: Competencies;
+  competency: any;
 
   touchStateDelay: number = 100;
 

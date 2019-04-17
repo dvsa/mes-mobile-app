@@ -3,7 +3,7 @@ import {
 } from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
-import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from './test-data.constants';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
@@ -27,7 +27,7 @@ export class RecordManoeuvresSelection implements Action {
 }
 
 export class AddManoeuvreDrivingFault implements Action {
-  constructor(public payload: Competencies) { }
+  constructor(public payload: ManoeuvreCompetencies) { }
   readonly type = ADD_MANOEUVRE_DRIVING_FAULT;
 }
 
