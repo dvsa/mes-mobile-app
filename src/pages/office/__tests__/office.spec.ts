@@ -31,6 +31,7 @@ import { WeatherConditionsComponent } from '../components/weather-conditions/wea
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
+import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -45,6 +46,7 @@ describe('OfficePage', () => {
         MockComponent(WeatherConditionsComponent),
         MockComponent(RouteNumberComponent),
         MockComponent(IndependentDrivingComponent),
+        MockComponent(CandidateDescriptionComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule,
         StoreModule.forRoot({

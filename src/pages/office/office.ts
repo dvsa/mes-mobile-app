@@ -32,9 +32,9 @@ import {
   DebriefUnwitnessed,
   D255Yes,
   D255No,
-  CandidateDescriptionChanged,
   WeatherConditionsChanged,
   RouteNumberChanged,
+  CandidateDescriptionChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -93,9 +93,6 @@ export class OfficePage extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
-
-  @ViewChild('candidateDescriptionInput')
-  candidateDescriptionInput: ElementRef;
 
   @ViewChild('additionalInformationInput')
   additionalInformationInput: ElementRef;
@@ -243,7 +240,6 @@ export class OfficePage extends BasePageComponent {
         this.additionalInformationInput,
         AdditionalInformationChanged,
       ),
-      this.inputChangeSubscriptionDispatchingAction(this.candidateDescriptionInput, CandidateDescriptionChanged),
     ];
   }
 
@@ -350,6 +346,10 @@ export class OfficePage extends BasePageComponent {
   // TODO: This should be a proper type
   independentDrivingChanged(independentDrivingType: string) {
     this.store$.dispatch(new IndependentDrivingTypeChanged(independentDrivingType));
+  }
+
+  candidateDescriptionChanged(candidateDescription: string) {
+    this.store$.dispatch(new CandidateDescriptionChanged(candidateDescription));
   }
 
   private createToast = (errorMessage: string) => {

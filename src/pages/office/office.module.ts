@@ -8,12 +8,14 @@ import { ComponentsModule } from '../../components/components.module';
 import { RouteNumberComponent } from './components/route-number/route-number';
 import { WeatherConditionsComponent } from './components/weather-conditions/weather-conditions';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
+import { CandidateDescriptionComponent } from './components/candidate-description/candidate-description';
 @NgModule({
   declarations: [
     OfficePage,
     RouteNumberComponent,
     WeatherConditionsComponent,
     IndependentDrivingComponent,
+    CandidateDescriptionComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
