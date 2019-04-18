@@ -33,4 +33,8 @@ export class IndependentDrivingComponent implements OnChanges {
     this.independentDrivingChange.emit(independentDrivingStyle);
   }
 
+  get invalid() {
+    return !this.formControl.valid && this.formControl.dirty;
+  }
+
 }
