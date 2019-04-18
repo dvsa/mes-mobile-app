@@ -13,12 +13,15 @@ import {
   RemoveDrivingFault,
   RemoveSeriousFault,
   RemoveDangerousFault,
+  AddManoeuvreSeriousFault,
+  AddManoeuvreDangerousFault,
 } from '../test-data.actions';
 import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
   ManoeuvreTypes,
 } from '../../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 describe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
@@ -141,7 +144,33 @@ describe('TestDataReducer reducer', () => {
           new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
         );
         // Assert
-        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual('DF');
+        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.DF);
+      });
+    });
+    describe('ADD_MANOEUVRE_SERIOUS_FAULT', () => {
+      it('should add a "S" outcome to the selected manoeuvre', () => {
+        // Arrange
+        initialState.manoeuvres = { selectedReverseParkRoad: true };
+        // Act
+        const result = testDataReducer(
+          initialState,
+          new AddManoeuvreSeriousFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
+        );
+        // Assert
+        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.S);
+      });
+    });
+    describe('ADD_MANOEUVRE_DANGEROUS_FAULT', () => {
+      it('should add a "D" outcome to the selected manoeuvre', () => {
+        // Arrange
+        initialState.manoeuvres = { selectedReverseParkRoad: true };
+        // Act
+        const result = testDataReducer(
+          initialState,
+          new AddManoeuvreDangerousFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
+        );
+        // Assert
+        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.D);
       });
     });
   });
