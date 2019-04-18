@@ -55,11 +55,8 @@ export class CompetencyComponent {
   hasSeriousFault: boolean = false;
   isDangerousMode: boolean = false;
   hasDangerousFault: boolean = false;
-  manoeuvreCompetencyOutcome: ManoeuvreOutcome;
 
   allowRipple: boolean = true;
-
-  isManoeuvreCompetency: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -169,10 +166,7 @@ export class CompetencyComponent {
     }
   }
 
-  checkIfManoeuvre = (): boolean => Object.keys(manoeuvreCompetencyLabels).includes(this.competency);
-
-  getLabel = (): string => this.checkIfManoeuvre() ?
-    manoeuvreCompetencyLabels[this.competency] : competencyLabels[this.competency]
+  getLabel = (): string => competencyLabels[this.competency];
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {
@@ -235,7 +229,5 @@ export class CompetencyComponent {
     }
 
   }
-
-  getManoeuvreCompetencyOutcomeCount = (): number => this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF ? 1 : 0;
 
 }
