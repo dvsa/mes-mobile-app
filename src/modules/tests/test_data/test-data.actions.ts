@@ -98,9 +98,7 @@ export class ControlledStopPending implements Action {
 }
 
 export class AddDrivingFaultComment implements Action {
-  constructor(public competencyName: string, public comment: string) {
-    console.log(`competencyName: ${competencyName}, comment: ${comment}`);
-  }
+  constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_DRIVING_FAULT_COMMENT;
 }
 export type Types =
