@@ -326,7 +326,7 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
 
-      it('should remove serious mode after removal attempt on competency with no serious fault', () => {
+      it('should not remove serious mode after removal attempt on competency with no serious fault', () => {
         component.competency = Competencies.controlsSteering;
         component.hasSeriousFault = false;
         component.isSeriousMode = true;
@@ -334,10 +334,11 @@ describe('CompetencyComponent', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
-        expect(component.isSeriousMode).toEqual(false);
+        expect(component.isRemoveFaultMode).toBeTruthy();
+        expect(component.isSeriousMode).toBeTruthy();
       });
 
     });
@@ -387,7 +388,7 @@ describe('CompetencyComponent', () => {
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
-      it('should remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
+      it('should not remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
         component.competency = Competencies.controlsSteering;
         component.hasDangerousFault = false;
         component.isDangerousMode = true;
@@ -395,10 +396,11 @@ describe('CompetencyComponent', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
-        expect(component.isDangerousMode).toEqual(false);
+        expect(component.isDangerousMode).toBeTruthy();
+        expect(component.isRemoveFaultMode).toBeTruthy();
       });
     });
 

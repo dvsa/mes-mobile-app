@@ -460,7 +460,7 @@ describe('ControlledStopComponent', () => {
       expect(component.allowRipple).toBeTruthy();
     });
 
-    it('should not allow the ripple effect when faults do exist', () => {
+    xit('should not allow the ripple effect when faults do exist', () => {
       component.onPress();
       fixture.detectChanges();
 
