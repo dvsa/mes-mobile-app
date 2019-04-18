@@ -58,8 +58,6 @@ import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
-import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
-import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 
 interface OfficePageState {
@@ -85,6 +83,7 @@ interface OfficePageState {
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
   dangerousFaults$: Observable<string[]>;
+  weatherConditions$: Observable<WeatherConditions[]>;
 }
 
 @IonicPage()
@@ -107,7 +106,6 @@ export class OfficePage extends BasePageComponent {
   dangerousFaultComment: QueryList<ElementRef>;
   inputSubscriptions: Subscription[] = [];
 
-  weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
   showMeQuestion: ShowMeQuestion;
 
@@ -118,12 +116,10 @@ export class OfficePage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    private weatherConditionProvider: WeatherConditionProvider,
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
-    this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
   }
 
@@ -232,6 +228,12 @@ export class OfficePage extends BasePageComponent {
         select(getTestData),
         map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
       ),
+      weatherConditions$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestSummary),
+        select(ts => ts.weatherConditions),
+      ),
     };
 
     this.pageState.routeNumber$.subscribe();
@@ -305,7 +307,6 @@ export class OfficePage extends BasePageComponent {
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
-      weatherConditionsCtrl: new FormControl([], [Validators.required]),
       showMeQuestionCtrl: new FormControl([], [Validators.required]),
     };
   }
