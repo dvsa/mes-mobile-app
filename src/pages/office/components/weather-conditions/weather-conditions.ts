@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 import { WeatherConditionSelection } from '../../../../providers/weather-conditions/weather-conditions.model';
@@ -6,7 +6,6 @@ import { WeatherConditionProvider } from '../../../../providers/weather-conditio
 
 @Component({
   selector: 'weather-conditions',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'weather-conditions.html',
 })
 export class WeatherConditionsComponent implements OnChanges {

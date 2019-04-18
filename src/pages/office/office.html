@@ -27,7 +27,7 @@
       <h4>Test Summary</h4>
     </ion-card-header>
     <ion-card-content class="card-content-ios" no-bounce>
-      <form [formGroup]="form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <ion-grid class="grid">
 
           <route-number [routeNumber]="pageState.routeNumber$ | async" (routeNumberChange)="routeNumberChanged($event)"

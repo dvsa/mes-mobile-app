@@ -1,9 +1,8 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'route-number',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'route-number.html',
 })
 export class RouteNumberComponent implements OnChanges {
