@@ -7,11 +7,13 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { RouteNumberComponent } from './components/route-number/route-number';
 import { WeatherConditionsComponent } from './components/weather-conditions/weather-conditions';
+import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
 @NgModule({
   declarations: [
     OfficePage,
     RouteNumberComponent,
     WeatherConditionsComponent,
+    IndependentDrivingComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),

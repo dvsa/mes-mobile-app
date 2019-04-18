@@ -18,8 +18,6 @@ import {
   isD255Yes,
   isD255No,
   getAdditionalInformation,
-  getSatNavUsed,
-  getTrafficSignsUsed,
   isDebriefWitnessed,
   isDebriefUnwitnessed,
 } from '../../modules/tests/test-summary/test-summary.selector';
@@ -73,8 +71,7 @@ interface OfficePageState {
   debriefWitnessedNoRadioChecked$: Observable<boolean>;
   identificationLicenseRadioChecked$: Observable<boolean>;
   identificationPassportRadioChecked$: Observable<boolean>;
-  independentDrivingSatNavRadioChecked$: Observable<boolean>;
-  independentDrivingTrafficSignsRadioChecked$: Observable<boolean>;
+  independentDriving$: Observable<string>;
   d255YesRadioChecked$: Observable<boolean>;
   d255NoRadioChecked$: Observable<boolean>;
   candidateDescription$: Observable<string>;
@@ -167,13 +164,9 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getCandidateDescription),
       ),
-      independentDrivingSatNavRadioChecked$: currentTest$.pipe(
+      independentDriving$: currentTest$.pipe(
         select(getTestSummary),
-        select(getSatNavUsed),
-      ),
-      independentDrivingTrafficSignsRadioChecked$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getTrafficSignsUsed),
+        select(ts => ts.independentDriving),
       ),
       debriefWitnessedYesRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
@@ -352,6 +345,11 @@ export class OfficePage extends BasePageComponent {
 
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
+  }
+
+  // TODO: This should be a proper type
+  independentDrivingChanged(independentDrivingType: string) {
+    this.store$.dispatch(new IndependentDrivingTypeChanged(independentDrivingType));
   }
 
   private createToast = (errorMessage: string) => {
