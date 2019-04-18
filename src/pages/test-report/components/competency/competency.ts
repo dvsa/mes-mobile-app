@@ -14,7 +14,6 @@ import {
   RemoveSeriousFault,
   RemoveDangerousFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
-import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
@@ -27,6 +26,7 @@ import {
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
 
 interface CompetencyState {
   isRemoveFaultMode$: Observable<boolean>;

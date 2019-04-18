@@ -3,6 +3,8 @@ import * as testDataActions from './test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { ManoeuvreTypes } from '../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { pickBy, startsWith } from 'lodash';
+import { Competencies } from './test-data.constants';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
   dangerousFaults: {},
@@ -29,7 +31,23 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: 'DF',
+          [action.payload]: CompetencyOutcome.DF,
+        },
+      };
+    case testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          [action.payload]: CompetencyOutcome.S,
+        },
+      };
+    case testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          [action.payload]: CompetencyOutcome.D,
         },
       };
     case testDataActions.ADD_DRIVING_FAULT:
@@ -57,6 +75,13 @@ export function testDataReducer(
         },
       };
     case testDataActions.REMOVE_DRIVING_FAULT:
+      if (action.payload.newFaultCount === 0) {
+        const { [action.payload.competency] : removedDrivingFault, ...updatedDrivingFaults } = state.drivingFaults;
+        return {
+          ...state,
+          drivingFaults: updatedDrivingFaults,
+        };
+      }
       return {
         ...state,
         drivingFaults: {
@@ -65,22 +90,20 @@ export function testDataReducer(
         },
       };
     case testDataActions.REMOVE_SERIOUS_FAULT:
+      const seriousCompetency = action.payload as Competencies;
+      const { [seriousCompetency]: removedSeriousFault, ...updatedSeriousFaults } = state.seriousFaults;
       return {
         ...state,
-        seriousFaults: {
-          ...state.seriousFaults,
-          [action.payload]: false,
-        },
+        seriousFaults: updatedSeriousFaults,
       };
-    case testDataActions.REMOVE_DANGEROUS_FAULT:
+    case testDataActions.REMOVE_DANGEROUS_FAULT :
+      const dangerousCompetency = action.payload as Competencies;
+      const { [dangerousCompetency]: removedDangerousFault, ...updatedDangerousFaults } = state.dangerousFaults;
       return {
         ...state,
-        dangerousFaults: {
-          ...state.dangerousFaults,
-          [action.payload]: false,
-        },
+        dangerousFaults: updatedDangerousFaults,
       };
-    case testDataActions.TOGGLE_LEGAL_REQUIREMENT:
+    case testDataActions.TOGGLE_LEGAL_REQUIREMENT :
       return {
         ...state,
         testRequirements: {
@@ -88,7 +111,7 @@ export function testDataReducer(
           [action.payload]: !state.testRequirements[action.payload],
         },
       };
-    case testDataActions.TOGGLE_ETA:
+    case testDataActions.TOGGLE_ETA :
       return {
         ...state,
         ETA: {
@@ -96,7 +119,7 @@ export function testDataReducer(
           [action.payload]: !state.ETA[action.payload],
         },
       };
-    case testDataActions.TOGGLE_CONTROL_ECO:
+    case testDataActions.TOGGLE_CONTROL_ECO :
       return {
         ...state,
         eco: {
@@ -104,7 +127,7 @@ export function testDataReducer(
           adviceGivenControl: !state.eco.adviceGivenControl,
         },
       };
-    case testDataActions.TOGGLE_PLANNING_ECO:
+    case testDataActions.TOGGLE_PLANNING_ECO :
       return {
         ...state,
         eco: {
@@ -112,7 +135,7 @@ export function testDataReducer(
           adviceGivenPlanning: !state.eco.adviceGivenPlanning,
         },
       };
-    case testDataActions.TOGGLE_CONTROLLED_STOP:
+    case testDataActions.TOGGLE_CONTROLLED_STOP :
       return {
         ...state,
         manoeuvres: {
