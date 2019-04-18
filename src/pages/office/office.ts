@@ -97,9 +97,6 @@ export class OfficePage extends BasePageComponent {
   form: FormGroup;
   toast: Toast;
 
-  // @ViewChild('routeInput')
-  // routeInput: ElementRef;
-
   @ViewChild('candidateDescriptionInput')
   candidateDescriptionInput: ElementRef;
 
@@ -241,7 +238,6 @@ export class OfficePage extends BasePageComponent {
 
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
-      // this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
       this.inputChangeSubscriptionDispatchingAction(
         this.additionalInformationInput,
         AdditionalInformationChanged,
@@ -365,7 +361,6 @@ export class OfficePage extends BasePageComponent {
   }
 
   routeNumberChanged(newValue) {
-    console.log(`RN: ${newValue}`);
     this.store$.dispatch(new RouteNumberChanged(newValue));
   }
 }
