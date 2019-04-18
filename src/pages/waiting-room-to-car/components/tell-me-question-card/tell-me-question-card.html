@@ -14,7 +14,7 @@
         (tellMeQuestionChange)="tellMeQuestionChanged($event)"></tell-me-question>
 
       <ion-row class="validation-message-row" align-items-center justify-content-start>
-        <div class="validation-text" [class.ng-invalid]="questionInvalid">
+        <div class="validation-text" [class.ng-invalid]="questionInvalid" id="waiting-room-to-car-tell-me-validation-text">
           Select a 'Tell me' question
         </div>
       </ion-row>
@@ -27,7 +27,7 @@
       <ion-row class="validation-message-row" align-items-center justify-content-start
         *ngIf="tellMeQuestionSelected">
         <div id="waiting-room-insurance-validation-text" class="validation-text"
-          [class.ng-invalid]="outcomeInvalid">
+          [class.ng-invalid]="outcomeInvalid" id="waiting-room-to-car-tell-me-outcome-validation-text">
           Select a 'Tell me' question outcome
         </div>
       </ion-row>
