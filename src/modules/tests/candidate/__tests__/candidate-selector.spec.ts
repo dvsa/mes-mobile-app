@@ -38,7 +38,7 @@ describe('candidate selector', () => {
       expect(formatDriverNumber('123')).toBe('123');
     });
     it('should output the driver number in 3 space separated parts where applicable', () => {
-      expect(formatDriverNumber('ABCDE123456Z78YX')).toBe('ABCDE 12345 6Z78YX');
+      expect(formatDriverNumber('ABCDE123456Z78YX')).toBe('ABCDE 123456 Z78YX');
     });
   });
 });
