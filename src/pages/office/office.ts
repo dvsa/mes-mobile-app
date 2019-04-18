@@ -304,7 +304,6 @@ export class OfficePage extends BasePageComponent {
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      routeNumber: new FormControl(null, [Validators.required]),
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
       debriefWitnessedCtrl: new FormControl('', [Validators.required]),
       identificationCtrl: new FormControl('', [Validators.required]),

@@ -31,7 +31,7 @@
         <ion-grid class="grid">
 
           <route-number [routeNumber]="pageState.routeNumber$ | async" (routeNumberChange)="routeNumberChanged($event)"
-            [form]="form">
+            [formGroup]="form">
           </route-number>
 
           <ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card">
