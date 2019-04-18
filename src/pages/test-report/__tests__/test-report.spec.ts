@@ -11,6 +11,7 @@ import { TestReportPage } from '../test-report';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { CompetencyComponent } from '../components/competency/competency';
+import { CompetencyButtonComponent } from '../components/competency-button/competency-button';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
@@ -44,6 +45,7 @@ describe('TestReportPage', () => {
         MockComponent(CompetencyWithModalComponent),
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),
+        MockComponent(CompetencyButtonComponent),
         MockComponent(LegalRequirementComponent),
         MockComponent(EtaComponent),
         MockComponent(DrivingFaultSummaryComponent),

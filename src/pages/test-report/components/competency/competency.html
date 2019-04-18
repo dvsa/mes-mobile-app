@@ -1,12 +1,7 @@
-<div class="competency-button"
-  (tap)="addOrRemoveFault()"
-  (press)="addOrRemoveFault(true)"
-  (touchstart)="onTouchStart()"
-  (touchend)="onTouchEnd()"
-  [ngClass]="{
-    'activated': touchState,
-    'ripple-effect': rippleState
-  }"
+<competency-button
+  [onTap]="onTap"
+  [onPress]="onPress"
+  [ripple]="allowRipple"
 >
 
   <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
@@ -17,5 +12,4 @@
     <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
     <dangerous-fault-badge [showBadge]="hasDangerousFault"></dangerous-fault-badge>
   </div>
-
-</div>
+</competency-button>

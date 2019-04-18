@@ -27,11 +27,6 @@ export class LegalRequirementComponent {
   @Input()
   legalRequirement: LegalRequirements;
 
-  touchStateDelay: number = 100;
-
-  touchState: boolean = false;
-  touchTimeout: any;
-
   componentState: LegalRequirementComponentState;
   subscription: Subscription;
 
@@ -54,18 +49,8 @@ export class LegalRequirementComponent {
 
   getLabel = (): string => legalRequirementLabels[this.legalRequirement];
 
-  toggleLegalRequirement(): void {
+  toggleLegalRequirement = (): void => {
     this.store$.dispatch(new ToggleLegalRequirement(this.legalRequirement));
-  }
-
-  onTouchStart():void {
-    clearTimeout(this.touchTimeout);
-    this.touchState = true;
-  }
-
-  onTouchEnd():void {
-    // defer the removal of the touch state to allow the page to render
-    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }
 
 }

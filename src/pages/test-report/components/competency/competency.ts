@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
@@ -46,16 +46,6 @@ export class CompetencyComponent {
   @Input()
   competency: Competencies;
 
-  touchStateDelay: number = 100;
-
-  touchState: boolean = false;
-  rippleState: boolean = false;
-
-  rippleTimeout: any;
-  touchTimeout: any;
-
-  rippleEffectAnimationDuration: number = 300;
-
   competencyState: CompetencyState;
   subscription: Subscription;
 
@@ -65,6 +55,8 @@ export class CompetencyComponent {
   hasSeriousFault: boolean = false;
   isDangerousMode: boolean = false;
   hasDangerousFault: boolean = false;
+
+  allowRipple: boolean = true;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -114,7 +106,8 @@ export class CompetencyComponent {
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
-    );
+    )
+    .pipe(tap(this.canButtonRipple));
 
     this.subscription = merged$.subscribe();
   }
@@ -125,12 +118,58 @@ export class CompetencyComponent {
     }
   }
 
+  onTap = () => {
+    this.addOrRemoveFault();
+  }
+
+  onPress = () => {
+    this.addOrRemoveFault(true);
+  }
+
+  canButtonRipple = (): void => {
+    if (this.isRemoveFaultMode) {
+      if (this.hasDangerousFault && this.isDangerousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (this.hasSeriousFault && this.isSeriousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (!this.isSeriousMode && !this.isDangerousMode && this.faultCount > 0) {
+        this.allowRipple = true;
+        return;
+      }
+      this.allowRipple = false;
+    } else {
+      if (this.hasDangerousFault) {
+        this.allowRipple = false;
+        return;
+      }
+
+      if (this.isDangerousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (this.hasSeriousFault) {
+        this.allowRipple = false;
+        return;
+      }
+
+      if (this.isSeriousMode) {
+        this.allowRipple = true;
+        return;
+      }
+      this.allowRipple = true;
+    }
+  }
+
   getLabel = (): string => competencyLabels[this.competency];
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
-    if (wasPress) {
-      this.applyRippleEffect();
-    }
     if (this.isRemoveFaultMode) {
       this.removeFault();
     } else {
@@ -182,44 +221,14 @@ export class CompetencyComponent {
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode) {
+    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount > 0) {
       this.store$.dispatch(new RemoveDrivingFault({
         competency: this.competency,
         newFaultCount: this.faultCount ? this.faultCount - 1 : 0,
       }));
+      this.store$.dispatch(new ToggleRemoveFaultMode());
     }
 
-    this.store$.dispatch(new ToggleRemoveFaultMode());
-    //  S and D can remain on in some conditions.
-    if (this.isSeriousMode) {
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-    }
-    if (this.isDangerousMode) {
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-    }
   }
 
-  /**
-   * Manages the addition and removal of the ripple effect animation css class
-   * @returns any
-   */
-  applyRippleEffect = (): any => {
-    this.rippleState = true;
-    this.rippleTimeout = setTimeout(() => this.removeRippleEffect(), this.rippleEffectAnimationDuration);
-  }
-
-  removeRippleEffect = (): any => {
-    this.rippleState = false;
-    clearTimeout(this.rippleTimeout);
-  }
-
-  onTouchStart():void {
-    clearTimeout(this.touchTimeout);
-    this.touchState = true;
-  }
-
-  onTouchEnd():void {
-    // defer the removal of the touch state to allow the page to render
-    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
-  }
 }

@@ -14,6 +14,7 @@ import {
   RemoveSeriousFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
+import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
@@ -34,6 +35,7 @@ describe('CompetencyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CompetencyComponent,
+        MockComponent(CompetencyButtonComponent),
         MockComponent(DrivingFaultsBadgeComponent),
         MockComponent(SeriousFaultBadgeComponent),
         MockComponent(DangerousFaultBadgeComponent),
@@ -235,7 +237,7 @@ describe('CompetencyComponent', () => {
           newFaultCount: 0,
         }));
       });
-      it('should dispatch a REMOVE_DRIVING_FAULT limit zero', () => {
+      it('should not dispatch a REMOVE_DRIVING_FAULT when limit is zero', () => {
         component.competency = Competencies.controlsSteering;
         component.faultCount = 0;
         component.isRemoveFaultMode = true;
@@ -243,7 +245,7 @@ describe('CompetencyComponent', () => {
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDrivingFault({
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDrivingFault({
           competency: component.competency,
           newFaultCount: 0,
         }));
@@ -324,7 +326,7 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
       });
 
-      it('should remove serious mode after removal attempt on competency with no serious fault', () => {
+      it('should not remove serious mode after removal attempt on competency with no serious fault', () => {
         component.competency = Competencies.controlsSteering;
         component.hasSeriousFault = false;
         component.isSeriousMode = true;
@@ -332,10 +334,9 @@ describe('CompetencyComponent', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
-        expect(component.isSeriousMode).toEqual(false);
       });
 
     });
@@ -385,7 +386,7 @@ describe('CompetencyComponent', () => {
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
       });
-      it('should remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
+      it('should not remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
         component.competency = Competencies.controlsSteering;
         component.hasDangerousFault = false;
         component.isDangerousMode = true;
@@ -393,10 +394,9 @@ describe('CompetencyComponent', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
-        expect(component.isDangerousMode).toEqual(false);
       });
     });
 
@@ -425,6 +425,126 @@ describe('CompetencyComponent', () => {
     });
   });
 
+  describe('canButtonRipple', () => {
+    it('should allow ripple when in remove dangerous mode and there is a dangerous fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in remove dangerous mode and there is not a dangerous fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in remove serious mode and there is a serious fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in remove serious mode and there is not a serious fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in remove fault mode and there is a driving fault', () => {
+      component.isRemoveFaultMode = true;
+      component.faultCount = 1;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in remove fault mode and there is not a driving fault', () => {
+      component.isRemoveFaultMode = true;
+      component.faultCount = 0;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should not allow ripple when in remove fault mode and driving fault is undefined', () => {
+      component.isRemoveFaultMode = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should not allow ripple when in add dangerous mode and there is a dangerous fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in add dangerous mode and there is not a dangerous fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in add serious mode and there is a serious fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in add serious mode and there is not a serious fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should allow ripple when in add fault mode and there is a driving fault', () => {
+      component.isRemoveFaultMode = false;
+      component.faultCount = 1;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should allow ripple when in add fault mode and there is not a driving fault', () => {
+      component.isRemoveFaultMode = false;
+      component.faultCount = 0;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should allow ripple when in add fault mode and driving fault is undefined', () => {
+      component.isRemoveFaultMode = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+  });
+
   describe('DOM', () => {
     it('should show provided label', () => {
       component.competency = Competencies.controlsGears;
@@ -444,60 +564,4 @@ describe('CompetencyComponent', () => {
     });
   });
 
-  describe('Ripple effect', () => {
-    it('should have added no classes to the competency button', () => {
-      const competencyButton = fixture.debugElement.query(By.css('.competency-button'));
-      expect(competencyButton.nativeElement.className).toEqual('competency-button');
-    });
-
-    it('should add the activated class when the button is pressed', () => {
-      component.onTouchStart();
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('activated');
-      expect(component.touchState).toBeTruthy();
-    });
-
-    it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
-      component.onTouchEnd();
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
-
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('activated');
-          expect(component.touchState).toBeFalsy();
-          done();
-        },
-        component.touchStateDelay);
-    });
-
-    it('should add the ripple effect animation css class', () => {
-      component.addOrRemoveFault(true);
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-
-      expect(button).toBeDefined();
-      expect(button.nativeElement.className).toContain('ripple-effect');
-    });
-
-    it('should remove the ripple effect animation css class within the required time frame', (done) => {
-      component.addOrRemoveFault(true);
-      fixture.detectChanges();
-      const button = fixture.debugElement.query(By.css('.competency-button'));
-      setTimeout(
-        () => {
-          fixture.detectChanges();
-
-          expect(button).toBeDefined();
-          expect(button.nativeElement.className).not.toContain('ripple-effect');
-          done();
-        },
-        component.rippleEffectAnimationDuration);
-    });
-  });
 });

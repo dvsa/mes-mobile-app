@@ -1,10 +1,6 @@
 legal-requirement {
-  div.legal-button {
-    @extend .mes-test-report-button;
+  competency-button {
     
-    margin-right: 3px;
-    padding: 1px 7px 2px;
-
     .label {
       width: 100%;
       display: flex;
@@ -17,14 +13,15 @@ legal-requirement {
     }
 
     &.complete {
-      border: 2px solid map-get($colors-gds, "gds-green");
-      color: map-get($colors-gds, "gds-green");
-      
-      .competency-label {
-        font-weight: bold;
+      .competency-button {
+        border: 2px solid map-get($colors-gds, "gds-green");
+        color: map-get($colors-gds, "gds-green");
+        
+        .competency-label {
+          font-weight: bold;
+        }
       }
     }
   }
-
-  
+ 
 }
