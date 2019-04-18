@@ -41,7 +41,7 @@
             <legal-requirement [legalRequirement]="legalRequirements.angledStart">
             </legal-requirement>
           </ion-col>
-          <ion-col>
+          <ion-col>     
             <legal-requirement [legalRequirement]="legalRequirements.hillStart">
             </legal-requirement>
           </ion-col>
@@ -53,10 +53,10 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <competency-with-modal [completed]="manoeuvresCompleted" [controlLabel]="'Manoeuvres'"
+            <manoeuvres [completed]="manoeuvresCompleted" [controlLabel]="'Manoeuvres'"
               [clickCallback]="getCallback()">
               <manoeuvres-popover></manoeuvres-popover>
-            </competency-with-modal>
+            </manoeuvres>
           </ion-col>
         </ion-row>
         <ion-row>

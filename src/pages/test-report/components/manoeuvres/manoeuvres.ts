@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { OverlayCallback } from '../../test-report';
 
 @Component({
-  selector: 'competency-with-modal',
-  templateUrl: 'competency-with-modal.html',
+  selector: 'manoeuvres',
+  templateUrl: 'manoeuvres.html',
 })
-export class CompetencyWithModalComponent {
+export class ManoeuvresComponent {
 
   @Input()
   controlLabel: String;

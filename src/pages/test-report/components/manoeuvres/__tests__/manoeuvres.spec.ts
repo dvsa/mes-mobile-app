@@ -2,21 +2,21 @@ import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { CompetencyWithModalComponent } from '../competency-with-modal';
+import { ManoeuvresComponent } from '../manoeuvres';
 import { AppModule } from '../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
-describe('CompetencyWithModalComponent', () => {
-  let fixture: ComponentFixture<CompetencyWithModalComponent>;
-  let component: CompetencyWithModalComponent;
+describe('ManoeuvresComponent', () => {
+  let fixture: ComponentFixture<ManoeuvresComponent>;
+  let component: ManoeuvresComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CompetencyWithModalComponent,
+        ManoeuvresComponent,
         TickIndicatorComponent,
         MockComponent(DrivingFaultsBadgeComponent),
       ],
@@ -30,7 +30,7 @@ describe('CompetencyWithModalComponent', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(CompetencyWithModalComponent);
+        fixture = TestBed.createComponent(ManoeuvresComponent);
         component = fixture.componentInstance;
       });
   }));
