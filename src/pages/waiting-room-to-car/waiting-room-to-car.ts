@@ -104,9 +104,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   tellMeQuestions: TellMeQuestion[];
 
-  subscription: Subscription;
-  eyesightFail: boolean;
-
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
@@ -194,15 +191,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       ),
     };
 
-    // tremporary fix for mes-2066
-    // there a bigger issue of binding changed store values to the form validation
-    const { eyesightFailRadioChecked$ } = this.pageState;
-    this.subscription = eyesightFailRadioChecked$.subscribe((value) => {
-      if (!value) {
-        this.eyesightFail = null;
-      }
-    });
-
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
       this.inputChangeSubscriptionDispatchingAction(
@@ -271,6 +259,11 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       this.navCtrl.push('TestReportPage');
     }
   }
+  updateForm(ctrl: string, value: any) {
+    this.form.patchValue({
+      [ctrl]: value,
+    });
+  }
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
@@ -278,7 +271,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
-      eyesightCtrl: new FormControl('', [Validators.required]),
+      eyesightCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
@@ -290,15 +283,17 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   }
 
   eyesightPassPressed(): void {
+    this.updateForm('eyesightCtrl', 'P');
     this.store$.dispatch(new EyesightResultPasssed());
   }
 
   eyesightFailPressed(): void {
+    this.updateForm('eyesightCtrl', 'F');
     this.store$.dispatch(new EyesightResultFailed());
   }
 
   eyesightFailCancelled = () => {
-    this.form.value['eyesightCtrl'] = '';
+    this.updateForm('eyesightCtrl', null);
     this.store$.dispatch(new EyesightResultReset());
   }
 
