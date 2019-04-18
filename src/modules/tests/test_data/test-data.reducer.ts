@@ -4,6 +4,7 @@ import { createFeatureSelector } from '@ngrx/store';
 import { ManoeuvreTypes } from '../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { pickBy, startsWith } from 'lodash';
 import { Competencies } from './test-data.constants';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
   dangerousFaults: {},
@@ -30,7 +31,7 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: 'DF',
+          [action.payload]: CompetencyOutcome.DF,
         },
       };
     case testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT:
@@ -38,7 +39,7 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: 'S',
+          [action.payload]: CompetencyOutcome.S,
         },
       };
     case testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT:
@@ -46,7 +47,7 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: 'D',
+          [action.payload]: CompetencyOutcome.D,
         },
       };
     case testDataActions.ADD_DRIVING_FAULT:
