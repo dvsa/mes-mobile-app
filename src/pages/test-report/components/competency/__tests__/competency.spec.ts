@@ -337,8 +337,6 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleSeriousFaultMode());
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
-        expect(component.isRemoveFaultMode).toBeTruthy();
-        expect(component.isSeriousMode).toBeTruthy();
       });
 
     });
@@ -399,8 +397,6 @@ describe('CompetencyComponent', () => {
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleDangerousFaultMode());
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleRemoveFaultMode());
         fixture.detectChanges();
-        expect(component.isDangerousMode).toBeTruthy();
-        expect(component.isRemoveFaultMode).toBeTruthy();
       });
     });
 
