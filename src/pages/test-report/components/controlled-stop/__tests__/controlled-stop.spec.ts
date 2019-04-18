@@ -18,6 +18,7 @@ import {
   AddManoeuvreDrivingFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
@@ -74,7 +75,7 @@ describe('ControlledStopComponent', () => {
           new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is already a driving fault', () => {
-        component.faultCount = 1;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
@@ -83,7 +84,7 @@ describe('ControlledStopComponent', () => {
           new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is a serious fault', () => {
-        component.hasSeriousFault = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
@@ -101,7 +102,7 @@ describe('ControlledStopComponent', () => {
           new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is a dangerous fault', () => {
-        component.hasDangerousFault = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
@@ -435,7 +436,7 @@ describe('ControlledStopComponent', () => {
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
-      component.faultCount = 1;
+      component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
 
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(1);
@@ -455,6 +456,7 @@ describe('ControlledStopComponent', () => {
   describe('Competency button ripple effects', () => {
 
     it('should allow the ripple effect when no faults exist', () => {
+      component.canButtonRipple();
       fixture.detectChanges();
 
       expect(component.allowRipple).toBeTruthy();
