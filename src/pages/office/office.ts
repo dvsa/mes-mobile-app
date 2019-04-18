@@ -59,6 +59,7 @@ import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { merge } from 'rxjs/observable/merge';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -104,6 +105,8 @@ export class OfficePage extends BasePageComponent {
 
   @ViewChildren('dangerousFaultComment')
   dangerousFaultComment: QueryList<ElementRef>;
+
+  storeSubscription: Subscription;
   inputSubscriptions: Subscription[] = [];
 
   showMeQuestions: ShowMeQuestion[];
@@ -236,8 +239,10 @@ export class OfficePage extends BasePageComponent {
       ),
     };
 
-    this.pageState.routeNumber$.subscribe();
-    this.pageState.weatherConditions$.subscribe();
+    this.storeSubscription = merge(
+      this.pageState.routeNumber$,
+      this.pageState.weatherConditions$,
+    ).subscribe();
 
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
@@ -258,6 +263,7 @@ export class OfficePage extends BasePageComponent {
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    this.storeSubscription.unsubscribe();
   }
 
   popToRoot() {
