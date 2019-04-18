@@ -237,6 +237,7 @@ export class OfficePage extends BasePageComponent {
     };
 
     this.pageState.routeNumber$.subscribe();
+    this.pageState.weatherConditions$.subscribe();
 
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
