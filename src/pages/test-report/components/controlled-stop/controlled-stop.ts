@@ -172,7 +172,7 @@ export class ControlledStopComponent implements OnInit {
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {
-      this.removeFault(wasPress);
+      this.removeFault();
     } else {
       this.addFault(wasPress);
     }
@@ -205,7 +205,8 @@ export class ControlledStopComponent implements OnInit {
     }
   }
 
-  removeFault = (wasPress: boolean): void => {
+  removeFault = (): void => {
+
     if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
       // TODO - Refactor to use Remove Maneourves Fault Action
       // this.store$.dispatch(new RemoveDangerousFault(this.competency));
@@ -221,21 +222,14 @@ export class ControlledStopComponent implements OnInit {
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode) {
+    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount > 0) {
       // TODO - Refactor to use Remove Maneourves Fault Action
       // this.store$.dispatch(new RemoveDrivingFault({
         // competency: this.competency,
         // newFaultCount: this.faultCount ? this.faultCount - 1 : 0,
       // }));
+      this.store$.dispatch(new ToggleRemoveFaultMode());
     }
 
-    this.store$.dispatch(new ToggleRemoveFaultMode());
-    //  S and D can remain on in some conditions.
-    if (this.isSeriousMode) {
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-    }
-    if (this.isDangerousMode) {
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-    }
   }
 }
