@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -121,9 +121,10 @@ export class ControlledStopComponent implements OnInit {
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       // hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
       selectedControlledStop$.pipe(map(toggle => this.controlledStopCompleted = toggle)),
-    );
+    )
+    .pipe(tap(this.canButtonRipple));
 
-    this.subscription = merged$.subscribe(() => this.canButtonRipple());
+    this.subscription = merged$.subscribe();
 
   }
 

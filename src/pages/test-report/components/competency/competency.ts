@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
@@ -106,9 +106,10 @@ export class CompetencyComponent {
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
-    );
+    )
+    .pipe(tap(this.canButtonRipple));
 
-    this.subscription = merged$.subscribe(() => this.canButtonRipple());
+    this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {
