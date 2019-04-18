@@ -42,4 +42,4 @@ export enum fullCompetencyLabels  {
     outcomeControlledStop = 'Controlled stop',
   }
 
-export type FaultCount = { propName: string, name: string, count: number };
+export type FaultCount = { propertyName: string, name: string, count: number };

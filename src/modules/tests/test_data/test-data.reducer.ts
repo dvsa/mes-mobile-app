@@ -40,6 +40,14 @@ export function testDataReducer(
           [action.payload.competency]: action.payload.newFaultCount,
         },
       };
+    case testDataActions.ADD_DRIVING_FAULT_COMMENT:
+      return {
+        ...state,
+        drivingFaults: {
+          ...state.drivingFaults,
+          [action.competencyName]: action.comment,
+        },
+      };
     case testDataActions.ADD_SERIOUS_FAULT:
       return {
         ...state,

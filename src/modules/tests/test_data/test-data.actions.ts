@@ -20,6 +20,7 @@ export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
 export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
 export const CONTROLLED_STOP_COMPLETE = '[ControlledStop] Controlled Stop Complete';
 export const CONTROLLED_STOP_PENDING = '[ControlledStop] Controlled Stop Pending';
+export const ADD_DRIVING_FAULT_COMMENT = '[Competency] Add driving fault comment';
 
 export class RecordManoeuvresSelection implements Action {
   constructor(public manoeuvre: ManoeuvreTypes) { }
@@ -84,10 +85,17 @@ export class ControlledStopPending implements Action {
   readonly type = CONTROLLED_STOP_PENDING;
 }
 
+export class AddDrivingFaultComment implements Action {
+  constructor(public competencyName: string, public comment: string) {
+    console.log(`competencyName: ${competencyName}, comment: ${comment}`);
+  }
+  readonly type = ADD_DRIVING_FAULT_COMMENT;
+}
 export type Types =
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
   | AddDrivingFault
+  | AddDrivingFaultComment
   | AddSeriousFault
   | AddDangerousFault
   | RemoveDrivingFault

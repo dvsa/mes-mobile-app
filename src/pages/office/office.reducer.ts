@@ -13,11 +13,6 @@ export function officeReducer(state = initialState, action: officeActions.Office
         ...state,
         dangerousFaultComments: [...state.dangerousFaultComments, action.payload],
       };
-    case officeActions.OFFICE_VIEW_ADD_DRIVING_FAULT_COMMENT:
-      return {
-        ...state,
-        drivingFaultComments: [...state.drivingFaultComments, action.payload],
-      };
     default:
       return state;
   }
