@@ -27,7 +27,9 @@ export class RouteNumberComponent implements OnChanges {
   }
 
   routeNumberChanged(routeNumber: string): void {
-    this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
+    if (this.formControl.valid) {
+      this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
+    }
   }
 
   get invalid(): boolean {
