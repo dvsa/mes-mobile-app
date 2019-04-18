@@ -425,6 +425,126 @@ describe('CompetencyComponent', () => {
     });
   });
 
+  describe('canButtonRipple', () => {
+    it('should allow ripple when in remove dangerous mode and there is a dangerous fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in remove dangerous mode and there is not a dangerous fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in remove serious mode and there is a serious fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in remove serious mode and there is not a serious fault', () => {
+      component.isRemoveFaultMode = true;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in remove fault mode and there is a driving fault', () => {
+      component.isRemoveFaultMode = true;
+      component.faultCount = 1;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in remove fault mode and there is not a driving fault', () => {
+      component.isRemoveFaultMode = true;
+      component.faultCount = 0;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should not allow ripple when in remove fault mode and driving fault is undefined', () => {
+      component.isRemoveFaultMode = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should not allow ripple when in add dangerous mode and there is a dangerous fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in add dangerous mode and there is not a dangerous fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isDangerousMode = true;
+      component.hasDangerousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should not allow ripple when in add serious mode and there is a serious fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = true;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeFalsy();
+    });
+
+    it('should allow ripple when in add serious mode and there is not a serious fault', () => {
+      component.isRemoveFaultMode = false;
+      component.isSeriousMode = true;
+      component.hasSeriousFault = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should allow ripple when in add fault mode and there is a driving fault', () => {
+      component.isRemoveFaultMode = false;
+      component.faultCount = 1;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should allow ripple when in add fault mode and there is not a driving fault', () => {
+      component.isRemoveFaultMode = false;
+      component.faultCount = 0;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+
+    it('should allow ripple when in add fault mode and driving fault is undefined', () => {
+      component.isRemoveFaultMode = false;
+
+      component.canButtonRipple();
+      expect(component.allowRipple).toBeTruthy();
+    });
+  });
+
   describe('DOM', () => {
     it('should show provided label', () => {
       component.competency = Competencies.controlsGears;
