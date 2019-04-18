@@ -60,7 +60,13 @@ export class ManoeuvresPopoverComponent {
   recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
     this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
   }
-
+  /**
+   * @param  {string} manoeuvre
+   * @returns Observable<boolean>
+   * Called by the manoeuvre input elements in manoeuvres-popover.html
+   * Tells the input whether it needs to be disabled based on whether
+   * or not another manoeuvre has a fault recorded
+   */
   shouldManoeuvreDisable(manoeuvre: string): Observable<boolean> {
     return this.manoeuvresWithFaults$.pipe(
       map((manoeuvresWithFaults: ManoeuvresDisabledState) => {
@@ -69,7 +75,12 @@ export class ManoeuvresPopoverComponent {
       }),
     );
   }
-
+  /**
+   * @param  {ManoeuvrePrefix} manoeuvrePrefix
+   * @param  {Manoeuvres} manoeuvres
+   * @returns boolean
+   * Looks up the manoeuvre 'outcome' keys and returns true if they exist
+   */
   manoeuvreHasFaults(manoeuvrePrefix: ManoeuvrePrefix, manoeuvres: Manoeuvres): boolean {
     return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefix)));
   }
