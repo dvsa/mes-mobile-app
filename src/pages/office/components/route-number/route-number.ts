@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'route-number.html',
 })
-export class RouteNumberComponent implements OnInit, OnChanges {
+export class RouteNumberComponent implements OnChanges {
 
   @Input()
   routeNumber: number;
@@ -17,32 +17,22 @@ export class RouteNumberComponent implements OnInit, OnChanges {
   @Output()
   routeNumberChange = new EventEmitter<number>();
 
-  private formControlName = 'routeNumber';
+  private formControl: FormControl;
 
-  ngOnInit(): void {
-    this.formGroup.addControl(this.formControlName, new FormControl(null, [Validators.required]));
-  }
-
-  private get formControl(): FormControl {
-    return this.formGroup.controls[this.formControlName] as FormControl;
+  ngOnChanges(): void {
+    if (!this.formControl) {
+      this.formControl = new FormControl(null, [Validators.required]);
+      this.formGroup.addControl('routeNumber', this.formControl);
+    }
+    this.formControl.patchValue(this.routeNumber);
   }
 
   routeNumberChanged(routeNumber: string): void {
     this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
   }
 
-  ngOnChanges(): void {
-    if (this.formControl) {
-      this.formControl.patchValue(this.routeNumber);
-    }
-  }
-
   get invalid(): boolean {
-    const ctrl = this.formControl;
-    const valid = ctrl.valid;
-    const dirty = ctrl.dirty;
-    console.log(`valid: ${valid} | dirty: ${dirty}`);
-    return !valid && dirty;
+    return !this.formControl.valid && this.formControl.dirty;
   }
 
 }
