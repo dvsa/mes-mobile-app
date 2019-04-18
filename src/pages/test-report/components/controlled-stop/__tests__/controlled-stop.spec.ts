@@ -13,20 +13,10 @@ import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fa
 import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../journal/journal.actions';
 import {
-  ToggleSeriousFaultMode,
-  ToggleDangerousFaultMode,
-  ToggleRemoveFaultMode,
-} from '../../../test-report.actions';
-import {
-  AddDrivingFault,
-  AddSeriousFault,
-  AddDangerousFault,
-  RemoveDrivingFault,
-  RemoveDangerousFault,
-  RemoveSeriousFault,
-  ToggleControlledStop,
   ControlledStopComplete,
+  AddManoeuvreDrivingFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
+import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
@@ -62,86 +52,73 @@ describe('ControlledStopComponent', () => {
       expect(component).toBeDefined();
     });
 
-    describe('addDrivingFault', () => {
-      it('should dispatch an ADD_DRIVING_FAULT action for press', () => {
+    describe('addManoeuvreDrivingFault', () => {
+      it('should dispatch an ADD_MANOEUVRE_DRIVING_FAULT action for press', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ControlledStopComplete());
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action for tap', () => {
+      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action for tap', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action if there is already a driving fault', () => {
+      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is already a driving fault', () => {
         component.faultCount = 1;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action if there is a serious fault', () => {
+      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is a serious fault', () => {
         component.hasSeriousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action if serious mode is active', () => {
+      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if serious mode is active', () => {
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action if there is a dangerous fault', () => {
+      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is a dangerous fault', () => {
         component.hasDangerousFault = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
-      it('should not dispatch an ADD_DRIVING_FAULT action if dangerous mode is active', () => {
+      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if dangerous mode is active', () => {
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new AddDrivingFault({
-          competency: component.competency,
-          newFaultCount: 1,
-        }));
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
     });
 
-    describe('addDangerousFault', () => {
+    /* describe('addDangerousFault', () => {
       it('should dispatch a ADD_DANGEROUS_FAULT action if dangerous mode is active on press', () => {
         component.isDangerousMode = true;
 
@@ -303,119 +280,119 @@ describe('ControlledStopComponent', () => {
           newFaultCount: 1,
         }));
       });
+  });
+
+  describe('removeSeriousFault', () => {
+    it('should not dispatch a REMOVE_SERIOUS_FAULT when not in remove mode', () => {
+      component.hasSeriousFault = true;
+      component.isSeriousMode = true;
+      component.isRemoveFaultMode = false;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
+    });
+    it('should dispatch a REMOVE_SERIOUS_FAULT for press and hold', () => {
+      component.hasSeriousFault = true;
+      component.isSeriousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
+    });
+    it('should dispatch a REMOVE_SERIOUS_FAULT for press', () => {
+      component.hasSeriousFault = true;
+      component.isSeriousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
+    });
+    it('should not dispatch a REMOVE_SERIOUS_FAULT when is dangerous mode', () => {
+      component.hasSeriousFault = true;
+      component.isDangerousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
     });
 
-    describe('removeSeriousFault', () => {
-      it('should not dispatch a REMOVE_SERIOUS_FAULT when not in remove mode', () => {
-        component.hasSeriousFault = true;
-        component.isSeriousMode = true;
-        component.isRemoveFaultMode = false;
+    it('should remove serious mode after removal attempt on competency with no serious fault', () => {
+      component.hasSeriousFault = false;
+      component.isSeriousMode = true;
+      component.isRemoveFaultMode = true;
 
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
-      });
-      it('should dispatch a REMOVE_SERIOUS_FAULT for press and hold', () => {
-        component.hasSeriousFault = true;
-        component.isSeriousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
-      });
-      it('should dispatch a REMOVE_SERIOUS_FAULT for press', () => {
-        component.hasSeriousFault = true;
-        component.isSeriousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
-      });
-      it('should not dispatch a REMOVE_SERIOUS_FAULT when is dangerous mode', () => {
-        component.hasSeriousFault = true;
-        component.isDangerousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveSeriousFault(component.competency));
-      });
-
-      it('should remove serious mode after removal attempt on competency with no serious fault', () => {
-        component.hasSeriousFault = false;
-        component.isSeriousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
-        fixture.detectChanges();
-        expect(component.isSeriousMode).toEqual(false);
-      });
-
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+      fixture.detectChanges();
+      expect(component.isSeriousMode).toEqual(false);
     });
 
-    describe('removeDangerousFault', () => {
-      it('should not dispatch a REMOVE_DANGEROUS_FAULT when not in remove mode', () => {
-        component.hasDangerousFault = true;
-        component.isDangerousMode = true;
-        component.isRemoveFaultMode = false;
+  });
 
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
+  describe('removeDangerousFault', () => {
+    it('should not dispatch a REMOVE_DANGEROUS_FAULT when not in remove mode', () => {
+      component.hasDangerousFault = true;
+      component.isDangerousMode = true;
+      component.isRemoveFaultMode = false;
 
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
-      });
-      it('should dispatch a REMOVE_DANGEROUS_FAULT for press and hold', () => {
-        component.hasDangerousFault = true;
-        component.isDangerousMode = true;
-        component.isRemoveFaultMode = true;
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
 
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
-      });
-      it('should dispatch a REMOVE_DANGEROUS_FAULT for press', () => {
-        component.hasDangerousFault = true;
-        component.isDangerousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
-      });
-      it('should not dispatch a REMOVE_DANGEROUS_FAULT when is serious mode', () => {
-        component.hasDangerousFault = true;
-        component.isSeriousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-
-        expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
-      });
-      it('should remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
-        component.hasDangerousFault = false;
-        component.isDangerousMode = true;
-        component.isRemoveFaultMode = true;
-
-        const storeDispatchSpy = spyOn(store$, 'dispatch');
-        component.addOrRemoveFault();
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
-        fixture.detectChanges();
-        expect(component.isDangerousMode).toEqual(false);
-      });
+      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
     });
+    it('should dispatch a REMOVE_DANGEROUS_FAULT for press and hold', () => {
+      component.hasDangerousFault = true;
+      component.isDangerousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
+    });
+    it('should dispatch a REMOVE_DANGEROUS_FAULT for press', () => {
+      component.hasDangerousFault = true;
+      component.isDangerousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
+    });
+    it('should not dispatch a REMOVE_DANGEROUS_FAULT when is serious mode', () => {
+      component.hasDangerousFault = true;
+      component.isSeriousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+
+      expect(storeDispatchSpy).not.toHaveBeenCalledWith(new RemoveDangerousFault(component.competency));
+    });
+    it('should remove dangerous mode after removal attempt on competency with no dangerous fault', () => {
+      component.hasDangerousFault = false;
+      component.isDangerousMode = true;
+      component.isRemoveFaultMode = true;
+
+      const storeDispatchSpy = spyOn(store$, 'dispatch');
+      component.addOrRemoveFault();
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+      expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+      fixture.detectChanges();
+      expect(component.isDangerousMode).toEqual(false);
+    });
+  });
 
     describe('toggleControlledStop', () => {
       it('should dispatch a TOGGLE_CONTROLLED_STOP action when there are no faults', () => {
@@ -448,7 +425,7 @@ describe('ControlledStopComponent', () => {
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(new ToggleControlledStop());
       });
-    });
+    }); */
   });
 
   describe('DOM', () => {

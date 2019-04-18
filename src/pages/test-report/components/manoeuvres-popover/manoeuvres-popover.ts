@@ -9,7 +9,7 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
 import { ManoeuvreTypes } from './manoeuvres-popover.constants';
-import { Competencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
 
 @Component({
   selector: 'manoeuvres-popover',
@@ -19,7 +19,7 @@ export class ManoeuvresPopoverComponent {
 
   public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
-  competencies = Competencies;
+  competencies = ManoeuvreCompetencies;
 
   constructor(private store$: Store<StoreModel>) { }
 

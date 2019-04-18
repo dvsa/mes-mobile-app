@@ -3,10 +3,12 @@ import {
 } from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
-import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
+import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from './test-data.constants';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
+export const ADD_MANOEUVRE_SERIOUS_FAULT = '[Manoeuvres] Add Manoeuvre Serious Fault';
+export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] Add Manoeuvre Dangerous Fault';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
 export const ADD_DANGEROUS_FAULT = '[Competency] Add Dangerous Fault';
@@ -28,8 +30,18 @@ export class RecordManoeuvresSelection implements Action {
 }
 
 export class AddManoeuvreDrivingFault implements Action {
-  constructor(public payload: Competencies) { }
+  constructor(public payload: ManoeuvreCompetencies) { }
   readonly type = ADD_MANOEUVRE_DRIVING_FAULT;
+}
+
+export class AddManoeuvreSeriousFault implements Action {
+  constructor(public payload: ManoeuvreCompetencies) { }
+  readonly type = ADD_MANOEUVRE_SERIOUS_FAULT;
+}
+
+export class AddManoeuvreDangerousFault implements Action {
+  constructor(public payload: ManoeuvreCompetencies) { }
+  readonly type = ADD_MANOEUVRE_DANGEROUS_FAULT;
 }
 
 export class AddDrivingFault implements Action {
@@ -94,6 +106,8 @@ export class AddDrivingFaultComment implements Action {
 export type Types =
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
+  | AddManoeuvreSeriousFault
+  | AddManoeuvreDangerousFault
   | AddDrivingFault
   | AddDrivingFaultComment
   | AddSeriousFault

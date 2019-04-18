@@ -38,6 +38,9 @@ export enum Competencies {
   pedestrianCrossings = 'pedestrianCrossings',
   positionNormalStops = 'positionNormalStops',
   awarenessPlanning = 'awarenessPlanning',
+}
+
+export enum ManoeuvreCompetencies {
   outcomeReverseLeftControl = 'outcomeReverseLeftControl',
   outcomeReverseLeftObservation = 'outcomeReverseLeftObservation',
   outcomeReverseRightControl = 'outcomeReverseRightControl',

@@ -13,8 +13,8 @@
   <span class='competency-label'>{{ getLabel() }}</span>
 
   <div class="fault-wrapper">
-    <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
-    <dangerous-fault-badge [showBadge]="hasDangerousFault"></dangerous-fault-badge>
+    <serious-fault-badge [showBadge]="hasSeriousFault()"></serious-fault-badge>
+    <dangerous-fault-badge [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
   </div>
 
 </div>

@@ -1,5 +1,5 @@
 
-import { TestData, TestRequirements, ETA, Eco, ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { TestData, TestRequirements, ETA, Eco, ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
 import { pickBy, startsWith } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -50,7 +50,7 @@ export const getEcoFaultText = (data: Eco) => {
   return;
 };
 
-export const getManoeuvres = (data: TestData) => data.manoeuvres;
+export const getManoeuvres = (data: TestData): Manoeuvres => data.manoeuvres;
 
 export const hasManoeuvreBeenCompleted = (data: TestData) => {
   return (
