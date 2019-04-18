@@ -14,7 +14,7 @@ import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../../test-report.selector';
 import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
@@ -33,7 +33,7 @@ interface ManoeuvreCompetencyComponentState {
   selector: 'manoeuvre-competency',
   templateUrl: 'manoeuvre-competency.html',
 })
-export class ManoeuvreCompetencyComponent {
+export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
 
   @Input()
   competency: ManoeuvreCompetencies;

@@ -8,6 +8,12 @@ import { MockComponent } from 'ng-mocks';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
+import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
+import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
+import { StoreModule, Store } from '@ngrx/store';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { testReportReducer } from '../../../test-report.reducer';
+import { StartTest } from '../../../../journal/journal.actions';
 
 describe('ManoeuvresComponent', () => {
   let fixture: ComponentFixture<ManoeuvresComponent>;
@@ -19,10 +25,13 @@ describe('ManoeuvresComponent', () => {
         ManoeuvresComponent,
         TickIndicatorComponent,
         MockComponent(DrivingFaultsBadgeComponent),
+        MockComponent(SeriousFaultBadgeComponent),
+        MockComponent(DangerousFaultBadgeComponent),
       ],
       imports: [
         IonicModule,
         AppModule,
+        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
       providers: [
         { provide: DateTimeProvider, useCalss: DateTimeProviderMock },
@@ -32,6 +41,9 @@ describe('ManoeuvresComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(ManoeuvresComponent);
         component = fixture.componentInstance;
+        const store$ = TestBed.get(Store);
+
+        store$.dispatch(new StartTest(103));
       });
   }));
 
