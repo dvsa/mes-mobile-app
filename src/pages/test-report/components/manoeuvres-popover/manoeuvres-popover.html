@@ -7,6 +7,7 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
+            [attr.disabled]="(shouldManoeuvreDisable('reverseRight') | async) ? 'disabled' : null"
             [checked]="asyncData.manoeuvre.selectedReverseRight" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseRight)" 
             id="manoeuvres-reverse-right-radio" class="gds-radio-button">
@@ -16,6 +17,7 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
+            [attr.disabled]="(shouldManoeuvreDisable('reverseParkRoad') | async) ? 'disabled' : null"
             [checked]="asyncData.manoeuvre.selectedReverseParkRoad" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseParkRoad)" 
             id="manoeuvres-reverse-park-road-radio" class="gds-radio-button">
@@ -26,6 +28,7 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
+            [attr.disabled]="(shouldManoeuvreDisable('reverseParkCarpark') | async) ? 'disabled' : null"
             [checked]="asyncData.manoeuvre.selectedReverseParkCarpark" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseParkCarpark)" 
             id="manoeuvres-reverse-park-carpark-radio" class="gds-radio-button">
@@ -35,6 +38,7 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
+            [attr.disabled]="(shouldManoeuvreDisable('forwardPark') | async) ? 'disabled' : null"
             [checked]="asyncData.manoeuvre.selectedForwardPark" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedForwardPark)" 
             id="manoeuvres-forward-park-radio" class="gds-radio-button">

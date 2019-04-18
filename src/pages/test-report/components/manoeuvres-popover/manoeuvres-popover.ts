@@ -10,6 +10,22 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
 import { ManoeuvreTypes } from './manoeuvres-popover.constants';
 import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { map } from 'rxjs/operators';
+import { startsWith, pickBy, isEmpty, some } from 'lodash';
+
+enum ManoeuvrePrefix {
+  reverseRight = 'outcomeReverseRight',
+  reverseParkRoad = 'outcomeReverseParkRoad',
+  reverseParkCarpark = 'outcomeReverseParkCarpark',
+  forwardPark = 'outcomeForwardPark',
+}
+
+interface ManoeuvresDisabledState {
+  reverseRight: boolean;
+  reverseParkRoad: boolean;
+  reverseParkCarpark: boolean;
+  forwardPark: boolean;
+}
 
 @Component({
   selector: 'manoeuvres-popover',
@@ -20,6 +36,7 @@ export class ManoeuvresPopoverComponent {
   public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
   competencies = ManoeuvreCompetencies;
+  manoeuvresWithFaults$: Observable<ManoeuvresDisabledState>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -30,9 +47,30 @@ export class ManoeuvresPopoverComponent {
       select(getTestData),
       select(getManoeuvres),
     );
+    this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
+      map(manoeuvres => ({
+        reverseRight: this.manoeuvreHasFaults(ManoeuvrePrefix.reverseRight, manoeuvres),
+        reverseParkRoad: this.manoeuvreHasFaults(ManoeuvrePrefix.reverseParkRoad, manoeuvres),
+        reverseParkCarpark: this.manoeuvreHasFaults(ManoeuvrePrefix.reverseParkCarpark, manoeuvres),
+        forwardPark: this.manoeuvreHasFaults(ManoeuvrePrefix.forwardPark, manoeuvres),
+      })),
+    );
   }
 
   recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
     this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
+  }
+
+  shouldManoeuvreDisable(manoeuvre: string): Observable<boolean> {
+    return this.manoeuvresWithFaults$.pipe(
+      map((manoeuvresWithFaults: ManoeuvresDisabledState) => {
+        const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
+        return some(otherManoeuvres, (value: boolean) => value);
+      }),
+    );
+  }
+
+  manoeuvreHasFaults(manoeuvrePrefix: ManoeuvrePrefix, manoeuvres: Manoeuvres): boolean {
+    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefix)));
   }
 }
