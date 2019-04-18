@@ -15,6 +15,8 @@ import {
   RemoveDangerousFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
+  RemoveManoeuvreFault,
+  ControlledStopComplete,
 } from '../test-data.actions';
 import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
@@ -171,6 +173,42 @@ describe('TestDataReducer reducer', () => {
         );
         // Assert
         expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.D);
+      });
+    });
+    describe('REMOVE_MANOEUVRE_FAULT', () => {
+      it('should remove the outcome for the selected manoeuvre', () => {
+        // Arrange
+        initialState.manoeuvres = {
+          selectedControlledStop: true,
+          outcomeControlledStop: 'DF',
+        };
+        // Act
+        const result = testDataReducer(
+          initialState,
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop),
+        );
+        // Assert
+        expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
+        expect(result.manoeuvres.outcomeControlledStop).toBeUndefined();
+      });
+      it('should not affect the outcome of other manoeuvres', () => {
+        // Arrange
+        initialState.manoeuvres = {
+          selectedReverseParkCarpark: true,
+          outcomeForwardParkControl: 'D',
+          selectedControlledStop: true,
+          outcomeControlledStop: 'DF',
+        };
+        // Act
+        const result = testDataReducer(
+          initialState,
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop),
+        );
+        // Assert
+        expect(result.manoeuvres.selectedReverseParkCarpark).toBeTruthy();
+        expect(result.manoeuvres.outcomeForwardParkControl).toEqual(CompetencyOutcome.D);
+        expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
+        expect(result.manoeuvres.outcomeControlledStop).toBeUndefined();
       });
     });
   });
@@ -345,15 +383,24 @@ describe('TestDataReducer reducer', () => {
       expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
     });
 
-    it('should toggle the controlled stop (false when dispatched second time)', () => {
+    it('should remove the controlled stop property when dispatched second time', () => {
       const state: TestData = {
         manoeuvres: {},
       };
       const modifiedState = testDataReducer(state, new ToggleControlledStop());
       const result = testDataReducer(modifiedState, new ToggleControlledStop());
 
-      expect(result.manoeuvres.selectedControlledStop).toBeFalsy();
+      expect(result.manoeuvres.selectedControlledStop).toBeUndefined();
 
+    });
+  });
+  describe('CONTROLLED_STOP_COMPLETE', () => {
+    it('should set controlled stop to true when set the first time', () => {
+      const state: TestData = {
+        manoeuvres: {},
+      };
+      const result = testDataReducer(state, new ControlledStopComplete());
+      expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
     });
   });
 

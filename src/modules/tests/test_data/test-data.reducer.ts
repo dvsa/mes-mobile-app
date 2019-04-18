@@ -3,7 +3,7 @@ import * as testDataActions from './test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { ManoeuvreTypes } from '../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { pickBy, startsWith } from 'lodash';
-import { Competencies } from './test-data.constants';
+import { Competencies, ManoeuvreCompetencies } from './test-data.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
@@ -49,6 +49,13 @@ export function testDataReducer(
           ...state.manoeuvres,
           [action.payload]: CompetencyOutcome.D,
         },
+      };
+    case testDataActions.REMOVE_MANOEUVRE_FAULT:
+      const manoeuvre = action.payload as ManoeuvreCompetencies;
+      const { [manoeuvre]: removedManoeuvre, ...updatedManoeuvres } = state.manoeuvres;
+      return {
+        ...state,
+        manoeuvres: updatedManoeuvres,
       };
     case testDataActions.ADD_DRIVING_FAULT:
       return {
@@ -143,7 +150,14 @@ export function testDataReducer(
           adviceGivenPlanning: !state.eco.adviceGivenPlanning,
         },
       };
-    case testDataActions.TOGGLE_CONTROLLED_STOP :
+    case testDataActions.TOGGLE_CONTROLLED_STOP:
+      if (state.manoeuvres.selectedControlledStop) {
+        const { selectedControlledStop : removedManoeuvre, ...updatedManoeuvres } = state.manoeuvres;
+        return {
+          ...state,
+          manoeuvres: updatedManoeuvres,
+        };
+      }
       return {
         ...state,
         manoeuvres: {
@@ -157,14 +171,6 @@ export function testDataReducer(
         manoeuvres: {
           ...state.manoeuvres,
           selectedControlledStop: true,
-        },
-      };
-    case testDataActions.CONTROLLED_STOP_PENDING:
-      return {
-        ...state,
-        manoeuvres: {
-          ...state.manoeuvres,
-          selectedControlledStop: false,
         },
       };
     default:
