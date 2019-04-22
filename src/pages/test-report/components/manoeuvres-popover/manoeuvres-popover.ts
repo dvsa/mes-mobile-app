@@ -81,7 +81,7 @@ export class ManoeuvresPopoverComponent {
    * @returns boolean
    * Looks up the manoeuvre 'outcome' keys and returns true if they exist
    */
-  manoeuvreHasFaults(manoeuvrePrefixes: ManoeuvrePrefixes, manoeuvres: Manoeuvres): boolean {
-    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefixes)));
+  manoeuvreHasFaults(manoeuvrePrefix: ManoeuvrePrefixes, manoeuvres: Manoeuvres): boolean {
+    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefix)));
   }
 }
