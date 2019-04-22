@@ -13,14 +13,14 @@ import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-
 import { map } from 'rxjs/operators';
 import { startsWith, pickBy, isEmpty, some } from 'lodash';
 
-enum ManoeuvrePrefix {
+enum ManoeuvrePrefixes {
   reverseRight = 'outcomeReverseRight',
   reverseParkRoad = 'outcomeReverseParkRoad',
   reverseParkCarpark = 'outcomeReverseParkCarpark',
   forwardPark = 'outcomeForwardPark',
 }
 
-interface ManoeuvresDisabledState {
+interface ManoeuvresFaultState {
   reverseRight: boolean;
   reverseParkRoad: boolean;
   reverseParkCarpark: boolean;
@@ -36,7 +36,7 @@ export class ManoeuvresPopoverComponent {
   public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
   competencies = ManoeuvreCompetencies;
-  manoeuvresWithFaults$: Observable<ManoeuvresDisabledState>;
+  manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -49,10 +49,10 @@ export class ManoeuvresPopoverComponent {
     );
     this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
       map(manoeuvres => ({
-        reverseRight: this.manoeuvreHasFaults(ManoeuvrePrefix.reverseRight, manoeuvres),
-        reverseParkRoad: this.manoeuvreHasFaults(ManoeuvrePrefix.reverseParkRoad, manoeuvres),
-        reverseParkCarpark: this.manoeuvreHasFaults(ManoeuvrePrefix.reverseParkCarpark, manoeuvres),
-        forwardPark: this.manoeuvreHasFaults(ManoeuvrePrefix.forwardPark, manoeuvres),
+        reverseRight: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseRight, manoeuvres),
+        reverseParkRoad: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkRoad, manoeuvres),
+        reverseParkCarpark: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkCarpark, manoeuvres),
+        forwardPark: this.manoeuvreHasFaults(ManoeuvrePrefixes.forwardPark, manoeuvres),
       })),
     );
   }
@@ -69,19 +69,19 @@ export class ManoeuvresPopoverComponent {
    */
   shouldManoeuvreDisable(manoeuvre: string): Observable<boolean> {
     return this.manoeuvresWithFaults$.pipe(
-      map((manoeuvresWithFaults: ManoeuvresDisabledState) => {
+      map((manoeuvresWithFaults: ManoeuvresFaultState) => {
         const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
         return some(otherManoeuvres, (value: boolean) => value);
       }),
     );
   }
   /**
-   * @param  {ManoeuvrePrefix} manoeuvrePrefix
+   * @param  {ManoeuvrePrefixes} manoeuvrePrefixes
    * @param  {Manoeuvres} manoeuvres
    * @returns boolean
    * Looks up the manoeuvre 'outcome' keys and returns true if they exist
    */
-  manoeuvreHasFaults(manoeuvrePrefix: ManoeuvrePrefix, manoeuvres: Manoeuvres): boolean {
-    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefix)));
+  manoeuvreHasFaults(manoeuvrePrefixes: ManoeuvrePrefixes, manoeuvres: Manoeuvres): boolean {
+    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefixes)));
   }
 }
