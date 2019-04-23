@@ -130,7 +130,7 @@ describe('TestDataReducer reducer', () => {
       expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
       expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
       expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
-      expect(result.manoeuvres.outcomeControlledStop).toBe('S');
+      expect(result.manoeuvres.outcomeControlledStop).toBe('DF');
     });
     it('should keep any outcome data from other manoeuvres when changing selected manoeuvre', () => {
       const state: TestData = {
