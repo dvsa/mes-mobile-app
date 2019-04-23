@@ -16,11 +16,12 @@ import { StartTest } from '../../../../journal/journal.actions';
 import {
   ControlledStopComplete,
   AddManoeuvreDrivingFault,
+  RemoveManoeuvreFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
-fdescribe('ControlledStopComponent', () => {
+describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
   let component: ControlledStopComponent;
   let store$: Store<StoreModel>;
@@ -119,6 +120,64 @@ fdescribe('ControlledStopComponent', () => {
           new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
       });
     });
+
+    describe('removeManoeuvreDrivingFault', () => {
+      it('should dispatch a REMOVE_MANOEUVRE_FAULT action for press', () => {
+        component.isRemoveFaultMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+
+      });
+      it('should dispatch a REMOVE_MANOEUVRE_FAULT action for tap', () => {
+        component.isRemoveFaultMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+      });
+      it('should not dispatch a REMOVE_MANOEUVRE_FAULT action if in the wrong mode', () => {
+        component.isRemoveFaultMode = true;
+        component.isSeriousMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+
+        expect(storeDispatchSpy).not.toHaveBeenCalledWith(
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+      });
+
+      it('should dispatch a REMOVE_MANOEUVRE_FAULT action if there is a serious fault', () => {
+        component.isRemoveFaultMode = true;
+        component.isSeriousMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+      });
+      it('should dispatch a REMOVE_MANOEUVRE_FAULT action if there is a dangerous fault', () => {
+        component.isRemoveFaultMode = true;
+        component.isDangerousMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -132,39 +191,34 @@ fdescribe('ControlledStopComponent', () => {
       expect(drivingFaultsBadge.count).toBe(1);
     });
 
-    it('should pass the allow ripple value to the competency button component', () => {
-      const competencyButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-competency'))
-        .componentInstance as CompetencyButtonComponent;
-
-      component.isRemoveFaultMode = false;
-      component.isSeriousMode = true;
-
+    it('should pass a ripple value of false to the competency button component', () => {
       fixture.detectChanges();
-      expect(competencyButton.ripple).toBeTruthy();
-
       component.isRemoveFaultMode = true;
       component.isSeriousMode = true;
+      const competencyButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-competency'))
+        .componentInstance as CompetencyButtonComponent;
 
       fixture.detectChanges();
       expect(competencyButton.ripple).toBeFalsy();
     });
+
+    describe('Tick button effects', () => {
+      it('should have added no classes to the tick button', () => {
+        const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
+
+        fixture.detectChanges();
+        expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick');
+      });
+
+      it('should have added a checked class to the tick button', () => {
+        component.toggleControlledStop();
+        const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
+
+        fixture.detectChanges();
+        expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick checked');
+      });
+
+    });
   });
 
-  describe('Tick button effects', () => {
-    it('should have added no classes to the tick button', () => {
-      const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
-
-      fixture.detectChanges();
-      expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick');
-    });
-
-    it('should have added a complete class to the tick button', () => {
-      component.toggleControlledStop();
-      const tickButton = fixture.debugElement.query(By.css('competency-button.controlled-stop-tick'));
-
-      fixture.detectChanges();
-      expect(tickButton.nativeElement.className).toEqual('controlled-stop-tick checked');
-    });
-
-  });
 });

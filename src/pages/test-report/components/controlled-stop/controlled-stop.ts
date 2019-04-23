@@ -52,6 +52,7 @@ export class ControlledStopComponent implements OnInit {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
 
+  selectedControlledStop: boolean = false;
   manoeuvreCompetencyOutcome: ManoeuvreOutcome;
 
   constructor(private store$: Store<StoreModel>) {}
@@ -87,6 +88,7 @@ export class ControlledStopComponent implements OnInit {
       isRemoveFaultMode$,
       isSeriousMode$,
       isDangerousMode$,
+      selectedControlledStop$,
       manoeuvreCompetencyOutcome$,
     } = this.componentState;
 
@@ -94,6 +96,7 @@ export class ControlledStopComponent implements OnInit {
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
+      selectedControlledStop$.pipe(map(value => this.selectedControlledStop = value)),
       manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
     );
 
