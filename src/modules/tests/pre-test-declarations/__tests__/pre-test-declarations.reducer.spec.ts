@@ -25,8 +25,11 @@ describe('PreTestDeclarations reducer', () => {
   });
 
   it('should clear the signature when the SignatureDataChanged action is received', () => {
-    initialState.preTestSignature = 'SomeSignatureData';
-    const result = preTestDeclarationsReducer(initialState, new SignatureDataCleared());
+    const state: PreTestDeclarations = {
+      ...initialState,
+      preTestSignature: 'SomeSignatureData',
+    };
+    const result = preTestDeclarationsReducer(state, new SignatureDataCleared());
     expect(result.preTestSignature).toEqual('');
   });
 

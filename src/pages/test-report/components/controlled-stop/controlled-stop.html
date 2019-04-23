@@ -5,11 +5,11 @@
       [onPress]="toggleControlledStop"
       [ripple]="false"
       [ngClass]="{
-        'checked' : componentState.selectedControlledStop$ | async
+        'checked' : selectedControlledStop
       }"
     >
       <span class='tickwrapper'>
-        <tick-indicator [ticked]="componentState.selectedControlledStop$ | async"></tick-indicator>
+        <tick-indicator [ticked]="selectedControlledStop"></tick-indicator>
       </span>
     </competency-button>
   </ion-col>
@@ -17,13 +17,13 @@
     <competency-button class="controlled-stop-competency"
       [onTap]="onTap"
       [onPress]="onPress"
-      [ripple]="allowRipple"
+      [ripple]="canButtonRipple()"
     >
-      <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
+      <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
       <div class='competency-label'>Controlled stop</div>
       <div class="fault-wrapper">
-        <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
-        <dangerous-fault-badge [showBadge]="hasDangerousFault"></dangerous-fault-badge>
+        <serious-fault-badge [showBadge]="hasSeriousFault()"></serious-fault-badge>
+        <dangerous-fault-badge [showBadge]="hasDangerousFault()"></dangerous-fault-badge>
       </div>
     </competency-button>
   </ion-col>
