@@ -24,6 +24,12 @@
       background-color: black;
       box-shadow: inset 0 0 0 6px white;
     }
+    &:disabled + label {
+      color: map-get($colors-gds, "gds-grey-2");
+    }
+    &:disabled + label:before {
+      border-color: map-get($colors-gds, "gds-grey-2");
+    }
   }
   .popover-content {
     margin-left: 68px;

@@ -1,5 +1,5 @@
 <ng-container *ngIf="{
-  manoeuvre: manoeuvres$ | async
+  manoeuvres: manoeuvres$ | async
 } as asyncData">
   <ion-grid class="popover-content">
     <ion-row>
@@ -7,7 +7,8 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
-            [checked]="asyncData.manoeuvre.selectedReverseRight" 
+            [attr.disabled]="(shouldManoeuvreDisable('reverseRight') | async) ? 'disabled' : null"
+            [checked]="asyncData.manoeuvres.selectedReverseRight" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseRight)" 
             id="manoeuvres-reverse-right-radio" class="gds-radio-button">
             <label for="manoeuvres-reverse-right-radio" class="radio-label">Reverse/ Right</label>
@@ -16,7 +17,8 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
-            [checked]="asyncData.manoeuvre.selectedReverseParkRoad" 
+            [attr.disabled]="(shouldManoeuvreDisable('reverseParkRoad') | async) ? 'disabled' : null"
+            [checked]="asyncData.manoeuvres.selectedReverseParkRoad" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseParkRoad)" 
             id="manoeuvres-reverse-park-road-radio" class="gds-radio-button">
             <label for="manoeuvres-reverse-park-road-radio" class="radio-label">Reverse Park (Road)</label>
@@ -26,7 +28,8 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
-            [checked]="asyncData.manoeuvre.selectedReverseParkCarpark" 
+            [attr.disabled]="(shouldManoeuvreDisable('reverseParkCarpark') | async) ? 'disabled' : null"
+            [checked]="asyncData.manoeuvres.selectedReverseParkCarpark" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedReverseParkCarpark)" 
             id="manoeuvres-reverse-park-carpark-radio" class="gds-radio-button">
             <label for="manoeuvres-reverse-park-carpark-radio" class="radio-label">Reverse Park (Car park)</label>
@@ -35,14 +38,15 @@
         <ion-row>
           <ion-col>
             <input type="radio" name="manoeuvres" 
-            [checked]="asyncData.manoeuvre.selectedForwardPark" 
+            [attr.disabled]="(shouldManoeuvreDisable('forwardPark') | async) ? 'disabled' : null"
+            [checked]="asyncData.manoeuvres.selectedForwardPark" 
             (click)="recordManoeuvreSelection(manoeuvreTypes.selectedForwardPark)" 
             id="manoeuvres-forward-park-radio" class="gds-radio-button">
             <label for="manoeuvres-forward-park-radio" class="radio-label">Forward Park</label>
           </ion-col>
         </ion-row>
       </ion-col>
-      <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedReverseRight">
+      <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvres.selectedReverseRight">
         <manoeuvre-competency 
           [competency]="competencies.outcomeReverseRightControl"
           [attr.id]="competencies.outcomeReverseRightControl"
@@ -53,7 +57,7 @@
           [competency]="competencies.outcomeReverseRightObservation"
           ></manoeuvre-competency>
       </ion-col>
-      <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedForwardPark">
+      <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvres.selectedForwardPark">
         <manoeuvre-competency 
           [competency]="competencies.outcomeForwardParkControl"
           [attr.id]="competencies.outcomeForwardParkControl"
@@ -64,7 +68,7 @@
           [attr.id]="competencies.outcomeForwardParkObservation"
         ></manoeuvre-competency>
       </ion-col>
-        <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedReverseParkCarpark">
+        <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvres.selectedReverseParkCarpark">
           <manoeuvre-competency 
             [competency]="competencies.outcomeReverseParkCarparkControl"
             [attr.id]="competencies.outcomeReverseParkCarparkControl"
@@ -75,7 +79,7 @@
             [competency]="competencies.outcomeReverseParkCarparkObservation"
           ></manoeuvre-competency>
         </ion-col>
-      <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvre.selectedReverseParkRoad">
+      <ion-col class="manoeuvre-competencies-container" col-8 *ngIf="asyncData.manoeuvres.selectedReverseParkRoad">
         <manoeuvre-competency 
           [competency]="competencies.outcomeReverseParkRoadControl"
           [attr.id]="competencies.outcomeReverseParkRoadControl"

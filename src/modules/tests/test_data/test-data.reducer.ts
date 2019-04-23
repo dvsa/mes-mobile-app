@@ -1,9 +1,9 @@
 import { TestData, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import * as testDataActions from './test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
+import { Competencies, ManoeuvreCompetencies } from './test-data.constants';
 import { ManoeuvreTypes } from '../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { pickBy, startsWith } from 'lodash';
-import { Competencies, ManoeuvreCompetencies } from './test-data.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
@@ -182,7 +182,7 @@ export function testDataReducer(
  * @param  {ManoeuvreTypes} manoeuvre
  * @returns Manoeuvres
  * Generate the manoeuvres slice of state when recording a new manoeuvre
- * Needs a separate function due to the need to preserve the outcomes of other manoeuvres
+ * Needs a separate function due to the need to preserve the outcomes of controlled stop
  */
 const preserveOutcomesAndGenerateNewManoeuvresState = (
   currentState: Manoeuvres,

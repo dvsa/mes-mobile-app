@@ -10,6 +10,22 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
 import { ManoeuvreTypes } from './manoeuvres-popover.constants';
 import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { map } from 'rxjs/operators';
+import { startsWith, pickBy, isEmpty, some } from 'lodash';
+
+export enum ManoeuvrePrefixes {
+  reverseRight = 'outcomeReverseRight',
+  reverseParkRoad = 'outcomeReverseParkRoad',
+  reverseParkCarpark = 'outcomeReverseParkCarpark',
+  forwardPark = 'outcomeForwardPark',
+}
+
+interface ManoeuvresFaultState {
+  reverseRight: boolean;
+  reverseParkRoad: boolean;
+  reverseParkCarpark: boolean;
+  forwardPark: boolean;
+}
 
 @Component({
   selector: 'manoeuvres-popover',
@@ -20,6 +36,7 @@ export class ManoeuvresPopoverComponent {
   public manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
   competencies = ManoeuvreCompetencies;
+  manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -30,9 +47,41 @@ export class ManoeuvresPopoverComponent {
       select(getTestData),
       select(getManoeuvres),
     );
+    this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
+      map((manoeuvres: Manoeuvres) => ({
+        reverseRight: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseRight, manoeuvres),
+        reverseParkRoad: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkRoad, manoeuvres),
+        reverseParkCarpark: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkCarpark, manoeuvres),
+        forwardPark: this.manoeuvreHasFaults(ManoeuvrePrefixes.forwardPark, manoeuvres),
+      })),
+    );
   }
 
   recordManoeuvreSelection(manoeuvre: ManoeuvreTypes): void {
     this.store$.dispatch(new RecordManoeuvresSelection(manoeuvre));
+  }
+  /**
+   * @param  {string} manoeuvre
+   * @returns Observable<boolean>
+   * Called by the manoeuvre input elements in manoeuvres-popover.html
+   * Tells the input whether it needs to be disabled based on whether
+   * or not another manoeuvre has a fault recorded
+   */
+  shouldManoeuvreDisable(manoeuvre: ManoeuvrePrefixes): Observable<boolean> {
+    return this.manoeuvresWithFaults$.pipe(
+      map((manoeuvresWithFaults: ManoeuvresFaultState) => {
+        const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
+        return some(otherManoeuvres, (value: boolean) => value);
+      }),
+    );
+  }
+  /**
+   * @param  {ManoeuvrePrefixes} manoeuvrePrefixes
+   * @param  {Manoeuvres} manoeuvres
+   * @returns boolean
+   * Looks up the manoeuvre 'outcome' keys and returns true if they exist
+   */
+  manoeuvreHasFaults(manoeuvrePrefix: ManoeuvrePrefixes, manoeuvres: Manoeuvres): boolean {
+    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefix)));
   }
 }

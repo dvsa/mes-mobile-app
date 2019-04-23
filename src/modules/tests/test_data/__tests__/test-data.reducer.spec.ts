@@ -119,7 +119,8 @@ describe('TestDataReducer reducer', () => {
         manoeuvres: {
           selectedReverseParkCarpark: true,
           selectedControlledStop: true,
-          outcomeControlledStop: 'S',
+          outcomeForwardParkControl: 'S',
+          outcomeControlledStop: 'DF',
         },
       };
       const result = testDataReducer(
@@ -129,14 +130,16 @@ describe('TestDataReducer reducer', () => {
       expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
       expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
       expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
-      expect(result.manoeuvres.outcomeControlledStop).toBe('S');
+      expect(result.manoeuvres.outcomeControlledStop).toBe('DF');
     });
     it('should keep any outcome data from other manoeuvres when changing selected manoeuvre', () => {
       const state: TestData = {
         ...initialState,
         manoeuvres: {
           selectedReverseParkCarpark: true,
-          outcomeForwardParkControl: 'DF',
+          selectedControlledStop: true,
+          outcomeForwardParkControl: 'S',
+          outcomeControlledStop: 'DF',
         },
       };
       const result = testDataReducer(
@@ -144,8 +147,9 @@ describe('TestDataReducer reducer', () => {
         new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
       );
       expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
-      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
-      expect(result.manoeuvres.outcomeForwardParkControl).toBe('DF');
+      expect(result.manoeuvres.outcomeForwardParkControl).toEqual('S');
+      expect(result.manoeuvres.selectedControlledStop).toBe(true);
+      expect(result.manoeuvres.outcomeControlledStop).toBe('DF');
     });
     describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
       it('should add a "DF" outcome to the selected manoeuvre', () => {
