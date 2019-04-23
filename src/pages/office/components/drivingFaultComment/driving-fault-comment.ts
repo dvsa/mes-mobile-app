@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { AddDrivingFaultComment } from '../../../../modules/tests/test_data/test-data.actions';
-import { extractPropertyNameFromId } from '../../../../shared/functions/property-name-extraction';
+import { extractPropertyNameFromId } from '../../../../shared/helpers/property-name-extraction';
 
 interface DrivingFaultCommentComponentState {
   competencyComment$: Observable<string>;
