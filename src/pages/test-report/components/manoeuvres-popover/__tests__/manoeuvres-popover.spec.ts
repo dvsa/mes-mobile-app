@@ -18,7 +18,7 @@ import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../journal/journal.actions';
 import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
 
-fdescribe('ManoeuvresPopoverComponent', () => {
+describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
   let component: ManoeuvresPopoverComponent;
   let store$: Store<StoreModel>;
