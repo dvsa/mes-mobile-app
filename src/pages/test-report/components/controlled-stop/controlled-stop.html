@@ -17,7 +17,7 @@
     <competency-button class="controlled-stop-competency"
       [onTap]="onTap"
       [onPress]="onPress"
-      [ripple]="allowRipple"
+      [ripple]="canButtonRipple()"
     >
       <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
       <div class='competency-label'>Controlled stop</div>

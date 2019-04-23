@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -48,14 +48,11 @@ export class ControlledStopComponent implements OnInit {
   componentState: ControlledStopComponentState;
   subscription: Subscription;
 
-  allowRipple: boolean = true;
-
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
 
   manoeuvreCompetencyOutcome: ManoeuvreOutcome;
-  controlledStopCompleted: boolean = false;
 
   constructor(private store$: Store<StoreModel>) {}
 
@@ -90,7 +87,6 @@ export class ControlledStopComponent implements OnInit {
       isRemoveFaultMode$,
       isSeriousMode$,
       isDangerousMode$,
-      selectedControlledStop$,
       manoeuvreCompetencyOutcome$,
     } = this.componentState;
 
@@ -98,10 +94,8 @@ export class ControlledStopComponent implements OnInit {
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
-      selectedControlledStop$.pipe(map(toggle => this.controlledStopCompleted = toggle)),
       manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
-    )
-    .pipe(tap(this.canButtonRipple));
+    );
 
     this.subscription = merged$.subscribe();
 
@@ -121,26 +115,22 @@ export class ControlledStopComponent implements OnInit {
     this.addOrRemoveFault(true);
   }
 
-  canButtonRipple = (): void => {
+  canButtonRipple = (): boolean => {
     if (this.isRemoveFaultMode) {
       if (this.hasDangerousFault() && this.isDangerousMode) {
-        this.allowRipple = true;
-        return;
+        return true;
       }
 
       if (this.hasSeriousFault() && this.isSeriousMode) {
-        this.allowRipple = true;
-        return;
+        return true;
       }
 
       if (!this.isSeriousMode && !this.isDangerousMode && this.faultCount() > 0) {
-        this.allowRipple = true;
-        return;
+        return true;
       }
-      this.allowRipple = false;
-    } else {
-      this.allowRipple = !(this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0);
+      return false;
     }
+    return !(this.hasDangerousFault() || this.hasSeriousFault() || this.faultCount() > 0);
   }
 
   toggleControlledStop = (): void => {
