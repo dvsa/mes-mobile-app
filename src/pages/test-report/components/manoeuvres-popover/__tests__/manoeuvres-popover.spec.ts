@@ -4,16 +4,21 @@ import { IonicModule } from 'ionic-angular';
 import { CompetencyComponent } from '../../competency/competency';
 import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
 import { AppModule } from '../../../../../app/app.module';
-import { RecordManoeuvresSelection } from '../../../../../modules/tests/test_data/test-data.actions';
+import {
+  RecordManoeuvresSelection, AddManoeuvreDrivingFault,
+} from '../../../../../modules/tests/test_data/test-data.actions';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
+import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { StartTest } from '../../../../journal/journal.actions';
+import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
 
-describe('ManoeuvresPopoverComponent', () => {
+fdescribe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
   let component: ManoeuvresPopoverComponent;
   let store$: Store<StoreModel>;
@@ -29,15 +34,18 @@ describe('ManoeuvresPopoverComponent', () => {
       imports: [
         IonicModule,
         AppModule,
+        StoreModule.forRoot({ tests: testsReducer }),
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(ManoeuvresPopoverComponent);
         component = fixture.componentInstance;
+        fixture.detectChanges();
       });
     store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
+    store$.dispatch(new StartTest(1003));
+    spyOn(store$, 'dispatch').and.callThrough();
   }));
 
   describe('Class', () => {
@@ -46,14 +54,15 @@ describe('ManoeuvresPopoverComponent', () => {
     });
     it('should display the correct competencies against each manoeuvre', () => {
       component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
-      expect(fixture.debugElement.query(By.css('#reverseParkRoadControl'))).toBeDefined();
-      expect(fixture.debugElement.query(By.css('#reverseParkRoadObservation'))).toBeDefined();
-      expect(fixture.debugElement.query(By.css('#reverseRightControl'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#reverseRightObservation'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#reverseParkCarparkControl'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#reverseParkCarparkObservation'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#forwardParkControl'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#forwardParkObservation'))).toBeNull();
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#outcomeReverseParkRoadControl'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('#outcomeReverseParkRoadObservation'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('#outcomeReverseRightControl'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#outcomeReverseRightObservation'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#outcomeReverseParkCarparkControl'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#outcomeReverseParkCarparkObservation'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#outcomeForwardParkControl'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#outcomeForwardParkObservation'))).toBeNull();
     });
     describe('record manoeuvre', () => {
       it('should dispatch a RECORD_MANOEUVRES_SELECTION action', () => {
@@ -61,6 +70,32 @@ describe('ManoeuvresPopoverComponent', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(
           new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
         );
+      });
+    });
+    describe('disabling manoeuvres', () => {
+      it('should not disable manoeuvres when a manoeuvre is selected', () => {
+        component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio'))
+          .nativeElement.disabled).toBe(false);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-carpark-radio'))
+          .nativeElement.disabled).toBe(false);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-forward-park-radio'))
+          .nativeElement.disabled).toBe(false);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
+          .nativeElement.disabled).toBe(false);
+      });
+      it('should disable other manoeuvres from being selected when a fault is added', () => {
+        store$.dispatch(new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeReverseRightControl));
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-carpark-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-forward-park-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
+          .nativeElement.disabled).toBe(false);
       });
     });
   });
