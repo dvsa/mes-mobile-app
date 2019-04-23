@@ -7,10 +7,12 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { OfficeComponentsModule } from './components/office.components.module';
 import { RouteNumberComponent } from './components/route-number/route-number';
+import { CandidateDescriptionComponent } from './components/candidate-description/candidate-description';
 @NgModule({
   declarations: [
     OfficePage,
     RouteNumberComponent,
+    CandidateDescriptionComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),

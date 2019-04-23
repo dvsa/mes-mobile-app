@@ -2,25 +2,30 @@
   <ion-grid no-padding>
     <ion-row align-items-right>
       <ion-col *ngIf="showOutcome()">
-        <span class="outcome"><h4>{{outcome}}</h4></span>
+        <span class="outcome">
+          <h4>{{outcome}}</h4>
+        </span>
       </ion-col>
       <ion-col *ngIf="showStartTestButton()">
         <span>
-          <button
-            class="mes-primary-button"
-            ion-button
-            (click)="startTest()"
-            [disabled]="!canStartTest"
-          >
+          <button class="mes-primary-button" ion-button (click)="startTest()" [disabled]="!canStartTest">
             <h3>Start test</h3>
           </button>
         </span>
       </ion-col>
       <ion-col *ngIf="showSubmitTestButton()">
-        <span><button class="mes-secondary-button" ion-button navPush="OfficePage"><h3>Submit</h3></button></span>
+        <span>
+          <button class="mes-secondary-button" ion-button>
+            <h3>Submit</h3>
+          </button>
+        </span>
       </ion-col>
       <ion-col *ngIf="needsWriteUp()">
-        <span><button class="mes-secondary-button mes-warning-button" ion-button><h3 class="write-up-label">Write-up</h3></button></span>
+        <span>
+          <button class="mes-secondary-button mes-warning-button" ion-button navPush="OfficePage">
+            <h3 class="write-up-label">Write-up</h3>
+          </button>
+        </span>
       </ion-col>
     </ion-row>
   </ion-grid>

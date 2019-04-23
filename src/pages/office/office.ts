@@ -69,6 +69,7 @@ import { FaultCount } from '../../shared/constants/competencies/catb-competencie
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { merge } from 'rxjs/observable/merge';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -109,9 +110,6 @@ export class OfficePage extends BasePageComponent {
   toast: Toast;
   drivingFaultCtrl: String = 'drivingFaultCtrl';
 
-  @ViewChild('candidateDescriptionInput')
-  candidateDescriptionInput: ElementRef;
-
   @ViewChild('additionalInformationInput')
   additionalInformationInput: ElementRef;
 
@@ -119,6 +117,7 @@ export class OfficePage extends BasePageComponent {
   dangerousFaultComment: QueryList<ElementRef>;
 
   inputSubscriptions: Subscription[] = [];
+  storeSubscription: Subscription;
   drivingFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
@@ -257,6 +256,11 @@ export class OfficePage extends BasePageComponent {
       ),
     };
 
+    this.storeSubscription = merge(
+      this.pageState.routeNumber$,
+      this.pageState.candidateDescription$,
+    ).subscribe();
+
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
       if (display) {
         this.getDrivingFaultCtrls();
@@ -269,7 +273,6 @@ export class OfficePage extends BasePageComponent {
         this.additionalInformationInput,
         AdditionalInformationChanged,
       ),
-      this.inputChangeSubscriptionDispatchingAction(this.candidateDescriptionInput, CandidateDescriptionChanged),
     ];
 
   }
@@ -284,6 +287,7 @@ export class OfficePage extends BasePageComponent {
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
     this.drivingFaultSubscription.unsubscribe();
+    this.storeSubscription.unsubscribe();
   }
 
   popToRoot() {
@@ -381,6 +385,10 @@ export class OfficePage extends BasePageComponent {
 
   routeNumberChanged(routeNumber: number) {
     this.store$.dispatch(new RouteNumberChanged(routeNumber));
+  }
+
+  candidateDescriptionChanged(candidateDescription: string) {
+    this.store$.dispatch(new CandidateDescriptionChanged(candidateDescription));
   }
 
   private createToast = (errorMessage: string) => {
