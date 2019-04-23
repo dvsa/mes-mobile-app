@@ -119,7 +119,8 @@ describe('TestDataReducer reducer', () => {
         manoeuvres: {
           selectedReverseParkCarpark: true,
           selectedControlledStop: true,
-          outcomeControlledStop: 'S',
+          outcomeForwardParkControl: 'S',
+          outcomeControlledStop: 'DF',
         },
       };
       const result = testDataReducer(
@@ -146,7 +147,7 @@ describe('TestDataReducer reducer', () => {
         new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
       );
       expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
-      expect(result.manoeuvres.outcomeForwardParkControl).toBeUndefined();
+      expect(result.manoeuvres.outcomeForwardParkControl).toEqual('S');
       expect(result.manoeuvres.selectedControlledStop).toBe(true);
       expect(result.manoeuvres.outcomeControlledStop).toBe('DF');
     });
