@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { AddDrivingFaultComment } from '../../../../modules/tests/test_data/test-data.actions';
+import { extractPropertyNameFromId } from '../../../../shared/functions/property-name-extraction';
 
 interface DrivingFaultCommentComponentState {
   competencyComment$: Observable<string>;
@@ -87,13 +88,7 @@ export class DrivingFaultCommentComponent implements OnInit {
     );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(
-        new actionType(this.extractPropertyNameFromId(id), newVal)));
+        new actionType(extractPropertyNameFromId(id), newVal)));
     return subscription;
-  }
-
-  extractPropertyNameFromId(id: any) {
-    const startPos = id.indexOf('-');
-    const returnString = id.substring(startPos + 1);
-    return returnString;
   }
 }
