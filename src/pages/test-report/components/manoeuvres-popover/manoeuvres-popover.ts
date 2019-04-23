@@ -13,7 +13,7 @@ import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-
 import { map } from 'rxjs/operators';
 import { startsWith, pickBy, isEmpty, some } from 'lodash';
 
-enum ManoeuvrePrefixes {
+export enum ManoeuvrePrefixes {
   reverseRight = 'outcomeReverseRight',
   reverseParkRoad = 'outcomeReverseParkRoad',
   reverseParkCarpark = 'outcomeReverseParkCarpark',
@@ -48,7 +48,7 @@ export class ManoeuvresPopoverComponent {
       select(getManoeuvres),
     );
     this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
-      map(manoeuvres => ({
+      map((manoeuvres: Manoeuvres) => ({
         reverseRight: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseRight, manoeuvres),
         reverseParkRoad: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkRoad, manoeuvres),
         reverseParkCarpark: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkCarpark, manoeuvres),
@@ -67,7 +67,7 @@ export class ManoeuvresPopoverComponent {
    * Tells the input whether it needs to be disabled based on whether
    * or not another manoeuvre has a fault recorded
    */
-  shouldManoeuvreDisable(manoeuvre: string): Observable<boolean> {
+  shouldManoeuvreDisable(manoeuvre: ManoeuvrePrefixes): Observable<boolean> {
     return this.manoeuvresWithFaults$.pipe(
       map((manoeuvresWithFaults: ManoeuvresFaultState) => {
         const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
