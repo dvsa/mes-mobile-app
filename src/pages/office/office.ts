@@ -109,9 +109,6 @@ export class OfficePage extends BasePageComponent {
   toast: Toast;
   drivingFaultCtrl: String = 'drivingFaultCtrl';
 
-  @ViewChild('routeInput')
-  routeInput: ElementRef;
-
   @ViewChild('candidateDescriptionInput')
   candidateDescriptionInput: ElementRef;
 
@@ -268,7 +265,6 @@ export class OfficePage extends BasePageComponent {
 
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
-      this.inputChangeSubscriptionDispatchingAction(this.routeInput, RouteNumberChanged),
       this.inputChangeSubscriptionDispatchingAction(
         this.additionalInformationInput,
         AdditionalInformationChanged,
@@ -333,7 +329,6 @@ export class OfficePage extends BasePageComponent {
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      routeNumberCtrl: new FormControl('', [Validators.required]),
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
       debriefWitnessedCtrl: new FormControl('', [Validators.required]),
       identificationCtrl: new FormControl('', [Validators.required]),
@@ -382,6 +377,10 @@ export class OfficePage extends BasePageComponent {
 
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
     this.store$.dispatch(new WeatherConditionsChanged(weatherConditions));
+  }
+
+  routeNumberChanged(routeNumber: number) {
+    this.store$.dispatch(new RouteNumberChanged(routeNumber));
   }
 
   private createToast = (errorMessage: string) => {

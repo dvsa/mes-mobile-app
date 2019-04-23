@@ -30,6 +30,8 @@ import {
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
 import { OfficeComponentsModule } from '../components/office.components.module';
+import { MockComponent } from 'ng-mocks';
+import { RouteNumberComponent } from '../components/route-number/route-number';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -39,7 +41,10 @@ describe('OfficePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OfficePage],
+      declarations: [
+        OfficePage,
+        MockComponent(RouteNumberComponent),
+      ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
