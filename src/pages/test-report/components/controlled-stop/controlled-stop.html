@@ -1,40 +1,31 @@
 <ion-row>
-  <ion-col no-padding>
-    <div class="tick-button"
-      (tap)="toggleControlledStop()"
-      (press)="toggleControlledStop()"
-      (touchstart)="onTouchStart('tick')"
-      (touchend)="onTouchEnd('tick')"
+  <ion-col col-20 no-padding>
+    <competency-button class="controlled-stop-tick"
+      [onTap]="toggleControlledStop"
+      [onPress]="toggleControlledStop"
+      [ripple]="false"
       [ngClass]="{
-        'activated': touchStateTick,
         'checked' : componentState.selectedControlledStop$ | async
       }"
     >
       <span class='tickwrapper'>
         <tick-indicator [ticked]="componentState.selectedControlledStop$ | async"></tick-indicator>
       </span>
-    </div>
+    </competency-button>
   </ion-col>
   <ion-col no-padding>
-    <div class="competency-button"
-      (tap)="addOrRemoveFault()"
-      (press)="addOrRemoveFault(true)"
-      (touchstart)="onTouchStart('competency')"
-      (touchend)="onTouchEnd('competency')"
-      [ngClass]="{
-        'activated': touchState,
-        'ripple-effect': rippleState
-      }"
+    <competency-button class="controlled-stop-competency"
+      [onTap]="onTap"
+      [onPress]="onPress"
+      [ripple]="allowRipple"
     >
       <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
-    
       <div class='competency-label'>Controlled stop</div>
-    
       <div class="fault-wrapper">
         <serious-fault-badge [showBadge]="hasSeriousFault"></serious-fault-badge>
         <dangerous-fault-badge [showBadge]="hasDangerousFault"></dangerous-fault-badge>
       </div>
-    
-    </div>
+    </competency-button>
   </ion-col>
 </ion-row>
+  

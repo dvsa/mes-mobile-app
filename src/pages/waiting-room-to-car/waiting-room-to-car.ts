@@ -89,7 +89,7 @@ interface WaitingRoomToCarPageState {
   selector: 'page-waiting-room-to-car',
   templateUrl: 'waiting-room-to-car.html',
 })
-export class WaitingRoomToCarPage extends BasePageComponent{
+export class WaitingRoomToCarPage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
@@ -190,6 +190,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
         map(isTellMeQuestionDrivingFault),
       ),
     };
+
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
       this.inputChangeSubscriptionDispatchingAction(
@@ -243,10 +244,10 @@ export class WaitingRoomToCarPage extends BasePageComponent{
    */
   inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
     const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      );
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
@@ -258,6 +259,11 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       this.navCtrl.push('TestReportPage');
     }
   }
+  updateForm(ctrl: string, value: any) {
+    this.form.patchValue({
+      [ctrl]: value,
+    });
+  }
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
@@ -265,7 +271,7 @@ export class WaitingRoomToCarPage extends BasePageComponent{
       tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
       transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
       registrationNumberCtrl: new FormControl('', [Validators.required]),
-      eyesightCtrl: new FormControl('', [Validators.required]),
+      eyesightCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
@@ -277,15 +283,17 @@ export class WaitingRoomToCarPage extends BasePageComponent{
   }
 
   eyesightPassPressed(): void {
+    this.updateForm('eyesightCtrl', 'P');
     this.store$.dispatch(new EyesightResultPasssed());
   }
 
   eyesightFailPressed(): void {
+    this.updateForm('eyesightCtrl', 'F');
     this.store$.dispatch(new EyesightResultFailed());
   }
 
   eyesightFailCancelled = () => {
-    this.form.value['eyesightCtrl'] = '';
+    this.updateForm('eyesightCtrl', null);
     this.store$.dispatch(new EyesightResultReset());
   }
 

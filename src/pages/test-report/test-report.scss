@@ -20,6 +20,14 @@ page-test-report {
       border: $report-mode-border-width solid map-get($colors-gds, 'gds-red');
     }
   }
+  .grid[no-padding] {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .grid[no-padding] > .row > .col {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
 
   .first-row-adjust {
     margin: -6px 0;

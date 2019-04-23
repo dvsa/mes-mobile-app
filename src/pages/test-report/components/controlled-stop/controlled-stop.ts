@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -53,17 +53,7 @@ export class ControlledStopComponent implements OnInit {
   componentState: ControlledStopComponentState;
   subscription: Subscription;
 
-  touchStateDelay: number = 100;
-
-  touchStateTick: boolean = false;
-  touchState: boolean = false;
-  rippleState: boolean = false;
-
-  rippleTimeout: any;
-  touchTimeoutTick: any;
-  touchTimeout: any;
-
-  rippleEffectAnimationDuration: number = 300;
+  allowRipple: boolean = true;
 
   isRemoveFaultMode: boolean = false;
 
@@ -131,7 +121,8 @@ export class ControlledStopComponent implements OnInit {
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       // hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
       selectedControlledStop$.pipe(map(toggle => this.controlledStopCompleted = toggle)),
-    );
+    )
+    .pipe(tap(this.canButtonRipple));
 
     this.subscription = merged$.subscribe();
 
@@ -140,6 +131,36 @@ export class ControlledStopComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+  }
+
+  onTap = () => {
+    this.addOrRemoveFault();
+  }
+
+  onPress = () => {
+    this.addOrRemoveFault(true);
+  }
+
+  canButtonRipple = (): void => {
+    if (this.isRemoveFaultMode) {
+      if (this.hasDangerousFault && this.isDangerousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (this.hasSeriousFault && this.isSeriousMode) {
+        this.allowRipple = true;
+        return;
+      }
+
+      if (!this.isSeriousMode && !this.isDangerousMode && this.faultCount > 0) {
+        this.allowRipple = true;
+        return;
+      }
+      this.allowRipple = false;
+    } else {
+      this.allowRipple = !(this.hasDangerousFault || this.hasSeriousFault || this.faultCount > 0);
     }
   }
 
@@ -152,7 +173,7 @@ export class ControlledStopComponent implements OnInit {
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
     if (this.isRemoveFaultMode) {
-      this.removeFault(wasPress);
+      this.removeFault();
     } else {
       this.addFault(wasPress);
     }
@@ -161,10 +182,6 @@ export class ControlledStopComponent implements OnInit {
   addFault = (wasPress: boolean): void => {
     if (this.hasDangerousFault || this.hasSeriousFault || this.faultCount > 0) {
       return;
-    }
-
-    if (wasPress) {
-      this.applyRippleEffect();
     }
 
     if (this.isDangerousMode) {
@@ -189,11 +206,7 @@ export class ControlledStopComponent implements OnInit {
     }
   }
 
-  removeFault = (wasPress: boolean): void => {
-
-    if (wasPress) {
-      this.applyRippleEffect();
-    }
+  removeFault = (): void => {
 
     if (this.hasDangerousFault && this.isDangerousMode && this.isRemoveFaultMode) {
       // TODO - Refactor to use Remove Maneourves Fault Action
@@ -210,54 +223,14 @@ export class ControlledStopComponent implements OnInit {
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
-    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode) {
+    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount > 0) {
       // TODO - Refactor to use Remove Maneourves Fault Action
       // this.store$.dispatch(new RemoveDrivingFault({
         // competency: this.competency,
         // newFaultCount: this.faultCount ? this.faultCount - 1 : 0,
       // }));
+      this.store$.dispatch(new ToggleRemoveFaultMode());
     }
 
-    this.store$.dispatch(new ToggleRemoveFaultMode());
-    //  S and D can remain on in some conditions.
-    if (this.isSeriousMode) {
-      this.store$.dispatch(new ToggleSeriousFaultMode());
-    }
-    if (this.isDangerousMode) {
-      this.store$.dispatch(new ToggleDangerousFaultMode());
-    }
-  }
-
-  /**
-   * Manages the addition and removal of the ripple effect animation css class
-   * @returns any
-   */
-  applyRippleEffect = (): any => {
-    this.rippleState = true;
-    this.rippleTimeout = setTimeout(() => this.removeRippleEffect(), this.rippleEffectAnimationDuration);
-  }
-
-  removeRippleEffect = (): any => {
-    this.rippleState = false;
-    clearTimeout(this.rippleTimeout);
-  }
-
-  onTouchStart(target: string):void {
-    if (target === 'tick') {
-      clearTimeout(this.touchTimeoutTick);
-      this.touchStateTick = true;
-    } else {
-      clearTimeout(this.touchTimeout);
-      this.touchState = true;
-    }
-  }
-
-  onTouchEnd(target: string):void {
-    // defer the removal of the touch state to allow the page to render
-    if (target === 'tick') {
-      this.touchTimeoutTick = setTimeout(() => this.touchStateTick = false, this.touchStateDelay);
-    } else {
-      this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
-    }
   }
 }

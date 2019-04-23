@@ -6,6 +6,8 @@ import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { ToggleETA } from '../../../../../modules/tests/test_data/test-data.actions';
 import { ExaminerActions } from '../../../../../modules/tests/test_data/test-data.constants';
+import { MockComponent } from 'ng-mocks';
+import { CompetencyButtonComponent } from '../../competency-button/competency-button';
 
 describe('Examiner Takes Action Component', () => {
   let fixture: ComponentFixture<EtaComponent>;
@@ -16,6 +18,7 @@ describe('Examiner Takes Action Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         EtaComponent,
+        MockComponent(CompetencyButtonComponent),
       ],
       imports: [
         IonicModule,

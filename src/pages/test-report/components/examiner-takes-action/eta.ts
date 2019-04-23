@@ -44,17 +44,8 @@ export class EtaComponent implements OnInit {
 
   getLabel = (): string => etaLabels[this.eta];
 
-  toggleETA(): void {
+  toggleETA = (): void => {
     this.store$.dispatch(new ToggleETA(this.eta));
   }
 
-  onTouchStart():void {
-    clearTimeout(this.touchTimeout);
-    this.touchState = true;
-  }
-
-  onTouchEnd():void {
-    // defer the removal of the touch state to allow the page to render
-    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
-  }
 }
