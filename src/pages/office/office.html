@@ -31,27 +31,10 @@
 
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
-          <ion-row class="mes-validated-row mes-row-separator" id="route-number-card">
-            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"></div>
-            <ion-col class="component-label" col-32 align-self-center>
-              <label>Route number</label>
-            </ion-col>
-            <ion-col align-self-center>
-              <ion-row class="spacing-row"></ion-row>
-              <ion-row>
-                <ion-col col-32>
-                  <input #routeInput type="text" id="route" formControlName="routeNumberCtrl" class="mes-data"
-                    numberonly [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')"
-                    [value]="pageState.routeNumber$ | async">
-                </ion-col>
-              </ion-row>
-              <ion-row class="validation-message-row" align-items-center>
-                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('routeNumberCtrl')">
-                  Enter the route number
-                </div>
-              </ion-row>
-            </ion-col>
-          </ion-row>
+
+          <route-number [routeNumber]="pageState.routeNumber$ | async" (routeNumberChange)="routeNumberChanged($event)"
+            [formGroup]="form">
+          </route-number>
 
           <ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('independentDrivingCtrl')">
@@ -364,8 +347,7 @@
             <ion-row>
               <driving-fault-comment [index]="$i" [competency]="drivingFault.propertyName"
                 [faultCount]="drivingFault.count" [faultName]="drivingFault.name"
-                [invalidIndicator]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)"
-                [parentForm]="form">
+                [invalidIndicator]="isCtrlDirtyAndInvalid('drivingFaultCtrl' + $i)" [parentForm]="form">
               </driving-fault-comment>
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
