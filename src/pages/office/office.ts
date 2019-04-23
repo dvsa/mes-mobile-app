@@ -229,44 +229,32 @@ export class OfficePage extends BasePageComponent {
         select(getVehicleChecks),
         select(getSelectedTellMeQuestionText),
       ),
-      etaFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
         select(getETAFaultText),
       ),
-      ecoFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      ecoFaults$: currentTest$.pipe(
         select(getTestData),
         select(getEco),
         select(getEcoFaultText),
       ),
-      dangerousFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
       ),
-      drivingFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      drivingFaults$: currentTest$.pipe(
         select(getTestData),
         map(data => getDrivingFaults(data.drivingFaults)),
       ),
-      drivingFaultCount$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
           const faults = getDrivingFaults(data.drivingFaults);
           return faults.reduce((sum, c) => sum + c.count, 0);
         }),
       ),
-      displayDrivingFaultComments$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
         map(data => displayDrivingFaultComments(data)),
       ),
@@ -414,8 +402,8 @@ export class OfficePage extends BasePageComponent {
     this.pageState.drivingFaults$.forEach((fault) => {
       fault.forEach((faultIndex) => {
         this.form.addControl(
-            this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
-            new FormControl('', Validators.required));
+          this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
+          new FormControl('', Validators.required));
       });
     });
   }
