@@ -9,6 +9,7 @@ import { RouteNumberComponent } from './components/route-number/route-number';
 import { WeatherConditionsComponent } from './components/weather-conditions/weather-conditions';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
 import { CandidateDescriptionComponent } from './components/candidate-description/candidate-description';
+import { DebriefWitnessedComponent } from './components/debrief-witnessed/debrief-witnessed';
 @NgModule({
   declarations: [
     OfficePage,
@@ -16,6 +17,7 @@ import { CandidateDescriptionComponent } from './components/candidate-descriptio
     WeatherConditionsComponent,
     IndependentDrivingComponent,
     CandidateDescriptionComponent,
+    DebriefWitnessedComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
