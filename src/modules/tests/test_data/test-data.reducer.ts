@@ -1,7 +1,9 @@
-import { TestData } from '@dvsa/mes-test-schema/categories/B';
+import { TestData, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import * as testDataActions from './test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { Competencies, ManoeuvreCompetencies } from './test-data.constants';
+import { ManoeuvreTypes } from '../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
+import { pickBy, startsWith } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
@@ -22,11 +24,7 @@ export function testDataReducer(
     case testDataActions.RECORD_MANOEUVRES_SELECTION:
       return {
         ...state,
-        manoeuvres: {
-          selectedControlledStop: state.manoeuvres.selectedControlledStop,
-          outcomeControlledStop: state.manoeuvres.outcomeControlledStop,
-          [action.manoeuvre]: true,
-        },
+        manoeuvres: preserveOutcomesAndGenerateNewManoeuvresState(state.manoeuvres, action.manoeuvre),
       };
     case testDataActions.ADD_MANOEUVRE_DRIVING_FAULT:
       return {
@@ -179,5 +177,24 @@ export function testDataReducer(
       return state;
   }
 }
+/**
+ * @param  {Manoeuvres} currentState
+ * @param  {ManoeuvreTypes} manoeuvre
+ * @returns Manoeuvres
+ * Generate the manoeuvres slice of state when recording a new manoeuvre
+ * Needs a separate function due to the need to preserve the outcomes of controlled stop
+ */
+const preserveOutcomesAndGenerateNewManoeuvresState = (
+  currentState: Manoeuvres,
+  manoeuvre: ManoeuvreTypes,
+): Manoeuvres => {
+  const savedOutcomes = pickBy(currentState, (value, key) => startsWith(key, 'outcome'));
+  const { selectedControlledStop } = currentState;
+  return {
+    ...savedOutcomes,
+    selectedControlledStop,
+    [manoeuvre]: true,
+  };
+};
 
 export const getTestData = createFeatureSelector<TestData>('testData');
