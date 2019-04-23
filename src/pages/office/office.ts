@@ -4,7 +4,10 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { OfficeViewDidEnter, OfficeViewAddDangerousFaultComment } from './office.actions';
+import {
+  OfficeViewDidEnter,
+  OfficeViewAddDangerousFaultComment,
+} from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
@@ -57,7 +60,12 @@ import { ShowMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehic
 import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
-import { getSeriousOrDangerousFaults } from '../debrief/debrief.selector';
+import {
+  getSeriousOrDangerousFaults,
+  getDrivingFaults,
+  displayDrivingFaultComments,
+} from '../debrief/debrief.selector';
+import { FaultCount } from '../../shared/constants/competencies/catb-competencies';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
@@ -85,6 +93,9 @@ interface OfficePageState {
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
   dangerousFaults$: Observable<string[]>;
+  drivingFaults$: Observable<FaultCount[]>;
+  drivingFaultCount$: Observable<number>;
+  displayDrivingFaultComments$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -96,6 +107,7 @@ export class OfficePage extends BasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
+  drivingFaultCtrl: String = 'drivingFaultCtrl';
 
   @ViewChild('routeInput')
   routeInput: ElementRef;
@@ -108,7 +120,9 @@ export class OfficePage extends BasePageComponent {
 
   @ViewChildren('dangerousFaultComment')
   dangerousFaultComment: QueryList<ElementRef>;
+
   inputSubscriptions: Subscription[] = [];
+  drivingFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
@@ -215,27 +229,42 @@ export class OfficePage extends BasePageComponent {
         select(getVehicleChecks),
         select(getSelectedTellMeQuestionText),
       ),
-      etaFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
         select(getETAFaultText),
       ),
-      ecoFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      ecoFaults$: currentTest$.pipe(
         select(getTestData),
         select(getEco),
         select(getEcoFaultText),
       ),
-      dangerousFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
       ),
+      drivingFaults$: currentTest$.pipe(
+        select(getTestData),
+        map(data => getDrivingFaults(data.drivingFaults)),
+      ),
+      drivingFaultCount$: currentTest$.pipe(
+        select(getTestData),
+        map((data) => {
+          const faults = getDrivingFaults(data.drivingFaults);
+          return faults.reduce((sum, c) => sum + c.count, 0);
+        }),
+      ),
+      displayDrivingFaultComments$: currentTest$.pipe(
+        select(getTestData),
+        map(data => displayDrivingFaultComments(data)),
+      ),
     };
+
+    this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
+      if (display) {
+        this.getDrivingFaultCtrls();
+      }
+    });
 
     this.inputSubscriptions = [
       this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
@@ -246,6 +275,7 @@ export class OfficePage extends BasePageComponent {
       ),
       this.inputChangeSubscriptionDispatchingAction(this.candidateDescriptionInput, CandidateDescriptionChanged),
     ];
+
   }
 
   ngAfterViewInit(): void {
@@ -257,6 +287,7 @@ export class OfficePage extends BasePageComponent {
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    this.drivingFaultSubscription.unsubscribe();
   }
 
   popToRoot() {
@@ -320,6 +351,7 @@ export class OfficePage extends BasePageComponent {
   debriefWitnessed(): void {
     this.store$.dispatch(new DebriefWitnessed());
   }
+
   debriefUnwitnessed(): void {
     this.store$.dispatch(new DebriefUnwitnessed());
   }
@@ -327,6 +359,7 @@ export class OfficePage extends BasePageComponent {
   identificationLicence(): void {
     this.store$.dispatch(new IdentificationUsedChanged('Licence'));
   }
+
   identificationPassport(): void {
     this.store$.dispatch(new IdentificationUsedChanged('Passport'));
   }
@@ -334,6 +367,7 @@ export class OfficePage extends BasePageComponent {
   satNavUsed(): void {
     this.store$.dispatch(new IndependentDrivingTypeChanged('Sat nav'));
   }
+
   trafficSignsUsed(): void {
     this.store$.dispatch(new IndependentDrivingTypeChanged('Traffic signs'));
   }
@@ -341,6 +375,7 @@ export class OfficePage extends BasePageComponent {
   d255Yes(): void {
     this.store$.dispatch(new D255Yes());
   }
+
   d255No(): void {
     this.store$.dispatch(new D255No());
   }
@@ -361,5 +396,15 @@ export class OfficePage extends BasePageComponent {
       closeButtonText: 'X',
     });
 
+  }
+
+  getDrivingFaultCtrls(): void {
+    this.pageState.drivingFaults$.forEach((fault) => {
+      fault.forEach((faultIndex) => {
+        this.form.addControl(
+          this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
+          new FormControl('', Validators.required));
+      });
+    });
   }
 }

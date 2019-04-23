@@ -3,6 +3,7 @@ import { OfficeModel } from './office.model';
 
 export const initialState: OfficeModel = {
   dangerousFaultComments: [],
+  drivingFaultComments: [],
 };
 
 export function officeReducer(state = initialState, action: officeActions.OfficeActionTypes): OfficeModel {
