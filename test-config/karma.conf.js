@@ -51,6 +51,9 @@ module.exports = function(config) {
     },
 
     reporters: config.coverage ? ['kjhtml', 'dots', 'spec', 'coverage-istanbul'] : ['kjhtml', 'spec', 'dots'],
+    specReporter: {
+      suppressSkipped: true,
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
