@@ -7,10 +7,7 @@ export const isIdentificationLicense = (testSummary: TestSummary): boolean =>
   testSummary.identification === 'Licence';
 export const isIdentificationPassport = (testSummary: TestSummary): boolean =>
   testSummary.identification === 'Passport';
-export const isD255Yes = (testSummary: TestSummary): boolean => testSummary.D255;
-export const isD255No = (testSummary: TestSummary): boolean => {
-  return (testSummary.D255 !== null && !testSummary.D255) || false;
-};
+export const getD255 = (testSummary: TestSummary): boolean => testSummary.D255;
 export const getSatNavUsed = (testSummary: TestSummary): boolean => testSummary.independentDriving === 'Sat nav';
 export const getTrafficSignsUsed = (testSummary: TestSummary): boolean =>
   testSummary.independentDriving === 'Traffic signs';

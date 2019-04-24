@@ -18,8 +18,7 @@ import {
   getCandidateDescription,
   isIdentificationLicense,
   isIdentificationPassport,
-  isD255Yes,
-  isD255No,
+  getD255,
   getAdditionalInformation,
   getSatNavUsed,
   getTrafficSignsUsed,
@@ -84,8 +83,7 @@ interface OfficePageState {
   identificationPassportRadioChecked$: Observable<boolean>;
   independentDrivingSatNavRadioChecked$: Observable<boolean>;
   independentDrivingTrafficSignsRadioChecked$: Observable<boolean>;
-  d255YesRadioChecked$: Observable<boolean>;
-  d255NoRadioChecked$: Observable<boolean>;
+  d255$: Observable<boolean>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   showMeQuestion$: Observable<ShowMeQuestion>;
@@ -200,13 +198,9 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(isIdentificationPassport),
       ),
-      d255YesRadioChecked$: currentTest$.pipe(
+      d255$: currentTest$.pipe(
         select(getTestSummary),
-        select(isD255Yes),
-      ),
-      d255NoRadioChecked$: currentTest$.pipe(
-        select(getTestSummary),
-        select(isD255No),
+        select(getD255),
       ),
       additionalInformation$: currentTest$.pipe(
         select(getTestSummary),
@@ -261,6 +255,7 @@ export class OfficePage extends BasePageComponent {
       this.pageState.debriefWitnessed$,
       this.pageState.showMeQuestion$,
       this.pageState.weatherConditions$,
+      this.pageState.d255$,
     ).subscribe();
 
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
@@ -337,7 +332,6 @@ export class OfficePage extends BasePageComponent {
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
-      d255Ctrl: new FormControl('', [Validators.required]),
     };
   }
 
@@ -369,12 +363,8 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new IndependentDrivingTypeChanged('Traffic signs'));
   }
 
-  d255Yes(): void {
-    this.store$.dispatch(new D255Yes());
-  }
-
-  d255No(): void {
-    this.store$.dispatch(new D255No());
+  d255Changed(d255: boolean): void {
+    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
   }
 
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {

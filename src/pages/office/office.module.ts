@@ -11,6 +11,7 @@ import { CandidateDescriptionComponent } from './components/candidate-descriptio
 import { DebriefWitnessedComponent } from './components/debrief-witnessed/debrief-witnessed';
 import { ShowMeQuestionComponent } from './show-me-question/show-me-question';
 import { WeatherConditionsComponent } from './components/weather-conditions/weather-conditions';
+import { D255Component } from './components/d255/d255';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { WeatherConditionsComponent } from './components/weather-conditions/weat
     DebriefWitnessedComponent,
     ShowMeQuestionComponent,
     WeatherConditionsComponent,
+    D255Component,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
