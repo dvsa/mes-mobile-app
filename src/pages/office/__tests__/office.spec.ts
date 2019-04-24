@@ -32,6 +32,7 @@ import { of } from 'rxjs/observable/of';
 import { OfficeComponentsModule } from '../components/office.components.module';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
+import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -44,6 +45,7 @@ describe('OfficePage', () => {
       declarations: [
         OfficePage,
         MockComponent(RouteNumberComponent),
+        MockComponent(CandidateDescriptionComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
