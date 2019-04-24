@@ -33,6 +33,7 @@ import { RouteNumberComponent } from '../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
 import { DebriefWitnessedComponent } from '../components/debrief-witnessed/debrief-witnessed';
 import { ShowMeQuestionComponent } from '../show-me-question/show-me-question';
+import { WeatherConditionsComponent } from '../components/weather-conditions/weather-conditions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -48,6 +49,7 @@ describe('OfficePage', () => {
         MockComponent(CandidateDescriptionComponent),
         MockComponent(DebriefWitnessedComponent),
         MockComponent(ShowMeQuestionComponent),
+        MockComponent(WeatherConditionsComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({

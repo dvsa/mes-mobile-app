@@ -24,6 +24,7 @@ import {
   getSatNavUsed,
   getTrafficSignsUsed,
   isDebriefWitnessed,
+  getWeatherConditions,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -95,6 +96,7 @@ interface OfficePageState {
   drivingFaults$: Observable<FaultCount[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
+  weatherConditions$: Observable<WeatherConditions[]>;
 }
 
 @IonicPage()
@@ -247,6 +249,10 @@ export class OfficePage extends BasePageComponent {
         select(getTestData),
         map(data => displayDrivingFaultComments(data)),
       ),
+      weatherConditions$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getWeatherConditions),
+      ),
     };
 
     this.storeSubscription = merge(
@@ -254,6 +260,7 @@ export class OfficePage extends BasePageComponent {
       this.pageState.candidateDescription$,
       this.pageState.debriefWitnessed$,
       this.pageState.showMeQuestion$,
+      this.pageState.weatherConditions$,
     ).subscribe();
 
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
@@ -331,7 +338,6 @@ export class OfficePage extends BasePageComponent {
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
-      weatherConditionsCtrl: new FormControl([], [Validators.required]),
     };
   }
 
