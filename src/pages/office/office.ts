@@ -24,7 +24,6 @@ import {
   getSatNavUsed,
   getTrafficSignsUsed,
   isDebriefWitnessed,
-  isDebriefUnwitnessed,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -79,8 +78,7 @@ interface OfficePageState {
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
-  debriefWitnessedYesRadioChecked$: Observable<boolean>;
-  debriefWitnessedNoRadioChecked$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
   identificationLicenseRadioChecked$: Observable<boolean>;
   identificationPassportRadioChecked$: Observable<boolean>;
   independentDrivingSatNavRadioChecked$: Observable<boolean>;
@@ -189,13 +187,9 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getTrafficSignsUsed),
       ),
-      debriefWitnessedYesRadioChecked$: currentTest$.pipe(
+      debriefWitnessed$: currentTest$.pipe(
         select(getTestSummary),
         select(isDebriefWitnessed),
-      ),
-      debriefWitnessedNoRadioChecked$: currentTest$.pipe(
-        select(getTestSummary),
-        select(isDebriefUnwitnessed),
       ),
       identificationLicenseRadioChecked$: currentTest$.pipe(
         select(getTestSummary),
@@ -259,6 +253,7 @@ export class OfficePage extends BasePageComponent {
     this.storeSubscription = merge(
       this.pageState.routeNumber$,
       this.pageState.candidateDescription$,
+      this.pageState.debriefWitnessed$,
     ).subscribe();
 
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
@@ -334,7 +329,6 @@ export class OfficePage extends BasePageComponent {
   getFormValidation(): { [key: string]: FormControl } {
     return {
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
-      debriefWitnessedCtrl: new FormControl('', [Validators.required]),
       identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
@@ -389,6 +383,10 @@ export class OfficePage extends BasePageComponent {
 
   candidateDescriptionChanged(candidateDescription: string) {
     this.store$.dispatch(new CandidateDescriptionChanged(candidateDescription));
+  }
+
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
   }
 
   private createToast = (errorMessage: string) => {

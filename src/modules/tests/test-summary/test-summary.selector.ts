@@ -15,6 +15,3 @@ export const getSatNavUsed = (testSummary: TestSummary): boolean => testSummary.
 export const getTrafficSignsUsed = (testSummary: TestSummary): boolean =>
   testSummary.independentDriving === 'Traffic signs';
 export const isDebriefWitnessed = (testSummary: TestSummary): boolean => testSummary.debriefWitnessed;
-export const isDebriefUnwitnessed = (testSummary: TestSummary): boolean => {
-  return (testSummary.debriefWitnessed != null && !testSummary.debriefWitnessed) || false;
-};
