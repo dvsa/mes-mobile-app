@@ -21,8 +21,6 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
-  D255Yes,
-  D255No,
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
@@ -34,6 +32,7 @@ import { CandidateDescriptionComponent } from '../components/candidate-descripti
 import { DebriefWitnessedComponent } from '../components/debrief-witnessed/debrief-witnessed';
 import { ShowMeQuestionComponent } from '../show-me-question/show-me-question';
 import { WeatherConditionsComponent } from '../components/weather-conditions/weather-conditions';
+import { D255Component } from '../components/d255/d255';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -50,6 +49,7 @@ describe('OfficePage', () => {
         MockComponent(DebriefWitnessedComponent),
         MockComponent(ShowMeQuestionComponent),
         MockComponent(WeatherConditionsComponent),
+        MockComponent(D255Component),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
@@ -213,21 +213,6 @@ describe('OfficePage', () => {
         passportRadio.triggerEventHandler('click', null);
         fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged('Passport'));
-      });
-    });
-
-    describe('changing D255', () => {
-      it('should dispatch a change to D255 action when Yes is clicked', () => {
-        const d255YesRadio = fixture.debugElement.query(By.css('#d255-yes'));
-        d255YesRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new D255Yes());
-      });
-      it('should dispatch a change to D255 action when No is clicked', () => {
-        const d255NoRadio = fixture.debugElement.query(By.css('#d255-no'));
-        d255NoRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new D255No());
       });
     });
 
