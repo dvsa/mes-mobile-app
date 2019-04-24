@@ -3,7 +3,7 @@ import { OverlayCallback } from '../../test-report';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.selector';
+import { getManoeuvres, sumManoeuvreFaults } from '../../../../modules/tests/test_data/test-data.selector';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
@@ -45,16 +45,9 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = manoeuvres$.subscribe((manoeuvres) => {
-
-      const outcomes = pickBy(manoeuvres, (value, key) => startsWith(key, 'outcome'));
-
-      this.drivingFaults = Object.values(outcomes).filter(outcome => outcome === CompetencyOutcome.DF).length;
-      this.hasSeriousFault = Object.values(outcomes).includes(CompetencyOutcome.S);
-      this.hasDangerousFault = Object.values(outcomes).includes(CompetencyOutcome.D);
-
-      console.log('### drivingFaults', this.drivingFaults);
-      console.log('### hasSeriousFault', this.hasSeriousFault);
-      console.log('### hasDangerousFaults', this.hasDangerousFault);
+      this.drivingFaults = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
+      this.hasSeriousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
+      this.hasDangerousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;
     });
   }
 

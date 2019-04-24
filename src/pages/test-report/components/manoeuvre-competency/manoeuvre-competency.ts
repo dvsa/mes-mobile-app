@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test_data/test-data.constants';
 import {
   AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
@@ -37,6 +37,8 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
 
   @Input()
   competency: ManoeuvreCompetencies;
+  @Input()
+  manoeuvre: ManoeuvreTypes;
 
   touchStateDelay: number = 100;
 
@@ -79,7 +81,7 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
       manoeuvreCompetencyOutcome$: currentTest$.pipe(
         select(getTestData),
         select(getManoeuvres),
-        select(manoeuvres => manoeuvres[this.competency]),
+        select(manoeuvres => manoeuvres[this.manoeuvre][this.competency]),
       ),
     };
 
@@ -126,20 +128,25 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const payload = {
+      competency: this.competency,
+      manoeuvre: this.manoeuvre,
+    };
+
     if (this.isDangerousMode) {
-      this.store$.dispatch(new AddManoeuvreDangerousFault(this.competency));
+      this.store$.dispatch(new AddManoeuvreDangerousFault(payload));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      this.store$.dispatch(new AddManoeuvreSeriousFault(this.competency));
+      this.store$.dispatch(new AddManoeuvreSeriousFault(payload));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
-      this.store$.dispatch(new AddManoeuvreDrivingFault(this.competency));
+      this.store$.dispatch(new AddManoeuvreDrivingFault(payload));
       return;
     }
   }

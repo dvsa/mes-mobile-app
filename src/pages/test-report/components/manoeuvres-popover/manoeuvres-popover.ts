@@ -8,17 +8,10 @@ import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.sel
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
-import { ManoeuvreTypes } from './manoeuvres-popover.constants';
-import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test_data/test-data.constants';
 import { map } from 'rxjs/operators';
-import { startsWith, pickBy, isEmpty, some } from 'lodash';
-
-export enum ManoeuvrePrefixes {
-  reverseRight = 'outcomeReverseRight',
-  reverseParkRoad = 'outcomeReverseParkRoad',
-  reverseParkCarpark = 'outcomeReverseParkCarpark',
-  forwardPark = 'outcomeForwardPark',
-}
+import { some } from 'lodash';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 interface ManoeuvresFaultState {
   reverseRight: boolean;
@@ -33,7 +26,7 @@ interface ManoeuvresFaultState {
 })
 export class ManoeuvresPopoverComponent {
 
-  public manoeuvreTypes = ManoeuvreTypes;
+  manoeuvreTypes = ManoeuvreTypes;
   manoeuvres$: Observable<Manoeuvres>;
   competencies = ManoeuvreCompetencies;
   manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;
@@ -49,10 +42,10 @@ export class ManoeuvresPopoverComponent {
     );
     this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
       map((manoeuvres: Manoeuvres) => ({
-        reverseRight: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseRight, manoeuvres),
-        reverseParkRoad: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkRoad, manoeuvres),
-        reverseParkCarpark: this.manoeuvreHasFaults(ManoeuvrePrefixes.reverseParkCarpark, manoeuvres),
-        forwardPark: this.manoeuvreHasFaults(ManoeuvrePrefixes.forwardPark, manoeuvres),
+        reverseRight: this.manoeuvreHasFaults(manoeuvres.reverseRight),
+        reverseParkRoad: this.manoeuvreHasFaults(manoeuvres.reverseParkRoad),
+        reverseParkCarpark: this.manoeuvreHasFaults(manoeuvres.reverseParkCarpark),
+        forwardPark: this.manoeuvreHasFaults(manoeuvres.forwardPark),
       })),
     );
   }
@@ -67,7 +60,7 @@ export class ManoeuvresPopoverComponent {
    * Tells the input whether it needs to be disabled based on whether
    * or not another manoeuvre has a fault recorded
    */
-  shouldManoeuvreDisable(manoeuvre: ManoeuvrePrefixes): Observable<boolean> {
+  shouldManoeuvreDisable(manoeuvre: ManoeuvreTypes): Observable<boolean> {
     return this.manoeuvresWithFaults$.pipe(
       map((manoeuvresWithFaults: ManoeuvresFaultState) => {
         const { [manoeuvre]: manoeuvreToOmit, ...otherManoeuvres } = manoeuvresWithFaults;
@@ -75,13 +68,12 @@ export class ManoeuvresPopoverComponent {
       }),
     );
   }
-  /**
-   * @param  {ManoeuvrePrefixes} manoeuvrePrefixes
-   * @param  {Manoeuvres} manoeuvres
-   * @returns boolean
-   * Looks up the manoeuvre 'outcome' keys and returns true if they exist
-   */
-  manoeuvreHasFaults(manoeuvrePrefix: ManoeuvrePrefixes, manoeuvres: Manoeuvres): boolean {
-    return !isEmpty(pickBy(manoeuvres, (value, key) => startsWith(key, manoeuvrePrefix)));
-  }
+
+  manoeuvreHasFaults = (manoeuvre): boolean => (
+    manoeuvre &&
+    (manoeuvre.controlFault === CompetencyOutcome.DF ||
+    manoeuvre.observationFault === CompetencyOutcome.DF)
+  )
+
+  getId = (manoeuvre: ManoeuvreTypes, competency: ManoeuvreCompetencies) => `${manoeuvre}-${competency}`;
 }

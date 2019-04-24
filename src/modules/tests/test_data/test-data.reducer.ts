@@ -1,9 +1,7 @@
-import { TestData, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import * as testDataActions from './test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { Competencies, ManoeuvreCompetencies } from './test-data.constants';
-import { ManoeuvreTypes } from '../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
-import { pickBy, startsWith } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
@@ -14,6 +12,7 @@ export const initialState: TestData = {
   testRequirements: {},
   ETA: {},
   eco: {},
+  controlledStop: {},
 };
 
 export function testDataReducer(
@@ -24,14 +23,22 @@ export function testDataReducer(
     case testDataActions.RECORD_MANOEUVRES_SELECTION:
       return {
         ...state,
-        manoeuvres: preserveOutcomesAndGenerateNewManoeuvresState(state.manoeuvres, action.manoeuvre),
+        manoeuvres: {
+          [action.manoeuvre]: {
+            ...state.manoeuvres[action.manoeuvre],
+            selected: true,
+          },
+        },
       };
     case testDataActions.ADD_MANOEUVRE_DRIVING_FAULT:
       return {
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: CompetencyOutcome.DF,
+          [action.payload.manoeuvre]: {
+            ...state.manoeuvres[action.payload.manoeuvre],
+            [action.payload.competency]: CompetencyOutcome.DF,
+          },
         },
       };
     case testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT:
@@ -39,7 +46,10 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: CompetencyOutcome.S,
+          [action.payload.manoeuvre]: {
+            ...state.manoeuvres[action.payload.manoeuvre],
+            [action.payload.competency]: CompetencyOutcome.S,
+          },
         },
       };
     case testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT:
@@ -47,7 +57,10 @@ export function testDataReducer(
         ...state,
         manoeuvres: {
           ...state.manoeuvres,
-          [action.payload]: CompetencyOutcome.D,
+          [action.payload.manoeuvre]: {
+            ...state.manoeuvres[action.payload.manoeuvre],
+            [action.payload.competency]: CompetencyOutcome.D,
+          },
         },
       };
     case testDataActions.REMOVE_MANOEUVRE_FAULT:
@@ -151,50 +164,51 @@ export function testDataReducer(
         },
       };
     case testDataActions.TOGGLE_CONTROLLED_STOP:
-      if (state.manoeuvres.selectedControlledStop) {
-        const { selectedControlledStop : removedManoeuvre, ...updatedManoeuvres } = state.manoeuvres;
-        return {
-          ...state,
-          manoeuvres: updatedManoeuvres,
-        };
-      }
       return {
         ...state,
-        manoeuvres: {
-          ...state.manoeuvres,
-          selectedControlledStop: !state.manoeuvres.selectedControlledStop,
+        controlledStop: {
+          ...state.controlledStop,
+          selected: !state.controlledStop.selected,
         },
       };
-    case testDataActions.CONTROLLED_STOP_COMPLETE:
+    case testDataActions.CONTROLLED_STOP_ADD_DRIVING_FAULT:
       return {
         ...state,
-        manoeuvres: {
-          ...state.manoeuvres,
-          selectedControlledStop: true,
+        controlledStop: {
+          ...state.controlledStop,
+          fault: CompetencyOutcome.DF,
+          selected: true,
+        },
+      };
+    case testDataActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT:
+      return {
+        ...state,
+        controlledStop: {
+          ...state.controlledStop,
+          fault: CompetencyOutcome.S,
+          selected: true,
+        },
+      };
+    case testDataActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT:
+      return {
+        ...state,
+        controlledStop: {
+          ...state.controlledStop,
+          fault: CompetencyOutcome.D,
+          selected: true,
+        },
+      };
+
+    case testDataActions.CONTROLLED_STOP_REMOVE_FAULT:
+      return {
+        ...state,
+        controlledStop: {
+          selected: state.controlledStop.selected,
         },
       };
     default:
       return state;
   }
 }
-/**
- * @param  {Manoeuvres} currentState
- * @param  {ManoeuvreTypes} manoeuvre
- * @returns Manoeuvres
- * Generate the manoeuvres slice of state when recording a new manoeuvre
- * Needs a separate function due to the need to preserve the outcomes of controlled stop
- */
-const preserveOutcomesAndGenerateNewManoeuvresState = (
-  currentState: Manoeuvres,
-  manoeuvre: ManoeuvreTypes,
-): Manoeuvres => {
-  const savedOutcomes = pickBy(currentState, (value, key) => startsWith(key, 'outcome'));
-  const { selectedControlledStop } = currentState;
-  return {
-    ...savedOutcomes,
-    selectedControlledStop,
-    [manoeuvre]: true,
-  };
-};
 
 export const getTestData = createFeatureSelector<TestData>('testData');
