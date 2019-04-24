@@ -20,8 +20,6 @@ import {
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   IndependentDrivingTypeChanged,
-  DebriefWitnessed,
-  DebriefUnwitnessed,
   IdentificationUsedChanged,
   D255Yes,
   D255No,
@@ -33,6 +31,7 @@ import { OfficeComponentsModule } from '../components/office.components.module';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
+import { DebriefWitnessedComponent } from '../components/debrief-witnessed/debrief-witnessed';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -46,6 +45,7 @@ describe('OfficePage', () => {
         OfficePage,
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
+        MockComponent(DebriefWitnessedComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
@@ -178,21 +178,6 @@ describe('OfficePage', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
         expect(navCtrl.popToRoot).toHaveBeenCalled();
-      });
-    });
-
-    describe('changing debrief witnessed', () => {
-      it('should dispatch a change to debrief witnessed action when Yes is clicked', () => {
-        const witnessedRadio = fixture.debugElement.query(By.css('#debrief-witnessed-yes'));
-        witnessedRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefWitnessed());
-      });
-      it('should dispatch a change to debrief unwitnessed when No is clicked', () => {
-        const unwitnessedRadio = fixture.debugElement.query(By.css('#debrief-witnessed-no'));
-        unwitnessedRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefUnwitnessed());
       });
     });
 

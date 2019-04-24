@@ -71,37 +71,8 @@
           <candidate-description [formGroup]="form" [candidateDescription]="pageState.candidateDescription$ | async"
             (candidateDescriptionChange)="candidateDescriptionChanged($event)"></candidate-description>
 
-          <ion-row class="mes-validated-row mes-row-separator" id="debrief-card">
-            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')">
-            </div>
-            <ion-col class="component-label" col-32 align-self-center>
-              <label>Debrief witnessed?</label>
-            </ion-col>
-            <ion-col align-self-center>
-              <ion-row class="spacing-row"></ion-row>
-              <ion-row>
-                <ion-col col-32>
-                  <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
-                    id="debrief-witnessed-yes" class="gds-radio-button"
-                    [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefWitnessed()"
-                    [checked]="pageState.debriefWitnessedYesRadioChecked$ | async" value='Yes'>
-                  <label for="debrief-witnessed-yes" class="radio-label">Yes</label>
-                </ion-col>
-                <ion-col col-32>
-                  <input type="radio" formControlName="debriefWitnessedCtrl" name="debriefWitnessedCtrl"
-                    id="debrief-witnessed-no" class="gds-radio-button"
-                    [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')" (click)="debriefUnwitnessed()"
-                    [checked]="pageState.debriefWitnessedNoRadioChecked$ | async" value='No'>
-                  <label for="debrief-witnessed-no" class="radio-label">No</label>
-                </ion-col>
-              </ion-row>
-              <ion-row class="validation-message-row" align-items-center>
-                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('debriefWitnessedCtrl')">
-                  Was the debrief witnessed?
-                </div>
-              </ion-row>
-            </ion-col>
-          </ion-row>
+          <debrief-witnessed [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
+            (debriefWitnessedChange)="debriefWitnessedChanged($event)"></debrief-witnessed>
 
           <ion-row class="mes-validated-row mes-row-separator" id="identification-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('identificationCtrl')">
