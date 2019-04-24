@@ -119,29 +119,9 @@
             </ion-col>
           </ion-row>
 
-          <ion-row class="mes-validated-row mes-row-separator" id="show-me-question-card">
-            <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')"></div>
-            <ion-col class="component-label" col-32 align-self-center>
-              <label>Show me question</label>
-            </ion-col>
-            <ion-col align-self-center>
-              <ion-row class="spacing-row"></ion-row>
-              <ion-row>
-                <ion-select (ionChange)="showMeQuestionChanged($event)" placeholder="Select a question"
-                  id="show-me-selector" [(ngModel)]="showMeQuestion" okText="Submit" cancelText="Cancel"
-                  formControlName="showMeQuestionCtrl">
-                  <ion-option [value]="showMeQuestion" *ngFor="let showMeQuestion of showMeQuestions">
-                    {{showMeQuestion.showMeQuestionCode}} - {{showMeQuestion.showMeQuestionShortName}}
-                  </ion-option>
-                </ion-select>
-              </ion-row>
-              <ion-row class="validation-message-row" align-it ems-center>
-                <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('showMeQuestionCtrl')">
-                  Select the show me question
-                </div>
-              </ion-row>
-            </ion-col>
-          </ion-row>
+          <show-me-question [formGroup]="form" [showMeQuestion]="pageState.showMeQuestion$ | async" [showMeQuestionOptions]="showMeQuestions"
+            (showMeQuestionChange)="showMeQuestionChanged($event)">
+          </show-me-question>
 
           <ion-row class="mes-validated-row mes-row-separator" id="weather-conditions-card">
             <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('weatherConditionsCtrl')"></div>

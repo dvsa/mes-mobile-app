@@ -120,7 +120,6 @@ export class OfficePage extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
-  showMeQuestion: ShowMeQuestion;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -254,6 +253,7 @@ export class OfficePage extends BasePageComponent {
       this.pageState.routeNumber$,
       this.pageState.candidateDescription$,
       this.pageState.debriefWitnessed$,
+      this.pageState.showMeQuestion$,
     ).subscribe();
 
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
@@ -263,7 +263,6 @@ export class OfficePage extends BasePageComponent {
     });
 
     this.inputSubscriptions = [
-      this.pageState.showMeQuestion$.subscribe(showMeQuestion => this.showMeQuestion = showMeQuestion),
       this.inputChangeSubscriptionDispatchingAction(
         this.additionalInformationInput,
         AdditionalInformationChanged,
@@ -322,8 +321,8 @@ export class OfficePage extends BasePageComponent {
     }
   }
 
-  showMeQuestionChanged(newShowMeQuestion): void {
-    this.store$.dispatch(new ShowMeQuestionSelected(newShowMeQuestion));
+  showMeQuestionChanged(showMeQuestion: ShowMeQuestion): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(showMeQuestion));
   }
 
   getFormValidation(): { [key: string]: FormControl } {
@@ -333,7 +332,6 @@ export class OfficePage extends BasePageComponent {
       independentDrivingCtrl: new FormControl('', [Validators.required]),
       d255Ctrl: new FormControl('', [Validators.required]),
       weatherConditionsCtrl: new FormControl([], [Validators.required]),
-      showMeQuestionCtrl: new FormControl([], [Validators.required]),
     };
   }
 

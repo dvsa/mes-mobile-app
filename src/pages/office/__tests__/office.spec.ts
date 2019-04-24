@@ -32,6 +32,7 @@ import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
 import { DebriefWitnessedComponent } from '../components/debrief-witnessed/debrief-witnessed';
+import { ShowMeQuestionComponent } from '../show-me-question/show-me-question';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -46,6 +47,7 @@ describe('OfficePage', () => {
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(DebriefWitnessedComponent),
+        MockComponent(ShowMeQuestionComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
@@ -126,10 +128,11 @@ describe('OfficePage', () => {
   });
 
   describe('DOM', () => {
-    it('should display the description for stored show me question code', () => {
+    it('should pass the selected show me question code to the show me subcomponent', () => {
       fixture.detectChanges();
-      const showMeElement: HTMLElement = fixture.debugElement.query(By.css('ion-select .select-text')).nativeElement;
-      expect(showMeElement.innerText).toEqual('S3 - Dipped headlights');
+      const showMeElement = fixture.debugElement.query(By.css('show-me-question'))
+        .componentInstance as ShowMeQuestionComponent;
+      expect(showMeElement.showMeQuestion.showMeQuestionCode).toEqual('S3');
     });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();
