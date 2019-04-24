@@ -15,14 +15,13 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
   getCandidateDescription,
-  isIdentificationLicense,
-  isIdentificationPassport,
   getD255,
   getAdditionalInformation,
   getSatNavUsed,
   getTrafficSignsUsed,
   isDebriefWitnessed,
   getWeatherConditions,
+  getIdentification,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -67,7 +66,7 @@ import {
 import { FaultCount, SeriousFaultsContainer } from '../../shared/constants/competencies/catb-competencies';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
-import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { WeatherConditions, Identification } from '@dvsa/mes-test-schema/categories/B';
 import { merge } from 'rxjs/observable/merge';
 
 interface OfficePageState {
@@ -79,8 +78,7 @@ interface OfficePageState {
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
   debriefWitnessed$: Observable<boolean>;
-  identificationLicenseRadioChecked$: Observable<boolean>;
-  identificationPassportRadioChecked$: Observable<boolean>;
+  identification$: Observable<Identification>;
   independentDrivingSatNavRadioChecked$: Observable<boolean>;
   independentDrivingTrafficSignsRadioChecked$: Observable<boolean>;
   d255$: Observable<boolean>;
@@ -193,13 +191,9 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(isDebriefWitnessed),
       ),
-      identificationLicenseRadioChecked$: currentTest$.pipe(
+      identification$: currentTest$.pipe(
         select(getTestSummary),
-        select(isIdentificationLicense),
-      ),
-      identificationPassportRadioChecked$: currentTest$.pipe(
-        select(getTestSummary),
-        select(isIdentificationPassport),
+        select(getIdentification),
       ),
       d255$: currentTest$.pipe(
         select(getTestSummary),
@@ -264,6 +258,7 @@ export class OfficePage extends BasePageComponent {
       this.pageState.weatherConditions$,
       this.pageState.d255$,
       this.pageState.additionalInformation$,
+      this.pageState.identification$,
     ).subscribe();
 
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
@@ -337,7 +332,6 @@ export class OfficePage extends BasePageComponent {
   getFormValidation(): { [key: string]: FormControl } {
     return {
       candidateDescriptionCtrl: new FormControl('', [Validators.required]),
-      identificationCtrl: new FormControl('', [Validators.required]),
       independentDrivingCtrl: new FormControl('', [Validators.required]),
     };
   }
@@ -354,12 +348,8 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new DebriefUnwitnessed());
   }
 
-  identificationLicence(): void {
-    this.store$.dispatch(new IdentificationUsedChanged('Licence'));
-  }
-
-  identificationPassport(): void {
-    this.store$.dispatch(new IdentificationUsedChanged('Passport'));
+  identificationChanged(identification: Identification): void {
+    this.store$.dispatch(new IdentificationUsedChanged(identification));
   }
 
   satNavUsed(): void {

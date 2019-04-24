@@ -1,15 +1,11 @@
-import { TestSummary, WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { TestSummary, WeatherConditions, Identification } from '@dvsa/mes-test-schema/categories/B';
 
-export const getRouteNumber = (testSummary: TestSummary): number => testSummary.routeNumber;
-export const getCandidateDescription = (testSummary: TestSummary): string => testSummary.candidateDescription;
-export const getAdditionalInformation = (testSummary: TestSummary): string => testSummary.additionalInformation;
-export const isIdentificationLicense = (testSummary: TestSummary): boolean =>
-  testSummary.identification === 'Licence';
-export const isIdentificationPassport = (testSummary: TestSummary): boolean =>
-  testSummary.identification === 'Passport';
-export const getD255 = (testSummary: TestSummary): boolean => testSummary.D255;
-export const getSatNavUsed = (testSummary: TestSummary): boolean => testSummary.independentDriving === 'Sat nav';
-export const getTrafficSignsUsed = (testSummary: TestSummary): boolean =>
-  testSummary.independentDriving === 'Traffic signs';
-export const isDebriefWitnessed = (testSummary: TestSummary): boolean => testSummary.debriefWitnessed;
-export const getWeatherConditions = (testSummary: TestSummary): WeatherConditions[] => testSummary.weatherConditions;
+export const getRouteNumber = (ts: TestSummary): number => ts.routeNumber;
+export const getCandidateDescription = (ts: TestSummary): string => ts.candidateDescription;
+export const getAdditionalInformation = (ts: TestSummary): string => ts.additionalInformation;
+export const getD255 = (ts: TestSummary): boolean => ts.D255;
+export const getIdentification = (ts: TestSummary): Identification => ts.identification;
+export const getSatNavUsed = (ts: TestSummary): boolean => ts.independentDriving === 'Sat nav';
+export const getTrafficSignsUsed = (ts: TestSummary): boolean => ts.independentDriving === 'Traffic signs';
+export const isDebriefWitnessed = (ts: TestSummary): boolean => ts.debriefWitnessed;
+export const getWeatherConditions = (ts: TestSummary): WeatherConditions[] => ts.weatherConditions;

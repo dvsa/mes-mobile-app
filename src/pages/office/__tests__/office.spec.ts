@@ -25,7 +25,6 @@ import {
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   IndependentDrivingTypeChanged,
-  IdentificationUsedChanged,
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
@@ -39,6 +38,7 @@ import { ShowMeQuestionComponent } from '../components/show-me-question/show-me-
 import { WeatherConditionsComponent } from '../components/weather-conditions/weather-conditions';
 import { D255Component } from '../components/d255/d255';
 import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
+import { IdentificationComponent } from '../components/identification/identification';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -53,6 +53,7 @@ describe('OfficePage', () => {
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(DebriefWitnessedComponent),
+        MockComponent(IdentificationComponent),
         MockComponent(ShowMeQuestionComponent),
         MockComponent(WeatherConditionsComponent),
         MockComponent(D255Component),
@@ -212,21 +213,6 @@ describe('OfficePage', () => {
         trafficSignsRadio.triggerEventHandler('click', null);
         fixture.detectChanges();
         expect(store$.dispatch).toHaveBeenCalledWith(new IndependentDrivingTypeChanged('Traffic signs'));
-      });
-    });
-
-    describe('changing identification', () => {
-      it('should dispatch a change to identification action when Licence is clicked', () => {
-        const licenceRadio = fixture.debugElement.query(By.css('#identification-license'));
-        licenceRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged('Licence'));
-      });
-      it('should dispatch a change to identification action when Passport is clicked', () => {
-        const passportRadio = fixture.debugElement.query(By.css('#identification-passport'));
-        passportRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new IdentificationUsedChanged('Passport'));
       });
     });
 

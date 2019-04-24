@@ -2,7 +2,7 @@ import { forOwn } from 'lodash';
 import { SeriousFaults, DrivingFaults, DangerousFaults, TestData } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { FaultCount, fullCompetencyLabels, SeriousFaultsContainer }
- from '../../shared/constants/competencies/catb-competencies';
+  from '../../shared/constants/competencies/catb-competencies';
 
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];
@@ -16,7 +16,7 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
 };
 
 export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
-  const faultsEncountered : FaultCount[] = [];
+  const faultsEncountered: FaultCount[] = [];
   forOwn(faults, (value: number, key) => {
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
@@ -26,8 +26,8 @@ export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
   return faultsEncountered.sort((a, b) => b.count - a.count);
 };
 
-export const displayDrivingFaultComments = (data: TestData) : boolean => {
-  const seriousFaults =  getSeriousOrDangerousFaults(data.seriousFaults);
+export const displayDrivingFaultComments = (data: TestData): boolean => {
+  const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
   const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
   let drivingFaultCount: number = 0;
 
@@ -85,6 +85,6 @@ export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[
 
 export const getDrivingFaultComment = (
   faults: DrivingFaults | DangerousFaults | SeriousFaults, competency: string,
-  ): string => {
+): string => {
   return faults[competency] || '';
 };

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { WeatherConditions, Identification } from '@dvsa/mes-test-schema/categories/B';
 
 export const CANDIDATE_DESCRIPTION_CHANGED = '[Test Summary] Candidate description changed';
 export const ADDITIONAL_INFORMATION_CHANGED = '[Test Summary] Additional Information changed';
@@ -14,16 +14,16 @@ export const WEATHER_CONDITIONS_CHANGED = '[Test Summary] Weather conditions cha
 
 export class AdditionalInformationChanged implements Action {
   readonly type = ADDITIONAL_INFORMATION_CHANGED;
-  constructor(public additionalInformation: string) {}
+  constructor(public additionalInformation: string) { }
 }
 export class CandidateDescriptionChanged implements Action {
   readonly type = CANDIDATE_DESCRIPTION_CHANGED;
-  constructor(public description: string) {}
+  constructor(public description: string) { }
 }
 
 export class RouteNumberChanged implements Action {
   readonly type = ROUTE_NUMBER_CHANGED;
-  constructor(public routeNumber: number) {}
+  constructor(public routeNumber: number) { }
 }
 
 export class DebriefWitnessed implements Action {
@@ -36,12 +36,12 @@ export class DebriefUnwitnessed implements Action {
 
 export class IdentificationUsedChanged implements Action {
   readonly type = IDENTIFICATION_USED_CHANGED;
-  constructor(public identification: any) {}
+  constructor(public identification: Identification) { }
 }
 
 export class IndependentDrivingTypeChanged implements Action {
   readonly type = INDEPENDENT_DRIVING_TYPE_CHANGED;
-  constructor(public drivingType: any) {}
+  constructor(public drivingType: any) { }
 }
 
 export class D255Yes implements Action {
@@ -53,7 +53,7 @@ export class D255No implements Action {
 
 export class WeatherConditionsChanged implements Action {
   readonly type = WEATHER_CONDITIONS_CHANGED;
-  constructor(public weatherConditions: WeatherConditions[]) {}
+  constructor(public weatherConditions: WeatherConditions[]) { }
 }
 
 export type Types =
