@@ -22,7 +22,6 @@ import {
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
-import { ControlledStop } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { get } from 'lodash';
 
@@ -32,7 +31,7 @@ interface ControlledStopComponentState {
   isDangerousMode$: Observable<boolean>;
 
   selectedControlledStop$: Observable<boolean>;
-  controlledStopOutcome$: Observable<ControlledStop>;
+  controlledStopOutcome$: Observable<CompetencyOutcome>;
 }
 
 @Component({
@@ -49,7 +48,7 @@ export class ControlledStopComponent implements OnInit {
   isDangerousMode: boolean = false;
 
   selectedControlledStop: boolean = false;
-  controlledStopOutcome: ControlledStop;
+  controlledStopOutcome: CompetencyOutcome;
 
   constructor(private store$: Store<StoreModel>) {}
 

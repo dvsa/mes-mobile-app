@@ -10,13 +10,12 @@ import {
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-import { ManoeuvreTypes } from '../manoeuvres-popover.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../journal/journal.actions';
-import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test_data/test-data.constants';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
@@ -53,28 +52,28 @@ describe('ManoeuvresPopoverComponent', () => {
       expect(component).toBeDefined();
     });
     it('should display the correct competencies against each manoeuvre', () => {
-      component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
+      component.recordManoeuvreSelection(ManoeuvreTypes.reverseParkRoad);
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#outcomeReverseParkRoadControl'))).toBeTruthy();
-      expect(fixture.debugElement.query(By.css('#outcomeReverseParkRoadObservation'))).toBeTruthy();
-      expect(fixture.debugElement.query(By.css('#outcomeReverseRightControl'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#outcomeReverseRightObservation'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#outcomeReverseParkCarparkControl'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#outcomeReverseParkCarparkObservation'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#outcomeForwardParkControl'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('#outcomeForwardParkObservation'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseParkRoad-controlFault'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('#reverseParkRoad-observationFault'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('#reverseRight-controlFault'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseRight-observationFault'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseParkCarpark-controlFault'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseParkCarpark-observationFault'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#forwardPark-controlFault'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('#forwardPark-observationFault'))).toBeNull();
     });
     describe('record manoeuvre', () => {
       it('should dispatch a RECORD_MANOEUVRES_SELECTION action', () => {
-        component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
+        component.recordManoeuvreSelection(ManoeuvreTypes.reverseParkRoad);
         expect(store$.dispatch).toHaveBeenCalledWith(
-          new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+          new RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad),
         );
       });
     });
     describe('disabling manoeuvres', () => {
       it('should not disable manoeuvres when a manoeuvre is selected', () => {
-        component.recordManoeuvreSelection(ManoeuvreTypes.selectedReverseParkRoad);
+        component.recordManoeuvreSelection(ManoeuvreTypes.reverseParkRoad);
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio'))
           .nativeElement.disabled).toBe(false);
@@ -86,7 +85,10 @@ describe('ManoeuvresPopoverComponent', () => {
           .nativeElement.disabled).toBe(false);
       });
       it('should disable other manoeuvres from being selected when a fault is added', () => {
-        store$.dispatch(new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeReverseRightControl));
+        store$.dispatch(new AddManoeuvreDrivingFault({
+          manoeuvre: ManoeuvreTypes.reverseRight,
+          competency: ManoeuvreCompetencies.controlFault,
+        }));
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio'))
           .nativeElement.disabled).toBe(true);

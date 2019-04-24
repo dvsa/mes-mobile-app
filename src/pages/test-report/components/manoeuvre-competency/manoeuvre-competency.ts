@@ -19,14 +19,14 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
-import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 
 interface ManoeuvreCompetencyComponentState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome>;
+  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome | null>;
 }
 
 @Component({
@@ -56,7 +56,7 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
-  manoeuvreCompetencyOutcome: ManoeuvreOutcome;
+  manoeuvreCompetencyOutcome: ManoeuvreOutcome | null;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -81,7 +81,13 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
       manoeuvreCompetencyOutcome$: currentTest$.pipe(
         select(getTestData),
         select(getManoeuvres),
-        select(manoeuvres => manoeuvres[this.manoeuvre][this.competency]),
+        select((manoeuvres: Manoeuvres) => {
+          const manoeuvre = manoeuvres[this.manoeuvre];
+          if (typeof manoeuvre !== 'undefined') {
+            return manoeuvre[this.competency];
+          }
+          return null;
+        }),
       ),
     };
 

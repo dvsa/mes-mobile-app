@@ -1,7 +1,7 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import * as testDataActions from './test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
-import { Competencies, ManoeuvreCompetencies } from './test-data.constants';
+import { Competencies } from './test-data.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
@@ -62,13 +62,6 @@ export function testDataReducer(
             [action.payload.competency]: CompetencyOutcome.D,
           },
         },
-      };
-    case testDataActions.REMOVE_MANOEUVRE_FAULT:
-      const manoeuvre = action.payload as ManoeuvreCompetencies;
-      const { [manoeuvre]: removedManoeuvre, ...updatedManoeuvres } = state.manoeuvres;
-      return {
-        ...state,
-        manoeuvres: updatedManoeuvres,
       };
     case testDataActions.ADD_DRIVING_FAULT:
       return {

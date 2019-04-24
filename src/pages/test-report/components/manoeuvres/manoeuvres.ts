@@ -7,7 +7,6 @@ import { getManoeuvres, sumManoeuvreFaults } from '../../../../modules/tests/tes
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
-import { startsWith, pickBy } from 'lodash';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 @Component({
