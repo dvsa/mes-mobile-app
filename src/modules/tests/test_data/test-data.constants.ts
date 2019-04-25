@@ -40,18 +40,16 @@ export enum Competencies {
   awarenessPlanning = 'awarenessPlanning',
 }
 
+export enum ManoeuvreTypes {
+  reverseRight = 'reverseRight',
+  reverseParkRoad = 'reverseParkRoad',
+  reverseParkCarpark = 'reverseParkCarpark',
+  forwardPark = 'forwardPark',
+}
+
 export enum ManoeuvreCompetencies {
-  outcomeReverseLeftControl = 'outcomeReverseLeftControl',
-  outcomeReverseLeftObservation = 'outcomeReverseLeftObservation',
-  outcomeReverseRightControl = 'outcomeReverseRightControl',
-  outcomeReverseRightObservation = 'outcomeReverseRightObservation',
-  outcomeReverseParkRoadControl = 'outcomeReverseParkRoadControl',
-  outcomeReverseParkRoadObservation = 'outcomeReverseParkRoadObservation',
-  outcomeReverseParkCarparkControl = 'outcomeReverseParkCarparkControl',
-  outcomeReverseParkCarparkObservation = 'outcomeReverseParkCarparkObservation',
-  outcomeForwardParkControl = 'outcomeForwardParkControl',
-  outcomeForwardParkObservation = 'outcomeForwardParkObservation',
-  outcomeControlledStop = 'outcomeControlledStop',
+  controlFault = 'controlFault',
+  observationFault = 'observationFault',
 }
 
 export enum LegalRequirements {

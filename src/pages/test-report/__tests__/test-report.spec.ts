@@ -1,5 +1,5 @@
 
-import { CompetencyWithModalComponent } from './../components/competency-with-modal/competency-with-modal';
+import { ManoeuvresComponent } from './../components/manoeuvres/manoeuvres';
 import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
@@ -42,7 +42,7 @@ describe('TestReportPage', () => {
     TestBed.configureTestingModule({
       declarations: [TestReportPage,
         MockComponent(ManoeuvresPopoverComponent),
-        MockComponent(CompetencyWithModalComponent),
+        MockComponent(ManoeuvresComponent),
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),
         MockComponent(CompetencyButtonComponent),

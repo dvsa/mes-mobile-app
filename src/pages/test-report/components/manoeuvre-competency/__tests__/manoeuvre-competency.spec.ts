@@ -1,6 +1,6 @@
 import { AppModule } from '../../../../../app/app.module';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test_data/test-data.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
@@ -57,7 +57,8 @@ describe('ManoeuvreCompetencyComponent', () => {
 
   describe('DOM', () => {
     it('should display the correct driving fault badge with a count of 1', () => {
-      component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+      component.manoeuvre = ManoeuvreTypes.reverseRight;
+      component.competency = ManoeuvreCompetencies.controlFault;
       component.manoeuvreCompetencyOutcome = 'DF';
       const result = component.hasDrivingFault();
       fixture.detectChanges();
@@ -70,7 +71,8 @@ describe('ManoeuvreCompetencyComponent', () => {
 
   describe('Class', () => {
     it('should get the competency label from the correct object', () => {
-      component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+      component.manoeuvre = ManoeuvreTypes.reverseRight;
+      component.competency = ManoeuvreCompetencies.controlFault;
       fixture.detectChanges();
       const result = component.getLabel();
       const expected = 'Control';
@@ -79,7 +81,8 @@ describe('ManoeuvreCompetencyComponent', () => {
 
     describe('hasDrivingFault', () => {
       it('should return 0 when not driving fault', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
         fixture.detectChanges();
 
@@ -88,7 +91,8 @@ describe('ManoeuvreCompetencyComponent', () => {
       });
 
       it('should return 1 when has a driving fault', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
 
         const result = component.hasDrivingFault();
@@ -98,7 +102,8 @@ describe('ManoeuvreCompetencyComponent', () => {
 
     describe('hasSeriousFault', () => {
       it('should return false if it does not have a serious fault', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
 
         const result = component.hasSeriousFault();
@@ -106,7 +111,8 @@ describe('ManoeuvreCompetencyComponent', () => {
       });
 
       it('should return true if it has a serious fault', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
 
         const result = component.hasSeriousFault();
@@ -116,7 +122,8 @@ describe('ManoeuvreCompetencyComponent', () => {
 
     describe('hasDangerousFault', () => {
       it('should return false if it does not have a dangerous fault', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
 
         const result = component.hasDangerousFault();
@@ -124,7 +131,8 @@ describe('ManoeuvreCompetencyComponent', () => {
       });
 
       it('should return true if it has a dangerous fault', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
 
         const result = component.hasDangerousFault();
@@ -134,45 +142,61 @@ describe('ManoeuvreCompetencyComponent', () => {
 
     describe('addFault', () => {
       it('should dispatch a ADD_MANOEUVRE_DANGEROUS_FAULT action if dangerous mode is active on press', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.isDangerousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDangerousFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDangerousFault({
+          manoeuvre: component.manoeuvre,
+          competency: component.competency,
+        }));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
       });
 
       it('should dispatch a ADD_MANOEUVRE_SERIOUS_FAULT action if serious mode is active on press', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         component.isSeriousMode = true;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreSeriousFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreSeriousFault({
+          manoeuvre: component.manoeuvre,
+          competency: component.competency,
+        }));
         expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
       });
 
       it('should dispatch a ADD_MANOEUVRE_DRIVING_FAULT action if simple driving fault mode is active on press', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault({
+          manoeuvre: component.manoeuvre,
+          competency: component.competency,
+        }));
       });
     });
 
     describe('AddManoeuvreDrivingFault', () => {
       it('should dispatch the correct action when the competency is a manoeuvre', () => {
-        component.competency = ManoeuvreCompetencies.outcomeReverseRightControl;
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
         fixture.detectChanges();
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault(component.competency));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddManoeuvreDrivingFault({
+          manoeuvre: component.manoeuvre,
+          competency: component.competency,
+        }));
       });
     });
   });

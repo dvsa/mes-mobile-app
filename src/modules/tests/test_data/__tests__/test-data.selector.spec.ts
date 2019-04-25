@@ -8,10 +8,10 @@ import {
   getEcoFaultText,
   getManoeuvres,
   hasManoeuvreBeenCompleted,
-  hasControlledStopBeenCompleted,
   getDrivingFaultSummaryCount,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 describe('TestDataSelectors', () => {
   const state: TestData = {
@@ -39,9 +39,13 @@ describe('TestDataSelectors', () => {
       adviceGivenPlanning: false,
     },
     manoeuvres: {
-      selectedForwardPark: true,
-      selectedControlledStop: true,
-      outcomeForwardParkControl: 'DF',
+      forwardPark: {
+        selected: true,
+        controlFault: CompetencyOutcome.DF,
+      },
+    },
+    controlledStop: {
+      selected: true,
     },
   };
 
@@ -156,29 +160,11 @@ describe('TestDataSelectors', () => {
     it('should return true when a manoeuvre has been completed', () => {
       const state: TestData = {
         manoeuvres: {
-          selectedForwardPark: true,
+          forwardPark: { selected: true },
         },
       };
       expect(hasManoeuvreBeenCompleted(state)).toBeTruthy();
     });
-    it('should return false when only a controlled stop has been completed', () => {
-      const state: TestData = {
-        manoeuvres: {
-          selectedControlledStop: true,
-        },
-      };
-      expect(hasManoeuvreBeenCompleted(state)).toBeFalsy();
-    });
   });
 
-  describe('hasControlledStopBeenCompleted', () => {
-    it('should return true if a controlled stop has been completed', () => {
-      expect(hasControlledStopBeenCompleted(state)).toBeTruthy();
-    });
-    it('should return false if a controlled stop has not been completed', () => {
-      expect(hasControlledStopBeenCompleted({
-        manoeuvres: {},
-      })).toBeFalsy();
-    });
-  });
 });

@@ -5,7 +5,7 @@ import { IonicModule } from 'ionic-angular';
 
 import { EtaComponent } from '../components/examiner-takes-action/eta';
 import { ManoeuvresPopoverComponent } from '../components/manoeuvres-popover/manoeuvres-popover';
-import { CompetencyWithModalComponent } from '../components/competency-with-modal/competency-with-modal';
+import { ManoeuvresComponent } from '../components/manoeuvres/manoeuvres';
 import { CompetencyComponent } from '../components/competency/competency';
 import { CompetencyButtonComponent } from '../components/competency-button/competency-button';
 import { TickIndicatorComponent } from '../components/tick-indicator/tick-indicator';
@@ -21,7 +21,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
   declarations: [
     EtaComponent,
     ManoeuvresPopoverComponent,
-    CompetencyWithModalComponent,
+    ManoeuvresComponent,
     CompetencyComponent,
     CompetencyButtonComponent,
     TickIndicatorComponent,
@@ -41,7 +41,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
   exports:[
     EtaComponent,
     ManoeuvresPopoverComponent,
-    CompetencyWithModalComponent,
+    ManoeuvresComponent,
     CompetencyComponent,
     CompetencyButtonComponent,
     TickIndicatorComponent,

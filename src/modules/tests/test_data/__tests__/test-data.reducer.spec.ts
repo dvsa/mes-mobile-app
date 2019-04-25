@@ -15,14 +15,15 @@ import {
   RemoveDangerousFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
-  RemoveManoeuvreFault,
-  ControlledStopComplete,
 } from '../test-data.actions';
-import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from '../test-data.constants';
-import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import {
+  Competencies,
+  LegalRequirements,
+  ExaminerActions,
+  ManoeuvreCompetencies,
   ManoeuvreTypes,
-} from '../../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
+} from '../test-data.constants';
+import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 describe('TestDataReducer reducer', () => {
@@ -95,61 +96,44 @@ describe('TestDataReducer reducer', () => {
     it('should add selected manoeuvre', () => {
       const result = testDataReducer(
         initialState,
-        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+        new RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad),
       );
-      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
+      expect(result.manoeuvres[ManoeuvreTypes.reverseParkRoad]).toEqual({ selected: true });
     });
     it('should replace current with selected manoeuvre', () => {
       const state: TestData = {
         ...initialState,
         manoeuvres: {
-          selectedReverseParkCarpark: true,
+          reverseParkCarpark: {
+            selected: true,
+          },
         },
       };
       const result = testDataReducer(
         state,
-        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+        new RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad),
       );
-      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
-      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
+      expect(result.manoeuvres[ManoeuvreTypes.reverseParkRoad]).toEqual({ selected: true });
+      expect(result.manoeuvres.reverseParkCarpark).toBeUndefined();
     });
-    it('should keep any controlled stop data when changing selected manoeuvre', () => {
+
+    it('should wipe any outcome data from other manoeuvres when changing selected manoeuvre', () => {
       const state: TestData = {
         ...initialState,
         manoeuvres: {
-          selectedReverseParkCarpark: true,
-          selectedControlledStop: true,
-          outcomeForwardParkControl: 'S',
-          outcomeControlledStop: 'DF',
+          reverseParkCarpark: {
+            selected: true,
+            controlFault: 'S',
+          },
         },
       };
       const result = testDataReducer(
         state,
-        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
+        new RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad),
       );
-      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
-      expect(result.manoeuvres.selectedReverseParkCarpark).toBeUndefined();
-      expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
-      expect(result.manoeuvres.outcomeControlledStop).toBe('DF');
-    });
-    it('should keep any outcome data from other manoeuvres when changing selected manoeuvre', () => {
-      const state: TestData = {
-        ...initialState,
-        manoeuvres: {
-          selectedReverseParkCarpark: true,
-          selectedControlledStop: true,
-          outcomeForwardParkControl: 'S',
-          outcomeControlledStop: 'DF',
-        },
-      };
-      const result = testDataReducer(
-        state,
-        new RecordManoeuvresSelection(ManoeuvreTypes.selectedReverseParkRoad),
-      );
-      expect(result.manoeuvres[ManoeuvreTypes.selectedReverseParkRoad]).toEqual(true);
-      expect(result.manoeuvres.outcomeForwardParkControl).toEqual('S');
-      expect(result.manoeuvres.selectedControlledStop).toBe(true);
-      expect(result.manoeuvres.outcomeControlledStop).toBe('DF');
+      expect(result.manoeuvres[ManoeuvreTypes.reverseParkRoad]).toBeDefined();
+      expect(result.manoeuvres[ManoeuvreTypes.reverseParkRoad].selected).toEqual(true);
+      expect(result.manoeuvres[ManoeuvreTypes.reverseParkCarpark]).toBeUndefined();
     });
     describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
       it('should add a "DF" outcome to the selected manoeuvre', () => {
@@ -157,16 +141,19 @@ describe('TestDataReducer reducer', () => {
         const state: TestData = {
           ...initialState,
           manoeuvres: {
-            selectedReverseParkRoad: true,
+            reverseParkRoad: { selected: true },
           },
         };
         // Act
         const result = testDataReducer(
           state,
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
+          new AddManoeuvreDrivingFault({
+            manoeuvre: ManoeuvreTypes.reverseParkRoad,
+            competency: ManoeuvreCompetencies.controlFault,
+          }),
         );
         // Assert
-        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.DF);
+        expect(result.manoeuvres.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.DF);
       });
     });
     describe('ADD_MANOEUVRE_SERIOUS_FAULT', () => {
@@ -175,16 +162,19 @@ describe('TestDataReducer reducer', () => {
         const state: TestData = {
           ...initialState,
           manoeuvres: {
-            selectedReverseParkRoad: true,
+            reverseParkRoad: { selected: true },
           },
         };
         // Act
         const result = testDataReducer(
           state,
-          new AddManoeuvreSeriousFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
+          new AddManoeuvreSeriousFault({
+            manoeuvre: ManoeuvreTypes.reverseParkRoad,
+            competency: ManoeuvreCompetencies.controlFault,
+          }),
         );
         // Assert
-        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.S);
+        expect(result.manoeuvres.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.S);
       });
     });
     describe('ADD_MANOEUVRE_DANGEROUS_FAULT', () => {
@@ -193,54 +183,19 @@ describe('TestDataReducer reducer', () => {
         const state: TestData = {
           ...initialState,
           manoeuvres: {
-            selectedReverseParkRoad: true,
+            reverseParkRoad: { selected: true },
           },
         };
         // Act
         const result = testDataReducer(
           state,
-          new AddManoeuvreDangerousFault(ManoeuvreCompetencies.outcomeReverseParkRoadControl),
+          new AddManoeuvreDangerousFault({
+            manoeuvre: ManoeuvreTypes.reverseParkRoad,
+            competency: ManoeuvreCompetencies.controlFault,
+          }),
         );
         // Assert
-        expect(result.manoeuvres.outcomeReverseParkRoadControl).toEqual(CompetencyOutcome.D);
-      });
-    });
-    describe('REMOVE_MANOEUVRE_FAULT', () => {
-      it('should remove the outcome for the selected manoeuvre', () => {
-        // Arrange
-        const state: TestData = {
-          ...initialState,
-          manoeuvres: {
-            selectedControlledStop: true,
-            outcomeControlledStop: 'DF',
-          },
-        };
-        // Act
-        const result = testDataReducer(state, new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop),
-        );
-        // Assert
-        expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
-        expect(result.manoeuvres.outcomeControlledStop).toBeUndefined();
-      });
-      it('should not affect the outcome of other manoeuvres', () => {
-        // Arrange
-        const state: TestData = {
-          ...initialState,
-          manoeuvres: {
-            selectedReverseParkCarpark: true,
-            outcomeForwardParkControl: 'D',
-            selectedControlledStop: true,
-            outcomeControlledStop: 'DF',
-          },
-        };
-        // Act
-        const result = testDataReducer(state, new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop),
-        );
-        // Assert
-        expect(result.manoeuvres.selectedReverseParkCarpark).toBeTruthy();
-        expect(result.manoeuvres.outcomeForwardParkControl).toEqual(CompetencyOutcome.D);
-        expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
-        expect(result.manoeuvres.outcomeControlledStop).toBeUndefined();
+        expect(result.manoeuvres.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.D);
       });
     });
   });
@@ -409,30 +364,21 @@ describe('TestDataReducer reducer', () => {
   describe('TOGGLE_CONTROLLED_STOP', () => {
     it('should toggle the controlled stop (true when dispatched first time)', () => {
       const state: TestData = {
-        manoeuvres: {},
+        controlledStop: {},
       };
       const result = testDataReducer(state, new ToggleControlledStop());
-      expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
+      expect(result.controlledStop.selected).toBeTruthy();
     });
 
     it('should remove the controlled stop property when dispatched second time', () => {
       const state: TestData = {
-        manoeuvres: {},
+        controlledStop: {},
       };
       const modifiedState = testDataReducer(state, new ToggleControlledStop());
       const result = testDataReducer(modifiedState, new ToggleControlledStop());
 
-      expect(result.manoeuvres.selectedControlledStop).toBeUndefined();
+      expect(result.controlledStop.selected).toBe(false);
 
-    });
-  });
-  describe('CONTROLLED_STOP_COMPLETE', () => {
-    it('should set controlled stop to true when set the first time', () => {
-      const state: TestData = {
-        manoeuvres: {},
-      };
-      const result = testDataReducer(state, new ControlledStopComplete());
-      expect(result.manoeuvres.selectedControlledStop).toBeTruthy();
     });
   });
 

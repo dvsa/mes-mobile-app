@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test_data/test-data.constants';
 import {
   AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
@@ -14,29 +14,31 @@ import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../../test-report.selector';
 import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
-import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 
 interface ManoeuvreCompetencyComponentState {
   isRemoveFaultMode$: Observable<boolean>;
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
-  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome>;
+  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome | null>;
 }
 
 @Component({
   selector: 'manoeuvre-competency',
   templateUrl: 'manoeuvre-competency.html',
 })
-export class ManoeuvreCompetencyComponent {
+export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
 
   @Input()
   competency: ManoeuvreCompetencies;
+  @Input()
+  manoeuvre: ManoeuvreTypes;
 
   touchStateDelay: number = 100;
 
@@ -54,7 +56,7 @@ export class ManoeuvreCompetencyComponent {
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
-  manoeuvreCompetencyOutcome: ManoeuvreOutcome;
+  manoeuvreCompetencyOutcome: ManoeuvreOutcome | null;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -79,7 +81,13 @@ export class ManoeuvreCompetencyComponent {
       manoeuvreCompetencyOutcome$: currentTest$.pipe(
         select(getTestData),
         select(getManoeuvres),
-        select(manoeuvres => manoeuvres[this.competency]),
+        select((manoeuvres: Manoeuvres) => {
+          const manoeuvre = manoeuvres[this.manoeuvre];
+          if (typeof manoeuvre !== 'undefined') {
+            return manoeuvre[this.competency];
+          }
+          return null;
+        }),
       ),
     };
 
@@ -126,20 +134,25 @@ export class ManoeuvreCompetencyComponent {
       return;
     }
 
+    const payload = {
+      competency: this.competency,
+      manoeuvre: this.manoeuvre,
+    };
+
     if (this.isDangerousMode) {
-      this.store$.dispatch(new AddManoeuvreDangerousFault(this.competency));
+      this.store$.dispatch(new AddManoeuvreDangerousFault(payload));
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      this.store$.dispatch(new AddManoeuvreSeriousFault(this.competency));
+      this.store$.dispatch(new AddManoeuvreSeriousFault(payload));
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
-      this.store$.dispatch(new AddManoeuvreDrivingFault(this.competency));
+      this.store$.dispatch(new AddManoeuvreDrivingFault(payload));
       return;
     }
   }

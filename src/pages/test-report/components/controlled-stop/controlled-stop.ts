@@ -11,22 +11,19 @@ import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
 import {
   hasControlledStopBeenCompleted,
-  getManoeuvres,
 } from '../../../../modules/tests/test_data/test-data.selector';
 import {
   ToggleControlledStop,
-  ControlledStopComplete,
-  AddManoeuvreDrivingFault,
-  AddManoeuvreSeriousFault,
-  AddManoeuvreDangerousFault,
-  RemoveManoeuvreFault,
+  ControlledStopAddDangerousFault,
+  ControlledStopAddSeriousFault,
+  ControlledStopAddDrivingFault,
+  ControlledStopRemoveFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
-import { ManoeuvreCompetencies } from '../../../../modules/tests/test_data/test-data.constants';
-import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { get } from 'lodash';
 
 interface ControlledStopComponentState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -34,7 +31,7 @@ interface ControlledStopComponentState {
   isDangerousMode$: Observable<boolean>;
 
   selectedControlledStop$: Observable<boolean>;
-  manoeuvreCompetencyOutcome$: Observable<ManoeuvreOutcome>;
+  controlledStopOutcome$: Observable<CompetencyOutcome>;
 }
 
 @Component({
@@ -42,8 +39,6 @@ interface ControlledStopComponentState {
   templateUrl: 'controlled-stop.html',
 })
 export class ControlledStopComponent implements OnInit {
-
-  competency: ManoeuvreCompetencies = ManoeuvreCompetencies.outcomeControlledStop;
 
   componentState: ControlledStopComponentState;
   subscription: Subscription;
@@ -53,7 +48,7 @@ export class ControlledStopComponent implements OnInit {
   isDangerousMode: boolean = false;
 
   selectedControlledStop: boolean = false;
-  manoeuvreCompetencyOutcome: ManoeuvreOutcome;
+  controlledStopOutcome: CompetencyOutcome;
 
   constructor(private store$: Store<StoreModel>) {}
 
@@ -77,10 +72,9 @@ export class ControlledStopComponent implements OnInit {
         select(getTestData),
         select(hasControlledStopBeenCompleted),
       ),
-      manoeuvreCompetencyOutcome$: currentTest$.pipe(
+      controlledStopOutcome$: currentTest$.pipe(
         select(getTestData),
-        select(getManoeuvres),
-        select(manoeuvres => manoeuvres[this.competency]),
+        select(testData => get(testData, 'controlledStop.fault')),
       ),
     };
 
@@ -89,7 +83,7 @@ export class ControlledStopComponent implements OnInit {
       isSeriousMode$,
       isDangerousMode$,
       selectedControlledStop$,
-      manoeuvreCompetencyOutcome$,
+      controlledStopOutcome$,
     } = this.componentState;
 
     const merged$ = merge(
@@ -97,7 +91,7 @@ export class ControlledStopComponent implements OnInit {
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       selectedControlledStop$.pipe(map(value => this.selectedControlledStop = value)),
-      manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
+      controlledStopOutcome$.pipe(map(outcome => this.controlledStopOutcome = outcome)),
     );
 
     this.subscription = merged$.subscribe();
@@ -157,49 +151,46 @@ export class ControlledStopComponent implements OnInit {
     }
 
     if (this.isDangerousMode) {
-      this.store$.dispatch(new ControlledStopComplete());
-      this.store$.dispatch(new AddManoeuvreDangerousFault(this.competency));
+      this.store$.dispatch(new ControlledStopAddDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       return;
     }
 
     if (this.isSeriousMode) {
-      this.store$.dispatch(new ControlledStopComplete());
-      this.store$.dispatch(new AddManoeuvreSeriousFault(this.competency));
+      this.store$.dispatch(new ControlledStopAddSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       return;
     }
 
     if (wasPress) {
-      this.store$.dispatch(new ControlledStopComplete());
-      this.store$.dispatch(new AddManoeuvreDrivingFault(this.competency));
+      this.store$.dispatch(new ControlledStopAddDrivingFault());
     }
   }
 
   removeFault = (): void => {
 
     if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveManoeuvreFault(this.competency));
+      this.store$.dispatch(new ControlledStopRemoveFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
 
     if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
-      this.store$.dispatch(new RemoveManoeuvreFault(this.competency));
+      this.store$.dispatch(new ControlledStopRemoveFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
     if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.faultCount() > 0) {
-      this.store$.dispatch(new RemoveManoeuvreFault(this.competency));
+      this.store$.dispatch(new ControlledStopRemoveFault());
       this.store$.dispatch(new ToggleRemoveFaultMode());
     }
   }
 
-  faultCount = (): number => this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF ? 1 : 0;
+  faultCount = (): number => this.controlledStopOutcome === CompetencyOutcome.DF ? 1 : 0;
 
-  hasSeriousFault = (): boolean => this.manoeuvreCompetencyOutcome === CompetencyOutcome.S;
+  hasSeriousFault = (): boolean => this.controlledStopOutcome === CompetencyOutcome.S;
 
-  hasDangerousFault = (): boolean => this.manoeuvreCompetencyOutcome === CompetencyOutcome.D;
+  hasDangerousFault = (): boolean => this.controlledStopOutcome === CompetencyOutcome.D;
 }

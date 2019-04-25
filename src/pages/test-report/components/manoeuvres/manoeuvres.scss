@@ -1,4 +1,4 @@
-competency-with-modal {
+manoeuvres {
   button {
     width: 254px;
     height: 44px;
@@ -82,6 +82,18 @@ competency-with-modal {
         align-self: center;
         width: 20px;
       }
+    }
+    .fault-wrapper {
+      display: flex;
+    }
+    
+    .tickwrapper {
+      margin-right: 5px;
+    }
+
+    serious-fault-badge {
+      display: inline-block;
+      margin-right: 2px;
     }
   }
 }

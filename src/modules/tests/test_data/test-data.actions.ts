@@ -1,9 +1,12 @@
-import {
-  ManoeuvreTypes,
-} from './../../../pages/test-report/components/manoeuvres-popover/manoeuvres-popover.constants';
 import { Action } from '@ngrx/store';
 import { FaultPayload } from './test-data.models';
-import { Competencies, LegalRequirements, ExaminerActions, ManoeuvreCompetencies } from './test-data.constants';
+import {
+  Competencies,
+  LegalRequirements,
+  ExaminerActions,
+  ManoeuvreCompetencies,
+  ManoeuvreTypes,
+} from './test-data.constants';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
@@ -21,8 +24,16 @@ export const TOGGLE_ETA = '[Eta] Toggle Eta';
 export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
 export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
 export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
-export const CONTROLLED_STOP_COMPLETE = '[ControlledStop] Controlled Stop Complete';
+export const CONTROLLED_STOP_ADD_DRIVING_FAULT = '[ControlledStop] Add Driving Fault';
+export const CONTROLLED_STOP_ADD_SERIOUS_FAULT = '[ControlledStop] Add Serious Fault';
+export const CONTROLLED_STOP_ADD_DANGEROUS_FAULT = '[ControlledStop] Add Dangerous Fault';
+export const CONTROLLED_STOP_REMOVE_FAULT = '[ControlledStop] Remove Fault';
 export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
+
+export interface ManoeuvrePayload {
+  manoeuvre: ManoeuvreTypes;
+  competency: ManoeuvreCompetencies;
+}
 
 export class RecordManoeuvresSelection implements Action {
   constructor(public manoeuvre: ManoeuvreTypes) { }
@@ -30,23 +41,37 @@ export class RecordManoeuvresSelection implements Action {
 }
 
 export class AddManoeuvreDrivingFault implements Action {
-  constructor(public payload: ManoeuvreCompetencies) { }
+  constructor(public payload: ManoeuvrePayload) { }
   readonly type = ADD_MANOEUVRE_DRIVING_FAULT;
 }
 
 export class AddManoeuvreSeriousFault implements Action {
-  constructor(public payload: ManoeuvreCompetencies) { }
+  constructor(public payload: ManoeuvrePayload) { }
   readonly type = ADD_MANOEUVRE_SERIOUS_FAULT;
 }
 
 export class AddManoeuvreDangerousFault implements Action {
-  constructor(public payload: ManoeuvreCompetencies) { }
+  constructor(public payload: ManoeuvrePayload) { }
   readonly type = ADD_MANOEUVRE_DANGEROUS_FAULT;
 }
 
 export class RemoveManoeuvreFault implements Action {
   constructor(public payload: ManoeuvreCompetencies) { }
   readonly type = REMOVE_MANOEUVRE_FAULT;
+}
+export class ControlledStopAddDrivingFault implements Action {
+  readonly type = CONTROLLED_STOP_ADD_DRIVING_FAULT;
+}
+export class ControlledStopAddSeriousFault implements Action {
+  readonly type = CONTROLLED_STOP_ADD_SERIOUS_FAULT;
+}
+
+export class ControlledStopAddDangerousFault implements Action {
+  readonly type = CONTROLLED_STOP_ADD_DANGEROUS_FAULT;
+}
+
+export class ControlledStopRemoveFault implements Action {
+  readonly type = CONTROLLED_STOP_REMOVE_FAULT;
 }
 
 export class AddDrivingFault implements Action {
@@ -91,14 +116,9 @@ export class ToggleControlEco implements Action {
 export class TogglePlanningEco implements Action {
   readonly type = TOGGLE_PLANNING_ECO;
 }
-
 export class ToggleControlledStop implements Action {
   readonly type = TOGGLE_CONTROLLED_STOP;
 }
-export class ControlledStopComplete implements Action {
-  readonly type = CONTROLLED_STOP_COMPLETE;
-}
-
 export class AddDrivingFaultComment implements Action {
   constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_DRIVING_FAULT_COMMENT;
@@ -121,4 +141,7 @@ export type Types =
   | ToggleControlEco
   | TogglePlanningEco
   | ToggleControlledStop
-  | ControlledStopComplete;
+  | ControlledStopAddDrivingFault
+  | ControlledStopAddSeriousFault
+  | ControlledStopAddDangerousFault
+  | ControlledStopRemoveFault;

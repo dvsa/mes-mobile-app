@@ -14,11 +14,9 @@ import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fa
 import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../journal/journal.actions';
 import {
-  ControlledStopComplete,
-  AddManoeuvreDrivingFault,
-  RemoveManoeuvreFault,
+  ControlledStopAddDrivingFault,
+  ControlledStopRemoveFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
-import { ManoeuvreCompetencies } from '../../../../../modules/tests/test_data/test-data.constants';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 describe('ControlledStopComponent', () => {
@@ -55,42 +53,40 @@ describe('ControlledStopComponent', () => {
       expect(component).toBeDefined();
     });
 
-    describe('addManoeuvreDrivingFault', () => {
-      it('should dispatch an ADD_MANOEUVRE_DRIVING_FAULT action for press', () => {
+    describe('ControlledStopAddDrivingFault', () => {
+      it('should dispatch an CONTROLLED_STOP_ADD_DRIVING_FAULT action for press', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
-
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new ControlledStopComplete());
+          new ControlledStopAddDrivingFault());
       });
-      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action for tap', () => {
+      it('should not dispatch an CONTROLLED_STOP_ADD_DRIVING_FAULT action for tap', () => {
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopAddDrivingFault());
       });
-      it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is already a driving fault', () => {
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+      it('should not dispatch an CONTROLLED_STOP_ADD_DRIVING_FAULT action if there is already a driving fault', () => {
+        component.controlledStopOutcome = CompetencyOutcome.DF;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopAddDrivingFault());
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is a serious fault', () => {
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
+        component.controlledStopOutcome = CompetencyOutcome.S;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopAddDrivingFault());
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if serious mode is active', () => {
         component.isSeriousMode = true;
@@ -99,16 +95,16 @@ describe('ControlledStopComponent', () => {
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopAddDrivingFault());
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if there is a dangerous fault', () => {
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
+        component.controlledStopOutcome = CompetencyOutcome.D;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopAddDrivingFault());
       });
       it('should not dispatch an ADD_MANOEUVRE_DRIVING_FAULT action if dangerous mode is active', () => {
         component.isDangerousMode = true;
@@ -117,65 +113,65 @@ describe('ControlledStopComponent', () => {
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new AddManoeuvreDrivingFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopAddDrivingFault());
       });
     });
 
     describe('removeManoeuvreDrivingFault', () => {
       it('should dispatch a REMOVE_MANOEUVRE_FAULT action for press', () => {
         component.isRemoveFaultMode = true;
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+        component.controlledStopOutcome = CompetencyOutcome.DF;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopRemoveFault());
 
       });
       it('should dispatch a REMOVE_MANOEUVRE_FAULT action for tap', () => {
         component.isRemoveFaultMode = true;
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+        component.controlledStopOutcome = CompetencyOutcome.DF;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopRemoveFault());
       });
       it('should not dispatch a REMOVE_MANOEUVRE_FAULT action if in the wrong mode', () => {
         component.isRemoveFaultMode = true;
         component.isSeriousMode = true;
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
+        component.controlledStopOutcome = CompetencyOutcome.D;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).not.toHaveBeenCalledWith(
-          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopRemoveFault());
       });
 
       it('should dispatch a REMOVE_MANOEUVRE_FAULT action if there is a serious fault', () => {
         component.isRemoveFaultMode = true;
         component.isSeriousMode = true;
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
+        component.controlledStopOutcome = CompetencyOutcome.S;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopRemoveFault());
       });
       it('should dispatch a REMOVE_MANOEUVRE_FAULT action if there is a dangerous fault', () => {
         component.isRemoveFaultMode = true;
         component.isDangerousMode = true;
-        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
+        component.controlledStopOutcome = CompetencyOutcome.D;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault();
 
         expect(storeDispatchSpy).toHaveBeenCalledWith(
-          new RemoveManoeuvreFault(ManoeuvreCompetencies.outcomeControlledStop));
+          new ControlledStopRemoveFault());
       });
     });
   });
@@ -185,7 +181,7 @@ describe('ControlledStopComponent', () => {
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;
-      component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+      component.controlledStopOutcome = CompetencyOutcome.DF;
 
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(1);
