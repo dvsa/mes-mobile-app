@@ -112,7 +112,7 @@ describe('ManoeuvresPopoverComponent', () => {
         expect(fixture.debugElement.query(By.css('#manoeuvres-forward-park-radio'))
           .nativeElement.disabled).toBe(true);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
-          .nativeElement.disabled).toBe(true);
+          .nativeElement.disabled).toBe(false);
       });
       it('should disable other manoeuvres from being selected when a dangerous fault is added', () => {
         store$.dispatch(new AddManoeuvreDangerousFault({
@@ -127,7 +127,7 @@ describe('ManoeuvresPopoverComponent', () => {
         expect(fixture.debugElement.query(By.css('#manoeuvres-forward-park-radio'))
           .nativeElement.disabled).toBe(true);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
-          .nativeElement.disabled).toBe(true);
+          .nativeElement.disabled).toBe(false);
       });
     });
   });
