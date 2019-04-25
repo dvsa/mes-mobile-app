@@ -17,6 +17,7 @@ import { LegalRequirementComponent } from '../components/legal-requirement/legal
 import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
+import { EcoComponent } from './eco/eco';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
     ControlledStopComponent,
     ManoeuvreCompetencyComponent,
     VehicleCheckComponent,
+    EcoComponent,
   ],
   imports: [
     ComponentsModule,
@@ -55,6 +57,7 @@ import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
     ControlledStopComponent,
     ManoeuvreCompetencyComponent,
     VehicleCheckComponent,
+    EcoComponent,
   ],
 })
 export class TestReportComponentsModule {}

@@ -1,0 +1,26 @@
+<ion-row>
+  <ion-col col-20 no-padding>
+    <competency-button class="eco-tick"
+      [ripple]="false"
+    >
+      <span class='tickwrapper'>
+        <tick-indicator [ticked]="selectedEco"></tick-indicator>
+      </span>
+    </competency-button>
+  </ion-col>
+  <ion-col no-padding>
+    <competency-button class="eco-control"
+      [ripple]="false"
+    >
+      <div class='competency-label'>ECO: C</div>
+    </competency-button>
+  </ion-col>
+  <ion-col no-padding>
+    <competency-button class="eco-planning"
+      [ripple]="false"
+    >
+      <div class='competency-label'>ECO: P</div>
+    </competency-button>
+  </ion-col>
+</ion-row>
+  
