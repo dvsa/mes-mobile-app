@@ -1,10 +1,21 @@
-import { SeriousFaults, DangerousFaults, DrivingFaults, TestData } from '@dvsa/mes-test-schema/categories/B';
-import { getSeriousOrDangerousFaults, getDrivingFaults, displayDrivingFaultComments } from '../debrief.selector';
+import { SeriousFaults,
+  DangerousFaults,
+  DrivingFaults,
+  TestData,
+  Manoeuvres,
+} from '@dvsa/mes-test-schema/categories/B';
+import { getSeriousOrDangerousFaults,
+  getDrivingFaults,
+  displayDrivingFaultComments,
+  getManoeuvreFaults,
+} from '../debrief.selector';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('debriefSelector', () => {
   const dangerousFaults: DangerousFaults = {};
   const seriousFaults: SeriousFaults = {};
   const drivingFaults: DrivingFaults = {};
+  const manoeuvres: Manoeuvres = {};
 
   describe('getSeriousOrDangerousFaults', () => {
     it('should return an empty array if there are no serious faults', () => {
@@ -139,6 +150,53 @@ describe('debriefSelector', () => {
 
     });
 
+  });
+
+  describe('getManoeuvreFaults', () => {
+    it('should return an empty array if there are no manoeuvre driving faults', () => {
+      const result = getManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
+      expect(result.length).toBe(0);
+    });
+
+    it('should return an array length matching the number of manoeuvre driving faults', () => {
+      manoeuvres.reverseRight = {
+        selected: true,
+        controlFault: 'DF',
+        observationFault: 'DF',
+      };
+      const result = getManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
+      expect(result.length).toBe(2);
+    });
+
+    it('should return an array length matching the number of manoeuvre serious faults', () => {
+      manoeuvres.reverseRight = {
+        selected: true,
+        controlFault: 'S',
+        observationFault: 'DF',
+      };
+      const result = getManoeuvreFaults(manoeuvres, CompetencyOutcome.S);
+      expect(result.length).toBe(1);
+    });
+
+    it('should return an array length matching the number of manoeuvre dangerous faults', () => {
+      manoeuvres.reverseRight = {
+        selected: true,
+        controlFault: 'DF',
+        observationFault: 'D',
+      };
+      const result = getManoeuvreFaults(manoeuvres, CompetencyOutcome.D);
+      expect(result.length).toBe(1);
+    });
+
+    it('should return an array with a correctly formatted fault object ', () => {
+      manoeuvres.reverseRight = {
+        selected: true,
+        controlFault: 'DF',
+      };
+      const result = getManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
+      expect(result[0].name).toBe('Reverse right - Control');
+      expect(result[0].count).toBe(1);
+    });
   });
 
 });

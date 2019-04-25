@@ -8,13 +8,19 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
-import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
+import { getETA,
+  getETAFaultText,
+  getEco,
+  getEcoFaultText,
+  getDrivingFaultSummaryCount,
+} from '../../modules/tests/test_data/test-data.selector';
 import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { getSeriousOrDangerousFaults, getDrivingFaults } from './debrief.selector';
+import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults } from './debrief.selector';
 import { FaultCount } from '../../shared/constants/competencies/catb-competencies';
+import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -57,28 +63,40 @@ export class DebriefPage extends BasePageComponent {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        map(data => getSeriousOrDangerousFaults(data.seriousFaults)),
+        map((data) => {
+          return [
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.name),
+            ...getSeriousOrDangerousFaults(data.seriousFaults),
+          ];
+        }),
       ),
       dangerousFaults$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        map(data => getSeriousOrDangerousFaults(data.dangerousFaults)),
+        map((data) => {
+          return [
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.name),
+            ...getSeriousOrDangerousFaults(data.dangerousFaults),
+          ];
+        }),
       ),
       drivingFaults$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        map(data => getDrivingFaults(data.drivingFaults)),
+        map((data) => {
+          return [
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
+            ...getDrivingFaults(data.drivingFaults),
+          ];
+        }),
       ),
       drivingFaultCount$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        map((data) => {
-          const faults = getDrivingFaults(data.drivingFaults);
-          return faults.reduce((sum, c) => sum + c.count, 0);
-        }),
+        select(getDrivingFaultSummaryCount),
       ),
       etaFaults$: this.store$.pipe(
         select(getTests),
