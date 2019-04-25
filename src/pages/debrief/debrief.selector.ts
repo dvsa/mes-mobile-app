@@ -16,7 +16,7 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
 
 export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
   const faultsEncountered : FaultCount[] = [];
-  forOwn(faults, (value, key) => {
+  forOwn(faults, (value: number, key) => {
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
       faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label], count: value });
@@ -28,13 +28,13 @@ export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
 export const displayDrivingFaultComments = (data: TestData) : boolean => {
   const seriousFaults =  getSeriousOrDangerousFaults(data.seriousFaults);
   const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
-  let drivingFaultCount = 0;
+  let drivingFaultCount: number = 0;
 
   if (seriousFaults.length > 0 || dangerousFaults.length > 0) {
     return false;
   }
 
-  forOwn(data.drivingFaults, (value, key) => {
+  forOwn(data.drivingFaults, (value: number, key) => {
     if (value > 0) {
       drivingFaultCount = drivingFaultCount + value;
     }
