@@ -8,7 +8,7 @@ page-office {
     .component-label {
       padding-left: 32px;
     }
-  }  
+  }
   ion-content {
         ion-select{
           width: 452px;
@@ -63,6 +63,12 @@ page-office {
     .fault-heading {
       padding-left: 20px;
     }
+    .fault-label {
+      margin-right: 16px;
+    }
+    .keyboard-space {
+      margin-bottom: 220px;
+    }
 }
 ion-footer {
   background-color: map-get($colors, "mes-white");
@@ -70,17 +76,7 @@ ion-footer {
     width: 100%;
     height: 56px;
    }
-      .fault-label {
-        margin-right: 1px;
-      }
 
-}
-ion-footer {
-  background-color: map-get($colors, "mes-white");
-   button {
-    width: 100%;
-    height: 56px;
-   }
 }
 
 

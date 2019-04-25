@@ -15,7 +15,9 @@ export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] Add Manoeuvre Dangero
 export const REMOVE_MANOEUVRE_FAULT = '[Manoeuvres] Remove Manoeuvre Fault';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
+export const ADD_SERIOUS_FAULT_COMMENT = '[Office] Add Serious Fault Comment';
 export const ADD_DANGEROUS_FAULT = '[Competency] Add Dangerous Fault';
+export const ADD_DANGEROUS_FAULT_COMMENT = '[Office] Add Dangerous Fault Comment';
 export const REMOVE_DRIVING_FAULT = '[Competency] Remove Driving Fault';
 export const REMOVE_SERIOUS_FAULT = '[Competency] Remove Serious Fault';
 export const REMOVE_DANGEROUS_FAULT = '[Competency] Remove Dangerous Fault';
@@ -82,9 +84,19 @@ export class AddSeriousFault implements Action {
   constructor(public payload: Competencies) { }
   readonly type = ADD_SERIOUS_FAULT;
 }
+
+export class AddSeriousFaultComment implements Action {
+  constructor(public competencyName: string, public comment: string) {}
+  readonly type = ADD_SERIOUS_FAULT_COMMENT;
+}
 export class AddDangerousFault implements Action {
   constructor(public payload: Competencies) { }
   readonly type = ADD_DANGEROUS_FAULT;
+}
+
+export class AddDangerousFaultComment implements Action {
+  constructor(public competencyName: string, public comment: string) {}
+  readonly type = ADD_DANGEROUS_FAULT_COMMENT;
 }
 
 export class RemoveDrivingFault implements Action {
@@ -132,7 +144,9 @@ export type Types =
   | AddDrivingFault
   | AddDrivingFaultComment
   | AddSeriousFault
+  | AddSeriousFaultComment
   | AddDangerousFault
+  | AddDangerousFaultComment
   | RemoveDrivingFault
   | RemoveSeriousFault
   | RemoveDangerousFault
