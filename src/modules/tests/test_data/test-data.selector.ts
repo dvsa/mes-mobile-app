@@ -15,7 +15,7 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
   const drivingFaultSumOfSimpleCompetencies =
     Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
 
-  const controlledStopHasDrivingFault = (controlledStop.fault === CompetencyOutcome.DF) ? 1 : 0;
+  const controlledStopHasDrivingFault = (controlledStop && controlledStop.fault === CompetencyOutcome.DF) ? 1 : 0;
 
   const result =
     drivingFaultSumOfSimpleCompetencies +
