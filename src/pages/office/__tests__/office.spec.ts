@@ -24,7 +24,6 @@ import {
 } from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
-  IndependentDrivingTypeChanged,
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
@@ -39,6 +38,7 @@ import { WeatherConditionsComponent } from '../components/weather-conditions/wea
 import { D255Component } from '../components/d255/d255';
 import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
 import { IdentificationComponent } from '../components/identification/identification';
+import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -58,6 +58,7 @@ describe('OfficePage', () => {
         MockComponent(WeatherConditionsComponent),
         MockComponent(D255Component),
         MockComponent(AdditionalInformationComponent),
+        MockComponent(IndependentDrivingComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
@@ -198,21 +199,6 @@ describe('OfficePage', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
         expect(navCtrl.popToRoot).toHaveBeenCalled();
-      });
-    });
-
-    describe('changing independent driving', () => {
-      it('should dispatch a change to independent driving action when Yes is clicked', () => {
-        const satNavRadio = fixture.debugElement.query(By.css('#independent-driving-satnav'));
-        satNavRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new IndependentDrivingTypeChanged('Sat nav'));
-      });
-      it('should dispatch a change to independent driving action when Traffic signs is clicked', () => {
-        const trafficSignsRadio = fixture.debugElement.query(By.css('#independent-driving-trafficsigns'));
-        trafficSignsRadio.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        expect(store$.dispatch).toHaveBeenCalledWith(new IndependentDrivingTypeChanged('Traffic signs'));
       });
     });
 

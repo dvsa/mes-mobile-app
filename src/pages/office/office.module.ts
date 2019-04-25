@@ -14,6 +14,7 @@ import { ShowMeQuestionComponent } from './components/show-me-question/show-me-q
 import { WeatherConditionsComponent } from './components/weather-conditions/weather-conditions';
 import { D255Component } from './components/d255/d255';
 import { AdditionalInformationComponent } from './components/additional-information/additional-information';
+import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AdditionalInformationComponent } from './components/additional-informat
     WeatherConditionsComponent,
     D255Component,
     AdditionalInformationComponent,
+    IndependentDrivingComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),

@@ -17,11 +17,10 @@ import {
   getCandidateDescription,
   getD255,
   getAdditionalInformation,
-  getSatNavUsed,
-  getTrafficSignsUsed,
   isDebriefWitnessed,
   getWeatherConditions,
   getIdentification,
+  getIndependentDriving,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -66,8 +65,7 @@ import {
 import { FaultCount, SeriousFaultsContainer } from '../../shared/constants/competencies/catb-competencies';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
-import { WeatherConditions, Identification } from '@dvsa/mes-test-schema/categories/B';
-import { merge } from 'rxjs/observable/merge';
+import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -79,8 +77,7 @@ interface OfficePageState {
   routeNumber$: Observable<number>;
   debriefWitnessed$: Observable<boolean>;
   identification$: Observable<Identification>;
-  independentDrivingSatNavRadioChecked$: Observable<boolean>;
-  independentDrivingTrafficSignsRadioChecked$: Observable<boolean>;
+  independentDriving$: Observable<IndependentDriving>;
   d255$: Observable<boolean>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
@@ -113,7 +110,6 @@ export class OfficePage extends BasePageComponent {
   dangerousFaultComment: QueryList<ElementRef>;
 
   inputSubscriptions: Subscription[] = [];
-  storeSubscription: Subscription;
   drivingFaultSubscription: Subscription;
   dangerousFaultSubscription: Subscription;
   seriousFaultSubscription: Subscription;
@@ -133,7 +129,7 @@ export class OfficePage extends BasePageComponent {
     public keyboard: Keyboard,
   ) {
     super(platform, navCtrl, authenticationProvider);
-    this.form = new FormGroup(this.getFormValidation());
+    this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
   }
@@ -179,13 +175,9 @@ export class OfficePage extends BasePageComponent {
         select(getTestSummary),
         select(getCandidateDescription),
       ),
-      independentDrivingSatNavRadioChecked$: currentTest$.pipe(
+      independentDriving$: currentTest$.pipe(
         select(getTestSummary),
-        select(getSatNavUsed),
-      ),
-      independentDrivingTrafficSignsRadioChecked$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getTrafficSignsUsed),
+        select(getIndependentDriving),
       ),
       debriefWitnessed$: currentTest$.pipe(
         select(getTestSummary),
@@ -250,17 +242,6 @@ export class OfficePage extends BasePageComponent {
       ),
     };
 
-    this.storeSubscription = merge(
-      this.pageState.routeNumber$,
-      this.pageState.candidateDescription$,
-      this.pageState.debriefWitnessed$,
-      this.pageState.showMeQuestion$,
-      this.pageState.weatherConditions$,
-      this.pageState.d255$,
-      this.pageState.additionalInformation$,
-      this.pageState.identification$,
-    ).subscribe();
-
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
       if (display) {
         this.getDrivingFaultCtrls();
@@ -283,7 +264,6 @@ export class OfficePage extends BasePageComponent {
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
     this.drivingFaultSubscription.unsubscribe();
-    this.storeSubscription.unsubscribe();
     this.dangerousFaultSubscription.unsubscribe();
     this.seriousFaultSubscription.unsubscribe();
   }
@@ -329,13 +309,6 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new ShowMeQuestionSelected(showMeQuestion));
   }
 
-  getFormValidation(): { [key: string]: FormControl } {
-    return {
-      candidateDescriptionCtrl: new FormControl('', [Validators.required]),
-      independentDrivingCtrl: new FormControl('', [Validators.required]),
-    };
-  }
-
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return this.form.controls[controlName].invalid && this.form.get(controlName).dirty;
   }
@@ -352,12 +325,8 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new IdentificationUsedChanged(identification));
   }
 
-  satNavUsed(): void {
-    this.store$.dispatch(new IndependentDrivingTypeChanged('Sat nav'));
-  }
-
-  trafficSignsUsed(): void {
-    this.store$.dispatch(new IndependentDrivingTypeChanged('Traffic signs'));
+  independentDrivingChanged(independentDriving: IndependentDriving): void {
+    this.store$.dispatch(new IndependentDrivingTypeChanged(independentDriving));
   }
 
   d255Changed(d255: boolean): void {
