@@ -26,6 +26,7 @@ import { initialState } from '../../../modules/tests/test_data/test-data.reducer
 import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
 import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
+import { EcoComponent } from '../components/eco/eco';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -54,6 +55,7 @@ describe('TestReportPage', () => {
         MockComponent(ControlledStopComponent),
         MockComponent(ManoeuvreCompetencyComponent),
         MockComponent(VehicleCheckComponent),
+        MockComponent(EcoComponent),
       ],
       imports: [
         IonicModule,
