@@ -1,8 +1,17 @@
-import { forOwn } from 'lodash';
-import { SeriousFaults, DrivingFaults, DangerousFaults, TestData } from '@dvsa/mes-test-schema/categories/B';
+import { forOwn, transform, endsWith } from 'lodash';
+import { SeriousFaults,
+  DrivingFaults,
+  DangerousFaults,
+  TestData,
+  Manoeuvres,
+} from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { FaultCount, fullCompetencyLabels, SeriousFaultsContainer }
   from '../../shared/constants/competencies/catb-competencies';
+import { manoeuvreTypeLabels, manoeuvreCompetencyLabels }
+  from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+import { ManoeuvreTypes } from '../../modules/tests/test_data/test-data.constants';
+import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];
@@ -26,8 +35,24 @@ export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
   return faultsEncountered.sort((a, b) => b.count - a.count);
 };
 
-export const displayDrivingFaultComments = (data: TestData): boolean => {
-  const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
+export const getManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): FaultCount[] => {
+  const faultsEncountered : FaultCount[] = [];
+  forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
+    const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
+      if (endsWith(key, 'Fault') && value === faultType) {
+        result.push({
+          name: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
+          count: 1,
+        });
+      }
+    }, []);
+    faultsEncountered.push(...faults);
+  });
+  return faultsEncountered;
+};
+
+export const displayDrivingFaultComments = (data: TestData) : boolean => {
+  const seriousFaults =  getSeriousOrDangerousFaults(data.seriousFaults);
   const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
   let drivingFaultCount: number = 0;
 
