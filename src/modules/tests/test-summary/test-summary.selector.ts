@@ -1,4 +1,4 @@
-import { TestSummary, WeatherConditions, Identification } from '@dvsa/mes-test-schema/categories/B';
+import { TestSummary, WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
 
 export const getRouteNumber = (ts: TestSummary): number => ts.routeNumber;
 export const getCandidateDescription = (ts: TestSummary): string => ts.candidateDescription;
@@ -9,3 +9,4 @@ export const getSatNavUsed = (ts: TestSummary): boolean => ts.independentDriving
 export const getTrafficSignsUsed = (ts: TestSummary): boolean => ts.independentDriving === 'Traffic signs';
 export const isDebriefWitnessed = (ts: TestSummary): boolean => ts.debriefWitnessed;
 export const getWeatherConditions = (ts: TestSummary): WeatherConditions[] => ts.weatherConditions;
+export const getIndependentDriving = (ts: TestSummary): IndependentDriving => ts.independentDriving;
