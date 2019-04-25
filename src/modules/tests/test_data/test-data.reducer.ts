@@ -63,6 +63,17 @@ export function testDataReducer(
           },
         },
       };
+    case testDataActions.REMOVE_MANOEUVRE_FAULT:
+      const {
+        [action.payload.competency]: competencyToOmit, ...stateToPreserve
+      } = state.manoeuvres[action.payload.manoeuvre];
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          [action.payload.manoeuvre]: stateToPreserve,
+        },
+      };
     case testDataActions.ADD_DRIVING_FAULT:
       return {
         ...state,
