@@ -16,6 +16,7 @@ import { DangerousTooltipComponent } from '../components/dangerous-tooltip/dange
 import { LegalRequirementComponent } from '../components/legal-requirement/legal-requirement';
 import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
+import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
     LegalRequirementComponent,
     ControlledStopComponent,
     ManoeuvreCompetencyComponent,
+    VehicleCheckComponent,
   ],
   imports: [
     ComponentsModule,
@@ -52,6 +54,7 @@ import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-c
     LegalRequirementComponent,
     ControlledStopComponent,
     ManoeuvreCompetencyComponent,
+    VehicleCheckComponent,
   ],
 })
 export class TestReportComponentsModule {}
