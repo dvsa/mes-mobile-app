@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -13,8 +13,8 @@ export class AdditionalInformationComponent implements OnChanges {
   @Input()
   formGroup: FormGroup;
 
-  @Output()
-  additionalInformationChange = new EventEmitter<string>();
+  @Input()
+  additionalInformationChangeCallback: Function;
 
   private formControl: FormControl;
 
@@ -27,7 +27,7 @@ export class AdditionalInformationComponent implements OnChanges {
   }
 
   additionalInformationChanged(additionalInformation: string): void {
-    this.additionalInformationChange.emit(additionalInformation);
+    this.additionalInformationChangeCallback(additionalInformation);
   }
 
 }

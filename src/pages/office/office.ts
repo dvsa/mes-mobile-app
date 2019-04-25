@@ -390,7 +390,7 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
   }
 
-  additionalInformationChanged(additionalInformation: string): void {
+  additionalInformationChanged = (additionalInformation: string) => {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 

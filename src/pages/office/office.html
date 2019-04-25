@@ -130,7 +130,7 @@
           <d255 [d255]="pageState.d255$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
 
           <additional-information [additionalInformation]="pageState.additionalInformation$ | async" [formGroup]="form"
-            (additionalInformationChange)="additionalInformationChanged($event)"></additional-information>
+            [additionalInformationChangeCallback]="additionalInformationChanged"></additional-information>
 
         </ion-grid>
       </ion-card-content>
@@ -288,7 +288,7 @@
       </ion-card-content>
     </ion-card>
 
-      <div [hidden]="!keyboard.isOpen()" class="keyboard-space"></div>
+    <div [hidden]="!keyboard.isOpen()" class="keyboard-space"></div>
   </form>
 </ion-content>
 <ion-footer>
