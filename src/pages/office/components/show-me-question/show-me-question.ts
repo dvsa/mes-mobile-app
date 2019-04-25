@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
+import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
 
 @Component({
   selector: 'show-me-question',
