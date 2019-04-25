@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-// import { StoreModel } from '../../../../shared/models/store.model';
-// import { Store } from '@ngrx/store';
-
 interface VehicleCheckComponentState {
 }
 
@@ -15,10 +12,6 @@ export class VehicleCheckComponent implements OnInit {
   componentState: VehicleCheckComponentState;
 
   selectedShowMeQuestion: boolean = false;
-
-  constructor(
-    // private store$: Store<StoreModel>
-    ) {}
 
   ngOnInit(): void {
   }
