@@ -14,6 +14,7 @@ import {
   AddManoeuvreDrivingFault,
   AddManoeuvreDangerousFault,
   AddManoeuvreSeriousFault,
+  RemoveManoeuvreFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { By } from '@angular/platform-browser';
 import { IonicModule } from 'ionic-angular';
@@ -21,7 +22,7 @@ import { MockComponent } from 'ng-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { ToggleDangerousFaultMode, ToggleSeriousFaultMode } from '../../../test-report.actions';
+import { ToggleDangerousFaultMode, ToggleSeriousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 
 describe('ManoeuvreCompetencyComponent', () => {
   let fixture: ComponentFixture<ManoeuvreCompetencyComponent>;
@@ -197,6 +198,95 @@ describe('ManoeuvreCompetencyComponent', () => {
           manoeuvre: component.manoeuvre,
           competency: component.competency,
         }));
+      });
+    });
+
+    describe('Remove faults', () => {
+      describe('dispatched the actions competency outcome is undefined', () => {
+        beforeEach(() => {
+          fixture.detectChanges();
+          component.manoeuvre = ManoeuvreTypes.reverseRight;
+          component.competency = ManoeuvreCompetencies.controlFault;
+          component.isRemoveFaultMode = true;
+          component.manoeuvreCompetencyOutcome = undefined;
+        });
+        it('should only toggle remove fault when remove fault mode is true', () => {
+          fixture.detectChanges();
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          component.addOrRemoveFault();
+          expect(storeDispatchSpy).toHaveBeenCalledTimes(1);
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        });
+        it('should only toggle remove and serious fault when remove and serious fault modes are true', () => {
+          component.isSeriousMode = true;
+          fixture.detectChanges();
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          component.addOrRemoveFault();
+          expect(storeDispatchSpy).toHaveBeenCalledTimes(2);
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+        });
+        it('should only toggle remove and serious fault when remove and serious fault modes are true', () => {
+          component.isDangerousMode = true;
+          fixture.detectChanges();
+          const storeDispatchSpy = spyOn(store$, 'dispatch');
+          component.addOrRemoveFault();
+          expect(storeDispatchSpy).toHaveBeenCalledTimes(2);
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+          expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+        });
+      });
+      it('should remove a dangerous fault and toggle dangerous mode when dangerous mode is true', () => {
+        fixture.detectChanges();
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
+        component.isRemoveFaultMode = true;
+        component.isDangerousMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.D;
+        fixture.detectChanges();
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+        expect(storeDispatchSpy).toHaveBeenCalledTimes(3);
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveManoeuvreFault({
+          competency: component.competency,
+          manoeuvre: component.manoeuvre,
+        }));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleDangerousFaultMode());
+      });
+      it('should remove a serious fault and toggle serious mode when serious mode is true', () => {
+        fixture.detectChanges();
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
+        component.isRemoveFaultMode = true;
+        component.isSeriousMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.S;
+        fixture.detectChanges();
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+        expect(storeDispatchSpy).toHaveBeenCalledTimes(3);
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveManoeuvreFault({
+          competency: component.competency,
+          manoeuvre: component.manoeuvre,
+        }));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleSeriousFaultMode());
+      });
+      it('should remove a driving fault and toggle remove mode', () => {
+        fixture.detectChanges();
+        component.manoeuvre = ManoeuvreTypes.reverseRight;
+        component.competency = ManoeuvreCompetencies.controlFault;
+        component.isRemoveFaultMode = true;
+        component.manoeuvreCompetencyOutcome = CompetencyOutcome.DF;
+        fixture.detectChanges();
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+        expect(storeDispatchSpy).toHaveBeenCalledTimes(2);
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new RemoveManoeuvreFault({
+          competency: component.competency,
+          manoeuvre: component.manoeuvre,
+        }));
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ToggleRemoveFaultMode());
       });
     });
   });

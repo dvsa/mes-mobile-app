@@ -5,7 +5,7 @@ import { CompetencyComponent } from '../../competency/competency';
 import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
 import { AppModule } from '../../../../../app/app.module';
 import {
-  RecordManoeuvresSelection, AddManoeuvreDrivingFault,
+  RecordManoeuvresSelection, AddManoeuvreDrivingFault, AddManoeuvreSeriousFault, AddManoeuvreDangerousFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
@@ -84,7 +84,7 @@ describe('ManoeuvresPopoverComponent', () => {
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
           .nativeElement.disabled).toBe(false);
       });
-      it('should disable other manoeuvres from being selected when a fault is added', () => {
+      it('should disable other manoeuvres from being selected when a driving fault is added', () => {
         store$.dispatch(new AddManoeuvreDrivingFault({
           manoeuvre: ManoeuvreTypes.reverseRight,
           competency: ManoeuvreCompetencies.controlFault,
@@ -98,6 +98,36 @@ describe('ManoeuvresPopoverComponent', () => {
           .nativeElement.disabled).toBe(true);
         expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
           .nativeElement.disabled).toBe(false);
+      });
+      it('should disable other manoeuvres from being selected when a serious fault is added', () => {
+        store$.dispatch(new AddManoeuvreSeriousFault({
+          manoeuvre: ManoeuvreTypes.reverseRight,
+          competency: ManoeuvreCompetencies.controlFault,
+        }));
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-carpark-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-forward-park-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
+          .nativeElement.disabled).toBe(true);
+      });
+      it('should disable other manoeuvres from being selected when a dangerous fault is added', () => {
+        store$.dispatch(new AddManoeuvreDangerousFault({
+          manoeuvre: ManoeuvreTypes.reverseRight,
+          competency: ManoeuvreCompetencies.controlFault,
+        }));
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-road-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-park-carpark-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-forward-park-radio'))
+          .nativeElement.disabled).toBe(true);
+        expect(fixture.debugElement.query(By.css('#manoeuvres-reverse-right-radio'))
+          .nativeElement.disabled).toBe(true);
       });
     });
   });
