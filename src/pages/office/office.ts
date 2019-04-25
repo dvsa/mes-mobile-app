@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, Toast, Keyboard } from 'ionic-angular';
+import { Component, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -28,7 +28,6 @@ import { getTestSummary } from '../../modules/tests/test-summary/test-summary.re
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import {
-  AdditionalInformationChanged,
   RouteNumberChanged,
   IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
@@ -38,6 +37,7 @@ import {
   D255No,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
+  AdditionalInformationChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -111,8 +111,8 @@ export class OfficePage extends BasePageComponent {
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
 
-  @ViewChild('additionalInformationInput')
-  additionalInformationInput: ElementRef;
+  @ViewChildren('dangerousFaultComment')
+  dangerousFaultComment: QueryList<ElementRef>;
 
   inputSubscriptions: Subscription[] = [];
   storeSubscription: Subscription;
@@ -263,6 +263,7 @@ export class OfficePage extends BasePageComponent {
       this.pageState.showMeQuestion$,
       this.pageState.weatherConditions$,
       this.pageState.d255$,
+      this.pageState.additionalInformation$,
     ).subscribe();
 
     this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
@@ -270,13 +271,6 @@ export class OfficePage extends BasePageComponent {
         this.getDrivingFaultCtrls();
       }
     });
-
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(
-        this.additionalInformationInput,
-        AdditionalInformationChanged,
-      ),
-    ];
 
     this.dangerousFaultSubscription = this.pageState.dangerousFaults$.subscribe((dangerousFault) => {
       if (dangerousFault) {
@@ -394,6 +388,10 @@ export class OfficePage extends BasePageComponent {
 
   debriefWitnessedChanged(debriefWitnessed: boolean) {
     this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
+  }
+
+  additionalInformationChanged(additionalInformation: string): void {
+    this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 
   private createToast = (errorMessage: string) => {

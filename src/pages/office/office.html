@@ -129,22 +129,8 @@
 
           <d255 [d255]="pageState.d255$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
 
-          <ion-row class="mes-component-row mes-row-separator" id="additional-information-card">
-            <ion-col class="component-label" col-32 align-self-center>
-              <label>Additional information (optional)</label>
-            </ion-col>
-            <ion-col align-self-center>
-              <ion-row class="spacing-row"></ion-row>
-              <ion-row>
-                <ion-col col-32>
-                  <textarea #additionalInformationInput id="additional-information" class="mes-data"
-                    [value]="pageState.additionalInformation$ | async">
-                </textarea>
-                </ion-col>
-              </ion-row>
-              <ion-row class="spacing-row"></ion-row>
-            </ion-col>
-          </ion-row>
+          <additional-information [additionalInformation]="pageState.additionalInformation$ | async" [formGroup]="form"
+            (additionalInformationChange)="additionalInformationChanged($event)"></additional-information>
 
         </ion-grid>
       </ion-card-content>
