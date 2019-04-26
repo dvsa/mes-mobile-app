@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SeriousFaultsContainer } from '../../../../shared/constants/competencies/catb-competencies';
-import { FaultComment } from './dangerous-fault-comments.model';
+import { FaultComment } from '../fault-comment/fault-comment.model';
 
 @Component({
   selector: 'dangerous-fault-comments',

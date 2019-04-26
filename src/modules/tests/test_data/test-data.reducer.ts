@@ -104,7 +104,7 @@ export function testDataReducer(
         ...state,
         seriousFaults: {
           ...state.seriousFaults,
-          [action.competencyName]: action.comment,
+          [`${action.competencyName}Comments`]: action.comment,
         },
       };
     case testDataActions.ADD_DANGEROUS_FAULT:

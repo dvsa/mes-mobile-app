@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { FaultComment } from '../dangerous-fault-comments/dangerous-fault-comments.model';
+import { FaultComment } from './fault-comment.model';
 
 @Component({
   selector: 'fault-comment',

@@ -38,6 +38,7 @@ import { AdditionalInformationComponent } from '../components/additional-informa
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { DangerousFaultCommentsComponent } from '../components/dangerous-fault-comments/dangerous-fault-comments';
+import { SeriousFaultCommentsComponent } from '../components/serious-fault-comments/serious-fault-comments';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -59,6 +60,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(DangerousFaultCommentsComponent),
+        MockComponent(SeriousFaultCommentsComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({

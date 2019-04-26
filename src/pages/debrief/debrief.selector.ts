@@ -101,10 +101,11 @@ export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContai
  */
 export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[] => {
   const faultsEncountered: SeriousFaultsContainer[] = [];
-  forOwn(faults, (value, key) => {
+  forOwn(faults, (value, key, obj) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label], comment: value as string });
+      const comment = obj[`${key}Comments`] || null;
+      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label] });
     }
   });
   return faultsEncountered;

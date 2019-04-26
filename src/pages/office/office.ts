@@ -69,8 +69,8 @@ import { FaultCount, SeriousFaultsContainer } from '../../shared/constants/compe
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
-import { FaultComment } from './components/dangerous-fault-comments/dangerous-fault-comments.model';
-import { AddDangerousFaultComment } from '../../modules/tests/test_data/test-data.actions';
+import { FaultComment } from './components/fault-comment/fault-comment.model';
+import { AddDangerousFaultComment, AddSeriousFaultComment } from '../../modules/tests/test_data/test-data.actions';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -116,7 +116,6 @@ export class OfficePage extends BasePageComponent {
 
   inputSubscriptions: Subscription[] = [];
   drivingFaultSubscription: Subscription;
-  seriousFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
@@ -253,18 +252,11 @@ export class OfficePage extends BasePageComponent {
         this.getDrivingFaultCtrls();
       }
     });
-
-    this.seriousFaultSubscription = this.pageState.seriousFaults$.subscribe((seriousFault) => {
-      if (seriousFault) {
-        this.getSeriousFaultCtrls();
-      }
-    });
   }
 
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
     this.drivingFaultSubscription.unsubscribe();
-    this.seriousFaultSubscription.unsubscribe();
   }
 
   popToRoot() {
@@ -356,6 +348,10 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new AddDangerousFaultComment(dangerousFaultComment.competency, dangerousFaultComment.comment));
   }
 
+  seriousFaultCommentChanged(seriousFaultComment: FaultComment) {
+    this.store$.dispatch(new AddSeriousFaultComment(seriousFaultComment.competency, seriousFaultComment.comment));
+  }
+
   private createToast = (errorMessage: string) => {
 
     this.toast = this.toastController.create({
@@ -375,16 +371,6 @@ export class OfficePage extends BasePageComponent {
       fault.forEach((faultIndex) => {
         this.form.addControl(
           this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
-          new FormControl('', Validators.required));
-      });
-    });
-  }
-
-  getSeriousFaultCtrls(): void {
-    this.pageState.seriousFaults$.forEach((fault) => {
-      fault.forEach((faultIndex) => {
-        this.form.addControl(
-          this.seriousFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
           new FormControl('', Validators.required));
       });
     });
