@@ -11,7 +11,6 @@ import { applicationReferenceReducer } from './application-reference/application
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-result.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
-import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { testStatusReducer } from './test-status/test-status.reducer';
 import { TestStatus } from './test-status/test-status.model';
@@ -76,7 +75,6 @@ export function testsReducer(
             passCompletion: passCompletionReducer,
             eyesightTestResult: eyesightTestResultReducer,
             postTestDeclarations: postTestDeclarationsReducer,
-            vehicleChecks: vehicleChecksReducer,
             testSummary: testSummaryReducer,
             testSlotAttributes: testSlotsAttributesReducer,
             examiner: examinerReducer,

@@ -38,7 +38,7 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
-} from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
+} from '../../../modules/tests/test_data/test-data.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -67,11 +67,13 @@ describe('WaitingRoomToCarPage', () => {
                 candidate: {
                   candidateName: 'Joe Bloggs',
                 },
-                vehicleChecks: {
-                  tellMeQuestion: {
-                    code: 'T1',
-                    description: 'desc',
-                    outcome: 'P',
+                testData: {
+                  vehicleChecks: {
+                    tellMeQuestion: {
+                      code: 'T1',
+                      description: 'desc',
+                      outcome: 'P',
+                    },
                   },
                 },
               },

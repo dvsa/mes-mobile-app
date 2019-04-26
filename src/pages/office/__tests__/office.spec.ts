@@ -16,12 +16,10 @@ import {
   TogglePlanningEco,
   AddDangerousFault,
   AddSeriousFault,
+  ShowMeQuestionSelected,
 } from '../../../modules/tests/test_data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test_data/test-data.constants';
 import { By } from '@angular/platform-browser';
-import {
-  ShowMeQuestionSelected,
-} from '../../../modules/tests/vehicle-checks/vehicle-checks.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
@@ -83,11 +81,11 @@ describe('OfficePage', () => {
                   testRequirements: {},
                   ETA: {},
                   eco: {},
-                },
-                vehicleChecks: {
-                  showMeQuestion: {
-                    code: 'S3',
-                    description: '',
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                    },
                   },
                 },
               },

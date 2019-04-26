@@ -7,6 +7,8 @@ import {
   ManoeuvreCompetencies,
   ManoeuvreTypes,
 } from './test-data.constants';
+import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
+import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
@@ -32,6 +34,11 @@ export const CONTROLLED_STOP_ADD_SERIOUS_FAULT = '[ControlledStop] Add Serious F
 export const CONTROLLED_STOP_ADD_DANGEROUS_FAULT = '[ControlledStop] Add Dangerous Fault';
 export const CONTROLLED_STOP_REMOVE_FAULT = '[ControlledStop] Remove Fault';
 export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
+
+export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
+export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
+export const TELL_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Tell me question driving fault';
+export const SHOW_ME_QUESTION_SELECTED = '[Vehicle Checks] Show me question selected';
 
 export interface ManoeuvrePayload {
   manoeuvre: ManoeuvreTypes;
@@ -139,6 +146,25 @@ export class AddDrivingFaultComment implements Action {
   constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_DRIVING_FAULT_COMMENT;
 }
+
+export class TellMeQuestionSelected implements Action {
+  constructor(public tellMeQuestion: TellMeQuestion) {}
+  readonly type = TELL_ME_QUESTION_SELECTED;
+}
+
+export class TellMeQuestionCorrect implements Action {
+  readonly type = TELL_ME_QUESTION_CORRECT;
+}
+
+export class TellMeQuestionDrivingFault implements Action {
+  readonly type = TELL_ME_QUESTION_DRIVING_FAULT;
+}
+
+export class ShowMeQuestionSelected implements Action {
+  constructor(public showMeQuestion: ShowMeQuestion) {}
+  readonly type = SHOW_ME_QUESTION_SELECTED;
+}
+
 export type Types =
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
@@ -163,4 +189,8 @@ export type Types =
   | ControlledStopAddDrivingFault
   | ControlledStopAddSeriousFault
   | ControlledStopAddDangerousFault
-  | ControlledStopRemoveFault;
+  | ControlledStopRemoveFault
+  | TellMeQuestionSelected
+  | TellMeQuestionCorrect
+  | TellMeQuestionDrivingFault
+  | ShowMeQuestionSelected;

@@ -47,13 +47,16 @@ import { ShowMeQuestion } from '../../providers/question/show-me-question.model'
 import { QuestionProvider } from '../../providers/question/question';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
-import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
+import { ShowMeQuestionSelected } from '../../modules/tests/test_data/test-data.actions';
 import {
+  getETA,
+  getETAFaultText,
+  getEco,
+  getEcoFaultText,
   getSelectedTellMeQuestionText,
   getShowMeQuestion,
-} from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
-import { ShowMeQuestionSelected } from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
-import { getETA, getETAFaultText, getEco, getEcoFaultText } from '../../modules/tests/test_data/test-data.selector';
+  getVehicleChecks,
+} from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import {
@@ -196,10 +199,12 @@ export class OfficePage extends BasePageComponent {
         select(getAdditionalInformation),
       ),
       showMeQuestion$: currentTest$.pipe(
+        select(getTestData),
         select(getVehicleChecks),
         select(getShowMeQuestion),
       ),
       tellMeQuestionText$: currentTest$.pipe(
+        select(getTestData),
         select(getVehicleChecks),
         select(getSelectedTellMeQuestionText),
       ),
