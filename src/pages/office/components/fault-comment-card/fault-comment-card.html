@@ -16,8 +16,8 @@
       <ion-col>
         <ion-row class="spacing-row"></ion-row>
         <ion-row>
-          <textarea row="5" class="mes-data" [class.ng-invalid]="invalid" [value]="faultComment.comment"
-            [formControlName]="faultComment.propertyName"
+          <textarea row="5" class="mes-data" [class.ng-invalid]="invalid(faultComment.propertyName)"
+            [value]="faultComment.comment" [formControlName]="faultType + 'Comment-' + faultComment.propertyName"
             (change)="faultCommentChanged(faultComment.propertyName, $event.target.value)">
           </textarea>
         </ion-row>
