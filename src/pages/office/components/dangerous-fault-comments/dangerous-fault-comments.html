@@ -16,10 +16,10 @@
       <ion-col>
         <ion-row class="spacing-row"></ion-row>
         <ion-row>
-          <dangerous-fault-comment [index]="$i" [competency]="dangerousFault.propertyName"
-            [comment]="dangerousFault.comment" [invalidIndicator]="invalid" [parentForm]="formGroup"
+          <fault-comment [index]="$i" [competency]="dangerousFault.propertyName" [comment]="dangerousFault.comment"
+            [invalidIndicator]="invalid" [parentForm]="formGroup"
             (faultCommentChange)="dangerousFaultCommentChanged($event)">
-          </dangerous-fault-comment>
+          </fault-comment>
         </ion-row>
         <ion-row class="validation-message-row" align-items-center>
           <div class="validation-text" [class.ng-invalid]="invalid">

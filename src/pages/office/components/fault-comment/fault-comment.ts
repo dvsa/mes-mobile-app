@@ -1,18 +1,12 @@
-import { Observable } from 'rxjs/Observable';
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FaultComment } from '../dangerous-fault-comments/dangerous-fault-comments.model';
 
-interface DangerousFaultCommentComponentState {
-  competencyComment$: Observable<string>;
-}
-
 @Component({
-  selector: 'dangerous-fault-comment',
-  templateUrl: 'dangerous-fault-comment.html',
+  selector: 'fault-comment',
+  templateUrl: 'fault-comment.html',
 })
-export class DangerousFaultCommentComponent implements OnChanges {
-  pageState: DangerousFaultCommentComponentState;
+export class FaultCommentComponent implements OnChanges {
 
   @Input()
   parentForm: FormGroup;
@@ -42,9 +36,9 @@ export class DangerousFaultCommentComponent implements OnChanges {
     this.formControl.patchValue(this.comment);
   }
 
-  dangerousFaultCommentChanged(comment: string): void {
-    const dangerousFaultComment: FaultComment = { comment, competency: this.competency };
-    this.faultCommentChange.emit(dangerousFaultComment);
+  faultCommentChanged(comment: string): void {
+    const faultComment: FaultComment = { comment, competency: this.competency };
+    this.faultCommentChange.emit(faultComment);
   }
 
   get invalid() {

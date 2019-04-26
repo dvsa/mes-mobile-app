@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { DrivingFaultCommentComponent } from './drivingFaultComment/driving-fault-comment';
 import { ComponentsModule } from '../../../components/components.module';
-import { DangerousFaultCommentComponent } from './dangerousFaultComments/dangerous-fault-comment';
+import { FaultCommentComponent } from './fault-comment/fault-comment';
 import { SeriousFaultCommentComponent } from './seriousFaultComments/serious-fault-component';
 
 @NgModule({
   declarations: [
     DrivingFaultCommentComponent,
-    DangerousFaultCommentComponent,
+    FaultCommentComponent,
     SeriousFaultCommentComponent,
   ],
   imports: [
@@ -17,10 +17,10 @@ import { SeriousFaultCommentComponent } from './seriousFaultComments/serious-fau
     ComponentsModule,
     IonicModule,
   ],
-  exports:[
+  exports: [
     DrivingFaultCommentComponent,
-    DangerousFaultCommentComponent,
+    FaultCommentComponent,
     SeriousFaultCommentComponent,
   ],
 })
-export class OfficeComponentsModule {}
+export class OfficeComponentsModule { }

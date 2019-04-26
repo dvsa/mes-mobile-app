@@ -1,0 +1,5 @@
+<div [formGroup]="parentForm">
+  <textarea row="5" class="mes-data" [formControlName]="formControlName" [class.ng-invalid]="invalid" [value]="comment"
+    (change)="faultCommentChanged($event.target.value)">
+  </textarea>
+</div>
