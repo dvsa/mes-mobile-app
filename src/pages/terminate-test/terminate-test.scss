@@ -1,3 +1,73 @@
-page-terminate-test {
+ion-card {
+  background: rgb(248, 248, 248);
+  border-radius: 14px !important;
+}
 
+.center-icon {
+  text-align: center;
+}
+
+.terminate-icon {
+  padding-top: 20px;
+  text-align: center !important;
+  font-size: 96px !important;
+  padding-bottom: 20px;
+}
+
+.icon-space {
+  padding: 50px;
+}
+
+.terminate-test-text {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 0.27px;
+  line-height: 40px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.terminate-button {
+  width: auto;
+  font-size: 23px;
+  font-weight: 500;
+  background: transparent !important;
+  color: crimson;
+  text-align: center !important;
+}
+
+.terminate-button:active {
+  background-color: lightslategray !important;
+  color: darkred
+}
+
+.return-button {
+  width: auto;
+  font-size: 23px;
+  font-weight: 500;
+  background: transparent !important;
+  color: black;
+  text-align: center !important;
+}
+
+.return-button:active {
+  background-color: lightslategray !important;
+  color: rgb(104, 104, 104)
+;
+}
+
+.column-border-top {
+  border-top-color: lightgrey !important;
+  border-top: 1px solid;
+  padding-top: 2px;
+}
+
+.column-border-right {
+  border-right: 1px solid;
+  border-right-color: lightgrey !important;
+  padding-top: 2px;
+}
+
+.center-button {
+  text-align: center;
 }

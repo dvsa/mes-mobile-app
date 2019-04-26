@@ -31,6 +31,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { EndTestLinkComponent } from '../../terminate-test/components/end-test-link';
+import { MockComponent } from 'ng-mocks';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -51,7 +53,10 @@ describe('WaitingRoomPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WaitingRoomPage],
+      declarations: [
+        WaitingRoomPage,
+        MockComponent(EndTestLinkComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,

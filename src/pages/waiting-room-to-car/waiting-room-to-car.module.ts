@@ -11,6 +11,7 @@ import {
 import {
   EyesightFailureConfirmationComponent,
 } from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+import { TerminateTestPageModule } from '../terminate-test/terminate-test.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),
     EffectsModule.forFeature([WaitingRoomToCarAnalyticsEffects]),
+    TerminateTestPageModule,
   ],
   providers: [
     AnalyticsProvider,

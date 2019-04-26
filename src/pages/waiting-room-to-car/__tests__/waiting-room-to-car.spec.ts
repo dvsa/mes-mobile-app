@@ -39,6 +39,7 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
 } from '../../../modules/tests/test_data/test-data.actions';
+import { EndTestLinkComponent } from '../../terminate-test/components/end-test-link';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -50,6 +51,7 @@ describe('WaitingRoomToCarPage', () => {
       declarations: [
         WaitingRoomToCarPage,
         MockComponent(EyesightFailureConfirmationComponent),
+        MockComponent(EndTestLinkComponent),
       ],
       imports: [
         IonicModule,
