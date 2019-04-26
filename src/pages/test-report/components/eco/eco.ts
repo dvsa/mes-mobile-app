@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -12,6 +11,15 @@ import {
   ToggleControlEco,
   TogglePlanningEco,
 } from '../../../../modules/tests/test_data/test-data.actions';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
+
+interface EcoComponentState {
+  completed$: Observable<boolean>;
+  adviceGivenPlanning$: Observable<boolean>;
+  adviceGivenControl$: Observable<boolean>;
+}
 
 @Component({
   selector: 'eco',
@@ -21,9 +29,9 @@ export class EcoComponent implements OnInit {
 
   subscription: Subscription;
 
-  completed: boolean = false;
   adviceGivenPlanning: boolean = false;
   adviceGivenControl: boolean = false;
+  componentState: EcoComponentState;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -36,13 +44,29 @@ export class EcoComponent implements OnInit {
       select(getCurrentTest),
       select(getTestData),
       select(getEco),
-      );
+    );
 
-    this.subscription = eco$.subscribe((eco) => {
-      this.completed = eco.completed;
-      this.adviceGivenPlanning = eco.adviceGivenPlanning;
-      this.adviceGivenControl = eco.adviceGivenControl;
-    });
+    this.componentState = {
+      completed$: eco$.pipe(
+        map(eco => eco.completed),
+      ),
+      adviceGivenPlanning$: eco$.pipe(
+        map(eco => eco.adviceGivenPlanning),
+      ),
+      adviceGivenControl$: eco$.pipe(
+        map(eco => eco.adviceGivenControl),
+      ),
+    };
+
+    const { completed$, adviceGivenPlanning$, adviceGivenControl$ } = this.componentState;
+
+    const merged$ = merge(
+      completed$,
+      adviceGivenPlanning$.pipe(map(toggle => this.adviceGivenPlanning = toggle)),
+      adviceGivenControl$.pipe(map(toggle => this.adviceGivenControl = toggle)),
+    );
+
+    this.subscription = merged$.subscribe();
 
   }
 

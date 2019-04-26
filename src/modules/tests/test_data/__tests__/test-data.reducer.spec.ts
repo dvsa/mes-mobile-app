@@ -27,7 +27,7 @@ import {
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
-fdescribe('TestDataReducer reducer', () => {
+describe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
     it('should add a driving fault when no driving faults exist', () => {
       const result = testDataReducer(initialState, new AddDrivingFault({
