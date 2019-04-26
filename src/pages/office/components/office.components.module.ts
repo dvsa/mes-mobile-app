@@ -5,12 +5,14 @@ import { DrivingFaultCommentComponent } from './drivingFaultComment/driving-faul
 import { ComponentsModule } from '../../../components/components.module';
 import { FaultCommentComponent } from './fault-comment/fault-comment';
 import { SeriousFaultCommentComponent } from './seriousFaultComments/serious-fault-component';
+import { FaultCommentCardComponent } from './fault-comment-card/fault-comment-card';
 
 @NgModule({
   declarations: [
     DrivingFaultCommentComponent,
     FaultCommentComponent,
     SeriousFaultCommentComponent,
+    FaultCommentCardComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { SeriousFaultCommentComponent } from './seriousFaultComments/serious-fau
     DrivingFaultCommentComponent,
     FaultCommentComponent,
     SeriousFaultCommentComponent,
+    FaultCommentCardComponent,
   ],
 })
 export class OfficeComponentsModule { }

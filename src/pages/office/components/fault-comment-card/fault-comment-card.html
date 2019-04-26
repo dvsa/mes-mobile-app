@@ -1,0 +1,31 @@
+<ion-card *ngIf="shouldRender" [formGroup]="formGroup">
+  <ion-card-header>
+    <h4>{{header}}</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-row class="mes-validated-row mes-row-separator" *ngFor="let faultComment of faultComments">
+      <div class="validation-bar">
+      </div>
+      <ion-col class="component-label" align-self-center col-1>
+        <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
+      </ion-col>
+      <ion-col class="component-label" col-29 align-self-center>
+        <label class="fault-label">{{faultComment.name}}</label>
+      </ion-col>
+      <ion-col>
+        <ion-row class="spacing-row"></ion-row>
+        <ion-row>
+          <textarea row="5" class="mes-data" [class.ng-invalid]="invalid" [value]="faultComment.comment"
+            [formControlName]="faultComment.propertyName"
+            (change)="faultCommentChanged(faultComment.propertyName, $event.target.value)">
+          </textarea>
+        </ion-row>
+        <ion-row class="validation-message-row" align-items-center>
+          <div class="validation-text">
+            Provide a comment
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

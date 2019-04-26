@@ -110,9 +110,9 @@
       </ion-card-content>
     </ion-card>
 
-    <dangerous-fault-comments [formGroup]="form" [dangerousFaultComments]="pageState.dangerousFaults$ | async"
-      (dangerousFaultCommentChange)="dangerousFaultCommentChanged($event)">
-    </dangerous-fault-comments>
+    <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async"
+      [shouldRender]="(pageState.dangerousFaults$ | async).length > 0" faultType="dangerous"
+      (faultCommentsChange)="dangerousFaultCommentChanged($event)"></fault-comment-card>
 
     <serious-fault-comments [formGroup]="form" [seriousFaultComments]="pageState.seriousFaults$ | async"
       (seriousFaultCommentChange)="seriousFaultCommentChanged($event)">
