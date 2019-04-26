@@ -58,7 +58,7 @@ export class AddManoeuvreDangerousFault implements Action {
 }
 
 export class RemoveManoeuvreFault implements Action {
-  constructor(public payload: ManoeuvreCompetencies) { }
+  constructor(public payload: ManoeuvrePayload) { }
   readonly type = REMOVE_MANOEUVRE_FAULT;
 }
 export class ControlledStopAddDrivingFault implements Action {

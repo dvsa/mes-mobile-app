@@ -11,7 +11,6 @@ import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/t
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test_data/test-data.constants';
 import { map } from 'rxjs/operators';
 import { some } from 'lodash';
-import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 interface ManoeuvresFaultState {
   reverseRight: boolean;
@@ -71,8 +70,8 @@ export class ManoeuvresPopoverComponent {
 
   manoeuvreHasFaults = (manoeuvre): boolean => (
     manoeuvre &&
-    (manoeuvre.controlFault === CompetencyOutcome.DF ||
-    manoeuvre.observationFault === CompetencyOutcome.DF)
+    (manoeuvre.controlFault != null ||
+    manoeuvre.observationFault != null)
   )
 
   getId = (manoeuvre: ManoeuvreTypes, competency: ManoeuvreCompetencies) => `${manoeuvre}-${competency}`;

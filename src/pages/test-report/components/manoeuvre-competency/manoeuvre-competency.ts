@@ -5,6 +5,7 @@ import {
   AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
+  RemoveManoeuvreFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
@@ -20,7 +21,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../test-report.actions';
 
 interface ManoeuvreCompetencyComponentState {
   isRemoveFaultMode$: Observable<boolean>;
@@ -158,7 +159,42 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
   }
 
   removeFault = (): void => {
-    console.log('remove a fault');
+    // Toggle modes off appropariately if competency outcome doesn't exist, then exit
+    if (this.manoeuvreCompetencyOutcome == null) {
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+      if (this.isSeriousMode) this.store$.dispatch(new ToggleSeriousFaultMode());
+      if (this.isDangerousMode) this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
+    const payload = {
+      competency: this.competency,
+      manoeuvre: this.manoeuvre,
+    };
+
+    if (this.isDangerousMode && this.isRemoveFaultMode) {
+      this.store$.dispatch(new RemoveManoeuvreFault(payload));
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+      return;
+    }
+
+    if (this.isSeriousMode && this.isRemoveFaultMode) {
+      this.store$.dispatch(new RemoveManoeuvreFault(payload));
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+      return;
+    }
+
+    if (
+      !this.isSeriousMode &&
+      !this.isDangerousMode &&
+      this.isRemoveFaultMode &&
+      this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF
+    ) {
+      this.store$.dispatch(new RemoveManoeuvreFault(payload));
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+    }
   }
 
   hasDrivingFault = (): number => this.manoeuvreCompetencyOutcome === CompetencyOutcome.DF ? 1 : 0;
