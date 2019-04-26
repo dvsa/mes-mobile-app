@@ -15,6 +15,7 @@ import {
   RemoveDangerousFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
+  ToggleEco,
 } from '../test-data.actions';
 import {
   Competencies,
@@ -26,7 +27,7 @@ import {
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
-describe('TestDataReducer reducer', () => {
+fdescribe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
     it('should add a driving fault when no driving faults exist', () => {
       const result = testDataReducer(initialState, new AddDrivingFault({
@@ -322,43 +323,63 @@ describe('TestDataReducer reducer', () => {
     });
   });
 
+  describe('TOGGLE_ECO', () => {
+    it('should toggle eco (true when dispatched first time)', () => {
+      const state: TestData = {
+        eco: {},
+      };
+      const result = testDataReducer(state, new ToggleEco());
+      expect(result.eco.completed).toBeTruthy();
+    });
+
+    it('should toggle eco (false when dispatched second time)', () => {
+      const state: TestData = {
+        eco: {},
+      };
+      const modifiedState = testDataReducer(state, new ToggleEco());
+      const result = testDataReducer(modifiedState, new ToggleEco());
+      expect(result.eco.completed).toBeFalsy();
+    });
+  });
   describe('TOGGLE_CONTROL_ECO', () => {
-    it('should toggle control eco fault (true when dispatched first time)', () => {
+    it('should toggle control eco fault (true when dispatched first time) and set eco completed', () => {
       const state: TestData = {
         eco: {},
       };
       const result = testDataReducer(state, new ToggleControlEco());
       expect(result.eco.adviceGivenControl).toBeTruthy();
+      expect(result.eco.completed).toBeTruthy();
     });
 
-    it('should toggle control eco fault (false when dispatched second time)', () => {
+    it('should toggle control eco fault (false when dispatched second time) and leave eco as completed', () => {
       const state: TestData = {
         eco: {},
       };
       const modifiedState = testDataReducer(state, new ToggleControlEco());
       const result = testDataReducer(modifiedState, new ToggleControlEco());
       expect(result.eco.adviceGivenControl).toBeFalsy();
+      expect(result.eco.completed).toBeTruthy();
     });
   });
 
   describe('TOGGLE_PLANNING_ECO', () => {
-    it('should toggle the planning eco fault (true when dispatched first time)', () => {
+    it('should toggle the planning eco fault (true when dispatched first time) and set eco completed', () => {
       const state: TestData = {
         eco: {},
       };
       const result = testDataReducer(state, new TogglePlanningEco());
       expect(result.eco.adviceGivenPlanning).toBeTruthy();
+      expect(result.eco.completed).toBeTruthy();
     });
 
-    it('should toggle planning eco fault (false when dispatched second time)', () => {
+    it('should toggle planning eco fault (false when dispatched second time) and leave eco as completed', () => {
       const state: TestData = {
         eco: {},
       };
       const modifiedState = testDataReducer(state, new TogglePlanningEco());
       const result = testDataReducer(modifiedState, new TogglePlanningEco());
-
       expect(result.eco.adviceGivenPlanning).toBeFalsy();
-
+      expect(result.eco.completed).toBeTruthy();
     });
   });
   describe('TOGGLE_CONTROLLED_STOP', () => {
