@@ -1,5 +1,6 @@
 import { forOwn, transform, endsWith } from 'lodash';
-import { SeriousFaults,
+import {
+  SeriousFaults,
   DrivingFaults,
   DangerousFaults,
   TestData,
@@ -36,7 +37,7 @@ export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
 };
 
 export const getManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): FaultCount[] => {
-  const faultsEncountered : FaultCount[] = [];
+  const faultsEncountered: FaultCount[] = [];
   forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
     const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
       if (endsWith(key, 'Fault') && value === faultType) {
@@ -51,8 +52,8 @@ export const getManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: Competency
   return faultsEncountered;
 };
 
-export const displayDrivingFaultComments = (data: TestData) : boolean => {
-  const seriousFaults =  getSeriousOrDangerousFaults(data.seriousFaults);
+export const displayDrivingFaultComments = (data: TestData): boolean => {
+  const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
   const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
   let drivingFaultCount: number = 0;
 
@@ -79,10 +80,11 @@ export const displayDrivingFaultComments = (data: TestData) : boolean => {
  */
 export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContainer[] => {
   const faultsEncountered: SeriousFaultsContainer[] = [];
-  forOwn(faults, (value, key) => {
+  forOwn(faults, (value, key, obj) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label] });
+      const comment = obj[`${key}Comments`] || null;
+      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label] });
     }
   });
   return faultsEncountered;
@@ -102,7 +104,7 @@ export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[
   forOwn(faults, (value, key) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label] });
+      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label], comment: value as string });
     }
   });
   return faultsEncountered;

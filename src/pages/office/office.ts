@@ -69,6 +69,8 @@ import { FaultCount, SeriousFaultsContainer } from '../../shared/constants/compe
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
+import { FaultComment } from './components/dangerous-fault-comments/dangerous-fault-comments.model';
+import { AddDangerousFaultComment } from '../../modules/tests/test_data/test-data.actions';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -114,7 +116,6 @@ export class OfficePage extends BasePageComponent {
 
   inputSubscriptions: Subscription[] = [];
   drivingFaultSubscription: Subscription;
-  dangerousFaultSubscription: Subscription;
   seriousFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
@@ -253,12 +254,6 @@ export class OfficePage extends BasePageComponent {
       }
     });
 
-    this.dangerousFaultSubscription = this.pageState.dangerousFaults$.subscribe((dangerousFault) => {
-      if (dangerousFault) {
-        this.getDangerousFaultCtrls();
-      }
-    });
-
     this.seriousFaultSubscription = this.pageState.seriousFaults$.subscribe((seriousFault) => {
       if (seriousFault) {
         this.getSeriousFaultCtrls();
@@ -269,7 +264,6 @@ export class OfficePage extends BasePageComponent {
   ngOnDestroy(): void {
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
     this.drivingFaultSubscription.unsubscribe();
-    this.dangerousFaultSubscription.unsubscribe();
     this.seriousFaultSubscription.unsubscribe();
   }
 
@@ -358,6 +352,10 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 
+  dangerousFaultCommentChanged(dangerousFaultComment: FaultComment) {
+    this.store$.dispatch(new AddDangerousFaultComment(dangerousFaultComment.competency, dangerousFaultComment.comment));
+  }
+
   private createToast = (errorMessage: string) => {
 
     this.toast = this.toastController.create({
@@ -377,16 +375,6 @@ export class OfficePage extends BasePageComponent {
       fault.forEach((faultIndex) => {
         this.form.addControl(
           this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
-          new FormControl('', Validators.required));
-      });
-    });
-  }
-
-  getDangerousFaultCtrls(): void {
-    this.pageState.dangerousFaults$.forEach((fault) => {
-      fault.forEach((faultIndex) => {
-        this.form.addControl(
-          this.dangerousFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
           new FormControl('', Validators.required));
       });
     });

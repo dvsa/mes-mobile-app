@@ -1,0 +1,32 @@
+<ion-card id="dangerous-fault" *ngIf="dangerousFaultComments.length > 0" [formGroup]="formGroup">
+  <ion-card-header>
+    <h4>Dangerous defects</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-row class="mes-component-row mes-row-separator" id="dangerous-commentary-label"
+      *ngFor="let dangerousFault of dangerousFaultComments; let $i = index;">
+      <div class="validation-bar" [class.ng-invalid]="invalid">
+      </div>
+      <ion-col class="component-label" align-self-center col-1>
+        <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
+      </ion-col>
+      <ion-col class="component-label" col-29 align-self-center>
+        <label class="fault-label">{{dangerousFault.name}}</label>
+      </ion-col>
+      <ion-col>
+        <ion-row class="spacing-row"></ion-row>
+        <ion-row>
+          <dangerous-fault-comment [index]="$i" [competency]="dangerousFault.propertyName"
+            [comment]="dangerousFault.comment" [invalidIndicator]="invalid" [parentForm]="formGroup"
+            (faultCommentChange)="dangerousFaultCommentChanged($event)">
+          </dangerous-fault-comment>
+        </ion-row>
+        <ion-row class="validation-message-row" align-items-center>
+          <div class="validation-text" [class.ng-invalid]="invalid">
+            Provide a comment
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

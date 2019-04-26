@@ -15,6 +15,7 @@ import { WeatherConditionsComponent } from './components/weather-conditions/weat
 import { D255Component } from './components/d255/d255';
 import { AdditionalInformationComponent } from './components/additional-information/additional-information';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
+import { DangerousFaultCommentsComponent } from './components/dangerous-fault-comments/dangerous-fault-comments';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { IndependentDrivingComponent } from './components/independent-driving/in
     D255Component,
     AdditionalInformationComponent,
     IndependentDrivingComponent,
+    DangerousFaultCommentsComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),

@@ -1,15 +1,7 @@
 import { Observable } from 'rxjs/Observable';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
-import { StoreModel } from '../../../../shared/models/store.model';
-import { Store, select } from '@ngrx/store';
-import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTests } from '../../../../modules/tests/tests.reducer';
-import { map } from 'rxjs/operators';
-import { AddDangerousFaultComment } from '../../../../modules/tests/test_data/test-data.actions';
-import { getDrivingFaultComment } from '../../../debrief/debrief.selector';
-import { InputSubscriptionActionDispatcher } from '../../../../shared/classes/input-area-action-dispatcher';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FaultComment } from '../dangerous-fault-comments/dangerous-fault-comments.model';
 
 interface DangerousFaultCommentComponentState {
   competencyComment$: Observable<string>;
@@ -19,7 +11,7 @@ interface DangerousFaultCommentComponentState {
   selector: 'dangerous-fault-comment',
   templateUrl: 'dangerous-fault-comment.html',
 })
-export class DangerousFaultCommentComponent extends InputSubscriptionActionDispatcher implements OnInit {
+export class DangerousFaultCommentComponent implements OnChanges {
   pageState: DangerousFaultCommentComponentState;
 
   @Input()
@@ -35,36 +27,32 @@ export class DangerousFaultCommentComponent extends InputSubscriptionActionDispa
   competency: string;
 
   @Input()
-  faultName: string;
+  comment: string;
 
-  @ViewChild('dangerousFaultComment')
-  dangerousFaultComment: ElementRef;
+  @Output()
+  faultCommentChange = new EventEmitter<FaultComment>();
 
-  inputSubscription$: Subscription;
+  private formControl: FormControl;
 
-  constructor(public store$: Store<StoreModel>) { super(store$); }
-
-  ngOnInit(): void {
-    const currentTest$ = this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-    );
-
-    this.pageState = {
-      competencyComment$: currentTest$.pipe(
-        map(data => getDrivingFaultComment(data.testData.dangerousFaults, `${this.competency}Comments`)),
-      ),
-    };
-  }
-  ngAfterViewInit(): void {
-    this.inputSubscription$ = super.inputAreaChangeSubscriptionDispatchingAction(
-      this.dangerousFaultComment,
-      this.dangerousFaultComment.nativeElement.id,
-      AddDangerousFaultComment,
-    );
+  ngOnChanges(): void {
+    if (!this.formControl) {
+      this.formControl = new FormControl(null, Validators.required);
+      this.parentForm.addControl(this.formControlName, this.formControl);
+    }
+    this.formControl.patchValue(this.comment);
   }
 
-  ngOnDestroy(): void {
-    this.inputSubscription$.unsubscribe();
+  dangerousFaultCommentChanged(comment: string): void {
+    const dangerousFaultComment: FaultComment = { comment, competency: this.competency };
+    this.faultCommentChange.emit(dangerousFaultComment);
   }
+
+  get invalid() {
+    return this.formControl.dirty && !this.formControl.valid;
+  }
+
+  get formControlName() {
+    return `dangerousFaultComment${this.competency}`;
+  }
+
 }

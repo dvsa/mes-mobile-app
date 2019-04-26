@@ -37,6 +37,7 @@ import { D255Component } from '../components/d255/d255';
 import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
+import { DangerousFaultCommentsComponent } from '../components/dangerous-fault-comments/dangerous-fault-comments';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -57,6 +58,7 @@ describe('OfficePage', () => {
         MockComponent(D255Component),
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
+        MockComponent(DangerousFaultCommentsComponent),
       ],
       imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
         StoreModule.forRoot({
