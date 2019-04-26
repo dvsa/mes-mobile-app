@@ -1,23 +1,38 @@
 <ion-row>
   <ion-col col-20 no-padding>
     <competency-button class="eco-tick"
+      [onTap]="toggleEco"
+      [onPress]="toggleEco"
       [ripple]="false"
+      [ngClass]="{
+        'checked': completed
+      }"
     >
       <span class='tickwrapper'>
-        <tick-indicator [ticked]="selectedEco"></tick-indicator>
+        <tick-indicator [ticked]="completed"></tick-indicator>
       </span>
     </competency-button>
   </ion-col>
   <ion-col no-padding>
     <competency-button class="eco-control"
+      [onTap]="toggleEcoControl"
+      [onPress]="toggleEcoControl"
       [ripple]="false"
+      [ngClass]="{
+        'complete': adviceGivenControl
+      }"
     >
       <div class='competency-label'>ECO: C</div>
     </competency-button>
   </ion-col>
   <ion-col no-padding>
     <competency-button class="eco-planning"
+      [onTap]="toggleEcoPlanning"
+      [onPress]="toggleEcoPlanning"
       [ripple]="false"
+      [ngClass]="{
+        'complete': adviceGivenPlanning
+      }"
     >
       <div class='competency-label'>ECO: P</div>
     </competency-button>
