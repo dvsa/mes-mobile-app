@@ -111,12 +111,12 @@
     </ion-card>
 
     <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async"
-      [shouldRender]="(pageState.dangerousFaults$ | async).length > 0" faultType="dangerous"
+      [shouldRender]="(pageState.dangerousFaults$ | async).length > 0" faultType="dangerous" header="Dangerous faults"
       (faultCommentsChange)="dangerousFaultCommentChanged($event)"></fault-comment-card>
 
-    <serious-fault-comments [formGroup]="form" [seriousFaultComments]="pageState.seriousFaults$ | async"
-      (seriousFaultCommentChange)="seriousFaultCommentChanged($event)">
-    </serious-fault-comments>
+    <fault-comment-card [formGroup]="form" [faultComments]="pageState.seriousFaults$ | async"
+      [shouldRender]="(pageState.seriousFaults$ | async).length > 0" faultType="serious" header="Serious faults"
+      (faultCommentsChange)="seriousFaultCommentChanged($event)"></fault-comment-card>
 
     <ion-card id="driving-fault-with-commentary" *ngIf="pageState.displayDrivingFaultComments$ | async">
       <ion-card-header>
