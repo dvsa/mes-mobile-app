@@ -68,9 +68,11 @@ describe('WaitingRoomToCarPage', () => {
                   candidateName: 'Joe Bloggs',
                 },
                 vehicleChecks: {
-                  tellMeQuestionCode: 'T1',
-                  tellMeQuestionDescription: 'desc',
-                  tellMeQuestionOutcome: 'P',
+                  tellMeQuestion: {
+                    code: 'T1',
+                    description: 'desc',
+                    outcome: 'P',
+                  },
                 },
               },
             },
@@ -107,9 +109,9 @@ describe('WaitingRoomToCarPage', () => {
     describe('selecting a tell me question', () => {
       it('should dispatch an action when the tell me question change handler is called', () => {
         const question: TellMeQuestion = {
-          tellMeQuestionCode: 'T1',
-          tellMeQuestionDescription: 'desc',
-          tellMeQuestionShortName: 'name',
+          code: 'T1',
+          description: 'desc',
+          shortName: 'name',
         };
         component.tellMeQuestionChanged(question);
         expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));

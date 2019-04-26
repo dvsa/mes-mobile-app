@@ -85,8 +85,10 @@ describe('OfficePage', () => {
                   eco: {},
                 },
                 vehicleChecks: {
-                  showMeQuestionCode: 'S3',
-                  showMeQuestionDescription: '',
+                  showMeQuestion: {
+                    code: 'S3',
+                    description: '',
+                  },
                 },
               },
             },
@@ -128,9 +130,9 @@ describe('OfficePage', () => {
     describe('selecting a show me question', () => {
       it('should dispatch an action when show me question change handler is called', () => {
         const question: ShowMeQuestion = {
-          showMeQuestionCode: 'S1',
-          showMeQuestionDescription: 'desc',
-          showMeQuestionShortName: 'name',
+          code: 'S1',
+          description: 'desc',
+          shortName: 'name',
         };
         component.showMeQuestionChanged(question);
         expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
@@ -143,7 +145,7 @@ describe('OfficePage', () => {
       fixture.detectChanges();
       const showMeElement = fixture.debugElement.query(By.css('show-me-question'))
         .componentInstance as ShowMeQuestionComponent;
-      expect(showMeElement.showMeQuestion.showMeQuestionCode).toEqual('S3');
+      expect(showMeElement.showMeQuestion.code).toEqual('S3');
     });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();

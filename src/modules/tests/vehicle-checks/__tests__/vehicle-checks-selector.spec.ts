@@ -9,9 +9,11 @@ describe('vehicle checks selector', () => {
   describe('isTellMeQuestionSelected', () => {
     it('should return true if there is a tell me question selected', () => {
       const state: VehicleChecks = {
-        tellMeQuestionCode: 'T1',
-        tellMeQuestionDescription: 'desc',
-        tellMeQuestionOutcome: 'P',
+        tellMeQuestion: {
+          code: 'T1',
+          description: 'desc',
+          outcome: 'P',
+        },
       };
       expect(isTellMeQuestionSelected(state)).toBe(true);
     });
@@ -21,9 +23,11 @@ describe('vehicle checks selector', () => {
   });
   describe('isTellMeQuestionCorrect', () => {
     const passedState: VehicleChecks = {
-      tellMeQuestionCode: 'T1',
-      tellMeQuestionDescription: 'desc',
-      tellMeQuestionOutcome: 'P',
+      tellMeQuestion: {
+        code: 'T1',
+        description: 'desc',
+        outcome: 'P',
+      },
     };
 
     it('should return true if the tell me question is marked as a pass', () => {
@@ -32,16 +36,20 @@ describe('vehicle checks selector', () => {
     it('should return false if the tell me question is marked as a driving fault', () => {
       const failedState = {
         ...passedState,
-        tellMeQuestionOutcome: 'DF' as QuestionOutcome,
+        tellMeQuestion: {
+          outcome: 'DF' as QuestionOutcome,
+        },
       };
       expect(isTellMeQuestionCorrect(failedState)).toBe(false);
     });
   });
   describe('isTellMeQuestionDrivingFault', () => {
     const faultState: VehicleChecks = {
-      tellMeQuestionCode: 'T1',
-      tellMeQuestionDescription: 'desc',
-      tellMeQuestionOutcome: 'DF',
+      tellMeQuestion: {
+        code: 'T1',
+        description: 'desc',
+        outcome: 'DF',
+      },
     };
 
     it('should return true if the tell me question is marked as a pass', () => {
@@ -50,7 +58,9 @@ describe('vehicle checks selector', () => {
     it('should return false if the tell me question is marked as a driving fault', () => {
       const passedState = {
         ...faultState,
-        tellMeQuestionOutcome: 'P' as QuestionOutcome,
+        tellMeQuestion: {
+          outcome: 'P' as QuestionOutcome,
+        },
       };
       expect(isTellMeQuestionDrivingFault(passedState)).toBe(false);
     });

@@ -11,27 +11,36 @@ export function vehicleChecksReducer(
 ): VehicleChecks {
   switch (action.type) {
     case vehicleChecksActions.TELL_ME_QUESTION_SELECTED:
-      const { tellMeQuestionOutcome, ...nonOutcomeState } = state;
       return {
-        ...nonOutcomeState,
-        tellMeQuestionCode: action.tellMeQuestion.tellMeQuestionCode,
-        tellMeQuestionDescription: action.tellMeQuestion.tellMeQuestionDescription,
+        ...state,
+        tellMeQuestion: {
+          code: action.tellMeQuestion.code as string,
+          description: action.tellMeQuestion.description as string,
+        },
       };
     case vehicleChecksActions.TELL_ME_QUESTION_CORRECT:
       return {
         ...state,
-        tellMeQuestionOutcome: 'P',
+        tellMeQuestion: {
+          ...state.tellMeQuestion,
+          outcome: 'P',
+        },
       };
     case vehicleChecksActions.TELL_ME_QUESTION_DRIVING_FAULT:
       return {
         ...state,
-        tellMeQuestionOutcome: 'DF',
+        tellMeQuestion: {
+          ...state.tellMeQuestion,
+          outcome: 'DF',
+        },
       };
     case vehicleChecksActions.SHOW_ME_QUESTION_SELECTED:
       return {
         ...state,
-        showMeQuestionCode: action.showMeQuestion.showMeQuestionCode,
-        showMeQuestionDescription: action.showMeQuestion.showMeQuestionDescription,
+        showMeQuestion: {
+          code: action.showMeQuestion.code as string,
+          description: action.showMeQuestion.description as string,
+        },
       };
     default:
       return state;

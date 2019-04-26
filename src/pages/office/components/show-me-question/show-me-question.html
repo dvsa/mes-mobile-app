@@ -9,7 +9,7 @@
       <ion-select id="show-me-selector" placeholder="Select a question" okText="Submit" cancelText="Cancel"
         formControlName="showMeQuestion" (ionChange)="showMeQuestionChanged($event)">
         <ion-option [value]="showMeQuestion" *ngFor="let showMeQuestion of showMeQuestionOptions">
-          {{showMeQuestion.showMeQuestionCode}} - {{showMeQuestion.showMeQuestionShortName}}
+          {{showMeQuestion.code}} - {{showMeQuestion.shortName}}
         </ion-option>
       </ion-select>
     </ion-row>

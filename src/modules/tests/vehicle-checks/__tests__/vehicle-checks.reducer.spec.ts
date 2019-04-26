@@ -6,61 +6,67 @@ import {
   TellMeQuestionDrivingFault,
 } from '../vehicle-checks.actions';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
+import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
 
 describe('vehicle checks reducer', () => {
   it('should set the question details and reset outcome when a tell me question is selected', () => {
-    const newQuestionPayload = {
-      tellMeQuestionCode: 'T1',
-      tellMeQuestionDescription: 'desc',
-      tellMeQuestionShortName: 'name',
+    const newQuestionPayload: TellMeQuestion = {
+      code: 'T1',
+      description: 'desc',
+      shortName: 'name',
     };
     const oldState: VehicleChecks = {
-      tellMeQuestionCode: 'T2',
-      tellMeQuestionDescription: 'desc2',
-      tellMeQuestionOutcome: 'P',
+      tellMeQuestion: {
+        code: 'T2',
+        description: 'desc2',
+        outcome: 'P',
+      },
     };
     const result = vehicleChecksReducer(oldState, new TellMeQuestionSelected(newQuestionPayload));
-    expect(result.tellMeQuestionCode).toBe('T1');
-    expect(result.tellMeQuestionDescription).toBe('desc');
-    expect(result.tellMeQuestionOutcome).toBeUndefined();
+    expect(result.tellMeQuestion.code).toBe('T1');
+    expect(result.tellMeQuestion.description).toBe('desc');
+    expect(result.tellMeQuestion.outcome).toBeUndefined();
   });
 
   it('should mark tell me question as pass when the action is received', () => {
     const result = vehicleChecksReducer({}, new TellMeQuestionCorrect());
-    expect(result.tellMeQuestionOutcome).toBe('P');
+    expect(result.tellMeQuestion.outcome).toBe('P');
   });
 
   it('should mark tell me question as driving fault when the action is received', () => {
     const result = vehicleChecksReducer({}, new TellMeQuestionDrivingFault());
-    expect(result.tellMeQuestionOutcome).toBe('DF');
+    expect(result.tellMeQuestion.outcome).toBe('DF');
   });
 
   it('should set the show me question details', () => {
-    const newQuestionPayload = {
-      showMeQuestionCode: 'S1',
-      showMeQuestionDescription: 'desc',
-      showMeQuestionShortName: 'name',
+    const newQuestionPayload: ShowMeQuestion = {
+      code: 'S1',
+      description: 'desc',
+      shortName: 'name',
     };
 
     const result = vehicleChecksReducer({}, new ShowMeQuestionSelected(newQuestionPayload));
-    expect(result.showMeQuestionCode).toBe('S1');
-    expect(result.showMeQuestionDescription).toBe('desc');
+    expect(result.showMeQuestion.code).toBe('S1');
+    expect(result.showMeQuestion.description).toBe('desc');
   });
 
   it('should update the show me question details', () => {
-    const newQuestionPayload = {
-      showMeQuestionCode: 'S1',
-      showMeQuestionDescription: 'desc',
-      showMeQuestionShortName: 'name',
+    const newQuestionPayload: ShowMeQuestion = {
+      code: 'S1',
+      description: 'desc',
+      shortName: 'name',
     };
 
     const oldState: VehicleChecks = {
-      showMeQuestionCode: 'S2',
-      showMeQuestionDescription: 'desc2',
+      showMeQuestion: {
+        code: 'S2',
+        description: 'desc2',
+      },
     };
 
     const result = vehicleChecksReducer(oldState, new ShowMeQuestionSelected(newQuestionPayload));
-    expect(result.showMeQuestionCode).toBe('S1');
-    expect(result.showMeQuestionDescription).toBe('desc');
+    expect(result.showMeQuestion.code).toBe('S1');
+    expect(result.showMeQuestion.description).toBe('desc');
   });
 });
