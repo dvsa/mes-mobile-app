@@ -4,7 +4,7 @@
   </ion-card-header>
   <ion-card-content>
     <ion-row class="mes-component-row mes-row-separator" id="dangerous-commentary-label"
-      *ngFor="let dangerousFault of dangerousFaultComments; let $i = index;">
+      *ngFor="let dangerousFault of dangerousFaultComments">
       <div class="validation-bar" [class.ng-invalid]="invalid">
       </div>
       <ion-col class="component-label" align-self-center col-1>
@@ -16,9 +16,8 @@
       <ion-col>
         <ion-row class="spacing-row"></ion-row>
         <ion-row>
-          <fault-comment [index]="$i" [competency]="dangerousFault.propertyName" [comment]="dangerousFault.comment"
-            [invalidIndicator]="invalid" [parentForm]="formGroup"
-            (faultCommentChange)="dangerousFaultCommentChanged($event)">
+          <fault-comment [competency]="dangerousFault.propertyName" [comment]="dangerousFault.comment"
+            [parentForm]="formGroup" (faultCommentChange)="dangerousFaultCommentChanged($event)">
           </fault-comment>
         </ion-row>
         <ion-row class="validation-message-row" align-items-center>

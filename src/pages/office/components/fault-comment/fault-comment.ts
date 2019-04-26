@@ -12,12 +12,6 @@ export class FaultCommentComponent implements OnChanges {
   parentForm: FormGroup;
 
   @Input()
-  invalidIndicator: boolean;
-
-  @Input()
-  index: number;
-
-  @Input()
   competency: string;
 
   @Input()
@@ -46,7 +40,7 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   get formControlName() {
-    return `dangerousFaultComment${this.competency}`;
+    return `faultComment-${this.competency}`;
   }
 
 }
