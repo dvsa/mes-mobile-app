@@ -30,8 +30,13 @@ export class FaultCommentComponent implements OnChanges {
     this.formControl.patchValue(this.faultComment.comment);
   }
 
-  faultCommentChanged(comment: string): void {
-    this.faultCommentChange.emit({ comment, ...this.faultComment });
+  faultCommentChanged(newComment: string): void {
+    const { comment, ...commentedCompetencyWithoutComment } = this.faultComment;
+    const commentedCompetency: CommentedCompetency = {
+      comment: newComment,
+      ...commentedCompetencyWithoutComment,
+    };
+    this.faultCommentChange.emit(commentedCompetency);
   }
 
   get invalid() {

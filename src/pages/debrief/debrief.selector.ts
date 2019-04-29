@@ -14,7 +14,6 @@ import { ManoeuvreTypes } from '../../modules/tests/test_data/test-data.constant
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
-  Competency,
   CommentedCompetency,
 } from '../../shared/models/fault-marking.model';
 
@@ -50,12 +49,12 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
 export const getManoeuvreFaults = (
   manoeuvres: Manoeuvres,
   faultType: CompetencyOutcome,
-): (Competency & MultiFaultAssignableCompetency)[] => {
-  const faultsEncountered: (Competency & MultiFaultAssignableCompetency)[] = [];
+): MultiFaultAssignableCompetency[] => {
+  const faultsEncountered: MultiFaultAssignableCompetency[] = [];
   forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
     const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
       if (endsWith(key, 'Fault') && value === faultType) {
-        const manoeuvreFaultSummary: Competency & MultiFaultAssignableCompetency = {
+        const manoeuvreFaultSummary: MultiFaultAssignableCompetency = {
           competencyIdentifier: type,
           competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
           faultCount: 1,
