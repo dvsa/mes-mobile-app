@@ -26,7 +26,6 @@ import {
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
-import { OfficeComponentsModule } from '../components/office.components.module';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
@@ -40,6 +39,7 @@ import { IndependentDrivingComponent } from '../components/independent-driving/i
 import { DangerousFaultCommentsComponent } from '../components/dangerous-fault-comments/dangerous-fault-comments';
 import { SeriousFaultCommentsComponent } from '../components/serious-fault-comments/serious-fault-comments';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
+import { DrivingFaultCommentComponent } from '../components/drivingFaultComment/driving-fault-comment';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -62,9 +62,13 @@ describe('OfficePage', () => {
         MockComponent(IndependentDrivingComponent),
         MockComponent(DangerousFaultCommentsComponent),
         MockComponent(SeriousFaultCommentsComponent),
+        MockComponent(DrivingFaultCommentComponent),
         MockComponent(FaultCommentCardComponent),
       ],
-      imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
+      imports: [
+        IonicModule,
+        AppModule,
+        ComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
