@@ -1,5 +1,6 @@
 import { forOwn, transform, endsWith } from 'lodash';
-import { SeriousFaults,
+import {
+  SeriousFaults,
   DrivingFaults,
   DangerousFaults,
   TestData,
@@ -26,17 +27,18 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
 
 export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
   const faultsEncountered: FaultCount[] = [];
-  forOwn(faults, (value: number, key) => {
+  forOwn(faults, (value: number, key, obj) => {
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label], count: value });
+      const comment = obj[`${key}Comments`] || null;
+      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label], count: value });
     }
   });
   return faultsEncountered.sort((a, b) => b.count - a.count);
 };
 
 export const getManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): FaultCount[] => {
-  const faultsEncountered : FaultCount[] = [];
+  const faultsEncountered: FaultCount[] = [];
   forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
     const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
       if (endsWith(key, 'Fault') && value === faultType) {
@@ -51,8 +53,8 @@ export const getManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: Competency
   return faultsEncountered;
 };
 
-export const displayDrivingFaultComments = (data: TestData) : boolean => {
-  const seriousFaults =  getSeriousOrDangerousFaults(data.seriousFaults);
+export const displayDrivingFaultComments = (data: TestData): boolean => {
+  const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
   const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
   let drivingFaultCount: number = 0;
 
@@ -73,16 +75,14 @@ export const displayDrivingFaultComments = (data: TestData) : boolean => {
  *
  * Returns a container of array holding the propertyName and fullCompetencyLabel for each dangerous
  * fault recorded against a candidate.
- *
- * Is used to populate properties in dangerous-fault-comment.html for the entry of comments
- * relating to each dangerous fault.
  */
 export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContainer[] => {
   const faultsEncountered: SeriousFaultsContainer[] = [];
-  forOwn(faults, (value, key) => {
+  forOwn(faults, (value, key, obj) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label] });
+      const comment = obj[`${key}Comments`] || null;
+      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label] });
     }
   });
   return faultsEncountered;
@@ -93,16 +93,14 @@ export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContai
  *
  * Returns a container of array holding the propertyName and fullCompetencyLabel for each serious
  * fault recorded against a candidate.
- *
- * Is used to populate properties in serious-fault-comment.html for the entry of comments
- * relating to each dangerous fault.
  */
 export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[] => {
   const faultsEncountered: SeriousFaultsContainer[] = [];
-  forOwn(faults, (value, key) => {
+  forOwn(faults, (value, key, obj) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label] });
+      const comment = obj[`${key}Comments`] || null;
+      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label] });
     }
   });
   return faultsEncountered;

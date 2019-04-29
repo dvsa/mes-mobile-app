@@ -88,7 +88,7 @@ export function testDataReducer(
         ...state,
         drivingFaults: {
           ...state.drivingFaults,
-          [action.competencyName]: action.comment,
+          [`${action.competencyName}Comments`]: action.comment,
         },
       };
     case testDataActions.ADD_SERIOUS_FAULT:
@@ -104,7 +104,7 @@ export function testDataReducer(
         ...state,
         seriousFaults: {
           ...state.seriousFaults,
-          [action.competencyName]: action.comment,
+          [`${action.competencyName}Comments`]: action.comment,
         },
       };
     case testDataActions.ADD_DANGEROUS_FAULT:
@@ -120,12 +120,12 @@ export function testDataReducer(
         ...state,
         dangerousFaults: {
           ...state.dangerousFaults,
-          [action.competencyName]: action.comment,
+          [`${action.competencyName}Comments`]: action.comment,
         },
       };
     case testDataActions.REMOVE_DRIVING_FAULT:
       if (action.payload.newFaultCount === 0) {
-        const { [action.payload.competency] : removedDrivingFault, ...updatedDrivingFaults } = state.drivingFaults;
+        const { [action.payload.competency]: removedDrivingFault, ...updatedDrivingFaults } = state.drivingFaults;
         return {
           ...state,
           drivingFaults: updatedDrivingFaults,
@@ -145,14 +145,14 @@ export function testDataReducer(
         ...state,
         seriousFaults: updatedSeriousFaults,
       };
-    case testDataActions.REMOVE_DANGEROUS_FAULT :
+    case testDataActions.REMOVE_DANGEROUS_FAULT:
       const dangerousCompetency = action.payload as Competencies;
       const { [dangerousCompetency]: removedDangerousFault, ...updatedDangerousFaults } = state.dangerousFaults;
       return {
         ...state,
         dangerousFaults: updatedDangerousFaults,
       };
-    case testDataActions.TOGGLE_LEGAL_REQUIREMENT :
+    case testDataActions.TOGGLE_LEGAL_REQUIREMENT:
       return {
         ...state,
         testRequirements: {
@@ -160,7 +160,7 @@ export function testDataReducer(
           [action.payload]: !state.testRequirements[action.payload],
         },
       };
-    case testDataActions.TOGGLE_ETA :
+    case testDataActions.TOGGLE_ETA:
       return {
         ...state,
         ETA: {
@@ -168,7 +168,7 @@ export function testDataReducer(
           [action.payload]: !state.ETA[action.payload],
         },
       };
-    case testDataActions.TOGGLE_ECO :
+    case testDataActions.TOGGLE_ECO:
       return {
         ...state,
         eco: {
@@ -176,7 +176,7 @@ export function testDataReducer(
           completed: !state.eco.completed,
         },
       };
-    case testDataActions.TOGGLE_CONTROL_ECO :
+    case testDataActions.TOGGLE_CONTROL_ECO:
       if (!state.eco.adviceGivenControl) {
         return {
           ...state,
@@ -194,7 +194,7 @@ export function testDataReducer(
           adviceGivenControl: !state.eco.adviceGivenControl,
         },
       };
-    case testDataActions.TOGGLE_PLANNING_ECO :
+    case testDataActions.TOGGLE_PLANNING_ECO:
       if (!state.eco.adviceGivenPlanning) {
         return {
           ...state,
