@@ -7,12 +7,16 @@ import {
   Manoeuvres,
 } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
-import { FaultCount, fullCompetencyLabels, SeriousFaultsContainer }
-  from '../../shared/constants/competencies/catb-competencies';
+import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import { manoeuvreTypeLabels, manoeuvreCompetencyLabels }
   from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
 import { ManoeuvreTypes } from '../../modules/tests/test_data/test-data.constants';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+import {
+  MultiFaultAssignable,
+  Competency,
+  CommentedCompetency,
+} from '../office/components/fault-comment/fault-comment.model';
 
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];
@@ -25,27 +29,38 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
   return faultsEncountered;
 };
 
-export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
-  const faultsEncountered: FaultCount[] = [];
+export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & MultiFaultAssignable)[] => {
+  const faultsEncountered: (CommentedCompetency & MultiFaultAssignable)[] = [];
   forOwn(faults, (value: number, key, obj) => {
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
       const comment = obj[`${key}Comments`] || null;
-      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label], count: value });
+      const drivingFaultSummary: CommentedCompetency & MultiFaultAssignable = {
+        comment,
+        competencyIdentifier: key,
+        competencyDisplayName: fullCompetencyLabels[label],
+        faultCount: value,
+      };
+      faultsEncountered.push(drivingFaultSummary);
     }
   });
-  return faultsEncountered.sort((a, b) => b.count - a.count);
+  return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
 };
 
-export const getManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): FaultCount[] => {
-  const faultsEncountered: FaultCount[] = [];
+export const getManoeuvreFaults = (
+  manoeuvres: Manoeuvres,
+  faultType: CompetencyOutcome,
+): (Competency & MultiFaultAssignable)[] => {
+  const faultsEncountered: (Competency & MultiFaultAssignable)[] = [];
   forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
     const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
       if (endsWith(key, 'Fault') && value === faultType) {
-        result.push({
-          name: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
-          count: 1,
-        });
+        const manoeuvreFaultSummary: Competency & MultiFaultAssignable = {
+          competencyIdentifier: type,
+          competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
+          faultCount: 1,
+        };
+        result.push(manoeuvreFaultSummary);
       }
     }, []);
     faultsEncountered.push(...faults);
@@ -76,13 +91,18 @@ export const displayDrivingFaultComments = (data: TestData): boolean => {
  * Returns a container of array holding the propertyName and fullCompetencyLabel for each dangerous
  * fault recorded against a candidate.
  */
-export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContainer[] => {
-  const faultsEncountered: SeriousFaultsContainer[] = [];
+export const getDangerousFaults = (faults: DangerousFaults): CommentedCompetency[] => {
+  const faultsEncountered: CommentedCompetency[] = [];
   forOwn(faults, (value, key, obj) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
       const comment = obj[`${key}Comments`] || null;
-      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label] });
+      const dangerousFault: (CommentedCompetency) = {
+        comment,
+        competencyIdentifier: key,
+        competencyDisplayName: fullCompetencyLabels[label],
+      };
+      faultsEncountered.push(dangerousFault);
     }
   });
   return faultsEncountered;
@@ -94,13 +114,18 @@ export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContai
  * Returns a container of array holding the propertyName and fullCompetencyLabel for each serious
  * fault recorded against a candidate.
  */
-export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[] => {
-  const faultsEncountered: SeriousFaultsContainer[] = [];
+export const getSeriousFaults = (faults: SeriousFaults): CommentedCompetency[] => {
+  const faultsEncountered: CommentedCompetency[] = [];
   forOwn(faults, (value, key, obj) => {
     if (value && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
       const comment = obj[`${key}Comments`] || null;
-      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label] });
+      const seriousFault: CommentedCompetency = {
+        comment,
+        competencyIdentifier: key,
+        competencyDisplayName: fullCompetencyLabels[label],
+      };
+      faultsEncountered.push(seriousFault);
     }
   });
   return faultsEncountered;

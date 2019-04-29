@@ -5,11 +5,10 @@
     <ion-col class="component-label" align-self-center col-1 [ngSwitch]="faultType">
       <dangerous-fault-badge [showBadge]="true" *ngSwitchCase="'dangerous'"></dangerous-fault-badge>
       <serious-fault-badge [showBadge]="true" *ngSwitchCase="'serious'"></serious-fault-badge>
-      <driving-faults-badge [count]="faultComment.count" *ngSwitchCase="'driving'">
-      </driving-faults-badge>
+      <driving-faults-badge [count]="faultComment.drivingFaultCount" *ngSwitchCase="'driving'"></driving-faults-badge>
     </ion-col>
     <ion-col class="component-label" col-29 align-self-center>
-      <label class="fault-label">{{faultComment.name}}</label>
+      <label class="fault-label">{{faultComment.competencyDisplayName}}</label>
     </ion-col>
     <ion-col>
       <ion-row class="spacing-row"></ion-row>

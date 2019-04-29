@@ -1,10 +1,12 @@
-import { SeriousFaults,
+import {
+  SeriousFaults,
   DangerousFaults,
   DrivingFaults,
   TestData,
   Manoeuvres,
 } from '@dvsa/mes-test-schema/categories/B';
-import { getSeriousOrDangerousFaults,
+import {
+  getSeriousOrDangerousFaults,
   getDrivingFaults,
   displayDrivingFaultComments,
   getManoeuvreFaults,
@@ -61,9 +63,9 @@ describe('debriefSelector', () => {
       drivingFaults.controlsSteering = 2;
       drivingFaults.junctionsObservation = 5;
       const result = getDrivingFaults(drivingFaults);
-      expect(result[0].count).toBe(5);
-      expect(result[1].count).toBe(2);
-      expect(result[2].count).toBe(1);
+      expect(result[0].faultCount).toBe(5);
+      expect(result[1].faultCount).toBe(2);
+      expect(result[2].faultCount).toBe(1);
     });
 
   });
@@ -194,8 +196,8 @@ describe('debriefSelector', () => {
         controlFault: 'DF',
       };
       const result = getManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
-      expect(result[0].name).toBe('Reverse right - Control');
-      expect(result[0].count).toBe(1);
+      expect(result[0].competencyDisplayName).toBe('Reverse right - Control');
+      expect(result[0].faultCount).toBe(1);
     });
   });
 

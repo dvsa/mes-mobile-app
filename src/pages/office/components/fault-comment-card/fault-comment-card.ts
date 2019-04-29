@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SeriousFaultsContainer, FaultCount } from '../../../../shared/constants/competencies/catb-competencies';
-import { FaultComment } from '../fault-comment/fault-comment.model';
+import { CommentedCompetency } from '../fault-comment/fault-comment.model';
 
 @Component({
   selector: 'fault-comment-card',
@@ -13,7 +12,7 @@ export class FaultCommentCardComponent {
   formGroup: FormGroup;
 
   @Input()
-  faultComments: (SeriousFaultsContainer | FaultCount)[];
+  faultComments: CommentedCompetency[];
 
   @Input()
   header: string;
@@ -25,10 +24,9 @@ export class FaultCommentCardComponent {
   shouldRender: boolean;
 
   @Output()
-  faultCommentsChange = new EventEmitter<FaultComment>();
+  faultCommentsChange = new EventEmitter<CommentedCompetency>();
 
-  faultCommentChanged(competency: string, comment: string): void {
-    const faultComment: FaultComment = { competency, comment };
+  faultCommentChanged(faultComment: CommentedCompetency): void {
     this.faultCommentsChange.emit(faultComment);
   }
 
