@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FaultComment } from './fault-comment.model';
+import { SeriousFaultsContainer } from '../../../../shared/constants/competencies/catb-competencies';
 
 @Component({
   selector: 'fault-comment',
@@ -12,10 +13,7 @@ export class FaultCommentComponent implements OnChanges {
   parentForm: FormGroup;
 
   @Input()
-  competency: string;
-
-  @Input()
-  comment: string;
+  faultComment: SeriousFaultsContainer;
 
   @Input()
   faultType: string;
@@ -30,11 +28,11 @@ export class FaultCommentComponent implements OnChanges {
       this.formControl = new FormControl(null, Validators.required);
       this.parentForm.addControl(this.formControlName, this.formControl);
     }
-    this.formControl.patchValue(this.comment);
+    this.formControl.patchValue(this.faultComment.comment);
   }
 
   faultCommentChanged(comment: string): void {
-    const faultComment: FaultComment = { comment, competency: this.competency };
+    const faultComment: FaultComment = { comment, competency: this.faultComment.propertyName };
     this.faultCommentChange.emit(faultComment);
   }
 
@@ -43,7 +41,7 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   get formControlName() {
-    return `faultComment-${this.faultType}-${this.competency}`;
+    return `faultComment-${this.faultType}-${this.faultComment.propertyName}`;
   }
 
 }

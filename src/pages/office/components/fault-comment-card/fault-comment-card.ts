@@ -64,4 +64,9 @@ export class FaultCommentCardComponent implements OnChanges {
     return invalid;
   }
 
+  seriousFaultContainerToFaultComment(faultContainer: SeriousFaultsContainer): FaultComment {
+    const { comment, propertyName } = faultContainer;
+    return { comment, competency: propertyName };
+  }
+
 }
