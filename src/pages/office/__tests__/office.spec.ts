@@ -209,27 +209,19 @@ describe('OfficePage', () => {
     });
 
     describe('driving fault commentary', () => {
-      it('should display the card with commentary fields when displayDrivingFaultComments is true', () => {
+      it('should pass whether to render driving fault commentary to fault-comment-card', () => {
+        const drivingFaultCommentCard: FaultCommentCardComponent = fixture.debugElement
+          .query(By.css('#driving-fault-comment-card')).componentInstance;
         fixture.detectChanges();
+
         component.pageState.displayDrivingFaultComments$ = of(true);
         fixture.detectChanges();
-        const drivingFaultWithCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-with-commentary'));
-        const drivingFaultNoCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-no-commentary'));
-        expect(drivingFaultWithCommentary.length).toBe(1);
-        expect(drivingFaultNoCommentary.length).toBe(0);
-      });
-      it('should display the card with no commentary fields when displayDrivingFaultComments is false', () => {
-        fixture.detectChanges();
+        expect(drivingFaultCommentCard.shouldRender).toBeTruthy();
         component.pageState.displayDrivingFaultComments$ = of(false);
-        component.pageState.drivingFaultCount$ = of(10);
         fixture.detectChanges();
-        const drivingFaultWithCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-with-commentary'));
-        const drivingFaultNoCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-no-commentary'));
-        expect(drivingFaultWithCommentary.length).toBe(0);
-        expect(drivingFaultNoCommentary.length).toBe(1);
+        expect(drivingFaultCommentCard.shouldRender).toBeFalsy();
       });
     });
-
   });
 
   describe('popToRoot', () => {

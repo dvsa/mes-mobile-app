@@ -27,10 +27,11 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
 
 export const getDrivingFaults = (faults: DrivingFaults): FaultCount[] => {
   const faultsEncountered: FaultCount[] = [];
-  forOwn(faults, (value: number, key) => {
+  forOwn(faults, (value: number, key, obj) => {
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push({ propertyName: key, name: fullCompetencyLabels[label], count: value });
+      const comment = obj[`${key}Comments`] || null;
+      faultsEncountered.push({ comment, propertyName: key, name: fullCompetencyLabels[label], count: value });
     }
   });
   return faultsEncountered.sort((a, b) => b.count - a.count);
@@ -74,9 +75,6 @@ export const displayDrivingFaultComments = (data: TestData): boolean => {
  *
  * Returns a container of array holding the propertyName and fullCompetencyLabel for each dangerous
  * fault recorded against a candidate.
- *
- * Is used to populate properties in dangerous-fault-comment.html for the entry of comments
- * relating to each dangerous fault.
  */
 export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContainer[] => {
   const faultsEncountered: SeriousFaultsContainer[] = [];

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SeriousFaultsContainer } from '../../../../shared/constants/competencies/catb-competencies';
+import { SeriousFaultsContainer, FaultCount } from '../../../../shared/constants/competencies/catb-competencies';
 import { FaultComment } from '../fault-comment/fault-comment.model';
 
 @Component({
@@ -13,7 +13,7 @@ export class FaultCommentCardComponent {
   formGroup: FormGroup;
 
   @Input()
-  faultComments: SeriousFaultsContainer[];
+  faultComments: (SeriousFaultsContainer | FaultCount)[];
 
   @Input()
   header: string;

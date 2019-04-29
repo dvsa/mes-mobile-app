@@ -1,5 +1,5 @@
 import { IonicPage, NavController, NavParams, Platform, ToastController, Toast, Keyboard } from 'ionic-angular';
-import { Component, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component } from '@angular/core';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -8,8 +8,7 @@ import {
   OfficeViewDidEnter,
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
+import { FormGroup } from '@angular/forms';
 import { getCurrentTest, getTestOutcome, getTestOutcomeClass, isPassed } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
@@ -23,8 +22,7 @@ import {
   getIndependentDriving,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
-import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
   RouteNumberChanged,
   IndependentDrivingTypeChanged,
@@ -70,7 +68,11 @@ import { WeatherConditionSelection } from '../../providers/weather-conditions/we
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
 import { FaultComment } from './components/fault-comment/fault-comment.model';
-import { AddDangerousFaultComment, AddSeriousFaultComment } from '../../modules/tests/test_data/test-data.actions';
+import {
+  AddDangerousFaultComment,
+  AddSeriousFaultComment,
+  AddDrivingFaultComment,
+} from '../../modules/tests/test_data/test-data.actions';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -110,12 +112,6 @@ export class OfficePage extends BasePageComponent {
   drivingFaultCtrl: String = 'drivingFaultCtrl';
   seriousFaultCtrl: String = 'seriousFaultCtrl';
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
-
-  @ViewChildren('dangerousFaultComment')
-  dangerousFaultComment: QueryList<ElementRef>;
-
-  inputSubscriptions: Subscription[] = [];
-  drivingFaultSubscription: Subscription;
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
@@ -246,17 +242,6 @@ export class OfficePage extends BasePageComponent {
         select(getWeatherConditions),
       ),
     };
-
-    this.drivingFaultSubscription = this.pageState.displayDrivingFaultComments$.subscribe((display) => {
-      if (display) {
-        this.getDrivingFaultCtrls();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
-    this.drivingFaultSubscription.unsubscribe();
   }
 
   popToRoot() {
@@ -266,23 +251,6 @@ export class OfficePage extends BasePageComponent {
   defer() {
     this.popToRoot();
     this.store$.dispatch(new PersistTests());
-  }
-
-  /**
-   * Returns a subscription to the debounced changes of a particular input fields.
-   * Dispatches the provided action type to the store when a new value is yielded.
-   * @param inputRef The input to listen for changes on.
-   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
-   */
-  inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
-    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-      map((event: any) => event.target.value),
-      debounceTime(1000),
-      distinctUntilChanged(),
-    );
-    const subscription = changeStream$
-      .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
-    return subscription;
   }
 
   onSubmit() {
@@ -298,10 +266,6 @@ export class OfficePage extends BasePageComponent {
 
   showMeQuestionChanged(showMeQuestion: ShowMeQuestion): void {
     this.store$.dispatch(new ShowMeQuestionSelected(showMeQuestion));
-  }
-
-  isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return this.form.controls[controlName].invalid && this.form.get(controlName).dirty;
   }
 
   debriefWitnessed(): void {
@@ -352,8 +316,11 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new AddSeriousFaultComment(seriousFaultComment.competency, seriousFaultComment.comment));
   }
 
-  private createToast = (errorMessage: string) => {
+  drivingFaultCommentChanged(drivingFaultComment: FaultComment) {
+    this.store$.dispatch(new AddDrivingFaultComment(drivingFaultComment.competency, drivingFaultComment.comment));
+  }
 
+  private createToast = (errorMessage: string) => {
     this.toast = this.toastController.create({
       message: errorMessage,
       position: 'top',
@@ -362,17 +329,6 @@ export class OfficePage extends BasePageComponent {
       duration: 5000,
       showCloseButton: true,
       closeButtonText: 'X',
-    });
-
-  }
-
-  getDrivingFaultCtrls(): void {
-    this.pageState.drivingFaults$.forEach((fault) => {
-      fault.forEach((faultIndex) => {
-        this.form.addControl(
-          this.drivingFaultCtrl.concat(fault.indexOf(faultIndex).toString()),
-          new FormControl('', Validators.required));
-      });
     });
   }
 

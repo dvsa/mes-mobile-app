@@ -88,7 +88,7 @@ export function testDataReducer(
         ...state,
         drivingFaults: {
           ...state.drivingFaults,
-          [action.competencyName]: action.comment,
+          [`${action.competencyName}Comments`]: action.comment,
         },
       };
     case testDataActions.ADD_SERIOUS_FAULT:

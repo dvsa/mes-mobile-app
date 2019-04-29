@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FaultComment } from './fault-comment.model';
-import { SeriousFaultsContainer } from '../../../../shared/constants/competencies/catb-competencies';
+import { SeriousFaultsContainer, FaultCount } from '../../../../shared/constants/competencies/catb-competencies';
 
 @Component({
   selector: 'fault-comment',
@@ -13,7 +13,7 @@ export class FaultCommentComponent implements OnChanges {
   parentForm: FormGroup;
 
   @Input()
-  faultComment: SeriousFaultsContainer;
+  faultComment: SeriousFaultsContainer | FaultCount;
 
   @Input()
   faultType: string;
