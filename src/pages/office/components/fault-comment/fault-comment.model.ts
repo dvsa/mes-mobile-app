@@ -5,7 +5,7 @@ export type Competency = {
 
 export type MultiFaultAssignableCompetency = {
   faultCount: number;
-} & Competency;
+};
 
 export type CommentedCompetency = {
   comment: string;

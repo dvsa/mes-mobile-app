@@ -13,7 +13,7 @@ import { manoeuvreTypeLabels, manoeuvreCompetencyLabels }
 import { ManoeuvreTypes } from '../../modules/tests/test_data/test-data.constants';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {
-  MultiFaultAssignable,
+  MultiFaultAssignableCompetency,
   Competency,
   CommentedCompetency,
 } from '../../shared/models/fault-marking.model';
@@ -29,13 +29,13 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
   return faultsEncountered;
 };
 
-export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & MultiFaultAssignable)[] => {
-  const faultsEncountered: (CommentedCompetency & MultiFaultAssignable)[] = [];
+export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
   forOwn(faults, (value: number, key, obj) => {
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
       const comment = obj[`${key}Comments`] || null;
-      const drivingFaultSummary: CommentedCompetency & MultiFaultAssignable = {
+      const drivingFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment,
         competencyIdentifier: key,
         competencyDisplayName: fullCompetencyLabels[label],
@@ -50,12 +50,12 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
 export const getManoeuvreFaults = (
   manoeuvres: Manoeuvres,
   faultType: CompetencyOutcome,
-): (Competency & MultiFaultAssignable)[] => {
-  const faultsEncountered: (Competency & MultiFaultAssignable)[] = [];
+): (Competency & MultiFaultAssignableCompetency)[] => {
+  const faultsEncountered: (Competency & MultiFaultAssignableCompetency)[] = [];
   forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
     const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
       if (endsWith(key, 'Fault') && value === faultType) {
-        const manoeuvreFaultSummary: Competency & MultiFaultAssignable = {
+        const manoeuvreFaultSummary: Competency & MultiFaultAssignableCompetency = {
           competencyIdentifier: type,
           competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
           faultCount: 1,

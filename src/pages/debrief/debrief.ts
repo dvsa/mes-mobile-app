@@ -21,12 +21,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
-import { Competency, MultiFaultAssignable } from '../../shared/models/fault-marking.model';
+import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
-  drivingFaults$: Observable<(Competency & MultiFaultAssignable)[]>;
+  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;

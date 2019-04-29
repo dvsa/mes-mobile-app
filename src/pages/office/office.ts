@@ -71,7 +71,7 @@ import {
   AddDrivingFaultComment,
   ShowMeQuestionSelected,
 } from '../../modules/tests/test_data/test-data.actions';
-import { MultiFaultAssignable, CommentedCompetency } from '../../shared/models/fault-marking.model';
+import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -91,7 +91,7 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  drivingFaults$: Observable<(CommentedCompetency & MultiFaultAssignable)[]>;
+  drivingFaults$: Observable<(CommentedCompetency & MultiFaultAssignableCompetency)[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
