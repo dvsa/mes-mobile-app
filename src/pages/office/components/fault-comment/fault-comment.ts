@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CommentedCompetency } from './fault-comment.model';
+import { CommentedCompetency } from '../../../../shared/models/fault-marking.model';
 
 @Component({
   selector: 'fault-comment',

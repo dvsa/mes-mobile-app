@@ -71,7 +71,7 @@ import {
   AddDrivingFaultComment,
   ShowMeQuestionSelected,
 } from '../../modules/tests/test_data/test-data.actions';
-import { MultiFaultAssignable, CommentedCompetency } from './components/fault-comment/fault-comment.model';
+import { MultiFaultAssignable, CommentedCompetency } from '../../shared/models/fault-marking.model';
 
 interface OfficePageState {
   startTime$: Observable<string>;

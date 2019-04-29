@@ -16,7 +16,7 @@ import {
   MultiFaultAssignable,
   Competency,
   CommentedCompetency,
-} from '../office/components/fault-comment/fault-comment.model';
+} from '../../shared/models/fault-marking.model';
 
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];

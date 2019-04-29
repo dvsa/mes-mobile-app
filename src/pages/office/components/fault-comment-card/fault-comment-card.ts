@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CommentedCompetency } from '../fault-comment/fault-comment.model';
+import { CommentedCompetency } from '../../../../shared/models/fault-marking.model';
 
 @Component({
   selector: 'fault-comment-card',
