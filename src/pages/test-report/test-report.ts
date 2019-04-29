@@ -19,7 +19,6 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
 import { hasManoeuvreBeenCompleted } from '../../modules/tests/test_data/test-data.selector';
-import { ToggleControlEco, TogglePlanningEco } from '../../modules/tests/test_data/test-data.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -125,6 +124,10 @@ export class TestReportPage extends BasePageComponent {
     }
   }
 
+  onEndTestClick = (): void => {
+    console.log('Clicked End Test');
+  }
+
   pass(): void {
     this.navCtrl.push('DebriefPage', { outcome: 'pass' });
   }
@@ -139,13 +142,9 @@ export class TestReportPage extends BasePageComponent {
     : this.isSeriousMode ? 'serious-mode'
     : this.isDangerousMode ? 'dangerous-mode' : '';
   }
-  toggleControl(): void {
-    this.store$.dispatch(new ToggleControlEco());
-  }
-  togglePlanning(): void {
-    this.store$.dispatch(new TogglePlanningEco());
-  }
+
 }
+
 export interface OverlayCallback {
   callbackMethod: () => void;
 }
