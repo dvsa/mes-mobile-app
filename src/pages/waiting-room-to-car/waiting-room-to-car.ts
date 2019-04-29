@@ -57,13 +57,14 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
-} from '../../modules/tests/vehicle-checks/vehicle-checks.actions';
-import { getVehicleChecks } from '../../modules/tests/vehicle-checks/vehicle-checks.reducer';
+} from '../../modules/tests/test_data/test-data.actions';
 import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
-} from '../../modules/tests/vehicle-checks/vehicle-checks.selector';
+  getVehicleChecks,
+} from '../../modules/tests/test_data/test-data.selector';
+import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -178,14 +179,17 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         map(isManual),
       ),
       tellMeQuestionSelected$: currentTest$.pipe(
+        select(getTestData),
         select(getVehicleChecks),
         map(isTellMeQuestionSelected),
       ),
       tellMeQuestionCorrect$: currentTest$.pipe(
+        select(getTestData),
         select(getVehicleChecks),
         map(isTellMeQuestionCorrect),
       ),
       tellMeQuestionDrivingFault$: currentTest$.pipe(
+        select(getTestData),
         select(getVehicleChecks),
         map(isTellMeQuestionDrivingFault),
       ),

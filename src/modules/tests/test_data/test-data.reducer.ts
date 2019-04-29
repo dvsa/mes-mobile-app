@@ -13,6 +13,7 @@ export const initialState: TestData = {
   ETA: {},
   eco: {},
   controlledStop: {},
+  vehicleChecks: {},
 };
 
 export function testDataReducer(
@@ -246,12 +247,53 @@ export function testDataReducer(
           selected: true,
         },
       };
-
     case testDataActions.CONTROLLED_STOP_REMOVE_FAULT:
       return {
         ...state,
         controlledStop: {
           selected: state.controlledStop.selected,
+        },
+      };
+    case testDataActions.TELL_ME_QUESTION_SELECTED:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          tellMeQuestion: {
+            code: action.tellMeQuestion.code as string,
+            description: action.tellMeQuestion.description as string,
+          },
+        },
+      };
+    case testDataActions.TELL_ME_QUESTION_CORRECT:
+      return {
+        ...state,
+        vehicleChecks: {
+          tellMeQuestion: {
+            ...state.vehicleChecks.tellMeQuestion,
+            outcome: 'P',
+          },
+        },
+      };
+    case testDataActions.TELL_ME_QUESTION_DRIVING_FAULT:
+      return {
+        ...state,
+        vehicleChecks: {
+          tellMeQuestion: {
+            ...state.vehicleChecks.tellMeQuestion,
+            outcome: 'DF',
+          },
+        },
+      };
+    case testDataActions.SHOW_ME_QUESTION_SELECTED:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            code: action.showMeQuestion.code as string,
+            description: action.showMeQuestion.description as string,
+          },
         },
       };
     default:

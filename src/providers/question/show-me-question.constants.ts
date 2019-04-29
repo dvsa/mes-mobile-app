@@ -3,44 +3,41 @@ import { ShowMeQuestion } from './show-me-question.model';
 
 export default [
   {
-    showMeQuestionCode: 'S1',
-    showMeQuestionDescription:
-      'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
-    showMeQuestionShortName: 'Rear windscreen',
+    code: 'S1',
+    description: 'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
+    shortName: 'Rear windscreen',
   },
   {
-    showMeQuestionCode: 'S2',
-    showMeQuestionDescription:
-      'When it is safe to do so can you show me how you wash and clean the front windscreen.',
-    showMeQuestionShortName: 'Front windscreen',
+    code: 'S2',
+    description: 'When it is safe to do so can you show me how you wash and clean the front windscreen.',
+    shortName: 'Front windscreen',
 
   },
   {
-    showMeQuestionCode: 'S3',
-    showMeQuestionDescription:
-      'When it is safe to do so can you show me how you would switch on your dipped headlights',
-    showMeQuestionShortName: 'Dipped headlights',
+    code: 'S3',
+    description: 'When it is safe to do so can you show me how you would switch on your dipped headlights',
+    shortName: 'Dipped headlights',
 
   },
   {
-    showMeQuestionCode: 'S4',
-    showMeQuestionDescription: 'When it is safe to do so can you show me how you would set the rear demister.',
-    showMeQuestionShortName: 'Rear demister',
+    code: 'S4',
+    description: 'When it is safe to do so can you show me how you would set the rear demister.',
+    shortName: 'Rear demister',
 
   },
   {
-    showMeQuestionCode: 'S5',
-    showMeQuestionDescription: 'When it is safe to do so can you show me how you would operate the horn.',
-    showMeQuestionShortName: 'Horn',
+    code: 'S5',
+    description: 'When it is safe to do so can you show me how you would operate the horn.',
+    shortName: 'Horn',
   },
   {
-    showMeQuestionCode: 'S6',
-    showMeQuestionDescription: 'When it is safe to do so can you show me how you would demist the front windscreen.',
-    showMeQuestionShortName: 'Demist front windscreen',
+    code: 'S6',
+    description: 'When it is safe to do so can you show me how you would demist the front windscreen.',
+    shortName: 'Demist front windscreen',
   },
   {
-    showMeQuestionCode: 'S7',
-    showMeQuestionDescription: 'When it is safe can you show me how you would open and close the side window.',
-    showMeQuestionShortName: 'Side window',
+    code: 'S7',
+    description: 'When it is safe can you show me how you would open and close the side window.',
+    shortName: 'Side window',
   },
 ] as ShowMeQuestion[];

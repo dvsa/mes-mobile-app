@@ -16,6 +16,10 @@ import {
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
   ToggleEco,
+  TellMeQuestionSelected,
+  TellMeQuestionCorrect,
+  TellMeQuestionDrivingFault,
+  ShowMeQuestionSelected,
 } from '../test-data.actions';
 import {
   Competencies,
@@ -26,6 +30,8 @@ import {
 } from '../test-data.constants';
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
+import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
 
 describe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
@@ -506,6 +512,72 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(state, new RemoveDangerousFault(Competencies.controlsGears));
 
       expect(result.dangerousFaults.controlsGears).toBeUndefined();
+    });
+  });
+
+  describe('VehicleChecks', () => {
+    it('should set the question details and reset outcome when a tell me question is selected', () => {
+      const newQuestionPayload: TellMeQuestion = {
+        code: 'T1',
+        description: 'desc',
+        shortName: 'name',
+      };
+      const oldState: TestData = {
+        vehicleChecks: {
+          tellMeQuestion: {
+            code: 'T2',
+            description: 'desc2',
+            outcome: 'P',
+          },
+        },
+      };
+      const result = testDataReducer(oldState, new TellMeQuestionSelected(newQuestionPayload));
+      expect(result.vehicleChecks.tellMeQuestion.code).toBe('T1');
+      expect(result.vehicleChecks.tellMeQuestion.description).toBe('desc');
+      expect(result.vehicleChecks.tellMeQuestion.outcome).toBeUndefined();
+    });
+
+    it('should mark tell me question as pass when the action is received', () => {
+      const result = testDataReducer({ vehicleChecks: {} }, new TellMeQuestionCorrect());
+      expect(result.vehicleChecks.tellMeQuestion.outcome).toBe('P');
+    });
+
+    it('should mark tell me question as driving fault when the action is received', () => {
+      const result = testDataReducer({ vehicleChecks: {} }, new TellMeQuestionDrivingFault());
+      expect(result.vehicleChecks.tellMeQuestion.outcome).toBe('DF');
+    });
+
+    it('should set the show me question details', () => {
+      const newQuestionPayload: ShowMeQuestion = {
+        code: 'S1',
+        description: 'desc',
+        shortName: 'name',
+      };
+
+      const result = testDataReducer({}, new ShowMeQuestionSelected(newQuestionPayload));
+      expect(result.vehicleChecks.showMeQuestion.code).toBe('S1');
+      expect(result.vehicleChecks.showMeQuestion.description).toBe('desc');
+    });
+
+    it('should update the show me question details', () => {
+      const newQuestionPayload: ShowMeQuestion = {
+        code: 'S1',
+        description: 'desc',
+        shortName: 'name',
+      };
+
+      const oldState: TestData = {
+        vehicleChecks: {
+          showMeQuestion: {
+            code: 'S2',
+            description: 'desc2',
+          },
+        },
+      };
+
+      const result = testDataReducer(oldState, new ShowMeQuestionSelected(newQuestionPayload));
+      expect(result.vehicleChecks.showMeQuestion.code).toBe('S1');
+      expect(result.vehicleChecks.showMeQuestion.description).toBe('desc');
     });
   });
 
