@@ -45,7 +45,6 @@ import { ShowMeQuestion } from '../../providers/question/show-me-question.model'
 import { QuestionProvider } from '../../providers/question/question';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
-import { ShowMeQuestionSelected } from '../../modules/tests/test_data/test-data.actions';
 import {
   getETA,
   getETAFaultText,
@@ -72,6 +71,7 @@ import {
   AddDangerousFaultComment,
   AddSeriousFaultComment,
   AddDrivingFaultComment,
+  ShowMeQuestionSelected,
 } from '../../modules/tests/test_data/test-data.actions';
 
 interface OfficePageState {

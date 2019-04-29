@@ -37,7 +37,6 @@ import { AdditionalInformationComponent } from '../components/additional-informa
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
-import { DrivingFaultCommentComponent } from '../components/drivingFaultComment/driving-fault-comment';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -58,7 +57,6 @@ describe('OfficePage', () => {
         MockComponent(D255Component),
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
-        MockComponent(DrivingFaultCommentComponent),
         MockComponent(FaultCommentCardComponent),
       ],
       imports: [
