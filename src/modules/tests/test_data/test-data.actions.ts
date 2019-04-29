@@ -23,6 +23,7 @@ export const REMOVE_SERIOUS_FAULT = '[Competency] Remove Serious Fault';
 export const REMOVE_DANGEROUS_FAULT = '[Competency] Remove Dangerous Fault';
 export const TOGGLE_LEGAL_REQUIREMENT = '[Legal Requirements] Toggle Legal Requirement';
 export const TOGGLE_ETA = '[Eta] Toggle Eta';
+export const TOGGLE_ECO = '[Eco] Toggle Eco';
 export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
 export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
 export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
@@ -122,6 +123,9 @@ export class ToggleETA implements Action {
   readonly type = TOGGLE_ETA;
 }
 
+export class ToggleEco implements Action {
+  readonly type = TOGGLE_ECO;
+}
 export class ToggleControlEco implements Action {
   readonly type = TOGGLE_CONTROL_ECO;
 }
@@ -152,6 +156,7 @@ export type Types =
   | RemoveDangerousFault
   | ToggleLegalRequirement
   | ToggleETA
+  | ToggleEco
   | ToggleControlEco
   | TogglePlanningEco
   | ToggleControlledStop
