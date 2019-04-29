@@ -19,6 +19,10 @@ timer {
     letter-spacing: -0.35px;
   }
   .timer-text {
-    text-align: end;
+    &:active {
+      color: map-get($colors-gds, 'gds-grey-2');
+    }
+    text-align: center;
+    font-weight: bold;
   }
 }
