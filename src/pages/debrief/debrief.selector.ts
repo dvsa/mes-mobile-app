@@ -95,9 +95,6 @@ export const getDangerousFaults = (faults: DangerousFaults): SeriousFaultsContai
  *
  * Returns a container of array holding the propertyName and fullCompetencyLabel for each serious
  * fault recorded against a candidate.
- *
- * Is used to populate properties in serious-fault-comment.html for the entry of comments
- * relating to each dangerous fault.
  */
 export const getSeriousFaults = (faults: SeriousFaults): SeriousFaultsContainer[] => {
   const faultsEncountered: SeriousFaultsContainer[] = [];
