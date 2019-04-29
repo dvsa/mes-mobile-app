@@ -36,8 +36,6 @@ import { D255Component } from '../components/d255/d255';
 import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
-import { DangerousFaultCommentsComponent } from '../components/dangerous-fault-comments/dangerous-fault-comments';
-import { SeriousFaultCommentsComponent } from '../components/serious-fault-comments/serious-fault-comments';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 import { DrivingFaultCommentComponent } from '../components/drivingFaultComment/driving-fault-comment';
 
@@ -60,8 +58,6 @@ describe('OfficePage', () => {
         MockComponent(D255Component),
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
-        MockComponent(DangerousFaultCommentsComponent),
-        MockComponent(SeriousFaultCommentsComponent),
         MockComponent(DrivingFaultCommentComponent),
         MockComponent(FaultCommentCardComponent),
       ],
