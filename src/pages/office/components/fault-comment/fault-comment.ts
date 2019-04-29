@@ -17,6 +17,9 @@ export class FaultCommentComponent implements OnChanges {
   @Input()
   comment: string;
 
+  @Input()
+  faultType: string;
+
   @Output()
   faultCommentChange = new EventEmitter<FaultComment>();
 
@@ -40,7 +43,7 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   get formControlName() {
-    return `faultComment-${this.competency}`;
+    return `faultComment-${this.faultType}-${this.competency}`;
   }
 
 }

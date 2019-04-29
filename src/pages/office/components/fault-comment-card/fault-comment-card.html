@@ -16,10 +16,9 @@
       <ion-col>
         <ion-row class="spacing-row"></ion-row>
         <ion-row>
-          <textarea row="5" class="mes-data" [class.ng-invalid]="invalid(faultComment.propertyName)"
-            [value]="faultComment.comment" [formControlName]="faultType + 'Comment-' + faultComment.propertyName"
-            (change)="faultCommentChanged(faultComment.propertyName, $event.target.value)">
-          </textarea>
+          <fault-comment [parentForm]="formGroup" [competency]="faultComment.propertyName"
+            [comment]="faultComment.comment" [faultType]="faultType"
+            (faultCommentChange)="faultCommentChanged($event.competency, $event.comment)"></fault-comment>
         </ion-row>
         <ion-row class="validation-message-row" align-items-center>
           <div class="validation-text">
