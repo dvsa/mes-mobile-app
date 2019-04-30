@@ -6,12 +6,10 @@ import { ModalController } from 'ionic-angular';
   templateUrl: 'end-test-link.html',
 })
 export class EndTestLinkComponent {
-  constructor(public modalController: ModalController) {}
+  constructor(public modalController: ModalController) { }
 
   openEndTestModal() {
-    const terminateTestModal = this.modalController.create(
-        'TerminateTestPage',
-    );
+    const terminateTestModal = this.modalController.create('TerminateTestModal');
     terminateTestModal.present();
   }
 }

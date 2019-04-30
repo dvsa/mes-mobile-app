@@ -31,8 +31,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
-import { EndTestLinkComponent } from '../../terminate-test/components/end-test-link';
-import { MockComponent } from 'ng-mocks';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -55,7 +53,6 @@ describe('WaitingRoomPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomPage,
-        MockComponent(EndTestLinkComponent),
       ],
       imports: [
         IonicModule,
@@ -129,7 +126,7 @@ describe('WaitingRoomPage', () => {
       it('should lock the screen orientation to Portrait Primary', () => {
         component.ionViewDidEnter();
         expect(screenOrientation.lock)
-            .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       });
 
       it('should keep the device awake', () => {

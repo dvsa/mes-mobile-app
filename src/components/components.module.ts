@@ -6,6 +6,9 @@ import { LockScreenIndicator } from './screen-lock-indicator/lock-screen-indicat
 import { DrivingFaultsBadgeComponent } from './driving-faults-badge/driving-faults-badge';
 import { SeriousFaultBadgeComponent } from './serious-fault-badge/serious-fault-badge';
 import { DangerousFaultBadgeComponent } from './dangerous-fault-badge/dangerous-fault-badge';
+import { IonicModule } from 'ionic-angular';
+import { EndTestLinkComponent } from './end-test-link/end-test-link';
+import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-modal.module';
 
 @NgModule({
   declarations: [
@@ -14,17 +17,21 @@ import { DangerousFaultBadgeComponent } from './dangerous-fault-badge/dangerous-
     DrivingFaultsBadgeComponent,
     SeriousFaultBadgeComponent,
     DangerousFaultBadgeComponent,
+    EndTestLinkComponent,
   ],
   imports: [
     SignaturePadModule,
     CommonModule,
+    IonicModule,
+    TerminateTestModalModule,
   ],
-  exports:[
+  exports: [
     SignatureAreaComponent,
     LockScreenIndicator,
     DrivingFaultsBadgeComponent,
     SeriousFaultBadgeComponent,
     DangerousFaultBadgeComponent,
+    EndTestLinkComponent,
   ],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

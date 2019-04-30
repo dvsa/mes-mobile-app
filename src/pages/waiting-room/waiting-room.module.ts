@@ -6,7 +6,6 @@ import { WaitingRoomAnalyticsEffects } from './waiting-room.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TerminateTestPageModule } from '../terminate-test/terminate-test.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { TerminateTestPageModule } from '../terminate-test/terminate-test.module
     EffectsModule.forFeature([WaitingRoomAnalyticsEffects]),
     ComponentsModule,
     ReactiveFormsModule,
-    TerminateTestPageModule,
   ],
   providers: [
     AnalyticsProvider,

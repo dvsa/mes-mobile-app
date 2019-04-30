@@ -39,7 +39,7 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
 } from '../../../modules/tests/test_data/test-data.actions';
-import { EndTestLinkComponent } from '../../terminate-test/components/end-test-link';
+import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
