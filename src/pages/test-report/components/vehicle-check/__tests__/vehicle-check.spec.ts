@@ -16,6 +16,7 @@ import { By } from '@angular/platform-browser';
 import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
+  ShowMeQuestionSeriousFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 
 describe('VehicleCheckComponent', () => {
@@ -52,6 +53,19 @@ describe('VehicleCheckComponent', () => {
     it('should compile', () => {
       expect(component).toBeDefined();
     });
+
+    describe('addFault', () => {
+      it('should dispatch SHOW_ME_QUESTION_SERIOUS_FAULT when serious mode is on', () => {
+        fixture.detectChanges();
+        component.isSeriousMode = true;
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.addFault(false);
+
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionSeriousFault());
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -65,7 +79,7 @@ describe('VehicleCheckComponent', () => {
       expect(drivingFaultsBadge.count).toBe(0);
     });
 
-    it('should pass 0 driving faults to the driving faults badge component when no tell me fault', () => {
+    it('should pass 1 driving faults to the driving faults badge component when no tell me fault', () => {
       store$.dispatch(new TellMeQuestionDrivingFault());
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
@@ -74,5 +88,35 @@ describe('VehicleCheckComponent', () => {
       fixture.detectChanges();
       expect(drivingFaultsBadge.count).toBe(1);
     });
+
+    it('should have a serious fault badge on if there was serious fault recorded against the show me question', () => {
+      store$.dispatch(new ShowMeQuestionSeriousFault());
+      fixture.detectChanges();
+      const seriousFaultBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
+        .componentInstance as SeriousFaultBadgeComponent;
+
+      fixture.detectChanges();
+      expect(seriousFaultBadge.showBadge).toBe(true);
+    });
+
+    it('should have a serious fault badge on if tell me has driving fault but show me has serious', () => {
+      store$.dispatch(new TellMeQuestionDrivingFault());
+      store$.dispatch(new ShowMeQuestionSeriousFault());
+      fixture.detectChanges();
+
+      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
+        .componentInstance as DrivingFaultsBadgeComponent;
+
+      fixture.detectChanges();
+      expect(drivingFaultsBadge.count).toBe(0);
+
+      const seriousFaultBadge = fixture.debugElement.query(By.css('serious-fault-badge'))
+        .componentInstance as SeriousFaultBadgeComponent;
+
+      fixture.detectChanges();
+      expect(seriousFaultBadge.showBadge).toBe(true);
+    });
   });
+
+
 });
