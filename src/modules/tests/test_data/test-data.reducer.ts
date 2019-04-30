@@ -13,7 +13,10 @@ export const initialState: TestData = {
   ETA: {},
   eco: {},
   controlledStop: {},
-  vehicleChecks: {},
+  vehicleChecks: {
+    tellMeQuestion: {},
+    showMeQuestion: {},
+  },
 };
 
 export function testDataReducer(
@@ -269,9 +272,10 @@ export function testDataReducer(
       return {
         ...state,
         vehicleChecks: {
+          ...state.vehicleChecks,
           tellMeQuestion: {
             ...state.vehicleChecks.tellMeQuestion,
-            outcome: 'P',
+            outcome: CompetencyOutcome.P,
           },
         },
       };
@@ -279,9 +283,10 @@ export function testDataReducer(
       return {
         ...state,
         vehicleChecks: {
+          ...state.vehicleChecks,
           tellMeQuestion: {
             ...state.vehicleChecks.tellMeQuestion,
-            outcome: 'DF',
+            outcome: CompetencyOutcome.DF,
           },
         },
       };
@@ -293,6 +298,17 @@ export function testDataReducer(
           showMeQuestion: {
             code: action.showMeQuestion.code as string,
             description: action.showMeQuestion.description as string,
+          },
+        },
+      };
+    case testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            ...state.vehicleChecks.showMeQuestion,
+            outcome: CompetencyOutcome.S,
           },
         },
       };

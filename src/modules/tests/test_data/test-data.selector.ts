@@ -85,7 +85,8 @@ export const getVehicleChecks = (state: TestData): VehicleChecks => state.vehicl
 
 export const isTellMeQuestionSelected = (state: VehicleChecks) => get(state, 'tellMeQuestion.code') !== undefined;
 
-export const isTellMeQuestionCorrect = (state: VehicleChecks) => get(state, 'tellMeQuestion.outcome') === 'P';
+export const isTellMeQuestionCorrect =
+  (state: VehicleChecks) => get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.P;
 
 export const isTellMeQuestionDrivingFault = (state: VehicleChecks) =>
   get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.DF;

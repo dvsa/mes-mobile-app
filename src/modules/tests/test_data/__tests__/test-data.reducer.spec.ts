@@ -527,7 +527,7 @@ describe('TestDataReducer reducer', () => {
           tellMeQuestion: {
             code: 'T2',
             description: 'desc2',
-            outcome: 'P',
+            outcome: CompetencyOutcome.P,
           },
         },
       };
@@ -539,7 +539,7 @@ describe('TestDataReducer reducer', () => {
 
     it('should mark tell me question as pass when the action is received', () => {
       const result = testDataReducer({ vehicleChecks: {} }, new TellMeQuestionCorrect());
-      expect(result.vehicleChecks.tellMeQuestion.outcome).toBe('P');
+      expect(result.vehicleChecks.tellMeQuestion.outcome).toBe(CompetencyOutcome.P);
     });
 
     it('should mark tell me question as driving fault when the action is received', () => {
