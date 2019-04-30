@@ -4,6 +4,9 @@
   border-radius: 10px;
   margin: 0 0.2rem;
   height: initial;
+  &.activated {
+    background:  map-get($colors-gds, gds-dark-green-2);
+  }
   h3 {
     color: map-get($colors, mes-white);
     .text-zoom-regular &,
@@ -21,6 +24,9 @@
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   margin: 0 0.2em;
+  &.activated {
+    background: darken(map-get($colors, secondary-button), 10);
+  }
   h3 {
     color: map-get($colors, mes-white);
   }
@@ -30,6 +36,9 @@
   background: map-get($colors, mes-white);
   border-radius: 10px;
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
+  &.activated {
+    background:  map-get($colors-gds, gds-grey-1);
+  }
   h3 {
     color : map-get($colors, mes-black);
   }

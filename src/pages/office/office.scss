@@ -49,6 +49,9 @@ page-office {
       border-radius: 10px;
       margin: 0 0.2rem;
       height: initial;
+      &.activated {
+        background: map-get($colors, gds-grey-3);
+      }
       h3 {
         color: map-get($colors, mes-black);
         .text-zoom-regular &,
