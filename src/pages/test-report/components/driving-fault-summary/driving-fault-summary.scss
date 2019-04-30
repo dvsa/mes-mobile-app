@@ -1,7 +1,8 @@
 driving-fault-summary {
   display: flex;
   .summary-label{
-    align-self:center;
+    align-self: center;
+    font-size: 19px;
   }
   #summary-count-badge {
     display:flex;
