@@ -117,6 +117,4 @@ describe('VehicleCheckComponent', () => {
       expect(seriousFaultBadge.showBadge).toBe(true);
     });
   });
-
-
 });
