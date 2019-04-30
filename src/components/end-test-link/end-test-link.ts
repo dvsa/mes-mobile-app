@@ -13,11 +13,16 @@ export class EndTestLinkComponent {
   openEndTestModal() {
     this.terminateTestModal = this.modalController.create('TerminateTestModal', {
       onCancel: this.onCancel,
+      onTerminate: this.onTerminate,
     });
     this.terminateTestModal.present();
   }
 
   onCancel = () => {
     this.terminateTestModal.dismiss();
+  }
+
+  onTerminate = () => {
+    console.log('Terminated');
   }
 }

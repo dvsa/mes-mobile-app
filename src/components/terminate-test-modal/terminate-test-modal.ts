@@ -18,6 +18,7 @@ export class TerminateTestModal {
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
   ) {
     this.onCancel = this.navParams.get('onCancel');
+    this.onTerminate = this.navParams.get('onTerminate');
   }
 
   /**
@@ -28,7 +29,7 @@ export class TerminateTestModal {
     return this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
         this.onTerminate();
-      });
+      }).catch(err => console.error(err));
   }
 
 }
