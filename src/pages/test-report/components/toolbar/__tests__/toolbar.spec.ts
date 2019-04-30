@@ -98,7 +98,7 @@ describe('ToolbarComponent', () => {
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeNull();
       expect(fixture.debugElement.query(By.css('dangerous-tooltip'))).toBeNull();
     });
-    it('should show the correct components when serious mode is actived', () => {
+    it('should show the correct components when serious mode is activated', () => {
 
       fixture.detectChanges();
 
@@ -112,8 +112,8 @@ describe('ToolbarComponent', () => {
 
       expect(fixture.debugElement.query(By.css('#serious-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeDefined();
 
-      expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeNull();
       expect(fixture.debugElement.query(By.css('driving-faults-badge'))).toBeNull();
       expect(fixture.debugElement.query(By.css('dangerous-tooltip'))).toBeNull();
     });
