@@ -275,7 +275,7 @@ export function testDataReducer(
           ...state.vehicleChecks,
           tellMeQuestion: {
             ...state.vehicleChecks.tellMeQuestion,
-            outcome: 'P',
+            outcome: CompetencyOutcome.P,
           },
         },
       };
