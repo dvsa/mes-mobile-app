@@ -99,12 +99,13 @@
           <ion-col col-32></ion-col>
           <ion-col col-2>
             <div class="counter-icon">
-              <driving-faults-badge class="counter driving-faults" [count]="drivingFault.count"></driving-faults-badge>
+              <driving-faults-badge class="counter driving-faults" [count]="drivingFault.faultCount">
+              </driving-faults-badge>
             </div>
           </ion-col>
           <ion-col col-3></ion-col>
           <ion-col>
-            <div class="counter-label">{{drivingFault.name}}</div>
+            <div class="counter-label">{{drivingFault.competencyDisplayName}}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
