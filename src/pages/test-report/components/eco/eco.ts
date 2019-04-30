@@ -67,7 +67,6 @@ export class EcoComponent implements OnInit {
     );
 
     this.subscription = merged$.subscribe();
-
   }
 
   ngOnDestroy(): void {
