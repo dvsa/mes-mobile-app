@@ -6,6 +6,7 @@ describe('TestReportSelectors', () => {
     seriousMode: true,
     dangerousMode: true,
     removeFaultMode: true,
+    isValid: true,
   };
 
   describe('isSeriousMode', () => {

@@ -10,6 +10,7 @@ import { testReportReducer } from './test-report.reducer';
 import { ComponentsModule } from '../../components/components.module';
 import { TestReportComponentsModule } from './components/test-report-components.module';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
+import { TestReportEffects } from './test-report.effects';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,10 @@ import { TestReportValidatorProvider } from '../../providers/test-report-validat
     TestReportComponentsModule,
     IonicPageModule.forChild(TestReportPage),
     StoreModule.forFeature('testReport', testReportReducer),
-    EffectsModule.forFeature([TestReportAnalyticsEffects]),
+    EffectsModule.forFeature([
+      TestReportAnalyticsEffects,
+      TestReportEffects,
+    ]),
     ComponentsModule,
   ],
   providers: [
