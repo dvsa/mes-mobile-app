@@ -13,6 +13,9 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs, LoadLog } from '../../modules/logs/logs.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
+import { SecureStorage } from '@ionic-native/secure-storage';
+import { DataStoreProvider } from '../../providers/data-store/data-store';
+import { LoadPersistedTests } from '../../modules/tests/tests.actions';
 
 @IonicPage()
 @Component({
@@ -38,6 +41,8 @@ export class LoginPage extends BasePageComponent {
     public appConfigProvider: AppConfigProvider,
     public analytics: AnalyticsProvider,
     public deviceProvider: DeviceProvider,
+    public secureStorage: SecureStorage,
+    public dataStore: DataStoreProvider,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -64,6 +69,7 @@ export class LoginPage extends BasePageComponent {
     .then(() => this.authenticationProvider
       .login()
       .then(() => this.store$.dispatch(new LoadLog()))
+      .then(() => this.initialisePersistentStorage())
       .then(() => this.appConfigProvider.loadRemoteConfig())
       .then(() => this.analytics.initialiseAnalytics())
       .then(() => this.store$.dispatch(new StartSendingLogs()))
@@ -81,6 +87,15 @@ export class LoginPage extends BasePageComponent {
       .then(() => this.hasUserLoggedOut = false)
       .then(() => this.splashScreen.hide()),
   );
+  }
+
+  async initialisePersistentStorage() {
+    if (this.platform.is('ios')) {
+      const storage = await this.secureStorage.create('MES');
+      this.dataStore.setSecureContainer(storage);
+
+      this.store$.dispatch(new LoadPersistedTests());
+    }
   }
 
   initialiseAppConfig = (): Promise<void> => {
