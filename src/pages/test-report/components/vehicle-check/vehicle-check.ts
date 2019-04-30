@@ -102,7 +102,7 @@ export class VehicleCheckComponent implements OnInit {
     }
   }
 
-  hasDrivingFault = (): number => {
+  getDrivingFaultCount = (): number => {
     if (this.hasSeriousFault()) {
       return 0;
     }
