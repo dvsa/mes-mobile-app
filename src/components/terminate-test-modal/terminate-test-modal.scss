@@ -1,0 +1,56 @@
+terminate-test-modal {
+  #terminate-test-modal-card {
+    background: map-get($colors-gds, gds-grey-4);
+    border-radius: 14px;
+  }
+
+  .center-icon {
+    text-align: center;
+  }
+
+  .terminate-icon {
+    padding: 20px 0;
+    font-size: 96px;
+  }
+
+  .terminate-test-text {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 0.27px;
+    line-height: 40px;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .terminate-button {
+    width: 100%;
+    font-size: 23px;
+    font-weight: 500;
+    background: transparent;
+    color: crimson;
+    &:active {
+      background: inherit;
+    }
+  }
+
+  .return-button {
+    width: 100%;
+    font-size: 23px;
+    font-weight: 500;
+    background: transparent;
+    color: black;
+    &:active {
+      background: inherit;
+    }
+  }
+
+  .column-border-top {
+    border-top: 1px solid lightgrey;
+    padding-top: 2px;
+  }
+
+  .column-border-right {
+    border-right: 1px solid lightgrey;
+    padding-top: 2px;
+  }
+}

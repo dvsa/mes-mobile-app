@@ -51,7 +51,9 @@ describe('WaitingRoomPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WaitingRoomPage],
+      declarations: [
+        WaitingRoomPage,
+      ],
       imports: [
         IonicModule,
         AppModule,
@@ -124,7 +126,7 @@ describe('WaitingRoomPage', () => {
       it('should lock the screen orientation to Portrait Primary', () => {
         component.ionViewDidEnter();
         expect(screenOrientation.lock)
-            .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       });
 
       it('should keep the device awake', () => {
