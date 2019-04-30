@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
-interface VehicleCheckComponentState {
-}
+import { Store, select } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../modules/tests/tests.selector';
+import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
+import { getVehicleChecks } from '../../../../modules/tests/test_data/test-data.selector';
+import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 @Component({
   selector: 'vehicle-check',
@@ -9,11 +14,25 @@ interface VehicleCheckComponentState {
 })
 export class VehicleCheckComponent implements OnInit {
 
-  componentState: VehicleCheckComponentState;
-
   selectedShowMeQuestion: boolean = false;
 
+  tellMeQuestionFault: string;
+
+  constructor(private store$: Store<StoreModel>) {}
+
   ngOnInit(): void {
+
+    const vehicleChecks$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getTestData),
+      select(getVehicleChecks),
+    );
+
+    vehicleChecks$.subscribe((vehicleChecks: VehicleChecks) => {
+      this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
+    });
+
   }
 
   ngOnDestroy(): void {
@@ -31,15 +50,16 @@ export class VehicleCheckComponent implements OnInit {
     return true;
   }
 
-  hasDrivingFault = () => {
+  hasDrivingFault = (): number => {
+    const hasDrivingFault = this.tellMeQuestionFault === CompetencyOutcome.DF;
+    return hasDrivingFault ? 1 : 0;
+  }
+
+  hasSeriousFault = (): boolean => {
     return false;
   }
 
-  hasSeriousFault = () => {
-    return false;
-  }
-
-  hasDangerousFault = () => {
+  hasDangerousFault = (): boolean => {
     return false;
   }
 }

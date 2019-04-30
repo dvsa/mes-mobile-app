@@ -26,7 +26,6 @@ import {
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
-import { OfficeComponentsModule } from '../components/office.components.module';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
@@ -37,6 +36,7 @@ import { D255Component } from '../components/d255/d255';
 import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
+import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -57,8 +57,12 @@ describe('OfficePage', () => {
         MockComponent(D255Component),
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
+        MockComponent(FaultCommentCardComponent),
       ],
-      imports: [IonicModule, AppModule, ComponentsModule, OfficeComponentsModule,
+      imports: [
+        IonicModule,
+        AppModule,
+        ComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
@@ -203,27 +207,19 @@ describe('OfficePage', () => {
     });
 
     describe('driving fault commentary', () => {
-      it('should display the card with commentary fields when displayDrivingFaultComments is true', () => {
+      it('should pass whether to render driving fault commentary to fault-comment-card', () => {
+        const drivingFaultCommentCard: FaultCommentCardComponent = fixture.debugElement
+          .query(By.css('#driving-fault-comment-card')).componentInstance;
         fixture.detectChanges();
+
         component.pageState.displayDrivingFaultComments$ = of(true);
         fixture.detectChanges();
-        const drivingFaultWithCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-with-commentary'));
-        const drivingFaultNoCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-no-commentary'));
-        expect(drivingFaultWithCommentary.length).toBe(1);
-        expect(drivingFaultNoCommentary.length).toBe(0);
-      });
-      it('should display the card with no commentary fields when displayDrivingFaultComments is false', () => {
-        fixture.detectChanges();
+        expect(drivingFaultCommentCard.shouldRender).toBeTruthy();
         component.pageState.displayDrivingFaultComments$ = of(false);
-        component.pageState.drivingFaultCount$ = of(10);
         fixture.detectChanges();
-        const drivingFaultWithCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-with-commentary'));
-        const drivingFaultNoCommentary = fixture.debugElement.queryAll(By.css('#driving-fault-no-commentary'));
-        expect(drivingFaultWithCommentary.length).toBe(0);
-        expect(drivingFaultNoCommentary.length).toBe(1);
+        expect(drivingFaultCommentCard.shouldRender).toBeFalsy();
       });
     });
-
   });
 
   describe('popToRoot', () => {

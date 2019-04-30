@@ -1,0 +1,12 @@
+<ion-card *ngIf="shouldRender" [formGroup]="formGroup">
+  <ion-card-header>
+    <h4>{{header}}</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-row class="mes-validated-row mes-row-separator" *ngFor="let faultComment of faultComments">
+      <fault-comment [parentForm]="formGroup" [faultComment]="faultComment" [faultType]="faultType"
+        (faultCommentChange)="faultCommentChanged($event.competency, $event.comment)">
+      </fault-comment>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

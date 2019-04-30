@@ -1,8 +1,0 @@
-<div [formGroup]="parentForm">
-    <textarea #drivingFaultComment  row="5" class="mes-data"
-      [attr.id]="'driving-'+competency+'Comments'"
-      [formControlName]="'drivingFaultCtrl'+index"
-      [class.ng-invalid]="invalidIndicator"
-      [value]="pageState.competencyComment$ | async">
-    </textarea>
-</div>

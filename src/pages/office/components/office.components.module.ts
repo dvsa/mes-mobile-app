@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { DrivingFaultCommentComponent } from './drivingFaultComment/driving-fault-comment';
 import { ComponentsModule } from '../../../components/components.module';
-import { DangerousFaultCommentComponent } from './dangerousFaultComments/dangerous-fault-comment';
-import { SeriousFaultCommentComponent } from './seriousFaultComments/serious-fault-component';
+import { FaultCommentComponent } from './fault-comment/fault-comment';
+import { FaultCommentCardComponent } from './fault-comment-card/fault-comment-card';
 
 @NgModule({
   declarations: [
-    DrivingFaultCommentComponent,
-    DangerousFaultCommentComponent,
-    SeriousFaultCommentComponent,
+    FaultCommentComponent,
+    FaultCommentCardComponent,
   ],
   imports: [
     CommonModule,
     ComponentsModule,
     IonicModule,
   ],
-  exports:[
-    DrivingFaultCommentComponent,
-    DangerousFaultCommentComponent,
-    SeriousFaultCommentComponent,
+  exports: [
+    FaultCommentComponent,
+    FaultCommentCardComponent,
   ],
 })
-export class OfficeComponentsModule {}
+export class OfficeComponentsModule { }
