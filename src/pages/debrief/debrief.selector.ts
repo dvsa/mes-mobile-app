@@ -87,8 +87,7 @@ export const displayDrivingFaultComments = (data: TestData): boolean => {
 /**
  * @param faults
  *
- * Returns a container of array holding the propertyName and fullCompetencyLabel for each dangerous
- * fault recorded against a candidate.
+ * Returns an array of CommentedCompetency for each dangerous fault recorded against a candidate.
  */
 export const getDangerousFaults = (faults: DangerousFaults): CommentedCompetency[] => {
   const faultsEncountered: CommentedCompetency[] = [];
@@ -110,8 +109,7 @@ export const getDangerousFaults = (faults: DangerousFaults): CommentedCompetency
 /**
  * @param faults
  *
- * Returns a container of array holding the propertyName and fullCompetencyLabel for each serious
- * fault recorded against a candidate.
+ * Returns an array of CommentedCompetency for each serious fault recorded against a candidate.
  */
 export const getSeriousFaults = (faults: SeriousFaults): CommentedCompetency[] => {
   const faultsEncountered: CommentedCompetency[] = [];
