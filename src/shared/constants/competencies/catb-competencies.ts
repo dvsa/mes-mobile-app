@@ -41,6 +41,3 @@ export enum fullCompetencyLabels {
   awarenessPlanning = 'Awareness planning',
   outcomeControlledStop = 'Controlled stop',
 }
-
-export type FaultCount = { propertyName: string, name: string, count: number, comment: string };
-export type SeriousFaultsContainer = { propertyName: string, name: string, comment: string };

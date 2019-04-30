@@ -8,7 +8,8 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
-import { getETA,
+import {
+  getETA,
   getETAFaultText,
   getEco,
   getEcoFaultText,
@@ -19,13 +20,13 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults } from './debrief.selector';
-import { FaultCount } from '../../shared/constants/competencies/catb-competencies';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
-  drivingFaults$: Observable<FaultCount[]>;
+  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
@@ -65,7 +66,7 @@ export class DebriefPage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.name),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
           ];
         }),
@@ -76,7 +77,7 @@ export class DebriefPage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.name),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
           ];
         }),

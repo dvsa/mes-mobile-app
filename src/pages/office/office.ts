@@ -62,17 +62,16 @@ import {
   getDangerousFaults,
   getSeriousFaults,
 } from '../debrief/debrief.selector';
-import { FaultCount, SeriousFaultsContainer } from '../../shared/constants/competencies/catb-competencies';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
 import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
-import { FaultComment } from './components/fault-comment/fault-comment.model';
 import {
   AddDangerousFaultComment,
   AddSeriousFaultComment,
   AddDrivingFaultComment,
   ShowMeQuestionSelected,
 } from '../../modules/tests/test_data/test-data.actions';
+import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -92,12 +91,12 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  drivingFaults$: Observable<FaultCount[]>;
+  drivingFaults$: Observable<(CommentedCompetency & MultiFaultAssignableCompetency)[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
-  dangerousFaults$: Observable<SeriousFaultsContainer[]>;
-  seriousFaults$: Observable<SeriousFaultsContainer[]>;
+  dangerousFaults$: Observable<CommentedCompetency[]>;
+  seriousFaults$: Observable<CommentedCompetency[]>;
 }
 
 @IonicPage()
@@ -230,7 +229,7 @@ export class OfficePage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           const faults = getDrivingFaults(data.drivingFaults);
-          return faults.reduce((sum, c) => sum + c.count, 0);
+          return faults.reduce((sum, c) => sum + c.faultCount, 0);
         }),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
@@ -308,16 +307,22 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 
-  dangerousFaultCommentChanged(dangerousFaultComment: FaultComment) {
-    this.store$.dispatch(new AddDangerousFaultComment(dangerousFaultComment.competency, dangerousFaultComment.comment));
+  dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
+    this.store$.dispatch(
+      new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
+    );
   }
 
-  seriousFaultCommentChanged(seriousFaultComment: FaultComment) {
-    this.store$.dispatch(new AddSeriousFaultComment(seriousFaultComment.competency, seriousFaultComment.comment));
+  seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
+    this.store$.dispatch(
+      new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
+    );
   }
 
-  drivingFaultCommentChanged(drivingFaultComment: FaultComment) {
-    this.store$.dispatch(new AddDrivingFaultComment(drivingFaultComment.competency, drivingFaultComment.comment));
+  drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
+    this.store$.dispatch(
+      new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
+    );
   }
 
   private createToast = (errorMessage: string) => {
