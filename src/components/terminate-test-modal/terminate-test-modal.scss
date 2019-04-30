@@ -13,10 +13,6 @@ terminate-test-modal {
     font-size: 96px;
   }
 
-  .icon-space {
-    padding: 50px;
-  }
-
   .terminate-test-text {
     font-size: 28px;
     font-weight: bold;
@@ -27,46 +23,28 @@ terminate-test-modal {
   }
 
   .terminate-button {
-    width: auto;
+    width: 100%;
     font-size: 23px;
     font-weight: 500;
-    background: transparent !important;
+    background: transparent;
     color: crimson;
   }
 
-  .terminate-button:active {
-    background-color: lightslategray !important;
-    color: darkred
-  }
-
   .return-button {
-    width: auto;
+    width: 100%;
     font-size: 23px;
     font-weight: 500;
-    background: transparent !important;
+    background: transparent;
     color: black;
-    text-align: center !important;
-  }
-
-  .return-button:active {
-    background-color: lightslategray !important;
-    color: rgb(104, 104, 104)
-  ;
   }
 
   .column-border-top {
-    border-top-color: lightgrey !important;
-    border-top: 1px solid;
+    border-top: 1px solid lightgrey;
     padding-top: 2px;
   }
 
   .column-border-right {
-    border-right: 1px solid;
-    border-right-color: lightgrey !important;
+    border-right: 1px solid lightgrey;
     padding-top: 2px;
-  }
-
-  .center-button {
-    text-align: center;
   }
 }
