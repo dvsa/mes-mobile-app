@@ -1,0 +1,18 @@
+<button
+  ion-button
+  class="start-timer-button"
+  (tap)="toggleTimer()"
+  *ngIf="showStartTimerButton"
+>
+  Start Timer
+</button>
+<div
+  class="timer-text"
+  (tap)="toggleTimer()"
+  [ngClass]="{
+    'paused': isPaused
+  }"
+  *ngIf="!showStartTimerButton"
+>
+  {{ timerString }}
+</div>
