@@ -308,18 +308,21 @@ export class OfficePage extends BasePageComponent {
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
-    const a = new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment);
-    this.store$.dispatch(a);
+    this.store$.dispatch(
+      new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
+    );
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
-    const a = new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment);
-    this.store$.dispatch(a);
+    this.store$.dispatch(
+      new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
+    );
   }
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
-    const a = new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment);
-    this.store$.dispatch(a);
+    this.store$.dispatch(
+      new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
+    );
   }
 
   private createToast = (errorMessage: string) => {
