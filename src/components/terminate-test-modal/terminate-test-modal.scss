@@ -28,6 +28,9 @@ terminate-test-modal {
     font-weight: 500;
     background: transparent;
     color: crimson;
+    &:active {
+      background: inherit;
+    }
   }
 
   .return-button {
@@ -36,6 +39,9 @@ terminate-test-modal {
     font-weight: 500;
     background: transparent;
     color: black;
+    &:active {
+      background: inherit;
+    }
   }
 
   .column-border-top {
