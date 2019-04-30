@@ -19,6 +19,7 @@ timer {
     letter-spacing: -0.35px;
   }
   .timer-text {
+    padding: 5px 3px;
     color: map-get($colors-gds, 'gds-blue');
     &.paused {
       color: map-get($colors-gds, 'gds-light-blue');
