@@ -11,9 +11,6 @@ export class TimerComponent {
   interval: NodeJS.Timeout;
   seconds: number;
   timerString: string;
-  touchTimeout: NodeJS.Timeout;
-  touchState: boolean = false;
-  touchStateDelay: number = 100;
   isPaused: boolean = true;
 
   constructor() {
@@ -54,15 +51,5 @@ export class TimerComponent {
         showExtraZeroMinutes ? '0' : ''}${date.getMinutes()}:${
         showExtraZeroSeconds ? '0' : ''}${date.getSeconds()
       }`;
-  }
-
-  onTouchStart(): void {
-    clearTimeout(this.touchTimeout);
-    this.touchState = true;
-  }
-
-  onTouchEnd(): void {
-    // defer the removal of the touch state to allow the page to render
-    this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }
 }
