@@ -24,7 +24,7 @@ timer {
     &.paused {
       color: map-get($colors-gds, 'gds-light-blue');
     }
-    text-align: center;
+    position: absolute;
     font-weight: bold;
   }
 }
