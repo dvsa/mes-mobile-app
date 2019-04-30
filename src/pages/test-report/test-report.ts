@@ -18,7 +18,9 @@ import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
-import { hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
+import { hasManoeuvreBeenCompleted, getCatBLegalRequirements } from '../../modules/tests/test_data/test-data.selector';
+import { CatBLegalRequirements } from '../../modules/tests/test_data/test-data.models';
+import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -26,6 +28,7 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
+  catBLegalRequirements$: Observable<CatBLegalRequirements>;
 }
 
 @IonicPage()
@@ -48,6 +51,7 @@ export class TestReportPage extends BasePageComponent {
   manoeuvresCompleted: boolean = false;
 
   modal: Modal;
+  catBLegalRequirements: CatBLegalRequirements;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -56,6 +60,7 @@ export class TestReportPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private modalController: ModalController,
+    public testReportValidatorProvider: TestReportValidatorProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -93,6 +98,12 @@ export class TestReportPage extends BasePageComponent {
         select(getTestData),
         select(hasManoeuvreBeenCompleted),
       ),
+      catBLegalRequirements$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getCatBLegalRequirements),
+      ),
     };
 
     const {
@@ -101,6 +112,7 @@ export class TestReportPage extends BasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
+      catBLegalRequirements$,
     } = this.pageState;
 
     const merged$ = merge(
@@ -109,6 +121,7 @@ export class TestReportPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
       manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
+      catBLegalRequirements$.pipe(map(result => this.catBLegalRequirements = result)),
     );
     this.subscription = merged$.subscribe();
   }

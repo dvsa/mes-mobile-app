@@ -27,6 +27,10 @@ import { ControlledStopComponent } from '../components/controlled-stop/controlle
 import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
 import { EcoComponent } from '../components/eco/eco';
+import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
+import {
+  TestReportValidatorProviderMock,
+} from '../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -83,6 +87,7 @@ describe('TestReportPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
+        { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
       ],
     })
       .compileComponents()

@@ -5,6 +5,7 @@ import { pickBy, sumBy, endsWith, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { default as tellMeQuestions } from '../../../providers/question/tell-me-question.constants';
 import { default as showMeQuestions } from '../../../providers/question/show-me-question.constants';
+import { CatBLegalRequirements } from './test-data.models';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -44,6 +45,7 @@ export const hasDangerousFault = (data: TestData, competency: Competencies) => d
 export const getTestRequirements = (data: TestData) => data.testRequirements;
 
 export const getETA = (data: TestData) => data.ETA;
+
 export const getETAFaultText = (data: ETA) => {
   if (!data) return;
   if (data.physical && !data.verbal) return 'Physical';
@@ -51,11 +53,13 @@ export const getETAFaultText = (data: ETA) => {
   if (data.physical && data.verbal) return 'Physical and Verbal';
   return;
 };
+
 export const hasExaminerTakenAction = (data: ETA, action: ExaminerActions) => {
   return data[action];
 };
 
 export const getEco = (data: TestData) => data.eco;
+
 export const getEcoFaultText = (data: Eco) => {
   if (!data) return;
   if (data.adviceGivenControl && !data.adviceGivenPlanning) return 'Control';
@@ -102,3 +106,33 @@ export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
 
 export const getShowMeQuestion = (state: VehicleChecks) =>
   showMeQuestions.find(question => question.code === get(state, 'showMeQuestion.code'));
+
+export const getCatBLegalRequirements = (data: TestData): CatBLegalRequirements => {
+  // const showMeQuestionOutcome = data.vehicleChecks.showMeQuestion.outcome;
+  // const tellMeQuestionOutcome = data.vehicleChecks.tellMeQuestion.outcome;
+
+  // TODO
+  /*
+  const vehicleChecksCompleted:boolean = (
+    showMeQuestionOutcome === 'P' ||
+    showMeQuestionOutcome === 'DF' ||
+    showMeQuestionOutcome === 'S' ||
+    showMeQuestionOutcome === 'D')
+  && (
+      tellMeQuestionOutcome === 'P' ||
+      tellMeQuestionOutcome === 'DF' ||
+      tellMeQuestionOutcome === 'S' ||
+      tellMeQuestionOutcome === 'D'
+  );
+  */
+
+  return {
+    normalStop1: data.testRequirements.normalStart1 || false,
+    normalStop2: data.testRequirements.normalStart2 || false,
+    angledStart: data.testRequirements.angledStart || false,
+    hillStart: data.testRequirements.hillStart || false,
+    manoeuvre: hasManoeuvreBeenCompleted(data) || false,
+    vehicleChecks: true, // vehicleChecksCompleted,
+    eco: data.eco.completed || false,
+  };
+};

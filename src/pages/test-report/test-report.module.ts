@@ -9,6 +9,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { testReportReducer } from './test-report.reducer';
 import { ComponentsModule } from '../../components/components.module';
 import { TestReportComponentsModule } from './components/test-report-components.module';
+import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TestReportComponentsModule } from './components/test-report-components.
   ],
   providers: [
     AnalyticsProvider,
+    TestReportValidatorProvider,
   ],
 })
 export class TestReportPageModule {}
