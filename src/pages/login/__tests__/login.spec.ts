@@ -20,6 +20,8 @@ import { NetworkStateProvider } from '../../../providers/network-state/network-s
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { DataStoreProvider } from '../../../providers/data-store/data-store';
+import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -50,6 +52,7 @@ describe('LoginPage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: DataStoreProvider, useClass: DataStoreProviderMock },
       ],
     })
       .compileComponents()
@@ -75,8 +78,11 @@ describe('LoginPage', () => {
         jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
       component.authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
+      component.initialisePersistentStorage =
+        jasmine.createSpy('component.initialisePersistentStorage').and.callThrough();
       component.login();
       tick();
+      expect(component.initialisePersistentStorage).toHaveBeenCalled();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
       expect(component.hasUserLoggedOut).toBeFalsy();
@@ -101,6 +107,8 @@ describe('LoginPage', () => {
         jasmine.createSpy('platform.ready').and.returnValue(Promise.resolve());
       component.authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
+      component.initialisePersistentStorage =
+        jasmine.createSpy('component.initialisePersistentStorage').and.callThrough();
       component.appConfigProvider.loadRemoteConfig =
         jasmine.createSpy('appConfigProvider.loadRemoteConfig')
           .and.returnValue(Promise.reject('user not authorised'));
