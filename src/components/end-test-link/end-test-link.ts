@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Modal } from 'ionic-angular';
 
 @Component({
   selector: 'end-test-link',
@@ -8,8 +8,16 @@ import { ModalController } from 'ionic-angular';
 export class EndTestLinkComponent {
   constructor(public modalController: ModalController) { }
 
+  terminateTestModal: Modal;
+
   openEndTestModal() {
-    const terminateTestModal = this.modalController.create('TerminateTestModal');
-    terminateTestModal.present();
+    this.terminateTestModal = this.modalController.create('TerminateTestModal', {
+      onCancel: this.onCancel,
+    });
+    this.terminateTestModal.present();
+  }
+
+  onCancel = () => {
+    this.terminateTestModal.dismiss();
   }
 }

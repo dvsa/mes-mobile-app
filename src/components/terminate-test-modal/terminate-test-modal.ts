@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { IonicPage, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,12 +8,12 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class TerminateTestModal {
 
+  onCancel: Function;
+
   constructor(
-    public navCtrl: NavController,
+    private navParams: NavParams,
   ) {
+    this.onCancel = this.navParams.get('onCancel');
   }
 
-  popToRoot() {
-    this.navCtrl.popToRoot();
-  }
 }
