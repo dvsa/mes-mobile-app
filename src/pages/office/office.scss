@@ -43,14 +43,14 @@ page-office {
         float: right;
         text-align: right;
       }
-    .defer-button {
+    #defer-button {
       background: map-get($colors-gds, gds-grey-3);
       box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.5);
       border-radius: 10px;
       margin: 0 0.2rem;
       height: initial;
       &.activated {
-        background: map-get($colors, gds-grey-3);
+        background: map-get($colors, gds-grey-4);
       }
       h3 {
         color: map-get($colors, mes-black);
