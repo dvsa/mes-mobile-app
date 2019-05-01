@@ -27,7 +27,6 @@ import { ControlledStopComponent } from '../components/controlled-stop/controlle
 import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
 import { EcoComponent } from '../components/eco/eco';
-import { App } from '../../../app/app.component';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -84,7 +83,6 @@ describe('TestReportPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
-        { provide: App, useFactory: () => AppMock.instance() },
       ],
     })
       .compileComponents()

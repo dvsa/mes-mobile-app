@@ -19,7 +19,6 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
 import { hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
-import { App } from '../../app/app.component';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -57,7 +56,6 @@ export class TestReportPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private modalController: ModalController,
-    private app: App,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -131,17 +129,16 @@ export class TestReportPage extends BasePageComponent {
 
   onEndTestClick = (): void => {
     console.log('Clicked End Test');
-    const zoomClass = `${this.app.getTextZoomClass()}`;
-    // MES 2196 to return valid state
+    // TODO - MES 2196 to return valid state
     const valid = true;
     if (valid) {
       this.modal = this.modalController.create('EndTestModal', {
         onCancel: this.onCancel,
         onContinue: this.onContinue,
         onTerminate: this.onTerminate,
-      }, { cssClass: zoomClass });
+      });
     } else {
-      // MES-2198 to handle valid state
+      // TODO - MES-2198 to handle valid state
     }
     this.modal.present();
   }
@@ -172,7 +169,7 @@ export class TestReportPage extends BasePageComponent {
 
   onTerminate = (): void => {
     this.modal.dismiss();
-    // MES-59 to handle terminate test page
+    // TODO - MES-59 to handle terminate test page
     // .then(() => this.navCtrl.push('TerminateTestPage'));
   }
 
