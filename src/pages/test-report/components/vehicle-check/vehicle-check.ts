@@ -8,7 +8,7 @@ import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
-import { ShowMeQuestionSeriousFault } from '../../../../modules/tests/test_data/test-data.actions';
+import { ShowMeQuestionSeriousFault } from '../../../../modules/tests/test-data/test-data.actions';
 import { ToggleSeriousFaultMode } from '../../test-report.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isSeriousMode } from '../../test-report.selector';

@@ -16,6 +16,7 @@ import { By } from '@angular/platform-browser';
 import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
+  ShowMeQuestionSeriousFault,
 } from '../../../../../modules/tests/test-data/test-data.actions';
 
 describe('VehicleCheckComponent', () => {
