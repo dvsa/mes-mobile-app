@@ -4,7 +4,7 @@ import { IonicModule, NavParams } from 'ionic-angular';
 import { NavParamsMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 
-fdescribe('EndTestModal', () => {
+describe('EndTestModal', () => {
   let fixture: ComponentFixture<EndTestModal>;
   let component: EndTestModal;
 
