@@ -174,6 +174,10 @@ export class ShowMeQuestionSeriousFault implements Action {
   readonly type = SHOW_ME_QUESTION_SERIOUS_FAULT;
 }
 
+export class ShowMeQuestionDangerousFault implements Action {
+  readonly type = SHOW_ME_QUESTION_DANGEROUS_FAULT;
+}
+
 export type Types =
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
@@ -203,4 +207,5 @@ export type Types =
   | TellMeQuestionCorrect
   | TellMeQuestionDrivingFault
   | ShowMeQuestionSelected
-  | ShowMeQuestionSeriousFault;
+  | ShowMeQuestionSeriousFault
+  | ShowMeQuestionDangerousFault;

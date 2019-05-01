@@ -17,7 +17,8 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   ShowMeQuestionSeriousFault,
-} from '../../../../../modules/tests/test-data/test-data.actions';
+  ShowMeQuestionDangerousFault,
+} from '../../../../../modules/tests/test_data/test-data.actions';
 
 describe('VehicleCheckComponent', () => {
 
@@ -64,6 +65,17 @@ describe('VehicleCheckComponent', () => {
         component.addFault(false);
 
         expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionSeriousFault());
+      });
+
+      it('should dispatch SHOW_ME_QUESTION_DANGEROUS_FAULT when dangerous mode is on', () => {
+        fixture.detectChanges();
+        component.isDangerousMode = true;
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.addFault(false);
+
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionDangerousFault());
       });
     });
   });
@@ -115,6 +127,34 @@ describe('VehicleCheckComponent', () => {
 
       fixture.detectChanges();
       expect(seriousFaultBadge.showBadge).toBe(true);
+    });
+
+    it('should have a dangerous fault badge on if there was serious fault recorded against show me question', () => {
+      store$.dispatch(new ShowMeQuestionDangerousFault());
+      fixture.detectChanges();
+      const dangerousFaultBadge = fixture.debugElement.query(By.css('dangerous-fault-badge'))
+        .componentInstance as DangerousFaultBadgeComponent;
+
+      fixture.detectChanges();
+      expect(dangerousFaultBadge.showBadge).toBe(true);
+    });
+
+    it('should have a dangerous fault badge on if tell me has driving fault but show me has dangerous', () => {
+      store$.dispatch(new TellMeQuestionDrivingFault());
+      store$.dispatch(new ShowMeQuestionDangerousFault());
+      fixture.detectChanges();
+
+      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
+        .componentInstance as DrivingFaultsBadgeComponent;
+
+      fixture.detectChanges();
+      expect(drivingFaultsBadge.count).toBe(0);
+
+      const dangerousFaultBadge = fixture.debugElement.query(By.css('dangerous-fault-badge'))
+        .componentInstance as DangerousFaultBadgeComponent;
+
+      fixture.detectChanges();
+      expect(dangerousFaultBadge.showBadge).toBe(true);
     });
   });
 });

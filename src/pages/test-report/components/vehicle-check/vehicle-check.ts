@@ -8,10 +8,13 @@ import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
-import { ShowMeQuestionSeriousFault } from '../../../../modules/tests/test-data/test-data.actions';
-import { ToggleSeriousFaultMode } from '../../test-report.actions';
+import {
+  ShowMeQuestionSeriousFault,
+  ShowMeQuestionDangerousFault,
+} from '../../../../modules/tests/test_data/test-data.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { getTestReportState } from '../../test-report.reducer';
-import { isSeriousMode } from '../../test-report.selector';
+import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 
@@ -48,12 +51,18 @@ export class VehicleCheckComponent implements OnInit {
       select(isSeriousMode),
     );
 
+    const isDangerousMode$ = this.store$.pipe(
+      select(getTestReportState),
+      select(isDangerousMode),
+    );
+
     const merged$ = merge(
       vehicleChecks$.pipe(map((vehicleChecks: VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
         this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;
       })),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
+      isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
     );
 
     this.subscription = merged$.subscribe();
@@ -92,9 +101,17 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   addFault = (wasPress: boolean): void => {
+
+    if (this.isDangerousMode) {
+      this.store$.dispatch(new ShowMeQuestionDangerousFault());
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
     if (this.isSeriousMode) {
       this.store$.dispatch(new ShowMeQuestionSeriousFault());
       this.store$.dispatch(new ToggleSeriousFaultMode());
+      return;
     }
 
     if (wasPress) {
@@ -121,18 +138,10 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   hasSeriousFault = (): boolean => {
-    if (this.hasDangerousFault()) {
-      return false;
-    }
-
-    if (this.showMeQuestionFault !== CompetencyOutcome.S) {
-      return false;
-    }
-
-    return true;
+    return this.showMeQuestionFault === CompetencyOutcome.S;
   }
 
   hasDangerousFault = (): boolean => {
-    return false;
+    return this.showMeQuestionFault === CompetencyOutcome.D;
   }
 }
