@@ -13,7 +13,7 @@
             <label id="eyesight-failure-subtitle">Do you want to continue?</label>
           </ion-row>
           <ion-row justify-content-between>
-            <button id="confirm-eyesight-failure" class="mes-neutral-button" ion-button navPush="DebriefPage"><label>Continue to debrief</label></button>
+            <button id="confirm-eyesight-failure" class="mes-neutral-button" ion-button (click)="onContinue()"><label>Continue to debrief</label></button>
             <button id="cancel-eyesight-failure" class="mes-neutral-button" ion-button (click)="onCancel()"><label>Cancel</label></button>
           </ion-row>
         </ion-col>

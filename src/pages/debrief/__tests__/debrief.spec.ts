@@ -89,7 +89,7 @@ describe('DebriefPage', () => {
     // Unit tests for the components template
 
     it('should display passed container if passed is true', () => {
-      component.passed = true;
+      component.outcome = 'pass';
 
       fixture.detectChanges();
 
@@ -97,7 +97,7 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
     it('should display failed container if passed is false', () => {
-      component.passed = false;
+      component.outcome = 'fail';
 
       fixture.detectChanges();
 
@@ -167,13 +167,18 @@ describe('DebriefPage', () => {
         component.endDebrief();
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests);
       });
-      it('should navigate to PassFinalisationPage when passed = true', () => {
-        component.passed = true;
+      it('should navigate to PassFinalisationPage when outcome = pass', () => {
+        component.outcome = 'pass';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('PassFinalisationPage');
       });
-      it('should navigate to OfficePage when passed = false', () => {
-        component.passed = false;
+      it('should navigate to BackToOfficePage when outcome = fail', () => {
+        component.outcome = 'fail';
+        component.endDebrief();
+        expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
+      });
+      it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
+        component.outcome = 'terminated';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });

@@ -44,8 +44,8 @@ export class DebriefPage extends BasePageComponent {
   pageState: DebriefPageState;
   subscription: Subscription;
 
-  // Used for now to test displaying pass/fail ngIf messages
-  public passed: boolean = true;
+  // Used for now to test displaying pass/fail/terminated messages
+  public outcome: string;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -55,8 +55,7 @@ export class DebriefPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
-    this.passed = this.navParams.get('outcome') === 'pass';
-
+    this.outcome = this.navParams.get('outcome');
   }
 
   ngOnInit(): void {
@@ -142,7 +141,7 @@ export class DebriefPage extends BasePageComponent {
 
   endDebrief(): void {
     this.store$.dispatch(new PersistTests());
-    if (this.passed) {
+    if (this.outcome === 'pass') {
       this.navController.push('PassFinalisationPage');
       return;
     }
