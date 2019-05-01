@@ -8,10 +8,15 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { By } from '@angular/platform-browser';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+// tslint:disable-next-line:max-line-length
+import { DeviceAuthenticationProviderMock } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 
 describe('TerminateTestModal', () => {
   let fixture: ComponentFixture<TerminateTestModal>;
   let component: TerminateTestModal;
+  let deviceAuthenticationProvider: DeviceAuthenticationProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,23 +29,52 @@ describe('TerminateTestModal', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(TerminateTestModal);
         component = fixture.componentInstance;
+        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
       });
   }));
 
-  describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
+  describe('DOM', () => {
+    it('should call the provided onCancel function when returning to the test', () => {
+      component.onCancel = jasmine.createSpy('onCancel');
+      const returnButton = fixture.debugElement.query(By.css('.return-button'));
+      returnButton.triggerEventHandler('click', null);
+      expect(component.onCancel).toHaveBeenCalled();
+    });
+    it('should call the provided onTerminate function when confirming test termination', () => {
+      spyOn(component, 'terminationWrapper');
+      const terminateButton = fixture.debugElement.query(By.css('.terminate-button'));
+      terminateButton.triggerEventHandler('click', null);
+      expect(component.terminationWrapper).toHaveBeenCalled();
     });
   });
 
-  describe('DOM', () => {
-    // Unit tests for the components template
+  describe('Class', () => {
+    describe('terminationWrapper', () => {
+      it('should trigger the lock screen', () => {
+        component.terminationWrapper();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      });
+      it('should not call the onTerminate callback when the lock screen Promise rejects', async () => {
+        component.onTerminate = jasmine.createSpy('onTerminate');
+        const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen').and.returnValue(Promise.reject('n'));
+        deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
+        await component.terminationWrapper();
+        expect(component.onTerminate).not.toHaveBeenCalled();
+      });
+      it('should call the onTerminate callback when the lock screen Promise resolves', async () => {
+        component.onTerminate = jasmine.createSpy('onTerminate');
+        const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen').and.returnValue(Promise.resolve('y'));
+        deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
+        await component.terminationWrapper();
+        expect(component.onTerminate).toHaveBeenCalled();
+      });
+    });
   });
 });
