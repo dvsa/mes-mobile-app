@@ -17,8 +17,8 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   ShowMeQuestionSelected,
-} from '../../../modules/tests/test_data/test-data.actions';
-import { ExaminerActions, Competencies } from '../../../modules/tests/test_data/test-data.constants';
+} from '../../../modules/tests/test-data/test-data.actions';
+import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import {

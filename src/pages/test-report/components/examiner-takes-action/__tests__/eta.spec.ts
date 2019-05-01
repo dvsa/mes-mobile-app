@@ -4,8 +4,8 @@ import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ToggleETA } from '../../../../../modules/tests/test_data/test-data.actions';
-import { ExaminerActions } from '../../../../../modules/tests/test_data/test-data.constants';
+import { ToggleETA } from '../../../../../modules/tests/test-data/test-data.actions';
+import { ExaminerActions } from '../../../../../modules/tests/test-data/test-data.constants';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../competency-button/competency-button';
 

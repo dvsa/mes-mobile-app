@@ -1,16 +1,16 @@
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
 import {
   AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
   RemoveManoeuvreFault,
-} from '../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../modules/tests/test-data/test-data.actions';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.selector';
+import { getManoeuvres } from '../../../../modules/tests/test-data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../../test-report.selector';
 import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';

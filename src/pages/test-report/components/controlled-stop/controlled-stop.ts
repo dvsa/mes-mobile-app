@@ -8,17 +8,17 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import {
   hasControlledStopBeenCompleted,
-} from '../../../../modules/tests/test_data/test-data.selector';
+} from '../../../../modules/tests/test-data/test-data.selector';
 import {
   ToggleControlledStop,
   ControlledStopAddDangerousFault,
   ControlledStopAddSeriousFault,
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../modules/tests/test-data/test-data.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';

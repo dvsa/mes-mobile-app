@@ -57,14 +57,14 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
-} from '../../modules/tests/test_data/test-data.actions';
+} from '../../modules/tests/test-data/test-data.actions';
 import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
   getVehicleChecks,
-} from '../../modules/tests/test_data/test-data.selector';
-import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+} from '../../modules/tests/test-data/test-data.selector';
+import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;

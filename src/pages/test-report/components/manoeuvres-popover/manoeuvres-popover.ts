@@ -3,12 +3,12 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { getManoeuvres } from '../../../../modules/tests/test_data/test-data.selector';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
+import { getManoeuvres } from '../../../../modules/tests/test-data/test-data.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { RecordManoeuvresSelection } from '../../../../modules/tests/test_data/test-data.actions';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test_data/test-data.constants';
+import { RecordManoeuvresSelection } from '../../../../modules/tests/test-data/test-data.actions';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../modules/tests/test-data/test-data.constants';
 import { map } from 'rxjs/operators';
 import { some } from 'lodash';
 

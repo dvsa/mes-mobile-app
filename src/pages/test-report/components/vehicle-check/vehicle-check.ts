@@ -3,8 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { getVehicleChecks } from '../../../../modules/tests/test_data/test-data.selector';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
+import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.selector';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 

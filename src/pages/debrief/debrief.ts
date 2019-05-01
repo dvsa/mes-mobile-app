@@ -7,14 +7,14 @@ import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import {
   getETA,
   getETAFaultText,
   getEco,
   getEcoFaultText,
   getDrivingFaultSummaryCount,
-} from '../../modules/tests/test_data/test-data.selector';
+} from '../../modules/tests/test-data/test-data.selector';
 import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';

@@ -3,7 +3,7 @@ import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-dec
 import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
-import { testDataReducer } from './test_data/test-data.reducer';
+import { testDataReducer } from './test-data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';

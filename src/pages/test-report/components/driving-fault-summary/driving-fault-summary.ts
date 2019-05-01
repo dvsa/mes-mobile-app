@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
-import { getDrivingFaultSummaryCount } from '../../../../modules/tests/test_data/test-data.selector';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
+import { getDrivingFaultSummaryCount } from '../../../../modules/tests/test-data/test-data.selector';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 

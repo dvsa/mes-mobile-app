@@ -15,8 +15,7 @@ import { WeatherConditionsComponent } from './components/weather-conditions/weat
 import { D255Component } from './components/d255/d255';
 import { AdditionalInformationComponent } from './components/additional-information/additional-information';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
-import { TestSummaryEffects } from '../../modules/tests/test-summary/test-summary.effects';
-import { TestDataEffects } from '../../modules/tests/test_data/test-data.effects';
+import { OfficeEffects } from './office.effects';
 
 @NgModule({
   declarations: [
@@ -35,8 +34,7 @@ import { TestDataEffects } from '../../modules/tests/test_data/test-data.effects
     IonicPageModule.forChild(OfficePage),
     EffectsModule.forFeature([
       OfficeAnalyticsEffects,
-      TestSummaryEffects,
-      TestDataEffects,
+      OfficeEffects,
     ]),
     ComponentsModule,
     OfficeComponentsModule,

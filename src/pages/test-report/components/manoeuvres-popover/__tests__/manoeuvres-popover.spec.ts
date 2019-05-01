@@ -6,7 +6,7 @@ import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
 import { AppModule } from '../../../../../app/app.module';
 import {
   RecordManoeuvresSelection, AddManoeuvreDrivingFault, AddManoeuvreSeriousFault, AddManoeuvreDangerousFault,
-} from '../../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../../modules/tests/test-data/test-data.actions';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
@@ -15,7 +15,7 @@ import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../journal/journal.actions';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;

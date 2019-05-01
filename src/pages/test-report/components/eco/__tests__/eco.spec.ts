@@ -10,7 +10,7 @@ import { CompetencyButtonComponent } from '../../../components/competency-button
 import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
 import { StartTest } from '../../../../journal/journal.actions';
 import { ToggleEco, TogglePlanningEco, ToggleControlEco }
-  from '../../../../../modules/tests/test_data/test-data.actions';
+  from '../../../../../modules/tests/test-data/test-data.actions';
 
 describe('Eco component', () => {
   let fixture: ComponentFixture<EcoComponent>;

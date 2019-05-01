@@ -7,8 +7,8 @@ import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ToggleLegalRequirement } from '../../../../../modules/tests/test_data/test-data.actions';
-import { LegalRequirements } from '../../../../../modules/tests/test_data/test-data.constants';
+import { ToggleLegalRequirement } from '../../../../../modules/tests/test-data/test-data.actions';
+import { LegalRequirements } from '../../../../../modules/tests/test-data/test-data.constants';
 
 describe('LegalRequirementComponent', () => {
   let fixture: ComponentFixture<LegalRequirementComponent>;

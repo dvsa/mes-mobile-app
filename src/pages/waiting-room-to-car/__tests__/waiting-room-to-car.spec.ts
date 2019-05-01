@@ -38,7 +38,7 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
-} from '../../../modules/tests/test_data/test-data.actions';
+} from '../../../modules/tests/test-data/test-data.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
