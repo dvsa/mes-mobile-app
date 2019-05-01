@@ -10,17 +10,17 @@ describe('TestReportSelectors', () => {
   };
 
   describe('isSeriousMode', () => {
-    it('should return if the test report is in serious mode', () => {
+    it('should return true if the test report is in serious mode', () => {
       expect(isSeriousMode(state)).toBeTruthy();
     });
   });
   describe('isDangerousMode', () => {
-    it('should return if the test report is in dangerous mode', () => {
+    it('should return true if the test report is in dangerous mode', () => {
       expect(isDangerousMode(state)).toBeTruthy();
     });
   });
   describe('isTestValid', () => {
-    it('should return if the test is valid', () => {
+    it('should return true if the test is valid', () => {
       expect(isTestValid(state)).toBeTruthy();
     });
   });
