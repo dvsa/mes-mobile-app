@@ -53,7 +53,8 @@ describe('EndTestLinkComponent', () => {
         component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
         component.onTerminate();
         expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
-        expect(navController.push).toHaveBeenCalledWith('DebriefPage');
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe('DebriefPage');
       });
     });
   });

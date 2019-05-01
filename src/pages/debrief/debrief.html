@@ -5,14 +5,18 @@
       <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
   </ion-navbar>
-  <div id="test-outcome-background">
-    <div class="test-outcome-container passed" *ngIf="passed">
+  <div id="test-outcome-background" [ngSwitch]="outcome">
+    <div class="test-outcome-container passed" *ngSwitchCase="'pass'">
       <h4>Test outcome</h4>
       <h1>passed</h1>
     </div>
-    <div class="test-outcome-container failed" *ngIf="!passed">
+    <div class="test-outcome-container failed" *ngSwitchCase="'fail'">
       <h4>Test outcome</h4>
       <h1>unsuccessful</h1>
+    </div>
+    <div class="test-outcome-container failed" *ngSwitchCase="'terminated'">
+      <h4>Test outcome</h4>
+      <h1>terminated</h1>
     </div>
   </div>
 </ion-header>
