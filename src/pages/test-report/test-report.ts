@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
@@ -47,12 +47,15 @@ export class TestReportPage extends BasePageComponent {
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
 
+  modal: Modal;
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private modalController: ModalController,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -126,6 +129,18 @@ export class TestReportPage extends BasePageComponent {
 
   onEndTestClick = (): void => {
     console.log('Clicked End Test');
+    // TODO - MES 2196 to return valid state
+    const valid = true;
+    if (valid) {
+      this.modal = this.modalController.create('EndTestModal', {
+        onCancel: this.onCancel,
+        onContinue: this.onContinue,
+        onTerminate: this.onTerminate,
+      });
+    } else {
+      // TODO - MES-2198 to handle valid state
+    }
+    this.modal.present();
   }
 
   pass(): void {
@@ -141,6 +156,21 @@ export class TestReportPage extends BasePageComponent {
     return this.isRemoveFaultMode ? 'remove-mode'
     : this.isSeriousMode ? 'serious-mode'
     : this.isDangerousMode ? 'dangerous-mode' : '';
+  }
+
+  onCancel = (): void => {
+    this.modal.dismiss();
+  }
+
+  onContinue = (): void => {
+    this.modal.dismiss()
+    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
+  }
+
+  onTerminate = (): void => {
+    this.modal.dismiss();
+    // TODO - MES-59 to handle terminate test page
+    // .then(() => this.navCtrl.push('TerminateTestPage'));
   }
 
 }

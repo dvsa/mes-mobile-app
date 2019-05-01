@@ -2,8 +2,8 @@
 import { ManoeuvresComponent } from './../components/manoeuvres/manoeuvres';
 import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, ModalControllerMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
 import { AppModule } from '../../../app/app.module';
@@ -82,6 +82,7 @@ describe('TestReportPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
       ],
     })
       .compileComponents()
