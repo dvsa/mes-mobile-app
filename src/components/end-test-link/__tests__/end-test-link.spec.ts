@@ -1,13 +1,14 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { EndTestLinkComponent } from '../end-test-link';
-import { IonicModule, ModalController } from 'ionic-angular';
-import { ModalControllerMock } from 'ionic-mocks';
+import { IonicModule, ModalController, NavController } from 'ionic-angular';
+import { ModalControllerMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../app/app.module';
 
 describe('EndTestLinkComponent', () => {
   let fixture: ComponentFixture<EndTestLinkComponent>;
   let component: EndTestLinkComponent;
   let modalController: ModalController;
+  let navController: NavController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -15,6 +16,7 @@ describe('EndTestLinkComponent', () => {
       imports: [IonicModule, AppModule],
       providers: [
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
       ],
     })
       .compileComponents()
@@ -22,6 +24,7 @@ describe('EndTestLinkComponent', () => {
         fixture = TestBed.createComponent(EndTestLinkComponent);
         component = fixture.componentInstance;
         modalController = TestBed.get(ModalController);
+        navController = TestBed.get(NavController);
       });
   }));
 
@@ -40,6 +43,17 @@ describe('EndTestLinkComponent', () => {
         const navParams = calls.argsFor(0)[1];
         expect(navParams.onCancel).toBe(component.onCancel);
         expect(navParams.onTerminate).toBe(component.onTerminate);
+      });
+    });
+  });
+
+  describe('Class', () => {
+    describe('onTerminate', () => {
+      it('should dismiss the dialog termination confirmation dialog and navigate to the debrief', () => {
+        component.terminateTestModal = jasmine.createSpyObj('terminateTestModal', ['dismiss']);
+        component.onTerminate();
+        expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
+        expect(navController.push).toHaveBeenCalledWith('DebriefPage');
       });
     });
   });

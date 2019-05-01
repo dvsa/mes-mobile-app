@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { ModalController, Modal } from 'ionic-angular';
+import { ModalController, Modal, NavController } from 'ionic-angular';
 
 @Component({
   selector: 'end-test-link',
   templateUrl: 'end-test-link.html',
 })
 export class EndTestLinkComponent {
-  constructor(public modalController: ModalController) { }
+  constructor(
+    public modalController: ModalController,
+    public navController: NavController,
+  ) { }
 
   terminateTestModal: Modal;
 
@@ -23,6 +26,7 @@ export class EndTestLinkComponent {
   }
 
   onTerminate = () => {
-    console.log('Terminated');
+    this.terminateTestModal.dismiss();
+    this.navController.push('DebriefPage');
   }
 }
