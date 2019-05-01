@@ -1,39 +1,12 @@
 end-test-modal {
+  @extend .modal-alert-wrapper;
   padding: 100px 100px 0;
-  
-  ion-card.modal-alert {
-    margin: 0;
-    border-radius: 14px;
-    width: 100%;
-  }
-
-  h2.modal-alert-header {
-    font-size: 28px;
-    letter-spacing: 0.27px;
-    line-height: 40px;
-    text-align: center;
-    margin-top: 25px;
-    html .text-zoom-regular & {
-      font-weight: bold;
-    }
-  }
 
   .mes-primary-button {
     margin-top: 60px;
     margin-bottom: 60px;
     width: 100%;
     height: 56px;
-  }
-
-  .button-clear {
-    margin: 0;
-    padding: 1px 7px 2px;
-    width: 100%;
-    font-size: 20px;
-    background: transparent;
-    &:active {
-      background: inherit;
-    }
   }
 
   .terminate-button {
@@ -44,13 +17,4 @@ end-test-modal {
     color: map-get($colors-gds, gds-black);
   }
 
-  .column-border-top {
-    border-top: 1px solid lightgrey;
-    // padding-top: 2px;
-  }
-
-  .column-border-right {
-    border-right: 1px solid lightgrey;
-    // padding-top: 2px;
-  }
 }
