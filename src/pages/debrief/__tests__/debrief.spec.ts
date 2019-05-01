@@ -20,6 +20,7 @@ import {
   TogglePlanningEco,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -73,6 +74,7 @@ describe('DebriefPage', () => {
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
       });
   }));
 
@@ -161,6 +163,10 @@ describe('DebriefPage', () => {
     });
 
     describe('endDebrief', () => {
+      it('should dispatch the PersistTests action', () => {
+        component.endDebrief();
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests);
+      });
       it('should navigate to PassFinalisationPage when outcome = pass', () => {
         component.outcome = 'pass';
         component.endDebrief();

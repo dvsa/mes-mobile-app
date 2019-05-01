@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
@@ -10,7 +10,7 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { ComponentsModule } from './../../../components/components.module';
 import { DeviceProvider } from '../../../providers/device/device';
-import { Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { HealthDeclarationViewDidEnter } from '../health-declaration.actions';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
@@ -20,6 +20,7 @@ import {
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('HealthDeclarationPage', () => {
   let fixture: ComponentFixture<HealthDeclarationPage>;
@@ -35,6 +36,7 @@ describe('HealthDeclarationPage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
+        StoreModule.forRoot({}),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -51,12 +53,12 @@ describe('HealthDeclarationPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(HealthDeclarationPage);
         component = fixture.componentInstance;
+        deviceProvider = TestBed.get(DeviceProvider);
+        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+        store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
       });
 
-    deviceProvider = TestBed.get(DeviceProvider);
-    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-    store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -118,5 +120,16 @@ describe('HealthDeclarationPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ToggleReceiptDeclaration());
       });
     });
+  });
+  describe('onSubmit', () => {
+    it('should dispatch the PersistTests action', fakeAsync(() => {
+      const form = component.form;
+      form.get('healthCheckboxCtrl').setValue(true);
+      form.get('receiptCheckboxCtrl').setValue(true);
+      form.get('signatureAreaCtrl').setValue('sig');
+      component.onSubmit();
+      tick();
+      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+    }));
   });
 });
