@@ -17,7 +17,7 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   ShowMeQuestionSeriousFault,
-} from '../../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../../modules/tests/test-data/test-data.actions';
 
 describe('VehicleCheckComponent', () => {
 

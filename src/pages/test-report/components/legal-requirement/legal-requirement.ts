@@ -5,13 +5,13 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { getTestData } from '../../../../modules/tests/test_data/test-data.reducer';
+import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import {
   getTestRequirements,
   hasLegalRequirementBeenCompleted,
-} from '../../../../modules/tests/test_data/test-data.selector';
-import { ToggleLegalRequirement } from '../../../../modules/tests/test_data/test-data.actions';
-import { LegalRequirements } from '../../../../modules/tests/test_data/test-data.constants';
+} from '../../../../modules/tests/test-data/test-data.selector';
+import { ToggleLegalRequirement } from '../../../../modules/tests/test-data/test-data.actions';
+import { LegalRequirements } from '../../../../modules/tests/test-data/test-data.constants';
 import { legalRequirementLabels } from './legal-requirement.constants';
 
 interface LegalRequirementComponentState {

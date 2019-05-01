@@ -18,8 +18,8 @@ import {
   AddDrivingFault,
   ToggleETA,
   TogglePlanningEco,
-} from '../../../modules/tests/test_data/test-data.actions';
-import { Competencies, ExaminerActions } from '../../../modules/tests/test_data/test-data.constants';
+} from '../../../modules/tests/test-data/test-data.actions';
+import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;

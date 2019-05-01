@@ -1,6 +1,6 @@
 import { AppModule } from '../../../../../app/app.module';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test_data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
@@ -15,7 +15,7 @@ import {
   AddManoeuvreDangerousFault,
   AddManoeuvreSeriousFault,
   RemoveManoeuvreFault,
-} from '../../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../../modules/tests/test-data/test-data.actions';
 import { By } from '@angular/platform-browser';
 import { IonicModule } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';

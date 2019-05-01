@@ -15,6 +15,7 @@ import { WeatherConditionsComponent } from './components/weather-conditions/weat
 import { D255Component } from './components/d255/d255';
 import { AdditionalInformationComponent } from './components/additional-information/additional-information';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
+import { OfficeEffects } from './office.effects';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,10 @@ import { IndependentDrivingComponent } from './components/independent-driving/in
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
-    EffectsModule.forFeature([OfficeAnalyticsEffects]),
+    EffectsModule.forFeature([
+      OfficeAnalyticsEffects,
+      OfficeEffects,
+    ]),
     ComponentsModule,
     OfficeComponentsModule,
   ],

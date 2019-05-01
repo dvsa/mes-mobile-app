@@ -38,7 +38,7 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
-} from '../../../modules/tests/test_data/test-data.actions';
+} from '../../../modules/tests/test-data/test-data.actions';
 import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 

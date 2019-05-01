@@ -9,8 +9,8 @@ import { ConfigMock } from 'ionic-mocks';
 import { Subscription } from 'rxjs/Subscription';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StartTest } from '../../../../journal/journal.actions';
-import { AddDrivingFault } from '../../../../../modules/tests/test_data/test-data.actions';
-import { Competencies } from '../../../../../modules/tests/test_data/test-data.constants';
+import { AddDrivingFault } from '../../../../../modules/tests/test-data/test-data.actions';
+import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
 
 describe('DrivingFaultSummary', () => {
   let fixture: ComponentFixture<DrivingFaultSummaryComponent>;

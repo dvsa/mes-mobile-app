@@ -53,8 +53,8 @@ import {
   getSelectedTellMeQuestionText,
   getShowMeQuestion,
   getVehicleChecks,
-} from '../../modules/tests/test_data/test-data.selector';
-import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+} from '../../modules/tests/test-data/test-data.selector';
+import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
@@ -70,7 +70,7 @@ import {
   AddSeriousFaultComment,
   AddDrivingFaultComment,
   ShowMeQuestionSelected,
-} from '../../modules/tests/test_data/test-data.actions';
+} from '../../modules/tests/test-data/test-data.actions';
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 
 interface OfficePageState {
