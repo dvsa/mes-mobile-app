@@ -103,6 +103,50 @@ describe('VehicleCheckComponent', () => {
       });
     });
 
+    describe('removeFault', () => {
+      it('should dispatch a SHOW_ME_QUESTION_PASSED action on remove fault', () => {
+        store$.dispatch(new ShowMeQuestionDrivingFault());
+        fixture.detectChanges();
+
+        component.isRemoveFaultMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.removeFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new ShowMeQuestionPassed());
+
+      });
+
+      it('should dispatch a SHOW_ME_QUESTION_PASSED action if there is a serious fault', () => {
+        store$.dispatch(new ShowMeQuestionSeriousFault());
+        fixture.detectChanges();
+
+        component.isRemoveFaultMode = true;
+        component.isSeriousMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault(true);
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new ShowMeQuestionPassed());
+      });
+
+      it('should dispatch a SHOW_ME_QUESTION_PASSED action if there is a dangerous fault', () => {
+        store$.dispatch(new ShowMeQuestionDangerousFault());
+        fixture.detectChanges();
+
+        component.isRemoveFaultMode = true;
+        component.isDangerousMode = true;
+
+        const storeDispatchSpy = spyOn(store$, 'dispatch');
+        component.addOrRemoveFault();
+
+        expect(storeDispatchSpy).toHaveBeenCalledWith(
+          new ShowMeQuestionPassed());
+      });
+    });
+
     describe('toggleShowMeQuestion', () => {
       it('should dispatch SHOW_ME_QUESTION_PASSED when competency has not got any faults', () => {
         fixture.detectChanges();

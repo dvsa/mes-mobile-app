@@ -15,9 +15,9 @@ import {
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
 } from '../../../../modules/tests/test-data/test-data.actions';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../test-report.actions';
 import { getTestReportState } from '../../test-report.reducer';
-import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
+import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../test-report.selector';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { isEmpty } from 'lodash';
@@ -60,6 +60,11 @@ export class VehicleCheckComponent implements OnInit {
       select(isDangerousMode),
     );
 
+    const isRemoveFaultMode$ = this.store$.pipe(
+      select(getTestReportState),
+      select(isRemoveFaultMode),
+    );
+
     const merged$ = merge(
       vehicleChecks$.pipe(map((vehicleChecks: VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
@@ -69,6 +74,7 @@ export class VehicleCheckComponent implements OnInit {
       })),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
+      isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
     );
 
     this.subscription = merged$.subscribe();
@@ -116,7 +122,24 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   removeFault = (): void => {
-    // TODO: Implement this
+    if (this.hasDangerousFault() && this.isDangerousMode && this.isRemoveFaultMode) {
+      this.store$.dispatch(new ShowMeQuestionPassed());
+      this.store$.dispatch(new ToggleDangerousFaultMode());
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+      return;
+    }
+
+    if (this.hasSeriousFault() && this.isSeriousMode && this.isRemoveFaultMode) {
+      this.store$.dispatch(new ShowMeQuestionPassed());
+      this.store$.dispatch(new ToggleSeriousFaultMode());
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+      return;
+    }
+
+    if (!this.isSeriousMode && !this.isDangerousMode && this.isRemoveFaultMode && this.hasShowMeDrivingFault()) {
+      this.store$.dispatch(new ShowMeQuestionPassed());
+      this.store$.dispatch(new ToggleRemoveFaultMode());
+    }
   }
 
   addFault = (wasPress: boolean): void => {
