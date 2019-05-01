@@ -1,15 +1,15 @@
 <div id="wrapper">
   <ion-row no-padding>
-    <ion-col col-24 no-padding>
+    <ion-col col-32 no-padding>
       <button
       id="remove-button"
       ion-button
       no-padding
       (click)="toggleRemoveFaultMode()"
       [ngClass]="isRemoveFaultMode ? 'active' : 'inactive'"
-    >
-    Remove
-  </button>
+        >
+        Remove
+      </button>
     </ion-col>
     <ion-col col-12 no-padding class="button-wrapper padding-right-16">
         <button
@@ -18,20 +18,20 @@
         no-padding
         (click)="toggleSeriousMode()"
         [ngClass]="isSeriousMode ? 'active' : 'inactive'"
-      >
-      S
-    </button>
+          >
+          S
+        </button>
     </ion-col>
-    <ion-col col-12 no-padding class="button-wrapper padding-right-16" *ngIf="!isSeriousMode">
+    <ion-col col-12 no-padding class="button-wrapper padding-right-16">
         <button
         id="dangerous-button"
         ion-button
         no-padding
         (click)="toggleDangerousMode()"
         [ngClass]="isDangerousMode ? 'active' : 'inactive'"
-      >
-      D
-    </button>
+          >
+          D
+        </button>
     </ion-col>
     <ion-col class="fault-summary" col-12 *ngIf="!isSeriousMode && !isDangerousMode">
         <driving-fault-summary></driving-fault-summary>
