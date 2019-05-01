@@ -7,7 +7,7 @@ import { empty } from 'rxjs/observable/empty';
 import { StoreModule, Store } from '@ngrx/store';
 import { TestReportEffects } from '../test-report.effects';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-import * as testDataActions from '../../../modules/tests/test_data/test-data.actions';
+import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
 import * as journalActions from '../../journal/journal.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';

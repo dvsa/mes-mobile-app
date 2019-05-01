@@ -18,9 +18,9 @@ import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode, isTestValid } from './test-report.selector';
-import { hasManoeuvreBeenCompleted, getCatBLegalRequirements } from '../../modules/tests/test_data/test-data.selector';
-import { CatBLegalRequirements } from '../../modules/tests/test_data/test-data.models';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
+import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
+import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;

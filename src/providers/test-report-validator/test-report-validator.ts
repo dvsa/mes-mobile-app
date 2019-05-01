@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CatBLegalRequirements } from '../../modules/tests/test_data/test-data.models';
+import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
 
 @Injectable()
 export class TestReportValidatorProvider {

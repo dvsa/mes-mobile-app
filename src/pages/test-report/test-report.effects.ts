@@ -7,10 +7,10 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
-import { getCatBLegalRequirements } from '../../modules/tests/test_data/test-data.selector';
+import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
+import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
 import * as testReportActions from './test-report.actions';
-import * as  testDataActions from '../../modules/tests/test_data/test-data.actions';
+import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
 
 @Injectable()
 export class TestReportEffects {
