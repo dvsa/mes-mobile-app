@@ -23,7 +23,7 @@ export class TestActions extends Actions {
   }
 }
 
-fdescribe('Test Office Data Effects', () => {
+describe('Test Office Data Effects', () => {
 
   let effects: OfficeEffects;
   let actions$: any;
