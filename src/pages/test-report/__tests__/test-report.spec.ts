@@ -3,7 +3,7 @@ import { ManoeuvresComponent } from './../components/manoeuvres/manoeuvres';
 import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, ModalControllerMock, AppMock } from 'ionic-mocks';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, ModalControllerMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
 import { AppModule } from '../../../app/app.module';
