@@ -155,10 +155,11 @@ export class TestReportPage extends BasePageComponent {
         onContinue: this.onContinue,
         onTerminate: this.onTerminate,
       });
+
+      this.modal.present();
     } else {
       // TODO - MES-2198 to handle valid state
     }
-    this.modal.present();
   }
 
   pass(): void {

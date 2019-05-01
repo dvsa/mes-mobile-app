@@ -27,6 +27,8 @@ export class TestReportEffects {
       testDataActions.TOGGLE_LEGAL_REQUIREMENT,
       testDataActions.RECORD_MANOEUVRES_SELECTION,
       testDataActions.TOGGLE_ECO,
+      testDataActions.TOGGLE_PLANNING_ECO,
+      testDataActions.TOGGLE_CONTROL_ECO,
       testDataActions.SHOW_ME_QUESTION_CORRECT,
       testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
       testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
