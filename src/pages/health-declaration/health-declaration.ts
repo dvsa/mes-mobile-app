@@ -166,10 +166,8 @@ export class HealthDeclarationPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      console.log('==============> FORM VALID TRIGGER LOCKSCREEN ABOUT TO CALL');
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
-          console.log('dispatch persist tests');
           this.store$.dispatch(new PersistTests());
           this.navCtrl.push('BackToOfficePage');
         })
