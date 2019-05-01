@@ -1,7 +1,10 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { EndTestModal } from '../end-test-modal';
+import { IonicModule, NavParams } from 'ionic-angular';
+import { NavParamsMock } from 'ionic-mocks';
+import { AppModule } from '../../../../../app/app.module';
 
-describe('EndTestModal', () => {
+fdescribe('EndTestModal', () => {
   let fixture: ComponentFixture<EndTestModal>;
   let component: EndTestModal;
 
@@ -9,6 +12,13 @@ describe('EndTestModal', () => {
     TestBed.configureTestingModule({
       declarations: [
         EndTestModal,
+      ],
+      imports: [
+        AppModule,
+        IonicModule,
+      ],
+      providers: [
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
       ],
     })
       .compileComponents()
