@@ -18,6 +18,7 @@ import {
   TellMeQuestionDrivingFault,
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
+  ShowMeQuestionDrivingFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
 
 describe('VehicleCheckComponent', () => {
@@ -77,6 +78,26 @@ describe('VehicleCheckComponent', () => {
 
         expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionDangerousFault());
       });
+
+      it('should dispatch SHOW_ME_QUESTION_DRIVING_FAULT when competency is pressed', () => {
+        fixture.detectChanges();
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.addFault(true);
+
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+      });
+
+      it('should not dispatch SHOW_ME_QUESTION_DRIVING_FAULT when competency was just tapped', () => {
+        fixture.detectChanges();
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.addFault(false);
+
+        expect(storeDisptachSpy).not.toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+      });
     });
   });
 
@@ -91,8 +112,18 @@ describe('VehicleCheckComponent', () => {
       expect(drivingFaultsBadge.count).toBe(0);
     });
 
-    it('should pass 1 driving faults to the driving faults badge component when no tell me fault', () => {
+    it('should pass 1 driving faults to the driving faults badge component when there is a tell me fault', () => {
       store$.dispatch(new TellMeQuestionDrivingFault());
+      fixture.detectChanges();
+      const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
+        .componentInstance as DrivingFaultsBadgeComponent;
+
+      fixture.detectChanges();
+      expect(drivingFaultsBadge.count).toBe(1);
+    });
+
+    it('should pass 1 driving faults to the driving faults badge component when there is a show me fault', () => {
+      store$.dispatch(new ShowMeQuestionDrivingFault());
       fixture.detectChanges();
       const drivingFaultsBadge = fixture.debugElement.query(By.css('.driving-faults'))
         .componentInstance as DrivingFaultsBadgeComponent;

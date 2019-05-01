@@ -323,6 +323,17 @@ export function testDataReducer(
           },
         },
       };
+    case testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            ...state.vehicleChecks.showMeQuestion,
+            outcome: CompetencyOutcome.DF,
+          },
+        },
+      };
     default:
       return state;
   }

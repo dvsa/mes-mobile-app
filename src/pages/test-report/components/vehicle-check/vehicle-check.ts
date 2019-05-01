@@ -11,12 +11,14 @@ import { Subscription } from 'rxjs/Subscription';
 import {
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
+  ShowMeQuestionDrivingFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
+import { isEmpty } from 'lodash';
 
 @Component({
   selector: 'vehicle-check',
@@ -60,6 +62,8 @@ export class VehicleCheckComponent implements OnInit {
       vehicleChecks$.pipe(map((vehicleChecks: VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
         this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;
+
+        this.selectedShowMeQuestion = !isEmpty(vehicleChecks.showMeQuestion.outcome);
       })),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
@@ -101,7 +105,6 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   addFault = (wasPress: boolean): void => {
-
     if (this.isDangerousMode) {
       this.store$.dispatch(new ShowMeQuestionDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
@@ -115,26 +118,28 @@ export class VehicleCheckComponent implements OnInit {
     }
 
     if (wasPress) {
-      // TODO: Implement this
+      this.store$.dispatch(new ShowMeQuestionDrivingFault());
     }
   }
 
   getDrivingFaultCount = (): number => {
-    if (this.hasSeriousFault()) {
+    if (this.hasDangerousFault() || this.hasSeriousFault()) {
       return 0;
     }
 
-    if (this.hasDangerousFault()) {
-      return 0;
+    if (this.hasShowMeDrivingFault() || this.hasTellMeDrivingFault()) {
+      return 1;
     }
 
-    if (this.tellMeQuestionFault !== CompetencyOutcome.DF) {
-      return 0;
-    }
+    return 0;
+  }
 
-    // if show me question is not DF then return 0
+  hasShowMeDrivingFault = (): boolean => {
+    return this.showMeQuestionFault === CompetencyOutcome.DF;
+  }
 
-    return 1;
+  hasTellMeDrivingFault = (): boolean => {
+    return this.tellMeQuestionFault === CompetencyOutcome.DF;
   }
 
   hasSeriousFault = (): boolean => {
