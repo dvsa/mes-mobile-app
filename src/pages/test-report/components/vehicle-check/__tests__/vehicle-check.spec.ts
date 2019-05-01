@@ -21,7 +21,7 @@ import {
   ShowMeQuestionDrivingFault,
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
-} from '../../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../../modules/tests/test-data/test-data.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 describe('VehicleCheckComponent', () => {

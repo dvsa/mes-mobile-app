@@ -14,7 +14,7 @@ import {
   ShowMeQuestionDrivingFault,
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
-} from '../../../../modules/tests/test_data/test-data.actions';
+} from '../../../../modules/tests/test-data/test-data.actions';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isSeriousMode, isDangerousMode } from '../../test-report.selector';
