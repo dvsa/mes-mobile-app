@@ -8,10 +8,14 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../../shared/models/store.model';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationPage>;
   let component: PassFinalisationPage;
+  let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,6 +34,8 @@ describe('PassFinalisationPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(PassFinalisationPage);
         component = fixture.componentInstance;
+        store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
       });
   }));
 
@@ -42,5 +48,15 @@ describe('PassFinalisationPage', () => {
 
   describe('DOM', () => {
     // Unit tests for the components template
+  });
+  describe('onSubmit', () => {
+    // Unit tests for the components TypeScript class
+    it('should dispatch the PersistTests action', () => {
+      const form = component.form;
+      form.get('provisionalLicenseProvidedCtrl').setValue(true);
+      form.get('passCertificateNumberCtrl').setValue(true);
+      component.onSubmit();
+      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+    });
   });
 });

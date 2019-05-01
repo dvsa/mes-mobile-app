@@ -27,6 +27,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -146,6 +147,7 @@ export class WaitingRoomPage extends BasePageComponent {
     if (this.form.valid) {
       this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
+        this.store$.dispatch(new PersistTests());
         this.store$.dispatch(new TestStatusStarted());
         this.navCtrl.push('WaitingRoomToCarPage');
       })

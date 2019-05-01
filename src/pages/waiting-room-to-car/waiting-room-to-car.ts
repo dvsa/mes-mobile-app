@@ -65,6 +65,7 @@ import {
   getVehicleChecks,
 } from '../../modules/tests/test_data/test-data.selector';
 import { getTestData } from '../../modules/tests/test_data/test-data.reducer';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -260,6 +261,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      this.store$.dispatch(new PersistTests());
       this.navCtrl.push('TestReportPage');
     }
   }
