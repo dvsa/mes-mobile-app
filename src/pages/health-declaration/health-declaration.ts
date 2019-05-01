@@ -27,6 +27,7 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { map } from 'rxjs/operators';
 import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -165,8 +166,11 @@ export class HealthDeclarationPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      console.log('==============> FORM VALID TRIGGER LOCKSCREEN ABOUT TO CALL');
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
+          console.log('dispatch persist tests');
+          this.store$.dispatch(new PersistTests());
           this.navCtrl.push('BackToOfficePage');
         })
         .catch((err) => {

@@ -39,6 +39,7 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
 } from '../../../modules/tests/test_data/test-data.actions';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -225,6 +226,18 @@ describe('WaitingRoomToCarPage', () => {
         tellMeFaultRadio.triggerEventHandler('click', null);
         expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionDrivingFault());
       });
+    });
+  });
+  describe('onSubmit', () => {
+    it('should dispatch the PersistTests action', () => {
+      const form = component.form;
+      form.get('eyesightCtrl').setValue(true);
+      form.get('tellMeQuestionOutcomeCtrl').setValue(true);
+      form.get('tellMeQuestionCtrl').setValue(true);
+      form.get('registrationNumberCtrl').setValue(true);
+      form.get('transmissionRadioGroupCtrl').setValue(true);
+      component.onSubmit();
+      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     });
   });
 });

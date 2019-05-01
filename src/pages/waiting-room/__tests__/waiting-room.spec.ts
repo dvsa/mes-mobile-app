@@ -31,6 +31,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -184,5 +185,16 @@ describe('WaitingRoomPage', () => {
         expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
       }));
     });
+  });
+  describe('onSubmit', () => {
+    it('should dispatch the PersistTests action', fakeAsync(() => {
+      const form = component.form;
+      form.get('insuranceCheckboxCtrl').setValue(true);
+      form.get('residencyCheckboxCtrl').setValue(true);
+      form.get('signatureAreaCtrl').setValue('sig');
+      component.onSubmit();
+      tick();
+      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+    }));
   });
 });
