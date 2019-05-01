@@ -12,6 +12,8 @@ import {
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
   ShowMeQuestionDrivingFault,
+  ShowMeQuestionPassed,
+  ShowMeQuestionRemoveFault,
 } from '../../../../modules/tests/test_data/test-data.actions';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { getTestReportState } from '../../test-report.reducer';
@@ -86,6 +88,19 @@ export class VehicleCheckComponent implements OnInit {
     this.addOrRemoveFault(true);
   }
 
+  toggleShowMeQuestion = (): void => {
+    if (this.hasShowMeDrivingFault() || this.hasSeriousFault() || this.hasDangerousFault()) {
+      return;
+    }
+
+    if (this.showMeQuestionFault === CompetencyOutcome.P) {
+      this.store$.dispatch(new ShowMeQuestionRemoveFault());
+      return;
+    }
+
+    this.store$.dispatch(new ShowMeQuestionPassed());
+  }
+
   canButtonRipple = () => {
     // TODO: Implement this
     return true;
@@ -105,9 +120,17 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   addFault = (wasPress: boolean): void => {
+    if (this.hasDangerousFault()) {
+      return;
+    }
+
     if (this.isDangerousMode) {
       this.store$.dispatch(new ShowMeQuestionDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
+      return;
+    }
+
+    if (this.hasSeriousFault()) {
       return;
     }
 

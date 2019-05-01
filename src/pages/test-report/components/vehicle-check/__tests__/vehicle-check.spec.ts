@@ -19,7 +19,10 @@ import {
   ShowMeQuestionSeriousFault,
   ShowMeQuestionDangerousFault,
   ShowMeQuestionDrivingFault,
+  ShowMeQuestionPassed,
+  ShowMeQuestionRemoveFault,
 } from '../../../../../modules/tests/test_data/test-data.actions';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 describe('VehicleCheckComponent', () => {
 
@@ -97,6 +100,62 @@ describe('VehicleCheckComponent', () => {
         component.addFault(false);
 
         expect(storeDisptachSpy).not.toHaveBeenCalledWith(new ShowMeQuestionDrivingFault());
+      });
+    });
+
+    describe('toggleShowMeQuestion', () => {
+      it('should dispatch SHOW_ME_QUESTION_PASSED when competency has not got any faults', () => {
+        fixture.detectChanges();
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.toggleShowMeQuestion();
+
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionPassed());
+      });
+
+      it('should not dispatch anything when show me has driving fault', () => {
+        fixture.detectChanges();
+        component.showMeQuestionFault = CompetencyOutcome.DF;
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.toggleShowMeQuestion();
+
+        expect(storeDisptachSpy).not.toHaveBeenCalled();
+      });
+
+      it('should not dispatch anything when show me has serious fault', () => {
+        fixture.detectChanges();
+        component.showMeQuestionFault = CompetencyOutcome.S;
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.toggleShowMeQuestion();
+
+        expect(storeDisptachSpy).not.toHaveBeenCalled();
+      });
+
+      it('should not dispatch anything when show me has dangerous fault', () => {
+        fixture.detectChanges();
+        component.showMeQuestionFault = CompetencyOutcome.D;
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.toggleShowMeQuestion();
+
+        expect(storeDisptachSpy).not.toHaveBeenCalled();
+      });
+
+      it('should dispatch SHOW_ME_QUESTION_REMOVE_FAULT when show me has pass outcome', () => {
+        fixture.detectChanges();
+        component.showMeQuestionFault = CompetencyOutcome.P;
+
+        const storeDisptachSpy = spyOn(store$, 'dispatch');
+
+        component.toggleShowMeQuestion();
+
+        expect(storeDisptachSpy).toHaveBeenCalledWith(new ShowMeQuestionRemoveFault());
       });
     });
   });
