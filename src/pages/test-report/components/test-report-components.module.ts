@@ -20,6 +20,7 @@ import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
 import { EcoComponent } from './eco/eco';
 import { TimerComponent } from './timer/timer';
 import { EndTestModalModule } from './end-test-modal/end-test-modal.module';
+import { LegalRequirementsModalModule } from './legal-requirements-modal/legal-requirements-modal.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { EndTestModalModule } from './end-test-modal/end-test-modal.module';
     CommonModule,
     IonicModule,
     EndTestModalModule,
+    LegalRequirementsModalModule,
   ],
   exports:[
     EtaComponent,

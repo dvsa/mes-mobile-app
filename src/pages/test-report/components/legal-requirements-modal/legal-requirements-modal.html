@@ -1,0 +1,25 @@
+<ion-card class="modal-alert">
+  <ion-row>
+    <ion-col class="center-icon">
+      <ion-icon class="terminate-icon" ios="md-alert"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col>
+      <div class="modal-alert-header">You've not completed all of the legal requirements</div>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col>
+      <div class="modal-alert-message">To end this test, complete:</div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="column-border-top column-border-right">
+      <button ion-button clear class="terminate-button" (click)="onTerminate()">Terminate test</button>
+    </ion-col>
+    <ion-col class="column-border-top">
+      <button ion-button clear class="return-button" (click)="onCancel()">Return to test</button>
+    </ion-col>
+  </ion-row>
+</ion-card>
