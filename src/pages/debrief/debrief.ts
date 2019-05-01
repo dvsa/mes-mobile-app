@@ -22,6 +22,7 @@ import { merge } from 'rxjs/observable/merge';
 import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -140,6 +141,7 @@ export class DebriefPage extends BasePageComponent {
   }
 
   endDebrief(): void {
+    this.store$.dispatch(new PersistTests());
     if (this.passed) {
       this.navController.push('PassFinalisationPage');
       return;
