@@ -18,6 +18,7 @@ import { ControlledStopComponent } from './controlled-stop/controlled-stop';
 import { ManoeuvreCompetencyComponent } from './manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from './vehicle-check/vehicle-check';
 import { EcoComponent } from './eco/eco';
+import { TimerComponent } from './timer/timer';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { EcoComponent } from './eco/eco';
     ManoeuvreCompetencyComponent,
     VehicleCheckComponent,
     EcoComponent,
+    TimerComponent,
   ],
   imports: [
     ComponentsModule,
@@ -58,6 +60,7 @@ import { EcoComponent } from './eco/eco';
     ManoeuvreCompetencyComponent,
     VehicleCheckComponent,
     EcoComponent,
+    TimerComponent,
   ],
 })
 export class TestReportComponentsModule {}

@@ -177,7 +177,7 @@ describe('TestDataSelectors', () => {
           tellMeQuestion: {
             code: 'T1',
             description: 'desc',
-            outcome: 'P',
+            outcome: CompetencyOutcome.P,
           },
         };
         expect(isTellMeQuestionSelected(state)).toBe(true);
@@ -191,7 +191,7 @@ describe('TestDataSelectors', () => {
         tellMeQuestion: {
           code: 'T1',
           description: 'desc',
-          outcome: 'P',
+          outcome: CompetencyOutcome.P,
         },
       };
 
@@ -224,7 +224,7 @@ describe('TestDataSelectors', () => {
         const passedState = {
           ...faultState,
           tellMeQuestion: {
-            outcome: 'P' as QuestionOutcome,
+            outcome: CompetencyOutcome.P,
           },
         };
         expect(isTellMeQuestionDrivingFault(passedState)).toBe(false);

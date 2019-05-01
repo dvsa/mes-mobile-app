@@ -19,7 +19,7 @@
       [onPress]="onPress"
       [ripple]="canButtonRipple()"
     >
-      <driving-faults-badge class="driving-faults" [count]="hasDrivingFault()"></driving-faults-badge>
+      <driving-faults-badge class="driving-faults" [count]="getDrivingFaultCount()"></driving-faults-badge>
       <div class='competency-label'>Show me / Tell me</div>
       <div class="fault-wrapper">
         <serious-fault-badge [showBadge]="hasSeriousFault()"></serious-fault-badge>

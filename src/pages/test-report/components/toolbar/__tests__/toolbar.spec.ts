@@ -14,6 +14,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../../test-report.actions';
 import { testReportReducer } from '../../../test-report.reducer';
 import { DangerousTooltipComponent } from '../../dangerous-tooltip/dangerous-tooltip';
+import { TimerComponent } from '../../timer/timer';
 
 describe('ToolbarComponent', () => {
   let fixture: ComponentFixture<ToolbarComponent>;
@@ -28,6 +29,7 @@ describe('ToolbarComponent', () => {
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(SeriousTooltipComponent),
         MockComponent(DangerousTooltipComponent),
+        MockComponent(TimerComponent),
       ],
       imports: [
         IonicModule,

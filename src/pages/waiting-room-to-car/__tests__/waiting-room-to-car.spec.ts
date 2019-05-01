@@ -39,6 +39,8 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
 } from '../../../modules/tests/test-data/test-data.actions';
+import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -50,6 +52,7 @@ describe('WaitingRoomToCarPage', () => {
       declarations: [
         WaitingRoomToCarPage,
         MockComponent(EyesightFailureConfirmationComponent),
+        MockComponent(EndTestLinkComponent),
       ],
       imports: [
         IonicModule,
@@ -72,7 +75,7 @@ describe('WaitingRoomToCarPage', () => {
                     tellMeQuestion: {
                       code: 'T1',
                       description: 'desc',
-                      outcome: 'P',
+                      outcome: CompetencyOutcome.P,
                     },
                   },
                 },

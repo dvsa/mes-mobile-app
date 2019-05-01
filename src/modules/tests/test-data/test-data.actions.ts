@@ -38,7 +38,12 @@ export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
 export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
 export const TELL_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Tell me question driving fault';
+
 export const SHOW_ME_QUESTION_SELECTED = '[Vehicle Checks] Show me question selected';
+export const SHOW_ME_QUESTION_CORRECT = '[Vehicle Checks] Show me question correct';
+export const SHOW_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Show me question driving fault';
+export const SHOW_ME_QUESTION_SERIOUS_FAULT = '[Vehicle Checks] Show me question serious fault';
+export const SHOW_ME_QUESTION_DANGEROUS_FAULT = '[Vehicle Checks] Show me question dangerous fault';
 
 export interface ManoeuvrePayload {
   manoeuvre: ManoeuvreTypes;
@@ -165,6 +170,10 @@ export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;
 }
 
+export class ShowMeQuestionSeriousFault implements Action {
+  readonly type = SHOW_ME_QUESTION_SERIOUS_FAULT;
+}
+
 export type Types =
   | RecordManoeuvresSelection
   | AddManoeuvreDrivingFault
@@ -193,4 +202,5 @@ export type Types =
   | TellMeQuestionSelected
   | TellMeQuestionCorrect
   | TellMeQuestionDrivingFault
-  | ShowMeQuestionSelected;
+  | ShowMeQuestionSelected
+  | ShowMeQuestionSeriousFault;

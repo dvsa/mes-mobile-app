@@ -3,19 +3,19 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
-import { TerminateTestPage } from '../terminate-test';
+import { TerminateTestModal } from '../terminate-test-modal';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 
-describe('TerminateTestPage', () => {
-  let fixture: ComponentFixture<TerminateTestPage>;
-  let component: TerminateTestPage;
+describe('TerminateTestModal', () => {
+  let fixture: ComponentFixture<TerminateTestModal>;
+  let component: TerminateTestModal;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TerminateTestPage],
+      declarations: [TerminateTestModal],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -28,7 +28,7 @@ describe('TerminateTestPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(TerminateTestPage);
+        fixture = TestBed.createComponent(TerminateTestModal);
         component = fixture.componentInstance;
       });
   }));
