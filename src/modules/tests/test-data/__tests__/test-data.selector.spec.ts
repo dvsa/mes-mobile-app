@@ -334,8 +334,8 @@ describe('TestDataSelectors', () => {
         } as TestData;
 
         expect(getCatBLegalRequirements(state)).toEqual({
-          normalStop1: true,
-          normalStop2: true,
+          normalStart1: true,
+          normalStart2: true,
           angledStart: true,
           hillStart: true,
           manoeuvre: true,
@@ -345,8 +345,8 @@ describe('TestDataSelectors', () => {
       });
       it('should return false for the data if it is not in the state', () => {
         expect(getCatBLegalRequirements(initialState)).toEqual({
-          normalStop1: false,
-          normalStop2: false,
+          normalStart1: false,
+          normalStart2: false,
           angledStart: false,
           hillStart: false,
           manoeuvre: false,

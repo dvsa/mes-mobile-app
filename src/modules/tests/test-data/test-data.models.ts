@@ -6,8 +6,8 @@ export type FaultPayload = {
 };
 
 export type CatBLegalRequirements = {
-  normalStop1: boolean,
-  normalStop2: boolean,
+  normalStart1: boolean,
+  normalStart2: boolean,
   angledStart: boolean,
   hillStart: boolean,
   manoeuvre: boolean,

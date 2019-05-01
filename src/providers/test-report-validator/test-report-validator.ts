@@ -7,8 +7,8 @@ export class TestReportValidatorProvider {
   constructor() { }
 
   validateCatBTestReport = (results: CatBLegalRequirements): boolean =>
-    results.normalStop1 &&
-    results.normalStop2 &&
+    results.normalStart1 &&
+    results.normalStart2 &&
     results.angledStart &&
     results.hillStart &&
     results.manoeuvre &&

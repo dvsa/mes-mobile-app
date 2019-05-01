@@ -19,8 +19,8 @@ describe('TestReportValidator', () => {
   describe('validateCatBTestReport', () => {
     it('should return true for a valid test', () => {
       const testResult: CatBLegalRequirements = {
-        normalStop1: true,
-        normalStop2: true,
+        normalStart1: true,
+        normalStart2: true,
         angledStart: true,
         hillStart: true,
         eco: true,
@@ -32,8 +32,8 @@ describe('TestReportValidator', () => {
     });
     it('should return false for a invalid test', () => {
       const testResult: CatBLegalRequirements = {
-        normalStop1: false,
-        normalStop2: true,
+        normalStart1: false,
+        normalStart2: true,
         angledStart: true,
         hillStart: false,
         eco: true,

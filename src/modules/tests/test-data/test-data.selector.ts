@@ -126,8 +126,8 @@ export const hasVehicleChecksBeenCompleted = (data: TestData): boolean => {
 
 export const getCatBLegalRequirements = (data: TestData): CatBLegalRequirements => {
   return {
-    normalStop1: data.testRequirements.normalStart1 || false,
-    normalStop2: data.testRequirements.normalStart2 || false,
+    normalStart1: data.testRequirements.normalStart1 || false,
+    normalStart2: data.testRequirements.normalStart2 || false,
     angledStart: data.testRequirements.angledStart || false,
     hillStart: data.testRequirements.hillStart || false,
     manoeuvre: hasManoeuvreBeenCompleted(data) || false,
