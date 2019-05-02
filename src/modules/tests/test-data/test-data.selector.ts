@@ -12,7 +12,7 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
 
   // The way how we store the driving faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
-  const { drivingFaults, manoeuvres, controlledStop } = data;
+  const { drivingFaults, manoeuvres, controlledStop, vehicleChecks } = data;
 
   const drivingFaultSumOfSimpleCompetencies =
     Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
@@ -22,9 +22,25 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
   const result =
     drivingFaultSumOfSimpleCompetencies +
     sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
+    sumVehicleCheckFaults(vehicleChecks) +
     controlledStopHasDrivingFault;
 
   return result;
+};
+
+export const sumVehicleCheckFaults = (vehicleChecks: VehicleChecks): number => {
+
+  const { showMeQuestion, tellMeQuestion } = vehicleChecks;
+
+  if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
+    return 0;
+  }
+
+  if (showMeQuestion.outcome === CompetencyOutcome.DF || tellMeQuestion.outcome === CompetencyOutcome.DF) {
+    return 1;
+  }
+
+  return 0;
 };
 
 export const sumManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): number => {

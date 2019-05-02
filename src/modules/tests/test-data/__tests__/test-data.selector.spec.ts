@@ -50,6 +50,14 @@ describe('TestDataSelectors', () => {
     controlledStop: {
       selected: true,
     },
+    vehicleChecks: {
+      tellMeQuestion: {
+        outcome: CompetencyOutcome.DF,
+      },
+      showMeQuestion: {
+        outcome: CompetencyOutcome.P,
+      },
+    },
   };
 
   describe('getDrivingFaultCount', () => {
@@ -63,7 +71,7 @@ describe('TestDataSelectors', () => {
 
   describe('getDrivingFaultSummaryCount', () => {
     it('should return the driving fault count correctly', () => {
-      expect(getDrivingFaultSummaryCount(state)).toBe(2);
+      expect(getDrivingFaultSummaryCount(state)).toBe(3);
     });
   });
 

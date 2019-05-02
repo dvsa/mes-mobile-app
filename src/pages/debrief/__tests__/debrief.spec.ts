@@ -53,6 +53,10 @@ describe('DebriefPage', () => {
                   testRequirements: {},
                   ETA: {},
                   eco: {},
+                  vehicleChecks: {
+                    tellMeQuestion: {},
+                    showMeQuestion: {},
+                  },
                 },
               },
             },
