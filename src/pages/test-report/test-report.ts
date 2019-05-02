@@ -168,9 +168,9 @@ export class TestReportPage extends BasePageComponent {
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss();
+    this.modal.dismiss()
     // TODO - MES-59 to handle terminate test page
-    // .then(() => this.navCtrl.push('TerminateTestPage'));
+    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
   }
 
 }
