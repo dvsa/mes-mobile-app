@@ -180,15 +180,27 @@ export class TestReportPage extends BasePageComponent {
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.CONTINUE:
-        // TODO - This needs to be wired up correctly so we can get the result and pass it to the next page (MES-89);
         this.store$.dispatch(new CalculateTestResult());
         this.navCtrl.push('DebriefPage', { outcome: 'pass' });
         break;
       case ModalEvent.TERMINATE:
-        // TODO - MES-59 to handle terminate test page
-        // this.navCtrl.push('TerminateTestPage');
+        this.navCtrl.push('DebriefPage', { outcome: 'terminated' });
         break;
     }
+  }
+
+  onCancel = (): void => {
+    this.modal.dismiss();
+  }
+
+  onContinue = (): void => {
+    this.modal.dismiss()
+    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
+  }
+
+  onTerminate = (): void => {
+    this.modal.dismiss()
+    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
   }
 
 }
