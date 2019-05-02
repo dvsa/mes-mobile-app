@@ -17,8 +17,10 @@ import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from './test-report.selector';
-import { hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode, isTestValid } from './test-report.selector';
+import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
+import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
+import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -26,6 +28,8 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
+  isTestValid$: Observable<boolean>;
+  catBLegalRequirements$: Observable<CatBLegalRequirements>;
 }
 
 @IonicPage()
@@ -46,8 +50,10 @@ export class TestReportPage extends BasePageComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
+  isTestValid: boolean = false;
 
   modal: Modal;
+  catBLegalRequirements: CatBLegalRequirements;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -56,6 +62,7 @@ export class TestReportPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private modalController: ModalController,
+    public testReportValidatorProvider: TestReportValidatorProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -93,6 +100,16 @@ export class TestReportPage extends BasePageComponent {
         select(getTestData),
         select(hasManoeuvreBeenCompleted),
       ),
+      isTestValid$: this.store$.pipe(
+        select(getTestReportState),
+        select(isTestValid),
+      ),
+      catBLegalRequirements$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getCatBLegalRequirements),
+      ),
     };
 
     const {
@@ -101,6 +118,8 @@ export class TestReportPage extends BasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
+      isTestValid$,
+      catBLegalRequirements$,
     } = this.pageState;
 
     const merged$ = merge(
@@ -109,6 +128,8 @@ export class TestReportPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
       manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
+      isTestValid$.pipe(map(result => this.isTestValid = result)),
+      catBLegalRequirements$.pipe(map(result => this.catBLegalRequirements = result)),
     );
     this.subscription = merged$.subscribe();
   }
@@ -128,19 +149,17 @@ export class TestReportPage extends BasePageComponent {
   }
 
   onEndTestClick = (): void => {
-    console.log('Clicked End Test');
-    // TODO - MES 2196 to return valid state
-    const valid = true;
-    if (valid) {
+    if (this.isTestValid) {
       this.modal = this.modalController.create('EndTestModal', {
         onCancel: this.onCancel,
         onContinue: this.onContinue,
         onTerminate: this.onTerminate,
       });
+
+      this.modal.present();
     } else {
       // TODO - MES-2198 to handle valid state
     }
-    this.modal.present();
   }
 
   pass(): void {

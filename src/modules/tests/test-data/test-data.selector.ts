@@ -5,6 +5,7 @@ import { pickBy, sumBy, endsWith, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { default as tellMeQuestions } from '../../../providers/question/tell-me-question.constants';
 import { default as showMeQuestions } from '../../../providers/question/show-me-question.constants';
+import { CatBLegalRequirements } from './test-data.models';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -44,6 +45,7 @@ export const hasDangerousFault = (data: TestData, competency: Competencies) => d
 export const getTestRequirements = (data: TestData) => data.testRequirements;
 
 export const getETA = (data: TestData) => data.ETA;
+
 export const getETAFaultText = (data: ETA) => {
   if (!data) return;
   if (data.physical && !data.verbal) return 'Physical';
@@ -51,11 +53,13 @@ export const getETAFaultText = (data: ETA) => {
   if (data.physical && data.verbal) return 'Physical and Verbal';
   return;
 };
+
 export const hasExaminerTakenAction = (data: ETA, action: ExaminerActions) => {
   return data[action];
 };
 
 export const getEco = (data: TestData) => data.eco;
+
 export const getEcoFaultText = (data: Eco) => {
   if (!data) return;
   if (data.adviceGivenControl && !data.adviceGivenPlanning) return 'Control';
@@ -102,3 +106,32 @@ export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
 
 export const getShowMeQuestion = (state: VehicleChecks) =>
   showMeQuestions.find(question => question.code === get(state, 'showMeQuestion.code'));
+
+export const hasVehicleChecksBeenCompleted = (data: TestData): boolean => {
+  const showMeQuestionOutcome = data.vehicleChecks.showMeQuestion.outcome;
+  const tellMeQuestionOutcome = data.vehicleChecks.tellMeQuestion.outcome;
+
+  return (
+    showMeQuestionOutcome === CompetencyOutcome.P ||
+    showMeQuestionOutcome === CompetencyOutcome.DF ||
+    showMeQuestionOutcome === CompetencyOutcome.S ||
+    showMeQuestionOutcome === CompetencyOutcome.D)
+  && (
+      tellMeQuestionOutcome === CompetencyOutcome.P ||
+      tellMeQuestionOutcome === CompetencyOutcome.DF ||
+      tellMeQuestionOutcome === CompetencyOutcome.S ||
+      tellMeQuestionOutcome === CompetencyOutcome.D
+  );
+};
+
+export const getCatBLegalRequirements = (data: TestData): CatBLegalRequirements => {
+  return {
+    normalStart1: data.testRequirements.normalStart1 || false,
+    normalStart2: data.testRequirements.normalStart2 || false,
+    angledStart: data.testRequirements.angledStart || false,
+    hillStart: data.testRequirements.hillStart || false,
+    manoeuvre: hasManoeuvreBeenCompleted(data) || false,
+    vehicleChecks: hasVehicleChecksBeenCompleted(data) || false,
+    eco: data.eco.completed || false,
+  };
+};

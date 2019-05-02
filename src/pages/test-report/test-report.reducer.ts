@@ -7,6 +7,7 @@ export const initialState: TestReportModel = {
   seriousMode: false,
   dangerousMode: false,
   removeFaultMode: false,
+  isValid: false,
 };
 
 export function testReportReducer(state = initialState, action: testReportActions.Types): TestReportModel {
@@ -26,7 +27,11 @@ export function testReportReducer(state = initialState, action: testReportAction
         ...state,
         dangerousMode: !state.dangerousMode,
       };
-
+    case testReportActions.VALIDATE_TEST_RESULT:
+      return {
+        ...state,
+        isValid: action.payload,
+      };
     default:
       return state;
   }
