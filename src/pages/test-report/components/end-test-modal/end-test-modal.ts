@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController } from 'ionic-angular';
+import { ModalEvent } from '../../test-report.constants';
 
 @IonicPage()
 @Component({
@@ -8,16 +9,20 @@ import { IonicPage, NavParams } from 'ionic-angular';
 })
 export class EndTestModal {
 
-  onContinue: Function;
-  onTerminate: Function;
-  onCancel: Function;
-
   constructor(
-    private navParams: NavParams,
-  ) {
-    this.onContinue = this.navParams.get('onContinue');
-    this.onTerminate = this.navParams.get('onTerminate');
-    this.onCancel = this.navParams.get('onCancel');
+    private viewCtrl: ViewController,
+  ) {}
+
+  onCancel() {
+    this.viewCtrl.dismiss(ModalEvent.CANCEL);
+  }
+
+  onContinue() {
+    this.viewCtrl.dismiss(ModalEvent.CONTINUE);
+  }
+
+  onTerminate() {
+    this.viewCtrl.dismiss(ModalEvent.TERMINATE);
   }
 
 }
