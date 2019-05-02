@@ -1,5 +1,6 @@
 import { TestReportModel } from '../test-report.model';
-import { isSeriousMode, isDangerousMode, isTestValid } from '../test-report.selector';
+import { isSeriousMode, isDangerousMode, isTestValid, getTestResult } from '../test-report.selector';
+import { TestResult } from '../../../providers/test-result/test-result.model';
 
 describe('TestReportSelectors', () => {
   const state: TestReportModel = {
@@ -7,6 +8,7 @@ describe('TestReportSelectors', () => {
     dangerousMode: true,
     removeFaultMode: true,
     isValid: true,
+    testResult: TestResult.NotCalculated,
   };
 
   describe('isSeriousMode', () => {
@@ -22,6 +24,11 @@ describe('TestReportSelectors', () => {
   describe('isTestValid', () => {
     it('should return true if the test is valid', () => {
       expect(isTestValid(state)).toBeTruthy();
+    });
+  });
+  describe('getTestResult', () => {
+    it('should return the correct test result', () => {
+      expect(getTestResult(state)).toBe(TestResult.NotCalculated);
     });
   });
 });

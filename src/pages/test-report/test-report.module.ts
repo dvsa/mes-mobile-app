@@ -11,6 +11,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { TestReportComponentsModule } from './components/test-report-components.module';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { TestReportEffects } from './test-report.effects';
+import { TestResultProvider } from '../../providers/test-result/test-result';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TestReportEffects } from './test-report.effects';
   providers: [
     AnalyticsProvider,
     TestReportValidatorProvider,
+    TestResultProvider,
   ],
 })
 export class TestReportPageModule {}

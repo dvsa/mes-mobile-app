@@ -9,9 +9,11 @@ import { TestReportEffects } from '../test-report.effects';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
 import * as journalActions from '../../journal/journal.actions';
+import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { ValidateTestResult } from '../test-report.actions';
+import { TestResultProvider } from '../../../providers/test-result/test-result';
+import { TestResult } from '../../../providers/test-result/test-result.model';
 
 export class TestActions extends Actions {
   constructor() {
@@ -28,6 +30,7 @@ describe('Test Report Effects', () => {
   let effects: TestReportEffects;
   let actions$: any;
   let testReportValidatorProvider: TestReportValidatorProvider;
+  let testResultProvider: TestResultProvider;
   let store$: Store<StoreModel>;
 
   beforeEach(() => {
@@ -42,10 +45,12 @@ describe('Test Report Effects', () => {
         TestReportEffects,
         provideMockActions(() => actions$),
         TestReportValidatorProvider,
+        TestResultProvider,
         Store,
       ],
     });
     testReportValidatorProvider = TestBed.get(TestReportValidatorProvider);
+    testResultProvider = TestBed.get(TestResultProvider);
     effects = TestBed.get(TestReportEffects);
     store$ = TestBed.get(Store);
   });
@@ -68,7 +73,7 @@ describe('Test Report Effects', () => {
       // ASSERT
       effects.validateCatBTest$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBTestReport).toHaveBeenCalled();
-        expect(result).toEqual(new ValidateTestResult(true));
+        expect(result).toEqual(new testReportActions.ValidateTestResult(true));
         done();
       });
     });
@@ -81,7 +86,27 @@ describe('Test Report Effects', () => {
       // ASSERT
       effects.validateCatBTest$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBTestReport).toHaveBeenCalled();
-        expect(result).toEqual(new ValidateTestResult(false));
+        expect(result).toEqual(new testReportActions.ValidateTestResult(false));
+        done();
+      });
+    });
+  });
+
+  describe('calculateTestResult', () => {
+
+    beforeEach(() => {
+      store$.dispatch(new journalActions.StartTest(123456));
+    });
+
+    it('should dispatch an action containing the correct result for a test', (done) => {
+       // ARRANGE
+      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue(TestResult.Fail);
+       // ACT
+      actions$.next(new testReportActions.CalculateTestResult());
+       // ASSERT
+      effects.calculateTestResult$.subscribe((result) => {
+        expect(testResultProvider.calculateCatBTestResult).toHaveBeenCalled();
+        expect(result).toEqual(new testReportActions.UpdateTestResult(TestResult.Fail));
         done();
       });
     });

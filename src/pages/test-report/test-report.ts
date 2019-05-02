@@ -11,7 +11,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
-import { TestReportViewDidEnter } from './test-report.actions';
+import { TestReportViewDidEnter, CalculateTestResult } from './test-report.actions';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
@@ -182,6 +182,8 @@ export class TestReportPage extends BasePageComponent {
   }
 
   onContinue = (): void => {
+    // TODO - This needs to be wired up correctly so we can get the result and pass it to the next page;
+    this.store$.dispatch(new CalculateTestResult());
     this.modal.dismiss()
     .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
   }
