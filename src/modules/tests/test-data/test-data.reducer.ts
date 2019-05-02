@@ -346,13 +346,14 @@ export function testDataReducer(
         },
       };
     case testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT:
+      const { outcome, ...notOutcome } = state.vehicleChecks.showMeQuestion;
+
       return {
         ...state,
         vehicleChecks: {
           ...state.vehicleChecks,
           showMeQuestion: {
-            ...state.vehicleChecks.showMeQuestion,
-            outcome: undefined,
+            ...notOutcome,
           },
         },
       };
