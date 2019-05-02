@@ -49,4 +49,8 @@ export class TestOutcomeComponent {
   needsWriteUp(): boolean {
     return this.testStatus === TestStatus.Decided;
   }
+
+  showResumeTestButton(): boolean {
+    return this.testStatus === TestStatus.Started;
+  }
 }
