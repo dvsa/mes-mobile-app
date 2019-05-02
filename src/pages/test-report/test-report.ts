@@ -21,6 +21,7 @@ import { isRemoveFaultMode, isSeriousMode, isDangerousMode, isTestValid } from '
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
 import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
+import { ModalEvent } from './test-report.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -151,18 +152,13 @@ export class TestReportPage extends BasePageComponent {
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (this.isTestValid) {
-      this.modal = this.modalController.create('EndTestModal', {
-        onCancel: this.onCancel,
-        onContinue: this.onContinue,
-        onTerminate: this.onTerminate,
-      }, options);
+      this.modal = this.modalController.create('EndTestModal', {}, options);
     } else {
       this.modal = this.modalController.create('LegalRequirementsModal', {
         legalRequirements: this.catBLegalRequirements,
-        onCancel: this.onCancel,
-        onTerminate: this.onTerminate,
       }, options);
     }
+    this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
   }
 
@@ -181,21 +177,18 @@ export class TestReportPage extends BasePageComponent {
     : this.isDangerousMode ? 'dangerous-mode' : '';
   }
 
-  onCancel = (): void => {
-    this.modal.dismiss();
-  }
-
-  onContinue = (): void => {
-    // TODO - This needs to be wired up correctly so we can get the result and pass it to the next page;
-    this.store$.dispatch(new CalculateTestResult());
-    this.modal.dismiss()
-    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
-  }
-
-  onTerminate = (): void => {
-    this.modal.dismiss();
-    // TODO - MES-59 to handle terminate test page
-    // .then(() => this.navCtrl.push('TerminateTestPage'));
+  onModalDismiss = (event: ModalEvent): void => {
+    switch (event) {
+      case ModalEvent.CONTINUE:
+        // TODO - This needs to be wired up correctly so we can get the result and pass it to the next page (MES-89);
+        this.store$.dispatch(new CalculateTestResult());
+        this.navCtrl.push('DebriefPage', { outcome: 'pass' });
+        break;
+      case ModalEvent.TERMINATE:
+        // TODO - MES-59 to handle terminate test page
+        // this.navCtrl.push('TerminateTestPage');
+        break;
+    }
   }
 
 }
