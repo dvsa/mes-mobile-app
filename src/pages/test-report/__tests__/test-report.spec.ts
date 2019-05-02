@@ -31,10 +31,12 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 import {
   TestReportValidatorProviderMock,
 } from '../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
+import { ModalEvent } from '../test-report.constants';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
+  let navController: NavController;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -94,12 +96,21 @@ describe('TestReportPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(TestReportPage);
         component = fixture.componentInstance;
+        navController = TestBed.get(NavController);
       });
   }));
 
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    describe('onModalDismiss', () => {
+      it('should navigate to debrief page when passed a CONTINUE event', () => {
+        component.onModalDismiss(ModalEvent.CONTINUE);
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe('DebriefPage');
+      });
     });
   });
 
