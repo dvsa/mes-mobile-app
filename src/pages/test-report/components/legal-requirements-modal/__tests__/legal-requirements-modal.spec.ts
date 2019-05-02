@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { LegalRequirementsModal } from '../legal-requirements-modal';
-import { IonicModule, NavParams } from 'ionic-angular';
-import { NavParamsMock } from 'ionic-mocks';
+import { IonicModule, NavParams, ViewController } from 'ionic-angular';
+import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 
@@ -20,6 +20,7 @@ describe('LegalRequirementsModal', () => {
       ],
       providers: [
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
+        { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
       ],
     })
       .compileComponents()
