@@ -27,6 +27,13 @@
           </button>
         </span>
       </ion-col>
+      <ion-col *ngIf="showResumeTestButton()">
+        <span>
+          <button class="mes-secondary-button mes-warning-button" ion-button navPush="WaitingRoomPage">
+            <h3 class="write-up-label">Resume</h3>
+          </button>
+        </span>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </div>
