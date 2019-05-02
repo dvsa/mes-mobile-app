@@ -12,6 +12,7 @@ import * as journalActions from '../../journal/journal.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { ValidateTestResult } from '../test-report.actions';
+import { TestResultProvider } from '../../../providers/test-result/test-result';
 
 export class TestActions extends Actions {
   constructor() {
@@ -42,6 +43,7 @@ describe('Test Report Effects', () => {
         TestReportEffects,
         provideMockActions(() => actions$),
         TestReportValidatorProvider,
+        TestResultProvider,
         Store,
       ],
     });

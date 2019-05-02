@@ -1,5 +1,6 @@
 import { TestReportModel } from '../test-report.model';
 import { isSeriousMode, isDangerousMode, isTestValid } from '../test-report.selector';
+import { TestResult } from '../../../providers/test-result/test-result.model';
 
 describe('TestReportSelectors', () => {
   const state: TestReportModel = {
@@ -7,6 +8,7 @@ describe('TestReportSelectors', () => {
     dangerousMode: true,
     removeFaultMode: true,
     isValid: true,
+    testResult: TestResult.NotCalculated,
   };
 
   describe('isSeriousMode', () => {

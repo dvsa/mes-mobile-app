@@ -11,6 +11,7 @@ import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
 import * as testReportActions from './test-report.actions';
 import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
+import { TestResultProvider } from '../../providers/test-result/test-result';
 
 @Injectable()
 export class TestReportEffects {
@@ -19,6 +20,7 @@ export class TestReportEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
     private testReportValidator: TestReportValidatorProvider,
+    private testResultProvider: TestResultProvider,
     ) {}
 
   @Effect()
@@ -45,5 +47,22 @@ export class TestReportEffects {
        return of(new testReportActions.ValidateTestResult(
          this.testReportValidator.validateCatBTestReport(catBLegalRequirements)));
      }),
+  );
+
+  @Effect()
+  calculateTestResult$ = this.actions$.pipe(
+    ofType(
+      testReportActions.CALCULATE_TEST_RESULT,
+    ),
+    withLatestFrom(
+     this.store$.pipe(
+        select(getTests),
+        map(getCurrentTest),
+      ),
+    ),
+    switchMap(([action, currentTest]) => {
+      return of(new testReportActions.UpdateTestResult(
+        this.testResultProvider.calculateCatBTestResult(currentTest.testData)));
+    }),
   );
 }
