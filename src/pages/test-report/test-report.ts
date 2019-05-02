@@ -191,6 +191,21 @@ export class TestReportPage extends BasePageComponent {
     }
   }
 
+  onCancel = (): void => {
+    this.modal.dismiss();
+  }
+
+  onContinue = (): void => {
+    this.modal.dismiss()
+    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
+  }
+
+  onTerminate = (): void => {
+    this.modal.dismiss()
+    // TODO - MES-59 to handle terminate test page
+    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
+  }
+
 }
 
 export interface OverlayCallback {
