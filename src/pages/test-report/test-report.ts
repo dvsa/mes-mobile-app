@@ -149,26 +149,19 @@ export class TestReportPage extends BasePageComponent {
   }
 
   onEndTestClick = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (this.isTestValid) {
       this.modal = this.modalController.create('EndTestModal', {
         onCancel: this.onCancel,
         onContinue: this.onContinue,
         onTerminate: this.onTerminate,
-      }, { cssClass: 'mes-modal-alert text-zoom-regular' });
+      }, options);
     } else {
       this.modal = this.modalController.create('LegalRequirementsModal', {
+        legalRequirements: this.catBLegalRequirements,
         onCancel: this.onCancel,
         onTerminate: this.onTerminate,
-        legalRequirements: this.catBLegalRequirements,
-        // legalRequirements: [
-        //   'NS (normal start)',
-        //   'AS (angled start)',
-        //   'HS / DS (hill or designated start)',
-        //   'Manoeuvres',
-        //   'Eco (control and planning)',
-        //   'Show me / Tell me',
-        // ],
-      }, { cssClass: 'mes-modal-alert text-zoom-regular' });
+      }, options);
     }
     this.modal.present();
   }

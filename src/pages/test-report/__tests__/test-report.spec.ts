@@ -125,4 +125,14 @@ describe('TestReportPage', () => {
     });
 
   });
+
+  describe('End Test Button', () => {
+    it('should call the end test function', () => {
+      spyOn(component, 'onEndTestClick');
+      const endTestButton = fixture.debugElement.query(By.css('#end-test-button'));
+      endTestButton.triggerEventHandler('click', null);
+      expect(component.onEndTestClick).toHaveBeenCalled();
+    });
+  });
+
 });
