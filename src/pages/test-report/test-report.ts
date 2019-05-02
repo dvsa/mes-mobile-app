@@ -186,7 +186,7 @@ export class TestReportPage extends BasePageComponent {
         break;
       case ModalEvent.TERMINATE:
         // TODO - MES-59 to handle terminate test page
-        // this.navCtrl.push('TerminateTestPage');
+        this.navCtrl.push('DebriefPage', { outcome: 'terminated' });
         break;
     }
   }
