@@ -161,11 +161,11 @@ export class TestReportPage extends BasePageComponent {
         onTerminate: this.onTerminate,
         legalRequirements: this.catBLegalRequirements,
         // legalRequirements: [
-        //   'NS (normal stop',
+        //   'NS (normal start)',
         //   'AS (angled start)',
-        //   'HS / DS (hill or designated stop)',
+        //   'HS / DS (hill or designated start)',
         //   'Manoeuvres',
-        //   'ECO (control and planning)',
+        //   'Eco (control and planning)',
         //   'Show me / Tell me',
         // ],
       }, { cssClass: 'mes-modal-alert text-zoom-regular' });

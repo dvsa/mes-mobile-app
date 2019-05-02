@@ -5,7 +5,7 @@ import { NavParamsMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 
-describe('LegalRequirementsModal', () => {
+fdescribe('LegalRequirementsModal', () => {
   let fixture: ComponentFixture<LegalRequirementsModal>;
   let component: LegalRequirementsModal;
 
@@ -28,6 +28,14 @@ describe('LegalRequirementsModal', () => {
         component = fixture.componentInstance;
         component.onCancel = () => {};
         component.onTerminate = () => {};
+        component.legalRequirements = [
+          'NS (normal stop',
+          'AS (angled start)',
+          'HS / DS (hill or designated stop)',
+          'Manoeuvres',
+          'ECO (control and planning)',
+          'Show me / Tell me',
+        ];
       });
   }));
 
@@ -49,6 +57,15 @@ describe('LegalRequirementsModal', () => {
     });
 
     it('should call onTerminate when the Terminate test button is clicked', () => {
+      fixture.detectChanges();
+      spyOn(component, 'onTerminate');
+      const button = fixture.debugElement.query(By.css('button.terminate-button'));
+      button.triggerEventHandler('click', null);
+
+      fixture.detectChanges();
+      expect(component.onTerminate).toHaveBeenCalled();
+    });
+    it('should display the legal requirements', () => {
       fixture.detectChanges();
       spyOn(component, 'onTerminate');
       const button = fixture.debugElement.query(By.css('button.terminate-button'));
