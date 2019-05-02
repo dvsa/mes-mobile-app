@@ -1,25 +1,34 @@
 <ion-card class="modal-alert">
   <ion-row>
-    <ion-col class="center-icon">
+    <ion-col class="center-icon" no-padding>
       <ion-icon class="terminate-icon" ios="md-alert"></ion-icon>
     </ion-col>
   </ion-row>
   <ion-row justify-content-center>
-    <ion-col>
-      <div class="modal-alert-header">You've not completed all of the legal requirements</div>
+    <ion-col no-padding>
+      <h2 class="modal-alert-header">You've not completed all of<br/>the legal requirements</h2>
     </ion-col>
   </ion-row>
   <ion-row justify-content-center>
-    <ion-col>
-      <div class="modal-alert-message">To end this test, complete:</div>
+    <ion-col no-padding col-80>
+      <div class="modal-alert-message mes-data">
+        <div class="mes-data">To end this test, complete:</div>
+        <ul *ngIf="legalRequirements.length > 0">
+          <li *ngFor="let requirement of legalRequirements">{{requirement}}</li>
+        </ul>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-72>
+      <button ion-button class="mes-return-button" (click)="onCancel()">
+        <h3>Return to test</h3>
+      </button>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="column-border-top column-border-right">
+    <ion-col class="column-border-top" no-padding>
       <button ion-button clear class="terminate-button" (click)="onTerminate()">Terminate test</button>
-    </ion-col>
-    <ion-col class="column-border-top">
-      <button ion-button clear class="return-button" (click)="onCancel()">Return to test</button>
     </ion-col>
   </ion-row>
 </ion-card>

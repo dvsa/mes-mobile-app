@@ -1,6 +1,13 @@
 end-test-modal {
   @extend .modal-alert-wrapper;
-  padding: 100px 100px 0;
+
+  .modal-alert {
+    width: 400px;
+  }
+
+  .modal-alert-header {
+    margin-top: 40px;
+  }
 
   .mes-primary-button {
     margin-top: 60px;

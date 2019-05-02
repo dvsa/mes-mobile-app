@@ -154,13 +154,21 @@ export class TestReportPage extends BasePageComponent {
         onCancel: this.onCancel,
         onContinue: this.onContinue,
         onTerminate: this.onTerminate,
-      });
+      }, { cssClass: 'mes-modal-alert text-zoom-regular' });
     } else {
       this.modal = this.modalController.create('LegalRequirementsModal', {
         onCancel: this.onCancel,
         onTerminate: this.onTerminate,
         legalRequirements: this.catBLegalRequirements,
-      });
+        // legalRequirements: [
+        //   'NS (normal stop',
+        //   'AS (angled start)',
+        //   'HS / DS (hill or designated stop)',
+        //   'Manoeuvres',
+        //   'ECO (control and planning)',
+        //   'Show me / Tell me',
+        // ],
+      }, { cssClass: 'mes-modal-alert text-zoom-regular' });
     }
     this.modal.present();
   }
