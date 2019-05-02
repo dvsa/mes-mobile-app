@@ -11,14 +11,14 @@ export class LegalRequirementsModal {
   onCancel: Function;
   onTerminate: Function;
 
-  legalRequirements: string[] = [];
+  legalRequirements: string[];
 
   constructor(
     private navParams: NavParams,
   ) {
     this.onCancel = this.navParams.get('onCancel');
     this.onTerminate = this.navParams.get('onTerminate');
-    this.legalRequirements = this.navParams.get('legalRequirements');
+    this.legalRequirements = this.navParams.get('legalRequirements') || [];
   }
 
 }
