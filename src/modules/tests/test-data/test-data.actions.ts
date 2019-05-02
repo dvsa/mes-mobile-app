@@ -40,10 +40,11 @@ export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question corre
 export const TELL_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Tell me question driving fault';
 
 export const SHOW_ME_QUESTION_SELECTED = '[Vehicle Checks] Show me question selected';
-export const SHOW_ME_QUESTION_CORRECT = '[Vehicle Checks] Show me question correct';
+export const SHOW_ME_QUESTION_PASSED = '[Vehicle Checks] Show me question passed';
 export const SHOW_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Show me question driving fault';
 export const SHOW_ME_QUESTION_SERIOUS_FAULT = '[Vehicle Checks] Show me question serious fault';
 export const SHOW_ME_QUESTION_DANGEROUS_FAULT = '[Vehicle Checks] Show me question dangerous fault';
+export const SHOW_ME_QUESTION_REMOVE_FAULT = '[Vehicle Checks] Show me question remove fault';
 
 export interface ManoeuvrePayload {
   manoeuvre: ManoeuvreTypes;
@@ -170,8 +171,24 @@ export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;
 }
 
+export class ShowMeQuestionPassed implements Action {
+  readonly type = SHOW_ME_QUESTION_PASSED;
+}
+
 export class ShowMeQuestionSeriousFault implements Action {
   readonly type = SHOW_ME_QUESTION_SERIOUS_FAULT;
+}
+
+export class ShowMeQuestionDangerousFault implements Action {
+  readonly type = SHOW_ME_QUESTION_DANGEROUS_FAULT;
+}
+
+export class ShowMeQuestionDrivingFault implements Action {
+  readonly type = SHOW_ME_QUESTION_DRIVING_FAULT;
+}
+
+export class ShowMeQuestionRemoveFault implements Action {
+  readonly type = SHOW_ME_QUESTION_REMOVE_FAULT;
 }
 
 export type Types =
@@ -203,4 +220,8 @@ export type Types =
   | TellMeQuestionCorrect
   | TellMeQuestionDrivingFault
   | ShowMeQuestionSelected
-  | ShowMeQuestionSeriousFault;
+  | ShowMeQuestionPassed
+  | ShowMeQuestionSeriousFault
+  | ShowMeQuestionDangerousFault
+  | ShowMeQuestionDrivingFault
+  | ShowMeQuestionRemoveFault;

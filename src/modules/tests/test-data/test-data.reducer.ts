@@ -301,6 +301,17 @@ export function testDataReducer(
           },
         },
       };
+    case testDataActions.SHOW_ME_QUESTION_PASSED:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            ...state.vehicleChecks.showMeQuestion,
+            outcome: CompetencyOutcome.P,
+          },
+        },
+      };
     case testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT:
       return {
         ...state,
@@ -309,6 +320,40 @@ export function testDataReducer(
           showMeQuestion: {
             ...state.vehicleChecks.showMeQuestion,
             outcome: CompetencyOutcome.S,
+          },
+        },
+      };
+    case testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            ...state.vehicleChecks.showMeQuestion,
+            outcome: CompetencyOutcome.D,
+          },
+        },
+      };
+    case testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            ...state.vehicleChecks.showMeQuestion,
+            outcome: CompetencyOutcome.DF,
+          },
+        },
+      };
+    case testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT:
+      const { outcome, ...notOutcome } = state.vehicleChecks.showMeQuestion;
+
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeQuestion: {
+            ...notOutcome,
           },
         },
       };
