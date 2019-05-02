@@ -108,8 +108,23 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   canButtonRipple = () => {
-    // TODO: Implement this
-    return true;
+    if (this.isRemoveFaultMode) {
+      if (this.hasDangerousFault() && this.isDangerousMode) {
+        return true;
+      }
+
+      if (this.hasSeriousFault() && this.isSeriousMode) {
+        return true;
+      }
+
+      if (this.hasShowMeDrivingFault() && !this.isSeriousMode && !this.isDangerousMode) {
+        return true;
+      }
+
+      return false;
+    }
+
+    return !(this.hasDangerousFault() || this.hasSeriousFault() || this.hasShowMeDrivingFault());
   }
 
   addOrRemoveFault = (wasPress: boolean = false): void => {
@@ -143,17 +158,13 @@ export class VehicleCheckComponent implements OnInit {
   }
 
   addFault = (wasPress: boolean): void => {
-    if (this.hasDangerousFault()) {
+    if (this.hasShowMeDrivingFault() || this.hasSeriousFault() || this.hasDangerousFault()) {
       return;
     }
 
     if (this.isDangerousMode) {
       this.store$.dispatch(new ShowMeQuestionDangerousFault());
       this.store$.dispatch(new ToggleDangerousFaultMode());
-      return;
-    }
-
-    if (this.hasSeriousFault()) {
       return;
     }
 
