@@ -20,6 +20,7 @@ import {
   getWeatherConditions,
   getIdentification,
   getIndependentDriving,
+  displayRouteNumber,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { map } from 'rxjs/operators';
@@ -72,6 +73,7 @@ import {
   ShowMeQuestionSelected,
 } from '../../modules/tests/test-data/test-data.actions';
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
+import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -81,6 +83,7 @@ interface OfficePageState {
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
+  displayRouteNumber$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
@@ -125,6 +128,7 @@ export class OfficePage extends BasePageComponent {
     private weatherConditionProvider: WeatherConditionProvider,
     public questionProvider: QuestionProvider,
     public keyboard: Keyboard,
+    private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup({});
@@ -168,6 +172,11 @@ export class OfficePage extends BasePageComponent {
       routeNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
+      ),
+      displayRouteNumber$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getRouteNumber),
+        map(data => displayRouteNumber(data, '1', this.outcomeBehaviourProvider)),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),

@@ -32,7 +32,7 @@
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
 
-          <route-number [routeNumber]="pageState.routeNumber$ | async" (routeNumberChange)="routeNumberChanged($event)"
+          <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async" (routeNumberChange)="routeNumberChanged($event)"
             [formGroup]="form">
           </route-number>
 
