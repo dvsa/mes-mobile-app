@@ -6,6 +6,7 @@ import { TestResult } from './test-result.model';
 export class TestResultProvider {
 
   calculateCatBTestResult = (testdata: TestData): TestResult => {
+    // TODO - This needs to be calculated
     return TestResult.Pass;
   }
 }
