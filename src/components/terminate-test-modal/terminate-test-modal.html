@@ -1,20 +1,20 @@
-<ion-card id="terminate-test-modal-card">
+<ion-card id="terminate-test-modal-card" class="modal-alert">
   <ion-row>
-    <ion-col class="center-icon">
-      <ion-icon class="terminate-icon" ios="ios-alert"></ion-icon>
+    <ion-col class="center-icon" no-padding>
+      <ion-icon class="terminate-icon" ios="md-alert"></ion-icon>
     </ion-col>
   </ion-row>
   <ion-row justify-content-center>
-    <ion-col class="terminate-test-text" col-50>
-      <span class="terminate-test-text">You're about to terminate the test</span>
+    <ion-col no-padding>
+      <h2 class="modal-alert-header">You're about to<br/>terminate the test</h2>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="column-border-top column-border-right">
-      <button ion-button class="terminate-button" (click)="terminationWrapper()">Terminate test</button>
+    <ion-col class="column-border-top column-border-right" no-padding>
+      <button ion-button clear class="terminate-button" (click)="terminationWrapper()">Terminate test</button>
     </ion-col>
-    <ion-col class="column-border-top">
-      <button ion-button class="return-button" (click)="onCancel()">Return to test</button>
+    <ion-col class="column-border-top" no-padding>
+      <button ion-button clear class="return-button" (click)="onCancel()">Return to test</button>
     </ion-col>
   </ion-row>
 </ion-card>

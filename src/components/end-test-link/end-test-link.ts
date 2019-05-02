@@ -17,7 +17,7 @@ export class EndTestLinkComponent {
     this.terminateTestModal = this.modalController.create('TerminateTestModal', {
       onCancel: this.onCancel,
       onTerminate: this.onTerminate,
-    });
+    }, { cssClass: 'mes-modal-alert text-zoom-regular' });
     this.terminateTestModal.present();
   }
 
