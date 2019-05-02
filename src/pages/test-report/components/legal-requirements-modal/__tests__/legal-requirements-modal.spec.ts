@@ -41,7 +41,7 @@ describe('LegalRequirementsModal', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
       fixture.detectChanges();
       spyOn(component, 'onCancel');
-      const button = fixture.debugElement.query(By.css('button.return-button'));
+      const button = fixture.debugElement.query(By.css('button.mes-return-button'));
       button.triggerEventHandler('click', null);
 
       fixture.detectChanges();

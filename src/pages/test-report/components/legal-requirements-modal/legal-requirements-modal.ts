@@ -11,7 +11,7 @@ export class LegalRequirementsModal {
   onCancel: Function;
   onTerminate: Function;
 
-  legalRequirements: string[];
+  legalRequirements: string[] = [];
 
   constructor(
     private navParams: NavParams,
