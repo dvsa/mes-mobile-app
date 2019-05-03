@@ -1,11 +1,19 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'route-number',
   templateUrl: 'route-number.html',
 })
 export class RouteNumberComponent implements OnChanges {
+
+  @Input()
+  display: boolean;
+
+  @Input()
+  outcome: string;
 
   @Input()
   routeNumber: number;
@@ -18,21 +26,33 @@ export class RouteNumberComponent implements OnChanges {
 
   private formControl: FormControl;
 
+  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {}
+
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl(null, [Validators.required]);
+      this.formControl = new FormControl(null);
       this.formGroup.addControl('routeNumber', this.formControl);
+    }
+
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'routeNumber');
+
+    if (visibilityType === 'N') {
+      this.formGroup.get('routeNumber').clearValidators();
+    } else {
+      this.formGroup.get('routeNumber').setValidators([Validators.required]);
     }
     this.formControl.patchValue(this.routeNumber);
   }
 
   routeNumberChanged(routeNumber: string): void {
     if (this.formControl.valid) {
-      this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
+      if (isNumber(routeNumber)) {
+        this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
+      }
     }
   }
 
-  get invalid(): boolean {
+  get invalid() : boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }
 

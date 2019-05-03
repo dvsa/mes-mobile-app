@@ -36,6 +36,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { TestPersistenceProvider } from '../providers/test-persistence/test-persistence';
 import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
+import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @NgModule({
   declarations: [App],
@@ -85,6 +86,7 @@ import { WeatherConditionProvider } from '../providers/weather-conditions/weathe
     Insomnia,
     TestPersistenceProvider,
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+    OutcomeBehaviourMapProvider,
   ],
 })
 export class AppModule {}

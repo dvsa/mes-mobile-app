@@ -1,4 +1,4 @@
-import { getCurrentTest, getTestStatus, getTestOutcome, getTestOutcomeClass, isPassed } from '../tests.selector';
+import { getCurrentTest, getTestStatus, getTestOutcomeClass, isPassed, getTestOutcomeText } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
 import { LogsModel } from '../../logs/logs.model';
@@ -80,7 +80,7 @@ describe('testsSelector', () => {
     });
   });
 
-  describe('getTestOutcome', () => {
+  describe('getTestOutcomeText', () => {
     const testState: StandardCarTestCATBSchema = {
       id: '1',
       activityCode: ActivityCodes.PASS,
@@ -106,17 +106,17 @@ describe('testsSelector', () => {
 
     };
     it('should retrieve a passed result for a pass activity code', () => {
-      const result = getTestOutcome(testState);
+      const result = getTestOutcomeText(testState);
       expect(result).toBe('Passed');
     });
     it('should retrieve an unsuccessful result for a fail activity code', () => {
       testState.activityCode = ActivityCodes.FAIL;
-      const result = getTestOutcome(testState);
+      const result = getTestOutcomeText(testState);
       expect(result).toBe('Unsuccessful');
     });
     it('should retrieve a terminated result for terminated activity code', () => {
       testState.activityCode = ActivityCodes.CANDIDATE_NOT_HAPPY_WITH_AUTHORISED_OCCUPANT;
-      const result = getTestOutcome(testState);
+      const result = getTestOutcomeText(testState);
       expect(result).toBe('Terminated');
     });
   });
@@ -157,8 +157,8 @@ describe('testsSelector', () => {
     });
     it('should return mes-red class for a terminated activity code', () => {
       testState.activityCode = ActivityCodes.ILLEGAL_ACTIVITY_FROM_CANDIDATE;
-      const result = getTestOutcome(testState);
-      expect(result).toBe('Terminated');
+      const result = getTestOutcomeClass(testState);
+      expect(result).toBe('mes-red');
     });
   });
 

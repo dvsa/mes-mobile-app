@@ -14,11 +14,15 @@ import {
   isTellMeQuestionDrivingFault,
   hasVehicleChecksBeenCompleted,
   getCatBLegalRequirements,
+  getShowMeQuestionOptions,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatBLegalRequirements } from '../test-data.models';
 import { initialState } from '../test-data.reducer';
+import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
+import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from '../../../../pages/office/office-behaviour-map';
 
 describe('TestDataSelectors', () => {
   const state: TestData = {
@@ -63,6 +67,34 @@ describe('TestDataSelectors', () => {
       },
     },
   };
+
+  describe('getShowMeQuestionOptions', () => {
+    const outcomeBehaviourMapProvider = new OutcomeBehaviourMapProvider();
+    outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
+
+    const showMeQuestions: ShowMeQuestion[] = [
+      {
+        code: 'S1',
+        description: 'S1 Desc',
+        shortName: 'S1 short',
+      },
+      {
+        code: 'S1',
+        description: 'S1 Desc',
+        shortName: 'S1 short',
+      },
+    ];
+    it('should return the same list of questions if outcome field does not have showNotApplicable set', () => {
+      const result = getShowMeQuestionOptions(showMeQuestions, '1', outcomeBehaviourMapProvider);
+      expect(result).toEqual(showMeQuestions);
+    });
+    it('should return extra question if outcome showNotApplicable set', () => {
+      const result = getShowMeQuestionOptions(showMeQuestions, '4', outcomeBehaviourMapProvider);
+      expect(result.length).toBe(3);
+      expect(result[2].code).toBe('NA');
+    });
+
+  });
 
   describe('getDrivingFaultCount', () => {
     it('should return the driving fault count', () => {

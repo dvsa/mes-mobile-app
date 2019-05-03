@@ -9,7 +9,13 @@ import {
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
-import { getCurrentTest, getTestOutcome, getTestOutcomeClass, isPassed } from '../../modules/tests/tests.selector';
+import {
+  getCurrentTest,
+  getTestOutcome,
+  getTestOutcomeClass,
+  isPassed,
+  getTestOutcomeText,
+} from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
@@ -22,7 +28,7 @@ import {
   getIndependentDriving,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
-import { map } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 import {
   RouteNumberChanged,
   IndependentDrivingTypeChanged,
@@ -53,6 +59,7 @@ import {
   getSelectedTellMeQuestionText,
   getShowMeQuestion,
   getVehicleChecks,
+  getShowMeQuestionOptions,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -72,15 +79,19 @@ import {
   ShowMeQuestionSelected,
 } from '../../modules/tests/test-data/test-data.actions';
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
+import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from './office-behaviour-map';
 
 interface OfficePageState {
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
+  testOutcomeText$: Observable<string>;
   testOutcomeClass$: Observable<string>;
   isPassed$: Observable<boolean>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
+  displayRouteNumber$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
@@ -88,6 +99,7 @@ interface OfficePageState {
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   showMeQuestion$: Observable<ShowMeQuestion>;
+  showMeQuestionOptions$: Observable<ShowMeQuestion[]>;
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
@@ -125,11 +137,13 @@ export class OfficePage extends BasePageComponent {
     private weatherConditionProvider: WeatherConditionProvider,
     public questionProvider: QuestionProvider,
     public keyboard: Keyboard,
+    private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
+    this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
   ionViewDidEnter(): void {
@@ -145,6 +159,9 @@ export class OfficePage extends BasePageComponent {
     this.pageState = {
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
+      ),
+      testOutcomeText$: currentTest$.pipe(
+        select(getTestOutcomeText),
       ),
       testOutcomeClass$: currentTest$.pipe(
         select(getTestOutcomeClass),
@@ -168,6 +185,13 @@ export class OfficePage extends BasePageComponent {
       routeNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
+      ),
+      displayRouteNumber$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getRouteNumber),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestOutcome))),
+        map(([route, outcome])  => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
@@ -197,6 +221,11 @@ export class OfficePage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecks),
         select(getShowMeQuestion),
+      ),
+      showMeQuestionOptions$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getTestOutcome),
+        map(outcome => getShowMeQuestionOptions(this.showMeQuestions, outcome, this.outcomeBehaviourProvider)),
       ),
       tellMeQuestionText$: currentTest$.pipe(
         select(getTestData),
