@@ -1,7 +1,8 @@
 terminate-test-modal {
-  #terminate-test-modal-card {
-    background: map-get($colors-gds, gds-grey-4);
-    border-radius: 14px;
+  @extend .modal-alert-wrapper;
+
+  .modal-alert {
+    width: 400px;
   }
 
   .center-icon {
@@ -9,48 +10,20 @@ terminate-test-modal {
   }
 
   .terminate-icon {
-    padding: 20px 0;
+    margin: 40px 0px 16px;
     font-size: 96px;
   }
 
-  .terminate-test-text {
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 0.27px;
-    line-height: 40px;
-    text-align: center;
-    margin-bottom: 25px;
+  .modal-alert-header {
+    margin: 0 0 36px;
   }
 
   .terminate-button {
-    width: 100%;
-    font-size: 23px;
-    font-weight: 500;
-    background: transparent;
-    color: crimson;
-    &:active {
-      background: inherit;
-    }
+    color: map-get($colors-gds, gds-red);
   }
 
   .return-button {
-    width: 100%;
-    font-size: 23px;
-    font-weight: 500;
-    background: transparent;
-    color: black;
-    &:active {
-      background: inherit;
-    }
+    color: map-get($colors-gds, gds-black);
   }
 
-  .column-border-top {
-    border-top: 1px solid lightgrey;
-    padding-top: 2px;
-  }
-
-  .column-border-right {
-    border-right: 1px solid lightgrey;
-    padding-top: 2px;
-  }
 }
