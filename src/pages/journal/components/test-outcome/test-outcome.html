@@ -22,14 +22,14 @@
       </ion-col>
       <ion-col *ngIf="needsWriteUp()">
         <span>
-          <button class="mes-secondary-button mes-warning-button" ion-button navPush="OfficePage">
+          <button class="mes-secondary-button mes-warning-button" ion-button (click)="writeUpTest()">
             <h3 class="write-up-label">Write-up</h3>
           </button>
         </span>
       </ion-col>
       <ion-col *ngIf="showResumeTestButton()">
         <span>
-          <button class="mes-secondary-button mes-warning-button" ion-button navPush="WaitingRoomPage">
+          <button class="mes-secondary-button mes-warning-button" ion-button (click)="resumeTest()">
             <h3 class="write-up-label">Resume</h3>
           </button>
         </span>

@@ -20,6 +20,8 @@ export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
 export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 
 export const START_TEST = '[TestOutcomeComponent] Start Test';
+// Differs from START_TEST in that it won't trigger the journal -> test state copy effect
+export const ACTIVATE_TEST = '[TestOutcomeComponent] Activate Test';
 
 // Analytic actions
 
@@ -41,20 +43,20 @@ export class LoadJournalSuccess implements Action {
 
   // TODO: declare payload with the correct type when we have a slot type in place
   constructor(
-    public payload: {[k: string]: SlotItem[]},
+    public payload: { [k: string]: SlotItem[] },
     public onlineOffline: ConnectionStatus,
     public unAuthenticatedMode: boolean,
-    public lastRefreshed: Date) {}
+    public lastRefreshed: Date) { }
 }
 
 export class LoadJournalFailure implements Action {
   readonly type = LOAD_JOURNAL_FAILURE;
-  constructor(public payload: MesError) {}
+  constructor(public payload: MesError) { }
 }
 
 export class LoadJournalSilentFailure implements Action {
   readonly type = LOAD_JOURNAL_SILENT_FAILURE;
-  constructor(public payload: MesError) {}
+  constructor(public payload: MesError) { }
 }
 
 export class UnloadJournal implements Action {
@@ -67,7 +69,7 @@ export class UnsetError implements Action {
 
 export class ClearChangedSlot implements Action {
   readonly type = CLEAR_CHANGED_SLOT;
-  constructor(public slotId: number) {}
+  constructor(public slotId: number) { }
 }
 
 export class SelectPreviousDay implements Action {
@@ -80,7 +82,7 @@ export class SelectNextDay implements Action {
 
 export class SetSelectedDate implements Action {
   readonly type = SET_SELECTED_DAY;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class SetupPolling implements Action {
@@ -97,22 +99,27 @@ export class JournalViewDidEnter implements Action {
 
 export class JournalNavigateDay implements Action {
   readonly type = JOURNAL_NAVIGATE_DAY;
-  constructor(public day: string) {}
+  constructor(public day: string) { }
 }
 
 export class JournalRefreshError implements Action {
   readonly type = JOURNAL_REFRESH_ERROR;
-  constructor(public errorDescription: string, public errorMessage: string) {}
+  constructor(public errorDescription: string, public errorMessage: string) { }
 }
 
 export class JournalRefresh implements Action {
   readonly type = JOURNAL_REFRESH;
-  constructor(public mode: string) {}
+  constructor(public mode: string) { }
 }
 
 export class StartTest implements Action {
   readonly type = START_TEST;
-  constructor(public slotId: number) {}
+  constructor(public slotId: number) { }
+}
+
+export class ActivateTest implements Action {
+  readonly type = ACTIVATE_TEST;
+  constructor(public slotId: number) { }
 }
 
 export type JournalActionTypes =
@@ -132,4 +139,5 @@ export type JournalActionTypes =
   | JournalNavigateDay
   | JournalRefreshError
   | JournalRefresh
-  | StartTest;
+  | StartTest
+  | ActivateTest;
