@@ -20,6 +20,7 @@ export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
 export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 
 export const START_TEST = '[TestOutcomeComponent] Start Test';
+// Differs from START_TEST in that it won't trigger the journal -> test state copy effect
 export const ACTIVATE_TEST = '[TestOutcomeComponent] Activate Test';
 
 // Analytic actions
