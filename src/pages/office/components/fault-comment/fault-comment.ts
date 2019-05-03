@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CommentedCompetency } from '../../../../shared/models/fault-marking.model';
+import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../../shared/models/fault-marking.model';
 
 @Component({
   selector: 'fault-comment',
@@ -12,7 +12,7 @@ export class FaultCommentComponent implements OnChanges {
   parentForm: FormGroup;
 
   @Input()
-  faultComment: CommentedCompetency;
+  faultComment: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency);
 
   @Input()
   faultType: string;
@@ -32,7 +32,7 @@ export class FaultCommentComponent implements OnChanges {
 
   faultCommentChanged(newComment: string): void {
     const { comment, ...commentedCompetencyWithoutComment } = this.faultComment;
-    const commentedCompetency: CommentedCompetency = {
+    const commentedCompetency: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency) = {
       comment: newComment,
       ...commentedCompetencyWithoutComment,
     };
