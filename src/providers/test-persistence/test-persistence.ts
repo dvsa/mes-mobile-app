@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { getTests, TestsModel } from '../../modules/tests/tests.reducer';
+import { getTests } from '../../modules/tests/tests.reducer';
 import { switchMap, take, mapTo } from 'rxjs/operators';
 import { DataStoreProvider } from '../data-store/data-store';
+import { TestsModel } from '../../modules/tests/tests.model';
 
 @Injectable()
 export class TestPersistenceProvider {

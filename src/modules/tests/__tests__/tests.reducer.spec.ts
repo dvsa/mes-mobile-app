@@ -1,10 +1,11 @@
-import { testsReducer, TestsModel } from '../tests.reducer';
+import { testsReducer } from '../tests.reducer';
 import * as journalActions from '../../../pages/journal/journal.actions';
 import * as candidateReducer from '../candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
 import { TestStatus } from '../test-status/test-status.model';
 import * as testStatusReducer from '../test-status/test-status.reducer';
+import { TestsModel } from '../tests.model';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };
@@ -55,7 +56,7 @@ describe('testsReducer', () => {
       },
     };
 
-    const result = testsReducer(state, { type: 'dummy-action' });
+    const result = testsReducer(state, new journalActions.JournalViewDidEnter());
 
     expect(testStatusReducer.testStatusReducer).toHaveBeenCalled();
     expect(result.testLifecycles['123']).toBe(TestStatus.Started);

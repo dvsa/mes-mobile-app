@@ -9,11 +9,11 @@ import { TestReportEffects } from '../test-report.effects';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
 import * as journalActions from '../../journal/journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
 import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
-import { TestResult } from '../../../providers/test-result/test-result.model';
 
 export class TestActions extends Actions {
   constructor() {
@@ -100,13 +100,13 @@ describe('Test Report Effects', () => {
 
     it('should dispatch an action containing the correct result for a test', (done) => {
        // ARRANGE
-      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue(TestResult.Fail);
+      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue('1');
        // ACT
       actions$.next(new testReportActions.CalculateTestResult());
        // ASSERT
       effects.calculateTestResult$.subscribe((result) => {
         expect(testResultProvider.calculateCatBTestResult).toHaveBeenCalled();
-        expect(result).toEqual(new testReportActions.UpdateTestResult(TestResult.Fail));
+        expect(result).toEqual(new testsActions.SetActivityCode('1'));
         done();
       });
     });

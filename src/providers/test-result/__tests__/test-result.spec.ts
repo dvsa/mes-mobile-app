@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { TestResultProvider } from '../test-result';
-import { TestResult } from '../test-result.model';
 
 describe('TestResultCalculatorProvider', () => {
 
@@ -18,7 +17,7 @@ describe('TestResultCalculatorProvider', () => {
 
   describe('calculateCatBTestResult', () => {
     it('should return a Pass', () => {
-      expect(testResultProvider.calculateCatBTestResult({})).toBe(TestResult.Pass);
+      expect(testResultProvider.calculateCatBTestResult({})).toBe('1');
     });
   });
 });
