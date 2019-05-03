@@ -5,6 +5,8 @@ import { pickBy, sumBy, endsWith, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { default as tellMeQuestions } from '../../../providers/question/tell-me-question.constants';
 import { default as showMeQuestions } from '../../../providers/question/show-me-question.constants';
+import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
+import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -102,3 +104,19 @@ export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
 
 export const getShowMeQuestion = (state: VehicleChecks) =>
   showMeQuestions.find(question => question.code === get(state, 'showMeQuestion.code'));
+
+export const getShowMeQuestionOptions = (
+  questions: ShowMeQuestion[],
+  outcome: string,
+  provider: OutcomeBehaviourMapProvider) => {
+  const filteredQuestions: ShowMeQuestion[] = [];
+  const showNotApplicable = provider.showNotApplicable(outcome, 'showMeQuestion');
+  questions.forEach((value) => {
+    filteredQuestions.push(value);
+  });
+
+  if (showNotApplicable) {
+    filteredQuestions.push({ code: 'NA', description: 'Not applicable', shortName: 'Not applicable' });
+  }
+  return filteredQuestions;
+};

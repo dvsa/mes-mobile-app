@@ -64,7 +64,7 @@
           </ion-row>
 
           <show-me-question [formGroup]="form" [showMeQuestion]="pageState.showMeQuestion$ | async"
-            [showMeQuestionOptions]="showMeQuestions" (showMeQuestionChange)="showMeQuestionChanged($event)">
+            [showMeQuestionOptions]="pageState.showMeQuestionOptions$ | async" (showMeQuestionChange)="showMeQuestionChanged($event)">
           </show-me-question>
 
           <weather-conditions [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"

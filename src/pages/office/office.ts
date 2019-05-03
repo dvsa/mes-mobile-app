@@ -54,6 +54,7 @@ import {
   getSelectedTellMeQuestionText,
   getShowMeQuestion,
   getVehicleChecks,
+  getShowMeQuestionOptions,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -91,6 +92,7 @@ interface OfficePageState {
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   showMeQuestion$: Observable<ShowMeQuestion>;
+  showMeQuestionOptions$: Observable<ShowMeQuestion[]>;
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
@@ -206,6 +208,9 @@ export class OfficePage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecks),
         select(getShowMeQuestion),
+      ),
+      showMeQuestionOptions$: currentTest$.pipe(
+        map(() => getShowMeQuestionOptions(this.showMeQuestions, '4', this.outcomeBehaviourProvider)),
       ),
       tellMeQuestionText$: currentTest$.pipe(
         select(getTestData),
