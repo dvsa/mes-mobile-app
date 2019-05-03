@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import { TestResult } from './test-result.model';
+import { TestData, ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCodes } from '../../shared/models/activity-codes';
 
 @Injectable()
 export class TestResultProvider {
 
-  calculateCatBTestResult = (testdata: TestData): TestResult => {
+  calculateCatBTestResult = (testdata: TestData): ActivityCode => {
     // TODO - This needs to be calculated
-    return TestResult.Pass;
+    return ActivityCodes.PASS;
   }
 }

@@ -2,14 +2,12 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import * as testReportActions from './test-report.actions';
 import { TestReportModel } from './test-report.model';
-import { TestResult } from '../../providers/test-result/test-result.model';
 
 export const initialState: TestReportModel = {
   seriousMode: false,
   dangerousMode: false,
   removeFaultMode: false,
   isValid: false,
-  testResult: TestResult.NotCalculated,
 };
 
 export function testReportReducer(state = initialState, action: testReportActions.Types): TestReportModel {
@@ -33,11 +31,6 @@ export function testReportReducer(state = initialState, action: testReportAction
       return {
         ...state,
         isValid: action.payload,
-      };
-    case testReportActions.UPDATE_TEST_RESULT:
-      return {
-        ...state,
-        testResult : action.payload,
       };
     default:
       return state;
