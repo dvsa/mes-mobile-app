@@ -23,6 +23,9 @@ import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults } fro
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { getTestReportState } from '../test-report/test-report.reducer';
+import { getTestResult } from '../test-report/test-report.selector';
+import { TestResult } from '../../providers/test-result/test-result.model';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -31,6 +34,7 @@ interface DebriefPageState {
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
+  testResult$: Observable<TestResult>;
 }
 
 @IonicPage()
@@ -55,7 +59,6 @@ export class DebriefPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
-    this.outcome = this.navParams.get('outcome');
   }
 
   ngOnInit(): void {
@@ -113,16 +116,16 @@ export class DebriefPage extends BasePageComponent {
         select(getEco),
         select(getEcoFaultText),
       ),
+      testResult$: this.store$.pipe(
+        select(getTestReportState),
+        select(getTestResult),
+      ),
     };
 
-    const { seriousFaults$, dangerousFaults$, drivingFaults$, etaFaults$, ecoFaults$ } = this.pageState;
+    const { testResult$ } = this.pageState;
 
     const merged$ = merge(
-      seriousFaults$,
-      dangerousFaults$,
-      drivingFaults$,
-      etaFaults$,
-      ecoFaults$,
+      testResult$.pipe(map(result => this.outcome = result)),
     );
 
     this.subscription = merged$.subscribe();
@@ -141,7 +144,7 @@ export class DebriefPage extends BasePageComponent {
 
   endDebrief(): void {
     this.store$.dispatch(new PersistTests());
-    if (this.outcome === 'pass') {
+    if (this.outcome === TestResult.Pass) {
       this.navController.push('PassFinalisationPage');
       return;
     }
