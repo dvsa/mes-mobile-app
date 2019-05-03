@@ -62,4 +62,16 @@ describe('testsReducer', () => {
     expect(result.testLifecycles['123']).toBe(TestStatus.Started);
     expect(result.testLifecycles['456']).toBe(TestStatus.Decided);
   });
+
+  it('should assign the slot ID as the current test when a test is activated', () => {
+    const state: TestsModel = {
+      currentTest: { slotId: '123' },
+      startedTests: {},
+      testLifecycles: {},
+    };
+
+    const result = testsReducer(state, new journalActions.ActivateTest(456));
+
+    expect(result.currentTest.slotId).toBe('456');
+  });
 });
