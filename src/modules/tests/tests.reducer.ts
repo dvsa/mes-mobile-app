@@ -1,8 +1,8 @@
 import * as journalActions from '../../pages/journal/journal.actions';
+import * as testActions from './tests.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { testDataReducer } from './test-data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
@@ -13,21 +13,10 @@ import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { testStatusReducer } from './test-status/test-status.reducer';
-import { TestStatus } from './test-status/test-status.model';
 import { testCentreReducer } from './test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
 import { examinerReducer } from './examiner/examiner.reducer';
-import { LOAD_PERSISTED_TESTS_SUCCESS, LoadPersistedTestsSuccess } from './tests.actions';
-
-export interface CurrentTest {
-  slotId: string;
-}
-
-export interface TestsModel {
-  currentTest: CurrentTest;
-  startedTests: { [slotId: string]: StandardCarTestCATBSchema };
-  testLifecycles: { [slotId: string]: TestStatus };
-}
+import { TestsModel } from './tests.model';
 
 const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -43,17 +32,37 @@ const initialState: TestsModel = {
  */
 export function testsReducer(
   state = initialState,
-  action: Action,
-) {
-  if (action.type === LOAD_PERSISTED_TESTS_SUCCESS) {
-    return (<LoadPersistedTestsSuccess>action).tests;
-  }
+  action: testActions.Types | journalActions.JournalActionTypes) {
 
   const slotId = deriveSlotId(state, action);
-  if (!slotId) {
-    return state;
-  }
 
+  switch (action.type){
+    case testActions.LOAD_PERSISTED_TESTS_SUCCESS:
+      return (<testActions.LoadPersistedTestsSuccess>action).tests;
+    case testActions.SET_ACTIVITY_CODE:
+      return {
+        ...state,
+        startedTests: {
+          ...state.startedTests,
+          [slotId]: {
+            ...state.startedTests[slotId],
+            activityCode: action.payload,
+          },
+        },
+      };
+    default:
+      return slotId ? createStateObject(state, action, slotId) : state;
+  }
+}
+
+const deriveSlotId = (state: TestsModel, action: Action): string | null => {
+  if (action instanceof journalActions.StartTest || action instanceof journalActions.ActivateTest) {
+    return `${action.slotId}`;
+  }
+  return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
+};
+
+const createStateObject = (state: TestsModel, action: Action, slotId: string) => {
   return {
     ...state,
     startedTests: {
@@ -80,8 +89,8 @@ export function testsReducer(
             examiner: examinerReducer,
             testCentre: testCentreReducer,
           },
-          // @ts-ignore
-        )(state.startedTests[slotId], action),
+        // @ts-ignore
+      )(state.startedTests[slotId], action),
       },
     },
     currentTest: {
@@ -92,13 +101,6 @@ export function testsReducer(
       [slotId]: testStatusReducer(state.testLifecycles[slotId], action),
     },
   };
-}
-
-const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof journalActions.StartTest || action instanceof journalActions.ActivateTest) {
-    return `${action.slotId}`;
-  }
-  return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };
 
 export const getTests = createFeatureSelector<TestsModel>('tests');

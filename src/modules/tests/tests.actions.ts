@@ -1,10 +1,11 @@
 import { Action } from '@ngrx/store';
-
-import { TestsModel } from './tests.reducer';
+import { TestsModel } from './tests.model';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 export const PERSIST_TESTS = '[Tests] Persist';
 export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
 export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
+export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
 
 export class PersistTests implements Action {
   readonly type = PERSIST_TESTS;
@@ -19,7 +20,13 @@ export class LoadPersistedTestsSuccess implements Action {
   constructor(public tests: TestsModel) {}
 }
 
+export class SetActivityCode implements Action {
+  readonly type = SET_ACTIVITY_CODE;
+  constructor(public payload: ActivityCode) {}
+}
+
 export type Types =
   | PersistTests
   | LoadPersistedTests
-  | LoadPersistedTestsSuccess;
+  | LoadPersistedTestsSuccess
+  | SetActivityCode;

@@ -1,5 +1,5 @@
-import { TestResult } from '../test-result.model';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 
 export class TestResultProviderMock {
-  calculateCatBTestResult = jasmine.createSpy('calculateCatBTestResult').and.returnValue(TestResult.Pass);
+  calculateCatBTestResult = jasmine.createSpy('calculateCatBTestResult').and.returnValue(ActivityCodes.PASS);
 }

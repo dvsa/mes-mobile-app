@@ -10,6 +10,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
 import * as testReportActions from './test-report.actions';
+import * as testsActions from '../../modules/tests/tests.actions';
 import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 
@@ -61,7 +62,7 @@ export class TestReportEffects {
       ),
     ),
     switchMap(([action, currentTest]) => {
-      return of(new testReportActions.UpdateTestResult(
+      return of(new testsActions.SetActivityCode(
         this.testResultProvider.calculateCatBTestResult(currentTest.testData)));
     }),
   );

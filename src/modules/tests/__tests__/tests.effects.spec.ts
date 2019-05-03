@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { TestPersistenceProviderMock } from '../../../providers/test-persistence/__mocks__/test-persistence.mock';
 import * as testsActions from '../tests.actions';
-import { TestsModel } from '../tests.reducer';
+import { TestsModel } from '../tests.model';
 
 describe('Tests Effects', () => {
 

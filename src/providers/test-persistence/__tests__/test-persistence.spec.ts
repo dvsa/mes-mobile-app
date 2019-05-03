@@ -3,7 +3,7 @@ import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { TestPersistenceProvider } from '../test-persistence';
 import { StoreModule } from '@ngrx/store';
-import { TestsModel } from '../../../modules/tests/tests.reducer';
+import { TestsModel } from '../../../modules/tests/tests.model';
 
 describe('TestPersistenceProvider', () => {
   let testPersistenceProvider: TestPersistenceProvider;

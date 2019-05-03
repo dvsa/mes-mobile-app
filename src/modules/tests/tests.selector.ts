@@ -1,6 +1,6 @@
-import { TestsModel } from './tests.reducer';
 import { TestStatus } from './test-status/test-status.model';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { TestsModel } from './tests.model';
 
 // temporary determination of test failure and success until service
 // that imnplements full business logic is implemented.
