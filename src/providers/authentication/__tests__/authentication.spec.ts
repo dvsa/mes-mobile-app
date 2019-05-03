@@ -89,11 +89,21 @@ describe('Authentication', () => {
       expect(authenticationProvider.aquireTokenSilently).toHaveBeenCalledTimes(1);
     });
 
-    it('should set the correct employeeId', async () => {
+    it('should set the correct employeeId when it is an array', async () => {
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
       expect(authenticationProvider.getEmployeeId()).toEqual('a');
+    });
+
+    it('should set the correct employeeId when it is a string', async () => {
+      authenticationProvider.jwtDecode = () => ({
+        'local-employeeIdKey': 'string',
+      });
+      await authenticationProvider.login();
+
+      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      expect(authenticationProvider.getEmployeeId()).toEqual('string');
     });
 
     describe('logout', () => {

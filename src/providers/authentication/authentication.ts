@@ -139,8 +139,8 @@ export class AuthenticationProvider {
 
   private successfulLogin = (authResponse: AuthenticationResult) => {
     const decodedToken = this.jwtDecode(authResponse.accessToken);
-    const employeeId = decodedToken[this.employeeIdKey][0];
-    this.employeeId = employeeId;
+    const employeeId = decodedToken[this.employeeIdKey];
+    this.employeeId = Array.isArray(employeeId) ? employeeId[0] : employeeId;
 
     this.isUserAuthenticated = true;
   }
