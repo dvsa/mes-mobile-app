@@ -20,6 +20,7 @@ import {
   TogglePlanningEco,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -52,6 +53,10 @@ describe('DebriefPage', () => {
                   testRequirements: {},
                   ETA: {},
                   eco: {},
+                  vehicleChecks: {
+                    tellMeQuestion: {},
+                    showMeQuestion: {},
+                  },
                 },
               },
             },
@@ -73,6 +78,7 @@ describe('DebriefPage', () => {
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
       });
   }));
 
@@ -86,21 +92,32 @@ describe('DebriefPage', () => {
   describe('DOM', () => {
     // Unit tests for the components template
 
-    it('should display passed container if passed is true', () => {
+    it('should display passed container if outcome is `passed`', () => {
       component.outcome = 'pass';
 
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.passed'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
     });
-    it('should display failed container if passed is false', () => {
+    it('should display failed container if outcome is `fail`', () => {
       component.outcome = 'fail';
 
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.failed'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
+    });
+    it('should display terminated container if outcome is `terminated`', () => {
+      component.outcome = 'terminated';
+
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('.terminated'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
 
     it('should not display ETA fault container if there are no ETA faults', () => {
@@ -161,6 +178,10 @@ describe('DebriefPage', () => {
     });
 
     describe('endDebrief', () => {
+      it('should dispatch the PersistTests action', () => {
+        component.endDebrief();
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests);
+      });
       it('should navigate to PassFinalisationPage when outcome = pass', () => {
         component.outcome = 'pass';
         component.endDebrief();

@@ -2,8 +2,8 @@
 import { ManoeuvresComponent } from './../components/manoeuvres/manoeuvres';
 import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, ModalControllerMock } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
 import { AppModule } from '../../../app/app.module';
@@ -27,10 +27,16 @@ import { ControlledStopComponent } from '../components/controlled-stop/controlle
 import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
 import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
 import { EcoComponent } from '../components/eco/eco';
+import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
+import {
+  TestReportValidatorProviderMock,
+} from '../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
+import { ModalEvent } from '../test-report.constants';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
+  let navController: NavController;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -82,18 +88,29 @@ describe('TestReportPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
+        { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(TestReportPage);
         component = fixture.componentInstance;
+        navController = TestBed.get(NavController);
       });
   }));
 
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    describe('onModalDismiss', () => {
+      it('should navigate to debrief page when passed a CONTINUE event', () => {
+        component.onModalDismiss(ModalEvent.CONTINUE);
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe('DebriefPage');
+      });
     });
   });
 
@@ -119,4 +136,14 @@ describe('TestReportPage', () => {
     });
 
   });
+
+  describe('End Test Button', () => {
+    it('should call the end test function', () => {
+      spyOn(component, 'onEndTestClick');
+      const endTestButton = fixture.debugElement.query(By.css('#end-test-button'));
+      endTestButton.triggerEventHandler('click', null);
+      expect(component.onEndTestClick).toHaveBeenCalled();
+    });
+  });
+
 });

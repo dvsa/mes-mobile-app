@@ -7,7 +7,7 @@ export enum competencyLabels  {
   controlsParkingBrake = 'Parking brake',
   controlsSteering  = 'Steering',
   precautions  = 'Precautions',
-  ancillaryControls  = 'Ancillary Controls',
+  ancillaryControls  = 'Ancillary controls',
   moveOffSafety  = 'Safety',
   moveOffControl  = 'Control',
   useOfMirrorsSignalling  = 'Signalling',

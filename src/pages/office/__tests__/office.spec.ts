@@ -37,6 +37,7 @@ import { AdditionalInformationComponent } from '../components/additional-informa
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
+import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -218,6 +219,47 @@ describe('OfficePage', () => {
         component.pageState.displayDrivingFaultComments$ = of(false);
         fixture.detectChanges();
         expect(drivingFaultCommentCard.shouldRender).toBeFalsy();
+      });
+    });
+
+    describe('driving fault overview', () => {
+      const drivingFaults: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [
+        {
+          competencyIdentifier: 'signalsTimed',
+          competencyDisplayName: 'Signals - Timed',
+          faultCount: 3,
+          comment: 'dummy',
+        },
+        {
+          competencyIdentifier: 'useOfSpeed',
+          competencyDisplayName: 'Use of speed',
+          faultCount: 1,
+          comment: 'dummy',
+        },
+      ];
+      it('should display a driving faults badge with the count for each type of driving fault on the test', () => {
+        fixture.detectChanges();
+        component.pageState.drivingFaults$ = of(drivingFaults);
+        component.pageState.drivingFaultCount$ = of(4);
+        component.pageState.displayDrivingFaultComments$ = of(false);
+        fixture.detectChanges();
+
+        const drivingFaultBadges = fixture.debugElement.queryAll(By.css('driving-faults-badge'));
+        expect(drivingFaultBadges.length).toBe(2);
+        expect(drivingFaultBadges[0].componentInstance.count).toBe(3);
+        expect(drivingFaultBadges[1].componentInstance.count).toBe(1);
+      });
+      it('should render the display name for each driving fault', () => {
+        fixture.detectChanges();
+        component.pageState.drivingFaults$ = of(drivingFaults);
+        component.pageState.drivingFaultCount$ = of(4);
+        component.pageState.displayDrivingFaultComments$ = of(false);
+        fixture.detectChanges();
+
+        const faultLabels = fixture.debugElement.queryAll(By.css('.fault-label'));
+        expect(faultLabels.length).toBe(2);
+        expect(faultLabels[0].nativeElement.innerHTML).toBe('Signals - Timed');
+        expect(faultLabels[1].nativeElement.innerHTML).toBe('Use of speed');
       });
     });
   });

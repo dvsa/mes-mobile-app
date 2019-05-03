@@ -33,6 +33,7 @@ import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -139,6 +140,7 @@ export class PassFinalisationPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      this.store$.dispatch(new PersistTests());
       this.navCtrl.push('HealthDeclarationPage');
     }
   }

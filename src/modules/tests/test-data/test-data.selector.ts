@@ -7,6 +7,7 @@ import { default as tellMeQuestions } from '../../../providers/question/tell-me-
 import { default as showMeQuestions } from '../../../providers/question/show-me-question.constants';
 import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { CatBLegalRequirements } from './test-data.models';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -14,7 +15,7 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
 
   // The way how we store the driving faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
-  const { drivingFaults, manoeuvres, controlledStop } = data;
+  const { drivingFaults, manoeuvres, controlledStop, vehicleChecks } = data;
 
   const drivingFaultSumOfSimpleCompetencies =
     Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
@@ -24,9 +25,25 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
   const result =
     drivingFaultSumOfSimpleCompetencies +
     sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF) +
+    sumVehicleCheckFaults(vehicleChecks) +
     controlledStopHasDrivingFault;
 
   return result;
+};
+
+export const sumVehicleCheckFaults = (vehicleChecks: VehicleChecks): number => {
+
+  const { showMeQuestion, tellMeQuestion } = vehicleChecks;
+
+  if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
+    return 0;
+  }
+
+  if (showMeQuestion.outcome === CompetencyOutcome.DF || tellMeQuestion.outcome === CompetencyOutcome.DF) {
+    return 1;
+  }
+
+  return 0;
 };
 
 export const sumManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): number => {
@@ -46,6 +63,7 @@ export const hasDangerousFault = (data: TestData, competency: Competencies) => d
 export const getTestRequirements = (data: TestData) => data.testRequirements;
 
 export const getETA = (data: TestData) => data.ETA;
+
 export const getETAFaultText = (data: ETA) => {
   if (!data) return;
   if (data.physical && !data.verbal) return 'Physical';
@@ -53,11 +71,13 @@ export const getETAFaultText = (data: ETA) => {
   if (data.physical && data.verbal) return 'Physical and Verbal';
   return;
 };
+
 export const hasExaminerTakenAction = (data: ETA, action: ExaminerActions) => {
   return data[action];
 };
 
 export const getEco = (data: TestData) => data.eco;
+
 export const getEcoFaultText = (data: Eco) => {
   if (!data) return;
   if (data.adviceGivenControl && !data.adviceGivenPlanning) return 'Control';
@@ -119,4 +139,33 @@ export const getShowMeQuestionOptions = (
     filteredQuestions.push({ code: 'NA', description: 'Not applicable', shortName: 'Not applicable' });
   }
   return filteredQuestions;
+};
+
+export const hasVehicleChecksBeenCompleted = (data: TestData): boolean => {
+  const showMeQuestionOutcome = data.vehicleChecks.showMeQuestion.outcome;
+  const tellMeQuestionOutcome = data.vehicleChecks.tellMeQuestion.outcome;
+
+  return (
+    showMeQuestionOutcome === CompetencyOutcome.P ||
+    showMeQuestionOutcome === CompetencyOutcome.DF ||
+    showMeQuestionOutcome === CompetencyOutcome.S ||
+    showMeQuestionOutcome === CompetencyOutcome.D)
+  && (
+      tellMeQuestionOutcome === CompetencyOutcome.P ||
+      tellMeQuestionOutcome === CompetencyOutcome.DF ||
+      tellMeQuestionOutcome === CompetencyOutcome.S ||
+      tellMeQuestionOutcome === CompetencyOutcome.D
+  );
+};
+
+export const getCatBLegalRequirements = (data: TestData): CatBLegalRequirements => {
+  return {
+    normalStart1: data.testRequirements.normalStart1 || false,
+    normalStart2: data.testRequirements.normalStart2 || false,
+    angledStart: data.testRequirements.angledStart || false,
+    hillStart: data.testRequirements.hillStart || false,
+    manoeuvre: hasManoeuvreBeenCompleted(data) || false,
+    vehicleChecks: hasVehicleChecksBeenCompleted(data) || false,
+    eco: data.eco.completed || false,
+  };
 };

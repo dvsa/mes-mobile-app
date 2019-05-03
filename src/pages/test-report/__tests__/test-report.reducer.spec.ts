@@ -1,5 +1,10 @@
 import { testReportReducer, initialState } from '../test-report.reducer';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../test-report.actions';
+import {
+  ToggleSeriousFaultMode,
+  ToggleDangerousFaultMode,
+  ValidateTestResult,
+  UpdateTestResult } from '../test-report.actions';
+import { TestResult } from '../../../providers/test-result/test-result.model';
 
 describe('TestReportReducer reducer', () => {
   describe('TOGGLE_SERIOUS_FAULT_MODE', () => {
@@ -28,6 +33,18 @@ describe('TestReportReducer reducer', () => {
       };
       const result = testReportReducer(state, new ToggleDangerousFaultMode());
       expect(result.dangerousMode).toBeFalsy();
+    });
+  });
+  describe('VALIDATE_TEST', () => {
+    it('should update isValid based on the value of a ValidateTestResult payload', () => {
+      const result = testReportReducer(initialState, new ValidateTestResult(true));
+      expect(result.isValid).toBeTruthy();
+    });
+  });
+  describe('UPDATE_TEST_RESULT', () => {
+    it('should update testResult based on the value of a UpdateTestResult payload', () => {
+      const result = testReportReducer(initialState, new UpdateTestResult(TestResult.Fail));
+      expect(result.testResult).toBe(TestResult.Fail);
     });
   });
 });
