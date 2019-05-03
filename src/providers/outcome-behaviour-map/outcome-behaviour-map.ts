@@ -1,23 +1,44 @@
 import { Injectable } from '@angular/core';
-import { behaviourMap } from './outcome-behaviour-map.constants';
+import { OutcomeBehaviourMapping } from './outcome-behaviour-map.model';
 
 @Injectable()
 export class OutcomeBehaviourMapProvider {
 
+  behaviourMap: OutcomeBehaviourMapping = {};
+
+  setBehaviourMap(map: OutcomeBehaviourMapping) {
+    this.behaviourMap = map;
+  }
   getVisibilityType(outcomeId: string, fieldName: string): string {
-    const mappedOutcome = behaviourMap[outcomeId];
+    const mappedOutcome = this.behaviourMap[outcomeId];
     if (!mappedOutcome) {
-      return 'U';
+      return 'N';
     }
     const field = mappedOutcome[fieldName];
     if (!field) {
-      return 'U';
+      return 'N';
     }
     return field.display;
   }
 
+  isVisible(outcomeId: string, fieldName: string, value: any): boolean {
+    const mappedOutcome = this.behaviourMap[outcomeId];
+    if (!mappedOutcome) {
+      return false;
+    }
+    const field = mappedOutcome[fieldName];
+    if (!field) {
+      return false;
+    }
+
+    if (field.display === 'A' && value !== null) {
+      return true;
+    }
+    return field.display === 'Y';
+  }
+
   hasDefault(outcomeId: string, fieldName: string): boolean {
-    const mappedOutcome = behaviourMap[outcomeId];
+    const mappedOutcome = this.behaviourMap[outcomeId];
     if (!mappedOutcome) {
       return false;
     }
@@ -33,7 +54,7 @@ export class OutcomeBehaviourMapProvider {
   }
 
   getDefault(outcomeId: string, fieldName: string): string {
-    const mappedOutcome = behaviourMap[outcomeId];
+    const mappedOutcome = this.behaviourMap[outcomeId];
     if (!mappedOutcome) {
       return null;
     }
@@ -49,12 +70,15 @@ export class OutcomeBehaviourMapProvider {
   }
 
   showNotApplicable(outcomeId: string, fieldName: string): boolean {
-    const mappedOutcome = behaviourMap[outcomeId];
+    const mappedOutcome = this.behaviourMap[outcomeId];
     if (!mappedOutcome) {
       return false;
     }
     const field = mappedOutcome[fieldName];
     if (!field) {
+      return false;
+    }
+    if (!field.showNotApplicable) {
       return false;
     }
     return field.showNotApplicable;

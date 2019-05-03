@@ -20,7 +20,6 @@ import {
   getWeatherConditions,
   getIdentification,
   getIndependentDriving,
-  displayRouteNumber,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { map } from 'rxjs/operators';
@@ -75,6 +74,7 @@ import {
 } from '../../modules/tests/test-data/test-data.actions';
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from './office-behaviour-map';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -136,6 +136,7 @@ export class OfficePage extends BasePageComponent {
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
+    this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
   ionViewDidEnter(): void {
@@ -178,7 +179,7 @@ export class OfficePage extends BasePageComponent {
       displayRouteNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
-        map(data => displayRouteNumber(data, '1', this.outcomeBehaviourProvider)),
+        map(route  => this.outcomeBehaviourProvider.isVisible('1', 'routeNumber', route)),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),

@@ -1,8 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { OutcomeBehaviourMapProvider } from '../outcome-behaviour-map';
+import { OutcomeBehaviourMapping } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map.model';
 
 fdescribe('OutcomeBehaviourMapProvider', () => {
   let outcomeBehaviourMapProvider: OutcomeBehaviourMapProvider;
+
+  const behaviourMap: OutcomeBehaviourMapping = {
+    ['1']: {
+      ['routeNumber']: { display: 'Y', defaultValue: null, showNotApplicable: false },
+      ['independentDriving']: { display: 'Y', showNotApplicable: false },
+      ['showMeQuestion']: { display: 'Y', defaultValue: '', showNotApplicable: false },
+      ['faultComment']: { display: 'A', showNotApplicable: false },
+    },
+    ['3']: {
+      ['routeNumber']: { display: 'N', defaultValue: '1', showNotApplicable: false },
+      ['independentDriving']: { display: 'N', showNotApplicable: false },
+      ['showMeQuestion']: { display: 'N', showNotApplicable: false },
+      ['faultComment']: { display: 'A', showNotApplicable: false },
+    },
+    ['4']: {
+      ['routeNumber']: { display: 'Y' },
+      ['independentDriving']: { display: 'Y', showNotApplicable: true },
+      ['showMeQuestion']: { display: 'Y', showNotApplicable: true },
+      ['faultComment']: { display: 'A', showNotApplicable: false },
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,9 +35,8 @@ fdescribe('OutcomeBehaviourMapProvider', () => {
     });
 
     outcomeBehaviourMapProvider = TestBed.get(OutcomeBehaviourMapProvider);
+    outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
   });
-
-// TODO need to create a way of providing a behaviour map so can pass in a test map
 
   describe('getVisibilityType', () => {
     it(`should return Y for an outcome and field that has display Y`, () => {
@@ -30,13 +51,41 @@ fdescribe('OutcomeBehaviourMapProvider', () => {
       const result = outcomeBehaviourMapProvider.getVisibilityType('4', 'faultComment');
       expect(result).toBe('A');
     });
-    it(`should return U for a non-existant outcome`, () => {
+    it(`should return N for a non-existant outcome`, () => {
       const result = outcomeBehaviourMapProvider.getVisibilityType('40', 'faultComment');
-      expect(result).toBe('U');
+      expect(result).toBe('N');
     });
-    it(`should return U for a non-existant field`, () => {
+    it(`should return N for a non-existant field`, () => {
       const result = outcomeBehaviourMapProvider.getVisibilityType('4', 'fakefield');
-      expect(result).toBe('U');
+      expect(result).toBe('N');
+    });
+  });
+
+  describe('isVisible', () => {
+    it(`should return true for an outcome and field that has display Y`, () => {
+      const result = outcomeBehaviourMapProvider.isVisible('1', 'routeNumber', 'x');
+      expect(result).toBeTruthy();
+    });
+    it(`should return false for an outcome and field that has display N`, () => {
+      const result = outcomeBehaviourMapProvider.isVisible('3', 'routeNumber', 'x');
+      expect(result).toBeFalsy();
+    });
+    it(`should return true for an outcome and field that has display A and has a value`, () => {
+      const result = outcomeBehaviourMapProvider.isVisible('4', 'faultComment', 'x');
+      expect(result).toBeTruthy();
+    });
+    it(`should return false for an outcome and field that has display A and has no value`, () => {
+      const result = outcomeBehaviourMapProvider.isVisible('4', 'faultComment', null);
+      expect(result).toBeFalsy();
+    });
+
+    it(`should return false for a non-existant outcome`, () => {
+      const result = outcomeBehaviourMapProvider.isVisible('40', 'faultComment', 'x');
+      expect(result).toBeFalsy();
+    });
+    it(`should return false for a non-existant field`, () => {
+      const result = outcomeBehaviourMapProvider.isVisible('4', 'fakefield', 'x');
+      expect(result).toBeFalsy();
     });
   });
 
@@ -87,6 +136,11 @@ fdescribe('OutcomeBehaviourMapProvider', () => {
   describe('showNotApplicable', () => {
     it(`should return false if showNotApplicable is false`, () => {
       const result = outcomeBehaviourMapProvider.showNotApplicable('1', 'independentDriving');
+      expect(result).toBeFalsy();
+    });
+
+    it(`should return false if showNotApplicable field is missing`, () => {
+      const result = outcomeBehaviourMapProvider.showNotApplicable('1', 'routeNumber');
       expect(result).toBeFalsy();
     });
 

@@ -1,15 +1,4 @@
-export interface FieldDetail {
-  display: string;
-  defaultValue?: string;
-  showNotApplicable: boolean;
-}
-export interface Field {
-  [k: string]: FieldDetail;
-}
-
-export interface OutcomeBehaviourMapping {
-  [k: string]: Field;
-}
+import { OutcomeBehaviourMapping } from '../../providers/outcome-behaviour-map/outcome-behaviour-map.model';
 
 export const behaviourMap: OutcomeBehaviourMapping = {
   ['1']: {
