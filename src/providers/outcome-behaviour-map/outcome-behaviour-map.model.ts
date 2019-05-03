@@ -1,5 +1,5 @@
 export interface FieldDetail {
-  display: string;
+  display: 'A' | 'Y' | 'N';
   defaultValue?: string;
   showNotApplicable?: boolean;
 }

@@ -223,7 +223,9 @@ export class OfficePage extends BasePageComponent {
         select(getShowMeQuestion),
       ),
       showMeQuestionOptions$: currentTest$.pipe(
-        map(() => getShowMeQuestionOptions(this.showMeQuestions, '4', this.outcomeBehaviourProvider)),
+        select(getTestSummary),
+        select(getTestOutcome),
+        map(outcome => getShowMeQuestionOptions(this.showMeQuestions, outcome, this.outcomeBehaviourProvider)),
       ),
       tellMeQuestionText$: currentTest$.pipe(
         select(getTestData),
