@@ -32,7 +32,7 @@ export class TestReportEffects {
       testDataActions.TOGGLE_ECO,
       testDataActions.TOGGLE_PLANNING_ECO,
       testDataActions.TOGGLE_CONTROL_ECO,
-      testDataActions.SHOW_ME_QUESTION_CORRECT,
+      testDataActions.SHOW_ME_QUESTION_PASSED,
       testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
       testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
       testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT),
@@ -44,10 +44,10 @@ export class TestReportEffects {
         map(getCatBLegalRequirements),
       ),
     ),
-     switchMap(([action, catBLegalRequirements]) => {
-       return of(new testReportActions.ValidateTestResult(
-         this.testReportValidator.validateCatBTestReport(catBLegalRequirements)));
-     }),
+    switchMap(([action, catBLegalRequirements]) => {
+      return of(new testReportActions.ValidateTestResult(
+        this.testReportValidator.validateCatBTestReport(catBLegalRequirements)));
+    }),
   );
 
   @Effect()
@@ -56,7 +56,7 @@ export class TestReportEffects {
       testReportActions.CALCULATE_TEST_RESULT,
     ),
     withLatestFrom(
-     this.store$.pipe(
+      this.store$.pipe(
         select(getTests),
         map(getCurrentTest),
       ),

@@ -45,7 +45,6 @@ export const SHOW_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Show me question
 export const SHOW_ME_QUESTION_SERIOUS_FAULT = '[Vehicle Checks] Show me question serious fault';
 export const SHOW_ME_QUESTION_DANGEROUS_FAULT = '[Vehicle Checks] Show me question dangerous fault';
 export const SHOW_ME_QUESTION_REMOVE_FAULT = '[Vehicle Checks] Show me question remove fault';
-export const SHOW_ME_QUESTION_CORRECT = '[Vehicle Checks] Show me question correct';
 
 export interface ManoeuvrePayload {
   manoeuvre: ManoeuvreTypes;
