@@ -6,15 +6,15 @@
     </ion-buttons>
   </ion-navbar>
   <div id="test-outcome-background" [ngSwitch]="outcome">
-    <div class="test-outcome-container passed" *ngSwitchCase="'pass'">
+    <div class="test-outcome-container passed" *ngSwitchCase="'Pass'">
       <h4>Test outcome</h4>
       <h1>passed</h1>
     </div>
-    <div class="test-outcome-container failed" *ngSwitchCase="'fail'">
+    <div class="test-outcome-container failed" *ngSwitchCase="'Fail'">
       <h4>Test outcome</h4>
       <h1>unsuccessful</h1>
     </div>
-    <div class="test-outcome-container terminated" *ngSwitchCase="'terminated'">
+    <div class="test-outcome-container terminated" *ngSwitchCase="'Terminated'">
       <h4>Test outcome</h4>
       <h1>terminated</h1>
     </div>

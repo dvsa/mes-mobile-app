@@ -19,7 +19,7 @@ import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults } from './debrief.selector';
+import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults, getTestOutcome } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -31,6 +31,7 @@ interface DebriefPageState {
   drivingFaultCount$: Observable<number>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
+  testResult$: Observable<string>;
 }
 
 @IonicPage()
@@ -55,7 +56,6 @@ export class DebriefPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navCtrl, authenticationProvider);
-    this.outcome = this.navParams.get('outcome');
   }
 
   ngOnInit(): void {
@@ -113,16 +113,17 @@ export class DebriefPage extends BasePageComponent {
         select(getEco),
         select(getEcoFaultText),
       ),
+      testResult$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestOutcome),
+      ),
     };
 
-    const { seriousFaults$, dangerousFaults$, drivingFaults$, etaFaults$, ecoFaults$ } = this.pageState;
+    const { testResult$ } = this.pageState;
 
     const merged$ = merge(
-      seriousFaults$,
-      dangerousFaults$,
-      drivingFaults$,
-      etaFaults$,
-      ecoFaults$,
+      testResult$.pipe(map(result => this.outcome = result)),
     );
 
     this.subscription = merged$.subscribe();
@@ -141,7 +142,7 @@ export class DebriefPage extends BasePageComponent {
 
   endDebrief(): void {
     this.store$.dispatch(new PersistTests());
-    if (this.outcome === 'pass') {
+    if (this.outcome === 'Pass') {
       this.navController.push('PassFinalisationPage');
       return;
     }

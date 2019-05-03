@@ -5,6 +5,7 @@ import {
   DangerousFaults,
   TestData,
   Manoeuvres,
+  StandardCarTestCATBSchema,
 } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -16,6 +17,7 @@ import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
 } from '../../shared/models/fault-marking.model';
+import { ActivityCodes } from '../../shared/models/activity-codes';
 
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];
@@ -132,4 +134,15 @@ export const getDrivingFaultComment = (
   faults: DrivingFaults | DangerousFaults | SeriousFaults, competency: string,
 ): string => {
   return faults[competency] || '';
+};
+
+export const getTestOutcome = (test: StandardCarTestCATBSchema): string => {
+  switch (test.activityCode) {
+    case ActivityCodes.PASS:
+      return 'Pass';
+    case ActivityCodes.FAIL:
+      return 'Fail';
+    default:
+      return 'Terminated';
+  }
 };

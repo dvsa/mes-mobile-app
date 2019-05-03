@@ -181,10 +181,10 @@ export class TestReportPage extends BasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navCtrl.push('DebriefPage', { outcome: 'pass' });
+        this.navCtrl.push('DebriefPage');
         break;
       case ModalEvent.TERMINATE:
-        this.navCtrl.push('DebriefPage', { outcome: 'terminated' });
+        this.navCtrl.push('DebriefPage');
         break;
     }
   }
