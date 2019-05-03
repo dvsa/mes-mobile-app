@@ -61,6 +61,13 @@ describe('DebriefPage', () => {
               },
             },
           }),
+          testReport: () => ({
+            seriousMode: false,
+            dangerousMode: false,
+            removeFaultMode: false,
+            isValid: false,
+            testResult: 'Not Calculated',
+          }),
         }),
       ],
       providers: [
@@ -93,7 +100,7 @@ describe('DebriefPage', () => {
     // Unit tests for the components template
 
     it('should display passed container if outcome is `passed`', () => {
-      component.outcome = 'pass';
+      component.outcome = 'Pass';
 
       fixture.detectChanges();
 
@@ -102,7 +109,7 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
     });
     it('should display failed container if outcome is `fail`', () => {
-      component.outcome = 'fail';
+      component.outcome = 'Fail';
 
       fixture.detectChanges();
 
@@ -111,7 +118,7 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
     });
     it('should display terminated container if outcome is `terminated`', () => {
-      component.outcome = 'terminated';
+      component.outcome = 'Terminated';
 
       fixture.detectChanges();
 
@@ -183,17 +190,17 @@ describe('DebriefPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests);
       });
       it('should navigate to PassFinalisationPage when outcome = pass', () => {
-        component.outcome = 'pass';
+        component.outcome = 'Pass';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('PassFinalisationPage');
       });
       it('should navigate to BackToOfficePage when outcome = fail', () => {
-        component.outcome = 'fail';
+        component.outcome = 'Fail';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });
       it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
-        component.outcome = 'terminated';
+        component.outcome = 'Terminated';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });
