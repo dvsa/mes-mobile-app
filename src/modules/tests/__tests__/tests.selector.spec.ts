@@ -6,6 +6,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { TestStatus } from '../test-status/test-status.model';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { TestsModel } from '../tests.model';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -35,7 +36,7 @@ describe('testsSelector', () => {
             checkDigit: 5,
           },
         },
-        activityCode: '1',
+        activityCode: ActivityCodes.PASS,
       };
       const journal: JournalModel = { isLoading: false, lastRefreshed: new Date(), slots: {}, selectedDate: 'dummy' };
       const appInfo: AppInfoModel = { versionNumber: '0.0.0' };
@@ -82,7 +83,7 @@ describe('testsSelector', () => {
   describe('getTestOutcome', () => {
     const testState: StandardCarTestCATBSchema = {
       id: '1',
-      activityCode: '1',
+      activityCode: ActivityCodes.PASS,
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
@@ -104,26 +105,26 @@ describe('testsSelector', () => {
       },
 
     };
-    it('should retrieve a passed result for activity code 1', () => {
+    it('should retrieve a passed result for a pass activity code', () => {
       const result = getTestOutcome(testState);
       expect(result).toBe('Passed');
     });
-    it('should retrieve an unsuccessful result for activity code 2', () => {
-      testState.activityCode = '2';
+    it('should retrieve an unsuccessful result for a fail activity code', () => {
+      testState.activityCode = ActivityCodes.FAIL;
       const result = getTestOutcome(testState);
       expect(result).toBe('Unsuccessful');
     });
-  /*  it('should retrieve a terminated result for non listed activity code 86', () => {
-      testState.activityCode = '86';
+    it('should retrieve a terminated result for terminated activity code', () => {
+      testState.activityCode = ActivityCodes.CANDIDATE_NOT_HAPPY_WITH_AUTHORISED_OCCUPANT;
       const result = getTestOutcome(testState);
       expect(result).toBe('Terminated');
-    }); */
+    });
   });
 
   describe('getTestOutcomeClass', () => {
     const testState: StandardCarTestCATBSchema = {
       id: '1',
-      activityCode: '1',
+      activityCode: ActivityCodes.PASS,
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
@@ -145,26 +146,26 @@ describe('testsSelector', () => {
       },
 
     };
-    it('should return mes-green class for activity code 1', () => {
+    it('should return mes-green class for a pass activity code', () => {
       const result = getTestOutcomeClass(testState);
       expect(result).toBe('mes-green');
     });
-    it('should return mes-red class for activity code 2', () => {
-      testState.activityCode = '2';
+    it('should return mes-red class for a fail activity code', () => {
+      testState.activityCode = ActivityCodes.FAIL;
       const result = getTestOutcomeClass(testState);
       expect(result).toBe('mes-red');
     });
-    /*it('should return mes-red class for non listed activity code 86', () => {
-      testState.activityCode = '86';
+    it('should return mes-red class for a terminated activity code', () => {
+      testState.activityCode = ActivityCodes.ILLEGAL_ACTIVITY_FROM_CANDIDATE;
       const result = getTestOutcome(testState);
       expect(result).toBe('Terminated');
-    }); */
+    });
   });
 
   describe('isPassed', () => {
     const testState: StandardCarTestCATBSchema = {
       id: '1',
-      activityCode: '1',
+      activityCode: ActivityCodes.PASS,
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
@@ -186,20 +187,20 @@ describe('testsSelector', () => {
       },
 
     };
-    it('should return true for activity code 1', () => {
+    it('should return true for a passed activity code', () => {
       const result = isPassed(testState);
       expect(result).toBeTruthy();
     });
-    it('should return false for activity code 2', () => {
-      testState.activityCode = '2';
+    it('should return false for a failed activity code', () => {
+      testState.activityCode = ActivityCodes.FAIL;
       const result = isPassed(testState);
       expect(result).toBeFalsy();
     });
-    /*it('should return false for non listed activity code 86', () => {
-      testState.activityCode = '86';
+    it('should return false for a terminated activity code', () => {
+      testState.activityCode = ActivityCodes.MECHANICAL_FAILURE;
       const result = isPassed(testState);
       expect(result).toBeFalsy();
-    }); */
+    });
   });
 
 });

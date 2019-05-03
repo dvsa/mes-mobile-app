@@ -14,6 +14,7 @@ import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 
 export class TestActions extends Actions {
   constructor() {
@@ -100,13 +101,13 @@ describe('Test Report Effects', () => {
 
     it('should dispatch an action containing the correct result for a test', (done) => {
        // ARRANGE
-      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue('1');
+      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue(ActivityCodes.PASS);
        // ACT
       actions$.next(new testReportActions.CalculateTestResult());
        // ASSERT
       effects.calculateTestResult$.subscribe((result) => {
         expect(testResultProvider.calculateCatBTestResult).toHaveBeenCalled();
-        expect(result).toEqual(new testsActions.SetActivityCode('1'));
+        expect(result).toEqual(new testsActions.SetActivityCode(ActivityCodes.PASS));
         done();
       });
     });
