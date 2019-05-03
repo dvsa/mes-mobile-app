@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import { AppModule } from '../../../../../app/app.module';
 import { FormGroup } from '@angular/forms';
 
-fdescribe('FaultCommentCardComponent', () => {
+describe('FaultCommentCardComponent', () => {
   let fixture: ComponentFixture<FaultCommentCardComponent>;
   let component: FaultCommentCardComponent;
 
