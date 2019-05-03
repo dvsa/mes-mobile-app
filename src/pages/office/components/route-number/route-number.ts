@@ -13,6 +13,9 @@ export class RouteNumberComponent implements OnChanges {
   display: boolean;
 
   @Input()
+  outcome: string;
+
+  @Input()
   routeNumber: number;
 
   @Input()
@@ -31,11 +34,9 @@ export class RouteNumberComponent implements OnChanges {
       this.formGroup.addControl('routeNumber', this.formControl);
     }
 
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType('1', 'routeNumber');
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'routeNumber');
 
     if (visibilityType === 'N') {
-      // turn off required validation
-      // if we have multiple validators will need to set the ones we need
       this.formGroup.get('routeNumber').clearValidators();
     } else {
       this.formGroup.get('routeNumber').setValidators([Validators.required]);

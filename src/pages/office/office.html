@@ -17,7 +17,7 @@
       <h2>{{pageState.startTime$ | async}}</h2>
       <h3>test outcome:
         <span
-          [ngClass]="(pageState.isPassed$ | async) ? 'mes-green' : 'mes-red'">{{pageState.testOutcome$ | async}}</span>
+          [ngClass]="(pageState.isPassed$ | async) ? 'mes-green' : 'mes-red'">{{pageState.testOutcomeText$ | async}}</span>
       </h3>
     </ion-col>
   </ion-row>
@@ -32,7 +32,9 @@
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
 
-          <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async" (routeNumberChange)="routeNumberChanged($event)"
+          <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async" 
+          [outcome]="pageState.testOutcome$ | async"
+          (routeNumberChange)="routeNumberChanged($event)"
             [formGroup]="form">
           </route-number>
 

@@ -19,7 +19,10 @@ export const getCurrentTest = (tests: TestsModel) => {
 
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testLifecycles[slotId] || TestStatus.Booked;
 
-export const getTestOutcome = (test: StandardCarTestCATBSchema) => {
+// TODO remove default of 1 when activity code population is wired up
+export const getTestOutcome = (test: StandardCarTestCATBSchema) => test.activityCode || '1';
+
+export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
   const outcomeIndex = outcomeStatus.findIndex(status => status.outcomeCode === test.activityCode);
   if (outcomeIndex > -1) {
     return outcomeStatus[outcomeIndex].outcomeText;

@@ -9,7 +9,13 @@ import {
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
-import { getCurrentTest, getTestOutcome, getTestOutcomeClass, isPassed } from '../../modules/tests/tests.selector';
+import {
+  getCurrentTest,
+  getTestOutcome,
+  getTestOutcomeClass,
+  isPassed,
+  getTestOutcomeText,
+} from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
@@ -22,7 +28,7 @@ import {
   getIndependentDriving,
 } from '../../modules/tests/test-summary/test-summary.selector';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
-import { map } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 import {
   RouteNumberChanged,
   IndependentDrivingTypeChanged,
@@ -79,6 +85,7 @@ import { behaviourMap } from './office-behaviour-map';
 interface OfficePageState {
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
+  testOutcomeText$: Observable<string>;
   testOutcomeClass$: Observable<string>;
   isPassed$: Observable<boolean>;
   candidateName$: Observable<string>;
@@ -153,6 +160,9 @@ export class OfficePage extends BasePageComponent {
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
       ),
+      testOutcomeText$: currentTest$.pipe(
+        select(getTestOutcomeText),
+      ),
       testOutcomeClass$: currentTest$.pipe(
         select(getTestOutcomeClass),
       ),
@@ -179,7 +189,9 @@ export class OfficePage extends BasePageComponent {
       displayRouteNumber$: currentTest$.pipe(
         select(getTestSummary),
         select(getRouteNumber),
-        map(route  => this.outcomeBehaviourProvider.isVisible('1', 'routeNumber', route)),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestOutcome))),
+        map(([route, outcome])  => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
