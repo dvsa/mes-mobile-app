@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { OutcomeBehaviourMapProvider } from '../outcome-behaviour-map';
 import { OutcomeBehaviourMapping } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map.model';
 
-fdescribe('OutcomeBehaviourMapProvider', () => {
+describe('OutcomeBehaviourMapProvider', () => {
   let outcomeBehaviourMapProvider: OutcomeBehaviourMapProvider;
 
   const behaviourMap: OutcomeBehaviourMapping = {
