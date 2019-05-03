@@ -56,7 +56,7 @@ export function testsReducer(
 }
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof journalActions.StartTest) {
+  if (action instanceof journalActions.StartTest || action instanceof journalActions.ActivateTest) {
     return `${action.slotId}`;
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
