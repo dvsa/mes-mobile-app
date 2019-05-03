@@ -1,3 +1,6 @@
-<div *ngIf="showDimensions">
-  <p><span>Length: </span><span class="bold">{{ length }}</span> …</p>
+<div *ngIf="showDimensions" class="vehicle-details-row">
+  <p><span>Length: </span><span class="bold">{{ length }}</span>
+    <span>Width: </span><span class="bold">{{ width }}</span>
+    <span>Height: </span><span class="bold">{{ height }}</span>
+    <span *ngIf="showNumberOfSeats">Seats: </span><span class="bold">{{ seats }}</span></p>
 </div>

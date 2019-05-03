@@ -2,7 +2,12 @@ vehicle-details {
   .bold {
     font-weight: bold;
   }
-  p {
+
+  p span {
     padding-left: 1rem;
+  }
+
+  .vehicle-details-row {
+    margin-top: 10px;
   }
 }
