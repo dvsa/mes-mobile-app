@@ -66,7 +66,6 @@ describe('DebriefPage', () => {
             dangerousMode: false,
             removeFaultMode: false,
             isValid: false,
-            testResult: 'Not Calculated',
           }),
         }),
       ],
@@ -102,8 +101,6 @@ describe('DebriefPage', () => {
     it('should display passed container if outcome is `passed`', () => {
       component.outcome = 'Pass';
 
-      fixture.detectChanges();
-
       expect(fixture.debugElement.query(By.css('.passed'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
       expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
@@ -111,16 +108,12 @@ describe('DebriefPage', () => {
     it('should display failed container if outcome is `fail`', () => {
       component.outcome = 'Fail';
 
-      fixture.detectChanges();
-
       expect(fixture.debugElement.query(By.css('.failed'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
       expect(fixture.debugElement.query(By.css('.terminated'))).toBeNull();
     });
     it('should display terminated container if outcome is `terminated`', () => {
       component.outcome = 'Terminated';
-
-      fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.terminated'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('.passed'))).toBeNull();
