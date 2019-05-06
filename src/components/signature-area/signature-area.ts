@@ -1,4 +1,4 @@
-import { Component, ViewChild, forwardRef } from '@angular/core';
+import { Component, ViewChild, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { StoreModel } from '../../shared/models/store.model';
@@ -26,6 +26,9 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   public clearAction: string;
   public actionLess: boolean;
 
+  @Input()
+  oldSignature: string;
+
   @ViewChild(SignaturePad)
   signaturePad: SignaturePad;
 
@@ -52,6 +55,9 @@ export class SignatureAreaComponent implements ControlValueAccessor {
     this.signaturePad.set('minWidth', 1); // set szimek/signature_pad options at runtime
     this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
     this.signaturePad.resizeCanvas();
+    if (this.oldSignature) {
+      this.setSignature(this.oldSignature);
+    }
   }
 
   clear() {
