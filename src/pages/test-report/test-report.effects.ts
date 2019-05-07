@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
-import { switchMap, withLatestFrom, map } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, concatMap } from 'rxjs/operators';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -13,6 +12,7 @@ import * as testReportActions from './test-report.actions';
 import * as testsActions from '../../modules/tests/tests.actions';
 import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class TestReportEffects {
@@ -33,9 +33,11 @@ export class TestReportEffects {
       testDataActions.TOGGLE_PLANNING_ECO,
       testDataActions.TOGGLE_CONTROL_ECO,
       testDataActions.SHOW_ME_QUESTION_PASSED,
+      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
       testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
       testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT),
+      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+    ),
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
@@ -44,9 +46,11 @@ export class TestReportEffects {
         map(getCatBLegalRequirements),
       ),
     ),
-    switchMap(([action, catBLegalRequirements]) => {
-      return of(new testReportActions.ValidateTestResult(
-        this.testReportValidator.validateCatBTestReport(catBLegalRequirements)));
+    concatMap(([action, catBLegalRequirements]) => {
+      return this.testReportValidator.validateCatBTestReport(catBLegalRequirements)
+        .pipe(
+          map((result: boolean) => new testReportActions.ValidateTestResult(result)),
+        );
     }),
   );
 
@@ -62,8 +66,10 @@ export class TestReportEffects {
       ),
     ),
     switchMap(([action, currentTest]) => {
-      return of(new testsActions.SetActivityCode(
-        this.testResultProvider.calculateCatBTestResult(currentTest.testData)));
+      return this.testResultProvider.calculateCatBTestResult(currentTest.testData)
+        .pipe(
+          map((result: ActivityCode) => new testsActions.SetActivityCode(result)),
+        );
     }),
   );
 }

@@ -57,25 +57,36 @@ describe('TestResultCalculatorProvider', () => {
   });
 
   describe('calculateCatBTestResult', () => {
-    it('should return a Fail when a dangerous fault exists', () => {
+    it('should return a Fail when a dangerous fault exists', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         dangerousFaults: {
           positioningNormalDriving: true,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
-    it('should return a Fail when a serious fault exists', () => {
+    it('should return a Fail when a serious fault exists', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         seriousFaults: {
           positioningNormalDriving: true,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
-    it('should return a Fail when there are 16 driving faults', () => {
+    it('should return a Fail when there are 16 driving faults', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         drivingFaults: {
@@ -83,10 +94,15 @@ describe('TestResultCalculatorProvider', () => {
           judgementMeeting: 1,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
 
-    it('should return a Fail when there are 16 driving faults and a dangerous fault', () => {
+    it('should return a Fail when there are 16 driving faults and a dangerous fault', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         dangerousFaults: {
@@ -97,9 +113,14 @@ describe('TestResultCalculatorProvider', () => {
           judgementMeeting: 1,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
-    it('should return a Fail when there are 16 driving faults and a serious fault', () => {
+    it('should return a Fail when there are 16 driving faults and a serious fault', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         seriousFaults: {
@@ -110,9 +131,14 @@ describe('TestResultCalculatorProvider', () => {
           judgementMeeting: 1,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
-    it('should return a Fail when there are 15 driving faults and a dangerous fault', () => {
+    it('should return a Fail when there are 15 driving faults and a dangerous fault', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         drivingFaults,
@@ -120,9 +146,14 @@ describe('TestResultCalculatorProvider', () => {
           positioningNormalDriving: true,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
-    it('should return a Fail when there are 15 driving faults and a serious fault', () => {
+    it('should return a Fail when there are 15 driving faults and a serious fault', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         drivingFaults,
@@ -130,21 +161,35 @@ describe('TestResultCalculatorProvider', () => {
           positioningNormalDriving: true,
         },
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.FAIL);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.FAIL);
+        done();
+      });
     });
 
-    it('should return a Pass when there are 15 driving faults', () => {
+    it('should return a Pass when there are 15 driving faults', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
         drivingFaults,
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.PASS);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.PASS);
+        done();
+      });
     });
-    it('should return a Pass when there are no driving faults', () => {
+    it('should return a Pass when there are no driving faults', (done) => {
+      // ARRANGE
       const testData: TestData = {
         ...initialTestData,
       };
-      expect(testResultProvider.calculateCatBTestResult(testData)).toBe(ActivityCodes.PASS);
+      // ASSERT
+      testResultProvider.calculateCatBTestResult(testData).subscribe((result) => {
+        expect(result).toBe(ActivityCodes.PASS);
+        done();
+      });
     });
   });
 });

@@ -17,7 +17,8 @@ describe('TestReportValidator', () => {
   });
 
   describe('validateCatBTestReport', () => {
-    it('should return true for a valid test', () => {
+    it('should return true for a valid test', (done) => {
+      // ARRANGE
       const testResult: CatBLegalRequirements = {
         normalStart1: true,
         normalStart2: true,
@@ -27,10 +28,14 @@ describe('TestReportValidator', () => {
         manoeuvre: true,
         vehicleChecks: true,
       };
-
-      expect(testReportValidatorProvider.validateCatBTestReport(testResult)).toBeTruthy();
+      // ASSERT
+      testReportValidatorProvider.validateCatBTestReport(testResult).subscribe((result) => {
+        expect(result).toBeTruthy();
+        done();
+      });
     });
-    it('should return false for a invalid test', () => {
+    it('should return false for a invalid test', (done) => {
+      // ARRANGE
       const testResult: CatBLegalRequirements = {
         normalStart1: false,
         normalStart2: true,
@@ -40,8 +45,11 @@ describe('TestReportValidator', () => {
         manoeuvre: true,
         vehicleChecks: true,
       };
-
-      expect(testReportValidatorProvider.validateCatBTestReport(testResult)).toBeFalsy();
+      // ASSERT
+      testReportValidatorProvider.validateCatBTestReport(testResult).subscribe((result) => {
+        expect(result).toBeFalsy();
+        done();
+      });
     });
   });
 });
