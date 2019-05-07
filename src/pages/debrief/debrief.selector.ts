@@ -141,6 +141,9 @@ export const getTestOutcome = (test: StandardCarTestCATBSchema): string => {
     case ActivityCodes.PASS:
       return 'Pass';
     case ActivityCodes.FAIL:
+    case ActivityCodes.FAIL_EYESIGHT:
+    case ActivityCodes.FAIL_PUBLIC_SAFETY:
+    case ActivityCodes.FAIL_CANDIDATE_STOPS_TEST:
       return 'Fail';
     default:
       return 'Terminated';
