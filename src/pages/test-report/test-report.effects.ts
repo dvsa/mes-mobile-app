@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, withLatestFrom, map } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, concatMap } from 'rxjs/operators';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -36,7 +36,8 @@ export class TestReportEffects {
       testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
       testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
       testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT),
+      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+    ),
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
@@ -45,7 +46,7 @@ export class TestReportEffects {
         map(getCatBLegalRequirements),
       ),
     ),
-    switchMap(([action, catBLegalRequirements]) => {
+    concatMap(([action, catBLegalRequirements]) => {
       return this.testReportValidator.validateCatBTestReport(catBLegalRequirements)
         .pipe(
           map((result: boolean) => new testReportActions.ValidateTestResult(result)),
