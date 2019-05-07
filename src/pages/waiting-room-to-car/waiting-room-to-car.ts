@@ -100,7 +100,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   @ViewChild('instructorRegistrationInput')
   instructorRegistrationInput: ElementRef;
-  inputSubscriptions: Subscription[] = [];
+  // inputSubscriptions: Subscription[] = [];
 
   showEyesightFailureConfirmation: boolean = false;
 
@@ -196,18 +196,18 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       ),
     };
 
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
-      this.inputChangeSubscriptionDispatchingAction(
-        this.instructorRegistrationInput,
-        InstructorRegistrationNumberChanged,
-      ),
-    ];
+    // this.inputSubscriptions = [
+    //   this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
+    //   this.inputChangeSubscriptionDispatchingAction(
+    //     this.instructorRegistrationInput,
+    //     InstructorRegistrationNumberChanged,
+    //   ),
+    // ];
   }
 
-  ngOnDestroy(): void {
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
-  }
+  // ngOnDestroy(): void {
+  //   this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  // }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
@@ -245,6 +245,9 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
   }
 
+  instructorRegistrationChanged(instructorRegistration: number) {
+    this.store$.dispatch(new InstructorRegistrationNumberChanged(instructorRegistration));
+  }
   /**
    * Returns a subscription to the debounced changes of a particular input fields.
    * Dispatches the provided action type to the store when a new value is yielded.

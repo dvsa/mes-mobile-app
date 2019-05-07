@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'instructor-registration',
@@ -8,13 +9,13 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class InstructorRegistrationComponent implements OnChanges {
 
   @Input()
-  instructorRegistration: string;
+  instructorRegistration: number;
 
   @Input()
   formGroup: FormGroup;
 
   @Output()
-  instructorRegistrationChange = new EventEmitter<string>();
+  instructorRegistrationChange = new EventEmitter<number>();
 
   private formControl: FormControl;
 
@@ -28,7 +29,9 @@ export class InstructorRegistrationComponent implements OnChanges {
 
   instructorRegistrationChanged(instructorRegistration: string): void {
     if (this.formControl.valid) {
-      this.instructorRegistrationChange.emit(instructorRegistration);
+      if (isNumber(instructorRegistration)) {
+        this.instructorRegistrationChange.emit(Number.parseInt(instructorRegistration, 10));
+      }
     }
   }
 
