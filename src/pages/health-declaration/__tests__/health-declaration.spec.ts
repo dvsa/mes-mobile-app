@@ -89,12 +89,7 @@ describe('HealthDeclarationPage', () => {
         expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
     });
-    describe('ionViewWillUnload', () => {
-      it('should should dispatch the ClearPostTestDeclarations action', () => {
-        component.ionViewWillUnload();
-        expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ClearPostTestDeclarations());
-      });
-    });
+
     describe('Declaration Validation', () => {
       it('form should only be valid when all fields are set', () => {
         const form = component.form;

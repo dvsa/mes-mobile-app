@@ -92,10 +92,6 @@ export class HealthDeclarationPage extends BasePageComponent {
       });
   }
 
-  ionViewWillUnload(): void {
-    this.store$.dispatch(new postTestDeclarationsActions.ClearPostTestDeclarations());
-  }
-
   getFormValidation(): { [key: string]: FormControl } {
     return {
       healthCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
@@ -155,7 +151,24 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getPassCertificateNumber),
       ),
     };
+    this.rehydrateFields();
   }
+
+  rehydrateFields(): void {
+    this.pageState.healthDeclarationAccepted$
+      .subscribe((val) => {
+        this.form.controls['healthCheckboxCtrl'].setValue(val);
+      });
+    this.pageState.passCertificateNumberReceived$
+      .subscribe((val) => {
+        this.form.controls['receiptCheckboxCtrl'].setValue(val);
+      });
+    this.pageState.signature$
+      .subscribe((val) => {
+        this.form.controls['signatureAreaCtrl'].setValue(val);
+      });
+  }
+
   healthDeclarationChanged(): void {
     this.store$.dispatch(new postTestDeclarationsActions.ToggleHealthDeclaration());
   }
