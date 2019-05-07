@@ -61,7 +61,7 @@ export class WaitingRoomPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
-    private screenOrientation : ScreenOrientation,
+    private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
@@ -89,10 +89,6 @@ export class WaitingRoomPage extends BasePageComponent {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  ionViewWillUnload(): void {
-    this.store$.dispatch(new preTestDeclarationsActions.ClearPreTestDeclarations());
   }
 
   ngOnInit(): void {
@@ -133,6 +129,22 @@ export class WaitingRoomPage extends BasePageComponent {
         map(formatDriverNumber),
       ),
     };
+    this.rehydrateFields();
+  }
+
+  rehydrateFields(): void {
+    this.pageState.insuranceDeclarationAccepted$
+      .subscribe((val) => {
+        this.form.controls['insuranceCheckboxCtrl'].setValue(val);
+      });
+    this.pageState.residencyDeclarationAccepted$
+      .subscribe((val) => {
+        this.form.controls['residencyCheckboxCtrl'].setValue(val);
+      });
+    this.pageState.signature$
+      .subscribe((val) => {
+        this.form.controls['signatureAreaCtrl'].setValue(val);
+      });
   }
 
   insuranceDeclarationChanged(): void {
@@ -146,14 +158,14 @@ export class WaitingRoomPage extends BasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.store$.dispatch(new PersistTests());
-        this.store$.dispatch(new TestStatusStarted());
-        this.navCtrl.push('WaitingRoomToCarPage');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(() => {
+          this.store$.dispatch(new TestStatusStarted());
+          this.store$.dispatch(new PersistTests());
+          this.navCtrl.push('WaitingRoomToCarPage');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -165,7 +177,6 @@ export class WaitingRoomPage extends BasePageComponent {
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
-
 }

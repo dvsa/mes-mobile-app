@@ -108,7 +108,7 @@
           </ion-row>
           <ion-row class="declaration-signature-row">
             <ion-col class="declaration-signature-col">
-              <signature-area formControlName="signatureAreaCtrl"></signature-area>
+              <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"></signature-area>
             </ion-col>
           </ion-row>
         </ion-col>

@@ -14,7 +14,6 @@ import { ComponentsModule } from './../../../components/components.module';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-  ClearPreTestDeclarations,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
@@ -135,13 +134,6 @@ describe('WaitingRoomPage', () => {
         expect(insomnia.keepAwake).toHaveBeenCalled();
       });
 
-    });
-  });
-
-  describe('ionViewWillUnload', () => {
-    it('should dispatch a clear declarations action', () => {
-      component.ionViewWillUnload();
-      expect(store$.dispatch).toHaveBeenCalledWith(new ClearPreTestDeclarations());
     });
   });
 
