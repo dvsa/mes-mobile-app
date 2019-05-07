@@ -22,6 +22,8 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
+import { SecureStorage } from '@ionic-native/secure-storage';
+import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -53,6 +55,7 @@ describe('LoginPage', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: SecureStorage, useClass: SecureStorageMock },
       ],
     })
       .compileComponents()
