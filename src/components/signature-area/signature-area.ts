@@ -16,7 +16,9 @@ import { Store } from '@ngrx/store';
   ],
 })
 export class SignatureAreaComponent implements ControlValueAccessor {
+  @Input()
   public signature: string;
+
   public isvalid: boolean;
   public retryImage: string;
   public retryButtonText: string;
@@ -25,9 +27,6 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   public drawCompleteAction: string;
   public clearAction: string;
   public actionLess: boolean;
-
-  @Input()
-  oldSignature: string;
 
   @ViewChild(SignaturePad)
   signaturePad: SignaturePad;
@@ -55,8 +54,8 @@ export class SignatureAreaComponent implements ControlValueAccessor {
     this.signaturePad.set('minWidth', 1); // set szimek/signature_pad options at runtime
     this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
     this.signaturePad.resizeCanvas();
-    if (this.oldSignature) {
-      this.setSignature(this.oldSignature);
+    if (this.signature) {
+      this.setSignature(this.signature);
     }
   }
 
