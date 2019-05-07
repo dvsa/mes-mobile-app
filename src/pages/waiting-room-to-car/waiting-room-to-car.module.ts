@@ -12,6 +12,8 @@ import {
   EyesightFailureConfirmationComponent,
 } from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { ComponentsModule } from '../../components/components.module';
+import { VehicleRegistrationComponent } from './components/vehicle-registration/vehicle-registration';
+import { InstructorRegistrationComponent } from './components/instructor-registration/instructor-registration';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { ComponentsModule } from '../../components/components.module';
     InputRestrictionNumbersDirective,
     InputRestrictionUppercaseAlphanumDirective,
     EyesightFailureConfirmationComponent,
+    VehicleRegistrationComponent,
+    InstructorRegistrationComponent,
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),

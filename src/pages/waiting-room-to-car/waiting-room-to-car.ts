@@ -241,6 +241,10 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new OtherAccompanimentToggled());
   }
 
+  vehicleRegistrationChanged(vehicleRegistration: string) {
+    this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
+  }
+
   /**
    * Returns a subscription to the debounced changes of a particular input fields.
    * Dispatches the provided action type to the store when a new value is yielded.
