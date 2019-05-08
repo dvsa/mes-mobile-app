@@ -22,7 +22,7 @@ export class EyesightFailureConfirmationComponent {
   }
 
   onContinue(): void {
-    this.navController.push('DebriefPage', { outcome: 'fail' });
+    this.navController.push('DebriefPage');
     this.store$.dispatch(new SetActivityCode('3'));
   }
 }
