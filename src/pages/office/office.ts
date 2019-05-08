@@ -15,6 +15,8 @@ import {
   getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
+  getActivityCode,
+  getTerminationCode,
 } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
@@ -71,7 +73,11 @@ import {
 } from '../debrief/debrief.selector';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
-import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
+import {
+  WeatherConditions,
+  Identification,
+  IndependentDriving,
+  ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import {
   AddDangerousFaultComment,
   AddSeriousFaultComment,
@@ -81,8 +87,12 @@ import {
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
+import { TerminationCode } from './components/termination-code/termination-code.model';
+import { default as TerminationCodeOptions } from './components/termination-code/termination-code.constants';
 
 interface OfficePageState {
+  activityCode$: Observable<ActivityCode>;
+  terminationCode$: Observable<TerminationCode>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -126,6 +136,7 @@ export class OfficePage extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
+  terminationCodeOptions: TerminationCode[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -144,6 +155,7 @@ export class OfficePage extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
+    this.terminationCodeOptions = TerminationCodeOptions;
   }
 
   ionViewDidEnter(): void {
@@ -157,6 +169,12 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
+      activityCode$: currentTest$.pipe(
+        select(getActivityCode),
+      ),
+      terminationCode$: currentTest$.pipe(
+        select(getTerminationCode),
+      ),
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
       ),

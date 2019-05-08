@@ -1,4 +1,4 @@
-import { ShowMeQuestion } from './../../../providers/question/show-me-question.model';
+import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
