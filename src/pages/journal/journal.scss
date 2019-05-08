@@ -35,16 +35,5 @@ page-journal {
     align-items: flex-end;
     line-height: 25px;
   }
-
-  .practice-mode-card {
-    padding: 12px;
-    h4 {
-      margin-bottom: 10px;
-    }
-    .mes-secondary-button {
-      h3 {
-        color: map-get($colors-gds, gds-black);
-      }
-    }
-  }
+  
 }
