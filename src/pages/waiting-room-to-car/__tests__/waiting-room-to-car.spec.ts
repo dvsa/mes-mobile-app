@@ -231,15 +231,9 @@ describe('WaitingRoomToCarPage', () => {
       });
     });
   });
-  describe('onSubmit', () => {
+  describe('ionViewWillLeave', () => {
     it('should dispatch the PersistTests action', () => {
-      const form = component.form;
-      form.get('eyesightCtrl').setValue(true);
-      form.get('tellMeQuestionOutcomeCtrl').setValue(true);
-      form.get('tellMeQuestionCtrl').setValue(true);
-      form.get('registrationNumberCtrl').setValue(true);
-      form.get('transmissionRadioGroupCtrl').setValue(true);
-      component.onSubmit();
+      component.ionViewWillLeave();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     });
   });
