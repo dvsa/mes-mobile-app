@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { StartPracticeTest } from '../../journal.actions';
+import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
+  from '../../../../modules/tests/test-data/test-data.actions';
 
 @Component({
   selector: 'practice',
@@ -8,40 +13,41 @@ import { NavController, AlertController } from 'ionic-angular';
 
 export class PracticeComponent {
 
+  slotId: number = 1;
+
   constructor(
-    public alertCtrl: AlertController,
-    public navCtrl: NavController,
+    private store$: Store<StoreModel>,
+    public alertController: AlertController,
+    public navController: NavController,
   ) { }
 
-  startPracticeTest() {
-    const alert = this.alertCtrl.create({
+  showDrivingFaultModal() {
+    const alert = this.alertController.create({
       title: 'Record a driving fault?',
       message: 'Do you want to start this practice test with a driving fault recorded against the tell me question?',
       cssClass: 'text-zoom-regular',
       buttons: [
         {
           text: 'Yes',
-          handler: this.recordFault,
+          handler: () => this.startPracticeTest(true),
         },
         {
           text: 'No',
-          handler: this.noFault,
+          handler: () => this.startPracticeTest(false),
         },
       ],
     });
     alert.present();
   }
 
-  noFault = () => {
-    console.log('noFault');
-    // this.store$.dispatch(new StartTest(this.slotId));
-    // this.navController.push('TestReportPage');
-  }
-
-  recordFault = () => {
-    console.log('recordFault');
-    // this.store$.dispatch(new StartTest(this.slotId));
-    // this.navController.push('TestReportPage');
+  startPracticeTest = (addFault: boolean) => {
+    this.store$.dispatch(new StartPracticeTest(this.slotId));
+    if (addFault) {
+      this.store$.dispatch(new TellMeQuestionDrivingFault());
+    } else {
+      this.store$.dispatch(new TellMeQuestionCorrect());
+    }
+    this.navController.push('TestReportPage');
   }
 
 }

@@ -35,7 +35,6 @@ export function testsReducer(
   action: testActions.Types | journalActions.JournalActionTypes) {
 
   const slotId = deriveSlotId(state, action);
-
   switch (action.type){
     case testActions.LOAD_PERSISTED_TESTS_SUCCESS:
       return (<testActions.LoadPersistedTestsSuccess>action).tests;
@@ -56,7 +55,9 @@ export function testsReducer(
 }
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof journalActions.StartTest || action instanceof journalActions.ActivateTest) {
+  if (action instanceof journalActions.StartTest
+      || action instanceof journalActions.ActivateTest
+      || action instanceof journalActions.StartPracticeTest) {
     return `${action.slotId}`;
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;

@@ -22,6 +22,7 @@ export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 export const START_TEST = '[TestOutcomeComponent] Start Test';
 // Differs from START_TEST in that it won't trigger the journal -> test state copy effect
 export const ACTIVATE_TEST = '[TestOutcomeComponent] Activate Test';
+export const START_PRACTICE_TEST = '[PracticeComponent] Start Practice Test';
 
 // Analytic actions
 
@@ -122,6 +123,11 @@ export class ActivateTest implements Action {
   constructor(public slotId: number) { }
 }
 
+export class StartPracticeTest implements Action {
+  readonly type = START_PRACTICE_TEST;
+  constructor(public slotId: number) { }
+}
+
 export type JournalActionTypes =
   | LoadJournal
   | LoadJournalSilent
@@ -140,4 +146,5 @@ export type JournalActionTypes =
   | JournalRefreshError
   | JournalRefresh
   | StartTest
-  | ActivateTest;
+  | ActivateTest
+  | StartPracticeTest;
