@@ -27,6 +27,7 @@ export class TestReportEffects {
   @Effect()
   validateCatBTest$ = this.actions$.pipe(
     ofType(
+      testReportActions.TEST_REPORT_VIEW_DID_ENTER,
       testDataActions.TOGGLE_LEGAL_REQUIREMENT,
       testDataActions.RECORD_MANOEUVRES_SELECTION,
       testDataActions.TOGGLE_ECO,
