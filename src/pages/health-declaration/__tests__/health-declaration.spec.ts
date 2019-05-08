@@ -21,6 +21,15 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { of } from 'rxjs/observable/of';
+
+const mockCandidate = {
+  driverNumber: '123',
+  candidateName: {
+    firstName: 'Joe',
+    lastName: 'Bloggs',
+  },
+};
 
 describe('HealthDeclarationPage', () => {
   let fixture: ComponentFixture<HealthDeclarationPage>;
@@ -36,7 +45,24 @@ describe('HealthDeclarationPage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forRoot({}),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testLifecycles: {},
+            startedTests: {
+              123: {
+                candidate: mockCandidate,
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+              },
+            },
+          }),
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -126,5 +152,27 @@ describe('HealthDeclarationPage', () => {
       tick();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     }));
+  });
+  describe('rehydrateFields', () => {
+    it('should set the field values from the page state', () => {
+      const form = component.form;
+
+      form.get('healthCheckboxCtrl').setValue(null);
+      form.get('receiptCheckboxCtrl').setValue(null);
+      form.get('signatureAreaCtrl').setValue(null);
+
+      fixture.detectChanges();
+
+      component.pageState.healthDeclarationAccepted$ = of(true);
+      component.pageState.passCertificateNumberReceived$ = of(true);
+      component.pageState.signature$ = of('abc123');
+
+      component.rehydrateFields();
+      fixture.detectChanges();
+
+      expect(form.get('healthCheckboxCtrl').value).toBeTruthy();
+      expect(form.get('receiptCheckboxCtrl').value).toBeTruthy();
+      expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
+    });
   });
 });
