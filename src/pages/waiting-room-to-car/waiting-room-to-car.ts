@@ -213,6 +213,10 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
   }
 
+  ionViewWillLeave(): void {
+    this.store$.dispatch(new PersistTests());
+  }
+
   schoolCarToggled(): void {
     this.store$.dispatch(new SchoolCarToggled());
   }
@@ -261,7 +265,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.store$.dispatch(new PersistTests());
       this.navCtrl.push('TestReportPage');
     }
   }
