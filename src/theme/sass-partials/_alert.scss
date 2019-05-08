@@ -4,6 +4,33 @@
   font-size: 19px;
   // Action buttons at the very bottom
   justify-content: space-between;
+  .alert-title {
+    font-size: 28px;
+    letter-spacing: 0.27px;
+    line-height: 40px;
+    margin-top: 8px;
+    html .text-zoom-regular & {
+      font-weight: bold;
+    }
+  }
+  .alert-message {
+    font-size: 20px;
+    letter-spacing: 0.27px;
+    line-height: 28px;
+    margin-bottom: 12px;
+  }
+  .alert-button-group {
+    height: 56px;
+    button {
+      height: 100%;
+      span.button-inner {
+        font-size: 20px;
+        color: map-get($colors-gds, gds-black)
+      }
+    }
+  }
+}
+.mes-select .alert-wrapper {
   .alert-head, .alert-message {
     display: none;
   }
@@ -58,15 +85,6 @@
       }
       div.alert-checkbox-label {
         font-weight: bold;
-      }
-    }
-  }
-  div.alert-button-group {
-    height: 56px;
-    button {
-      height: 100%;
-      span.button-inner {
-        color: map-get($colors-gds, gds-black)
       }
     }
   }
