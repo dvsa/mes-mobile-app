@@ -15,6 +15,7 @@ import {
   getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
+  getTerminationCode,
 } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
@@ -62,7 +63,7 @@ import {
   getShowMeQuestionOptions,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
+import { PersistTests, SetActivityCode } from '../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
   displayDrivingFaultComments,
@@ -71,7 +72,11 @@ import {
 } from '../debrief/debrief.selector';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
-import { WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
+import {
+  WeatherConditions,
+  Identification,
+  IndependentDriving,
+  } from '@dvsa/mes-test-schema/categories/B';
 import {
   AddDangerousFaultComment,
   AddSeriousFaultComment,
@@ -81,9 +86,11 @@ import {
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
+import { TerminationCode, TERMINATION_CODE_LIST } from './components/termination-code/termination-code.constants';
 import { TestStatusCompleted } from '../../modules/tests/test-status/test-status.actions';
 
 interface OfficePageState {
+  terminationCode$: Observable<TerminationCode>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -127,6 +134,7 @@ export class OfficePage extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
+  terminationCodeOptions: TerminationCode[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -145,6 +153,7 @@ export class OfficePage extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
+    this.terminationCodeOptions = TERMINATION_CODE_LIST;
   }
 
   ionViewDidEnter(): void {
@@ -158,6 +167,9 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
+      terminationCode$: currentTest$.pipe(
+        select(getTerminationCode),
+      ),
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
       ),
@@ -355,6 +367,10 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(
       new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
     );
+  }
+
+  terminationCodeChanged(terminationCode: TerminationCode) {
+    this.store$.dispatch(new SetActivityCode(terminationCode.activityCode));
   }
 
   private createToast = (errorMessage: string) => {

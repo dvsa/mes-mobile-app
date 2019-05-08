@@ -1,4 +1,4 @@
-import { ShowMeQuestion } from './../../../providers/question/show-me-question.model';
+import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
@@ -20,7 +20,7 @@ import {
 } from '../../../modules/tests/test-data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SetActivityCode } from '../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
@@ -38,6 +38,8 @@ import { IdentificationComponent } from '../components/identification/identifica
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
+import { TerminationCodeComponent } from '../components/termination-code/termination-code';
+import { TERMINATION_CODE_LIST } from '../components/termination-code/termination-code.constants';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -59,6 +61,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
+        MockComponent(TerminationCodeComponent),
       ],
       imports: [
         IonicModule,
@@ -93,6 +96,7 @@ describe('OfficePage', () => {
                     },
                   },
                 },
+                activityCode: '24',
               },
             },
           }),
@@ -141,6 +145,12 @@ describe('OfficePage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
       });
     });
+    xdescribe('selecting a termination code', () => {
+      it('should dispatch a SetActivityCode action with the activity code', () => {
+        component.terminationCodeChanged(TERMINATION_CODE_LIST[0]);
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(TERMINATION_CODE_LIST[0].activityCode));
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -149,6 +159,12 @@ describe('OfficePage', () => {
       const showMeElement = fixture.debugElement.query(By.css('show-me-question'))
         .componentInstance as ShowMeQuestionComponent;
       expect(showMeElement.showMeQuestion.code).toEqual('S3');
+    });
+    it('should pass the selected termination code to the termination code subcomponent', () => {
+      fixture.detectChanges();
+      const terminationCodeElement = fixture.debugElement.query(By.css('termination-code-card'))
+        .componentInstance as TerminationCodeComponent;
+      expect(terminationCodeElement.terminationCode).toEqual('24');
     });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();

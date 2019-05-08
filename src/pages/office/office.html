@@ -31,6 +31,8 @@
 
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
+          <termination-code id="termination-code-card"[formGroup]="form" [terminationCode]="pageState.terminationCode$ | async" 
+          [terminationCodeOptions]="terminationCodeOptions" (terminationCodeChange)="terminationCodeChanged($event)"></termination-code>
 
           <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async" 
           [outcome]="pageState.testOutcome$ | async"
