@@ -75,7 +75,7 @@ export class TestReportEffects {
   );
 
   @Effect()
-  persistTestReportData$ = this.actions$.pipe(
+  persistTestReport$ = this.actions$.pipe(
     ofType(
       testDataActions.ADD_DRIVING_FAULT,
       testDataActions.ADD_DANGEROUS_FAULT,
