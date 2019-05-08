@@ -9,6 +9,7 @@ import { DangerousFaultBadgeComponent } from './dangerous-fault-badge/dangerous-
 import { IonicModule } from 'ionic-angular';
 import { EndTestLinkComponent } from './end-test-link/end-test-link';
 import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-modal.module';
+import { CandidateSectionComponent } from './candidate-section/candidate-section';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-
     SeriousFaultBadgeComponent,
     DangerousFaultBadgeComponent,
     EndTestLinkComponent,
+    CandidateSectionComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -32,6 +34,7 @@ import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-
     SeriousFaultBadgeComponent,
     DangerousFaultBadgeComponent,
     EndTestLinkComponent,
+    CandidateSectionComponent,
   ],
 })
 export class ComponentsModule { }
