@@ -30,7 +30,6 @@ export class LoginPage extends BasePageComponent {
   hasUserLoggedOut: boolean = false;
   hasDeviceTypeError: boolean = false;
   unauthenticatedMode: boolean = false;
-  isLoading: boolean = false;
 
   constructor(
     public navCtrl: NavController,
