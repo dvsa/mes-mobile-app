@@ -5,7 +5,7 @@ import { TestPersistenceProvider } from '../../providers/test-persistence/test-p
 import { from } from 'rxjs/observable/from';
 import * as testActions from './tests.actions';
 import { of } from 'rxjs/observable/of';
-import { TestSlotAttributes, TestCentre, Candidate } from '@dvsa/mes-test-schema/categories/B';
+import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateApplicationReference } from './application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from './candidate/candidate.actions';
 import { Application } from '../../shared/models/DJournal';
@@ -44,35 +44,16 @@ export class TestsEffects {
   startPracticeTestEffect$ = this.actions$.pipe(
     ofType(testActions.START_PRACTICE_TEST),
     switchMap(() => {
-      const slot = {
-        slotData: {
-          ...practiceSlot,
-        },
+      const slotData = {
+        ...practiceSlot,
       };
 
       return [
-        new PopulateApplicationReference(slot.slotData.booking.application),
-        new PopulateCandidateDetails(slot.slotData.booking.candidate),
+        new PopulateApplicationReference(slotData.booking.application),
+        new PopulateCandidateDetails(slotData.booking.candidate),
       ];
     }),
   );
-
-  extractTestSlotAttributes = (slotData): TestSlotAttributes => {
-    return {
-      welshTest: slotData.booking.application.welshTest,
-      slotId: slotData.slotDetail.slotId,
-      start: slotData.slotDetail.start,
-      specialNeeds: slotData.booking.application.specialNeeds,
-      vehicleSlotType: slotData.vehicleSlotType,
-      extendedTest: slotData.booking.application.extendedTest,
-    };
-  }
-
-  extractTestCentre = (slotData): TestCentre => {
-    return {
-      costCode: slotData.testCentre.costCode,
-    };
-  }
 
 }
 
