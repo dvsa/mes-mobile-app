@@ -81,7 +81,9 @@ export class LoginPage extends BasePageComponent {
 
       await this.platform.ready();
       await this.initialiseAppConfig();
+
       this.initialiseAuthentication();
+
       await this.authenticationProvider.login();
 
       this.store$.dispatch(new LoadLog());
