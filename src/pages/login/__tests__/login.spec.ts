@@ -1,5 +1,13 @@
 import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform, LoadingController } from 'ionic-angular';
+import {
+  IonicModule,
+  NavController,
+  NavParams,
+  Config,
+  Platform,
+  LoadingController,
+  AlertController,
+} from 'ionic-angular';
 import {
   NavControllerMock,
   NavParamsMock,
@@ -7,6 +15,7 @@ import {
   PlatformMock,
   SplashScreenMock,
   LoadingControllerMock,
+  AlertControllerMock,
 } from 'ionic-mocks';
 import { Store , StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -56,6 +65,7 @@ describe('LoginPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
+        { provide: AlertController, useFactory: () => AlertControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
