@@ -33,7 +33,7 @@ export class TestReportPracticeModeEffects {
 
 }
 
-const application: Application = {
+export const application: Application = {
   applicationId: 1234569,
   bookingSequence: 1,
   checkDigit: 9,
@@ -45,7 +45,7 @@ const application: Application = {
   welshTest: false,
 };
 
-const candidate: Candidate = {
+export const candidate: Candidate = {
   candidateAddress: {
     addressLine1: 'My House',
     addressLine2: 'Someplace',
