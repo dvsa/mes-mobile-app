@@ -42,8 +42,14 @@ import {
 import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
+import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';
+import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
+import { VehicleRegistrationComponent } from '../components/vehicle-registration/vehicle-registration';
+import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
+import { TransmissionComponent } from '../components/transmission/transmission';
 
-describe('WaitingRoomToCarPage', () => {
+fdescribe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
   let component: WaitingRoomToCarPage;
   let store$: Store<StoreModel>;
@@ -54,6 +60,12 @@ describe('WaitingRoomToCarPage', () => {
         WaitingRoomToCarPage,
         MockComponent(EyesightFailureConfirmationComponent),
         MockComponent(EndTestLinkComponent),
+        MockComponent(TellMeQuestionCardComponent),
+        MockComponent(TellMeQuestionComponent),
+        MockComponent(TellMeQuestionOutcomeComponent),
+        MockComponent(VehicleRegistrationComponent),
+        MockComponent(InstructorRegistrationComponent),
+        MockComponent(TransmissionComponent),
       ],
       imports: [
         IonicModule,
