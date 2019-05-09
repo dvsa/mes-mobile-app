@@ -15,7 +15,6 @@ import {
   getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
-  getActivityCode,
   getTerminationCode,
 } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -77,7 +76,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-  ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+  } from '@dvsa/mes-test-schema/categories/B';
 import {
   AddDangerousFaultComment,
   AddSeriousFaultComment,
@@ -90,7 +89,6 @@ import { behaviourMap } from './office-behaviour-map';
 import { TerminationCode, TERMINATION_CODE_LIST } from './components/termination-code/termination-code.constants';
 
 interface OfficePageState {
-  activityCode$: Observable<ActivityCode>;
   terminationCode$: Observable<TerminationCode>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
@@ -168,9 +166,6 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
-      activityCode$: currentTest$.pipe(
-        select(getActivityCode),
-      ),
       terminationCode$: currentTest$.pipe(
         select(getTerminationCode),
       ),

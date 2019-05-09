@@ -31,12 +31,9 @@ export class TerminationCodeComponent implements OnChanges {
   }
 
   terminationCodeChanged(terminationCode: TerminationCode): void {
-
     this.terminationCodeChange.emit(terminationCode);
     if (this.formControl.valid) {
-      console.log(JSON.stringify(terminationCode));
       this.terminationCodeChange.emit(terminationCode);
-      console.log('Emitted');
     }
   }
 

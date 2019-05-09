@@ -38,6 +38,7 @@ import { IdentificationComponent } from '../components/identification/identifica
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
+import { TerminationCodeComponent } from '../components/termination-code/termination-code';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -59,6 +60,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
+        MockComponent(TerminationCodeComponent),
       ],
       imports: [
         IonicModule,
