@@ -6,6 +6,8 @@ import {
   TestData,
   Manoeuvres,
   StandardCarTestCATBSchema,
+  VehicleChecks,
+  ControlledStop,
 } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -67,6 +69,46 @@ export const getManoeuvreFaults = (
     faultsEncountered.push(...faults);
   });
   return faultsEncountered;
+};
+
+export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): string[] => {
+  const result: string[] = [];
+
+  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push('Vehicle checks');
+
+  return result;
+};
+
+export const getVehicleCheckSeriousFault = (vehicleChecks: VehicleChecks): string[] => {
+  const result: string[] = [];
+
+  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push('Vehicle checks');
+
+  return result;
+};
+
+export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): string[] => {
+  if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
+    || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
+    return [];
+  }
+
+  const result: string[] = [];
+
+  if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
+    || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
+    result.push('Vehicle checks');
+  }
+
+  return result;
+};
+
+export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
+  const result: string[] = [];
+
+  controlledStop.fault === faultType && result.push('Controlled stop');
+
+  return result;
 };
 
 export const displayDrivingFaultComments = (data: TestData): boolean => {

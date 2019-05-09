@@ -57,6 +57,7 @@ describe('DebriefPage', () => {
                     tellMeQuestion: {},
                     showMeQuestion: {},
                   },
+                  controlledStop: {},
                 },
               },
             },

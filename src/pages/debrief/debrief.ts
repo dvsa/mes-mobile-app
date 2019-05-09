@@ -19,7 +19,16 @@ import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults, getTestOutcome } from './debrief.selector';
+import {
+  getSeriousOrDangerousFaults,
+  getDrivingFaults,
+  getManoeuvreFaults,
+  getTestOutcome,
+  getControlledStopFault,
+  getVehicleCheckSeriousFault,
+  getVehicleCheckDangerousFault,
+  getVehicleCheckDrivingFault,
+} from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -68,6 +77,8 @@ export class DebriefPage extends BasePageComponent {
           return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
+            ...getVehicleCheckSeriousFault(data.vehicleChecks),
+            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
           ];
         }),
       ),
@@ -79,6 +90,8 @@ export class DebriefPage extends BasePageComponent {
           return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
+            ...getVehicleCheckDangerousFault(data.vehicleChecks),
+            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
           ];
         }),
       ),
@@ -90,6 +103,20 @@ export class DebriefPage extends BasePageComponent {
           return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
             ...getDrivingFaults(data.drivingFaults),
+            ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
+              (result: string): MultiFaultAssignableCompetency => ({
+                faultCount: 1,
+                competencyDisplayName: result,
+                competencyIdentifier: result,
+              }),
+            ),
+            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.DF).map(
+              (result: string): MultiFaultAssignableCompetency => ({
+                faultCount: 1,
+                competencyDisplayName: result,
+                competencyIdentifier: result,
+              }),
+            ),
           ];
         }),
       ),
