@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
 
@@ -26,6 +26,7 @@ export class LoginPage extends BasePageComponent {
 
   authenticationError: AuthenticationError;
   deviceTypeError: DeviceError;
+  loadingSpinner: Loading;
   hasUserLoggedOut: boolean = false;
   hasDeviceTypeError: boolean = false;
   unauthenticatedMode: boolean = false;
@@ -43,6 +44,7 @@ export class LoginPage extends BasePageComponent {
     public deviceProvider: DeviceProvider,
     public secureStorage: SecureStorage,
     public dataStore: DataStoreProvider,
+    public loadingController: LoadingController,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -62,6 +64,7 @@ export class LoginPage extends BasePageComponent {
   }
 
   login = async (): Promise<any> => {
+    this.handleLoadingUI(true);
     await this.platform.ready();
 
     this.initialiseAppConfig()
@@ -73,8 +76,10 @@ export class LoginPage extends BasePageComponent {
       .then(() => this.appConfigProvider.loadRemoteConfig())
       .then(() => this.analytics.initialiseAnalytics())
       .then(() => this.store$.dispatch(new StartSendingLogs()))
+      .then(() => this.handleLoadingUI(false))
       .then(() => this.validateDeviceType())
       .catch((error: AuthenticationError) => {
+        this.handleLoadingUI(false);
         if (error === AuthenticationError.USER_CANCELLED) {
           this.analytics.logException(error, true);
         }
@@ -142,5 +147,20 @@ export class LoginPage extends BasePageComponent {
 
   isUserNotAuthorised = (): boolean => {
     return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.USER_NOT_AUTHORISED;
+  }
+
+  handleLoadingUI = (isLoading: boolean): void => {
+    if (isLoading) {
+      this.loadingSpinner = this.loadingController.create({
+        spinner: 'circles',
+        content: 'App initialising...',
+      });
+      this.loadingSpinner.present();
+      return;
+    }
+    if (this.loadingSpinner) {
+      this.loadingSpinner.dismiss();
+      this.loadingSpinner = null;
+    }
   }
 }
