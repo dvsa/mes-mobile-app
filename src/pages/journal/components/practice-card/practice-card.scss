@@ -1,0 +1,13 @@
+practice-card {
+  .practice-mode-card {
+    padding: 12px;
+    h4 {
+      margin-bottom: 10px;
+    }
+    .mes-secondary-button {
+      h3 {
+        color: map-get($colors-gds, gds-black);
+      }
+    }
+  }
+}

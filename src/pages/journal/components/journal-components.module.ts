@@ -13,6 +13,8 @@ import { TestCategoryComponent } from '../components/test-category/test-category
 import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 import { LanguageComponent } from '../components/language/language';
 import { TestSlotComponent } from './test-slot/test-slot';
+import { PracticeCardComponent } from './practice-card/practice-card';
+import { PracticeTestModalModule } from './practice-test-modal/practice-test-modal.module';
 
 @NgModule({
   declarations: [
@@ -28,10 +30,12 @@ import { TestSlotComponent } from './test-slot/test-slot';
     TestCategoryComponent,
     JournalNavigationComponent,
     LanguageComponent,
+    PracticeCardComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
+    PracticeTestModalModule,
   ],
   entryComponents:[
     TestSlotComponent,
@@ -49,6 +53,7 @@ import { TestSlotComponent } from './test-slot/test-slot';
     TestCategoryComponent,
     JournalNavigationComponent,
     LanguageComponent,
+    PracticeCardComponent,
   ],
 })
 export class JournalComponentsModule {}
