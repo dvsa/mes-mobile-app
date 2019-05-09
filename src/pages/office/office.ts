@@ -81,6 +81,7 @@ import {
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
+import { TestStatusCompleted } from '../../modules/tests/test-status/test-status.actions';
 
 interface OfficePageState {
   startTime$: Observable<string>;
@@ -284,6 +285,8 @@ export class OfficePage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      // TODO - This will be updated with UX Modal in another ticket
+      this.store$.dispatch(new TestStatusCompleted());
       // TODO go to the correct page
       this.popToRoot();
     } else {
