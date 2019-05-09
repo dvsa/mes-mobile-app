@@ -6,10 +6,10 @@
                   <ion-row>
                     <ion-col col-32>
                       <input #instructorRegistrationInput type="number" id="instructor-registration" numbersOnly
+                        formControlName="instructorRegistration"
                         [value]="instructorRegistration"
                         (change)="instructorRegistrationChanged($event.target.value)">
                     </ion-col>
                   </ion-row>
                 </ion-col>
               </ion-row>
-  

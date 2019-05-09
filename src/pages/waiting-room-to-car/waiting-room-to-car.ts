@@ -221,12 +221,8 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new DualControlsToggled());
   }
 
-  manualTransmission(): void {
-    this.store$.dispatch(new GearboxCategoryChanged('Manual'));
-  }
-
-  automaticTransmission(): void {
-    this.store$.dispatch(new GearboxCategoryChanged('Automatic'));
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
   instructorAccompanimentToggled(): void {
@@ -267,6 +263,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    console.log(`form valid = ${this.form.valid}`);
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
       this.navCtrl.push('TestReportPage');
@@ -282,8 +279,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     return {
       tellMeQuestionCtrl: new FormControl('', [Validators.required]),
       tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
-      transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
-      registrationNumberCtrl: new FormControl('', [Validators.required]),
       eyesightCtrl: new FormControl(null, [Validators.required]),
     };
   }
@@ -310,16 +305,17 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new EyesightResultReset());
   }
 
-  tellMeQuestionChanged(newTellMeQuestion): void {
+  tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
     this.form.controls['tellMeQuestionOutcomeCtrl'].setValue('');
   }
 
-  tellMeQuestionCorrect(): void {
-    this.store$.dispatch(new TellMeQuestionCorrect());
+  tellMeQuestionOutcomeChanged(outcome: string): void {
+    if (outcome === 'Correct') {
+      this.store$.dispatch(new TellMeQuestionCorrect());
+    } else if (outcome === 'Fault') {
+      this.store$.dispatch(new TellMeQuestionDrivingFault());
+    }
   }
 
-  tellMeQuestionDrivingFault(): void {
-    this.store$.dispatch(new TellMeQuestionDrivingFault());
-  }
 }

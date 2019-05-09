@@ -14,6 +14,10 @@ import {
 import { ComponentsModule } from '../../components/components.module';
 import { VehicleRegistrationComponent } from './components/vehicle-registration/vehicle-registration';
 import { InstructorRegistrationComponent } from './components/instructor-registration/instructor-registration';
+import { TransmissionComponent } from './components/transmission/transmission';
+import { TellMeQuestionComponent } from './components/tell-me-question/tell-me-question';
+import { TellMeQuestionCardComponent } from './components/tell-me-question-card/tell-me-question-card';
+import { TellMeQuestionOutcomeComponent } from './components/tell-me-question-outcome/tell-me-question-outcome';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,10 @@ import { InstructorRegistrationComponent } from './components/instructor-registr
     EyesightFailureConfirmationComponent,
     VehicleRegistrationComponent,
     InstructorRegistrationComponent,
+    TransmissionComponent,
+    TellMeQuestionCardComponent,
+    TellMeQuestionComponent,
+    TellMeQuestionOutcomeComponent,
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),
