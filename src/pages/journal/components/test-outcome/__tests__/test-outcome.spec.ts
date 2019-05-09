@@ -72,7 +72,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe('WaitingRoomPage');
+        expect(calls.argsFor(0)[0]).toBe('CommunicationPage');
       });
     });
   });

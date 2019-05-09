@@ -37,10 +37,7 @@ describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
-  let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
-  let screenOrientation: ScreenOrientation;
-  let insomnia: Insomnia;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -95,10 +92,6 @@ describe('WaitingRoomPage', () => {
         fixture = TestBed.createComponent(WaitingRoomPage);
         component = fixture.componentInstance;
       });
-
-    deviceProvider = TestBed.get(DeviceProvider);
-    screenOrientation = TestBed.get(ScreenOrientation);
-    insomnia = TestBed.get(Insomnia);
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
@@ -122,31 +115,12 @@ describe('WaitingRoomPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ToggleInsuranceDeclaration());
       });
     });
-
-    describe('ionViewDidEnter', () => {
-      it('should enable single app mode if on ios', () => {
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
-
-      it('should lock the screen orientation to Portrait Primary', () => {
-        component.ionViewDidEnter();
-        expect(screenOrientation.lock)
-          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      });
-
-      it('should keep the device awake', () => {
-        component.ionViewDidEnter();
-        expect(insomnia.keepAwake).toHaveBeenCalled();
-      });
-
-    });
   });
 
   describe('clickBack', () => {
-    it('should should trigger the lock screen', () => {
+    it('should should not trigger the lock screen', () => {
       component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      expect(deviceAuthenticationProvider.triggerLockScreen).not.toHaveBeenCalled();
     });
 
     describe('Declaration Validation', () => {

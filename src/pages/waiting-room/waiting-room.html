@@ -8,18 +8,10 @@
 </ion-header>
 <ion-content no-bounce>
   <lock-screen-indicator></lock-screen-indicator>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ion-row class="mes-full-width-card" id="candidate-section">
-      <ion-col>
-        <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
-        <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
-      </ion-col>
-      <ion-col col-auto>
-        <button type="submit" id="continue-button" class="mes-primary-button" float-right ion-button>
-          <h3>Continue</h3>
-        </button>
-      </ion-col>
-    </ion-row>
+  <form [formGroup]="form">
+    <candidate-section [candidateName]="pageState.candidateName$ | async"
+      [candidateDriverNumber]="pageState.candidateDriverNumber$ | async" (continueClickEvent)="onSubmit()">
+    </candidate-section>
     <div class="mes-full-width-card-separator"></div>
     <div class="mes-full-width-card" id="declaration-section">
       <ion-row>
