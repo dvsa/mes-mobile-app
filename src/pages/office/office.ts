@@ -64,7 +64,7 @@ import {
   getShowMeQuestionOptions,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
+import { PersistTests, SetActivityCode } from '../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
   displayDrivingFaultComments,
@@ -87,8 +87,7 @@ import {
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
-import { TerminationCode } from './components/termination-code/termination-code.model';
-import { default as TerminationCodeOptions } from './components/termination-code/termination-code.constants';
+import { TerminationCode, TERMINATION_CODE_LIST } from './components/termination-code/termination-code.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCode>;
@@ -155,7 +154,7 @@ export class OfficePage extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.terminationCodeOptions = TerminationCodeOptions;
+    this.terminationCodeOptions = TERMINATION_CODE_LIST;
   }
 
   ionViewDidEnter(): void {
@@ -370,6 +369,10 @@ export class OfficePage extends BasePageComponent {
     this.store$.dispatch(
       new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
     );
+  }
+
+  terminationCodeChanged(terminationCode: TerminationCode) {
+    this.store$.dispatch(new SetActivityCode(terminationCode.activityCode));
   }
 
   private createToast = (errorMessage: string) => {

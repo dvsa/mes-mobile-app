@@ -1,7 +1,7 @@
 import { TestStatus } from './test-status/test-status.model';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
-import { default as TerminationCodes } from '../../pages/office/components/termination-code/termination-code.constants';
+import { TERMINATION_CODE_LIST } from '../../pages/office/components/termination-code/termination-code.constants';
 
 // temporary determination of test failure and success until service
 // that imnplements full business logic is implemented.
@@ -51,8 +51,8 @@ export const getActivityCode = (test: StandardCarTestCATBSchema) => test.activit
 
 export const getTerminationCode = (test: StandardCarTestCATBSchema) => {
 
-  const terminationCodeIndex = TerminationCodes.findIndex(
-    terminationCode => test.activityCode === terminationCode.code);
-  return TerminationCodes[terminationCodeIndex];
+  const terminationCodeIndex = TERMINATION_CODE_LIST.findIndex(
+    terminationCode => test.activityCode === terminationCode.activityCode);
+  return TERMINATION_CODE_LIST[terminationCodeIndex];
 
 };

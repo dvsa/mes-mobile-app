@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TerminationCode } from './termination-code.model';
+import { TerminationCode } from './termination-code.constants';
 
 @Component({
   selector: 'termination-code',
@@ -18,7 +18,7 @@ export class TerminationCodeComponent implements OnChanges {
   formGroup: FormGroup;
 
   @Output()
-  terminationCodeChange = new EventEmitter<TerminationCode>();
+  terminationCodeChange = new EventEmitter<any>();
 
   private formControl: FormControl;
 
@@ -31,8 +31,12 @@ export class TerminationCodeComponent implements OnChanges {
   }
 
   terminationCodeChanged(terminationCode: TerminationCode): void {
+
+    this.terminationCodeChange.emit(terminationCode);
     if (this.formControl.valid) {
+      console.log(JSON.stringify(terminationCode));
       this.terminationCodeChange.emit(terminationCode);
+      console.log('Emitted');
     }
   }
 

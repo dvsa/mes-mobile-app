@@ -9,7 +9,7 @@
         <ion-select id="termination-code-selector" placeholder="Select a termination code" okText="Submit" cancelText="Cancel"
           formControlName="terminationCode" (ionChange)="terminationCodeChanged($event)" [selectOptions]="{cssClass:'mes-select'}">
           <ion-option [value]="terminationCode" *ngFor="let terminationCode of terminationCodeOptions">
-            {{terminationCode.code}} - {{terminationCode.description}}
+            {{terminationCode.activityCode}} - {{terminationCode.description}}
           </ion-option>
         </ion-select>
       </ion-row>
