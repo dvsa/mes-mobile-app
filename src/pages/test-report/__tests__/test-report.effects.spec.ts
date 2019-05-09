@@ -16,6 +16,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { of } from 'rxjs/observable/of';
+import { ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 
 export class TestActions extends Actions {
   constructor() {
@@ -112,5 +113,23 @@ describe('Test Report Effects', () => {
         done();
       });
     });
+  });
+
+  describe('persistTestReport', () => {
+
+    beforeEach(() => {
+      store$.dispatch(new journalActions.StartTest(123456));
+    });
+
+    it('should dispatch an action requesting the test data to be saved when triggered', (done) => {
+      // ACT
+      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.persistTestReport$.subscribe((result) => {
+        expect(result).toEqual(new testsActions.PersistTests());
+        done();
+      });
+    });
+
   });
 });
