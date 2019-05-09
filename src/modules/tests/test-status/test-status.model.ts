@@ -3,4 +3,5 @@ export enum TestStatus {
   Started = 'Started',
   Decided = 'Decided',
   Completed = 'Completed',
+  Submitted = 'Submitted',
 }
