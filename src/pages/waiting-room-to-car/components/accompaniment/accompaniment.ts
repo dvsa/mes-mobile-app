@@ -33,12 +33,12 @@ export class TransmissionComponent implements OnChanges {
       this.formControl = new FormControl('Transmission', [Validators.required]);
       this.formGroup.addControl('accompaniment', this.formControl);
     }
-    this.formControl.patchValue(this.accompaniment);
+//    this.formControl.patchValue(this.accompaniment);
   }
 
   accompanimentChanged(accompaniment: GearboxCategory): void {
     if (this.formControl.valid) {
-      this.accompanimentChange.emit(accompaniment);
+//      this.accompanimentChange.emit(accompaniment);
     }
   }
 
