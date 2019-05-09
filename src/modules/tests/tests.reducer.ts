@@ -18,6 +18,7 @@ import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-att
 import { examinerReducer } from './examiner/examiner.reducer';
 import { TestsModel } from './tests.model';
 import { startsWith } from 'lodash';
+import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -108,6 +109,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             testSlotAttributes: testSlotsAttributesReducer,
             examiner: examinerReducer,
             testCentre: testCentreReducer,
+            communicationPreferences: communicationPreferencesReducer,
           },
         // @ts-ignore
       )(state.startedTests[slotId], action),

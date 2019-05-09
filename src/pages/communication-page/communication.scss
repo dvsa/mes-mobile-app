@@ -2,4 +2,42 @@ communication {
   ion-content>div {
     background-color: map-get($colors, "mes-white");
   }
+
+  .communication-option {
+    padding: 10px 5px;
+  }
+
+  .communication-box {
+    margin: 10px 0px 10px 26px;
+    border-left: 4px solid;
+    border-color: map-get($colors-gds, "gds-grey-2");
+  }
+
+  .communication-helper-text {
+    font-size: 23px;
+    color: map-get($colors-gds, "gds-grey-1");
+    margin-bottom: 10px;
+  }
+
+  .provided-email-textbox {
+    width: 40%;
+    border: 2px solid map-get($colors-gds, "gds-lavendar");
+    height: 48px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: map-get($colors-gds, "gds-lavendar");
+    font-weight: 500;
+  }
+
+  .new-email-textbox {
+    width: 40%;
+    border-radius: 6px;
+    border: 2px solid map-get($colors-gds, "gds-black");
+    height: 48px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-transform: lowercase;
+  }
 }
