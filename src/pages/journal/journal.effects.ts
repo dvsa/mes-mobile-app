@@ -177,25 +177,6 @@ export class JournalEffects {
   );
 
   @Effect()
-  startPracticeTestEffect$ = this.actions$.pipe(
-    ofType(journalActions.START_PRACTICE_TEST),
-    switchMap(() => {
-      const slot = {
-        slotData: {
-          ...practiceSlot,
-        },
-      };
-
-      return [
-        new PopulateApplicationReference(slot.slotData.booking.application),
-        new PopulateCandidateDetails(slot.slotData.booking.candidate),
-        new PopulateTestSlotAttributes(this.extractTestSlotAttributes(slot.slotData)),
-        new PopulateTestCentre(this.extractTestCentre(slot.slotData)),
-      ];
-    }),
-  );
-
-  @Effect()
   selectPreviousDayEffect$ = this.actions$.pipe(
     ofType(journalActions.SELECT_PREVIOUS_DAY),
     withLatestFrom(
@@ -260,53 +241,3 @@ export class JournalEffects {
     };
   }
 }
-
-const practiceSlot = {
-  booking: {
-    application: {
-      applicationId: 1234569,
-      bookingSequence: 1,
-      checkDigit: 9,
-      entitlementCheck: false,
-      extendedTest: false,
-      progressiveAccess: false,
-      testCategory: 'B',
-      // vehicleGearbox: 'Manual',
-      welshTest: false,
-    },
-    candidate: {
-      age: 17,
-      candidateAddress: {
-        addressLine1: 'My House',
-        addressLine2: 'Someplace',
-        addressLine3: 'Sometown',
-        postcode: 'AB45 6CD',
-      },
-      candidateId: 1,
-      candidateName: {
-        firstName: 'Practice',
-        lastName: 'Mode',
-        title: 'Miss',
-      },
-      driverNumber: 'MODEX625220A99HC',
-      gender: 'Female',
-      mobileTelephone: '07654 123456',
-    },
-    previousCancellation: [
-      'DSA',
-      'Act of nature',
-    ],
-  },
-  slotDetail: {
-    duration: 57,
-    slotId: 1,
-    start: '2019-05-08T10:14:00+01:00',
-  },
-  testCentre: {
-    centreId: 54321,
-    centreName: 'Example Test Centre',
-    costCode: 'EXTC1',
-  },
-  vehicleSlotType: 'B57mins',
-  vehicleSlotTypeCode: 7,
-};
