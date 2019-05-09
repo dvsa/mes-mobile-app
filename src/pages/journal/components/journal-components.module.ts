@@ -13,7 +13,7 @@ import { TestCategoryComponent } from '../components/test-category/test-category
 import { JournalNavigationComponent } from '../components/journal-navigation/journal-navigation';
 import { LanguageComponent } from '../components/language/language';
 import { TestSlotComponent } from './test-slot/test-slot';
-import { PracticeComponent } from './practice/practice';
+import { PracticeCardComponent } from './practice-card/practice-card';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { PracticeComponent } from './practice/practice';
     TestCategoryComponent,
     JournalNavigationComponent,
     LanguageComponent,
-    PracticeComponent,
+    PracticeCardComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +51,7 @@ import { PracticeComponent } from './practice/practice';
     TestCategoryComponent,
     JournalNavigationComponent,
     LanguageComponent,
-    PracticeComponent,
+    PracticeCardComponent,
   ],
 })
 export class JournalComponentsModule {}

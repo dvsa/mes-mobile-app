@@ -11,7 +11,7 @@ import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
   templateUrl: 'practice.html',
 })
 
-export class PracticeComponent {
+export class PracticeCardComponent {
 
   slotId: number = 1;
 
