@@ -58,10 +58,16 @@
             <vehicle-registration [formGroup]="form" [vehicleRegistration]="pageState.registrationNumber$ | async"
             (vehicleRegistrationChange)="vehicleRegistrationChanged($event)"></vehicle-registration>
 
-            <transmission [formGroup]="form" [transmission]="pageState.blah" (transmissionChange)="transmissionChanged($event)"></transmission>
+            <transmission [formGroup]="form" [transmission]="pageState.transmission$ | async" (transmissionChange)="transmissionChanged($event)"></transmission>
 
             <instructor-registration [formGroup]="form" [instructorRegistration]="pageState.instructorRegistrationNumber$ | async"
             (instructorRegistrationChange)="instructorRegistrationChanged($event)"></instructor-registration>
+
+            <accompaniment [formGroup]="form" 
+              [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
+              [superVisorAccompaniment]="pageState.superVisorAccompaniment$ | async"
+              [otherAccompaniment]="pageState.instructorAccompaniment$ | async"
+              (accompanimentChangee)="accompanimentChanged($event)"></accompaniment>
 
             <ion-row class="mes-component-row mes-row-separator" id="accompaniment-card">
               <ion-col class="component-label" col-32 align-self-center>

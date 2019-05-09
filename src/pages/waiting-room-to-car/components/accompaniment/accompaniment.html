@@ -1,0 +1,30 @@
+<ion-row class="mes-component-row mes-row-separator" id="accompaniment-card">
+    <ion-col class="component-label" col-32 align-self-center>
+      <label>Accompanied by (optional)</label>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-row>
+        <ion-col col-32>
+          <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox"
+            [checked]="accompaniment ==='Ins'" 
+            (click)="instructorAccompanimentToggled()"
+            value="Ins">
+          <label for="accompaniment-instructor">Ins</label>
+        </ion-col>
+        <ion-col col-32>
+          <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox"
+            [checked]="accompaniment === 'Sup'" 
+            (click)="supervisorAccompanimentToggled()"
+            value="Sup">
+          <label for="accompaniment-supervisor">Sup</label>
+        </ion-col>
+        <ion-col>
+          <input type="checkbox" id="accompaniment-other" class="gds-checkbox"
+            [checked]="accompanieement === ' Other'" 
+            (click)="otherAccompanimentToggled()"
+            value="Other">
+          <label for="accompaniment-other">Other</label>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
