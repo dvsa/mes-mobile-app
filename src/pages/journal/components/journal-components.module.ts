@@ -14,6 +14,7 @@ import { JournalNavigationComponent } from '../components/journal-navigation/jou
 import { LanguageComponent } from '../components/language/language';
 import { TestSlotComponent } from './test-slot/test-slot';
 import { PracticeCardComponent } from './practice-card/practice-card';
+import { PracticeTestModalModule } from './practice-test-modal/practice-test-modal.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PracticeCardComponent } from './practice-card/practice-card';
   imports: [
     CommonModule,
     IonicModule,
+    PracticeTestModalModule,
   ],
   entryComponents:[
     TestSlotComponent,

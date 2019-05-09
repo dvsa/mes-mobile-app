@@ -1,53 +1,51 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ModalController, Modal } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartPracticeTest } from '../../../../modules/tests/tests.actions';
 import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
   from '../../../../modules/tests/test-data/test-data.actions';
+import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants';
 
 @Component({
-  selector: 'practice',
-  templateUrl: 'practice.html',
+  selector: 'practice-card',
+  templateUrl: 'practice-card.html',
 })
 
 export class PracticeCardComponent {
 
   slotId: number = 1;
+  modal: Modal;
 
   constructor(
     private store$: Store<StoreModel>,
     public alertController: AlertController,
     public navController: NavController,
+    private modalController: ModalController,
   ) { }
 
-  showDrivingFaultModal() {
-    const alert = this.alertController.create({
-      title: 'Record a driving fault?',
-      message: 'Do you want to start this practice test with a driving fault recorded against the tell me question?',
-      cssClass: 'text-zoom-regular',
-      buttons: [
-        {
-          text: 'Yes',
-          handler: () => this.startPracticeTest(true),
-        },
-        {
-          text: 'No',
-          handler: () => this.startPracticeTest(false),
-        },
-      ],
-    });
-    alert.present();
+  showDrivingFaultModal = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create('PracticeTestModal', {}, options);
+    this.modal.onDidDismiss(this.onModalDismiss);
+    this.modal.present();
   }
 
-  startPracticeTest = (addFault: boolean) => {
-    this.store$.dispatch(new StartPracticeTest(this.slotId));
-    if (addFault) {
-      this.store$.dispatch(new TellMeQuestionDrivingFault());
-    } else {
-      this.store$.dispatch(new TellMeQuestionCorrect());
+  onModalDismiss = (event: ModalEvent): void => {
+    switch (event) {
+      case ModalEvent.FAULT:
+        this.store$.dispatch(new StartPracticeTest(this.slotId));
+        this.store$.dispatch(new TellMeQuestionDrivingFault());
+        this.navController.push('TestReportPage');
+        break;
+      case ModalEvent.NO_FAULT:
+        this.store$.dispatch(new StartPracticeTest(this.slotId));
+        this.store$.dispatch(new TellMeQuestionCorrect());
+        this.navController.push('TestReportPage');
+        break;
+      case ModalEvent.CANCEL:
+        break;
     }
-    this.navController.push('TestReportPage');
   }
 
 }
