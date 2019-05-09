@@ -1,4 +1,4 @@
-import { TestsEffects, application, candidate } from '../tests.effects';
+import { TestsEffects } from '../tests.effects';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TestPersistenceProvider } from '../../../providers/test-persistence/test-persistence';
 import { TestBed } from '@angular/core/testing';
@@ -8,6 +8,7 @@ import * as testsActions from '../tests.actions';
 import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
+import { application, candidate } from '../__mocks__/tests.mock';
 
 describe('Tests Effects', () => {
 
