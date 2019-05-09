@@ -13,6 +13,10 @@ export function testStatusReducer(
       return TestStatus.Started;
     case testStatusActions.TEST_STATUS_DECIDED:
       return TestStatus.Decided;
+    case testStatusActions.TEST_STATUS_COMPLETED:
+      return TestStatus.Completed;
+    case testStatusActions.TEST_STATUS_SUBMITTED:
+      return TestStatus.Submitted;
     default:
       return state;
   }
