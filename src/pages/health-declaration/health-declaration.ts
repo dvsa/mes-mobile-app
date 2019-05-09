@@ -28,6 +28,7 @@ import { map } from 'rxjs/operators';
 import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { Subscription } from 'rxjs/Subscription';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -52,6 +53,8 @@ export class HealthDeclarationPage extends BasePageComponent {
   pageState: HealthDeclarationPageState;
 
   form: FormGroup;
+
+  inputSubscriptions: Subscription[] = [];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -90,10 +93,6 @@ export class HealthDeclarationPage extends BasePageComponent {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  ionViewWillUnload(): void {
-    this.store$.dispatch(new postTestDeclarationsActions.ClearPostTestDeclarations());
   }
 
   getFormValidation(): { [key: string]: FormControl } {
@@ -155,7 +154,30 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getPassCertificateNumber),
       ),
     };
+    this.rehydrateFields();
   }
+
+  rehydrateFields(): void {
+    this.inputSubscriptions.push(
+      this.pageState.healthDeclarationAccepted$
+        .subscribe((val) => {
+          this.form.controls['healthCheckboxCtrl'].setValue(val);
+        }),
+    );
+    this.inputSubscriptions.push(
+      this.pageState.passCertificateNumberReceived$
+        .subscribe((val) => {
+          this.form.controls['receiptCheckboxCtrl'].setValue(val);
+        }),
+    );
+    this.inputSubscriptions.push(
+      this.pageState.signature$
+        .subscribe((val) => {
+          this.form.controls['signatureAreaCtrl'].setValue(val);
+        }),
+    );
+  }
+
   healthDeclarationChanged(): void {
     this.store$.dispatch(new postTestDeclarationsActions.ToggleHealthDeclaration());
   }
@@ -179,6 +201,10 @@ export class HealthDeclarationPage extends BasePageComponent {
 
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  }
+
+  ngOnDestroy(): void {
+    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }
 
 }

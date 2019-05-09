@@ -1,6 +1,13 @@
 import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, SplashScreenMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Config, Platform, LoadingController } from 'ionic-angular';
+import {
+  NavControllerMock,
+  NavParamsMock,
+  ConfigMock,
+  PlatformMock,
+  SplashScreenMock,
+  LoadingControllerMock,
+} from 'ionic-mocks';
 import { Store , StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { AppModule } from '../../../app/app.module';
@@ -22,6 +29,8 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
+import { SecureStorage } from '@ionic-native/secure-storage';
+import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -46,6 +55,7 @@ describe('LoginPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
+        { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
@@ -53,6 +63,7 @@ describe('LoginPage', () => {
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: SecureStorage, useClass: SecureStorageMock },
       ],
     })
       .compileComponents()
@@ -80,8 +91,11 @@ describe('LoginPage', () => {
         jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.resolve());
       component.initialisePersistentStorage =
         jasmine.createSpy('component.initialisePersistentStorage').and.callThrough();
+      component.handleLoadingUI =
+        jasmine.createSpy('component.handleLoadingUI').and.callThrough();
       component.login();
       tick();
+      expect(component.handleLoadingUI).toHaveBeenCalledWith(true);
       expect(component.initialisePersistentStorage).toHaveBeenCalled();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
@@ -95,8 +109,11 @@ describe('LoginPage', () => {
       authenticationProvider.login =
         jasmine.createSpy('authenticationProvider.login')
           .and.returnValue(Promise.reject(AuthenticationError.NO_INTERNET));
+      component.handleLoadingUI =
+        jasmine.createSpy('component.handleLoadingUI').and.callThrough();
       component.login();
       tick();
+      expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
       expect(component.authenticationError === AuthenticationError.NO_INTERNET);
       expect(component.hasUserLoggedOut).toBeFalsy();
       expect(splashScreen.hide).toHaveBeenCalled();

@@ -15,6 +15,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { of } from 'rxjs/observable/of';
 
 export class TestActions extends Actions {
   constructor() {
@@ -68,7 +69,7 @@ describe('Test Report Effects', () => {
 
     it('should dispatch a success action when the effect is triggered and test is valid', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBTestReport').and.returnValue(true);
+      spyOn(testReportValidatorProvider, 'validateCatBTestReport').and.returnValue(of(true));
       // ACT
       actions$.next(new testDataActions.ToggleEco());
       // ASSERT
@@ -81,7 +82,7 @@ describe('Test Report Effects', () => {
 
     it('should dispatch a failure action when the effect is triggered and test is not valid', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBTestReport').and.returnValue(false);
+      spyOn(testReportValidatorProvider, 'validateCatBTestReport').and.returnValue(of(false));
       // ACT
       actions$.next(new testDataActions.ToggleEco());
       // ASSERT
@@ -101,7 +102,7 @@ describe('Test Report Effects', () => {
 
     it('should dispatch an action containing the correct result for a test', (done) => {
        // ARRANGE
-      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue(ActivityCodes.PASS);
+      spyOn(testResultProvider, 'calculateCatBTestResult').and.returnValue(of(ActivityCodes.PASS));
        // ACT
       actions$.next(new testReportActions.CalculateTestResult());
        // ASSERT

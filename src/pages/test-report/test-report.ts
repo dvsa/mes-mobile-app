@@ -162,15 +162,6 @@ export class TestReportPage extends BasePageComponent {
     this.modal.present();
   }
 
-  pass(): void {
-    this.navCtrl.push('DebriefPage', { outcome: 'pass' });
-  }
-
-  fail(): void {
-    this.navCtrl.push('DebriefPage', { outcome: 'fail' });
-
-  }
-
   getBorderModeCSS(): string {
     return this.isRemoveFaultMode ? 'remove-mode'
     : this.isSeriousMode ? 'serious-mode'

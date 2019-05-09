@@ -31,6 +31,7 @@ import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { of } from 'rxjs/observable/of';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -67,6 +68,11 @@ describe('WaitingRoomPage', () => {
             123: {
               candidate: mockCandidate,
               preTestDeclarations: preTestDeclarationInitialState,
+              postTestDeclarations: {
+                healthDeclarationAccepted: false,
+                passCertificateNumberReceived: false,
+                postTestSignature: '',
+              },
             },
           },
         })),
@@ -190,5 +196,27 @@ describe('WaitingRoomPage', () => {
       tick();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     }));
+  });
+  describe('rehydrateFields', () => {
+    it('should set the field values from the page state', () => {
+      const form = component.form;
+
+      form.get('insuranceCheckboxCtrl').setValue(null);
+      form.get('residencyCheckboxCtrl').setValue(null);
+      form.get('signatureAreaCtrl').setValue(null);
+
+      fixture.detectChanges();
+
+      component.pageState.insuranceDeclarationAccepted$ = of(true);
+      component.pageState.residencyDeclarationAccepted$ = of(true);
+      component.pageState.signature$ = of('abc123');
+
+      component.rehydrateFields();
+      fixture.detectChanges();
+
+      expect(form.get('insuranceCheckboxCtrl').value).toBeTruthy();
+      expect(form.get('residencyCheckboxCtrl').value).toBeTruthy();
+      expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
+    });
   });
 });
