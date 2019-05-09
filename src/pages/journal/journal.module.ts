@@ -15,7 +15,7 @@ import { JournalAnalyticsEffects } from './journal.analytics.effects';
 import { JournalLogsEffects } from './journal.logs.effects';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { JournalComponentsModule } from './components/journal-components.module';
-import { TestReportPracticeModeEffects } from '../test-report/test-report.practice-mode.effects';
+import { TestsEffects } from '../../modules/tests/tests.effects';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { TestReportPracticeModeEffects } from '../test-report/test-report.practi
       JournalEffects,
       JournalAnalyticsEffects,
       JournalLogsEffects,
-      TestReportPracticeModeEffects,
+      TestsEffects,
     ]),
   ],
   entryComponents: [

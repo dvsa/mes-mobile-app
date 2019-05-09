@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { StartPracticeTest } from '../../journal.actions';
+import { StartPracticeTest } from '../../../../modules/tests/tests.actions';
 import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
   from '../../../../modules/tests/test-data/test-data.actions';
 

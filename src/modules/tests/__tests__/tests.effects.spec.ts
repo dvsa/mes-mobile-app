@@ -1,4 +1,4 @@
-import { TestsEffects } from '../tests.effects';
+import { TestsEffects, application, candidate } from '../tests.effects';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TestPersistenceProvider } from '../../../providers/test-persistence/test-persistence';
 import { TestBed } from '@angular/core/testing';
@@ -6,6 +6,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { TestPersistenceProviderMock } from '../../../providers/test-persistence/__mocks__/test-persistence.mock';
 import * as testsActions from '../tests.actions';
 import { TestsModel } from '../tests.model';
+import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../candidate/candidate.actions';
 
 describe('Tests Effects', () => {
 
@@ -58,6 +60,24 @@ describe('Tests Effects', () => {
         done();
       });
     });
+  });
+
+  describe('startPracticeTestEffect', () => {
+    it('should dispatch the PopulateApplicationReference and PopulateCandidateDetails action', (done) => {
+      // ACT
+      actions$.next(new testsActions.StartPracticeTest(1));
+      // ASSERT
+      effects.startPracticeTestEffect$.subscribe((result) => {
+        if (result instanceof PopulateApplicationReference)  {
+          expect(result).toEqual(new PopulateApplicationReference(application));
+        }
+        if (result instanceof PopulateCandidateDetails) {
+          expect(result).toEqual(new PopulateCandidateDetails(candidate));
+        }
+        done();
+      });
+    });
+
   });
 
 });
