@@ -39,7 +39,12 @@ import { IndependentDrivingComponent } from '../components/independent-driving/i
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
 import { TerminationCodeComponent } from '../components/termination-code/termination-code';
-import { TERMINATION_CODE_LIST } from '../components/termination-code/termination-code.constants';
+import {
+  TerminationCode,
+  TERMINATION_CODE_LIST,
+  ActivityCodeDescriptions,
+} from '../components/termination-code/termination-code.constants';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -96,7 +101,7 @@ describe('OfficePage', () => {
                     },
                   },
                 },
-                activityCode: '24',
+                activityCode: '28',
               },
             },
           }),
@@ -145,7 +150,7 @@ describe('OfficePage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
       });
     });
-    xdescribe('selecting a termination code', () => {
+    describe('selecting a termination code', () => {
       it('should dispatch a SetActivityCode action with the activity code', () => {
         component.terminationCodeChanged(TERMINATION_CODE_LIST[0]);
         expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(TERMINATION_CODE_LIST[0].activityCode));
@@ -161,10 +166,14 @@ describe('OfficePage', () => {
       expect(showMeElement.showMeQuestion.code).toEqual('S3');
     });
     it('should pass the selected termination code to the termination code subcomponent', () => {
+      const terminationCode: TerminationCode = {
+        activityCode: ActivityCodes.ACCIDENT,
+        description: ActivityCodeDescriptions.ACCIDENT,
+      };
       fixture.detectChanges();
-      const terminationCodeElement = fixture.debugElement.query(By.css('termination-code-card'))
+      const terminationCodeElement = fixture.debugElement.query(By.css('termination-code'))
         .componentInstance as TerminationCodeComponent;
-      expect(terminationCodeElement.terminationCode).toEqual('24');
+      expect(terminationCodeElement.terminationCode).toEqual(terminationCode);
     });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();

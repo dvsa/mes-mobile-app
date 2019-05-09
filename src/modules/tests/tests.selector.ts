@@ -47,8 +47,6 @@ export const isPassed = (test: StandardCarTestCATBSchema) => {
   return false;
 };
 
-export const getActivityCode = (test: StandardCarTestCATBSchema) => test.activityCode;
-
 export const getTerminationCode = (test: StandardCarTestCATBSchema) => {
 
   const terminationCodeIndex = TERMINATION_CODE_LIST.findIndex(
