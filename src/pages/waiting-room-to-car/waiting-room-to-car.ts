@@ -41,14 +41,18 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import {
   EyesightResultPasssed,
   EyesightResultFailed,
   EyesightResultReset,
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
-import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+import {
+  isFailed,
+  isPassed,
+  getEyesightTestState,
+} from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
@@ -81,6 +85,7 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
+  eyesightTestResult$: Observable<string>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   tellMeQuestionSelected$: Observable<boolean>;
@@ -120,7 +125,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
-    this.form = new FormGroup(this.getFormValidation());
+    this.form = new FormGroup({});
   }
 
   ngOnInit(): void {
@@ -174,6 +179,10 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       eyesightFailRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isFailed),
+      ),
+      eyesightTestResult$: currentTest$.pipe(
+        select(getEyesightTestResult),
+        map(getEyesightTestState),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -279,27 +288,12 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     });
   }
 
-  getFormValidation(): { [key: string]: FormControl } {
-    return {
-      eyesightCtrl: new FormControl(null, [Validators.required]),
-    };
-  }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
   setEyesightFailureVisibility(show: boolean) {
     this.showEyesightFailureConfirmation = show;
-  }
-
-  eyesightPassPressed(): void {
-    this.updateForm('eyesightCtrl', 'P');
-    this.store$.dispatch(new EyesightResultPasssed());
-  }
-
-  eyesightFailPressed(): void {
-    this.updateForm('eyesightCtrl', 'F');
-    this.store$.dispatch(new EyesightResultFailed());
   }
 
   eyesightFailCancelled = () => {
@@ -318,6 +312,14 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       this.store$.dispatch(new TellMeQuestionCorrect());
     } else if (outcome === 'DF') {
       this.store$.dispatch(new TellMeQuestionDrivingFault());
+    }
+  }
+
+  eyesightTestResultChanged(result: string): void {
+    if (result === 'P') {
+      this.store$.dispatch(new EyesightResultPasssed());
+    } else if (result === 'F') {
+      this.store$.dispatch(new EyesightResultFailed());
     }
   }
 

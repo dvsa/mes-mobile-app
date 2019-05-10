@@ -22,12 +22,14 @@ import { AccompanimentComponent } from './components/accompaniment/accompaniment
 import { AccompanimentCardComponent } from './components/accompaniment-card/accompaniment-card';
 import { VehicleDetailsCardComponent } from './components/vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
+import { EyesightTestComponent } from './components/eyesight-test/eyesight-test';
 
 @NgModule({
   declarations: [
     WaitingRoomToCarPage,
     InputRestrictionNumbersDirective,
     InputRestrictionUppercaseAlphanumDirective,
+    EyesightTestComponent,
     EyesightFailureConfirmationComponent,
     VehicleRegistrationComponent,
     InstructorRegistrationComponent,
