@@ -16,6 +16,7 @@ import { D255Component } from './components/d255/d255';
 import { AdditionalInformationComponent } from './components/additional-information/additional-information';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
 import { OfficeEffects } from './office.effects';
+import { TerminationCodeComponent } from './components/termination-code/termination-code';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { OfficeEffects } from './office.effects';
     D255Component,
     AdditionalInformationComponent,
     IndependentDrivingComponent,
+    TerminationCodeComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
