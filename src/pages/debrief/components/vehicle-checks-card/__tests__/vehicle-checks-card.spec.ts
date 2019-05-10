@@ -6,7 +6,7 @@ import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { StartTest } from '../../../../journal/journal.actions';
 
-fdescribe('VehicleChecksCardComponent', () => {
+describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
   let component: VehicleChecksCardComponent;
   let store$: Store<StoreModel>;
