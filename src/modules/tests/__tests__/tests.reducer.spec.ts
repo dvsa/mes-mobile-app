@@ -6,6 +6,7 @@ import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
 import { TestStatus } from '../test-status/test-status.model';
 import * as testStatusReducer from '../test-status/test-status.reducer';
 import { TestsModel } from '../tests.model';
+import * as testActions from './../tests.actions';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };
@@ -28,6 +29,34 @@ describe('testsReducer', () => {
     const output = testsReducer(state, action);
 
     expect(output.currentTest.slotId).toBe('123');
+  });
+
+  it('should use the payload of a start practice test action to setup state for a new test', () => {
+    const state = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testLifecycles: {},
+    };
+    const slotId = 'practice_123';
+    const action = new testActions.StartPracticeTest(slotId);
+
+    const output = testsReducer(state, action);
+
+    expect(output.currentTest.slotId).toBe('practice_123');
+  });
+
+  it('should ensure that all slot ids for practice tests are prefixed with _practice ', () => {
+    const state = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testLifecycles: {},
+    };
+    const slotId = '123';
+    const action = new testActions.StartPracticeTest(slotId);
+
+    const output = testsReducer(state, action);
+
+    expect(output.currentTest.slotId).toBe('practice_123');
   });
 
   it('should derive the sub-states from sub-reducers', () => {

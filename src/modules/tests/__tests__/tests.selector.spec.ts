@@ -5,6 +5,7 @@ import {
   isPassed,
   getTestOutcomeText,
   getTerminationCode,
+  isPracticeTest,
 } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -245,4 +246,27 @@ describe('testsSelector', () => {
       expect(terminationCode.description).toEqual(ActivityCodeDescription.DVSA_RADIO_FAILURE);
     });
   });
+
+  describe('isPracticeTest', () => {
+    const testState: TestsModel = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testLifecycles: { 12345: TestStatus.Decided },
+    };
+    it('should return false when no tests started', () => {
+      const result = isPracticeTest(testState);
+      expect(result).toBeFalsy();
+    });
+    it('should return false when slot id is numeric', () => {
+      testState.currentTest.slotId = '1';
+      const result = isPracticeTest(testState);
+      expect(result).toBeFalsy();
+    });
+    it('should return true when slot id starts with practice', () => {
+      testState.currentTest.slotId = 'practice_1';
+      const result = isPracticeTest(testState);
+      expect(result).toBeTruthy();
+    });
+  });
+
 });

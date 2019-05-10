@@ -197,6 +197,11 @@ describe('DebriefPage', () => {
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });
+      it('should navigate back to the root when this is a practice test', () => {
+        component.isPracticeTest = true;
+        component.endDebrief();
+        expect(navController.popToRoot).toHaveBeenCalled();
+      });
 
     });
   });

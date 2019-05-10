@@ -48,7 +48,7 @@ export class DebriefPage extends BasePageComponent {
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
-  private isPracticeTest: boolean;
+  public isPracticeTest: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
