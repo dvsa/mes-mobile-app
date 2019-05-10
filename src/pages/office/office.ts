@@ -154,7 +154,6 @@ export class OfficePage extends BasePageComponent {
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
     this.terminationCodeOptions = terminationCodeList;
-    console.log(terminationCodeList.length);
   }
 
   ionViewDidEnter(): void {

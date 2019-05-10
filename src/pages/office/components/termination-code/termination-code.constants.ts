@@ -61,7 +61,6 @@ function populateCodeList(): TerminationCode[] {
     activityCode: ActivityCodes[code],
     description: ActivityCodeDescriptions[code],
   }));
-  console.log(codeList.length);
   return codeList;
 }
 
