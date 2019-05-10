@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TerminationCode } from './termination-code.constants';
-import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 @Component({
@@ -20,7 +19,7 @@ export class TerminationCodeComponent implements OnChanges {
   formGroup: FormGroup;
 
   @Output()
-  terminationCodeChange = new EventEmitter<any>();
+  terminationCodeChange = new EventEmitter<TerminationCode>();
 
   private formControl: FormControl;
 
@@ -43,20 +42,11 @@ export class TerminationCodeComponent implements OnChanges {
   }
 
   isSelectDisabled(): boolean {
-    if (this.terminationCode && this.terminationCode.activityCode === ActivityCodes.FAIL_EYESIGHT) {
-      return true;
-    }
-    return false;
+    return this.terminationCode && parseInt(this.terminationCode.activityCode, 10) < 4;
   }
 
   isOptionDisabled(activityCode: ActivityCode): boolean {
-    if (
-      activityCode === ActivityCodes.PASS ||
-      activityCode === ActivityCodes.FAIL ||
-      activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST ||
-      activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY ||
-      activityCode === ActivityCodes.FAIL_EYESIGHT
-      ) {
+    if (parseInt(activityCode, 10) < 4) {
       return true;
     }
     return false;

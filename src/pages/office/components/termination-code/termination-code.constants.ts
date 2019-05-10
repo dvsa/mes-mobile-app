@@ -4,10 +4,10 @@ import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 export interface TerminationCode {
   activityCode: ActivityCode;
-  description: ActivityCodeDescriptions;
+  description: ActivityCodeDescription;
 }
 
-export enum ActivityCodeDescriptions {
+export enum ActivityCodeDescription {
     PASS = 'Pass',
     FAIL = 'Fail',
     FAIL_EYESIGHT = 'Fail due to eyesight',
@@ -59,7 +59,7 @@ function populateCodeList(): TerminationCode[] {
   const codeList = [];
   Object.keys(ActivityCodes).forEach(code => codeList.push({
     activityCode: ActivityCodes[code],
-    description: ActivityCodeDescriptions[code],
+    description: ActivityCodeDescription[code],
   }));
   return codeList;
 }

@@ -15,7 +15,7 @@ import { DateTime } from '../../../shared/helpers/date-time';
 import { TestsModel } from '../tests.model';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
-  ActivityCodeDescriptions,
+  ActivityCodeDescription,
 } from '../../../pages/office/components/termination-code/termination-code.constants';
 
 describe('testsSelector', () => {
@@ -242,7 +242,7 @@ describe('testsSelector', () => {
     it('should return the DVSA_RADIO_FAILURE TerminationCode', () => {
       const terminationCode = getTerminationCode(testState);
       expect(terminationCode.activityCode).toEqual(ActivityCodes.DVSA_RADIO_FAILURE);
-      expect(terminationCode.description).toEqual(ActivityCodeDescriptions.DVSA_RADIO_FAILURE);
+      expect(terminationCode.description).toEqual(ActivityCodeDescription.DVSA_RADIO_FAILURE);
     });
   });
 });

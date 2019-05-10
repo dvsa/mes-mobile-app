@@ -42,7 +42,7 @@ import { TerminationCodeComponent } from '../components/termination-code/termina
 import {
   TerminationCode,
   terminationCodeList,
-  ActivityCodeDescriptions,
+  ActivityCodeDescription,
 } from '../components/termination-code/termination-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 
@@ -168,7 +168,7 @@ describe('OfficePage', () => {
     it('should pass the selected termination code to the termination code subcomponent', () => {
       const terminationCode: TerminationCode = {
         activityCode: ActivityCodes.ACCIDENT,
-        description: ActivityCodeDescriptions.ACCIDENT,
+        description: ActivityCodeDescription.ACCIDENT,
       };
       fixture.detectChanges();
       const terminationCodeElement = fixture.debugElement.query(By.css('termination-code'))

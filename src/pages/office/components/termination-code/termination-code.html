@@ -7,7 +7,7 @@
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
         <ion-select id="termination-code-selector" placeholder="Select a termination code" okText="Submit" cancelText="Cancel"
-          formControlName="terminationCode" (ionChange)="terminationCodeChanged($event)" [selectOptions]="{cssClass:'mes-select'}" [disabled]="isSelectDisabled()">
+          formControlName="terminationCode" (ionChange)="terminationCodeChanged($event)" [selectOptions]="{cssClass:'termination-code-select'}" [disabled]="isSelectDisabled()">
           <ion-option [value]="terminationCode" [disabled]="isOptionDisabled(terminationCode.activityCode)" *ngFor="let terminationCode of terminationCodeOptions">
             {{terminationCode.activityCode}} - {{terminationCode.description}}
           </ion-option>
