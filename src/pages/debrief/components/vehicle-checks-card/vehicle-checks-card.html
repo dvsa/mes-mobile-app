@@ -7,8 +7,8 @@
           <h4 class="fault-heading">Vehicle checks</h4>
         </ion-col>
         <ion-col align-self-start>
-          <div *ngIf="componentState.tellMeQuestion$ | async">{{ componentState.tellMeQuestion$ | async }}</div>
-          <div *ngIf="componentState.showMeQuestion$ | async">{{ componentState.showMeQuestion$ | async }}</div>
+          <div id="tell-me-question" *ngIf="componentState.tellMeQuestion$ | async">{{ componentState.tellMeQuestion$ | async }}</div>
+          <div id="show-me-question" *ngIf="componentState.showMeQuestion$ | async">{{ componentState.showMeQuestion$ | async }}</div>
         </ion-col>
       </ion-row>
     </ion-grid>
