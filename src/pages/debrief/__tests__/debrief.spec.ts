@@ -21,6 +21,7 @@ import {
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { DebriefComponentsModule } from '../components/debrief-components.module';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -31,7 +32,11 @@ describe('DebriefPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefPage],
-      imports: [IonicModule, AppModule, ComponentsModule,
+      imports: [
+        IonicModule,
+        AppModule,
+        ComponentsModule,
+        DebriefComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
