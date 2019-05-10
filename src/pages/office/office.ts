@@ -1,4 +1,10 @@
-import { IonicPage, NavController, NavParams, Platform, ToastController, Toast, Keyboard } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform,
+  ToastController,
+  Toast, Keyboard, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -147,6 +153,7 @@ export class OfficePage extends BasePageComponent {
     public questionProvider: QuestionProvider,
     public keyboard: Keyboard,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
+    public alertController: AlertController,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup({});
@@ -297,10 +304,7 @@ export class OfficePage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      // TODO - This will be updated with UX Modal in another ticket
-      this.store$.dispatch(new TestStatusCompleted());
-      // TODO go to the correct page
-      this.popToRoot();
+      this.showFinishTestModal();
     } else {
       this.createToast('Fill all mandatory fields');
       this.toast.present();
@@ -385,4 +389,27 @@ export class OfficePage extends BasePageComponent {
     });
   }
 
+  showFinishTestModal() {
+    const alert = this.alertController.create({
+      title: 'Are you sure you want to upload this test?',
+      cssClass: 'finish-test-modal',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {},
+        },
+        {
+          text: 'Upload',
+          handler: () => this.completeTest(),
+        },
+      ],
+    });
+    alert.present();
+  }
+
+  completeTest() {
+    this.store$.dispatch(new TestStatusCompleted());
+    this.store$.dispatch(new PersistTests());
+    this.popToRoot();
+  }
 }
