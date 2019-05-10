@@ -14,13 +14,13 @@ import { DataStoreProviderMock } from '../../providers/data-store/__mocks__/data
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { TranslateService } from '@ngx-translate/core';
+import { translateServiceMock } from '../../shared/__mocks__/translate';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
   let component: App;
   let statusBar: Spied<StatusBar>;
   let store$: Store<AppInfoModel>;
-  const translateServiceMock = jasmine.createSpyObj('TranslateService', ['setDefaultLang']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -16,13 +16,15 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../../../providers/data-store/__mocks__/data-store.mock';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
+import { TranslateService } from '@ngx-translate/core';
+import { translateServiceMock } from '../../../../../shared/__mocks__/translate';
 
 class MockAppService extends App {
   getTextZoomClass() {
     return 'text-zoom-regular';
   }
 }
-class MockStore{}
+class MockStore { }
 
 describe('CandidateLinkComponent', () => {
   let component: CandidateLinkComponent;
@@ -41,6 +43,7 @@ describe('CandidateLinkComponent', () => {
         { provide: Store, useClass: MockStore },
         { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: TranslateService, useValue: translateServiceMock },
       ],
     })
       .compileComponents()
