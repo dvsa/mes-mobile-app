@@ -11,11 +11,11 @@ export class TestResultProvider {
 
   calculateCatBTestResult = (testData: TestData): Observable<ActivityCode> => {
 
-    if (getSeriousFaultSummaryCount(testData) > 0) {
+    if (getDangerousFaultSummaryCount(testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (getDangerousFaultSummaryCount(testData) > 0) {
+    if (getSeriousFaultSummaryCount(testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
