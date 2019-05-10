@@ -8,7 +8,8 @@ import * as testsActions from '../tests.actions';
 import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
-import { application, candidate } from '../__mocks__/tests.mock';
+import { application, candidate, practiceSlot } from '../__mocks__/tests.mock';
+import { initialState } from '../tests.reducer';
 
 describe('Tests Effects', () => {
 
@@ -47,9 +48,11 @@ describe('Tests Effects', () => {
     it('should respond to a LOAD_PERSISTED_TESTS action by loading tests and dispatching a success action', (done) => {
       // ARRANGE
       const persistedTests: TestsModel = {
-        currentTest: { slotId: '123' },
-        startedTests: {},
-        testLifecycles: {},
+        ...initialState,
+        currentTest: {
+          ...initialState.currentTest,
+          slotId: '123',
+        },
       };
       testPersistenceProviderMock.loadPersistedTests.and.returnValue(Promise.resolve(persistedTests));
       // ACT
@@ -66,7 +69,7 @@ describe('Tests Effects', () => {
   describe('startPracticeTestEffect', () => {
     it('should dispatch the PopulateApplicationReference and PopulateCandidateDetails action', (done) => {
       // ACT
-      actions$.next(new testsActions.StartPracticeTest(1));
+      actions$.next(new testsActions.StartPracticeTest(practiceSlot.slotDetail.slotId));
       // ASSERT
       effects.startPracticeTestEffect$.subscribe((result) => {
         if (result instanceof PopulateApplicationReference)  {

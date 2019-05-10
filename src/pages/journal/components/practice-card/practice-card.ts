@@ -6,6 +6,7 @@ import { StartPracticeTest } from '../../../../modules/tests/tests.actions';
 import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
   from '../../../../modules/tests/test-data/test-data.actions';
 import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants';
+import { practiceSlot } from '../../../../modules/tests/__mocks__/tests.mock';
 
 @Component({
   selector: 'practice-card',
@@ -14,7 +15,7 @@ import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants
 
 export class PracticeCardComponent {
 
-  slotId: number = 1;
+  slotId: string = practiceSlot.slotDetail.slotId;
   modal: Modal;
 
   constructor(

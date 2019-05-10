@@ -17,8 +17,9 @@ import { testCentreReducer } from './test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
 import { examinerReducer } from './examiner/examiner.reducer';
 import { TestsModel } from './tests.model';
+import { startsWith } from 'lodash';
 
-const initialState: TestsModel = {
+export const initialState: TestsModel = {
   currentTest: { slotId: null },
   startedTests: {},
   testLifecycles: {},
@@ -55,9 +56,14 @@ export function testsReducer(
 }
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
+  if (action instanceof testActions.StartPracticeTest) {
+    if (!startsWith(action.slotId, 'practice_')) {
+      return `practice_${action.slotId}`;
+    }
+    return `${action.slotId}`;
+  }
   if (action instanceof journalActions.StartTest
-      || action instanceof journalActions.ActivateTest
-      || action instanceof testActions.StartPracticeTest) {
+      || action instanceof journalActions.ActivateTest) {
     return `${action.slotId}`;
   }
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;

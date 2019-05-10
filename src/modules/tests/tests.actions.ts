@@ -28,7 +28,7 @@ export class SetActivityCode implements Action {
 
 export class StartPracticeTest implements Action {
   readonly type = START_PRACTICE_TEST;
-  constructor(public slotId: number) { }
+  constructor(public slotId: string) { }
 }
 
 export type Types =

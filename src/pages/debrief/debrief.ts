@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPracticeTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
@@ -32,6 +32,7 @@ interface DebriefPageState {
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
   testResult$: Observable<string>;
+  practiceTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -47,6 +48,7 @@ export class DebriefPage extends BasePageComponent {
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
+  private isPracticeTest: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -118,12 +120,17 @@ export class DebriefPage extends BasePageComponent {
         select(getCurrentTest),
         select(getTestOutcome),
       ),
+      practiceTest$: this.store$.pipe(
+        select(getTests),
+        select(isPracticeTest),
+      ),
     };
 
-    const { testResult$ } = this.pageState;
+    const { testResult$, practiceTest$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
+      practiceTest$.pipe(map(value => this.isPracticeTest = value)),
     );
 
     this.subscription = merged$.subscribe();
@@ -141,6 +148,10 @@ export class DebriefPage extends BasePageComponent {
   }
 
   endDebrief(): void {
+    if (this.isPracticeTest) {
+      this.navController.popToRoot();
+      return;
+    }
     this.store$.dispatch(new PersistTests());
     if (this.outcome === 'Pass') {
       this.navController.push('PassFinalisationPage');
