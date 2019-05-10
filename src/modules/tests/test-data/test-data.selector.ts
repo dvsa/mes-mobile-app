@@ -31,6 +31,44 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
   return result;
 };
 
+export const getSeriousFaultSummaryCount = (data: TestData): number => {
+
+  // The way how we store serious faults differs for certain competencies
+  // Because of this we need to pay extra attention on summing up all of them
+  const { seriousFaults, manoeuvres, controlledStop, vehicleChecks } = data;
+
+  const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
+  const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S ? 1 : 0;
+  const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
+
+  const result =
+    seriousFaultSumOfSimpleCompetencies +
+    sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
+    vehicleCheckSeriousFaults +
+    controlledStopSeriousFaults;
+
+  return result;
+};
+
+export const getDangerousFaultSummaryCount = (data: TestData): number => {
+
+  // The way how we store serious faults differs for certain competencies
+  // Because of this we need to pay extra attention on summing up all of them
+  const { dangerousFaults, manoeuvres, controlledStop, vehicleChecks } = data;
+
+  const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
+  const vehicleCheckDangerousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D ? 1 : 0;
+  const controlledStopDangerousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.D) ? 1 : 0;
+  
+  const result =
+    dangerousFaultSumOfSimpleCompetencies +
+    sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +
+    vehicleCheckDangerousFaults +
+    controlledStopDangerousFaults;
+
+  return result;
+};
+
 export const sumVehicleCheckFaults = (vehicleChecks: VehicleChecks): number => {
 
   const { showMeQuestion, tellMeQuestion } = vehicleChecks;
