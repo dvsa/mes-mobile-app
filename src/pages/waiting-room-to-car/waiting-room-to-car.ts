@@ -62,7 +62,9 @@ import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
+  tellMeQuestionOutcome,
   getVehicleChecks,
+  getTellMeQuestion,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -84,6 +86,8 @@ interface WaitingRoomToCarPageState {
   tellMeQuestionSelected$: Observable<boolean>;
   tellMeQuestionCorrect$: Observable<boolean>;
   tellMeQuestionDrivingFault$: Observable<boolean>;
+  tellMeQuestionOutcome$: Observable<string>;
+  tellMeQuestion$: Observable<TellMeQuestion>;
 }
 
 @IonicPage()
@@ -184,6 +188,11 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         select(getVehicleChecks),
         map(isTellMeQuestionSelected),
       ),
+      tellMeQuestionOutcome$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecks),
+        map(tellMeQuestionOutcome),
+      ),
       tellMeQuestionCorrect$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecks),
@@ -193,6 +202,11 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecks),
         map(isTellMeQuestionDrivingFault),
+      ),
+      tellMeQuestion$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecks),
+        map(getTellMeQuestion),
       ),
     };
   }
@@ -295,13 +309,14 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
+    console.log('resetting tellmeQuestionOutcome to null');
     this.form.controls['tellMeQuestionOutcome'].setValue('');
   }
 
   tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === 'Correct') {
+    if (outcome === 'P') {
       this.store$.dispatch(new TellMeQuestionCorrect());
-    } else if (outcome === 'Fault') {
+    } else if (outcome === 'DF') {
       this.store$.dispatch(new TellMeQuestionDrivingFault());
     }
   }

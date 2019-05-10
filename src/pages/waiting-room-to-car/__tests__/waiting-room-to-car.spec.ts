@@ -48,6 +48,10 @@ import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-o
 import { VehicleRegistrationComponent } from '../components/vehicle-registration/vehicle-registration';
 import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
 import { TransmissionComponent } from '../components/transmission/transmission';
+import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-details';
+import { AccompanimentCardComponent } from '../components/accompaniment-card/accompaniment-card';
+import { AccompanimentComponent } from '../components/accompaniment/accompaniment';
 
 fdescribe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -66,6 +70,10 @@ fdescribe('WaitingRoomToCarPage', () => {
         MockComponent(VehicleRegistrationComponent),
         MockComponent(InstructorRegistrationComponent),
         MockComponent(TransmissionComponent),
+        MockComponent(VehicleDetailsCardComponent),
+        MockComponent(VehicleDetailsComponent),
+        MockComponent(AccompanimentCardComponent),
+        MockComponent(AccompanimentComponent),
       ],
       imports: [
         IonicModule,

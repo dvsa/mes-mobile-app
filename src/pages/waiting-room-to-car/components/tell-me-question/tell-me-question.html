@@ -1,10 +1,12 @@
       <ion-row [formGroup]="formGroup">
         <ion-col col-58>
-          <ion-select id="tell-me-selector" okText="Submit" cancelText="Cancel"
-            placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)"
+          <ion-select value="tellMeQuestion" id="tell-me-selector" okText="Submit" cancelText="Cancel"
+          placeholder="Select a question" (ionChange)="tellMeQuestionChanged($event)"
             formControlName="tellMeQuestion">
-            <ion-option [value]="tellMeQuestion" *ngFor="let tellMeQuestion of tellMeQuestions">
-              {{tellMeQuestion.code}} - {{tellMeQuestion.shortName}}
+            <ion-option  
+                *ngFor="let currentTellMeQuestion of tellMeQuestions"
+                [value]="currentTellMeQuestion">
+              {{currentTellMeQuestion.code}} - {{currentTellMeQuestion.shortName}}
             </ion-option>
           </ion-select>
         </ion-col>

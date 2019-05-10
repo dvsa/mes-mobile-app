@@ -39,5 +39,4 @@ export class TellMeQuestionComponent implements OnChanges {
   get invalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }
-
 }

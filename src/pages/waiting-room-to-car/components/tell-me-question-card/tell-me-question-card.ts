@@ -18,6 +18,9 @@ export class TellMeQuestionCardComponent  {
   tellMeQuestions: TellMeQuestion[];
 
   @Input()
+  tellMeQuestionOutcome: string;
+
+  @Input()
   tellMeQuestionSelected: boolean;
 
   @Output()

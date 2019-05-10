@@ -8,7 +8,7 @@
     <ion-col align-self-center>
       <ion-row class="spacing-row"></ion-row>
 
-      <tell-me-question [formGroup]="formGroup" 
+      <tell-me-question [formGroup]="formGroup"
         [tellMeQuestion]="tellMeQuestion"
         [tellMeQuestions]="tellMeQuestions"
         (tellMeQuestionChange)="tellMeQuestionChanged($event)"></tell-me-question>
@@ -21,6 +21,7 @@
 
       <tell-me-question-outcome [formGroup]="formGroup"
        [tellMeQuestionSelected]="tellMeQuestionSelected"
+       [tellMeQuestionOutcome]="tellMeQuestionOutcome"
        (tellMeQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event)"></tell-me-question-outcome>
        
       <ion-row class="validation-message-row" align-items-center justify-content-start

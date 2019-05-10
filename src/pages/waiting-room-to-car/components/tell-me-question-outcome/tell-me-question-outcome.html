@@ -1,18 +1,18 @@
 <ion-row align-items-center justify-content-start *ngIf="tellMeQuestionSelected" [formGroup]="formGroup">
     <ion-col col-32>
-      <input type="radio" id="tell-me-correct" class="gds-radio-button" value="Correct"
+      <input type="radio" id="tell-me-correct" class="gds-radio-button" value="P"
         formControlName="tellMeQuestionOutcome"
         [class.ng-invalid]="invalid"
         (change)="tellMeQuestionOutcomeChanged($event.target.value)"
-        [checked]="questionOutcome === 'Correct'">
+        [checked]="tellMeQuestionOutcome === 'P'">
       <label for="tell-me-correct" class="radio-label">Correct</label>
     </ion-col>
     <ion-col>
-      <input type="radio" id="tell-me-fault" class="gds-radio-button" value="Fault"
+      <input type="radio" id="tell-me-fault" class="gds-radio-button" value="DF"
         formControlName="tellMeQuestionOutcome"
         [class.ng-invalid]="invalid"
         (change)="tellMeQuestionOutcomeChanged($event.target.value)"
-        [checked]="questionOutCome === 'Fault'">
+        [checked]="tellMeQuestionOutcome === 'DF'">
       <label for="tell-me-fault" class="radio-label">1 Driving fault</label>
     </ion-col>
   </ion-row>
