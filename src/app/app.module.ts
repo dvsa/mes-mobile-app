@@ -9,7 +9,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
 import { App } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { StoreModule } from '@ngrx/store';
@@ -37,6 +37,8 @@ import { TestPersistenceProvider } from '../providers/test-persistence/test-pers
 import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
 import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { createTranslateLoader } from '../shared/helpers/translation-initialisation';
 
 @NgModule({
   declarations: [App],
@@ -50,6 +52,14 @@ import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/
     AppInfoModule,
     LogsModule,
     TestsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [App],
@@ -89,4 +99,4 @@ import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/
     OutcomeBehaviourMapProvider,
   ],
 })
-export class AppModule {}
+export class AppModule { }

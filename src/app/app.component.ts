@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let window: any;
 
@@ -20,13 +21,19 @@ export class App {
     private store$: Store<StoreModel>,
     private statusBar: StatusBar,
     private platform: Platform,
+    private translate: TranslateService,
   ) {
     platform.ready()
       .then(() => {
+        this.configureLocale();
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();
       });
+  }
+
+  configureLocale() {
+    this.translate.setDefaultLang('en');
   }
 
   configureStatusBar() {

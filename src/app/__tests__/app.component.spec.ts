@@ -13,12 +13,14 @@ import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../providers/data-store/__mocks__/data-store.mock';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
   let component: App;
   let statusBar: Spied<StatusBar>;
   let store$: Store<AppInfoModel>;
+  const translateServiceMock = jasmine.createSpyObj('TranslateService', ['setDefaultLang']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,6 +34,7 @@ describe('App', () => {
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: SecureStorage, useClass: SecureStorageMock },
+        { provide: TranslateService, useValue: translateServiceMock },
       ],
     })
       .compileComponents()
@@ -54,6 +57,10 @@ describe('App', () => {
 
     it('should have the correct root page', () => {
       expect(component.rootPage).toBe('LoginPage');
+    });
+
+    it('should configure the locale to be English by default', () => {
+      expect(translateServiceMock.setDefaultLang).toHaveBeenCalledWith('en');
     });
 
     it('should configure the status bar', () => {
