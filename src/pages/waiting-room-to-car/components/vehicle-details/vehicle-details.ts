@@ -2,22 +2,22 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'accompaniment',
-  templateUrl: 'accompaniment.html',
+  selector: 'vehicle-details',
+  templateUrl: 'vehicle-details.html',
 })
-export class AccompanimentComponent implements OnChanges {
+export class VehicleDetailsComponent implements OnChanges {
 
   @Input()
-  accompaniment: boolean;
+  vehicleDetails: boolean;
 
   @Input()
-  accompanimentType: string;
+  vehicleDetailsType: string;
 
   @Input()
   formGroup: FormGroup;
 
   @Output()
-  accompanimentChange = new EventEmitter();
+  vehicleDetailsChange = new EventEmitter();
 
   private formControl: FormControl;
 
@@ -26,16 +26,16 @@ export class AccompanimentComponent implements OnChanges {
       this.formControl = new FormControl(null);
       this.formGroup.addControl(this.formControlName, this.formControl);
     }
-    this.formControl.patchValue(this.accompaniment);
+    this.formControl.patchValue(this.vehicleDetails);
   }
 
-  accompanimentChanged(): void {
+  vehicleDetailsChanged(): void {
     if (this.formControl.valid) {
-      this.accompanimentChange.emit();
+      this.vehicleDetailsChange.emit();
     }
   }
 
   get formControlName() {
-    return `accompaniment-${this.accompanimentType}`;
+    return `vehicle-details-${this.vehicleDetailsType}`;
   }
 }

@@ -18,6 +18,10 @@ import { TransmissionComponent } from './components/transmission/transmission';
 import { TellMeQuestionComponent } from './components/tell-me-question/tell-me-question';
 import { TellMeQuestionCardComponent } from './components/tell-me-question-card/tell-me-question-card';
 import { TellMeQuestionOutcomeComponent } from './components/tell-me-question-outcome/tell-me-question-outcome';
+import { AccompanimentComponent } from './components/accompaniment/accompaniment';
+import { AccompanimentCardComponent } from './components/accompaniment-card/accompaniment-card';
+import { VehicleDetailsCardComponent } from './components/vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { TellMeQuestionOutcomeComponent } from './components/tell-me-question-ou
     TellMeQuestionCardComponent,
     TellMeQuestionComponent,
     TellMeQuestionOutcomeComponent,
+    AccompanimentCardComponent,
+    AccompanimentComponent,
+    VehicleDetailsCardComponent,
+    VehicleDetailsComponent,
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),

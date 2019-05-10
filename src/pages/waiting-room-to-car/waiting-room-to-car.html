@@ -63,56 +63,19 @@
             <instructor-registration [formGroup]="form" [instructorRegistration]="pageState.instructorRegistrationNumber$ | async"
             (instructorRegistrationChange)="instructorRegistrationChanged($event)"></instructor-registration>
 
-            <accompaniment [formGroup]="form" 
-              [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
-              [superVisorAccompaniment]="pageState.superVisorAccompaniment$ | async"
-              [otherAccompaniment]="pageState.instructorAccompaniment$ | async"
-              (accompanimentChangee)="accompanimentChanged($event)"></accompaniment>
+            <accompaniment-card [formGroup]="form"
+                [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
+                [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async"
+                [otherAccompaniment]="pageState.otherAccompaniment$ | async"
+                (instructorAccompanimentChange)="instructorAccompanimentToggled()"
+                (supervisorAccompanimentChange)="supervisorAccompanimentToggled()"
+                (otherAccompanimentChange)="otherAccompanimentToggled()"></accompaniment-card>
 
-            <ion-row class="mes-component-row mes-row-separator" id="accompaniment-card">
-              <ion-col class="component-label" col-32 align-self-center>
-                <label>Accompanied by (optional)</label>
-              </ion-col>
-              <ion-col align-self-center>
-                <ion-row>
-                  <ion-col col-32>
-                    <input type="checkbox" id="accompaniment-instructor" class="gds-checkbox"
-                      [checked]="pageState.instructorAccompaniment$ | async" (click)="instructorAccompanimentToggled()">
-                    <label for="accompaniment-instructor">Ins</label>
-                  </ion-col>
-                  <ion-col col-32>
-                    <input type="checkbox" id="accompaniment-supervisor" class="gds-checkbox"
-                      [checked]="pageState.supervisorAccompaniment$ | async" (click)="supervisorAccompanimentToggled()">
-                    <label for="accompaniment-supervisor">Sup</label>
-                  </ion-col>
-                  <ion-col>
-                    <input type="checkbox" id="accompaniment-other" class="gds-checkbox"
-                      [checked]="pageState.otherAccompaniment$ | async" (click)="otherAccompanimentToggled()">
-                    <label for="accompaniment-other">Other</label>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-
-            <ion-row class="mes-component-row mes-row-separator" id="vehicle-details-card">
-              <ion-col class="component-label" col-32 align-self-center>
-                <label>Vehicle details (optional)</label>
-              </ion-col>
-              <ion-col align-self-center>
-                <ion-row>
-                  <ion-col col-32>
-                    <input type="checkbox" id="school-car" class="gds-checkbox" [checked]="pageState.schoolCar$ | async"
-                      (click)="schoolCarToggled()">
-                    <label for="school-car">School car</label>
-                  </ion-col>
-                  <ion-col>
-                    <input type="checkbox" id="dual-control" class="gds-checkbox"
-                      [checked]="pageState.dualControls$ | async" (click)="dualControlsToggled()">
-                    <label for="dual-control">Dual control</label>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
+            <vehicle-details-card [formGroup]="form"
+                [schoolVehicleDetails]="pageState.schoolCar$ | async"
+                [dualVehicleDetails]="pageState.dualControls$ | async"
+                (schoolVehicleDetailsChange)="schoolCarToggled()"
+                (dualVehicleDetailsChange)="dualControlsToggled()"></vehicle-details-card>
           </ion-col>
         </ion-row>
 

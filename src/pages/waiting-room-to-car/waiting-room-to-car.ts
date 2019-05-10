@@ -195,19 +195,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         map(isTellMeQuestionDrivingFault),
       ),
     };
-
-    // this.inputSubscriptions = [
-    //   this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
-    //   this.inputChangeSubscriptionDispatchingAction(
-    //     this.instructorRegistrationInput,
-    //     InstructorRegistrationNumberChanged,
-    //   ),
-    // ];
   }
-
-  // ngOnDestroy(): void {
-  //   this.inputSubscriptions.forEach(sub => sub.unsubscribe());
-  // }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
@@ -267,7 +255,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
-    console.log(`form valid = ${this.form.valid}`);
     if (this.form.valid) {
       this.navCtrl.push('TestReportPage');
     }
@@ -280,8 +267,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      tellMeQuestionCtrl: new FormControl('', [Validators.required]),
-      tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
       eyesightCtrl: new FormControl(null, [Validators.required]),
     };
   }
@@ -310,7 +295,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    this.form.controls['tellMeQuestionOutcomeCtrl'].setValue('');
+    this.form.controls['tellMeQuestionOutcome'].setValue('');
   }
 
   tellMeQuestionOutcomeChanged(outcome: string): void {
