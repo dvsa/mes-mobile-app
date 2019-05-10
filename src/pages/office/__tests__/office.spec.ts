@@ -1,7 +1,7 @@
 import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
 import { ComponentsModule } from '../../../components/components.module';
 import { AppModule } from '../../../app/app.module';
 import { OfficePage } from '../office';
@@ -45,6 +45,7 @@ import {
   ActivityCodeDescription,
 } from '../components/termination-code/termination-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { TestStatusCompleted } from '../../../modules/tests/test-status/test-status.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -114,6 +115,7 @@ describe('OfficePage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: AlertController, useClass: AlertControllerMock },
       ],
     })
       .compileComponents()
@@ -154,6 +156,14 @@ describe('OfficePage', () => {
       it('should dispatch a SetActivityCode action with the activity code', () => {
         component.activityCodeChanged(terminationCodeList[0]);
         expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(terminationCodeList[0].activityCode));
+      });
+    });
+    describe('completeTest', () => {
+      it('should successfully end the test', () => {
+        component.completeTest();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new TestStatusCompleted());
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
       });
     });
   });
