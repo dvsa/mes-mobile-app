@@ -90,7 +90,7 @@ import { TerminationCode, terminationCodeList } from './components/termination-c
 import { TestStatusCompleted } from '../../modules/tests/test-status/test-status.actions';
 
 interface OfficePageState {
-  terminationCode$: Observable<TerminationCode>;
+  activityCode$: Observable<TerminationCode>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -134,7 +134,7 @@ export class OfficePage extends BasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
-  terminationCodeOptions: TerminationCode[];
+  activityCodeOptions: TerminationCode[];
 
   constructor(
     private store$: Store<StoreModel>,
@@ -153,7 +153,7 @@ export class OfficePage extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.terminationCodeOptions = terminationCodeList;
+    this.activityCodeOptions = terminationCodeList;
   }
 
   ionViewDidEnter(): void {
@@ -167,7 +167,7 @@ export class OfficePage extends BasePageComponent {
     );
 
     this.pageState = {
-      terminationCode$: currentTest$.pipe(
+      activityCode$: currentTest$.pipe(
         select(getTerminationCode),
       ),
       testOutcome$: currentTest$.pipe(
@@ -369,7 +369,7 @@ export class OfficePage extends BasePageComponent {
     );
   }
 
-  terminationCodeChanged(terminationCode: TerminationCode) {
+  activityCodeChanged(terminationCode: TerminationCode) {
     this.store$.dispatch(new SetActivityCode(terminationCode.activityCode));
   }
 

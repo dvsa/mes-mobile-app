@@ -152,7 +152,7 @@ describe('OfficePage', () => {
     });
     describe('selecting a termination code', () => {
       it('should dispatch a SetActivityCode action with the activity code', () => {
-        component.terminationCodeChanged(terminationCodeList[0]);
+        component.activityCodeChanged(terminationCodeList[0]);
         expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(terminationCodeList[0].activityCode));
       });
     });
