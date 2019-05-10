@@ -86,7 +86,7 @@ import {
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
-import { TerminationCode, TERMINATION_CODE_LIST } from './components/termination-code/termination-code.constants';
+import { TerminationCode, terminationCodeList } from './components/termination-code/termination-code.constants';
 import { TestStatusCompleted } from '../../modules/tests/test-status/test-status.actions';
 
 interface OfficePageState {
@@ -153,7 +153,8 @@ export class OfficePage extends BasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.terminationCodeOptions = TERMINATION_CODE_LIST;
+    this.terminationCodeOptions = terminationCodeList;
+    console.log(terminationCodeList.length);
   }
 
   ionViewDidEnter(): void {

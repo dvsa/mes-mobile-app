@@ -41,7 +41,7 @@ import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../sh
 import { TerminationCodeComponent } from '../components/termination-code/termination-code';
 import {
   TerminationCode,
-  TERMINATION_CODE_LIST,
+  terminationCodeList,
   ActivityCodeDescriptions,
 } from '../components/termination-code/termination-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
@@ -152,8 +152,8 @@ describe('OfficePage', () => {
     });
     describe('selecting a termination code', () => {
       it('should dispatch a SetActivityCode action with the activity code', () => {
-        component.terminationCodeChanged(TERMINATION_CODE_LIST[0]);
-        expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(TERMINATION_CODE_LIST[0].activityCode));
+        component.terminationCodeChanged(terminationCodeList[0]);
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(terminationCodeList[0].activityCode));
       });
     });
   });
