@@ -14,7 +14,7 @@ import {
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 
-fdescribe('VehicleChecksCardComponent', () => {
+describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
   let component: VehicleChecksCardComponent;
   let store$: Store<StoreModel>;
