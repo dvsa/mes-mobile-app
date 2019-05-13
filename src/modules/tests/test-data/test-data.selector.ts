@@ -59,7 +59,7 @@ export const getDangerousFaultSummaryCount = (data: TestData): number => {
   const dangerousFaultSumOfSimpleCompetencies = Object.keys(pickBy(dangerousFaults)).length;
   const vehicleCheckDangerousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D ? 1 : 0;
   const controlledStopDangerousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.D) ? 1 : 0;
-  
+
   const result =
     dangerousFaultSumOfSimpleCompetencies +
     sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) +

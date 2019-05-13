@@ -8,7 +8,7 @@ export class TimerComponent {
 
   showStartTimerButton: boolean;
 
-  interval: NodeJS.Timeout;
+  interval: any;
   seconds: number;
   timerString: string;
   isPaused: boolean = true;
