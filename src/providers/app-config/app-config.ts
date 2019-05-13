@@ -163,6 +163,10 @@ export class AppConfigProvider {
         allowTests: data.journal.allowTests,
         allowedTestCategories: data.journal.allowedTestCategories,
       },
+      tests: {
+        testSubmissionUrl: data.tests.testSubmissionUrl,
+        autoSendInterval: data.tests.autoSendInterval,
+      },
       logs: {
         url: data.logs.url,
         autoSendInterval: data.logs.autoSendInterval,

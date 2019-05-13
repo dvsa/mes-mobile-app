@@ -8,6 +8,10 @@ export const environmentResponseMock = {
     allowTests: true,
     allowedTestCategories: ['B'],
   },
+  tests: {
+    testSubmissionUrl: 'https://example.com/api/v1/test-result',
+    autoSendInterval: 900000,
+  },
   logs: {
     url: 'https://example.com/api/vi/logs',
     autoSendInterval: 60000,
