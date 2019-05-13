@@ -32,7 +32,7 @@ export const candidate: Candidate = {
 
 export const practiceSlot = {
   slotDetail: {
-    slotId: 1,
+    slotId: 'practice_1',
     duration: 57,
     start: '2019-01-01T10:14:00+00:00',
   },

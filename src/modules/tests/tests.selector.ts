@@ -2,6 +2,7 @@ import { TestStatus } from './test-status/test-status.model';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
 import { terminationCodeList } from '../../pages/office/components/termination-code/termination-code.constants';
+import { startsWith } from 'lodash';
 
 // temporary determination of test failure and success until service
 // that imnplements full business logic is implemented.
@@ -54,3 +55,5 @@ export const getTerminationCode = (test: StandardCarTestCATBSchema) => {
   return terminationCodeList[terminationCodeIndex];
 
 };
+
+export const isPracticeTest = (tests: TestsModel) => startsWith(tests.currentTest.slotId, 'practice_');
