@@ -32,11 +32,19 @@ import {
   TestReportValidatorProviderMock,
 } from '../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
 import { ModalEvent } from '../test-report.constants';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
   let component: TestReportPage;
   let navController: NavController;
+  let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -90,6 +98,9 @@ describe('TestReportPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -97,6 +108,8 @@ describe('TestReportPage', () => {
         fixture = TestBed.createComponent(TestReportPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
+        screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
       });
   }));
 
@@ -110,6 +123,21 @@ describe('TestReportPage', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe('DebriefPage');
+      });
+    });
+
+    describe('ionViewWillEnter', () => {
+      it('should enable the plugins when the test is a practice test', () => {
+        component.isPracticeTest = true;
+        component.ionViewWillEnter();
+        expect(screenOrientation.lock).toHaveBeenCalled();
+        expect(insomnia.keepAwake).toHaveBeenCalled();
+      });
+      it('should not enable the plugins when the test is not a practice test', () => {
+        component.isPracticeTest = false;
+        component.ionViewWillEnter();
+        expect(screenOrientation.lock).not.toHaveBeenCalled();
+        expect(insomnia.keepAwake).not.toHaveBeenCalled();
       });
     });
   });
