@@ -18,4 +18,8 @@ export class UrlProvider {
     return this.appConfigProvider.getAppConfig().logs.url;
   }
 
+  getTestResultServiceUrl(): any {
+    return this.appConfigProvider.getAppConfig().tests.testSubmissionUrl;
+  }
+
 }
