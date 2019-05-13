@@ -36,7 +36,6 @@ describe('DebriefPage', () => {
   let store$: Store<StoreModel>;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
-  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -104,7 +103,6 @@ describe('DebriefPage', () => {
         store$ = TestBed.get(Store);
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
         spyOn(store$, 'dispatch');
       });
   }));
@@ -118,14 +116,12 @@ describe('DebriefPage', () => {
       it('should disable the plugins when the test is a practice test', () => {
         component.isPracticeTest = true;
         component.ionViewDidLeave();
-        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
       it('should not disable the plugins when the test is not a practice test', () => {
         component.isPracticeTest = false;
         component.ionViewDidLeave();
-        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
         expect(screenOrientation.unlock).not.toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).not.toHaveBeenCalled();
       });

@@ -45,7 +45,6 @@ describe('TestReportPage', () => {
   let navController: NavController;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
-  let deviceProvider: DeviceProvider;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -111,7 +110,6 @@ describe('TestReportPage', () => {
         navController = TestBed.get(NavController);
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);
-        deviceProvider = TestBed.get(DeviceProvider);
       });
   }));
 
@@ -132,14 +130,12 @@ describe('TestReportPage', () => {
       it('should enable the plugins when the test is a practice test', () => {
         component.isPracticeTest = true;
         component.ionViewWillEnter();
-        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
         expect(screenOrientation.lock).toHaveBeenCalled();
         expect(insomnia.keepAwake).toHaveBeenCalled();
       });
       it('should not enable the plugins when the test is not a practice test', () => {
         component.isPracticeTest = false;
         component.ionViewWillEnter();
-        expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
         expect(screenOrientation.lock).not.toHaveBeenCalled();
         expect(insomnia.keepAwake).not.toHaveBeenCalled();
       });

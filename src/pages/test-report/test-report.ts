@@ -22,7 +22,6 @@ import { TestReportValidatorProvider } from '../../providers/test-report-validat
 import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
 import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
 import { ModalEvent } from './test-report.constants';
-import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 
@@ -69,7 +68,6 @@ export class TestReportPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     private modalController: ModalController,
     public testReportValidatorProvider: TestReportValidatorProvider,
-    private deviceProvider: DeviceProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
@@ -152,7 +150,6 @@ export class TestReportPage extends BasePageComponent {
   ionViewWillEnter() {
     // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
     if (super.isIos() && this.isPracticeTest) {
-      this.deviceProvider.enableSingleAppMode();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
     }
