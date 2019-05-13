@@ -20,13 +20,10 @@ import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
-import { DeviceProvider } from '../../providers/device/device';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
-import { Insomnia } from '@ionic-native/insomnia';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { PersistTests } from '../../modules/tests/tests.actions';
 
 interface WaitingRoomPageState {
@@ -59,10 +56,7 @@ export class WaitingRoomPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
-    private screenOrientation: ScreenOrientation,
-    private insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -70,25 +64,13 @@ export class WaitingRoomPage extends BasePageComponent {
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
 
-    if (super.isIos()) {
-      this.deviceProvider.enableSingleAppMode();
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      this.insomnia.keepAwake();
-    }
-
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.clickBack();
     };
   }
 
   clickBack(): void {
-    this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.navCtrl.pop();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.navCtrl.pop();
   }
 
   ngOnInit(): void {

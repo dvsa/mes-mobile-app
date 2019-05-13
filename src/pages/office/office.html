@@ -31,8 +31,10 @@
 
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
+          <termination-code id="termination-code-card"[formGroup]="form" [terminationCode]="pageState.activityCode$ | async" 
+          [terminationCodeOptions]="activityCodeOptions" (terminationCodeChange)="activityCodeChanged($event)"></termination-code>
 
-          <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async" 
+          <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async"
           [outcome]="pageState.testOutcome$ | async"
           (routeNumberChange)="routeNumberChanged($event)"
             [formGroup]="form">
@@ -156,10 +158,10 @@
         <h3>Save and continue later</h3>
       </button>
     </ion-col>
-    <ion-col col-48></ion-col>
-    <ion-col col-12>
+    <ion-col col-40></ion-col>
+    <ion-col col-20>
       <button class="mes-primary-button padding-x-5" ion-button (click)="onSubmit()">
-        <h3>Submit</h3>
+        <h3>Upload</h3>
       </button>
     </ion-col>
   </ion-row>

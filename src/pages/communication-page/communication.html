@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Declaration - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons end>
+      <end-test-link></end-test-link>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content no-bounce>
+  <lock-screen-indicator></lock-screen-indicator>
+  <form>
+    <candidate-section [candidateName]="pageState.candidateName$ | async"
+      [candidateDriverNumber]="pageState.candidateDriverNumber$ | async" (continueClickEvent)="onSubmit()">
+    </candidate-section>
+    <div class="mes-full-width-card-separator"></div>
+    <div class="mes-full-width-card" id="declaration-section">
+      <h3>Select how to receive the test results</h3>
+    </div>
+  </form>
+</ion-content>

@@ -18,7 +18,7 @@ declare let cordova: any;
  *
  *  IOS Devices
  *
- *  If the device is IOS it will attempt to create a Enviroment file in from configuration provided from MDM
+ *  If the device is IOS it will attempt to create a Environment file in from configuration provided from MDM
  *  using loadManagedConfig().
  *
  *  If this fails then it will use the Enviroment configuration
@@ -56,17 +56,19 @@ export class AppConfigProvider {
     public platform: Platform,
     ) {}
 
-  public initialiseAppConfig = (): void => {
+  public initialiseAppConfig = (): Promise<void> => {
+    try {
+      if (this.platform.is('ios')) {
+        this.loadManagedConfig();
+      }
+      this.mapInAppConfig(this.environmentFile);
 
-    if (this.platform.is('ios')) {
-      this.loadManagedConfig();
-      console.log('Loaded MDM Config');
-    }
-
-    this.mapInAppConfig(this.environmentFile);
-
-    if (!this.environmentFile.isRemote) {
-      this.mapRemoteConfig(this.environmentFile);
+      if (!this.environmentFile.isRemote) {
+        this.mapRemoteConfig(this.environmentFile);
+      }
+      return Promise.resolve();
+    } catch (err) {
+      return Promise.reject(AppConfigError.MDM_ERROR);
     }
   }
 
@@ -160,6 +162,10 @@ export class AppConfigProvider {
         numberOfDaysToView: data.journal.numberOfDaysToView,
         allowTests: data.journal.allowTests,
         allowedTestCategories: data.journal.allowedTestCategories,
+      },
+      tests: {
+        testSubmissionUrl: data.tests.testSubmissionUrl,
+        autoSendInterval: data.tests.autoSendInterval,
       },
       logs: {
         url: data.logs.url,

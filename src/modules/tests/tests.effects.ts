@@ -5,6 +5,9 @@ import { TestPersistenceProvider } from '../../providers/test-persistence/test-p
 import { from } from 'rxjs/observable/from';
 import * as testActions from './tests.actions';
 import { of } from 'rxjs/observable/of';
+import { PopulateApplicationReference } from './application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from './candidate/candidate.actions';
+import { practiceSlot } from './__mocks__/tests.mock';
 
 @Injectable()
 export class TestsEffects {
@@ -34,6 +37,21 @@ export class TestsEffects {
         return of();
       }),
     )),
+  );
+
+  @Effect()
+  startPracticeTestEffect$ = this.actions$.pipe(
+    ofType(testActions.START_PRACTICE_TEST),
+    switchMap(() => {
+      const slotData = {
+        ...practiceSlot,
+      };
+
+      return [
+        new PopulateApplicationReference(slotData.booking.application),
+        new PopulateCandidateDetails(slotData.booking.candidate),
+      ];
+    }),
   );
 
 }

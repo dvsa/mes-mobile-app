@@ -90,7 +90,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card id="driving-fault" *ngIf="(pageState.drivingFaultCount$ | async) > 0">
+  <ion-card id="driving-fault" *ngIf="(pageState.drivingFaultCount$ | async) > 0 || (pageState.drivingFaults$ | async).length > 0">
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{pageState.drivingFaultCount$ | async}}</h1>
@@ -131,6 +131,8 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
+
+  <vehicle-checks-card></vehicle-checks-card>
 
 </ion-content>
 <ion-footer>

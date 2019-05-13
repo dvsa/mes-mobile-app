@@ -1,4 +1,12 @@
-import { getCurrentTest, getTestStatus, getTestOutcomeClass, isPassed, getTestOutcomeText } from '../tests.selector';
+import {
+  getCurrentTest,
+  getTestStatus,
+  getTestOutcomeClass,
+  isPassed,
+  getTestOutcomeText,
+  getTerminationCode,
+  isPracticeTest,
+} from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
 import { LogsModel } from '../../logs/logs.model';
@@ -7,6 +15,9 @@ import { TestStatus } from '../test-status/test-status.model';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { TestsModel } from '../tests.model';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import {
+  ActivityCodeDescription,
+} from '../../../pages/office/components/termination-code/termination-code.constants';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -200,6 +211,61 @@ describe('testsSelector', () => {
       testState.activityCode = ActivityCodes.MECHANICAL_FAILURE;
       const result = isPassed(testState);
       expect(result).toBeFalsy();
+    });
+  });
+
+  describe('getTerminationCode', () => {
+    const testState: StandardCarTestCATBSchema = {
+      id: '1',
+      // DVSA_RADIO_FAILURE = '25'
+      activityCode: ActivityCodes.DVSA_RADIO_FAILURE,
+      category: 'x',
+      journalData: {
+        examiner: { staffNumber: '12345' },
+        testCentre: { costCode: '12345' },
+        testSlotAttributes: {
+          slotId: 12345,
+          vehicleSlotType: 'B57mins',
+          start: new DateTime().format('HH:mm'),
+          welshTest: false,
+          extendedTest: false,
+          specialNeeds: false,
+        },
+        candidate: {},
+        applicationReference: {
+          applicationId: 123,
+          bookingSequence: 1,
+          checkDigit: 2,
+        },
+      },
+
+    };
+    it('should return the DVSA_RADIO_FAILURE TerminationCode', () => {
+      const terminationCode = getTerminationCode(testState);
+      expect(terminationCode.activityCode).toEqual(ActivityCodes.DVSA_RADIO_FAILURE);
+      expect(terminationCode.description).toEqual(ActivityCodeDescription.DVSA_RADIO_FAILURE);
+    });
+  });
+
+  describe('isPracticeTest', () => {
+    const testState: TestsModel = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testLifecycles: { 12345: TestStatus.Decided },
+    };
+    it('should return false when no tests started', () => {
+      const result = isPracticeTest(testState);
+      expect(result).toBeFalsy();
+    });
+    it('should return false when slot id is numeric', () => {
+      testState.currentTest.slotId = '1';
+      const result = isPracticeTest(testState);
+      expect(result).toBeFalsy();
+    });
+    it('should return true when slot id starts with practice', () => {
+      testState.currentTest.slotId = 'practice_1';
+      const result = isPracticeTest(testState);
+      expect(result).toBeTruthy();
     });
   });
 

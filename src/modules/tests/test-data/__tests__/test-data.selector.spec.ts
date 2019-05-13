@@ -15,6 +15,8 @@ import {
   hasVehicleChecksBeenCompleted,
   getCatBLegalRequirements,
   getShowMeQuestionOptions,
+  getSeriousFaultSummaryCount,
+  getDangerousFaultSummaryCount,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
@@ -108,6 +110,66 @@ describe('TestDataSelectors', () => {
   describe('getDrivingFaultSummaryCount', () => {
     it('should return the driving fault count correctly', () => {
       expect(getDrivingFaultSummaryCount(state)).toBe(3);
+    });
+  });
+
+  describe('getSeriousFaultSummaryCount', () => {
+    it('should return the serious faults count', () => {
+      expect(getSeriousFaultSummaryCount(state)).toBe(1);
+    });
+    it('should return the correct count of serious faults', () => {
+      const failedState: TestData = {
+        ...state,
+        manoeuvres: {
+          forwardPark: {
+            selected: true,
+            controlFault: CompetencyOutcome.S,
+          },
+        },
+        controlledStop: {
+          selected: true,
+          fault: CompetencyOutcome.S,
+        },
+        vehicleChecks: {
+          tellMeQuestion: {
+            outcome: CompetencyOutcome.DF,
+          },
+          showMeQuestion: {
+            outcome: CompetencyOutcome.S,
+          },
+        },
+      };
+      expect(getSeriousFaultSummaryCount(failedState)).toBe(4);
+    });
+  });
+
+  describe('getDangerousFaultSummaryCount', () => {
+    it('should return the dangerous faults count', () => {
+      expect(getDangerousFaultSummaryCount(state)).toBe(1);
+    });
+    it('should return the correct number of dangerous faults', () => {
+      const failedState: TestData = {
+        ...state,
+        manoeuvres: {
+          forwardPark: {
+            selected: true,
+            controlFault: CompetencyOutcome.D,
+          },
+        },
+        controlledStop: {
+          selected: true,
+          fault: CompetencyOutcome.D,
+        },
+        vehicleChecks: {
+          tellMeQuestion: {
+            outcome: CompetencyOutcome.DF,
+          },
+          showMeQuestion: {
+            outcome: CompetencyOutcome.D,
+          },
+        },
+      };
+      expect(getDangerousFaultSummaryCount(failedState)).toBe(4);
     });
   });
 

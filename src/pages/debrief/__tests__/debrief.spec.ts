@@ -21,17 +21,30 @@ import {
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { DebriefComponentsModule } from '../components/debrief-components.module';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
   let component: DebriefPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
+  let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DebriefPage],
-      imports: [IonicModule, AppModule, ComponentsModule,
+      imports: [
+        IonicModule,
+        AppModule,
+        ComponentsModule,
+        DebriefComponentsModule,
         StoreModule.forRoot({
           tests: () => ({
             currentTest: {
@@ -57,6 +70,7 @@ describe('DebriefPage', () => {
                     tellMeQuestion: {},
                     showMeQuestion: {},
                   },
+                  controlledStop: {},
                 },
               },
             },
@@ -76,6 +90,9 @@ describe('DebriefPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -84,6 +101,8 @@ describe('DebriefPage', () => {
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);
+        screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
         spyOn(store$, 'dispatch');
       });
   }));
@@ -92,6 +111,20 @@ describe('DebriefPage', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+    describe('ionViewDidLeave', () => {
+      it('should disable the plugins when the test is a practice test', () => {
+        component.isPracticeTest = true;
+        component.ionViewDidLeave();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+      it('should not disable the plugins when the test is not a practice test', () => {
+        component.isPracticeTest = false;
+        component.ionViewDidLeave();
+        expect(screenOrientation.unlock).not.toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).not.toHaveBeenCalled();
+      });
     });
   });
 
@@ -196,6 +229,11 @@ describe('DebriefPage', () => {
         component.outcome = 'Terminated';
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
+      });
+      it('should navigate back to the root when this is a practice test', () => {
+        component.isPracticeTest = true;
+        component.endDebrief();
+        expect(navController.popToRoot).toHaveBeenCalled();
       });
 
     });

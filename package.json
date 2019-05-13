@@ -102,7 +102,7 @@
     "@dvsa/mes-test-schema": "^1.0.12",
     "@ionic-native-mocks/device": "^2.0.12",
     "@ionic-native-mocks/secure-storage": "^2.0.12",
-    "@ionic/app-scripts": "3.2.1",
+    "@ionic/app-scripts": "^3.2.3",
     "@ngrx/store-devtools": "^5.2.0",
     "@types/hammerjs": "^2.0.36",
     "@types/jasmine": "2.5.41",

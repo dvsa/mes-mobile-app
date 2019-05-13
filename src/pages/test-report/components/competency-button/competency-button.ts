@@ -17,7 +17,7 @@ export class CompetencyButtonComponent {
 
   touchState: boolean = false;
   touchStateDelay: number = 100;
-  touchTimeout: NodeJS.Timeout;
+  touchTimeout: any;
 
   rippleState: boolean = false;
   rippleEffectAnimationDuration: number = 300;

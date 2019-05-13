@@ -1,7 +1,7 @@
-import { ShowMeQuestion } from './../../../providers/question/show-me-question.model';
+import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
 import { ComponentsModule } from '../../../components/components.module';
 import { AppModule } from '../../../app/app.module';
 import { OfficePage } from '../office';
@@ -20,7 +20,7 @@ import {
 } from '../../../modules/tests/test-data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { PersistTests, SetActivityCode } from '../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
@@ -38,6 +38,14 @@ import { IdentificationComponent } from '../components/identification/identifica
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
+import { TerminationCodeComponent } from '../components/termination-code/termination-code';
+import {
+  TerminationCode,
+  terminationCodeList,
+  ActivityCodeDescription,
+} from '../components/termination-code/termination-code.constants';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { TestStatusCompleted } from '../../../modules/tests/test-status/test-status.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -59,6 +67,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
+        MockComponent(TerminationCodeComponent),
       ],
       imports: [
         IonicModule,
@@ -93,6 +102,7 @@ describe('OfficePage', () => {
                     },
                   },
                 },
+                activityCode: '28',
               },
             },
           }),
@@ -105,6 +115,7 @@ describe('OfficePage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: AlertController, useClass: AlertControllerMock },
       ],
     })
       .compileComponents()
@@ -141,6 +152,20 @@ describe('OfficePage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
       });
     });
+    describe('selecting a termination code', () => {
+      it('should dispatch a SetActivityCode action with the activity code', () => {
+        component.activityCodeChanged(terminationCodeList[0]);
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(terminationCodeList[0].activityCode));
+      });
+    });
+    describe('completeTest', () => {
+      it('should successfully end the test', () => {
+        component.completeTest();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new TestStatusCompleted());
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -149,6 +174,16 @@ describe('OfficePage', () => {
       const showMeElement = fixture.debugElement.query(By.css('show-me-question'))
         .componentInstance as ShowMeQuestionComponent;
       expect(showMeElement.showMeQuestion.code).toEqual('S3');
+    });
+    it('should pass the selected termination code to the termination code subcomponent', () => {
+      const terminationCode: TerminationCode = {
+        activityCode: ActivityCodes.ACCIDENT,
+        description: ActivityCodeDescription.ACCIDENT,
+      };
+      fixture.detectChanges();
+      const terminationCodeElement = fixture.debugElement.query(By.css('termination-code'))
+        .componentInstance as TerminationCodeComponent;
+      expect(terminationCodeElement.terminationCode).toEqual(terminationCode);
     });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();

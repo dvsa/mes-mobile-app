@@ -15,6 +15,7 @@ import { JournalAnalyticsEffects } from './journal.analytics.effects';
 import { JournalLogsEffects } from './journal.logs.effects';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { JournalComponentsModule } from './components/journal-components.module';
+import { TestsEffects } from '../../modules/tests/tests.effects';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { JournalComponentsModule } from './components/journal-components.module'
       JournalEffects,
       JournalAnalyticsEffects,
       JournalLogsEffects,
+      TestsEffects,
     ]),
   ],
   entryComponents: [

@@ -1,5 +1,13 @@
 import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform, LoadingController } from 'ionic-angular';
+import {
+  IonicModule,
+  NavController,
+  NavParams,
+  Config,
+  Platform,
+  LoadingController,
+  AlertController,
+} from 'ionic-angular';
 import {
   NavControllerMock,
   NavParamsMock,
@@ -7,6 +15,7 @@ import {
   PlatformMock,
   SplashScreenMock,
   LoadingControllerMock,
+  AlertControllerMock,
 } from 'ionic-mocks';
 import { Store , StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -56,6 +65,7 @@ describe('LoginPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
+        { provide: AlertController, useFactory: () => AlertControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
@@ -114,7 +124,7 @@ describe('LoginPage', () => {
       component.login();
       tick();
       expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-      expect(component.authenticationError === AuthenticationError.NO_INTERNET);
+      expect(component.appInitError === AuthenticationError.NO_INTERNET);
       expect(component.hasUserLoggedOut).toBeFalsy();
       expect(splashScreen.hide).toHaveBeenCalled();
     }));
@@ -133,69 +143,69 @@ describe('LoginPage', () => {
       tick();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(component.hasUserLoggedOut).toBeFalsy();
-      expect(component.authenticationError === AuthenticationError.USER_NOT_AUTHORISED);
+      expect(component.appInitError === AuthenticationError.USER_NOT_AUTHORISED);
       expect(splashScreen.hide).toHaveBeenCalled();
     }));
 
     it('should return true for isInternetConnectError when criteria is met', () => {
-      component.authenticationError = AuthenticationError.NO_INTERNET;
+      component.appInitError = AuthenticationError.NO_INTERNET;
       component.hasUserLoggedOut = false;
 
       expect(component.isInternetConnectionError()).toBeTruthy();
     });
 
     it('should return false for isInternetConnectError when criteria is not met', () => {
-      component.authenticationError = AuthenticationError.NO_INTERNET;
+      component.appInitError = AuthenticationError.NO_INTERNET;
       component.hasUserLoggedOut = true;
 
       expect(component.isInternetConnectionError()).toBeFalsy();
 
-      component.authenticationError = undefined;
+      component.appInitError = undefined;
       component.hasUserLoggedOut = false;
 
       expect(component.isInternetConnectionError()).toBeFalsy();
     });
 
     it('should return true for isUserCancelledError when criteria is met', () => {
-      component.authenticationError = AuthenticationError.USER_CANCELLED;
+      component.appInitError = AuthenticationError.USER_CANCELLED;
       component.hasUserLoggedOut = false;
 
       expect(component.isUserCancelledError()).toBeTruthy();
     });
 
     it('should return false for isUserCancelledError when criteria is not met', () => {
-      component.authenticationError = AuthenticationError.USER_CANCELLED;
+      component.appInitError = AuthenticationError.USER_CANCELLED;
       component.hasUserLoggedOut = true;
 
       expect(component.isUserCancelledError()).toBeFalsy();
 
-      component.authenticationError = undefined;
+      component.appInitError = undefined;
       component.hasUserLoggedOut = false;
 
       expect(component.isUserCancelledError()).toBeFalsy();
     });
 
     it('should return true for isUnknownError when criteria is met', () => {
-      component.authenticationError = AuthenticationError.NO_RESPONSE;
+      component.appInitError = AuthenticationError.NO_RESPONSE;
       component.hasUserLoggedOut = false;
 
       expect(component.isUnknownError()).toBeTruthy();
     });
 
     it('should return false for isUnknownError when criteria is not met', () => {
-      component.authenticationError = AuthenticationError.USER_CANCELLED;
+      component.appInitError = AuthenticationError.USER_CANCELLED;
       component.hasUserLoggedOut = false;
 
       expect(component.isUnknownError()).toBeFalsy();
 
-      component.authenticationError = undefined;
+      component.appInitError = undefined;
       component.hasUserLoggedOut = true;
 
       expect(component.isUnknownError()).toBeFalsy();
     });
 
     it('should return true for isUserNotAuthorised when criteria is met', () => {
-      component.authenticationError = AuthenticationError.USER_NOT_AUTHORISED;
+      component.appInitError = AuthenticationError.USER_NOT_AUTHORISED;
       component.hasUserLoggedOut = false;
 
       expect(component.isUserNotAuthorised()).toBeTruthy();
@@ -214,7 +224,7 @@ describe('LoginPage', () => {
 
     it('should show the correct div if user has an internet connection error', () => {
       component.hasUserLoggedOut = false;
-      component.authenticationError = AuthenticationError.NO_INTERNET;
+      component.appInitError = AuthenticationError.NO_INTERNET;
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
@@ -224,7 +234,7 @@ describe('LoginPage', () => {
 
     it('should show the correct div if user has an user cancelled error', () => {
       component.hasUserLoggedOut = false;
-      component.authenticationError = AuthenticationError.USER_CANCELLED;
+      component.appInitError = AuthenticationError.USER_CANCELLED;
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
@@ -234,7 +244,7 @@ describe('LoginPage', () => {
 
     it('should show the correct div if user has an internet connection error', () => {
       component.hasUserLoggedOut = false;
-      component.authenticationError = AuthenticationError.NO_RESPONSE;
+      component.appInitError = AuthenticationError.NO_RESPONSE;
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));
@@ -244,7 +254,7 @@ describe('LoginPage', () => {
 
     it('should show the correct div if user is not authorised to use the app', () => {
       component.hasUserLoggedOut = false;
-      component.authenticationError = AuthenticationError.USER_NOT_AUTHORISED;
+      component.appInitError = AuthenticationError.USER_NOT_AUTHORISED;
       fixture.detectChanges();
 
       const tags = fixture.debugElement.queryAll(By.css('h2'));

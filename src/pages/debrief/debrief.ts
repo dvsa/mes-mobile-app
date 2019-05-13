@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPracticeTest } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
@@ -19,10 +19,21 @@ import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { getSeriousOrDangerousFaults, getDrivingFaults, getManoeuvreFaults, getTestOutcome } from './debrief.selector';
+import {
+  getSeriousOrDangerousFaults,
+  getDrivingFaults,
+  getManoeuvreFaults,
+  getTestOutcome,
+  getControlledStopFault,
+  getVehicleCheckSeriousFault,
+  getVehicleCheckDangerousFault,
+  getVehicleCheckDrivingFault,
+} from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -32,6 +43,7 @@ interface DebriefPageState {
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
   testResult$: Observable<string>;
+  practiceTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -47,6 +59,7 @@ export class DebriefPage extends BasePageComponent {
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
+  public isPracticeTest: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -54,6 +67,8 @@ export class DebriefPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
@@ -68,6 +83,8 @@ export class DebriefPage extends BasePageComponent {
           return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
+            ...getVehicleCheckSeriousFault(data.vehicleChecks),
+            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
           ];
         }),
       ),
@@ -79,6 +96,8 @@ export class DebriefPage extends BasePageComponent {
           return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
+            ...getVehicleCheckDangerousFault(data.vehicleChecks),
+            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
           ];
         }),
       ),
@@ -90,6 +109,20 @@ export class DebriefPage extends BasePageComponent {
           return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
             ...getDrivingFaults(data.drivingFaults),
+            ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
+              (result: string): MultiFaultAssignableCompetency => ({
+                faultCount: 1,
+                competencyDisplayName: result,
+                competencyIdentifier: result,
+              }),
+            ),
+            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.DF).map(
+              (result: string): MultiFaultAssignableCompetency => ({
+                faultCount: 1,
+                competencyDisplayName: result,
+                competencyIdentifier: result,
+              }),
+            ),
           ];
         }),
       ),
@@ -118,12 +151,17 @@ export class DebriefPage extends BasePageComponent {
         select(getCurrentTest),
         select(getTestOutcome),
       ),
+      practiceTest$: this.store$.pipe(
+        select(getTests),
+        select(isPracticeTest),
+      ),
     };
 
-    const { testResult$ } = this.pageState;
+    const { testResult$, practiceTest$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
+      practiceTest$.pipe(map(value => this.isPracticeTest = value)),
     );
 
     this.subscription = merged$.subscribe();
@@ -140,7 +178,18 @@ export class DebriefPage extends BasePageComponent {
     this.store$.dispatch(new DebriefViewDidEnter());
   }
 
+  ionViewDidLeave(): void {
+    if (super.isIos() && this.isPracticeTest) {
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+    }
+  }
+
   endDebrief(): void {
+    if (this.isPracticeTest) {
+      this.navController.popToRoot();
+      return;
+    }
     this.store$.dispatch(new PersistTests());
     if (this.outcome === 'Pass') {
       this.navController.push('PassFinalisationPage');

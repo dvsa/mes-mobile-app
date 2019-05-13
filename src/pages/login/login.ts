@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform,
+  Loading,
+  LoadingController,
+  AlertController,
+} from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
 
@@ -16,6 +24,7 @@ import { NetworkStateProvider } from '../../providers/network-state/network-stat
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { LoadPersistedTests } from '../../modules/tests/tests.actions';
+import { AppConfigError } from '../../providers/app-config/app-config.constants';
 
 @IonicPage()
 @Component({
@@ -24,7 +33,7 @@ import { LoadPersistedTests } from '../../modules/tests/tests.actions';
 })
 export class LoginPage extends BasePageComponent {
 
-  authenticationError: AuthenticationError;
+  appInitError: AuthenticationError | AppConfigError;
   deviceTypeError: DeviceError;
   loadingSpinner: Loading;
   hasUserLoggedOut: boolean = false;
@@ -45,6 +54,7 @@ export class LoginPage extends BasePageComponent {
     public secureStorage: SecureStorage,
     public dataStore: DataStoreProvider,
     public loadingController: LoadingController,
+    public alertCtrl: AlertController,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -64,58 +74,67 @@ export class LoginPage extends BasePageComponent {
   }
 
   login = async (): Promise<any> => {
-    this.handleLoadingUI(true);
-    await this.platform.ready();
 
-    this.initialiseAppConfig()
-    .then(() => this.initialiseAuthentication())
-    .then(() => this.authenticationProvider
-      .login()
-      .then(() => this.store$.dispatch(new LoadLog()))
-      .then(() => this.initialisePersistentStorage())
-      .then(() => this.appConfigProvider.loadRemoteConfig())
-      .then(() => this.analytics.initialiseAnalytics())
-      .then(() => this.store$.dispatch(new StartSendingLogs()))
-      .then(() => this.handleLoadingUI(false))
-      .then(() => this.validateDeviceType())
-      .catch((error: AuthenticationError) => {
-        this.handleLoadingUI(false);
-        if (error === AuthenticationError.USER_CANCELLED) {
-          this.analytics.logException(error, true);
-        }
-        if (error === AuthenticationError.USER_NOT_AUTHORISED) {
-          this.authenticationProvider.logout();
-        }
-        this.authenticationError = error;
-        console.log(error);
-      })
-      .then(() => this.hasUserLoggedOut = false)
-      .then(() => this.splashScreen.hide()),
-  );
+    this.handleLoadingUI(true);
+
+    try {
+
+      await this.platform.ready();
+      await this.initialiseAppConfig();
+
+      this.initialiseAuthentication();
+
+      await this.authenticationProvider.login();
+
+      this.store$.dispatch(new LoadLog());
+      this.initialisePersistentStorage();
+
+      await this.appConfigProvider.loadRemoteConfig();
+
+      this.analytics.initialiseAnalytics();
+      this.store$.dispatch(new StartSendingLogs());
+      this.handleLoadingUI(false);
+      this.validateDeviceType();
+
+    } catch (error) {
+
+      this.handleLoadingUI(false);
+
+      if (error === AuthenticationError.USER_CANCELLED) {
+        this.analytics.logException(error, true);
+      }
+      if (error === AuthenticationError.USER_NOT_AUTHORISED) {
+        this.authenticationProvider.logout();
+      }
+      this.appInitError = error;
+      console.log(error);
+
+    }
+    this.hasUserLoggedOut = false;
+    this.splashScreen.hide();
   }
 
-  async initialisePersistentStorage() {
+  async initialisePersistentStorage(): Promise<void> {
     if (this.platform.is('ios')) {
-      const storage = await this.secureStorage.create('MES');
-      this.dataStore.setSecureContainer(storage);
+      try {
+        const storage = await this.secureStorage.create('MES');
+        this.dataStore.setSecureContainer(storage);
 
-      this.store$.dispatch(new LoadPersistedTests());
+        this.store$.dispatch(new LoadPersistedTests());
+        return Promise.resolve();
+      } catch (err) {
+        return Promise.reject(err);
+      }
     }
   }
 
   initialiseAppConfig = (): Promise<void> => {
-    return new Promise((resolve) => {
-      this.appConfigProvider.initialiseAppConfig();
-      resolve();
-    });
+    return this.appConfigProvider.initialiseAppConfig();
   }
 
-  initialiseAuthentication = (): Promise<void> => {
-    return new Promise((resolve) => {
-      this.authenticationProvider.initialiseAuthentication();
-      this.authenticationProvider.determineAuthenticationMode();
-      resolve();
-    });
+  initialiseAuthentication = (): void => {
+    this.authenticationProvider.initialiseAuthentication();
+    this.authenticationProvider.determineAuthenticationMode();
   }
 
   validateDeviceType = (): void => {
@@ -130,23 +149,32 @@ export class LoginPage extends BasePageComponent {
   }
 
   isInternetConnectionError = (): boolean => {
-    return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.NO_INTERNET;
+    return !this.hasUserLoggedOut && this.appInitError === AuthenticationError.NO_INTERNET;
   }
 
   isUserCancelledError = (): boolean => {
-    return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.USER_CANCELLED;
+    return !this.hasUserLoggedOut && this.appInitError === AuthenticationError.USER_CANCELLED;
   }
 
   isUnknownError = (): boolean => {
     return !this.hasUserLoggedOut &&
-      this.authenticationError &&
-      this.authenticationError.valueOf() !== AuthenticationError.USER_CANCELLED &&
-      this.authenticationError.valueOf() !== AuthenticationError.NO_INTERNET &&
-      this.authenticationError.valueOf() !== AuthenticationError.USER_NOT_AUTHORISED;
+      this.appInitError &&
+      this.appInitError.valueOf() !== AuthenticationError.USER_CANCELLED &&
+      this.appInitError.valueOf() !== AuthenticationError.NO_INTERNET &&
+      this.appInitError.valueOf() !== AuthenticationError.USER_NOT_AUTHORISED;
   }
 
   isUserNotAuthorised = (): boolean => {
-    return !this.hasUserLoggedOut && this.authenticationError === AuthenticationError.USER_NOT_AUTHORISED;
+    return !this.hasUserLoggedOut && this.appInitError === AuthenticationError.USER_NOT_AUTHORISED;
+  }
+
+  showErrorDetails() {
+    const alert = this.alertCtrl.create({
+      title: 'Error details',
+      subTitle: JSON.stringify(this.appInitError),
+      buttons: ['OK'],
+    });
+    alert.present();
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
