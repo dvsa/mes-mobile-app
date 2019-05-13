@@ -41,6 +41,10 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     allowTests: true,
     allowedTestCategories: ['B'],
   },
+  tests: {
+    testSubmissionUrl: 'https://www.example.com/api/v1/test-result',
+    autoSendInterval: 900000,
+  },
   logs: {
     url: 'https://www.example.com/api/v1/logs',
     autoSendInterval: 1000 * 60,

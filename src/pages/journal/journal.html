@@ -41,7 +41,7 @@
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>
-
-  <practice-card></practice-card>
+  
+  <practice-card *ngIf="!(pageState.isLoading$ | async)"></practice-card>
 
 </ion-content>

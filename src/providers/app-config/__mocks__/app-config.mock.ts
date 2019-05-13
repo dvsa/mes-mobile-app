@@ -36,6 +36,10 @@ export class AppConfigProviderMock {
         allowTests: localEnvironmentMock.journal.allowTests,
         allowedTestCategories: localEnvironmentMock.journal.allowedTestCategories,
       },
+      tests: {
+        testSubmissionUrl: localEnvironmentMock.tests.testSubmissionUrl,
+        autoSendInterval: localEnvironmentMock.tests.autoSendInterval,
+      },
       logs: {
         url: localEnvironmentMock.logs.url,
         autoSendInterval: localEnvironmentMock.logs.autoSendInterval,

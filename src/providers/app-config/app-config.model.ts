@@ -21,6 +21,10 @@ export type AppConfig = {
     allowTests: boolean,
     allowedTestCategories: string [],
   },
+  tests: {
+    testSubmissionUrl: string,
+    autoSendInterval: number,
+  },
   logs: {
     url: string,
     autoSendInterval: number,
