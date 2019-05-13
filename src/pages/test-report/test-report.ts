@@ -12,7 +12,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter, CalculateTestResult } from './test-report.actions';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPracticeTest } from '../../modules/tests/tests.selector';
 import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -22,6 +22,9 @@ import { TestReportValidatorProvider } from '../../providers/test-report-validat
 import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
 import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
 import { ModalEvent } from './test-report.constants';
+import { DeviceProvider } from '../../providers/device/device';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -31,6 +34,7 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   isTestValid$: Observable<boolean>;
   catBLegalRequirements$: Observable<CatBLegalRequirements>;
+  practiceTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -52,6 +56,7 @@ export class TestReportPage extends BasePageComponent {
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
   isTestValid: boolean = false;
+  isPracticeTest: boolean;
 
   modal: Modal;
   catBLegalRequirements: CatBLegalRequirements;
@@ -64,6 +69,9 @@ export class TestReportPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     private modalController: ModalController,
     public testReportValidatorProvider: TestReportValidatorProvider,
+    private deviceProvider: DeviceProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.displayOverlay = false;
@@ -111,6 +119,10 @@ export class TestReportPage extends BasePageComponent {
         select(getTestData),
         select(getCatBLegalRequirements),
       ),
+      practiceTest$: this.store$.pipe(
+        select(getTests),
+        select(isPracticeTest),
+      ),
     };
 
     const {
@@ -121,6 +133,7 @@ export class TestReportPage extends BasePageComponent {
       manoeuvres$,
       isTestValid$,
       catBLegalRequirements$,
+      practiceTest$,
     } = this.pageState;
 
     const merged$ = merge(
@@ -131,8 +144,19 @@ export class TestReportPage extends BasePageComponent {
       manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
       isTestValid$.pipe(map(result => this.isTestValid = result)),
       catBLegalRequirements$.pipe(map(result => this.catBLegalRequirements = result)),
+      practiceTest$.pipe(map(value => this.isPracticeTest = value)),
     );
     this.subscription = merged$.subscribe();
+  }
+
+  ionViewWillEnter() {
+    // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
+    if (super.isIos() && this.isPracticeTest) {
+      this.deviceProvider.enableSingleAppMode();
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.insomnia.keepAwake();
+    }
+    return true;
   }
 
   ionViewDidEnter(): void {

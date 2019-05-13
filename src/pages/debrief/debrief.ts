@@ -32,6 +32,9 @@ import {
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { DeviceProvider } from '../../providers/device/device';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -65,6 +68,9 @@ export class DebriefPage extends BasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private deviceProvider: DeviceProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
@@ -172,6 +178,14 @@ export class DebriefPage extends BasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new DebriefViewDidEnter());
+  }
+
+  ionViewDidLeave(): void {
+    if (super.isIos() && this.isPracticeTest) {
+      this.deviceProvider.disableSingleAppMode();
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+    }
   }
 
   endDebrief(): void {
