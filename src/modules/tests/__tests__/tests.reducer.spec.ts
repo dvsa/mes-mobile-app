@@ -103,4 +103,9 @@ describe('testsReducer', () => {
 
     expect(result.currentTest.slotId).toBe('456');
   });
+
+  it('should reset the practice test state when a test is ended', () => {
+    // TODO
+  });
+
 });
