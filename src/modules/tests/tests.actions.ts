@@ -2,6 +2,11 @@ import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
+export const START_SENDING_TESTS = '[Tests] Start Sending Test Results';
+export const SEND_TESTS = '[Tests] Send Test Result';
+export const SEND_TESTS_SUCCESS = '[Tests] Send Tests Result Success';
+export const SEND_TESTS_FAILURE = '[Tests] Send Test Results Failure';
+
 export const PERSIST_TESTS = '[Tests] Persist';
 export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
 export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
@@ -31,9 +36,29 @@ export class StartPracticeTest implements Action {
   constructor(public slotId: string) { }
 }
 
+export class StartSendingTests implements Action {
+  readonly type = START_SENDING_TESTS;
+}
+
+export class SendTests implements Action {
+  readonly type = SEND_TESTS;
+}
+
+export class SendTestsSuccess implements Action {
+  readonly type = SEND_TESTS_SUCCESS;
+}
+
+export class SendTestsFailure implements Action {
+  readonly type = SEND_TESTS_FAILURE;
+}
+
 export type Types =
   | PersistTests
   | LoadPersistedTests
   | LoadPersistedTestsSuccess
   | SetActivityCode
-  | StartPracticeTest;
+  | StartPracticeTest
+  | StartSendingTests
+  | SendTests
+  | SendTestsSuccess
+  | SendTestsFailure;
