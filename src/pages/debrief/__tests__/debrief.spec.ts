@@ -22,12 +22,21 @@ import {
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { DebriefComponentsModule } from '../components/debrief-components.module';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { Insomnia } from '@ionic-native/insomnia';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
   let component: DebriefPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
+  let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
+  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -82,6 +91,9 @@ describe('DebriefPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -90,6 +102,9 @@ describe('DebriefPage', () => {
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);
+        screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
+        deviceProvider = TestBed.get(DeviceProvider);
         spyOn(store$, 'dispatch');
       });
   }));
@@ -98,6 +113,22 @@ describe('DebriefPage', () => {
     // Unit tests for the components TypeScript class
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+    describe('ionViewDidLeave', () => {
+      it('should disable the plugins when the test is a practice test', () => {
+        component.isPracticeTest = true;
+        component.ionViewDidLeave();
+        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+      it('should not disable the plugins when the test is not a practice test', () => {
+        component.isPracticeTest = false;
+        component.ionViewDidLeave();
+        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
+        expect(screenOrientation.unlock).not.toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).not.toHaveBeenCalled();
+      });
     });
   });
 
