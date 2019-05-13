@@ -1,0 +1,16 @@
+<ion-card id="vehicle-checks" *ngIf="hasFault">
+  <ion-card-content>
+    <ion-grid>
+      <ion-row align-items-start class="mes-data">
+        <ion-col col-3></ion-col>
+        <ion-col col-34>
+          <h4 class="fault-heading">Vehicle checks</h4>
+        </ion-col>
+        <ion-col align-self-start>
+          <div id="tell-me-question" *ngIf="componentState.tellMeQuestion$ | async">{{ componentState.tellMeQuestion$ | async }}</div>
+          <div id="show-me-question" *ngIf="componentState.showMeQuestion$ | async">{{ componentState.showMeQuestion$ | async }}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
