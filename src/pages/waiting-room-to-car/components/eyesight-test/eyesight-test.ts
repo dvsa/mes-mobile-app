@@ -16,7 +16,7 @@ export class EyesightTestComponent implements OnChanges {
   @Output()
   eyesightTestResultChange = new EventEmitter<string>();
 
-  private formControl: FormControl;
+  formControl: FormControl;
 
   ngOnChanges(): void {
     if (!this.formControl) {
@@ -26,9 +26,7 @@ export class EyesightTestComponent implements OnChanges {
     this.formControl.patchValue(this.testState);
   }
   eyesightTestResultChanged(result: string): void {
-    console.log('eyesigh test result changed');
     if (this.formControl.valid) {
-      console.log(`emitting result ${result}`);
       this.eyesightTestResultChange.emit(result);
     }
   }

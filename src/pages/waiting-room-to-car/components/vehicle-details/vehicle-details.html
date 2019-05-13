@@ -1,7 +1,7 @@
 <div [formGroup]="formGroup">
     <input [id]="formControlName" type="checkbox" class="gds-checkbox"
             [formControlName]="formControlName"
-            (change)="vehicleDetailsChanged(true)"
+            (change)="vehicleDetailsChanged()"
             [value]="vehicleDetailsType">
     <label  [for]="formControlName">{{vehicleDetailsType}}</label>
 </div>

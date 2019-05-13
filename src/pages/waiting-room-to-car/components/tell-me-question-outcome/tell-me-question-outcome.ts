@@ -23,7 +23,7 @@ export class TellMeQuestionOutcomeComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl  = new FormControl('TellMeQuestionOutcome', [Validators.required]);
+      this.formControl  = new FormControl('', [Validators.required]);
       this.formGroup.addControl('tellMeQuestionOutcome', this.formControl);
     }
     this.formControl.patchValue(this.tellMeQuestionOutcome);

@@ -36,6 +36,7 @@ export class VehicleDetailsComponent implements OnChanges {
   }
 
   get formControlName() {
-    return `vehicle-details-${this.vehicleDetailsType}`;
+    const vehicleDetails = this.vehicleDetailsType.replace(' ', '-').toLowerCase();
+    return `vehicle-details-${vehicleDetails}`;
   }
 }
