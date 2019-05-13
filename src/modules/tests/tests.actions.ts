@@ -12,6 +12,7 @@ export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
 export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
 export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
 export const START_PRACTICE_TEST = '[Tests] Start practice test';
+export const END_PRACTICE_TEST = '[Tests] End practice test';
 
 export class PersistTests implements Action {
   readonly type = PERSIST_TESTS;
@@ -34,6 +35,10 @@ export class SetActivityCode implements Action {
 export class StartPracticeTest implements Action {
   readonly type = START_PRACTICE_TEST;
   constructor(public slotId: string) { }
+}
+
+export class EndPracticeTest implements Action {
+  readonly type = END_PRACTICE_TEST;
 }
 
 export class StartSendingCompletedTests implements Action {
@@ -59,6 +64,7 @@ export type Types =
   | LoadPersistedTestsSuccess
   | SetActivityCode
   | StartPracticeTest
+  | EndPracticeTest
   | StartSendingCompletedTests
   | SendTest
   | SendTestSuccess
