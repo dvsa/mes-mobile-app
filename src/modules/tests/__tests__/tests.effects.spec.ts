@@ -9,7 +9,10 @@ import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
 import { application, candidate, practiceSlot } from '../__mocks__/tests.mock';
-import { initialState } from '../tests.reducer';
+import { initialState, testsReducer } from '../tests.reducer';
+import { TestSubmissionProvider } from '../../../providers/test-submission/test-submission';
+import { TestSubmissionProviderMock } from '../../../providers/test-submission/__mocks__/test-submission.mock';
+import { Store, StoreModule } from '@ngrx/store';
 
 describe('Tests Effects', () => {
 
@@ -20,10 +23,17 @@ describe('Tests Effects', () => {
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({
+          tests: testsReducer,
+        }),
+      ],
       providers: [
         TestsEffects,
         provideMockActions(() => actions$),
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
+        { provide: TestSubmissionProvider, useClass: TestSubmissionProviderMock },
+        Store,
       ],
     });
     effects = TestBed.get(TestsEffects);
