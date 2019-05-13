@@ -46,7 +46,6 @@ describe('VehicleDetailsComponent', () => {
         component.vehicleDetailsType = 'Dual control';
         component.ngOnChanges();
         fixture.detectChanges();
-        console.log(`control name ${component.formControlName}`);
         const dualControlCb = fixture.debugElement.query(By.css(`#${component.formControlName}`));
         dualControlCb.triggerEventHandler('change', { target: {} });
         fixture.detectChanges();
