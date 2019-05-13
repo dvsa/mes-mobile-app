@@ -26,7 +26,7 @@ describe('TestResultCalculatorProvider', () => {
     urlProvider = TestBed.get(UrlProvider);
   });
 
-  fdescribe('submitTests', () => {
+  describe('submitTests', () => {
     it('should attempt to submit a test', () => {
       testSubmissionProvider.submitTests([]).subscribe();
 
