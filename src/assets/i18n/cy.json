@@ -1,4 +1,8 @@
 {
+  "common": {
+    "continue": "continueWelsh",
+    "screenLocked": "screenLockedWelsh"
+  },
   "waitingRoom": {
     "confirm": "confirmWelsh",
     "declarationIntent": "declarationIntentWelsh",

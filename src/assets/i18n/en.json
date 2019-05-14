@@ -1,4 +1,8 @@
 {
+  "common": {
+    "continue": "Continue",
+    "screenLocked": "Device locked"
+  },
   "waitingRoom": {
     "confirm": "I confirm",
     "declarationIntent": "I declare that",
