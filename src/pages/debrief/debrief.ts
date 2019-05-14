@@ -179,9 +179,11 @@ export class DebriefPage extends BasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    if (super.isIos() && this.isPracticeTest) {
-      this.screenOrientation.unlock();
-      this.insomnia.allowSleepAgain();
+    if (this.isPracticeTest) {
+      if (super.isIos()) {
+        this.screenOrientation.unlock();
+        this.insomnia.allowSleepAgain();
+      }
     }
   }
 
