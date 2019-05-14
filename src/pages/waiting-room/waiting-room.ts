@@ -25,6 +25,7 @@ import { DeviceAuthenticationProvider } from '../../providers/device-authenticat
 import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { TranslateService } from 'ng2-translate';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -33,6 +34,7 @@ interface WaitingRoomPageState {
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
+  welshTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -57,6 +59,7 @@ export class WaitingRoomPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private translate: TranslateService,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -110,8 +113,20 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
+      welshTest$: currentTest$.pipe(
+        // TODO: Get rid of this type generification
+        select((ct: any) => ct.testSlotAttributes),
+        select(tsa => tsa.welshTest),
+      ),
     };
     this.rehydrateFields();
+
+    const { welshTest$ } = this.pageState;
+    welshTest$.subscribe((isWelsh) => {
+      if (isWelsh) {
+        this.translate.use('cy');
+      }
+    });
   }
 
   rehydrateFields(): void {
