@@ -19,7 +19,7 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
-import { map } from 'rxjs/operators';
+import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -55,6 +55,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   form: FormGroup;
 
   subscription: Subscription;
+  translationSubscription: Subscription;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -83,8 +84,6 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   ngOnInit(): void {
     this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
-    this.signatureArea.signHereText = 'Sign here';
-    this.signatureArea.retryButtonText = 'Retry';
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
@@ -128,7 +127,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
     const { welshTest$ } = this.pageState;
     const merged$ = merge(
       welshTest$.pipe(
-        map(isWelsh => this.changeLanguageIfWelsh(isWelsh)),
+        map(isWelsh => this.configureI18N(isWelsh)),
       ),
     );
     this.subscription = merged$.subscribe();
@@ -136,6 +135,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.translationSubscription.unsubscribe();
     this.translate.use(this.translate.getDefaultLang());
   }
 
@@ -154,10 +154,18 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
       });
   }
 
-  changeLanguageIfWelsh(isWelsh: boolean): void {
-    if (isWelsh) {
-      this.translate.use('cy');
-    }
+  configureI18N(isWelsh: boolean): void {
+    const lang = isWelsh ? 'cy' : this.translate.getDefaultLang();
+    this.translationSubscription = this.translate.use(lang).pipe(
+      withLatestFrom(
+        this.translate.get('waitingRoom.signaturePrompt'),
+        this.translate.get('waitingRoom.signatureRetry'),
+      ),
+      tap(([_, signaturePromptTranslation, signatureRetryTranslation]) => {
+        this.signatureArea.signHereText = signaturePromptTranslation;
+        this.signatureArea.retryButtonText = signatureRetryTranslation;
+      }),
+    ).subscribe();
   }
 
   insuranceDeclarationChanged(): void {
