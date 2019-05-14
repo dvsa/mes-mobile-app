@@ -100,7 +100,7 @@ export class AddSeriousFault implements Action {
 }
 
 export class AddSeriousFaultComment implements Action {
-  constructor(public competencyName: string, public comment: string) {}
+  constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_SERIOUS_FAULT_COMMENT;
 }
 export class AddDangerousFault implements Action {
@@ -109,7 +109,7 @@ export class AddDangerousFault implements Action {
 }
 
 export class AddDangerousFaultComment implements Action {
-  constructor(public competencyName: string, public comment: string) {}
+  constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_DANGEROUS_FAULT_COMMENT;
 }
 
@@ -154,7 +154,7 @@ export class AddDrivingFaultComment implements Action {
 }
 
 export class TellMeQuestionSelected implements Action {
-  constructor(public tellMeQuestion: TellMeQuestion) {}
+  constructor(public tellMeQuestion: TellMeQuestion) { }
   readonly type = TELL_ME_QUESTION_SELECTED;
 }
 
@@ -167,7 +167,7 @@ export class TellMeQuestionDrivingFault implements Action {
 }
 
 export class ShowMeQuestionSelected implements Action {
-  constructor(public showMeQuestion: ShowMeQuestion) {}
+  constructor(public showMeQuestion: ShowMeQuestion) { }
   readonly type = SHOW_ME_QUESTION_SELECTED;
 }
 
@@ -189,6 +189,11 @@ export class ShowMeQuestionDrivingFault implements Action {
 
 export class ShowMeQuestionRemoveFault implements Action {
   readonly type = SHOW_ME_QUESTION_REMOVE_FAULT;
+}
+
+export enum QuestionOutcomes {
+  Pass = 'P',
+  DrivingFault = 'DF',
 }
 
 export type Types =
