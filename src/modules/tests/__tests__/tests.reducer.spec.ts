@@ -46,66 +46,7 @@ describe('testsReducer', () => {
     expect(output.currentTest.slotId).toBe('practice_123');
   });
 
-  it('should ensure that all slot ids for practice tests are prefixed with _practice ', () => {
-    const state = {
-      currentTest: { slotId: null },
-      startedTests: {},
-      testLifecycles: {},
-    };
-    const slotId = '123';
-    const action = new testActions.StartPracticeTest(slotId);
-
-    const output = testsReducer(state, action);
-
-    expect(output.currentTest.slotId).toBe('practice_123');
-  });
-
-  it('should derive the sub-states from sub-reducers', () => {
-    const state: TestsModel = {
-      currentTest: { slotId: null },
-      startedTests: {},
-      testLifecycles: {},
-    };
-
-    const result = testsReducer(state, new journalActions.StartTest(123));
-
-    expect(candidateReducer.candidateReducer).toHaveBeenCalled();
-    expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
-    expect(result.startedTests['123'].candidate).toBe(newCandidate);
-    expect(result.startedTests['123'].preTestDeclarations).toBe(preTestDeclarations);
-  });
-
-  it('should track test lifecycles independently of the started tests', () => {
-    const testStatusReducerResult = TestStatus.Started;
-    spyOn(testStatusReducer, 'testStatusReducer').and.returnValue(testStatusReducerResult);
-    const state: TestsModel = {
-      currentTest: { slotId: '123' },
-      startedTests: {},
-      testLifecycles: {
-        456: TestStatus.Decided,
-      },
-    };
-
-    const result = testsReducer(state, new journalActions.JournalViewDidEnter());
-
-    expect(testStatusReducer.testStatusReducer).toHaveBeenCalled();
-    expect(result.testLifecycles['123']).toBe(TestStatus.Started);
-    expect(result.testLifecycles['456']).toBe(TestStatus.Decided);
-  });
-
-  it('should assign the slot ID as the current test when a test is activated', () => {
-    const state: TestsModel = {
-      currentTest: { slotId: '123' },
-      startedTests: {},
-      testLifecycles: {},
-    };
-
-    const result = testsReducer(state, new journalActions.ActivateTest(456));
-
-    expect(result.currentTest.slotId).toBe('456');
-  });
-
-  it('should reset the practice test state when a test is ended and preserve other test states', () => {
+  it('should reset the state when a practice test is started and not affect other tests', () => {
     const state: TestsModel = {
       currentTest: { slotId: 'practice_1' },
       startedTests: {
@@ -166,16 +107,78 @@ describe('testsReducer', () => {
       },
       testLifecycles: {},
     };
+    const slotId = 'practice_1';
+    const action = new testActions.StartPracticeTest(slotId);
 
-    const result = testsReducer(state, new testActions.EndPracticeTest());
-    expect(result.startedTests['practice_1'].testData.seriousFaults.positioningNormalDriving).toBeUndefined();
-    expect(result.startedTests['practice_1'].testData.drivingFaults.moveOffSafety).toBeUndefined();
-    expect(result.startedTests['practice_1'].testData.vehicleChecks.tellMeQuestion.outcome).toBeUndefined();
+    const output = testsReducer(state, action);
 
-    expect(result.startedTests[1].testData.seriousFaults.signalsTimed).toBeTruthy();
-    expect(result.startedTests[1].testData.drivingFaults.clearance).toBeTruthy();
-    expect(result.startedTests[1].testData.vehicleChecks.tellMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
-    expect(result.startedTests[1].testData.vehicleChecks.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
+    expect(output.startedTests['practice_1'].testData.seriousFaults.positioningNormalDriving).toBeUndefined();
+    expect(output.startedTests['practice_1'].testData.drivingFaults.moveOffSafety).toBeUndefined();
+    expect(output.startedTests['practice_1'].testData.vehicleChecks.tellMeQuestion.outcome).toBeUndefined();
+
+    expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toBeTruthy();
+    expect(output.startedTests[1].testData.drivingFaults.clearance).toBeTruthy();
+    expect(output.startedTests[1].testData.vehicleChecks.tellMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
+    expect(output.startedTests[1].testData.vehicleChecks.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
+  });
+
+  it('should ensure that all slot ids for practice tests are prefixed with _practice ', () => {
+    const state = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testLifecycles: {},
+    };
+    const slotId = '123';
+    const action = new testActions.StartPracticeTest(slotId);
+
+    const output = testsReducer(state, action);
+
+    expect(output.currentTest.slotId).toBe('practice_123');
+  });
+
+  it('should derive the sub-states from sub-reducers', () => {
+    const state: TestsModel = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testLifecycles: {},
+    };
+
+    const result = testsReducer(state, new journalActions.StartTest(123));
+
+    expect(candidateReducer.candidateReducer).toHaveBeenCalled();
+    expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
+    expect(result.startedTests['123'].candidate).toBe(newCandidate);
+    expect(result.startedTests['123'].preTestDeclarations).toBe(preTestDeclarations);
+  });
+
+  it('should track test lifecycles independently of the started tests', () => {
+    const testStatusReducerResult = TestStatus.Started;
+    spyOn(testStatusReducer, 'testStatusReducer').and.returnValue(testStatusReducerResult);
+    const state: TestsModel = {
+      currentTest: { slotId: '123' },
+      startedTests: {},
+      testLifecycles: {
+        456: TestStatus.Decided,
+      },
+    };
+
+    const result = testsReducer(state, new journalActions.JournalViewDidEnter());
+
+    expect(testStatusReducer.testStatusReducer).toHaveBeenCalled();
+    expect(result.testLifecycles['123']).toBe(TestStatus.Started);
+    expect(result.testLifecycles['456']).toBe(TestStatus.Decided);
+  });
+
+  it('should assign the slot ID as the current test when a test is activated', () => {
+    const state: TestsModel = {
+      currentTest: { slotId: '123' },
+      startedTests: {},
+      testLifecycles: {},
+    };
+
+    const result = testsReducer(state, new journalActions.ActivateTest(456));
+
+    expect(result.currentTest.slotId).toBe('456');
   });
 
 });

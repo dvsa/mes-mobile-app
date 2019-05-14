@@ -31,7 +31,7 @@ import {
 } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
-import { PersistTests, EndPracticeTest } from '../../modules/tests/tests.actions';
+import { PersistTests } from '../../modules/tests/tests.actions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 
@@ -180,7 +180,7 @@ export class DebriefPage extends BasePageComponent {
 
   ionViewDidLeave(): void {
     if (this.isPracticeTest) {
-      this.store$.dispatch(new EndPracticeTest());
+      // this.store$.dispatch(new EndPracticeTest());
       if (super.isIos()) {
         this.screenOrientation.unlock();
         this.insomnia.allowSleepAgain();
