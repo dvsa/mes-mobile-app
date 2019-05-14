@@ -10,6 +10,7 @@ import { IonicModule } from 'ionic-angular';
 import { EndTestLinkComponent } from './end-test-link/end-test-link';
 import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-modal.module';
 import { CandidateSectionComponent } from './candidate-section/candidate-section';
+import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CandidateSectionComponent } from './candidate-section/candidate-section
     CommonModule,
     IonicModule,
     TerminateTestModalModule,
+    TranslateModule,
   ],
   exports: [
     SignatureAreaComponent,
