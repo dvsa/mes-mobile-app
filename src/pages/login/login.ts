@@ -87,7 +87,8 @@ export class LoginPage extends BasePageComponent {
       await this.authenticationProvider.login();
 
       this.store$.dispatch(new LoadLog());
-      this.initialisePersistentStorage();
+
+      await this.initialisePersistentStorage();
 
       await this.appConfigProvider.loadRemoteConfig();
 
