@@ -8,6 +8,7 @@ import { default as showMeQuestions } from '../../../providers/question/show-me-
 import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { CatBLegalRequirements } from './test-data.models';
+import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 
 export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
 
@@ -143,6 +144,9 @@ export const hasLegalRequirementBeenCompleted = (data: TestRequirements, legalRe
 
 export const getVehicleChecks = (state: TestData): VehicleChecks => state.vehicleChecks;
 
+export const getTellMeQuestion = (state: VehicleChecks): TellMeQuestion =>
+  tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
+
 export const isTellMeQuestionSelected = (state: VehicleChecks) => get(state, 'tellMeQuestion.code') !== undefined;
 
 export const isTellMeQuestionCorrect =
@@ -150,6 +154,8 @@ export const isTellMeQuestionCorrect =
 
 export const isTellMeQuestionDrivingFault = (state: VehicleChecks) =>
   get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.DF;
+
+export const tellMeQuestionOutcome = (state: VehicleChecks) => get(state, 'tellMeQuestion.outcome');
 
 export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
   const tellMeQuestionText =

@@ -14,9 +14,7 @@ import {
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
 } from '../../modules/tests/vehicle-details/vehicle-details.actions';
-import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
+import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
   OtherAccompanimentToggled,
@@ -41,14 +39,18 @@ import {
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import {
   EyesightResultPasssed,
   EyesightResultFailed,
   EyesightResultReset,
+  EyesightTestResult,
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
-import { isFailed, isPassed } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+import {
+  isFailed,
+  isPassed,
+} from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
@@ -57,12 +59,15 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
+  QuestionOutcomes,
 } from '../../modules/tests/test-data/test-data.actions';
 import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
   isTellMeQuestionCorrect,
+  tellMeQuestionOutcome,
   getVehicleChecks,
+  getTellMeQuestion,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -79,11 +84,14 @@ interface WaitingRoomToCarPageState {
   otherAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
+  eyesightTestResult$: Observable<string>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   tellMeQuestionSelected$: Observable<boolean>;
   tellMeQuestionCorrect$: Observable<boolean>;
   tellMeQuestionDrivingFault$: Observable<boolean>;
+  tellMeQuestionOutcome$: Observable<string>;
+  tellMeQuestion$: Observable<TellMeQuestion>;
 }
 
 @IonicPage()
@@ -100,7 +108,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   @ViewChild('instructorRegistrationInput')
   instructorRegistrationInput: ElementRef;
-  inputSubscriptions: Subscription[] = [];
 
   showEyesightFailureConfirmation: boolean = false;
 
@@ -116,7 +123,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
-    this.form = new FormGroup(this.getFormValidation());
+    this.form = new FormGroup({});
   }
 
   ngOnInit(): void {
@@ -171,6 +178,9 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         select(getEyesightTestResult),
         map(isFailed),
       ),
+      eyesightTestResult$: currentTest$.pipe(
+        select(getEyesightTestResult),
+      ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
         map(isAutomatic),
@@ -184,6 +194,11 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         select(getVehicleChecks),
         map(isTellMeQuestionSelected),
       ),
+      tellMeQuestionOutcome$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecks),
+        map(tellMeQuestionOutcome),
+      ),
       tellMeQuestionCorrect$: currentTest$.pipe(
         select(getTestData),
         select(getVehicleChecks),
@@ -194,19 +209,12 @@ export class WaitingRoomToCarPage extends BasePageComponent {
         select(getVehicleChecks),
         map(isTellMeQuestionDrivingFault),
       ),
-    };
-
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(this.regisrationInput, VehicleRegistrationChanged),
-      this.inputChangeSubscriptionDispatchingAction(
-        this.instructorRegistrationInput,
-        InstructorRegistrationNumberChanged,
+      tellMeQuestion$: currentTest$.pipe(
+        select(getTestData),
+        select(getVehicleChecks),
+        map(getTellMeQuestion),
       ),
-    ];
-  }
-
-  ngOnDestroy(): void {
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    };
   }
 
   ionViewDidEnter(): void {
@@ -225,12 +233,8 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new DualControlsToggled());
   }
 
-  manualTransmission(): void {
-    this.store$.dispatch(new GearboxCategoryChanged('Manual'));
-  }
-
-  automaticTransmission(): void {
-    this.store$.dispatch(new GearboxCategoryChanged('Automatic'));
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
   instructorAccompanimentToggled(): void {
@@ -245,21 +249,12 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.store$.dispatch(new OtherAccompanimentToggled());
   }
 
-  /**
-   * Returns a subscription to the debounced changes of a particular input fields.
-   * Dispatches the provided action type to the store when a new value is yielded.
-   * @param inputRef The input to listen for changes on.
-   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
-   */
-  inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
-    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-      map((event: any) => event.target.value),
-      debounceTime(1000),
-      distinctUntilChanged(),
-    );
-    const subscription = changeStream$
-      .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
-    return subscription;
+  vehicleRegistrationChanged(vehicleRegistration: string) {
+    this.store$.dispatch(new VehicleRegistrationChanged(vehicleRegistration));
+  }
+
+  instructorRegistrationChanged(instructorRegistration: number) {
+    this.store$.dispatch(new InstructorRegistrationNumberChanged(instructorRegistration));
   }
 
   onSubmit() {
@@ -274,15 +269,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     });
   }
 
-  getFormValidation(): { [key: string]: FormControl } {
-    return {
-      tellMeQuestionCtrl: new FormControl('', [Validators.required]),
-      tellMeQuestionOutcomeCtrl: new FormControl('', [Validators.required]),
-      transmissionRadioGroupCtrl: new FormControl('', [Validators.required]),
-      registrationNumberCtrl: new FormControl('', [Validators.required]),
-      eyesightCtrl: new FormControl(null, [Validators.required]),
-    };
-  }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
@@ -291,31 +277,32 @@ export class WaitingRoomToCarPage extends BasePageComponent {
     this.showEyesightFailureConfirmation = show;
   }
 
-  eyesightPassPressed(): void {
-    this.updateForm('eyesightCtrl', 'P');
-    this.store$.dispatch(new EyesightResultPasssed());
-  }
-
-  eyesightFailPressed(): void {
-    this.updateForm('eyesightCtrl', 'F');
-    this.store$.dispatch(new EyesightResultFailed());
-  }
-
   eyesightFailCancelled = () => {
     this.updateForm('eyesightCtrl', null);
     this.store$.dispatch(new EyesightResultReset());
   }
 
-  tellMeQuestionChanged(newTellMeQuestion): void {
+  tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
-    this.form.controls['tellMeQuestionOutcomeCtrl'].setValue('');
+    if (this.form.controls['tellMeQuestionOutcome']) {
+      this.form.controls['tellMeQuestionOutcome'].setValue('');
+    }
   }
 
-  tellMeQuestionCorrect(): void {
-    this.store$.dispatch(new TellMeQuestionCorrect());
-  }
-
-  tellMeQuestionDrivingFault(): void {
+  tellMeQuestionOutcomeChanged(outcome: string): void {
+    if (outcome === QuestionOutcomes.Pass) {
+      this.store$.dispatch(new TellMeQuestionCorrect());
+      return;
+    }
     this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
+
+  eyesightTestResultChanged(result: string): void {
+    if (result === EyesightTestResult.Pass) {
+      this.store$.dispatch(new EyesightResultPasssed());
+      return;
+    }
+    this.store$.dispatch(new EyesightResultFailed());
+  }
+
 }

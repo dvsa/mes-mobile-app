@@ -16,6 +16,10 @@ export class EyesightResultReset implements Action {
   readonly type = EYESIGHT_RESULT_RESET;
 }
 
+export enum EyesightTestResult {
+  Pass = 'P',
+  Fail = 'F',
+}
 export type Types =
   | EyesightResultPasssed
   | EyesightResultFailed
