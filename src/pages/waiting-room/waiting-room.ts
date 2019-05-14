@@ -19,7 +19,7 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
-import { map, tap, withLatestFrom } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -55,7 +55,6 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   form: FormGroup;
 
   subscription: Subscription;
-  translationSubscription: Subscription;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -135,7 +134,6 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.translationSubscription.unsubscribe();
     this.translate.use(this.translate.getDefaultLang());
   }
 
@@ -155,17 +153,9 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   }
 
   configureI18N(isWelsh: boolean): void {
-    const lang = isWelsh ? 'cy' : this.translate.getDefaultLang();
-    this.translationSubscription = this.translate.use(lang).pipe(
-      withLatestFrom(
-        this.translate.get('waitingRoom.signaturePrompt'),
-        this.translate.get('waitingRoom.signatureRetry'),
-      ),
-      tap(([_, signaturePromptTranslation, signatureRetryTranslation]) => {
-        this.signatureArea.signHereText = signaturePromptTranslation;
-        this.signatureArea.retryButtonText = signatureRetryTranslation;
-      }),
-    ).subscribe();
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
   }
 
   insuranceDeclarationChanged(): void {
