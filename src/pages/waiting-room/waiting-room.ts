@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -26,6 +26,8 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { TranslateService } from 'ng2-translate';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -42,7 +44,7 @@ interface WaitingRoomPageState {
   selector: 'page-waiting-room',
   templateUrl: 'waiting-room.html',
 })
-export class WaitingRoomPage extends BasePageComponent {
+export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDestroy {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -51,6 +53,8 @@ export class WaitingRoomPage extends BasePageComponent {
   pageState: WaitingRoomPageState;
 
   form: FormGroup;
+
+  subscription: Subscription;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -114,7 +118,7 @@ export class WaitingRoomPage extends BasePageComponent {
         map(formatDriverNumber),
       ),
       welshTest$: currentTest$.pipe(
-        // TODO: Get rid of this type generification
+        // TODO: MES-2336 - Get rid of this type generification
         select((ct: any) => ct.testSlotAttributes),
         select(tsa => tsa.welshTest),
       ),
@@ -122,11 +126,17 @@ export class WaitingRoomPage extends BasePageComponent {
     this.rehydrateFields();
 
     const { welshTest$ } = this.pageState;
-    welshTest$.subscribe((isWelsh) => {
-      if (isWelsh) {
-        this.translate.use('cy');
-      }
-    });
+    const merged$ = merge(
+      welshTest$.pipe(
+        map(isWelsh => this.changeLanguageIfWelsh(isWelsh)),
+      ),
+    );
+    this.subscription = merged$.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.translate.use(this.translate.getDefaultLang());
   }
 
   rehydrateFields(): void {
@@ -142,6 +152,12 @@ export class WaitingRoomPage extends BasePageComponent {
       .subscribe((val) => {
         this.form.controls['signatureAreaCtrl'].setValue(val);
       });
+  }
+
+  changeLanguageIfWelsh(isWelsh: boolean): void {
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
   }
 
   insuranceDeclarationChanged(): void {

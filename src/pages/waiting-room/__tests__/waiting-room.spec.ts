@@ -32,13 +32,14 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { of } from 'rxjs/observable/of';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule, TranslateService } from 'ng2-translate';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
+  let translate: TranslateService;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -71,6 +72,9 @@ describe('WaitingRoomPage', () => {
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
               },
+              testSlotAttributes: {
+                welshTest: false,
+              },
             },
           },
         })),
@@ -95,6 +99,8 @@ describe('WaitingRoomPage', () => {
         component = fixture.componentInstance;
       });
     deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+    translate = TestBed.get(TranslateService);
+    translate.setDefaultLang('en');
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
