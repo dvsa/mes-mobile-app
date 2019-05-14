@@ -5,11 +5,15 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { TestPersistenceProviderMock } from '../../../providers/test-persistence/__mocks__/test-persistence.mock';
 import * as testsActions from '../tests.actions';
+import * as testStatusActions from '../test-status/test-status.actions';
 import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
 import { application, candidate, practiceSlot } from '../__mocks__/tests.mock';
-import { initialState } from '../tests.reducer';
+import { initialState, testsReducer } from '../tests.reducer';
+import { TestSubmissionProvider } from '../../../providers/test-submission/test-submission';
+import { TestSubmissionProviderMock } from '../../../providers/test-submission/__mocks__/test-submission.mock';
+import { Store, StoreModule } from '@ngrx/store';
 
 describe('Tests Effects', () => {
 
@@ -20,10 +24,17 @@ describe('Tests Effects', () => {
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({
+          tests: testsReducer,
+        }),
+      ],
       providers: [
         TestsEffects,
         provideMockActions(() => actions$),
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
+        { provide: TestSubmissionProvider, useClass: TestSubmissionProviderMock },
+        Store,
       ],
     });
     effects = TestBed.get(TestsEffects);
@@ -81,7 +92,18 @@ describe('Tests Effects', () => {
         done();
       });
     });
+  });
 
+  describe('sendTestSuccessEffect', () => {
+    it('should dispatch the TestStatusSubmitted action', (done) => {
+      // ACT
+      actions$.next(new testsActions.SendTestSuccess());
+      // ASSERT
+      effects.sendTestSuccessEffect$.subscribe((result) => {
+        expect(result).toEqual(new testStatusActions.TestStatusSubmitted());
+        done();
+      });
+    });
   });
 
 });

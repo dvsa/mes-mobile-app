@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
 
+// TODO: These actions are not relatable to an action in the app. Rename needed.
+
 export const TEST_STATUS_STARTED = '[Test status] Started';
 export const TEST_STATUS_DECIDED = '[Test status] Decided';
 export const TEST_STATUS_COMPLETED = '[Tests status] Completed';
