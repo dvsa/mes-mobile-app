@@ -14,9 +14,7 @@ import {
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
 } from '../../modules/tests/vehicle-details/vehicle-details.actions';
-import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
+import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
   OtherAccompanimentToggled,
@@ -51,7 +49,6 @@ import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/
 import {
   isFailed,
   isPassed,
-  getEyesightTestState,
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
@@ -109,7 +106,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   @ViewChild('instructorRegistrationInput')
   instructorRegistrationInput: ElementRef;
-  // inputSubscriptions: Subscription[] = [];
 
   showEyesightFailureConfirmation: boolean = false;
 
@@ -182,7 +178,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
       ),
       eyesightTestResult$: currentTest$.pipe(
         select(getEyesightTestResult),
-        map(getEyesightTestState),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -258,22 +253,6 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
   instructorRegistrationChanged(instructorRegistration: number) {
     this.store$.dispatch(new InstructorRegistrationNumberChanged(instructorRegistration));
-  }
-  /**
-   * Returns a subscription to the debounced changes of a particular input fields.
-   * Dispatches the provided action type to the store when a new value is yielded.
-   * @param inputRef The input to listen for changes on.
-   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
-   */
-  inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
-    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-      map((event: any) => event.target.value),
-      debounceTime(1000),
-      distinctUntilChanged(),
-    );
-    const subscription = changeStream$
-      .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
-    return subscription;
   }
 
   onSubmit() {

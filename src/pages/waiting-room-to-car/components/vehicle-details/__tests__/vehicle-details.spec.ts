@@ -31,7 +31,7 @@ describe('VehicleDetailsComponent', () => {
 
   describe('DOM', () => {
     describe('setting optional vehicle details', () => {
-      it('should dispatch a toggle school car action when school car is selected', () => {
+      it('should call vehicleDetailsChanged when school car is selected', () => {
         spyOn(component, 'vehicleDetailsChanged');
         component.vehicleDetailsType = 'School car';
         component.ngOnChanges();
@@ -41,7 +41,7 @@ describe('VehicleDetailsComponent', () => {
         fixture.detectChanges();
         expect(component.vehicleDetailsChanged).toHaveBeenCalled();
       });
-      it('should dispatch a toggle dual controls action when dual controls is selected', () => {
+      it('should call vehicleDetailsChanged when dual controls is selected', () => {
         spyOn(component, 'vehicleDetailsChanged');
         component.vehicleDetailsType = 'Dual control';
         component.ngOnChanges();

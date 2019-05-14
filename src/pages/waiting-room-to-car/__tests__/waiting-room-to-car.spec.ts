@@ -35,6 +35,8 @@ import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-d
 import { AccompanimentCardComponent } from '../components/accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from '../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test';
+import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
+import { TellMeQuestionSelected } from '../../../modules/tests/test-data/test-data.actions';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -117,18 +119,17 @@ describe('WaitingRoomToCarPage', () => {
       expect(component.tellMeQuestions.length).toBe(2);
     });
 
-    // TODO move to a test for the new component
-    // describe('selecting a tell me question', () => {
-    //   it('should dispatch an action when the tell me question change handler is called', () => {
-    //     const question: TellMeQuestion = {
-    //       code: 'T1',
-    //       description: 'desc',
-    //       shortName: 'name',
-    //     };
-    //     component.tellMeQuestionChanged(question);
-    //     expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
-    //   });
-    // });
+    describe('selecting a tell me question', () => {
+      it('should dispatch an action when the tell me question change handler is called', () => {
+        const question: TellMeQuestion = {
+          code: 'T1',
+          description: 'desc',
+          shortName: 'name',
+        };
+        component.tellMeQuestionChanged(question);
+        expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
+      });
+    });
   });
 
   describe('DOM', () => {

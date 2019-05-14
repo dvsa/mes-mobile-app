@@ -20,4 +20,4 @@ export const eyesightTestResultReducer = (
   }
 };
 
-export const getEyesightTestResult = createFeatureSelector('eyesightTestResult');
+export const getEyesightTestResult = createFeatureSelector<EyesightTestResult>('eyesightTestResult');

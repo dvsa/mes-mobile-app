@@ -39,7 +39,7 @@ describe('TransmissionComponent', () => {
         fixture.detectChanges();
         expect(component.transmissionChanged).toHaveBeenCalledWith('Manual');
       });
-      it('should call transmissionChangedchanged with Automatic when automatic is clicked', () => {
+      it('should call transmissionChanged with Automatic when automatic is clicked', () => {
         spyOn(component, 'transmissionChanged');
         component.ngOnChanges();
         fixture.detectChanges();

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { StringType } from '../../../../shared/helpers/string-type';
 
 @Component({
   selector: 'instructor-registration',
@@ -27,18 +28,8 @@ export class InstructorRegistrationComponent implements OnChanges {
   }
 
   instructorRegistrationChanged(instructorRegistration: string): void {
-    if (this.isNumeric(instructorRegistration)) {
+    if (StringType.isNumeric(instructorRegistration)) {
       this.instructorRegistrationChange.emit(Number.parseInt(instructorRegistration, 10));
     }
   }
-
-  isNumeric(value: string): boolean {
-
-    if (value === null || value === '') {
-      return false;
-    }
-    const regExp = new RegExp('^([0-9]*)$');
-    return regExp.test(value);
-  }
-
 }

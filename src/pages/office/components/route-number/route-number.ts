@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { StringType } from '../../../../shared/helpers/string-type';
 
 @Component({
   selector: 'route-number',
@@ -25,7 +26,7 @@ export class RouteNumberComponent implements OnChanges {
 
   private formControl: FormControl;
 
-  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) {}
+  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
@@ -45,23 +46,13 @@ export class RouteNumberComponent implements OnChanges {
 
   routeNumberChanged(routeNumber: string): void {
     if (this.formControl.valid) {
-      if (this.isNumeric(routeNumber)) {
+      if (StringType.isNumeric(routeNumber)) {
         this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
       }
     }
   }
 
-  isNumeric(value: string): boolean {
-
-    if (value === null || value === '') {
-      return false;
-    }
-
-    const regExp = new RegExp('^([0-9]*)$');
-    return regExp.test(value);
-  }
-
-  get invalid() : boolean {
+  get invalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }
 
