@@ -1,18 +1,18 @@
 {
   "common": {
-    "continue": "continueWelsh",
-    "screenLocked": "screenLockedWelsh"
+    "continue": "[CY] Continue",
+    "screenLocked": "[CY] Device locked"
   },
   "waitingRoom": {
-    "confirm": "confirmWelsh",
-    "declarationIntent": "declarationIntentWelsh",
-    "insuranceDeclaration": "insuranceDeclarationWelsh",
-    "insuranceDeclarationValidation": "insuranceDeclarationValidationWelsh",
-    "residencyDeclaration": "residencyDeclarationWelsh",
-    "residencyDeclarationValidation": "residencyDeclarationValidationWelsh",
-    "signaturePrompt": "signaturePromptWelsh",
-    "signatureRetry": "signatureRetryWelsh",
-    "signatureValidation": "signatureValidationWelsh",
-    "title": "titleWelsh"
+    "confirm": "[CY] I confirm",
+    "declarationIntent": "[CY] I declare that",
+    "insuranceDeclaration": "[CY] The use of the test vehicle for the purpose of the test is fully covered by a valid policy of insurance which satisfies the requirements of the legislation.",
+    "insuranceDeclarationValidation": "[CY] Confirm that the vehicle is insured for the purpose of the test",
+    "residencyDeclaration": "[CY] I normally live/have lived in the UK for at least 185 days in the last 12 months.",
+    "residencyDeclarationValidation": "[CY] Confirm that you live in the UK",
+    "signaturePrompt": "[CY] Sign here",
+    "signatureRetry": "[CY] Retry",
+    "signatureValidation": "[CY] Enter a signature",
+    "title": "[CY] Declaration"
   }
 }
