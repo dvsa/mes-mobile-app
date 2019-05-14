@@ -6,6 +6,7 @@ import { WaitingRoomAnalyticsEffects } from './waiting-room.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     EffectsModule.forFeature([WaitingRoomAnalyticsEffects]),
     ComponentsModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   providers: [
     AnalyticsProvider,

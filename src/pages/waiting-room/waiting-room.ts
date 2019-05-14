@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -25,6 +25,9 @@ import { DeviceAuthenticationProvider } from '../../providers/device-authenticat
 import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { TranslateService } from 'ng2-translate';
+import { merge } from 'rxjs/observable/merge';
+import { Subscription } from 'rxjs/Subscription';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -33,6 +36,7 @@ interface WaitingRoomPageState {
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
+  welshTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -40,7 +44,7 @@ interface WaitingRoomPageState {
   selector: 'page-waiting-room',
   templateUrl: 'waiting-room.html',
 })
-export class WaitingRoomPage extends BasePageComponent {
+export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDestroy {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -50,6 +54,8 @@ export class WaitingRoomPage extends BasePageComponent {
 
   form: FormGroup;
 
+  subscription: Subscription;
+
   constructor(
     private store$: Store<StoreModel>,
     public navCtrl: NavController,
@@ -57,6 +63,7 @@ export class WaitingRoomPage extends BasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private translate: TranslateService,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -110,8 +117,26 @@ export class WaitingRoomPage extends BasePageComponent {
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
+      welshTest$: currentTest$.pipe(
+        // TODO: MES-2336 - Get rid of this type generification
+        select((ct: any) => ct.testSlotAttributes),
+        select(tsa => tsa.welshTest),
+      ),
     };
     this.rehydrateFields();
+
+    const { welshTest$ } = this.pageState;
+    const merged$ = merge(
+      welshTest$.pipe(
+        map(isWelsh => this.changeLanguageIfWelsh(isWelsh)),
+      ),
+    );
+    this.subscription = merged$.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.translate.use(this.translate.getDefaultLang());
   }
 
   rehydrateFields(): void {
@@ -127,6 +152,12 @@ export class WaitingRoomPage extends BasePageComponent {
       .subscribe((val) => {
         this.form.controls['signatureAreaCtrl'].setValue(val);
       });
+  }
+
+  changeLanguageIfWelsh(isWelsh: boolean): void {
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
   }
 
   insuranceDeclarationChanged(): void {
