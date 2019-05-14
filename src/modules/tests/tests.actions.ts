@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode, StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
-export const START_SENDING_TESTS = '[Tests] Start Sending Test Results';
-export const SEND_TESTS = '[Tests] Send Test Result';
-export const SEND_TESTS_SUCCESS = '[Tests] Send Tests Result Success';
-export const SEND_TESTS_FAILURE = '[Tests] Send Test Results Failure';
+export const START_SENDING_COMPLETED_TESTS = '[???] Start Sending Completed Test';
+export const SEND_TEST = '[TestsEffects] Send Test';
+export const SEND_TEST_SUCCESS = '[Tests] Send Test Success';
+export const SEND_TEST_FAILURE = '[Tests] Send Test Failure';
 
 export const PERSIST_TESTS = '[Tests] Persist';
 export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
@@ -36,20 +36,21 @@ export class StartPracticeTest implements Action {
   constructor(public slotId: string) { }
 }
 
-export class StartSendingTests implements Action {
-  readonly type = START_SENDING_TESTS;
+export class StartSendingCompletedTests implements Action {
+  readonly type = START_SENDING_COMPLETED_TESTS;
 }
 
-export class SendTests implements Action {
-  readonly type = SEND_TESTS;
+export class SendTest implements Action {
+  readonly type = SEND_TEST;
+  constructor(public payload: StandardCarTestCATBSchema) {}
 }
 
-export class SendTestsSuccess implements Action {
-  readonly type = SEND_TESTS_SUCCESS;
+export class SendTestSuccess implements Action {
+  readonly type = SEND_TEST_SUCCESS;
 }
 
-export class SendTestsFailure implements Action {
-  readonly type = SEND_TESTS_FAILURE;
+export class SendTestFailure implements Action {
+  readonly type = SEND_TEST_FAILURE;
 }
 
 export type Types =
@@ -58,7 +59,7 @@ export type Types =
   | LoadPersistedTestsSuccess
   | SetActivityCode
   | StartPracticeTest
-  | StartSendingTests
-  | SendTests
-  | SendTestsSuccess
-  | SendTestsFailure;
+  | StartSendingCompletedTests
+  | SendTest
+  | SendTestSuccess
+  | SendTestFailure;
