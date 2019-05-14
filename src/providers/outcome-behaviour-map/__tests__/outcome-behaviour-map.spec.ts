@@ -160,22 +160,7 @@ describe('OutcomeBehaviourMapProvider', () => {
     });
   });
 
-  // outcome testing
-  // for testing all scenarios I need
-  // 1  DONE
-  // 3  DONE
-  // 4  DONE
-  // 11  DONE
-  // 20  DONE
-  // 21  DONE
-  // 22 DONE
-  // 23 DONE
-  // 33 DONE
-  // 40 DONE
-  // 51 DONE
-  // 69 DONE
-
-  fdescribe('outcome testing', () => {
+  describe('unique outcome testing', () => {
     describe('outcome 1', () => {
       it(`should return visibility Y for all fields but eta,faultComment and eco`, () => {
         outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
@@ -668,7 +653,7 @@ describe('OutcomeBehaviourMapProvider', () => {
 
     describe('outcome 69', () => {
 
-      it(`should return visibility Y for additional information`, () => {
+      it(`should return visibility Y for candidate,debrief,identification and additionalInformation`, () => {
         outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
         const candidate = outcomeBehaviourMapProvider.getVisibilityType('69', 'candidateDescription');
         const debrief = outcomeBehaviourMapProvider.getVisibilityType('69', 'debriefWitnessed');
