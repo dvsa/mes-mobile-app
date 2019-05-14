@@ -7,6 +7,7 @@ import { TestStatus } from '../test-status/test-status.model';
 import * as testStatusReducer from '../test-status/test-status.reducer';
 import { TestsModel } from '../tests.model';
 import * as testActions from './../tests.actions';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };
@@ -104,8 +105,77 @@ describe('testsReducer', () => {
     expect(result.currentTest.slotId).toBe('456');
   });
 
-  it('should reset the practice test state when a test is ended', () => {
-    // TODO
+  it('should reset the practice test state when a test is ended and preserve other test states', () => {
+    const state: TestsModel = {
+      currentTest: { slotId: 'practice_1' },
+      startedTests: {
+        1: {
+          testData: {
+            dangerousFaults: {},
+            drivingFaults: {
+              clearance: 1,
+            },
+            manoeuvres: {},
+            seriousFaults: {
+              signalsTimed: true,
+            },
+            testRequirements: {},
+            ETA: {},
+            eco: {},
+            controlledStop: {},
+            vehicleChecks: {
+              tellMeQuestion: {
+                outcome: 'DF',
+              },
+              showMeQuestion: {
+                outcome: 'S',
+              },
+            },
+          },
+          category: '',
+          id: '',
+          journalData: null,
+          activityCode: null,
+        },
+        practice_1: {
+          testData: {
+            dangerousFaults: {},
+            drivingFaults: {
+              moveOffSafety: 1,
+            },
+            manoeuvres: {},
+            seriousFaults: {
+              positioningNormalDriving: true,
+            },
+            testRequirements: {},
+            ETA: {},
+            eco: {},
+            controlledStop: {},
+            vehicleChecks: {
+              tellMeQuestion: {
+                outcome: 'DF',
+              },
+              showMeQuestion: {},
+            },
+          },
+          category: '',
+          id: '',
+          journalData: null,
+          activityCode: null,
+        },
+      },
+      testLifecycles: {},
+    };
+
+    const result = testsReducer(state, new testActions.EndPracticeTest());
+    expect(result.startedTests['practice_1'].testData.seriousFaults.positioningNormalDriving).toBeUndefined();
+    expect(result.startedTests['practice_1'].testData.drivingFaults.moveOffSafety).toBeUndefined();
+    expect(result.startedTests['practice_1'].testData.vehicleChecks.tellMeQuestion.outcome).toBeUndefined();
+
+    expect(result.startedTests[1].testData.seriousFaults.signalsTimed).toBeTruthy();
+    expect(result.startedTests[1].testData.drivingFaults.clearance).toBeTruthy();
+    expect(result.startedTests[1].testData.vehicleChecks.tellMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
+    expect(result.startedTests[1].testData.vehicleChecks.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
   });
 
 });
