@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { UrlProvider } from '../url/url';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class TestSubmissionProvider {
 
-  submitTests = (data: StandardCarTestCATBSchema[]): Observable<boolean> => {
-    // TODO - Write in seperate sub task
-    return of(true);
+  constructor(
+    public httpClient : HttpClient,
+    public urlProvider : UrlProvider,
+    ) {}
+
+  submitTests = (data: StandardCarTestCATBSchema[]): Observable<any> => {
+    return this.httpClient.post(
+      this.urlProvider.getTestResultServiceUrl(),
+      data,
+    );
   }
 }
