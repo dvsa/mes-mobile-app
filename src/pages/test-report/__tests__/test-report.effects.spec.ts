@@ -131,5 +131,10 @@ describe('Test Report Effects', () => {
       });
     });
 
+    it('should not dispatch an action requesting the test data to be saved when triggered', () => {
+      // When something is filtered, nothing happens - the pipe function will not call the next operator.
+      // TODO - think about how this could be tested
+    });
+
   });
 });
