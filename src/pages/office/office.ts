@@ -4,7 +4,8 @@ import {
   NavParams,
   Platform,
   ToastController,
-  Toast, Keyboard, AlertController } from 'ionic-angular';
+  Toast, Keyboard, AlertController,
+} from 'ionic-angular';
 import { Component } from '@angular/core';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -82,7 +83,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-  } from '@dvsa/mes-test-schema/categories/B';
+} from '@dvsa/mes-test-schema/categories/B';
 import {
   AddDangerousFaultComment,
   AddSeriousFaultComment,
@@ -207,11 +208,11 @@ export class OfficePage extends BasePageComponent {
         select(getRouteNumber),
       ),
       displayRouteNumber$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getRouteNumber),
+        select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestOutcome))),
-        map(([route, outcome])  => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
+          select(getTestSummary),
+          select(getRouteNumber))),
+        map(([outcome, route]) => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
       ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
@@ -243,7 +244,6 @@ export class OfficePage extends BasePageComponent {
         select(getShowMeQuestion),
       ),
       showMeQuestionOptions$: currentTest$.pipe(
-        select(getTestSummary),
         select(getTestOutcome),
         map(outcome => getShowMeQuestionOptions(this.showMeQuestions, outcome, this.outcomeBehaviourProvider)),
       ),
@@ -374,6 +374,12 @@ export class OfficePage extends BasePageComponent {
   }
 
   activityCodeChanged(terminationCode: TerminationCode) {
+    const showMeQuestionValue = this.form.controls['showMeQuestion'].value;
+    if (showMeQuestionValue) {
+      if (showMeQuestionValue.code === 'N/A') {
+        this.form.controls['showMeQuestion'].setValue({});
+      }
+    }
     this.store$.dispatch(new SetActivityCode(terminationCode.activityCode));
   }
 
@@ -396,7 +402,7 @@ export class OfficePage extends BasePageComponent {
       buttons: [
         {
           text: 'Cancel',
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: 'Upload',

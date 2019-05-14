@@ -176,12 +176,10 @@ export const getShowMeQuestionOptions = (
   const filteredQuestions: ShowMeQuestion[] = [];
   const showNotApplicable = provider.showNotApplicable(outcome, 'showMeQuestion');
   questions.forEach((value) => {
-    filteredQuestions.push(value);
+    if (value.code !== 'N/A' || (value.code === 'N/A' && showNotApplicable)) {
+      filteredQuestions.push(value);
+    }
   });
-
-  if (showNotApplicable) {
-    filteredQuestions.push({ code: 'NA', description: 'Not applicable', shortName: 'Not applicable' });
-  }
   return filteredQuestions;
 };
 
@@ -194,12 +192,12 @@ export const hasVehicleChecksBeenCompleted = (data: TestData): boolean => {
     showMeQuestionOutcome === CompetencyOutcome.DF ||
     showMeQuestionOutcome === CompetencyOutcome.S ||
     showMeQuestionOutcome === CompetencyOutcome.D)
-  && (
+    && (
       tellMeQuestionOutcome === CompetencyOutcome.P ||
       tellMeQuestionOutcome === CompetencyOutcome.DF ||
       tellMeQuestionOutcome === CompetencyOutcome.S ||
       tellMeQuestionOutcome === CompetencyOutcome.D
-  );
+    );
 };
 
 export const getCatBLegalRequirements = (data: TestData): CatBLegalRequirements => {

@@ -79,9 +79,9 @@ describe('OutcomeBehaviourMapProvider', () => {
       expect(result).toBeFalsy();
     });
 
-    it(`should return false for a non-existant outcome`, () => {
+    it(`should return true for a non-existant outcome`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('40', 'faultComment', 'x');
-      expect(result).toBeFalsy();
+      expect(result).toBeTruthy();
     });
     it(`should return false for a non-existant field`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('4', 'fakefield', 'x');
