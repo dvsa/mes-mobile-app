@@ -26,7 +26,7 @@ export const environment: LocalEnvironmentFile = {
     allowedTestCategories: ['B'],
   },
   tests: {
-    testSubmissionUrl: '/assets/mock/local-test-submission.json',
+    testSubmissionUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/test-results',
     autoSendInterval: 900000,
   },
   logs: {
