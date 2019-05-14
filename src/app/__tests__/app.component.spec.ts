@@ -13,7 +13,7 @@ import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../providers/data-store/__mocks__/data-store.mock';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import { translateServiceMock } from '../../shared/__mocks__/translate';
 
 describe('App', () => {

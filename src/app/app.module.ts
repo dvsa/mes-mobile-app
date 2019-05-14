@@ -9,7 +9,8 @@ import { AppVersion } from '@ionic-native/app-version';
 import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
 import { App } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { Http } from '@angular/http';
 import { AppConfigProvider } from '../providers/app-config/app-config';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { StoreModule } from '@ngrx/store';
@@ -37,14 +38,16 @@ import { TestPersistenceProvider } from '../providers/test-persistence/test-pers
 import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
 import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { createTranslateLoader } from '../shared/helpers/translation-initialisation';
+import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http, 'assets/i18n', '.json');
+}
 
 @NgModule({
   declarations: [App],
   imports: [
     BrowserModule,
-    HttpClientModule,
     IonicModule.forRoot(App, { mode: 'ios' }),
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
@@ -54,11 +57,9 @@ import { createTranslateLoader } from '../shared/helpers/translation-initialisat
     TestsModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [Http],
     }),
   ],
   bootstrap: [IonicApp],

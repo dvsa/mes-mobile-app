@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 declare let window: any;
 

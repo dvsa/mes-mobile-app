@@ -32,7 +32,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { of } from 'rxjs/observable/of';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from 'ng2-translate';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -74,7 +74,7 @@ describe('WaitingRoomPage', () => {
             },
           },
         })),
-        TranslateModule.forChild(),
+        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
