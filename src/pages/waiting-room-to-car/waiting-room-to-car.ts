@@ -44,6 +44,7 @@ import {
   EyesightResultPasssed,
   EyesightResultFailed,
   EyesightResultReset,
+  EyesightTestResult,
 } from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
 import {
@@ -58,6 +59,7 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
+  QuestionOutcomes,
 } from '../../modules/tests/test-data/test-data.actions';
 import {
   isTellMeQuestionSelected,
@@ -288,19 +290,19 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   }
 
   tellMeQuestionOutcomeChanged(outcome: string): void {
-    if (outcome === 'P') {
+    if (outcome === QuestionOutcomes.Pass) {
       this.store$.dispatch(new TellMeQuestionCorrect());
-    } else if (outcome === 'DF') {
-      this.store$.dispatch(new TellMeQuestionDrivingFault());
+      return;
     }
+    this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
   eyesightTestResultChanged(result: string): void {
-    if (result === 'P') {
+    if (result === EyesightTestResult.Pass) {
       this.store$.dispatch(new EyesightResultPasssed());
-    } else if (result === 'F') {
-      this.store$.dispatch(new EyesightResultFailed());
+      return;
     }
+    this.store$.dispatch(new EyesightResultFailed());
   }
 
 }
