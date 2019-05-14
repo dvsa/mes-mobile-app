@@ -241,7 +241,8 @@ describe('LoginPage', () => {
     }));
 
     it('should not call any further methods when initialiseAppConfig() fails', fakeAsync(() => {
-      component.platform.ready = jasmine.createSpy('component.initialiseAppConfig').and.returnValue(Promise.reject(''));
+      component.initialiseAppConfig =
+        jasmine.createSpy('component.initialiseAppConfig').and.returnValue(Promise.reject(''));
 
       component.login();
       tick();
