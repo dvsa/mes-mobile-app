@@ -180,7 +180,6 @@ export class DebriefPage extends BasePageComponent {
 
   ionViewDidLeave(): void {
     if (this.isPracticeTest) {
-      // this.store$.dispatch(new EndPracticeTest());
       if (super.isIos()) {
         this.screenOrientation.unlock();
         this.insomnia.allowSleepAgain();
