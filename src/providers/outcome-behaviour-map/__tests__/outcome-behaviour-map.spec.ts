@@ -202,7 +202,7 @@ describe('OutcomeBehaviourMapProvider', () => {
     });
   });
 
-  fdescribe('outcome testing', () => {
+  describe('outcome testing', () => {
     describe('outcome 3', () => {
       it(`should return visibility Y for candidate, debrief, identification, weather, d255 and additionalInfo`, () => {
         outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
