@@ -212,6 +212,100 @@ describe('LoginPage', () => {
     });
   });
 
+  describe('Async order of events in the login() method', () => {
+
+    beforeEach(() => {
+      component.platform.ready = jasmine.createSpy('platform.ready');
+      component.initialisePersistentStorage = jasmine.createSpy('component.initialisePersistentStorage');
+      component.initialiseAppConfig = jasmine.createSpy('component.initialiseAppConfig');
+      component.initialiseAuthentication = jasmine.createSpy('component.initialiseAuthentication');
+      component.authenticationProvider.login = jasmine.createSpy('authenticationProvider.login');
+      component.appConfigProvider.loadRemoteConfig = jasmine.createSpy('appConfigProvider.loadRemoteConfig');
+      component.analytics.initialiseAnalytics = jasmine.createSpy('analytics.initialiseAnalytics');
+      component.validateDeviceType = jasmine.createSpy('component.validateDeviceType');
+    });
+
+    it('should not call any further methods when platform.ready() fails', fakeAsync(() => {
+      component.platform.ready = jasmine.createSpy('platform.ready').and.returnValue(Promise.reject(''));
+
+      component.login();
+      tick();
+      // Shouldn't be called
+      expect(component.initialiseAppConfig).not.toHaveBeenCalled();
+      expect(component.initialiseAuthentication).not.toHaveBeenCalled();
+      expect(component.authenticationProvider.login).not.toHaveBeenCalled();
+      expect(component.initialisePersistentStorage).not.toHaveBeenCalled();
+      expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
+      expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
+      expect(component.validateDeviceType).not.toHaveBeenCalled();
+    }));
+
+    it('should not call any further methods when initialiseAppConfig() fails', fakeAsync(() => {
+      component.initialiseAppConfig =
+        jasmine.createSpy('component.initialiseAppConfig').and.returnValue(Promise.reject(''));
+
+      component.login();
+      tick();
+      // Should be called
+      expect(component.platform.ready).toHaveBeenCalled();
+      // Shouldn't be called
+      expect(component.initialiseAuthentication).not.toHaveBeenCalled();
+      expect(component.authenticationProvider.login).not.toHaveBeenCalled();
+      expect(component.initialisePersistentStorage).not.toHaveBeenCalled();
+      expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
+      expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
+      expect(component.validateDeviceType).not.toHaveBeenCalled();
+    }));
+
+    it('should not call any further methods when authenticationProvider.login() fails', fakeAsync(() => {
+      component.authenticationProvider.login =
+        jasmine.createSpy('authenticationProvider.login').and.returnValue(Promise.reject(''));
+
+      component.login();
+      tick();
+      // Should be called
+      expect(component.platform.ready).toHaveBeenCalled();
+      expect(component.initialiseAppConfig).toHaveBeenCalled();
+      // Shouldn't be called
+      expect(component.initialisePersistentStorage).not.toHaveBeenCalled();
+      expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
+      expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
+      expect(component.validateDeviceType).not.toHaveBeenCalled();
+    }));
+
+    it('should not call any further methods when initialisePersistentStorage() fails', fakeAsync(() => {
+      component.initialisePersistentStorage =
+        jasmine.createSpy('component.initialisePersistentStorage').and.returnValue(Promise.reject(''));
+
+      component.login();
+      tick();
+      // Should be called
+      expect(component.platform.ready).toHaveBeenCalled();
+      expect(component.initialiseAppConfig).toHaveBeenCalled();
+      expect(component.initialisePersistentStorage).toHaveBeenCalled();
+      // Shouldn't be called
+      expect(component.appConfigProvider.loadRemoteConfig).not.toHaveBeenCalled();
+      expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
+      expect(component.validateDeviceType).not.toHaveBeenCalled();
+    }));
+
+    it('should not call any further methods when loadRemoteConfig() fails', fakeAsync(() => {
+      component.appConfigProvider.loadRemoteConfig =
+        jasmine.createSpy('component.appConfigProvider.loadRemoteConfig').and.returnValue(Promise.reject(''));
+
+      component.login();
+      tick();
+      // Should be called
+      expect(component.platform.ready).toHaveBeenCalled();
+      expect(component.initialiseAppConfig).toHaveBeenCalled();
+      expect(component.initialisePersistentStorage).toHaveBeenCalled();
+      expect(component.appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
+      // Shouldn't be called
+      expect(component.analytics.initialiseAnalytics).not.toHaveBeenCalled();
+      expect(component.validateDeviceType).not.toHaveBeenCalled();
+    }));
+  });
+
   describe('DOM', () => {
     it('should show the correct div if user has logged out', () => {
       component.hasUserLoggedOut = true;
