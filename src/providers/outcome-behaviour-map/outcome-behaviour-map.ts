@@ -23,14 +23,14 @@ export class OutcomeBehaviourMapProvider {
 
   isVisible(outcomeId: string, fieldName: string, value: any): boolean {
     const mappedOutcome = this.behaviourMap[outcomeId];
+
     if (!mappedOutcome) {
-      return false;
+      return true;
     }
     const field = mappedOutcome[fieldName];
     if (!field) {
       return false;
     }
-
     if (field.display === 'A' && value !== null) {
       return true;
     }

@@ -119,7 +119,15 @@ describe('Journal Effects', () => {
       expect(slotProvider.detectSlotChanges).toHaveBeenCalledTimes(0);
       expect(slotProvider.extendWithEmptyDays).toHaveBeenCalledTimes(0);
       expect(slotProvider.getRelevantSlots).toHaveBeenCalledTimes(0);
-      expect(result instanceof journalActions.LoadJournalFailure).toBe(true);
+
+      if (result instanceof journalActions.JournalRefreshError) {
+        expect(result instanceof journalActions.JournalRefreshError).toBeTruthy();
+      } else if (result instanceof journalActions.LoadJournalFailure) {
+        expect(result instanceof journalActions.LoadJournalFailure).toBeTruthy();
+      } else {
+        fail('Unknown Action Sent');
+      }
+
       done();
     });
 

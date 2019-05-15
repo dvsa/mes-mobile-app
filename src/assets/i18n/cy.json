@@ -3,6 +3,19 @@
     "continue": "[CY] Continue",
     "screenLocked": "[CY] Device locked"
   },
+  "debrief": {
+    "dangerousFaultsCardDescription": "[CY] dangerous faults",
+    "drivingFaultsCardDescription": "[CY] driving faults",
+    "ecoHeader": "[CY] ECO",
+    "end": "[CY] End debrief",
+    "etaHeader": "[CY] ETA",
+    "failStatus": "[CY] Unsuccessful",
+    "outcomeHeader": "[CY] Test outcome",
+    "passStatus": "[CY] Passed",
+    "seriousFaultsCardDescription": "[CY] serious faults",
+    "terminatedStatus": "[CY] Terminated",
+    "title": "[CY] Debrief"
+  },
   "waitingRoom": {
     "confirm": "[CY] I confirm",
     "declarationIntent": "[CY] I declare that",
