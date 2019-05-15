@@ -28,6 +28,7 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { TranslateModule } from 'ng2-translate';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -82,6 +83,7 @@ describe('DebriefPage', () => {
             isValid: false,
           }),
         }),
+        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

@@ -1,22 +1,22 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Debrief</ion-title>
+    <ion-title>{{ 'debrief.title' | translate }}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
   </ion-navbar>
   <div id="test-outcome-background" [ngSwitch]="outcome">
     <div class="test-outcome-container passed" *ngSwitchCase="'Pass'">
-      <h4>Test outcome</h4>
-      <h1>Passed</h1>
+      <h4>{{ 'debrief.outcomeHeader' | translate }}</h4>
+      <h1>{{ 'debrief.passStatus' | translate }}</h1>
     </div>
     <div class="test-outcome-container failed" *ngSwitchCase="'Fail'">
-      <h4>Test outcome</h4>
-      <h1>Unsuccessful</h1>
+      <h4>{{ 'debrief.outcomeHeader' | translate }}</h4>
+      <h1>{{ 'debrief.failStatus' | translate }}</h1>
     </div>
     <div class="test-outcome-container terminated" *ngSwitchCase="'Terminated'">
-      <h4>Test outcome</h4>
-      <h1>Terminated</h1>
+      <h4>{{ 'debrief.outcomeHeader' | translate }}</h4>
+      <h1>{{ 'debrief.terminatedStatus' | translate }}</h1>
     </div>
   </div>
 </ion-header>
@@ -29,7 +29,7 @@
         <ion-row align-items-start class="mes-data">
           <ion-col col-3></ion-col>
           <ion-col col-34>
-            <h4 class="fault-heading">ETA</h4>
+            <h4 class="fault-heading">{{ 'debrief.etaHeader' | translate }}</h4>
           </ion-col>
           <ion-col align-self-start>
             <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
@@ -43,7 +43,7 @@
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{(pageState.dangerousFaults$ | async).length}}</h1>
-        <h4 class="fault-heading">dangerous faults</h4>
+        <h4 class="fault-heading">{{ 'debrief.dangerousFaultsCardDescription' | translate }}</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -69,7 +69,7 @@
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{(pageState.seriousFaults$ | async).length}}</h1>
-        <h4 class="fault-heading">serious faults</h4>
+        <h4 class="fault-heading">{{ 'debrief.seriousFaultsCardDescription' | translate }}</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -90,11 +90,12 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card id="driving-fault" *ngIf="(pageState.drivingFaultCount$ | async) > 0 || (pageState.drivingFaults$ | async).length > 0">
+  <ion-card id="driving-fault"
+    *ngIf="(pageState.drivingFaultCount$ | async) > 0 || (pageState.drivingFaults$ | async).length > 0">
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{pageState.drivingFaultCount$ | async}}</h1>
-        <h4 class="fault-heading">driving faults</h4>
+        <h4 class="fault-heading">{{ 'debrief.drivingFaultsCardDescription' | translate }}</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -122,7 +123,7 @@
         <ion-row align-items-start class="mes-data">
           <ion-col col-3></ion-col>
           <ion-col col-34>
-            <h4 class="fault-heading">ECO</h4>
+            <h4 class="fault-heading">{{ 'debrief.ecoHeader' | translate }}</h4>
           </ion-col>
           <ion-col align-self-start>
             <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
@@ -138,7 +139,7 @@
 <ion-footer>
   <div id="end-debrief-background">
     <button ion-button id="end-debrief-button" class="mes-primary-button" (click)="endDebrief()">
-      <h3>End debrief</h3>
+      <h3>{{ 'debrief.end' | translate }}</h3>
     </button>
   </div>
 </ion-footer>
