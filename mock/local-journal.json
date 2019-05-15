@@ -126,8 +126,9 @@
           "age": 30,
           "candidateAddress": {
             "addressLine1": "999 Letsby Avenue",
-            "addressLine2": "Someplace",
+            "addressLine2": "Someplace    ",
             "addressLine3": "Sometown",
+            "addressLine4": " ",
             "postcode": "AB67 8CD"
           },
           "candidateId": 104,
