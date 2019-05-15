@@ -14,6 +14,10 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
 import { getCurrentTest } from './tests.selector';
 import { TestSubmissionProvider } from '../../providers/test-submission/test-submission';
+import { interval } from 'rxjs/observable/interval';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { startsWith } from 'lodash';
 
 @Injectable()
 export class TestsEffects {
@@ -21,6 +25,8 @@ export class TestsEffects {
     private actions$: Actions,
     private testPersistenceProvider: TestPersistenceProvider,
     private testSubmissionProvider: TestSubmissionProvider,
+    private appConfigProvider: AppConfigProvider,
+    private networkStateProvider: NetworkStateProvider,
     private store$: Store<StoreModel>,
   ) {}
 
@@ -59,6 +65,46 @@ export class TestsEffects {
         new PopulateApplicationReference(slotData.booking.application),
         new PopulateCandidateDetails(slotData.booking.candidate),
       ];
+    }),
+  );
+
+  @Effect()
+  startSendingCompletedTestsEffect$ = this.actions$.pipe(
+    ofType(testActions.START_SENDING_COMPLETED_TESTS),
+    switchMap(() => {
+      return interval(this.appConfigProvider.getAppConfig().tests.autoSendInterval)
+        .pipe(
+          map(() => new testActions.SendCompletedTests()),
+        );
+    }),
+  );
+
+  @Effect()
+  sendCompletedTestsEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_COMPLETED_TESTS),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+      ),
+    ),
+    filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE),
+    switchMap(([action, tests]) => {
+
+      const completedTestKeys = Object.keys(tests.testLifecycles).filter((slotId) => {
+        return !startsWith(slotId, 'practice_') && tests.testLifecycles[slotId] === 'Completed';
+      });
+
+      const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
+
+      return this.testSubmissionProvider.submitTests(completedTests)
+        .pipe(
+          map((response: any) => {
+            return new testActions.SendCompletedTestsSuccess(completedTestKeys);
+          }),
+          catchError((err: any) => {
+            return of(new testActions.SendCompletedTestsFailure());
+          }),
+        );
     }),
   );
 
