@@ -8,15 +8,15 @@
   <div id="test-outcome-background" [ngSwitch]="outcome">
     <div class="test-outcome-container passed" *ngSwitchCase="'Pass'">
       <h4>Test outcome</h4>
-      <h1>passed</h1>
+      <h1>Passed</h1>
     </div>
     <div class="test-outcome-container failed" *ngSwitchCase="'Fail'">
       <h4>Test outcome</h4>
-      <h1>unsuccessful</h1>
+      <h1>Unsuccessful</h1>
     </div>
     <div class="test-outcome-container terminated" *ngSwitchCase="'Terminated'">
       <h4>Test outcome</h4>
-      <h1>terminated</h1>
+      <h1>Terminated</h1>
     </div>
   </div>
 </ion-header>
@@ -43,7 +43,7 @@
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{(pageState.dangerousFaults$ | async).length}}</h1>
-        <h4 class="fault-heading">Dangerous</h4>
+        <h4 class="fault-heading">dangerous faults</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -69,7 +69,7 @@
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{(pageState.seriousFaults$ | async).length}}</h1>
-        <h4 class="fault-heading">Serious</h4>
+        <h4 class="fault-heading">serious faults</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -94,7 +94,7 @@
     <ion-card-header>
       <ion-card-title>
         <h1 class="fault-heading">{{pageState.drivingFaultCount$ | async}}</h1>
-        <h4 class="fault-heading">Driving Faults</h4>
+        <h4 class="fault-heading">driving faults</h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
