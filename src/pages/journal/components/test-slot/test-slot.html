@@ -25,6 +25,7 @@
               <ion-col class="exclamation-col">
                 <indicators
                   [showExclamationIndicator]="isIndicatorNeededForSlot()"
+                  [testStatus]="componentState.testStatus$ | async"
                 >
                 </indicators>
               </ion-col>
