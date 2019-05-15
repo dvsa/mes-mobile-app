@@ -6,6 +6,11 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: 'additional-information.html',
 })
 export class AdditionalInformationComponent implements OnChanges {
+  @Input()
+  display: boolean;
+
+  @Input()
+  outcome: string;
 
   @Input()
   additionalInformation: string;

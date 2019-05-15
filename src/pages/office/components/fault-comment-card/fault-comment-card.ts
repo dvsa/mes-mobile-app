@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CommentedCompetency } from '../../../../shared/models/fault-marking.model';
 
@@ -6,7 +6,9 @@ import { CommentedCompetency } from '../../../../shared/models/fault-marking.mod
   selector: 'fault-comment-card',
   templateUrl: 'fault-comment-card.html',
 })
-export class FaultCommentCardComponent {
+export class FaultCommentCardComponent implements OnChanges {
+  @Input()
+  outcome: string;
 
   @Input()
   formGroup: FormGroup;
@@ -29,5 +31,15 @@ export class FaultCommentCardComponent {
   faultCommentChanged(faultComment: CommentedCompetency): void {
     this.faultCommentsChange.emit(faultComment);
   }
-
+  ngOnChanges(): void {
+    this.faultComments.forEach((value) => {
+      const fieldName = `faultComment-${this.faultType}-${value.competencyIdentifier}`;
+      const field = this.formGroup.get(fieldName);
+      if (field) {
+        this.formGroup.get(fieldName).clearValidators();
+        this.formGroup.get(fieldName).reset();
+        Object.keys(this.formGroup.controls).forEach(controlName => this.formGroup.controls[controlName].markAsDirty());
+      }
+    });
+  }
 }

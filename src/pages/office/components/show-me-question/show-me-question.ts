@@ -1,12 +1,18 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
+import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'show-me-question',
   templateUrl: 'show-me-question.html',
 })
 export class ShowMeQuestionComponent implements OnChanges {
+  @Input()
+  display: boolean;
+
+  @Input()
+  outcome: string;
 
   @Input()
   showMeQuestion: ShowMeQuestion;
@@ -22,11 +28,21 @@ export class ShowMeQuestionComponent implements OnChanges {
 
   private formControl: FormControl;
 
+  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
+
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl([], [Validators.required]);
+      this.formControl = new FormControl([]);
       this.formGroup.addControl('showMeQuestion', this.formControl);
     }
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'showMeQuestion');
+
+    if (visibilityType === 'N') {
+      this.formGroup.get('showMeQuestion').clearValidators();
+    } else {
+      this.formGroup.get('showMeQuestion').setValidators([Validators.required]);
+    }
+
     this.formControl.patchValue(this.showMeQuestion);
   }
 

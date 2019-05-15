@@ -68,6 +68,7 @@ import {
   getShowMeQuestion,
   getVehicleChecks,
   getShowMeQuestionOptions,
+  getTellMeQuestion,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests, SetActivityCode } from '../../modules/tests/tests.actions';
@@ -107,6 +108,20 @@ interface OfficePageState {
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
   displayRouteNumber$: Observable<boolean>;
+  displayIndependentDriving$: Observable<boolean>;
+  displayCandidateDescription$: Observable<boolean>;
+  displayDebriefWitnessed$: Observable<boolean>;
+  displayIdentification$: Observable<boolean>;
+  displayShowMeQuestion$: Observable<boolean>;
+  displayTellMeQuestion$: Observable<boolean>;
+  displayWeatherConditions$: Observable<boolean>;
+  displayD255$: Observable<boolean>;
+  displayAdditionalInformation$: Observable<boolean>;
+  displayEco$: Observable<boolean>;
+  displayEta$: Observable<boolean>;
+  displayDrivingFault$: Observable<boolean>;
+  displaySeriousFault$: Observable<boolean>;
+  displayDangerousFault$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
@@ -214,6 +229,118 @@ export class OfficePage extends BasePageComponent {
           select(getRouteNumber))),
         map(([outcome, route]) => this.outcomeBehaviourProvider.isVisible(outcome, 'routeNumber', route)),
       ),
+      displayIndependentDriving$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getIndependentDriving))),
+        map(([outcome, independent]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'independentDriving', independent)),
+      ),
+      displayCandidateDescription$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getCandidateDescription))),
+        map(([outcome, candidate]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'candidateDescription', candidate)),
+      ),
+      displayDebriefWitnessed$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(isDebriefWitnessed))),
+        map(([outcome, debrief]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'debriefWitnessed', debrief)),
+      ),
+      displayIdentification$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getIdentification))),
+        map(([outcome, identification]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'identification', identification)),
+      ),
+      displayShowMeQuestion$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getShowMeQuestion))),
+        map(([outcome, question]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', question)),
+      ),
+      displayTellMeQuestion$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getTellMeQuestion))),
+        map(([outcome, question]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'tellMeQuestion', question)),
+      ),
+      displayWeatherConditions$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getWeatherConditions))),
+        map(([outcome, weather]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'weatherConditions', weather)),
+      ),
+      displayD255$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getD255))),
+        map(([outcome, d255]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'weatherConditions', d255)),
+      ),
+      displayAdditionalInformation$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getAdditionalInformation))),
+        map(([outcome, additional]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'additionalInformation', additional)),
+      ),
+      displayEco$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getEco))),
+        map(([outcome, eco]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'eco', eco)),
+      ),
+      displayEta$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getETA))),
+        map(([outcome, eta]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'eta', eta)),
+      ),
+      displayDrivingFault$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getDrivingFaults))),
+        map(([outcome, drivingFault]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', drivingFault)),
+      ),
+      displaySeriousFault$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getSeriousFaults))),
+        map(([outcome, seriousFault]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', seriousFault)),
+      ),
+      displayDangerousFault$: currentTest$.pipe(
+        select(getTestOutcome),
+        withLatestFrom(currentTest$.pipe(
+          select(getTestSummary),
+          select(getDangerousFaults))),
+        map(([outcome, dangerousFault]) =>
+          this.outcomeBehaviourProvider.isVisible(outcome, 'faultComment', dangerousFault)),
+      ),
       candidateDescription$: currentTest$.pipe(
         select(getTestSummary),
         select(getCandidateDescription),
@@ -283,7 +410,7 @@ export class OfficePage extends BasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => displayDrivingFaultComments(data)),
+        map(data => displayDrivingFaultComments(data)), // TODO add call to behaviour provider????
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),

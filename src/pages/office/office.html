@@ -31,29 +31,34 @@
 
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
-          <termination-code id="termination-code-card"[formGroup]="form" [terminationCode]="pageState.activityCode$ | async" 
-          [terminationCodeOptions]="activityCodeOptions" (terminationCodeChange)="activityCodeChanged($event)"></termination-code>
+          <termination-code id="termination-code-card" [formGroup]="form"
+            [terminationCode]="pageState.activityCode$ | async" [terminationCodeOptions]="activityCodeOptions"
+            (terminationCodeChange)="activityCodeChanged($event)"></termination-code>
 
           <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async"
-          [outcome]="pageState.testOutcome$ | async"
-          (routeNumberChange)="routeNumberChanged($event)"
+            [outcome]="pageState.testOutcome$ | async" (routeNumberChange)="routeNumberChanged($event)"
             [formGroup]="form">
           </route-number>
 
-          <independent-driving [formGroup]="form" [independentDriving]="pageState.independentDriving$ | async"
+          <independent-driving [display]="pageState.displayIndependentDriving$ | async" [formGroup]="form"
+            [outcome]="pageState.testOutcome$ | async" [independentDriving]="pageState.independentDriving$ | async"
             (independentDrivingChange)="independentDrivingChanged($event)"></independent-driving>
 
-          <candidate-description [formGroup]="form" [candidateDescription]="pageState.candidateDescription$ | async"
+          <candidate-description [display]="pageState.displayCandidateDescription$ | async" [formGroup]="form"
+            [candidateDescription]="pageState.candidateDescription$ | async" [outcome]="pageState.testOutcome$ | async"
             (candidateDescriptionChange)="candidateDescriptionChanged($event)"></candidate-description>
 
-          <debrief-witnessed [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
+          <debrief-witnessed [display]="pageState.displayDebriefWitnessed$ | async" [formGroup]="form"
+            [debriefWitnessed]="pageState.debriefWitnessed$ | async" [outcome]="pageState.testOutcome$ | async"
             (debriefWitnessedChange)="debriefWitnessedChanged($event)"></debrief-witnessed>
 
-          <identification [formGroup]="form" [identification]="pageState.identification$ | async"
+          <identification [display]="pageState.displayIdentification$ | async" [formGroup]="form"
+            [identification]="pageState.identification$ | async" [outcome]="pageState.testOutcome$ | async"
             (identificationChange)="identificationChanged($event)">
           </identification>
 
-          <ion-row class="mes-validated-row mes-row-separator" id="tell-me-question-card">
+          <ion-row *ngIf="pageState.displayTellMeQuestion$ | async" class="mes-validated-row mes-row-separator"
+            id="tell-me-question-card">
             <div class="validation-bar"></div>
             <ion-col class="component-label" col-32 align-self-center>
               <label>Tell me question</label>
@@ -67,24 +72,31 @@
             </ion-col>
           </ion-row>
 
-          <show-me-question [formGroup]="form" [showMeQuestion]="pageState.showMeQuestion$ | async"
-            [showMeQuestionOptions]="pageState.showMeQuestionOptions$ | async" (showMeQuestionChange)="showMeQuestionChanged($event)">
+          <show-me-question [display]="pageState.displayShowMeQuestion$ | async" [formGroup]="form"
+            [showMeQuestion]="pageState.showMeQuestion$ | async" [outcome]="pageState.testOutcome$ | async"
+            [showMeQuestionOptions]="pageState.showMeQuestionOptions$ | async"
+            (showMeQuestionChange)="showMeQuestionChanged($event)">
           </show-me-question>
 
-          <weather-conditions [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"
-            [weatherConditionsOptions]="weatherConditions" (weatherConditionsChange)="weatherConditionsChanged($event)">
+          <weather-conditions [display]="pageState.displayWeatherConditions$ | async"
+            [weatherConditions]="pageState.weatherConditions$ | async" [formGroup]="form"
+            [outcome]="pageState.testOutcome$ | async" [weatherConditionsOptions]="weatherConditions"
+            (weatherConditionsChange)="weatherConditionsChanged($event)">
           </weather-conditions>
 
-          <d255 [d255]="pageState.d255$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
+          <d255 [display]="pageState.displayWeatherConditions$ | async" [d255]="pageState.d255$ | async"
+            [outcome]="pageState.testOutcome$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
 
-          <additional-information [additionalInformation]="pageState.additionalInformation$ | async" [formGroup]="form"
+          <additional-information [display]="pageState.displayAdditionalInformation$ | async"
+            [additionalInformation]="pageState.additionalInformation$ | async" [formGroup]="form"
+            [outcome]="pageState.testOutcome$ | async"
             (additionalInformationChange)="additionalInformationChanged($event)"></additional-information>
 
         </ion-grid>
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
+    <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async) && (pageState.displayEta$ | async)">
       <ion-card-content>
         <ion-grid>
           <ion-row align-items-start class="mes-data">
@@ -99,7 +111,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async)">
+    <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async) && (pageState.displayEco$ | async)">
       <ion-card-content>
         <ion-grid>
           <ion-row align-items-start class="mes-data">
@@ -115,20 +127,26 @@
     </ion-card>
 
     <fault-comment-card [formGroup]="form" [faultComments]="pageState.dangerousFaults$ | async"
-      [shouldRender]="(pageState.dangerousFaults$ | async).length > 0" faultType="dangerous" header="Dangerous faults"
-      (faultCommentsChange)="dangerousFaultCommentChanged($event)"></fault-comment-card>
+      [shouldRender]="(pageState.dangerousFaults$ | async).length > 0 && pageState.displayDangerousFault$ | async"
+      [outcome]="pageState.testOutcome$ | async" faultType="dangerous" header="Dangerous faults"
+      (faultCommentsChange)="dangerousFaultCommentChanged($event)">
+    </fault-comment-card>
 
     <fault-comment-card [formGroup]="form" [faultComments]="pageState.seriousFaults$ | async"
-      [shouldRender]="(pageState.seriousFaults$ | async).length > 0" faultType="serious" header="Serious faults"
-      (faultCommentsChange)="seriousFaultCommentChanged($event)"></fault-comment-card>
+      [shouldRender]="(pageState.seriousFaults$ | async).length > 0  && pageState.displaySeriousFault$ | async"
+      [outcome]="pageState.testOutcome$ | async" faultType="serious" header="Serious faults"
+      (faultCommentsChange)="seriousFaultCommentChanged($event)">
+    </fault-comment-card>
 
     <fault-comment-card id="driving-fault-comment-card" [formGroup]="form"
-      [faultComments]="pageState.drivingFaults$ | async" [shouldRender]="pageState.displayDrivingFaultComments$ | async"
-      faultType="driving" header="Driving faults" (faultCommentsChange)="drivingFaultCommentChanged($event)">
+      [faultComments]="pageState.drivingFaults$ | async"
+      [shouldRender]="(pageState.displayDrivingFaultComments$ | async) && pageState.displayDrivingFault$ | async"
+      [outcome]="pageState.testOutcome$ | async" faultType="driving" header="Driving faults"
+      (faultCommentsChange)="drivingFaultCommentChanged($event)">
     </fault-comment-card>
 
     <ion-card id="driving-fault-no-commentary"
-      *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0">
+      *ngIf="!(pageState.displayDrivingFaultComments$ | async) && (pageState.drivingFaultCount$ | async) > 0 && pageState.displayDrivingFault$ | async">
       <ion-card-header>
         <h4>Driving faults</h4>
       </ion-card-header>
