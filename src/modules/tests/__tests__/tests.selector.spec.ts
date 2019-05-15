@@ -56,7 +56,7 @@ describe('testsSelector', () => {
         journal,
         appInfo,
         logs,
-        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' }, testLifecycles: {} },
+        tests: { startedTests: { 123: currentTest }, currentTest: { slotId: '123' }, testStatus: {} },
       };
 
       const result = getCurrentTest(state.tests);
@@ -70,7 +70,7 @@ describe('testsSelector', () => {
       const testState: TestsModel = {
         currentTest: { slotId: null },
         startedTests: {},
-        testLifecycles: { 12345: TestStatus.Decided },
+        testStatus: { 12345: TestStatus.Decided },
       };
 
       const result = getTestStatus(testState, 12345);
@@ -82,7 +82,7 @@ describe('testsSelector', () => {
       const testState: TestsModel = {
         currentTest: { slotId: null },
         startedTests: {},
-        testLifecycles: {},
+        testStatus: {},
       };
 
       const result = getTestStatus(testState, 12345);
@@ -251,7 +251,7 @@ describe('testsSelector', () => {
     const testState: TestsModel = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: { 12345: TestStatus.Decided },
+      testStatus: { 12345: TestStatus.Decided },
     };
     it('should return false when no tests started', () => {
       const result = isPracticeTest(testState);

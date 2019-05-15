@@ -13,6 +13,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
+  CompleteTest,
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
@@ -95,7 +96,6 @@ import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../share
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
 import { TerminationCode, terminationCodeList } from './components/termination-code/termination-code.constants';
-import { TestStatusCompleted } from '../../modules/tests/test-status/test-status.actions';
 
 interface OfficePageState {
   activityCode$: Observable<TerminationCode>;
@@ -418,8 +418,7 @@ export class OfficePage extends BasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new TestStatusCompleted());
-    this.store$.dispatch(new PersistTests());
+    this.store$.dispatch(new CompleteTest());
     this.popToRoot();
   }
 }

@@ -64,6 +64,7 @@ export class SendTest implements Action {
 
 export class SendTestSuccess implements Action {
   readonly type = SEND_TEST_SUCCESS;
+  constructor(public slotId: string) {}
 }
 
 export class SendTestFailure implements Action {

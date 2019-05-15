@@ -90,8 +90,8 @@ export class TestsEffects {
     filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE),
     switchMap(([action, tests]) => {
 
-      const completedTestKeys = Object.keys(tests.testLifecycles).filter((slotId) => {
-        return !startsWith(slotId, 'practice_') && tests.testLifecycles[slotId] === 'Completed';
+      const completedTestKeys = Object.keys(tests.testStatus).filter((slotId) => {
+        return !startsWith(slotId, 'practice_') && tests.testStatus[slotId] === 'Completed';
       });
 
       const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
@@ -110,14 +110,14 @@ export class TestsEffects {
 
   @Effect()
   completeTestEffect$ = this.actions$.pipe(
-    ofType(testStatusActions.TEST_STATUS_COMPLETED),
+    ofType(testStatusActions.SET_TEST_STATUS_COMPLETED),
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
+        select(getCurrentTest),
       ),
     ),
-    switchMap(([action, tests]) => {
-      const currentTest = getCurrentTest(tests);
+    map(([action, currentTest]) => {
       return of(new testActions.SendTest(currentTest));
     }),
   );
@@ -129,7 +129,10 @@ export class TestsEffects {
       return this.testSubmissionProvider.submitTests([action.payload])
         .pipe(
           map((response: any) => {
-            return new testActions.SendTestSuccess();
+
+            // TODO: This has to come from the store
+            const dummyId = 'dummyId';
+            return new testActions.SendTestSuccess(dummyId);
           }),
           catchError((err: any) => {
             return of(new testActions.SendTestFailure());
@@ -141,8 +144,8 @@ export class TestsEffects {
   @Effect()
   sendTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_TEST_SUCCESS),
-    switchMap((action) => {
-      return of(new testStatusActions.TestStatusSubmitted());
+    switchMap((action: testActions.SendTestSuccess) => {
+      return of(new testStatusActions.SetTestStatusSubmitted(action.slotId));
     }),
   );
 

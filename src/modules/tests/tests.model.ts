@@ -8,5 +8,5 @@ export interface CurrentTest {
 export interface TestsModel {
   currentTest: CurrentTest;
   startedTests: { [slotId: string]: StandardCarTestCATBSchema };
-  testLifecycles: { [slotId: string]: TestStatus };
+  testStatus: { [slotId: string]: TestStatus };
 }

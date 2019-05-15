@@ -5,7 +5,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { BackToOfficeViewDidEnter } from './back-to-office.actions';
-import { TestStatusDecided } from '../../modules/tests/test-status/test-status.actions';
+import { SetTestStatusDecided } from '../../modules/tests/test-status/test-status.actions';
 import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -37,7 +37,10 @@ export class BackToOfficePage extends BasePageComponent {
       this.screenOrientation.unlock();
       this.insomnia.allowSleepAgain();
     }
-    this.store$.dispatch(new TestStatusDecided());
+
+    // TODO: change this dummy slot id
+    const dummySlotId = 'dummySlotId';
+    this.store$.dispatch(new SetTestStatusDecided(dummySlotId));
     this.store$.dispatch(new PersistTests());
     this.store$.dispatch(new BackToOfficeViewDidEnter());
   }

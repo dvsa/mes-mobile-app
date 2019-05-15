@@ -22,7 +22,7 @@ describe('testsReducer', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = 123;
     const action = new journalActions.StartTest(slotId);
@@ -36,7 +36,7 @@ describe('testsReducer', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = 'practice_123';
     const action = new testActions.StartPracticeTest(slotId);
@@ -126,7 +126,7 @@ describe('testsReducer', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = '123';
     const action = new testActions.StartPracticeTest(slotId);
@@ -140,7 +140,7 @@ describe('testsReducer', () => {
     const state: TestsModel = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
 
     const result = testsReducer(state, new journalActions.StartTest(123));
@@ -157,7 +157,7 @@ describe('testsReducer', () => {
     const state: TestsModel = {
       currentTest: { slotId: '123' },
       startedTests: {},
-      testLifecycles: {
+      testStatus: {
         456: TestStatus.Decided,
       },
     };
@@ -165,15 +165,15 @@ describe('testsReducer', () => {
     const result = testsReducer(state, new journalActions.JournalViewDidEnter());
 
     expect(testStatusReducer.testStatusReducer).toHaveBeenCalled();
-    expect(result.testLifecycles['123']).toBe(TestStatus.Started);
-    expect(result.testLifecycles['456']).toBe(TestStatus.Decided);
+    expect(result.testStatus['123']).toBe(TestStatus.Started);
+    expect(result.testStatus['456']).toBe(TestStatus.Decided);
   });
 
   it('should assign the slot ID as the current test when a test is activated', () => {
     const state: TestsModel = {
       currentTest: { slotId: '123' },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
 
     const result = testsReducer(state, new journalActions.ActivateTest(456));

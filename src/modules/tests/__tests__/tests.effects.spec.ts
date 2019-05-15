@@ -102,11 +102,12 @@ describe('Tests Effects', () => {
 
   describe('sendTestSuccessEffect', () => {
     it('should dispatch the TestStatusSubmitted action', (done) => {
+      const currentTestSlotId = '12345';
       // ACT
-      actions$.next(new testsActions.SendTestSuccess());
+      actions$.next(new testsActions.SendTestSuccess(currentTestSlotId));
       // ASSERT
       effects.sendTestSuccessEffect$.subscribe((result) => {
-        expect(result).toEqual(new testStatusActions.TestStatusSubmitted());
+        expect(result).toEqual(new testStatusActions.SetTestStatusSubmitted(currentTestSlotId));
         done();
       });
     });
