@@ -34,6 +34,7 @@ import { MultiFaultAssignableCompetency } from '../../shared/models/fault-markin
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
+import { TranslateService } from 'ng2-translate';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -44,6 +45,7 @@ interface DebriefPageState {
   ecoFaults$: Observable<string>;
   testResult$: Observable<string>;
   practiceTest$: Observable<boolean>;
+  welshTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -69,15 +71,18 @@ export class DebriefPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
+    private translate: TranslateService,
   ) {
     super(platform, navCtrl, authenticationProvider);
   }
 
   ngOnInit(): void {
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
     this.pageState = {
-      seriousFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
           return [
@@ -88,9 +93,7 @@ export class DebriefPage extends BasePageComponent {
           ];
         }),
       ),
-      dangerousFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
           return [
@@ -101,9 +104,7 @@ export class DebriefPage extends BasePageComponent {
           ];
         }),
       ),
-      drivingFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      drivingFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
           return [
@@ -126,52 +127,57 @@ export class DebriefPage extends BasePageComponent {
           ];
         }),
       ),
-      drivingFaultCount$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         select(getDrivingFaultSummaryCount),
       ),
-      etaFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
         select(getETAFaultText),
       ),
-      ecoFaults$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      ecoFaults$: currentTest$.pipe(
         select(getTestData),
         select(getEco),
         select(getEcoFaultText),
       ),
-      testResult$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      testResult$: currentTest$.pipe(
         select(getTestOutcome),
       ),
       practiceTest$: this.store$.pipe(
         select(getTests),
         select(isPracticeTest),
       ),
+      welshTest$: currentTest$.pipe(
+        // TODO: MES-2336 - Get rid of this type generification
+        select((ct: any) => ct.testSlotAttributes),
+        select(tsa => tsa.welshTest),
+      ),
     };
 
-    const { testResult$, practiceTest$ } = this.pageState;
+    const { testResult$, practiceTest$, welshTest$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
       practiceTest$.pipe(map(value => this.isPracticeTest = value)),
+      welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
     );
 
     this.subscription = merged$.subscribe();
 
   }
 
+  configureI18N(isWelsh: boolean): void {
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.translate.use(this.translate.getDefaultLang());
   }
 
   ionViewDidEnter(): void {
