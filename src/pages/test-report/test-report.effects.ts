@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, withLatestFrom, map, concatMap, delay } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, concatMap, delay, filter } from 'rxjs/operators';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPracticeTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
 import * as testReportActions from './test-report.actions';
@@ -104,7 +104,14 @@ export class TestReportEffects {
       testDataActions.TOGGLE_ETA,
       testDataActions.TOGGLE_LEGAL_REQUIREMENT,
     ),
-    delay(1000), // Added a 1 second delay to allow other actions to complete/effects to fire
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isPracticeTest),
+      ),
+    ),
+    filter(([action, isPracticeTest]) => !isPracticeTest),
+    delay(1000), // Added a 1 second delay to allow other action to complete/effects to fire
     map(() => new testsActions.PersistTests()),
   );
 }

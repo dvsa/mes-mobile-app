@@ -83,8 +83,6 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   ngOnInit(): void {
     this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
-    this.signatureArea.signHereText = 'Sign here';
-    this.signatureArea.retryButtonText = 'Retry';
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
@@ -128,7 +126,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
     const { welshTest$ } = this.pageState;
     const merged$ = merge(
       welshTest$.pipe(
-        map(isWelsh => this.changeLanguageIfWelsh(isWelsh)),
+        map(isWelsh => this.configureI18N(isWelsh)),
       ),
     );
     this.subscription = merged$.subscribe();
@@ -154,7 +152,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
       });
   }
 
-  changeLanguageIfWelsh(isWelsh: boolean): void {
+  configureI18N(isWelsh: boolean): void {
     if (isWelsh) {
       this.translate.use('cy');
     }

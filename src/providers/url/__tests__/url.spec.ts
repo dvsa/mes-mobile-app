@@ -39,4 +39,11 @@ describe('UrlProvider', () => {
       expect(url).toBe('https://www.example.com/api/v1/logs');
     });
   });
+
+  describe('getTestResultServiceUrl', () => {
+    it('should return the correct url', () => {
+      const url = urlProvider.getTestResultServiceUrl();
+      expect(url).toBe('https://www.example.com/api/v1/test-result');
+    });
+  });
 });

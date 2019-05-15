@@ -1,4 +1,8 @@
 {
+  "common": {
+    "continue": "Continue",
+    "screenLocked": "Device locked"
+  },
   "waitingRoom": {
     "confirm": "I confirm",
     "declarationIntent": "I declare that",
@@ -6,6 +10,8 @@
     "insuranceDeclarationValidation": "Confirm that the vehicle is insured for the purpose of the test",
     "residencyDeclaration": "I normally live/have lived in the UK for at least 185 days in the last 12 months.",
     "residencyDeclarationValidation": "Confirm that you live in the UK",
+    "signaturePrompt": "Sign here",
+    "signatureRetry": "Retry",
     "signatureValidation": "Enter a signature",
     "title": "Declaration"
   }

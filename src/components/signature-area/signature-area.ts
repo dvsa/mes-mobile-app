@@ -21,8 +21,6 @@ export class SignatureAreaComponent implements ControlValueAccessor {
 
   public isvalid: boolean;
   public retryImage: string;
-  public retryButtonText: string;
-  public signHereText: string;
   public signHereImage: string;
   public drawCompleteAction: string;
   public clearAction: string;
@@ -30,6 +28,12 @@ export class SignatureAreaComponent implements ControlValueAccessor {
 
   @ViewChild(SignaturePad)
   signaturePad: SignaturePad;
+
+  @Input()
+  public retryButtonText: string;
+
+  @Input()
+  public signHereText: string;
 
   constructor(private store$: Store<StoreModel>) {
     this.signature = null;
