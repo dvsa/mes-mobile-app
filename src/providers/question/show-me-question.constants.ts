@@ -40,4 +40,10 @@ export default [
     description: 'When it is safe can you show me how you would open and close the side window.',
     shortName: 'Side window',
   },
+  {
+    code: 'N/A',
+    description: 'Not applicable.',
+    shortName: 'Not applicable',
+  },
+
 ] as ShowMeQuestion[];
