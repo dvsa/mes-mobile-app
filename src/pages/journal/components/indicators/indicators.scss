@@ -19,15 +19,8 @@ indicators {
     }
 
     img.green-tick-indicator {
-      width: 29px;
-
-      .text-zoom-large & {
-        width: 33px;
-     }
-
-     .text-zoom-x-large & {
-       width: 36px;
-     }
+      height: 22px;
+      width: 22px;
     }
   }
 }
