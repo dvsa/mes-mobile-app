@@ -85,10 +85,10 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
         catchError((err) => {
-          // TODO: We don't need to use the store here, just return the action wrapped in an Observable
-          this.store$.dispatch(new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message));
-          console.log(err);
-          return of(new journalActions.LoadJournalSilentFailure(err));
+          return [
+            new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message),
+            new journalActions.LoadJournalSilentFailure(err),
+          ];
         }),
       ),
     ),
@@ -100,9 +100,10 @@ export class JournalEffects {
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
         catchError((err) => {
-          // TODO: We don't need to use the store here, just return the action wrapped in an Observable
-          this.store$.dispatch(new journalActions.JournalRefreshError('ManualJournalRefresh', err.message));
-          return of(new journalActions.LoadJournalFailure(err));
+          return [
+            new journalActions.JournalRefreshError('ManualJournalRefresh', err.message),
+            new journalActions.LoadJournalFailure(err),
+          ];
         }),
       ),
     ),
