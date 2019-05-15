@@ -374,9 +374,9 @@ export class OfficePage extends BasePageComponent {
   }
 
   activityCodeChanged(terminationCode: TerminationCode) {
-    const showMeQuestionValue = this.form.controls['showMeQuestion'].value;
-    if (showMeQuestionValue) {
-      if (showMeQuestionValue.code === 'N/A') {
+    const showMeQuestion = this.form.controls['showMeQuestion'];
+    if (showMeQuestion) {
+      if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
         this.form.controls['showMeQuestion'].setValue({});
       }
     }
