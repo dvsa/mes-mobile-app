@@ -15,6 +15,7 @@ test-slot {
     &.slot-header,
     &.slot-footer {
       min-height: 22px;
+      padding-right: 4px;
       &.vehicle-details-displayed {
         min-height: 34px;
       }
