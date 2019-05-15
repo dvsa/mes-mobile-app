@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions, element, by } from 'protractor';
+import { browser, ExpectedConditions, element, by , Key } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 
 const {
@@ -36,6 +36,17 @@ Given('I am not logged in', () => {
   });
 });
 
+Given('I reset the application state for {string}', (username) => {
+  // Go to journal page
+  loadApplication();
+  // Logout
+  logout();
+  // Login
+  logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+  // Refresh application
+  loadApplication();
+});
+
 When('I launch the mobile app', () => {
   // Application is already launched by framework
 });
@@ -66,7 +77,9 @@ When('I log in to the application as {string}', (username) => {
 });
 
 Then('I should see the {string} page', (pageTitle) => {
-  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+  // Wait for the page title to exist
+  getElement(by.xpath(`//div[contains(@class, 'toolbar-title')][normalize-space(text()) = '${pageTitle}']`));
+  // Check that it is the last page title i.e. the displayed one
   return expect(element.all(by.className('toolbar-title')).last().getText()).to.eventually.equal(pageTitle);
 });
 
@@ -96,7 +109,9 @@ Then('validation item {string} should be {string}', (validationId: string, valid
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
-// After hook to take screenshots of page
+/**
+ * Take a screenshot of the page at the end of the scenario.
+ */
 After(function (testCase) {
   return browser.driver.takeScreenshot().then((screenShot) => {
     // screenShot is a base-64 encoded PNG
@@ -106,7 +121,11 @@ After(function (testCase) {
 
 //////////////////////////////////////////// SHARED FUNCTIONS ////////////////////////////////////////////
 
-// Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
+/**
+ * Logs into the application with the given username and password. Assumes we will be on the Microsoft login page.
+ * @param username the username
+ * @param password the password
+ */
 export const logInToApplication = (username, password) => {
   // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
   browser.driver.getCurrentContext().then((webviewContext) => {
@@ -133,14 +152,19 @@ export const logInToApplication = (username, password) => {
   });
 };
 
-// Checks whether the user is logged in. This will need updating as it checks for the existance of the logout button.
+/**
+ * Checks whether the user is logged in.
+ * @param staffNumber the staff number of the user we wish to be logged in
+ */
 export const loggedInAs = (staffNumber) => {
   browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   const logout = element(by.xpath(`//input[@id="employeeId"][@value="${staffNumber}"]`));
   return logout.isPresent();
 };
 
-// Logs out of the application and takes them to the login page if they were logged in else returns current page
+/**
+ * Logs out of the application and takes them to the login page if they were logged in else returns current page
+ */
 export const logout = () => {
   browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
@@ -160,7 +184,10 @@ export const logout = () => {
   });
 };
 
-// A framework safe click method
+/**
+ * A framework safe click method.
+ * @param fieldElement the element to click
+ */
 export const clickElement = (fieldElement) => {
   browser.wait(ExpectedConditions.presenceOf(fieldElement));
   fieldElement.click().then((promise) => {
@@ -168,13 +195,21 @@ export const clickElement = (fieldElement) => {
   });
 };
 
-// Goes to the home page which will be the journal for logged in Examiners
+/**
+ * Load application.
+ * Goes to the home page which will be the journal for logged in Examiners.
+ * This essentially reloads the application.
+ */
 export const loadApplication = () => {
   const promise = browser.get('ionic://localhost');
   return isReady(promise);
 };
 
-// Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear
+/**
+ * Checks whether the page is ready to be interacted with.
+ * Ionic adds an overlay preventing clicking until the page is ready so we need to wait for that to disappear.
+ * @param promise the promise to return when the page is ready
+ */
 const isReady = (promise) => {
   // There is a 200ms transition duration we have to account for
   browser.sleep(TEST_CONFIG.ACTION_WAIT);
@@ -184,8 +219,69 @@ const isReady = (promise) => {
   return promise;
 };
 
-// Waits for the element to exist on the page before returning it.
+/**
+ * Waits for the element to exist on the page before returning it.
+ * @param elementBy the element finder
+ */
 export const getElement = (elementBy) => {
   browser.wait(ExpectedConditions.presenceOf(element(elementBy)));
   return element(elementBy);
+};
+
+/**
+ * Enters a generic password into the iOS passcode field.
+ * Note: This will not work on the physical device but the simulator will accept any code.
+ */
+export const enterPasscode = () => {
+  // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    // Switch to NATIVE context
+    browser.driver.selectContext('NATIVE_APP');
+
+    // Get the passcode field
+    const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
+    browser.wait(ExpectedConditions.presenceOf(passcodeField));
+
+    // Set focus on the field
+    passcodeField.click();
+
+    // Send the fake passcode using native browser actions
+    browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
+
+    // Switch back to WEBVIEW context
+    browser.driver.selectContext(webviewContext);
+
+    browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+  });
+};
+
+/**
+ * Alternative way to enter text where the field element does not allow direct text entry.
+ * Works by setting focus on the field and then sending browser actions rather than element actions.
+ * @param field the field to enter the text into
+ * @param text  the text you wish to enter into the field
+ */
+export const enterTextIndirect = (field, text) => {
+  // Wait for field to be present
+  browser.wait(ExpectedConditions.presenceOf(field));
+  // Set focus on the field
+  field.click();
+  // Enter the text using browser actions rather than field send keys
+  browser.actions().sendKeys(text).perform();
+};
+
+/**
+ * Output the page source to a file - For debug purposes only
+ * @param fileName the name of the file to output to
+ */
+export const logPageSource = (fileName: string) => {
+  browser.getPageSource().then((pageSource) => {
+    const fs = require('fs');
+    fs.writeFile(fileName, pageSource, (err) => {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(`The page source was saved as ${fileName}`);
+    });
+  });
 };
