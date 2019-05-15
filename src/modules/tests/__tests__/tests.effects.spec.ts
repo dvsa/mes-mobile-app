@@ -14,6 +14,10 @@ import { initialState, testsReducer } from '../tests.reducer';
 import { TestSubmissionProvider } from '../../../providers/test-submission/test-submission';
 import { TestSubmissionProviderMock } from '../../../providers/test-submission/__mocks__/test-submission.mock';
 import { Store, StoreModule } from '@ngrx/store';
+import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('Tests Effects', () => {
 
@@ -32,8 +36,10 @@ describe('Tests Effects', () => {
       providers: [
         TestsEffects,
         provideMockActions(() => actions$),
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
         { provide: TestSubmissionProvider, useClass: TestSubmissionProviderMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         Store,
       ],
     });
