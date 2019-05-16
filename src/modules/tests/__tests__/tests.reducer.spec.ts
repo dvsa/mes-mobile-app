@@ -3,8 +3,6 @@ import * as journalActions from '../../../pages/journal/journal.actions';
 import * as candidateReducer from '../candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
-import { TestStatus } from '../test-status/test-status.model';
-import * as testStatusReducer from '../test-status/test-status.reducer';
 import { TestsModel } from '../tests.model';
 import * as testActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -149,24 +147,6 @@ describe('testsReducer', () => {
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
     expect(result.startedTests['123'].journalData.candidate).toBe(newCandidate);
     expect(result.startedTests['123'].preTestDeclarations).toBe(preTestDeclarations);
-  });
-
-  it('should track test lifecycles independently of the started tests', () => {
-    const testStatusReducerResult = TestStatus.Started;
-    spyOn(testStatusReducer, 'testStatusReducer').and.returnValue(testStatusReducerResult);
-    const state: TestsModel = {
-      currentTest: { slotId: '123' },
-      startedTests: {},
-      testStatus: {
-        456: TestStatus.Decided,
-      },
-    };
-
-    const result = testsReducer(state, new journalActions.JournalViewDidEnter());
-
-    expect(testStatusReducer.testStatusReducer).toHaveBeenCalled();
-    expect(result.testStatus['123']).toBe(TestStatus.Started);
-    expect(result.testStatus['456']).toBe(TestStatus.Decided);
   });
 
   it('should assign the slot ID as the current test when a test is activated', () => {

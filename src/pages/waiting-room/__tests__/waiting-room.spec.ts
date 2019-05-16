@@ -30,7 +30,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { SubmitWaitingRoomInfo } from '../waiting-room.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
@@ -173,14 +173,14 @@ describe('WaitingRoomPage', () => {
     });
   });
   describe('onSubmit', () => {
-    it('should dispatch the PersistTests action', fakeAsync(() => {
+    it('should dispatch the SubmitWaitingRoomInfo action', fakeAsync(() => {
       const form = component.form;
       form.get('insuranceCheckboxCtrl').setValue(true);
       form.get('residencyCheckboxCtrl').setValue(true);
       form.get('signatureAreaCtrl').setValue('sig');
       component.onSubmit();
       tick();
-      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+      expect(store$.dispatch).toHaveBeenCalledWith(new SubmitWaitingRoomInfo());
     }));
   });
   describe('rehydrateFields', () => {

@@ -3,8 +3,8 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
 import { getCurrentTest, isPracticeTest, getJournalData } from '../../modules/tests/tests.selector';
+import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
@@ -31,7 +31,6 @@ import {
 } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
-import { PersistTests } from '../../modules/tests/tests.actions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
@@ -200,7 +199,7 @@ export class DebriefPage extends BasePageComponent {
       this.navController.popToRoot();
       return;
     }
-    this.store$.dispatch(new PersistTests());
+    this.store$.dispatch(new EndDebrief());
     if (this.outcome === 'Pass') {
       this.navController.push('PassFinalisationPage');
       return;
