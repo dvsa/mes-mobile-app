@@ -8,15 +8,18 @@ communication {
   }
 
   .communication-box {
-    margin: 10px 0px 10px 26px;
+    margin: 10px 0px 10px 44px;
     border-left: 4px solid;
     border-color: map-get($colors-gds, "gds-grey-2");
   }
 
-  .communication-helper-text {
+  .communication-text-container {
+    margin-bottom: 30px;
+  }
+
+  .communication-text {
     font-size: 23px;
     color: map-get($colors-gds, "gds-grey-1");
-    margin-bottom: 10px;
   }
 
   .provided-email-textbox {
@@ -40,4 +43,9 @@ communication {
     margin-bottom: 10px;
     text-transform: lowercase;
   }
+
+  .communication-validation-bar {
+    margin-right: 10px;
+  }
+
 }

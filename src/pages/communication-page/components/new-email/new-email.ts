@@ -7,8 +7,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class NewEmailComponent implements OnChanges {
 
-  readonly newEmail = 'newEmail';
-  readonly newEmailCtrl = 'newEmailCtrl';
+  static readonly newEmail: string = 'newEmail';
+  static readonly newEmailCtrl: string = 'newEmailCtrl';
+  static readonly radioCtrl: string = 'radioCtrl';
 
   @Input()
   formGroup: FormGroup;
@@ -19,6 +20,9 @@ export class NewEmailComponent implements OnChanges {
   @Input()
   newEmailAddressChosen: boolean;
 
+  @Input()
+  newEmailRadioValue: boolean;
+
   @Output()
   newEmailRadioSelect = new EventEmitter<string>();
 
@@ -26,17 +30,25 @@ export class NewEmailComponent implements OnChanges {
   newEmailTextChange = new EventEmitter<string>();
 
   private formControl: FormControl;
+  private radioFormControl: FormControl;
 
   ngOnChanges(): void {
-    if (!this.formControl) {
-      this.formControl = new FormControl(null, [Validators.email]);
-      this.formGroup.addControl(this.newEmailCtrl, this.formControl);
+    if (!this.radioFormControl) {
+      this.radioFormControl = new FormControl('', [Validators.required]);
+      this.formGroup.addControl(NewEmailComponent.radioCtrl, this.radioFormControl);
     }
-    this.formControl.patchValue(this.newEmailCtrl);
+
+    if (!this.formControl) {
+      this.formControl = new FormControl('', [Validators.email]);
+      this.formGroup.addControl(NewEmailComponent.newEmailCtrl, this.formControl);
+    }
+
+    this.formControl.patchValue(this.newEmailAddress);
+    this.radioFormControl.patchValue(this.newEmailRadioValue ? true : false);
   }
 
   newEmailRadioSelected() {
-    this.newEmailRadioSelect.emit(this.newEmail);
+    this.newEmailRadioSelect.emit(NewEmailComponent.newEmail);
   }
 
   newEmailTextChanged(email: string) {
@@ -48,5 +60,4 @@ export class NewEmailComponent implements OnChanges {
   get invalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }
-
 }

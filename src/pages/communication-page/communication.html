@@ -19,38 +19,43 @@
 
         <ion-row class="mes-validated-row">
           <ion-col>
-            <h4>Select how to receive the test results</h4>
-          <div class="validation-bar"></div>
-          <ion-col align-self-center>
+            <div class="communication-text-container">
+              <h4>Select how to receive the test results</h4>
+            </div>
+            <div class="validation-bar"></div>
+            <ion-col align-self-center>
 
-            <provided-email [formGroup]="form"
-              [shouldRender]="pageState.candidateProvidedEmail$ | async"
-              [providedEmailAddress]="pageState.candidateProvidedEmail$ | async"
-              [providedEmailAddressChosen]="isSelected('providedEmail')"
-              (providedEmailRadioSelect)="dispatchCandidateChoseProvidedEmail('providedEmail')">
-            </provided-email>
+              <provided-email [formGroup]="form" [shouldRender]="pageState.candidateProvidedEmail$ | async"
+                [providedEmailAddress]="pageState.candidateProvidedEmail$ | async"
+                [providedEmailAddressChosen]="isProvidedEmailSelected()" [providedEmailRadioValue]="selectProvidedEmail"
+                (providedEmailRadioSelect)="dispatchCandidateChoseProvidedEmail()">
+              </provided-email>
 
-            <new-email [formGroup]="form"
-              [newEmailAddress]="pageState.candiateNewEmail$ | async"
-              [newEmailAddressChosen]="isSelected('newEmail')"
-              (newEmailRadioSelect)="setCommunicationType('newEmail')"
-              (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)">
-            </new-email>
+              <new-email [formGroup]="form" [newEmailAddress]="pageState.communicationEmail$ | async"
+                [newEmailAddressChosen]="isNewEmailSelected()" [newEmailRadioValue]="selectNewEmail"
+                (newEmailRadioSelect)="setCommunicationType('Email', 'Updated')"
+                (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)">
+              </new-email>
 
-            <ion-row class="communication-option">
-              <input type="radio" id="post" class="gds-radio-button" name="communicationChoice"
-                (click)="setCommunicationType('post')" [value]="post">
-              <label for="post" class="radio-label">By post</label>
-            </ion-row>
-            <ion-row class="communication-option">
-              <input type="radio" id="support-centre" class="gds-radio-button" name="communicationChoice"
-                (click)="setCommunicationType('support-centre')" [value]="SC">
-              <label for="support-centre" class="radio-label">By calling the support centre</label>
-            </ion-row>
-            <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text"></div>
-            </ion-row>
-          </ion-col>
+              <ion-row class="communication-option">
+                <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
+                <input type="radio" id="post" class="gds-radio-button" formControlName="radioCtrl"
+                  name="radioCtrl"
+                  (click)="setCommunicationType('Post')" [value]="isPostSelected()"
+                  [checked]="isPostSelected()">
+                <label for="post" class="radio-label">By post</label>
+              </ion-row>
+              <ion-row class="communication-option">
+                <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
+                <input type="radio" id="support-centre" class="gds-radio-button"
+                  formControlName="radioCtrl" name="radioCtrl" (click)="setCommunicationType('Support Centre')"
+                  [value]="isSupportCentreSelected()" [checked]="isSupportCentreSelected()">
+                <label for="support-centre" class="radio-label">By calling the support centre</label>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div class="validation-text"></div>
+              </ion-row>
+            </ion-col>
           </ion-col>
         </ion-row>
       </div>

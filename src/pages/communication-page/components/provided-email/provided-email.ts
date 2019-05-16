@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'provided-email',
@@ -6,7 +7,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ProvidedEmailComponent {
 
-  readonly providedEmail = 'providedEmail';
+  static readonly providedEmail: string = 'Email';
+  static readonly radioCtrl: string = 'radioCtrl';
+
+  @Input()
+  formGroup: FormGroup;
+
   @Input()
   providedEmailAddress: string;
 
@@ -16,10 +22,24 @@ export class ProvidedEmailComponent {
   @Input()
   providedEmailAddressChosen: boolean;
 
+  @Input()
+  providedEmailRadioValue: boolean;
+
   @Output()
   providedEmailRadioSelect = new EventEmitter<string>();
 
+  private radioControl: FormControl;
+
+  ngOnChanges() {
+    if (!this.radioControl) {
+      this.radioControl = new FormControl('', [Validators.required]);
+      this.formGroup.addControl(ProvidedEmailComponent.radioCtrl, this.radioControl);
+    }
+    this.radioControl.patchValue(this.providedEmailRadioValue ? true : false);
+
+  }
+
   providedEmailRadioSelected() {
-    this.providedEmailRadioSelect.emit(this.providedEmail);
+    this.providedEmailRadioSelect.emit(ProvidedEmailComponent.providedEmail);
   }
 }

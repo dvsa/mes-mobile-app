@@ -52,21 +52,24 @@ interface CommunicationPageState {
 })
 export class CommunicationPage extends BasePageComponent {
 
-  readonly providedEmail = 'providedEmail';
-  readonly newEmail = 'newEmail';
+  static readonly providedEmail: string = 'Provided';
+  static readonly updatedEmail: string = 'Updated';
 
   @ViewChild(Navbar)
   navBar: Navbar;
 
   form: FormGroup;
   subscription: Subscription;
-  communicationChoice: string;
+  emailType: string;
   pageState: CommunicationPageState;
   communicationMethodForEmail: CommunicationMethod;
   communicationMethodForPost: CommunicationMethod;
   communicationMethodForSupportCentre: CommunicationMethod;
   candidateProvidedEmail: string;
   communicationEmail: string;
+  communicationType: string;
+  selectProvidedEmail: boolean;
+  selectNewEmail: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -153,13 +156,19 @@ export class CommunicationPage extends BasePageComponent {
     const {
       candidateProvidedEmail$,
       communicationEmail$,
+      communicationType$,
     } = this.pageState;
 
     const merged$ = merge(
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
+      communicationType$.pipe(map(value => this.communicationType = value)),
     );
     this.subscription = merged$.subscribe();
+
+    this.initialiseDefaultSelections();
+    this.restoreRadiosFromState();
+    this.restoreRadioValidators();
   }
 
   ngOnDestroy(): void {
@@ -167,41 +176,112 @@ export class CommunicationPage extends BasePageComponent {
   }
 
   onSubmit() {
-    this.navController.push('WaitingRoomPage');
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navController.push('WaitingRoomPage');
+    }
   }
 
-  dispatchCandidateChoseProvidedEmail(emailType: string) {
-    this.setCommunicationType(emailType);
+  dispatchCandidateChoseProvidedEmail() {
+    this.setCommunicationType('Email', CommunicationPage.providedEmail);
     this.store$.dispatch(
       new CandidateChoseEmailAsCommunicationPreference(this.candidateProvidedEmail, this.communicationMethodForEmail),
     );
   }
 
-  dispatchCandidateChoseNewEmail(newEmail: string): void {
+  dispatchCandidateChoseNewEmail(communicationEmail: string): void {
     this.store$.dispatch(
-      new CandidateChoseEmailAsCommunicationPreference(newEmail, this.communicationMethodForEmail),
+      new CandidateChoseEmailAsCommunicationPreference(communicationEmail, this.communicationMethodForEmail),
     );
   }
 
-  setCommunicationType(communicationChoice: string) {
-    this.communicationChoice = communicationChoice;
+  setCommunicationType(communicationChoice: string, emailType: string = null) {
+    this.communicationType = communicationChoice;
+    this.emailType = emailType;
   }
 
-  isSelected(communicationChoice: string) {
-    return (this.communicationChoice === communicationChoice);
+  isProvidedEmailSelected() {
+    return this.communicationType === 'Email' && this.emailType === CommunicationPage.providedEmail;
+  }
+
+  isNewEmailSelected() {
+    return this.communicationType === 'Email' && this.emailType === CommunicationPage.updatedEmail;
+  }
+
+  isPostSelected() {
+    return this.communicationType === 'Post';
+  }
+
+  isSupportCentreSelected() {
+    return this.communicationType === 'Support Centre';
   }
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      communicationChoiceCtrl: new FormControl('', [Validators.required]),
+      radioCtrl: new FormControl('', Validators.required),
     };
   }
 
-  isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  /**
+   * Facade function which dictates which radio value to reselect when rehydrating from state.
+   *
+   * No current schema properties allow for the capture of radio selection for emails on the communication page.
+   */
+  restoreRadiosFromState() {
+    if (this.communicationType === 'Email') {
+      this.assertEmailType();
+    }
   }
 
-  verifyCandidateChoseProvidedEmail() {
-    return (this.communicationEmail === '') || (this.communicationEmail === this.candidateProvidedEmail);
+  /**
+   * Called by restoreRadiosFromState() when communicationType is 'Email'.
+   *
+   * If candidate provided an email at time of booking and this email is the same as the 'updatedEmail' in the
+   * 'CommunicationPreferences' object stored in state then we select the relevant properties, to ensure that the
+   * appropriate radio button is rehydrated.
+   *
+   * If the candidate did not provided an email at the time of booking and the 'CommunicationPreferences' object
+   * contains one in state, we select the relevant properties, to ensure that the appropriate radio button is
+   * rehydrated.
+   */
+  assertEmailType() {
+    if (this.candidateProvidedEmail !== '' && this.candidateProvidedEmail === this.communicationEmail) {
+      this.selectProvidedEmail = true;
+      this.emailType = CommunicationPage.providedEmail;
+    }
+
+    if (this.candidateProvidedEmail === '' && this.communicationEmail !== '') {
+      this.selectNewEmail = true;
+      this.selectProvidedEmail = false;
+      this.emailType = CommunicationPage.updatedEmail;
+    }
+  }
+
+  restoreRadioValidators() {
+    this.form.controls['radioCtrl'].setValue(true);
+  }
+
+  /**
+   * Initialise a default radio selection on the communication page
+   *
+   * If there is a candidate email provided at the time of booking, this will be chosen as
+   * the default selection. If there is not then the new email radio selection will be chosen
+   * as the default selection.
+   */
+  initialiseDefaultSelections() {
+    this.communicationType = 'Email';
+    if (this.candidateProvidedEmail) {
+      this.emailType = CommunicationPage.providedEmail;
+      this.selectProvidedEmail = true;
+      this.form.controls['radioCtrl'].setValue(true);
+      this.dispatchCandidateChoseProvidedEmail();
+    }
+
+    if (!this.candidateProvidedEmail) {
+      this.emailType = CommunicationPage.updatedEmail;
+      this.selectNewEmail = true;
+      this.selectProvidedEmail = false;
+      this.form.controls['radioCtrl'].setValue(true);
+    }
   }
 }
