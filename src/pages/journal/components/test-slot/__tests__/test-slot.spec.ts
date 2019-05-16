@@ -27,6 +27,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { TestStatusDecided } from '../../../../../modules/tests/test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { StartTest } from '../../../journal.actions';
+import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -103,6 +104,7 @@ describe('TestSlotComponent', () => {
         MockComponent(TestOutcomeComponent),
         MockComponent(VehicleDetailsComponent),
         MockComponent(CandidateLinkComponent),
+        MockComponent(SubmissionStatusComponent),
       ],
       imports: [
         IonicModule,
