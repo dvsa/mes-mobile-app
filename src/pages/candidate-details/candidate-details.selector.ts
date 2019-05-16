@@ -74,13 +74,17 @@ export const getSlotType = (slot: any): string => {
 };
 
 export const getCity = (address: any): string => {
-  let city = '';
-  if (!isEmpty(address.addressLine2)) city += address.addressLine2;
-  if (!isEmpty(address.addressLine3)) city += `, ${address.addressLine3}`;
-  if (!isEmpty(address.addressLine4)) city += `, ${address.addressLine4}`;
-  if (!isEmpty(address.addressLine5)) city += `, ${address.addressLine5}`;
+  const addressLines = [
+    address.addressLine2,
+    address.addressLine3,
+    address.addressLine4,
+    address.addressLine5,
+  ];
+  return addressLines.filter(addressExists).map(address => address.trim()).join(', ');
+};
 
-  return city;
+const addressExists = (address) => {
+  return !(isEmpty(address) || address.trim() === '');
 };
 
 export const getDetails = (slot: any): Details => {

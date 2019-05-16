@@ -500,6 +500,23 @@ describe('Candidate Details Selector', () => {
           },
           expected: 'some place, some other place, here, there',
         },
+        {
+          input: {
+            addressLine1: ' ',
+            addressLine3: ' ',
+            addressLine4: ' ',
+            addressLine5: 'there ',
+          },
+          expected: 'there',
+        },
+        {
+          input: {
+            addressLine3: ' some other place ',
+            addressLine4: ' here',
+            addressLine5: ' ',
+          },
+          expected: 'some other place, here',
+        },
       ];
 
       cases.map((c) => {

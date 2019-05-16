@@ -3,6 +3,19 @@
     "continue": "Continue",
     "screenLocked": "Device locked"
   },
+  "debrief": {
+    "dangerousFaultsCardDescription": "dangerous faults",
+    "drivingFaultsCardDescription": "driving faults",
+    "ecoHeader": "ECO",
+    "end": "End debrief",
+    "etaHeader": "ETA",
+    "failStatus": "Unsuccessful",
+    "outcomeHeader": "Test outcome",
+    "passStatus": "Passed",
+    "seriousFaultsCardDescription": "serious faults",
+    "terminatedStatus": "Terminated",
+    "title": "Debrief"
+  },
   "waitingRoom": {
     "confirm": "I confirm",
     "declarationIntent": "I declare that",
