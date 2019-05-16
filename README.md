@@ -65,7 +65,7 @@ Pre-requisites
 
 To run against the simulator
 
-- Build the application `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0"`
+- Build the application `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0" --emulator`
 - Run Appium `npx appium`
 - Add/Update the test/e2e/test.config.js
 - In another tab execute the simulator based testsuite `npm run test:e2e-simulator-bdd`

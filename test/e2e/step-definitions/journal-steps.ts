@@ -58,9 +58,9 @@ Then('I have a special needs slot for {string}', (candidateName) => {
 });
 
 Then('I have a welsh slot for {string}', (candidateName) => {
-  const exclamationIndicator = getElement(by.xpath(`//ion-grid/ion-row/language/div[@class = "welsh-language-indicator"]
-    [ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
-    h3[text() = "${candidateName}"]]`));
+  const exclamationIndicator = getElement(by.xpath(`//ion-grid/ion-row/ion-col/language/
+  div[@class = "welsh-language-indicator"][ancestor::ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link
+    /div/button/span/h3[text() = "${candidateName}"]]`));
   return expect(exclamationIndicator.isPresent()).to.eventually.be.true;
 });
 
