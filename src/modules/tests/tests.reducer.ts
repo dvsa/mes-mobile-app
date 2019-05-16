@@ -1,24 +1,20 @@
 import * as journalActions from '../../pages/journal/journal.actions';
 import * as testActions from './tests.actions';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
-import { candidateReducer } from './candidate/candidate.reducer';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { testDataReducer } from './test-data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
-import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-result.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { testStatusReducer } from './test-status/test-status.reducer';
-import { testCentreReducer } from './test-centre/test-centre.reducer';
-import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
-import { examinerReducer } from './examiner/examiner.reducer';
 import { TestsModel } from './tests.model';
 import { startsWith } from 'lodash';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
+import { journalDataReducer } from './journal-data/journal-data.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -95,24 +91,20 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
         // slotId to the relevant sub-reducer
         ...combineReducers(
           {
+            journalData: journalDataReducer,
             preTestDeclarations: preTestDeclarationsReducer,
-            candidate: candidateReducer,
-            testData: testDataReducer,
-            vehicleDetails: vehicleDetailsReducer,
-            accompaniment: accompanimentReducer,
-            instructorDetails: instructorDetailsReducer,
-            applicationReference: applicationReferenceReducer,
-            passCompletion: passCompletionReducer,
             eyesightTestResult: eyesightTestResultReducer,
+            accompaniment: accompanimentReducer,
+            vehicleDetails: vehicleDetailsReducer,
+            instructorDetails: instructorDetailsReducer,
+            testData: testDataReducer,
+            passCompletion: passCompletionReducer,
             postTestDeclarations: postTestDeclarationsReducer,
             testSummary: testSummaryReducer,
-            testSlotAttributes: testSlotsAttributesReducer,
-            examiner: examinerReducer,
-            testCentre: testCentreReducer,
             communicationPreferences: communicationPreferencesReducer,
           },
         // @ts-ignore
-      )(state.startedTests[slotId], action),
+        )(state.startedTests[slotId], action),
       },
     },
     currentTest: {
