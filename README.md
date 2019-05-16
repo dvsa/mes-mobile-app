@@ -54,22 +54,20 @@ Some Cordova plugins have special code that should handle the `browser` platform
 
 ### Running the Appium/Selenium testsuite
 
-You can run the Appium testsuite either against a web based version of the application or against a simulator version.
+You can run the Appium testsuite against an iOS simulator.
 
 Pre-requisites
 
-- Appium (`npm install -g appium` - https://www.npmjs.com/package/appium)
-- Notes : if you hit EACCES: permission denied, mkdir '/usr/local/lib/node_modules/appium/node_modules/appium-chromedriver/201928-81324-fhqpz.jct6jq'
-          try: sudo npm install -g appium --unsafe-perm=true --allow-root
-
-- WebDriver-Manager (`npm install -g webdriver-manager` - https://www.npmjs.com/package/webdriver-manager)
+- iPad Pro 10.5 Simulator running iOS 12.1 (If you are running the latest version of XCode you will need to manually download this `XCode > Preferences ... > Components > iOS 12.1 Simulator`)
 - Carthage (`brew install carthage` - https://github.com/appium/appium/blob/HEAD/docs/en/drivers/ios-xcuitest.md - dependancy of XCUITest driver)
 - Notes : if you get /usr/local/share/man issues 
           try: sudo chown -R $(whoami):admin /usr/local/share/man (don't sudo brew)
+
 To run against the simulator
 
 - Build the application `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0"`
-- Run Appium `appium`
+- Run Appium `npx appium`
+- Add/Update the test/e2e/test.config.js
 - In another tab execute the simulator based testsuite `npm run test:e2e-simulator-bdd`
 - Once complete generate the report `npm run test:generate-report`
 
