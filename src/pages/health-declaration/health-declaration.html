@@ -65,7 +65,7 @@
         <ul>
           <li>
             <p>
-              {{ 'healthDeclaration.certificateReceived' }}: {{pageState.passCertificateNumber$ | async}}
+              {{ 'healthDeclaration.certificateReceived' | translate }}: {{pageState.passCertificateNumber$ | async}}
             </p>
           </li>
         </ul>
@@ -105,7 +105,10 @@
           </ion-row>
           <ion-row class="declaration-signature-row">
             <ion-col class="declaration-signature-col">
-              <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$"></signature-area>
+              <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
+                signHereText="{{ 'healthDeclaration.signaturePrompt' | translate }}"
+                retryButtonText="{{ 'healthDeclaration.signatureRetry' | translate }}">
+              </signature-area>
             </ion-col>
           </ion-row>
         </ion-col>

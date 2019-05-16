@@ -23,6 +23,8 @@
     "declarationIntent": "I declare that",
     "healthDeclaration": "There has been no change in my health status since I last applied for a license.",
     "healthDeclarationValidation": "Confirm that there has been no change in your health status",
+    "signaturePrompt": "Sign here",
+    "signatureRetry": "Retry",
     "signatureValidation": "Enter a signature",
     "title": "Test debrief"
   },

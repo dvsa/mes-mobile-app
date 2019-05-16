@@ -16,6 +16,18 @@
     "terminatedStatus": "[CY] Terminated",
     "title": "[CY] Debrief"
   },
+  "healthDeclaration": {
+    "confirm": "[CY] I confirm",
+    "certificateReceived": "[CY] I have received the pass certificate number",
+    "certificateReceivedValidation": "[CY] Confirm that you have received the pass certificate number",
+    "declarationIntent": "[CY] I declare that",
+    "healthDeclaration": "[CY] There has been no change in my health status since I last applied for a license.",
+    "healthDeclarationValidation": "[CY] Confirm that there has been no change in your health status",
+    "signaturePrompt": "[CY] Sign here",
+    "signatureRetry": "[CY] Retry",
+    "signatureValidation": "[CY] Enter a signature",
+    "title": "[CY] Test debrief"
+  },
   "waitingRoom": {
     "confirm": "[CY] I confirm",
     "declarationIntent": "[CY] I declare that",
