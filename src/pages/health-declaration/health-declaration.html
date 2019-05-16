@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Test debrief - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-title>{{ 'healthDeclaration.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
@@ -17,7 +17,7 @@
       </ion-col>
       <ion-col col-auto>
         <button type="submit" id="continue-button" class="mes-primary-button" float-right ion-button>
-          <h3>Continue</h3>
+          <h3>{{ 'common.continue' | translate }}</h3>
         </button>
       </ion-col>
     </ion-row>
@@ -25,17 +25,14 @@
     <div class="mes-full-width-card" id="declaration-section">
       <ion-row>
         <ion-col>
-          <h4>I declare that:</h4>
+          <h4>{{ 'healthDeclaration.declarationIntent' | translate }}:</h4>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <ul>
             <li>
-              <p>
-                There has been no change in my health status since I last
-                applied for a license.
-              </p>
+              <p>{{ 'healthDeclaration.healthDeclaration' | translate }}</p>
             </li>
           </ul>
         </ion-col>
@@ -48,14 +45,14 @@
               <input formControlName="healthCheckboxCtrl" type="checkbox" class="gds-checkbox"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('healthCheckboxCtrl')" id="health-declaration-checkbox"
                 [checked]="pageState.healthDeclarationAccepted$ | async" (click)="healthDeclarationChanged()">
-              <label for="health-declaration-checkbox">I confirm</label>
+              <label for="health-declaration-checkbox">{{ 'healthDeclaration.confirm' | translate }}</label>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <div id="health-change-validation-text" class="validation-text-with-row-spacing"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('healthCheckboxCtrl')">
-                Confirm that there has been no change in your health status
+                {{ 'healthDeclaration.healthDeclarationValidation' | translate }}
               </div>
             </ion-col>
           </ion-row>
@@ -68,7 +65,7 @@
         <ul>
           <li>
             <p>
-              I have received the pass certificate number: {{pageState.passCertificateNumber$ | async}}
+              {{ 'healthDeclaration.certificateReceived' }}: {{pageState.passCertificateNumber$ | async}}
             </p>
           </li>
         </ul>
@@ -81,14 +78,14 @@
               <input formControlName="receiptCheckboxCtrl" type="checkbox" class="gds-checkbox"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('receiptCheckboxCtrl')" id="receipt-declaration-checkbox"
                 [checked]="pageState.passCertificateNumberReceived$ | async" (click)="receiptDeclarationChanged()">
-              <label for="receipt-declaration-checkbox">I confirm</label>
+              <label for="receipt-declaration-checkbox">{{ 'healthDeclaration.confirm' | translate }}</label>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <div id="pass-certificate-receipt-validation-text" class="validation-text-with-row-spacing"
                 [class.ng-invalid.withRowMargin]="isCtrlDirtyAndInvalid('receiptCheckboxCtrl')">
-                Confirm that you have received the pass certificate number
+                {{ 'healthDeclaration.certificateReceivedValidation' | translate }}
               </div>
             </ion-col>
           </ion-row>
@@ -102,7 +99,7 @@
             <ion-col>
               <div id="health-declaration-signature-validation-text" class="validation-text-with-row-spacing"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
-                Enter a signature
+                {{ 'healthDeclaration.signatureValidation' | translate }}
               </div>
             </ion-col>
           </ion-row>

@@ -22,6 +22,7 @@ import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { of } from 'rxjs/observable/of';
+import { TranslateModule, TranslateService } from 'ng2-translate';
 
 const mockCandidate = {
   driverNumber: '123',
@@ -37,6 +38,7 @@ describe('HealthDeclarationPage', () => {
   let deviceProvider: DeviceProvider;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
+  let translate: TranslateService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -63,6 +65,7 @@ describe('HealthDeclarationPage', () => {
             },
           }),
         }),
+        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -83,6 +86,8 @@ describe('HealthDeclarationPage', () => {
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
+        translate = TestBed.get(TranslateService);
+        translate.setDefaultLang('en');
       });
 
   }));
