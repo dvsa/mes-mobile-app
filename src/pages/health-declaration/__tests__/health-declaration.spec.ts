@@ -23,6 +23,9 @@ import * as postTestDeclarationsActions
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
+import { By } from '@angular/platform-browser';
+import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 
 const mockCandidate = {
   driverNumber: '123',
@@ -40,6 +43,15 @@ describe('HealthDeclarationPage', () => {
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
 
+  const testSlotAttributes: TestSlotAttributes = {
+    welshTest: false,
+    extendedTest: false,
+    slotId: 123,
+    specialNeeds: false,
+    start: '',
+    vehicleSlotType: '',
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HealthDeclarationPage],
@@ -55,6 +67,7 @@ describe('HealthDeclarationPage', () => {
             testLifecycles: {},
             startedTests: {
               123: {
+                testSlotAttributes,
                 candidate: mockCandidate,
                 postTestDeclarations: {
                   healthDeclarationAccepted: false,
@@ -85,7 +98,7 @@ describe('HealthDeclarationPage', () => {
         deviceProvider = TestBed.get(DeviceProvider);
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+        spyOn(store$, 'dispatch').and.callThrough();
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });
@@ -178,6 +191,26 @@ describe('HealthDeclarationPage', () => {
       expect(form.get('healthCheckboxCtrl').value).toBeTruthy();
       expect(form.get('receiptCheckboxCtrl').value).toBeTruthy();
       expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
+    });
+  });
+
+  describe('DOM', () => {
+    describe('multi language support', () => {
+      it('should render the page in English by default', () => {
+        fixture.detectChanges();
+        const declarationIntent = fixture.debugElement.query(By.css('h4')).nativeElement;
+        expect(declarationIntent.innerHTML).toBe('I declare that:');
+      });
+      it('should render the page in Welsh for a Welsh test', (done) => {
+        fixture.detectChanges();
+        translate.onLangChange.subscribe(() => {
+          fixture.detectChanges();
+          const declarationIntent = fixture.debugElement.query(By.css('h4')).nativeElement;
+          expect(declarationIntent.innerHTML).toBe('[CY] I declare that:');
+          done();
+        });
+        store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
+      });
     });
   });
 });
