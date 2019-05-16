@@ -58,14 +58,14 @@ export function testsReducer(
       };
     case testActions.START_PRACTICE_TEST:
       const { [slotId]: removedStartedTest, ...updatedStartedTests } = state.startedTests;
-      const { [slotId]: removedTestLifecycle, ...updatedTestLifecycles } = state.testLifecycles;
+      const { [slotId]: removedTestStatus, ...updatedTestStatus } = state.testStatus;
       const newState = {
         ...state,
         currentTest: {
           ...initialState.currentTest,
         },
         startedTests: updatedStartedTests,
-        testLifecycles: updatedTestLifecycles,
+        testStatus: updatedTestStatus,
       };
       return slotId ? createStateObject(newState, action, slotId) : state;
     default:

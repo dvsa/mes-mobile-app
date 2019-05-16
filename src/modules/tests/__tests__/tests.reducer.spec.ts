@@ -103,7 +103,7 @@ describe('testsReducer', () => {
           activityCode: null,
         },
       },
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = 'practice_1';
     const action = new testActions.StartPracticeTest(slotId);
