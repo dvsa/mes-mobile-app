@@ -83,10 +83,6 @@ describe('OfficePage', () => {
               123: {
                 vehicleDetails: {},
                 accompaniment: {},
-                candidate: {
-                  candidateName: 'Joe Bloggs',
-                  driverNumber: '123',
-                },
                 testData: {
                   dangerousFaults: {},
                   drivingFaults: {},
@@ -103,6 +99,12 @@ describe('OfficePage', () => {
                   },
                 },
                 activityCode: '28',
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                    driverNumber: '123',
+                  },
+                },
               },
             },
           }),

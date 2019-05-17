@@ -57,9 +57,6 @@ describe('DebriefPage', () => {
               123: {
                 vehicleDetails: {},
                 accompaniment: {},
-                candidate: {
-                  candidateName: 'Joe Bloggs',
-                },
                 testData: {
                   dangerousFaults: {},
                   drivingFaults: {},
@@ -73,6 +70,11 @@ describe('DebriefPage', () => {
                     showMeQuestion: {},
                   },
                   controlledStop: {},
+                },
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                  },
                 },
               },
             },

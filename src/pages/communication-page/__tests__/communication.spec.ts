@@ -62,13 +62,15 @@ describe('CommunicationPage', () => {
           testLifecycles: {},
           startedTests: {
             123: {
-              candidate: mockCandidate,
               preTestDeclarations: preTestDeclarationInitialState,
               postTestDeclarations: {
                 healthDeclarationAccepted: false,
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
               },
+            },
+            journalData: {
+              candidate: mockCandidate,
             },
           },
         })),

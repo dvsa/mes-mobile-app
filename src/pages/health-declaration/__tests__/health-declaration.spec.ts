@@ -67,12 +67,14 @@ describe('HealthDeclarationPage', () => {
             testLifecycles: {},
             startedTests: {
               123: {
-                testSlotAttributes,
-                candidate: mockCandidate,
                 postTestDeclarations: {
                   healthDeclarationAccepted: false,
                   passCertificateNumberReceived: false,
                   postTestSignature: '',
+                },
+                journalData: {
+                  testSlotAttributes,
+                  candidate: mockCandidate,
                 },
               },
             },

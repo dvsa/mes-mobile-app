@@ -83,7 +83,9 @@ describe('TestReportPage', () => {
             startedTests: {
               123: {
                 testData: initialState,
-                candidate: mockCandidate,
+                journalData: {
+                  candidate: mockCandidate,
+                },
               },
             },
           })),

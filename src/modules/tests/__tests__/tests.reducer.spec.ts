@@ -147,7 +147,7 @@ describe('testsReducer', () => {
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
-    expect(result.startedTests['123'].candidate).toBe(newCandidate);
+    expect(result.startedTests['123'].journalData.candidate).toBe(newCandidate);
     expect(result.startedTests['123'].preTestDeclarations).toBe(preTestDeclarations);
   });
 

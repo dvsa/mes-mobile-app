@@ -65,15 +65,17 @@ describe('WaitingRoomPage', () => {
           testLifecycles: {},
           startedTests: {
             123: {
-              candidate: mockCandidate,
               preTestDeclarations: preTestDeclarationInitialState,
               postTestDeclarations: {
                 healthDeclarationAccepted: false,
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
               },
-              testSlotAttributes: {
-                welshTest: false,
+              journalData: {
+                candidate: mockCandidate,
+                testSlotAttributes: {
+                  welshTest: false,
+                },
               },
             },
           },
