@@ -107,7 +107,12 @@ describe('Tests Effects', () => {
       actions$.next(new testsActions.SendTestSuccess(currentTestSlotId));
       // ASSERT
       effects.sendTestSuccessEffect$.subscribe((result) => {
-        expect(result).toEqual(new testStatusActions.SetTestStatusSubmitted(currentTestSlotId));
+        if (result instanceof testStatusActions.SetTestStatusSubmitted)  {
+          expect(result).toEqual(new testStatusActions.SetTestStatusSubmitted(currentTestSlotId));
+        }
+        if (result instanceof testsActions.PersistTests) {
+          expect(result).toEqual(new testsActions.PersistTests());
+        }
         done();
       });
     });
