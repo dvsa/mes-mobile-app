@@ -188,7 +188,7 @@ export class CommunicationPage extends BasePageComponent {
     );
   }
 
-  dispatchCandidateChosePost(){
+  dispatchCandidateChosePost() {
     this.store$.dispatch(new CandidateChosePostAsCommunicationPreference(this.communicationMethodForPost));
   }
 
