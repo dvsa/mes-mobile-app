@@ -97,7 +97,7 @@ export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): strin
 
   if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
     || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
-    result.push('Vehicle checks');
+    result.push('vehicleChecks');
   }
 
   return result;

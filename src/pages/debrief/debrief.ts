@@ -85,31 +85,29 @@ export class DebriefPage extends BasePageComponent {
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
-          const srs = [
+          return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
             ...getVehicleCheckSeriousFault(data.vehicleChecks),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
           ];
-          return srs;
         }),
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
-          const dang = [
+          return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getVehicleCheckDangerousFault(data.vehicleChecks),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
           ];
-          return dang;
         }),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {
-          const df = [
+          return [
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
             ...getDrivingFaults(data.drivingFaults),
             ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
@@ -127,7 +125,6 @@ export class DebriefPage extends BasePageComponent {
               }),
             ),
           ];
-          return df;
         }),
       ),
       drivingFaultCount$: currentTest$.pipe(
