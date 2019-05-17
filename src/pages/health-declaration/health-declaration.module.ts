@@ -6,6 +6,7 @@ import { HealthDeclarationAnalyticsEffects } from './health-declaration.analytic
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     EffectsModule.forFeature([HealthDeclarationAnalyticsEffects]),
     ComponentsModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   providers: [
     AnalyticsProvider,
   ],
 })
-export class HealthDeclarationPageModule {}
+export class HealthDeclarationPageModule { }

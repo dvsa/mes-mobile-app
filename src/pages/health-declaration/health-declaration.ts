@@ -13,7 +13,7 @@ import { DeviceAuthenticationProvider } from '../../providers/device-authenticat
 import * as postTestDeclarationsActions
   from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getPostTestDeclarations } from '../../modules/tests/post-test-declarations/post-test-declarations.reducer';
 import {
   getHealthDeclarationStatus,
@@ -29,6 +29,8 @@ import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pa
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { TranslateService } from 'ng2-translate';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -38,6 +40,7 @@ interface HealthDeclarationPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   passCertificateNumber$: Observable<string>;
+  welshTest$: Observable<boolean>;
 }
 @IonicPage()
 @Component({
@@ -54,6 +57,7 @@ export class HealthDeclarationPage extends BasePageComponent {
 
   form: FormGroup;
 
+  subscription: Subscription;
   inputSubscriptions: Subscription[] = [];
 
   constructor(
@@ -64,6 +68,7 @@ export class HealthDeclarationPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private translate: TranslateService,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -106,55 +111,67 @@ export class HealthDeclarationPage extends BasePageComponent {
   ngOnInit(): void {
     this.signatureArea.drawCompleteAction = postTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = postTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
-    this.signatureArea.signHereText = 'Sign here';
-    this.signatureArea.retryButtonText = 'Retry';
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
 
     this.pageState = {
-      healthDeclarationAccepted$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      healthDeclarationAccepted$: currentTest$.pipe(
         select(getPostTestDeclarations),
         select(getHealthDeclarationStatus),
       ),
-      passCertificateNumberReceived$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      passCertificateNumberReceived$: currentTest$.pipe(
         select(getPostTestDeclarations),
         select(getReceiptDeclarationStatus),
       ),
-      signature$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      signature$: currentTest$.pipe(
         select(getPostTestDeclarations),
         select(getSignatureStatus),
       ),
       candidateName$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
+        select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
-      passCertificateNumber$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      passCertificateNumber$: currentTest$.pipe(
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
+      welshTest$: currentTest$.pipe(
+        // TODO: MES-2336 - Get rid of this type generification
+        select(getJournalData),
+        select((ct: any) => ct.testSlotAttributes),
+        select(tsa => tsa.welshTest),
+      ),
     };
     this.rehydrateFields();
+
+    const { welshTest$ } = this.pageState;
+    const merged$ = merge(
+      welshTest$.pipe(
+        map(isWelsh => this.configureI18N(isWelsh)),
+      ),
+    );
+    this.subscription = merged$.subscribe();
   }
 
   rehydrateFields(): void {
@@ -176,6 +193,12 @@ export class HealthDeclarationPage extends BasePageComponent {
           this.form.controls['signatureAreaCtrl'].setValue(val);
         }),
     );
+  }
+
+  configureI18N(isWelsh: boolean): void {
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
   }
 
   healthDeclarationChanged(): void {
@@ -204,6 +227,7 @@ export class HealthDeclarationPage extends BasePageComponent {
   }
 
   ngOnDestroy(): void {
+    this.subscription.unsubscribe();
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }
 

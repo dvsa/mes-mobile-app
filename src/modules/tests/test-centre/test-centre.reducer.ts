@@ -17,4 +17,4 @@ export function testCentreReducer(
   return state;
 }
 
-export const getJournalData = createFeatureSelector<TestCentre>('testCentre');
+export const getTestCentre = createFeatureSelector<TestCentre>('testCentre');

@@ -8,10 +8,15 @@
       <ion-row class="slot-header"
         [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center
       >
-        <language align-items-center
+      <ion-col no-padding>
+          <language align-items-center
           [welshLanguage]="slot.booking.application.welshTest"
         >
         </language>
+      </ion-col>
+      <ion-col no-padding>
+          <submission-status float-end [testStatus]="componentState.testStatus$ | async"></submission-status>
+      </ion-col>
       </ion-row>
       <ion-row class="slot-main" align-items-center>
         <ion-col class="time-exclamation-col">
@@ -20,6 +25,7 @@
               <ion-col class="exclamation-col">
                 <indicators
                   [showExclamationIndicator]="isIndicatorNeededForSlot()"
+                  [testStatus]="componentState.testStatus$ | async"
                 >
                 </indicators>
               </ion-col>

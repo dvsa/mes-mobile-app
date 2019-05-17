@@ -1,4 +1,11 @@
-export const TEST_CONFIG = {
+
+# Example template for test.config.ts
+
+If you see the error `Error: Cannot find module '../test.config'` then you need to add the test.config.js file here.
+
+NOTE: This file should not be checked in to git. It is included in .gitignore.
+
+```export const TEST_CONFIG = {
   users: {
     mobexaminer: { username: '<USERNAME-HERE>', password: '<PASSWORD-HERE>', employeeId: '12345678' },
     mobexaminer1: { username: '<USERNAME-HERE>', password: '<PASSWORD-HERE>', employeeId: '01234567' },
@@ -11,5 +18,6 @@ export const TEST_CONFIG = {
   },
   PAGE_LOAD_WAIT: 3000,
   ACTION_WAIT: 500,
-  DEFAULT_TIMEOUT: 30000,
+  DEFAULT_TIMEOUT: 60000,
 };
+```

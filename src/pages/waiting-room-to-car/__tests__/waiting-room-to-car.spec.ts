@@ -74,9 +74,6 @@ describe('WaitingRoomToCarPage', () => {
               123: {
                 vehicleDetails: {},
                 accompaniment: {},
-                candidate: {
-                  candidateName: 'Joe Bloggs',
-                },
                 testData: {
                   vehicleChecks: {
                     tellMeQuestion: {
@@ -84,6 +81,11 @@ describe('WaitingRoomToCarPage', () => {
                       description: 'desc',
                       outcome: CompetencyOutcome.P,
                     },
+                  },
+                },
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
                   },
                 },
               },

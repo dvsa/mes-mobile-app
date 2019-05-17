@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IndicatorsComponent } from '../indicators';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
+import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 
 describe('IndicatorsComponent', () => {
   let component: IndicatorsComponent;
@@ -27,14 +28,39 @@ describe('IndicatorsComponent', () => {
     describe('exclamation indicator', () => {
       it('should render when visibility is configured', () => {
         component.showExclamationIndicator = true;
+        component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
         const renderedImage = fixture.debugElement.query(By.css('.exclamation-indicator'));
         expect(renderedImage.attributes.src).toContain('exclamation');
       });
       it('should not be rendered when visibility is turned off', () => {
         component.showExclamationIndicator = false;
+        component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
         const renderedImages = fixture.debugElement.queryAll(By.css('.exclamation-indicator'));
+        expect(renderedImages.length).toBe(0);
+      });
+      it('should not be rendered when test status is submitted', () => {
+        component.showExclamationIndicator = false;
+        component.testStatus = TestStatus.Submitted;
+        fixture.detectChanges();
+        const renderedImages = fixture.debugElement.queryAll(By.css('.exclamation-indicator'));
+        expect(renderedImages.length).toBe(0);
+      });
+    });
+    describe('green tick indicator', () => {
+      it('should be rendered when test status is submitted', () => {
+        component.showExclamationIndicator = false;
+        component.testStatus = TestStatus.Submitted;
+        fixture.detectChanges();
+        const renderedImage = fixture.debugElement.query(By.css('.green-tick-indicator'));
+        expect(renderedImage.attributes.src).toContain('tick');
+      });
+      it('should not rendered when test status is not submitted', () => {
+        component.showExclamationIndicator = false;
+        component.testStatus = TestStatus.Booked;
+        fixture.detectChanges();
+        const renderedImages = fixture.debugElement.queryAll(By.css('.green-tick-indicator'));
         expect(renderedImages.length).toBe(0);
       });
     });

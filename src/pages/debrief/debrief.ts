@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { DebriefViewDidEnter } from '../../pages/debrief/debrief.actions';
-import { getCurrentTest, isPracticeTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPracticeTest, getJournalData } from '../../modules/tests/tests.selector';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
@@ -150,6 +150,7 @@ export class DebriefPage extends BasePageComponent {
       ),
       welshTest$: currentTest$.pipe(
         // TODO: MES-2336 - Get rid of this type generification
+        select(getJournalData),
         select((ct: any) => ct.testSlotAttributes),
         select(tsa => tsa.welshTest),
       ),

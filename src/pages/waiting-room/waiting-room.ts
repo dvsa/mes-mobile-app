@@ -20,7 +20,7 @@ import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
 import { map } from 'rxjs/operators';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
@@ -103,20 +103,24 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
         select(getSignatureStatus),
       ),
       candidateName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
       welshTest$: currentTest$.pipe(
         // TODO: MES-2336 - Get rid of this type generification
+        select(getJournalData),
         select((ct: any) => ct.testSlotAttributes),
         select(tsa => tsa.welshTest),
       ),

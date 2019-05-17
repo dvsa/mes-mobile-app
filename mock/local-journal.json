@@ -67,7 +67,7 @@
           "progressiveAccess": false,
           "testCategory": "B",
           "vehicleGearbox": "Automatic",
-          "welshTest": false
+          "welshTest": true
         },
         "candidate": {
           "age": 56,

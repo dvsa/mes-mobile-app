@@ -33,6 +33,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -65,15 +66,17 @@ describe('WaitingRoomPage', () => {
           testLifecycles: {},
           startedTests: {
             123: {
-              candidate: mockCandidate,
               preTestDeclarations: preTestDeclarationInitialState,
               postTestDeclarations: {
                 healthDeclarationAccepted: false,
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
               },
-              testSlotAttributes: {
-                welshTest: false,
+              journalData: {
+                candidate: mockCandidate,
+                testSlotAttributes: {
+                  welshTest: false,
+                },
               },
             },
           },
@@ -97,12 +100,13 @@ describe('WaitingRoomPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(WaitingRoomPage);
         component = fixture.componentInstance;
+        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+        translate = TestBed.get(TranslateService);
+        translate.setDefaultLang('en');
+        store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
+        component.subscription = new Subscription();
       });
-    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-    translate = TestBed.get(TranslateService);
-    translate.setDefaultLang('en');
-    store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
