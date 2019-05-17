@@ -25,6 +25,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ProvidedEmailComponent } from '../components/provided-email/provided-email';
 import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
+import { PostalAddressComponent } from '../components/postal-address/postal-address';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -50,6 +51,7 @@ describe('CommunicationPage', () => {
         CommunicationPage,
         ProvidedEmailComponent,
         NewEmailComponent,
+        PostalAddressComponent,
       ],
       imports: [
         IonicModule,
@@ -68,6 +70,11 @@ describe('CommunicationPage', () => {
                 healthDeclarationAccepted: false,
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
+              },
+              candidateAddress: {
+                addressLine2: 'Someplace',
+                addressLine3: 'Sometown',
+                postcode: 'AB12 3CD',
               },
             },
           },
@@ -103,47 +110,59 @@ describe('CommunicationPage', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+      expect(fixture.debugElement.query(By.css('#addressLine1'))).toBeDefined();
     });
 
-    describe('Changing preferred email', () => {
-      it('should display the provided email input when selected', () => {
-        fixture.whenStable().then(() => {
-          const providedEmail = fixture.debugElement.query(By.css('#providedEmail'));
-          providedEmail.triggerEventHandler('click', null);
-          expect(fixture.debugElement.query(By.css('#providedEmailInput'))).toBeDefined();
+    describe('DOM', () => {
+      it('should display the correct address fields', () => {
+        expect(fixture.debugElement.query(By.css('#addressLine1'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('#addressLine2'))).toBeDefined();
+        expect(fixture.debugElement.query(By.css('#addressLine3'))).toBeDefined();
+        expect(fixture.debugElement.query(By.css('#addressLine4'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('#addressLine5'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('#postcode'))).toBeDefined();
+      });
+
+      describe('Changing preferred email', () => {
+        it('should display the provided email input when selected', () => {
+          fixture.whenStable().then(() => {
+            const providedEmail = fixture.debugElement.query(By.css('#providedEmail'));
+            providedEmail.triggerEventHandler('click', null);
+            expect(fixture.debugElement.query(By.css('#providedEmailInput'))).toBeDefined();
+          });
+        });
+        it('should display the new email input when selected', () => {
+          const newEmail = fixture.debugElement.query(By.css('#newEmail'));
+          newEmail.triggerEventHandler('click', null);
+          expect(fixture.debugElement.query(By.css('#newEmailInput'))).toBeDefined();
         });
       });
-      it('should display the new email input when selected', () => {
-        const newEmail = fixture.debugElement.query(By.css('#newEmail'));
-        newEmail.triggerEventHandler('click', null);
-        expect(fixture.debugElement.query(By.css('#newEmailInput'))).toBeDefined();
-      });
-    });
 
-    describe('ionViewDidEnter', () => {
-      it('should enable single app mode if on ios', () => {
-        component.ionViewDidEnter();
-        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-      });
+      describe('ionViewDidEnter', () => {
+        it('should enable single app mode if on ios', () => {
+          component.ionViewDidEnter();
+          expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+        });
 
-      it('should lock the screen orientation to Portrait Primary', () => {
-        component.ionViewDidEnter();
-        expect(screenOrientation.lock)
+        it('should lock the screen orientation to Portrait Primary', () => {
+          component.ionViewDidEnter();
+          expect(screenOrientation.lock)
           .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      });
+        });
 
-      it('should keep the device awake', () => {
-        component.ionViewDidEnter();
-        expect(insomnia.keepAwake).toHaveBeenCalled();
-      });
+        it('should keep the device awake', () => {
+          component.ionViewDidEnter();
+          expect(insomnia.keepAwake).toHaveBeenCalled();
+        });
 
+      });
     });
-  });
 
-  describe('clickBack', () => {
-    it('should should trigger the lock screen', () => {
-      component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+    describe('clickBack', () => {
+      it('should should trigger the lock screen', () => {
+        component.clickBack();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      });
     });
   });
 });

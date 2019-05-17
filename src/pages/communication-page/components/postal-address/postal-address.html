@@ -11,12 +11,12 @@
             <span class="communication-helper-text">The following postal address was used when booking the test:</span>
         </ion-row>
         <div class="displayAddress">
-            <div *ngIf="postalAddress.addressLine1">{{postalAddress.addressLine1}}</div>
-            <div *ngIf="postalAddress.addressLine2">{{postalAddress.addressLine2}}</div>
-            <div *ngIf="postalAddress.addressLine3">{{postalAddress.addressLine3}}</div>
-            <div *ngIf="postalAddress.addressLine4">{{postalAddress.addressLine4}}</div>
-            <div *ngIf="postalAddress.addressLine5">{{postalAddress.addressLine5}}</div>
-            <div *ngIf="postalAddress.postcode">{{postalAddress.postcode}}</div>
+            <div *ngIf="postalAddress.addressLine1" id="addressLine1">{{postalAddress.addressLine1}}</div>
+            <div *ngIf="postalAddress.addressLine2" id="addressLine2">{{postalAddress.addressLine2}}</div>
+            <div *ngIf="postalAddress.addressLine3" id="addressLine3">{{postalAddress.addressLine3}}</div>
+            <div *ngIf="postalAddress.addressLine4" id="addressLine4">{{postalAddress.addressLine4}}</div>
+            <div *ngIf="postalAddress.addressLine5" id="addressLine5">{{postalAddress.addressLine5}}</div>
+            <div *ngIf="postalAddress.postcode" id="postcode">{{postalAddress.postcode}}</div>
         </div>
     </ion-col>
 </ion-row>
