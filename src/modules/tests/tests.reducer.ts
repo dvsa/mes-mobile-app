@@ -118,6 +118,12 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             communicationPreferences: communicationPreferencesReducer,
           }, combineReducers,
         )(
+          // The redux pattern necessitates that the state tree be initialised
+          // with all its properties declared. This conflicts with the
+          // 'StandardCarTestCATBSchema' TS interface as many of its properties are optional (?).
+          // In order to reconcile the TS interface and the redux reducer pattern we use
+          // the TS 'Required' mapped type which The 'Required' type which strips ? modifiers
+          // from all properties of 'StandardCarTestCATBSchema', thus making all properties required.
           state.startedTests[slotId] as Required<StandardCarTestCATBSchema>,
           action,
         ),
