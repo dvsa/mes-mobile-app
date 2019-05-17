@@ -231,6 +231,7 @@ describe('OfficePage', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
     });
+
     describe('deferring the write up', () => {
       it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {
         const saveAndContinueButton = fixture.debugElement.query(By.css('#defer-button'));

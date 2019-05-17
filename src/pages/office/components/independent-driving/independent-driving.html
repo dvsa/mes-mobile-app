@@ -21,6 +21,12 @@
           (change)="independentDrivingChanged($event.target.value)">
         <label for="independent-driving-trafficsigns" class="radio-label">Traffic signs</label>
       </ion-col>
+      <ion-col [hidden]="!showNotApplicable">
+        <input type="radio" id="independent-driving-na" class="gds-radio-button" formControlName="independentDriving"
+          name="independentDriving" value='N/A' [class.ng-invalid]="invalid" [checked]="independentDriving === 'N/A'"
+          (change)="independentDrivingChanged($event.target.value)">
+        <label for="independent-driving-na" class="radio-label">N/A</label>
+      </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
       <div class="validation-text" [class.ng-invalid]="invalid">

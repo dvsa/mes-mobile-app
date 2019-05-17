@@ -23,6 +23,7 @@ export class IndependentDrivingComponent implements OnChanges {
   @Output()
   independentDrivingChange = new EventEmitter<IndependentDriving>();
 
+  showNotApplicable: boolean;
   private formControl: FormControl;
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
@@ -32,6 +33,7 @@ export class IndependentDrivingComponent implements OnChanges {
       this.formControl = new FormControl(null);
       this.formGroup.addControl('independentDriving', this.formControl);
     }
+    this.showNotApplicable = this.outcomeBehaviourProvider.showNotApplicable(this.outcome, 'independentDriving');
     const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'independentDriving');
 
     if (visibilityType === 'N') {
