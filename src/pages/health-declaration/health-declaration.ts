@@ -158,6 +158,7 @@ export class HealthDeclarationPage extends BasePageComponent {
       ),
       welshTest$: currentTest$.pipe(
         // TODO: MES-2336 - Get rid of this type generification
+        select(getJournalData),
         select((ct: any) => ct.testSlotAttributes),
         select(tsa => tsa.welshTest),
       ),

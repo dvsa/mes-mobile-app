@@ -133,6 +133,7 @@ export class CommunicationPage extends BasePageComponent {
         map(formatDriverNumber),
       ),
       candidateProvidedEmail$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateEmailAddress),
         take(1),
