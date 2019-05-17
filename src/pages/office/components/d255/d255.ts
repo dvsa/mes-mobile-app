@@ -39,17 +39,25 @@ export class D255Component implements OnChanges {
       this.formGroup.get('d255').setValidators([Validators.required]);
     }
 
-    if (this.d255 !== null) {
-      this.formControl.patchValue(this.d255 ? 'Yes' : 'No');
-    } else {
-      this.formControl.patchValue(null);
-    }
+    this.formControl.patchValue(this.getD255OrDefault());
   }
 
   d255Changed(d255FormValue: string): void {
     if (this.formControl.valid) {
       this.d255Change.emit(d255FormValue === 'Yes' ? true : false);
     }
+  }
+
+  getD255OrDefault(): string | null {
+    if (this.d255 === null) {
+      if (this.outcomeBehaviourProvider.hasDefault(this.outcome, 'd255')) {
+        const defaultValue = this.outcomeBehaviourProvider.getDefault(this.outcome, 'd255');
+        this.d255Changed(defaultValue);
+        return defaultValue;
+      }
+      return null;
+    }
+    return this.d255 ? 'Yes' : 'No';
   }
 
   get invalid(): boolean {

@@ -40,7 +40,7 @@ export const behaviourMap: OutcomeBehaviourMapping = {
     ['tellMeQuestion']: { display: 'A' },
     ['showMeQuestion']: { display: 'N' },
     ['weatherConditions']: { display: 'Y' },
-    ['d255']: { display: 'Y', defaultValue: 'YES' },
+    ['d255']: { display: 'Y', defaultValue: 'Yes' },
     ['eta']: { display: 'A' },
     ['additionalInformation']: { display: 'Y' },
     ['faultComment']: { display: 'A' },

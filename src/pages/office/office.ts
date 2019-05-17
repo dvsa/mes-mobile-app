@@ -269,7 +269,8 @@ export class OfficePage extends BasePageComponent {
       displayShowMeQuestion$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
+          select(getVehicleChecks),
           select(getShowMeQuestion))),
         map(([outcome, question]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'showMeQuestion', question)),
@@ -277,7 +278,8 @@ export class OfficePage extends BasePageComponent {
       displayTellMeQuestion$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
+          select(getTestData),
+          select(getVehicleChecks),
           select(getTellMeQuestion))),
         map(([outcome, question]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'tellMeQuestion', question)),

@@ -38,14 +38,13 @@ export class CandidateDescriptionComponent implements OnChanges {
     } else {
       this.formGroup.get('candidateDescription').setValidators([Validators.required]);
     }
-
     this.formControl.patchValue(this.candidateDescription);
   }
 
   candidateDescriptionChanged(candidateDescription: string): void {
-    if (this.formControl.valid) {
-      this.candidateDescriptionChange.emit(candidateDescription);
-    }
+    //    if (this.formControl.valid) {
+    this.candidateDescriptionChange.emit(candidateDescription);
+    //    }
   }
 
   get invalid(): boolean {

@@ -31,7 +31,7 @@ export class OutcomeBehaviourMapProvider {
     if (!field) {
       return false;
     }
-    if (field.display === 'A' && value !== null) {
+    if (field.display === 'A' && value) {
       return true;
     }
     return field.display === 'Y';
