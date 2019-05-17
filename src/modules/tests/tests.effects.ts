@@ -87,7 +87,7 @@ export class TestsEffects {
         select(getTests),
       ),
     ),
-    filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE),
+    filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE),
     switchMap(([action, tests]) => {
 
       const completedTestKeys = Object.keys(tests.testStatus).filter((slotId) => {
@@ -96,7 +96,7 @@ export class TestsEffects {
 
       const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
 
-      if (completedTests && completedTests.length === 0) {
+      if (completedTests.length === 0) {
         return of();
       }
 
@@ -109,6 +109,17 @@ export class TestsEffects {
             return of(new testActions.SendCompletedTestsFailure());
           }),
         );
+    }),
+  );
+
+  @Effect()
+  sendCompletedTestsSuccessEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_COMPLETED_TESTS_SUCCESS),
+    switchMap((action: testActions.SendCompletedTestsSuccess) => {
+      return [
+        ...action.completedTestIds.map(id => new testStatusActions.SetTestStatusSubmitted(id)),
+        new testActions.PersistTests(),
+      ];
     }),
   );
 
@@ -153,7 +164,10 @@ export class TestsEffects {
   sendTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_TEST_SUCCESS),
     switchMap((action: testActions.SendTestSuccess) => {
-      return of(new testStatusActions.SetTestStatusSubmitted(action.slotId));
+      return [
+        new testStatusActions.SetTestStatusSubmitted(action.slotId),
+        new testActions.PersistTests(),
+      ];
     }),
   );
 
