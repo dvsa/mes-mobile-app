@@ -18,3 +18,5 @@ export const formatDriverNumber = (driverNumber: string) => {
   }
   return driverNumber;
 };
+
+export const getCandidateEmailAddress = (candidate: Candidate) => candidate.emailAddress ? candidate.emailAddress : '';

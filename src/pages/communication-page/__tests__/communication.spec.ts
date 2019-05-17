@@ -22,6 +22,9 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { ProvidedEmailComponent } from '../components/provided-email/provided-email';
+import { NewEmailComponent } from '../components/new-email/new-email';
+import { By } from '@angular/platform-browser';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -38,12 +41,15 @@ describe('CommunicationPage', () => {
       firstName: 'Joe',
       lastName: 'Blogs',
     },
+    emailAddress: 'testemail@mes',
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         CommunicationPage,
+        ProvidedEmailComponent,
+        NewEmailComponent,
       ],
       imports: [
         IonicModule,
@@ -99,6 +105,21 @@ describe('CommunicationPage', () => {
       expect(component).toBeDefined();
     });
 
+    describe('Changing preferred email', () => {
+      it('should display the provided email input when selected', () => {
+        fixture.whenStable().then(() => {
+          const providedEmail = fixture.debugElement.query(By.css('#providedEmail'));
+          providedEmail.triggerEventHandler('click', null);
+          expect(fixture.debugElement.query(By.css('#providedEmailInput'))).toBeDefined();
+        });
+      });
+      it('should display the new email input when selected', () => {
+        const newEmail = fixture.debugElement.query(By.css('#newEmail'));
+        newEmail.triggerEventHandler('click', null);
+        expect(fixture.debugElement.query(By.css('#newEmailInput'))).toBeDefined();
+      });
+    });
+
     describe('ionViewDidEnter', () => {
       it('should enable single app mode if on ios', () => {
         component.ionViewDidEnter();
@@ -117,25 +138,6 @@ describe('CommunicationPage', () => {
       });
 
     });
-  });
-
-  describe('ionViewDidEnter', () => {
-    it('should enable single app mode if on ios', () => {
-      component.ionViewDidEnter();
-      expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-    });
-
-    it('should lock the screen orientation to Portrait Primary', () => {
-      component.ionViewDidEnter();
-      expect(screenOrientation.lock)
-        .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-    });
-
-    it('should keep the device awake', () => {
-      component.ionViewDidEnter();
-      expect(insomnia.keepAwake).toHaveBeenCalled();
-    });
-
   });
 
   describe('clickBack', () => {
