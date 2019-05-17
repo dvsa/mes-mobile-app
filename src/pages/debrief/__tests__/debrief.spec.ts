@@ -30,6 +30,8 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
+import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -39,6 +41,15 @@ describe('DebriefPage', () => {
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
   let translate: TranslateService;
+
+  const testSlotAttributes: TestSlotAttributes = {
+    welshTest: false,
+    extendedTest: false,
+    slotId: 123,
+    specialNeeds: false,
+    start: '',
+    vehicleSlotType: '',
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -56,6 +67,7 @@ describe('DebriefPage', () => {
             testLifecycles: {},
             startedTests: {
               123: {
+                testSlotAttributes,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
@@ -258,6 +270,24 @@ describe('DebriefPage', () => {
         expect(drivingFaultLabel.innerHTML).toBe(fullCompetencyLabels.moveOffSafety);
         expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsSignalling);
         expect(dangerousLabel.innerHTML).toBe(fullCompetencyLabels.useOfMirrorsChangeDirection);
+      });
+      it('should display fault competencies in Welsh for a Welsh test', (done) => {
+        store$.dispatch(new AddDrivingFault({ competency: Competencies.moveOffSafety, newFaultCount: 1 }));
+        store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
+        store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
+        fixture.detectChanges();
+        translate.onLangChange.subscribe(() => {
+          fixture.detectChanges();
+          const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;
+          const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
+          const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
+
+          expect(drivingFaultLabel.innerHTML).toBe(`[CY] ${fullCompetencyLabels.moveOffSafety}`);
+          expect(seriousLabel.innerHTML).toBe(`[CY] ${fullCompetencyLabels.useOfMirrorsSignalling}`);
+          expect(dangerousLabel.innerHTML).toBe(`[CY] ${fullCompetencyLabels.useOfMirrorsChangeDirection}`);
+          done();
+        });
+        store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
       });
     });
   });
