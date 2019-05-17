@@ -44,7 +44,11 @@
       "pedestrianCrossings": "[CY] Pedestrian crossings",
       "positionNormalStops": "[CY] Position/normal stop",
       "awarenessPlanning": "[CY] Awareness planning",
-      "outcomeControlledStop": "[CY] Controlled stop"
+      "outcomeControlledStop": "[CY] Controlled stop",
+      "reverseRight": "[CY] Reverse right",
+      "reverseParkRoad": "[CY] Reverse park (road)",
+      "reverseParkCarpark": "[CY] Reverse park (car park)",
+      "forwardPark": "[CY] Forward park"
     },
     "dangerousFaultsCardDescription": "[CY] dangerous faults",
     "drivingFaultsCardDescription": "[CY] driving faults",

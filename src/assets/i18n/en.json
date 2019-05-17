@@ -44,7 +44,11 @@
       "pedestrianCrossings": "Pedestrian crossings",
       "positionNormalStops": "Position/normal stop",
       "awarenessPlanning": "Awareness planning",
-      "outcomeControlledStop": "Controlled stop"
+      "outcomeControlledStop": "Controlled stop",
+      "reverseRight": "Reverse right",
+      "reverseParkRoad": "Reverse park (road)",
+      "reverseParkCarpark": "Reverse park (car park)",
+      "forwardPark": "Forward park"
     },
     "dangerousFaultsCardDescription": "dangerous faults",
     "drivingFaultsCardDescription": "driving faults",
