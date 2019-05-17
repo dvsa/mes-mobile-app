@@ -31,6 +31,13 @@ export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
   return 'Terminated';
 };
 
+export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
+  if (test.activityCode) {
+    return true;
+  }
+  return false;
+};
+
 export const getTestOutcomeClass = (test: StandardCarTestCATBSchema) => {
   const outcomeIndex = outcomeStatus.findIndex(status => status.outcomeCode === test.activityCode);
   if (outcomeIndex > -1) {

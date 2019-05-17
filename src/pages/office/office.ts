@@ -19,6 +19,7 @@ import { FormGroup } from '@angular/forms';
 import {
   getCurrentTest,
   getTestOutcome,
+  isTestOutcomeSet,
   getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
@@ -104,6 +105,7 @@ interface OfficePageState {
   testOutcomeText$: Observable<string>;
   testOutcomeClass$: Observable<string>;
   isPassed$: Observable<boolean>;
+  isTestOutcomeSet$: Observable<boolean>;
   candidateName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   routeNumber$: Observable<number>;
@@ -204,6 +206,9 @@ export class OfficePage extends BasePageComponent {
       ),
       isPassed$: currentTest$.pipe(
         select(isPassed),
+      ),
+      isTestOutcomeSet$: currentTest$.pipe(
+        select(isTestOutcomeSet),
       ),
       startTime$: currentTest$.pipe(
         select(getTestSlotAttributes),
