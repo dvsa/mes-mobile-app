@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
 import { ActivityCode, StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
-export const START_SENDING_COMPLETED_TESTS = '[???] Start Sending Completed Test';
+export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
 export const SEND_COMPLETED_TESTS_SUCCESS = '[TestsEffects] Send Completed Tests Success';
 export const SEND_COMPLETED_TESTS_FAILURE = '[TestsEffects] Send Completed Tests Failure';

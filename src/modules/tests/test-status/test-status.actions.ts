@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
 
-export const SET_TEST_STATUS_BOOKED = '[???] Set Test Status to Booked';
-export const SET_TEST_STATUS_STARTED = '[???] Set Test Status to Started';
-export const SET_TEST_STATUS_DECIDED = '[???] Set Test Status to Decided';
-export const SET_TEST_STATUS_COMPLETED = '[???] Set Test Status to Completed';
-export const SET_TEST_STATUS_SUBMITTED = '[???] Set Test Status to Submitted';
+export const SET_TEST_STATUS_BOOKED = '[JournalEffects] Set Test Status to Booked';
+export const SET_TEST_STATUS_STARTED = '[WaitingRoomEffects] Set Test Status to Started';
+export const SET_TEST_STATUS_DECIDED = '[DebriefEffects] Set Test Status to Decided';
+export const SET_TEST_STATUS_COMPLETED = '[OfficeEffects] Set Test Status to Completed';
+export const SET_TEST_STATUS_SUBMITTED = '[TestsEffects] Set Test Status to Submitted';
 
 export class SetTestStatusBooked implements Action {
   readonly type = SET_TEST_STATUS_BOOKED;
