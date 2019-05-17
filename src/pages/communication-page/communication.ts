@@ -10,7 +10,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
@@ -117,14 +117,17 @@ export class CommunicationPage extends BasePageComponent {
 
     this.pageState = {
       candidateName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),

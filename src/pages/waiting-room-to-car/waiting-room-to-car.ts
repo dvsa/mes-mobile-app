@@ -7,7 +7,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
   DualControlsToggled,
@@ -135,6 +135,7 @@ export class WaitingRoomToCarPage extends BasePageComponent {
 
     this.pageState = {
       candidateName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),

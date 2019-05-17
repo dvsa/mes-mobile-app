@@ -23,6 +23,7 @@ import {
   isPassed,
   getTestOutcomeText,
   getTerminationCode,
+  getJournalData,
 } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import {
@@ -191,14 +192,17 @@ export class OfficePage extends BasePageComponent {
         select(isPassed),
       ),
       startTime$: currentTest$.pipe(
+        select(getJournalData),
         select(getTestSlotAttributes),
         select(getTestTime),
       ),
       candidateName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateDriverNumber$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),

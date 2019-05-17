@@ -1,7 +1,12 @@
 import * as journalActions from '../../pages/journal/journal.actions';
 import * as testActions from './tests.actions';
-import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
+
+import { TestsModel } from './tests.model';
+import { startsWith } from 'lodash';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
+import { nestedCombineReducers } from 'nested-combine-reducers';
+
+import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { testDataReducer } from './test-data/test-data.reducer';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
@@ -11,10 +16,12 @@ import { eyesightTestResultReducer } from './eyesight-test-result/eyesight-test-
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { testStatusReducer } from './test-status/test-status.reducer';
-import { TestsModel } from './tests.model';
-import { startsWith } from 'lodash';
 import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
-import { journalDataReducer } from './journal-data/journal-data.reducer';
+import { examinerReducer } from './examiner/examiner.reducer';
+import { testCentreReducer } from './test-centre/test-centre.reducer';
+import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
+import { candidateReducer } from './candidate/candidate.reducer';
+import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -89,9 +96,15 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
         // the context of which test contains it that state.
         // Here, combineReducers delegates management of the sub-state navigated here for a given
         // slotId to the relevant sub-reducer
-        ...combineReducers(
+        ...nestedCombineReducers(
           {
-            journalData: journalDataReducer,
+            journalData:  {
+              examiner: examinerReducer,
+              testCentre: testCentreReducer,
+              testSlotAttributes: testSlotsAttributesReducer,
+              candidate: candidateReducer,
+              applicationReference: applicationReferenceReducer,
+            },
             preTestDeclarations: preTestDeclarationsReducer,
             eyesightTestResult: eyesightTestResultReducer,
             accompaniment: accompanimentReducer,
@@ -102,7 +115,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             postTestDeclarations: postTestDeclarationsReducer,
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
-          },
+          }, combineReducers,
         // @ts-ignore
         )(state.startedTests[slotId], action),
       },
