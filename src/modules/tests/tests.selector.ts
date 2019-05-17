@@ -1,5 +1,5 @@
 import { TestStatus } from './test-status/test-status.model';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { StandardCarTestCATBSchema, JournalData } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
 import { terminationCodeList } from '../../pages/office/components/termination-code/termination-code.constants';
 import { startsWith } from 'lodash';
@@ -18,6 +18,8 @@ export const getCurrentTest = (tests: TestsModel) => {
   const currentTestSlotId = tests.currentTest.slotId;
   return tests.startedTests[currentTestSlotId];
 };
+
+export const getJournalData = (test: StandardCarTestCATBSchema): JournalData => test.journalData;
 
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testLifecycles[slotId] || TestStatus.Booked;
 

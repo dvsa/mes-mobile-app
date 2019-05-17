@@ -28,7 +28,7 @@ import { getApplicationReference } from '../../modules/tests/application-referen
 import {
   getApplicationNumber,
 } from '../../modules/tests/application-reference/application-reference.selector';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
@@ -80,19 +80,23 @@ export class PassFinalisationPage extends BasePageComponent {
 
     this.pageState = {
       candidateName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateName),
       ),
       candidateUntitledName$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
       candidateDriverNumber$: currentTest$.pipe(
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
       ),
       applicationNumber$: currentTest$.pipe(
+        select(getJournalData),
         select(getApplicationReference),
         select(getApplicationNumber),
       ),

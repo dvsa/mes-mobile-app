@@ -13,7 +13,7 @@ import { DeviceAuthenticationProvider } from '../../providers/device-authenticat
 import * as postTestDeclarationsActions
   from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getPostTestDeclarations } from '../../modules/tests/post-test-declarations/post-test-declarations.reducer';
 import {
   getHealthDeclarationStatus,
@@ -130,15 +130,24 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getPostTestDeclarations),
         select(getSignatureStatus),
       ),
-      candidateName$: currentTest$.pipe(
+      candidateName$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateName),
       ),
-      candidateUntitledName$: currentTest$.pipe(
+      candidateUntitledName$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getJournalData),
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
-      candidateDriverNumber$: currentTest$.pipe(
+      candidateDriverNumber$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getJournalData),
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
@@ -149,6 +158,7 @@ export class HealthDeclarationPage extends BasePageComponent {
       ),
       welshTest$: currentTest$.pipe(
         // TODO: MES-2336 - Get rid of this type generification
+        select(getJournalData),
         select((ct: any) => ct.testSlotAttributes),
         select(tsa => tsa.welshTest),
       ),
