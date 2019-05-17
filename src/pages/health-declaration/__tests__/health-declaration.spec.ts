@@ -26,6 +26,7 @@ import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
+import { Subscription } from 'rxjs/Subscription';
 
 const mockCandidate = {
   driverNumber: '123',
@@ -103,6 +104,7 @@ describe('HealthDeclarationPage', () => {
         spyOn(store$, 'dispatch').and.callThrough();
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
+        component.subscription = new Subscription();
       });
 
   }));

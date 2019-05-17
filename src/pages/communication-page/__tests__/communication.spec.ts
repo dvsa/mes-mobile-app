@@ -25,6 +25,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ProvidedEmailComponent } from '../components/provided-email/provided-email';
 import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -92,14 +93,15 @@ describe('CommunicationPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(CommunicationPage);
         component = fixture.componentInstance;
+        deviceProvider = TestBed.get(DeviceProvider);
+        screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
+        deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+        store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
+        component.subscription = new Subscription();
       });
 
-    deviceProvider = TestBed.get(DeviceProvider);
-    screenOrientation = TestBed.get(ScreenOrientation);
-    insomnia = TestBed.get(Insomnia);
-    deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
-    store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
