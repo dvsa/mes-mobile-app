@@ -48,7 +48,9 @@
       "reverseRight": "Reverse right",
       "reverseParkRoad": "Reverse park (road)",
       "reverseParkCarpark": "Reverse park (car park)",
-      "forwardPark": "Forward park"
+      "forwardPark": "Forward park",
+      "vehicleChecks": "Vehicle checks",
+      "controlledStop": "Controlled stop"
     },
     "dangerousFaultsCardDescription": "dangerous faults",
     "drivingFaultsCardDescription": "driving faults",

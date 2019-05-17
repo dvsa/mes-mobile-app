@@ -48,7 +48,9 @@
       "reverseRight": "[CY] Reverse right",
       "reverseParkRoad": "[CY] Reverse park (road)",
       "reverseParkCarpark": "[CY] Reverse park (car park)",
-      "forwardPark": "[CY] Forward park"
+      "forwardPark": "[CY] Forward park",
+      "vehicleChecks": "[CY] Vehicle checks",
+      "controlledStop": "[CY] Controlled stop"
     },
     "dangerousFaultsCardDescription": "[CY] dangerous faults",
     "drivingFaultsCardDescription": "[CY] driving faults",
