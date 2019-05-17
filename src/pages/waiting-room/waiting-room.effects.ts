@@ -18,7 +18,7 @@ export class WaitingRoomEffects {
   ) {}
 
   @Effect()
-  completeTestEffect$ = this.actions$.pipe(
+  submitWaitingRoomInfoEffect$ = this.actions$.pipe(
     ofType(waitingRoomActions.SUBMIT_WAITING_ROOM_INFO),
     withLatestFrom(
       this.store$.pipe(

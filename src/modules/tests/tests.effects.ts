@@ -12,7 +12,7 @@ import { practiceSlot } from './__mocks__/tests.mock';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
-import { getCurrentTest } from './tests.selector';
+import { getCurrentTest, getCurrentTestSlotId } from './tests.selector';
 import { TestSubmissionProvider } from '../../providers/test-submission/test-submission';
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
@@ -96,6 +96,10 @@ export class TestsEffects {
 
       const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
 
+      if (completedTests && completedTests.length === 0) {
+        return of();
+      }
+
       return this.testSubmissionProvider.submitTests(completedTests)
         .pipe(
           map((response: any) => {
@@ -109,7 +113,7 @@ export class TestsEffects {
   );
 
   @Effect()
-  completeTestEffect$ = this.actions$.pipe(
+  setTestStatusCompletedEffect$ = this.actions$.pipe(
     ofType(testStatusActions.SET_TEST_STATUS_COMPLETED),
     withLatestFrom(
       this.store$.pipe(
@@ -118,21 +122,25 @@ export class TestsEffects {
       ),
     ),
     map(([action, currentTest]) => {
-      return of(new testActions.SendTest(currentTest));
+      return new testActions.SendTest(currentTest);
     }),
   );
 
   @Effect()
   sendTestEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_TEST),
-    switchMap((action: testActions.SendTest) => {
-      return this.testSubmissionProvider.submitTests([action.payload])
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        select(getCurrentTestSlotId),
+      ),
+    ),
+    switchMap(([action, currentTestSlotId]) => {
+      const sendTestAction = action as testActions.SendTest;
+      return this.testSubmissionProvider.submitTests([sendTestAction.payload])
         .pipe(
           map((response: any) => {
-
-            // TODO: This has to come from the store
-            const dummyId = 'dummyId';
-            return new testActions.SendTestSuccess(dummyId);
+            return new testActions.SendTestSuccess(currentTestSlotId);
           }),
           catchError((err: any) => {
             return of(new testActions.SendTestFailure());

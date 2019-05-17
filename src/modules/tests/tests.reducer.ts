@@ -133,7 +133,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
     currentTest: {
       slotId,
     },
-    testStatus: testStatusReducer(state.testStatus[slotId], action as testStatusActions.Types),
+    testStatus: testStatusReducer(state.testStatus, action as testStatusActions.Types),
   };
 };
 

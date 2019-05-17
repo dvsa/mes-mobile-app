@@ -5,7 +5,6 @@ import * as testStatusActions from './test-status.actions';
 export const initialState = {};
 
 export function testStatusReducer(state = initialState, action: testStatusActions.Types): {} {
-
   switch (action.type) {
     case testStatusActions.SET_TEST_STATUS_BOOKED:
       return {

@@ -11,14 +11,14 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 
 @Injectable()
-export class WaitingRoomEffects {
+export class DebriefEffects {
   constructor(
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {}
 
   @Effect()
-  completeTestEffect$ = this.actions$.pipe(
+  endDebriefEffect$ = this.actions$.pipe(
     ofType(debriefActions.END_DEBRIEF),
     withLatestFrom(
       this.store$.pipe(
