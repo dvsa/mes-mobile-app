@@ -22,6 +22,7 @@ import { testCentreReducer } from './test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
 import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -116,8 +117,10 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
           }, combineReducers,
-        // @ts-ignore
-        )(state.startedTests[slotId], action),
+        )(
+          state.startedTests[slotId] as Required<StandardCarTestCATBSchema>,
+          action,
+        ),
       },
     },
     currentTest: {
