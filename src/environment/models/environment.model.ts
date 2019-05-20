@@ -24,6 +24,8 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     numberOfDaysToView: number;
     allowTests: boolean;
     allowedTestCategories: string[];
+    enableTestReportPracticeMode: boolean;
+    enableEndToEndPracticeMode: boolean;
   };
   tests: {
     testSubmissionUrl: string,

@@ -40,6 +40,8 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     numberOfDaysToView: 7,
     allowTests: true,
     allowedTestCategories: ['B'],
+    enableTestReportPracticeMode: true,
+    enableEndToEndPracticeMode: true,
   },
   tests: {
     testSubmissionUrl: 'https://www.example.com/api/v1/test-result',
