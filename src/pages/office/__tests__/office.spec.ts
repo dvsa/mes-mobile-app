@@ -233,6 +233,7 @@ describe('OfficePage', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
     });
+
     describe('deferring the write up', () => {
       it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {
         const saveAndContinueButton = fixture.debugElement.query(By.css('#defer-button'));
@@ -251,6 +252,7 @@ describe('OfficePage', () => {
         fixture.detectChanges();
 
         component.pageState.displayDrivingFaultComments$ = of(true);
+        component.pageState.displayDrivingFault$ = of(true);
         fixture.detectChanges();
         expect(drivingFaultCommentCard.shouldRender).toBeTruthy();
         component.pageState.displayDrivingFaultComments$ = of(false);
@@ -279,6 +281,8 @@ describe('OfficePage', () => {
         component.pageState.drivingFaults$ = of(drivingFaults);
         component.pageState.drivingFaultCount$ = of(4);
         component.pageState.displayDrivingFaultComments$ = of(false);
+        component.pageState.displayDrivingFault$ = of(true);
+
         fixture.detectChanges();
 
         const drivingFaultBadges = fixture.debugElement.queryAll(By.css('driving-faults-badge'));
@@ -291,6 +295,8 @@ describe('OfficePage', () => {
         component.pageState.drivingFaults$ = of(drivingFaults);
         component.pageState.drivingFaultCount$ = of(4);
         component.pageState.displayDrivingFaultComments$ = of(false);
+        component.pageState.displayDrivingFault$ = of(true);
+
         fixture.detectChanges();
 
         const faultLabels = fixture.debugElement.queryAll(By.css('.fault-label'));

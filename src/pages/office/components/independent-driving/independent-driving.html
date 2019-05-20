@@ -1,4 +1,5 @@
-<ion-row class="mes-validated-row mes-row-separator" id="independent-driving-card" [formGroup]="formGroup">
+<ion-row *ngIf="display" class="mes-validated-row mes-row-separator" id="independent-driving-card"
+  [formGroup]="formGroup">
   <div class="validation-bar" [class.ng-invalid]="invalid">
   </div>
   <ion-col class="component-label" col-32 align-self-center>
@@ -19,6 +20,12 @@
           [class.ng-invalid]="invalid" [checked]="independentDriving === 'Traffic signs'"
           (change)="independentDrivingChanged($event.target.value)">
         <label for="independent-driving-trafficsigns" class="radio-label">Traffic signs</label>
+      </ion-col>
+      <ion-col [hidden]="!showNotApplicable">
+        <input type="radio" id="independent-driving-na" class="gds-radio-button" formControlName="independentDriving"
+          name="independentDriving" value='N/A' [class.ng-invalid]="invalid" [checked]="independentDriving === 'N/A'"
+          (change)="independentDrivingChanged($event.target.value)">
+        <label for="independent-driving-na" class="radio-label">N/A</label>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>

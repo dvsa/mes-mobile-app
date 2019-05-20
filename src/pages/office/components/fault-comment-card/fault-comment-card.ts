@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { CommentedCompetency } from '../../../../shared/models/fault-marking.model';
 
 @Component({
@@ -7,6 +7,8 @@ import { CommentedCompetency } from '../../../../shared/models/fault-marking.mod
   templateUrl: 'fault-comment-card.html',
 })
 export class FaultCommentCardComponent {
+  @Input()
+  outcome: string;
 
   @Input()
   formGroup: FormGroup;
@@ -26,8 +28,14 @@ export class FaultCommentCardComponent {
   @Output()
   faultCommentsChange = new EventEmitter<CommentedCompetency>();
 
+  ngOnInit() {
+    this.faultComments.forEach((value) => {
+      const control = new FormControl(null);
+      this.formGroup.addControl(`faultComment-${this.faultType}-${value.competencyIdentifier}`, control);
+    });
+  }
+
   faultCommentChanged(faultComment: CommentedCompetency): void {
     this.faultCommentsChange.emit(faultComment);
   }
-
 }

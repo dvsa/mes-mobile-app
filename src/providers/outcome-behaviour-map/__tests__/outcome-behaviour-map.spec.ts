@@ -251,7 +251,7 @@ describe('OutcomeBehaviourMapProvider', () => {
       it(`should return default value of YES for d255`, () => {
         outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
         const d255 = outcomeBehaviourMapProvider.getDefault('3', 'd255');
-        expect(d255).toBe('YES');
+        expect(d255).toBe('Yes');
       });
     });
     describe('outcome 4', () => {

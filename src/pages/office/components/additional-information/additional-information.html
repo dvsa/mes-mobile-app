@@ -1,4 +1,5 @@
-<ion-row class="mes-component-row mes-row-separator" id="additional-information-card" [formGroup]="formGroup">
+<ion-row *ngIf="display" class="mes-component-row mes-row-separator" id="additional-information-card"
+  [formGroup]="formGroup">
   <ion-col class="component-label" col-32 align-self-center>
     <label>Additional information (optional)</label>
   </ion-col>

@@ -6,6 +6,11 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: 'additional-information.html',
 })
 export class AdditionalInformationComponent implements OnChanges {
+  @Input()
+  display: boolean;
+
+  @Input()
+  outcome: string;
 
   @Input()
   additionalInformation: string;
@@ -17,11 +22,12 @@ export class AdditionalInformationComponent implements OnChanges {
   additionalInformationChange = new EventEmitter<string>();
 
   private formControl: FormControl;
+  static readonly fieldName: string = 'additionalInformation';
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl('additionalInformation', this.formControl);
+      this.formGroup.addControl(AdditionalInformationComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.additionalInformation);
   }

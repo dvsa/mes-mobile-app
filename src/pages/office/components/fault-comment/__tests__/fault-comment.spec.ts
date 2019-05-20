@@ -8,7 +8,7 @@ import { MockComponent } from 'ng-mocks';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
 import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 describe('FaultCommentComponent', () => {
   let fixture: ComponentFixture<FaultCommentComponent>;
@@ -32,6 +32,8 @@ describe('FaultCommentComponent', () => {
         fixture = TestBed.createComponent(FaultCommentComponent);
         component = fixture.componentInstance;
         component.parentForm = new FormGroup({});
+        const control = new FormControl(null);
+        component.parentForm.addControl('faultComment-driving-id', control);
       });
   }));
 

@@ -34,6 +34,8 @@ describe('FaultCommentCardComponent', () => {
     it('should display the provided header', () => {
       component.shouldRender = true;
       component.header = 'header';
+      component.faultComments = [];
+      component.faultType = 'drivingFault';
       fixture.detectChanges();
 
       const header = fixture.debugElement.query(By.css('h4')).nativeElement;

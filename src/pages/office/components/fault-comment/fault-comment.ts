@@ -1,12 +1,19 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../../shared/models/fault-marking.model';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'fault-comment',
   templateUrl: 'fault-comment.html',
 })
 export class FaultCommentComponent implements OnChanges {
+
+  @Input()
+  outcome: string;
 
   @Input()
   parentForm: FormGroup;
@@ -20,14 +27,17 @@ export class FaultCommentComponent implements OnChanges {
   @Output()
   faultCommentChange = new EventEmitter<CommentedCompetency>();
 
-  private formControl: FormControl;
+  static readonly fieldName: string = 'faultComment';
+  constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
-    if (!this.formControl) {
-      this.formControl = new FormControl(null, Validators.required);
-      this.parentForm.addControl(this.formControlName, this.formControl);
+    if (this.outcomeBehaviourProvider.getVisibilityType(this.outcome, FaultCommentComponent.fieldName) ===
+      VisibilityType.NotVisible) {
+      this.parentForm.get(this.formControlName).clearValidators();
+    } else {
+      this.parentForm.get(this.formControlName).setValidators(Validators.required);
     }
-    this.formControl.patchValue(this.faultComment.comment);
+    this.parentForm.get(this.formControlName).patchValue(this.faultComment.comment);
   }
 
   faultCommentChanged(newComment: string): void {
@@ -39,8 +49,8 @@ export class FaultCommentComponent implements OnChanges {
     this.faultCommentChange.emit(commentedCompetency);
   }
 
-  get invalid() {
-    return this.formControl.dirty && !this.formControl.valid;
+  get invalid(): boolean {
+    return !this.parentForm.get(this.formControlName).valid && this.parentForm.get(this.formControlName).dirty;
   }
 
   get formControlName() {
