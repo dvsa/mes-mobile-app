@@ -1,7 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'independent-driving',
@@ -25,7 +28,7 @@ export class IndependentDrivingComponent implements OnChanges {
 
   showNotApplicable: boolean;
   private formControl: FormControl;
-
+  private fieldName: string = 'independentDriving';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
@@ -33,13 +36,13 @@ export class IndependentDrivingComponent implements OnChanges {
       this.formControl = new FormControl(null);
       this.formGroup.addControl('independentDriving', this.formControl);
     }
-    this.showNotApplicable = this.outcomeBehaviourProvider.showNotApplicable(this.outcome, 'independentDriving');
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'independentDriving');
+    this.showNotApplicable = this.outcomeBehaviourProvider.showNotApplicable(this.outcome, this.fieldName);
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
 
-    if (visibilityType === 'N') {
-      this.formGroup.get('independentDriving').clearValidators();
+    if (visibilityType === VisibilityType.NotVisible) {
+      this.formGroup.get(this.fieldName).clearValidators();
     } else {
-      this.formGroup.get('independentDriving').setValidators([Validators.required]);
+      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
     }
 
     this.formControl.patchValue(this.independentDriving);

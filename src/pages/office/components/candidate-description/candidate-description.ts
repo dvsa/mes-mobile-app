@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'candidate-description',
@@ -23,28 +26,27 @@ export class CandidateDescriptionComponent implements OnChanges {
   candidateDescriptionChange = new EventEmitter<string>();
 
   private formControl: FormControl;
+  private fieldName: string = 'candidateDescription';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl('candidateDescription', this.formControl);
+      this.formGroup.addControl(this.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'candidateDescription');
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
 
-    if (visibilityType === 'N') {
-      this.formGroup.get('candidateDescription').clearValidators();
+    if (visibilityType === VisibilityType.NotVisible) {
+      this.formGroup.get(this.fieldName).clearValidators();
     } else {
-      this.formGroup.get('candidateDescription').setValidators([Validators.required]);
+      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
     }
     this.formControl.patchValue(this.candidateDescription);
   }
 
   candidateDescriptionChanged(candidateDescription: string): void {
-    //    if (this.formControl.valid) {
     this.candidateDescriptionChange.emit(candidateDescription);
-    //    }
   }
 
   get invalid(): boolean {

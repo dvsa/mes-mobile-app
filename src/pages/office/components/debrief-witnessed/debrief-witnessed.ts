@@ -1,6 +1,14 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+
+enum ValidWitnessedValues {
+  YES = 'Yes',
+  NO = 'No',
+}
 
 @Component({
   selector: 'debrief-witnessed',
@@ -23,23 +31,24 @@ export class DebriefWitnessedComponent implements OnChanges {
   debriefWitnessedChange = new EventEmitter<boolean>();
 
   private formControl: FormControl;
-
+  private fieldName: string = 'debriefWitnessed';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl('debriefWitnessed', this.formControl);
+      this.formGroup.addControl(this.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'debriefWitnessed');
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
 
-    if (visibilityType === 'N') {
-      this.formGroup.get('debriefWitnessed').clearValidators();
+    if (visibilityType === VisibilityType.NotVisible) {
+      this.formGroup.get(this.fieldName).clearValidators();
     } else {
-      this.formGroup.get('debriefWitnessed').setValidators([Validators.required]);
+      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
     }
     if (this.debriefWitnessed !== null) {
-      this.formControl.patchValue(this.debriefWitnessed ? 'Yes' : 'No');
+      this.formControl.patchValue(this.debriefWitnessed
+        ? ValidWitnessedValues.YES : ValidWitnessedValues.NO);
     } else {
       this.formControl.patchValue(null);
     }
@@ -47,7 +56,8 @@ export class DebriefWitnessedComponent implements OnChanges {
 
   debriefWitnessedChanged(debriefWitnessedFormValue: string): void {
     if (this.formControl.valid) {
-      this.debriefWitnessedChange.emit(debriefWitnessedFormValue === 'Yes' ? true : false);
+      this.debriefWitnessedChange.emit(
+        debriefWitnessedFormValue === ValidWitnessedValues.YES ? true : false);
     }
   }
 

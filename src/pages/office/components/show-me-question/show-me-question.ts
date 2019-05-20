@@ -1,7 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'show-me-question',
@@ -27,22 +30,22 @@ export class ShowMeQuestionComponent implements OnChanges {
   showMeQuestionChange = new EventEmitter<ShowMeQuestion>();
 
   private formControl: FormControl;
+  private fieldName: string = 'showMeQuestion';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl('showMeQuestion', this.formControl);
+      this.formGroup.addControl(this.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'showMeQuestion');
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
 
-    if (visibilityType === 'N') {
-      this.formGroup.get('showMeQuestion').clearValidators();
+    if (visibilityType === VisibilityType.NotVisible) {
+      this.formGroup.get(this.fieldName).clearValidators();
     } else {
-      this.formGroup.get('showMeQuestion').setValidators([Validators.required]);
+      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
     }
-
     this.formControl.patchValue(this.showMeQuestion);
   }
 

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { OutcomeBehaviourMapping } from './outcome-behaviour-map.model';
 
+export enum VisibilityType {
+  NotVisible = 'N',
+  Visible = 'Y',
+  VisibleIfPresent = 'A',
+}
+
 @Injectable()
 export class OutcomeBehaviourMapProvider {
 

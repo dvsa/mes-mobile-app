@@ -421,7 +421,7 @@ export class OfficePage extends BasePageComponent {
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
-        map(data => displayDrivingFaultComments(data)), // TODO add call to behaviour provider????
+        map(data => displayDrivingFaultComments(data)),
       ),
       weatherConditions$: currentTest$.pipe(
         select(getTestSummary),

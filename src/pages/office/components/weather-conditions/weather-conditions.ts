@@ -2,7 +2,10 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 import { WeatherConditionSelection } from '../../../../providers/weather-conditions/weather-conditions.model';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'weather-conditions',
@@ -29,20 +32,21 @@ export class WeatherConditionsComponent implements OnChanges {
   weatherConditionsChange = new EventEmitter<WeatherConditions[]>();
 
   private formControl: FormControl;
+  private fieldName: string = 'weatherConditions';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl([]);
-      this.formGroup.addControl('weatherConditions', this.formControl);
+      this.formGroup.addControl(this.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'weatherConditions');
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
 
-    if (visibilityType === 'N') {
-      this.formGroup.get('weatherConditions').clearValidators();
+    if (visibilityType === VisibilityType.NotVisible) {
+      this.formGroup.get(this.fieldName).clearValidators();
     } else {
-      this.formGroup.get('weatherConditions').setValidators([Validators.required]);
+      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
     }
 
     this.formControl.patchValue(this.weatherConditions);

@@ -2,7 +2,10 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Identification } from '@dvsa/mes-test-schema/categories/B';
-import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import {
+  OutcomeBehaviourMapProvider,
+  VisibilityType,
+} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 @Component({
   selector: 'identification',
@@ -25,19 +28,20 @@ export class IdentificationComponent implements OnChanges {
   identificationChange = new EventEmitter<Identification>();
 
   private formControl: FormControl;
+  private formField: string = 'identification';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl('Licence');
-      this.formGroup.addControl('identification', this.formControl);
+      this.formGroup.addControl(this.formField, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, 'identification');
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.formField);
 
-    if (visibilityType === 'N') {
-      this.formGroup.get('identification').clearValidators();
+    if (visibilityType === VisibilityType.NotVisible) {
+      this.formGroup.get(this.formField).clearValidators();
     } else {
-      this.formGroup.get('identification').setValidators([Validators.required]);
+      this.formGroup.get(this.formField).setValidators([Validators.required]);
     }
     this.formControl.patchValue(this.identification);
   }
