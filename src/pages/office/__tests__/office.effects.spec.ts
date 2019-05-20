@@ -5,12 +5,12 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
 import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
 import * as testActions  from '../../../modules/tests/tests.actions';
-import { testSummaryReducer } from '../../../modules/tests/test-summary/test-summary.reducer';
+import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
+import * as officeActions from '../office.actions';
 import { StoreModule, Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { empty } from 'rxjs/Observable/empty';
 import { Observable } from 'rxjs/Observable';
-import { testDataReducer } from '../../../modules/tests/test-data/test-data.reducer';
 import { Competencies } from '../../../modules/tests/test-data/test-data.constants';
 
 export class TestActions extends Actions {
@@ -28,14 +28,21 @@ describe('Test Office Data Effects', () => {
   let effects: OfficeEffects;
   let actions$: any;
 
+  const currentSlotId = '1234';
+
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
     TestBed.configureTestingModule({
       imports: [
 
         StoreModule.forRoot({
-          testSummary: testSummaryReducer,
-          testData: testDataReducer,
+          tests: () => ({
+            currentTest: {
+              slotId: currentSlotId,
+            },
+            testStatus: {},
+            startedTests: {},
+          }),
         }),
       ],
       providers: [
@@ -201,6 +208,24 @@ describe('Test Office Data Effects', () => {
         done();
       });
     });
+  });
+
+  describe('submitWaitingRoomInfoEffect', () => {
+
+    it('should return SET_STATUS_DECIDED & PERSIST_TESTS actions', (done) => {
+      actions$.next(new officeActions.CompleteTest());
+
+      effects.completeTestEffect$.subscribe((result) => {
+        if (result instanceof testStatusActions.SetTestStatusCompleted) {
+          expect(result).toEqual(new testStatusActions.SetTestStatusCompleted(currentSlotId));
+        }
+        if (result instanceof testActions.PersistTests) {
+          expect(result).toEqual(new testActions.PersistTests());
+        }
+        done();
+      });
+    });
+
   });
 
 });

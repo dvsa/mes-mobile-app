@@ -14,9 +14,7 @@ const outcomeStatus: any[] = [
   { outcomeCode: '5', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
 ];
 
-export const getCurrentTestSlotId = (tests: TestsModel) => {
-  return tests.currentTest.slotId;
-};
+export const getCurrentTestSlotId = (tests: TestsModel) => tests.currentTest.slotId;
 
 export const getCurrentTest = (tests: TestsModel) => {
   const currentTestSlotId = tests.currentTest.slotId;
