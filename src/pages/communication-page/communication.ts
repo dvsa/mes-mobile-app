@@ -157,7 +157,6 @@ export class CommunicationPage extends BasePageComponent {
         select(getJournalData),
         select(getCandidate),
         select(getPostalAddress),
-        map(address => this.formatAddress(address)),
       ),
     };
 
@@ -298,12 +297,5 @@ export class CommunicationPage extends BasePageComponent {
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
     }
-  }
-
-  formatAddress (address: Address): Address {
-    const regex = new RegExp('[0-9]', 'g');
-    const formattedAddress: Address = address;
-    Object.keys(formattedAddress).forEach(res => formattedAddress[res] = formattedAddress[res].replace(regex, 'x'));
-    return formattedAddress;
   }
 }

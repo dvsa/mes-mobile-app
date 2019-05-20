@@ -20,9 +20,20 @@ export class PostalAddressComponent {
   isPostalAddressChosen: boolean;
 
   @Output()
-  postalRadioSelect = new EventEmitter<boolean>();
+  postalRadioSelect = new EventEmitter<void>();
 
   postalRadioSelected() {
-    this.postalRadioSelect.emit(true);
+    this.postalRadioSelect.emit();
+  }
+
+  ngOnInit() {
+    this.postalAddress = this.formatAddress(this.postalAddress);
+  }
+
+  formatAddress (address: Address): Address {
+    const regex = new RegExp('[0-9]', 'g');
+    const formattedAddress: Address = address;
+    Object.keys(formattedAddress).forEach(res => formattedAddress[res] = formattedAddress[res].replace(regex, 'x'));
+    return formattedAddress;
   }
 }
