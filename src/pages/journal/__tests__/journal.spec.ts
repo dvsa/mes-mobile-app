@@ -31,6 +31,8 @@ import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/an
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -61,6 +63,7 @@ describe('JournalPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     })
       .compileComponents()
@@ -123,6 +126,24 @@ describe('JournalPage', () => {
 
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every(child => child.name === 'test-slot')).toBeTruthy();
+    });
+
+    describe('test report practice mode', () => {
+      it('should show test report practice mode banner when config is set to true', () => {
+        component.showTestReportPracticeMode =
+          jasmine.createSpy('showTestReportPracticeMode').and.returnValue(true);
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeDefined();
+
+      });
+      it('should not show test report practice mode banner when config is set to false', () => {
+        component.showTestReportPracticeMode =
+          jasmine.createSpy('showTestReportPracticeMode').and.returnValue(false);
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
+      });
     });
   });
 });

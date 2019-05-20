@@ -24,7 +24,7 @@
   <div *ngIf="isUnauthenticated" id="unauthenticated-mode-indicator">
     <label id="unauth-text">You are offline. Some features may be unavailable.</label>
   </div>
-    
+
   <ion-refresher (ionRefresh)="pullRefreshJournal($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -41,7 +41,10 @@
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>
-  
-  <practice-card *ngIf="!(pageState.isLoading$ | async)"></practice-card>
+
+  <practice-card
+    id="testReportPracticeMode"
+    *ngIf="!(pageState.isLoading$ | async) && showTestReportPracticeMode()"
+  ></practice-card>
 
 </ion-content>
