@@ -1,9 +1,10 @@
 import {
     getTestTime,
     getVehicleSlotType,
-    getExtendedTest,
-    getSpecialNeeds,
     getSlotId,
+    isWelshTest,
+    isSpecialNeeds,
+    isExtendedTest,
 } from '../test-slot-attributes.selector';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { DateTime } from '../../../../shared/helpers/date-time';
@@ -12,7 +13,7 @@ const testTime = new DateTime().toString();
 const formattedTime = DateTime.at(testTime).format('HH:mm');
 
 describe('testSlotAttributes selector', () => {
-  const testCentre: TestSlotAttributes = {
+  const testSlotAttributes: TestSlotAttributes = {
     slotId: 1234,
     specialNeeds: true,
     start: testTime,
@@ -23,31 +24,37 @@ describe('testSlotAttributes selector', () => {
 
   describe('getTestTime', () => {
     it('should return the time of the test', () => {
-      expect(getTestTime(testCentre)).toBe(formattedTime);
+      expect(getTestTime(testSlotAttributes)).toBe(formattedTime);
     });
   });
 
   describe('getVehicleSlotType', () => {
     it('should return the vehicle slot type', () => {
-      expect(getVehicleSlotType(testCentre)).toBe('B57mins');
+      expect(getVehicleSlotType(testSlotAttributes)).toBe('B57mins');
     });
   });
 
-  describe('getExtendedTest', () => {
+  describe('isExtendedTest', () => {
     it('should return true if test is an extended test', () => {
-      expect(getExtendedTest(testCentre)).toBeTruthy();
+      expect(isExtendedTest(testSlotAttributes)).toBeTruthy();
     });
   });
 
-  describe('getSpecialNeeds', () => {
+  describe('isSpecialNeeds', () => {
     it('should return true if special needs', () => {
-      expect(getSpecialNeeds(testCentre)).toBeTruthy();
+      expect(isSpecialNeeds(testSlotAttributes)).toBeTruthy();
     });
   });
 
   describe('getSlotId', () => {
     it('should return the slot id of the test', () => {
-      expect(getSlotId(testCentre)).toBe(1234);
+      expect(getSlotId(testSlotAttributes)).toBe(1234);
+    });
+  });
+
+  describe('isWelshTest', () => {
+    it('should return if the test is welsh', () => {
+      expect(isWelshTest(testSlotAttributes)).toBeTruthy();
     });
   });
 

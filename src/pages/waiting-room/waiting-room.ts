@@ -28,6 +28,8 @@ import { PersistTests } from '../../modules/tests/tests.actions';
 import { TranslateService } from 'ng2-translate';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -119,10 +121,9 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
         map(formatDriverNumber),
       ),
       welshTest$: currentTest$.pipe(
-        // TODO: MES-2336 - Get rid of this type generification
         select(getJournalData),
-        select((ct: any) => ct.testSlotAttributes),
-        select(tsa => tsa.welshTest),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
       ),
     };
     this.rehydrateFields();
