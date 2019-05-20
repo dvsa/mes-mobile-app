@@ -16,7 +16,7 @@
       {{ pageState.time$ | async | date: "HH:mm" }}
     </span>
   </h2>
-  
+
   <ion-card>
     <ion-card-header>
       <h4>Candidate details</h4>
@@ -58,7 +58,7 @@
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Special requirements</label>
-            <img 
+            <img
               alt="Exclamation Indicator"
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
@@ -76,15 +76,15 @@
         </ion-row>
         <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row-with-separator">
           <ion-col col-40>
-            <label>Entitlement Check</label>
+            <label>Entitlement check</label>
             <img
-              alt="Exclamation Indicator" 
+              alt="Exclamation Indicator"
               src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
             />
           </ion-col>
           <ion-col col-56>
-            <div class="mes-data">Entitlement check is required. Call deployment</div>
+            <div class="mes-data">Entitlement check is required.</div>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row">
