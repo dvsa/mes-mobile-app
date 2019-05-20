@@ -22,6 +22,7 @@ import { testCentreReducer } from './test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
 import { candidateReducer } from './candidate/candidate.reducer';
 import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -116,8 +117,16 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
           }, combineReducers,
-        // @ts-ignore
-        )(state.startedTests[slotId], action),
+        )(
+          // The redux pattern necessitates that the state tree be initialised
+          // with all its properties declared. This conflicts with the
+          // 'StandardCarTestCATBSchema' TS interface as many of its properties are optional (?).
+          // In order to reconcile the TS interface and the redux reducer pattern we use
+          // the TS 'Required' mapped type which The 'Required' type which strips ? modifiers
+          // from all properties of 'StandardCarTestCATBSchema', thus making all properties required.
+          state.startedTests[slotId] as Required<StandardCarTestCATBSchema>,
+          action,
+        ),
       },
     },
     currentTest: {

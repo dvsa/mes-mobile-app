@@ -35,6 +35,8 @@ import { PersistTests } from '../../modules/tests/tests.actions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -86,7 +88,7 @@ export class DebriefPage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
             ...getVehicleCheckSeriousFault(data.vehicleChecks),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
@@ -97,7 +99,7 @@ export class DebriefPage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getVehicleCheckDangerousFault(data.vehicleChecks),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
@@ -149,10 +151,9 @@ export class DebriefPage extends BasePageComponent {
         select(isPracticeTest),
       ),
       welshTest$: currentTest$.pipe(
-        // TODO: MES-2336 - Get rid of this type generification
         select(getJournalData),
-        select((ct: any) => ct.testSlotAttributes),
-        select(tsa => tsa.welshTest),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
       ),
     };
 

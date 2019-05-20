@@ -26,7 +26,7 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
   forOwn(faults, (value, key) => {
     if (value) {
       const label = key as keyof typeof competencyLabels;
-      faultsEncountered.push(fullCompetencyLabels[label]);
+      faultsEncountered.push(label);
     }
   });
   return faultsEncountered;
@@ -74,7 +74,7 @@ export const getManoeuvreFaults = (
 export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): string[] => {
   const result: string[] = [];
 
-  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push('Vehicle checks');
+  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push('vehicleChecks');
 
   return result;
 };
@@ -82,7 +82,7 @@ export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): str
 export const getVehicleCheckSeriousFault = (vehicleChecks: VehicleChecks): string[] => {
   const result: string[] = [];
 
-  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push('Vehicle checks');
+  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push('vehicleChecks');
 
   return result;
 };
@@ -97,7 +97,7 @@ export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): strin
 
   if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
     || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
-    result.push('Vehicle checks');
+    result.push('vehicleChecks');
   }
 
   return result;
@@ -106,7 +106,7 @@ export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): strin
 export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];
 
-  controlledStop.fault === faultType && result.push('Controlled stop');
+  controlledStop.fault === faultType && result.push('controlledStop');
 
   return result;
 };

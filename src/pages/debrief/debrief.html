@@ -58,7 +58,7 @@
           </ion-col>
           <ion-col col-3></ion-col>
           <ion-col>
-            <div class="counter-label">{{dangerousFault}}</div>
+            <div class="counter-label">{{ 'debrief.competencies.' + dangerousFault | translate }}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -83,7 +83,7 @@
           </ion-col>
           <ion-col col-3></ion-col>
           <ion-col>
-            <div class="counter-label">{{seriousFault}}</div>
+            <div class="counter-label">{{ 'debrief.competencies.' + seriousFault | translate }}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -110,7 +110,7 @@
           </ion-col>
           <ion-col col-3></ion-col>
           <ion-col>
-            <div class="counter-label">{{drivingFault.competencyDisplayName}}</div>
+            <div class="counter-label">{{'debrief.competencies.' + drivingFault.competencyIdentifier | translate}}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
