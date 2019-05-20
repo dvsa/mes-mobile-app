@@ -13,11 +13,15 @@ import {
 } from '../../../../../modules/tests/test-data/test-data.actions';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
+import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
+import { createTranslateLoader } from '../../../../../app/app.module';
+import { Http } from '@angular/http';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
   let component: VehicleChecksCardComponent;
   let store$: Store<StoreModel>;
+  let translate: TranslateService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,6 +31,11 @@ describe('VehicleChecksCardComponent', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer }),
+        TranslateModule.forRoot({
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [Http],
+        }),
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
@@ -38,6 +47,8 @@ describe('VehicleChecksCardComponent', () => {
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         store$.dispatch(new StartTest(105));
+        translate = TestBed.get(TranslateService);
+        translate.setDefaultLang('en');
       });
   }));
 
@@ -86,6 +97,28 @@ describe('VehicleChecksCardComponent', () => {
       fixture.detectChanges();
       const vehicleChecksCard = fixture.debugElement.query(By.css('#show-me-question'));
       expect(vehicleChecksCard).not.toBeNull();
+    });
+
+    describe('Vehicle check reporting', () => {
+      describe('Tell me question reporting', () => {
+        it('should indicate when there was a driving fault on the tell me question', () => {
+          store$.dispatch(new TellMeQuestionDrivingFault());
+          fixture.detectChanges();
+          const tellMeQuestionText = fixture.debugElement.query(By.css('#tell-me-question')).nativeElement;
+          expect(tellMeQuestionText.innerHTML.trim()).toBe('Tell me question - Driving fault');
+        });
+        it('should indicate a tell me fault in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
+          store$.dispatch(new TellMeQuestionDrivingFault());
+          // Language change handled by parent page component, force the switch
+          translate.use('cy').subscribe(() => {
+            fixture.detectChanges();
+            const tellMeQuestionText = fixture.debugElement.query(By.css('#tell-me-question')).nativeElement;
+            expect(tellMeQuestionText.innerHTML.trim()).toBe('[CY] Tell me question - [CY] Driving fault');
+            done();
+          });
+        });
+      });
     });
   });
 

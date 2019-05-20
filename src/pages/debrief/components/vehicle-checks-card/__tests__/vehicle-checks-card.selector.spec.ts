@@ -1,6 +1,6 @@
 import {
   getShowMeQuestionText,
-  getTellMeQuestionText,
+  tellMeQuestionHasFault,
   hasVehicleChecksFault,
 } from '../vehicle-checks-card.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
@@ -62,9 +62,9 @@ describe('vehicleChecksCardSelector', () => {
 
   });
 
-  describe('getTellMeQuestionText', () => {
+  describe('tellMeQuestionHasFault', () => {
 
-    it('should return driving fault text', () => {
+    it('should return true when theres a driving fault for tell me', () => {
       const vehicleChecks = {
         showMeQuestion: {},
         tellMeQuestion: {
@@ -72,12 +72,12 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      const result = getTellMeQuestionText(vehicleChecks);
+      const result = tellMeQuestionHasFault(vehicleChecks);
 
-      expect(result).toBe('Tell me question - Driving fault');
+      expect(result).toBe(true);
     });
 
-    it('should return undefined when no tell me fault', () => {
+    it('should return false when no tell me fault', () => {
       const vehicleChecks = {
         showMeQuestion: {},
         tellMeQuestion: {
@@ -85,9 +85,9 @@ describe('vehicleChecksCardSelector', () => {
         },
       };
 
-      const result = getTellMeQuestionText(vehicleChecks);
+      const result = tellMeQuestionHasFault(vehicleChecks);
 
-      expect(result).toBe(undefined);
+      expect(result).toBe(false);
     });
 
   });

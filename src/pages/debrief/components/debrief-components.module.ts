@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { VehicleChecksCardComponent } from './vehicle-checks-card/vehicle-checks-card';
+import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
   declarations: [
@@ -12,9 +13,10 @@ import { VehicleChecksCardComponent } from './vehicle-checks-card/vehicle-checks
     ComponentsModule,
     CommonModule,
     IonicModule,
+    TranslateModule,
   ],
-  exports:[
+  exports: [
     VehicleChecksCardComponent,
   ],
 })
-export class DebriefComponentsModule {}
+export class DebriefComponentsModule { }

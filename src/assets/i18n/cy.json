@@ -53,6 +53,7 @@
       "controlledStop": "[CY] Controlled stop"
     },
     "dangerousFaultsCardDescription": "[CY] dangerous faults",
+    "drivingFault": "[CY] Driving fault",
     "drivingFaultsCardDescription": "[CY] driving faults",
     "ecoHeader": "[CY] ECO",
     "end": "[CY] End debrief",
@@ -61,6 +62,7 @@
     "outcomeHeader": "[CY] Test outcome",
     "passStatus": "[CY] Passed",
     "seriousFaultsCardDescription": "[CY] serious faults",
+    "tellMeQuestion": "[CY] Tell me question",
     "terminatedStatus": "[CY] Terminated",
     "title": "[CY] Debrief"
   },

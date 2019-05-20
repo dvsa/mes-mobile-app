@@ -53,6 +53,7 @@
       "controlledStop": "Controlled stop"
     },
     "dangerousFaultsCardDescription": "dangerous faults",
+    "drivingFault": "Driving fault",
     "drivingFaultsCardDescription": "driving faults",
     "ecoHeader": "ECO",
     "end": "End debrief",
@@ -61,6 +62,7 @@
     "outcomeHeader": "Test outcome",
     "passStatus": "Passed",
     "seriousFaultsCardDescription": "serious faults",
+    "tellMeQuestion": "Tell me question",
     "terminatedStatus": "Terminated",
     "title": "Debrief"
   },

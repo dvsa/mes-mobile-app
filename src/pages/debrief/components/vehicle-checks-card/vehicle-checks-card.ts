@@ -7,12 +7,12 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.selector';
-import { getShowMeQuestionText, getTellMeQuestionText, hasVehicleChecksFault } from './vehicle-checks-card.selector';
+import { getShowMeQuestionText, tellMeQuestionHasFault, hasVehicleChecksFault } from './vehicle-checks-card.selector';
 import { Subscription } from 'rxjs/Subscription';
 
 interface VehicleChecksCardComponentState {
   showMeQuestion$: Observable<string>;
-  tellMeQuestion$: Observable<string>;
+  tellMeQuestionHasFault$: Observable<boolean>;
   hasVehicleChecksFault$: Observable<boolean>;
 }
 
@@ -27,12 +27,14 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
-    const vehicleChecks$: Observable<VehicleChecks> = this.store$.pipe(
+    const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
+    );
+    const vehicleChecks$: Observable<VehicleChecks> = currentTest$.pipe(
       select(getTestData),
       select(getVehicleChecks),
     );
@@ -41,8 +43,8 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
       showMeQuestion$: vehicleChecks$.pipe(
         select(getShowMeQuestionText),
       ),
-      tellMeQuestion$: vehicleChecks$.pipe(
-        select(getTellMeQuestionText),
+      tellMeQuestionHasFault$: vehicleChecks$.pipe(
+        select(tellMeQuestionHasFault),
       ),
       hasVehicleChecksFault$: vehicleChecks$.pipe(
         select(hasVehicleChecksFault),

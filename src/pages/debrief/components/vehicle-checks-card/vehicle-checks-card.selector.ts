@@ -14,11 +14,8 @@ export const getShowMeQuestionText = (vehicleChecks: VehicleChecks): string => {
   return;
 };
 
-export const getTellMeQuestionText = (vehicleChecks: VehicleChecks): string => {
-  if (vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
-    return 'Tell me question - Driving fault';
-  }
-  return;
+export const tellMeQuestionHasFault = (vehicleChecks: VehicleChecks): boolean => {
+  return vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF;
 };
 
 export const hasVehicleChecksFault = (vehicleChecks: VehicleChecks): boolean => {
