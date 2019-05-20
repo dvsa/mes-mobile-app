@@ -37,11 +37,12 @@
               (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)">
             </new-email>
 
-            <ion-row class="communication-option">
-              <input type="radio" id="post" class="gds-radio-button" name="communicationChoice"
-                (click)="setCommunicationType('post')" [value]="post">
-              <label for="post" class="radio-label">By post</label>
-            </ion-row>
+            <postal-address [formGroup]="form"
+              [postalAddress]="pageState.candidateAddress$ | async"
+              [isPostalAddressChosen]="isSelected('Post')"
+              (postalRadioSelect)="dispatchCandidateChosePost($event)">
+            </postal-address>
+
             <ion-row class="communication-option">
               <input type="radio" id="support-centre" class="gds-radio-button" name="communicationChoice"
                 (click)="setCommunicationType('support-centre')" [value]="SC">

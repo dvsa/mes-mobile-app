@@ -19,6 +19,8 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
   getCandidateEmailAddress,
+  getPostalAddress,
+  formatAddress,
 } from '../../modules/tests/candidate/candidate.selector';
 import {
   CommunicationViewDidEnter,
@@ -31,10 +33,10 @@ import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType,
 } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod } from '@dvsa/mes-test-schema/categories/B';
+import { CommunicationMethod, Address } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import {
-  CandidateChoseEmailAsCommunicationPreference,
+  CandidateChoseEmailAsCommunicationPreference, CandidateChosePostAsCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
 
 interface CommunicationPageState {
@@ -44,6 +46,7 @@ interface CommunicationPageState {
   candidateProvidedEmail$: Observable<string>;
   communicationEmail$: Observable<string>;
   communicationType$: Observable<string>;
+  candidateAddress$: Observable<Address>;
 }
 @IonicPage()
 @Component({
@@ -148,8 +151,13 @@ export class CommunicationPage extends BasePageComponent {
         select(getCommunicationPreference),
         select(getCommunicationPreferenceType),
       ),
+      candidateAddress$: currentTest$.pipe(
+        select(getJournalData),
+        select(getCandidate),
+        select(getPostalAddress),
+        select(formatAddress),
+      ),
     };
-
     const {
       candidateProvidedEmail$,
       communicationEmail$,
@@ -180,6 +188,13 @@ export class CommunicationPage extends BasePageComponent {
   dispatchCandidateChoseNewEmail(newEmail: string): void {
     this.store$.dispatch(
       new CandidateChoseEmailAsCommunicationPreference(newEmail, this.communicationMethodForEmail),
+    );
+  }
+
+  dispatchCandidateChosePost(): void {
+    this.setCommunicationType(this.communicationMethodForPost);
+    this.store$.dispatch(
+      new CandidateChosePostAsCommunicationPreference(this.communicationMethodForPost),
     );
   }
 

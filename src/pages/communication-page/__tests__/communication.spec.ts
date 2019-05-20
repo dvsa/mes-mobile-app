@@ -26,6 +26,7 @@ import { ProvidedEmailComponent } from '../components/provided-email/provided-em
 import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
+import { PostalAddressComponent } from '../components/postal-address/postal-address';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -43,6 +44,11 @@ describe('CommunicationPage', () => {
       lastName: 'Blogs',
     },
     emailAddress: 'testemail@mes',
+    candidateAddress: {
+      addressLine2: 'Someplace',
+      addressLine3: 'Sometown',
+      postcode: 'AB12 3CD',
+    },
   };
 
   beforeEach(async(() => {
@@ -51,6 +57,7 @@ describe('CommunicationPage', () => {
         CommunicationPage,
         ProvidedEmailComponent,
         NewEmailComponent,
+        PostalAddressComponent,
       ],
       imports: [
         IonicModule,
@@ -107,6 +114,17 @@ describe('CommunicationPage', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    describe('DOM', () => {
+      it('should display the correct address fields', () => {
+        expect(fixture.debugElement.query(By.css('#addressLine1'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('#addressLine2'))).toBeDefined();
+        expect(fixture.debugElement.query(By.css('#addressLine3'))).toBeDefined();
+        expect(fixture.debugElement.query(By.css('#addressLine4'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('#addressLine5'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('#postcode'))).toBeDefined();
+      });
     });
 
     describe('Changing preferred email', () => {
