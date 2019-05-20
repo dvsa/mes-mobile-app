@@ -20,7 +20,6 @@ import {
   formatDriverNumber,
   getCandidateEmailAddress,
   getPostalAddress,
-  formatAddress,
 } from '../../modules/tests/candidate/candidate.selector';
 import {
   CommunicationViewDidEnter,
@@ -155,9 +154,10 @@ export class CommunicationPage extends BasePageComponent {
         select(getJournalData),
         select(getCandidate),
         select(getPostalAddress),
-        select(formatAddress),
+        map(address => this.formatAddress(address)),
       ),
     };
+
     const {
       candidateProvidedEmail$,
       communicationEmail$,
@@ -218,5 +218,12 @@ export class CommunicationPage extends BasePageComponent {
 
   verifyCandidateChoseProvidedEmail() {
     return (this.communicationEmail === '') || (this.communicationEmail === this.candidateProvidedEmail);
+  }
+
+  formatAddress (address: Address): Address {
+    const regex = new RegExp('[0-9]', 'g');
+    const formattedAddress: Address = address;
+    Object.keys(formattedAddress).forEach(res => formattedAddress[res] = formattedAddress[res].replace(regex, 'x'));
+    return formattedAddress;
   }
 }

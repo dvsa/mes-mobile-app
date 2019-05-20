@@ -20,9 +20,9 @@ export class PostalAddressComponent {
   isPostalAddressChosen: boolean;
 
   @Output()
-  postalRadioSelect = new EventEmitter();
+  postalRadioSelect = new EventEmitter<boolean>();
 
   postalRadioSelected() {
-    this.postalRadioSelect.emit();
+    this.postalRadioSelect.emit(true);
   }
 }
