@@ -68,3 +68,9 @@ When('I refresh the journal', () => {
   const refreshButton = getElement(by.xpath('//button/span/span/span[text() = "Refresh"]'));
   return clickElement(refreshButton);
 });
+
+Then('I have a non-test slot for {string} with code {string} at {string}', (description, code, time) => {
+  const slotLocator = getElement(by.xpath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
+  [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`));
+  return expect(slotLocator.isPresent()).to.eventually.be.true;
+});
