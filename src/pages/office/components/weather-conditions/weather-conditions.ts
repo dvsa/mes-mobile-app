@@ -32,21 +32,22 @@ export class WeatherConditionsComponent implements OnChanges {
   weatherConditionsChange = new EventEmitter<WeatherConditions[]>();
 
   private formControl: FormControl;
-  private fieldName: string = 'weatherConditions';
+  static readonly fieldName: string = 'weatherConditions';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl([]);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(WeatherConditionsComponent.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome,
+      WeatherConditionsComponent.fieldName);
 
     if (visibilityType === VisibilityType.NotVisible) {
-      this.formGroup.get(this.fieldName).clearValidators();
+      this.formGroup.get(WeatherConditionsComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(WeatherConditionsComponent.fieldName).setValidators([Validators.required]);
     }
 
     this.formControl.patchValue(this.weatherConditions);

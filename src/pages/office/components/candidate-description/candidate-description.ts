@@ -26,21 +26,22 @@ export class CandidateDescriptionComponent implements OnChanges {
   candidateDescriptionChange = new EventEmitter<string>();
 
   private formControl: FormControl;
-  private fieldName: string = 'candidateDescription';
+  static readonly fieldName: string = 'candidateDescription';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(CandidateDescriptionComponent.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome,
+      CandidateDescriptionComponent.fieldName);
 
     if (visibilityType === VisibilityType.NotVisible) {
-      this.formGroup.get(this.fieldName).clearValidators();
+      this.formGroup.get(CandidateDescriptionComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(CandidateDescriptionComponent.fieldName).setValidators([Validators.required]);
     }
     this.formControl.patchValue(this.candidateDescription);
   }

@@ -27,11 +27,11 @@ export class FaultCommentComponent implements OnChanges {
   @Output()
   faultCommentChange = new EventEmitter<CommentedCompetency>();
 
-  private fieldName:string = 'faultComment';
+  static readonly fieldName: string = 'faultComment';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
-    if (this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName) ===
+    if (this.outcomeBehaviourProvider.getVisibilityType(this.outcome, FaultCommentComponent.fieldName) ===
       VisibilityType.NotVisible) {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {

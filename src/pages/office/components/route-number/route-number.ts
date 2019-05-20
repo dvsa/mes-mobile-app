@@ -28,22 +28,23 @@ export class RouteNumberComponent implements OnChanges {
   routeNumberChange = new EventEmitter<number>();
 
   private formControl: FormControl;
-  private fieldName: string = 'routeNumber';
+  static readonly fieldName: string = 'routeNumber';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(RouteNumberComponent.fieldName, this.formControl);
     }
 
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome,
+      RouteNumberComponent.fieldName);
 
     if (visibilityType === VisibilityType.NotVisible) {
-      this.formGroup.get(this.fieldName).clearValidators();
+      this.formGroup.get(RouteNumberComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(RouteNumberComponent.fieldName).setValidators([Validators.required]);
     }
     this.formControl.patchValue(this.routeNumber);
   }

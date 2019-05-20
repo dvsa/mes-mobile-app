@@ -22,12 +22,12 @@ export class AdditionalInformationComponent implements OnChanges {
   additionalInformationChange = new EventEmitter<string>();
 
   private formControl: FormControl;
-  private fieldName: string = 'additionalInformation';
+  static readonly fieldName: string = 'additionalInformation';
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(AdditionalInformationComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.additionalInformation);
   }

@@ -18,11 +18,11 @@ export class OutcomeBehaviourMapProvider {
   getVisibilityType(outcomeId: string, fieldName: string): string {
     const mappedOutcome = this.behaviourMap[outcomeId];
     if (!mappedOutcome) {
-      return 'N';
+      return VisibilityType.NotVisible;
     }
     const field = mappedOutcome[fieldName];
     if (!field) {
-      return 'N';
+      return VisibilityType.NotVisible;
     }
     return field.display;
   }
@@ -37,10 +37,10 @@ export class OutcomeBehaviourMapProvider {
     if (!field) {
       return false;
     }
-    if (field.display === 'A' && value) {
+    if (field.display === VisibilityType.VisibleIfPresent && value) {
       return true;
     }
-    return field.display === 'Y';
+    return field.display === VisibilityType.Visible;
   }
 
   hasDefault(outcomeId: string, fieldName: string): boolean {

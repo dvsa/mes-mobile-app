@@ -30,21 +30,21 @@ export class D255Component implements OnChanges {
   @Output()
   d255Change = new EventEmitter<boolean>();
   private formControl: FormControl;
-  private fieldName: string = 'd255';
+  static readonly fieldName: string = 'd255';
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(D255Component.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, D255Component.fieldName);
 
     if (visibilityType === VisibilityType.NotVisible) {
-      this.formGroup.get(this.fieldName).clearValidators();
+      this.formGroup.get(D255Component.fieldName).clearValidators();
     } else {
-      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(D255Component.fieldName).setValidators([Validators.required]);
     }
 
     this.formControl.patchValue(this.getD255OrDefault());
@@ -52,20 +52,21 @@ export class D255Component implements OnChanges {
 
   d255Changed(d255FormValue: string): void {
     if (this.formControl.valid) {
-      this.d255Change.emit(d255FormValue === ValidD255Values.YES ? true : false);
+      this.d255Change.emit(d255FormValue === ValidD255Values.YES);
     }
   }
 
   getD255OrDefault(): string | null {
-    if (!this.d255) {
-      if (this.outcomeBehaviourProvider.hasDefault(this.outcome, this.fieldName)) {
-        const defaultValue = this.outcomeBehaviourProvider.getDefault(this.outcome, this.fieldName);
-        this.d255Changed(defaultValue);
-        return defaultValue;
-      }
-      return null;
+    if (this.d255) {
+      return this.d255 ? ValidD255Values.YES : ValidD255Values.NO;
     }
-    return this.d255 ? ValidD255Values.YES : ValidD255Values.NO;
+
+    if (this.outcomeBehaviourProvider.hasDefault(this.outcome, D255Component.fieldName)) {
+      const defaultValue = this.outcomeBehaviourProvider.getDefault(this.outcome, D255Component.fieldName);
+      this.d255Changed(defaultValue);
+      return defaultValue;
+    }
+    return null;
   }
 
   get invalid(): boolean {

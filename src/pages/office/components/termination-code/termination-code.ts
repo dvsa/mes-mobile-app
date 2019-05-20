@@ -22,12 +22,12 @@ export class TerminationCodeComponent implements OnChanges {
   terminationCodeChange = new EventEmitter<TerminationCode>();
 
   private formControl: FormControl;
-  private fieldName: string = 'terminationCode';
+  static readonly fieldName: string = 'terminationCode';
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl({ disabled: true }, [Validators.required]);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(TerminationCodeComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.terminationCode);
   }

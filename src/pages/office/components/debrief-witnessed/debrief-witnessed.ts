@@ -31,20 +31,21 @@ export class DebriefWitnessedComponent implements OnChanges {
   debriefWitnessedChange = new EventEmitter<boolean>();
 
   private formControl: FormControl;
-  private fieldName: string = 'debriefWitnessed';
+  static readonly fieldName: string = 'debriefWitnessed';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null);
-      this.formGroup.addControl(this.fieldName, this.formControl);
+      this.formGroup.addControl(DebriefWitnessedComponent.fieldName, this.formControl);
     }
-    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
+    const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome,
+      DebriefWitnessedComponent.fieldName);
 
     if (visibilityType === VisibilityType.NotVisible) {
-      this.formGroup.get(this.fieldName).clearValidators();
+      this.formGroup.get(DebriefWitnessedComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(this.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(DebriefWitnessedComponent.fieldName).setValidators([Validators.required]);
     }
     if (this.debriefWitnessed !== null) {
       this.formControl.patchValue(this.debriefWitnessed
