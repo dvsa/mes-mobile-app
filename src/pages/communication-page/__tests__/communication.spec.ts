@@ -133,9 +133,8 @@ describe('CommunicationPage', () => {
         expect(fixture.debugElement.query(By.css('#postcode'))).toBeNull();
       });
 
-      mockCandidate.candidateAddress = address;
-
       it('should display the correct address fields when address populated', () => {
+        mockCandidate.candidateAddress = address;
         expect(fixture.debugElement.query(By.css('#addressLine1'))).toBeDefined();
         expect(fixture.debugElement.query(By.css('#addressLine2'))).toBeDefined();
         expect(fixture.debugElement.query(By.css('#addressLine3'))).toBeDefined();
