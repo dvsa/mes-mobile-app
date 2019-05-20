@@ -58,7 +58,7 @@ export class DebriefWitnessedComponent implements OnChanges {
   debriefWitnessedChanged(debriefWitnessedFormValue: string): void {
     if (this.formControl.valid) {
       this.debriefWitnessedChange.emit(
-        debriefWitnessedFormValue === ValidWitnessedValues.YES ? true : false);
+        debriefWitnessedFormValue === ValidWitnessedValues.YES);
     }
   }
 
