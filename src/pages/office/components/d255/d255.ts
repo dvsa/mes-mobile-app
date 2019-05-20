@@ -57,10 +57,9 @@ export class D255Component implements OnChanges {
   }
 
   getD255OrDefault(): string | null {
-    if (this.d255) {
+    if (this.d255 !== null) {
       return this.d255 ? ValidD255Values.YES : ValidD255Values.NO;
     }
-
     if (this.outcomeBehaviourProvider.hasDefault(this.outcome, D255Component.fieldName)) {
       const defaultValue = this.outcomeBehaviourProvider.getDefault(this.outcome, D255Component.fieldName);
       this.d255Changed(defaultValue);
