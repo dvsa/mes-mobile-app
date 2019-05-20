@@ -1,4 +1,4 @@
-import { Candidate } from '@dvsa/mes-test-schema/categories/B';
+import { Candidate, Address } from '@dvsa/mes-test-schema/categories/B';
 
 export const getCandidateName = (candidate: Candidate): string => {
   const { title, firstName, lastName } = candidate.candidateName;
@@ -20,3 +20,12 @@ export const formatDriverNumber = (driverNumber: string) => {
 };
 
 export const getCandidateEmailAddress = (candidate: Candidate) => candidate.emailAddress ? candidate.emailAddress : '';
+
+export const getPostalAddress = (candidate: Candidate) => candidate.candidateAddress;
+
+export const formatAddress = (address: Address) => {
+  const regex = new RegExp('[0-9]', 'g');
+  const formattedAddress: Address = address;
+  Object.keys(formattedAddress).forEach(res => formattedAddress[res] = formattedAddress[res].replace(regex, 'x'));
+  return formattedAddress;
+};
