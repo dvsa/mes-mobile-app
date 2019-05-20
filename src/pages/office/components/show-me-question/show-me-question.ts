@@ -36,7 +36,7 @@ export class ShowMeQuestionComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl(null);
+      this.formControl = new FormControl([]);
       this.formGroup.addControl(this.fieldName, this.formControl);
     }
     const visibilityType = this.outcomeBehaviourProvider.getVisibilityType(this.outcome, this.fieldName);
