@@ -42,9 +42,9 @@
     <ng-template #slotContainer></ng-template>
   </ion-list>
 
-  <practice-card
+  <practice-test-report-card
     id="testReportPracticeMode"
     *ngIf="!(pageState.isLoading$ | async) && showTestReportPracticeMode()"
-  ></practice-card>
+  ></practice-test-report-card>
 
 </ion-content>
