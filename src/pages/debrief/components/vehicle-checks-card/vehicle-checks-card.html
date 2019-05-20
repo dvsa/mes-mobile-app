@@ -10,8 +10,8 @@
           <div id="tell-me-question" *ngIf="componentState.tellMeQuestionHasFault$ | async">
             {{ 'debrief.tellMeQuestion' | translate }} - {{ 'debrief.drivingFault' | translate }}
           </div>
-          <div id="show-me-question" *ngIf="componentState.showMeQuestion$ | async">
-            {{ componentState.showMeQuestion$ | async }}
+          <div id="show-me-question" *ngIf="hasShowMeFault">
+            Show me question - Driving fault
           </div>
         </ion-col>
       </ion-row>

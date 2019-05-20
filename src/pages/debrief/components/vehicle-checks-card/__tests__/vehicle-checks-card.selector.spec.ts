@@ -1,5 +1,5 @@
 import {
-  getShowMeQuestionText,
+  getShowMeQuestionOutcome,
   tellMeQuestionHasFault,
   hasVehicleChecksFault,
 } from '../vehicle-checks-card.selector';
@@ -7,59 +7,29 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 
 describe('vehicleChecksCardSelector', () => {
-  describe('getShowMeQuestionText', () => {
-    it('should return dangerous fault text', () => {
-      const vehicleChecks: VehicleChecks = {
+
+  describe('getShowMeQuestionOutcome', () => {
+    it('should return the show me question outcome', () => {
+      let vehicleChecks: VehicleChecks = {
         showMeQuestion: {
           outcome: CompetencyOutcome.D,
         },
         tellMeQuestion: {},
       };
 
-      const result = getShowMeQuestionText(vehicleChecks);
+      let result = getShowMeQuestionOutcome(vehicleChecks);
 
-      expect(result).toBe('Show me question - Dangerous fault');
-    });
-
-    it('should return serious fault text', () => {
-      const vehicleChecks = {
-        showMeQuestion: {
-          outcome: CompetencyOutcome.S,
-        },
-        tellMeQuestion: {},
-      };
-
-      const result = getShowMeQuestionText(vehicleChecks);
-
-      expect(result).toBe('Show me question - Serious fault');
-    });
-
-    it('should return driving fault text', () => {
-      const vehicleChecks = {
+      expect(result).toBe(CompetencyOutcome.D);
+      vehicleChecks = {
+        ...vehicleChecks,
         showMeQuestion: {
           outcome: CompetencyOutcome.DF,
         },
-        tellMeQuestion: {},
       };
 
-      const result = getShowMeQuestionText(vehicleChecks);
-
-      expect(result).toBe('Show me question - Driving fault');
+      result = getShowMeQuestionOutcome(vehicleChecks);
+      expect(result).toBe(CompetencyOutcome.DF);
     });
-
-    it('should return undefined when no show me fault', () => {
-      const vehicleChecks = {
-        showMeQuestion: {
-          outcome: CompetencyOutcome.P,
-        },
-        tellMeQuestion: {},
-      };
-
-      const result = getShowMeQuestionText(vehicleChecks);
-
-      expect(result).toBe(undefined);
-    });
-
   });
 
   describe('tellMeQuestionHasFault', () => {

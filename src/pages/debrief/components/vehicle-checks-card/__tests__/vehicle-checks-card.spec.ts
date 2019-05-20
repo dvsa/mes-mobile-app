@@ -119,6 +119,26 @@ describe('VehicleChecksCardComponent', () => {
           });
         });
       });
+      describe('Show me question reporting', () => {
+        it('should indicate when there was a driving fault on the show me question', () => {
+          fixture.detectChanges();
+          store$.dispatch(new ShowMeQuestionDrivingFault());
+          fixture.detectChanges();
+          const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question')).nativeElement;
+          expect(showMeQuestionText.innerHTML.trim()).toBe('Show me question - Driving fault');
+        });
+        // it('should indicate a tell me driving fault in Welsh for a Welsh test', (done) => {
+        //   fixture.detectChanges();
+        //   store$.dispatch(new ShowMeQuestionDrivingFault());
+        //   // Language change handled by parent page component, force the switch
+        //   translate.use('cy').subscribe(() => {
+        //     fixture.detectChanges();
+        //     const showMeQuestionText = fixture.debugElement.query(By.css('#show-me-question')).nativeElement;
+        //     expect(showMeQuestionText.innerHTML.trim()).toBe('[CY] Show me question - [CY] Driving fault');
+        //     done();
+        //   });
+        // });
+      });
     });
   });
 
