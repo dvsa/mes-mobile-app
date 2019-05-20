@@ -31,6 +31,8 @@ import { PersistTests } from '../../modules/tests/tests.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -157,10 +159,9 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getPassCertificateNumber),
       ),
       welshTest$: currentTest$.pipe(
-        // TODO: MES-2336 - Get rid of this type generification
         select(getJournalData),
-        select((ct: any) => ct.testSlotAttributes),
-        select(tsa => tsa.welshTest),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
       ),
     };
     this.rehydrateFields();
