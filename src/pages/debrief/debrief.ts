@@ -86,7 +86,7 @@ export class DebriefPage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
             ...getVehicleCheckSeriousFault(data.vehicleChecks),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
@@ -97,7 +97,7 @@ export class DebriefPage extends BasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getVehicleCheckDangerousFault(data.vehicleChecks),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
