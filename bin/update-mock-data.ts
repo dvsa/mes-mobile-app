@@ -19,6 +19,7 @@ class DateUpdater {
     if (!this.data.testSlots) { return this; }
 
     this.updateSlots(this.data.testSlots);
+    this.updateSlots(this.data.nonTestActivities);
     return this;
   }
 
@@ -48,8 +49,9 @@ class DateUpdater {
       dateProcessing =
         this.caculateNewProcessingDate(dateProcessing, commitmentDate, newDate);
 
-      commitment.startDate =
-        this.createMoment(this.updateDate(commitmentDate, newDate)).format('YYYY-MM-DD');
+      const newFormattedDate = this.createMoment(this.updateDate(commitmentDate, newDate)).format('YYYY-MM-DD');
+      commitment.startDate = newFormattedDate;
+      commitment.endDate = newFormattedDate;
     });
     return this;
 
@@ -72,6 +74,21 @@ class DateUpdater {
 
     return this;
   }
+
+  public updateDeployments = (): DateUpdater => {
+    const { deployments } = this.data;
+    if (!deployments) {
+      return this;
+    }
+    
+    const newDate = this.createMoment().format('YYYY-MM-DD');;
+  
+    deployments.forEach((deployment) => {
+      deployment.date = newDate;
+    });
+
+    return this;
+  };
 
   public getData = (): ExaminerWorkSchedule => {
     return this.data;
@@ -141,16 +158,16 @@ class DateUpdater {
   }
 }
 
-updateLocalJournal();
+updateMockData('mock/local-journal.json');
+updateMockData('mock/local-journal-non-test-activities.json');
 
-function updateLocalJournal() {
-  const path = 'mock/local-journal.json';
-
+function updateMockData(path: string) {
   const updatedData = new DateUpdater(getData(path))
     .updateTestSlots()
     .updateNonTestActivities()
     .updatePersonalCommitments()
     .updateAdvancedTestSlots()
+    .updateDeployments()
     .getData();
 
   saveData(path, updatedData);
