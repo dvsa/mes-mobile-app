@@ -172,7 +172,7 @@ describe('Journal Effects', () => {
     actions$.next(new journalActions.SelectPreviousDay());
     // ASSERT
     effects.selectPreviousDayEffect$.subscribe((result) => {
-      if (result instanceof journalActions.SetSelectedDate)  {
+      if (result instanceof journalActions.SetSelectedDate) {
         expect(result).toEqual(new journalActions.SetSelectedDate(selectedDate));
       }
       if (result instanceof journalActions.JournalNavigateDay) {

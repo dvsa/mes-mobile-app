@@ -12,8 +12,12 @@ import { practiceSlot } from './__mocks__/tests.mock';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
-import { getCurrentTest } from './tests.selector';
+import { getCurrentTest, getCurrentTestSlotId } from './tests.selector';
 import { TestSubmissionProvider } from '../../providers/test-submission/test-submission';
+import { interval } from 'rxjs/observable/interval';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { startsWith } from 'lodash';
 
 @Injectable()
 export class TestsEffects {
@@ -21,6 +25,8 @@ export class TestsEffects {
     private actions$: Actions,
     private testPersistenceProvider: TestPersistenceProvider,
     private testSubmissionProvider: TestSubmissionProvider,
+    private appConfigProvider: AppConfigProvider,
+    private networkStateProvider: NetworkStateProvider,
     private store$: Store<StoreModel>,
   ) {}
 
@@ -63,27 +69,89 @@ export class TestsEffects {
   );
 
   @Effect()
-  completeTestEffect$ = this.actions$.pipe(
-    ofType(testStatusActions.TEST_STATUS_COMPLETED),
+  startSendingCompletedTestsEffect$ = this.actions$.pipe(
+    ofType(testActions.START_SENDING_COMPLETED_TESTS),
+    switchMap(() => {
+      return interval(this.appConfigProvider.getAppConfig().tests.autoSendInterval)
+        .pipe(
+          map(() => new testActions.SendCompletedTests()),
+        );
+    }),
+  );
+
+  @Effect()
+  sendCompletedTestsEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_COMPLETED_TESTS),
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
       ),
     ),
+    filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE),
     switchMap(([action, tests]) => {
-      const currentTest = getCurrentTest(tests);
-      return of(new testActions.SendTest(currentTest));
+
+      const completedTestKeys = Object.keys(tests.testStatus).filter((slotId) => {
+        return !startsWith(slotId, 'practice_') && tests.testStatus[slotId] === 'Completed';
+      });
+
+      const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
+
+      if (completedTests.length === 0) {
+        return of();
+      }
+
+      return this.testSubmissionProvider.submitTests(completedTests)
+        .pipe(
+          map((response: any) => {
+            return new testActions.SendCompletedTestsSuccess(completedTestKeys);
+          }),
+          catchError((err: any) => {
+            return of(new testActions.SendCompletedTestsFailure());
+          }),
+        );
+    }),
+  );
+
+  @Effect()
+  sendCompletedTestsSuccessEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_COMPLETED_TESTS_SUCCESS),
+    switchMap((action: testActions.SendCompletedTestsSuccess) => {
+      return [
+        ...action.completedTestIds.map(id => new testStatusActions.SetTestStatusSubmitted(id)),
+        new testActions.PersistTests(),
+      ];
+    }),
+  );
+
+  @Effect()
+  setTestStatusCompletedEffect$ = this.actions$.pipe(
+    ofType(testStatusActions.SET_TEST_STATUS_COMPLETED),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+      ),
+    ),
+    map(([action, currentTest]) => {
+      return new testActions.SendTest(currentTest);
     }),
   );
 
   @Effect()
   sendTestEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_TEST),
-    switchMap((action: testActions.SendTest) => {
-      return this.testSubmissionProvider.submitTests([action.payload])
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        select(getCurrentTestSlotId),
+      ),
+    ),
+    switchMap(([action, currentTestSlotId]) => {
+      const sendTestAction = action as testActions.SendTest;
+      return this.testSubmissionProvider.submitTests([sendTestAction.payload])
         .pipe(
           map((response: any) => {
-            return new testActions.SendTestSuccess();
+            return new testActions.SendTestSuccess(currentTestSlotId);
           }),
           catchError((err: any) => {
             return of(new testActions.SendTestFailure());
@@ -95,8 +163,11 @@ export class TestsEffects {
   @Effect()
   sendTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_TEST_SUCCESS),
-    switchMap((action) => {
-      return of(new testStatusActions.TestStatusSubmitted());
+    switchMap((action: testActions.SendTestSuccess) => {
+      return [
+        new testStatusActions.SetTestStatusSubmitted(action.slotId),
+        new testActions.PersistTests(),
+      ];
     }),
   );
 

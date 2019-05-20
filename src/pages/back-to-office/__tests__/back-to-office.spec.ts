@@ -10,14 +10,12 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { TestStatusDecided } from '../../../modules/tests/test-status/test-status.actions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
-import { PersistTests } from '../../../modules/tests/tests.actions';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;
@@ -72,11 +70,6 @@ describe('BackToOfficePage', () => {
         expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
-      });
-      it('should dispatch actions to change the test status and to persist the tests', () => {
-        component.ionViewDidEnter();
-        expect(store$.dispatch).toHaveBeenCalledWith(new TestStatusDecided());
-        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
       });
     });
   });

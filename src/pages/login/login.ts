@@ -23,7 +23,7 @@ import { StartSendingLogs, LoadLog } from '../../modules/logs/logs.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
-import { LoadPersistedTests } from '../../modules/tests/tests.actions';
+import { LoadPersistedTests, StartSendingCompletedTests } from '../../modules/tests/tests.actions';
 import { AppConfigError } from '../../providers/app-config/app-config.constants';
 
 @IonicPage()
@@ -94,6 +94,9 @@ export class LoginPage extends BasePageComponent {
 
       this.analytics.initialiseAnalytics();
       this.store$.dispatch(new StartSendingLogs());
+
+      this.store$.dispatch(new StartSendingCompletedTests());
+
       this.handleLoadingUI(false);
       this.validateDeviceType();
 

@@ -23,8 +23,6 @@ import { map } from 'rxjs/operators';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { TestStatusStarted } from '../../modules/tests/test-status/test-status.actions';
-import { PersistTests } from '../../modules/tests/tests.actions';
 import { TranslateService } from 'ng2-translate';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
@@ -170,13 +168,13 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   residencyDeclarationChanged(): void {
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
-          this.store$.dispatch(new TestStatusStarted());
-          this.store$.dispatch(new PersistTests());
+          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfo());
           this.navCtrl.push('WaitingRoomToCarPage');
         })
         .catch((err) => {

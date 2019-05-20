@@ -79,7 +79,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-
     this.pageState = {
       selectedDate$: this.store$.pipe(
         select(getJournalState),

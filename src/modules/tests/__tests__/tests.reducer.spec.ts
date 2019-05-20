@@ -3,8 +3,6 @@ import * as journalActions from '../../../pages/journal/journal.actions';
 import * as candidateReducer from '../candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
-import { TestStatus } from '../test-status/test-status.model';
-import * as testStatusReducer from '../test-status/test-status.reducer';
 import { TestsModel } from '../tests.model';
 import * as testActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -22,7 +20,7 @@ describe('testsReducer', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = 123;
     const action = new journalActions.StartTest(slotId);
@@ -36,7 +34,7 @@ describe('testsReducer', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = 'practice_123';
     const action = new testActions.StartPracticeTest(slotId);
@@ -105,7 +103,7 @@ describe('testsReducer', () => {
           activityCode: null,
         },
       },
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = 'practice_1';
     const action = new testActions.StartPracticeTest(slotId);
@@ -126,7 +124,7 @@ describe('testsReducer', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
     const slotId = '123';
     const action = new testActions.StartPracticeTest(slotId);
@@ -140,7 +138,7 @@ describe('testsReducer', () => {
     const state: TestsModel = {
       currentTest: { slotId: null },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
 
     const result = testsReducer(state, new journalActions.StartTest(123));
@@ -151,29 +149,11 @@ describe('testsReducer', () => {
     expect(result.startedTests['123'].preTestDeclarations).toBe(preTestDeclarations);
   });
 
-  it('should track test lifecycles independently of the started tests', () => {
-    const testStatusReducerResult = TestStatus.Started;
-    spyOn(testStatusReducer, 'testStatusReducer').and.returnValue(testStatusReducerResult);
-    const state: TestsModel = {
-      currentTest: { slotId: '123' },
-      startedTests: {},
-      testLifecycles: {
-        456: TestStatus.Decided,
-      },
-    };
-
-    const result = testsReducer(state, new journalActions.JournalViewDidEnter());
-
-    expect(testStatusReducer.testStatusReducer).toHaveBeenCalled();
-    expect(result.testLifecycles['123']).toBe(TestStatus.Started);
-    expect(result.testLifecycles['456']).toBe(TestStatus.Decided);
-  });
-
   it('should assign the slot ID as the current test when a test is activated', () => {
     const state: TestsModel = {
       currentTest: { slotId: '123' },
       startedTests: {},
-      testLifecycles: {},
+      testStatus: {},
     };
 
     const result = testsReducer(state, new journalActions.ActivateTest(456));

@@ -24,7 +24,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { TestStatusDecided } from '../../../../../modules/tests/test-status/test-status.actions';
+import { SetTestStatusDecided } from '../../../../../modules/tests/test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { StartTest } from '../../../journal.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
@@ -295,7 +295,7 @@ describe('TestSlotComponent', () => {
       it('should pass test status decided to the test-outcome component when the outcome observable changes', () => {
         fixture.detectChanges();
         store$.dispatch(new StartTest(mockSlot.slotDetail.slotId));
-        store$.dispatch(new TestStatusDecided());
+        store$.dispatch(new SetTestStatusDecided(mockSlot.slotDetail.slotId.toString()));
         fixture.detectChanges();
 
         const testOutcomeSubComponent = fixture.debugElement.query(

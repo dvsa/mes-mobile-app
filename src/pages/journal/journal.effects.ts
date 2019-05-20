@@ -31,6 +31,7 @@ import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidat
 import { TestSlotAttributes, TestCentre } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
+import { SetTestStatusBooked } from '../../modules/tests/test-status/test-status.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -173,6 +174,7 @@ export class JournalEffects {
         new PopulateCandidateDetails(slot.slotData.booking.candidate),
         new PopulateTestSlotAttributes(this.extractTestSlotAttributes(slot.slotData)),
         new PopulateTestCentre(this.extractTestCentre(slot.slotData)),
+        new SetTestStatusBooked(startTestAction.slotId.toString()),
       ];
     }),
   );

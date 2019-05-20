@@ -3,6 +3,7 @@ import * as testActions from './tests.actions';
 
 import { TestsModel } from './tests.model';
 import { startsWith } from 'lodash';
+import * as testStatusActions from './test-status/test-status.actions';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { nestedCombineReducers } from 'nested-combine-reducers';
 
@@ -27,7 +28,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
   startedTests: {},
-  testLifecycles: {},
+  testStatus: {},
 };
 
 /**
@@ -57,14 +58,14 @@ export function testsReducer(
       };
     case testActions.START_PRACTICE_TEST:
       const { [slotId]: removedStartedTest, ...updatedStartedTests } = state.startedTests;
-      const { [slotId]: removedTestLifecycle, ...updatedTestLifecycles } = state.testLifecycles;
+      const { [slotId]: removedTestStatus, ...updatedTestStatus } = state.testStatus;
       const newState = {
         ...state,
         currentTest: {
           ...initialState.currentTest,
         },
         startedTests: updatedStartedTests,
-        testLifecycles: updatedTestLifecycles,
+        testStatus: updatedTestStatus,
       };
       return slotId ? createStateObject(newState, action, slotId) : state;
     default:
@@ -132,10 +133,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
     currentTest: {
       slotId,
     },
-    testLifecycles: {
-      ...state.testLifecycles,
-      [slotId]: testStatusReducer(state.testLifecycles[slotId], action),
-    },
+    testStatus: testStatusReducer(state.testStatus, action as testStatusActions.Types),
   };
 };
 

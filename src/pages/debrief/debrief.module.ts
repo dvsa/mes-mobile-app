@@ -7,6 +7,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { DebriefComponentsModule } from './components/debrief-components.module';
 import { TranslateModule } from 'ng2-translate';
+import { DebriefEffects } from './debrief.effects';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,10 @@ import { TranslateModule } from 'ng2-translate';
   imports: [
     DebriefComponentsModule,
     IonicPageModule.forChild(DebriefPage),
-    EffectsModule.forFeature([DebriefAnalyticsEffects]),
+    EffectsModule.forFeature([
+      DebriefEffects,
+      DebriefAnalyticsEffects,
+    ]),
     ComponentsModule,
     TranslateModule,
   ],

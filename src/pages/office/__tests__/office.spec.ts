@@ -45,7 +45,7 @@ import {
   ActivityCodeDescription,
 } from '../components/termination-code/termination-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { TestStatusCompleted } from '../../../modules/tests/test-status/test-status.actions';
+import { CompleteTest } from '../office.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -78,7 +78,7 @@ describe('OfficePage', () => {
             currentTest: {
               slotId: '123',
             },
-            testLifecycles: {},
+            testStatus: {},
             startedTests: {
               123: {
                 vehicleDetails: {},
@@ -164,8 +164,7 @@ describe('OfficePage', () => {
       it('should successfully end the test', () => {
         component.completeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new TestStatusCompleted());
-        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+        expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
       });
     });
   });

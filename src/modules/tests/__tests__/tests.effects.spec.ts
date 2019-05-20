@@ -14,6 +14,10 @@ import { initialState, testsReducer } from '../tests.reducer';
 import { TestSubmissionProvider } from '../../../providers/test-submission/test-submission';
 import { TestSubmissionProviderMock } from '../../../providers/test-submission/__mocks__/test-submission.mock';
 import { Store, StoreModule } from '@ngrx/store';
+import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 
 describe('Tests Effects', () => {
 
@@ -32,8 +36,10 @@ describe('Tests Effects', () => {
       providers: [
         TestsEffects,
         provideMockActions(() => actions$),
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
         { provide: TestSubmissionProvider, useClass: TestSubmissionProviderMock },
+        { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         Store,
       ],
     });
@@ -96,11 +102,17 @@ describe('Tests Effects', () => {
 
   describe('sendTestSuccessEffect', () => {
     it('should dispatch the TestStatusSubmitted action', (done) => {
+      const currentTestSlotId = '12345';
       // ACT
-      actions$.next(new testsActions.SendTestSuccess());
+      actions$.next(new testsActions.SendTestSuccess(currentTestSlotId));
       // ASSERT
       effects.sendTestSuccessEffect$.subscribe((result) => {
-        expect(result).toEqual(new testStatusActions.TestStatusSubmitted());
+        if (result instanceof testStatusActions.SetTestStatusSubmitted)  {
+          expect(result).toEqual(new testStatusActions.SetTestStatusSubmitted(currentTestSlotId));
+        }
+        if (result instanceof testsActions.PersistTests) {
+          expect(result).toEqual(new testsActions.PersistTests());
+        }
         done();
       });
     });

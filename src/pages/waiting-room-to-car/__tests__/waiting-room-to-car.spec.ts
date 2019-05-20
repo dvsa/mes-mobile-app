@@ -69,7 +69,7 @@ describe('WaitingRoomToCarPage', () => {
             currentTest: {
               slotId: '123',
             },
-            testLifecycles: {},
+            testStatus: {},
             startedTests: {
               123: {
                 vehicleDetails: {},

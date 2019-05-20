@@ -40,6 +40,8 @@ import { DataStoreProvider } from '../../../providers/data-store/data-store';
 import { DataStoreProviderMock } from '../../../providers/data-store/__mocks__/data-store.mock';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
+import { LoadLog, StartSendingLogs } from '../../../modules/logs/logs.actions';
+import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -210,6 +212,15 @@ describe('LoginPage', () => {
 
       expect(component.isUserNotAuthorised()).toBeTruthy();
     });
+
+    it('should dispatch LOAD_LOG, START_SENDING_LOGS, START_SENDING_COMPLETED_LOGS action', fakeAsync(() => {
+      component.login();
+      tick();
+
+      expect(store$.dispatch).toHaveBeenCalledWith(new LoadLog());
+      expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
+      expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingCompletedTests());
+    }));
   });
 
   describe('Async order of events in the login() method', () => {

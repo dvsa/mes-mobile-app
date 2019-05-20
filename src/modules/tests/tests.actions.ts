@@ -2,7 +2,11 @@ import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
 import { ActivityCode, StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
-export const START_SENDING_COMPLETED_TESTS = '[???] Start Sending Completed Test';
+export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
+export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
+export const SEND_COMPLETED_TESTS_SUCCESS = '[TestsEffects] Send Completed Tests Success';
+export const SEND_COMPLETED_TESTS_FAILURE = '[TestsEffects] Send Completed Tests Failure';
+
 export const SEND_TEST = '[TestsEffects] Send Test';
 export const SEND_TEST_SUCCESS = '[Tests] Send Test Success';
 export const SEND_TEST_FAILURE = '[Tests] Send Test Failure';
@@ -40,6 +44,19 @@ export class StartSendingCompletedTests implements Action {
   readonly type = START_SENDING_COMPLETED_TESTS;
 }
 
+export class SendCompletedTests implements Action {
+  readonly type = SEND_COMPLETED_TESTS;
+}
+
+export class SendCompletedTestsSuccess implements Action {
+  readonly type = SEND_COMPLETED_TESTS_SUCCESS;
+  constructor(public completedTestIds: string[]) {}
+}
+
+export class SendCompletedTestsFailure implements Action {
+  readonly type = SEND_COMPLETED_TESTS_FAILURE;
+}
+
 export class SendTest implements Action {
   readonly type = SEND_TEST;
   constructor(public payload: StandardCarTestCATBSchema) {}
@@ -47,6 +64,7 @@ export class SendTest implements Action {
 
 export class SendTestSuccess implements Action {
   readonly type = SEND_TEST_SUCCESS;
+  constructor(public slotId: string) {}
 }
 
 export class SendTestFailure implements Action {
@@ -60,6 +78,9 @@ export type Types =
   | SetActivityCode
   | StartPracticeTest
   | StartSendingCompletedTests
+  | SendCompletedTests
+  | SendCompletedTestsSuccess
+  | SendCompletedTestsFailure
   | SendTest
   | SendTestSuccess
   | SendTestFailure;

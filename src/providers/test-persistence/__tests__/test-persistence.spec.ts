@@ -11,7 +11,7 @@ describe('TestPersistenceProvider', () => {
   const testState: TestsModel = {
     currentTest: { slotId: '123' },
     startedTests: {},
-    testLifecycles: {},
+    testStatus: {},
   };
 
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('TestPersistenceProvider', () => {
       const persistedTestsModel: TestsModel = {
         currentTest: { slotId: '1' },
         startedTests: {},
-        testLifecycles: {},
+        testStatus: {},
       };
       dataStoreProvider.getItem.and.returnValue(JSON.stringify(persistedTestsModel));
 

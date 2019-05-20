@@ -20,7 +20,6 @@ import {
   TogglePlanningEco,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
-import { PersistTests } from '../../../modules/tests/tests.actions';
 import { DebriefComponentsModule } from '../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -32,6 +31,7 @@ import { TranslateModule, TranslateService } from 'ng2-translate';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { EndDebrief } from '../debrief.actions';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -64,7 +64,7 @@ describe('DebriefPage', () => {
             currentTest: {
               slotId: '123',
             },
-            testLifecycles: {},
+            testStatus: {},
             startedTests: {
               123: {
                 testSlotAttributes,
@@ -233,7 +233,7 @@ describe('DebriefPage', () => {
     describe('endDebrief', () => {
       it('should dispatch the PersistTests action', () => {
         component.endDebrief();
-        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests);
+        expect(store$.dispatch).toHaveBeenCalledWith(new EndDebrief);
       });
       it('should navigate to PassFinalisationPage when outcome = pass', () => {
         component.outcome = 'Pass';

@@ -14,6 +14,8 @@ const outcomeStatus: any[] = [
   { outcomeCode: '5', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
 ];
 
+export const getCurrentTestSlotId = (tests: TestsModel) => tests.currentTest.slotId;
+
 export const getCurrentTest = (tests: TestsModel) => {
   const currentTestSlotId = tests.currentTest.slotId;
   return tests.startedTests[currentTestSlotId];
@@ -21,7 +23,7 @@ export const getCurrentTest = (tests: TestsModel) => {
 
 export const getJournalData = (test: StandardCarTestCATBSchema): JournalData => test.journalData;
 
-export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testLifecycles[slotId] || TestStatus.Booked;
+export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testStatus[slotId] || TestStatus.Booked;
 
 export const getTestOutcome = (test: StandardCarTestCATBSchema) => test.activityCode;
 

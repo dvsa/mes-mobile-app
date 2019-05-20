@@ -1,30 +1,39 @@
 import { Action } from '@ngrx/store';
 
-// TODO: These actions are not relatable to an action in the app. Rename needed.
+export const SET_TEST_STATUS_BOOKED = '[JournalEffects] Set Test Status to Booked';
+export const SET_TEST_STATUS_STARTED = '[WaitingRoomEffects] Set Test Status to Started';
+export const SET_TEST_STATUS_DECIDED = '[DebriefEffects] Set Test Status to Decided';
+export const SET_TEST_STATUS_COMPLETED = '[OfficeEffects] Set Test Status to Completed';
+export const SET_TEST_STATUS_SUBMITTED = '[TestsEffects] Set Test Status to Submitted';
 
-export const TEST_STATUS_STARTED = '[Test status] Started';
-export const TEST_STATUS_DECIDED = '[Test status] Decided';
-export const TEST_STATUS_COMPLETED = '[Tests status] Completed';
-export const TEST_STATUS_SUBMITTED = '[Tests status] Submitted';
-
-export class TestStatusStarted implements Action {
-  readonly type = TEST_STATUS_STARTED;
+export class SetTestStatusBooked implements Action {
+  readonly type = SET_TEST_STATUS_BOOKED;
+  constructor(public slotId: string) {}
 }
 
-export class TestStatusDecided implements Action {
-  readonly type = TEST_STATUS_DECIDED;
+export class SetTestStatusStarted implements Action {
+  readonly type = SET_TEST_STATUS_STARTED;
+  constructor(public slotId: string) {}
 }
 
-export class TestStatusCompleted implements Action {
-  readonly type = TEST_STATUS_COMPLETED;
+export class SetTestStatusDecided implements Action {
+  readonly type = SET_TEST_STATUS_DECIDED;
+  constructor(public slotId: string) {}
 }
 
-export class TestStatusSubmitted implements Action {
-  readonly type = TEST_STATUS_SUBMITTED;
+export class SetTestStatusCompleted implements Action {
+  readonly type = SET_TEST_STATUS_COMPLETED;
+  constructor(public slotId: string) {}
+}
+
+export class SetTestStatusSubmitted implements Action {
+  readonly type = SET_TEST_STATUS_SUBMITTED;
+  constructor(public slotId: string) {}
 }
 
 export type Types =
-  | TestStatusStarted
-  | TestStatusDecided
-  | TestStatusCompleted
-  | TestStatusSubmitted;
+  | SetTestStatusBooked
+  | SetTestStatusStarted
+  | SetTestStatusDecided
+  | SetTestStatusCompleted
+  | SetTestStatusSubmitted;
