@@ -20,6 +20,8 @@ export type AppConfig = {
     numberOfDaysToView: number,
     allowTests: boolean,
     allowedTestCategories: string [],
+    enableTestReportPracticeMode: boolean,
+    enableEndToEndPracticeMode: boolean,
   },
   tests: {
     testSubmissionUrl: string,

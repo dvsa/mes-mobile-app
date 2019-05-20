@@ -26,6 +26,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -68,6 +69,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     private resolver: ComponentFactoryResolver,
     public analytics: AnalyticsProvider,
     public dateTimeProvider: DateTimeProvider,
+    public appConfigProvider: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
@@ -228,5 +230,11 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.store$.dispatch(new journalActions.UnloadJournal());
     super.logout();
   }
+
+  showTestReportPracticeMode = () :boolean =>
+    this.appConfigProvider.getAppConfig().journal.enableTestReportPracticeMode
+
+  showEndToEndPracticeMode = () :boolean =>
+    this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
 
 }
