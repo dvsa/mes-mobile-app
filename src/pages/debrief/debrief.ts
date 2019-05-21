@@ -3,7 +3,11 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { getCurrentTest, isPracticeTest, getJournalData } from '../../modules/tests/tests.selector';
+import {
+  getCurrentTest,
+  isTestReportPracticeTest,
+  getJournalData,
+} from '../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -150,7 +154,7 @@ export class DebriefPage extends BasePageComponent {
       ),
       practiceTest$: this.store$.pipe(
         select(getTests),
-        select(isPracticeTest),
+        select(isTestReportPracticeTest),
       ),
       welshTest$: currentTest$.pipe(
         select(getJournalData),

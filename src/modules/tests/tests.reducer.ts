@@ -2,7 +2,6 @@ import * as journalActions from '../../pages/journal/journal.actions';
 import * as testActions from './tests.actions';
 
 import { TestsModel } from './tests.model';
-import { startsWith } from 'lodash';
 import * as testStatusActions from './test-status/test-status.actions';
 import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { nestedCombineReducers } from 'nested-combine-reducers';
@@ -24,6 +23,7 @@ import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-att
 import { candidateReducer } from './candidate/candidate.reducer';
 import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { testReportPracticeSlotId } from './__mocks__/tests.mock';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -56,7 +56,7 @@ export function testsReducer(
           },
         },
       };
-    case testActions.START_PRACTICE_TEST:
+    case testActions.START_TEST_REPORT_PRACTICE_TEST:
       const { [slotId]: removedStartedTest, ...updatedStartedTests } = state.startedTests;
       const { [slotId]: removedTestStatus, ...updatedTestStatus } = state.testStatus;
       const newState = {
@@ -74,16 +74,15 @@ export function testsReducer(
 }
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof testActions.StartPracticeTest) {
-    if (!startsWith(action.slotId, 'practice_')) {
-      return `practice_${action.slotId}`;
-    }
-    return `${action.slotId}`;
+  if (action instanceof testActions.StartTestReportPracticeTest) {
+    return testReportPracticeSlotId;
   }
+
   if (action instanceof journalActions.StartTest
       || action instanceof journalActions.ActivateTest) {
     return `${action.slotId}`;
   }
+
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };
 
