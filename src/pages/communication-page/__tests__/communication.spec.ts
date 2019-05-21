@@ -72,10 +72,15 @@ describe('CommunicationPage', () => {
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
               },
+              journalData: {
+                candidate: mockCandidate,
+              },
+              communicationPreferences: {
+                updatedEmail: '',
+                communicationMethod: 'Post',
+              },
             },
-            journalData: {
-              candidate: mockCandidate,
-            },
+
           },
         })),
       ],
@@ -110,39 +115,6 @@ describe('CommunicationPage', () => {
   describe('Class', () => {
     it('should create', () => {
       expect(component).toBeDefined();
-    });
-
-    describe('DOM', () => {
-      const address = {
-        candidateAddress: {
-          addressLine1: 'Somewhere',
-          addressLine2: 'Someplace',
-          addressLine3: 'Sometown',
-          addressLine4: 'Somecity',
-          addressLine5: 'Somecountry',
-          postcode: 'AB12 3CD',
-        },
-      };
-
-      it('should display the no address fields when address is empty', () => {
-        expect(fixture.debugElement.query(By.css('#addressLine1'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('#addressLine2'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('#addressLine3'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('#addressLine4'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('#addressLine5'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('#postcode'))).toBeNull();
-      });
-
-      it('should display the correct address fields when address populated', () => {
-        mockCandidate.candidateAddress = address;
-        expect(fixture.debugElement.query(By.css('#addressLine1'))).toBeDefined();
-        expect(fixture.debugElement.query(By.css('#addressLine2'))).toBeDefined();
-        expect(fixture.debugElement.query(By.css('#addressLine3'))).toBeDefined();
-        expect(fixture.debugElement.query(By.css('#addressLine4'))).toBeDefined();
-        expect(fixture.debugElement.query(By.css('#addressLine5'))).toBeDefined();
-        expect(fixture.debugElement.query(By.css('#postcode'))).toBeDefined();
-      });
-
     });
 
     describe('Changing preferred email', () => {
