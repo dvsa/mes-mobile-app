@@ -205,6 +205,7 @@ export class CommunicationPage extends BasePageComponent {
   setCommunicationType(communicationChoice: string, emailType: string = null) {
     this.communicationType = communicationChoice;
     this.emailType = emailType;
+    this.verifyNewEmailFormControl(communicationChoice);
   }
 
   isProvidedEmailSelected() {
@@ -297,5 +298,15 @@ export class CommunicationPage extends BasePageComponent {
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
     }
+  }
+
+  verifyNewEmailFormControl(communicationChoice: string) {
+    const newEmailCtrl = this.form.get('newEmailCtrl');
+    if (communicationChoice !== 'Email') {
+      newEmailCtrl.clearValidators();
+    } else {
+      newEmailCtrl.setValidators(Validators.email);
+    }
+    newEmailCtrl.updateValueAndValidity();
   }
 }
