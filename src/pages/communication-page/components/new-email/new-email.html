@@ -1,20 +1,21 @@
-<ion-row class="communication-option">
-  <input type="radio" id="newEmail" class="gds-radio-button" name="communicationChoice"
-    (click)="newEmailRadioSelected()"
-    [value]="newEmail">
+<ion-row class="communication-option" [formGroup]="formGroup">
+  <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
+  <input type="radio" id="newEmail" class="gds-radio-button" formControlName="radioCtrl"
+    name="radioCtrl" (click)="newEmailRadioSelected()" [checked]="newEmailRadioValue"
+    value="newEmailRadioValue">
   <label for="newEmail" class="radio-label">By email (new email)</label>
 </ion-row>
 <ion-row *ngIf="newEmailAddressChosen" class="communication-box">
   <ion-col col-6></ion-col>
   <ion-col>
     <ion-row>
-      <span class="communication-helper-text">Enter the email address you want us to send your results
+      <span class="communication-text">Enter the email address you want us to send your results
         to.</span>
     </ion-row>
     <ion-row [formGroup]="formGroup">
       <input id="newEmailInput" class="new-email-textbox mes-data" type="text-area"
-        formControlName="newEmailCtrl"
-        [value]="''" (change)="newEmailTextChanged($event.target.value)"
+        formControlName="newEmailCtrl" name="newEmailCtrl"
+        [value]="newEmailAddress" (change)="newEmailTextChanged($event.target.value)"
         [class.ng-invalid]="invalid">
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>

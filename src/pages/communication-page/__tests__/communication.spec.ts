@@ -26,6 +26,8 @@ import { ProvidedEmailComponent } from '../components/provided-email/provided-em
 import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
+import * as communicationPreferenceActions
+from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -98,7 +100,7 @@ describe('CommunicationPage', () => {
         insomnia = TestBed.get(Insomnia);
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         store$ = TestBed.get(Store);
-        spyOn(store$, 'dispatch');
+        spyOn(store$, 'dispatch').and.callThrough();
         component.subscription = new Subscription();
       });
 
@@ -142,6 +144,73 @@ describe('CommunicationPage', () => {
       });
 
     });
+
+    describe('Communication validation', () => {
+      it('form should only be valid whenever all form controls are initialised', () => {
+        const form = component.form;
+        form.get('radioCtrl').setValue(true);
+        expect(form.get('radioCtrl').status).toEqual('VALID');
+        expect(form.valid).toEqual(true);
+      });
+    });
+
+    describe('Provided email selected', () => {
+      it('should dispatch a CandidateChoseEmailAsCommunicationPreference action', () => {
+        component.candidateProvidedEmail = mockCandidate.emailAddress;
+        component.dispatchCandidateChoseProvidedEmail();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
+            mockCandidate.emailAddress, 'Email',
+          ));
+      });
+    });
+
+    describe('New email selected', () => {
+      it('should dispatch a CommunicationViewChoseNewEmail action', () => {
+        component.dispatchCandidateChoseNewEmail(mockCandidate.emailAddress);
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
+            mockCandidate.emailAddress, 'Email',
+          ));
+      });
+    });
+
+    describe('Communication class level funcitons', () => {
+      it('should set setCommunicationType', () => {
+        component.setCommunicationType('Email', 'Provided');
+        expect(component.communicationType).toEqual('Email');
+        expect(component.emailType).toEqual(CommunicationPage.providedEmail);
+      });
+
+      it('should return true for isProvidedEmailSelected() if appropriate properties are defined', () => {
+        component.communicationType = 'Email';
+        component.emailType = CommunicationPage.providedEmail;
+        const returnValue = component.isProvidedEmailSelected();
+        expect(returnValue).toBe(true);
+      });
+
+      it('should return false for isProvidedEmailSelected() if appropriate properties are not defined', () => {
+        component.communicationType = 'Post';
+        component.emailType = null;
+        const returnValue = component.isProvidedEmailSelected();
+        expect(returnValue).toBe(false);
+      });
+
+      it('should return true for isNewEmailSelected() if appropriate properties are defined', () => {
+        component.communicationType = 'Email';
+        component.emailType = CommunicationPage.updatedEmail;
+        const returnValue = component.isNewEmailSelected();
+        expect(returnValue).toBe(true);
+      });
+
+      it('should return false for isNewEmailSelected() if appropriate properties are not defined', () => {
+        component.communicationType = 'Post';
+        component.emailType = null;
+        const returnValue = component.isNewEmailSelected();
+        expect(returnValue).toBe(false);
+      });
+    });
+
   });
 
   describe('clickBack', () => {
