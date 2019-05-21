@@ -10,7 +10,6 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import {
   getETA,
-  getETAFaultText,
   getEco,
   getEcoFaultText,
   getDrivingFaultSummaryCount,
@@ -36,13 +35,14 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { ETA } from '@dvsa/mes-test-schema/categories/B';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
   drivingFaultCount$: Observable<number>;
-  etaFaults$: Observable<string>;
+  etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<string>;
   testResult$: Observable<string>;
   practiceTest$: Observable<boolean>;
@@ -63,6 +63,9 @@ export class DebriefPage extends BasePageComponent {
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
   public isPracticeTest: boolean;
+
+  public hasPhysicalEta: boolean = false;
+  public hasVerbalEta: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -135,7 +138,6 @@ export class DebriefPage extends BasePageComponent {
       etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
-        select(getETAFaultText),
       ),
       ecoFaults$: currentTest$.pipe(
         select(getTestData),
@@ -156,16 +158,21 @@ export class DebriefPage extends BasePageComponent {
       ),
     };
 
-    const { testResult$, practiceTest$, welshTest$ } = this.pageState;
+    const { testResult$, practiceTest$, welshTest$, etaFaults$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
       practiceTest$.pipe(map(value => this.isPracticeTest = value)),
       welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      etaFaults$.pipe(
+        map((eta) => {
+          this.hasPhysicalEta = eta.physical;
+          this.hasVerbalEta = eta.verbal;
+        }),
+      ),
     );
 
     this.subscription = merged$.subscribe();
-
   }
 
   configureI18N(isWelsh: boolean): void {

@@ -23,7 +23,7 @@
 
 <ion-content>
 
-  <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
+  <ion-card id="ETA" *ngIf="hasPhysicalEta || hasVerbalEta">
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-start class="mes-data">
@@ -32,7 +32,9 @@
             <h4 class="fault-heading">{{ 'debrief.etaHeader' | translate }}</h4>
           </ion-col>
           <ion-col align-self-start>
-            <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
+            <span id="etaFaults" *ngIf="hasPhysicalEta && !hasVerbalEta">{{ 'debrief.etaPhysical' | translate }}</span>
+            <span id="etaFaults" *ngIf="!hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaVerbal' | translate }}</span>
+            <span id="etaFaults" *ngIf="hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaBoth' | translate }}</span>
           </ion-col>
         </ion-row>
       </ion-grid>

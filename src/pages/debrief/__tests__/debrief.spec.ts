@@ -32,6 +32,7 @@ import { fullCompetencyLabels } from '../../../shared/constants/competencies/cat
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../debrief.actions';
+import * as welshTranslations from '../../../assets/i18n/cy.json';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -173,7 +174,7 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
 
-    fdescribe('displaying ETAs', () => {
+    describe('displaying ETAs', () => {
       it('should not display ETA fault container if there are no ETA faults', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
@@ -191,7 +192,15 @@ describe('DebriefPage', () => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical');
           });
-          it('should display in Welsh for a Welsh test', () => {
+          it('should display in Welsh for a Welsh test', (done) => {
+            translate.use('cy').subscribe(() => {
+              store$.dispatch(new ToggleETA(ExaminerActions.physical));
+              fixture.detectChanges();
+              const expectedTranslation = (<any>welshTranslations).debrief.etaPhysical;
+              const { debugElement } = fixture;
+              expect(debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe(expectedTranslation);
+              done();
+            });
           });
         });
         describe('verbal ETAs', () => {
@@ -200,7 +209,15 @@ describe('DebriefPage', () => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Verbal');
           });
-          it('should display in Welsh for a Welsh test', () => {
+          it('should display in Welsh for a Welsh test', (done) => {
+            translate.use('cy').subscribe(() => {
+              store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+              fixture.detectChanges();
+              const expectedTranslation = (<any>welshTranslations).debrief.etaVerbal;
+              const { debugElement } = fixture;
+              expect(debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe(expectedTranslation);
+              done();
+            });
           });
         });
       });
@@ -211,7 +228,15 @@ describe('DebriefPage', () => {
           fixture.detectChanges();
           expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical and Verbal');
         });
-        it('should display in Welsh for a Welsh test', () => {
+        it('should display in Welsh for a Welsh test', (done) => {
+          translate.use('cy').subscribe(() => {
+            store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+            store$.dispatch(new ToggleETA(ExaminerActions.physical));
+            fixture.detectChanges();
+            const expectedTranslation = (<any>welshTranslations).debrief.etaBoth;
+            expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe(expectedTranslation);
+            done();
+          });
         });
       });
     });
