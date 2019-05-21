@@ -21,6 +21,11 @@ Then(/^the (communication page|waiting room) candidate driver number should be \
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
+When(/^the candidate enters a new email address$/, () => {
+  const newEmailAddressField = getElement(by.id('newEmailInput'));
+  newEmailAddressField.sendKeys('test@test.com');
+});
+
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
   const pageType = (pageName === 'communication preference' ? 'communication' : 'page-waiting-room');
   const continueButton = getElement(by.xpath(`//${pageType}//button[@id = 'continue-button']`));

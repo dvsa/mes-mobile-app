@@ -5,6 +5,7 @@ Feature: Waiting Room to Car
       Given I reset the application state for "mobexaminer1"
       When I start the test for "Mrs Jane Doe"
       Then I should see the "Declaration - Jane Doe" page
+      And the candidate enters a new email address
       And the candidate confirms their communication preference
       And the candidate completes the declaration page
       And I proceed to the car
