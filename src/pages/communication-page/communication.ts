@@ -27,7 +27,7 @@ import {
 import { map, take } from 'rxjs/operators';
 import {
   getCommunicationPreference,
- } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType,
 } from '../../modules/tests/communication-preferences/communication-preferences.selector';
@@ -302,11 +302,13 @@ export class CommunicationPage extends BasePageComponent {
 
   verifyNewEmailFormControl(communicationChoice: string) {
     const newEmailCtrl = this.form.get('newEmailCtrl');
-    if (communicationChoice !== 'Email') {
-      newEmailCtrl.clearValidators();
-    } else {
-      newEmailCtrl.setValidators(Validators.email);
+    if (newEmailCtrl !== null) {
+      if (communicationChoice !== 'Email') {
+        newEmailCtrl.clearValidators();
+      } else {
+        newEmailCtrl.setValidators(Validators.email);
+      }
+      newEmailCtrl.updateValueAndValidity();
     }
-    newEmailCtrl.updateValueAndValidity();
   }
 }
