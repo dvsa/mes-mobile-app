@@ -3,6 +3,7 @@ Feature: Full end to end journey
    Scenario: Examiner completes a passed test with no faults
       Given I reset the application state for "mobexaminer1"
       When I start the test for "Miss Florence Pearson"
+      And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Florence Pearson" page
       And the candidate completes the declaration page
