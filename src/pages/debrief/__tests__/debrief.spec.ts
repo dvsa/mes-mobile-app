@@ -173,9 +173,47 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
 
-    it('should not display ETA fault container if there are no ETA faults', () => {
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+    fdescribe('displaying ETAs', () => {
+      it('should not display ETA fault container if there are no ETA faults', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+      });
+      it('should display the ETA faults if there are any', () => {
+        store$.dispatch(new ToggleETA(ExaminerActions.physical));
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#ETA'))).not.toBeNull();
+        expect(fixture.debugElement.query(By.css('#etaFaults'))).not.toBeNull();
+      });
+      describe('single ETA', () => {
+        describe('physical ETAs', () => {
+          it('should display in English', () => {
+            store$.dispatch(new ToggleETA(ExaminerActions.physical));
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical');
+          });
+          it('should display in Welsh for a Welsh test', () => {
+          });
+        });
+        describe('verbal ETAs', () => {
+          it('should display in English', () => {
+            store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Verbal');
+          });
+          it('should display in Welsh for a Welsh test', () => {
+          });
+        });
+      });
+      describe('both ETAs', () => {
+        it('should display in English', () => {
+          store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+          store$.dispatch(new ToggleETA(ExaminerActions.physical));
+          fixture.detectChanges();
+          expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical and Verbal');
+        });
+        it('should display in Welsh for a Welsh test', () => {
+        });
+      });
     });
 
     it('should not display dangerous faults container if there are no dangerous faults', () => {
@@ -196,13 +234,6 @@ describe('DebriefPage', () => {
     it('should not display eco fault container if there are no eco faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#eco'))).toBeNull();
-    });
-
-    it('should display the ETA faults if there are any', () => {
-      store$.dispatch(new ToggleETA(ExaminerActions.physical));
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#ETA'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('#etaFaults'))).not.toBeNull();
     });
 
     it('should display dangerous faults container if there are dangerous faults', () => {
