@@ -25,6 +25,9 @@ export class FaultCommentCardComponent {
   @Input()
   shouldRender: boolean;
 
+  @Input()
+  faultCount: number;
+
   @Output()
   faultCommentsChange = new EventEmitter<CommentedCompetency>();
 

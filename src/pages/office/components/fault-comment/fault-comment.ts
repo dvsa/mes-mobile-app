@@ -24,6 +24,8 @@ export class FaultCommentComponent implements OnChanges {
   @Input()
   faultType: string;
 
+  @Input()
+  faultCount: number;
   @Output()
   faultCommentChange = new EventEmitter<CommentedCompetency>();
 
@@ -35,7 +37,14 @@ export class FaultCommentComponent implements OnChanges {
       VisibilityType.NotVisible) {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {
-      this.parentForm.get(this.formControlName).setValidators(Validators.required);
+      console.log(`faultType ${this.faultType} fault count ${this.faultCount}`);
+      if (this.faultType !== 'driving' ||
+        (this.faultType === 'driving' && this.faultCount &&
+          this.faultCount > 15)) {
+        this.parentForm.get(this.formControlName).setValidators(Validators.required);
+      } else {
+        this.parentForm.get(this.formControlName).clearValidators();
+      }
     }
     this.parentForm.get(this.formControlName).patchValue(this.faultComment.comment);
   }
