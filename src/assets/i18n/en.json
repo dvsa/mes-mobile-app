@@ -52,7 +52,9 @@
       "vehicleChecks": "Vehicle checks",
       "controlledStop": "Controlled stop"
     },
+    "dangerousFault": "Dangerous fault",
     "dangerousFaultsCardDescription": "dangerous faults",
+    "drivingFault": "Driving fault",
     "drivingFaultsCardDescription": "driving faults",
     "ecoHeader": "ECO",
     "end": "End debrief",
@@ -60,9 +62,13 @@
     "failStatus": "Unsuccessful",
     "outcomeHeader": "Test outcome",
     "passStatus": "Passed",
+    "seriousFault": "Serious fault",
     "seriousFaultsCardDescription": "serious faults",
+    "showMeQuestion": "Show me question",
+    "tellMeQuestion": "Tell me question",
     "terminatedStatus": "Terminated",
-    "title": "Debrief"
+    "title": "Debrief",
+    "vehicleChecks": "Vehicle checks"
   },
   "healthDeclaration": {
     "confirm": "I confirm",

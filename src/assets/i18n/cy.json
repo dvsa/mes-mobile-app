@@ -52,7 +52,9 @@
       "vehicleChecks": "[CY] Vehicle checks",
       "controlledStop": "[CY] Controlled stop"
     },
+    "dangerousFault": "[CY] Dangerous fault",
     "dangerousFaultsCardDescription": "[CY] dangerous faults",
+    "drivingFault": "[CY] Driving fault",
     "drivingFaultsCardDescription": "[CY] driving faults",
     "ecoHeader": "[CY] ECO",
     "end": "[CY] End debrief",
@@ -60,9 +62,13 @@
     "failStatus": "[CY] Unsuccessful",
     "outcomeHeader": "[CY] Test outcome",
     "passStatus": "[CY] Passed",
+    "seriousFault": "[CY] Serious fault",
     "seriousFaultsCardDescription": "[CY] serious faults",
+    "showMeQuestion": "[CY] Show me question",
+    "tellMeQuestion": "[CY] Tell me question",
     "terminatedStatus": "[CY] Terminated",
-    "title": "[CY] Debrief"
+    "title": "[CY] Debrief",
+    "vehicleChecks": "[CY] Vehicle checks"
   },
   "healthDeclaration": {
     "confirm": "[CY] I confirm",

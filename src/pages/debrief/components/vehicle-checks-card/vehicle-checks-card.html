@@ -4,11 +4,23 @@
       <ion-row align-items-start class="mes-data">
         <ion-col col-3></ion-col>
         <ion-col col-34>
-          <h4 class="fault-heading">Vehicle checks</h4>
+          <h4 class="fault-heading">{{ 'debrief.vehicleChecks' | translate }}</h4>
         </ion-col>
         <ion-col align-self-start>
-          <div id="tell-me-question" *ngIf="componentState.tellMeQuestion$ | async">{{ componentState.tellMeQuestion$ | async }}</div>
-          <div id="show-me-question" *ngIf="componentState.showMeQuestion$ | async">{{ componentState.showMeQuestion$ | async }}</div>
+          <div id="tell-me-question" *ngIf="componentState.tellMeQuestionHasFault$ | async">
+            {{ 'debrief.tellMeQuestion' | translate }} - {{ 'debrief.drivingFault' | translate }}
+          </div>
+          <div id="show-me-question" *ngIf="hasShowMeFault" [ngSwitch]="componentState.showMeQuestionOutcome$ | async">
+            <span *ngSwitchCase="'DF'" id="show-me-question-outcome">
+              {{ 'debrief.showMeQuestion' | translate }} - {{ 'debrief.drivingFault' | translate }}
+            </span>
+            <span *ngSwitchCase="'S'" id="show-me-question-outcome">
+              {{ 'debrief.showMeQuestion' | translate }} - {{ 'debrief.seriousFault' | translate }}
+            </span>
+            <span *ngSwitchCase="'D'" id="show-me-question-outcome">
+              {{ 'debrief.showMeQuestion' | translate }} - {{ 'debrief.dangerousFault' | translate }}
+            </span>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -2,17 +2,24 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleChecks, QuestionOutcome } from '@dvsa/mes-test-schema/categories/B';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.selector';
-import { getShowMeQuestionText, getTellMeQuestionText, hasVehicleChecksFault } from './vehicle-checks-card.selector';
+import {
+  tellMeQuestionHasFault,
+  hasVehicleChecksFault,
+  getShowMeQuestionOutcome,
+} from './vehicle-checks-card.selector';
 import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { map } from 'rxjs/operators';
 
 interface VehicleChecksCardComponentState {
-  showMeQuestion$: Observable<string>;
-  tellMeQuestion$: Observable<string>;
+  showMeQuestionOutcome$: Observable<QuestionOutcome>;
+  tellMeQuestionHasFault$: Observable<boolean>;
   hasVehicleChecksFault$: Observable<boolean>;
 }
 
@@ -24,10 +31,11 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
 
   componentState: VehicleChecksCardComponentState;
   hasFault: boolean = false;
+  hasShowMeFault: boolean = false;
 
   subscription: Subscription;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
     const vehicleChecks$: Observable<VehicleChecks> = this.store$.pipe(
@@ -38,20 +46,23 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
     );
 
     this.componentState = {
-      showMeQuestion$: vehicleChecks$.pipe(
-        select(getShowMeQuestionText),
+      showMeQuestionOutcome$: vehicleChecks$.pipe(
+        select(getShowMeQuestionOutcome),
       ),
-      tellMeQuestion$: vehicleChecks$.pipe(
-        select(getTellMeQuestionText),
+      tellMeQuestionHasFault$: vehicleChecks$.pipe(
+        select(tellMeQuestionHasFault),
       ),
       hasVehicleChecksFault$: vehicleChecks$.pipe(
         select(hasVehicleChecksFault),
       ),
     };
 
-    const { hasVehicleChecksFault$ } = this.componentState;
+    const { hasVehicleChecksFault$, showMeQuestionOutcome$ } = this.componentState;
 
-    this.subscription = hasVehicleChecksFault$.subscribe(val => this.hasFault = val);
+    this.subscription = merge(
+      hasVehicleChecksFault$.pipe(map(val => this.hasFault = val)),
+      showMeQuestionOutcome$.pipe(map(val => this.hasShowMeFault = val !== CompetencyOutcome.P)),
+    ).subscribe();
   }
 
   ngOnDestroy(): void {
