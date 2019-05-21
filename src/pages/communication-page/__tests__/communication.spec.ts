@@ -28,6 +28,7 @@ import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
 from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { PostalAddressComponent } from '../components/postal-address/postal-address';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -45,6 +46,7 @@ describe('CommunicationPage', () => {
       lastName: 'Blogs',
     },
     emailAddress: 'testemail@mes',
+    candidateAddress: null,
   };
 
   beforeEach(async(() => {
@@ -53,6 +55,7 @@ describe('CommunicationPage', () => {
         CommunicationPage,
         ProvidedEmailComponent,
         NewEmailComponent,
+        PostalAddressComponent,
       ],
       imports: [
         IonicModule,
@@ -71,10 +74,15 @@ describe('CommunicationPage', () => {
                 passCertificateNumberReceived: false,
                 postTestSignature: '',
               },
+              journalData: {
+                candidate: mockCandidate,
+              },
+              communicationPreferences: {
+                updatedEmail: '',
+                communicationMethod: 'Post',
+              },
             },
-            journalData: {
-              candidate: mockCandidate,
-            },
+
           },
         })),
       ],

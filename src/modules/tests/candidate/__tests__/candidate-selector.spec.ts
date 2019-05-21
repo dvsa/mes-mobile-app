@@ -3,6 +3,7 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
   getUntitledCandidateName,
+  getPostalAddress,
 } from '../candidate.selector';
 import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 
@@ -14,6 +15,14 @@ describe('candidate selector', () => {
       title: 'Mr',
     },
     driverNumber: '123',
+    candidateAddress: {
+      addressLine1: '1 Example Street',
+      addressLine2: '456 Market Square',
+      addressLine3: 'Nottingham',
+      addressLine4: 'East Midlands',
+      addressLine5: 'United Kingdom',
+      postcode: 'NG1 6HY',
+    },
   };
   describe('getCandidateName', () => {
     it('should produce first and last name with a title prefix', () => {
@@ -39,6 +48,12 @@ describe('candidate selector', () => {
     });
     it('should output the driver number in 3 space separated parts where applicable', () => {
       expect(formatDriverNumber('ABCDE123456Z78YX')).toBe('ABCDE 123456 Z78YX');
+    });
+  });
+
+  describe('getPostalAddress', () => {
+    it('should output the address', () => {
+      expect(getPostalAddress(candidate)).toEqual(candidate.candidateAddress);
     });
   });
 });
