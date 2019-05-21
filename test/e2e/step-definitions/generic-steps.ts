@@ -110,15 +110,12 @@ Then('validation item {string} should be {string}', (validationId: string, valid
 });
 
 When('I terminate the test', () => {
-  // Find the last End test button as this will be the one displayed
   const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
   clickElement(lastEndTestButton);
 
-  // Confirm termination
   const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
   clickElement(terminateTestButton);
 
-  // Enter passcode
   enterPasscode();
 });
 
