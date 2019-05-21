@@ -34,7 +34,7 @@ describe('ProvidedEmailComponent', () => {
         component.formGroup = new FormGroup({});
         component.formGroup.addControl('radioCtrl', new FormControl());
         component.shouldRender = true;
-        component.providedEmailAddressChosen = true;
+        component.isProvidedEmailAddressChosen = true;
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });

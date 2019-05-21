@@ -35,7 +35,9 @@ import { merge } from 'rxjs/observable/merge';
 import { CommunicationMethod, Address } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import {
-  CandidateChoseEmailAsCommunicationPreference, CandidateChosePostAsCommunicationPreference,
+  CandidateChoseEmailAsCommunicationPreference,
+  CandidateChosePostAsCommunicationPreference,
+  CandidateChoseSupportCentreAsCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
@@ -60,6 +62,9 @@ export class CommunicationPage extends PracticeableBasePageComponent {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
+  static readonly email: CommunicationMethod = 'Email';
+  static readonly post: CommunicationMethod = 'Post';
+  static readonly supportCentre: CommunicationMethod = 'Support Centre';
 
   @ViewChild(Navbar)
   navBar: Navbar;
@@ -68,9 +73,6 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   subscription: Subscription;
   emailType: string;
   pageState: CommunicationPageState;
-  communicationMethodForEmail: CommunicationMethod;
-  communicationMethodForPost: CommunicationMethod;
-  communicationMethodForSupportCentre: CommunicationMethod;
   candidateProvidedEmail: string;
   communicationEmail: string;
   communicationType: string;
@@ -90,9 +92,6 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   ) {
     super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
-    this.communicationMethodForEmail = 'Email';
-    this.communicationMethodForPost = 'Post';
-    this.communicationMethodForSupportCentre = 'Support Centre';
   }
 
   ionViewDidEnter(): void {
@@ -185,7 +184,10 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     );
     this.subscription = merged$.subscribe();
 
-    this.initialiseDefaultSelections();
+    if (this.shouldPreselectADefaultValue()) {
+      this.initialiseDefaultSelections();
+    }
+
     this.restoreRadiosFromState();
     this.restoreRadioValidators();
   }
@@ -209,15 +211,17 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   }
 
   dispatchCandidateChoseProvidedEmail() {
-    this.setCommunicationType('Email', CommunicationPage.providedEmail);
+    this.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
     this.store$.dispatch(
-      new CandidateChoseEmailAsCommunicationPreference(this.candidateProvidedEmail, this.communicationMethodForEmail),
+      new CandidateChoseEmailAsCommunicationPreference(
+        this.candidateProvidedEmail, CommunicationPage.email),
     );
   }
 
   dispatchCandidateChoseNewEmail(communicationEmail: string): void {
     this.store$.dispatch(
-      new CandidateChoseEmailAsCommunicationPreference(communicationEmail, this.communicationMethodForEmail),
+      new CandidateChoseEmailAsCommunicationPreference(
+        communicationEmail, CommunicationPage.email),
     );
   }
 
@@ -228,26 +232,33 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   }
 
   isProvidedEmailSelected() {
-    return this.communicationType === 'Email' && this.emailType === CommunicationPage.providedEmail;
+    return this.communicationType === CommunicationPage.email && this.emailType === CommunicationPage.providedEmail;
   }
 
   isNewEmailSelected() {
-    return this.communicationType === 'Email' && this.emailType === CommunicationPage.updatedEmail;
+    return this.communicationType === CommunicationPage.email && this.emailType === CommunicationPage.updatedEmail;
   }
 
   isPostSelected() {
-    return this.communicationType === 'Post';
+    return this.communicationType === CommunicationPage.post;
   }
 
   dispatchCandidateChosePost(): void {
-    this.setCommunicationType(this.communicationMethodForPost);
+    this.setCommunicationType(CommunicationPage.post);
     this.store$.dispatch(
-      new CandidateChosePostAsCommunicationPreference(this.communicationMethodForPost),
+      new CandidateChosePostAsCommunicationPreference(CommunicationPage.post),
+    );
+  }
+
+  dispatchCandidateChoseSupportCentre(): void {
+    this.setCommunicationType(CommunicationPage.supportCentre);
+    this.store$.dispatch(
+      new CandidateChoseSupportCentreAsCommunicationPreference(CommunicationPage.supportCentre),
     );
   }
 
   isSupportCentreSelected() {
-    return this.communicationType === 'Support Centre';
+    return this.communicationType === CommunicationPage.supportCentre;
   }
 
   getFormValidation(): { [key: string]: FormControl } {
@@ -262,7 +273,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
    * No current schema properties allow for the capture of radio selection for emails on the communication page.
    */
   restoreRadiosFromState() {
-    if (this.communicationType === 'Email') {
+    if (this.communicationType === CommunicationPage.email) {
       this.assertEmailType();
     }
   }
@@ -281,10 +292,11 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   assertEmailType() {
     if (this.candidateProvidedEmail !== '' && this.candidateProvidedEmail === this.communicationEmail) {
       this.selectProvidedEmail = true;
+      this.selectNewEmail = false;
       this.emailType = CommunicationPage.providedEmail;
     }
 
-    if (this.candidateProvidedEmail === '' && this.communicationEmail !== '') {
+    if (this.candidateProvidedEmail !== this.communicationEmail) {
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
       this.emailType = CommunicationPage.updatedEmail;
@@ -298,12 +310,16 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   /**
    * Initialise a default radio selection on the communication page
    *
+   * If 'communicationEmail' it implies the candidate is entering the form for the first time and
+   * setting default values will not impact rehydration.
+   *
    * If there is a candidate email provided at the time of booking, this will be chosen as
    * the default selection. If there is not then the new email radio selection will be chosen
    * as the default selection.
+   *
    */
   initialiseDefaultSelections() {
-    this.communicationType = 'Email';
+    this.communicationType = CommunicationPage.email;
     if (this.candidateProvidedEmail) {
       this.emailType = CommunicationPage.providedEmail;
       this.selectProvidedEmail = true;
@@ -322,12 +338,39 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   verifyNewEmailFormControl(communicationChoice: string) {
     const newEmailCtrl = this.form.get('newEmailCtrl');
     if (newEmailCtrl !== null) {
-      if (communicationChoice !== 'Email') {
+      if (communicationChoice !== CommunicationPage.email
+        || this.emailType === CommunicationPage.providedEmail) {
         newEmailCtrl.clearValidators();
       } else {
         newEmailCtrl.setValidators(Validators.email);
       }
       newEmailCtrl.updateValueAndValidity();
     }
+  }
+
+  shouldPreselectADefaultValue() {
+    return this.communicationType === null;
+  }
+
+  /**
+   * Function to conditionally dispatch 'dispatchCandidateChoseNewEmail' action
+   * to cover edge case candidate action.
+   *
+   * Candidate selects new email -> app crashes -> candidate selects Post/Support Centre ->
+   * app crashes -> candidate selects new email (previous state value exists so examiner clicks continue)
+   *
+   * As state change for new email happens on text input, the expected action
+   * (CandidateChoseEmailAsCommunicationPreference) would not be dispatched.
+   */
+  conditionalDispatchCandidateChoseNewEmail() {
+    this.setCommunicationType(CommunicationPage.email, CommunicationPage.updatedEmail);
+
+    if (this.isNewEmailSelected() && this.communicationEmail !== '') {
+      this.dispatchCandidateChoseNewEmail(this.communicationEmail);
+    }
+  }
+
+  getNewEmailAddressValue() {
+    return this.candidateProvidedEmail === this.communicationEmail ? '' : this.communicationEmail;
   }
 }
