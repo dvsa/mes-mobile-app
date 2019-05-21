@@ -16,6 +16,7 @@ import { TestSlotComponent } from './test-slot/test-slot';
 import { PracticeTestReportCardComponent } from './practice-test-report-card/practice-test-report-card';
 import { PracticeTestModalModule } from './practice-test-modal/practice-test-modal.module';
 import { SubmissionStatusComponent } from './submission-status/submission-status';
+import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practice-end-to-end-card';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SubmissionStatusComponent } from './submission-status/submission-status
     LanguageComponent,
     PracticeTestReportCardComponent,
     SubmissionStatusComponent,
+    PracticeEndToEndCardComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { SubmissionStatusComponent } from './submission-status/submission-status
     LanguageComponent,
     PracticeTestReportCardComponent,
     SubmissionStatusComponent,
+    PracticeEndToEndCardComponent,
   ],
 })
 export class JournalComponentsModule {}

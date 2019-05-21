@@ -1,4 +1,4 @@
-practice-test-report-card {
+practice-end-to-end-card {
   .practice-mode-card {
     padding: 12px;
     h4 {
@@ -8,6 +8,7 @@ practice-test-report-card {
       font-size: 20px;
     }
     .mes-secondary-button {
+      height: 74px;
       h3 {
         color: map-get($colors-gds, gds-black);
       }

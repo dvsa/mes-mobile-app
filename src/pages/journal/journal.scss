@@ -35,5 +35,11 @@ page-journal {
     align-items: flex-end;
     line-height: 25px;
   }
-  
+
+  .content-ios hr {
+    height: 2px;
+    background-color: #979797;
+    margin: -14px 12px 16px;
+  }
+
 }
