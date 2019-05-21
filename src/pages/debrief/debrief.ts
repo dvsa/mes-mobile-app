@@ -10,9 +10,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import {
   getETA,
-  getETAFaultText,
   getEco,
-  getEcoFaultText,
   getDrivingFaultSummaryCount,
 } from '../../modules/tests/test-data/test-data.selector';
 import { map } from 'rxjs/operators';
@@ -36,14 +34,15 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
   dangerousFaults$: Observable<string[]>;
   drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
   drivingFaultCount$: Observable<number>;
-  etaFaults$: Observable<string>;
-  ecoFaults$: Observable<string>;
+  etaFaults$: Observable<ETA>;
+  ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
   practiceTest$: Observable<boolean>;
   welshTest$: Observable<boolean>;
@@ -63,6 +62,12 @@ export class DebriefPage extends BasePageComponent {
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
   public isPracticeTest: boolean;
+
+  public hasPhysicalEta: boolean = false;
+  public hasVerbalEta: boolean = false;
+
+  public adviceGivenControl: boolean = false;
+  public adviceGivenPlanning: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -135,12 +140,10 @@ export class DebriefPage extends BasePageComponent {
       etaFaults$: currentTest$.pipe(
         select(getTestData),
         select(getETA),
-        select(getETAFaultText),
       ),
       ecoFaults$: currentTest$.pipe(
         select(getTestData),
         select(getEco),
-        select(getEcoFaultText),
       ),
       testResult$: currentTest$.pipe(
         select(getTestOutcome),
@@ -156,16 +159,27 @@ export class DebriefPage extends BasePageComponent {
       ),
     };
 
-    const { testResult$, practiceTest$, welshTest$ } = this.pageState;
+    const { testResult$, practiceTest$, welshTest$, etaFaults$, ecoFaults$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
       practiceTest$.pipe(map(value => this.isPracticeTest = value)),
       welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      etaFaults$.pipe(
+        map((eta) => {
+          this.hasPhysicalEta = eta.physical;
+          this.hasVerbalEta = eta.verbal;
+        }),
+      ),
+      ecoFaults$.pipe(
+        map((eco) => {
+          this.adviceGivenControl = eco.adviceGivenControl;
+          this.adviceGivenPlanning = eco.adviceGivenPlanning;
+        }),
+      ),
     );
 
     this.subscription = merged$.subscribe();
-
   }
 
   configureI18N(isWelsh: boolean): void {

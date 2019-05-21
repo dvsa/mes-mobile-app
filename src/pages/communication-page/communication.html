@@ -37,26 +37,23 @@
                 (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)">
               </new-email>
 
+              <postal-address [formGroup]="form" [postalAddress]="pageState.candidateAddress$ | async"
+                [isPostalAddressChosen]="isPostSelected()" (postalRadioSelect)="dispatchCandidateChosePost($event)">
+              </postal-address>
+
               <ion-row class="communication-option">
                 <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
-                <input type="radio" id="post" class="gds-radio-button" formControlName="radioCtrl"
-                  name="radioCtrl"
-                  (click)="setCommunicationType('Post')" [value]="isPostSelected()"
-                  [checked]="isPostSelected()">
-                <label for="post" class="radio-label">By post</label>
-              </ion-row>
-              <ion-row class="communication-option">
-                <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
-                <input type="radio" id="support-centre" class="gds-radio-button"
-                  formControlName="radioCtrl" name="radioCtrl" (click)="setCommunicationType('Support Centre')"
-                  [value]="isSupportCentreSelected()" [checked]="isSupportCentreSelected()">
+                <input type="radio" id="support-centre" class="gds-radio-button" formControlName="radioCtrl"
+                  name="radioCtrl" (click)="setCommunicationType('Support Centre')" [value]="isSupportCentreSelected()"
+                  [checked]="isSupportCentreSelected()">
                 <label for="support-centre" class="radio-label">By calling the support centre</label>
               </ion-row>
+
               <ion-row class="validation-message-row" align-items-center>
                 <div class="validation-text"></div>
               </ion-row>
+              </ion-col>
             </ion-col>
-          </ion-col>
         </ion-row>
       </div>
     </form>

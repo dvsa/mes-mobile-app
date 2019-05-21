@@ -109,6 +109,16 @@ Then('validation item {string} should be {string}', (validationId: string, valid
   return expect(validationElement.getText()).to.eventually.equal(validationText);
 });
 
+When('I terminate the test', () => {
+  const lastEndTestButton = element.all(by.xpath('//end-test-link/button/span[text() = "End test"]')).last();
+  clickElement(lastEndTestButton);
+
+  const terminateTestButton = getElement(by.xpath('//button/span[text() = "Terminate test"]'));
+  clickElement(terminateTestButton);
+
+  enterPasscode();
+});
+
 /**
  * Take a screenshot of the page at the end of the scenario.
  */

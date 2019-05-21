@@ -7,8 +7,7 @@ When('I complete the office write up', () => {
   routeField.sendKeys('2');
   const satnavRadio = getElement(by.id('independent-driving-satnav'));
   clickElement(satnavRadio);
-  const physicalDescriptionField = getElement(by.id('physical-description'));
-  physicalDescriptionField.sendKeys('Tall, slim build with dark brown hair.');
+  enterCandidateDescription();
   const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debriefWitnessedRadio);
 
@@ -30,9 +29,44 @@ When('I complete the office write up', () => {
   const d255Radio = getElement(by.id('d255-yes'));
   clickElement(d255Radio);
 
+  uploadTest();
+});
+
+When('I select termination code {string}', (terminationCodeDesc) => {
+  const terminationSelector = getElement(by.id('termination-code-selector'));
+  clickElement(terminationSelector);
+  const terminationItem = getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
+  [normalize-space(text()) = '${terminationCodeDesc}']`));
+  clickElement(terminationItem);
+  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
+  clickElement(submitDialog);
+});
+
+When('I upload the test', () => {
+  uploadTest();
+});
+
+When('I try to upload the test', () => {
+  clickUploadButton();
+});
+
+When('I enter a candidate description', () => {
+  enterCandidateDescription();
+});
+
+const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);
+};
+
+const uploadTest = () => {
+  clickUploadButton();
 
   const uploadConfirmationButton = getElement(by.xpath('//ion-alert//button/span[text() = "Upload"]'));
   clickElement(uploadConfirmationButton);
-});
+};
+
+const enterCandidateDescription = () => {
+  const physicalDescriptionField = getElement(by.id('physical-description'));
+  physicalDescriptionField.sendKeys('Tall, slim build with dark brown hair.');
+};

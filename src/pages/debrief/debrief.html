@@ -23,7 +23,7 @@
 
 <ion-content>
 
-  <ion-card id="ETA" *ngIf="(pageState.etaFaults$ | async)">
+  <ion-card id="ETA" *ngIf="hasPhysicalEta || hasVerbalEta">
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-start class="mes-data">
@@ -32,7 +32,9 @@
             <h4 class="fault-heading">{{ 'debrief.etaHeader' | translate }}</h4>
           </ion-col>
           <ion-col align-self-start>
-            <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
+            <span id="etaFaults" *ngIf="hasPhysicalEta && !hasVerbalEta">{{ 'debrief.etaPhysical' | translate }}</span>
+            <span id="etaFaults" *ngIf="!hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaVerbal' | translate }}</span>
+            <span id="etaFaults" *ngIf="hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaBoth' | translate }}</span>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -117,7 +119,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card id="eco" *ngIf="(pageState.ecoFaults$ | async)">
+  <ion-card id="eco" *ngIf="adviceGivenControl || adviceGivenPlanning">
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-start class="mes-data">
@@ -126,7 +128,15 @@
             <h4 class="fault-heading">{{ 'debrief.ecoHeader' | translate }}</h4>
           </ion-col>
           <ion-col align-self-start>
-            <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
+            <div id="ecoFaults" *ngIf="adviceGivenControl && !adviceGivenPlanning">
+              {{ 'debrief.ecoControl' | translate }}
+            </div>
+            <div id="ecoFaults" *ngIf="!adviceGivenControl && adviceGivenPlanning">
+              {{ 'debrief.ecoPlanning' | translate }}
+            </div>
+            <div id="ecoFaults" *ngIf="adviceGivenControl && adviceGivenPlanning">
+              {{ 'debrief.ecoBoth' | translate }}
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>

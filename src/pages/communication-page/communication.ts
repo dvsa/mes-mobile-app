@@ -19,6 +19,7 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
   getCandidateEmailAddress,
+  getPostalAddress,
 } from '../../modules/tests/candidate/candidate.selector';
 import {
   CommunicationViewDidEnter,
@@ -26,15 +27,15 @@ import {
 import { map, take } from 'rxjs/operators';
 import {
   getCommunicationPreference,
- } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType,
 } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod } from '@dvsa/mes-test-schema/categories/B';
+import { CommunicationMethod, Address } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import {
-  CandidateChoseEmailAsCommunicationPreference,
+  CandidateChoseEmailAsCommunicationPreference, CandidateChosePostAsCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
 
 interface CommunicationPageState {
@@ -44,6 +45,7 @@ interface CommunicationPageState {
   candidateProvidedEmail$: Observable<string>;
   communicationEmail$: Observable<string>;
   communicationType$: Observable<string>;
+  candidateAddress$: Observable<Address>;
 }
 @IonicPage()
 @Component({
@@ -151,6 +153,11 @@ export class CommunicationPage extends BasePageComponent {
         select(getCommunicationPreference),
         select(getCommunicationPreferenceType),
       ),
+      candidateAddress$: currentTest$.pipe(
+        select(getJournalData),
+        select(getCandidate),
+        select(getPostalAddress),
+      ),
     };
 
     const {
@@ -198,6 +205,7 @@ export class CommunicationPage extends BasePageComponent {
   setCommunicationType(communicationChoice: string, emailType: string = null) {
     this.communicationType = communicationChoice;
     this.emailType = emailType;
+    this.verifyNewEmailFormControl(communicationChoice);
   }
 
   isProvidedEmailSelected() {
@@ -210,6 +218,13 @@ export class CommunicationPage extends BasePageComponent {
 
   isPostSelected() {
     return this.communicationType === 'Post';
+  }
+
+  dispatchCandidateChosePost(): void {
+    this.setCommunicationType(this.communicationMethodForPost);
+    this.store$.dispatch(
+      new CandidateChosePostAsCommunicationPreference(this.communicationMethodForPost),
+    );
   }
 
   isSupportCentreSelected() {
@@ -282,6 +297,18 @@ export class CommunicationPage extends BasePageComponent {
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
+    }
+  }
+
+  verifyNewEmailFormControl(communicationChoice: string) {
+    const newEmailCtrl = this.form.get('newEmailCtrl');
+    if (newEmailCtrl !== null) {
+      if (communicationChoice !== 'Email') {
+        newEmailCtrl.clearValidators();
+      } else {
+        newEmailCtrl.setValidators(Validators.email);
+      }
+      newEmailCtrl.updateValueAndValidity();
     }
   }
 }

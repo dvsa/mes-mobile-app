@@ -18,6 +18,7 @@ import {
   AddDrivingFault,
   ToggleETA,
   TogglePlanningEco,
+  ToggleControlEco,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 import { DebriefComponentsModule } from '../components/debrief-components.module';
@@ -32,6 +33,7 @@ import { fullCompetencyLabels } from '../../../shared/constants/competencies/cat
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../debrief.actions';
+import * as welshTranslations from '../../../assets/i18n/cy.json';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -173,9 +175,140 @@ describe('DebriefPage', () => {
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
 
-    it('should not display ETA fault container if there are no ETA faults', () => {
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+    describe('displaying ETAs', () => {
+      it('should not display ETA fault container if there are no ETA faults', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#ETA'))).toBeNull();
+      });
+      it('should display the ETA faults if there are any', () => {
+        store$.dispatch(new ToggleETA(ExaminerActions.physical));
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#ETA'))).not.toBeNull();
+        expect(fixture.debugElement.query(By.css('#etaFaults'))).not.toBeNull();
+      });
+      describe('single ETA', () => {
+        describe('physical ETAs', () => {
+          it('should display in English', () => {
+            store$.dispatch(new ToggleETA(ExaminerActions.physical));
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical');
+          });
+          it('should display in Welsh for a Welsh test', (done) => {
+            translate.use('cy').subscribe(() => {
+              store$.dispatch(new ToggleETA(ExaminerActions.physical));
+              fixture.detectChanges();
+              const expectedTranslation = (<any>welshTranslations).debrief.etaPhysical;
+              const { debugElement } = fixture;
+              expect(debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe(expectedTranslation);
+              done();
+            });
+          });
+        });
+        describe('verbal ETAs', () => {
+          it('should display in English', () => {
+            store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Verbal');
+          });
+          it('should display in Welsh for a Welsh test', (done) => {
+            translate.use('cy').subscribe(() => {
+              store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+              fixture.detectChanges();
+              const expectedTranslation = (<any>welshTranslations).debrief.etaVerbal;
+              const { debugElement } = fixture;
+              expect(debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe(expectedTranslation);
+              done();
+            });
+          });
+        });
+      });
+      describe('both ETAs', () => {
+        it('should display in English', () => {
+          store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+          store$.dispatch(new ToggleETA(ExaminerActions.physical));
+          fixture.detectChanges();
+          expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical and Verbal');
+        });
+        it('should display in Welsh for a Welsh test', (done) => {
+          translate.use('cy').subscribe(() => {
+            store$.dispatch(new ToggleETA(ExaminerActions.verbal));
+            store$.dispatch(new ToggleETA(ExaminerActions.physical));
+            fixture.detectChanges();
+            const expectedTranslation = (<any>welshTranslations).debrief.etaBoth;
+            expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe(expectedTranslation);
+            done();
+          });
+        });
+      });
+    });
+
+    describe('displaying results of eco driving', () => {
+      it('should display the eco faults if there are any', () => {
+        store$.dispatch(new TogglePlanningEco());
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#eco'))).not.toBeNull();
+        expect(fixture.debugElement.query(By.css('#ecoFaults'))).not.toBeNull();
+      });
+      it('should not display eco fault container if there are no eco faults', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#eco'))).toBeNull();
+      });
+      describe('single ECO element', () => {
+        describe('ECO planning', () => {
+          it('should display in English', () => {
+            store$.dispatch(new TogglePlanningEco());
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe('Planning');
+          });
+          it('should display in Welsh for a Welsh test', (done) => {
+            translate.use('cy').subscribe(() => {
+              store$.dispatch(new TogglePlanningEco());
+              fixture.detectChanges();
+              const expectedTranslation = (<any>welshTranslations).debrief.ecoPlanning;
+              const { debugElement } = fixture;
+              expect(debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe(expectedTranslation);
+              done();
+            });
+          });
+        });
+        describe('ECO control', () => {
+          it('should display in English', () => {
+            store$.dispatch(new ToggleControlEco());
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe('Control');
+          });
+          it('should display in Welsh for a Welsh test', (done) => {
+            translate.use('cy').subscribe(() => {
+              store$.dispatch(new ToggleControlEco());
+              fixture.detectChanges();
+              const expectedTranslation = (<any>welshTranslations).debrief.ecoControl;
+              const { debugElement } = fixture;
+              expect(debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe(expectedTranslation);
+              done();
+            });
+          });
+        });
+      });
+      describe('Both ECO elements', () => {
+        it('should display in English', () => {
+          store$.dispatch(new TogglePlanningEco());
+          store$.dispatch(new ToggleControlEco());
+          fixture.detectChanges();
+          expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim())
+            .toBe('Control and Planning');
+        });
+        it('should display in Welsh for a Welsh test', (done) => {
+          translate.use('cy').subscribe(() => {
+            store$.dispatch(new TogglePlanningEco());
+            store$.dispatch(new ToggleControlEco());
+            fixture.detectChanges();
+            const expectedTranslation = (<any>welshTranslations).debrief.ecoBoth;
+            expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim())
+              .toBe(expectedTranslation);
+            done();
+          });
+        });
+      });
     });
 
     it('should not display dangerous faults container if there are no dangerous faults', () => {
@@ -191,18 +324,6 @@ describe('DebriefPage', () => {
     it('should not display driving faults container if there are no driving faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#driving-fault'))).toBeNull();
-    });
-
-    it('should not display eco fault container if there are no eco faults', () => {
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#eco'))).toBeNull();
-    });
-
-    it('should display the ETA faults if there are any', () => {
-      store$.dispatch(new ToggleETA(ExaminerActions.physical));
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#ETA'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('#etaFaults'))).not.toBeNull();
     });
 
     it('should display dangerous faults container if there are dangerous faults', () => {
@@ -221,13 +342,6 @@ describe('DebriefPage', () => {
       store$.dispatch(new AddDrivingFault({ competency: Competencies.controlsClutch, newFaultCount: 1 }));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#driving-fault'))).not.toBeNull();
-    });
-
-    it('should display the eco faults if there are any', () => {
-      store$.dispatch(new TogglePlanningEco());
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#eco'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('#ecoFaults'))).not.toBeNull();
     });
 
     describe('endDebrief', () => {
