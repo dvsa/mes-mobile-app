@@ -6,12 +6,19 @@ import {
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
+enum ValidFaultTypes {
+  DRIVING = 'driving',
+  SERIOUS = 'serious',
+  DANGEROUS = 'dangerous',
+}
+
 @Component({
   selector: 'fault-comment',
   templateUrl: 'fault-comment.html',
 })
-export class FaultCommentComponent implements OnChanges {
 
+export class FaultCommentComponent implements OnChanges {
+  static readonly maxFaultCount = 15;
   @Input()
   outcome: string;
 
@@ -24,6 +31,8 @@ export class FaultCommentComponent implements OnChanges {
   @Input()
   faultType: string;
 
+  @Input()
+  faultCount: number;
   @Output()
   faultCommentChange = new EventEmitter<CommentedCompetency>();
 
@@ -31,8 +40,14 @@ export class FaultCommentComponent implements OnChanges {
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
-    if (this.outcomeBehaviourProvider.getVisibilityType(this.outcome, FaultCommentComponent.fieldName) ===
-      VisibilityType.NotVisible) {
+    const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
+      this.outcome, FaultCommentComponent.fieldName);
+
+    // mes 2393 - need to remove validations if < 16 faults as comments can
+    // only be entered if 16 or more.
+    if (fieldVisibility === VisibilityType.NotVisible ||
+      (this.faultType === ValidFaultTypes.DRIVING &&
+        this.faultCount && this.faultCount <= FaultCommentComponent.maxFaultCount)) {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {
       this.parentForm.get(this.formControlName).setValidators(Validators.required);
