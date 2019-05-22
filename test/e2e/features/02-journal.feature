@@ -59,10 +59,10 @@ Feature: Journal
      And I have a non-test slot for "Travel" with code "91" at "12:00"
      And I have a non-test slot for "Annual leave" with code "81" at "13:00"
      When I navigate to next day
-     # Then I have a non-test slot for "Training course" with code "107" at "11:45" - MES-2372
+     Then I have a non-test slot for "Training course" with code "107" at "11:45"
      And I have a non-test slot for "Industrial action" with code "125" at "13:30"
-     # And I have a non-test slot for "Medical appointment" with code "104" at "15:05" - MES-2372
-     # And I have a non-test slot for "Hospital appointment" with code "180" at "16:05" - MES-2372
+     And I have a non-test slot for "Medical appointment" with code "104" at "15:05"
+     And I have a non-test slot for "Hospital appointment" with code "180" at "16:05"
      And I have a non-test slot for "Bad Weather" with code "133" at "18:35"
 
    Scenario: Examiner goes to the waiting room to meet the candidate
