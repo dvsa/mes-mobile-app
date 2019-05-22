@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-title>Office</ion-title>
-    <ion-buttons end>
+    <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
       <button ion-button (click)="logout()">Logout</button>
     </ion-buttons>
   </ion-navbar>

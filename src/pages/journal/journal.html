@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="logout()">
+      <button ion-button (click)="logout()" *ngIf="authenticationProvider.logoutEnabled()">
         <span>Logout</span>
         <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       </button>
