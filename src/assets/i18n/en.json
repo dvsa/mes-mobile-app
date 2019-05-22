@@ -4,6 +4,8 @@
     "screenLocked": "Device locked"
   },
   "communication": {
+    "bookingEmail": "The following email address was used when booking the test",
+    "byEmailLabel": "By email (provided at time of booking)",
     "instructionHeader": "Select how to receive the test results",
     "optionCallCentre": "By calling the support centre",
     "title": "Declaration"

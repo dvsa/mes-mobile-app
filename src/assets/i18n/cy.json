@@ -4,6 +4,8 @@
     "screenLocked": "[CY] Device locked"
   },
   "communication": {
+    "bookingEmail": "[CY] The following email address was used when booking the test",
+    "byEmailLabel": "[CY] By email (provided at time of booking)",
     "instructionHeader": "[CY] Select how to receive the test results",
     "optionCallCentre": "[CY] By calling the support centre",
     "title": "[CY] Declaration"
