@@ -43,6 +43,8 @@ export class FaultCommentComponent implements OnChanges {
     const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
       this.outcome, FaultCommentComponent.fieldName);
 
+    // mes 2393 - need to remove validations if < 16 faults as comments can
+    // only be entered if 16 or more.
     if (fieldVisibility === VisibilityType.NotVisible ||
       (this.faultType === ValidFaultTypes.DRIVING &&
         this.faultCount && this.faultCount <= FaultCommentComponent.maxFaultCount)) {
