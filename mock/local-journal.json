@@ -18,7 +18,8 @@
           "specialNeedsExtendedTest": false,
           "testCategory": "A1",
           "vehicleGearbox": "Automatic",
-          "welshTest": false
+          "welshTest": false,
+          "meetingPlace": "At the pub"
         },
         "candidate": {
           "age": 17,
@@ -67,7 +68,8 @@
           "progressiveAccess": false,
           "testCategory": "B",
           "vehicleGearbox": "Automatic",
-          "welshTest": true
+          "welshTest": true,
+          "meetingPlace": "At the pub"
         },
         "candidate": {
           "age": 56,

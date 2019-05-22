@@ -91,6 +91,7 @@ export const getDetails = (slot: any): Details => {
   const details: Details = {
     testCategory: `Category ${slot.booking.application.testCategory}`,
     slotType: getSlotType(slot),
+    meetingPlace: slot.booking.application.meetingPlace,
     driverNumber: slot.booking.candidate.driverNumber,
     applicationRef: slot.booking.application.applicationId,
     specialNeeds: processSpecialNeeds(slot),

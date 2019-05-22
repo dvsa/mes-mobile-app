@@ -39,6 +39,14 @@
             <span class="mes-data">{{ (pageState.details$ | async).slotType }}</span>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="(pageState.details$| async).meetingPlace" class="mes-data-row-with-separator" id="meetingPlace">
+          <ion-col col-40>
+            <label>Meeting Place</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{(pageState.details$ | async).meetingPlace}}</span>
+          </ion-col>
+        </ion-row>
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Driver number</label>
