@@ -6,6 +6,7 @@ import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from '../tests.model';
 import * as testActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { testReportPracticeSlotId } from '../__mocks__/tests.mock';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };
@@ -30,23 +31,23 @@ describe('testsReducer', () => {
     expect(output.currentTest.slotId).toBe('123');
   });
 
-  it('should use the payload of a start practice test action to setup state for a new test', () => {
+  it('should use the payload of a start test report practice test action to setup state for a new test', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: {},
     };
-    const slotId = 'practice_123';
-    const action = new testActions.StartPracticeTest(slotId);
+    const slotId = testReportPracticeSlotId;
+    const action = new testActions.StartTestReportPracticeTest(slotId);
 
     const output = testsReducer(state, action);
 
-    expect(output.currentTest.slotId).toBe('practice_123');
+    expect(output.currentTest.slotId).toBe(testReportPracticeSlotId);
   });
 
-  it('should reset the state when a practice test is started and not affect other tests', () => {
+  it('should reset the state when a test report practice test is started and not affect other tests', () => {
     const state: TestsModel = {
-      currentTest: { slotId: 'practice_1' },
+      currentTest: { slotId: testReportPracticeSlotId },
       startedTests: {
         1: {
           testData: {
@@ -76,7 +77,7 @@ describe('testsReducer', () => {
           journalData: null,
           activityCode: null,
         },
-        practice_1: {
+        [testReportPracticeSlotId]: {
           testData: {
             dangerousFaults: {},
             drivingFaults: {
@@ -105,14 +106,17 @@ describe('testsReducer', () => {
       },
       testStatus: {},
     };
-    const slotId = 'practice_1';
-    const action = new testActions.StartPracticeTest(slotId);
+    const slotId = testReportPracticeSlotId;
+    const action = new testActions.StartTestReportPracticeTest(slotId);
 
     const output = testsReducer(state, action);
 
-    expect(output.startedTests['practice_1'].testData.seriousFaults.positioningNormalDriving).toBeUndefined();
-    expect(output.startedTests['practice_1'].testData.drivingFaults.moveOffSafety).toBeUndefined();
-    expect(output.startedTests['practice_1'].testData.vehicleChecks.tellMeQuestion.outcome).toBeUndefined();
+    expect(output.startedTests[testReportPracticeSlotId].testData.seriousFaults.positioningNormalDriving)
+      .toBeUndefined();
+    expect(output.startedTests[testReportPracticeSlotId].testData.drivingFaults.moveOffSafety)
+      .toBeUndefined();
+    expect(output.startedTests[testReportPracticeSlotId].testData.vehicleChecks.tellMeQuestion.outcome)
+      .toBeUndefined();
 
     expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toBeTruthy();
     expect(output.startedTests[1].testData.drivingFaults.clearance).toBeTruthy();
@@ -120,18 +124,18 @@ describe('testsReducer', () => {
     expect(output.startedTests[1].testData.vehicleChecks.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
   });
 
-  it('should ensure that all slot ids for practice tests are prefixed with _practice ', () => {
+  it('should ensure that all slot ids for test report practice tests are test_report_practice ', () => {
     const state = {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: {},
     };
     const slotId = '123';
-    const action = new testActions.StartPracticeTest(slotId);
+    const action = new testActions.StartTestReportPracticeTest(slotId);
 
     const output = testsReducer(state, action);
 
-    expect(output.currentTest.slotId).toBe('practice_123');
+    expect(output.currentTest.slotId).toBe(testReportPracticeSlotId);
   });
 
   it('should derive the sub-states from sub-reducers', () => {

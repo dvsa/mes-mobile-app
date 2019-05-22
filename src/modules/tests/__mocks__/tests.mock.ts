@@ -1,8 +1,10 @@
-import { Candidate } from '@dvsa/mes-test-schema/categories/B';
-import { Application } from '../../../shared/models/DJournal';
+import { Application, Candidate } from '../../../shared/models/DJournal';
 
-export const application: Application = {
-  applicationId: 1234569,
+export const testReportPracticeSlotId = 'practice_test_report';
+export const end2endPracticeSlotId = 'practice_end_2_end';
+
+export const testApplicationMock: Application = {
+  applicationId: 12345692,
   bookingSequence: 1,
   checkDigit: 9,
   entitlementCheck: false,
@@ -13,7 +15,7 @@ export const application: Application = {
   welshTest: false,
 };
 
-export const candidate: Candidate = {
+export const candidateMock: Candidate = {
   candidateAddress: {
     addressLine1: 'My House',
     addressLine2: 'Someplace',
@@ -28,16 +30,29 @@ export const candidate: Candidate = {
   },
   driverNumber: 'MODEX625220A99HC',
   mobileTelephone: '07654 123456',
+  emailAddress: 'practice@mode.com',
 };
 
-export const practiceSlot = {
+export const testReportPracticeModeSlot = {
   slotDetail: {
-    slotId: 'practice_1',
+    slotId: testReportPracticeSlotId,
     duration: 57,
     start: '2019-01-01T10:14:00+00:00',
   },
   booking: {
-    application,
-    candidate,
+    application: testApplicationMock,
+    candidate: candidateMock,
+  },
+};
+
+export const end2endPracticeModeSlot = {
+  slotDetail: {
+    slotId: end2endPracticeSlotId,
+    duration: 57,
+    start: '2019-01-01T10:14:00+00:00',
+  },
+  booking: {
+    application: testApplicationMock,
+    candidate: candidateMock,
   },
 };
