@@ -25,7 +25,7 @@ export class ActivitySlotComponent implements SlotComponent {
       return '0';
     }
     // Remove leading zeros (e.g. 089 -> 89)
-    return activityCode.replace(/0+(?!$)/, '');
+    return activityCode.replace(/^0+(?!$)/, '');
   }
 
   public getTitle(): string {
