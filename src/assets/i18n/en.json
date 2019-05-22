@@ -7,6 +7,9 @@
     "bookingEmail": "The following email address was used when booking the test",
     "byEmailLabel": "By email (provided at time of booking)",
     "instructionHeader": "Select how to receive the test results",
+    "newEmail": "Enter the email address you want us to send your results to.",
+    "newEmailLabel": "By email (new email)",
+    "newEmailValidation": "Please enter a valid email",
     "optionCallCentre": "By calling the support centre",
     "title": "Declaration"
   },
