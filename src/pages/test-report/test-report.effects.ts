@@ -5,7 +5,7 @@ import { TestReportValidatorProvider } from '../../providers/test-report-validat
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest, isPracticeTest } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isTestReportPracticeTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
 import * as testReportActions from './test-report.actions';
@@ -107,10 +107,10 @@ export class TestReportEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeTest),
+        map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isPracticeTest]) => !isPracticeTest),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
     delay(1000), // Added a 1 second delay to allow other action to complete/effects to fire
     map(() => new testsActions.PersistTests()),
   );

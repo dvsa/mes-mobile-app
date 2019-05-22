@@ -12,7 +12,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter, CalculateTestResult } from './test-report.actions';
-import { getCurrentTest, isPracticeTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isTestReportPracticeTest, getJournalData } from '../../modules/tests/tests.selector';
 import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -120,7 +120,7 @@ export class TestReportPage extends BasePageComponent {
       ),
       practiceTest$: this.store$.pipe(
         select(getTests),
-        select(isPracticeTest),
+        select(isTestReportPracticeTest),
       ),
     };
 

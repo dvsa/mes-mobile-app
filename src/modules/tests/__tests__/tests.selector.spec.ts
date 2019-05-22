@@ -5,7 +5,7 @@ import {
   isPassed,
   getTestOutcomeText,
   getTerminationCode,
-  isPracticeTest,
+  isTestReportPracticeTest,
 } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -18,6 +18,7 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   ActivityCodeDescription,
 } from '../../../pages/office/components/termination-code/termination-code.constants';
+import { testReportPracticeSlotId } from '../__mocks__/tests.mock';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -247,24 +248,27 @@ describe('testsSelector', () => {
     });
   });
 
-  describe('isPracticeTest', () => {
+  describe('isTestReportPracticeTest', () => {
     const testState: TestsModel = {
       currentTest: { slotId: null },
       startedTests: {},
       testStatus: { 12345: TestStatus.Decided },
     };
+
     it('should return false when no tests started', () => {
-      const result = isPracticeTest(testState);
+      const result = isTestReportPracticeTest(testState);
       expect(result).toBeFalsy();
     });
+
     it('should return false when slot id is numeric', () => {
       testState.currentTest.slotId = '1';
-      const result = isPracticeTest(testState);
+      const result = isTestReportPracticeTest(testState);
       expect(result).toBeFalsy();
     });
+
     it('should return true when slot id starts with practice', () => {
-      testState.currentTest.slotId = 'practice_1';
-      const result = isPracticeTest(testState);
+      testState.currentTest.slotId = testReportPracticeSlotId;
+      const result = isTestReportPracticeTest(testState);
       expect(result).toBeTruthy();
     });
   });

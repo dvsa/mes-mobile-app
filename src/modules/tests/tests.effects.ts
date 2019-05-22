@@ -8,7 +8,11 @@ import * as testStatusActions from './test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { PopulateApplicationReference } from './application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from './candidate/candidate.actions';
-import { practiceSlot } from './__mocks__/tests.mock';
+import {
+  testReportPracticeModeSlot,
+  testReportPracticeSlotId,
+  end2endPracticeSlotId,
+} from './__mocks__/tests.mock';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
@@ -17,7 +21,6 @@ import { TestSubmissionProvider } from '../../providers/test-submission/test-sub
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-import { startsWith } from 'lodash';
 
 @Injectable()
 export class TestsEffects {
@@ -55,10 +58,10 @@ export class TestsEffects {
 
   @Effect()
   startPracticeTestEffect$ = this.actions$.pipe(
-    ofType(testActions.START_PRACTICE_TEST),
+    ofType(testActions.START_TEST_REPORT_PRACTICE_TEST),
     switchMap(() => {
       const slotData = {
-        ...practiceSlot,
+        ...testReportPracticeModeSlot,
       };
 
       return [
@@ -90,9 +93,11 @@ export class TestsEffects {
     filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE),
     switchMap(([action, tests]) => {
 
-      const completedTestKeys = Object.keys(tests.testStatus).filter((slotId) => {
-        return !startsWith(slotId, 'practice_') && tests.testStatus[slotId] === 'Completed';
-      });
+      const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
+        slotId !== testReportPracticeSlotId &&
+        slotId !== end2endPracticeSlotId &&
+        tests.testStatus[slotId] === 'Completed'),
+      );
 
       const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
 
