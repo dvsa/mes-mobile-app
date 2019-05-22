@@ -1,6 +1,7 @@
 export type Details = {
   testCategory: string,
   slotType: string,
+  meetingPlace: string,
   driverNumber: string,
   applicationRef: string,
   specialNeeds: string | string[],
