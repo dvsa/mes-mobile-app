@@ -440,9 +440,6 @@ export class OfficePage extends BasePageComponent {
   }
 
   onSubmit() {
-    Object.keys(this.form.controls).forEach((controlName) => {
-      console.log(`${controlName} ${this.form.controls[controlName].valid}`);
-    });
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.showFinishTestModal();

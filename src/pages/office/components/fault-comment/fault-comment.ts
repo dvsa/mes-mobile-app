@@ -6,12 +6,19 @@ import {
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
+enum ValidFaultTypes {
+  DRIVING = 'driving',
+  SERIOUS = 'serious',
+  DANGEROUS = 'dangerous',
+}
+
 @Component({
   selector: 'fault-comment',
   templateUrl: 'fault-comment.html',
 })
-export class FaultCommentComponent implements OnChanges {
 
+export class FaultCommentComponent implements OnChanges {
+  static readonly maxFaultCount = 15;
   @Input()
   outcome: string;
 
@@ -33,18 +40,15 @@ export class FaultCommentComponent implements OnChanges {
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
-    if (this.outcomeBehaviourProvider.getVisibilityType(this.outcome, FaultCommentComponent.fieldName) ===
-      VisibilityType.NotVisible) {
+    const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
+      this.outcome, FaultCommentComponent.fieldName);
+
+    if (fieldVisibility === VisibilityType.NotVisible ||
+      (this.faultType === ValidFaultTypes.DRIVING &&
+        this.faultCount && this.faultCount <= FaultCommentComponent.maxFaultCount)) {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {
-      console.log(`faultType ${this.faultType} fault count ${this.faultCount}`);
-      if (this.faultType !== 'driving' ||
-        (this.faultType === 'driving' && this.faultCount &&
-          this.faultCount > 15)) {
-        this.parentForm.get(this.formControlName).setValidators(Validators.required);
-      } else {
-        this.parentForm.get(this.formControlName).clearValidators();
-      }
+      this.parentForm.get(this.formControlName).setValidators(Validators.required);
     }
     this.parentForm.get(this.formControlName).patchValue(this.faultComment.comment);
   }
