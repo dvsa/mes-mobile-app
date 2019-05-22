@@ -3,6 +3,9 @@
     "continue": "[CY] Continue",
     "screenLocked": "[CY] Device locked"
   },
+  "communication": {
+    "instructionHeader": "[CY] Select how to receive the test results"
+  },
   "debrief": {
     "competencies": {
       "controlsAccelerator": "[CY] Controls - Accelerator",

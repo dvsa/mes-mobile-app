@@ -87,7 +87,8 @@
           },
           "driverNumber": "DOEXX625220A99HC",
           "gender": "Female",
-          "mobileTelephone": "07654 123456"
+          "mobileTelephone": "07654 123456",
+          "emailAddress": "test@test.com"
         },
         "previousCancellation": [
           "DSA",

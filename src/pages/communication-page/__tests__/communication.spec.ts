@@ -27,8 +27,13 @@ import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
-from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+  from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PostalAddressComponent } from '../components/postal-address/postal-address';
+import { MockComponent } from 'ng-mocks';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
+import { TranslateService, TranslateModule } from 'ng2-translate';
+import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import * as welshTranslations from '../../../assets/i18n/cy.json';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -38,6 +43,7 @@ describe('CommunicationPage', () => {
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
+  let translate: TranslateService;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -49,42 +55,54 @@ describe('CommunicationPage', () => {
     candidateAddress: null,
   };
 
+  const testSlotAttributes: TestSlotAttributes = {
+    welshTest: false,
+    extendedTest: false,
+    slotId: 123,
+    specialNeeds: false,
+    start: '',
+    vehicleSlotType: '',
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         CommunicationPage,
         ProvidedEmailComponent,
         NewEmailComponent,
-        PostalAddressComponent,
+        MockComponent(PostalAddressComponent),
       ],
       imports: [
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forFeature('tests', () => ({
-          currentTest: {
-            slotId: '123',
-          },
-          testStatus: {},
-          startedTests: {
-            123: {
-              preTestDeclarations: preTestDeclarationInitialState,
-              postTestDeclarations: {
-                healthDeclarationAccepted: false,
-                passCertificateNumberReceived: false,
-                postTestSignature: '',
-              },
-              journalData: {
-                candidate: mockCandidate,
-              },
-              communicationPreferences: {
-                updatedEmail: '',
-                communicationMethod: 'Post',
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                preTestDeclarations: preTestDeclarationInitialState,
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                journalData: {
+                  testSlotAttributes,
+                  candidate: mockCandidate,
+                },
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Post',
+                },
               },
             },
-
-          },
-        })),
+          }),
+        }),
+        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -110,15 +128,13 @@ describe('CommunicationPage', () => {
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch').and.callThrough();
         component.subscription = new Subscription();
+        translate = TestBed.get(TranslateService);
+        translate.setDefaultLang('en');
       });
 
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('Changing preferred email', () => {
       it('should display the provided email input when selected', () => {
         fixture.whenStable().then(() => {
@@ -218,13 +234,32 @@ describe('CommunicationPage', () => {
         expect(returnValue).toBe(false);
       });
     });
-
-  });
-
-  describe('clickBack', () => {
-    it('should should trigger the lock screen', () => {
-      component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+    describe('clickBack', () => {
+      it('should should trigger the lock screen', () => {
+        component.clickBack();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      });
     });
   });
+
+  describe('DOM', () => {
+    describe('i18n', () => {
+      it('should render the page in English by default', () => {
+        fixture.detectChanges();
+        const { debugElement } = fixture;
+        expect(debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe('Select how to receive the test results');
+      });
+      it('should render the page in Welsh for a Welsh test', (done) => {
+        fixture.detectChanges();
+        translate.onLangChange.subscribe(() => {
+          fixture.detectChanges();
+          const expectedTranslation = (<any>welshTranslations).communication.instructionHeader;
+          expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe(expectedTranslation);
+          done();
+        });
+        store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
+      });
+    });
+  });
+
 });

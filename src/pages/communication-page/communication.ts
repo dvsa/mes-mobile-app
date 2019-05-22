@@ -37,6 +37,9 @@ import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference, CandidateChosePostAsCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { TranslateService } from 'ng2-translate';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -46,6 +49,7 @@ interface CommunicationPageState {
   communicationEmail$: Observable<string>;
   communicationType$: Observable<string>;
   candidateAddress$: Observable<Address>;
+  welshTest$: Observable<boolean>;
 }
 @IonicPage()
 @Component({
@@ -82,6 +86,7 @@ export class CommunicationPage extends BasePageComponent {
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
+    private translate: TranslateService,
   ) {
     super(platform, navCtrl, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
@@ -158,18 +163,25 @@ export class CommunicationPage extends BasePageComponent {
         select(getCandidate),
         select(getPostalAddress),
       ),
+      welshTest$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
+      ),
     };
 
     const {
       candidateProvidedEmail$,
       communicationEmail$,
       communicationType$,
+      welshTest$,
     } = this.pageState;
 
     const merged$ = merge(
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value)),
+      welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
     );
     this.subscription = merged$.subscribe();
 
@@ -180,6 +192,13 @@ export class CommunicationPage extends BasePageComponent {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.translate.use(this.translate.getDefaultLang());
+  }
+
+  configureI18N(isWelsh: boolean): void {
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
   }
 
   onSubmit() {

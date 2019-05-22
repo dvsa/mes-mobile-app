@@ -3,6 +3,9 @@
     "continue": "Continue",
     "screenLocked": "Device locked"
   },
+  "communication": {
+    "instructionHeader": "Select how to receive the test results"
+  },
   "debrief": {
     "competencies": {
       "controlsAccelerator": "Controls - Accelerator",
