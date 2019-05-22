@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'practice-end-to-end-card',
@@ -8,6 +7,6 @@ import { NavController } from 'ionic-angular';
 
 export class PracticeEndToEndCardComponent {
 
-  constructor(public navController: NavController) { }
+  constructor() { }
 
 }
