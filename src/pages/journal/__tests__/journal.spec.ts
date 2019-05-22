@@ -145,5 +145,23 @@ describe('JournalPage', () => {
         expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
       });
     });
+
+    describe('end to end practice mode', () => {
+      it('should show the end to end practice mode banner when config is set to true', () => {
+        component.showEndToEndPracticeMode =
+          jasmine.createSpy('showEndToEndPracticeMode').and.returnValue(true);
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).toBeDefined();
+
+      });
+      it('should not show the end to end practice mode banner when config is set to false', () => {
+        component.showEndToEndPracticeMode =
+          jasmine.createSpy('showEndToEndPracticeMode').and.returnValue(false);
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).toBeNull();
+      });
+    });
   });
 });
