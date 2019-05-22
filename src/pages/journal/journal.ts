@@ -236,4 +236,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   showEndToEndPracticeMode = () :boolean =>
     this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
 
+  showLogoutButton = (): boolean =>
+    this.appConfigProvider.getAppConfig().journal.enableLogoutButton
+
 }

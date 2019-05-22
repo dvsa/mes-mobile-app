@@ -9,6 +9,7 @@ export const environmentResponseMock = {
     allowedTestCategories: ['B'],
     enableTestReportPracticeMode: true,
     enableEndToEndPracticeMode: true,
+    enableLogoutButton: true,
   },
   tests: {
     testSubmissionUrl: 'https://example.com/api/v1/test-result',

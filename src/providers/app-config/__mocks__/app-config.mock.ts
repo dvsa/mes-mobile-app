@@ -37,6 +37,7 @@ export class AppConfigProviderMock {
         allowedTestCategories: localEnvironmentMock.journal.allowedTestCategories,
         enableTestReportPracticeMode: localEnvironmentMock.journal.enableTestReportPracticeMode,
         enableEndToEndPracticeMode: localEnvironmentMock.journal.enableEndToEndPracticeMode,
+        enableLogoutButton: localEnvironmentMock.journal.enableLogoutButton,
       },
       tests: {
         testSubmissionUrl: localEnvironmentMock.tests.testSubmissionUrl,
