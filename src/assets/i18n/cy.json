@@ -4,7 +4,9 @@
     "screenLocked": "[CY] Device locked"
   },
   "communication": {
-    "instructionHeader": "[CY] Select how to receive the test results"
+    "instructionHeader": "[CY] Select how to receive the test results",
+    "optionCallCentre": "[CY] By calling the support centre",
+    "title": "[CY] Declaration"
   },
   "debrief": {
     "competencies": {

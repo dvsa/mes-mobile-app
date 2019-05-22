@@ -4,7 +4,9 @@
     "screenLocked": "Device locked"
   },
   "communication": {
-    "instructionHeader": "Select how to receive the test results"
+    "instructionHeader": "Select how to receive the test results",
+    "optionCallCentre": "By calling the support centre",
+    "title": "Declaration"
   },
   "debrief": {
     "competencies": {

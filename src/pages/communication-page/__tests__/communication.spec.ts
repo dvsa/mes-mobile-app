@@ -248,13 +248,17 @@ describe('CommunicationPage', () => {
         fixture.detectChanges();
         const { debugElement } = fixture;
         expect(debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe('Select how to receive the test results');
+        expect(debugElement.query(By.css('#support-centre + label')).nativeElement.innerHTML.trim())
+          .toBe('By calling the support centre');
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
         fixture.detectChanges();
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
-          const expectedTranslation = (<any>welshTranslations).communication.instructionHeader;
-          expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe(expectedTranslation);
+          expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)
+            .toBe((<any>welshTranslations).communication.instructionHeader);
+          expect(fixture.debugElement.query(By.css('#support-centre + label')).nativeElement.innerHTML.trim())
+            .toBe((<any>welshTranslations).communication.optionCallCentre);
           done();
         });
         store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));

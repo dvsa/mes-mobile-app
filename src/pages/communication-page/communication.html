@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Declaration - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-title>{{ 'communication.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
       <end-test-link></end-test-link>
     </ion-buttons>
@@ -46,7 +46,9 @@
                 <input type="radio" id="support-centre" class="gds-radio-button" formControlName="radioCtrl"
                   name="radioCtrl" (click)="setCommunicationType('Support Centre')" [value]="isSupportCentreSelected()"
                   [checked]="isSupportCentreSelected()">
-                <label for="support-centre" class="radio-label">By calling the support centre</label>
+                <label for="support-centre" class="radio-label">
+                  {{ 'communication.optionCallCentre' | translate }}
+                </label>
               </ion-row>
 
               <ion-row class="validation-message-row" align-items-center>
