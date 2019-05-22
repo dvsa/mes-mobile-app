@@ -10,8 +10,8 @@ import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
 import {
-  testReportPracticeModeApplication,
-  testReportPracticeModeCandidate,
+  testApplicationMock,
+  candidateMock,
   testReportPracticeModeSlot,
 } from '../__mocks__/tests.mock';
 import { initialState, testsReducer } from '../tests.reducer';
@@ -94,10 +94,10 @@ describe('Tests Effects', () => {
       // ASSERT
       effects.startPracticeTestEffect$.subscribe((result) => {
         if (result instanceof PopulateApplicationReference)  {
-          expect(result).toEqual(new PopulateApplicationReference(testReportPracticeModeApplication));
+          expect(result).toEqual(new PopulateApplicationReference(testApplicationMock));
         }
         if (result instanceof PopulateCandidateDetails) {
-          expect(result).toEqual(new PopulateCandidateDetails(testReportPracticeModeCandidate));
+          expect(result).toEqual(new PopulateCandidateDetails(candidateMock));
         }
         done();
       });
