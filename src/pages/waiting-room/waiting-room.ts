@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -44,7 +44,7 @@ interface WaitingRoomPageState {
   selector: 'page-waiting-room',
   templateUrl: 'waiting-room.html',
 })
-export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDestroy {
+export class WaitingRoomPage extends PracticeableBasePageComponent implements OnInit, OnDestroy {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -57,7 +57,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
   subscription: Subscription;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -65,7 +65,7 @@ export class WaitingRoomPage extends BasePageComponent implements OnInit, OnDest
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
   ionViewDidEnter(): void {

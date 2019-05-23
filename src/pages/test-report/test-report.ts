@@ -6,7 +6,7 @@ import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
@@ -41,7 +41,7 @@ interface TestReportPageState {
   selector: 'page-test-report',
   templateUrl: 'test-report.html',
 })
-export class TestReportPage extends BasePageComponent {
+export class TestReportPage extends PracticeableBasePageComponent {
 
   pageState: TestReportPageState;
   subscription: Subscription;
@@ -61,7 +61,7 @@ export class TestReportPage extends BasePageComponent {
   catBLegalRequirements: CatBLegalRequirements;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -71,7 +71,7 @@ export class TestReportPage extends BasePageComponent {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.displayOverlay = false;
   }
   getCallback(): OverlayCallback {

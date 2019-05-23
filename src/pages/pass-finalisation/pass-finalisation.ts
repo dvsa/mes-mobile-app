@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -50,7 +50,7 @@ interface PassFinalisationPageState {
   selector: 'page-pass-finalisation',
   templateUrl: 'pass-finalisation.html',
 })
-export class PassFinalisationPage extends BasePageComponent {
+export class PassFinalisationPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
 
   @ViewChild('passCertificateNumberInput')
@@ -61,13 +61,13 @@ export class PassFinalisationPage extends BasePageComponent {
   form: FormGroup;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 

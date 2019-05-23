@@ -1,5 +1,5 @@
 import { NavController, NavParams, Platform, IonicPage } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -58,7 +58,7 @@ interface DebriefPageState {
   templateUrl: 'debrief.html',
 })
 
-export class DebriefPage extends BasePageComponent {
+export class DebriefPage extends PracticeableBasePageComponent {
 
   pageState: DebriefPageState;
   subscription: Subscription;
@@ -74,7 +74,7 @@ export class DebriefPage extends BasePageComponent {
   public adviceGivenPlanning: boolean = false;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -83,7 +83,7 @@ export class DebriefPage extends BasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
   }
 
   ngOnInit(): void {
