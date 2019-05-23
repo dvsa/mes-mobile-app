@@ -40,7 +40,7 @@
                   (click)="provisionalLicenseReceived()">
                 <label for="license-received" class="radio-label">Yes</label>
               </ion-col>
-              <ion-col col-32>
+              <ion-col>
                 <input formControlName="provisionalLicenseProvidedCtrl" type="radio" id="license-not-received"
                   value="no" [checked]="pageState.provisionalLicenseNotProvidedRadioChecked$ | async"
                   class="gds-radio-button" (click)="provisionalLicenseNotReceived()">
@@ -71,7 +71,7 @@
                   [checked]="pageState.transmissionManualRadioChecked$ | async">
                 <label for="transmission-manual" class="radio-label">Manual</label>
               </ion-col>
-              <ion-col col-32>
+              <ion-col>
                 <input type="radio" id="transmission-automatic" formControlName="transmissionCtrl"
                   name="transmissionCtrl" class="gds-radio-button"
                   [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionCtrl')"
