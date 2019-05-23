@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { TestSubmissionProvider } from '../test-submission';
+import { TestSubmissionProvider, TestToSubmit } from '../test-submission';
 import { UrlProvider } from '../../url/url';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { gunzipSync } from 'zlib';
 
-describe('TestResultCalculatorProvider', () => {
+describe('TestSubmissionProvider', () => {
 
   let testSubmissionProvider: TestSubmissionProvider;
   let httpMock: HttpTestingController;
@@ -29,7 +29,11 @@ describe('TestResultCalculatorProvider', () => {
 
   describe('submitTests', () => {
     it('should attempt to submit a test', () => {
-      testSubmissionProvider.submitTests([]).subscribe();
+      testSubmissionProvider.submitTests([{
+        index: 0,
+        slotId: '',
+        payload: {},
+      }] as TestToSubmit[]).subscribe();
 
       httpMock.expectOne('https://www.example.com/api/v1/test-result');
       expect(urlProvider.getTestResultServiceUrl).toHaveBeenCalled();
