@@ -4,14 +4,15 @@
     <input type="radio" id="providedEmail" formControlName="radioCtrl" name="radioCtrl"
       class="gds-radio-button communication-radio" (click)="providedEmailRadioSelected()"
       [checked]="providedEmailRadioValue" [value]="providedEmailRadioValue">
-    <label for="providedEmail" class="radio-label">By email (provided at time of booking)</label>
+    <label for="providedEmail" class="radio-label">{{ 'communication.byEmailLabel' | translate }}</label>
   </ion-row>
   <ion-row *ngIf="providedEmailAddressChosen" class="communication-box">
     <ion-col col-6></ion-col>
     <ion-col>
       <ion-row>
-        <span class="communication-text">The following email address was used when booking the
-          test: </span>
+        <span class="communication-text">
+          {{ 'communication.bookingEmail' | translate }}:
+        </span>
       </ion-row>
       <ion-row>
         <input id="providedEmailInput" class="provided-email-textbox" type="text-area" [value]="providedEmailAddress"

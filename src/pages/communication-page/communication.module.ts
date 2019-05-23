@@ -6,6 +6,7 @@ import { CommunicationPage } from './communication';
 import { ProvidedEmailComponent } from './components/provided-email/provided-email';
 import { NewEmailComponent } from './components/new-email/new-email';
 import { PostalAddressComponent } from './components/postal-address/postal-address';
+import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import { PostalAddressComponent } from './components/postal-address/postal-addre
   imports: [
     IonicPageModule.forChild(CommunicationPage),
     ComponentsModule,
+    TranslateModule,
   ],
   providers: [
     AnalyticsProvider,
   ],
 })
-export class CommunicationPageModule {}
+export class CommunicationPageModule { }

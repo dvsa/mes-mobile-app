@@ -3,6 +3,18 @@
     "continue": "Continue",
     "screenLocked": "Device locked"
   },
+  "communication": {
+    "bookingEmail": "The following email address was used when booking the test",
+    "byPostDescription": "The following postal address was used when booking the test",
+    "byPostLabel": "By post",
+    "byEmailLabel": "By email (provided at time of booking)",
+    "instructionHeader": "Select how to receive the test results",
+    "newEmail": "Enter the email address you want us to send your results to.",
+    "newEmailLabel": "By email (new email)",
+    "newEmailValidation": "Please enter a valid email",
+    "optionCallCentre": "By calling the support centre",
+    "title": "Declaration"
+  },
   "debrief": {
     "competencies": {
       "controlsAccelerator": "Controls - Accelerator",
