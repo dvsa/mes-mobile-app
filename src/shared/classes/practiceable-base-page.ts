@@ -18,17 +18,17 @@ interface PracticeableBasePageState {
 
 export abstract class PracticeableBasePageComponent extends BasePageComponent implements OnInit, OnDestroy {
 
-  practiceableBasePageState: PracticeableBasePageState;
-  subscription: Subscription;
+  public isPracticeMode: boolean;
 
-  isPracticeMode: boolean;
+  private practiceableBasePageState: PracticeableBasePageState;
+  private practiceableBasePageSubscription: Subscription;
 
   constructor(
     public platform: Platform,
     public navController: NavController,
     public authenticationProvider: AuthenticationProvider,
+    public store$: Store<StoreModel>,
     public loginRequired: boolean = true,
-    private store$: Store<StoreModel>,
   ) {
     super(platform, navController, authenticationProvider, loginRequired);
   }
@@ -48,11 +48,13 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
     const merged$ = merge(
       isPracticeMode$.pipe(map(value => this.isPracticeMode = value)),
     );
-    this.subscription = merged$.subscribe();
+    this.practiceableBasePageSubscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.practiceableBasePageSubscription) {
+      this.practiceableBasePageSubscription.unsubscribe();
+    }
   }
 
 }

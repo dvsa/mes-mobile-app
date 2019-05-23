@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -54,7 +54,7 @@ interface HealthDeclarationPageState {
   selector: 'page-health-declaration',
   templateUrl: 'health-declaration.html',
 })
-export class HealthDeclarationPage extends BasePageComponent {
+export class HealthDeclarationPage extends PracticeableBasePageComponent {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -68,7 +68,7 @@ export class HealthDeclarationPage extends BasePageComponent {
   inputSubscriptions: Subscription[] = [];
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -79,7 +79,7 @@ export class HealthDeclarationPage extends BasePageComponent {
     public alertController: AlertController,
 
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 

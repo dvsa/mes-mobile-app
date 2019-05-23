@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -99,7 +99,7 @@ interface WaitingRoomToCarPageState {
   selector: 'page-waiting-room-to-car',
   templateUrl: 'waiting-room-to-car.html',
 })
-export class WaitingRoomToCarPage extends BasePageComponent {
+export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
@@ -114,14 +114,14 @@ export class WaitingRoomToCarPage extends BasePageComponent {
   tellMeQuestions: TellMeQuestion[];
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public questionProvider: QuestionProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
     this.form = new FormGroup({});
   }

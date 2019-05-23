@@ -7,7 +7,7 @@ import {
   Toast, Keyboard, AlertController,
 } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -149,7 +149,7 @@ interface OfficePageState {
   selector: 'page-office',
   templateUrl: 'office.html',
 })
-export class OfficePage extends BasePageComponent {
+export class OfficePage extends PracticeableBasePageComponent {
   pageState: OfficePageState;
   form: FormGroup;
   toast: Toast;
@@ -162,7 +162,7 @@ export class OfficePage extends BasePageComponent {
   activityCodeOptions: TerminationCode[];
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public toastController: ToastController,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -174,7 +174,7 @@ export class OfficePage extends BasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();

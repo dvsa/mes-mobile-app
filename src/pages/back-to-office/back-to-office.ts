@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -14,10 +14,10 @@ import { Insomnia } from '@ionic-native/insomnia';
   selector: 'page-back-to-office',
   templateUrl: 'back-to-office.html',
 })
-export class BackToOfficePage extends BasePageComponent {
+export class BackToOfficePage extends PracticeableBasePageComponent {
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     private deviceProvider: DeviceProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -26,7 +26,7 @@ export class BackToOfficePage extends BasePageComponent {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
   }
 
   ionViewDidEnter(): void {

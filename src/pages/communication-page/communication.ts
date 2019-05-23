@@ -1,6 +1,6 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Observable } from 'rxjs/Observable';
@@ -56,7 +56,7 @@ interface CommunicationPageState {
   selector: 'communication',
   templateUrl: 'communication.html',
 })
-export class CommunicationPage extends BasePageComponent {
+export class CommunicationPage extends PracticeableBasePageComponent {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
@@ -78,7 +78,7 @@ export class CommunicationPage extends BasePageComponent {
   selectNewEmail: boolean;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -88,7 +88,7 @@ export class CommunicationPage extends BasePageComponent {
     private insomnia: Insomnia,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
     this.communicationMethodForEmail = 'Email';
     this.communicationMethodForPost = 'Post';
