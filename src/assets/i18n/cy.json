@@ -3,6 +3,18 @@
     "continue": "[CY] Continue",
     "screenLocked": "[CY] Device locked"
   },
+  "communication": {
+    "bookingEmail": "[CY] The following email address was used when booking the test",
+    "byEmailLabel": "[CY] By email (provided at time of booking)",
+    "byPostDescription": "[CY] The following postal address was used when booking the test",
+    "byPostLabel": "[CY] By post",
+    "instructionHeader": "[CY] Select how to receive the test results",
+    "newEmail": "[CY] Enter the email address you want us to send your results to.",
+    "newEmailLabel": "[CY] By email (new email)",
+    "newEmailValidation": "[CY] Please enter a valid email",
+    "optionCallCentre": "[CY] By calling the support centre",
+    "title": "[CY] Declaration"
+  },
   "debrief": {
     "competencies": {
       "controlsAccelerator": "[CY] Controls - Accelerator",

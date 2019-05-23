@@ -29,8 +29,8 @@ export class NewEmailComponent implements OnChanges {
   @Output()
   newEmailTextChange = new EventEmitter<string>();
 
-  private formControl: FormControl;
-  private radioFormControl: FormControl;
+  formControl: FormControl;
+  radioFormControl: FormControl;
 
   ngOnChanges(): void {
     if (!this.radioFormControl) {

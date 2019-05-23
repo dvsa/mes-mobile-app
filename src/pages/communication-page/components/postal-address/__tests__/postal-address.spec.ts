@@ -6,7 +6,7 @@ import { DeviceProvider } from '../../../../../providers/device/device';
 import { DeviceAuthenticationProvider } from '../../../../../providers/device-authentication/device-authentication';
 import { Insomnia } from '@ionic-native/insomnia';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { AppModule } from '../../../../../app/app.module';
+import { AppModule, createTranslateLoader } from '../../../../../app/app.module';
 import { ComponentsModule } from '../../../../../components/components.module';
 import {
   initialState as preTestDeclarationInitialState,
@@ -22,11 +22,15 @@ import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { InsomniaMock } from '../../../../../shared/mocks/insomnia.mock';
 import { By } from '@angular/platform-browser';
+import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
+import { Http } from '@angular/http';
+import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 
 describe('PostalAddressComponent', () => {
   let fixture: ComponentFixture<PostalAddressComponent>;
   let component: PostalAddressComponent;
   let store$: Store<StoreModel>;
+  let translate: TranslateService;
 
   const mockAddress = {
     addressLine1: '1 Somewhere',
@@ -79,6 +83,11 @@ describe('PostalAddressComponent', () => {
             },
           },
         })),
+        TranslateModule.forRoot({
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [Http],
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -98,6 +107,8 @@ describe('PostalAddressComponent', () => {
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
+        translate = TestBed.get(TranslateService);
+        translate.setDefaultLang('en');
       });
 
   }));
@@ -126,6 +137,26 @@ describe('PostalAddressComponent', () => {
         expect(fixture.debugElement.query(By.css('#addressLine4'))).toBeNull();
         expect(fixture.debugElement.query(By.css('#addressLine5'))).toBeNull();
         expect(fixture.debugElement.query(By.css('#postcode'))).toBeNull();
+      });
+    });
+
+    describe('i18n', () => {
+      it('should render the component in English by default', () => {
+        component.isPostalAddressChosen = true;
+        component.postalAddress = mockAddress;
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.communication-text')).nativeElement.innerHTML.trim())
+          .toBe('The following postal address was used when booking the test:');
+      });
+      it('should render the component in Welsh when its a Welsh test', (done) => {
+        component.isPostalAddressChosen = true;
+        component.postalAddress = mockAddress;
+        translate.use('cy').subscribe(() => {
+          fixture.detectChanges();
+          expect(fixture.debugElement.query(By.css('.communication-text')).nativeElement.innerHTML.trim())
+            .toBe(`${(<any>welshTranslations).communication.byPostDescription}:`);
+          done();
+        });
       });
     });
   });
