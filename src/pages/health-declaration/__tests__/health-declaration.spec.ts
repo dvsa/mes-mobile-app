@@ -1,6 +1,6 @@
-import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+import { ComponentFixture, async, TestBed, fakeAsync } from '@angular/core/testing';
+import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../app/app.module';
 import { HealthDeclarationPage } from '../health-declaration';
@@ -20,7 +20,8 @@ import {
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import * as passCompletionActions
+  from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';
@@ -85,6 +86,7 @@ describe('HealthDeclarationPage', () => {
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: AlertController, useFactory: () => AlertControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
@@ -163,17 +165,45 @@ describe('HealthDeclarationPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ToggleReceiptDeclaration());
       });
     });
+
+    describe('persistAndNavigate', () => {
+      it('should dispatch a ProvisionalLicenseNotReceived if passed true and licenseProvided is true', () => {
+        component.licenseProvided = true;
+        component.persistAndNavigate(true);
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new passCompletionActions.ProvisionalLicenseNotReceived());
+      });
+    });
   });
   describe('onSubmit', () => {
-    it('should dispatch the PersistTests action', fakeAsync(() => {
+    it('should call the persist and navigate method if all fields set', fakeAsync(() => {
+      spyOn(component, 'persistAndNavigate');
       const form = component.form;
-      form.get('healthCheckboxCtrl').setValue(true);
-      form.get('receiptCheckboxCtrl').setValue(true);
-      form.get('signatureAreaCtrl').setValue('sig');
+      fixture.detectChanges();
+      component.pageState.healthDeclarationAccepted$ = of(true);
+      component.pageState.passCertificateNumberReceived$ = of(true);
+      component.pageState.signature$ = of('sig');
+      component.rehydrateFields();
+      component.healthDeclarationAccepted = true;
       component.onSubmit();
-      tick();
-      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+      fixture.detectChanges();
+      expect(form.valid).toEqual(true);
+      expect(component.persistAndNavigate).toHaveBeenCalled();
     }));
+
+    it('should show the confirmation modal if health checkbox not set', fakeAsync(() => {
+      spyOn(component, 'showConfirmHealthDeclarationModal');
+      const form = component.form;
+      fixture.detectChanges();
+      component.pageState.healthDeclarationAccepted$ = of(false);
+      component.pageState.passCertificateNumberReceived$ = of(true);
+      component.pageState.signature$ = of('sig');
+      component.rehydrateFields();
+      component.onSubmit();
+      fixture.detectChanges();
+      expect(form.valid).toEqual(true);
+      expect(component.showConfirmHealthDeclarationModal).toHaveBeenCalled();
+    }));
+
   });
   describe('rehydrateFields', () => {
     it('should set the field values from the page state', () => {
