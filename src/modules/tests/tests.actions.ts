@@ -4,7 +4,7 @@ import { ActivityCode, StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/c
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
-export const SEND_COMPLETED_TESTS_SUCCESS = '[TestsEffects] Send Completed Tests Success';
+export const SEND_COMPLETED_TEST_SUCCESS = '[TestsEffects] Send Completed Tests Success';
 export const SEND_COMPLETED_TESTS_FAILURE = '[TestsEffects] Send Completed Tests Failure';
 
 export const SEND_TEST = '[TestsEffects] Send Test';
@@ -48,9 +48,9 @@ export class SendCompletedTests implements Action {
   readonly type = SEND_COMPLETED_TESTS;
 }
 
-export class SendCompletedTestsSuccess implements Action {
-  readonly type = SEND_COMPLETED_TESTS_SUCCESS;
-  constructor(public completedTestIds: string[]) {}
+export class SendCompletedTestSuccess implements Action {
+  readonly type = SEND_COMPLETED_TEST_SUCCESS;
+  constructor(public completedTestId: string) {}
 }
 
 export class SendCompletedTestsFailure implements Action {
@@ -79,7 +79,7 @@ export type Types =
   | StartTestReportPracticeTest
   | StartSendingCompletedTests
   | SendCompletedTests
-  | SendCompletedTestsSuccess
+  | SendCompletedTestSuccess
   | SendCompletedTestsFailure
   | SendTest
   | SendTestSuccess
