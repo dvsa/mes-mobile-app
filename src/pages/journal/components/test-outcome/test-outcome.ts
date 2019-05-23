@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTest, ActivateTest } from '../../journal.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { startsWith } from 'lodash';
 
 @Component({
   selector: 'test-outcome',
@@ -41,6 +42,10 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
+    if (startsWith(this.slotId.toString(), 'practice_')) {
+
+      // TODO: disptach start practice mode
+    }
     this.store$.dispatch(new StartTest(this.slotId));
     this.navController.push('CommunicationPage');
   }
