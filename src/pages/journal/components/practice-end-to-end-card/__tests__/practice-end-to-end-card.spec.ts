@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule, NavController } from 'ionic-angular';
 import { PracticeEndToEndCardComponent } from '../practice-end-to-end-card';
+import { NavControllerMock } from 'ionic-mocks';
 
 describe('PracticeEndToEndCard ', () => {
   let component: PracticeEndToEndCardComponent;
@@ -10,7 +11,9 @@ describe('PracticeEndToEndCard ', () => {
     TestBed.configureTestingModule({
       declarations: [PracticeEndToEndCardComponent],
       imports: [IonicModule.forRoot(PracticeEndToEndCardComponent)],
-      providers: [],
+      providers: [
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+      ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(PracticeEndToEndCardComponent);
       component = fixture.componentInstance;

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'practice-end-to-end-card',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
 
 export class PracticeEndToEndCardComponent {
 
-  constructor() { }
+  constructor(private navController: NavController) { }
+
+  navigateToFakeJournal = () => {
+    this.navController.push('FakeJournalPage');
+  }
 
 }
