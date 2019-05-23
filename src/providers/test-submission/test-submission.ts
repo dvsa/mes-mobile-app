@@ -23,14 +23,14 @@ export class TestSubmissionProvider {
   ) {}
 
   submitTests = (testsToSubmit: TestToSubmit[]): Observable<HttpResponse<any>[]> => {
-    const requests: Observable<any>[] = testsToSubmit.map(test => this.submitTest(test.payload));
+    const requests: Observable<any>[] = testsToSubmit.map(test => this.submitTest(test));
     return forkJoin(requests);
   }
 
-  submitTest = (testToSubmit: StandardCarTestCATBSchema): Observable<any> =>
+  submitTest = (testToSubmit: TestToSubmit): Observable<any> =>
     this.httpClient.post(
       this.urlProvider.getTestResultServiceUrl(),
-      this.compressData(testToSubmit),
+      this.compressData(testToSubmit.payload),
     )
     // Note: Catching failures here (the inner observable) is what allows us to coordinate
     // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
