@@ -61,8 +61,6 @@ export class HealthDeclarationPage extends BasePageComponent {
   @ViewChild(Navbar) navBar: Navbar;
 
   pageState: HealthDeclarationPageState;
-  licenseProvidedSubscription: Subscription;
-  healhDeclarationSubscripton: Subscription;
   form: FormGroup;
   licenseProvided: boolean;
   healthDeclarationAccepted: boolean;
@@ -179,21 +177,19 @@ export class HealthDeclarationPage extends BasePageComponent {
     };
     this.rehydrateFields();
 
-    const { welshTest$ } = this.pageState;
+    const { welshTest$, licenseProvided$, healthDeclarationAccepted$ } = this.pageState;
     const merged$ = merge(
       welshTest$.pipe(
         map(isWelsh => this.configureI18N(isWelsh)),
       ),
+      licenseProvided$.pipe(
+        map(val => this.licenseProvided = val),
+      ),
+      healthDeclarationAccepted$.pipe(
+        map(val => this.healthDeclarationAccepted = val),
+      ),
     );
     this.subscription = merged$.subscribe();
-    this.licenseProvidedSubscription = this.pageState.licenseProvided$.
-      subscribe((val) => {
-        this.licenseProvided = val;
-      });
-    this.healhDeclarationSubscripton = this.pageState.healthDeclarationAccepted$.
-      subscribe((val) => {
-        this.healthDeclarationAccepted = val;
-      });
   }
 
   rehydrateFields(): void {
@@ -285,8 +281,6 @@ export class HealthDeclarationPage extends BasePageComponent {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.licenseProvidedSubscription.unsubscribe();
-    this.healhDeclarationSubscripton.unsubscribe();
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }
 
