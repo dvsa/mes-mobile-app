@@ -2,7 +2,7 @@ import { TestStatus } from './test-status/test-status.model';
 import { StandardCarTestCATBSchema, JournalData } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
 import { terminationCodeList } from '../../pages/office/components/termination-code/termination-code.constants';
-import { testReportPracticeSlotId } from './__mocks__/tests.mock';
+import { testReportPracticeSlotId, end2endPracticeSlotId } from './__mocks__/tests.mock';
 
 // temporary determination of test failure and success until service
 // that imnplements full business logic is implemented.
@@ -66,4 +66,11 @@ export const getTerminationCode = (test: StandardCarTestCATBSchema) => {
 
 };
 
-export const isTestReportPracticeTest = (tests: TestsModel) => tests.currentTest.slotId === testReportPracticeSlotId;
+export const isPracticeMode = (tests: TestsModel) : boolean =>
+  isTestReportPracticeTest(tests) || isEndToEndPracticeTest(tests);
+
+export const isTestReportPracticeTest = (tests: TestsModel): boolean =>
+  tests.currentTest.slotId === testReportPracticeSlotId;
+
+export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
+  tests.currentTest.slotId === end2endPracticeSlotId;
