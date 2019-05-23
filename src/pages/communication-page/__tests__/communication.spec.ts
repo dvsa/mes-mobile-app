@@ -184,30 +184,50 @@ describe('CommunicationPage', () => {
         component.dispatchCandidateChoseProvidedEmail();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, 'Email',
+            mockCandidate.emailAddress, CommunicationPage.email,
           ));
       });
     });
 
     describe('New email selected', () => {
-      it('should dispatch a CommunicationViewChoseNewEmail action', () => {
+      it('should dispatch a CandidateChoseEmailAsCommunicationPreference action', () => {
         component.dispatchCandidateChoseNewEmail(mockCandidate.emailAddress);
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, 'Email',
+            mockCandidate.emailAddress, CommunicationPage.email,
+          ));
+      });
+    });
+
+    describe('Post selected', () => {
+      it('should dispatch a CandidateChosePostAsCommunicationPreference action', () => {
+        component.dispatchCandidateChosePost();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChosePostAsCommunicationPreference(
+            CommunicationPage.post,
+          ));
+      });
+    });
+
+    describe('Support centre selected', () => {
+      it('should dispatch a CandidateChoseSupportCentreAsCommunicationPreference action', () => {
+        component.dispatchCandidateChoseSupportCentre();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseSupportCentreAsCommunicationPreference(
+            CommunicationPage.supportCentre,
           ));
       });
     });
 
     describe('Communication class level funcitons', () => {
       it('should set setCommunicationType', () => {
-        component.setCommunicationType('Email', 'Provided');
-        expect(component.communicationType).toEqual('Email');
+        component.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
+        expect(component.communicationType).toEqual(CommunicationPage.email);
         expect(component.emailType).toEqual(CommunicationPage.providedEmail);
       });
 
       it('should return true for isProvidedEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = 'Email';
+        component.communicationType = CommunicationPage.email;
         component.emailType = CommunicationPage.providedEmail;
         const returnValue = component.isProvidedEmailSelected();
         expect(returnValue).toBe(true);
@@ -221,7 +241,7 @@ describe('CommunicationPage', () => {
       });
 
       it('should return true for isNewEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = 'Email';
+        component.communicationType = CommunicationPage.email;
         component.emailType = CommunicationPage.updatedEmail;
         const returnValue = component.isNewEmailSelected();
         expect(returnValue).toBe(true);
@@ -232,6 +252,18 @@ describe('CommunicationPage', () => {
         component.emailType = null;
         const returnValue = component.isNewEmailSelected();
         expect(returnValue).toBe(false);
+      });
+
+      it('should return false for shouldPreselectADefaultValue() if communication type is defined', () => {
+        component.communicationType = CommunicationPage.email;
+        const returnValue = component.shouldPreselectADefaultValue();
+        expect(returnValue).toBe(false);
+      });
+
+      it('should return true for shouldPreselectADefaultValue() if communication type is null', () => {
+        component.communicationType = null;
+        const returnValue = component.shouldPreselectADefaultValue();
+        expect(returnValue).toBe(true);
       });
     });
     describe('clickBack', () => {

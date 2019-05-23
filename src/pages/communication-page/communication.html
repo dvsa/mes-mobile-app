@@ -27,13 +27,14 @@
 
               <provided-email [formGroup]="form" [shouldRender]="pageState.candidateProvidedEmail$ | async"
                 [providedEmailAddress]="pageState.candidateProvidedEmail$ | async"
-                [providedEmailAddressChosen]="isProvidedEmailSelected()" [providedEmailRadioValue]="selectProvidedEmail"
+                [isProvidedEmailAddressChosen]="isProvidedEmailSelected()"
                 (providedEmailRadioSelect)="dispatchCandidateChoseProvidedEmail()">
               </provided-email>
 
-              <new-email [formGroup]="form" [newEmailAddress]="pageState.communicationEmail$ | async"
-                [newEmailAddressChosen]="isNewEmailSelected()" [newEmailRadioValue]="selectNewEmail"
-                (newEmailRadioSelect)="setCommunicationType('Email', 'Updated')"
+              <new-email [formGroup]="form"
+                [newEmailAddress]="getNewEmailAddressValue()"
+                [isNewEmailAddressChosen]="isNewEmailSelected()"
+                (newEmailRadioSelect)="conditionalDispatchCandidateChoseNewEmail()"
                 (newEmailTextChange)="dispatchCandidateChoseNewEmail($event)">
               </new-email>
 
@@ -44,11 +45,10 @@
               <ion-row class="communication-option">
                 <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
                 <input type="radio" id="support-centre" class="gds-radio-button" formControlName="radioCtrl"
-                  name="radioCtrl" (click)="setCommunicationType('Support Centre')" [value]="isSupportCentreSelected()"
-                  [checked]="isSupportCentreSelected()">
-                <label for="support-centre" class="radio-label">
-                  {{ 'communication.optionCallCentre' | translate }}
-                </label>
+                  name="radioCtrl" (click)="dispatchCandidateChoseSupportCentre('Support Centre')"
+                  [value]="isSupportCentreSelected()" [checked]="isSupportCentreSelected()">
+                <label for="support-centre"
+                  class="radio-label">{{ 'communication.optionCallCentre' | translate }}</label>
               </ion-row>
 
               <ion-row class="validation-message-row" align-items-center>

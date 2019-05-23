@@ -36,11 +36,11 @@ describe('NewEmailComponent', () => {
         component.formGroup = new FormGroup({});
         const radioCtrl = new FormControl('radioCtrl');
         component.formGroup.addControl('radioCtrl', radioCtrl);
-        component.radioFormControl = radioCtrl;
+        component.radioButtonControl = radioCtrl;
         const newEmailCtrl = new FormControl('newEmailCtrl');
         component.formGroup.addControl('newEmailCtrl', newEmailCtrl);
         component.formControl = newEmailCtrl;
-        component.newEmailAddressChosen = true;
+        component.isNewEmailAddressChosen = true;
       });
 
   }));
