@@ -6,6 +6,8 @@
   "communication": {
     "bookingEmail": "[CY] The following email address was used when booking the test",
     "byEmailLabel": "[CY] By email (provided at time of booking)",
+    "byPostDescription": "[CY] The following postal address was used when booking the test",
+    "byPostLabel": "[CY] By post",
     "instructionHeader": "[CY] Select how to receive the test results",
     "newEmail": "[CY] Enter the email address you want us to send your results to.",
     "newEmailLabel": "[CY] By email (new email)",
