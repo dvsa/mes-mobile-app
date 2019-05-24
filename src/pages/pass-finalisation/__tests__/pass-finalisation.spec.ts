@@ -11,6 +11,8 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { PersistTests } from '../../../modules/tests/tests.actions';
+import { MockComponent } from 'ng-mocks';
+import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 
 describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationPage>;
@@ -19,7 +21,10 @@ describe('PassFinalisationPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PassFinalisationPage],
+      declarations: [
+        PassFinalisationPage,
+        MockComponent(PracticeModeBanner),
+      ],
       imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
