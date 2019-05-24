@@ -24,6 +24,7 @@ import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modul
 import { ModalEvent } from './test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
+import { StatusBar } from '@ionic-native/status-bar';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -70,10 +71,12 @@ export class TestReportPage extends PracticeableBasePageComponent {
     public testReportValidatorProvider: TestReportValidatorProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
+    public statusBar: StatusBar,
   ) {
     super(platform, navCtrl, authenticationProvider, store$);
     this.displayOverlay = false;
   }
+
   getCallback(): OverlayCallback {
     return {
       callbackMethod: () => {
@@ -159,6 +162,11 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
+    this.toggleStatusBar();
+  }
+
+  ionViewDidLeave(): void {
+    this.toggleStatusBar();
   }
 
   toggleReportOverlay(): void {
@@ -214,6 +222,18 @@ export class TestReportPage extends PracticeableBasePageComponent {
   onTerminate = (): void => {
     this.modal.dismiss()
     .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
+  }
+
+  toggleStatusBar = () => {
+    if (!this.isPracticeMode) {
+      return;
+    }
+
+    if (this.statusBar.isVisible) {
+      this.statusBar.hide();
+    } else {
+      this.statusBar.show();
+    }
   }
 
 }
