@@ -34,6 +34,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
+import {
+  getGearboxCategory,
+  isAutomatic,
+  isManual,
+} from '../../modules/tests/vehicle-details/vehicle-details.selector';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
+import { GearboxCategoryChanged } from '../../modules/tests/vehicle-details/vehicle-details.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -43,6 +51,9 @@ interface PassFinalisationPageState {
   provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
   provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
+  transmission$: Observable<GearboxCategory>;
+  transmissionAutomaticRadioChecked$: Observable<boolean>;
+  transmissionManualRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -119,6 +130,24 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
         select(getPassCertificateNumber),
         tap(val => this.form.controls['passCertificateNumberCtrl'].setValue(val)),
       ),
+      transmission$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getGearboxCategory),
+      ),
+      transmissionAutomaticRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isAutomatic),
+        tap((val) => {
+          if (val) this.form.controls['transmissionCtrl'].setValue('Automatic');
+        }),
+      ),
+      transmissionManualRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isManual),
+        tap((val) => {
+          if (val) this.form.controls['transmissionCtrl'].setValue('Manual');
+        }),
+      ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
@@ -141,6 +170,10 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
@@ -153,10 +186,11 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     return {
       provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
       passCertificateNumberCtrl: new FormControl(null, [Validators.required]),
+      transmissionCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
   /**
@@ -167,10 +201,10 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
    */
   inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
     const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      );
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
