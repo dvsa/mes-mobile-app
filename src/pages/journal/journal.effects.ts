@@ -88,6 +88,7 @@ export class JournalEffects {
                   lastRefreshed,
                 ));
               }
+              return of(err);
             }),
           );
       }),
