@@ -26,7 +26,7 @@ export class JournalProvider {
     public networkStateProvider: NetworkStateProvider,
     private appConfigProvider: AppConfigProvider,
     private dateTimeProvider: DateTimeProvider,
-  ) {}
+  ) { }
 
   getJournal(lastRefreshed: Date): Observable<ExaminerWorkSchedule> {
     const staffNumber = this.authProvider.getEmployeeId();
@@ -34,13 +34,13 @@ export class JournalProvider {
     const networkStatus = this.networkStateProvider.getNetworkState();
     if (lastRefreshed === null) {
       if (!this.authProvider.isInUnAuthenticatedMode() &&
-      networkStatus === ConnectionStatus.ONLINE) {
+        networkStatus === ConnectionStatus.ONLINE) {
         return this.http.get(journalUrl);
       }
       return this.getOfflineJournal();
     }
 
-    const modifiedSinceValue = DateTime.at(lastRefreshed).format('ddd[,] D MMM YYYY HH:mm:ss [GMT]');
+    const modifiedSinceValue = lastRefreshed.toUTCString();
     const options = {
       headers: new HttpHeaders().set('If-Modified-Since', modifiedSinceValue),
     };
@@ -91,7 +91,7 @@ export class JournalProvider {
         dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
         data: journalData,
       };
-      this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then((response) => {});
+      this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then((response) => { });
     }
   }
 
@@ -101,7 +101,7 @@ export class JournalProvider {
    * @returns boolean
    */
 
-  isCacheTooOld = (dateStored: DateTime, now: DateTime):boolean => {
+  isCacheTooOld = (dateStored: DateTime, now: DateTime): boolean => {
     return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().daysToCacheJournalData;
   }
 
@@ -117,7 +117,7 @@ export class JournalProvider {
       dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
       data: emptyJournalData,
     };
-    this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then(() => {});
+    this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then(() => { });
     return emptyJournalData;
   }
 
