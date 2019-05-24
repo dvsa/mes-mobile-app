@@ -3,7 +3,14 @@ import { ManoeuvresComponent } from './../components/manoeuvres/manoeuvres';
 import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, ModalControllerMock } from 'ionic-mocks';
+import {
+  NavControllerMock,
+  NavParamsMock,
+  ConfigMock,
+  PlatformMock,
+  ModalControllerMock,
+  StatusBarMock,
+} from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
 import { AppModule } from '../../../app/app.module';
@@ -39,6 +46,7 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { StatusBar } from '@ionic-native/status-bar';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -46,6 +54,7 @@ describe('TestReportPage', () => {
   let navController: NavController;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
+  let statusBar: StatusBar;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -105,6 +114,7 @@ describe('TestReportPage', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
       ],
     })
       .compileComponents()
@@ -114,6 +124,7 @@ describe('TestReportPage', () => {
         navController = TestBed.get(NavController);
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);
+        statusBar = TestBed.get(StatusBar);
       });
   }));
 
@@ -142,6 +153,36 @@ describe('TestReportPage', () => {
         component.ionViewWillEnter();
         expect(screenOrientation.lock).not.toHaveBeenCalled();
         expect(insomnia.keepAwake).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('toggleStatusBar', () => {
+
+      it('should not do anything if not in practice mode', () => {
+        component.isPracticeMode = false;
+
+        component.toggleStatusBar();
+
+        expect(statusBar.hide).not.toHaveBeenCalled();
+        expect(statusBar.show).not.toHaveBeenCalled();
+      });
+      it('should hide the status bar if it is visible', () => {
+        component.isPracticeMode = true;
+        statusBar.isVisible = true;
+
+        component.toggleStatusBar();
+
+        expect(statusBar.hide).toHaveBeenCalled();
+        expect(statusBar.show).not.toHaveBeenCalled();
+      });
+      it('should show the status bar if it is hidden', () => {
+        component.isPracticeMode = true;
+        statusBar.isVisible = false;
+
+        component.toggleStatusBar();
+
+        expect(statusBar.hide).not.toHaveBeenCalled();
+        expect(statusBar.show).toHaveBeenCalled();
       });
     });
   });
