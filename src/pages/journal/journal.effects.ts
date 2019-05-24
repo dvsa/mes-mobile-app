@@ -68,13 +68,28 @@ export class JournalEffects {
             tap((journalData: ExaminerWorkSchedule) => this.journalProvider.saveJournalForOffline(journalData)),
             map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
             map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
-            map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.extendWithEmptyDays(slots)),
-            map((slots: {[k: string]: SlotItem[]}) => this.slotProvider.getRelevantSlots(slots)),
-            map((slots: {[k: string]: SlotItem[]}) =>
-              new journalActions.LoadJournalSuccess(slots,
-                                                    this.networkStateProvider.getNetworkState(),
-                                                    this.authProvider.isInUnAuthenticatedMode(),
-                                                    lastRefreshed)),
+            map((slots: { [k: string]: SlotItem[] }) => this.slotProvider.extendWithEmptyDays(slots)),
+            map((slots: { [k: string]: SlotItem[] }) => this.slotProvider.getRelevantSlots(slots)),
+            map((slots: { [k: string]: SlotItem[] }) =>
+              new journalActions.LoadJournalSuccess(
+                slots,
+                this.networkStateProvider.getNetworkState(),
+                this.authProvider.isInUnAuthenticatedMode(),
+                lastRefreshed,
+              ),
+            ),
+            catchError((err) => {
+              // For HTTP 304 NOT_MODIFIED we just use the slots we already have cached
+              if (err.status === 304) {
+                return of(new journalActions.LoadJournalSuccess(
+                  slots,
+                  this.networkStateProvider.getNetworkState(),
+                  this.authProvider.isInUnAuthenticatedMode(),
+                  lastRefreshed,
+                ));
+              }
+              return of(err);
+            }),
           );
       }),
     );
