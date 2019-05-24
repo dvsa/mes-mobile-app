@@ -13,6 +13,7 @@ import { CandidateSectionComponent } from './candidate-section/candidate-section
 import { TranslateModule } from 'ng2-translate';
 import { ConductedLanguageComponent } from './conducted-language/conducted-language';
 import { DisplayAddressComponent } from './display-address/display-address';
+import { PracticeModeBanner } from './practice-mode-banner/practice-mode-banner';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { DisplayAddressComponent } from './display-address/display-address';
     CandidateSectionComponent,
     ConductedLanguageComponent,
     DisplayAddressComponent,
+    PracticeModeBanner,
   ],
   imports: [
     SignaturePadModule,
@@ -43,6 +45,7 @@ import { DisplayAddressComponent } from './display-address/display-address';
     CandidateSectionComponent,
     ConductedLanguageComponent,
     DisplayAddressComponent,
+    PracticeModeBanner,
   ],
 })
 export class ComponentsModule { }
