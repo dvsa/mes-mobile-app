@@ -44,6 +44,11 @@ Feature: Journal
       And I view candidate details for "Mr Buxton Phil"
      Then I should see the "Slot type" contains "Single Slot (Special Needs)"
 
+  Scenario: Examiner views meeting place information
+    Given I am on the journal page as "mobexaminer1"
+     When I view candidate details for "Miss Florence Pearson"
+     Then I should see the "Meeting place" contains "Can we meet in the pub over the road from the corner shop on High Street."
+
    @smoke
    Scenario: Examiner cannot start a test that isn't today
     Given I am on the journal page as "mobexaminer1"
