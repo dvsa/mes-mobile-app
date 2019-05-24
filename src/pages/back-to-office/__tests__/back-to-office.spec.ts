@@ -16,6 +16,8 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { MockComponent } from 'ng-mocks';
+import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;
@@ -28,7 +30,10 @@ describe('BackToOfficePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BackToOfficePage],
+      declarations: [
+        BackToOfficePage,
+        MockComponent(PracticeModeBanner),
+      ],
       imports: [
         IonicModule,
         AppModule,

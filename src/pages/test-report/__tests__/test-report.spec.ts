@@ -38,6 +38,7 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -70,6 +71,7 @@ describe('TestReportPage', () => {
         MockComponent(ManoeuvreCompetencyComponent),
         MockComponent(VehicleCheckComponent),
         MockComponent(EcoComponent),
+        MockComponent(PracticeModeBanner),
       ],
       imports: [
         IonicModule,
