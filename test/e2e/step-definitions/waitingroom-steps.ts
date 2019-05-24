@@ -21,9 +21,11 @@ Then(/^the (communication page|waiting room) candidate driver number should be \
   return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
 });
 
-When(/^the candidate enters a new email address$/, () => {
+When('the candidate enters a new email address', () => {
+  const newEmailRadio = getElement(by.id('newEmail'));
+  clickElement(newEmailRadio);
   const newEmailAddressField = getElement(by.id('newEmailInput'));
-  newEmailAddressField.sendKeys('test@test.com');
+  newEmailAddressField.sendKeys('testemail@example.com');
 });
 
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {

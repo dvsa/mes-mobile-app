@@ -17,7 +17,7 @@ Feature: Comms Capture and Waiting Room
    @smoke
    Scenario: Communications and Waiting room validation
       Given I am on the journal page as "mobexaminer1"
-      When I start the test for "Mrs Jane Doe"
+      When I start the test for "Miss Florence Pearson"
       # Communications page validation
       Then validation item "communication-new-email-validation-text" should not be visible
       When the candidate confirms their communication preference
@@ -37,11 +37,10 @@ Feature: Comms Capture and Waiting Room
       And validation item "waiting-room-signature-validation-text" should be "Enter a signature"
       And validation item "waiting-room-signature-validation-text" should be visible
 
-   Scenario: Candidate completes declaration and examiner proceeds to waiting room to car stage
+   Scenario: Candidate completes declaration and examiner proceeds to waiting room to car stage. Note using default email address
       Given I am on the journal page as "mobexaminer1"
       When I start the test for "Mrs Jane Doe"
       Then I should see the "Declaration - Jane Doe" page
-      And the candidate enters a new email address
       And the candidate confirms their communication preference
       And the candidate completes the declaration page
       And I proceed to the car

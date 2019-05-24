@@ -12,7 +12,8 @@ exports.config = {
     //fullReset: true,
     app: appPath,
     automationName: 'XCUITest',
-    isHeadless: false
+    isHeadless: false, 
+    newCommandTimeout: 180
   },
   specs: ['./test/e2e/features/*.feature'],
   framework: 'custom',
