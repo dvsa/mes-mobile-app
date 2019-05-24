@@ -28,8 +28,6 @@ When('I complete the office write up', () => {
 
   const d255Radio = getElement(by.id('d255-yes'));
   clickElement(d255Radio);
-
-  uploadTest();
 });
 
 When('I select termination code {string}', (terminationCodeDesc) => {
@@ -52,6 +50,13 @@ When('I try to upload the test', () => {
 
 When('I enter a candidate description', () => {
   enterCandidateDescription();
+});
+
+When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
+  const commentsField = getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}']
+  //ion-row[ion-col/label[text() = '${faultLabel}']]/ion-col/ion-row/div/textarea`));
+
+  commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
 const clickUploadButton = () => {

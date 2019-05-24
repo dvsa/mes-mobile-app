@@ -21,6 +21,37 @@ Feature: Full end to end journey
       And I continue to the office write up
       Then I should see the "Office" page
       And I complete the office write up
+      And I upload the test
+      Then I should see the "Journal" page
+
+   Scenario: Examiner completes a failed test with various faults
+      Given I reset the application state for "mobexaminer1"
+      When I start the test for "Miss Florence Pearson"
+      And the candidate enters a new email address
+      And the candidate confirms their communication preference
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate completes the declaration page
+      And I proceed to the car
+      Then I should see the "Florence Pearson" page
+      And I complete the waiting room to car page
+      Then I should see the "Test report - Florence Pearson" page
+      And I add a "Accelerator" driver fault
+      And I add a "Clutch" driver fault
+      And I add a "Safety" driver fault
+      And I add a "Normal driving" driver fault
+      And I add a "Lane discipline" driver fault
+      And I add a "Accelerator" serious fault
+      And I add a "Use of speed" dangerous fault
+      And I complete the test
+      Then I should see the "Debrief" page
+      When I end the debrief
+      Then I am on the back to office page
+      And I continue to the office write up
+      Then I should see the "Office" page
+      And I complete the office write up
+      And I enter a comment for "dangerous" fault "Use of speed"
+      And I enter a comment for "serious" fault "Controls - Accelerator"
+      And I upload the test
       Then I should see the "Journal" page
 
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)
