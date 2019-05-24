@@ -105,6 +105,29 @@ describe('Journal Effects', () => {
 
   });
 
+  it('should dispatch the success action when an error is thrown indicating HTTP 304 for the journal', (done) => {
+    // ARRANGE
+    spyOn(journalProvider, 'getJournal').and.callThrough();
+    spyOn(journalProvider, 'saveJournalForOffline').and.callThrough();
+    spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
+    spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
+    spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+    (<any>journalProvider).setupHttp304Error();
+    // ACT
+    actions$.next(new journalActions.LoadJournal());
+    // ASSERT
+    effects.loadJournal$.subscribe((result) => {
+      expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(journalProvider.saveJournalForOffline).not.toHaveBeenCalled();
+      expect(slotProvider.detectSlotChanges).not.toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
+      expect(slotProvider.extendWithEmptyDays).not.toHaveBeenCalled();
+      expect(slotProvider.getRelevantSlots).not.toHaveBeenCalled();
+      expect(result instanceof journalActions.LoadJournalSuccess).toBe(true);
+      done();
+    });
+
+  });
+
   it('should dispatch the failure action when the journal fails to load', (done) => {
     // ARRANGE
     spyOn(journalProvider, 'getJournal').and.throwError;
@@ -147,7 +170,7 @@ describe('Journal Effects', () => {
     actions$.next(new journalActions.SelectNextDay());
     // ASSERT
     effects.selectNextDayEffect$.subscribe((result) => {
-      if (result instanceof journalActions.SetSelectedDate)  {
+      if (result instanceof journalActions.SetSelectedDate) {
         expect(result).toEqual(new journalActions.SetSelectedDate(nextDay));
       }
       if (result instanceof journalActions.JournalNavigateDay) {
