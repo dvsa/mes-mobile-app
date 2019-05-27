@@ -6,3 +6,7 @@ export const getCommunicationPreferenceUpdatedEmail
 
 export const getCommunicationPreferenceType
   = (communicationPreferences: CommunicationPreferences) => get(communicationPreferences, 'communicationMethod', '');
+
+export const getConductedLanguage
+  = (communicationPreferences: CommunicationPreferences) =>
+  communicationPreferences.conductedLanguage ? communicationPreferences.conductedLanguage : '';
