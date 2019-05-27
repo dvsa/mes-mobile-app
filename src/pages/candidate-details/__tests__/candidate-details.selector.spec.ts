@@ -4,7 +4,6 @@ import {
   getTime,
   getCandidateName,
   getPhoneNumber,
-  getCity,
   isCandidateCommentsEmpty,
   getCandidateId,
   isCandidateSpecialNeeds,
@@ -12,6 +11,7 @@ import {
   getSlotChanged,
   getSlotType,
   processSpecialNeeds,
+  getBusiness,
 } from '../candidate-details.selector';
 import { SpecialNeedsCode } from '../candidate-details.constants';
 
@@ -466,64 +466,25 @@ describe('Candidate Details Selector', () => {
     });
   });
 
-  describe('getCity', () => {
-    it('returns the right combination of address lines', () => {
-      const cases = [
-        {
-          input: { addressLine1: '23 Canal str' },
-          expected: '',
-        },
-        {
-          input: { addressLine1: '23 Canal str', addressLine2: 'some place' },
-          expected: 'some place',
-        },
-        {
-          input: { addressLine1: '23 Canal str', addressLine2: 'some place', addressLine3: 'some other place' },
-          expected: 'some place, some other place',
-        },
-        {
-          input: {
-            addressLine1: '23 Canal str',
-            addressLine2: 'some place',
-            addressLine3: 'some other place',
-            addressLine4: 'here',
-          },
-          expected: 'some place, some other place, here',
-        },
-        {
-          input: {
-            addressLine1: '23 Canal str',
-            addressLine2: 'some place',
-            addressLine3: 'some other place',
-            addressLine4: 'here',
-            addressLine5: 'there',
-          },
-          expected: 'some place, some other place, here, there',
-        },
-        {
-          input: {
-            addressLine1: ' ',
-            addressLine3: ' ',
-            addressLine4: ' ',
-            addressLine5: 'there ',
-          },
-          expected: 'there',
-        },
-        {
-          input: {
-            addressLine3: ' some other place ',
-            addressLine4: ' here',
-            addressLine5: ' ',
-          },
-          expected: 'some other place, here',
-        },
-      ];
+  describe('getBusiness', () => {
+    it('should return the business', () => {
+      const mockBusiness = {
+        businessId: 1234,
+        businessName: 'My Business',
+      };
 
-      cases.map((c) => {
-        const result = getCity(c.input);
+      const slot = {
+        hasSlotChanged: true,
+        booking: {
+          application: {
+            entitlementCheck: 'true',
+          },
+          previousCancellation: [],
+          business: mockBusiness,
+        },
+      };
 
-        expect(result).toEqual(c.expected);
-      });
+      expect(getBusiness(slot)).toEqual(mockBusiness);
     });
   });
 });

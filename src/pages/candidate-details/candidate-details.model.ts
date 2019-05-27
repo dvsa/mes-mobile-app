@@ -1,3 +1,5 @@
+import { Address } from '@dvsa/mes-test-schema/categories/B';
+
 export type Details = {
   testCategory: string,
   slotType: string,
@@ -14,9 +16,5 @@ export type Details = {
   }
   phoneNumber: string,
   email: string,
-  address: {
-    street: string,
-    city: string,
-    postcode: string,
-  },
+  address: Address,
 };
