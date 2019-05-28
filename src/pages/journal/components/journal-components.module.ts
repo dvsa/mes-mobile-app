@@ -17,6 +17,7 @@ import { PracticeTestReportCardComponent } from './practice-test-report-card/pra
 import { PracticeTestModalModule } from './practice-test-modal/practice-test-modal.module';
 import { SubmissionStatusComponent } from './submission-status/submission-status';
 import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practice-end-to-end-card';
+import { ProgressiveAccessComponent } from './progressive-access/progressive-access';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practi
     PracticeTestReportCardComponent,
     SubmissionStatusComponent,
     PracticeEndToEndCardComponent,
+    ProgressiveAccessComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +62,7 @@ import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practi
     PracticeTestReportCardComponent,
     SubmissionStatusComponent,
     PracticeEndToEndCardComponent,
+    ProgressiveAccessComponent,
   ],
 })
 export class JournalComponentsModule {}

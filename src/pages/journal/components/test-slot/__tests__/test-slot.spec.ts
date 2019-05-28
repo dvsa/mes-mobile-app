@@ -28,6 +28,7 @@ import { SetTestStatusDecided } from '../../../../../modules/tests/test-status/t
 import { of } from 'rxjs/observable/of';
 import { StartTest } from '../../../journal.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
+import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -105,6 +106,7 @@ describe('TestSlotComponent', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(CandidateLinkComponent),
         MockComponent(SubmissionStatusComponent),
+        MockComponent(ProgressiveAccessComponent),
       ],
       imports: [
         IonicModule,
