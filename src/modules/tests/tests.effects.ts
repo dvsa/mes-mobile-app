@@ -23,6 +23,7 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { find } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 
 @Injectable()
 export class TestsEffects {
@@ -114,17 +115,11 @@ export class TestsEffects {
       return this.testSubmissionProvider.submitTests(completedTests)
         .pipe(
           switchMap((responses: HttpResponse<any>[]) => {
-            console.log('#### responses ####');
-            console.log(responses);
             return responses.map((response, index) => {
               const matchedTests = find(completedTests, ['index', index]);
-              console.log('#### matchedTests ####');
-              console.log(matchedTests);
-              if (response.status === 201) {
-                console.log('### SendCompletedTestSuccess ###');
+              if (response.status === HttpStatusCodes.CREATED) {
                 return new testActions.SendCompletedTestSuccess(matchedTests.slotId);
               }
-              console.log('### SendCompletedTestsFailure ###');
               return new testActions.SendCompletedTestsFailure();
             });
           }),
