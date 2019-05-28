@@ -12,7 +12,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { TestReportViewDidEnter, CalculateTestResult } from './test-report.actions';
-import { getCurrentTest, isTestReportPracticeTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -34,7 +34,6 @@ interface TestReportPageState {
   manoeuvres$: Observable<boolean>;
   isTestValid$: Observable<boolean>;
   catBLegalRequirements$: Observable<CatBLegalRequirements>;
-  practiceTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -56,7 +55,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
   isTestValid: boolean = false;
-  isPracticeTest: boolean;
 
   modal: Modal;
   catBLegalRequirements: CatBLegalRequirements;
@@ -122,10 +120,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
         select(getTestData),
         select(getCatBLegalRequirements),
       ),
-      practiceTest$: this.store$.pipe(
-        select(getTests),
-        select(isTestReportPracticeTest),
-      ),
     };
 
     const {
@@ -136,7 +130,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
       manoeuvres$,
       isTestValid$,
       catBLegalRequirements$,
-      practiceTest$,
     } = this.pageState;
 
     const merged$ = merge(
@@ -147,27 +140,28 @@ export class TestReportPage extends PracticeableBasePageComponent {
       manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
       isTestValid$.pipe(map(result => this.isTestValid = result)),
       catBLegalRequirements$.pipe(map(result => this.catBLegalRequirements = result)),
-      practiceTest$.pipe(map(value => this.isPracticeTest = value)),
     );
     this.subscription = merged$.subscribe();
   }
 
   ionViewWillEnter() {
     // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
-    if (super.isIos() && this.isPracticeTest) {
+    if (super.isIos() && this.isPracticeMode) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+      this.statusBar.hide();
     }
     return true;
   }
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new TestReportViewDidEnter());
-    this.toggleStatusBar();
   }
 
-  ionViewDidLeave(): void {
-    this.toggleStatusBar();
+  ionViewWillLeave() {
+    if (super.isIos() && this.isPracticeMode) {
+      this.statusBar.show();
+    }
   }
 
   toggleReportOverlay(): void {
@@ -225,19 +219,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
     this.modal.dismiss()
     .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
   }
-
-  toggleStatusBar = () => {
-    if (!this.isPracticeMode) {
-      return;
-    }
-
-    if (this.statusBar.isVisible) {
-      this.statusBar.hide();
-    } else {
-      this.statusBar.show();
-    }
-  }
-
 }
 
 export interface OverlayCallback {
