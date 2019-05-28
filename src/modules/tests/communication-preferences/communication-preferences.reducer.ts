@@ -5,6 +5,7 @@ import { createFeatureSelector } from '@ngrx/store';
 export const initialState: CommunicationPreferences = {
   updatedEmail: '',
   communicationMethod: null,
+  conductedLanguage: null,
 };
 
 export const communicationPreferencesReducer = (
@@ -27,6 +28,16 @@ export const communicationPreferencesReducer = (
       return {
         ...state,
         communicationMethod: action.communicationMethod,
+      };
+    case communicationPrefActions.CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_WELSH:
+      return {
+        ...state,
+        conductedLanguage: action.conductedLanguage,
+      };
+    case communicationPrefActions.CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_ENGLISH:
+      return {
+        ...state,
+        conductedLanguage: action.conductedLanguage,
       };
     default:
       return state;

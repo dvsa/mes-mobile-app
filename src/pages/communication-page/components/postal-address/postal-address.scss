@@ -1,9 +1,8 @@
 postal-address {
-  .displayAddress {
+  display-address{
     background: map-get($colors-gds, "gds-red");
     width: 554px;
     font-weight: bold;
-    font-style: italic;
     background-color: map-get($colors-gds, "gds-lavendar");
     padding: 12px 15px;
     margin-top: 8px;

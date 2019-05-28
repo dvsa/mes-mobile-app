@@ -27,8 +27,13 @@ import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
-from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+  from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PostalAddressComponent } from '../components/postal-address/postal-address';
+import { MockComponent } from 'ng-mocks';
+import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
+import { TranslateService, TranslateModule } from 'ng2-translate';
+import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import * as welshTranslations from '../../../assets/i18n/cy.json';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -38,6 +43,7 @@ describe('CommunicationPage', () => {
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
+  let translate: TranslateService;
 
   const mockCandidate = {
     driverNumber: '123',
@@ -49,42 +55,54 @@ describe('CommunicationPage', () => {
     candidateAddress: null,
   };
 
+  const testSlotAttributes: TestSlotAttributes = {
+    welshTest: false,
+    extendedTest: false,
+    slotId: 123,
+    specialNeeds: false,
+    start: '',
+    vehicleSlotType: '',
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         CommunicationPage,
         ProvidedEmailComponent,
         NewEmailComponent,
-        PostalAddressComponent,
+        MockComponent(PostalAddressComponent),
       ],
       imports: [
         IonicModule,
         AppModule,
         ComponentsModule,
-        StoreModule.forFeature('tests', () => ({
-          currentTest: {
-            slotId: '123',
-          },
-          testStatus: {},
-          startedTests: {
-            123: {
-              preTestDeclarations: preTestDeclarationInitialState,
-              postTestDeclarations: {
-                healthDeclarationAccepted: false,
-                passCertificateNumberReceived: false,
-                postTestSignature: '',
-              },
-              journalData: {
-                candidate: mockCandidate,
-              },
-              communicationPreferences: {
-                updatedEmail: '',
-                communicationMethod: 'Post',
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                preTestDeclarations: preTestDeclarationInitialState,
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                journalData: {
+                  testSlotAttributes,
+                  candidate: mockCandidate,
+                },
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Post',
+                },
               },
             },
-
-          },
-        })),
+          }),
+        }),
+        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -110,15 +128,13 @@ describe('CommunicationPage', () => {
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch').and.callThrough();
         component.subscription = new Subscription();
+        translate = TestBed.get(TranslateService);
+        translate.setDefaultLang('en');
       });
 
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('Changing preferred email', () => {
       it('should display the provided email input when selected', () => {
         fixture.whenStable().then(() => {
@@ -168,30 +184,68 @@ describe('CommunicationPage', () => {
         component.dispatchCandidateChoseProvidedEmail();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, 'Email',
+            mockCandidate.emailAddress, CommunicationPage.email,
           ));
       });
     });
 
     describe('New email selected', () => {
-      it('should dispatch a CommunicationViewChoseNewEmail action', () => {
+      it('should dispatch a CandidateChoseEmailAsCommunicationPreference action', () => {
         component.dispatchCandidateChoseNewEmail(mockCandidate.emailAddress);
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, 'Email',
+            mockCandidate.emailAddress, CommunicationPage.email,
           ));
+      });
+    });
+
+    describe('Post selected', () => {
+      it('should dispatch a CandidateChosePostAsCommunicationPreference action', () => {
+        component.dispatchCandidateChosePost();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChosePostAsCommunicationPreference(
+            CommunicationPage.post,
+          ));
+      });
+    });
+
+    describe('Support centre selected', () => {
+      it('should dispatch a CandidateChoseSupportCentreAsCommunicationPreference action', () => {
+        component.dispatchCandidateChoseSupportCentre();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseSupportCentreAsCommunicationPreference(
+            CommunicationPage.supportCentre,
+          ));
+      });
+    });
+
+    describe('Welsh text selected', () => {
+      it('it should dispatch CandidateChoseToProceedWithTestInWelsh action', () => {
+        component.dispatchCandidateChoseToProceedInWelsh();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInWelsh(
+            CommunicationPage.welshLanguage));
+      });
+    });
+
+    describe('English text selected', () => {
+      it('it should dispatch CandidateChoseToProceedWithTestInEnglish action', () => {
+        component.dispatchCandidateChoseToProceedInEnglish();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInEnglish(
+            CommunicationPage.englishLanguage));
       });
     });
 
     describe('Communication class level funcitons', () => {
       it('should set setCommunicationType', () => {
-        component.setCommunicationType('Email', 'Provided');
-        expect(component.communicationType).toEqual('Email');
+        component.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
+        expect(component.communicationType).toEqual(CommunicationPage.email);
         expect(component.emailType).toEqual(CommunicationPage.providedEmail);
       });
 
       it('should return true for isProvidedEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = 'Email';
+        component.communicationType = CommunicationPage.email;
         component.emailType = CommunicationPage.providedEmail;
         const returnValue = component.isProvidedEmailSelected();
         expect(returnValue).toBe(true);
@@ -205,7 +259,7 @@ describe('CommunicationPage', () => {
       });
 
       it('should return true for isNewEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = 'Email';
+        component.communicationType = CommunicationPage.email;
         component.emailType = CommunicationPage.updatedEmail;
         const returnValue = component.isNewEmailSelected();
         expect(returnValue).toBe(true);
@@ -217,14 +271,49 @@ describe('CommunicationPage', () => {
         const returnValue = component.isNewEmailSelected();
         expect(returnValue).toBe(false);
       });
-    });
 
+      it('should return false for shouldPreselectADefaultValue() if communication type is defined', () => {
+        component.communicationType = CommunicationPage.email;
+        const returnValue = component.shouldPreselectADefaultValue();
+        expect(returnValue).toBe(false);
+      });
+
+      it('should return true for shouldPreselectADefaultValue() if communication type is null', () => {
+        component.communicationType = null;
+        const returnValue = component.shouldPreselectADefaultValue();
+        expect(returnValue).toBe(true);
+      });
+    });
+    describe('clickBack', () => {
+      it('should should trigger the lock screen', () => {
+        component.clickBack();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      });
+    });
   });
 
-  describe('clickBack', () => {
-    it('should should trigger the lock screen', () => {
-      component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+  describe('DOM', () => {
+    describe('i18n', () => {
+      it('should render the page in English by default', () => {
+        fixture.detectChanges();
+        const { debugElement } = fixture;
+        expect(debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe('Select how to receive the test results');
+        expect(debugElement.query(By.css('#support-centre + label')).nativeElement.innerHTML.trim())
+          .toBe('By calling the support centre');
+      });
+      it('should render the page in Welsh for a Welsh test', (done) => {
+        fixture.detectChanges();
+        translate.onLangChange.subscribe(() => {
+          fixture.detectChanges();
+          expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)
+            .toBe((<any>welshTranslations).communication.instructionHeader);
+          expect(fixture.debugElement.query(By.css('#support-centre + label')).nativeElement.innerHTML.trim())
+            .toBe((<any>welshTranslations).communication.optionCallCentre);
+          done();
+        });
+        store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
+      });
     });
   });
+
 });

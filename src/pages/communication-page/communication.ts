@@ -1,6 +1,6 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Observable } from 'rxjs/Observable';
@@ -29,14 +29,21 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
-  getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType,
+  getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod, Address } from '@dvsa/mes-test-schema/categories/B';
+import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import {
-  CandidateChoseEmailAsCommunicationPreference, CandidateChosePostAsCommunicationPreference,
+  CandidateChoseEmailAsCommunicationPreference,
+  CandidateChosePostAsCommunicationPreference,
+  CandidateChoseSupportCentreAsCommunicationPreference,
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { TranslateService } from 'ng2-translate';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -46,16 +53,23 @@ interface CommunicationPageState {
   communicationEmail$: Observable<string>;
   communicationType$: Observable<string>;
   candidateAddress$: Observable<Address>;
+  welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 @IonicPage()
 @Component({
   selector: 'communication',
   templateUrl: 'communication.html',
 })
-export class CommunicationPage extends BasePageComponent {
+export class CommunicationPage extends PracticeableBasePageComponent {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
+  static readonly email: CommunicationMethod = 'Email';
+  static readonly post: CommunicationMethod = 'Post';
+  static readonly supportCentre: CommunicationMethod = 'Support Centre';
+  static readonly welshLanguage: ConductedLanguage = 'Cymraeg';
+  static readonly englishLanguage: ConductedLanguage = 'English';
 
   @ViewChild(Navbar)
   navBar: Navbar;
@@ -64,17 +78,15 @@ export class CommunicationPage extends BasePageComponent {
   subscription: Subscription;
   emailType: string;
   pageState: CommunicationPageState;
-  communicationMethodForEmail: CommunicationMethod;
-  communicationMethodForPost: CommunicationMethod;
-  communicationMethodForSupportCentre: CommunicationMethod;
   candidateProvidedEmail: string;
   communicationEmail: string;
   communicationType: string;
   selectProvidedEmail: boolean;
   selectNewEmail: boolean;
+  conductedLanguage: string;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -82,12 +94,10 @@ export class CommunicationPage extends BasePageComponent {
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
+    private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
-    this.communicationMethodForEmail = 'Email';
-    this.communicationMethodForPost = 'Post';
-    this.communicationMethodForSupportCentre = 'Support Centre';
   }
 
   ionViewDidEnter(): void {
@@ -115,6 +125,7 @@ export class CommunicationPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -158,28 +169,52 @@ export class CommunicationPage extends BasePageComponent {
         select(getCandidate),
         select(getPostalAddress),
       ),
+      welshTest$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
+      ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
     };
 
     const {
       candidateProvidedEmail$,
       communicationEmail$,
       communicationType$,
+      welshTest$,
+      conductedLanguage$,
     } = this.pageState;
 
     const merged$ = merge(
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value)),
+      welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
     );
     this.subscription = merged$.subscribe();
 
-    this.initialiseDefaultSelections();
+    if (this.shouldPreselectADefaultValue()) {
+      this.initialiseDefaultSelections();
+    }
+
     this.restoreRadiosFromState();
     this.restoreRadioValidators();
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.subscription.unsubscribe();
+    this.translate.use(this.translate.getDefaultLang());
+  }
+
+  configureI18N(isWelsh: boolean): void {
+    if (isWelsh) {
+      this.translate.use('cy');
+    }
   }
 
   onSubmit() {
@@ -190,15 +225,17 @@ export class CommunicationPage extends BasePageComponent {
   }
 
   dispatchCandidateChoseProvidedEmail() {
-    this.setCommunicationType('Email', CommunicationPage.providedEmail);
+    this.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
     this.store$.dispatch(
-      new CandidateChoseEmailAsCommunicationPreference(this.candidateProvidedEmail, this.communicationMethodForEmail),
+      new CandidateChoseEmailAsCommunicationPreference(
+        this.candidateProvidedEmail, CommunicationPage.email),
     );
   }
 
   dispatchCandidateChoseNewEmail(communicationEmail: string): void {
     this.store$.dispatch(
-      new CandidateChoseEmailAsCommunicationPreference(communicationEmail, this.communicationMethodForEmail),
+      new CandidateChoseEmailAsCommunicationPreference(
+        communicationEmail, CommunicationPage.email),
     );
   }
 
@@ -209,26 +246,33 @@ export class CommunicationPage extends BasePageComponent {
   }
 
   isProvidedEmailSelected() {
-    return this.communicationType === 'Email' && this.emailType === CommunicationPage.providedEmail;
+    return this.communicationType === CommunicationPage.email && this.emailType === CommunicationPage.providedEmail;
   }
 
   isNewEmailSelected() {
-    return this.communicationType === 'Email' && this.emailType === CommunicationPage.updatedEmail;
+    return this.communicationType === CommunicationPage.email && this.emailType === CommunicationPage.updatedEmail;
   }
 
   isPostSelected() {
-    return this.communicationType === 'Post';
+    return this.communicationType === CommunicationPage.post;
   }
 
   dispatchCandidateChosePost(): void {
-    this.setCommunicationType(this.communicationMethodForPost);
+    this.setCommunicationType(CommunicationPage.post);
     this.store$.dispatch(
-      new CandidateChosePostAsCommunicationPreference(this.communicationMethodForPost),
+      new CandidateChosePostAsCommunicationPreference(CommunicationPage.post),
+    );
+  }
+
+  dispatchCandidateChoseSupportCentre(): void {
+    this.setCommunicationType(CommunicationPage.supportCentre);
+    this.store$.dispatch(
+      new CandidateChoseSupportCentreAsCommunicationPreference(CommunicationPage.supportCentre),
     );
   }
 
   isSupportCentreSelected() {
-    return this.communicationType === 'Support Centre';
+    return this.communicationType === CommunicationPage.supportCentre;
   }
 
   getFormValidation(): { [key: string]: FormControl } {
@@ -243,7 +287,7 @@ export class CommunicationPage extends BasePageComponent {
    * No current schema properties allow for the capture of radio selection for emails on the communication page.
    */
   restoreRadiosFromState() {
-    if (this.communicationType === 'Email') {
+    if (this.communicationType === CommunicationPage.email) {
       this.assertEmailType();
     }
   }
@@ -262,10 +306,11 @@ export class CommunicationPage extends BasePageComponent {
   assertEmailType() {
     if (this.candidateProvidedEmail !== '' && this.candidateProvidedEmail === this.communicationEmail) {
       this.selectProvidedEmail = true;
+      this.selectNewEmail = false;
       this.emailType = CommunicationPage.providedEmail;
     }
 
-    if (this.candidateProvidedEmail === '' && this.communicationEmail !== '') {
+    if (this.candidateProvidedEmail !== this.communicationEmail) {
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
       this.emailType = CommunicationPage.updatedEmail;
@@ -279,12 +324,16 @@ export class CommunicationPage extends BasePageComponent {
   /**
    * Initialise a default radio selection on the communication page
    *
+   * If 'communicationEmail' it implies the candidate is entering the form for the first time and
+   * setting default values will not impact rehydration.
+   *
    * If there is a candidate email provided at the time of booking, this will be chosen as
    * the default selection. If there is not then the new email radio selection will be chosen
    * as the default selection.
+   *
    */
   initialiseDefaultSelections() {
-    this.communicationType = 'Email';
+    this.communicationType = CommunicationPage.email;
     if (this.candidateProvidedEmail) {
       this.emailType = CommunicationPage.providedEmail;
       this.selectProvidedEmail = true;
@@ -298,17 +347,57 @@ export class CommunicationPage extends BasePageComponent {
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
     }
+
+    if (this.conductedLanguage !== CommunicationPage.englishLanguage) {
+      this.dispatchCandidateChoseToProceedInWelsh();
+    }
+
   }
 
   verifyNewEmailFormControl(communicationChoice: string) {
     const newEmailCtrl = this.form.get('newEmailCtrl');
     if (newEmailCtrl !== null) {
-      if (communicationChoice !== 'Email') {
+      if (communicationChoice !== CommunicationPage.email
+        || this.emailType === CommunicationPage.providedEmail) {
         newEmailCtrl.clearValidators();
       } else {
         newEmailCtrl.setValidators(Validators.email);
       }
       newEmailCtrl.updateValueAndValidity();
     }
+  }
+
+  shouldPreselectADefaultValue() {
+    return this.communicationType === null;
+  }
+
+  /**
+   * Function to conditionally dispatch 'dispatchCandidateChoseNewEmail' action
+   * to cover edge case candidate action.
+   *
+   * Candidate selects new email -> app crashes -> candidate selects Post/Support Centre ->
+   * app crashes -> candidate selects new email (previous state value exists so examiner clicks continue)
+   *
+   * As state change for new email happens on text input, the expected action
+   * (CandidateChoseEmailAsCommunicationPreference) would not be dispatched.
+   */
+  conditionalDispatchCandidateChoseNewEmail() {
+    this.setCommunicationType(CommunicationPage.email, CommunicationPage.updatedEmail);
+
+    if (this.isNewEmailSelected() && this.communicationEmail !== '') {
+      this.dispatchCandidateChoseNewEmail(this.communicationEmail);
+    }
+  }
+
+  getNewEmailAddressValue() {
+    return this.candidateProvidedEmail === this.communicationEmail ? '' : this.communicationEmail;
+  }
+
+  dispatchCandidateChoseToProceedInWelsh() {
+    this.store$.dispatch(new CandidateChoseToProceedWithTestInWelsh(CommunicationPage.welshLanguage));
+  }
+
+  dispatchCandidateChoseToProceedInEnglish() {
+    this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(CommunicationPage.englishLanguage));
   }
 }

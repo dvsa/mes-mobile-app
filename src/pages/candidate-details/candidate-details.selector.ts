@@ -73,24 +73,11 @@ export const getSlotType = (slot: any): string => {
   return 'Special Needs Extra Time';
 };
 
-export const getCity = (address: any): string => {
-  const addressLines = [
-    address.addressLine2,
-    address.addressLine3,
-    address.addressLine4,
-    address.addressLine5,
-  ];
-  return addressLines.filter(addressExists).map(address => address.trim()).join(', ');
-};
-
-const addressExists = (address) => {
-  return !(isEmpty(address) || address.trim() === '');
-};
-
 export const getDetails = (slot: any): Details => {
   const details: Details = {
     testCategory: `Category ${slot.booking.application.testCategory}`,
     slotType: getSlotType(slot),
+    meetingPlace: slot.booking.application.meetingPlace,
     driverNumber: slot.booking.candidate.driverNumber,
     applicationRef: slot.booking.application.applicationId,
     specialNeeds: processSpecialNeeds(slot),
@@ -105,14 +92,12 @@ export const getDetails = (slot: any): Details => {
 
     // TODO: remove the string literal when e-mail address is configured in the service
     email: slot.booking.candidate.emailAddress || 'e-mail unavailable',
-    address: {
-      street: slot.booking.candidate.candidateAddress.addressLine1,
-      city: getCity(slot.booking.candidate.candidateAddress),
-      postcode: slot.booking.candidate.candidateAddress.postcode,
-    },
+    address: slot.booking.candidate.candidateAddress,
   };
   return details;
 };
 export const processSpecialNeeds = (slot: any): string | string[] => {
   return slot.booking.application.specialNeeds ? slot.booking.application.specialNeeds.split(';') : 'None';
 };
+
+export const getBusiness = (slot: any) => slot.booking.business;

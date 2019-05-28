@@ -4,6 +4,7 @@ import { BackToOfficePage } from './back-to-office';
 import { EffectsModule } from '@ngrx/effects';
 import { BackToOfficeAnalyticsEffects } from './back-to-office.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
   imports: [
     IonicPageModule.forChild(BackToOfficePage),
     EffectsModule.forFeature([BackToOfficeAnalyticsEffects]),
+    ComponentsModule,
   ],
   providers: [
     AnalyticsProvider,

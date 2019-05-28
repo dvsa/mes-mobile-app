@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -25,7 +25,10 @@ import {
 } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { map } from 'rxjs/operators';
-import { getPassCertificateNumber } from '../../modules/tests/pass-completion/pass-completion.selector';
+import {
+  getPassCertificateNumber,
+  isProvisionalLicenseProvided,
+} from '../../modules/tests/pass-completion/pass-completion.selector';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,6 +36,7 @@ import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { ProvisionalLicenseNotReceived } from '../../modules/tests/pass-completion/pass-completion.actions';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -42,6 +46,7 @@ interface HealthDeclarationPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   passCertificateNumber$: Observable<string>;
+  licenseProvided$: Observable<boolean>;
   welshTest$: Observable<boolean>;
 }
 @IonicPage()
@@ -49,21 +54,21 @@ interface HealthDeclarationPageState {
   selector: 'page-health-declaration',
   templateUrl: 'health-declaration.html',
 })
-export class HealthDeclarationPage extends BasePageComponent {
+export class HealthDeclarationPage extends PracticeableBasePageComponent {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
   @ViewChild(Navbar) navBar: Navbar;
 
   pageState: HealthDeclarationPageState;
-
   form: FormGroup;
-
+  licenseProvided: boolean;
+  healthDeclarationAccepted: boolean;
   subscription: Subscription;
   inputSubscriptions: Subscription[] = [];
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -71,8 +76,10 @@ export class HealthDeclarationPage extends BasePageComponent {
     private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
+    public alertController: AlertController,
+
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 
@@ -104,13 +111,14 @@ export class HealthDeclarationPage extends BasePageComponent {
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      healthCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      healthCheckboxCtrl: new FormControl(''),
       receiptCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
       signatureAreaCtrl: new FormControl(null, [Validators.required]),
     };
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.signatureArea.drawCompleteAction = postTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = postTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
 
@@ -158,6 +166,10 @@ export class HealthDeclarationPage extends BasePageComponent {
         select(getPassCompletion),
         select(getPassCertificateNumber),
       ),
+      licenseProvided$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseProvided),
+      ),
       welshTest$: currentTest$.pipe(
         select(getJournalData),
         select(getTestSlotAttributes),
@@ -166,10 +178,16 @@ export class HealthDeclarationPage extends BasePageComponent {
     };
     this.rehydrateFields();
 
-    const { welshTest$ } = this.pageState;
+    const { welshTest$, licenseProvided$, healthDeclarationAccepted$ } = this.pageState;
     const merged$ = merge(
       welshTest$.pipe(
         map(isWelsh => this.configureI18N(isWelsh)),
+      ),
+      licenseProvided$.pipe(
+        map(val => this.licenseProvided = val),
+      ),
+      healthDeclarationAccepted$.pipe(
+        map(val => this.healthDeclarationAccepted = val),
       ),
     );
     this.subscription = merged$.subscribe();
@@ -212,22 +230,58 @@ export class HealthDeclarationPage extends BasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.deviceAuthenticationProvider.triggerLockScreen()
-        .then(() => {
-          this.store$.dispatch(new PersistTests());
-          this.navCtrl.push('BackToOfficePage');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (!this.healthDeclarationAccepted) {
+        this.showConfirmHealthDeclarationModal();
+      } else {
+        this.persistAndNavigate(false);
+      }
     }
   }
 
+  showConfirmHealthDeclarationModal() {
+    const shortMessage = 'Remind the candidate to contact DVLA';
+    const extendedMessage =
+      // tslint:disable-next-line:max-line-length
+      `You need to give the provisional license back to the candidate.<br/>The field 'Driver license received' will be automatically changed to 'no'.<br/>${shortMessage}`;
+    const alert = this.alertController.create({
+      title: 'The candidate has not confirmed the health declaration',
+      message: this.licenseProvided ? extendedMessage : shortMessage,
+      cssClass: 'confirm-declaration-modal',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => { },
+        },
+        {
+          text: 'Continue',
+          handler: () => this.persistAndNavigate(true),
+        },
+      ],
+      enableBackdropDismiss: false,
+    });
+    alert.present();
+  }
+
+  persistAndNavigate(resetLicenseProvided: boolean) {
+    this.deviceAuthenticationProvider.triggerLockScreen()
+      .then(() => {
+        if (this.licenseProvided && resetLicenseProvided) {
+          this.store$.dispatch(new ProvisionalLicenseNotReceived());
+        }
+        this.store$.dispatch(new PersistTests());
+        this.navCtrl.push('BackToOfficePage');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName] && this.form.get(controlName).dirty;
+    return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.subscription.unsubscribe();
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }

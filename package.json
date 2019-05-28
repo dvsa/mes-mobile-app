@@ -86,7 +86,7 @@
     "deep-diff": "^1.0.2",
     "event-stream": "3.3.4",
     "hammerjs": "^2.0.8",
-    "ionic-angular": "3.9.2",
+    "ionic-angular": "3.9.6",
     "ionic-native": "^2.9.0",
     "ionicons": "3.0.0",
     "jwt-decode": "^2.2.0",
@@ -101,7 +101,7 @@
   "devDependencies": {
     "@angular/cli": "1.4.8",
     "@angular/compiler-cli": "^5.2.11",
-    "@dvsa/mes-test-schema": "^1.0.14",
+    "@dvsa/mes-test-schema": "^1.0.15",
     "@ionic-native-mocks/device": "^2.0.12",
     "@ionic-native-mocks/secure-storage": "^2.0.12",
     "@ionic/app-scripts": "^3.2.3",

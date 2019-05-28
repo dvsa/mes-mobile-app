@@ -37,6 +37,7 @@ import { AccompanimentComponent } from '../components/accompaniment/accompanimen
 import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 import { TellMeQuestionSelected } from '../../../modules/tests/test-data/test-data.actions';
+import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -60,6 +61,7 @@ describe('WaitingRoomToCarPage', () => {
         MockComponent(VehicleDetailsComponent),
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
+        MockComponent(PracticeModeBanner),
       ],
       imports: [
         IonicModule,

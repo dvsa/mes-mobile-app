@@ -9,11 +9,11 @@ import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants
 import { testReportPracticeModeSlot } from '../../../../modules/tests/__mocks__/tests.mock';
 
 @Component({
-  selector: 'practice-card',
-  templateUrl: 'practice-card.html',
+  selector: 'practice-test-report-card',
+  templateUrl: 'practice-test-report-card.html',
 })
 
-export class PracticeCardComponent {
+export class PracticeTestReportCardComponent {
 
   slotId: string = testReportPracticeModeSlot.slotDetail.slotId;
   modal: Modal;

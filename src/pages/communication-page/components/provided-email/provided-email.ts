@@ -20,23 +20,19 @@ export class ProvidedEmailComponent {
   shouldRender: boolean;
 
   @Input()
-  providedEmailAddressChosen: boolean;
-
-  @Input()
-  providedEmailRadioValue: boolean;
+  isProvidedEmailAddressChosen: boolean;
 
   @Output()
   providedEmailRadioSelect = new EventEmitter<string>();
 
-  private radioControl: FormControl;
+  radioButtonControl: FormControl;
 
   ngOnChanges() {
-    if (!this.radioControl) {
-      this.radioControl = new FormControl('', [Validators.required]);
-      this.formGroup.addControl(ProvidedEmailComponent.radioCtrl, this.radioControl);
+    if (!this.radioButtonControl) {
+      this.radioButtonControl = new FormControl('', Validators.required);
+      this.formGroup.addControl(ProvidedEmailComponent.radioCtrl, this.radioButtonControl);
     }
-    this.radioControl.patchValue(this.providedEmailRadioValue ? true : false);
-
+    this.radioButtonControl.patchValue(this.isProvidedEmailAddressChosen ? true : false);
   }
 
   providedEmailRadioSelected() {

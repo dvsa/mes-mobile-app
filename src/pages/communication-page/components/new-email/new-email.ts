@@ -18,10 +18,7 @@ export class NewEmailComponent implements OnChanges {
   newEmailAddress: string;
 
   @Input()
-  newEmailAddressChosen: boolean;
-
-  @Input()
-  newEmailRadioValue: boolean;
+  isNewEmailAddressChosen: boolean;
 
   @Output()
   newEmailRadioSelect = new EventEmitter<string>();
@@ -29,22 +26,25 @@ export class NewEmailComponent implements OnChanges {
   @Output()
   newEmailTextChange = new EventEmitter<string>();
 
-  private formControl: FormControl;
-  private radioFormControl: FormControl;
+  formControl: FormControl;
+  radioButtonControl: FormControl;
 
   ngOnChanges(): void {
-    if (!this.radioFormControl) {
-      this.radioFormControl = new FormControl('', [Validators.required]);
-      this.formGroup.addControl(NewEmailComponent.radioCtrl, this.radioFormControl);
+    if (!this.radioButtonControl) {
+      this.radioButtonControl = new FormControl('', Validators.required);
+      this.formGroup.addControl(NewEmailComponent.radioCtrl, this.radioButtonControl);
     }
 
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.email]);
+      this.formControl = new FormControl('');
+      if (this.isNewEmailAddressChosen) {
+        this.formControl.setValidators(Validators.email);
+      }
       this.formGroup.addControl(NewEmailComponent.newEmailCtrl, this.formControl);
     }
 
     this.formControl.patchValue(this.newEmailAddress);
-    this.radioFormControl.patchValue(this.newEmailRadioValue ? true : false);
+    this.radioButtonControl.patchValue(this.isNewEmailAddressChosen ? true : false);
   }
 
   newEmailRadioSelected() {

@@ -9,6 +9,8 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { Subscription } from 'rxjs/Subscription';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { MockComponent } from 'ng-mocks';
+import { DisplayAddressComponent } from '../../../components/display-address/display-address';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -16,8 +18,14 @@ describe('CandidateDetailsPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CandidateDetailsPage],
-      imports: [IonicModule, AppModule],
+      declarations: [
+        CandidateDetailsPage,
+        MockComponent(DisplayAddressComponent),
+      ],
+      imports: [
+        IonicModule,
+        AppModule,
+      ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },

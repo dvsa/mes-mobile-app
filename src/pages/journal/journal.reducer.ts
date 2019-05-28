@@ -27,7 +27,7 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         // TODO: The reducer has to get the lastRefreshed date from the action
         // And should not do any logic
         lastRefreshed: (action.onlineOffline ===
-          ConnectionStatus.ONLINE  && !action.unAuthenticatedMode) ? new Date() : action.lastRefreshed,
+          ConnectionStatus.ONLINE && !action.unAuthenticatedMode) ? new Date() : action.lastRefreshed,
         isLoading: false,
         slots: action.payload,
       };
@@ -38,10 +38,7 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         error: action.payload,
       };
     case journalActions.UNLOAD_JOURNAL:
-      return {
-        ...state,
-        slots: {},
-      };
+      return initialState;
     case journalActions.UNSET_ERROR:
       const { error, ...stateWithoutError } = state;
       return {

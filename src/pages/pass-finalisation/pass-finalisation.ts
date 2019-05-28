@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { BasePageComponent } from '../../shared/classes/base-page';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -34,6 +34,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
+import {
+  getGearboxCategory,
+  isAutomatic,
+  isManual,
+} from '../../modules/tests/vehicle-details/vehicle-details.selector';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
+import { GearboxCategoryChanged } from '../../modules/tests/vehicle-details/vehicle-details.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -43,6 +51,9 @@ interface PassFinalisationPageState {
   provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
   provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
   passCertificateNumber$: Observable<string>;
+  transmission$: Observable<GearboxCategory>;
+  transmissionAutomaticRadioChecked$: Observable<boolean>;
+  transmissionManualRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -50,7 +61,7 @@ interface PassFinalisationPageState {
   selector: 'page-pass-finalisation',
   templateUrl: 'pass-finalisation.html',
 })
-export class PassFinalisationPage extends BasePageComponent {
+export class PassFinalisationPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
 
   @ViewChild('passCertificateNumberInput')
@@ -61,18 +72,18 @@ export class PassFinalisationPage extends BasePageComponent {
   form: FormGroup;
 
   constructor(
-    private store$: Store<StoreModel>,
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider);
+    super(platform, navCtrl, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 
   ngOnInit(): void {
-
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -119,6 +130,24 @@ export class PassFinalisationPage extends BasePageComponent {
         select(getPassCertificateNumber),
         tap(val => this.form.controls['passCertificateNumberCtrl'].setValue(val)),
       ),
+      transmission$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getGearboxCategory),
+      ),
+      transmissionAutomaticRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isAutomatic),
+        tap((val) => {
+          if (val) this.form.controls['transmissionCtrl'].setValue('Automatic');
+        }),
+      ),
+      transmissionManualRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isManual),
+        tap((val) => {
+          if (val) this.form.controls['transmissionCtrl'].setValue('Manual');
+        }),
+      ),
     };
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
@@ -126,6 +155,7 @@ export class PassFinalisationPage extends BasePageComponent {
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }
 
@@ -141,6 +171,10 @@ export class PassFinalisationPage extends BasePageComponent {
     this.store$.dispatch(new ProvisionalLicenseNotReceived());
   }
 
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
+  }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
@@ -153,10 +187,11 @@ export class PassFinalisationPage extends BasePageComponent {
     return {
       provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
       passCertificateNumberCtrl: new FormControl(null, [Validators.required]),
+      transmissionCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName]  && this.form.get(controlName).dirty;
+    return !this.form.value[controlName] && this.form.get(controlName).dirty;
   }
 
   /**
@@ -167,10 +202,10 @@ export class PassFinalisationPage extends BasePageComponent {
    */
   inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
     const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-        map((event: any) => event.target.value),
-        debounceTime(1000),
-        distinctUntilChanged(),
-      );
+      map((event: any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged(),
+    );
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;

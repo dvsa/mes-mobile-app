@@ -134,7 +134,7 @@ describe('JournalPage', () => {
           jasmine.createSpy('showTestReportPracticeMode').and.returnValue(true);
 
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeDefined();
+        expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).not.toBeNull();
 
       });
       it('should not show test report practice mode banner when config is set to false', () => {
@@ -143,6 +143,24 @@ describe('JournalPage', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
+      });
+    });
+
+    describe('end to end practice mode', () => {
+      it('should show the end to end practice mode banner when config is set to true', () => {
+        component.showEndToEndPracticeMode =
+          jasmine.createSpy('showEndToEndPracticeMode').and.returnValue(true);
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).not.toBeNull();
+
+      });
+      it('should not show the end to end practice mode banner when config is set to false', () => {
+        component.showEndToEndPracticeMode =
+          jasmine.createSpy('showEndToEndPracticeMode').and.returnValue(false);
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).toBeNull();
       });
     });
   });
