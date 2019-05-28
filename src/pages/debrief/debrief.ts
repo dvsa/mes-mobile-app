@@ -35,6 +35,10 @@ import { TranslateService } from 'ng2-translate';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
+import {
+  getCommunicationPreference,
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -45,6 +49,7 @@ interface DebriefPageState {
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
   welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 
 @IonicPage()
@@ -55,8 +60,12 @@ interface DebriefPageState {
 
 export class DebriefPage extends PracticeableBasePageComponent {
 
+  static readonly welshLanguage: string = 'Cymraeg';
+
   pageState: DebriefPageState;
   subscription: Subscription;
+  conductedLanguage: string;
+  isBookedInWelsh: boolean;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
@@ -152,13 +161,17 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
     };
 
-    const { testResult$, welshTest$, etaFaults$, ecoFaults$ } = this.pageState;
+    const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
-      welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       etaFaults$.pipe(
         map((eta) => {
           this.hasPhysicalEta = eta.physical;
@@ -171,13 +184,14 @@ export class DebriefPage extends PracticeableBasePageComponent {
           this.adviceGivenPlanning = eco.adviceGivenPlanning;
         }),
       ),
+      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
     );
-
+    this.configureI18N(this.conductedLanguage === DebriefPage.welshLanguage);
     this.subscription = merged$.subscribe();
   }
 
   configureI18N(isWelsh: boolean): void {
-    if (isWelsh) {
+    if (this.isBookedInWelsh && isWelsh) {
       this.translate.use('cy');
     }
   }
@@ -187,7 +201,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.translate.use(this.translate.getDefaultLang());
   }
 
   ionViewDidEnter(): void {

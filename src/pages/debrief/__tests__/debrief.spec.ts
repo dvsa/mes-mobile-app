@@ -390,6 +390,8 @@ describe('DebriefPage', () => {
         store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
         store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
         fixture.detectChanges();
+        component.isBookedInWelsh = true;
+        component.configureI18N(true);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;

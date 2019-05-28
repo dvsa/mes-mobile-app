@@ -97,6 +97,7 @@ describe('CommunicationPage', () => {
                 communicationPreferences: {
                   updatedEmail: '',
                   communicationMethod: 'Post',
+                  conductedLanguage: 'Cymraeg',
                 },
               },
             },
@@ -303,6 +304,8 @@ describe('CommunicationPage', () => {
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
         fixture.detectChanges();
+        component.isBookedInWelsh = true;
+        component.configureI18N(true);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)
