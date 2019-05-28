@@ -164,6 +164,7 @@ export class AppConfigProvider {
         allowedTestCategories: data.journal.allowedTestCategories,
         enableTestReportPracticeMode: data.journal.enableTestReportPracticeMode,
         enableEndToEndPracticeMode: data.journal.enableEndToEndPracticeMode,
+        enableLogoutButton: data.journal.enableLogoutButton,
       },
       tests: {
         testSubmissionUrl: data.tests.testSubmissionUrl,

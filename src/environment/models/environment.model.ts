@@ -26,6 +26,7 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     allowedTestCategories: string[];
     enableTestReportPracticeMode: boolean;
     enableEndToEndPracticeMode: boolean;
+    enableLogoutButton: boolean;
   };
   tests: {
     testSubmissionUrl: string,

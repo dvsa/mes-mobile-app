@@ -22,6 +22,7 @@ export type AppConfig = {
     allowedTestCategories: string [],
     enableTestReportPracticeMode: boolean,
     enableEndToEndPracticeMode: boolean,
+    enableLogoutButton: boolean,
   },
   tests: {
     testSubmissionUrl: string,
