@@ -44,7 +44,7 @@ export class TestSubmissionProvider {
 
   removeNullFieldsDeep = (data: StandardCarTestCATBSchema): Partial<StandardCarTestCATBSchema> => {
     const removeNullFields = (object) => {
-      Object.keys(object).map((key) => {
+      Object.keys(object).forEach((key) => {
         const value = object[key];
         if (isNull(value)) unset(object, key);
         if (isObject(value)) removeNullFields(value);
