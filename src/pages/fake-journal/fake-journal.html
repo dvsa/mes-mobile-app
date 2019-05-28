@@ -1,12 +1,12 @@
 <ion-header>
   <practice-mode-banner></practice-mode-banner>
-  <ion-navbar>
+  <ion-navbar [hideBackButton]='true'>
     <ion-title>Journal</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content no-padding>
-  <div>
+  <div class="date-navigation">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
@@ -20,9 +20,4 @@
   <div *ngFor="let slot of slots">
     <test-slot [slot]="slot"></test-slot>
   </div>
-
-  <hr />
-
-  <practice-test-report-card id="testReportPracticeMode"></practice-test-report-card>
-
 </ion-content>

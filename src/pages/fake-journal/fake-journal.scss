@@ -1,21 +1,9 @@
-fake-journal {
-  display: flex;
-  margin-top: 8px;
-  margin-bottom: -2px;
-  margin-left: 12px;
-
-  // TODO find a better way to set the font size without defining it here
-  ion-icon {
-    font-size: 30px;
-    color: map-get($colors-gds, gds-grey-1);
-    padding-right: 8px;
+page-fake-journal {
+  .toolbar-ios {
+    min-height: 52px;
   }
-  h3 {
-    font-size: 20px;
-    line-height: 1.5em;
-  }
-  #date-container {
-    text-align: center;
-    white-space: nowrap;
+  .date-navigation {
+    padding-top: 12px;
+    padding-bottom: 24px;
   }
 }
