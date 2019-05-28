@@ -87,6 +87,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -193,6 +194,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
