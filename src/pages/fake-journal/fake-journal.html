@@ -1,6 +1,7 @@
 <ion-header>
+  <practice-mode-banner></practice-mode-banner>
   <ion-navbar>
-    <ion-title>Fake Journal</ion-title>
+    <ion-title>Journal</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,25 +9,14 @@
   <div>
     <ion-grid>
       <ion-row>
-        <ion-col>
-        </ion-col>
-        <ion-col>
-          <div id="date-container">
-            <div>
-              <h1>Today</h1>
-              <h3>Thursday 23 May 2019</h3>
-            </div>
-          </div>
-        </ion-col>
-        <ion-col>
+        <ion-col text-center>
+          <h1>Today</h1>
+          <h3>{{dateToDisplay}}</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
-
-  <ion-icon name="pin"></ion-icon>
-  <h3>Example Test Centre</h3>
-
+  <location location='Example Test Centre'></location>
   <div *ngFor="let slot of slots">
     <test-slot [slot]="slot"></test-slot>
   </div>
