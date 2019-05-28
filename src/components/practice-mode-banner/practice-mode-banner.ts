@@ -13,6 +13,6 @@ export class PracticeModeBanner {
   ) {}
 
   exitPracticeMode() {
-    this.navController.popToRoot();
+    this.navController.popToRoot({ animate: false });
   }
 }
