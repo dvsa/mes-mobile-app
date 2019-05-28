@@ -4,6 +4,7 @@ export type AppConfig = {
   daysToCacheJournalData: number,
   daysToCacheLogs: number,
   logoutClearsTestPersistence?: boolean;
+  logsPostApiKey: string;
   authentication: {
     context: string,
     resourceUrl: string,
@@ -19,7 +20,7 @@ export type AppConfig = {
     autoRefreshInterval: number
     numberOfDaysToView: number,
     allowTests: boolean,
-    allowedTestCategories: string [],
+    allowedTestCategories: string[],
     enableTestReportPracticeMode: boolean,
     enableEndToEndPracticeMode: boolean,
     enableLogoutButton: boolean,

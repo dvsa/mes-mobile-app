@@ -4,6 +4,7 @@ export interface EnvironmentFile {
   daysToCacheJournalData: number;
   daysToCacheLogs: number;
   logoutClearsTestPersistence?: boolean;
+  logsPostApiKey: string;
   authentication: {
     context: string;
     resourceUrl: string;

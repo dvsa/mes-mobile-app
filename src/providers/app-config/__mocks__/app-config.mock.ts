@@ -19,6 +19,7 @@ export class AppConfigProviderMock {
       daysToCacheJournalData: localEnvironmentMock.daysToCacheJournalData,
       daysToCacheLogs: localEnvironmentMock.daysToCacheLogs,
       logoutClearsTestPersistence: localEnvironmentMock.logoutClearsTestPersistence,
+      logsPostApiKey: localEnvironmentMock.logsPostApiKey,
       authentication: {
         clientId: localEnvironmentMock.authentication.clientId,
         context: localEnvironmentMock.authentication.context,

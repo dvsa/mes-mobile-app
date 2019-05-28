@@ -54,7 +54,7 @@ export class AppConfigProvider {
     public networkState: NetworkStateProvider,
     public dataStore: DataStoreProvider,
     public platform: Platform,
-    ) {}
+  ) { }
 
   public initialiseAppConfig = (): Promise<void> => {
     try {
@@ -84,7 +84,7 @@ export class AppConfigProvider {
         return Promise.reject(AppConfigError.UNKNOWN_ERROR);
       })
 
-  public loadManagedConfig = () : void => {
+  public loadManagedConfig = (): void => {
 
     if (cordova && cordova.plugins.AppConfig) {
       const appConfigPlugin = cordova.plugins.AppConfig;
@@ -94,15 +94,17 @@ export class AppConfigProvider {
         daysToCacheJournalData: appConfigPlugin.getValue('daysToCacheJournalData'),
         daysToCacheLogs: appConfigPlugin.getValue('daysToCacheLogs'),
         isRemote: true,
+        logsPostApiKey: appConfigPlugin.getValue('logsPostApiKey'),
         authentication: {
           clientId: appConfigPlugin.getValue('clientId'),
-          context : appConfigPlugin.getValue('authenticationContext'),
-          employeeIdKey : appConfigPlugin.getValue('employeeIdKey'),
-          logoutUrl : appConfigPlugin.getValue('logoutUrl'),
-          redirectUrl : appConfigPlugin.getValue('redirectUrl'),
+          context: appConfigPlugin.getValue('authenticationContext'),
+          employeeIdKey: appConfigPlugin.getValue('employeeIdKey'),
+          logoutUrl: appConfigPlugin.getValue('logoutUrl'),
+          redirectUrl: appConfigPlugin.getValue('redirectUrl'),
           resourceUrl: appConfigPlugin.getValue('resourceUrl'),
         },
       } as EnvironmentFile;
+      console.log(`Got logs POST API key: ${newEnvFile.logsPostApiKey}`);
 
       // Check to see if we have any config
       if (newEnvFile.configUrl) {
@@ -115,17 +117,17 @@ export class AppConfigProvider {
     new Promise((resolve, reject) => {
       if (this.networkState.getNetworkState() === ConnectionStatus.ONLINE) {
         this.httpClient.get<any>(this.environmentFile.configUrl)
-        .subscribe(
-          (data) => {
-            this.dataStore.setItem('CONFIG', JSON.stringify(data));
-            resolve(data);
-          },
-          error => reject(error),
-        );
+          .subscribe(
+            (data) => {
+              this.dataStore.setItem('CONFIG', JSON.stringify(data));
+              resolve(data);
+            },
+            error => reject(error),
+          );
       } else {
         this.getCachedRemoteConfig()
-        .then(data => resolve(data))
-        .catch(error => reject(error));
+          .then(data => resolve(data))
+          .catch(error => reject(error));
       }
     })
 
@@ -141,6 +143,7 @@ export class AppConfigProvider {
       daysToCacheJournalData: data.daysToCacheJournalData,
       daysToCacheLogs: data.daysToCacheLogs,
       logoutClearsTestPersistence: data.logoutClearsTestPersistence,
+      logsPostApiKey: data.logsPostApiKey,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,
