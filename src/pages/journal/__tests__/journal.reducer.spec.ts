@@ -37,10 +37,12 @@ describe('Journal Reducer', () => {
         ],
       };
 
-      const action = new LoadJournalSuccess(actionPayload,
-                                            ConnectionStatus.ONLINE,
-                                            false,
-                                            new Date());
+      const action = new LoadJournalSuccess(
+        actionPayload,
+        ConnectionStatus.ONLINE,
+        false,
+        new Date(),
+      );
 
       const state = {
         ...initialState,
@@ -71,11 +73,24 @@ describe('Journal Reducer', () => {
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toEqual({});
     });
+    it('should reset the rest of the journal to default state', () => {
+      const stateWithJournals = {
+        isLoading: true,
+        lastRefreshed: new Date(),
+        selectedDate: 'dummy',
+        slots: { ['2019-01-13']: [new SlotItem({}, false)] },
+      };
+      const action = new UnloadJournal();
+      const result = journalReducer(stateWithJournals, action);
+      expect(result.isLoading).toBe(false);
+      expect(result.lastRefreshed).toBeNull();
+      expect(result.selectedDate).toBe('');
+    });
   });
 
   describe('[JournalPage] Unset error', () => {
     it('should remove any journal error in the state', () => {
-      const stateWithError = { ...initialState, error: { message: '', status: 0, statusText: '' }  };
+      const stateWithError = { ...initialState, error: { message: '', status: 0, statusText: '' } };
       const action = new UnsetError();
       const result = journalReducer(stateWithError, action);
       expect(result.error).toBeUndefined();
@@ -89,7 +104,7 @@ describe('Journal Reducer', () => {
         ...initialState,
         selectedDate: slotDate,
         slots: {
-          [`${slotDate}`] : [new SlotItem({ slotDetail: { slotId:1234 } }, true)],
+          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true)],
         },
       };
       const action = new ClearChangedSlot(1234);
