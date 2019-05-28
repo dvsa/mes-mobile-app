@@ -19,7 +19,7 @@ import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
 
 export class FakeJournalPage extends BasePageComponent {
 
-  selectedDate: string = moment().toNow();
+  dateToDisplay: string;
 
   slots: TestSlot[] = fakeJournalTestSlots;
 
@@ -29,6 +29,8 @@ export class FakeJournalPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navController, authenticationProvider);
+
+    this.dateToDisplay = moment().format('dddd D MMMM YYYY');
   }
 
 }
