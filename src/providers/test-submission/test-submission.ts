@@ -7,6 +7,7 @@ import { gzipSync } from 'zlib';
 import { catchError } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
+import { isNull, unset, isObject } from 'lodash';
 
 export interface TestToSubmit {
   index: number;
@@ -30,7 +31,7 @@ export class TestSubmissionProvider {
   submitTest = (testToSubmit: TestToSubmit): Observable<any> =>
     this.httpClient.post(
       this.urlProvider.getTestResultServiceUrl(),
-      this.compressData(testToSubmit.payload),
+      this.compressData(this.removeNullFieldsDeep(testToSubmit.payload)),
     )
     // Note: Catching failures here (the inner observable) is what allows us to coordinate
     // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
@@ -38,6 +39,19 @@ export class TestSubmissionProvider {
       catchError(err => of(err)),
     )
 
-  compressData = (data: any): string =>
+  compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
+
+  removeNullFieldsDeep = (data: StandardCarTestCATBSchema): Partial<StandardCarTestCATBSchema> => {
+    const removeNullFields = (object) => {
+      Object.keys(object).map((key) => {
+        const value = object[key];
+        if (isNull(value)) unset(object, key);
+        if (isObject(value)) removeNullFields(value);
+      });
+      return object;
+    };
+    return removeNullFields(data);
+  }
+
 }

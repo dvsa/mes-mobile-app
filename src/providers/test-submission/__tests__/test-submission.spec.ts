@@ -4,6 +4,7 @@ import { UrlProvider } from '../../url/url';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { gunzipSync } from 'zlib';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
 describe('TestSubmissionProvider', () => {
 
@@ -25,6 +26,8 @@ describe('TestSubmissionProvider', () => {
     testSubmissionProvider = TestBed.get(TestSubmissionProvider);
     httpMock = TestBed.get(HttpTestingController);
     urlProvider = TestBed.get(UrlProvider);
+    spyOn(testSubmissionProvider, 'compressData').and.callThrough();
+    spyOn(testSubmissionProvider, 'removeNullFieldsDeep').and.callThrough();
   });
 
   describe('submitTests', () => {
@@ -37,30 +40,20 @@ describe('TestSubmissionProvider', () => {
 
       httpMock.expectOne('https://www.example.com/api/v1/test-result');
       expect(urlProvider.getTestResultServiceUrl).toHaveBeenCalled();
+      expect(testSubmissionProvider.compressData).toHaveBeenCalled();
+      expect(testSubmissionProvider.removeNullFieldsDeep).toHaveBeenCalled();
     });
   });
   describe('compressData', () => {
     it('should successfully compress the provided data', () => {
 
       // ARRANGE
-      const mockData = {
-        tests: {
-          startedTests: {
-            1003: {
-              candidate: {
-                age: 56,
-                candidateId: 103,
-                candidateName: {
-                  firstName: 'Jane',
-                  lastName: 'Doe',
-                  title: 'Mrs',
-                },
-                driverNumber: 'DOEXX625220A99HC',
-                gender: 'Female',
-                mobileTelephone: '07654 123456',
-              },
-            },
-          },
+      const mockData: Partial<StandardCarTestCATBSchema> = {
+        category: 'B',
+        id: '1022',
+        communicationPreferences: {
+          updatedEmail: 'test@test.com',
+          communicationMethod: 'Post',
         },
       };
       // ACT
@@ -70,6 +63,37 @@ describe('TestSubmissionProvider', () => {
       const unzippedJson = gunzipSync(gzippedBytes).toString();
       const json = JSON.parse(unzippedJson);
       expect(json).toEqual(mockData);
+    });
+  });
+  describe('removeNullFieldsDeep', () => {
+    it('should successfully remove null props from the provided data', () => {
+
+      // ARRANGE
+      const mockData: Partial<StandardCarTestCATBSchema> = {
+        category: 'B',
+        id: '1022',
+        activityCode: null,
+        communicationPreferences: {
+          updatedEmail: 'test@test.com',
+          communicationMethod: 'Post',
+        },
+        instructorDetails: {
+          registrationNumber: null,
+        },
+      };
+      const expected = {
+        category: 'B',
+        id: '1022',
+        communicationPreferences: {
+          updatedEmail: 'test@test.com',
+          communicationMethod: 'Post',
+        },
+        instructorDetails: {},
+      };
+      // ACT
+      const result = testSubmissionProvider.removeNullFieldsDeep(mockData as StandardCarTestCATBSchema);
+      // ASSERT
+      expect(result).toEqual(expected);
     });
   });
 });
