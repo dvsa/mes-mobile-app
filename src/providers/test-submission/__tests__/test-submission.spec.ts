@@ -56,6 +56,7 @@ describe('TestSubmissionProvider', () => {
         communicationPreferences: {
           updatedEmail: 'test@test.com',
           communicationMethod: 'Post',
+          conductedLanguage: 'English',
         },
       };
       // ACT
@@ -78,6 +79,7 @@ describe('TestSubmissionProvider', () => {
         communicationPreferences: {
           updatedEmail: 'test@test.com',
           communicationMethod: 'Post',
+          conductedLanguage: 'English',
         },
         instructorDetails: {
           registrationNumber: null,
@@ -89,6 +91,7 @@ describe('TestSubmissionProvider', () => {
         communicationPreferences: {
           updatedEmail: 'test@test.com',
           communicationMethod: 'Post',
+          conductedLanguage: 'English',
         },
         instructorDetails: {},
       };

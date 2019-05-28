@@ -116,8 +116,8 @@ describe('Tests Effects', () => {
       const currentTestSlotId = '12345'; // Mocked as a 201 http response
       const currentTestSlotId1 = '123456'; // Mocked as a 201 http response
       const currentTestSlotId2 = '1234567'; // Mocked as a 500 http error response
-      store$.dispatch(new testsActions.StartPracticeTest(practiceSlot.slotDetail.slotId));
-      store$.dispatch(new testStatusActions.SetTestStatusCompleted(practiceSlot.slotDetail.slotId));
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testStatusActions.SetTestStatusCompleted(testReportPracticeModeSlot.slotDetail.slotId));
       store$.dispatch(new StartTest(Number(currentTestSlotId)));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId));
       store$.dispatch(new StartTest(Number(currentTestSlotId1)));
@@ -138,7 +138,7 @@ describe('Tests Effects', () => {
           if (result.completedTestId === currentTestSlotId2) {
             expect(result).toEqual(new testsActions.SendCompletedTestsFailure());
           }
-          if (result.completedTestId === practiceSlot.slotDetail.slotId) {
+          if (result.completedTestId === testReportPracticeModeSlot.slotDetail.slotId) {
             fail('Practice test should not be submitted');
           }
         }
