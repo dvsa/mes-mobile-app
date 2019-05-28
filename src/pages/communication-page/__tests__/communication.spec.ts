@@ -219,6 +219,24 @@ describe('CommunicationPage', () => {
       });
     });
 
+    describe('Welsh text selected', () => {
+      it('it should dispatch CandidateChoseToProceedWithTestInWelsh action', () => {
+        component.dispatchCandidateChoseToProceedInWelsh();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInWelsh(
+            CommunicationPage.welshLanguage));
+      });
+    });
+
+    describe('English text selected', () => {
+      it('it should dispatch CandidateChoseToProceedWithTestInEnglish action', () => {
+        component.dispatchCandidateChoseToProceedInEnglish();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInEnglish(
+            CommunicationPage.englishLanguage));
+      });
+    });
+
     describe('Communication class level funcitons', () => {
       it('should set setCommunicationType', () => {
         component.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);

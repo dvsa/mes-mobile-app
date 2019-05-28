@@ -29,15 +29,17 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
-  getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType,
+  getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
 } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
-import { CommunicationMethod, Address } from '@dvsa/mes-test-schema/categories/B';
+import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
   CandidateChoseSupportCentreAsCommunicationPreference,
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
@@ -52,6 +54,7 @@ interface CommunicationPageState {
   communicationType$: Observable<string>;
   candidateAddress$: Observable<Address>;
   welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 @IonicPage()
 @Component({
@@ -65,6 +68,8 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   static readonly email: CommunicationMethod = 'Email';
   static readonly post: CommunicationMethod = 'Post';
   static readonly supportCentre: CommunicationMethod = 'Support Centre';
+  static readonly welshLanguage: ConductedLanguage = 'Cymraeg';
+  static readonly englishLanguage: ConductedLanguage = 'English';
 
   @ViewChild(Navbar)
   navBar: Navbar;
@@ -78,6 +83,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   communicationType: string;
   selectProvidedEmail: boolean;
   selectNewEmail: boolean;
+  conductedLanguage: string;
 
   constructor(
     store$: Store<StoreModel>,
@@ -167,6 +173,10 @@ export class CommunicationPage extends PracticeableBasePageComponent {
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
     };
 
     const {
@@ -174,6 +184,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       communicationEmail$,
       communicationType$,
       welshTest$,
+      conductedLanguage$,
     } = this.pageState;
 
     const merged$ = merge(
@@ -181,6 +192,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value)),
       welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
     );
     this.subscription = merged$.subscribe();
 
@@ -333,6 +345,11 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
     }
+
+    if (this.conductedLanguage !== CommunicationPage.englishLanguage) {
+      this.dispatchCandidateChoseToProceedInWelsh();
+    }
+
   }
 
   verifyNewEmailFormControl(communicationChoice: string) {
@@ -372,5 +389,13 @@ export class CommunicationPage extends PracticeableBasePageComponent {
 
   getNewEmailAddressValue() {
     return this.candidateProvidedEmail === this.communicationEmail ? '' : this.communicationEmail;
+  }
+
+  dispatchCandidateChoseToProceedInWelsh() {
+    this.store$.dispatch(new CandidateChoseToProceedWithTestInWelsh(CommunicationPage.welshLanguage));
+  }
+
+  dispatchCandidateChoseToProceedInEnglish() {
+    this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(CommunicationPage.englishLanguage));
   }
 }

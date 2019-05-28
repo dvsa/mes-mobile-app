@@ -101,7 +101,7 @@
   "devDependencies": {
     "@angular/cli": "1.4.8",
     "@angular/compiler-cli": "^5.2.11",
-    "@dvsa/mes-test-schema": "^1.0.14",
+    "@dvsa/mes-test-schema": "^1.0.15",
     "@ionic-native-mocks/device": "^2.0.12",
     "@ionic-native-mocks/secure-storage": "^2.0.12",
     "@ionic/app-scripts": "^3.2.3",
