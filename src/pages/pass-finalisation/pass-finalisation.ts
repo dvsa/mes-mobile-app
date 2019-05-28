@@ -83,7 +83,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
-
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -155,6 +155,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }
 

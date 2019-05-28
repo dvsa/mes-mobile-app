@@ -125,6 +125,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -205,6 +206,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.subscription.unsubscribe();
     this.translate.use(this.translate.getDefaultLang());
   }

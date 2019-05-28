@@ -81,6 +81,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
 
@@ -136,6 +137,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.subscription.unsubscribe();
     this.translate.use(this.translate.getDefaultLang());
   }

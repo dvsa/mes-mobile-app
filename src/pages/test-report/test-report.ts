@@ -85,6 +85,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
     };
   }
   ngOnInit(): void {
+    super.ngOnInit();
     this.pageState = {
       candidateUntitledName$: this.store$.pipe(
         select(getTests),
@@ -174,6 +175,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

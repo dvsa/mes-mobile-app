@@ -127,6 +127,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
 
     const currentTest$ = this.store$.pipe(
       select(getTests),

@@ -118,6 +118,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.signatureArea.drawCompleteAction = postTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
     this.signatureArea.clearAction = postTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
 
@@ -280,6 +281,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.subscription.unsubscribe();
     this.inputSubscriptions.forEach(sub => sub.unsubscribe());
   }

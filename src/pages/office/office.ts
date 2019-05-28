@@ -187,6 +187,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
