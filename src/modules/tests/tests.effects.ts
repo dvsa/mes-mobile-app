@@ -24,6 +24,7 @@ import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-
 import { find } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
+import { TestStatus } from './test-status/test-status.model';
 
 @Injectable()
 export class TestsEffects {
@@ -99,7 +100,7 @@ export class TestsEffects {
       const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
         slotId !== testReportPracticeSlotId &&
         slotId !== end2endPracticeSlotId &&
-        tests.testStatus[slotId] === 'Completed'),
+        tests.testStatus[slotId] === TestStatus.Completed),
       );
 
       const completedTests: TestToSubmit[] = completedTestKeys.map((slotId: string, index: number) => ({

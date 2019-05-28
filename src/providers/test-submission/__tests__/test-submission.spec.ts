@@ -28,6 +28,7 @@ describe('TestSubmissionProvider', () => {
     urlProvider = TestBed.get(UrlProvider);
     spyOn(testSubmissionProvider, 'compressData').and.callThrough();
     spyOn(testSubmissionProvider, 'removeNullFieldsDeep').and.callThrough();
+    spyOn(testSubmissionProvider, 'submitTest').and.callThrough();
   });
 
   describe('submitTests', () => {
@@ -42,6 +43,7 @@ describe('TestSubmissionProvider', () => {
       expect(urlProvider.getTestResultServiceUrl).toHaveBeenCalled();
       expect(testSubmissionProvider.compressData).toHaveBeenCalled();
       expect(testSubmissionProvider.removeNullFieldsDeep).toHaveBeenCalled();
+      expect(testSubmissionProvider.submitTest).toHaveBeenCalledTimes(1);
     });
   });
   describe('compressData', () => {
