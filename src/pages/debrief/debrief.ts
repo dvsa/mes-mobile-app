@@ -216,7 +216,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
   endDebrief(): void {
     if (this.isPracticeTest) {
-      this.navController.popToRoot();
+      this.navController.popToRoot({ animate: false });
       return;
     }
     this.store$.dispatch(new EndDebrief());
