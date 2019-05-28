@@ -26,13 +26,8 @@
   </div>
 
   <ion-refresher (ionRefresh)="pullRefreshJournal($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing Journal..."
-      pullMin=70
-      pullMax=500>
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing Journal..." pullMin=70 pullMax=500>
     </ion-refresher-content>
   </ion-refresher>
 
@@ -42,16 +37,16 @@
     <ng-template #slotContainer></ng-template>
   </ion-list>
 
-  <hr *ngIf="showEndToEndPracticeMode() || showTestReportPracticeMode()"/>
+  <hr *ngIf="showEndToEndPracticeMode() || showTestReportPracticeMode()" />
 
-  <practice-test-report-card
-    id="testReportPracticeMode"
-    *ngIf="!(pageState.isLoading$ | async) && showTestReportPracticeMode()"
-  ></practice-test-report-card>
+  <practice-test-report-card id="testReportPracticeMode"
+    *ngIf="!(pageState.isLoading$ | async) && showTestReportPracticeMode()"></practice-test-report-card>
 
-  <practice-end-to-end-card
-    id="endToendPracticeMode"
-    *ngIf="!(pageState.isLoading$ | async) && showEndToEndPracticeMode()"
-  ></practice-end-to-end-card>
+  <practice-end-to-end-card id="endToendPracticeMode"
+    *ngIf="!(pageState.isLoading$ | async) && showEndToEndPracticeMode()"></practice-end-to-end-card>
+
+  <div>
+    LOGS POST KEY: {{ appConfigProvider.getAppConfig().logsPostApiKey }}
+  </div>
 
 </ion-content>
