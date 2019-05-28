@@ -18,16 +18,19 @@ import {
   getCandidateName,
   getTime,
   getDetails,
+  getBusiness,
 } from './candidate-details.selector';
 import {
   CandidateDetailsViewDidEnter,
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
+import { Business } from '../../shared/models/DJournal';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>;
   time$: Observable<string>;
   details$: Observable<Details>;
+  business$: Observable<Business>;
 }
 
 @IonicPage()
@@ -77,9 +80,15 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
         map(slots => getSlotById(slots, this.slotId)),
         select(getDetails),
       ),
+      business$: this.store$.pipe(
+        select(getJournalState),
+        select(getSlots),
+        map(slots => getSlotById(slots, this.slotId)),
+        select(getBusiness),
+      ),
     };
 
-    const { name$, time$, details$ } = this.pageState;
+    const { name$, time$, details$, business$ } = this.pageState;
 
     const merged$ = merge(
       name$,
@@ -87,6 +96,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       details$.pipe(
         map(details => this.testCategory = details.testCategory as TestCategory),
       ),
+      business$,
     );
 
     this.subscription = merged$.subscribe();

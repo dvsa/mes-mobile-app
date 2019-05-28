@@ -12,6 +12,7 @@ import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-
 import { CandidateSectionComponent } from './candidate-section/candidate-section';
 import { TranslateModule } from 'ng2-translate';
 import { ConductedLanguageComponent } from './conducted-language/conducted-language';
+import { DisplayAddressComponent } from './display-address/display-address';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ConductedLanguageComponent } from './conducted-language/conducted-langu
     EndTestLinkComponent,
     CandidateSectionComponent,
     ConductedLanguageComponent,
+    DisplayAddressComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -40,6 +42,7 @@ import { ConductedLanguageComponent } from './conducted-language/conducted-langu
     EndTestLinkComponent,
     CandidateSectionComponent,
     ConductedLanguageComponent,
+    DisplayAddressComponent,
   ],
 })
 export class ComponentsModule { }
