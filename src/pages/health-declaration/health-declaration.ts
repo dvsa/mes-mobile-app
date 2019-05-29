@@ -8,7 +8,6 @@ import { StoreModel } from '../../shared/models/store.model';
 import { HealthDeclarationViewDidEnter } from './health-declaration.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { DeviceProvider } from '../../providers/device/device';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import * as postTestDeclarationsActions
   from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
@@ -73,7 +72,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
     public alertController: AlertController,
@@ -85,18 +83,9 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new HealthDeclarationViewDidEnter());
-    if (super.isIos() && !this.isPracticeMode) {
-      this.deviceProvider.enableSingleAppMode();
-    }
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.clickBack();
     };
-  }
-
-  ionViewDidLeave(): void {
-    if (super.isIos() && !this.isPracticeMode) {
-      this.deviceProvider.disableSingleAppMode();
-    }
   }
 
   clickBack(): void {

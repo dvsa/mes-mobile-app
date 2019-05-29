@@ -9,7 +9,6 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { ComponentsModule } from './../../../components/components.module';
-import { DeviceProvider } from '../../../providers/device/device';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { HealthDeclarationViewDidEnter } from '../health-declaration.actions';
@@ -17,7 +16,6 @@ import { DeviceAuthenticationProvider } from '../../../providers/device-authenti
 import {
   DeviceAuthenticationProviderMock,
 } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import * as postTestDeclarationsActions
   from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import * as passCompletionActions
@@ -40,7 +38,6 @@ const mockCandidate = {
 describe('HealthDeclarationPage', () => {
   let fixture: ComponentFixture<HealthDeclarationPage>;
   let component: HealthDeclarationPage;
-  let deviceProvider: DeviceProvider;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
@@ -92,7 +89,6 @@ describe('HealthDeclarationPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
       ],
     })
@@ -100,7 +96,6 @@ describe('HealthDeclarationPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(HealthDeclarationPage);
         component = fixture.componentInstance;
-        deviceProvider = TestBed.get(DeviceProvider);
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch').and.callThrough();
@@ -119,31 +114,9 @@ describe('HealthDeclarationPage', () => {
   });
 
   describe('ionViewDidEnter', () => {
-    it('should enable single app mode if on ios and not in practice mode', () => {
-      component.isPracticeMode = false;
-      component.ionViewDidEnter();
-      expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
-    });
-    it('should not enable single app mode if on ios and in practice mode', () => {
-      component.isPracticeMode = true;
-      component.ionViewDidEnter();
-      expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
-    });
     it('should dispatch HealthDeclarationViewDidEnter', () => {
       component.ionViewDidEnter();
       expect(store$.dispatch).toHaveBeenCalledWith(new HealthDeclarationViewDidEnter());
-    });
-    describe('ionViewDidLeave', () => {
-      it('should  disable single app mode if on ios and not in practice mode', () => {
-        component.isPracticeMode = false;
-        component.ionViewDidLeave();
-        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
-      });
-      it('should not disable single app mode if on ios and in practice mode', () => {
-        component.isPracticeMode = true;
-        component.ionViewDidLeave();
-        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
-      });
     });
     describe('clickBack', () => {
       it('should should trigger the lock screen', () => {
