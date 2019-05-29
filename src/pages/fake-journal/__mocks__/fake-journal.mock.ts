@@ -44,7 +44,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     slotDetail: {
       duration: 57,
       slotId: 1001,
-      start: '2019-05-22T08:10:00+01:00',
+      start: '2019-05-29T08:10:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -92,7 +92,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     slotDetail: {
       duration: 57,
       slotId: 1003,
-      start: '2019-05-22T10:14:00+01:00',
+      start: '2019-05-29T10:14:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -141,7 +141,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     slotDetail: {
       duration: 57,
       slotId: 1004,
-      start: '2019-05-22T11:11:00+01:00',
+      start: '2019-05-29T11:11:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -191,7 +191,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     slotDetail: {
       duration: 57,
       slotId: 1005,
-      start: '2019-05-22T12:38:00+01:00',
+      start: '2019-05-29T12:38:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -243,7 +243,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     slotDetail: {
       duration: 57,
       slotId: 1006,
-      start: '2019-05-22T13:35:00+01:00',
+      start: '2019-05-29T13:35:00+01:00',
     },
     testCentre: {
       centreId: 54321,

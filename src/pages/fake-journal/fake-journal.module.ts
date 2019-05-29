@@ -3,6 +3,8 @@ import { IonicPageModule } from 'ionic-angular';
 import { FakeJournalPage } from './fake-journal';
 import { JournalComponentsModule } from '../journal/components/journal-components.module';
 import { ComponentsModule } from '../../components/components.module';
+import { EffectsModule } from '@ngrx/effects';
+import { FakeJournalEffects } from './fake-journal.effects';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,9 @@ import { ComponentsModule } from '../../components/components.module';
     JournalComponentsModule,
     IonicPageModule.forChild(FakeJournalPage),
     ComponentsModule,
+    EffectsModule.forFeature([
+      FakeJournalEffects,
+    ]),
   ],
   providers: [
   ],
