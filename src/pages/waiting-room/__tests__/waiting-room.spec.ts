@@ -78,6 +78,11 @@ describe('WaitingRoomPage', () => {
                   welshTest: false,
                 },
               },
+              communicationPreferences: {
+                updatedEmaill: 'test@mail.com',
+                communicationMethod: 'Email',
+                conductedLanguage: 'Cymraeg',
+              },
             },
           },
         })),

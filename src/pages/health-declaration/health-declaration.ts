@@ -37,6 +37,10 @@ import { TranslateService } from 'ng2-translate';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { ProvisionalLicenseNotReceived } from '../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  getCommunicationPreference,
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -48,6 +52,7 @@ interface HealthDeclarationPageState {
   passCertificateNumber$: Observable<string>;
   licenseProvided$: Observable<boolean>;
   welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 @IonicPage()
 @Component({
@@ -55,6 +60,9 @@ interface HealthDeclarationPageState {
   templateUrl: 'health-declaration.html',
 })
 export class HealthDeclarationPage extends PracticeableBasePageComponent {
+
+  static readonly welshLanguage: string = 'Cymraeg';
+
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -66,6 +74,8 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   healthDeclarationAccepted: boolean;
   subscription: Subscription;
   inputSubscriptions: Subscription[] = [];
+  isBookedInWelsh: boolean;
+  conductedLanguage: string;
 
   constructor(
     store$: Store<StoreModel>,
@@ -175,22 +185,25 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
     };
     this.rehydrateFields();
 
-    const { welshTest$, licenseProvided$, healthDeclarationAccepted$ } = this.pageState;
+    const { welshTest$, licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
+
     const merged$ = merge(
-      welshTest$.pipe(
-        map(isWelsh => this.configureI18N(isWelsh)),
-      ),
-      licenseProvided$.pipe(
-        map(val => this.licenseProvided = val),
-      ),
-      healthDeclarationAccepted$.pipe(
-        map(val => this.healthDeclarationAccepted = val),
-      ),
+      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
+      licenseProvided$.pipe(map(val => this.licenseProvided = val)),
+      healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
+      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
     );
+
+    this.configureI18N(this.conductedLanguage === HealthDeclarationPage.welshLanguage);
     this.subscription = merged$.subscribe();
+
   }
 
   rehydrateFields(): void {
@@ -215,7 +228,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   }
 
   configureI18N(isWelsh: boolean): void {
-    if (isWelsh) {
+    if (this.isBookedInWelsh && isWelsh) {
       this.translate.use('cy');
     }
   }
