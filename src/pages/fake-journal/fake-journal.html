@@ -1,0 +1,23 @@
+<ion-header>
+  <practice-mode-banner></practice-mode-banner>
+  <ion-navbar [hideBackButton]='true'>
+    <ion-title>Journal</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+  <div class="date-navigation">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <h1>Today</h1>
+          <h3>{{dateToDisplay}}</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <location location='Example Test Centre'></location>
+  <div *ngFor="let slot of slots">
+    <test-slot [slot]="slot"></test-slot>
+  </div>
+</ion-content>

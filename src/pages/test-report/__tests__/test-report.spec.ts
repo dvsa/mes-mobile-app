@@ -143,46 +143,18 @@ describe('TestReportPage', () => {
 
     describe('ionViewWillEnter', () => {
       it('should enable the plugins when the test is a practice test', () => {
-        component.isPracticeTest = true;
+        component.isPracticeMode = true;
         component.ionViewWillEnter();
         expect(screenOrientation.lock).toHaveBeenCalled();
         expect(insomnia.keepAwake).toHaveBeenCalled();
+        expect(statusBar.hide).toHaveBeenCalled();
       });
       it('should not enable the plugins when the test is not a practice test', () => {
-        component.isPracticeTest = false;
+        component.isPracticeMode = false;
         component.ionViewWillEnter();
         expect(screenOrientation.lock).not.toHaveBeenCalled();
         expect(insomnia.keepAwake).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('toggleStatusBar', () => {
-
-      it('should not do anything if not in practice mode', () => {
-        component.isPracticeMode = false;
-
-        component.toggleStatusBar();
-
-        expect(statusBar.hide).not.toHaveBeenCalled();
         expect(statusBar.show).not.toHaveBeenCalled();
-      });
-      it('should hide the status bar if it is visible', () => {
-        component.isPracticeMode = true;
-        statusBar.isVisible = true;
-
-        component.toggleStatusBar();
-
-        expect(statusBar.hide).toHaveBeenCalled();
-        expect(statusBar.show).not.toHaveBeenCalled();
-      });
-      it('should show the status bar if it is hidden', () => {
-        component.isPracticeMode = true;
-        statusBar.isVisible = false;
-
-        component.toggleStatusBar();
-
-        expect(statusBar.hide).not.toHaveBeenCalled();
-        expect(statusBar.show).toHaveBeenCalled();
       });
     });
   });

@@ -19,6 +19,7 @@ export class AppConfigProviderMock {
       daysToCacheJournalData: localEnvironmentMock.daysToCacheJournalData,
       daysToCacheLogs: localEnvironmentMock.daysToCacheLogs,
       logoutClearsTestPersistence: localEnvironmentMock.logoutClearsTestPersistence,
+      logsPostApiKey: localEnvironmentMock.logsPostApiKey,
       authentication: {
         clientId: localEnvironmentMock.authentication.clientId,
         context: localEnvironmentMock.authentication.context,
@@ -37,6 +38,7 @@ export class AppConfigProviderMock {
         allowedTestCategories: localEnvironmentMock.journal.allowedTestCategories,
         enableTestReportPracticeMode: localEnvironmentMock.journal.enableTestReportPracticeMode,
         enableEndToEndPracticeMode: localEnvironmentMock.journal.enableEndToEndPracticeMode,
+        enableLogoutButton: localEnvironmentMock.journal.enableLogoutButton,
       },
       tests: {
         testSubmissionUrl: localEnvironmentMock.tests.testSubmissionUrl,

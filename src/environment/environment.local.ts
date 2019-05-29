@@ -6,6 +6,7 @@ export const environment: LocalEnvironmentFile = {
   daysToCacheJournalData: 7,
   daysToCacheLogs: 7,
   googleAnalyticsId: 'UA-129489007-3',
+  logsPostApiKey: '',
   authentication: {
     context: 'https://login.windows.net/common',
     resourceUrl: '09fdd68c-4f2f-45c2-be55-dd98104d4f74',
@@ -26,6 +27,7 @@ export const environment: LocalEnvironmentFile = {
     allowedTestCategories: ['B'],
     enableTestReportPracticeMode: true,
     enableEndToEndPracticeMode: true,
+    enableLogoutButton: true,
   },
   tests: {
     testSubmissionUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/test-results',

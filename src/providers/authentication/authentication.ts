@@ -82,6 +82,10 @@ export class AuthenticationProvider {
     });
   }
 
+  public logoutEnabled = (): boolean => {
+    return this.appConfig.getAppConfig().journal.enableLogoutButton;
+  }
+
   public logout = () => {
     const authenticationContext: AuthenticationContext = this.createAuthContext();
     authenticationContext.tokenCache.clear();
