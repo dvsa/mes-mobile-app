@@ -5,12 +5,14 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { gunzipSync } from 'zlib';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { HttpClient } from '@angular/common/http';
 
 describe('TestSubmissionProvider', () => {
 
   let testSubmissionProvider: TestSubmissionProvider;
   let httpMock: HttpTestingController;
   let urlProvider : UrlProvider;
+  let httpClient: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,16 +21,19 @@ describe('TestSubmissionProvider', () => {
       ],
       providers: [
         TestSubmissionProvider,
+        HttpClient,
         { provide: UrlProvider, useClass: UrlProviderMock },
       ],
     });
 
     testSubmissionProvider = TestBed.get(TestSubmissionProvider);
     httpMock = TestBed.get(HttpTestingController);
+    httpClient = TestBed.get(HttpClient);
     urlProvider = TestBed.get(UrlProvider);
     spyOn(testSubmissionProvider, 'compressData').and.callThrough();
     spyOn(testSubmissionProvider, 'removeNullFieldsDeep').and.callThrough();
     spyOn(testSubmissionProvider, 'submitTest').and.callThrough();
+    spyOn(httpClient, 'post').and.callThrough();
   });
 
   describe('submitTests', () => {
@@ -40,6 +45,13 @@ describe('TestSubmissionProvider', () => {
       }] as TestToSubmit[]).subscribe();
 
       httpMock.expectOne('https://www.example.com/api/v1/test-result');
+
+      expect(httpClient.post).toHaveBeenCalledWith(
+        'https://www.example.com/api/v1/test-result',
+        // Compressed and base64 encoded string of and empty object
+        'H4sIAAAAAAAAA6uuBQBDv6ajAgAAAA==',
+        { observe: 'response' },
+      );
       expect(urlProvider.getTestResultServiceUrl).toHaveBeenCalled();
       expect(testSubmissionProvider.compressData).toHaveBeenCalled();
       expect(testSubmissionProvider.removeNullFieldsDeep).toHaveBeenCalled();

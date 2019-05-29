@@ -28,10 +28,11 @@ export class TestSubmissionProvider {
     return forkJoin(requests);
   }
 
-  submitTest = (testToSubmit: TestToSubmit): Observable<any> =>
+  submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any>> =>
     this.httpClient.post(
       this.urlProvider.getTestResultServiceUrl(),
       this.compressData(this.removeNullFieldsDeep(testToSubmit.payload)),
+      { observe: 'response' },
     )
     // Note: Catching failures here (the inner observable) is what allows us to coordinate
     // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
