@@ -105,9 +105,12 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new CommunicationViewDidEnter());
 
     if (super.isIos()) {
-      this.deviceProvider.enableSingleAppMode();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+
+      if (!this.isPracticeMode) {
+        this.deviceProvider.enableSingleAppMode();
+      }
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {

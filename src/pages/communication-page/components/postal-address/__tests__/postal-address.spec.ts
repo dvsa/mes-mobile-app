@@ -2,9 +2,6 @@ import { PostalAddressComponent } from '../postal-address';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { DeviceProvider } from '../../../../../providers/device/device';
-import { DeviceAuthenticationProvider } from '../../../../../providers/device-authentication/device-authentication';
-import { Insomnia } from '@ionic-native/insomnia';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { AppModule, createTranslateLoader } from '../../../../../app/app.module';
 import { ComponentsModule } from '../../../../../components/components.module';
@@ -14,13 +11,8 @@ import {
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../../providers/authentication/__mocks__/authentication.mock';
-import { DeviceProviderMock } from '../../../../../providers/device/__mocks__/device.mock';
-import {
-  DeviceAuthenticationProviderMock,
-} from '../../../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
-import { InsomniaMock } from '../../../../../shared/mocks/insomnia.mock';
 import { By } from '@angular/platform-browser';
 import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
 import { Http } from '@angular/http';
@@ -95,10 +87,7 @@ describe('PostalAddressComponent', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
-        { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
-        { provide: Insomnia, useClass: InsomniaMock },
       ],
     })
       .compileComponents()

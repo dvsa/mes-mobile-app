@@ -119,18 +119,30 @@ describe('HealthDeclarationPage', () => {
   });
 
   describe('ionViewDidEnter', () => {
-    it('should enable single app mode if on ios', () => {
+    it('should enable single app mode if on ios and not in practice mode', () => {
+      component.isPracticeMode = false;
       component.ionViewDidEnter();
       expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+    });
+    it('should not enable single app mode if on ios and in practice mode', () => {
+      component.isPracticeMode = true;
+      component.ionViewDidEnter();
+      expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
     });
     it('should dispatch HealthDeclarationViewDidEnter', () => {
       component.ionViewDidEnter();
       expect(store$.dispatch).toHaveBeenCalledWith(new HealthDeclarationViewDidEnter());
     });
     describe('ionViewDidLeave', () => {
-      it('should disable single app mode if on ios', () => {
+      it('should  disable single app mode if on ios and not in practice mode', () => {
+        component.isPracticeMode = false;
         component.ionViewDidLeave();
         expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+      });
+      it('should not disable single app mode if on ios and in practice mode', () => {
+        component.isPracticeMode = true;
+        component.ionViewDidLeave();
+        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
       });
     });
     describe('clickBack', () => {

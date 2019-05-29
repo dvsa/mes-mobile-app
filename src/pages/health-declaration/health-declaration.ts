@@ -95,7 +95,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new HealthDeclarationViewDidEnter());
-    if (super.isIos()) {
+    if (super.isIos() && !this.isPracticeMode) {
       this.deviceProvider.enableSingleAppMode();
     }
     this.navBar.backButtonClick = (e: UIEvent) => {
@@ -104,7 +104,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    if (super.isIos()) {
+    if (super.isIos() && !this.isPracticeMode) {
       this.deviceProvider.disableSingleAppMode();
     }
   }
