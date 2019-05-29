@@ -44,7 +44,14 @@ Given('I reset the application state for {string}', (username) => {
   // Login
   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
   // Refresh application
-  loadApplication();
+  loadApplication().then(() => {
+    // Small wait to make sure the action has initiated
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+  });
+  // If the journal page is loaded we should have a refresh button
+  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+  browser.wait(ExpectedConditions.presenceOf(refreshButton));
+  return expect(refreshButton.isPresent()).to.eventually.be.true;
 });
 
 When('I launch the mobile app', () => {
