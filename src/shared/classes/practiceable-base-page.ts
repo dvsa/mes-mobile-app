@@ -9,16 +9,20 @@ import { BasePageComponent } from './base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { isPracticeMode } from '../../modules/tests/tests.selector';
+import { isPracticeMode, isTestReportPracticeTest, isEndToEndPracticeTest } from '../../modules/tests/tests.selector';
 import { OnInit, OnDestroy } from '@angular/core';
 
 interface PracticeableBasePageState {
   isPracticeMode$: Observable<boolean>;
+  isTestReportPracticeMode$: Observable<boolean>;
+  isEndToEndPracticeMode$: Observable<boolean>;
 }
 
 export abstract class PracticeableBasePageComponent extends BasePageComponent implements OnInit, OnDestroy {
 
   public isPracticeMode: boolean;
+  public isTestReportPracticeMode: boolean;
+  public isEndToEndPracticeMode: boolean;
 
   private practiceableBasePageState: PracticeableBasePageState;
   private practiceableBasePageSubscription: Subscription;
@@ -39,14 +43,26 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
         select(getTests),
         select(isPracticeMode),
       ),
+      isTestReportPracticeMode$: this.store$.pipe(
+        select(getTests),
+        select(isTestReportPracticeTest),
+      ),
+      isEndToEndPracticeMode$: this.store$.pipe(
+        select(getTests),
+        select(isEndToEndPracticeTest),
+      ),
     };
 
     const {
       isPracticeMode$,
+      isTestReportPracticeMode$,
+      isEndToEndPracticeMode$,
     } = this.practiceableBasePageState;
 
     const merged$ = merge(
       isPracticeMode$.pipe(map(value => this.isPracticeMode = value)),
+      isTestReportPracticeMode$.pipe(map(value => this.isTestReportPracticeMode = value)),
+      isEndToEndPracticeMode$.pipe(map(value => this.isEndToEndPracticeMode = value)),
     );
     this.practiceableBasePageSubscription = merged$.subscribe();
   }

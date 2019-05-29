@@ -3,11 +3,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import {
-  getCurrentTest,
-  isTestReportPracticeTest,
-  getJournalData,
-} from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -48,7 +44,6 @@ interface DebriefPageState {
   etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
-  practiceTest$: Observable<boolean>;
   welshTest$: Observable<boolean>;
 }
 
@@ -65,7 +60,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
-  public isPracticeTest: boolean;
 
   public hasPhysicalEta: boolean = false;
   public hasVerbalEta: boolean = false;
@@ -153,10 +147,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
       testResult$: currentTest$.pipe(
         select(getTestOutcome),
       ),
-      practiceTest$: this.store$.pipe(
-        select(getTests),
-        select(isTestReportPracticeTest),
-      ),
       welshTest$: currentTest$.pipe(
         select(getJournalData),
         select(getTestSlotAttributes),
@@ -164,11 +154,10 @@ export class DebriefPage extends PracticeableBasePageComponent {
       ),
     };
 
-    const { testResult$, practiceTest$, welshTest$, etaFaults$, ecoFaults$ } = this.pageState;
+    const { testResult$, welshTest$, etaFaults$, ecoFaults$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
-      practiceTest$.pipe(map(value => this.isPracticeTest = value)),
       welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
       etaFaults$.pipe(
         map((eta) => {
@@ -206,7 +195,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    if (this.isPracticeTest) {
+    if (this.isTestReportPracticeMode) {
       if (super.isIos()) {
         this.screenOrientation.unlock();
         this.insomnia.allowSleepAgain();
@@ -215,7 +204,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   endDebrief(): void {
-    if (this.isPracticeTest) {
+    if (this.isTestReportPracticeMode) {
       this.navController.popToRoot({ animate: false });
       return;
     }

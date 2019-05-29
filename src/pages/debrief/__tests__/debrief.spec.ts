@@ -131,14 +131,14 @@ describe('DebriefPage', () => {
 
   describe('Class', () => {
     describe('ionViewDidLeave', () => {
-      it('should disable the plugins when the test is a practice test', () => {
-        component.isPracticeTest = true;
+      it('should disable the plugins when the test is a test report practice test', () => {
+        component.isTestReportPracticeMode = true;
         component.ionViewDidLeave();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
-      it('should not disable the plugins when the test is not a practice test', () => {
-        component.isPracticeTest = false;
+      it('should not disable the plugins when the test is not a test report practice test', () => {
+        component.isTestReportPracticeMode = false;
         component.ionViewDidLeave();
         expect(screenOrientation.unlock).not.toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).not.toHaveBeenCalled();
@@ -364,8 +364,8 @@ describe('DebriefPage', () => {
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });
-      it('should navigate back to the root when this is a practice test', () => {
-        component.isPracticeTest = true;
+      it('should navigate back to the root when this is a test report practice test', () => {
+        component.isTestReportPracticeMode = true;
         component.endDebrief();
         expect(navController.popToRoot).toHaveBeenCalled();
       });
