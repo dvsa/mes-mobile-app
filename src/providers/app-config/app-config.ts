@@ -104,7 +104,6 @@ export class AppConfigProvider {
           resourceUrl: appConfigPlugin.getValue('resourceUrl'),
         },
       } as EnvironmentFile;
-      console.log(`Got logs POST API key: ${newEnvFile.logsPostApiKey}`);
 
       // Check to see if we have any config
       if (newEnvFile.configUrl) {
