@@ -70,9 +70,16 @@ describe('BackToOfficePage', () => {
       expect(component).toBeDefined();
     });
     describe('ionViewDidEnter', () => {
-      it('should disable test inhibitions', () => {
+      it('should disable test inhibitions when not in practice mode', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+      it('should disable test inhibitions when in practice mode', () => {
+        component.isPracticeMode = true;
+        component.ionViewDidEnter();
+        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });

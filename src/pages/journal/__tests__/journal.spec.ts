@@ -18,8 +18,6 @@ import { journalReducer } from '../journal.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { SlotSelectorProvider } from '../../../providers/slot-selector/slot-selector';
 import { MockedJournalModule } from '../__mocks__/journal.module.mock';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { UnloadJournal, LoadJournal, LoadJournalSuccess } from '../journal.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -60,7 +58,6 @@ describe('JournalPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },

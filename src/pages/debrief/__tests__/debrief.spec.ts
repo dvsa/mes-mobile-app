@@ -24,8 +24,6 @@ import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/
 import { DebriefComponentsModule } from '../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
@@ -112,7 +110,6 @@ describe('DebriefPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
