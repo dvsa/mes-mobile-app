@@ -1,6 +1,6 @@
-import { TestSlot } from '../../../shared/models/DJournal';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
-export const fakeJournalTestSlots: TestSlot[] = [
+export const fakeJournalTestSlots = [
   {
     booking: {
       application: {
@@ -43,7 +43,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1001,
+      slotId: `${end2endPracticeSlotId}_1`,
       start: '2019-05-22T08:10:00+01:00',
     },
     testCentre: {
@@ -91,7 +91,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1003,
+      slotId: `${end2endPracticeSlotId}_2`,
       start: '2019-05-22T10:14:00+01:00',
     },
     testCentre: {
@@ -140,7 +140,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1004,
+      slotId: `${end2endPracticeSlotId}_3`,
       start: '2019-05-22T11:11:00+01:00',
     },
     testCentre: {
@@ -190,7 +190,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1005,
+      slotId: `${end2endPracticeSlotId}_4`,
       start: '2019-05-22T12:38:00+01:00',
     },
     testCentre: {
@@ -242,7 +242,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1006,
+      slotId: `${end2endPracticeSlotId}_5`,
       start: '2019-05-22T13:35:00+01:00',
     },
     testCentre: {
@@ -286,7 +286,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1007,
+      slotId: `${end2endPracticeSlotId}_6`,
       start: '2019-05-23T14:32:00+01:00',
     },
     testCentre: {
@@ -330,7 +330,7 @@ export const fakeJournalTestSlots: TestSlot[] = [
     },
     slotDetail: {
       duration: 57,
-      slotId: 1007,
+      slotId: `${end2endPracticeSlotId}_7`,
       start: '2019-05-23T14:32:00+01:00',
     },
     testCentre: {

@@ -23,7 +23,7 @@ import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-att
 import { candidateReducer } from './candidate/candidate.reducer';
 import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
-import { testReportPracticeSlotId } from './__mocks__/tests.mock';
+import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
