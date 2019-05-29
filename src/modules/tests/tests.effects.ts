@@ -8,11 +8,8 @@ import * as testStatusActions from './test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { PopulateApplicationReference } from './application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from './candidate/candidate.actions';
-import {
-  testReportPracticeModeSlot,
-  testReportPracticeSlotId,
-  end2endPracticeSlotId,
-} from './__mocks__/tests.mock';
+import { testReportPracticeModeSlot } from './__mocks__/tests.mock';
+import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
@@ -21,7 +18,7 @@ import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submi
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-import { find } from 'lodash';
+import { find, startsWith } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
@@ -99,7 +96,7 @@ export class TestsEffects {
 
       const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
         slotId !== testReportPracticeSlotId &&
-        slotId !== end2endPracticeSlotId &&
+        !startsWith(slotId, end2endPracticeSlotId) &&
         tests.testStatus[slotId] === TestStatus.Completed),
       );
 

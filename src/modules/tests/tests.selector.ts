@@ -2,7 +2,8 @@ import { TestStatus } from './test-status/test-status.model';
 import { StandardCarTestCATBSchema, JournalData } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
 import { terminationCodeList } from '../../pages/office/components/termination-code/termination-code.constants';
-import { testReportPracticeSlotId, end2endPracticeSlotId } from './__mocks__/tests.mock';
+import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
+import { startsWith } from 'lodash';
 
 // temporary determination of test failure and success until service
 // that imnplements full business logic is implemented.
@@ -73,4 +74,4 @@ export const isTestReportPracticeTest = (tests: TestsModel): boolean =>
   tests.currentTest.slotId === testReportPracticeSlotId;
 
 export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
-  tests.currentTest.slotId === end2endPracticeSlotId;
+  startsWith(tests.currentTest.slotId, end2endPracticeSlotId);
