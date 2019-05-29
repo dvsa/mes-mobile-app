@@ -19,12 +19,14 @@ import { DeviceProvider } from '../../providers/device/device';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
-import { StartSendingLogs, LoadLog } from '../../modules/logs/logs.actions';
+import { StartSendingLogs, LoadLog, SaveLog } from '../../modules/logs/logs.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { LoadPersistedTests, StartSendingCompletedTests } from '../../modules/tests/tests.actions';
 import { AppConfigError } from '../../providers/app-config/app-config.constants';
+import { LogsProvider } from '../../providers/logs/logs';
+import { LogType, Log } from '../../shared/models/log.model';
 
 @IonicPage()
 @Component({
@@ -55,6 +57,7 @@ export class LoginPage extends BasePageComponent {
     public dataStore: DataStoreProvider,
     public loadingController: LoadingController,
     public alertCtrl: AlertController,
+    public logProvider: LogsProvider,
   ) {
     super(platform, navCtrl, authenticationProvider, false);
 
@@ -106,8 +109,16 @@ export class LoginPage extends BasePageComponent {
 
       if (error === AuthenticationError.USER_CANCELLED) {
         this.analytics.logException(error, true);
+        const log: Log = this.createLog(LogType.INFO, LogType.INFO, `user cancelled login`);
+        this.store$.dispatch(new SaveLog(log));
+
       }
       if (error === AuthenticationError.USER_NOT_AUTHORISED) {
+        const token = await this.authenticationProvider.getAuthenticationToken();
+        if (token) {
+          const log: Log = this.createLog(LogType.INFO, LogType.INFO, `user not authorised: TOKEN ${token}`);
+          this.store$.dispatch(new SaveLog(log));
+        }
         this.authenticationProvider.logout();
       }
       this.appInitError = error;
@@ -195,4 +206,13 @@ export class LoginPage extends BasePageComponent {
       this.loadingSpinner = null;
     }
   }
+
+  private createLog(logType: LogType, actionType: string, message: string): Log {
+    return {
+      message,
+      type: logType,
+      timestamp: Date.now(),
+    };
+  }
+
 }

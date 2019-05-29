@@ -12,17 +12,27 @@ import { switchMap } from 'rxjs/operators';
 
 import { Platform } from 'ionic-angular';
 import { AuthenticationProvider } from './authentication';
+import { UrlProvider } from '../url/url';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private platform: Platform,
-    private authService: AuthenticationProvider) {}
+    private authService: AuthenticationProvider,
+    public urlProvider: UrlProvider) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!this.platform.is('ios')) return next.handle(request);
 
+    if (request.url === this.urlProvider.getLogsServiceUrl()) {
+      const newRequest = request.clone({
+        setHeaders: {
+          'x-api-key': this.urlProvider.getLogsServiceApiKey(),
+        },
+      });
+      return next.handle(newRequest);
+    }
     return from(this.authService.getAuthenticationToken()).pipe(
       switchMap((token: string) => {
         if (token) {
@@ -37,4 +47,5 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
     );
   }
+
 }
