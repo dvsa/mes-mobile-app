@@ -557,7 +557,9 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new CompleteTest());
+    if (!this.isPracticeMode) {
+      this.store$.dispatch(new CompleteTest());
+    }
     this.popToRoot();
   }
 }
