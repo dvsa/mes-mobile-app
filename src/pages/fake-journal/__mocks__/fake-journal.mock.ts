@@ -44,7 +44,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_1`,
-      start: '2019-05-22T08:10:00+01:00',
+      start: '2019-05-30T08:10:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -92,7 +92,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_2`,
-      start: '2019-05-22T10:14:00+01:00',
+      start: '2019-05-30T10:14:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -141,7 +141,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_3`,
-      start: '2019-05-22T11:11:00+01:00',
+      start: '2019-05-30T11:11:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -191,7 +191,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_4`,
-      start: '2019-05-22T12:38:00+01:00',
+      start: '2019-05-30T12:38:00+01:00',
     },
     testCentre: {
       centreId: 54321,
@@ -243,7 +243,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_5`,
-      start: '2019-05-22T13:35:00+01:00',
+      start: '2019-05-30T13:35:00+01:00',
     },
     testCentre: {
       centreId: 54321,
