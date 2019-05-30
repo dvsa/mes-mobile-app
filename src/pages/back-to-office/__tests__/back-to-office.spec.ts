@@ -91,10 +91,10 @@ describe('BackToOfficePage', () => {
       component.goToJournal();
       expect(navCtrl.popToRoot).toHaveBeenCalled();
     });
-    it('should call the popTo method in the navcontroller if in practice mode', () => {
+    it('should call the push method in the navcontroller if in practice mode', () => {
       component.isPracticeMode = true;
       component.goToJournal();
-      expect(navCtrl.popTo).toHaveBeenCalledWith('FakeJournalPage');
+      expect(navCtrl.push).toHaveBeenCalledWith('FakeJournalPage');
     });
   });
 });
