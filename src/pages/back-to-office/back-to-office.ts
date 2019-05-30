@@ -44,7 +44,7 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
 
   goToJournal() {
     if (this.isPracticeMode) {
-      this.navCtrl.popTo('FakeJournalPage');
+      this.navCtrl.push('FakeJournalPage');
       return;
     }
     this.navCtrl.popToRoot();
