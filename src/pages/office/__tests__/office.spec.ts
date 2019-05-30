@@ -317,7 +317,7 @@ describe('OfficePage', () => {
   });
 
   describe('isWelshChanged', () => {
-    it('should', () => {
+    it('should dispatch a WelshTestChanged action', () => {
       const isWelsh = true;
       component.isWelshChanged(isWelsh);
       expect(store$.dispatch).toHaveBeenCalledWith(new WelshTestChanged(isWelsh));
