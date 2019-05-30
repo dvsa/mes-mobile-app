@@ -24,8 +24,6 @@ import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/
 import { DebriefComponentsModule } from '../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
@@ -112,7 +110,6 @@ describe('DebriefPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
       ],
     })
       .compileComponents()
@@ -131,14 +128,14 @@ describe('DebriefPage', () => {
 
   describe('Class', () => {
     describe('ionViewDidLeave', () => {
-      it('should disable the plugins when the test is a practice test', () => {
-        component.isPracticeTest = true;
+      it('should disable the plugins when the test is a test report practice test', () => {
+        component.isTestReportPracticeMode = true;
         component.ionViewDidLeave();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
-      it('should not disable the plugins when the test is not a practice test', () => {
-        component.isPracticeTest = false;
+      it('should not disable the plugins when the test is not a test report practice test', () => {
+        component.isTestReportPracticeMode = false;
         component.ionViewDidLeave();
         expect(screenOrientation.unlock).not.toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).not.toHaveBeenCalled();
@@ -364,8 +361,8 @@ describe('DebriefPage', () => {
         component.endDebrief();
         expect(navController.push).toHaveBeenCalledWith('BackToOfficePage');
       });
-      it('should navigate back to the root when this is a practice test', () => {
-        component.isPracticeTest = true;
+      it('should navigate back to the root when this is a test report practice test', () => {
+        component.isTestReportPracticeMode = true;
         component.endDebrief();
         expect(navController.popToRoot).toHaveBeenCalled();
       });
@@ -390,6 +387,8 @@ describe('DebriefPage', () => {
         store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
         store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
         fixture.detectChanges();
+        component.isBookedInWelsh = true;
+        component.configureI18N(true);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;

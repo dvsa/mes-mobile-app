@@ -15,8 +15,6 @@ import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import {
   initialState as preTestDeclarationInitialState,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
@@ -26,10 +24,6 @@ import {
 } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
-import { Insomnia } from '@ionic-native/insomnia';
-import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { SubmitWaitingRoomInfo } from '../waiting-room.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
@@ -78,6 +72,11 @@ describe('WaitingRoomPage', () => {
                   welshTest: false,
                 },
               },
+              communicationPreferences: {
+                updatedEmaill: 'test@mail.com',
+                communicationMethod: 'Email',
+                conductedLanguage: 'Cymraeg',
+              },
             },
           },
         })),
@@ -89,11 +88,8 @@ describe('WaitingRoomPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
-        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
-        { provide: Insomnia, useClass: InsomniaMock },
       ],
     })
       .compileComponents()

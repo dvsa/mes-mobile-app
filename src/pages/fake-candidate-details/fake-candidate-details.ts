@@ -1,26 +1,21 @@
 import { Component } from '@angular/core';
+import { BasePageComponent } from '../../shared/classes/base-page';
+
 import {
   IonicPage,
   NavController,
   Platform,
 } from 'ionic-angular';
 
-import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import moment from 'moment';
-import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
 
 @IonicPage()
 @Component({
-  selector: 'page-fake-journal',
-  templateUrl: 'fake-journal.html',
+  selector: 'page-fake-candidate-details',
+  templateUrl: 'fake-candidate-details.html',
 })
 
-export class FakeJournalPage extends BasePageComponent {
-
-  dateToDisplay: string;
-
-  slots = fakeJournalTestSlots;
+export class FakeCandidateDetailsPage extends BasePageComponent {
 
   constructor(
     public navController: NavController,
@@ -28,8 +23,6 @@ export class FakeJournalPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navController, authenticationProvider);
-
-    this.dateToDisplay = moment().format('dddd D MMMM YYYY');
   }
 
 }

@@ -8,19 +8,20 @@ import * as testStatusActions from './test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
 import { PopulateApplicationReference } from './application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from './candidate/candidate.actions';
-import {
-  testReportPracticeModeSlot,
-  testReportPracticeSlotId,
-  end2endPracticeSlotId,
-} from './__mocks__/tests.mock';
+import { testReportPracticeModeSlot } from './__mocks__/tests.mock';
+import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
-import { getCurrentTest, getCurrentTestSlotId } from './tests.selector';
-import { TestSubmissionProvider } from '../../providers/test-submission/test-submission';
+import { getCurrentTest } from './tests.selector';
+import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submission/test-submission';
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
+import { find, startsWith } from 'lodash';
+import { HttpResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '../../shared/models/http-status-codes';
+import { TestStatus } from './test-status/test-status.model';
 
 @Injectable()
 export class TestsEffects {
@@ -95,11 +96,15 @@ export class TestsEffects {
 
       const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
         slotId !== testReportPracticeSlotId &&
-        slotId !== end2endPracticeSlotId &&
-        tests.testStatus[slotId] === 'Completed'),
+        !startsWith(slotId, end2endPracticeSlotId) &&
+        tests.testStatus[slotId] === TestStatus.Completed),
       );
 
-      const completedTests = completedTestKeys.map(slotId => tests.startedTests[slotId]);
+      const completedTests: TestToSubmit[] = completedTestKeys.map((slotId: string, index: number) => ({
+        index,
+        slotId,
+        payload: tests.startedTests[slotId],
+      }));
 
       if (completedTests.length === 0) {
         return of();
@@ -107,11 +112,14 @@ export class TestsEffects {
 
       return this.testSubmissionProvider.submitTests(completedTests)
         .pipe(
-          map((response: any) => {
-            return new testActions.SendCompletedTestsSuccess(completedTestKeys);
-          }),
-          catchError((err: any) => {
-            return of(new testActions.SendCompletedTestsFailure());
+          switchMap((responses: HttpResponse<any>[]) => {
+            return responses.map((response, index) => {
+              const matchedTests = find(completedTests, ['index', index]);
+              if (response.status === HttpStatusCodes.CREATED) {
+                return new testActions.SendCompletedTestSuccess(matchedTests.slotId);
+              }
+              return new testActions.SendCompletedTestsFailure();
+            });
           }),
         );
     }),
@@ -119,10 +127,10 @@ export class TestsEffects {
 
   @Effect()
   sendCompletedTestsSuccessEffect$ = this.actions$.pipe(
-    ofType(testActions.SEND_COMPLETED_TESTS_SUCCESS),
-    switchMap((action: testActions.SendCompletedTestsSuccess) => {
+    ofType(testActions.SEND_COMPLETED_TEST_SUCCESS),
+    switchMap((action: testActions.SendCompletedTestSuccess) => {
       return [
-        ...action.completedTestIds.map(id => new testStatusActions.SetTestStatusSubmitted(id)),
+        new testStatusActions.SetTestStatusSubmitted(action.completedTestId),
         new testActions.PersistTests(),
       ];
     }),
@@ -138,30 +146,7 @@ export class TestsEffects {
       ),
     ),
     map(([action, currentTest]) => {
-      return new testActions.SendTest(currentTest);
-    }),
-  );
-
-  @Effect()
-  sendTestEffect$ = this.actions$.pipe(
-    ofType(testActions.SEND_TEST),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTestSlotId),
-      ),
-    ),
-    switchMap(([action, currentTestSlotId]) => {
-      const sendTestAction = action as testActions.SendTest;
-      return this.testSubmissionProvider.submitTests([sendTestAction.payload])
-        .pipe(
-          map((response: any) => {
-            return new testActions.SendTestSuccess(currentTestSlotId);
-          }),
-          catchError((err: any) => {
-            return of(new testActions.SendTestFailure());
-          }),
-        );
+      return new testActions.SendCompletedTests();
     }),
   );
 

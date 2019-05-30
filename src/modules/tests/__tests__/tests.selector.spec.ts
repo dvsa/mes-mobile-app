@@ -19,7 +19,7 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   ActivityCodeDescription,
 } from '../../../pages/office/components/termination-code/termination-code.constants';
-import { testReportPracticeSlotId, end2endPracticeSlotId } from '../__mocks__/tests.mock';
+import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {

@@ -18,6 +18,7 @@ import { DataStoreProviderMock } from '../../../../../providers/data-store/__moc
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { translateServiceMock } from '../../../../../shared/__mocks__/translate';
+import { end2endPracticeSlotId } from '../../../../../shared/mocks/test-slot-ids.mock';
 
 class MockAppService extends App {
   getTextZoomClass() {
@@ -65,14 +66,24 @@ describe('CandidateLinkComponent', () => {
       expect(component).toBeDefined();
     });
 
-    it('should call the create function of modalController and pass the right slotId', () => {
-      component.openCandidateDetailsModal();
-
-      expect(component.modalController.create).toHaveBeenCalledWith(
-        'CandidateDetailsPage',
-        { slotId: component.slotId, slotChanged: false },
-        { cssClass: 'modal-fullscreen text-zoom-regular' },
-      );
+    describe('openCandidateDetailsModal', () => {
+      it('should open CandidateDetailsPage when not in practice mode', () => {
+        component.openCandidateDetailsModal();
+        expect(component.modalController.create).toHaveBeenCalledWith(
+          'CandidateDetailsPage',
+          { slotId: component.slotId, slotChanged: false },
+          { cssClass: 'modal-fullscreen text-zoom-regular' },
+        );
+      });
+      it('should open FakeCandidateDetailsPage when in practice mode', () => {
+        component.slotId = `${end2endPracticeSlotId}_1`;
+        component.openCandidateDetailsModal();
+        expect(component.modalController.create).toHaveBeenCalledWith(
+          'FakeCandidateDetailsPage',
+          { slotId: component.slotId, slotChanged: false },
+          { cssClass: 'modal-fullscreen text-zoom-regular' },
+        );
+      });
     });
   });
 

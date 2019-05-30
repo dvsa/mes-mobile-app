@@ -307,9 +307,14 @@ describe('OfficePage', () => {
   });
 
   describe('popToRoot', () => {
-    it('should call the popToRoot method in the navcontroller', () => {
+    it('should call the popToRoot method in the navcontroller if not in practice mode', () => {
       component.popToRoot();
       expect(navCtrl.popToRoot).toHaveBeenCalled();
+    });
+    it('should call the popTo method in the navcontroller if in practice mode.', () => {
+      component.isPracticeMode = true;
+      component.popToRoot();
+      expect(navCtrl.popTo).toHaveBeenCalledWith('FakeJournalPage');
     });
   });
 });

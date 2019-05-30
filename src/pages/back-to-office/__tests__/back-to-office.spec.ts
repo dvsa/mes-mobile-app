@@ -70,19 +70,31 @@ describe('BackToOfficePage', () => {
       expect(component).toBeDefined();
     });
     describe('ionViewDidEnter', () => {
-      it('should disable test inhibitions', () => {
+      it('should disable test inhibitions when not in practice mode', () => {
         component.ionViewDidEnter();
         expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
+      });
+      it('should disable test inhibitions when in practice mode', () => {
+        component.isPracticeMode = true;
+        component.ionViewDidEnter();
+        expect(deviceProvider.disableSingleAppMode).not.toHaveBeenCalled();
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
     });
   });
 
-  describe('popToRoot', () => {
-    it('should call the popToRoot method in the navcontroller', () => {
-      component.popToRoot();
+  describe('goToJournal', () => {
+    it('should call the popToRoot method in the navcontroller if not in practice mode', () => {
+      component.goToJournal();
       expect(navCtrl.popToRoot).toHaveBeenCalled();
+    });
+    it('should call the popTo method in the navcontroller if in practice mode', () => {
+      component.isPracticeMode = true;
+      component.goToJournal();
+      expect(navCtrl.popTo).toHaveBeenCalledWith('FakeJournalPage');
     });
   });
 });
