@@ -10,14 +10,3 @@ export class PopulateTestSlotAttributes implements Action {
 
 export type Types =
   | PopulateTestSlotAttributes;
-
-export const extractTestSlotAttributes = (slotData): TestSlotAttributes => {
-  return {
-    welshTest: slotData.booking.application.welshTest,
-    slotId: slotData.slotDetail.slotId,
-    start: slotData.slotDetail.start,
-    specialNeeds: slotData.booking.application.specialNeeds,
-    vehicleSlotType: slotData.vehicleSlotType,
-    extendedTest: slotData.booking.application.extendedTest,
-  };
-};

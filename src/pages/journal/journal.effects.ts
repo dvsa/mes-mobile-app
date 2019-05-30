@@ -31,10 +31,10 @@ import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidat
 import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
 import {
   PopulateTestSlotAttributes,
-  extractTestSlotAttributes,
 } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
 import { SetTestStatusBooked } from '../../modules/tests/test-status/test-status.actions';
+import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 
 @Injectable()
 export class JournalEffects {

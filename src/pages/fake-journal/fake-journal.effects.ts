@@ -8,10 +8,10 @@ import { PopulateApplicationReference } from '../../modules/tests/application-re
 import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
 import {
   PopulateTestSlotAttributes,
-  extractTestSlotAttributes,
 } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
 import { Application } from '../../shared/models/DJournal';
+import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 
 @Injectable()
 export class FakeJournalEffects {
