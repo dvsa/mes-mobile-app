@@ -20,6 +20,8 @@ import { fakeJournalTestSlots } from '../fake-journal/__mocks__/fake-journal.moc
 
 export class FakeCandidateDetailsPage extends BasePageComponent {
 
+  slotId: string;
+
   name: string;
   time: string;
   details: Details;
@@ -32,11 +34,11 @@ export class FakeCandidateDetailsPage extends BasePageComponent {
     public navParams: NavParams,
   ) {
     super(platform, navController, authenticationProvider);
+    this.slotId = this.navParams.get('slotId');
+  }
 
-    const slotId = this.navParams.get('slotId');
-    console.log('slotId', slotId);
-    const slot = fakeJournalTestSlots.find(testSlot => testSlot.slotDetail.slotId === slotId);
-    console.log('Slot', slot);
+  ngOnInit(): void {
+    const slot = fakeJournalTestSlots.find(testSlot => testSlot.slotDetail.slotId === this.slotId);
 
     this.name = getCandidateName(slot);
     this.time = getTime(slot);
