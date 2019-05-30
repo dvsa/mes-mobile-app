@@ -15,14 +15,13 @@ export class UrlProvider {
   }
 
   getLogsServiceUrl(): any {
-    return this.appConfigProvider.getAppConfig().logs.url;
+    return this.appConfigProvider.getAppConfig().logsApiUrl;
   }
 
   getLogsServiceApiKey(): any {
-    // todo use definition when john has merged in his api key changes
-    // return this.appConfigProvider.getAppConfig().logs.apiKey;
-    return 'API_KEY';
+    return this.appConfigProvider.getAppConfig().logsPostApiKey;
   }
+
   getTestResultServiceUrl(): any {
     return this.appConfigProvider.getAppConfig().tests.testSubmissionUrl;
   }

@@ -5,6 +5,8 @@ export type AppConfig = {
   daysToCacheLogs: number,
   logoutClearsTestPersistence?: boolean;
   logsPostApiKey: string;
+  logsApiUrl: string;
+  logsAutoSendInterval: number;
   authentication: {
     context: string,
     resourceUrl: string,

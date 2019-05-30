@@ -17,7 +17,7 @@ import {
   LoadingControllerMock,
   AlertControllerMock,
 } from 'ionic-mocks';
-import { Store , StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { AppModule } from '../../../app/app.module';
 import { LoginPage } from '../login';
@@ -146,6 +146,8 @@ describe('LoginPage', () => {
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(component.hasUserLoggedOut).toBeFalsy();
       expect(component.appInitError === AuthenticationError.USER_NOT_AUTHORISED);
+      expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
+
       expect(splashScreen.hide).toHaveBeenCalled();
     }));
 

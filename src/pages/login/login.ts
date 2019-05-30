@@ -19,7 +19,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
-import { StartSendingLogs, LoadLog, SaveLog } from '../../modules/logs/logs.actions';
+import { StartSendingLogs, LoadLog, SaveLog, SendLogs } from '../../modules/logs/logs.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
@@ -109,15 +109,26 @@ export class LoginPage extends BasePageComponent {
 
       if (error === AuthenticationError.USER_CANCELLED) {
         this.analytics.logException(error, true);
-        const log: Log = this.createLog(LogType.INFO, LogType.INFO, `user cancelled login`);
+        const log: Log = this.createLog(LogType.INFO, LogType.INFO,
+          `user cancelled login`);
         this.store$.dispatch(new SaveLog(log));
-
+        this.store$.dispatch(new SendLogs());
       }
       if (error === AuthenticationError.USER_NOT_AUTHORISED) {
+
         const token = await this.authenticationProvider.getAuthenticationToken();
+        const examiner = await this.authenticationProvider.getEmployeeId() || '';
         if (token) {
-          const log: Log = this.createLog(LogType.INFO, LogType.INFO, `user not authorised: TOKEN ${token}`);
+          const log: Log = this.createLog(LogType.INFO, LogType.INFO,
+            `user ${examiner} not authorised: TOKEN ${token}`);
           this.store$.dispatch(new SaveLog(log));
+          this.store$.dispatch(new StartSendingLogs());
+        } else {
+          const log: Log = this.createLog(LogType.INFO, LogType.INFO,
+            `user ${examiner} not authorised: Could not get token`);
+          this.store$.dispatch(new SaveLog(log));
+          this.store$.dispatch(new StartSendingLogs());
+
         }
         this.authenticationProvider.logout();
       }

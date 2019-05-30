@@ -25,7 +25,9 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!this.platform.is('ios')) return next.handle(request);
 
-    if (request.url === this.urlProvider.getLogsServiceUrl()) {
+    const logUrl = new URL(request.url);
+
+    if (logUrl.pathname.endsWith('/logs')) {
       const newRequest = request.clone({
         setHeaders: {
           'x-api-key': this.urlProvider.getLogsServiceApiKey(),

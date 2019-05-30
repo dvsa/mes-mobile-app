@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class LogsProvider {
 
-  constructor(public http: HttpClient, public urlProvider: UrlProvider) {}
+  constructor(public http: HttpClient, public urlProvider: UrlProvider) { }
 
-  public sendLogs = (logs : Log[]): Observable<Object> => {
+  public sendLogs = (logs: Log[]): Observable<Object> => {
     const logsServiceUrl = this.urlProvider.getLogsServiceUrl();
     return this.http.post(logsServiceUrl, logs);
   }

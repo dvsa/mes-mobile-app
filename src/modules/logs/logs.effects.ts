@@ -34,13 +34,13 @@ export class LogsEffects {
     private dataStore: DataStoreProvider,
     private networkStateProvider: NetworkStateProvider,
     private dateTimeProvider: DateTimeProvider,
-  ) {}
+  ) { }
 
   @Effect()
   startSendingLogsEffect$ = this.actions$.pipe(
     ofType(logsActions.START_SENDING_LOGS),
     switchMap(() => {
-      return interval(this.appConfigProvider.getAppConfig().logs.autoSendInterval)
+      return interval(this.appConfigProvider.getAppConfig().logsAutoSendInterval)
         .pipe(
           map(() => new logsActions.SendLogs()),
         );
@@ -115,7 +115,7 @@ export class LogsEffects {
 
   // TODO: All this has to be moved to the LogsProvider or DataStore provider
 
-  getPersistedLogs = () : Observable<Log[]> => {
+  getPersistedLogs = (): Observable<Log[]> => {
     return from(this.getAndConvertPersistedLogs());
   }
 
@@ -139,10 +139,10 @@ export class LogsEffects {
       dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
       data: logData,
     };
-    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then((response) => {});
+    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then((response) => { });
   }
 
-  isCacheTooOld = (dateStored: DateTime, now: DateTime):boolean => {
+  isCacheTooOld = (dateStored: DateTime, now: DateTime): boolean => {
     return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().daysToCacheLogs;
   }
 
@@ -152,7 +152,7 @@ export class LogsEffects {
       dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
       data: emptyLogData,
     };
-    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then(() => {});
+    this.dataStore.setItem('LOGS', JSON.stringify(logDataToStore)).then(() => { });
     return emptyLogData;
   }
 
