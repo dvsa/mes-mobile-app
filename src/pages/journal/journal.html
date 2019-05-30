@@ -5,6 +5,7 @@
         <span>Logout</span>
         <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       </button>
+      <h6 *ngIf="!authenticationProvider.logoutEnabled()" class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
     </ion-buttons>
     <ion-title>Journal</ion-title>
