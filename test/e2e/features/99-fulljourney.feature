@@ -35,11 +35,18 @@ Feature: Full end to end journey
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page
       Then I should see the "Test report - Florence Pearson" page
-      And I add a "Accelerator" driver fault
-      And I add a "Clutch" driver fault
-      And I add a "Safety" driver fault
-      And I add a "Normal driving" driver fault
-      And I add a "Lane discipline" driver fault
+      When I add a "Accelerator" driver fault
+      Then the driver fault count is "1"
+      And the competency "Accelerator" driver fault count is "1"
+      When I add a "Safety" driver fault
+      Then the driver fault count is "2"
+      And the competency "Safety" driver fault count is "1"
+      When I add a "Safety" driver fault
+      Then the driver fault count is "3"
+      And the competency "Safety" driver fault count is "2"
+      When I add a "Lane discipline" driver fault
+      Then the driver fault count is "4"
+      And the competency "Lane discipline" driver fault count is "1"
       And I add a "Accelerator" serious fault
       And I add a "Use of speed" dangerous fault
       And I complete the test
