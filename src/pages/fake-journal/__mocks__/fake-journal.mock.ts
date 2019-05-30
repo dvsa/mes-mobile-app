@@ -16,7 +16,7 @@ export const fakeJournalTestSlots = [
         specialNeeds: 'Candidate has dyslexia',
         specialNeedsCode: 'NONE',
         specialNeedsExtendedTest: false,
-        testCategory: 'A1',
+        testCategory: 'B',
         vehicleGearbox: 'Automatic',
         welshTest: false,
         meetingPlace: 'At the pub',
@@ -47,7 +47,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_1`,
-      start: todayAt8Am.format(),
+      start: todayAt8Am.add(10, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -95,7 +95,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_2`,
-      start: todayAt8Am.add(1, 'hour').format(),
+      start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -114,7 +114,7 @@ export const fakeJournalTestSlots = [
         entitlementCheck: false,
         extendedTest: false,
         progressiveAccess: false,
-        testCategory: 'C1+E',
+        testCategory: 'B',
         vehicleGearbox: 'Manual',
         vehicleHeight: 5,
         vehicleLength: 10,
@@ -144,7 +144,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_3`,
-      start: todayAt8Am.add(1, 'hour').format(),
+      start: todayAt8Am.add(67, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -194,7 +194,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_4`,
-      start: todayAt8Am.add(1, 'hour').format(),
+      start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -213,7 +213,7 @@ export const fakeJournalTestSlots = [
         entitlementCheck: false,
         extendedTest: false,
         progressiveAccess: false,
-        testCategory: 'D+E',
+        testCategory: 'B',
         vehicleGearbox: 'Manual',
         vehicleHeight: 5,
         vehicleLength: 15,
@@ -246,7 +246,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_5`,
-      start: todayAt8Am.add(1, 'hour').format(),
+      start: todayAt8Am.add(86, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -290,7 +290,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_6`,
-      start: todayAt8Am.add(1, 'hour').format(),
+      start: todayAt8Am.add(58, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -334,7 +334,7 @@ export const fakeJournalTestSlots = [
     slotDetail: {
       duration: 57,
       slotId: `${end2endPracticeSlotId}_7`,
-      start: todayAt8Am.add(1, 'hour').format(),
+      start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
