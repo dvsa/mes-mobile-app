@@ -7,7 +7,7 @@ import {
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import moment from 'moment';
+import * as moment from 'moment';
 import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
 
 @IonicPage()
