@@ -11,7 +11,7 @@ import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mo
 })
 export class CandidateLinkComponent {
   @Input()
-  slotId: number;
+  slotId: number | string;
 
   @Input()
   slotChanged: boolean;
