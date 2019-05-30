@@ -25,14 +25,14 @@ Given('I am not logged in', () => {
 
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP');
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      // Wait until we are on the login page before proceeding
+      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+      browser.wait(ExpectedConditions.presenceOf(usernameFld));
 
-    // Wait until we are on the login page before proceeding
-    const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-    browser.wait(ExpectedConditions.presenceOf(usernameField));
-
-    // Switch back to WEBVIEW context
-    browser.driver.selectContext(webviewContext);
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(webviewContext);
+    });
   });
 });
 
@@ -63,14 +63,14 @@ Then('I should see the Microsoft login page', () => {
   browser.driver.getCurrentContext().then((webviewContext) => {
 
     // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP');
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      // Check for Microsoft login username field
+      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+      expect(usernameFld.isPresent()).to.eventually.be.true;
 
-    // Check for Microsoft login username field
-    const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-    expect(usernameField.isPresent()).to.eventually.be.true;
-
-    // Switch back to WEBVIEW context
-    browser.driver.selectContext(webviewContext);
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(webviewContext);
+    });
   });
 });
 
@@ -147,25 +147,25 @@ export const logInToApplication = (username, password) => {
   // To be able to fill in the Authenticator login we need to switch to NATIVE context then switch back to WEBVIEW after
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP');
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      // Fill in username and click Next
+      const usernameFld = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
+      browser.wait(ExpectedConditions.presenceOf(usernameFld));
+      usernameFld.sendKeys(username);
+      const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
+      nextButtonElement.click();
 
-    // Fill in username and click Next
-    const usernameField = element(by.xpath('//XCUIElementTypeTextField[@label="Enter your email, phone, or Skype."]'));
-    browser.wait(ExpectedConditions.presenceOf(usernameField));
-    usernameField.sendKeys(username);
-    const nextButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Next"]'));
-    nextButtonElement.click();
+      // Fill in password and click Sign in
+      const pFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
+      browser.wait(ExpectedConditions.presenceOf(pFld));
+      pFld.sendKeys(password);
+      const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
+      signInButtonElement.click();
+      browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
-    // Fill in password and click Sign in
-    const passFld = element(by.xpath(`//XCUIElementTypeSecureTextField[@label="Enter the password for ${username}"]`));
-    browser.wait(ExpectedConditions.presenceOf(passFld));
-    passFld.sendKeys(password);
-    const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
-    signInButtonElement.click();
-    browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-
-    // Switch back to WEBVIEW context
-    browser.driver.selectContext(webviewContext);
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(webviewContext);
+    });
   });
 };
 
@@ -253,22 +253,22 @@ export const enterPasscode = () => {
   // To be able to fill in the passcode we need to switch to NATIVE context then switch back to WEBVIEW after
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP');
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      // Get the passcode field
+      const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
+      browser.wait(ExpectedConditions.presenceOf(passcodeField));
 
-    // Get the passcode field
-    const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
-    browser.wait(ExpectedConditions.presenceOf(passcodeField));
+      // Set focus on the field
+      passcodeField.click();
 
-    // Set focus on the field
-    passcodeField.click();
+      // Send the fake passcode using native browser actions
+      browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
 
-    // Send the fake passcode using native browser actions
-    browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
-
-    // Switch back to WEBVIEW context
-    browser.driver.selectContext(webviewContext);
-
-    browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(webviewContext).then(() => {
+        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+      });
+    });
   });
 };
 
