@@ -46,6 +46,8 @@ import {
 } from '../components/termination-code/termination-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest } from '../office.actions';
+import { WelshTestChanged } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { LanguagePreferencesComponent } from '../components/language-preference/language-preferences';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -68,6 +70,7 @@ describe('OfficePage', () => {
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(TerminationCodeComponent),
+        MockComponent(LanguagePreferencesComponent),
       ],
       imports: [
         IonicModule,
@@ -310,6 +313,14 @@ describe('OfficePage', () => {
     it('should call the popToRoot method in the navcontroller', () => {
       component.popToRoot();
       expect(navCtrl.popToRoot).toHaveBeenCalled();
+    });
+  });
+
+  describe('isWelshChanged', () => {
+    it('should', () => {
+      const isWelsh = true;
+      component.isWelshChanged(isWelsh);
+      expect(store$.dispatch).toHaveBeenCalledWith(new WelshTestChanged(isWelsh));
     });
   });
 });

@@ -17,6 +17,7 @@ import { AdditionalInformationComponent } from './components/additional-informat
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
 import { OfficeEffects } from './office.effects';
 import { TerminationCodeComponent } from './components/termination-code/termination-code';
+import { LanguagePreferencesComponent } from './components/language-preference/language-preferences';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TerminationCodeComponent } from './components/termination-code/terminat
     AdditionalInformationComponent,
     IndependentDrivingComponent,
     TerminationCodeComponent,
+    LanguagePreferencesComponent,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),
