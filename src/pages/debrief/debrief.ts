@@ -3,11 +3,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import {
-  getCurrentTest,
-  isTestReportPracticeTest,
-  getJournalData,
-} from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -39,6 +35,10 @@ import { TranslateService } from 'ng2-translate';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
+import {
+  getCommunicationPreference,
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -48,8 +48,8 @@ interface DebriefPageState {
   etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
-  practiceTest$: Observable<boolean>;
   welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 
 @IonicPage()
@@ -60,12 +60,15 @@ interface DebriefPageState {
 
 export class DebriefPage extends PracticeableBasePageComponent {
 
+  static readonly welshLanguage: string = 'Cymraeg';
+
   pageState: DebriefPageState;
   subscription: Subscription;
+  conductedLanguage: string;
+  isBookedInWelsh: boolean;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
-  public isPracticeTest: boolean;
 
   public hasPhysicalEta: boolean = false;
   public hasVerbalEta: boolean = false;
@@ -153,23 +156,22 @@ export class DebriefPage extends PracticeableBasePageComponent {
       testResult$: currentTest$.pipe(
         select(getTestOutcome),
       ),
-      practiceTest$: this.store$.pipe(
-        select(getTests),
-        select(isTestReportPracticeTest),
-      ),
       welshTest$: currentTest$.pipe(
         select(getJournalData),
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
     };
 
-    const { testResult$, practiceTest$, welshTest$, etaFaults$, ecoFaults$ } = this.pageState;
+    const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
-      practiceTest$.pipe(map(value => this.isPracticeTest = value)),
-      welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       etaFaults$.pipe(
         map((eta) => {
           this.hasPhysicalEta = eta.physical;
@@ -182,13 +184,14 @@ export class DebriefPage extends PracticeableBasePageComponent {
           this.adviceGivenPlanning = eco.adviceGivenPlanning;
         }),
       ),
+      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
     );
-
+    this.configureI18N(this.conductedLanguage === DebriefPage.welshLanguage);
     this.subscription = merged$.subscribe();
   }
 
   configureI18N(isWelsh: boolean): void {
-    if (isWelsh) {
+    if (this.isBookedInWelsh && isWelsh) {
       this.translate.use('cy');
     }
   }
@@ -198,7 +201,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.translate.use(this.translate.getDefaultLang());
   }
 
   ionViewDidEnter(): void {
@@ -206,7 +208,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    if (this.isPracticeTest) {
+    if (this.isTestReportPracticeMode) {
       if (super.isIos()) {
         this.screenOrientation.unlock();
         this.insomnia.allowSleepAgain();
@@ -215,7 +217,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   endDebrief(): void {
-    if (this.isPracticeTest) {
+    if (this.isTestReportPracticeMode) {
       this.navController.popToRoot({ animate: false });
       return;
     }

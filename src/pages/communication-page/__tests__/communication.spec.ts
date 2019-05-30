@@ -97,6 +97,7 @@ describe('CommunicationPage', () => {
                 communicationPreferences: {
                   updatedEmail: '',
                   communicationMethod: 'Post',
+                  conductedLanguage: 'Cymraeg',
                 },
               },
             },
@@ -151,9 +152,16 @@ describe('CommunicationPage', () => {
     });
 
     describe('ionViewDidEnter', () => {
-      it('should enable single app mode if on ios', () => {
+      it('should enable single app mode if on ios and not in practice mode', () => {
+        component.isPracticeMode = false;
         component.ionViewDidEnter();
         expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
+
+      it('should note enable single app mode if on ios and in practice mode', () => {
+        component.isPracticeMode = true;
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
       });
 
       it('should lock the screen orientation to Portrait Primary', () => {
@@ -303,6 +311,8 @@ describe('CommunicationPage', () => {
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
         fixture.detectChanges();
+        component.isBookedInWelsh = true;
+        component.configureI18N(true);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)

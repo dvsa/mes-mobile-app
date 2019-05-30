@@ -49,3 +49,10 @@ When('I proceed to the car', () => {
   clickElement(continueButton);
   enterPasscode();
 });
+
+Then('the email {string} has been provided and is preselected', (emailAddress) => {
+  const providedEmailRadio = getElement(by.id('providedEmail'));
+  expect(providedEmailRadio.isSelected()).to.eventually.be.true;
+  const providedEmailValue = getElement(by.id('providedEmailInput'));
+  return expect(providedEmailValue.getText()).to.eventually.equal(emailAddress);
+});

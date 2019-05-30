@@ -432,6 +432,10 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   popToRoot() {
+    if (this.isPracticeMode) {
+      this.navCtrl.popTo('FakeJournalPage');
+      return;
+    }
     this.navCtrl.popToRoot();
   }
 

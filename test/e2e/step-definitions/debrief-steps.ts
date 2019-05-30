@@ -1,6 +1,11 @@
-import { When } from 'cucumber';
+import { Then, When } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { by } from 'protractor';
+
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const expect = chai.expect;
 
 When('I end the debrief', () => {
   const endDebriefButton = getElement(by.xpath('//button[span[h3[text()="End debrief"]]]'));
@@ -14,4 +19,9 @@ When('I complete the pass details', () => {
   clickElement(licenceRecievedRadio);
   const continueButton = getElement(by.xpath('//page-pass-finalisation//button[span[h3[text() = "Continue"]]]'));
   clickElement(continueButton);
+});
+
+Then('I should see the Debrief page with outcome {string}', (outcome) => {
+  const testOutcome = getElement(by.xpath('//page-debrief//div[@id = "test-outcome-background"]/div/h1'));
+  return expect(testOutcome.getText()).to.eventually.equal(outcome);
 });

@@ -10,15 +10,15 @@ When('I complete the test', () => {
   // Click all the legal requirements - having to go native as normal find and click not working. Not sure why.
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP');
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      const legalRequirements = element.all(by.xpath('//XCUIElementTypeImage[@label="checkmark"]'));
+      legalRequirements.each((legalRequirement) => {
+        legalRequirement.click();
+      });
 
-    const legalRequirements = element.all(by.xpath('//XCUIElementTypeImage[@label="checkmark"]'));
-    legalRequirements.each((legalRequirement) => {
-      legalRequirement.click();
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(webviewContext);
     });
-
-    // Switch back to WEBVIEW context
-    browser.driver.selectContext(webviewContext);
   });
 
   // Select a manouveure

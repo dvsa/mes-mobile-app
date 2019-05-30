@@ -14,11 +14,12 @@ import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candi
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../../modules/tests/test-centre/test-centre.actions';
 import { SetTestStatusBooked } from '../../../modules/tests/test-status/test-status.actions';
-import { end2endPracticeSlotId } from '../../../modules/tests/__mocks__/tests.mock';
+import { Application } from '../../../shared/models/DJournal';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('Fake Journal Effects', () => {
   let effects: FakeJournalEffects;
-  let actions$: any;
+  let actions$: ReplaySubject<{}>;
   let store$: Store<StoreModel>;
 
   beforeEach(() => {
@@ -44,28 +45,32 @@ describe('Fake Journal Effects', () => {
   });
 
   describe('startE2EPracticeTestEffect', () => {
+    const testId = `${end2endPracticeSlotId}_1`;
     beforeEach(() => {
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(1003));
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(testId));
     });
 
-    it('should dispatch a success action when the effect is triggered and test is valid', (done) => {
-      actions$.next(new fakeJournalActions.StartE2EPracticeTest(1003));
+    it('should dispatch actions for populating startedTests with mock data', (done) => {
+      // ACT
+      actions$.next(new fakeJournalActions.StartE2EPracticeTest(testId));
+      // ASSERT
       effects.startE2EPracticeTestEffect$.subscribe((result) => {
-        const slot = fakeJournalTestSlots.find(slot => slot.slotDetail.slotId === 1003);
+        const slot = fakeJournalTestSlots.find(slot => slot.slotDetail.slotId === testId);
         if (result instanceof PopulateApplicationReference)  {
-          expect(result).toEqual(new PopulateApplicationReference(slot.booking.application));
+          expect(result).toEqual(new PopulateApplicationReference(slot.booking.application as Application));
         }
         if (result instanceof PopulateCandidateDetails) {
           expect(result).toEqual(new PopulateCandidateDetails(slot.booking.candidate));
         }
         if (result instanceof PopulateTestSlotAttributes) {
-          expect(result.payload.slotId).toEqual(end2endPracticeSlotId);
+          expect(result.payload.slotId).toEqual(testId);
         }
         if (result instanceof PopulateTestCentre) {
           expect(result.payload.costCode).toEqual(slot.testCentre.costCode);
         }
         if (result instanceof SetTestStatusBooked) {
-          expect(result).toEqual(new SetTestStatusBooked(end2endPracticeSlotId));
+          expect(result).toEqual(new SetTestStatusBooked(testId));
           done();
         }
       });

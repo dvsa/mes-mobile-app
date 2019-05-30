@@ -22,12 +22,15 @@ import { NetworkStateProvider } from '../../../providers/network-state/network-s
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { StartTest } from '../../../pages/journal/journal.actions';
+import { StoreModel } from '../../../shared/models/store.model';
 
 describe('Tests Effects', () => {
 
   let effects: TestsEffects;
   let actions$: any;
   let testPersistenceProviderMock;
+  let store$: Store<StoreModel>;
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -49,6 +52,7 @@ describe('Tests Effects', () => {
     });
     effects = TestBed.get(TestsEffects);
     testPersistenceProviderMock = TestBed.get(TestPersistenceProvider);
+    store$ = TestBed.get(Store);
   });
 
   describe('persistTestsEffect', () => {
@@ -98,6 +102,45 @@ describe('Tests Effects', () => {
         }
         if (result instanceof PopulateCandidateDetails) {
           expect(result).toEqual(new PopulateCandidateDetails(candidateMock));
+        }
+        done();
+      });
+    });
+  });
+
+  describe('sendCompletedTestsEffect', () => {
+    it('should dispatch use the order of the responses to coordinate subsequent dispatching of actions', (done) => {
+      // ARRANGE
+      // Adds three tests as 'Completed' for the sendCompletedTestsEffect to consume
+      // The http responses are mocked in test-submission.mock.ts
+      const currentTestSlotId = '12345'; // Mocked as a 201 http response
+      const currentTestSlotId1 = '123456'; // Mocked as a 201 http response
+      const currentTestSlotId2 = '1234567'; // Mocked as a 500 http error response
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testStatusActions.SetTestStatusCompleted(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new StartTest(Number(currentTestSlotId)));
+      store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId));
+      store$.dispatch(new StartTest(Number(currentTestSlotId1)));
+      store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId1));
+      store$.dispatch(new StartTest(Number(currentTestSlotId2)));
+      store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId2));
+      // ACT
+      actions$.next(new testsActions.SendCompletedTests());
+      // ASSERT
+      effects.sendCompletedTestsEffect$.subscribe((result) => {
+        if (result instanceof testsActions.SendCompletedTestSuccess) {
+          if (result.completedTestId === currentTestSlotId) {
+            expect(result).toEqual(new testsActions.SendCompletedTestSuccess(currentTestSlotId));
+          }
+          if (result.completedTestId === currentTestSlotId1) {
+            expect(result).toEqual(new testsActions.SendCompletedTestSuccess(currentTestSlotId1));
+          }
+          if (result.completedTestId === currentTestSlotId2) {
+            expect(result).toEqual(new testsActions.SendCompletedTestsFailure());
+          }
+          if (result.completedTestId === testReportPracticeModeSlot.slotDetail.slotId) {
+            fail('Practice test should not be submitted');
+          }
         }
         done();
       });

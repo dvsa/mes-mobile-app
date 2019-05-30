@@ -23,8 +23,8 @@ import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-att
 import { candidateReducer } from './candidate/candidate.reducer';
 import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
-import { testReportPracticeSlotId, end2endPracticeSlotId } from './__mocks__/tests.mock';
 import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actions';
+import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -79,12 +79,9 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
     return testReportPracticeSlotId;
   }
 
-  if (action instanceof fakeJournalActions.StartE2EPracticeTest) {
-    return end2endPracticeSlotId;
-  }
-
   if (action instanceof journalActions.StartTest
-      || action instanceof journalActions.ActivateTest) {
+      || action instanceof journalActions.ActivateTest
+      || action instanceof fakeJournalActions.StartE2EPracticeTest) {
     return `${action.slotId}`;
   }
 

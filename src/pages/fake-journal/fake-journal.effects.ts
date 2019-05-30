@@ -4,7 +4,6 @@ import { switchMap } from 'rxjs/operators';
 import * as fakeJournalActions from './fake-journal.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
 import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
-import { end2endPracticeSlotId } from '../../modules/tests/__mocks__/tests.mock';
 import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
 import {
@@ -12,6 +11,7 @@ import {
   extractTestSlotAttributes,
 } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
+import { Application } from '../../shared/models/DJournal';
 
 @Injectable()
 export class FakeJournalEffects {
@@ -24,17 +24,14 @@ export class FakeJournalEffects {
     ofType(fakeJournalActions.START_E2E_PRACTICE_TEST),
     switchMap((action) => {
       const startTestAction = action as fakeJournalActions.StartE2EPracticeTest;
-      let slot = fakeJournalTestSlots.find(s => s.slotDetail.slotId === startTestAction.slotId);
-      // Avoid mutating mock slot data
-      slot = JSON.parse(JSON.stringify(slot));
-      slot.slotDetail.slotId = end2endPracticeSlotId as any;
+      const slot = fakeJournalTestSlots.find(s => s.slotDetail.slotId === startTestAction.slotId);
 
       return [
-        new PopulateApplicationReference(slot.booking.application),
+        new PopulateApplicationReference(slot.booking.application as Application),
         new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
         new PopulateTestCentre({ costCode: slot.testCentre.costCode }),
-        new testStatusActions.SetTestStatusBooked(end2endPracticeSlotId),
+        new testStatusActions.SetTestStatusBooked(slot.slotDetail.slotId),
       ];
     }),
   );

@@ -5,6 +5,8 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTest, ActivateTest } from '../../journal.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions';
+import { startsWith } from 'lodash';
+import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 
 @Component({
   selector: 'test-outcome',
@@ -42,8 +44,8 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
-    if (window.location.href.indexOf('fake-journal') !== -1) {
-      this.store$.dispatch(new StartE2EPracticeTest(this.slotId));
+    if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
+      this.store$.dispatch(new StartE2EPracticeTest(this.slotId.toString()));
     } else {
       this.store$.dispatch(new StartTest(this.slotId));
     }

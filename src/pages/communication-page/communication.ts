@@ -84,6 +84,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   selectProvidedEmail: boolean;
   selectNewEmail: boolean;
   conductedLanguage: string;
+  isBookedInWelsh: boolean;
 
   constructor(
     store$: Store<StoreModel>,
@@ -104,9 +105,12 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new CommunicationViewDidEnter());
 
     if (super.isIos()) {
-      this.deviceProvider.enableSingleAppMode();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       this.insomnia.keepAwake();
+
+      if (!this.isPracticeMode) {
+        this.deviceProvider.enableSingleAppMode();
+      }
     }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
@@ -192,7 +196,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value)),
-      welshTest$.pipe(map(isWelsh => this.configureI18N(isWelsh))),
+      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
     );
     this.subscription = merged$.subscribe();
@@ -201,6 +205,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       this.initialiseDefaultSelections();
     }
 
+    this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
     this.restoreRadiosFromState();
     this.restoreRadioValidators();
   }
@@ -208,12 +213,13 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.subscription.unsubscribe();
-    this.translate.use(this.translate.getDefaultLang());
   }
 
   configureI18N(isWelsh: boolean): void {
-    if (isWelsh) {
+    if (this.isBookedInWelsh && isWelsh) {
       this.translate.use('cy');
+    } else {
+      this.translate.use('en');
     }
   }
 
@@ -348,10 +354,9 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       this.form.controls['radioCtrl'].setValue(true);
     }
 
-    if (this.conductedLanguage !== CommunicationPage.englishLanguage) {
+    if (this.isBookedInWelsh && this.conductedLanguage !== CommunicationPage.englishLanguage) {
       this.dispatchCandidateChoseToProceedInWelsh();
     }
-
   }
 
   verifyNewEmailFormControl(communicationChoice: string) {
@@ -395,9 +400,11 @@ export class CommunicationPage extends PracticeableBasePageComponent {
 
   dispatchCandidateChoseToProceedInWelsh() {
     this.store$.dispatch(new CandidateChoseToProceedWithTestInWelsh(CommunicationPage.welshLanguage));
+    this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
   }
 
   dispatchCandidateChoseToProceedInEnglish() {
     this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(CommunicationPage.englishLanguage));
+    this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
   }
 }

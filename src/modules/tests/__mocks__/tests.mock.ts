@@ -1,7 +1,6 @@
 import { Application, Candidate } from '../../../shared/models/DJournal';
 
-export const testReportPracticeSlotId = 'practice_test_report';
-export const end2endPracticeSlotId = 'practice_end_2_end';
+import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 export const testApplicationMock: Application = {
   applicationId: 12345692,

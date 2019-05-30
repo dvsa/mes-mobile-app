@@ -31,15 +31,22 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
 
   ionViewDidEnter(): void {
     if (super.isIos()) {
-      this.deviceProvider.disableSingleAppMode();
       this.screenOrientation.unlock();
       this.insomnia.allowSleepAgain();
+
+      if (!this.isPracticeMode) {
+        this.deviceProvider.disableSingleAppMode();
+      }
     }
 
     this.store$.dispatch(new BackToOfficeViewDidEnter());
   }
 
-  popToRoot() {
+  goToJournal() {
+    if (this.isPracticeMode) {
+      this.navCtrl.popTo('FakeJournalPage');
+      return;
+    }
     this.navCtrl.popToRoot();
   }
 }

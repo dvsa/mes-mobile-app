@@ -28,6 +28,10 @@ import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import {
+  getCommunicationPreference,
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -37,6 +41,7 @@ interface WaitingRoomPageState {
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
   welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 
 @IonicPage()
@@ -45,6 +50,9 @@ interface WaitingRoomPageState {
   templateUrl: 'waiting-room.html',
 })
 export class WaitingRoomPage extends PracticeableBasePageComponent implements OnInit, OnDestroy {
+
+  static readonly welshLanguage: string = 'Cymraeg';
+
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -55,6 +63,10 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   form: FormGroup;
 
   subscription: Subscription;
+
+  isBookedInWelsh: boolean;
+
+  conductedLanguage: string;
 
   constructor(
     store$: Store<StoreModel>,
@@ -124,22 +136,26 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
     };
     this.rehydrateFields();
 
-    const { welshTest$ } = this.pageState;
+    const { welshTest$, conductedLanguage$ } = this.pageState;
     const merged$ = merge(
-      welshTest$.pipe(
-        map(isWelsh => this.configureI18N(isWelsh)),
-      ),
-    );
+      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
+      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
+      );
+
+    this.configureI18N(this.conductedLanguage === WaitingRoomPage.welshLanguage);
     this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.subscription.unsubscribe();
-    this.translate.use(this.translate.getDefaultLang());
   }
 
   rehydrateFields(): void {
@@ -158,7 +174,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   configureI18N(isWelsh: boolean): void {
-    if (isWelsh) {
+    if (this.isBookedInWelsh && isWelsh) {
       this.translate.use('cy');
     }
   }

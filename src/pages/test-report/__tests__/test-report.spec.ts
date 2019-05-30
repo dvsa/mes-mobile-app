@@ -41,8 +41,6 @@ import {
 import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
@@ -113,7 +111,6 @@ describe('TestReportPage', () => {
         { provide: TestReportValidatorProvider, useClass: TestReportValidatorProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
-        { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
       ],
     })

@@ -5,6 +5,7 @@ export const remoteEnvironmentMock: EnvironmentFile = {
   configUrl: 'remote-url',
   daysToCacheJournalData: 7,
   daysToCacheLogs: 7,
+  logsPostApiKey: '',
   authentication: {
     context: 'remote-authentication-context',
     resourceUrl: 'remote-authentication-resource-url',
@@ -22,6 +23,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
   daysToCacheLogs: 7,
   googleAnalyticsId: 'local-ga-id',
   timeTravelDate: '2019-02-01',
+  logsPostApiKey: '',
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',
@@ -42,6 +44,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     allowedTestCategories: ['B'],
     enableTestReportPracticeMode: true,
     enableEndToEndPracticeMode: true,
+    enableLogoutButton: true,
   },
   tests: {
     testSubmissionUrl: 'https://www.example.com/api/v1/test-result',
