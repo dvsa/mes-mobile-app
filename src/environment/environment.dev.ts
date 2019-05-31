@@ -7,7 +7,7 @@ export const environment: EnvironmentFile = {
   daysToCacheLogs: 7,
   logoutClearsTestPersistence: true,
   logsPostApiKey: '',
-  logsApiUrl: 'https://john.mes.dev-dvsacloud.uk/v1/logs',
+  logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',
   logsAutoSendInterval: 6000,
   authentication: {
     context: 'https://login.windows.net/common',
