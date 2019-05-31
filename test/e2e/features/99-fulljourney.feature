@@ -1,7 +1,7 @@
 Feature: Full end to end journey
 
    Scenario: Examiner completes a passed test with no faults
-      Given I reset the application state for "mobexaminer1"
+      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
@@ -25,16 +25,16 @@ Feature: Full end to end journey
       Then I should see the "Journal" page
 
    Scenario: Examiner completes a failed test with various faults
-      Given I reset the application state for "mobexaminer1"
-      When I start the test for "Miss Florence Pearson"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
+      When I start the test for "Mrs Jane Doe"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
+      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
       And I proceed to the car
-      Then I should see the "Florence Pearson" page
+      Then I should see the "Jane Doe" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Florence Pearson" page
+      Then I should see the "Test report - Jane Doe" page
       When I add a "Accelerator" driver fault
       Then the driver fault count is "1"
       And the competency "Accelerator" driver fault count is "1"
@@ -62,9 +62,9 @@ Feature: Full end to end journey
       Then I should see the "Journal" page
 
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)
-      Given I reset the application state for "mobexaminer1"
-      When I start the test for "Miss Florence Pearson"
-      Then I should see the "Declaration - Florence Pearson" page
+      Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
+      When I start the test for "Miss Theresa Shaw"
+      Then I should see the "Declaration - Theresa Shaw" page
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
       When I end the debrief
@@ -76,9 +76,9 @@ Feature: Full end to end journey
       Then I should see the "Journal" page
 
    Scenario: Examiner terminates test as candidate failed to present ID (Only physical description mandatory)
-      Given I reset the application state for "mobexaminer1"
-      When I start the test for "Miss Florence Pearson"
-      Then I should see the "Declaration - Florence Pearson" page
+      Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
+      When I start the test for "Mr Ali Campbell"
+      Then I should see the "Declaration - Ali Campbell" page
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
       When I end the debrief
@@ -94,14 +94,14 @@ Feature: Full end to end journey
       Then I should see the "Journal" page
 
    Scenario: Examiner terminates test as candidate failed eye sight test
-      Given I reset the application state for "mobexaminer1"
-      When I start the test for "Miss Florence Pearson"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
+      When I start the test for "Mr James Brown"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
+      Then I should see the "Declaration - James Brown" page
       And the candidate completes the declaration page
       And I proceed to the car
-      Then I should see the "Florence Pearson" page
+      Then I should see the "James Brown" page
       And I fail the eye sight test
       Then I should see the Debrief page with outcome "Unsuccessful"
       When I end the debrief

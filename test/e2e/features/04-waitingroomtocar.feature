@@ -2,14 +2,14 @@ Feature: Waiting Room to Car
 
    @smoke
    Scenario: Waiting room to Car validation
-      Given I reset the application state for "mobexaminer1"
-      When I start the test for "Mrs Jane Doe"
-      Then I should see the "Declaration - Jane Doe" page
+      Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
+      When I start the test for "Miss Theresa Shaw"
+      Then I should see the "Declaration - Theresa Shaw" page
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       And the candidate completes the declaration page
       And I proceed to the car
-      Then I should see the "Jane Doe" page
+      Then I should see the "Theresa Shaw" page
       And validation item "waiting-room-to-car-eyesight-validation-text" should not be visible
       And validation item "waiting-room-to-car-tell-me-validation-text" should not be visible
       And validation item "waiting-room-to-car-registration-validation-text" should not be visible
@@ -29,13 +29,14 @@ Feature: Waiting Room to Car
       And validation item "waiting-room-to-car-tell-me-outcome-validation-text" should be visible
 
    Scenario: Adding a Tell me question fault carries through to test
-      Given I reset the application state for "mobexaminer1"
-      When I start the test for "Mrs Jane Doe"
-      Then I should see the "Declaration - Jane Doe" page
+      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
+      When I start the test for "Miss Florence Pearson"
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate enters a new email address
       And the candidate confirms their communication preference
       And the candidate completes the declaration page
       And I proceed to the car
-      Then I should see the "Jane Doe" page
+      Then I should see the "Florence Pearson" page
       When I complete the waiting room to car page with a tell me driver fault
       Then the driver fault count is "1"
       And the competency "Show me / Tell me" driver fault count is "1"
