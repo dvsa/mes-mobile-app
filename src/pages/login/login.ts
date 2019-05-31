@@ -117,7 +117,7 @@ export class LoginPage extends BasePageComponent {
       if (error === AuthenticationError.USER_NOT_AUTHORISED) {
 
         const token = await this.authenticationProvider.getAuthenticationToken();
-        const examiner = await this.authenticationProvider.getEmployeeId() || '';
+        const examiner = await this.authenticationProvider.getEmployeeId() || 'unavailable';
         if (token) {
           const log: Log = this.createLog(LogType.INFO,
             `user ${examiner} not authorised: TOKEN ${token}`);
