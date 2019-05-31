@@ -46,7 +46,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_1`,
+      slotId: `${end2endPracticeSlotId}_0`,
       start: todayAt8Am.add(10, 'minutes').format(),
     },
     testCentre: {
@@ -94,7 +94,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_2`,
+      slotId: `${end2endPracticeSlotId}_1`,
       start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
@@ -143,7 +143,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_3`,
+      slotId: `${end2endPracticeSlotId}_2`,
       start: todayAt8Am.add(67, 'minutes').format(),
     },
     testCentre: {
@@ -193,7 +193,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_4`,
+      slotId: `${end2endPracticeSlotId}_3`,
       start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
@@ -245,7 +245,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_5`,
+      slotId: `${end2endPracticeSlotId}_4`,
       start: todayAt8Am.add(86, 'minutes').format(),
     },
     testCentre: {
@@ -289,7 +289,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_6`,
+      slotId: `${end2endPracticeSlotId}_5`,
       start: todayAt8Am.add(58, 'minutes').format(),
     },
     testCentre: {
@@ -333,7 +333,7 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_7`,
+      slotId: `${end2endPracticeSlotId}_6`,
       start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {

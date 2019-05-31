@@ -18,6 +18,11 @@
   </div>
   <location location='Example Test Centre'></location>
   <div *ngFor="let slot of slots">
-    <test-slot [slot]="slot"></test-slot>
+    <div *ngIf="isRedLineSlot(slot.slotDetail.slotId); else simpleSlot">
+      <test-slot [slot]="slot" [hasSlotChanged]="true"></test-slot>
+    </div>
+    <ng-template #simpleSlot>
+      <test-slot [slot]="slot"></test-slot>
+    </ng-template>
   </div>
 </ion-content>

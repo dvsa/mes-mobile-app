@@ -9,6 +9,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import * as moment from 'moment';
 import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
+import { end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 
 @IonicPage()
 @Component({
@@ -31,5 +32,7 @@ export class FakeJournalPage extends BasePageComponent {
 
     this.dateToDisplay = moment().format('dddd D MMMM YYYY');
   }
+
+  isRedLineSlot = (slotId: string) => slotId === `${end2endPracticeSlotId}_2`;
 
 }
