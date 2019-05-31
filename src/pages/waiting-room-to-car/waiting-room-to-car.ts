@@ -224,7 +224,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   }
 
   ionViewWillLeave(): void {
-    this.store$.dispatch(new PersistTests());
+    if (!this.isPracticeMode) this.store$.dispatch(new PersistTests());
   }
 
   schoolCarToggled(): void {

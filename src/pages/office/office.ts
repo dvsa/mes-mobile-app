@@ -448,7 +448,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   defer() {
     this.popToRoot();
-    this.store$.dispatch(new PersistTests());
+    if (!this.isPracticeMode) this.store$.dispatch(new PersistTests());
   }
 
   onSubmit() {

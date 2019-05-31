@@ -270,7 +270,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         if (this.licenseProvided && resetLicenseProvided) {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
-        this.store$.dispatch(new PersistTests());
+        if (!this.isPracticeMode) this.store$.dispatch(new PersistTests());
         this.navCtrl.push('BackToOfficePage');
       })
       .catch((err) => {

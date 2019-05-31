@@ -64,5 +64,14 @@ describe('PassFinalisationPage', () => {
       component.onSubmit();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     });
+    it('should not dispatch the PersistTests action when in practice mode', () => {
+      const form = component.form;
+      component.isPracticeMode = true;
+      form.get('provisionalLicenseProvidedCtrl').setValue(true);
+      form.get('passCertificateNumberCtrl').setValue(true);
+      form.get('transmissionCtrl').setValue('Manual');
+      component.onSubmit();
+      expect(store$.dispatch).not.toHaveBeenCalledWith(new PersistTests());
+    });
   });
 });

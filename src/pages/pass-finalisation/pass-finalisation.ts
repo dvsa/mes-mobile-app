@@ -178,7 +178,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.store$.dispatch(new PersistTests());
+      if (!this.isPracticeMode) this.store$.dispatch(new PersistTests());
       this.navCtrl.push('HealthDeclarationPage');
     }
   }

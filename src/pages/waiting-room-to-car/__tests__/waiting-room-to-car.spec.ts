@@ -172,5 +172,10 @@ describe('WaitingRoomToCarPage', () => {
       component.ionViewWillLeave();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     });
+    it('should not dispatch the PersistTests action when in practice mode', () => {
+      component.isPracticeMode = true;
+      component.ionViewWillLeave();
+      expect(store$.dispatch).not.toHaveBeenCalledWith(new PersistTests());
+    });
   });
 });

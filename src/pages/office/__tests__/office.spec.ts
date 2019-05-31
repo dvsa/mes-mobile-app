@@ -241,9 +241,16 @@ describe('OfficePage', () => {
         const saveAndContinueButton = fixture.debugElement.query(By.css('#defer-button'));
         saveAndContinueButton.triggerEventHandler('click', null);
         fixture.detectChanges();
-
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
         expect(navCtrl.popToRoot).toHaveBeenCalled();
+      });
+      it('should not persist tests when pressing save and continue in practice mode', () => {
+        const saveAndContinueButton = fixture.debugElement.query(By.css('#defer-button'));
+        component.isPracticeMode = true;
+        saveAndContinueButton.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new PersistTests());
+        expect(navCtrl.popTo).toHaveBeenCalledWith('FakeJournalPage');
       });
     });
 
