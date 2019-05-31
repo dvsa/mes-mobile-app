@@ -94,6 +94,9 @@
               [additionalInformation]="pageState.additionalInformation$ | async" [formGroup]="form"
               [outcome]="pageState.testOutcome$ | async"
               (additionalInformationChange)="additionalInformationChanged($event)"></additional-information>
+
+            <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
+              (welshChanged)="isWelshChanged($event)"></language-preferences>
           </div>
         </ion-grid>
       </ion-card-content>
