@@ -53,12 +53,4 @@
     [testStatus]="'Booked'"
     [canStartTest]="true">
   </fake-test-slot>
-  <!-- <div *ngFor="let slot of slots">
-    <div *ngIf="isRedLineSlot(slot.slotDetail.slotId); else simpleSlot">
-      <fake-test-slot [slot]="slot" [hasSlotChanged]="true" [testStatus]="'Completed'"></fake-test-slot>
-    </div>
-    <ng-template #simpleSlot>
-      <fake-test-slot [slot]="slot" [testStatus]="'Submitted'"></fake-test-slot>
-    </ng-template>
-  </div> -->
 </ion-content>
