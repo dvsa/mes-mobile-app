@@ -109,7 +109,7 @@ export class LoginPage extends BasePageComponent {
 
       if (error === AuthenticationError.USER_CANCELLED) {
         this.analytics.logException(error, true);
-        const log: Log = this.createLog(LogType.INFO, LogType.INFO,
+        const log: Log = this.createLog(LogType.INFO,
           `user cancelled login`);
         this.store$.dispatch(new SaveLog(log));
         this.store$.dispatch(new SendLogs());
@@ -119,12 +119,12 @@ export class LoginPage extends BasePageComponent {
         const token = await this.authenticationProvider.getAuthenticationToken();
         const examiner = await this.authenticationProvider.getEmployeeId() || '';
         if (token) {
-          const log: Log = this.createLog(LogType.INFO, LogType.INFO,
+          const log: Log = this.createLog(LogType.INFO,
             `user ${examiner} not authorised: TOKEN ${token}`);
           this.store$.dispatch(new SaveLog(log));
           this.store$.dispatch(new StartSendingLogs());
         } else {
-          const log: Log = this.createLog(LogType.INFO, LogType.INFO,
+          const log: Log = this.createLog(LogType.INFO,
             `user ${examiner} not authorised: Could not get token`);
           this.store$.dispatch(new SaveLog(log));
           this.store$.dispatch(new StartSendingLogs());
@@ -218,7 +218,7 @@ export class LoginPage extends BasePageComponent {
     }
   }
 
-  private createLog(logType: LogType, actionType: string, message: string): Log {
+  private createLog(logType: LogType, message: string): Log {
     return {
       message,
       type: logType,
