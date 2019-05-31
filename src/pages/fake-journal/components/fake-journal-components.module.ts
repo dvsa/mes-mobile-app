@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { FakeTestSlotComponent } from './fake-test-slot/fake-test-slot';
+import { JournalComponentsModule } from '../../journal/components/journal-components.module';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { FakeTestSlotComponent } from './fake-test-slot/fake-test-slot';
   imports: [
     CommonModule,
     IonicModule,
+    JournalComponentsModule,
   ],
   entryComponents:[
     FakeTestSlotComponent,
@@ -18,4 +20,4 @@ import { FakeTestSlotComponent } from './fake-test-slot/fake-test-slot';
     FakeTestSlotComponent,
   ],
 })
-export class JournalComponentsModule {}
+export class FakeJournalComponentsModule {}

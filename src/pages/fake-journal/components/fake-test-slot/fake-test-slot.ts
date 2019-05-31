@@ -2,14 +2,12 @@ import { Component, Input } from '@angular/core';
 import { get, isNil } from 'lodash';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
-import { DateTime } from '../../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'test-slot',
-  templateUrl: 'test-slot.html',
+  selector: 'fake-test-slot',
+  templateUrl: 'fake-test-slot.html',
 })
 export class FakeTestSlotComponent {
   @Input()
@@ -24,7 +22,8 @@ export class FakeTestSlotComponent {
   @Input()
   showLocation: boolean;
 
-  subscription: Subscription;
+  @Input()
+  canStartTest: boolean;
 
   constructor(
     public screenOrientation: ScreenOrientation,
@@ -47,25 +46,5 @@ export class FakeTestSlotComponent {
   isPortrait() : boolean {
     return this.screenOrientation.type === this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY ||
       this.screenOrientation.type === this.screenOrientation.ORIENTATIONS.PORTRAIT;
-  }
-
-  canStartTest(): boolean {
-    if (!this.appConfig.getAppConfig().journal.allowTests) {
-      return false;
-    }
-
-    const startDate = new DateTime(this.slot.slotDetail.start);
-    if (startDate.daysDiff(this.dateTimeProvider.now()) !== 0) {
-      return false;
-    }
-
-    const testCategory = this.slot.booking.application.testCategory;
-    const allowedTestCategories = this.appConfig.getAppConfig().journal.allowedTestCategories;
-
-    if (allowedTestCategories.includes(testCategory)) {
-      return true;
-    }
-
-    return false;
   }
 }
