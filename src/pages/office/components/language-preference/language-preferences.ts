@@ -17,7 +17,7 @@ export class LanguagePreferencesComponent implements OnChanges {
   welshChanged = new EventEmitter<boolean>();
 
   private formControl: FormControl;
-  private formField: string = 'language-preferences';
+  private formField: string = 'languagePreferences';
 
   ngOnChanges(): void {
     this.formControl = new FormControl('', Validators.required);

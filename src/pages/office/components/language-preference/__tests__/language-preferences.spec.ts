@@ -26,27 +26,20 @@ describe('LanguagePreferencesComponent', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should compile', () => {
-      expect(component).toBeDefined();
-      expect(component).not.toBeNull();
-    });
-  });
-
   describe('ngOnChanges', () => {
     it('should add the form control for the language preference radio', () => {
       component.ngOnChanges();
-      expect(component.formGroup.get('language-preferences')).not.toBeNull;
+      expect(component.formGroup.get('languagePreferences')).not.toBeNull;
     });
     it('should set the value of the validation to true if isWelsh is true', () => {
       component.isWelsh = true;
       component.ngOnChanges();
-      expect(component.formGroup.get('language-preferences').value).toEqual(true);
+      expect(component.formGroup.get('languagePreferences').value).toEqual(true);
     });
     it('should set the value of the validation to false if isWelsh is false', () => {
       component.isWelsh = false;
       component.ngOnChanges();
-      expect(component.formGroup.get('language-preferences').value).toEqual(false);
+      expect(component.formGroup.get('languagePreferences').value).toEqual(false);
     });
   });
 

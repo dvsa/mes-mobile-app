@@ -7,14 +7,14 @@
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
         <ion-col col-32>
-          <input type="radio" id="lang-pref-english" class="gds-radio-button" name="language-preferences"
-            formControlName="language-preferences" value=false [checked]="(isWelsh === false)"
+          <input type="radio" id="lang-pref-english" class="gds-radio-button" name="languagePreferences"
+            formControlName="languagePreferences" value=false [checked]="(isWelsh === false)"
             (change)="isWelshChanged($event.target.value)">
           <label for="lang-pref-english" class="radio-label">English</label>
         </ion-col>
         <ion-col col-32>
-          <input type="radio" id="lang-pref-welsh" class="gds-radio-button" name="language-preferences"
-            formControlName="language-preferences" [class.ng-invalid]="invalid" value=true
+          <input type="radio" id="lang-pref-welsh" class="gds-radio-button" name="languagePreferences"
+            formControlName="languagePreferences" [class.ng-invalid]="invalid" value=true
             [checked]="(isWelsh === true)" (change)="isWelshChanged($event.target.value)">
           <label for="lang-pref-welsh" class="radio-label">Cymraeg</label>
         </ion-col>
