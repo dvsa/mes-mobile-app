@@ -13,7 +13,7 @@ import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mo
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './tests.reducer';
-import { getCurrentTest } from './tests.selector';
+import { getCurrentTest, isPracticeMode } from './tests.selector';
 import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submission/test-submission';
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
@@ -37,6 +37,13 @@ export class TestsEffects {
   @Effect({ dispatch: false })
   persistTestsEffect$ = this.actions$.pipe(
     ofType(testActions.PERSIST_TESTS),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        select(isPracticeMode),
+      ),
+    ),
+    filter(([action, isPracticeMode]) => !isPracticeMode),
     switchMap(() => this.testPersistenceProvider.persistAllTests()),
     catchError((err) => {
       console.log(`Error persisting tests: ${err}`);
