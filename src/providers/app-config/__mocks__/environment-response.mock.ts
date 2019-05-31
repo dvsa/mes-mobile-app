@@ -16,7 +16,7 @@ export const environmentResponseMock = {
     autoSendInterval: 900000,
   },
   logs: {
-    url: 'https://example.com/api/vi/logs',
+    url: 'https://example.com/api/v1/logs',
     autoSendInterval: 60000,
   },
 };

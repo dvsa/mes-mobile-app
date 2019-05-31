@@ -6,6 +6,8 @@ export const remoteEnvironmentMock: EnvironmentFile = {
   daysToCacheJournalData: 7,
   daysToCacheLogs: 7,
   logsPostApiKey: '',
+  logsApiUrl: 'remote-logs-url',
+  logsAutoSendInterval: 6000,
   authentication: {
     context: 'remote-authentication-context',
     resourceUrl: 'remote-authentication-resource-url',
@@ -24,6 +26,8 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
   googleAnalyticsId: 'local-ga-id',
   timeTravelDate: '2019-02-01',
   logsPostApiKey: '',
+  logsApiUrl: 'https://www.example.com/api/v1/logs',
+  logsAutoSendInterval: 6000,
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',

@@ -10,7 +10,7 @@ import { DeviceProvider } from '../device/device';
 @Injectable()
 export class AnalyticsProvider implements IAnalyticsProvider {
   private analyticsStartupError: string = 'Error starting Google Analytics';
-  googleAnalyticsKey: string;
+  googleAnalyticsKey: string = '';
   uniqueDeviceId: string;
   constructor(
     private appConfig: AppConfigProvider,
@@ -31,81 +31,81 @@ export class AnalyticsProvider implements IAnalyticsProvider {
       resolve();
     })
 
-  enableExceptionReporting():void {
+  enableExceptionReporting(): void {
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
           this.ga.enableUncaughtExceptionReporting(true)
-          .then((resp) => {})
-          .catch(uncaughtError => console.log('Error enabling uncaught exceptions', uncaughtError));
+            .then((resp) => { })
+            .catch(uncaughtError => console.log('Error enabling uncaught exceptions', uncaughtError));
         })
         .catch(error => console.log(`enableExceptionReporting: ${this.analyticsStartupError}`, error));
     });
   }
 
-  setCurrentPage(name: string):void {
+  setCurrentPage(name: string): void {
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
           this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
           this.ga.trackView(name)
-          .then((resp) => {})
-          .catch(pageError => console.log('Error setting page', pageError));
+            .then((resp) => { })
+            .catch(pageError => console.log('Error setting page', pageError));
         })
         .catch(error => console.log('Error starting Google Analytics', error));
     });
   }
 
-  logEvent(category: string, event: string, label?: string, params?: any):void {
+  logEvent(category: string, event: string, label?: string, params?: any): void {
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
           this.ga.trackEvent(category, event, label)
-          .then((resp) => {})
-          .catch(eventError => console.log('Error tracking event', eventError));
+            .then((resp) => { })
+            .catch(eventError => console.log('Error tracking event', eventError));
         })
         .catch(error => console.log(`logEvent: ${this.analyticsStartupError}`, error));
     });
   }
 
-  addCustomDimension(key: number, value: string):void {
+  addCustomDimension(key: number, value: string): void {
     this.ga
-    .startTrackerWithId(this.googleAnalyticsKey)
-    .then(() => {
-      this.ga.addCustomDimension(key, value)
-        .then((resp) => {})
-        .catch(dimError => console.log('Error adding custom dimension ', dimError));
-    })
-    .catch(error => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
+      .startTrackerWithId(this.googleAnalyticsKey)
+      .then(() => {
+        this.ga.addCustomDimension(key, value)
+          .then((resp) => { })
+          .catch(dimError => console.log('Error adding custom dimension ', dimError));
+      })
+      .catch(error => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
   }
 
-  logError(type: string, message: string):void {
+  logError(type: string, message: string): void {
     this.logEvent(AnalyticsEventCategories.ERROR, type, message);
   }
 
-  logException(message: string, fatal: boolean):void {
+  logException(message: string, fatal: boolean): void {
     this.ga
-    .startTrackerWithId(this.googleAnalyticsKey)
-    .then(() => {
-      this.ga.trackException(message, fatal)
-        .then((resp) => {})
-        .catch(trackingError => console.log('Error logging exception in Google Analytics', trackingError));
-    })
-    .catch(error => console.log(`logException: ${this.analyticsStartupError}`, error));
+      .startTrackerWithId(this.googleAnalyticsKey)
+      .then(() => {
+        this.ga.trackException(message, fatal)
+          .then((resp) => { })
+          .catch(trackingError => console.log('Error logging exception in Google Analytics', trackingError));
+      })
+      .catch(error => console.log(`logException: ${this.analyticsStartupError}`, error));
   }
 
-  setUserId(userId: string):void {
+  setUserId(userId: string): void {
     this.ga
-    .startTrackerWithId(this.googleAnalyticsKey)
-    .then(() => {
-      this.ga.setUserId(userId)
-        .then((resp) => {})
-        .catch(idError => console.log(`Error setting userid ${userId}`, idError));
-    })
-    .catch(error => console.log(`setUserId: ${this.analyticsStartupError}`, error));
+      .startTrackerWithId(this.googleAnalyticsKey)
+      .then(() => {
+        this.ga.setUserId(userId)
+          .then((resp) => { })
+          .catch(idError => console.log(`Error setting userid ${userId}`, idError));
+      })
+      .catch(error => console.log(`setUserId: ${this.analyticsStartupError}`, error));
   }
 
   getDiffDays(userDate: string): number {
@@ -119,7 +119,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     const daysDiff = this.getDiffDays(userDate);
 
     switch (daysDiff) {
-      case -1 :
+      case -1:
         ret = 'Yesterday';
         break;
       case 0:

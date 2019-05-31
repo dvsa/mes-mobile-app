@@ -6,6 +6,8 @@ export const environment: EnvironmentFile = {
   daysToCacheJournalData: 7,
   daysToCacheLogs: 7,
   logsPostApiKey: '',
+  logsApiUrl: 'https://uat.mes.dev-dvsacloud.uk/v1/logs',
+  logsAutoSendInterval: 6000,
   authentication: {
     context: 'https://login.windows.net/common',
     resourceUrl: '09fdd68c-4f2f-45c2-be55-dd98104d4f74',

@@ -95,6 +95,8 @@ export class AppConfigProvider {
         daysToCacheLogs: appConfigPlugin.getValue('daysToCacheLogs'),
         isRemote: true,
         logsPostApiKey: appConfigPlugin.getValue('logsPostApiKey'),
+        logsApiUrl: appConfigPlugin.getValue('logsApiUrl'),
+        logsAutoSendInterval: appConfigPlugin.getValue('logsAutoSendInterval'),
         authentication: {
           clientId: appConfigPlugin.getValue('clientId'),
           context: appConfigPlugin.getValue('authenticationContext'),
@@ -143,6 +145,8 @@ export class AppConfigProvider {
       daysToCacheLogs: data.daysToCacheLogs,
       logoutClearsTestPersistence: data.logoutClearsTestPersistence,
       logsPostApiKey: data.logsPostApiKey,
+      logsApiUrl: data.logsApiUrl,
+      logsAutoSendInterval: data.logsAutoSendInterval,
       authentication: {
         context: data.authentication.context,
         redirectUrl: data.authentication.redirectUrl,
