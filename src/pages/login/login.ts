@@ -109,26 +109,16 @@ export class LoginPage extends BasePageComponent {
 
       if (error === AuthenticationError.USER_CANCELLED) {
         this.analytics.logException(error, true);
-        const log: Log = this.createLog(LogType.INFO,
-          `user cancelled login`);
-        this.store$.dispatch(new SaveLog(log));
-        this.store$.dispatch(new SendLogs());
+        this.dispatchLog(`user cancelled login`);
       }
       if (error === AuthenticationError.USER_NOT_AUTHORISED) {
 
         const token = await this.authenticationProvider.getAuthenticationToken();
         const examiner = await this.authenticationProvider.getEmployeeId() || 'unavailable';
         if (token) {
-          const log: Log = this.createLog(LogType.INFO,
-            `user ${examiner} not authorised: TOKEN ${token}`);
-          this.store$.dispatch(new SaveLog(log));
-          this.store$.dispatch(new StartSendingLogs());
+          this.dispatchLog(`user ${examiner} not authorised: TOKEN ${token}`);
         } else {
-          const log: Log = this.createLog(LogType.INFO,
-            `user ${examiner} not authorised: Could not get token`);
-          this.store$.dispatch(new SaveLog(log));
-          this.store$.dispatch(new StartSendingLogs());
-
+          this.dispatchLog(`user ${examiner} not authorised: Could not get token`);
         }
         this.authenticationProvider.logout();
       }
@@ -138,6 +128,12 @@ export class LoginPage extends BasePageComponent {
     }
     this.hasUserLoggedOut = false;
     this.splashScreen.hide();
+  }
+
+  dispatchLog(message: string) {
+    const log: Log = this.createLog(LogType.INFO, message);
+    this.store$.dispatch(new SaveLog(log));
+    this.store$.dispatch(new SendLogs());
   }
 
   async initialisePersistentStorage(): Promise<void> {
