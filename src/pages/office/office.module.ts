@@ -16,7 +16,7 @@ import { D255Component } from './components/d255/d255';
 import { AdditionalInformationComponent } from './components/additional-information/additional-information';
 import { IndependentDrivingComponent } from './components/independent-driving/independent-driving';
 import { OfficeEffects } from './office.effects';
-import { TerminationCodeComponent } from './components/termination-code/termination-code';
+import { ActivityCodeComponent } from './components/activity-code/activity-code';
 import { LanguagePreferencesComponent } from './components/language-preference/language-preferences';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { LanguagePreferencesComponent } from './components/language-preference/l
     D255Component,
     AdditionalInformationComponent,
     IndependentDrivingComponent,
-    TerminationCodeComponent,
+    ActivityCodeComponent,
     LanguagePreferencesComponent,
   ],
   imports: [

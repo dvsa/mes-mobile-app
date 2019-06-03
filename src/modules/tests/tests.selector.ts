@@ -1,7 +1,7 @@
 import { TestStatus } from './test-status/test-status.model';
 import { StandardCarTestCATBSchema, JournalData } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
-import { terminationCodeList } from '../../pages/office/components/termination-code/termination-code.constants';
+import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { startsWith } from 'lodash';
 
@@ -59,11 +59,11 @@ export const isPassed = (test: StandardCarTestCATBSchema) => {
   return false;
 };
 
-export const getTerminationCode = (test: StandardCarTestCATBSchema) => {
+export const getActivityCode = (test: StandardCarTestCATBSchema) => {
 
-  const terminationCodeIndex = terminationCodeList.findIndex(
-    terminationCode => test.activityCode === terminationCode.activityCode);
-  return terminationCodeList[terminationCodeIndex];
+  const activityCodeIndex = activityCodeModelList.findIndex(
+    activityCode => test.activityCode === activityCode.activityCode);
+  return activityCodeModelList[activityCodeIndex];
 
 };
 

@@ -32,9 +32,9 @@
 
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
-          <termination-code id="termination-code-card" [formGroup]="form"
-            [terminationCode]="pageState.activityCode$ | async" [terminationCodeOptions]="activityCodeOptions"
-            (terminationCodeChange)="activityCodeChanged($event)"></termination-code>
+          <activity-code id="activity-code-card" [formGroup]="form"
+            [activityCodeModel]="pageState.activityCode$ | async" [activityCodeOptions]="activityCodeOptions"
+            (activityCodeChange)="activityCodeChanged($event)"></activity-code>
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
             <route-number [display]="pageState.displayRouteNumber$ | async"
