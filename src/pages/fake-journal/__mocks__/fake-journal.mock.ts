@@ -1,4 +1,7 @@
+import * as moment from 'moment';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+
+const todayAt8Am = moment().startOf('day').add(8, 'hour');
 
 export const fakeJournalTestSlots = [
   {
@@ -13,7 +16,7 @@ export const fakeJournalTestSlots = [
         specialNeeds: 'Candidate has dyslexia',
         specialNeedsCode: 'NONE',
         specialNeedsExtendedTest: false,
-        testCategory: 'A1',
+        testCategory: 'B',
         vehicleGearbox: 'Automatic',
         welshTest: false,
         meetingPlace: 'At the pub',
@@ -43,8 +46,8 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_1`,
-      start: '2019-05-30T08:10:00+01:00',
+      slotId: `${end2endPracticeSlotId}_0`,
+      start: todayAt8Am.add(10, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -91,8 +94,8 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_2`,
-      start: '2019-05-30T10:14:00+01:00',
+      slotId: `${end2endPracticeSlotId}_1`,
+      start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -111,7 +114,7 @@ export const fakeJournalTestSlots = [
         entitlementCheck: false,
         extendedTest: false,
         progressiveAccess: false,
-        testCategory: 'C1+E',
+        testCategory: 'B',
         vehicleGearbox: 'Manual',
         vehicleHeight: 5,
         vehicleLength: 10,
@@ -140,8 +143,8 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_3`,
-      start: '2019-05-30T11:11:00+01:00',
+      slotId: `${end2endPracticeSlotId}_2`,
+      start: todayAt8Am.add(67, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -190,8 +193,8 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_4`,
-      start: '2019-05-30T12:38:00+01:00',
+      slotId: `${end2endPracticeSlotId}_3`,
+      start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -210,7 +213,7 @@ export const fakeJournalTestSlots = [
         entitlementCheck: false,
         extendedTest: false,
         progressiveAccess: false,
-        testCategory: 'D+E',
+        testCategory: 'B',
         vehicleGearbox: 'Manual',
         vehicleHeight: 5,
         vehicleLength: 15,
@@ -242,8 +245,8 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_5`,
-      start: '2019-05-30T13:35:00+01:00',
+      slotId: `${end2endPracticeSlotId}_4`,
+      start: todayAt8Am.add(86, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,
@@ -264,7 +267,7 @@ export const fakeJournalTestSlots = [
         progressiveAccess: false,
         testCategory: 'B',
         vehicleGearbox: 'Manual',
-        welshTest: true,
+        welshTest: false,
       },
       candidate: {
         candidateAddress: {
@@ -286,52 +289,8 @@ export const fakeJournalTestSlots = [
     },
     slotDetail: {
       duration: 57,
-      slotId: `${end2endPracticeSlotId}_6`,
-      start: '2019-05-23T14:32:00+01:00',
-    },
-    testCentre: {
-      centreId: 54321,
-      centreName: 'Example Test Centre',
-      costCode: 'EXTC1',
-    },
-    vehicleSlotType: 'B57mins',
-    vehicleSlotTypeCode: 7,
-  },
-  {
-    booking: {
-      application: {
-        applicationId: 1234532,
-        bookingSequence: 7,
-        checkDigit: 7,
-        entitlementCheck: false,
-        extendedTest: false,
-        progressiveAccess: false,
-        testCategory: 'B',
-        vehicleGearbox: 'Manual',
-        welshTest: true,
-      },
-      candidate: {
-        candidateAddress: {
-          addressLine1: '1 Hangar Lane',
-          addressLine2: 'Someplace',
-          addressLine3: 'Sometown',
-          postcode: 'AB78 9CD',
-        },
-        candidateId: 107,
-        candidateName: {
-          firstName: 'Jeremy',
-          lastName: 'Craig',
-          title: 'Captain',
-        },
-        driverNumber: 'CRAIG375220A99HC',
-        primaryTelephone: '01234 567890',
-        emailAddress: 'captain@craig.com',
-      },
-    },
-    slotDetail: {
-      duration: 57,
-      slotId: `${end2endPracticeSlotId}_7`,
-      start: '2019-05-23T14:32:00+01:00',
+      slotId: `${end2endPracticeSlotId}_5`,
+      start: todayAt8Am.add(58, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,

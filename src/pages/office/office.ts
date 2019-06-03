@@ -61,7 +61,7 @@ import {
 import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { getTestTime, isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
   getETAFaultText,
@@ -98,6 +98,7 @@ import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../share
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
 import { TerminationCode, terminationCodeList } from './components/termination-code/termination-code.constants';
+import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 
 interface OfficePageState {
   activityCode$: Observable<TerminationCode>;
@@ -142,6 +143,7 @@ interface OfficePageState {
   weatherConditions$: Observable<WeatherConditions[]>;
   dangerousFaults$: Observable<CommentedCompetency[]>;
   seriousFaults$: Observable<CommentedCompetency[]>;
+  isWelshTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -428,12 +430,19 @@ export class OfficePage extends PracticeableBasePageComponent {
         select(getTestSummary),
         select(getWeatherConditions),
       ),
+      isWelshTest$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
+      ),
     };
   }
 
   popToRoot() {
     if (this.isPracticeMode) {
-      this.navCtrl.push('FakeJournalPage');
+      // As per bug request for Ionic 3 we need to get and pass in the view controller
+      // for the page we want to get back to - https://github.com/ionic-team/ionic/issues/13672
+      this.navCtrl.popTo(this.navCtrl.getViews().find(view => view.name === 'FakeJournalPage'));
       return;
     }
     this.navCtrl.popToRoot();
@@ -502,6 +511,10 @@ export class OfficePage extends PracticeableBasePageComponent {
     this.store$.dispatch(
       new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
     );
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(new WelshTestChanged(isWelsh));
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {

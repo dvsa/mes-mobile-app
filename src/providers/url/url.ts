@@ -7,7 +7,7 @@ export class UrlProvider {
 
   constructor(
     public appConfigProvider: AppConfigProvider,
-  ) {}
+  ) { }
 
   getPersonalJournalUrl(staffNumber: string): any {
     const urlTemplate = this.appConfigProvider.getAppConfig().journal.journalUrl;
@@ -15,7 +15,11 @@ export class UrlProvider {
   }
 
   getLogsServiceUrl(): any {
-    return this.appConfigProvider.getAppConfig().logs.url;
+    return this.appConfigProvider.getAppConfig().logsApiUrl;
+  }
+
+  getLogsServiceApiKey(): any {
+    return this.appConfigProvider.getAppConfig().logsPostApiKey;
   }
 
   getTestResultServiceUrl(): any {

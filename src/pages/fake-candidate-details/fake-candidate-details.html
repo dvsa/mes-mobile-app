@@ -5,11 +5,169 @@
             src="assets/imgs/journal/closebt2x.png" /></button>
       </ion-buttons>
       <ion-title>
-        Fake Candidate Details
+        Test details - {{ name }}
       </ion-title>
     </ion-navbar>
   </ion-header>
 
   <ion-content padding>
-    <p>Fake Candidate Details Page</p>
+    <h2>
+      {{ name }}
+      <span class="test-start-time">
+        {{ time | date: "HH:mm" }}
+      </span>
+    </h2>
+
+    <ion-card>
+      <ion-card-header>
+        <h4>Candidate details</h4>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Test category</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{details.testCategory}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Slot type</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{ details.slotType }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="details.meetingPlace" class="mes-data-row-with-separator" id="meetingPlace">
+            <ion-col col-40>
+              <label>Meeting place</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{details.meetingPlace}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Driver number</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{ details.driverNumber }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Application number</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{ details.applicationRef }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Special requirements</label>
+              <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
+                class="exclamation-indicator"
+                *ngIf="specialNeedsIsPopulated(details.specialNeeds)" />
+            </ion-col>
+            <ion-col col-56>
+              <div class="mes-data" *ngIf="!specialNeedsIsPopulated(details.specialNeeds)">
+                {{details.specialNeeds}}
+              </div>
+              <div *ngIf="specialNeedsIsPopulated(details.specialNeeds)">
+                <div *ngFor="let specialNeed of details.specialNeeds" class="mes-data">-
+                  {{specialNeed}}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="details.entitlementCheck.show" class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Entitlement check</label>
+              <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
+                class="exclamation-indicator" />
+            </ion-col>
+            <ion-col col-56>
+              <div class="mes-data">Entitlement check is required.</div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row">
+            <ion-col col-40>
+              <label>Additional information</label>
+            </ion-col>
+            <ion-col col-56>
+              <div class="mes-data" *ngIf="details.candidateComments.isSectionEmpty">
+                None
+              </div>
+              <div *ngIf="!details.candidateComments.isSectionEmpty">
+                <div *ngIf="details.candidateComments.previousCancellations?.length > 0">
+                  <div class="mes-data">Previous cancellations</div>
+                  <div
+                    *ngFor="let previousCancellation of details.candidateComments.previousCancellations"
+                    class="mes-data">
+                    - {{previousCancellation}}
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <h4>Contact details</h4>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Phone number</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{ details.phoneNumber }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Email</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{ details.email }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mes-data-row">
+            <ion-col col-40>
+              <label>Address</label>
+            </ion-col>
+            <display-address [address]="details.address"></display-address>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="business">
+      <ion-card-header>
+        <h4>Business contact details</h4>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row *ngIf="business.telephone" class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Phone number</label>
+            </ion-col>
+            <ion-col col-56>
+              <span class="mes-data">{{ business.telephone }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="business.businessAddress" class="mes-data-row-with-separator">
+            <ion-col col-40>
+              <label>Address</label>
+            </ion-col>
+            <ion-col col-56>
+              <display-address [address]="business.businessAddress"></display-address>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
   </ion-content>

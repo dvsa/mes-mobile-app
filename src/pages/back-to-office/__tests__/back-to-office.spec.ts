@@ -94,7 +94,7 @@ describe('BackToOfficePage', () => {
     it('should call the push method in the navcontroller if in practice mode', () => {
       component.isPracticeMode = true;
       component.goToJournal();
-      expect(navCtrl.push).toHaveBeenCalledWith('FakeJournalPage');
+      expect(navCtrl.popTo).toHaveBeenCalled();
     });
   });
 });
