@@ -169,6 +169,12 @@ describe('OfficePage', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
       });
+      it('should not dispatch complete test if in practice mode', () => {
+        component.isPracticeMode = true;
+        component.completeTest();
+
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new CompleteTest());
+      });
     });
   });
 
