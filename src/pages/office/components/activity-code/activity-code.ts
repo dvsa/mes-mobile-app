@@ -1,40 +1,40 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TerminationCode } from './termination-code.constants';
+import { ActivityCodeModel } from './activity-code.constants';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 @Component({
-  selector: 'termination-code',
-  templateUrl: 'termination-code.html',
+  selector: 'activity-code',
+  templateUrl: 'activity-code.html',
 })
-export class TerminationCodeComponent implements OnChanges {
+export class ActivityCodeComponent implements OnChanges {
 
   @Input()
-  terminationCode: TerminationCode;
+  activityCodeModel: ActivityCodeModel;
 
   @Input()
-  terminationCodeOptions: TerminationCode[];
+  activityCodeOptions: ActivityCodeModel[];
 
   @Input()
   formGroup: FormGroup;
 
   @Output()
-  terminationCodeChange = new EventEmitter<TerminationCode>();
+  activityCodeChange = new EventEmitter<ActivityCodeModel>();
 
   private formControl: FormControl;
-  static readonly fieldName: string = 'terminationCode';
+  static readonly fieldName: string = 'activityCode';
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl({ disabled: true }, [Validators.required]);
-      this.formGroup.addControl(TerminationCodeComponent.fieldName, this.formControl);
+      this.formGroup.addControl(ActivityCodeComponent.fieldName, this.formControl);
     }
-    this.formControl.patchValue(this.terminationCode);
+    this.formControl.patchValue(this.activityCodeModel);
   }
 
-  terminationCodeChanged(terminationCode: TerminationCode): void {
+  activityCodeChanged(activityCode: ActivityCodeModel): void {
     if (this.formControl.valid) {
-      this.terminationCodeChange.emit(terminationCode);
+      this.activityCodeChange.emit(activityCode);
     }
   }
 
@@ -43,7 +43,7 @@ export class TerminationCodeComponent implements OnChanges {
   }
 
   isSelectDisabled(): boolean {
-    return this.terminationCode && parseInt(this.terminationCode.activityCode, 10) < 4;
+    return this.activityCodeModel && parseInt(this.activityCodeModel.activityCode, 10) < 4;
   }
 
   isOptionDisabled(activityCode: ActivityCode): boolean {
