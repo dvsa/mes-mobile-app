@@ -5,12 +5,14 @@ import { JournalComponentsModule } from '../journal/components/journal-component
 import { ComponentsModule } from '../../components/components.module';
 import { EffectsModule } from '@ngrx/effects';
 import { FakeJournalEffects } from './fake-journal.effects';
+import { FakeJournalComponentsModule } from './components/fake-journal-components.module';
 
 @NgModule({
   declarations: [
     FakeJournalPage,
   ],
   imports: [
+    FakeJournalComponentsModule,
     JournalComponentsModule,
     IonicPageModule.forChild(FakeJournalPage),
     ComponentsModule,
