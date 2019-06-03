@@ -317,7 +317,7 @@ describe('OfficePage', () => {
     it('should call the popTo method in the navcontroller if in practice mode.', () => {
       component.isPracticeMode = true;
       component.popToRoot();
-      expect(navCtrl.popTo).toHaveBeenCalledWith('FakeJournalPage');
+      expect(navCtrl.popTo).toHaveBeenCalled();
     });
   });
 
