@@ -40,6 +40,7 @@ describe('testsSelector', () => {
             staffNumber: '',
           },
           testCentre: {
+            centreId: 1,
             costCode: '',
           },
           candidate: {},
@@ -100,7 +101,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -141,7 +142,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -182,7 +183,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -224,7 +225,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',

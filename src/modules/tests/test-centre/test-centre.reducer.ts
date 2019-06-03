@@ -2,7 +2,8 @@ import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testCentreActions from './test-centre.actions';
 
-export const initialState:TestCentre = {
+export const initialState: TestCentre = {
+  centreId: null,
   costCode: null,
 };
 
