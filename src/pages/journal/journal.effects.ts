@@ -247,6 +247,7 @@ export class JournalEffects {
 
   extractTestCentre = (slotData): TestCentre => {
     return {
+      centreId: slotData.testCentre.centreId,
       costCode: slotData.testCentre.costCode,
     };
   }
