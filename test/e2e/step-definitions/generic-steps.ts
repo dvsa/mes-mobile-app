@@ -272,9 +272,6 @@ export const enterPasscode = () => {
       const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
       browser.wait(ExpectedConditions.presenceOf(passcodeField));
 
-      // Set focus on the field
-      passcodeField.click();
-
       // Send the fake passcode using native browser actions
       browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
 
