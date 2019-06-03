@@ -58,17 +58,9 @@ export function testsReducer(
         },
       };
     case testActions.START_TEST_REPORT_PRACTICE_TEST:
-      const { [slotId]: removedStartedTest, ...updatedStartedTests } = state.startedTests;
-      const { [slotId]: removedTestStatus, ...updatedTestStatus } = state.testStatus;
-      const newState = {
-        ...state,
-        currentTest: {
-          ...initialState.currentTest,
-        },
-        startedTests: updatedStartedTests,
-        testStatus: updatedTestStatus,
-      };
-      return slotId ? createStateObject(newState, action, slotId) : state;
+      return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
+    case fakeJournalActions.START_E2E_PRACTICE_TEST:
+      return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
     default:
       return slotId ? createStateObject(state, action, slotId) : state;
   }
@@ -135,6 +127,19 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
       slotId,
     },
     testStatus: testStatusReducer(state.testStatus, action as testStatusActions.Types),
+  };
+};
+
+const removeTest = (state: TestsModel, slotId: string): TestsModel => {
+  const { [slotId]: removedStartedTest, ...updatedStartedTests } = state.startedTests;
+  const { [slotId]: removedTestStatus, ...updatedTestStatus } = state.testStatus;
+  return {
+    ...state,
+    currentTest: {
+      ...initialState.currentTest,
+    },
+    startedTests: updatedStartedTests,
+    testStatus: updatedTestStatus,
   };
 };
 

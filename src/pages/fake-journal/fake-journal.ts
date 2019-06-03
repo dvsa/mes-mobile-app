@@ -34,5 +34,4 @@ export class FakeJournalPage extends BasePageComponent {
   }
 
   isRedLineSlot = (slotId: string) => slotId === `${end2endPracticeSlotId}_2`;
-
 }
