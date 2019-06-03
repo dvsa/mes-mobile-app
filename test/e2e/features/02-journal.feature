@@ -71,7 +71,6 @@ Feature: Journal
      And I have a non-test slot for "Bad Weather" with code "133" at "18:35"
 
    Scenario: Examiner goes to the waiting room to meet the candidate
-    Given I am on the journal page as "mobexaminer1"
-     When I refresh the journal
-      And I start the test for "Mrs Jane Doe"
+    Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
+     When I start the test for "Mrs Jane Doe"
      Then I should see the "Declaration - Jane Doe" page
