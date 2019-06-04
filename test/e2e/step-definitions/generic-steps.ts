@@ -175,10 +175,13 @@ export const logInToApplication = (username, password) => {
       pFld.sendKeys(password);
       const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
       signInButtonElement.click();
-      browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
       // Switch back to WEBVIEW context
       browser.driver.selectContext(webviewContext);
+
+      // Wait for journal page to load
+      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+      browser.wait(ExpectedConditions.presenceOf(refreshButton));
     });
   });
 };
@@ -188,7 +191,7 @@ export const logInToApplication = (username, password) => {
  * @param staffNumber the staff number of the user we wish to be logged in
  */
 export const loggedInAs = (staffNumber) => {
-  browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
   const logout = element(by.xpath(`//input[@id="employeeId"][@value="${staffNumber}"]`));
   return logout.isPresent();
 };
@@ -197,7 +200,7 @@ export const loggedInAs = (staffNumber) => {
  * Logs out of the application and takes them to the login page if they were logged in else returns current page
  */
 export const logout = () => {
-  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
@@ -271,9 +274,6 @@ export const enterPasscode = () => {
       // Get the passcode field
       const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
       browser.wait(ExpectedConditions.presenceOf(passcodeField));
-
-      // Set focus on the field
-      passcodeField.click();
 
       // Send the fake passcode using native browser actions
       browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();

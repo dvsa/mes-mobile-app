@@ -71,7 +71,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      When I select termination code "51 - Candidate failed to attend at test centre"
+      When I select activity code "51 - Candidate failed to attend at test centre"
       And I upload the test
       Then I should see the "Journal" page
 
@@ -85,7 +85,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      When I select termination code "20 - Documents not produced"
+      When I select activity code "20 - Documents not produced"
       And I try to upload the test
       Then validation item "office-candidate-description-validation-text" should be "Describe the candidate"
       And validation item "office-candidate-description-validation-text" should be visible
@@ -108,7 +108,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      And the termination code should be "3 - Fail due to eyesight"
+      And the activity code should be "3 - Fail due to eyesight"
       When I enter a candidate description
       And I complete the debrief witnessed
       And I complete the weather conditions
