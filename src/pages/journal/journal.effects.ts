@@ -35,6 +35,7 @@ import {
 import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
 import { SetTestStatusBooked } from '../../modules/tests/test-status/test-status.actions';
 import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { PopulateExaminer } from '../../modules/tests/examiner/examiner.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -188,6 +189,7 @@ export class JournalEffects {
       const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
 
       return [
+        new PopulateExaminer({ staffNumber: this.authProvider.getEmployeeId() }),
         new PopulateApplicationReference(slot.slotData.booking.application),
         new PopulateCandidateDetails(slot.slotData.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot.slotData)),
