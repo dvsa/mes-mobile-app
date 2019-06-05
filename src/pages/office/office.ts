@@ -415,7 +415,6 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        // map(data => getDangerousFaults(data.dangerousFaults)),
         map((data) => {
           return [
             ...getDangerousFaults(data.dangerousFaults),
@@ -449,7 +448,6 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        //        map(data => getSeriousFaults(data.seriousFaults)),
         map((data) => {
           return [
             ...getSeriousFaults(data.seriousFaults),
@@ -481,10 +479,6 @@ export class OfficePage extends PracticeableBasePageComponent {
           ];
         }),
       ),
-      // drivingFaults$: currentTest$.pipe(
-      //   select(getTestData),
-      //   map(data => getDrivingFaults(data.drivingFaults)),
-      // ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
         map((data) => {

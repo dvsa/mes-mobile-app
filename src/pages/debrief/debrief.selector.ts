@@ -81,6 +81,9 @@ export const getManoeuvreFaultsCount = (
 export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): string[] => {
   const result: string[] = [];
 
+  if (!vehicleChecks) {
+    return result;
+  }
   vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push('vehicleChecks');
 
   return result;
@@ -89,18 +92,23 @@ export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): str
 export const getVehicleCheckSeriousFault = (vehicleChecks: VehicleChecks): string[] => {
   const result: string[] = [];
 
+  if (!vehicleChecks) {
+    return result;
+  }
   vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push('vehicleChecks');
 
   return result;
 };
 
 export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): string[] => {
+  const result: string[] = [];
+  if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
+    return result;
+  }
   if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
     || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
-    return [];
+    return result;
   }
-
-  const result: string[] = [];
 
   if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
     || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
@@ -112,7 +120,9 @@ export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): strin
 
 export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];
-
+  if (!controlledStop) {
+    return result;
+  }
   controlledStop.fault === faultType && result.push('controlledStop');
 
   return result;
@@ -121,7 +131,7 @@ export const getControlledStopFault = (controlledStop: ControlledStop, faultType
 export const getControlledStopFaultAndComment =
   (controlledStop: ControlledStop, faultType: CompetencyOutcome): CommentedCompetency[] => {
     const returnCompetencies = [];
-    if (controlledStop.fault !== faultType) {
+    if (!controlledStop || controlledStop.fault !== faultType) {
       return returnCompetencies;
     }
     const result: CommentedCompetency = {

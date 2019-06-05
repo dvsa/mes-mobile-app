@@ -40,7 +40,7 @@ describe('FaultCommentComponent', () => {
         component = fixture.componentInstance;
         component.parentForm = new FormGroup({});
         const control = new FormControl(null);
-        component.parentForm.addControl('faultComment-driving-id', control);
+        component.parentForm.addControl('faultComment-undefined-driving-id', control);
       });
   }));
 
@@ -67,11 +67,11 @@ describe('FaultCommentComponent', () => {
       component.faultCount = 16;
       component.outcome = '5';
       const control = new FormControl(null);
-      component.parentForm.addControl(`faultComment-driving-signalsTimed`, control);
+      component.parentForm.addControl(`faultComment-undefined-driving-signalsTimed`, control);
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.get('faultComment-driving-signalsTimed').validator).not.toBeNull();
+      expect(component.parentForm.get('faultComment-undefined-driving-signalsTimed').validator).not.toBeNull();
     });
     it('should clear validators from the form field if < 16 driving faults.', () => {
       component.faultComment = {
@@ -84,11 +84,11 @@ describe('FaultCommentComponent', () => {
       component.faultCount = 15;
       component.outcome = '5';
       const control = new FormControl(null);
-      component.parentForm.addControl(`faultComment-driving-signalsTimed`, control);
+      component.parentForm.addControl(`faultComment-undefined-driving-signalsTimed`, control);
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.get('faultComment-driving-signalsTimed').validator).toBeNull();
+      expect(component.parentForm.get('faultComment-undefined-driving-signalsTimed').validator).toBeNull();
     });
 
     it('should pass the fault count down to the driving-fault-badge', () => {
