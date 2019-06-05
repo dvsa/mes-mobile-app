@@ -40,13 +40,18 @@ describe('FaultCommentComponent', () => {
         component = fixture.componentInstance;
         component.parentForm = new FormGroup({});
         const control = new FormControl(null);
-        component.parentForm.addControl('faultComment-undefined-driving-id', control);
+        component.parentForm.addControl('faultComment-default-driving-id', control);
       });
   }));
 
   describe('DOM', () => {
     it('should display the fault competency display name', () => {
-      component.faultComment = { comment: 'comment', competencyDisplayName: 'display', competencyIdentifier: 'id' };
+      component.faultComment = {
+        comment: 'comment',
+        competencyDisplayName: 'display',
+        competencyIdentifier: 'id',
+        source: 'default',
+      };
       component.faultType = 'driving';
       component.ngOnChanges();
       fixture.detectChanges();
@@ -62,16 +67,17 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'Signals - timed',
         competencyIdentifier: 'signalsTimed',
         faultCount: 16,
+        source: 'default',
       };
       component.faultType = 'driving';
       component.faultCount = 16;
       component.outcome = '5';
       const control = new FormControl(null);
-      component.parentForm.addControl(`faultComment-undefined-driving-signalsTimed`, control);
+      component.parentForm.addControl(`faultComment-default-driving-signalsTimed`, control);
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.get('faultComment-undefined-driving-signalsTimed').validator).not.toBeNull();
+      expect(component.parentForm.get('faultComment-default-driving-signalsTimed').validator).not.toBeNull();
     });
     it('should clear validators from the form field if < 16 driving faults.', () => {
       component.faultComment = {
@@ -79,16 +85,17 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'Signals - timed',
         competencyIdentifier: 'signalsTimed',
         faultCount: 4,
+        source: 'default',
       };
       component.faultType = 'driving';
       component.faultCount = 15;
       component.outcome = '5';
       const control = new FormControl(null);
-      component.parentForm.addControl(`faultComment-undefined-driving-signalsTimed`, control);
+      component.parentForm.addControl(`faultComment-default-driving-signalsTimed`, control);
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.get('faultComment-undefined-driving-signalsTimed').validator).toBeNull();
+      expect(component.parentForm.get('faultComment-default-driving-signalsTimed').validator).toBeNull();
     });
 
     it('should pass the fault count down to the driving-fault-badge', () => {
@@ -97,6 +104,7 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'display',
         competencyIdentifier: 'id',
         faultCount: 3,
+        source: 'default',
       };
       component.faultType = 'driving';
       component.ngOnChanges();

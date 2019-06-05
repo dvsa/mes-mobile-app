@@ -600,7 +600,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
-    if (!dangerousFaultComment.source) {
+    if (dangerousFaultComment.source === 'default') {
       this.store$.dispatch(
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
       );
@@ -629,7 +629,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
-    if (!seriousFaultComment.source) {
+    if (seriousFaultComment.source === 'default') {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
       );
@@ -655,7 +655,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
-    if (!drivingFaultComment.source) {
+    if (drivingFaultComment.source === 'default') {
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
       );

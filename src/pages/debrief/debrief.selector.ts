@@ -216,6 +216,7 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
         competencyIdentifier: key,
         competencyDisplayName: fullCompetencyLabels[label],
         faultCount: value,
+        source: 'default',
       };
       faultsEncountered.push(drivingFaultSummary);
     }
@@ -240,7 +241,7 @@ export const getDangerousFaults =
           comment,
           competencyIdentifier: key,
           competencyDisplayName: fullCompetencyLabels[label],
-          source: null,
+          source: 'default',
           faultCount: 1,
         };
         faultsEncountered.push(dangerousFault);
@@ -266,7 +267,7 @@ export const getSeriousFaults =
           comment,
           competencyIdentifier: key,
           competencyDisplayName: fullCompetencyLabels[label],
-          source: null,
+          source: 'default',
           faultCount: 1,
         };
         faultsEncountered.push(seriousFault);
