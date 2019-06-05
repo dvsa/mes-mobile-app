@@ -15,6 +15,8 @@ import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { getTestStatus } from '../../../../modules/tests/tests.selector';
+import { getSlotType } from '../../../candidate-details/candidate-details.selector';
+import { SlotTypes } from '../../../../shared/models/slot-types';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -68,8 +70,9 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
   isIndicatorNeededForSlot(): boolean {
     const specialNeeds: boolean = this.isSpecialNeedsSlot();
     const checkNeeded: boolean = this.slot.booking.application.entitlementCheck || false;
+    const nonStandardTest: boolean = getSlotType(this.slot) !==  SlotTypes.STANDARD_TEST;
 
-    return specialNeeds || checkNeeded;
+    return specialNeeds || checkNeeded || nonStandardTest;
   }
 
   isSpecialNeedsSlot(): boolean {
