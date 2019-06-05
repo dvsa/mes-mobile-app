@@ -4,6 +4,7 @@ import { JournalModel } from '../journal/journal.model';
 import { Details } from './candidate-details.model';
 
 import { SpecialNeedsCode } from './candidate-details.constants';
+import { SlotTypes } from '../../shared/models/slot-types';
 
 export const getSlots = (journal: JournalModel) => {
   return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);
@@ -45,13 +46,13 @@ export const getSlotType = (slot: any): string => {
   // Jira ticket is available here for more details: https://jira.i-env.net/browse/MES-1698
   if (vehicleSlotTypeCode === 6) {
     if (specialNeedsCode !== SpecialNeedsCode.NONE) {
-      return 'Single Slot (Special Needs)';
+      return SlotTypes.SINGLE_SLOT_SPECIAL_NEEDS;
     }
   }
 
   if (vehicleSlotTypeCode === 14) {
     if (specialNeedsCode !== SpecialNeedsCode.NONE) {
-      return 'Single Slot (Special Needs)';
+      return SlotTypes.SINGLE_SLOT_SPECIAL_NEEDS;
     }
   }
 
@@ -59,18 +60,18 @@ export const getSlotType = (slot: any): string => {
 
   if (specialNeedsExtendedTest) {
     if (specialNeedsCode === SpecialNeedsCode.NONE) {
-      return 'Extended Test';
+      return SlotTypes.EXTENDED_TEST;
     }
-    return 'Extended Test Special Needs';
+    return SlotTypes.EXTENDED_TEST_SPECIAL_NEEDS;
   }
 
   if (specialNeedsCode === SpecialNeedsCode.NONE) {
-    return 'Standard Test';
+    return SlotTypes.STANDARD_TEST;
   }
   if (specialNeedsCode === SpecialNeedsCode.YES) {
-    return 'Standard Test';
+    return SlotTypes.STANDARD_TEST;
   }
-  return 'Special Needs Extra Time';
+  return SlotTypes.SPECIAL_NEEDS_EXTRA_TIME;
 };
 
 export const getDetails = (slot: any): Details => {
