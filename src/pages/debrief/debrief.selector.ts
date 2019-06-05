@@ -125,7 +125,7 @@ export const getControlledStopFaultAndComment =
       return returnCompetencies;
     }
     const result: CommentedCompetency = {
-      competencyDisplayName: 'controlledStop',
+      competencyDisplayName: 'Controlled Stop',
       competencyIdentifier: 'controlledStop',
       comment: controlledStop.faultComments || '',
       source: 'ControlledStop',
@@ -201,7 +201,6 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
     if (value > 0 && !key.endsWith('Comments')) {
       const label = key as keyof typeof competencyLabels;
       const comment = obj[`${key}Comments`] || null;
-      console.log(`driving fault ${key}Comments: ${comment}`);
       const drivingFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment,
         competencyIdentifier: key,
@@ -223,7 +222,6 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
 export const getDangerousFaults =
   (faults: DangerousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-    console.log(`dangerousfaults ${JSON.stringify(faults)}`);
     forOwn(faults, (value, key, obj) => {
       if (value && !key.endsWith('Comments')) {
         const label = key as keyof typeof competencyLabels;
@@ -236,8 +234,6 @@ export const getDangerousFaults =
           faultCount: 1,
         };
         faultsEncountered.push(dangerousFault);
-        console.log(`added dangerousfaults ${JSON.stringify(dangerousFault)}`);
-
       }
     });
     return faultsEncountered;
@@ -252,7 +248,6 @@ export const getDangerousFaults =
 export const getSeriousFaults =
   (faults: SeriousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
-    console.log(`seriousfaults ${JSON.stringify(faults)}`);
     forOwn(faults, (value, key, obj) => {
       if (value && !key.endsWith('Comments')) {
         const label = key as keyof typeof competencyLabels;
@@ -265,7 +260,6 @@ export const getSeriousFaults =
           faultCount: 1,
         };
         faultsEncountered.push(seriousFault);
-        console.log(`seriousFaults added  ${JSON.stringify(seriousFault)}`);
       }
     });
     return faultsEncountered;

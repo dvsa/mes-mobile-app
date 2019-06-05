@@ -34,7 +34,6 @@ export class FaultCommentCardComponent {
   ngOnInit() {
     this.faultComments.forEach((value) => {
       const control = new FormControl(null);
-      console.log(`adding control faultComment-${value.source}-${this.faultType}-${value.competencyIdentifier}`);
       this.formGroup.addControl(
         `faultComment-${value.source}-${this.faultType}-${value.competencyIdentifier}`, control);
     });

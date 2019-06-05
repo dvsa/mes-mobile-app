@@ -101,10 +101,10 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
-            ...getVehicleCheckSeriousFault(data.vehicleChecks),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
+            ...getVehicleCheckSeriousFault(data.vehicleChecks),
           ];
         }),
       ),
@@ -112,10 +112,10 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
-            ...getVehicleCheckDangerousFault(data.vehicleChecks),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
+            ...getVehicleCheckDangerousFault(data.vehicleChecks),
           ];
         }),
       ),
@@ -123,6 +123,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
+            ...getDrivingFaults(data.drivingFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
               (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
@@ -137,7 +138,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,
               })),
-            ...getDrivingFaults(data.drivingFaults),
             ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
               (result: string): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
@@ -149,29 +149,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
           ];
         }),
       ),
-      // ),      drivingFaults$: currentTest$.pipe(
-      //   select(getTestData),
-      //   map((data) => {
-      //     return [
-      //       ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
-      //       ...getDrivingFaults(data.drivingFaults),
-      //       ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
-      //         (result: string): MultiFaultAssignableCompetency => ({
-      //           faultCount: 1,
-      //           competencyDisplayName: result,
-      //           competencyIdentifier: result,
-      //         }),
-      //       ),
-      //       ...getControlledStopFault(data.controlledStop, CompetencyOutcome.DF).map(
-      //         (result: string): MultiFaultAssignableCompetency => ({
-      //           faultCount: 1,
-      //           competencyDisplayName: result,
-      //           competencyIdentifier: result,
-      //         }),
-      //       ),
-      //     ];
-      //   }),
-      // ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
         select(getDrivingFaultSummaryCount),

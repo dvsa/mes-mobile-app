@@ -418,6 +418,7 @@ export class OfficePage extends PracticeableBasePageComponent {
         // map(data => getDangerousFaults(data.dangerousFaults)),
         map((data) => {
           return [
+            ...getDangerousFaults(data.dangerousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(
               (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
@@ -434,11 +435,10 @@ export class OfficePage extends PracticeableBasePageComponent {
                 source: result.source,
                 comment: result.comment,
               })),
-            ...getDangerousFaults(data.dangerousFaults),
             ...getVehicleCheckDangerousFault(data.vehicleChecks).map(
               (result: string): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
-                competencyDisplayName: result,
+                competencyDisplayName: 'Show Me/Tell Me',
                 competencyIdentifier: result,
                 source: 'VehicleChecks',
                 comment: '',
@@ -452,6 +452,7 @@ export class OfficePage extends PracticeableBasePageComponent {
         //        map(data => getSeriousFaults(data.seriousFaults)),
         map((data) => {
           return [
+            ...getSeriousFaults(data.seriousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(
               (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
@@ -468,11 +469,10 @@ export class OfficePage extends PracticeableBasePageComponent {
                 source: result.source,
                 comment: result.comment,
               })),
-            ...getSeriousFaults(data.seriousFaults),
             ...getVehicleCheckSeriousFault(data.vehicleChecks).map(
               (result: string): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
-                competencyDisplayName: result,
+                competencyDisplayName: 'Show Me/Tell Me',
                 competencyIdentifier: result,
                 source: 'VehicleChecks',
                 comment: '',
@@ -489,6 +489,7 @@ export class OfficePage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
+            ...getDrivingFaults(data.drivingFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
               (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
@@ -505,11 +506,10 @@ export class OfficePage extends PracticeableBasePageComponent {
                 source: result.source,
                 comment: result.comment,
               })),
-            ...getDrivingFaults(data.drivingFaults),
             ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
               (result: string): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
-                competencyDisplayName: result,
+                competencyDisplayName: 'Show Me/Tell Me',
                 competencyIdentifier: result,
                 source: 'VehicleChecks',
                 comment: '',
@@ -662,7 +662,6 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
     if (!drivingFaultComment.source) {
-      console.log('dispatching add driving fault comment');
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
       );
