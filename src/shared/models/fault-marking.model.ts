@@ -1,6 +1,7 @@
 export type Competency = {
   competencyIdentifier: string;
   competencyDisplayName: string;
+  source?: string;
 };
 
 export type MultiFaultAssignableCompetency = {
