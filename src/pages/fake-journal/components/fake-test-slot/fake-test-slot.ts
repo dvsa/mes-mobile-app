@@ -4,6 +4,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { getSlotType } from '../../../candidate-details/candidate-details.selector';
+import { SlotTypes } from '../../../../shared/models/slot-types';
 
 @Component({
   selector: 'fake-test-slot',
@@ -34,8 +36,9 @@ export class FakeTestSlotComponent {
   isIndicatorNeededForSlot(): boolean {
     const specialNeeds: boolean = this.isSpecialNeedsSlot();
     const checkNeeded: boolean = this.slot.booking.application.entitlementCheck || false;
+    const nonStandardTest: boolean = getSlotType(this.slot) !==  SlotTypes.STANDARD_TEST;
 
-    return specialNeeds || checkNeeded;
+    return specialNeeds || checkNeeded || nonStandardTest;
   }
 
   isSpecialNeedsSlot(): boolean {
