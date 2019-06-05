@@ -44,9 +44,7 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
 
   goToJournal() {
     if (this.isPracticeMode) {
-      // As per bug request for Ionic 3 we need to get and pass in the view controller
-      // for the page we want to get back to - https://github.com/ionic-team/ionic/issues/13672
-      this.navCtrl.popTo(this.navCtrl.getViews().find(view => view.name === 'FakeJournalPage'));
+      this.exitPracticeMode();
       return;
     }
     this.navCtrl.popToRoot();
