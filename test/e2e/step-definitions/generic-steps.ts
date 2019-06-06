@@ -140,6 +140,19 @@ When('I terminate the test', () => {
   enterPasscode();
 });
 
+Then(/^the (communication page|waiting room|debrief) candidate name should be \"(.+)\"$/, (
+  pageName: string, candidateName: string) => {
+  const candidateNameElement = getElement(by.xpath(`//${getPageType(pageName)}//h2[@id = 'candidate-name']`));
+  return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
+});
+
+Then(/^the (communication page|waiting room|debrief) candidate driver number should be \"(.+)\"$/, (
+  pageName: string, driverNumber: string) => {
+  const candidateDriverNumberElement = getElement(
+    by.xpath(`//${getPageType(pageName)}//h3[@id = 'candidate-driver-number']`));
+  return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
+});
+
 /**
  * Take a screenshot of the page at the end of the scenario.
  */
@@ -334,4 +347,15 @@ export const onJournalPageAs = (username) => {
   // If the journal page is loaded we should have a refresh button
   const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
   browser.wait(ExpectedConditions.presenceOf(refreshButton));
+};
+
+const getPageType = (pageName : string) => {
+  switch (pageName) {
+    case 'communication page':
+      return 'communication';
+    case 'debrief':
+      return 'page-pass-finalisation';
+    default:
+      return 'page-waiting-room';
+  }
 };

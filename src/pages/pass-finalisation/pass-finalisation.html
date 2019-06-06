@@ -49,7 +49,8 @@
               </ion-col>
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('provisionalLicenseProvidedCtrl')">
+              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('provisionalLicenseProvidedCtrl')"
+                id="pass-finalisation-licence-received-validation-text">
                 Select a response
               </div>
             </ion-row>
@@ -106,7 +107,8 @@
               </ion-col>
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl')">
+              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl')"
+                id="pass-finalisation-certificate-number-validation-text">
                 Enter a certificate number
               </div>
             </ion-row>
