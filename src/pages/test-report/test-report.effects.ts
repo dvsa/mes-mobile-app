@@ -56,6 +56,30 @@ export class TestReportEffects {
   );
 
   @Effect()
+  validateCatBTestEta$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_DANGEROUS_FAULT,
+      testDataActions.ADD_SERIOUS_FAULT,
+      testDataActions.REMOVE_DANGEROUS_FAULT,
+      testDataActions.REMOVE_SERIOUS_FAULT,
+      testDataActions.TOGGLE_ETA,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+      ),
+    ),
+    concatMap(([action, testData]) => {
+      return this.testReportValidator.validateCatBEta(testData)
+        .pipe(
+          map((result: boolean) => new testReportActions.ValidateEta(result)),
+        );
+    }),
+  );
+
+  @Effect()
   calculateTestResult$ = this.actions$.pipe(
     ofType(
       testReportActions.CALCULATE_TEST_RESULT,

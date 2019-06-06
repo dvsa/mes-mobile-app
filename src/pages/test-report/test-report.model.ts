@@ -3,4 +3,5 @@ export type TestReportModel = {
   dangerousMode: boolean,
   removeFaultMode: boolean,
   isValid: boolean,
+  isEtaValid: boolean,
 };
