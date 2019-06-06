@@ -288,6 +288,14 @@ export function testDataReducer(
           },
         },
       };
+    case testDataActions.ADD_SHOW_ME_TELL_ME_COMMENT:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeTellMeComments: action.comment,
+        },
+      };
     case testDataActions.TELL_ME_QUESTION_CORRECT:
       return {
         ...state,

@@ -18,6 +18,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
+  CommentSource,
 } from '../../shared/models/fault-marking.model';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 
@@ -50,7 +51,7 @@ export const getManoeuvreFaults = (
           comment: competencyComment || '',
           competencyIdentifier: type,
           competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
-          source: `Manoeuvres-${type}-${manoeuvreCompetencyLabels[key]}`,
+          source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
           faultCount: 1,
         };
         result.push(manoeuvreFaultSummary);
@@ -138,7 +139,7 @@ export const getControlledStopFaultAndComment =
       competencyDisplayName: 'Controlled Stop',
       competencyIdentifier: 'controlledStop',
       comment: controlledStop.faultComments || '',
-      source: 'ControlledStop',
+      source: CommentSource.CONTROLLED_STOP,
     };
     returnCompetencies.push(result);
     return returnCompetencies;
@@ -192,10 +193,10 @@ export const displayDrivingFaultComments = (data: TestData): boolean => {
   }
   if (data.vehicleChecks) {
     const checks = data.vehicleChecks;
-    if (checks.showMeQuestion && checks.showMeQuestion.outcome === 'DF') {
+    if (checks.showMeQuestion && checks.showMeQuestion.outcome === CompetencyOutcome.DF) {
       drivingFaultCount = drivingFaultCount + 1;
     }
-    if (checks.tellMeQuestion && checks.tellMeQuestion.outcome === 'DF') {
+    if (checks.tellMeQuestion && checks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
       drivingFaultCount = drivingFaultCount + 1;
     }
   }
@@ -216,7 +217,7 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
         competencyIdentifier: key,
         competencyDisplayName: fullCompetencyLabels[label],
         faultCount: value,
-        source: 'default',
+        source: CommentSource.SIMPLE,
       };
       faultsEncountered.push(drivingFaultSummary);
     }
@@ -241,7 +242,7 @@ export const getDangerousFaults =
           comment,
           competencyIdentifier: key,
           competencyDisplayName: fullCompetencyLabels[label],
-          source: 'default',
+          source: CommentSource.SIMPLE,
           faultCount: 1,
         };
         faultsEncountered.push(dangerousFault);
@@ -267,7 +268,7 @@ export const getSeriousFaults =
           comment,
           competencyIdentifier: key,
           competencyDisplayName: fullCompetencyLabels[label],
-          source: 'default',
+          source: CommentSource.SIMPLE,
           faultCount: 1,
         };
         faultsEncountered.push(seriousFault);

@@ -69,7 +69,6 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   get formControlName() {
-    console.log(`faultComment-${this.faultComment.source}-${this.faultType}-${this.faultComment.competencyIdentifier}`);
     return `faultComment-${this.faultComment.source}-${this.faultType}-${this.faultComment.competencyIdentifier}`;
   }
 

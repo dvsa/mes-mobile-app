@@ -41,6 +41,7 @@ export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
 export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
 export const TELL_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Tell me question driving fault';
+export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] Show me Tell me comment added';
 
 export const SHOW_ME_QUESTION_SELECTED = '[Vehicle Checks] Show me question selected';
 export const SHOW_ME_QUESTION_PASSED = '[Vehicle Checks] Show me question passed';
@@ -128,6 +129,11 @@ export class AddDangerousFault implements Action {
 export class AddDangerousFaultComment implements Action {
   constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_DANGEROUS_FAULT_COMMENT;
+}
+
+export class AddShowMeTellMeComment implements Action {
+  constructor(public comment: string) { }
+  readonly type = ADD_SHOW_ME_TELL_ME_COMMENT;
 }
 
 export class RemoveDrivingFault implements Action {
@@ -248,4 +254,5 @@ export type Types =
   | ShowMeQuestionSeriousFault
   | ShowMeQuestionDangerousFault
   | ShowMeQuestionDrivingFault
-  | ShowMeQuestionRemoveFault;
+  | ShowMeQuestionRemoveFault
+  | AddShowMeTellMeComment;

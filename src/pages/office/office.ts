@@ -101,8 +101,13 @@ import {
   ShowMeQuestionSelected,
   ControlledStopAddComment,
   AddManoeuvreComment,
+  AddShowMeTellMeComment,
 } from '../../modules/tests/test-data/test-data.actions';
-import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
+import {
+  MultiFaultAssignableCompetency,
+  CommentedCompetency,
+  CommentSource,
+} from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
@@ -439,7 +444,7 @@ export class OfficePage extends PracticeableBasePageComponent {
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
                 competencyIdentifier: result,
-                source: 'VehicleChecks',
+                source: CommentSource.VEHICLE_CHECKS,
                 comment: '',
               }),
             ),
@@ -472,7 +477,7 @@ export class OfficePage extends PracticeableBasePageComponent {
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
                 competencyIdentifier: result,
-                source: 'VehicleChecks',
+                source: CommentSource.VEHICLE_CHECKS,
                 comment: '',
               }),
             ),
@@ -505,7 +510,7 @@ export class OfficePage extends PracticeableBasePageComponent {
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
                 competencyIdentifier: result,
-                source: 'VehicleChecks',
+                source: CommentSource.VEHICLE_CHECKS,
                 comment: '',
               }),
             ),
@@ -600,11 +605,11 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
-    if (dangerousFaultComment.source === 'default') {
+    if (dangerousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
       );
-    } else if (startsWith(dangerousFaultComment.source, 'Manoeuvres')) {
+    } else if (startsWith(dangerousFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = dangerousFaultComment.source.split('-');
       const fieldName = segments[1];
       const controlOrObservation = segments[2];
@@ -616,11 +621,11 @@ export class OfficePage extends PracticeableBasePageComponent {
           dangerousFaultComment.comment),
       );
 
-    } else if (dangerousFaultComment.source === 'ControlledStop') {
+    } else if (dangerousFaultComment.source === CommentSource.CONTROLLED_STOP) {
       this.store$.dispatch(new ControlledStopAddComment(dangerousFaultComment.comment));
 
-    } else if (dangerousFaultComment.source === 'VehicleChecks') {
-      console.log(`${dangerousFaultComment.competencyIdentifier}`);
+    } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     }
   }
 
@@ -629,11 +634,11 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
-    if (seriousFaultComment.source === 'default') {
+    if (seriousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
       );
-    } else if (startsWith(seriousFaultComment.source, 'Manoeuvres')) {
+    } else if (startsWith(seriousFaultComment.source, CommentSource.VEHICLE_CHECKS)) {
       const segments = seriousFaultComment.source.split('-');
       const fieldName = segments[1];
       const controlOrObservation = segments[2];
@@ -645,21 +650,21 @@ export class OfficePage extends PracticeableBasePageComponent {
           seriousFaultComment.comment),
       );
 
-    } else if (seriousFaultComment.source === 'ControlledStop') {
+    } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
       this.store$.dispatch(new ControlledStopAddComment(seriousFaultComment.comment));
 
-    } else if (seriousFaultComment.source === 'VehicleChecks') {
-      console.log(`${seriousFaultComment.competencyIdentifier}`);
+    } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     }
 
   }
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
-    if (drivingFaultComment.source === 'default') {
+    if (drivingFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
       );
-    } else if (startsWith(drivingFaultComment.source, 'Manoeuvres')) {
+    } else if (startsWith(drivingFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = drivingFaultComment.source.split('-');
       const fieldName = segments[1];
       const controlOrObservation = segments[2];
@@ -671,11 +676,11 @@ export class OfficePage extends PracticeableBasePageComponent {
           drivingFaultComment.comment),
       );
 
-    } else if (drivingFaultComment.source === 'ControlledStop') {
+    } else if (drivingFaultComment.source === CommentSource.CONTROLLED_STOP) {
       this.store$.dispatch(new ControlledStopAddComment(drivingFaultComment.comment));
 
-    } else if (drivingFaultComment.source === 'VehicleChecks') {
-      console.log(`${drivingFaultComment.competencyIdentifier}`);
+    } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
     }
 
   }

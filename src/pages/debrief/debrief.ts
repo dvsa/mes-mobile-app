@@ -29,7 +29,11 @@ import {
   getControlledStopFaultAndComment,
 } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
-import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
+import {
+  MultiFaultAssignableCompetency,
+  CommentedCompetency,
+  CommentSource,
+} from '../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
@@ -143,7 +147,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
                 faultCount: 1,
                 competencyDisplayName: result,
                 competencyIdentifier: result,
-                source: 'VehicleChecks',
+                source: CommentSource.VEHICLE_CHECKS,
               }),
             ),
           ];
