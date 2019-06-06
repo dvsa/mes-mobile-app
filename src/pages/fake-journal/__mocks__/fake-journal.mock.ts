@@ -5,6 +5,7 @@ const todayAt8Am = moment().startOf('day').add(8, 'hour');
 
 export const fakeJournalTestSlots = [
   {
+    vehicleSlotTypeCode: 6,
     booking: {
       application: {
         applicationId: 1234567,
@@ -13,8 +14,7 @@ export const fakeJournalTestSlots = [
         entitlementCheck: false,
         extendedTest: false,
         progressiveAccess: false,
-        specialNeeds: 'Candidate has dyslexia',
-        specialNeedsCode: 'NONE',
+        specialNeedsCode: 'EXTRA',
         specialNeedsExtendedTest: false,
         testCategory: 'B',
         vehicleGearbox: 'Automatic',
@@ -69,6 +69,8 @@ export const fakeJournalTestSlots = [
         vehicleGearbox: 'Automatic',
         welshTest: true,
         meetingPlace: 'At the pub',
+        specialNeedsExtendedTest: true,
+        specialNeedsCode: 'NONE',
       },
       candidate: {
         candidateAddress: {
@@ -121,6 +123,8 @@ export const fakeJournalTestSlots = [
         vehicleSeats: 2,
         vehicleWidth: 2.5,
         welshTest: false,
+        specialNeedsCode: 'YES',
+        specialNeedsExtendedTest: true,
       },
       candidate: {
         candidateAddress: {
@@ -170,6 +174,7 @@ export const fakeJournalTestSlots = [
         vehicleSeats: 20,
         vehicleWidth: 3.5,
         welshTest: false,
+        specialNeedsCode: 'NONE',
       },
       candidate: {
         candidateAddress: {
@@ -220,6 +225,7 @@ export const fakeJournalTestSlots = [
         vehicleSeats: 50,
         vehicleWidth: 2,
         welshTest: false,
+        specialNeedsCode: 'YES',
       },
       candidate: {
         candidateAddress: {
@@ -267,7 +273,8 @@ export const fakeJournalTestSlots = [
         progressiveAccess: false,
         testCategory: 'B',
         vehicleGearbox: 'Manual',
-        welshTest: true,
+        welshTest: false,
+        specialNeedsCode: 'EXTRA',
       },
       candidate: {
         candidateAddress: {
@@ -291,50 +298,6 @@ export const fakeJournalTestSlots = [
       duration: 57,
       slotId: `${end2endPracticeSlotId}_5`,
       start: todayAt8Am.add(58, 'minutes').format(),
-    },
-    testCentre: {
-      centreId: 54321,
-      centreName: 'Example Test Centre',
-      costCode: 'EXTC1',
-    },
-    vehicleSlotType: 'B57mins',
-    vehicleSlotTypeCode: 7,
-  },
-  {
-    booking: {
-      application: {
-        applicationId: 1234532,
-        bookingSequence: 7,
-        checkDigit: 7,
-        entitlementCheck: false,
-        extendedTest: false,
-        progressiveAccess: false,
-        testCategory: 'B',
-        vehicleGearbox: 'Manual',
-        welshTest: true,
-      },
-      candidate: {
-        candidateAddress: {
-          addressLine1: '1 Hangar Lane',
-          addressLine2: 'Someplace',
-          addressLine3: 'Sometown',
-          postcode: 'AB78 9CD',
-        },
-        candidateId: 107,
-        candidateName: {
-          firstName: 'Jeremy',
-          lastName: 'Craig',
-          title: 'Captain',
-        },
-        driverNumber: 'CRAIG375220A99HC',
-        primaryTelephone: '01234 567890',
-        emailAddress: 'captain@craig.com',
-      },
-    },
-    slotDetail: {
-      duration: 57,
-      slotId: `${end2endPracticeSlotId}_6`,
-      start: todayAt8Am.add(57, 'minutes').format(),
     },
     testCentre: {
       centreId: 54321,

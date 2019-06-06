@@ -29,6 +29,7 @@ import { of } from 'rxjs/observable/of';
 import { StartTest } from '../../../journal.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
+import { SpecialNeedsCode } from '../../../../candidate-details/candidate-details.constants';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -79,6 +80,7 @@ describe('TestSlotComponent', () => {
         meetingPlace: '',
         progressiveAccess: false,
         specialNeeds: 'Candidate has dyslexia',
+        specialNeedsCode: SpecialNeedsCode.NONE,
         entitlementCheck: false,
         vehicleSeats: 5,
         vehicleHeight: 4,
@@ -134,27 +136,44 @@ describe('TestSlotComponent', () => {
       it('should return true if specialNeeds is a non-blank string', () => {
         expect(component.isIndicatorNeededForSlot()).toBe(true);
       });
-      it('should return false if specialNeeds is blank (and entitlementCheck is false)', () => {
+      it('should return false if specialNeeds is blank (entitlementCheck is false, slotType is Standard)', () => {
         component.slot.booking.application.specialNeeds = '';
+        component.slot.booking.application.entitlementCheck = false;
+        component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
         expect(component.isIndicatorNeededForSlot()).toBe(false);
       });
       it('should return false if specialNeeds is missing', () => {
         delete component.slot.booking.application;
         expect(component.isSpecialNeedsSlot()).toBe(false);
       });
-      it('should return true if entitlementCheck is true (and specialNeeds is blank)', () => {
+      it('should return true if entitlementCheck is true (specialNeeds is blank, slotType is Standard)', () => {
         component.slot.booking.application.specialNeeds = '';
         component.slot.booking.application.entitlementCheck = true;
+        component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
         expect(component.isIndicatorNeededForSlot()).toBe(true);
       });
-      it('should return false if entitlementCheck is missing (and specialNeeds is blank)', () => {
+      it('should return false if entitlementCheck is missing (specialNeeds is blank, slotType is Standard)', () => {
         component.slot.booking.application.specialNeeds = '';
         delete component.slot.booking.application.entitlementCheck;
+        component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
         expect(component.isIndicatorNeededForSlot()).toBe(false);
       });
-      it('should return false if entitlementCheck is false (and specialNeeds is blank)', () => {
+      it('should return false if entitlementCheck is false (specialNeeds is blank, slotType is Standard)', () => {
         component.slot.booking.application.specialNeeds = '';
         component.slot.booking.application.entitlementCheck = false;
+        component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
+        expect(component.isIndicatorNeededForSlot()).toBe(false);
+      });
+      it('should return true if slotType is not Standard (specialNeeds is blank, entitlementCheck is false)', () => {
+        component.slot.booking.application.specialNeeds = '';
+        component.slot.booking.application.entitlementCheck = false;
+        component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.EXTRA;
+        expect(component.isIndicatorNeededForSlot()).toBe(true);
+      });
+      it('should return false if slotType is Standard (specialNeeds is blank, entitlementCheck is false )', () => {
+        component.slot.booking.application.specialNeeds = '';
+        component.slot.booking.application.entitlementCheck = false;
+        component.slot.booking.application.specialNeedsCode = SpecialNeedsCode.NONE;
         expect(component.isIndicatorNeededForSlot()).toBe(false);
       });
 

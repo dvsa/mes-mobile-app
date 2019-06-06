@@ -36,22 +36,36 @@ Given('I am not logged in', () => {
   });
 });
 
-Given('I reset the application state for {string}', (username) => {
-  // Go to journal page
-  loadApplication();
-  // Logout
-  logout();
-  // Login
-  logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
-  // Refresh application
-  loadApplication().then(() => {
-    // Small wait to make sure the action has initiated
-    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-  });
-  // If the journal page is loaded we should have a refresh button
+Given('I am logged in as {string} and I have a test for {string}', (username, candidateName) => {
+  // Go to journal page as the user
+  onJournalPageAs(username);
+
+  // Once the journal is loaded and ready check to see if we have a Start test button for the candidate else reset state
   const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
   browser.wait(ExpectedConditions.presenceOf(refreshButton));
-  return expect(refreshButton.isPresent()).to.eventually.be.true;
+
+  const buttonElement = element(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+
+  buttonElement.isPresent().then((isStartPresent) => {
+    if (!isStartPresent) {
+      // Logout
+      logout();
+      // Login
+      logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+      // Refresh application
+      loadApplication().then(() => {
+      // Small wait to make sure the action has initiated
+        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+      });
+      // If the journal page is loaded we should have a refresh button
+      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+      browser.wait(ExpectedConditions.presenceOf(refreshButton));
+      return expect(refreshButton.isPresent()).to.eventually.be.true;
+    }
+  });
+  return expect(buttonElement.isPresent()).to.eventually.be.true;
 });
 
 When('I launch the mobile app', () => {
@@ -161,10 +175,13 @@ export const logInToApplication = (username, password) => {
       pFld.sendKeys(password);
       const signInButtonElement = element(by.xpath('//XCUIElementTypeButton[@label="Sign in"]'));
       signInButtonElement.click();
-      browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
 
       // Switch back to WEBVIEW context
       browser.driver.selectContext(webviewContext);
+
+      // Wait for journal page to load
+      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+      browser.wait(ExpectedConditions.presenceOf(refreshButton));
     });
   });
 };
@@ -174,7 +191,7 @@ export const logInToApplication = (username, password) => {
  * @param staffNumber the staff number of the user we wish to be logged in
  */
 export const loggedInAs = (staffNumber) => {
-  browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
   const logout = element(by.xpath(`//input[@id="employeeId"][@value="${staffNumber}"]`));
   return logout.isPresent();
 };
@@ -183,7 +200,7 @@ export const loggedInAs = (staffNumber) => {
  * Logs out of the application and takes them to the login page if they were logged in else returns current page
  */
 export const logout = () => {
-  browser.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
   browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
   const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
@@ -258,9 +275,6 @@ export const enterPasscode = () => {
       const passcodeField = element(by.xpath('//XCUIElementTypeSecureTextField[@label="Passcode field"]'));
       browser.wait(ExpectedConditions.presenceOf(passcodeField));
 
-      // Set focus on the field
-      passcodeField.click();
-
       // Send the fake passcode using native browser actions
       browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
 
@@ -301,4 +315,23 @@ export const logPageSource = (fileName: string) => {
       console.log(`The page source was saved as ${fileName}`);
     });
   });
+};
+
+export const onJournalPageAs = (username) => {
+  loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
+    if (!response) {
+        // If not logged in as the right user logout and log in as the correct user
+      logout();
+      logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+    }
+  });
+
+  loadApplication().then(() => {
+      // Small wait to make sure the action has initiated
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+  });
+
+  // If the journal page is loaded we should have a refresh button
+  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
+  browser.wait(ExpectedConditions.presenceOf(refreshButton));
 };

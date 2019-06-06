@@ -24,7 +24,7 @@ import {
   getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
-  getTerminationCode,
+  getActivityCode,
   getJournalData,
 } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -105,13 +105,13 @@ import {
 import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
-import { TerminationCode, terminationCodeList } from './components/termination-code/termination-code.constants';
+import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
 import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 
 interface OfficePageState {
-  activityCode$: Observable<TerminationCode>;
+  activityCode$: Observable<ActivityCodeModel>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -171,7 +171,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
-  activityCodeOptions: TerminationCode[];
+  activityCodeOptions: ActivityCodeModel[];
 
   constructor(
     store$: Store<StoreModel>,
@@ -191,7 +191,7 @@ export class OfficePage extends PracticeableBasePageComponent {
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
-    this.activityCodeOptions = terminationCodeList;
+    this.activityCodeOptions = activityCodeModelList;
   }
 
   ionViewDidEnter(): void {
@@ -207,7 +207,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
     this.pageState = {
       activityCode$: currentTest$.pipe(
-        select(getTerminationCode),
+        select(getActivityCode),
       ),
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
@@ -534,7 +534,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   popToRoot() {
     if (this.isPracticeMode) {
-      this.navCtrl.popTo('FakeJournalPage');
+      this.exitPracticeMode();
       return;
     }
     this.navCtrl.popToRoot();
@@ -680,14 +680,14 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   }
 
-  activityCodeChanged(terminationCode: TerminationCode) {
+  activityCodeChanged(activityCodeModel: ActivityCodeModel) {
     const showMeQuestion = this.form.controls['showMeQuestion'];
     if (showMeQuestion) {
       if (showMeQuestion.value && showMeQuestion.value.code === 'N/A') {
         this.form.controls['showMeQuestion'].setValue({});
       }
     }
-    this.store$.dispatch(new SetActivityCode(terminationCode.activityCode));
+    this.store$.dispatch(new SetActivityCode(activityCodeModel.activityCode));
   }
 
   private createToast = (errorMessage: string) => {
@@ -721,7 +721,9 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   completeTest() {
-    this.store$.dispatch(new CompleteTest());
+    if (!this.isPracticeMode) {
+      this.store$.dispatch(new CompleteTest());
+    }
     this.popToRoot();
   }
 }

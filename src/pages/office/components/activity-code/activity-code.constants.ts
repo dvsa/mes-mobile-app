@@ -2,7 +2,7 @@
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
-export interface TerminationCode {
+export interface ActivityCodeModel {
   activityCode: ActivityCode;
   description: ActivityCodeDescription;
 }
@@ -55,7 +55,7 @@ export enum ActivityCodeDescription {
     SITE_ACCESS_MANAGER_NOT_AVAILABLE = 'Site access manager not available',
 }
 
-function populateCodeList(): TerminationCode[] {
+function populateActivityCodeModelList(): ActivityCodeModel[] {
   const codeList = [];
   Object.keys(ActivityCodes).forEach(code => codeList.push({
     activityCode: ActivityCodes[code],
@@ -64,4 +64,4 @@ function populateCodeList(): TerminationCode[] {
   return codeList;
 }
 
-export let terminationCodeList: TerminationCode[] = populateCodeList();
+export let activityCodeModelList: ActivityCodeModel[] = populateActivityCodeModelList();

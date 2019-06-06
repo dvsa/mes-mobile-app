@@ -11,6 +11,7 @@ import { StoreModel } from '../models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { isPracticeMode, isTestReportPracticeTest, isEndToEndPracticeTest } from '../../modules/tests/tests.selector';
 import { OnInit, OnDestroy } from '@angular/core';
+import { FakeJournalPage } from '../../pages/fake-journal/fake-journal';
 
 interface PracticeableBasePageState {
   isPracticeMode$: Observable<boolean>;
@@ -71,6 +72,12 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
     if (this.practiceableBasePageSubscription) {
       this.practiceableBasePageSubscription.unsubscribe();
     }
+  }
+
+  exitPracticeMode = (): void => {
+    // As per bug request for Ionic 3 we need to get and pass in the view controller
+    // for the page we want to get back to - https://github.com/ionic-team/ionic/issues/13672
+    this.navController.popTo(this.navController.getViews().find(view => view.name === FakeJournalPage.name));
   }
 
 }

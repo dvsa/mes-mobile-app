@@ -1,8 +1,9 @@
-import { getCostCentre  } from '../test-centre.selector';
+import { getCostCentre } from '../test-centre.selector';
 import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
 
 describe('testCentre selector', () => {
   const testCentre: TestCentre = {
+    centreId: 1,
     costCode: '1234',
   };
 

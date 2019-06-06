@@ -4,7 +4,7 @@ import {
   getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
-  getTerminationCode,
+  getActivityCode,
   isTestReportPracticeTest,
   isEndToEndPracticeTest,
 } from '../tests.selector';
@@ -18,7 +18,7 @@ import { TestsModel } from '../tests.model';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   ActivityCodeDescription,
-} from '../../../pages/office/components/termination-code/termination-code.constants';
+} from '../../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('testsSelector', () => {
@@ -40,6 +40,7 @@ describe('testsSelector', () => {
             staffNumber: '',
           },
           testCentre: {
+            centreId: 1,
             costCode: '',
           },
           candidate: {},
@@ -100,7 +101,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -141,7 +142,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -182,7 +183,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -216,7 +217,7 @@ describe('testsSelector', () => {
     });
   });
 
-  describe('getTerminationCode', () => {
+  describe('getActivityCode', () => {
     const testState: StandardCarTestCATBSchema = {
       id: '1',
       // DVSA_RADIO_FAILURE = '25'
@@ -224,7 +225,7 @@ describe('testsSelector', () => {
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
-        testCentre: { costCode: '12345' },
+        testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
           vehicleSlotType: 'B57mins',
@@ -242,10 +243,10 @@ describe('testsSelector', () => {
       },
 
     };
-    it('should return the DVSA_RADIO_FAILURE TerminationCode', () => {
-      const terminationCode = getTerminationCode(testState);
-      expect(terminationCode.activityCode).toEqual(ActivityCodes.DVSA_RADIO_FAILURE);
-      expect(terminationCode.description).toEqual(ActivityCodeDescription.DVSA_RADIO_FAILURE);
+    it('should return the DVSA_RADIO_FAILURE ActivityCode', () => {
+      const activityCode = getActivityCode(testState);
+      expect(activityCode.activityCode).toEqual(ActivityCodes.DVSA_RADIO_FAILURE);
+      expect(activityCode.description).toEqual(ActivityCodeDescription.DVSA_RADIO_FAILURE);
     });
   });
 

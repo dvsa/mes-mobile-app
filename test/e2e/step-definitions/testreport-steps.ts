@@ -1,6 +1,11 @@
-import { When } from 'cucumber';
+import { Then, When } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
 import { browser, by, element } from 'protractor';
+
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const expect = chai.expect;
 
 const buttonPadding = 30;
 const request = require('request');
@@ -47,6 +52,17 @@ When('I add a {string} dangerous fault', (competency) => {
   const dangerousButton = getElement(by.id('dangerous-button'));
   clickElement(dangerousButton);
   clickCompetency(competency);
+});
+
+Then('the driver fault count is {string}', (driverFaultCount) => {
+  const summaryCountField = getElement(by.id('summary-count'));
+  return expect(summaryCountField.getText()).to.eventually.equal(driverFaultCount);
+});
+
+Then('the competency {string} driver fault count is {string}', (competency, driverFaultCount) => {
+  const competencyCountField = getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge//span[@class = 'count']`));
+  return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
 /**

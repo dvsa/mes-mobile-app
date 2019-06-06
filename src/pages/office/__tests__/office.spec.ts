@@ -38,12 +38,12 @@ import { IdentificationComponent } from '../components/identification/identifica
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
-import { TerminationCodeComponent } from '../components/termination-code/termination-code';
+import { ActivityCodeComponent } from '../components/activity-code/activity-code';
 import {
-  TerminationCode,
-  terminationCodeList,
+  ActivityCodeModel,
+  activityCodeModelList,
   ActivityCodeDescription,
-} from '../components/termination-code/termination-code.constants';
+} from '../components/activity-code/activity-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest } from '../office.actions';
 import { WelshTestChanged } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
@@ -69,7 +69,7 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
-        MockComponent(TerminationCodeComponent),
+        MockComponent(ActivityCodeComponent),
         MockComponent(LanguagePreferencesComponent),
       ],
       imports: [
@@ -157,10 +157,10 @@ describe('OfficePage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ShowMeQuestionSelected(question));
       });
     });
-    describe('selecting a termination code', () => {
+    describe('selecting a activity code', () => {
       it('should dispatch a SetActivityCode action with the activity code', () => {
-        component.activityCodeChanged(terminationCodeList[0]);
-        expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(terminationCodeList[0].activityCode));
+        component.activityCodeChanged(activityCodeModelList[0]);
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetActivityCode(activityCodeModelList[0].activityCode));
       });
     });
     describe('completeTest', () => {
@@ -168,6 +168,12 @@ describe('OfficePage', () => {
         component.completeTest();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new CompleteTest());
+      });
+      it('should not dispatch complete test if in practice mode', () => {
+        component.isPracticeMode = true;
+        component.completeTest();
+
+        expect(store$.dispatch).not.toHaveBeenCalledWith(new CompleteTest());
       });
     });
   });
@@ -179,15 +185,15 @@ describe('OfficePage', () => {
         .componentInstance as ShowMeQuestionComponent;
       expect(showMeElement.showMeQuestion.code).toEqual('S3');
     });
-    it('should pass the selected termination code to the termination code subcomponent', () => {
-      const terminationCode: TerminationCode = {
+    it('should pass the selected activity code to the activity code subcomponent', () => {
+      const activityCodeModel: ActivityCodeModel = {
         activityCode: ActivityCodes.ACCIDENT,
         description: ActivityCodeDescription.ACCIDENT,
       };
       fixture.detectChanges();
-      const terminationCodeElement = fixture.debugElement.query(By.css('termination-code'))
-        .componentInstance as TerminationCodeComponent;
-      expect(terminationCodeElement.terminationCode).toEqual(terminationCode);
+      const activityCodeElement = fixture.debugElement.query(By.css('activity-code'))
+        .componentInstance as ActivityCodeComponent;
+      expect(activityCodeElement.activityCodeModel).toEqual(activityCodeModel);
     });
     it('should hide ETA faults container if there are none', () => {
       fixture.detectChanges();
@@ -317,7 +323,7 @@ describe('OfficePage', () => {
     it('should call the popTo method in the navcontroller if in practice mode.', () => {
       component.isPracticeMode = true;
       component.popToRoot();
-      expect(navCtrl.popTo).toHaveBeenCalledWith('FakeJournalPage');
+      expect(navCtrl.popTo).toHaveBeenCalled();
     });
   });
 

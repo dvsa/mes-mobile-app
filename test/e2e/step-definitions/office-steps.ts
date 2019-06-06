@@ -17,12 +17,12 @@ When('I complete the office write up', () => {
   enterD255();
 });
 
-When('I select termination code {string}', (terminationCodeDesc) => {
-  const terminationSelector = getElement(by.id('termination-code-selector'));
-  clickElement(terminationSelector);
-  const terminationItem = getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
-  [normalize-space(text()) = '${terminationCodeDesc}']`));
-  clickElement(terminationItem);
+When('I select activity code {string}', (activityCodeDesc) => {
+  const activitySelector = getElement(by.id('activity-code-selector'));
+  clickElement(activitySelector);
+  const activityItem = getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
+  [normalize-space(text()) = '${activityCodeDesc}']`));
+  clickElement(activityItem);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
   clickElement(submitDialog);
 });
@@ -54,9 +54,9 @@ When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel
   commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
-Then('the termination code should be {string}', (terminationCode) => {
-  const terminationCodeField = getElement(by.id('termination-code-selector'));
-  return expect(terminationCodeField.getText()).to.eventually.equal(terminationCode);
+Then('the activity code should be {string}', (activityCode) => {
+  const acitivityCodeField = getElement(by.id('activity-code-selector'));
+  return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
 const clickUploadButton = () => {

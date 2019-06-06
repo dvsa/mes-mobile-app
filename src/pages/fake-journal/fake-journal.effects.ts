@@ -17,7 +17,7 @@ import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attribu
 export class FakeJournalEffects {
   constructor(
     private actions$: Actions,
-  ) {}
+  ) { }
 
   @Effect()
   startE2EPracticeTestEffect$ = this.actions$.pipe(
@@ -30,7 +30,7 @@ export class FakeJournalEffects {
         new PopulateApplicationReference(slot.booking.application as Application),
         new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
-        new PopulateTestCentre({ costCode: slot.testCentre.costCode }),
+        new PopulateTestCentre({ centreId: slot.testCentre.centreId, costCode: slot.testCentre.costCode }),
         new testStatusActions.SetTestStatusBooked(slot.slotDetail.slotId),
       ];
     }),
