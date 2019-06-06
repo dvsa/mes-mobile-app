@@ -2,7 +2,7 @@ import { testReportReducer, initialState } from '../test-report.reducer';
 import {
   ToggleSeriousFaultMode,
   ToggleDangerousFaultMode,
-  ValidateTestResult } from '../test-report.actions';
+  ValidateLegalRequirements } from '../test-report.actions';
 
 describe('TestReportReducer reducer', () => {
   describe('TOGGLE_SERIOUS_FAULT_MODE', () => {
@@ -34,9 +34,9 @@ describe('TestReportReducer reducer', () => {
     });
   });
   describe('VALIDATE_TEST', () => {
-    it('should update isValid based on the value of a ValidateTestResult payload', () => {
-      const result = testReportReducer(initialState, new ValidateTestResult(true));
-      expect(result.isValid).toBeTruthy();
+    it('should update isValid based on the value of a ValidateLegalRequirements payload', () => {
+      const result = testReportReducer(initialState, new ValidateLegalRequirements(true));
+      expect(result.isLegalRequirementsValid).toBeTruthy();
     });
   });
 });

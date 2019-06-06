@@ -62,7 +62,7 @@ describe('Test Report Effects', () => {
     expect(effects).toBeTruthy();
   });
 
-  describe('validateCatBTest', () => {
+  describe('validateCatBLegalRequirements', () => {
 
     beforeEach(() => {
       store$.dispatch(new journalActions.StartTest(123456));
@@ -70,26 +70,26 @@ describe('Test Report Effects', () => {
 
     it('should dispatch a success action when the effect is triggered and test is valid', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBTestReport').and.returnValue(of(true));
+      spyOn(testReportValidatorProvider, 'validateCatBLegalRequirements').and.returnValue(of(true));
       // ACT
       actions$.next(new testDataActions.ToggleEco());
       // ASSERT
-      effects.validateCatBTest$.subscribe((result) => {
-        expect(testReportValidatorProvider.validateCatBTestReport).toHaveBeenCalled();
-        expect(result).toEqual(new testReportActions.ValidateTestResult(true));
+      effects.validateCatBLegalRequirements$.subscribe((result) => {
+        expect(testReportValidatorProvider.validateCatBLegalRequirements).toHaveBeenCalled();
+        expect(result).toEqual(new testReportActions.ValidateLegalRequirements(true));
         done();
       });
     });
 
     it('should dispatch a failure action when the effect is triggered and test is not valid', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBTestReport').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateCatBLegalRequirements').and.returnValue(of(false));
       // ACT
       actions$.next(new testDataActions.ToggleEco());
       // ASSERT
-      effects.validateCatBTest$.subscribe((result) => {
-        expect(testReportValidatorProvider.validateCatBTestReport).toHaveBeenCalled();
-        expect(result).toEqual(new testReportActions.ValidateTestResult(false));
+      effects.validateCatBLegalRequirements$.subscribe((result) => {
+        expect(testReportValidatorProvider.validateCatBLegalRequirements).toHaveBeenCalled();
+        expect(result).toEqual(new testReportActions.ValidateLegalRequirements(false));
         done();
       });
     });

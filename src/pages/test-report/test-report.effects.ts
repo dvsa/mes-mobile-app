@@ -25,7 +25,7 @@ export class TestReportEffects {
     ) {}
 
   @Effect()
-  validateCatBTest$ = this.actions$.pipe(
+  validateCatBLegalRequirements$ = this.actions$.pipe(
     ofType(
       testReportActions.TEST_REPORT_VIEW_DID_ENTER,
       testDataActions.TOGGLE_LEGAL_REQUIREMENT,
@@ -48,9 +48,9 @@ export class TestReportEffects {
       ),
     ),
     concatMap(([action, catBLegalRequirements]) => {
-      return this.testReportValidator.validateCatBTestReport(catBLegalRequirements)
+      return this.testReportValidator.validateCatBLegalRequirements(catBLegalRequirements)
         .pipe(
-          map((result: boolean) => new testReportActions.ValidateTestResult(result)),
+          map((result: boolean) => new testReportActions.ValidateLegalRequirements(result)),
         );
     }),
   );

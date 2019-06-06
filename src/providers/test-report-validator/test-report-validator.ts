@@ -13,7 +13,7 @@ export class TestReportValidatorProvider {
 
   constructor() { }
 
-  validateCatBTestReport = (results: CatBLegalRequirements): Observable<boolean> =>
+  validateCatBLegalRequirements = (results: CatBLegalRequirements): Observable<boolean> =>
     of(results.normalStart1 &&
       results.normalStart2 &&
       results.angledStart &&

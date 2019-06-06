@@ -1,12 +1,12 @@
 import { TestReportModel } from '../test-report.model';
-import { isSeriousMode, isDangerousMode, isTestValid } from '../test-report.selector';
+import { isSeriousMode, isDangerousMode, isLegalRequirementsValid } from '../test-report.selector';
 
 describe('TestReportSelectors', () => {
   const state: TestReportModel = {
     seriousMode: true,
     dangerousMode: true,
     removeFaultMode: true,
-    isValid: true,
+    isLegalRequirementsValid: true,
     isEtaValid: true,
   };
 
@@ -20,9 +20,9 @@ describe('TestReportSelectors', () => {
       expect(isDangerousMode(state)).toBeTruthy();
     });
   });
-  describe('isTestValid', () => {
-    it('should return true if the test is valid', () => {
-      expect(isTestValid(state)).toBeTruthy();
+  describe('isLegalRequirementsValid', () => {
+    it('should return true if the legal requirements are valid', () => {
+      expect(isLegalRequirementsValid(state)).toBeTruthy();
     });
   });
 });
