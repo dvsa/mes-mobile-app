@@ -17,7 +17,13 @@ import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode, isLegalRequirementsValid } from './test-report.selector';
+import {
+  isRemoveFaultMode,
+  isSeriousMode,
+  isDangerousMode,
+  isLegalRequirementsValid,
+  isEtaValid,
+} from './test-report.selector';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
 import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
@@ -33,6 +39,7 @@ interface TestReportPageState {
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
   isLegalRequirementsValid$: Observable<boolean>;
+  isEtaValid$: Observable<boolean>;
   catBLegalRequirements$: Observable<CatBLegalRequirements>;
 }
 
@@ -55,6 +62,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
   isDangerousMode: boolean = false;
   manoeuvresCompleted: boolean = false;
   isLegalRequirementsValid: boolean = false;
+  isEtaValid: boolean = true;
 
   modal: Modal;
   catBLegalRequirements: CatBLegalRequirements;
@@ -114,6 +122,10 @@ export class TestReportPage extends PracticeableBasePageComponent {
         select(getTestReportState),
         select(isLegalRequirementsValid),
       ),
+      isEtaValid$: this.store$.pipe(
+        select(getTestReportState),
+        select(isEtaValid),
+      ),
       catBLegalRequirements$: this.store$.pipe(
         select(getTests),
         select(getCurrentTest),
@@ -129,6 +141,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       isDangerousMode$,
       manoeuvres$,
       isLegalRequirementsValid$,
+      isEtaValid$,
       catBLegalRequirements$,
     } = this.pageState;
 
@@ -139,6 +152,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
       manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
       isLegalRequirementsValid$.pipe(map(result => this.isLegalRequirementsValid = result)),
+      isEtaValid$.pipe(map(result => this.isEtaValid = result)),
       catBLegalRequirements$.pipe(map(result => this.catBLegalRequirements = result)),
     );
     this.subscription = merged$.subscribe();
@@ -177,12 +191,14 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    if (this.isLegalRequirementsValid) {
-      this.modal = this.modalController.create('EndTestModal', {}, options);
-    } else {
+    if (!this.isLegalRequirementsValid) {
       this.modal = this.modalController.create('LegalRequirementsModal', {
         legalRequirements: this.catBLegalRequirements,
       }, options);
+    } else if (!this.isEtaValid) {
+      this.modal = this.modalController.create('EtaInvalidModal', {}, options);
+    } else {
+      this.modal = this.modalController.create('EndTestModal', {}, options);
     }
     this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();

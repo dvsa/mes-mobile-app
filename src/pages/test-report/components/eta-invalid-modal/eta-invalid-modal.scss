@@ -1,0 +1,11 @@
+eta-invalid-modal {
+  @extend .modal-alert-wrapper;
+
+  .modal-alert {
+    width: 450px;
+  }
+
+  .eta-invalid-description {
+    margin-bottom: 16px;
+  }
+}
