@@ -4,7 +4,7 @@ import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
-import { TestReportModalModule } from '../../test-report-modal.module';
+import { TestReportModalModule } from '../../test-report-modal/test-report-modal.module';
 
 describe('LegalRequirementsModal', () => {
   let fixture: ComponentFixture<LegalRequirementsModal>;

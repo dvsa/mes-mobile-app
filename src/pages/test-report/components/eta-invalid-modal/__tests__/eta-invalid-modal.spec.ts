@@ -2,7 +2,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
-import { TestReportModalModule } from '../../test-report-modal.module';
+import { TestReportModalModule } from '../../test-report-modal/test-report-modal.module';
 import { EtaInvalidModal } from '../eta-invalid-modal';
 import { By } from '@angular/platform-browser';
 

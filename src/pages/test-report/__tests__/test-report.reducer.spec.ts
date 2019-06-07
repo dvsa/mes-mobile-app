@@ -2,7 +2,7 @@ import { testReportReducer, initialState } from '../test-report.reducer';
 import {
   ToggleSeriousFaultMode,
   ToggleDangerousFaultMode,
-  ValidateLegalRequirements, 
+  ValidateLegalRequirements,
   ValidateEta} from '../test-report.actions';
 
 describe('TestReportReducer reducer', () => {
