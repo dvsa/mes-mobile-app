@@ -79,45 +79,69 @@ export const getManoeuvreFaultsCount = (
   return faultCount;
 };
 
-export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): string[] => {
-  const result: string[] = [];
+export const getVehicleCheckDangerousFault =
+  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
-  if (!vehicleChecks) {
+    if (!vehicleChecks) {
+      return result;
+    }
+    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+      comment: vehicleChecks.showMeTellMeComments || '',
+      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      source: CommentSource.VEHICLE_CHECKS,
+      faultCount: 1,
+
+    };
+    vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push(competency);
+
     return result;
-  }
-  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push('vehicleChecks');
+  };
 
-  return result;
-};
+export const getVehicleCheckSeriousFault =
+  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
-export const getVehicleCheckSeriousFault = (vehicleChecks: VehicleChecks): string[] => {
-  const result: string[] = [];
+    if (!vehicleChecks) {
+      return result;
+    }
+    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+      comment: vehicleChecks.showMeTellMeComments || '',
+      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      source: CommentSource.VEHICLE_CHECKS,
+      faultCount: 1,
+    };
+    vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push(competency);
 
-  if (!vehicleChecks) {
     return result;
-  }
-  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push('vehicleChecks');
+  };
 
-  return result;
-};
+export const getVehicleCheckDrivingFault =
+  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
+      return result;
+    }
+    if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
+      || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
+      return result;
+    }
 
-export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): string[] => {
-  const result: string[] = [];
-  if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
+    if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
+      || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
+      const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+        comment: vehicleChecks.showMeTellMeComments || '',
+        competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+        competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+        source: CommentSource.VEHICLE_CHECKS,
+        faultCount: 1,
+      };
+      result.push(competency);
+    }
     return result;
-  }
-  if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
-    || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
-    return result;
-  }
-
-  if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
-    || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
-    result.push('vehicleChecks');
-  }
-
-  return result;
-};
+  };
 
 export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];

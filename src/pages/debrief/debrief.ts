@@ -32,7 +32,6 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
-  CommentSource,
 } from '../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -108,7 +107,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
             ...getSeriousOrDangerousFaults(data.seriousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
-            ...getVehicleCheckSeriousFault(data.vehicleChecks),
+            ...getVehicleCheckSeriousFault(data.vehicleChecks).map(fault => fault.competencyDisplayName),
           ];
         }),
       ),
@@ -119,7 +118,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
-            ...getVehicleCheckDangerousFault(data.vehicleChecks),
+            ...getVehicleCheckDangerousFault(data.vehicleChecks).map(fault => fault.competencyDisplayName),
           ];
         }),
       ),
@@ -143,11 +142,11 @@ export class DebriefPage extends PracticeableBasePageComponent {
                 source: result.source,
               })),
             ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
-              (result: string): MultiFaultAssignableCompetency => ({
+              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
-                competencyDisplayName: result,
-                competencyIdentifier: result,
-                source: CommentSource.VEHICLE_CHECKS,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
               }),
             ),
           ];

@@ -440,12 +440,12 @@ export class OfficePage extends PracticeableBasePageComponent {
                 comment: result.comment,
               })),
             ...getVehicleCheckDangerousFault(data.vehicleChecks).map(
-              (result: string): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
-                competencyIdentifier: result,
-                source: CommentSource.VEHICLE_CHECKS,
-                comment: '',
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
               }),
             ),
           ];
@@ -473,12 +473,12 @@ export class OfficePage extends PracticeableBasePageComponent {
                 comment: result.comment,
               })),
             ...getVehicleCheckSeriousFault(data.vehicleChecks).map(
-              (result: string): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
-                competencyIdentifier: result,
-                source: CommentSource.VEHICLE_CHECKS,
-                comment: '',
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
               }),
             ),
           ];
@@ -506,12 +506,12 @@ export class OfficePage extends PracticeableBasePageComponent {
                 comment: result.comment,
               })),
             ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
-              (result: string): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
-                competencyIdentifier: result,
-                source: CommentSource.VEHICLE_CHECKS,
-                comment: '',
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
               }),
             ),
           ];
@@ -625,6 +625,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       this.store$.dispatch(new ControlledStopAddComment(dangerousFaultComment.comment));
 
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      console.log(`dangreous fault comment ${dangerousFaultComment.comment}`);
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     }
   }
