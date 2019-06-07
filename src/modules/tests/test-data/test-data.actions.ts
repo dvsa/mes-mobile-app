@@ -41,7 +41,7 @@ export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
 export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
 export const TELL_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Tell me question driving fault';
-export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] Show me Tell me comment added';
+export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] Add Show me Tell me comment';
 
 export const SHOW_ME_QUESTION_SELECTED = '[Vehicle Checks] Show me question selected';
 export const SHOW_ME_QUESTION_PASSED = '[Vehicle Checks] Show me question passed';
