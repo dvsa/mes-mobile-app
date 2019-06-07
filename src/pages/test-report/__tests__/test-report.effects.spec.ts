@@ -16,7 +16,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { of } from 'rxjs/observable/of';
-import { ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
+import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 
 export class TestActions extends Actions {
   constructor() {
@@ -90,6 +90,39 @@ describe('Test Report Effects', () => {
       effects.validateCatBLegalRequirements$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBLegalRequirements).toHaveBeenCalled();
         expect(result).toEqual(new testReportActions.ValidateLegalRequirements(false));
+        done();
+      });
+    });
+  });
+
+  describe('validateCatBTestEta', () => {
+    beforeEach(() => {
+      store$.dispatch(new journalActions.StartTest(123456));
+    });
+
+    it('should dispatch a success action when the effect is triggered and the eta is valid', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(true));
+      // ACT
+      actions$.next(new testDataActions.AddDangerousFault(Competencies.moveOffSafety));
+      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
+        expect(result).toEqual(new testReportActions.ValidateEta(true));
+        done();
+      });
+    });
+
+    it('should dispatch a failure action when the effect is triggered and the test is not valid', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
         done();
       });
     });
