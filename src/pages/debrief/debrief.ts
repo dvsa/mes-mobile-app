@@ -23,9 +23,9 @@ import {
   getManoeuvreFaults,
   getTestOutcome,
   getControlledStopFault,
-  getVehicleCheckSeriousFault,
-  getVehicleCheckDangerousFault,
-  getVehicleCheckDrivingFault,
+  getVehicleCheckSeriousFaults,
+  getVehicleCheckDangerousFaults,
+  getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
 } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
@@ -107,7 +107,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
             ...getSeriousOrDangerousFaults(data.seriousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
-            ...getVehicleCheckSeriousFault(data.vehicleChecks).map(fault => fault.competencyIdentifier),
+            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
@@ -118,7 +118,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
-            ...getVehicleCheckDangerousFault(data.vehicleChecks).map(fault => fault.competencyIdentifier),
+            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
@@ -141,7 +141,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
                 competencyIdentifier: result.competencyIdentifier,
                 source: result.source,
               })),
-            ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
               (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
                 competencyDisplayName: result.competencyDisplayName,

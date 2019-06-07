@@ -269,7 +269,7 @@ export function testDataReducer(
           selected: state.controlledStop.selected,
         },
       };
-    case testDataActions.CONTROLLED_STOP_ADD_COMMENT:
+    case testDataActions.ADD_CONTROLLED_STOP_COMMENT:
       return {
         ...state,
         controlledStop: {

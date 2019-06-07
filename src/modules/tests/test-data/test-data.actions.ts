@@ -35,7 +35,7 @@ export const CONTROLLED_STOP_ADD_DRIVING_FAULT = '[ControlledStop] Add Driving F
 export const CONTROLLED_STOP_ADD_SERIOUS_FAULT = '[ControlledStop] Add Serious Fault';
 export const CONTROLLED_STOP_ADD_DANGEROUS_FAULT = '[ControlledStop] Add Dangerous Fault';
 export const CONTROLLED_STOP_REMOVE_FAULT = '[ControlledStop] Remove Fault';
-export const CONTROLLED_STOP_ADD_COMMENT = '[ControlledStop] Add Comment';
+export const ADD_CONTROLLED_STOP_COMMENT = '[ControlledStop] Add Comment';
 export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
 
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
@@ -103,8 +103,8 @@ export class ControlledStopRemoveFault implements Action {
   readonly type = CONTROLLED_STOP_REMOVE_FAULT;
 }
 
-export class ControlledStopAddComment implements Action {
-  readonly type = CONTROLLED_STOP_ADD_COMMENT;
+export class AddControlledStopComment implements Action {
+  readonly type = ADD_CONTROLLED_STOP_COMMENT;
   constructor(public comment: string) { }
 }
 
@@ -245,7 +245,7 @@ export type Types =
   | ControlledStopAddSeriousFault
   | ControlledStopAddDangerousFault
   | ControlledStopRemoveFault
-  | ControlledStopAddComment
+  | AddControlledStopComment
   | TellMeQuestionSelected
   | TellMeQuestionCorrect
   | TellMeQuestionDrivingFault

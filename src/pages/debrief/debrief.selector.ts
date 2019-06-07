@@ -79,7 +79,7 @@ export const getManoeuvreFaultsCount = (
   return faultCount;
 };
 
-export const getVehicleCheckDangerousFault =
+export const getVehicleCheckDangerousFaults =
   (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
@@ -99,7 +99,7 @@ export const getVehicleCheckDangerousFault =
     return result;
   };
 
-export const getVehicleCheckSeriousFault =
+export const getVehicleCheckSeriousFaults =
   (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
@@ -118,7 +118,7 @@ export const getVehicleCheckSeriousFault =
     return result;
   };
 
-export const getVehicleCheckDrivingFault =
+export const getVehicleCheckDrivingFaults =
   (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
     if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
@@ -174,7 +174,7 @@ export const anySeriousFaults = (data: TestData): boolean => {
   if (seriousFaults.length > 0) {
     return true;
   }
-  const vehicleCheckSeriousFaults = getVehicleCheckSeriousFault(data.vehicleChecks);
+  const vehicleCheckSeriousFaults = getVehicleCheckSeriousFaults(data.vehicleChecks);
   if (vehicleCheckSeriousFaults.length > 0) {
     return true;
   }
@@ -190,7 +190,7 @@ export const anyDangerousFaults = (data: TestData): boolean => {
   if (dangerousFaults.length > 0) {
     return true;
   }
-  const vehicleCheckDangerousFaults = getVehicleCheckDangerousFault(data.vehicleChecks);
+  const vehicleCheckDangerousFaults = getVehicleCheckDangerousFaults(data.vehicleChecks);
   if (vehicleCheckDangerousFaults.length > 0) {
     return true;
   }

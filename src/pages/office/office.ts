@@ -82,10 +82,10 @@ import {
   getDangerousFaults,
   getSeriousFaults,
   getManoeuvreFaults,
-  getVehicleCheckDrivingFault,
+  getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
-  getVehicleCheckSeriousFault,
-  getVehicleCheckDangerousFault,
+  getVehicleCheckSeriousFaults,
+  getVehicleCheckDangerousFaults,
 } from '../debrief/debrief.selector';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
@@ -99,7 +99,7 @@ import {
   AddSeriousFaultComment,
   AddDrivingFaultComment,
   ShowMeQuestionSelected,
-  ControlledStopAddComment,
+  AddControlledStopComment,
   AddManoeuvreComment,
   AddShowMeTellMeComment,
 } from '../../modules/tests/test-data/test-data.actions';
@@ -439,7 +439,7 @@ export class OfficePage extends PracticeableBasePageComponent {
                 source: result.source,
                 comment: result.comment,
               })),
-            ...getVehicleCheckDangerousFault(data.vehicleChecks).map(
+            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(
               (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
@@ -472,7 +472,7 @@ export class OfficePage extends PracticeableBasePageComponent {
                 source: result.source,
                 comment: result.comment,
               })),
-            ...getVehicleCheckSeriousFault(data.vehicleChecks).map(
+            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(
               (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
@@ -505,7 +505,7 @@ export class OfficePage extends PracticeableBasePageComponent {
                 source: result.source,
                 comment: result.comment,
               })),
-            ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
               (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
                 faultCount: 1,
                 competencyDisplayName: 'Show Me/Tell Me',
@@ -622,7 +622,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       );
 
     } else if (dangerousFaultComment.source === CommentSource.CONTROLLED_STOP) {
-      this.store$.dispatch(new ControlledStopAddComment(dangerousFaultComment.comment));
+      this.store$.dispatch(new AddControlledStopComment(dangerousFaultComment.comment));
 
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       console.log(`dangreous fault comment ${dangerousFaultComment.comment}`);
@@ -652,7 +652,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       );
 
     } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
-      this.store$.dispatch(new ControlledStopAddComment(seriousFaultComment.comment));
+      this.store$.dispatch(new AddControlledStopComment(seriousFaultComment.comment));
 
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
@@ -678,7 +678,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       );
 
     } else if (drivingFaultComment.source === CommentSource.CONTROLLED_STOP) {
-      this.store$.dispatch(new ControlledStopAddComment(drivingFaultComment.comment));
+      this.store$.dispatch(new AddControlledStopComment(drivingFaultComment.comment));
 
     } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
