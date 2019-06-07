@@ -35,6 +35,9 @@
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Slot type</label>
+            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
+              class="exclamation-indicator"
+              *ngIf="(pageState.details$ | async).slotType !== 'Standard Test'" />
           </ion-col>
           <ion-col col-56>
             <span class="mes-data">{{ (pageState.details$ | async).slotType }}</span>

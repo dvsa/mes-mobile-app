@@ -5,6 +5,7 @@ const todayAt8Am = moment().startOf('day').add(8, 'hour');
 
 export const fakeJournalTestSlots = [
   {
+    vehicleSlotTypeCode: 6,
     booking: {
       application: {
         applicationId: 1234567,
@@ -13,8 +14,7 @@ export const fakeJournalTestSlots = [
         entitlementCheck: false,
         extendedTest: false,
         progressiveAccess: false,
-        specialNeeds: 'Candidate has dyslexia',
-        specialNeedsCode: 'NONE',
+        specialNeedsCode: 'EXTRA',
         specialNeedsExtendedTest: false,
         testCategory: 'B',
         vehicleGearbox: 'Automatic',
@@ -69,6 +69,8 @@ export const fakeJournalTestSlots = [
         vehicleGearbox: 'Automatic',
         welshTest: true,
         meetingPlace: 'At the pub',
+        specialNeedsExtendedTest: true,
+        specialNeedsCode: 'NONE',
       },
       candidate: {
         candidateAddress: {
@@ -121,6 +123,8 @@ export const fakeJournalTestSlots = [
         vehicleSeats: 2,
         vehicleWidth: 2.5,
         welshTest: false,
+        specialNeedsCode: 'YES',
+        specialNeedsExtendedTest: true,
       },
       candidate: {
         candidateAddress: {
@@ -170,6 +174,7 @@ export const fakeJournalTestSlots = [
         vehicleSeats: 20,
         vehicleWidth: 3.5,
         welshTest: false,
+        specialNeedsCode: 'NONE',
       },
       candidate: {
         candidateAddress: {
@@ -220,6 +225,7 @@ export const fakeJournalTestSlots = [
         vehicleSeats: 50,
         vehicleWidth: 2,
         welshTest: false,
+        specialNeedsCode: 'YES',
       },
       candidate: {
         candidateAddress: {
@@ -268,6 +274,7 @@ export const fakeJournalTestSlots = [
         testCategory: 'B',
         vehicleGearbox: 'Manual',
         welshTest: false,
+        specialNeedsCode: 'EXTRA',
       },
       candidate: {
         candidateAddress: {

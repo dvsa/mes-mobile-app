@@ -14,6 +14,7 @@ import {
   getBusiness,
 } from '../candidate-details.selector';
 import { SpecialNeedsCode } from '../candidate-details.constants';
+import { SlotTypes } from '../../../shared/models/slot-types';
 
 describe('Candidate Details Selector', () => {
   describe('processSpecialNeeds', () => {
@@ -259,7 +260,7 @@ describe('Candidate Details Selector', () => {
           },
         };
         const result = getSlotType(slot);
-        expect(result).toBe('Single Slot (Special Needs)');
+        expect(result).toBe(SlotTypes.SINGLE_SLOT_SPECIAL_NEEDS);
       });
     });
 
@@ -274,7 +275,7 @@ describe('Candidate Details Selector', () => {
           },
         };
         const result = getSlotType(slot);
-        expect(result).toBe('Single Slot (Special Needs)');
+        expect(result).toBe(SlotTypes.SINGLE_SLOT_SPECIAL_NEEDS);
       });
     });
 
@@ -294,7 +295,7 @@ describe('Candidate Details Selector', () => {
             },
           };
           const result = getSlotType(slot);
-          expect(result).toBe('Extended Test');
+          expect(result).toBe(SlotTypes.EXTENDED_TEST);
         });
       });
 
@@ -311,7 +312,7 @@ describe('Candidate Details Selector', () => {
             },
           };
           const result = getSlotType(slot);
-          expect(result).toBe('Extended Test Special Needs');
+          expect(result).toBe(SlotTypes.EXTENDED_TEST_SPECIAL_NEEDS);
         });
       });
 
@@ -328,7 +329,7 @@ describe('Candidate Details Selector', () => {
             },
           };
           const result = getSlotType(slot);
-          expect(result).toBe('Extended Test Special Needs');
+          expect(result).toBe(SlotTypes.EXTENDED_TEST_SPECIAL_NEEDS);
         });
       });
     });
@@ -349,7 +350,7 @@ describe('Candidate Details Selector', () => {
             },
           };
           const result = getSlotType(slot);
-          expect(result).toBe('Standard Test');
+          expect(result).toBe(SlotTypes.STANDARD_TEST);
         });
       });
 
@@ -366,7 +367,7 @@ describe('Candidate Details Selector', () => {
             },
           };
           const result = getSlotType(slot);
-          expect(result).toBe('Standard Test');
+          expect(result).toBe(SlotTypes.STANDARD_TEST);
         });
       });
 
@@ -383,7 +384,7 @@ describe('Candidate Details Selector', () => {
             },
           };
           const result = getSlotType(slot);
-          expect(result).toBe('Special Needs Extra Time');
+          expect(result).toBe(SlotTypes.SPECIAL_NEEDS_EXTRA_TIME);
         });
       });
     });

@@ -116,8 +116,8 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   handleDoneButtonClick(): void {
     this.navController.pop();
   }
+
   public specialNeedsIsPopulated(specialNeeds: string | string[]): boolean {
     return Array.isArray(specialNeeds);
   }
-
 }
