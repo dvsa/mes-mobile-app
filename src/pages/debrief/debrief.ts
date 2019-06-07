@@ -105,9 +105,9 @@ export class DebriefPage extends PracticeableBasePageComponent {
         map((data) => {
           return [
             ...getSeriousOrDangerousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyDisplayName),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
-            ...getVehicleCheckSeriousFault(data.vehicleChecks).map(fault => fault.competencyDisplayName),
+            ...getVehicleCheckSeriousFault(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
@@ -116,9 +116,9 @@ export class DebriefPage extends PracticeableBasePageComponent {
         map((data) => {
           return [
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyDisplayName),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
-            ...getVehicleCheckDangerousFault(data.vehicleChecks).map(fault => fault.competencyDisplayName),
+            ...getVehicleCheckDangerousFault(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
