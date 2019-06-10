@@ -625,7 +625,6 @@ export class OfficePage extends PracticeableBasePageComponent {
       this.store$.dispatch(new AddControlledStopComment(dangerousFaultComment.comment));
 
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
-      console.log(`dangreous fault comment ${dangerousFaultComment.comment}`);
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     }
   }
@@ -639,7 +638,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
       );
-    } else if (startsWith(seriousFaultComment.source, CommentSource.VEHICLE_CHECKS)) {
+    } else if (startsWith(seriousFaultComment.source, CommentSource.MANOEUVRES)) {
       const segments = seriousFaultComment.source.split('-');
       const fieldName = segments[1];
       const controlOrObservation = segments[2];
