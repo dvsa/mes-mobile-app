@@ -69,7 +69,7 @@ export const fakeJournalTestSlots = [
         vehicleGearbox: 'Automatic',
         welshTest: true,
         meetingPlace: 'At the pub',
-        specialNeedsExtendedTest: true,
+        specialNeedsExtendedTest: false,
         specialNeedsCode: 'NONE',
       },
       candidate: {
@@ -124,7 +124,7 @@ export const fakeJournalTestSlots = [
         vehicleWidth: 2.5,
         welshTest: false,
         specialNeedsCode: 'YES',
-        specialNeedsExtendedTest: true,
+        specialNeedsExtendedTest: false,
       },
       candidate: {
         candidateAddress: {
@@ -274,7 +274,8 @@ export const fakeJournalTestSlots = [
         testCategory: 'B',
         vehicleGearbox: 'Manual',
         welshTest: false,
-        specialNeedsCode: 'EXTRA',
+        specialNeedsCode: 'NONE',
+        specialNeedsExtendedTest: false,
       },
       candidate: {
         candidateAddress: {
