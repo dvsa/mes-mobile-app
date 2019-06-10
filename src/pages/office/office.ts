@@ -114,7 +114,6 @@ import { ActivityCodeModel, activityCodeModelList } from './components/activity-
 import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
-import { create } from 'domain';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -726,7 +725,7 @@ export class OfficePage extends PracticeableBasePageComponent {
     alert.present();
   }
 
-  leteTest() {
+  completeTest() {
     if (!this.isPracticeMode) {
       this.store$.dispatch(new CompleteTest());
     }
