@@ -10,8 +10,13 @@ const expect = chai.expect;
 const buttonPadding = 30;
 const request = require('request');
 
+const endTest = () => {
+  const endTestButton = getElement(by.id('end-test-button'));
+  clickElement(endTestButton);
+};
+
 // This needs to be correctly re-implemented with the Test Report page
-When('I complete the test', () => {
+const completeLegalRequirements = () => {
   // Click all the legal requirements - having to go native as normal find and click not working. Not sure why.
   browser.driver.getCurrentContext().then((webviewContext) => {
     // Switch to NATIVE context
@@ -25,21 +30,32 @@ When('I complete the test', () => {
       browser.driver.selectContext(webviewContext);
     });
   });
+};
 
-  // Select a manouveure
-  completeManouveure();
+When('I complete legal requirements', () => {
+  completeLegalRequirements();
+});
 
-  // End the test
-  const endTestButton = getElement(by.id('end-test-button'));
-  clickElement(endTestButton);
 
-  // Continue to debrief
+When('I end the test', () => {
+  endTest();
+});
+
+When('I continue to debrief', () => {
   const continueToDebriefButton = getElement(by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
   clickElement(continueToDebriefButton);
 });
 
+When('I complete the test', () => {
+  completeLegalRequirements();
+
+  completeManouveure();
+
+  endTest();
+});
+
 When('I add a {string} driver fault', (competency) => {
-  addDriverFault(competency);
+  longPressCompetency(competency);
 });
 
 When('I add a {string} serious fault', (competency) => {
@@ -48,10 +64,96 @@ When('I add a {string} serious fault', (competency) => {
   clickCompetency(competency);
 });
 
+When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
+  const etaText = `ETA: ${etaType}`;
+  clickCompetency(etaText);
+});
+
 When('I add a {string} dangerous fault', (competency) => {
   const dangerousButton = getElement(by.id('dangerous-button'));
   clickElement(dangerousButton);
   clickCompetency(competency);
+});
+
+Then('the ETA invalid modal is shown', () => {
+  // TODO Check title text is "You cannot record an ETA"
+  // TODO Click return to test
+});
+
+Then('the {string} button displays the serious badge', (competency: string) => {
+  const button = getCompetencyButton(competency);
+  const seriousBadge = button.element(by.tagName('serious-fault-badge'));
+  expect(seriousBadge.isPresent()).to.eventually.be.true;
+});
+
+Then('the {string} button displays the dangerous badge', (competency: string) => {
+  const button = getCompetencyButton(competency);
+  const dangerousBadge = button.element(by.tagName('dangerous-fault-badge'));
+  expect(dangerousBadge.isPresent()).to.eventually.be.true;
+});
+
+Then('the {string} button does not display the serious badge', (competency: string) => {
+  const button = getCompetencyButton(competency);
+  const seriousBadge = button.element(by.tagName('serious-fault-badge'));
+  expect(seriousBadge.isPresent()).toBe(false);
+});
+
+const clickRemove = () => {
+  // TODO
+};
+
+const clickSeriousMode = () => {
+  // TODO
+};
+
+When('I remove a driver fault for {string} with a tap', (competency: string) => {
+  clickRemove();
+  clickCompetency(competency);
+});
+
+When('I remove a driver fault for {string} with a long press', (competency: string) => {
+  clickRemove();
+  longPressCompetency(competency);
+});
+
+When('I remove a serious fault for {string} with a tap', (competency: string) => {
+  clickRemove();
+  clickSeriousMode();
+  clickCompetency(competency);
+});
+
+When('I remove a serious fault for {string} with a long press', (competency: string) => {
+  clickSeriousMode();
+  clickRemove();
+  longPressCompetency(competency);
+});
+
+const clickManoeuvresButton = () => {
+  const manoeuvresButton = getElement(
+    by.xpath('//manoeuvres/button'));
+
+  clickElement(manoeuvresButton);
+};
+
+When('I add a manoeuvre', () => {
+  clickManoeuvresButton();
+  
+  const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
+  clickElement(reverseRightRadio);
+});
+
+When('I click the manoeuvres button', () => {
+  clickManoeuvresButton();
+});
+
+When('I mark the manoeuvre as a {string} driver fault', (faultName: 'Control' | 'Observation') => {
+  const competencyButton = getCompetencyButton(faultName);
+  longPressCompetency(competencyButton);
+});
+
+Then('the controlled stop requirement is ticked', () => {
+  const controlledStopTick = getElement(by.css('.controlled-stop-tick .checked'));
+  expect(controlledStopTick.isPresent()).to.eventually.be.true;
 });
 
 Then('the driver fault count is {string}', (driverFaultCount) => {
@@ -65,15 +167,19 @@ Then('the competency {string} driver fault count is {string}', (competency, driv
   return expect(competencyCountField.getText()).to.eventually.equal(driverFaultCount);
 });
 
+const getCompetencyButton = (competency: string) => {
+  return getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
+};
+
 /**
  * Performs the long press action on the competency to add a driver fault.
  * The long press does not appear to have been implemented so calling appiums touch perform action directly.
  * @param driverFault The competency to apply the driver fault to
  */
-const addDriverFault = (competency) => {
+const longPressCompetency = (competency) => {
   browser.getProcessedConfig().then((config) => {
     browser.driver.getSession().then((session) => {
-      const competencyButton = getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
+      const competencyButton = getCompetencyButton(competency);
       competencyButton.getLocation().then((buttonLocation) => {
         request.post(`${config.seleniumAddress}/session/${session.getId()}/touch/perform`, {
           json: {
@@ -109,7 +215,7 @@ const addDriverFault = (competency) => {
 const clickCompetency = (competency) => {
   browser.getProcessedConfig().then((config) => {
     browser.driver.getSession().then((session) => {
-      const competencyButton = getElement(by.xpath(`//competency-button/div/span[text() = '${competency}']`));
+      const competencyButton = getCompetencyButton(competency);
       competencyButton.getLocation().then((buttonLocation) => {
         request.post(`${config.seleniumAddress}/session/${session.getId()}/touch/perform`, {
           json: {
