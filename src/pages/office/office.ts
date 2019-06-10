@@ -72,6 +72,7 @@ import {
   getVehicleChecks,
   getShowMeQuestionOptions,
   getTellMeQuestion,
+  getDrivingFaultSummaryCount,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests, SetActivityCode } from '../../modules/tests/tests.actions';
@@ -80,6 +81,11 @@ import {
   displayDrivingFaultComments,
   getDangerousFaults,
   getSeriousFaults,
+  getManoeuvreFaults,
+  getVehicleCheckDrivingFaults,
+  getControlledStopFaultAndComment,
+  getVehicleCheckSeriousFaults,
+  getVehicleCheckDangerousFaults,
 } from '../debrief/debrief.selector';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
@@ -93,12 +99,21 @@ import {
   AddSeriousFaultComment,
   AddDrivingFaultComment,
   ShowMeQuestionSelected,
+  AddControlledStopComment,
+  AddManoeuvreComment,
+  AddShowMeTellMeComment,
 } from '../../modules/tests/test-data/test-data.actions';
-import { MultiFaultAssignableCompetency, CommentedCompetency } from '../../shared/models/fault-marking.model';
+import {
+  MultiFaultAssignableCompetency,
+  CommentedCompetency,
+  CommentSource,
+} from '../../shared/models/fault-marking.model';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
 import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+import { startsWith } from 'lodash';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -137,12 +152,12 @@ interface OfficePageState {
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
-  drivingFaults$: Observable<(CommentedCompetency & MultiFaultAssignableCompetency)[]>;
+  drivingFaults$: Observable<MultiFaultAssignableCompetency[]>;
   drivingFaultCount$: Observable<number>;
   displayDrivingFaultComments$: Observable<boolean>;
   weatherConditions$: Observable<WeatherConditions[]>;
-  dangerousFaults$: Observable<CommentedCompetency[]>;
-  seriousFaults$: Observable<CommentedCompetency[]>;
+  dangerousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
+  seriousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
   isWelshTest$: Observable<boolean>;
 }
 
@@ -405,22 +420,106 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       dangerousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => getDangerousFaults(data.dangerousFaults)),
+        map((data) => {
+          return [
+            ...getDangerousFaults(data.dangerousFaults),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              })),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.D).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              })),
+            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: 'Show Me/Tell Me',
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              }),
+            ),
+          ];
+        }),
       ),
       seriousFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => getSeriousFaults(data.seriousFaults)),
+        map((data) => {
+          return [
+            ...getSeriousFaults(data.seriousFaults),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              })),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.S).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              })),
+            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: 'Show Me/Tell Me',
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              }),
+            ),
+          ];
+        }),
       ),
       drivingFaults$: currentTest$.pipe(
         select(getTestData),
-        map(data => getDrivingFaults(data.drivingFaults)),
+        map((data) => {
+          return [
+            ...getDrivingFaults(data.drivingFaults),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              })),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              })),
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
+              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+                faultCount: 1,
+                competencyDisplayName: 'Show Me/Tell Me',
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+                comment: result.comment,
+              }),
+            ),
+          ];
+        }),
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        map((data) => {
-          const faults = getDrivingFaults(data.drivingFaults);
-          return faults.reduce((sum, c) => sum + c.faultCount, 0);
-        }),
+        select(getDrivingFaultSummaryCount),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
@@ -506,9 +605,29 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
-    this.store$.dispatch(
-      new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
-    );
+    if (dangerousFaultComment.source === CommentSource.SIMPLE) {
+      this.store$.dispatch(
+        new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
+      );
+    } else if (startsWith(dangerousFaultComment.source, CommentSource.MANOEUVRES)) {
+      const segments = dangerousFaultComment.source.split('-');
+      const fieldName = segments[1];
+      const controlOrObservation = segments[2];
+      this.store$.dispatch(
+        new AddManoeuvreComment(
+          fieldName,
+          CompetencyOutcome.D,
+          controlOrObservation,
+          dangerousFaultComment.comment),
+      );
+
+    } else if (dangerousFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(dangerousFaultComment.comment));
+
+    } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      console.log(`dangreous fault comment ${dangerousFaultComment.comment}`);
+      this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
+    }
   }
 
   isWelshChanged(isWelsh: boolean) {
@@ -516,15 +635,55 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
-    this.store$.dispatch(
-      new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
-    );
+    if (seriousFaultComment.source === CommentSource.SIMPLE) {
+      this.store$.dispatch(
+        new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
+      );
+    } else if (startsWith(seriousFaultComment.source, CommentSource.VEHICLE_CHECKS)) {
+      const segments = seriousFaultComment.source.split('-');
+      const fieldName = segments[1];
+      const controlOrObservation = segments[2];
+      this.store$.dispatch(
+        new AddManoeuvreComment(
+          fieldName,
+          CompetencyOutcome.S,
+          controlOrObservation,
+          seriousFaultComment.comment),
+      );
+
+    } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(seriousFaultComment.comment));
+
+    } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
+    }
+
   }
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
-    this.store$.dispatch(
-      new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
-    );
+    if (drivingFaultComment.source === CommentSource.SIMPLE) {
+      this.store$.dispatch(
+        new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),
+      );
+    } else if (startsWith(drivingFaultComment.source, CommentSource.MANOEUVRES)) {
+      const segments = drivingFaultComment.source.split('-');
+      const fieldName = segments[1];
+      const controlOrObservation = segments[2];
+      this.store$.dispatch(
+        new AddManoeuvreComment(
+          fieldName,
+          CompetencyOutcome.DF,
+          controlOrObservation,
+          drivingFaultComment.comment),
+      );
+
+    } else if (drivingFaultComment.source === CommentSource.CONTROLLED_STOP) {
+      this.store$.dispatch(new AddControlledStopComment(drivingFaultComment.comment));
+
+    } else if (drivingFaultComment.source === CommentSource.VEHICLE_CHECKS) {
+      this.store$.dispatch(new AddShowMeTellMeComment(drivingFaultComment.comment));
+    }
+
   }
 
   activityCodeChanged(activityCodeModel: ActivityCodeModel) {

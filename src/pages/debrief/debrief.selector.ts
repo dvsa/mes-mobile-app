@@ -18,6 +18,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
+  CommentSource,
 } from '../../shared/models/fault-marking.model';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 
@@ -32,6 +33,203 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
   return faultsEncountered;
 };
 
+export const getManoeuvreFaults = (
+  manoeuvres: Manoeuvres,
+  faultType: CompetencyOutcome,
+): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+  forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
+    let competencyComment = '';
+    const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
+      if (endsWith(key, 'Fault') && value === faultType) {
+        if (key === 'controlFault') {
+          competencyComment = manoeuvre.controlFaultComments || '';
+        } else {
+          competencyComment = manoeuvre.observationFaultComments || '';
+        }
+        const manoeuvreFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
+          comment: competencyComment || '',
+          competencyIdentifier: type,
+          competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
+          source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
+          faultCount: 1,
+        };
+        result.push(manoeuvreFaultSummary);
+      }
+    }, []);
+    faultsEncountered.push(...faults);
+  });
+  return faultsEncountered;
+};
+
+export const getManoeuvreFaultsCount = (
+  manoeuvres: Manoeuvres,
+  faultType: CompetencyOutcome,
+): number => {
+  let faultCount = 0;
+  forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes, key) => {
+    if (manoeuvre.selected) {
+      forOwn(manoeuvre, (value, key) => {
+        if (endsWith(key, 'Fault') && value === faultType) {
+          faultCount = faultCount + 1;
+        }
+      });
+    }
+  });
+  return faultCount;
+};
+
+export const getVehicleCheckDangerousFaults =
+  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+
+    if (!vehicleChecks) {
+      return result;
+    }
+    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+      comment: vehicleChecks.showMeTellMeComments || '',
+      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      source: CommentSource.VEHICLE_CHECKS,
+      faultCount: 1,
+
+    };
+    vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push(competency);
+
+    return result;
+  };
+
+export const getVehicleCheckSeriousFaults =
+  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+
+    if (!vehicleChecks) {
+      return result;
+    }
+    const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+      comment: vehicleChecks.showMeTellMeComments || '',
+      competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      source: CommentSource.VEHICLE_CHECKS,
+      faultCount: 1,
+    };
+    vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push(competency);
+
+    return result;
+  };
+
+export const getVehicleCheckDrivingFaults =
+  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
+      return result;
+    }
+    if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
+      || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
+      return result;
+    }
+
+    if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
+      || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
+      const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
+        comment: vehicleChecks.showMeTellMeComments || '',
+        competencyIdentifier: CommentSource.VEHICLE_CHECKS,
+        competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+        source: CommentSource.VEHICLE_CHECKS,
+        faultCount: 1,
+      };
+      result.push(competency);
+    }
+    return result;
+  };
+
+export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
+  const result: string[] = [];
+  if (!controlledStop) {
+    return result;
+  }
+  controlledStop.fault === faultType && result.push('controlledStop');
+
+  return result;
+};
+
+export const getControlledStopFaultAndComment =
+  (controlledStop: ControlledStop, faultType: CompetencyOutcome): CommentedCompetency[] => {
+    const returnCompetencies = [];
+    if (!controlledStop || controlledStop.fault !== faultType) {
+      return returnCompetencies;
+    }
+    const result: CommentedCompetency = {
+      competencyDisplayName: 'Controlled Stop',
+      competencyIdentifier: 'controlledStop',
+      comment: controlledStop.faultComments || '',
+      source: CommentSource.CONTROLLED_STOP,
+    };
+    returnCompetencies.push(result);
+    return returnCompetencies;
+  };
+
+export const anySeriousFaults = (data: TestData): boolean => {
+  const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
+  if (seriousFaults.length > 0) {
+    return true;
+  }
+  const vehicleCheckSeriousFaults = getVehicleCheckSeriousFaults(data.vehicleChecks);
+  if (vehicleCheckSeriousFaults.length > 0) {
+    return true;
+  }
+  const controlledStopSeriousFault = getControlledStopFault(data.controlledStop, CompetencyOutcome.S);
+  if (controlledStopSeriousFault.length > 0) {
+    return true;
+  }
+  return false;
+};
+
+export const anyDangerousFaults = (data: TestData): boolean => {
+  const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
+  if (dangerousFaults.length > 0) {
+    return true;
+  }
+  const vehicleCheckDangerousFaults = getVehicleCheckDangerousFaults(data.vehicleChecks);
+  if (vehicleCheckDangerousFaults.length > 0) {
+    return true;
+  }
+  const controlledStopDangerousFault = getControlledStopFault(data.controlledStop, CompetencyOutcome.D);
+  if (controlledStopDangerousFault.length > 0) {
+    return true;
+  }
+  return false;
+};
+
+export const displayDrivingFaultComments = (data: TestData): boolean => {
+  if (anySeriousFaults(data) || anyDangerousFaults(data)) {
+    return false;
+  }
+  let drivingFaultCount: number = 0;
+
+  forOwn(data.drivingFaults, (value: number, key) => {
+    if (value > 0) {
+      drivingFaultCount = drivingFaultCount + value;
+    }
+  });
+  if (data.controlledStop && data.controlledStop.selected && data.controlledStop.fault === CompetencyOutcome.DF) {
+    drivingFaultCount = drivingFaultCount + 1;
+  }
+  if (data.vehicleChecks) {
+    const checks = data.vehicleChecks;
+    if (checks.showMeQuestion && checks.showMeQuestion.outcome === CompetencyOutcome.DF) {
+      drivingFaultCount = drivingFaultCount + 1;
+    }
+    if (checks.tellMeQuestion && checks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
+      drivingFaultCount = drivingFaultCount + 1;
+    }
+  }
+
+  drivingFaultCount = drivingFaultCount + getManoeuvreFaultsCount(data.manoeuvres, CompetencyOutcome.DF);
+
+  return drivingFaultCount > 15;
+};
+
 export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
   const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
   forOwn(faults, (value: number, key, obj) => {
@@ -43,6 +241,7 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
         competencyIdentifier: key,
         competencyDisplayName: fullCompetencyLabels[label],
         faultCount: value,
+        source: CommentSource.SIMPLE,
       };
       faultsEncountered.push(drivingFaultSummary);
     }
@@ -50,127 +249,57 @@ export const getDrivingFaults = (faults: DrivingFaults): (CommentedCompetency & 
   return faultsEncountered.sort((a, b) => b.faultCount - a.faultCount);
 };
 
-export const getManoeuvreFaults = (
-  manoeuvres: Manoeuvres,
-  faultType: CompetencyOutcome,
-): MultiFaultAssignableCompetency[] => {
-  const faultsEncountered: MultiFaultAssignableCompetency[] = [];
-  forOwn(manoeuvres, (manoeuvre, type: ManoeuvreTypes) => {
-    const faults = !manoeuvre.selected ? [] : transform(manoeuvre, (result, value, key: string) => {
-      if (endsWith(key, 'Fault') && value === faultType) {
-        const manoeuvreFaultSummary: MultiFaultAssignableCompetency = {
-          competencyIdentifier: type,
-          competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
+/**
+ * @param faults
+ *
+ * Returns an array of CommentedCompetency & MultiFaultAssignableCompetency
+ * for each dangerous fault recorded against a candidate.
+ */
+export const getDangerousFaults =
+  (faults: DangerousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    forOwn(faults, (value, key, obj) => {
+      if (value && !key.endsWith('Comments')) {
+        const label = key as keyof typeof competencyLabels;
+        const comment = obj[`${key}Comments`] || null;
+        const dangerousFault: CommentedCompetency & MultiFaultAssignableCompetency = {
+          comment,
+          competencyIdentifier: key,
+          competencyDisplayName: fullCompetencyLabels[label],
+          source: CommentSource.SIMPLE,
           faultCount: 1,
         };
-        result.push(manoeuvreFaultSummary);
+        faultsEncountered.push(dangerousFault);
       }
-    }, []);
-    faultsEncountered.push(...faults);
-  });
-  return faultsEncountered;
-};
-
-export const getVehicleCheckDangerousFault = (vehicleChecks: VehicleChecks): string[] => {
-  const result: string[] = [];
-
-  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D && result.push('vehicleChecks');
-
-  return result;
-};
-
-export const getVehicleCheckSeriousFault = (vehicleChecks: VehicleChecks): string[] => {
-  const result: string[] = [];
-
-  vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S && result.push('vehicleChecks');
-
-  return result;
-};
-
-export const getVehicleCheckDrivingFault = (vehicleChecks: VehicleChecks): string[] => {
-  if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.D
-    || vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S) {
-    return [];
-  }
-
-  const result: string[] = [];
-
-  if (vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.DF
-    || vehicleChecks.tellMeQuestion.outcome === CompetencyOutcome.DF) {
-    result.push('vehicleChecks');
-  }
-
-  return result;
-};
-
-export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
-  const result: string[] = [];
-
-  controlledStop.fault === faultType && result.push('controlledStop');
-
-  return result;
-};
-
-export const displayDrivingFaultComments = (data: TestData): boolean => {
-  const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
-  const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
-  let drivingFaultCount: number = 0;
-
-  if (seriousFaults.length > 0 || dangerousFaults.length > 0) {
-    return false;
-  }
-
-  forOwn(data.drivingFaults, (value: number, key) => {
-    if (value > 0) {
-      drivingFaultCount = drivingFaultCount + value;
-    }
-  });
-  return drivingFaultCount > 15;
-};
+    });
+    return faultsEncountered;
+  };
 
 /**
  * @param faults
  *
- * Returns an array of CommentedCompetency for each dangerous fault recorded against a candidate.
+ * Returns an array of CommentedCompetency & MultiFaultAssignableCompetency
+ * for each serious fault recorded against a candidate.
  */
-export const getDangerousFaults = (faults: DangerousFaults): CommentedCompetency[] => {
-  const faultsEncountered: CommentedCompetency[] = [];
-  forOwn(faults, (value, key, obj) => {
-    if (value && !key.endsWith('Comments')) {
-      const label = key as keyof typeof competencyLabels;
-      const comment = obj[`${key}Comments`] || null;
-      const dangerousFault: (CommentedCompetency) = {
-        comment,
-        competencyIdentifier: key,
-        competencyDisplayName: fullCompetencyLabels[label],
-      };
-      faultsEncountered.push(dangerousFault);
-    }
-  });
-  return faultsEncountered;
-};
-
-/**
- * @param faults
- *
- * Returns an array of CommentedCompetency for each serious fault recorded against a candidate.
- */
-export const getSeriousFaults = (faults: SeriousFaults): CommentedCompetency[] => {
-  const faultsEncountered: CommentedCompetency[] = [];
-  forOwn(faults, (value, key, obj) => {
-    if (value && !key.endsWith('Comments')) {
-      const label = key as keyof typeof competencyLabels;
-      const comment = obj[`${key}Comments`] || null;
-      const seriousFault: CommentedCompetency = {
-        comment,
-        competencyIdentifier: key,
-        competencyDisplayName: fullCompetencyLabels[label],
-      };
-      faultsEncountered.push(seriousFault);
-    }
-  });
-  return faultsEncountered;
-};
+export const getSeriousFaults =
+  (faults: SeriousFaults): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+    const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
+    forOwn(faults, (value, key, obj) => {
+      if (value && !key.endsWith('Comments')) {
+        const label = key as keyof typeof competencyLabels;
+        const comment = obj[`${key}Comments`] || null;
+        const seriousFault: CommentedCompetency & MultiFaultAssignableCompetency = {
+          comment,
+          competencyIdentifier: key,
+          competencyDisplayName: fullCompetencyLabels[label],
+          source: CommentSource.SIMPLE,
+          faultCount: 1,
+        };
+        faultsEncountered.push(seriousFault);
+      }
+    });
+    return faultsEncountered;
+  };
 
 export const getDrivingFaultComment = (
   faults: DrivingFaults | DangerousFaults | SeriousFaults, competency: string,

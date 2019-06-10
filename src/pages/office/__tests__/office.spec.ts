@@ -98,6 +98,12 @@ describe('OfficePage', () => {
                     showMeQuestion: {
                       code: 'S3',
                       description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
                     },
                   },
                 },

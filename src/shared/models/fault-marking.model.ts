@@ -1,6 +1,7 @@
 export type Competency = {
   competencyIdentifier: string;
   competencyDisplayName: string;
+  source?: string;
 };
 
 export type MultiFaultAssignableCompetency = {
@@ -10,3 +11,10 @@ export type MultiFaultAssignableCompetency = {
 export type CommentedCompetency = {
   comment: string;
 } & Competency;
+
+export enum CommentSource {
+  SIMPLE = 'simple',
+  VEHICLE_CHECKS = 'vehicleChecks',
+  CONTROLLED_STOP = 'controlledStop',
+  MANOEUVRES = 'Manoeuvres',
+}
