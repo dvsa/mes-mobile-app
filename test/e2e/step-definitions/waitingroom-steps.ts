@@ -7,20 +7,6 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-Then(/^the (communication page|waiting room) candidate name should be \"(.+)\"$/, (pageName: string,
-                                                                                   candidateName: string) => {
-  const pageType = (pageName === 'communication page' ? 'communication' : 'page-waiting-room');
-  const candidateNameElement = getElement(by.xpath(`//${pageType}//h2[@id = 'candidate-name']`));
-  return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
-});
-
-Then(/^the (communication page|waiting room) candidate driver number should be \"(.+)\"$/, (pageName: string,
-                                                                                            driverNumber: string) => {
-  const pageType = (pageName === 'communication page' ? 'communication' : 'page-waiting-room');
-  const candidateDriverNumberElement = getElement(by.xpath(`//${pageType}//h3[@id = 'candidate-driver-number']`));
-  return expect(candidateDriverNumberElement.getText()).to.eventually.equal(driverNumber);
-});
-
 When('the candidate enters a new email address', () => {
   const newEmailRadio = getElement(by.id('newEmail'));
   clickElement(newEmailRadio);

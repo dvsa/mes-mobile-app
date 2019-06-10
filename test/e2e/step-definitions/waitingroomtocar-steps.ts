@@ -17,11 +17,15 @@ When('I select a tell me question', () => {
 });
 
 When('I complete the waiting room to car page', () => {
-  completeWaitingRoomPage(false);
+  completeWaitingRoomPage(false, true);
 });
 
 When('I complete the waiting room to car page with a tell me driver fault', () => {
-  completeWaitingRoomPage(true);
+  completeWaitingRoomPage(true, true);
+});
+
+When('I complete the waiting room to car page with automatic transmission', () => {
+  completeWaitingRoomPage(false, false);
 });
 
 When('I fail the eye sight test', () => {
@@ -33,7 +37,7 @@ When('I fail the eye sight test', () => {
   clickElement(eyesightFailConfirmButton);
 });
 
-const completeWaitingRoomPage = (withDriverFault: boolean) => {
+const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: boolean) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
   const tellMeSelector = getElement(by.id('tell-me-selector'));
@@ -46,8 +50,9 @@ const completeWaitingRoomPage = (withDriverFault: boolean) => {
   const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
   clickElement(tellMeRadio);
-  const transitionManualRadio = getElement(by.id('transmission-manual'));
-  clickElement(transitionManualRadio);
+  const transmissionSelector = (manualTransmission) ? 'transmission-manual' : 'transmission-automatic';
+  const transmissionRadio = getElement(by.id(transmissionSelector));
+  clickElement(transmissionRadio);
 
   const registrationField = element(by.id('registration'));
   enterTextIndirect(registrationField, 'ABC');
