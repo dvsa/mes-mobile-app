@@ -13,7 +13,7 @@ declare let window: any;
   templateUrl: 'app.html',
 })
 export class App {
-  rootPage: any = 'LoginPage';
+  rootPage: any = 'Poc';
   textZoom: number = 100;
   increasedContrast: Boolean = false;
 
