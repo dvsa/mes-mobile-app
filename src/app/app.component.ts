@@ -13,7 +13,9 @@ declare let window: any;
   templateUrl: 'app.html',
 })
 export class App {
-  rootPage: any = 'Poc';
+  // Uncomment below to enable Poc as initial page
+  // rootPage: any = 'Poc';
+  rootPage: any = 'LoginPage';
   textZoom: number = 100;
   increasedContrast: Boolean = false;
 
