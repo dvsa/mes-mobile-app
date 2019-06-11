@@ -96,7 +96,8 @@
     "phonegap-plugin-mobile-accessibility": "^1.0.5",
     "rxjs": "^5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-plugin-insomnia": "~4.3.0"
   },
   "devDependencies": {
     "@angular/cli": "1.4.8",
