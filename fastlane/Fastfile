@@ -19,20 +19,20 @@ platform :ios do
   desc "Signs and builds the app with the DVSA production distribution certificate & provisioning profile"
   lane :build do
    upgrade_super_old_xcode_project(
-    path: "platforms/ios/mes-mobile-app.xcodeproj",
+    path: "platforms/ios/Driving Examiner Service.xcodeproj",
     team_id: "K84TL26V3P"
   )
-  disable_automatic_code_signing(path: "platforms/ios/mes-mobile-app.xcodeproj")
+  disable_automatic_code_signing(path: "platforms/ios/Driving Examiner Service.xcodeproj")
   # Make sure the XCode project is using the VOSA/DVSA team
   update_project_team(
-   path: "platforms/ios/mes-mobile-app.xcodeproj",
+   path: "platforms/ios/Driving Examiner Service.xcodeproj",
    teamid: "K84TL26V3P")
 
-   # Update the project's provisoning settings to use our distribution cert
+   # Update the project's provisioning settings to use our distribution cert
    update_project_provisioning(
-    xcodeproj: "platforms/ios/mes-mobile-app.xcodeproj",
+    xcodeproj: "platforms/ios/Driving Examiner Service.xcodeproj",
     profile: "/Users/mes/certs/Mobile_Examiner_App.mobileprovision", 
-    target_filter: ".*mes-mobile-app.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation 
+    target_filter: ".*Driving Examiner Service.*", # matches name or type of a target, see https://medium.com/@andersongusmao/xcode-targets-with-multiples-build-configuration-90a575ddc687 for an explanation 
     build_configuration: "Release",
     code_signing_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
   )
@@ -44,12 +44,12 @@ platform :ios do
         "uk.gov.dvsa.mobile-examiner-app" => "Mobile Examiner App",
       }
     },
-    project:  "platforms/ios/mes-mobile-app.xcodeproj",
-        scheme: "mes-mobile-app",
+    project:  "platforms/ios/Driving Examiner Service.xcodeproj",
+        scheme: "Driving Examiner Service",
         configuration: "Release",
         output_directory: "build",
         silent: false,
-        output_name: "mes-mobile-app.ipa",
+        output_name: "Driving Examiner Service.ipa",
         export_method: "enterprise",
         codesigning_identity: "iPhone Distribution: Vehicle and Operator Services Agency"
 
