@@ -71,7 +71,6 @@ export const getDangerousFaultSummaryCount = (data: TestData): number => {
 };
 
 export const sumVehicleCheckFaults = (vehicleChecks: VehicleChecks): number => {
-
   const { showMeQuestion, tellMeQuestion } = vehicleChecks;
 
   if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {

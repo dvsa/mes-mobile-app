@@ -9,11 +9,13 @@ import {
 } from './test-data.constants';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 export const RECORD_MANOEUVRES_SELECTION = '[Manoeuvres] Record Manoeuvres Selection';
 export const ADD_MANOEUVRE_DRIVING_FAULT = '[Manoeuvres] Add Manoeuvre Driving Fault';
 export const ADD_MANOEUVRE_SERIOUS_FAULT = '[Manoeuvres] Add Manoeuvre Serious Fault';
 export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] Add Manoeuvre Dangerous Fault';
+export const ADD_MANOEUVRE_COMMENT = '[Manoeuvres] Add Manoeuvre Comment';
 export const REMOVE_MANOEUVRE_FAULT = '[Manoeuvres] Remove Manoeuvre Fault';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
@@ -33,11 +35,13 @@ export const CONTROLLED_STOP_ADD_DRIVING_FAULT = '[ControlledStop] Add Driving F
 export const CONTROLLED_STOP_ADD_SERIOUS_FAULT = '[ControlledStop] Add Serious Fault';
 export const CONTROLLED_STOP_ADD_DANGEROUS_FAULT = '[ControlledStop] Add Dangerous Fault';
 export const CONTROLLED_STOP_REMOVE_FAULT = '[ControlledStop] Remove Fault';
+export const ADD_CONTROLLED_STOP_COMMENT = '[ControlledStop] Add Comment';
 export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
 
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
 export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
 export const TELL_ME_QUESTION_DRIVING_FAULT = '[Vehicle Checks] Tell me question driving fault';
+export const ADD_SHOW_ME_TELL_ME_COMMENT = '[Vehicle Checks] Add Show me Tell me comment';
 
 export const SHOW_ME_QUESTION_SELECTED = '[Vehicle Checks] Show me question selected';
 export const SHOW_ME_QUESTION_PASSED = '[Vehicle Checks] Show me question passed';
@@ -71,6 +75,15 @@ export class AddManoeuvreDangerousFault implements Action {
   readonly type = ADD_MANOEUVRE_DANGEROUS_FAULT;
 }
 
+export class AddManoeuvreComment implements Action {
+  constructor(
+    public fieldName: string,
+    public faultType: CompetencyOutcome,
+    public controlOrObservation: string,  // 'Control' | 'Observation',
+    public comment: string) { }
+  readonly type = ADD_MANOEUVRE_COMMENT;
+}
+
 export class RemoveManoeuvreFault implements Action {
   constructor(public payload: ManoeuvrePayload) { }
   readonly type = REMOVE_MANOEUVRE_FAULT;
@@ -88,6 +101,11 @@ export class ControlledStopAddDangerousFault implements Action {
 
 export class ControlledStopRemoveFault implements Action {
   readonly type = CONTROLLED_STOP_REMOVE_FAULT;
+}
+
+export class AddControlledStopComment implements Action {
+  readonly type = ADD_CONTROLLED_STOP_COMMENT;
+  constructor(public comment: string) { }
 }
 
 export class AddDrivingFault implements Action {
@@ -111,6 +129,11 @@ export class AddDangerousFault implements Action {
 export class AddDangerousFaultComment implements Action {
   constructor(public competencyName: string, public comment: string) { }
   readonly type = ADD_DANGEROUS_FAULT_COMMENT;
+}
+
+export class AddShowMeTellMeComment implements Action {
+  constructor(public comment: string) { }
+  readonly type = ADD_SHOW_ME_TELL_ME_COMMENT;
 }
 
 export class RemoveDrivingFault implements Action {
@@ -201,6 +224,7 @@ export type Types =
   | AddManoeuvreDrivingFault
   | AddManoeuvreSeriousFault
   | AddManoeuvreDangerousFault
+  | AddManoeuvreComment
   | RemoveManoeuvreFault
   | AddDrivingFault
   | AddDrivingFaultComment
@@ -221,6 +245,7 @@ export type Types =
   | ControlledStopAddSeriousFault
   | ControlledStopAddDangerousFault
   | ControlledStopRemoveFault
+  | AddControlledStopComment
   | TellMeQuestionSelected
   | TellMeQuestionCorrect
   | TellMeQuestionDrivingFault
@@ -229,4 +254,5 @@ export type Types =
   | ShowMeQuestionSeriousFault
   | ShowMeQuestionDangerousFault
   | ShowMeQuestionDrivingFault
-  | ShowMeQuestionRemoveFault;
+  | ShowMeQuestionRemoveFault
+  | AddShowMeTellMeComment;

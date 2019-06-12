@@ -31,6 +31,7 @@ import { ModalEvent } from './test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
+import { SetActivityCode } from '../../modules/tests/tests.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -217,6 +218,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
         this.navCtrl.push('DebriefPage');
         break;
       case ModalEvent.TERMINATE:
+        this.store$.dispatch(new SetActivityCode(null));
         this.navCtrl.push('DebriefPage');
         break;
     }

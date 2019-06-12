@@ -11,6 +11,7 @@ import { DangerousFaultBadgeComponent } from '../../../../../components/dangerou
 import { FormGroup, FormControl } from '@angular/forms';
 import { OutcomeBehaviourMapProvider } from '../../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../../../pages/office/office-behaviour-map';
+import { CommentSource } from '../../../../../shared/models/fault-marking.model';
 
 describe('FaultCommentComponent', () => {
   let fixture: ComponentFixture<FaultCommentComponent>;
@@ -40,13 +41,18 @@ describe('FaultCommentComponent', () => {
         component = fixture.componentInstance;
         component.parentForm = new FormGroup({});
         const control = new FormControl(null);
-        component.parentForm.addControl('faultComment-driving-id', control);
+        component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-id`, control);
       });
   }));
 
   describe('DOM', () => {
     it('should display the fault competency display name', () => {
-      component.faultComment = { comment: 'comment', competencyDisplayName: 'display', competencyIdentifier: 'id' };
+      component.faultComment = {
+        comment: 'comment',
+        competencyDisplayName: 'display',
+        competencyIdentifier: 'id',
+        source: CommentSource.SIMPLE,
+      };
       component.faultType = 'driving';
       component.ngOnChanges();
       fixture.detectChanges();
@@ -62,16 +68,18 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'Signals - timed',
         competencyIdentifier: 'signalsTimed',
         faultCount: 16,
+        source: CommentSource.SIMPLE,
       };
       component.faultType = 'driving';
       component.faultCount = 16;
       component.outcome = '5';
       const control = new FormControl(null);
-      component.parentForm.addControl(`faultComment-driving-signalsTimed`, control);
+      component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`, control);
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.get('faultComment-driving-signalsTimed').validator).not.toBeNull();
+      expect(component.parentForm.
+        get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).not.toBeNull();
     });
     it('should clear validators from the form field if < 16 driving faults.', () => {
       component.faultComment = {
@@ -79,16 +87,18 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'Signals - timed',
         competencyIdentifier: 'signalsTimed',
         faultCount: 4,
+        source: CommentSource.SIMPLE,
       };
       component.faultType = 'driving';
       component.faultCount = 15;
       component.outcome = '5';
       const control = new FormControl(null);
-      component.parentForm.addControl(`faultComment-driving-signalsTimed`, control);
+      component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`, control);
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.get('faultComment-driving-signalsTimed').validator).toBeNull();
+      expect(component.parentForm.
+        get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).toBeNull();
     });
 
     it('should pass the fault count down to the driving-fault-badge', () => {
@@ -97,6 +107,7 @@ describe('FaultCommentComponent', () => {
         competencyDisplayName: 'display',
         competencyIdentifier: 'id',
         faultCount: 3,
+        source: CommentSource.SIMPLE,
       };
       component.faultType = 'driving';
       component.ngOnChanges();

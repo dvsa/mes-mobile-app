@@ -45,6 +45,18 @@ export function testDataReducer(
           },
         },
       };
+    case testDataActions.ADD_MANOEUVRE_COMMENT:
+      return {
+        ...state,
+        manoeuvres: {
+          ...state.manoeuvres,
+          [action.fieldName]: {
+            ...state.manoeuvres[action.fieldName],
+            [action.controlOrObservation]: action.faultType,
+            [`${action.controlOrObservation.toLocaleLowerCase()}FaultComments`]: action.comment,
+          },
+        },
+      };
     case testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT:
       return {
         ...state,
@@ -257,6 +269,14 @@ export function testDataReducer(
           selected: state.controlledStop.selected,
         },
       };
+    case testDataActions.ADD_CONTROLLED_STOP_COMMENT:
+      return {
+        ...state,
+        controlledStop: {
+          ...state.controlledStop,
+          faultComments: action.comment,
+        },
+      };
     case testDataActions.TELL_ME_QUESTION_SELECTED:
       return {
         ...state,
@@ -266,6 +286,14 @@ export function testDataReducer(
             code: action.tellMeQuestion.code as string,
             description: action.tellMeQuestion.description as string,
           },
+        },
+      };
+    case testDataActions.ADD_SHOW_ME_TELL_ME_COMMENT:
+      return {
+        ...state,
+        vehicleChecks: {
+          ...state.vehicleChecks,
+          showMeTellMeComments: action.comment,
         },
       };
     case testDataActions.TELL_ME_QUESTION_CORRECT:

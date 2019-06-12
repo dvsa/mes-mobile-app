@@ -23,12 +23,16 @@ import {
   getManoeuvreFaults,
   getTestOutcome,
   getControlledStopFault,
-  getVehicleCheckSeriousFault,
-  getVehicleCheckDangerousFault,
-  getVehicleCheckDrivingFault,
+  getVehicleCheckSeriousFaults,
+  getVehicleCheckDangerousFaults,
+  getVehicleCheckDrivingFaults,
+  getControlledStopFaultAndComment,
 } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
-import { MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
+import {
+  MultiFaultAssignableCompetency,
+  CommentedCompetency,
+} from '../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
@@ -100,10 +104,10 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.seriousFaults),
-            ...getVehicleCheckSeriousFault(data.vehicleChecks),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
+            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
@@ -111,10 +115,10 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getSeriousOrDangerousFaults(data.dangerousFaults),
-            ...getVehicleCheckDangerousFault(data.vehicleChecks),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.D),
+            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
           ];
         }),
       ),
@@ -122,20 +126,27 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getTestData),
         map((data) => {
           return [
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF),
             ...getDrivingFaults(data.drivingFaults),
-            ...getVehicleCheckDrivingFault(data.vehicleChecks).map(
-              (result: string): MultiFaultAssignableCompetency => ({
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
+              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
-                competencyDisplayName: result,
-                competencyIdentifier: result,
-              }),
-            ),
-            ...getControlledStopFault(data.controlledStop, CompetencyOutcome.DF).map(
-              (result: string): MultiFaultAssignableCompetency => ({
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+              })),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(
+              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
                 faultCount: 1,
-                competencyDisplayName: result,
-                competencyIdentifier: result,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
+              })),
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
+              (result: CommentedCompetency): MultiFaultAssignableCompetency => ({
+                faultCount: 1,
+                competencyDisplayName: result.competencyDisplayName,
+                competencyIdentifier: result.competencyIdentifier,
+                source: result.source,
               }),
             ),
           ];
