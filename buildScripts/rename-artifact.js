@@ -21,8 +21,8 @@ fs.readFile(configFile, 'utf8', (err, xml) => {
 
     const currentVersion = obj.widget['$'].version;
     const artifactDir = 'build';
-    const defaultArtifactName = 'mes-mobile-app.ipa';
-    const newArtifactName = `MobileExaminer-${currentVersion}-${git.short()}.ipa`;
+    const defaultArtifactName = 'DrivingExaminerService.ipa';
+    const newArtifactName = `DrivingExaminerService-${currentVersion}-${git.short()}.ipa`;
 
     const oldArtifactPath = `${artifactDir}/${defaultArtifactName}`;
     const newArtifactPath = `${artifactDir}/${newArtifactName}`;
