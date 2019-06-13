@@ -16,7 +16,7 @@ describe('TestReportValidator', () => {
     testReportValidatorProvider = TestBed.get(TestReportValidatorProvider);
   });
 
-  describe('validateCatBTestReport', () => {
+  describe('validateCatBLegalRequirements', () => {
     it('should return true for a valid test', (done) => {
       // ARRANGE
       const testResult: CatBLegalRequirements = {
@@ -29,7 +29,7 @@ describe('TestReportValidator', () => {
         vehicleChecks: true,
       };
       // ASSERT
-      testReportValidatorProvider.validateCatBTestReport(testResult).subscribe((result) => {
+      testReportValidatorProvider.validateCatBLegalRequirements(testResult).subscribe((result) => {
         expect(result).toBeTruthy();
         done();
       });
@@ -46,7 +46,7 @@ describe('TestReportValidator', () => {
         vehicleChecks: true,
       };
       // ASSERT
-      testReportValidatorProvider.validateCatBTestReport(testResult).subscribe((result) => {
+      testReportValidatorProvider.validateCatBLegalRequirements(testResult).subscribe((result) => {
         expect(result).toBeFalsy();
         done();
       });

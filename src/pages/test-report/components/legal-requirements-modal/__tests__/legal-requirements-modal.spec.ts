@@ -4,6 +4,7 @@ import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
+import { TestReportModalModule } from '../../test-report-modal/test-report-modal.module';
 
 describe('LegalRequirementsModal', () => {
   let fixture: ComponentFixture<LegalRequirementsModal>;
@@ -17,6 +18,7 @@ describe('LegalRequirementsModal', () => {
       imports: [
         AppModule,
         IonicModule,
+        TestReportModalModule,
       ],
       providers: [
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
@@ -100,7 +102,7 @@ describe('LegalRequirementsModal', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
       fixture.detectChanges();
       spyOn(component, 'onCancel');
-      const button = fixture.debugElement.query(By.css('button.mes-return-button'));
+      const button = fixture.debugElement.query(By.css('button.modal-return-button'));
       button.triggerEventHandler('click', null);
 
       fixture.detectChanges();

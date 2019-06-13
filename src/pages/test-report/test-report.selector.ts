@@ -7,4 +7,6 @@ export const isSeriousMode = (testReport: TestReportModel) => testReport.serious
 
 export const isDangerousMode = (testReport: TestReportModel) => testReport.dangerousMode;
 
-export const isTestValid = (testReport: TestReportModel) => testReport.isValid;
+export const isLegalRequirementsValid = (testReport: TestReportModel) => testReport.isLegalRequirementsValid;
+
+export const isEtaValid = (testReport: TestReportModel) => testReport.isEtaValid;

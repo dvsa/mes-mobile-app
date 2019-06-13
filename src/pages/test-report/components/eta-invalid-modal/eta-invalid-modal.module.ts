@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { LegalRequirementsModal } from './legal-requirements-modal';
+import { EtaInvalidModal } from './eta-invalid-modal';
 import { TestReportModalModule } from '../test-report-modal/test-report-modal.module';
 
 @NgModule({
   declarations: [
-    LegalRequirementsModal,
+    EtaInvalidModal,
   ],
   imports: [
-    IonicPageModule.forChild(LegalRequirementsModal),
+    IonicPageModule.forChild(EtaInvalidModal),
     TestReportModalModule,
   ],
   exports: [
-    LegalRequirementsModal,
+    EtaInvalidModal,
   ],
 })
-export class LegalRequirementsModalModule { }
+export class EtaInvalidModalModule { }

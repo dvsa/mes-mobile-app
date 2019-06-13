@@ -4,8 +4,9 @@ export const TEST_REPORT_VIEW_DID_ENTER = '[TestReportPage] Test Report did ente
 export const TOGGLE_REMOVE_FAULT_MODE = '[TestReportPage] Toggle Remove Fault Mode';
 export const TOGGLE_SERIOUS_FAULT_MODE = '[TestReportPage] Toggle Serious Fault Mode';
 export const TOGGLE_DANGEROUS_FAULT_MODE = '[TestReportPage] Toggle Dangerous Fault Mode';
-export const VALIDATE_TEST_RESULT = '[TestReportPage] Validated Test Report';
+export const VALIDATE_LEGAL_REQUIREMENTS = '[TestReportPage] Validated Legal Requirements';
 export const CALCULATE_TEST_RESULT = '[TestResultPage] Calculate Test Result';
+export const VALIDATE_ETA = '[TestReportPage] Validate ETA';
 
 export class TestReportViewDidEnter implements Action {
   readonly type = TEST_REPORT_VIEW_DID_ENTER;
@@ -22,10 +23,16 @@ export class ToggleDangerousFaultMode implements Action {
   readonly type = TOGGLE_DANGEROUS_FAULT_MODE;
 }
 
-export class ValidateTestResult implements Action {
+export class ValidateLegalRequirements implements Action {
   constructor(public payload: boolean) {}
 
-  readonly type = VALIDATE_TEST_RESULT;
+  readonly type = VALIDATE_LEGAL_REQUIREMENTS;
+}
+
+export class ValidateEta implements Action {
+  constructor(public isValid: boolean) {}
+
+  readonly type = VALIDATE_ETA;
 }
 
 export class CalculateTestResult implements Action {
@@ -37,5 +44,6 @@ export type Types =
   | ToggleSeriousFaultMode
   | ToggleDangerousFaultMode
   | ToggleRemoveFaultMode
-  | ValidateTestResult
+  | ValidateLegalRequirements
+  | ValidateEta
   | CalculateTestResult;
