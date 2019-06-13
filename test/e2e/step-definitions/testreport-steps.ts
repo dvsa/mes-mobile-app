@@ -77,9 +77,9 @@ When('I add a {string} serious fault with a long press', (competency: string) =>
 });
 
 Then('the competency {string} driver fault count is not displayed', (competency: string) => {
-  const competencyButton = getCompetencyButton(competency);
-  const badge = competencyButton.element(by.tagName('driving-faults-badge'));
-  expect(badge.getAttribute('ng-reflect-count')).to.eventually.equal(null);
+  const driverBadge = getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/driving-faults-badge`));
+  expect(driverBadge.getAttribute('ng-reflect-count')).to.eventually.equal(null);
 });
 
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {

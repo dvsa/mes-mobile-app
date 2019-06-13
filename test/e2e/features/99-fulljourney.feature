@@ -88,12 +88,13 @@ Feature: Full end to end journey
       When I remove a serious fault for "Approach speed" with a tap
       Then the "Approach speed" button does not display the serious badge
 
-      # When I remove a driver fault for "Safety" with a tap
-      # Then the competency "Safety" driver fault count is not displayed
-
       When I add a "Safety" driver fault
       And I remove a driver fault for "Safety" with a long press
       Then the driver fault count is "7"
+
+      When I remove a driver fault for "Lane discipline" with a tap
+      Then the competency "Lane discipline" driver fault count is not displayed
+      And the driver fault count is "6"
 
       When I add a "Approach speed" serious fault
       And I remove a serious fault for "Approach speed" with a tap
