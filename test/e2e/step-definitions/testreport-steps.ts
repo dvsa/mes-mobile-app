@@ -94,25 +94,25 @@ When('I add a {string} dangerous fault', (competency) => {
   clickCompetency(competency);
 });
 
+When('I close the ETA modal', () => {
+  clickElement(getElement(by.className('modal-return-button')));
+});
+
 Then('the ETA invalid modal is shown', () => {
-  // TODO Check title text is "You cannot record an ETA"
-  // TODO Click return to test
+  const modalTitle = getElement(by.className('modal-alert-header'));
+  expect(modalTitle.getText()).to.eventually.equal('ETA recorded');
 });
 
 Then('the {string} button displays the serious badge', (competency: string) => {
-  // const button = getCompetencyButton(competency);
-
-  // const seriousBadge = button.element(by.tagName('serious-fault-badge'));
-  // const seriousBadge = getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
-  // and text() = '${competency}']]/div/serious-fault-badge//span[@class = 'label']`));
-  // expect(seriousBadge.isPresent()).to.eventually.be.true;
+  const seriousBadge = getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/serious-fault-badge//span[@class = 'label']`));
+  expect(seriousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button displays the dangerous badge', (competency: string) => {
-  // const button = getCompetencyButton(competency);
-  // const dangerousBadge = button.element(by.tagName('dangerous-fault-badge'));
-  // browser.wait(ExpectedConditions.presenceOf(dangerousBadge));
-  // expect(dangerousBadge.isPresent()).to.eventually.be.true;
+  const dangerousBadge = getElement(by.xpath(`//competency-button[div/*[@class = 'competency-label'
+  and text() = '${competency}']]/div/div/dangerous-fault-badge//span[@class = 'label']`));
+  expect(dangerousBadge.isPresent()).to.eventually.be.true;
 });
 
 Then('the {string} button does not display the serious badge', (competency: string) => {

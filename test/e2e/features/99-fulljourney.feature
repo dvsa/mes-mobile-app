@@ -69,10 +69,11 @@ Feature: Full end to end journey
       And the driver fault count is "7"
 
       When I add an ETA with type "Physical"
-      And I complete the legal requirements
+      And I complete the test
       Then the ETA invalid modal is shown
 
-      When I add a "Accelerator" serious fault
+      When I close the ETA modal
+      And I add a "Accelerator" serious fault
       Then the "Accelerator" button displays the serious badge
 
       When I add a "Use of speed" dangerous fault
