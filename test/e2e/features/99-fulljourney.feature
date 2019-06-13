@@ -40,7 +40,7 @@ Feature: Full end to end journey
       And the driver fault count is "1"
 
       # Existing driver fault should prevent a second fault from being added
-      When I add a "Show me / Tell me" driver fault
+      When I add a Show me / Tell me driver fault
       Then the driver fault count is "1"
 
       When I add a "Accelerator" driver fault
@@ -59,28 +59,26 @@ Feature: Full end to end journey
       Then the driver fault count is "5"
       And the competency "Lane discipline" driver fault count is "1"
 
-
       When I add a manoeuvre
       And I mark the manoeuvre as a "Control" driver fault
       Then the driver fault count is "6"
 
       When I click the manoeuvres button
-      And I add a "Controlled stop" driver fault
+      And I add a Controlled Stop driver fault
       Then the controlled stop requirement is ticked
       And the driver fault count is "7"
 
-      # Awaiting MES-2489
-      # When I add an ETA with type "Physical"
-      # And I complete the test
-      # Then the ETA invalid modal is shown
+      When I add an ETA with type "Physical"
+      And I complete the legal requirements
+      Then the ETA invalid modal is shown
 
       When I add a "Accelerator" serious fault
       Then the "Accelerator" button displays the serious badge
 
       When I add a "Use of speed" dangerous fault
-      Then the "Accelerator" button displays the dangerous badge
+      Then the "Use of speed" button displays the dangerous badge
 
-      # Test driver fault cannot be added on competency with serious fault
+      # Test that a driver fault cannot be added on competency with serious fault
       When I add a "Accelerator" driver fault
       Then the driver fault count is "7"
 
@@ -90,8 +88,8 @@ Feature: Full end to end journey
       When I remove a serious fault for "Approach speed" with a tap
       Then the "Approach speed" button does not display the serious badge
 
-      When I remove a driver fault for "Safety" with a tap
-      Then the competency "Safety" driver fault count is not displayed
+      # When I remove a driver fault for "Safety" with a tap
+      # Then the competency "Safety" driver fault count is not displayed
 
       When I add a "Safety" driver fault
       And I remove a driver fault for "Safety" with a long press
