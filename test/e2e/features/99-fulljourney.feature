@@ -75,9 +75,12 @@ Feature: Full end to end journey
       And I upload the test
       Then I should see the "Journal" page
 
+   @wip
    Scenario: Examiner terminates test as candidate failed to present ID (Only physical description mandatory)
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
       When I start the test for "Mr Ali Campbell"
+      And the candidate requests to receive results by post
+      And the candidate confirms their communication preference
       Then I should see the "Declaration - Ali Campbell" page
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
@@ -93,10 +96,11 @@ Feature: Full end to end journey
       And I upload the test
       Then I should see the "Journal" page
 
+   @wip
    Scenario: Examiner terminates test as candidate failed eye sight test
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
       When I start the test for "Mr James Brown"
-      And the candidate enters a new email address
+      And the candidate requests to receive results by calling the support centre
       And the candidate confirms their communication preference
       Then I should see the "Declaration - James Brown" page
       And the candidate completes the declaration page
