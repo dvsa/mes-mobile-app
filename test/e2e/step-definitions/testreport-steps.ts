@@ -83,8 +83,9 @@ Then('the competency {string} driver fault count is not displayed', (competency:
 });
 
 When('I add an ETA with type {string}', (etaType: 'Verbal' | 'Physical') => {
-  // const etaText = `ETA: ${etaType}`;
-  // clickCompetency(etaText);
+  const etaText = `ETA: ${etaType}`;
+  const etaButton = getElement(by.xpath(`//competency-button/div/div/span[text() = '${etaText}']`));
+  longPressButton(etaButton);
 });
 
 When('I add a {string} dangerous fault', (competency) => {
