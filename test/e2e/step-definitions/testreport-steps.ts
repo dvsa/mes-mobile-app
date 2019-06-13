@@ -1,6 +1,6 @@
 import { Then, When } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
-import { browser, by, element, ExpectedConditions } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
