@@ -32,10 +32,6 @@ const completeLegalRequirements = () => {
   });
 };
 
-When('I complete the legal requirements', () => {
-  completeLegalRequirements();
-});
-
 
 When('I end the test', () => {
   endTest();
