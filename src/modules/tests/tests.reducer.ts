@@ -25,6 +25,7 @@ import { applicationReferenceReducer } from './application-reference/application
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actions';
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
+import { categoryReducer } from './category/category.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -93,6 +94,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
         // slotId to the relevant sub-reducer
         ...nestedCombineReducers(
           {
+            category: categoryReducer,
             journalData:  {
               examiner: examinerReducer,
               testCentre: testCentreReducer,
