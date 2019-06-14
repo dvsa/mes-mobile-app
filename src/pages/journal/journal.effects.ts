@@ -188,8 +188,6 @@ export class JournalEffects {
       const startTestAction = action as journalActions.StartTest;
 
       const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
-      // tslint:disable-next-line:max-line-length
-      console.log(`Properties of slotDetail ${Object.getOwnPropertyNames(slot.slotData.booking.application)}`);
       return [
         new PopulateExaminer({ staffNumber: this.authProvider.getEmployeeId() }),
         new PopulateApplicationReference(slot.slotData.booking.application),
