@@ -188,6 +188,7 @@ export class JournalEffects {
       const startTestAction = action as journalActions.StartTest;
 
       const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
+
       return [
         new PopulateExaminer({ staffNumber: this.authProvider.getEmployeeId() }),
         new PopulateApplicationReference(slot.slotData.booking.application),
