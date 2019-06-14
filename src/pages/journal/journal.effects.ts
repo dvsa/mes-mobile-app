@@ -36,6 +36,7 @@ import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.
 import { SetTestStatusBooked } from '../../modules/tests/test-status/test-status.actions';
 import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateExaminer } from '../../modules/tests/examiner/examiner.actions';
+import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -195,6 +196,7 @@ export class JournalEffects {
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot.slotData)),
         new PopulateTestCentre(this.extractTestCentre(slot.slotData)),
         new SetTestStatusBooked(startTestAction.slotId.toString()),
+        new PopulateTestCategory(slot.slotData.booking.application.testCategory),
       ];
     }),
   );
