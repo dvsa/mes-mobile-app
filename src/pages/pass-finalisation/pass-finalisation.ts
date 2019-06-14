@@ -12,6 +12,7 @@ import {
   PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
+  PopulatePassCompletion,
 } from '../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
 import {
@@ -152,6 +153,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
     ];
+    this.store$.dispatch(new PopulatePassCompletion());
   }
 
   ngOnDestroy(): void {
