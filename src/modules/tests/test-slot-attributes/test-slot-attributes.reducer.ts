@@ -8,7 +8,7 @@ export const initialState:TestSlotAttributes = {
   start: '',
   vehicleSlotType: '',
   extendedTest: false,
-  specialNeeds: null,
+  specialNeeds: false,
 };
 
 export function testSlotsAttributesReducer(

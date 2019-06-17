@@ -21,7 +21,8 @@ exports.config = {
   cucumberOpts: {
     compiler: 'ts:ts-node/register',
     format: ['json:./test-reports/cucumber-report.json', 'node_modules/cucumber-pretty'],
-    require: ['./test/e2e/step-definitions/*.ts']
+    require: ['./test/e2e/step-definitions/*.ts'],
+    'fail-fast': true
   },
   baseUrl: '',
   useAllAngular2AppRoots: true,

@@ -140,13 +140,13 @@ When('I terminate the test', () => {
   enterPasscode();
 });
 
-Then(/^the (communication page|waiting room|debrief) candidate name should be \"(.+)\"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate name should be \"(.+)\"$/, (
   pageName: string, candidateName: string) => {
   const candidateNameElement = getElement(by.xpath(`//${getPageType(pageName)}//h2[@id = 'candidate-name']`));
   return expect(candidateNameElement.getText()).to.eventually.equal(candidateName);
 });
 
-Then(/^the (communication page|waiting room|debrief) candidate driver number should be \"(.+)\"$/, (
+Then(/^the (communication page|waiting room|debrief|health declaration) candidate driver number should be \"(.+)\"$/, (
   pageName: string, driverNumber: string) => {
   const candidateDriverNumberElement = getElement(
     by.xpath(`//${getPageType(pageName)}//h3[@id = 'candidate-driver-number']`));
@@ -356,6 +356,8 @@ const getPageType = (pageName : string) => {
       return 'communication';
     case 'debrief':
       return 'page-pass-finalisation';
+    case 'health declaration':
+      return 'page-health-declaration';
     default:
       return 'page-waiting-room';
   }
