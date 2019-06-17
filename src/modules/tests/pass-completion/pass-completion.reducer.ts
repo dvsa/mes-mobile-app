@@ -9,7 +9,7 @@ export const passCompletionReducer = (state = initialState, action: passCompleti
     case passCompletionActions.POPULATE_PASS_COMPLETION:
       return {
         passCertificateNumber: null,
-        provisionalLicenceProvided: false,
+        provisionalLicenceProvided: null,
       };
     case passCompletionActions.PASS_CERTIFICATE_NUMBER_CHANGED:
       return {
