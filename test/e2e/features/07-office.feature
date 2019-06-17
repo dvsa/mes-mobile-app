@@ -1,1 +1,84 @@
 Feature: Office page
+
+   Scenario: Office page validation for pass
+      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
+      When I start the test for "Miss Florence Pearson"
+      And the candidate enters a new email address
+      And the candidate confirms their communication preference
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate completes the declaration page
+      And I proceed to the car
+      Then I should see the "Florence Pearson" page
+      And I complete the waiting room to car page
+      Then I should see the "Test report - Florence Pearson" page
+      And I complete the test
+      Then I should see the Debrief page with outcome "Passed"
+      When I end the debrief
+      Then I should see the "Test debrief - Florence Pearson" page
+      And I complete the pass details
+      And I complete the health declaration
+      Then I am on the back to office page
+      And I continue to the office write up
+      Then I should see the "Office" page
+      And the activity code should be "1 - Pass"
+      And I try to upload the test
+      Then validation item "office-route-number-validation-text" should be "Enter the route number"
+      And validation item "office-route-number-validation-text" should be visible
+      And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
+      And validation item "office-independent-driving-validation-text" should be visible
+      And validation item "office-candidate-description-validation-text" should be "Describe the candidate"
+      And validation item "office-candidate-description-validation-text" should be visible
+      And validation item "office-debrief-witnessed-validation-text" should be "Was the debrief witnessed?"
+      And validation item "office-debrief-witnessed-validation-text" should be visible
+      And validation item "office-show-me-validation-text" should be "Select the show me question"
+      And validation item "office-show-me-validation-text" should be visible
+      And validation item "office-weather-validation-text" should be "Select weather conditions"
+      And validation item "office-weather-validation-text" should be visible
+      And validation item "office-d255-validation-text" should be "Select D255"
+      And validation item "office-d255-validation-text" should be visible
+
+   Scenario: Office page validation for fail
+      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
+      When I start the test for "Miss Florence Pearson"
+      And the candidate enters a new email address
+      And the candidate confirms their communication preference
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate completes the declaration page
+      And I proceed to the car
+      Then I should see the "Florence Pearson" page
+      And I complete the waiting room to car page
+      Then I should see the "Test report - Florence Pearson" page
+      When I add a "Accelerator" driver fault
+      And the competency "Accelerator" driver fault count is "1"
+      When I add a "Safety" driver fault
+      And the competency "Safety" driver fault count is "1"
+      When I add a "Safety" driver fault
+      And the competency "Safety" driver fault count is "2"
+      When I add a "Lane discipline" driver fault
+      And the competency "Lane discipline" driver fault count is "1"
+      And I add a "Accelerator" serious fault
+      And I add a "Use of speed" dangerous fault
+      And I complete the test
+      Then I should see the Debrief page with outcome "Unsuccessful"
+      When I end the debrief
+      Then I am on the back to office page
+      And I continue to the office write up
+      Then I should see the "Office" page
+      And the activity code should be "2 - Fail"
+      And I try to upload the test
+      Then validation item "office-route-number-validation-text" should be "Enter the route number"
+      And validation item "office-route-number-validation-text" should be visible
+      And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
+      And validation item "office-independent-driving-validation-text" should be visible
+      And validation item "office-candidate-description-validation-text" should be "Describe the candidate"
+      And validation item "office-candidate-description-validation-text" should be visible
+      And validation item "office-debrief-witnessed-validation-text" should be "Was the debrief witnessed?"
+      And validation item "office-debrief-witnessed-validation-text" should be visible
+      And validation item "office-show-me-validation-text" should be "Select the show me question"
+      And validation item "office-show-me-validation-text" should be visible
+      And validation item "office-weather-validation-text" should be "Select weather conditions"
+      And validation item "office-weather-validation-text" should be visible
+      And validation item "office-d255-validation-text" should be "Select D255"
+      And validation item "office-d255-validation-text" should be visible
+      And I have a "dangerous" fault for "Use of speed" requiring a comment
+      And I have a "serious" fault for "Controls - Accelerator" requiring a comment
