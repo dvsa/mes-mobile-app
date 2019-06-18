@@ -59,6 +59,20 @@ Then('the activity code should be {string}', (activityCode) => {
   return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
+Then('I have a {string} fault for {string} requiring a comment', (faultSeverity, faultLabel) => {
+  const commentsValidationText = getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}'
+  and //label[@class = 'fault-label' and text() = '${faultLabel}']]//div[@class='validation-text ng-invalid']`));
+
+  expect(commentsValidationText.getText()).to.eventually.equal('Provide a comment');
+
+  return expect(commentsValidationText.getAttribute('class')).to.eventually.contain('ng-invalid');
+});
+
+Then('the tell me question should be {string}', (tellMeQuestion : string) => {
+  const tellMeQuestionField = getElement(by.id('tell-me-question-text'));
+  return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
+});
+
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);
