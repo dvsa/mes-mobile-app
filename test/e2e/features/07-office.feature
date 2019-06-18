@@ -12,6 +12,7 @@ Feature: Office page
       And I complete the waiting room to car page
       Then I should see the "Test report - Florence Pearson" page
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
@@ -60,6 +61,7 @@ Feature: Office page
       And I add a "Accelerator" serious fault
       And I add a "Use of speed" dangerous fault
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
       When I end the debrief
       Then I am on the back to office page
