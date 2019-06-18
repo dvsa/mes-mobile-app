@@ -68,6 +68,11 @@ Then('I have a {string} fault for {string} requiring a comment', (faultSeverity,
   return expect(commentsValidationText.getAttribute('class')).to.eventually.contain('ng-invalid');
 });
 
+Then('the tell me question should be {string}', (tellMeQuestion : string) => {
+  const tellMeQuestionField = getElement(by.id('tell-me-question-text'));
+  return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
+});
+
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);

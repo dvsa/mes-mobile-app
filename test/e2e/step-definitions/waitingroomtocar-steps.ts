@@ -8,24 +8,19 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 When('I select a tell me question', () => {
-  const tellMeSelector = getElement(by.id('tell-me-selector'));
-  clickElement(tellMeSelector);
-  const tellMeT7 = getElement(by.id('alert-input-0-6'));
-  clickElement(tellMeT7);
-  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
+  selectTellMeQuestion('T2 - Tyre pressures');
 });
 
 When('I complete the waiting room to car page', () => {
-  completeWaitingRoomPage(false, true);
+  completeWaitingRoomPage(false, true, 'T5 - Headlights & tail lights');
 });
 
 When('I complete the waiting room to car page with a tell me driver fault', () => {
-  completeWaitingRoomPage(true, true);
+  completeWaitingRoomPage(true, true, 'T6 - Antilock braking system');
 });
 
 When('I complete the waiting room to car page with automatic transmission', () => {
-  completeWaitingRoomPage(false, false);
+  completeWaitingRoomPage(false, false, 'T1 - Brakes');
 });
 
 When('I fail the eye sight test', () => {
@@ -37,15 +32,10 @@ When('I fail the eye sight test', () => {
   clickElement(eyesightFailConfirmButton);
 });
 
-const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: boolean) => {
+const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: boolean, tellMeQuestion: string) => {
   const eyesightPassRadio = getElement(by.id('eyesight-pass'));
   clickElement(eyesightPassRadio);
-  const tellMeSelector = getElement(by.id('tell-me-selector'));
-  clickElement(tellMeSelector);
-  const tellMeT7 = getElement(by.id('alert-input-0-6'));
-  clickElement(tellMeT7);
-  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
+  selectTellMeQuestion(tellMeQuestion);
 
   const tellMeRadioSelector = (withDriverFault) ? 'tellme-fault' : 'tellme-correct';
   const tellMeRadio = getElement(by.id(tellMeRadioSelector));
@@ -59,4 +49,13 @@ const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: b
 
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
   clickElement(submitWRTC);
+};
+
+const selectTellMeQuestion = (tellMeQuestion) => {
+  const tellMeSelector = getElement(by.id('tell-me-selector'));
+  clickElement(tellMeSelector);
+  const tellMe = getElement(by.xpath(`//button/span/div[normalize-space(text()) = "${tellMeQuestion}"]`));
+  clickElement(tellMe);
+  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
+  clickElement(submitDialog);
 };

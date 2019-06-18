@@ -22,7 +22,8 @@ Feature: Office page
       Then I should see the "Office" page
       And the activity code should be "1 - Pass"
       And I try to upload the test
-      Then validation item "office-route-number-validation-text" should be "Enter the route number"
+      Then the tell me question should be "T5 - Headlights & tail lights"
+      And validation item "office-route-number-validation-text" should be "Enter the route number"
       And validation item "office-route-number-validation-text" should be visible
       And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
       And validation item "office-independent-driving-validation-text" should be visible
@@ -46,7 +47,7 @@ Feature: Office page
       And the candidate completes the declaration page
       And I proceed to the car
       Then I should see the "Jane Doe" page
-      And I complete the waiting room to car page
+      And I complete the waiting room to car page with automatic transmission
       Then I should see the "Test report - Jane Doe" page
       When I add a "Accelerator" driver fault
       And the competency "Accelerator" driver fault count is "1"
@@ -66,7 +67,8 @@ Feature: Office page
       Then I should see the "Office" page
       And the activity code should be "2 - Fail"
       And I try to upload the test
-      Then validation item "office-route-number-validation-text" should be "Enter the route number"
+      Then the tell me question should be "T1 - Brakes"
+      And validation item "office-route-number-validation-text" should be "Enter the route number"
       And validation item "office-route-number-validation-text" should be visible
       And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
       And validation item "office-independent-driving-validation-text" should be visible
