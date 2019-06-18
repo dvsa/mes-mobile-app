@@ -38,16 +38,16 @@ Feature: Office page
       And validation item "office-d255-validation-text" should be visible
 
    Scenario: Office page validation for fail
-      Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
-      When I start the test for "Miss Florence Pearson"
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
+      When I start the test for "Mrs Jane Doe"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
+      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
       And I proceed to the car
-      Then I should see the "Florence Pearson" page
+      Then I should see the "Jane Doe" page
       And I complete the waiting room to car page
-      Then I should see the "Test report - Florence Pearson" page
+      Then I should see the "Test report - Jane Doe" page
       When I add a "Accelerator" driver fault
       And the competency "Accelerator" driver fault count is "1"
       When I add a "Safety" driver fault
