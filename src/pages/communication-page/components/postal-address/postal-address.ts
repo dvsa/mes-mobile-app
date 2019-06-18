@@ -32,7 +32,7 @@ export class PostalAddressComponent {
 
   formatAddress(address: Address): Address {
     const regex = new RegExp('[0-9]', 'g');
-    const formattedAddress: Address = address;
+    const formattedAddress: Address = Object.assign({}, address);
     Object.keys(formattedAddress).forEach(res => formattedAddress[res] = formattedAddress[res].replace(regex, 'x'));
     return formattedAddress;
   }
