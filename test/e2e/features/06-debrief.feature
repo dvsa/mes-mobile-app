@@ -12,6 +12,7 @@ Feature: Debrief including Health Declaration
       And I complete the waiting room to car page
       Then I should see the "Test report - Florence Pearson" page
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
@@ -32,6 +33,7 @@ Feature: Debrief including Health Declaration
       And I complete the waiting room to car page with automatic transmission
       Then I should see the "Test report - Jane Doe" page
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Jane Doe" page
@@ -49,6 +51,7 @@ Feature: Debrief including Health Declaration
       And I complete the waiting room to car page
       Then I should see the "Test report - Theresa Shaw" page
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Theresa Shaw" page
@@ -72,6 +75,7 @@ Feature: Debrief including Health Declaration
       And I complete the waiting room to car page
       Then I should see the "Test report - Ali Campbell" page
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Ali Campbell" page
