@@ -12,6 +12,7 @@ Feature: Full end to end journey
       And I complete the waiting room to car page
       Then I should see the "Test report - Florence Pearson" page
       And I complete the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Florence Pearson" page
@@ -26,6 +27,7 @@ Feature: Full end to end journey
 
    Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
+
       When I start the test for "Mrs Jane Doe"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
@@ -33,24 +35,76 @@ Feature: Full end to end journey
       And the candidate completes the declaration page
       And I proceed to the car
       Then I should see the "Jane Doe" page
-      And I complete the waiting room to car page
+      And I complete the waiting room to car page with a tell me driver fault
       Then I should see the "Test report - Jane Doe" page
-      When I add a "Accelerator" driver fault
+      And the driver fault count is "1"
+
+      # Existing driver fault should prevent a second fault from being added
+      When I add a Show me / Tell me driver fault
       Then the driver fault count is "1"
-      And the competency "Accelerator" driver fault count is "1"
-      When I add a "Safety" driver fault
+
+      When I add a "Accelerator" driver fault
       Then the driver fault count is "2"
-      And the competency "Safety" driver fault count is "1"
+      And the competency "Accelerator" driver fault count is "1"
+
       When I add a "Safety" driver fault
       Then the driver fault count is "3"
-      And the competency "Safety" driver fault count is "2"
-      When I add a "Lane discipline" driver fault
+      And the competency "Safety" driver fault count is "1"
+
+      When I add a "Safety" driver fault
       Then the driver fault count is "4"
+      And the competency "Safety" driver fault count is "2"
+
+      When I add a "Lane discipline" driver fault
+      Then the driver fault count is "5"
       And the competency "Lane discipline" driver fault count is "1"
-      And I add a "Accelerator" serious fault
-      And I add a "Use of speed" dangerous fault
+
+      When I add a manoeuvre
+      And I mark the manoeuvre as a "Control" driver fault
+      Then the driver fault count is "6"
+
+      When I click the manoeuvres button
+      And I add a Controlled Stop driver fault
+      Then the controlled stop requirement is ticked
+      And the driver fault count is "7"
+
+      When I add an ETA with type "Physical"
       And I complete the test
+      Then the ETA invalid modal is shown
+
+      When I close the ETA modal
+      And I add a "Accelerator" serious fault
+      Then the "Accelerator" button displays the serious badge
+
+      When I add a "Use of speed" dangerous fault
+      Then the "Use of speed" button displays the dangerous badge
+
+      # Test that a driver fault cannot be added on competency with serious fault
+      When I add a "Accelerator" driver fault
+      Then the driver fault count is "7"
+
+      When I add a "Approach speed" serious fault with a long press
+      Then the "Approach speed" button displays the serious badge
+
+      When I remove a serious fault for "Approach speed" with a tap
+      Then the "Approach speed" button does not display the serious badge
+
+      When I add a "Safety" driver fault
+      And I remove a driver fault for "Safety" with a long press
+      Then the driver fault count is "7"
+
+      When I remove a driver fault for "Lane discipline" with a tap
+      Then the competency "Lane discipline" driver fault count is not displayed
+      And the driver fault count is "6"
+
+      When I add a "Approach speed" serious fault
+      And I remove a serious fault for "Approach speed" with a tap
+      Then the "Approach speed" button does not display the serious badge
+
+      When I end the test
+      And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
+
       When I end the debrief
       Then I am on the back to office page
       And I continue to the office write up

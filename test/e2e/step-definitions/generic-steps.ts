@@ -271,8 +271,9 @@ const isReady = (promise) => {
  * @param elementBy the element finder
  */
 export const getElement = (elementBy) => {
-  browser.wait(ExpectedConditions.presenceOf(element(elementBy)));
-  return element(elementBy);
+  const foundElement = element(elementBy);
+  browser.wait(ExpectedConditions.presenceOf(foundElement));
+  return foundElement;
 };
 
 /**
