@@ -105,6 +105,8 @@ describe('PostalAddressComponent', () => {
   describe('DOM', () => {
 
     it('should display the correct address fields when address populated', () => {
+      component.isPostalAddressChosen = true;
+      component.postalAddress = mockAddress;
       fixture.whenStable().then(() => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#addressLine1'))).not.toBeNull();
@@ -117,6 +119,7 @@ describe('PostalAddressComponent', () => {
     });
 
     it('should display the no address fields when address is empty', () => {
+      component.isPostalAddressChosen = true;
       component.postalAddress = null;
       fixture.whenStable().then(() => {
         fixture.detectChanges();
