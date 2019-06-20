@@ -69,10 +69,10 @@ describe('JournalNavigationComponent', () => {
     });
 
     describe('selected date is today', () => {
-      it('does not show previous day button', () => {
+      it('does show previous day button', () => {
         fixture.detectChanges();
         const previousDayContainer: DebugElement = componentEl.query(By.css('#previous-day-container'));
-        expect(previousDayContainer).toBeNull();
+        expect(previousDayContainer).not.toBeNull();
       });
 
       it('shows Today as header', () => {
@@ -129,7 +129,7 @@ describe('JournalNavigationComponent', () => {
     describe('selected date is the last available date', () => {
       let selectedDay: string;
       beforeEach(() => {
-        selectedDay = dateTimeProvider.now().add(2, Duration.DAY).format('YYYY-MM-DD');
+        selectedDay = DateTime.at(DateTime.today()).add(3, Duration.DAY).format('YYYY-MM-DD');
         store$.dispatch(new SetSelectedDate(selectedDay));
       });
 

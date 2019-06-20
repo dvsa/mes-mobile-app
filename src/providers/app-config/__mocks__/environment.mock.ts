@@ -3,8 +3,8 @@ import { EnvironmentFile, LocalEnvironmentFile } from '../../../environment/mode
 export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
   configUrl: 'remote-url',
-  daysToCacheJournalData: 7,
-  daysToCacheLogs: 7,
+  daysToCacheJournalData: 14,
+  daysToCacheLogs: 14,
   logsPostApiKey: '',
   logsApiUrl: 'remote-logs-url',
   logsAutoSendInterval: 6000,
@@ -21,8 +21,8 @@ export const remoteEnvironmentMock: EnvironmentFile = {
 export const localEnvironmentMock: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://www.example.com/api/v1/config/dev',
-  daysToCacheJournalData: 7,
-  daysToCacheLogs: 7,
+  daysToCacheJournalData: 14,
+  daysToCacheLogs: 14,
   googleAnalyticsId: 'local-ga-id',
   timeTravelDate: '2019-02-01',
   logsPostApiKey: '',

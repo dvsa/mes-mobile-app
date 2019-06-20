@@ -21,15 +21,15 @@ export const getSelectedDate = (journal: JournalModel) => journal.selectedDate;
 
 export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime): boolean => {
   const selectedDate = journal.selectedDate;
-  const availableDays = getAvailableDays(journal);
-  const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
+  const lookbackLimit = today.subtract(14, Duration.DAY).format('YYYY-MM-DD');
 
-  return selectedDate !== today.format('YYYY-MM-DD') && availableDays.includes(previousDay);
+  return selectedDate > lookbackLimit;
 };
 
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
   const availableDays = getAvailableDays(journal);
   const nextDay = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
+  const today = DateTime.at(DateTime.today()).format('YYYY-MM-DD');
 
-  return availableDays.includes(nextDay);
+  return availableDays.includes(nextDay) || nextDay < today;
 };
