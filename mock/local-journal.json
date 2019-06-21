@@ -1,6 +1,7 @@
 {
   "examiner": {
-    "staffNumber": "01234567"
+    "staffNumber": "01234567",
+    "individualId": 9000000
   },
   "nonTestActivities": [],
   "testSlots": [
@@ -22,7 +23,6 @@
           "meetingPlace": "At the pub"
         },
         "candidate": {
-          "age": 17,
           "candidateAddress": {
             "addressLine1": "1 Station Street",
             "addressLine2": "Someplace",
@@ -36,10 +36,12 @@
             "title": "Miss"
           },
           "driverNumber": "PEARS015220A99HC",
-          "gender": "Female",
+          "gender": "F",
           "mobileTelephone": "07654 123456",
           "primaryTelephone": "01234 567890",
-          "secondaryTelephone": "04321 098765"
+          "secondaryTelephone": "04321 098765",
+          "dateOfBirth": "1983-09-27",
+          "ethnicOriginCode": "1271"
         },
         "previousCancellation": [
           "Act of nature"
@@ -72,7 +74,6 @@
           "meetingPlace": "At the pub"
         },
         "candidate": {
-          "age": 56,
           "candidateAddress": {
             "addressLine1": "My House",
             "addressLine2": "Someplace",
@@ -86,9 +87,11 @@
             "title": "Mrs"
           },
           "driverNumber": "DOEXX625220A99HC",
-          "gender": "Female",
+          "gender": "F",
           "mobileTelephone": "07654 123456",
-          "emailAddress": "test@test.com"
+          "emailAddress": "test@test.com",
+          "dateOfBirth": "1979-10-20",
+          "ethnicOriginCode": "1272"
         },
         "previousCancellation": [
           "DSA",
@@ -126,7 +129,6 @@
           "welshTest": false
         },
         "candidate": {
-          "age": 30,
           "candidateAddress": {
             "addressLine1": "999 Letsby Avenue",
             "addressLine2": "Someplace    ",
@@ -141,8 +143,10 @@
             "title": "Miss"
           },
           "driverNumber": "SHAWX885220A99HC",
-          "gender": "Female",
-          "mobileTelephone": "07654 123456"
+          "gender": "F",
+          "mobileTelephone": "07654 123456",
+          "dateOfBirth": "1959-11-16",
+          "ethnicOriginCode": "1273"
         }
       },
       "slotDetail": {
@@ -176,7 +180,6 @@
           "welshTest": false
         },
         "candidate": {
-          "age": 38,
           "candidateAddress": {
             "addressLine1": "1 Station Street",
             "addressLine2": "Someplace",
@@ -191,9 +194,11 @@
             "title": "Mr"
           },
           "driverNumber": "CAMPB805220A89HC",
-          "gender": "Male",
+          "gender": "M",
           "mobileTelephone": "07654 123456",
-          "primaryTelephone": "01234 567890"
+          "primaryTelephone": "01234 567890",
+          "dateOfBirth": "1975-06-09",
+          "ethnicOriginCode": "1274"
         }
       },
       "slotDetail": {
@@ -227,7 +232,6 @@
           "welshTest": false
         },
         "candidate": {
-          "age": 27,
           "candidateAddress": {
             "addressLine1": "The Gables Cottage",
             "addressLine2": "Home Farm",
@@ -243,10 +247,12 @@
             "title": "Mr"
           },
           "driverNumber": "BROWN915220A99HC",
-          "gender": "Male",
+          "gender": "M",
           "mobileTelephone": "07654 123456",
           "primaryTelephone": "01234 567890",
-          "secondaryTelephone": "04321 098765"
+          "secondaryTelephone": "04321 098765",
+          "dateOfBirth": "1950-02-27",
+          "ethnicOriginCode": "1275"
         }
       },
       "slotDetail": {
@@ -276,7 +282,6 @@
           "welshTest": true
         },
         "candidate": {
-          "age": 37,
           "candidateAddress": {
             "addressLine1": "1 Hangar Lane",
             "addressLine2": "Someplace",
@@ -290,8 +295,10 @@
             "title": "Captain"
           },
           "driverNumber": "CRAIG375220A99HC",
-          "gender": "Male",
-          "primaryTelephone": "01234 567890"
+          "gender": "M",
+          "primaryTelephone": "01234 567890",
+          "dateOfBirth": "1973-09-06",
+          "ethnicOriginCode": "1276"
         }
       },
       "slotDetail": {
