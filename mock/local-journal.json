@@ -57,7 +57,8 @@
         "centreName": "Example Test Centre",
         "costCode": "EXTC1"
       },
-      "vehicleSlotType": "Voc90mins"
+      "vehicleSlotType": "Voc90mins",
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -109,7 +110,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -160,7 +162,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -212,7 +215,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -266,7 +270,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -312,7 +317,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     }
   ]
 }
