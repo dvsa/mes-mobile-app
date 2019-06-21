@@ -26,6 +26,7 @@ describe('JournalSelector', () => {
       statusText: 'HTTP 404',
     },
     selectedDate: '2019-01-17',
+    examiner: { staffNumber: '123', individualId: 456 },
   };
 
   describe('getIsLoading', () => {
@@ -87,6 +88,7 @@ describe('JournalSelector', () => {
           ],
         },
         selectedDate: '2019-01-29',
+        examiner: { staffNumber: '123', individualId: 456 },
       };
 
       const result = canNavigateToNextDay(journal);
@@ -107,6 +109,7 @@ describe('JournalSelector', () => {
           ],
         },
         selectedDate: '2019-01-29',
+        examiner: { staffNumber: '123', individualId: 456 },
       };
 
       const result = canNavigateToNextDay(journal);
@@ -129,6 +132,7 @@ describe('JournalSelector', () => {
           ],
         },
         selectedDate: '2019-01-13',
+        examiner: { staffNumber: '123', individualId: 456 },
       };
 
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
@@ -155,6 +159,7 @@ describe('JournalSelector', () => {
           ],
         },
         selectedDate: '2019-01-14',
+        examiner: { staffNumber: '123', individualId: 456 },
       };
 
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));

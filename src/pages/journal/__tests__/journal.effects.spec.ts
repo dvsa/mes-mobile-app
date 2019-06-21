@@ -162,7 +162,7 @@ describe('Journal Effects', () => {
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
     store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
     store$.dispatch(new journalActions.LoadJournalSuccess(
-      journalSlotsDataMock,
+      { examiner: { staffNumber: '123', individualId: 456 }, slotItemsByDate: journalSlotsDataMock },
       ConnectionStatus.ONLINE,
       false,
       new Date())); // Load in mock journal state
@@ -186,7 +186,7 @@ describe('Journal Effects', () => {
     const selectedDate: string = new DateTime().format('YYYY-MM-DD'); // Today
     const nextDay: string = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD'); // Tomorrow
     store$.dispatch(new journalActions.LoadJournalSuccess(
-      journalSlotsDataMock,
+      { examiner: { staffNumber: '123', individualId: 456 }, slotItemsByDate: journalSlotsDataMock },
       ConnectionStatus.ONLINE,
       false,
       new Date())); // Load in mock journal state

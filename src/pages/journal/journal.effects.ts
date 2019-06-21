@@ -77,7 +77,7 @@ export class JournalEffects {
             map((slots: { [k: string]: SlotItem[] }) => this.slotProvider.getRelevantSlots(slots)),
             map((slots: { [k: string]: SlotItem[] }) =>
               new journalActions.LoadJournalSuccess(
-                slots,
+                { examiner: null, slotItemsByDate: slots },
                 this.networkStateProvider.getNetworkState(),
                 this.authProvider.isInUnAuthenticatedMode(),
                 lastRefreshed,
@@ -87,7 +87,7 @@ export class JournalEffects {
               // For HTTP 304 NOT_MODIFIED we just use the slots we already have cached
               if (err.status === 304) {
                 return of(new journalActions.LoadJournalSuccess(
-                  slots,
+                  { examiner: null, slotItemsByDate: slots },
                   this.networkStateProvider.getNetworkState(),
                   this.authProvider.isInUnAuthenticatedMode(),
                   lastRefreshed,

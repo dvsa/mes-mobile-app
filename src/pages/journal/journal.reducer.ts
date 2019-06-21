@@ -10,6 +10,7 @@ export const initialState: JournalModel = {
   lastRefreshed: null,
   slots: {},
   selectedDate: '',
+  examiner: null,
 };
 
 export function journalReducer(state = initialState, action: journalActions.JournalActionTypes): JournalModel {
@@ -29,7 +30,8 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         lastRefreshed: (action.onlineOffline ===
           ConnectionStatus.ONLINE && !action.unAuthenticatedMode) ? new Date() : action.lastRefreshed,
         isLoading: false,
-        slots: action.payload,
+        slots: action.payload.slotItemsByDate,
+        examiner: action.payload.examiner,
       };
     case journalActions.LOAD_JOURNAL_FAILURE:
       return {

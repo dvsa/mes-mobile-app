@@ -107,6 +107,7 @@ describe('Candidate Details Selector', () => {
           ],
         },
         selectedDate: '2019-01-17',
+        examiner: { staffNumber: '123', individualId: 456 },
       };
 
       const result = getSlots(journal);

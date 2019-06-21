@@ -1,5 +1,6 @@
 import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { Examiner } from '@dvsa/mes-test-schema/categories/B';
 
 export type Slot = {
   booking: any,
@@ -12,7 +13,18 @@ export type Slot = {
 export type JournalModel = {
   isLoading: boolean,
   lastRefreshed: Date,
-  slots: {[k: string]: SlotItem[]},
+  slots: { [k: string]: SlotItem[] },
   error?: MesError,
   selectedDate: string,
+  examiner: Examiner,
 };
+
+export interface ExaminerSlotItems {
+  examiner: Examiner;
+  slotItems: SlotItem[];
+}
+
+export interface ExaminerSlotItemsByDate {
+  examiner: Examiner;
+  slotItemsByDate: { [date: string]: SlotItem[] };
+}

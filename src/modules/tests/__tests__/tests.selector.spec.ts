@@ -51,7 +51,13 @@ describe('testsSelector', () => {
         },
         activityCode: ActivityCodes.PASS,
       };
-      const journal: JournalModel = { isLoading: false, lastRefreshed: new Date(), slots: {}, selectedDate: 'dummy' };
+      const journal: JournalModel = {
+        isLoading: false,
+        lastRefreshed: new Date(),
+        slots: {},
+        selectedDate: 'dummy',
+        examiner: { staffNumber: '123', individualId: 456 },
+      };
       const appInfo: AppInfoModel = { versionNumber: '0.0.0' };
       const logs: LogsModel = [];
       const state = {
