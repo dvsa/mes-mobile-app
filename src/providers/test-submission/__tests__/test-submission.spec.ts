@@ -97,7 +97,6 @@ describe('TestSubmissionProvider', () => {
       };
       const expected = {
         category: 'B',
-        id: '1022',
         communicationPreferences: {
           updatedEmail: 'test@test.com',
           communicationMethod: 'Post',
