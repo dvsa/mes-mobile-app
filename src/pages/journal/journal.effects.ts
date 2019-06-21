@@ -200,14 +200,19 @@ export class JournalEffects {
         select(getJournalState),
         map(getSlotsOnSelectedDate),
       ),
+      this.store$.pipe(
+        select(getJournalState),
+        map(journal => journal.examiner),
+      ),
     ),
-    switchMap(([action, slots]) => {
+    switchMap(([action, slots, examiner]) => {
       const startTestAction = action as journalActions.StartTest;
 
       const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
+      const { staffNumber, individualId } = examiner;
 
       return [
-        new PopulateExaminer({ staffNumber: this.authProvider.getEmployeeId() }),
+        new PopulateExaminer({ staffNumber, individualId }),
         new PopulateApplicationReference(slot.slotData.booking.application),
         new PopulateCandidateDetails(slot.slotData.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot.slotData)),
