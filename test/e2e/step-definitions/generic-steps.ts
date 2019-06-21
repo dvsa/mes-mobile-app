@@ -236,7 +236,7 @@ export const logout = () => {
  * @param fieldElement the element to click
  */
 export const clickElement = (fieldElement) => {
-  browser.wait(ExpectedConditions.presenceOf(fieldElement));
+  browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
   fieldElement.click().then((promise) => {
     return isReady(promise);
   });

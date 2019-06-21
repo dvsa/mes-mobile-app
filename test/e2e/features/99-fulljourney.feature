@@ -25,6 +25,7 @@ Feature: Full end to end journey
       And I upload the test
       Then I should see the "Journal" page
 
+   @wip
    Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
 
@@ -106,6 +107,11 @@ Feature: Full end to end journey
       Then I should see the Debrief page with outcome "Unsuccessful"
       And I see a "dangerous" fault for "Use of speed"
       And I see a "serious" fault for "Controls - Accelerator"
+      And I see a "driving" fault for "Move off - Safety"
+      And I see a "driving" fault for "Controls - Accelerator"
+      And I see a "driving" fault for "Reverse right"
+      And I see a "driving" fault for "Controlled stop"
+      And I see a "driving" fault for "Vehicle checks"
 
       When I end the debrief
 
