@@ -11,7 +11,7 @@ describe('TestSubmissionProvider', () => {
 
   let testSubmissionProvider: TestSubmissionProvider;
   let httpMock: HttpTestingController;
-  let urlProvider : UrlProvider;
+  let urlProvider: UrlProvider;
   let httpClient: HttpClient;
 
   beforeEach(() => {
@@ -64,7 +64,6 @@ describe('TestSubmissionProvider', () => {
       // ARRANGE
       const mockData: Partial<StandardCarTestCATBSchema> = {
         category: 'B',
-        id: '1022',
         communicationPreferences: {
           updatedEmail: 'test@test.com',
           communicationMethod: 'Post',
@@ -86,7 +85,6 @@ describe('TestSubmissionProvider', () => {
       // ARRANGE
       const mockData: Partial<StandardCarTestCATBSchema> = {
         category: 'B',
-        id: '1022',
         activityCode: null,
         communicationPreferences: {
           updatedEmail: 'test@test.com',

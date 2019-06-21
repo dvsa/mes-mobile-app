@@ -26,7 +26,6 @@ describe('testsSelector', () => {
     it('should return whichever test is the current one', () => {
       const currentTest: StandardCarTestCATBSchema = {
         category: 'B',
-        id: 'abc123',
         journalData: {
           testSlotAttributes: {
             welshTest: false,
@@ -96,7 +95,6 @@ describe('testsSelector', () => {
 
   describe('getTestOutcomeText', () => {
     const testState: StandardCarTestCATBSchema = {
-      id: '1',
       activityCode: ActivityCodes.PASS,
       category: 'x',
       journalData: {
@@ -137,7 +135,6 @@ describe('testsSelector', () => {
 
   describe('getTestOutcomeClass', () => {
     const testState: StandardCarTestCATBSchema = {
-      id: '1',
       activityCode: ActivityCodes.PASS,
       category: 'x',
       journalData: {
@@ -178,7 +175,6 @@ describe('testsSelector', () => {
 
   describe('isPassed', () => {
     const testState: StandardCarTestCATBSchema = {
-      id: '1',
       activityCode: ActivityCodes.PASS,
       category: 'x',
       journalData: {
@@ -219,7 +215,6 @@ describe('testsSelector', () => {
 
   describe('getActivityCode', () => {
     const testState: StandardCarTestCATBSchema = {
-      id: '1',
       // DVSA_RADIO_FAILURE = '25'
       activityCode: ActivityCodes.DVSA_RADIO_FAILURE,
       category: 'x',
