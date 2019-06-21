@@ -104,8 +104,11 @@ Feature: Full end to end journey
       When I end the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
+      And I see a "dangerous" fault for "Use of speed"
+      And I see a "serious" fault for "Controls - Accelerator"
 
       When I end the debrief
+
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -201,6 +204,13 @@ Feature: Full end to end journey
       When I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
+      And I see a "driving" fault for "Use of mirrors - Signalling"
+      And I see a "driving" fault for "Move off - Safety"
+      And I see a "driving" fault for "Positioning - Lane discipline"
+      And I see a "driving" fault for "Controls - Accelerator"
+      And I see a "driving" fault for "Junctions - Approach speed"
+      And I see a "driving" fault for "Signals - Timed"
+      And I see a "driving" fault for "Clearance"
       When I end the debrief
       Then I should see the "Test debrief - Jane Doe" page
       And I complete the pass details
@@ -243,6 +253,13 @@ Feature: Full end to end journey
       When I complete the test
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
+      And I see a "driving" fault for "Use of mirrors - Signalling"
+      And I see a "driving" fault for "Move off - Safety"
+      And I see a "driving" fault for "Positioning - Lane discipline"
+      And I see a "driving" fault for "Controls - Accelerator"
+      And I see a "driving" fault for "Junctions - Approach speed"
+      And I see a "driving" fault for "Signals - Timed"
+      And I see a "driving" fault for "Clearance"
       When I end the debrief
       Then I am on the back to office page
       And I continue to the office write up

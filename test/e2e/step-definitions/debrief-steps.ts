@@ -35,6 +35,12 @@ Then('I should see the Debrief page with outcome {string}', (outcome) => {
   return expect(testOutcome.getText()).to.eventually.equal(outcome);
 });
 
+Then('I see a {string} fault for {string}', (faultSeverity, faultDescription) => {
+  const faultElement = getElement(by.xpath(`//ion-card[@id = '${faultSeverity}-fault']
+  //div[text() = '${faultDescription}']`));
+  return expect(faultElement.isPresent()).to.eventually.be.true;
+});
+
 const continuePassFinalisation = () => {
   const continueButton = getElement(by.xpath('//page-pass-finalisation//button[span[h3[text() = "Continue"]]]'));
   clickElement(continueButton);
