@@ -50,7 +50,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1001,
-        "start": "2019-06-21T08:10:00+01:00"
+        "start": "2019-06-24T08:10:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -102,7 +102,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1003,
-        "start": "2019-06-21T10:14:00+01:00"
+        "start": "2019-06-24T10:14:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -154,7 +154,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1004,
-        "start": "2019-06-21T11:11:00+01:00"
+        "start": "2019-06-24T11:11:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -207,7 +207,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1005,
-        "start": "2019-06-21T12:38:00+01:00"
+        "start": "2019-06-24T12:38:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -262,7 +262,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1006,
-        "start": "2019-06-21T13:35:00+01:00"
+        "start": "2019-06-24T13:35:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -309,7 +309,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1007,
-        "start": "2019-06-22T14:32:00+01:00"
+        "start": "2019-06-25T14:32:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
