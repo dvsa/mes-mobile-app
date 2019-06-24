@@ -106,6 +106,54 @@ Feature: Extended category B test scenarios
       And I upload the test
       Then I should see the "Journal" page
 
+   Scenario: Candidate passes a test with 15 driver faults
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
+      When I start the test for "Mrs Jane Doe"
+      And the candidate enters a new email address
+      And the candidate confirms their communication preference
+      Then I should see the "Declaration - Jane Doe" page
+      And the candidate completes the declaration page
+      And I proceed to the car
+      Then I should see the "Jane Doe" page
+      And I complete the waiting room to car page
+      Then I should see the "Test report - Jane Doe" page
+      When I add a "Accelerator" driver fault
+      And I add a "Safety" driver fault
+      And I add a "Safety" driver fault
+      And I add a "Lane discipline" driver fault
+      And I add a "Accelerator" driver fault
+      And I add a "Safety" driver fault
+      And I add a "Lane discipline" driver fault
+      And I add a "Lane discipline" driver fault
+      And I add a "Approach speed" driver fault
+      And I add a "Approach speed" driver fault
+      And I add a "Signalling" driver fault
+      And I add a "Timed" driver fault
+      And I add a "Clearance" driver fault
+      And I add a "Signalling" driver fault
+      And I add a "Signalling" driver fault
+      Then the driver fault count is "15"
+      When I complete the test
+      And I continue to debrief
+      Then I should see the Debrief page with outcome "Passed"
+      And I see a "driving" fault for "Use of mirrors - Signalling"
+      And I see a "driving" fault for "Move off - Safety"
+      And I see a "driving" fault for "Positioning - Lane discipline"
+      And I see a "driving" fault for "Controls - Accelerator"
+      And I see a "driving" fault for "Junctions - Approach speed"
+      And I see a "driving" fault for "Signals - Timed"
+      And I see a "driving" fault for "Clearance"
+      When I end the debrief
+      Then I should see the "Test debrief - Jane Doe" page
+      And I complete the pass details
+      And I complete the health declaration
+      Then I am on the back to office page
+      And I continue to the office write up
+      Then I should see the "Office" page
+      And I complete the office write up
+      And I upload the test
+      Then I should see the "Journal" page
+
    # This will fail until MES-2673 is fixed
    Scenario: Candidate fails a test with a dangerous and 16 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
