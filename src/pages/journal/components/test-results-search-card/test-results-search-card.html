@@ -1,15 +1,20 @@
+
 <ion-card class="search-card">
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <h4>Access Test Results Search</h4>
-        <p>By tapping on the button you can access DE & LDTM search</p>
-      </ion-col>
-      <ion-col col-36 align-self-center>
-        <button class="mes-secondary-button" ion-button float-right (click)="navigateToTestResultsSearch()">
-          <h3 class="test-results-search-label">Access Tests Results <br /> Search</h3>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div id="card-content-wrapper">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h4>
+            <ion-icon name="search" id="search-icon"></ion-icon>
+            <span id="search-text">Find and view submitted tests</span>
+          </h4>
+        </ion-col>
+        <ion-col col-36 align-self-center>
+          <button class="search-test-button" ion-button float-right (click)="navigateToTestResultsSearch()">
+            <h3 class="test-results-search-label">Search tests</h3>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-card>

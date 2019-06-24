@@ -1,18 +1,32 @@
 test-results-search-card {
   .search-card {
-    padding: 12px;
     h4 {
-      margin-bottom: 10px;
+      color: map-get($colors, mes-white);
+      margin-top: 8px;
     }
-    p {
-      font-size: 20px;
-    }
-    .mes-secondary-button {
-      height: 74px;
-      width: 220px;
+    .search-test-button {
+      background: map-get($colors, mes-white);
+      border-radius: 10px;
+      height: 48px;
+      width: 148px;
       h3 {
-        color: map-get($colors-gds, gds-black);
+        color: map-get($colors-gds, gds-dark-green);
+        text-align: center;
       }
+      margin-right: 18px;
+    }
+    #card-content-wrapper {
+      margin-left: 12px;
+      background: map-get($colors-gds, gds-dark-green);
+    }
+    #search-icon {
+      vertical-align: middle;
+      font-size: 42px;
+      font-weight: 900;
+    }
+    #search-text {
+      vertical-align: middle;
+      font-size: 24px;
     }
   }
 }
