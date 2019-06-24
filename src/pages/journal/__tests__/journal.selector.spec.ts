@@ -108,7 +108,7 @@ describe('JournalSelector', () => {
             },
           ],
         },
-        selectedDate: '2019-01-29',
+        selectedDate: '2021-01-29',
         examiner: { staffNumber: '123', individualId: 456 },
       };
 
@@ -131,7 +131,7 @@ describe('JournalSelector', () => {
             },
           ],
         },
-        selectedDate: '2019-01-13',
+        selectedDate: '2019-01-01',
         examiner: { staffNumber: '123', individualId: 456 },
       };
 
