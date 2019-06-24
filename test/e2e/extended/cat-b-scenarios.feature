@@ -98,11 +98,10 @@ Feature: Extended category B test scenarios
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
+      And the office page test outcome is "Terminated"
       When I select activity code "4 - Fail in the interests of public safety"
-      # test outcome is Unsuccessful
-      # Independent driving N/A available
-      # Show me question N/A - Not applicable
-      And I complete the office write up
+      Then the office page test outcome is "Unsuccessful"
+      When I complete the office write up with Not applicable to independent driving and show me question
       And I enter a comment for "dangerous" fault "Use of speed"
       And I upload the test
       Then I should see the "Journal" page
