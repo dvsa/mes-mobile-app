@@ -57,10 +57,14 @@ describe('JournalNavigationComponent', () => {
     beforeEach(() => {
       componentEl = fixture.debugElement;
 
-      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock,
-                                             ConnectionStatus.ONLINE,
-                                             false,
-                                             new Date()));
+      store$.dispatch(
+        new LoadJournalSuccess(
+          { examiner: { staffNumber: '123', individualId: 456 }, slotItemsByDate: journalSlotsDataMock },
+          ConnectionStatus.ONLINE,
+          false,
+          new Date(),
+        ),
+      );
       store$.dispatch(new SetSelectedDate(dateTimeProvider.now().format('YYYY-MM-DD')));
     });
 

@@ -105,10 +105,14 @@ describe('JournalPage', () => {
       componentEl = fixture.debugElement;
 
       // Manually dispatching an action which loads slots to the store
-      store$.dispatch(new LoadJournalSuccess(journalSlotsDataMock,
-                                             ConnectionStatus.ONLINE,
-                                             false,
-                                             new Date()));
+      store$.dispatch(
+        new LoadJournalSuccess(
+          { examiner: { staffNumber: '123', individualId: 456 }, slotItemsByDate: journalSlotsDataMock },
+          ConnectionStatus.ONLINE,
+          false,
+          new Date(),
+        ),
+      );
     });
 
     // TODO - Come back and look at this test

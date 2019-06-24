@@ -28,13 +28,16 @@ describe('Journal Reducer', () => {
   });
 
   describe('[JournalPage] Load Journal Success', () => {
-    it('should toggle loading state and populate slots', () => {
+    it('should toggle loading state and populate slots + examiner', () => {
       const actionPayload = {
-        ['2019-01-13']: [{
-          hasSlotChanged: false,
-          slotData: {},
+        examiner: { staffNumber: '123', individualId: 456 },
+        slotItemsByDate: {
+          ['2019-01-13']: [{
+            hasSlotChanged: false,
+            slotData: {},
+          },
+          ],
         },
-        ],
       };
 
       const action = new LoadJournalSuccess(
@@ -62,6 +65,7 @@ describe('Journal Reducer', () => {
           },
           ],
         },
+        examiner: { staffNumber: '123', individualId: 456 },
       });
     });
   });
@@ -79,12 +83,14 @@ describe('Journal Reducer', () => {
         lastRefreshed: new Date(),
         selectedDate: 'dummy',
         slots: { ['2019-01-13']: [new SlotItem({}, false)] },
+        examiner: { staffNumber: '123', individualId: 456 },
       };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.isLoading).toBe(false);
       expect(result.lastRefreshed).toBeNull();
       expect(result.selectedDate).toBe('');
+      expect(result.examiner).toBeNull();
     });
   });
 

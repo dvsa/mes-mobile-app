@@ -28,7 +28,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
-import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
+import { TestCentre, Examiner } from '@dvsa/mes-test-schema/categories/B';
 import {
   PopulateTestSlotAttributes,
 } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
@@ -37,6 +37,7 @@ import { SetTestStatusBooked } from '../../modules/tests/test-status/test-status
 import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateExaminer } from '../../modules/tests/examiner/examiner.actions';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
+import { ExaminerSlotItems, ExaminerSlotItemsByDate } from './journal.model';
 
 @Injectable()
 export class JournalEffects {
@@ -65,19 +66,27 @@ export class JournalEffects {
           select(getJournalState),
           map(getSlots),
         ),
+        this.store$.pipe(
+          select(getJournalState),
+          map(journal => journal.examiner),
+        ),
       ),
-      switchMap(([action, lastRefreshed, slots]) => {
+      switchMap(([action, lastRefreshed, slots, examiner]) => {
         return this.journalProvider
           .getJournal(lastRefreshed)
           .pipe(
             tap((journalData: ExaminerWorkSchedule) => this.journalProvider.saveJournalForOffline(journalData)),
-            map((journalData: ExaminerWorkSchedule) => this.slotProvider.detectSlotChanges(slots, journalData)),
-            map((slots: any[]) => groupBy(slots, this.slotProvider.getSlotDate)),
-            map((slots: { [k: string]: SlotItem[] }) => this.slotProvider.extendWithEmptyDays(slots)),
-            map((slots: { [k: string]: SlotItem[] }) => this.slotProvider.getRelevantSlots(slots)),
-            map((slots: { [k: string]: SlotItem[] }) =>
+            map((journalData: ExaminerWorkSchedule): ExaminerSlotItems => ({
+              examiner: journalData.examiner as Required<Examiner>,
+              slotItems: this.slotProvider.detectSlotChanges(slots, journalData),
+            })),
+            map((examinerSlotItems: ExaminerSlotItems): ExaminerSlotItemsByDate => ({
+              examiner: examinerSlotItems.examiner,
+              slotItemsByDate: this.getRelevantSlotItemsByDate(examinerSlotItems.slotItems),
+            })),
+            map((slotItemsByDate: ExaminerSlotItemsByDate) =>
               new journalActions.LoadJournalSuccess(
-                slots,
+                slotItemsByDate,
                 this.networkStateProvider.getNetworkState(),
                 this.authProvider.isInUnAuthenticatedMode(),
                 lastRefreshed,
@@ -87,7 +96,7 @@ export class JournalEffects {
               // For HTTP 304 NOT_MODIFIED we just use the slots we already have cached
               if (err.status === 304) {
                 return of(new journalActions.LoadJournalSuccess(
-                  slots,
+                  { examiner, slotItemsByDate: slots },
                   this.networkStateProvider.getNetworkState(),
                   this.authProvider.isInUnAuthenticatedMode(),
                   lastRefreshed,
@@ -98,6 +107,14 @@ export class JournalEffects {
           );
       }),
     );
+  }
+
+  private getRelevantSlotItemsByDate = (slotItems: SlotItem[]): { [date: string]: SlotItem[] } => {
+    let slotItemsByDate: { [date: string]: SlotItem[] };
+    slotItemsByDate = groupBy(slotItems, this.slotProvider.getSlotDate);
+    slotItemsByDate = this.slotProvider.extendWithEmptyDays(slotItemsByDate);
+    slotItemsByDate = this.slotProvider.getRelevantSlots(slotItemsByDate);
+    return slotItemsByDate;
   }
 
   @Effect()
@@ -183,14 +200,19 @@ export class JournalEffects {
         select(getJournalState),
         map(getSlotsOnSelectedDate),
       ),
+      this.store$.pipe(
+        select(getJournalState),
+        map(journal => journal.examiner),
+      ),
     ),
-    switchMap(([action, slots]) => {
+    switchMap(([action, slots, examiner]) => {
       const startTestAction = action as journalActions.StartTest;
 
       const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
+      const { staffNumber, individualId } = examiner;
 
       return [
-        new PopulateExaminer({ staffNumber: this.authProvider.getEmployeeId() }),
+        new PopulateExaminer({ staffNumber, individualId }),
         new PopulateApplicationReference(slot.slotData.booking.application),
         new PopulateCandidateDetails(slot.slotData.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot.slotData)),

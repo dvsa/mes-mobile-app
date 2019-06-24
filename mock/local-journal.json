@@ -1,6 +1,7 @@
 {
   "examiner": {
-    "staffNumber": "01234567"
+    "staffNumber": "01234567",
+    "individualId": 9000000
   },
   "nonTestActivities": [],
   "testSlots": [
@@ -22,7 +23,6 @@
           "meetingPlace": "At the pub"
         },
         "candidate": {
-          "age": 17,
           "candidateAddress": {
             "addressLine1": "1 Station Street",
             "addressLine2": "Someplace",
@@ -36,10 +36,12 @@
             "title": "Miss"
           },
           "driverNumber": "PEARS015220A99HC",
-          "gender": "Female",
+          "gender": "F",
           "mobileTelephone": "07654 123456",
           "primaryTelephone": "01234 567890",
-          "secondaryTelephone": "04321 098765"
+          "secondaryTelephone": "04321 098765",
+          "dateOfBirth": "1983-09-27",
+          "ethnicOriginCode": "1271"
         },
         "previousCancellation": [
           "Act of nature"
@@ -48,14 +50,15 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1001,
-        "start": "2019-06-17T08:10:00+01:00"
+        "start": "2019-06-21T08:10:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
         "centreName": "Example Test Centre",
         "costCode": "EXTC1"
       },
-      "vehicleSlotType": "Voc90mins"
+      "vehicleSlotType": "Voc90mins",
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -72,7 +75,6 @@
           "meetingPlace": "At the pub"
         },
         "candidate": {
-          "age": 56,
           "candidateAddress": {
             "addressLine1": "My House",
             "addressLine2": "Someplace",
@@ -86,9 +88,11 @@
             "title": "Mrs"
           },
           "driverNumber": "DOEXX625220A99HC",
-          "gender": "Female",
+          "gender": "F",
           "mobileTelephone": "07654 123456",
-          "emailAddress": "test@test.com"
+          "emailAddress": "test@test.com",
+          "dateOfBirth": "1979-10-20",
+          "ethnicOriginCode": "1272"
         },
         "previousCancellation": [
           "DSA",
@@ -98,7 +102,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1003,
-        "start": "2019-06-17T10:14:00+01:00"
+        "start": "2019-06-21T10:14:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -106,7 +110,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -126,7 +131,6 @@
           "welshTest": false
         },
         "candidate": {
-          "age": 30,
           "candidateAddress": {
             "addressLine1": "999 Letsby Avenue",
             "addressLine2": "Someplace    ",
@@ -141,14 +145,16 @@
             "title": "Miss"
           },
           "driverNumber": "SHAWX885220A99HC",
-          "gender": "Female",
-          "mobileTelephone": "07654 123456"
+          "gender": "F",
+          "mobileTelephone": "07654 123456",
+          "dateOfBirth": "1959-11-16",
+          "ethnicOriginCode": "1273"
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1004,
-        "start": "2019-06-17T11:11:00+01:00"
+        "start": "2019-06-21T11:11:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -156,7 +162,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -176,7 +183,6 @@
           "welshTest": false
         },
         "candidate": {
-          "age": 38,
           "candidateAddress": {
             "addressLine1": "1 Station Street",
             "addressLine2": "Someplace",
@@ -191,15 +197,17 @@
             "title": "Mr"
           },
           "driverNumber": "CAMPB805220A89HC",
-          "gender": "Male",
+          "gender": "M",
           "mobileTelephone": "07654 123456",
-          "primaryTelephone": "01234 567890"
+          "primaryTelephone": "01234 567890",
+          "dateOfBirth": "1975-06-09",
+          "ethnicOriginCode": "1274"
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1005,
-        "start": "2019-06-17T12:38:00+01:00"
+        "start": "2019-06-21T12:38:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -207,7 +215,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -227,7 +236,6 @@
           "welshTest": false
         },
         "candidate": {
-          "age": 27,
           "candidateAddress": {
             "addressLine1": "The Gables Cottage",
             "addressLine2": "Home Farm",
@@ -243,16 +251,18 @@
             "title": "Mr"
           },
           "driverNumber": "BROWN915220A99HC",
-          "gender": "Male",
+          "gender": "M",
           "mobileTelephone": "07654 123456",
           "primaryTelephone": "01234 567890",
-          "secondaryTelephone": "04321 098765"
+          "secondaryTelephone": "04321 098765",
+          "dateOfBirth": "1950-02-27",
+          "ethnicOriginCode": "1275"
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1006,
-        "start": "2019-06-17T13:35:00+01:00"
+        "start": "2019-06-21T13:35:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -260,7 +270,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     },
     {
       "booking": {
@@ -276,7 +287,6 @@
           "welshTest": true
         },
         "candidate": {
-          "age": 37,
           "candidateAddress": {
             "addressLine1": "1 Hangar Lane",
             "addressLine2": "Someplace",
@@ -290,14 +300,16 @@
             "title": "Captain"
           },
           "driverNumber": "CRAIG375220A99HC",
-          "gender": "Male",
-          "primaryTelephone": "01234 567890"
+          "gender": "M",
+          "primaryTelephone": "01234 567890",
+          "dateOfBirth": "1973-09-06",
+          "ethnicOriginCode": "1276"
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1007,
-        "start": "2019-06-18T14:32:00+01:00"
+        "start": "2019-06-22T14:32:00+01:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -305,7 +317,8 @@
         "costCode": "EXTC1"
       },
       "vehicleSlotType": "B57mins",
-      "vehicleSlotTypeCode": 7
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
     }
   ]
 }

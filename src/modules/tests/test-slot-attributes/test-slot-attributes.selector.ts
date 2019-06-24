@@ -5,7 +5,7 @@ export const getTestTime = (attributes: TestSlotAttributes) => DateTime.at(attri
 export const getVehicleSlotType = (attributes: TestSlotAttributes) => attributes.vehicleSlotType || '';
 export const isExtendedTest = (attributes: TestSlotAttributes) => attributes.extendedTest || false;
 export const isSpecialNeeds = (attributes: TestSlotAttributes) => attributes.specialNeeds || false;
-export const getSlotId = (attributes: TestSlotAttributes) =>  attributes.slotId;
+export const getSlotId = (attributes: TestSlotAttributes) => attributes.slotId;
 export const isWelshTest = (attributes: TestSlotAttributes) => attributes.welshTest;
 export const extractTestSlotAttributes = (slotData): TestSlotAttributes => ({
   welshTest: slotData.booking.application.welshTest,
@@ -14,4 +14,5 @@ export const extractTestSlotAttributes = (slotData): TestSlotAttributes => ({
   specialNeeds: slotData.booking.application.specialNeeds ? true : false,
   vehicleSlotType: slotData.vehicleSlotType,
   extendedTest: slotData.booking.application.extendedTest,
+  examinerVisiting: slotData.examinerVisiting,
 });
