@@ -101,14 +101,14 @@ describe('JournalSelector', () => {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          '2019-01-29': [
+          '2021-01-29': [
             {
               hasSlotChanged: false,
               slotData: {},
             },
           ],
         },
-        selectedDate: '2019-01-29',
+        selectedDate: '2021-01-29',
         examiner: { staffNumber: '123', individualId: 456 },
       };
 
@@ -119,23 +119,23 @@ describe('JournalSelector', () => {
   });
 
   describe('canNavigateToPreviousDay', () => {
-    it('should return false if selected day is today', () => {
+    it('should return false if selected day is 14 days from today', () => {
       const journal: JournalModel = {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          ['2019-01-13']: [
+          ['2019-01-01']: [
             {
               hasSlotChanged: false,
               slotData: {},
             },
           ],
         },
-        selectedDate: '2019-01-13',
+        selectedDate: '2019-01-01',
         examiner: { staffNumber: '123', individualId: 456 },
       };
 
-      const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
+      const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-15'));
 
       expect(result).toBe(false);
     });

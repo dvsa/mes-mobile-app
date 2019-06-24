@@ -46,6 +46,10 @@ export class DateTime {
     const today = this.moment.startOf(Duration.DAY);
     return date.moment.startOf(Duration.DAY).diff(today, Duration.DAY);
   }
+
+  static today(): Date {
+    return moment().toDate();
+  }
 }
 
 export enum Duration {

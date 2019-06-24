@@ -3,7 +3,7 @@ import { EnvironmentFile } from './models/environment.model';
 export const environment: EnvironmentFile = {
   isRemote: true,
   configUrl: 'https://uat.mes.dev-dvsacloud.uk/v1/configuration/uat',
-  daysToCacheJournalData: 7,
+  daysToCacheJournalData: 14,
   daysToCacheLogs: 7,
   logsPostApiKey: '',
   logsApiUrl: 'https://uat.mes.dev-dvsacloud.uk/v1/logs',
