@@ -3,7 +3,7 @@ import { LocalEnvironmentFile } from './models/environment.model';
 export const environment: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
-  daysToCacheJournalData: 7,
+  daysToCacheJournalData: 14,
   daysToCacheLogs: 7,
   googleAnalyticsId: 'UA-129489007-3',
   logsPostApiKey: '',
