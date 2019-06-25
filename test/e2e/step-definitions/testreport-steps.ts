@@ -32,7 +32,6 @@ const completeLegalRequirements = () => {
   });
 };
 
-
 When('I end the test', () => {
   endTest();
 });
@@ -40,6 +39,12 @@ When('I end the test', () => {
 When('I continue to debrief', () => {
   const continueToDebriefButton = getElement(by.xpath('//button[span[h3[text() = "Continue to debrief"]]]'));
   clickElement(continueToDebriefButton);
+});
+
+When('I end and terminate the test', () => {
+  endTest();
+  const terminateTestButton = getElement(by.xpath('//button[span[text() = "Terminate test"]]'));
+  clickElement(terminateTestButton);
 });
 
 When('I complete the test', () => {
@@ -55,7 +60,7 @@ When('I add a Show me / Tell me driver fault', () => {
 });
 
 When('I add a Controlled Stop driver fault', () => {
-  longPressButton(getElement(by.className('controlled-stop-competency')))
+  longPressButton(getElement(by.className('controlled-stop-competency')));
 });
 
 When('I add a {string} driver fault', (competency) => {
@@ -156,7 +161,7 @@ const clickManoeuvresButton = () => {
 
 When('I add a manoeuvre', () => {
   clickManoeuvresButton();
-  
+
   const reverseRightRadio = getElement(by.id('manoeuvres-reverse-right-radio'));
   clickElement(reverseRightRadio);
 });

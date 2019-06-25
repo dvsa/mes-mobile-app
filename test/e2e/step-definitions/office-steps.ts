@@ -9,10 +9,20 @@ const expect = chai.expect;
 
 When('I complete the office write up', () => {
   enterRouteNumber('2');
-  enterIndependentDriving();
+  enterIndependentDriving('satnav');
   enterCandidateDescription();
   enterDebriefWitnessed();
-  enterShowMe();
+  enterShowMe('S5 - Horn');
+  enterWeatherConditions();
+  enterD255();
+});
+
+When('I complete the office write up with Not applicable to independent driving and show me question', () => {
+  enterRouteNumber('4');
+  enterIndependentDriving('na');
+  enterCandidateDescription();
+  enterDebriefWitnessed();
+  enterShowMe('N/A - Not applicable');
   enterWeatherConditions();
   enterD255();
 });
@@ -73,6 +83,11 @@ Then('the tell me question should be {string}', (tellMeQuestion : string) => {
   return expect(tellMeQuestionField.getText()).to.eventually.equal(tellMeQuestion);
 });
 
+Then('the office page test outcome is {string}', (testOutcome : string) => {
+  const testOutcomeField = getElement(by.id('office-page-test-outcome'));
+  return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
+});
+
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);
@@ -100,15 +115,15 @@ const enterDebriefWitnessed = () => {
   clickElement(debriefWitnessedRadio);
 };
 
-const enterIndependentDriving = () => {
-  const satnavRadio = getElement(by.id('independent-driving-satnav'));
+const enterIndependentDriving = (type) => {
+  const satnavRadio = getElement(by.id(`independent-driving-${type}`));
   clickElement(satnavRadio);
 };
 
-const enterShowMe = () => {
+const enterShowMe = (value) => {
   const showMeSelector = getElement(by.id('show-me-selector'));
   clickElement(showMeSelector);
-  const showMeItem = getElement(by.xpath('//button/span/div[normalize-space(text()) = "S5 - Horn"]'));
+  const showMeItem = getElement(by.xpath(`//button/span/div[normalize-space(text()) = '${value}']`));
   clickElement(showMeItem);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
   clickElement(submitDialog);

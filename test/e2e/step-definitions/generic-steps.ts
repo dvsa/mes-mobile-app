@@ -218,6 +218,7 @@ export const logout = () => {
   const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
   logout.isPresent().then((result) => {
     if (result) {
+      browser.wait(ExpectedConditions.elementToBeClickable(logout));
       logout.click().then(() => {
         // After logout click sign in to get us to the login screen
         browser.sleep(TEST_CONFIG.ACTION_WAIT);
@@ -236,7 +237,7 @@ export const logout = () => {
  * @param fieldElement the element to click
  */
 export const clickElement = (fieldElement) => {
-  browser.wait(ExpectedConditions.presenceOf(fieldElement));
+  browser.wait(ExpectedConditions.elementToBeClickable(fieldElement));
   fieldElement.click().then((promise) => {
     return isReady(promise);
   });
