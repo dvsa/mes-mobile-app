@@ -88,6 +88,14 @@ Then('the office page test outcome is {string}', (testOutcome : string) => {
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
+Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCount : string, faultTest : string) => {
+  const driverFault = getElement(by.xpath(`//ion-row[@id = 'driving-fault-commentary-label']
+  [descendant::span[@class='count' and text() = '${faultCount}'] and descendant::label[@class='fault-label'
+  and text() = '${faultTest}']]`));
+
+  return expect(driverFault.isPresent()).to.eventually.be.true;
+});
+
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);

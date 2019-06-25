@@ -21,7 +21,8 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      And I complete the office write up
+      And the office page test outcome is "Passed"
+      When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
 
@@ -116,7 +117,13 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      And I complete the office write up
+      And the office page test outcome is "Unsuccessful"
+      And there are "2" driver faults listed for "Move off - Safety"
+      And there is "1" driver fault listed for "Controls - Accelerator"
+      And there is "1" driver fault listed for "Reverse right - Control"
+      And there is "1" driver fault listed for "Controlled Stop"
+      And there is "1" driver fault listed for "Show Me/Tell Me"
+      When I complete the office write up
       And I enter a comment for "dangerous" fault "Use of speed"
       And I enter a comment for "serious" fault "Controls - Accelerator"
       And I upload the test
@@ -132,6 +139,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
+      And the office page test outcome is "Terminated"
       When I select activity code "51 - Candidate failed to attend at test centre"
       And I upload the test
       Then I should see the "Journal" page
@@ -148,6 +156,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
+      And the office page test outcome is "Terminated"
       When I select activity code "20 - Documents not produced"
       And I try to upload the test
       Then validation item "office-candidate-description-validation-text" should be "Describe the candidate"
@@ -171,6 +180,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
+      And the office page test outcome is "Unsuccessful"
       And the activity code should be "3 - Fail due to eyesight"
       When I enter a candidate description
       And I complete the debrief witnessed
@@ -220,6 +230,7 @@ Feature: Full end to end journey
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
+      And the office page test outcome is "Unsuccessful"
       And I complete the office write up
       And I enter a comment for "driving" fault "Use of mirrors - Signalling"
       And I enter a comment for "driving" fault "Move off - Safety"
