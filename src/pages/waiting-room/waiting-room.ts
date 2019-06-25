@@ -70,14 +70,14 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
   ionViewDidEnter(): void {
@@ -89,7 +89,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   clickBack(): void {
-    this.navCtrl.pop();
+    this.navController.pop();
   }
 
   ngOnInit(): void {
@@ -193,7 +193,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
           this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfo());
-          this.navCtrl.push('WaitingRoomToCarPage');
+          this.navController.push('WaitingRoomToCarPage');
         })
         .catch((err) => {
           console.log(err);

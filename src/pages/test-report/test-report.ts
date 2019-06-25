@@ -70,7 +70,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -80,7 +80,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
     public statusBar: StatusBar,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.displayOverlay = false;
   }
 
@@ -215,11 +215,11 @@ export class TestReportPage extends PracticeableBasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navCtrl.push('DebriefPage');
+        this.navController.push('DebriefPage');
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new SetActivityCode(null));
-        this.navCtrl.push('DebriefPage');
+        this.navController.push('DebriefPage');
         break;
     }
   }
@@ -230,12 +230,12 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   onContinue = (): void => {
     this.modal.dismiss()
-    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
+    .then(() => this.navController.push('DebriefPage'));
   }
 
   onTerminate = (): void => {
     this.modal.dismiss()
-    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
+    .then(() => this.navController.push('DebriefPage'));
   }
 }
 

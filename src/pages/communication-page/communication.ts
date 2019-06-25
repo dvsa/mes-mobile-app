@@ -88,7 +88,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
@@ -97,7 +97,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     private insomnia: Insomnia,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 
@@ -121,7 +121,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   clickBack(): void {
     this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
-        this.navCtrl.pop();
+        this.navController.pop();
       })
       .catch((err) => {
         console.log(err);

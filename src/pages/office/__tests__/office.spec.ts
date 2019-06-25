@@ -52,7 +52,7 @@ import { LanguagePreferencesComponent } from '../components/language-preference/
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
   let component: OfficePage;
-  let navCtrl: NavController;
+  let navController: NavController;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
@@ -133,7 +133,7 @@ describe('OfficePage', () => {
       .then(() => {
         fixture = TestBed.createComponent(OfficePage);
         component = fixture.componentInstance;
-        navCtrl = TestBed.get(NavController);
+        navController = TestBed.get(NavController);
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
@@ -255,7 +255,7 @@ describe('OfficePage', () => {
         fixture.detectChanges();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
-        expect(navCtrl.popToRoot).toHaveBeenCalled();
+        expect(navController.popToRoot).toHaveBeenCalled();
       });
     });
 
@@ -324,12 +324,12 @@ describe('OfficePage', () => {
   describe('popToRoot', () => {
     it('should call the popToRoot method in the navcontroller if not in practice mode', () => {
       component.popToRoot();
-      expect(navCtrl.popToRoot).toHaveBeenCalled();
+      expect(navController.popToRoot).toHaveBeenCalled();
     });
     it('should call the popTo method in the navcontroller if in practice mode.', () => {
       component.isPracticeMode = true;
       component.popToRoot();
-      expect(navCtrl.popTo).toHaveBeenCalled();
+      expect(navController.popTo).toHaveBeenCalled();
     });
   });
 

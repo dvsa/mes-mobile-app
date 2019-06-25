@@ -27,6 +27,6 @@ export class EndTestLinkComponent {
 
   onTerminate = () => {
     this.terminateTestModal.dismiss();
-    this.navController.push('DebriefPage', { outcome: 'terminated' });
+    this.navController.push('DebriefPage');
   }
 }

@@ -115,13 +115,13 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public questionProvider: QuestionProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
     this.form = new FormGroup({});
   }
@@ -262,7 +262,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navCtrl.push('TestReportPage');
+      this.navController.push('TestReportPage');
     }
   }
   updateForm(ctrl: string, value: any) {

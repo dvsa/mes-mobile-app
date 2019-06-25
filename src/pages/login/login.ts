@@ -43,7 +43,7 @@ export class LoginPage extends BasePageComponent {
   unauthenticatedMode: boolean = false;
 
   constructor(
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public splashScreen: SplashScreen,
@@ -59,7 +59,7 @@ export class LoginPage extends BasePageComponent {
     public alertCtrl: AlertController,
     public logProvider: LogsProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider, false);
+    super(platform, navController, authenticationProvider, false);
 
     // Check to see if redirect to page was from a logout
     this.hasUserLoggedOut = navParams.get('hasLoggedOut');
