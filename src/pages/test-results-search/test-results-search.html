@@ -7,6 +7,32 @@
 
 <ion-content padding>
 
-  <div>Search will be possible here</div>
+  <my-tabs>
+    <my-tab [tabTitle]="'Candidate details'">
+      <h3>Candidate details search will show here</h3>
+    </my-tab>
+    <my-tab [tabTitle]="'Advanced search'">
+      <h3>Advanced search search will show here</h3>
+    </my-tab>
+  </my-tabs>
+
+  <!-- <ng-template let-person="person" #personEdit>
+    <person-edit [person]="person" (savePerson)="onPersonFormSubmit($event)"></person-edit>
+  </ng-template>
+  <ng-template #about>
+    <p>
+      Hi, I hope this demo was useful to learn more about dynamic components
+      in Angular, in specific about <code>ViewContainerRef</code>,
+      <code>ComponentResolverFactory</code> etc.
+    </p>
+    <p>
+      Also check out the <a href="https://juristr.com/blog/2017/07/ng2-dynamic-tab-component/">according blog article</a>. You
+      may also want to read the <a href="https://juristr.com/blog/2016/02/learning-ng2-creating-tab-component/">article about
+      creating basic tabs with <code>@ContentChildren</code> and <code>@QueryList</code></a>.
+    </p>
+    <p>
+      Visit me on <a href="https://twitter.com/juristr">Twitter</a> or on <a href="https://juristr.com/blog">blog</a>.
+    </p>
+  </ng-template> -->
 
 </ion-content>

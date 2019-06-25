@@ -1,0 +1,35 @@
+my-tabs {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+  }
+
+  li {
+    display: inline;
+    border: solid transparent;
+    border-width: 1px 1px 0 1px;
+    // margin: 0 5px 0 0;
+    padding: 18px;
+  }
+
+  li.active {
+    background-color: map-get($colors, 'mes-white');
+    border: solid;
+    border-width: 1px 1px 1px 1px;
+    border-bottom-color: map-get($colors, 'mes-white');
+  }
+
+  .nav {
+    h4 {
+      display: inline;
+    }
+  }
+
+
+
+  #content {
+    background-color: map-get($colors, 'mes-white');
+    border: 1px solid;
+  }
+}
