@@ -27,6 +27,10 @@ import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { TestStatus } from '../../modules/tests/test-status/test-status.model';
+import { getAllTestStatuses } from '../../modules/tests/tests.selector';
+import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -35,6 +39,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
+  testStatuses$: Observable<{ [slotId: string]: TestStatus; }>;
 }
 
 @IonicPage()
@@ -56,6 +61,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
+  incompleteTestCounter: number;
 
   constructor(
     public navController: NavController,
@@ -70,6 +76,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public analytics: AnalyticsProvider,
     public dateTimeProvider: DateTimeProvider,
     public appConfigProvider: AppConfigProvider,
+    public incompleteTestsProvider: IncompleteTestsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
@@ -104,6 +111,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       appVersion$: this.store$.pipe(
         select(getAppInfoState),
         map(getVersionNumber),
+      ),
+      testStatuses$: this.store$.pipe(
+        select(getTests),
+        map(getAllTestStatuses),
       ),
     };
 
@@ -230,10 +241,24 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     super.logout();
   }
 
-  showTestReportPracticeMode = () :boolean =>
+  showTestReportPracticeMode = (): boolean =>
     this.appConfigProvider.getAppConfig().journal.enableTestReportPracticeMode
 
-  showEndToEndPracticeMode = () :boolean =>
+  showEndToEndPracticeMode = (): boolean =>
     this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
 
+  updateIncompleteTests = (): number => {
+
+    let testsStatuses;
+    this.pageState.testStatuses$.subscribe((res) => {
+      testsStatuses = res;
+    });
+
+    let slots;
+    this.pageState.slots$.subscribe((res) => {
+      slots = res;
+    });
+
+    return this.incompleteTestsProvider.countIncompleteTests(testsStatuses, slots);
+  }
 }
