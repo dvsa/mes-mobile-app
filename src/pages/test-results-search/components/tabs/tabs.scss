@@ -7,10 +7,11 @@ my-tabs {
 
   li {
     display: inline;
-    border: solid transparent;
-    border-width: 1px 1px 0 1px;
-    // margin: 0 5px 0 0;
-    padding: 18px;
+    border: 1px solid map-get($colors-gds, 'gds-grey-4');
+    border-width: 1px 1px 1px 1px;
+    border-bottom-color: black;
+    padding: 16px;
+    background-color: map-get($colors-gds, 'gds-grey-4');
   }
 
   li.active {
@@ -25,8 +26,6 @@ my-tabs {
       display: inline;
     }
   }
-
-
 
   #content {
     background-color: map-get($colors, 'mes-white');
