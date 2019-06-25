@@ -31,6 +31,8 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { IncompleteTestsProvider } from '../../../providers/incomplete-tests/incomplete-tests';
+import { IncompleteTestsMock } from '../../../providers/incomplete-tests/__mocks__/incomplete-tests.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -61,6 +63,7 @@ describe('JournalPage', () => {
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: IncompleteTestsProvider, useClass: IncompleteTestsMock },
       ],
     })
       .compileComponents()
