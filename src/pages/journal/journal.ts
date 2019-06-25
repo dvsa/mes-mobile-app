@@ -176,10 +176,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   }
 
   private createSlots = (emission: any) => {
-    if (!Array.isArray(emission)) return;
-
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
+
+    if (!Array.isArray(emission)) return;
 
     if (emission.length === 0) return;
 
