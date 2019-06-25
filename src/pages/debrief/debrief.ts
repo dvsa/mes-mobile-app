@@ -82,7 +82,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -90,7 +90,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
   }
 
   ngOnInit(): void {
@@ -237,7 +237,13 @@ export class DebriefPage extends PracticeableBasePageComponent {
       this.navController.push('PassFinalisationPage');
       return;
     }
-    this.navController.push('BackToOfficePage');
+    this.navController.push('BackToOfficePage').then(() => {
+      console.log(`+++ NAV +++ there are ${this.navController.getActive().index} pages on the stack`);
+      // remove Test Report Page and Debrief Page
+      this.navController.remove(this.navController.getActive().index - 1).then(() => {
+        console.log(`+++ NAV +++ there are now ${this.navController.getActive().index} pages on the stack`);
+      });
+    });
   }
 
 }

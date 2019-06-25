@@ -193,7 +193,13 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
           this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfo());
-          this.navController.push('WaitingRoomToCarPage');
+          this.navController.push('WaitingRoomToCarPage').then(() => {
+            console.log(`+++ NAV +++ there are ${this.navController.getActive().index} pages on the stack`);
+            // remove Communication Page and Waiting Room Page
+            this.navController.remove(this.navController.getActive().index - 2, 2).then(() => {
+              console.log(`+++ NAV +++ there are now ${this.navController.getActive().index} pages on the stack`);
+            });
+          });
         })
         .catch((err) => {
           console.log(err);
