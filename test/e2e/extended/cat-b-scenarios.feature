@@ -64,6 +64,7 @@ Feature: Extended category B test scenarios
       Then I should see the "Journal" page
 
    Scenario: Candidate fails a test with a single serious fault
+      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I start the test for "Mrs Jane Doe"
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Jane Doe" page
