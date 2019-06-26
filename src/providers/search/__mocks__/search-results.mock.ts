@@ -6,8 +6,8 @@ export const searchResultsMock: SearchResultTestSchema [] = [
     applicationReference: '123456',
     category: 'B',
     costCode: 'abcd',
-    staffNumber: '98765',
     testDate: new Date('2019-06-24T09:00:00'),
+    driverNumber: 'ABC123EFG',
     candidateName: {
       firstName: 'Joe',
       lastName: 'Blogs',
@@ -19,8 +19,8 @@ export const searchResultsMock: SearchResultTestSchema [] = [
     applicationReference: '234567',
     category: 'B',
     costCode: 'mnbv',
-    staffNumber: '98765',
     testDate: new Date('2019-06-24T010:00:00'),
+    driverNumber: 'ABC123EFG',
     candidateName: {
       firstName: 'Alan',
       lastName: 'Smith',
