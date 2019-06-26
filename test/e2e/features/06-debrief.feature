@@ -19,7 +19,7 @@ Feature: Debrief including Health Declaration
       And the debrief candidate name should be "Miss Florence Pearson"
       And the debrief candidate driver number should be "PEARS 015220 A99HC"
       And I should see "manual" transmission is selected
-      # And I should see the application reference "123456731" - MES-2529 means this is not displayed correctly
+      And I should see the application reference "123456731"
 
    Scenario: The transmission value from the WRTC is carried through to the pass test debrief
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"

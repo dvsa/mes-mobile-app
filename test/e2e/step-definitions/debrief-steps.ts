@@ -41,6 +41,11 @@ Then('I see a {string} fault for {string}', (faultSeverity, faultDescription) =>
   return expect(faultElement.isPresent()).to.eventually.be.true;
 });
 
+Then('I should see the application reference {string}', (applicationRef) => {
+  const applicationRefField = getElement(by.xpath('//ion-row[@id="application-reference-card"]/ion-col/span'));
+  return expect(applicationRefField.getText()).to.eventually.equal(applicationRef);
+});
+
 const continuePassFinalisation = () => {
   const continueButton = getElement(by.xpath('//page-pass-finalisation//button[span[h3[text() = "Continue"]]]'));
   clickElement(continueButton);
