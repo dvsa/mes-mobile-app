@@ -20,7 +20,7 @@ export class IncompleteTestsProvider {
     let count = 0;
     slots.forEach((slot) => {
       if (this.canStartTest(slot) &&
-        // this.isDateInPast(slot.slotData.slotDetail.start) &&
+        this.isDateInPast(slot.slotData.slotDetail.start) &&
         this.slotSelector.isTestSlot(slot.slotData) &&
         testsStatuses[slot.slotData.slotDetail.slotId] !== TestStatus.Submitted
       ) {
