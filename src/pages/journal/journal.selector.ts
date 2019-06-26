@@ -2,6 +2,7 @@
 import { JournalModel } from './journal.model';
 import { isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
+import { SlotItem } from '../../providers/slot-selector/slot-item';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
@@ -38,4 +39,15 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
   }
 
   return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend;
+};
+
+export const getAllSlots = (journal: JournalModel): any => {
+  const slotArray: SlotItem[] = [];
+  Object.keys(journal.slots).map(date => journal.slots[date])
+  .forEach((dayOfSlots) => {
+    dayOfSlots.forEach((slot) => {
+      slotArray.push(slot);
+    });
+  });
+  return slotArray;
 };

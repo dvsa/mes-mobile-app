@@ -14,7 +14,7 @@ import * as journalActions from './journal.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   getError, getIsLoading, getSelectedDate, getLastRefreshed,
-  getLastRefreshedTime, getSlotsOnSelectedDate,
+  getLastRefreshedTime, getSlotsOnSelectedDate, getAllSlots,
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
@@ -40,6 +40,7 @@ interface JournalPageState {
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
   testStatuses$: Observable<{ [slotId: string]: TestStatus; }>;
+  allSlots$: Observable<SlotItem[]>;
 }
 
 @IonicPage()
@@ -115,6 +116,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       testStatuses$: this.store$.pipe(
         select(getTests),
         map(getAllTestStatuses),
+      ),
+      allSlots$: this.store$.pipe(
+        select(getJournalState),
+        map(getAllSlots),
       ),
     };
 
@@ -255,7 +260,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     });
 
     let slots;
-    this.pageState.slots$.subscribe((res) => {
+    this.pageState.allSlots$.subscribe((res) => {
       slots = res;
     });
 
