@@ -19,6 +19,7 @@ import {
   InstructorAccompanimentToggled,
   OtherAccompanimentToggled,
   SupervisorAccompanimentToggled,
+  InterpreterAccompanimentToggled,
 } from '../../modules/tests/accompaniment/accompaniment.actions';
 import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
 import { getAccompaniment } from '../../modules/tests/accompaniment/accompaniment.reducer';
@@ -35,6 +36,7 @@ import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
+  getInterpreterAccompaniment,
 } from '../../modules/tests/accompaniment/accompaniment.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
@@ -82,6 +84,7 @@ interface WaitingRoomToCarPageState {
   instructorAccompaniment$: Observable<boolean>;
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
+  interpreterAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
   eyesightTestResult$: Observable<string>;
@@ -172,6 +175,10 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
         select(getAccompaniment),
         select(getOtherAccompaniment),
       ),
+      interpreterAccompaniment$: currentTest$.pipe(
+        select(getAccompaniment),
+        select(getInterpreterAccompaniment),
+      ),
       eyesightPassRadioChecked$: currentTest$.pipe(
         select(getEyesightTestResult),
         map(isPassed),
@@ -245,6 +252,10 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
 
   supervisorAccompanimentToggled(): void {
     this.store$.dispatch(new SupervisorAccompanimentToggled());
+  }
+
+  interpreterAccompanimentToggled(): void {
+    this.store$.dispatch(new InterpreterAccompanimentToggled());
   }
 
   otherAccompanimentToggled(): void {

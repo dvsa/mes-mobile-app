@@ -29,7 +29,12 @@
   }
 }
 
-.mes-component-row::before {
+.mes-extended-component-row {
+  @extend .mes-component-row;
+  min-height: 162px;
+}
+
+.mes-component-row::before, .mes-extended-component-row::before  {
   display: inline-block;
   width: 8px;
   content: '';

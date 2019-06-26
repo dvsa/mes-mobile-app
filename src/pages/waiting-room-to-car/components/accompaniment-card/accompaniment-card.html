@@ -1,4 +1,4 @@
-<ion-row class="mes-component-row mes-row-separator" id="accompaniment-card" [formGroup]="formGroup">
+<ion-row class="mes-extended-component-row mes-row-separator" id="accompaniment-card" [formGroup]="formGroup">
     <ion-col class="component-label" col-32 align-self-center>
       <label>Accompanied by (optional)</label>
     </ion-col>
@@ -16,7 +16,16 @@
             accompanimentType="Sup"
             (accompanimentChange)="supervisorAccompanimentChanged()"></accompaniment>
         </ion-col>
-        <ion-col>
+      </ion-row>
+      <ion-row class="spacing-row"></ion-row>
+      <ion-row>
+        <ion-col col-32>
+          <accompaniment [formGroup]="formGroup" 
+          [accompaniment]="interpreterAccompaniment"
+          accompanimentType="Interpreter"
+          (accompanimentChange)="interpreterAccompanimentChanged()"></accompaniment>
+        </ion-col>
+        <ion-col col-32>
             <accompaniment [formGroup]="formGroup" 
             [accompaniment]="otherAccompaniment"
             accompanimentType="Other"

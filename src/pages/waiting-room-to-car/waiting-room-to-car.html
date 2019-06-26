@@ -47,9 +47,12 @@
               [instructorAccompaniment]="pageState.instructorAccompaniment$ | async"
               [supervisorAccompaniment]="pageState.supervisorAccompaniment$ | async"
               [otherAccompaniment]="pageState.otherAccompaniment$ | async"
+              [interpreterAccompaniment] = "pageState.interpreterAccompaniment$ | async"
               (instructorAccompanimentChange)="instructorAccompanimentToggled()"
               (supervisorAccompanimentChange)="supervisorAccompanimentToggled()"
-              (otherAccompanimentChange)="otherAccompanimentToggled()"></accompaniment-card>
+              (otherAccompanimentChange)="otherAccompanimentToggled()"
+              (interpreterAccompanimentChange)="interpreterAccompanimentToggled()">
+            </accompaniment-card>
 
             <vehicle-details-card [formGroup]="form"
               [schoolVehicleDetails]="pageState.schoolCar$ | async"

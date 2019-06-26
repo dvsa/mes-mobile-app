@@ -13,7 +13,8 @@ export class AccompanimentCardComponent {
   supervisorAccompaniment: boolean;
   @Input()
   otherAccompaniment: boolean;
-
+  @Input()
+  interpreterAccompaniment: boolean;
   @Input()
   formGroup: FormGroup;
 
@@ -23,6 +24,8 @@ export class AccompanimentCardComponent {
   supervisorAccompanimentChange = new EventEmitter();
   @Output()
   otherAccompanimentChange = new EventEmitter();
+  @Output()
+  interpreterAccompanimentChange = new EventEmitter();
 
   instructorAccompanimentChanged(): void {
     this.instructorAccompanimentChange.emit();
@@ -32,6 +35,9 @@ export class AccompanimentCardComponent {
   }
   otherAccompanimentChanged(): void {
     this.otherAccompanimentChange.emit();
+  }
+  interpreterAccompanimentChanged(): void {
+    this.interpreterAccompanimentChange.emit();
   }
 
 }
