@@ -14,21 +14,16 @@ export class IncompleteTestsProvider {
 
   countIncompleteTests = (testsStatuses: { [slotId: string]: TestStatus }, slots: SlotItem[]): number => {
     if (!testsStatuses || !slots) {
-      return;
+      return 0;
     }
 
-    let count = 0;
-    slots.forEach((slot) => {
-      if (this.canStartTest(slot) &&
-        this.isDateInPast(slot.slotData.slotDetail.start) &&
-        this.slotSelector.isTestSlot(slot.slotData) &&
-        testsStatuses[slot.slotData.slotDetail.slotId] !== TestStatus.Submitted
-      ) {
-        count = count + 1;
-      }
-    });
+    const reducer = (sum, slot) => sum + (
+      this.canStartTest(slot) &&
+      this.isDateInPast(slot.slotData.slotDetail.start) &&
+      this.slotSelector.isTestSlot(slot.slotData) &&
+      testsStatuses[slot.slotData.slotDetail.slotId] !== TestStatus.Submitted);
 
-    return count;
+    return slots.reduce(reducer, 0);
   }
 
   canStartTest(slot: SlotItem) {
@@ -44,9 +39,6 @@ export class IncompleteTestsProvider {
   isDateInPast = (dateTime: Date) => {
     const date = new Date(dateTime).setUTCHours(0, 0, 0, 0);
     const todaysDate = new Date().setUTCHours(0, 0, 0, 0);
-    if (date < todaysDate) {
-      return true;
-    }
-    return false;
+    return date < todaysDate;
   }
 }

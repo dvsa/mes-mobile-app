@@ -43,7 +43,7 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
 
 export const getAllSlots = (journal: JournalModel): SlotItem[] => {
   const slotArray: SlotItem[] = [];
-  Object.keys(journal.slots).map(date => journal.slots[date])
+  Object.values(journal.slots)
   .forEach((dayOfSlots) => {
     dayOfSlots.forEach((slot) => {
       slotArray.push(slot);

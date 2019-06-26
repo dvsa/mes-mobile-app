@@ -76,6 +76,6 @@ export const isTestReportPracticeTest = (tests: TestsModel): boolean =>
 export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
   startsWith(tests.currentTest.slotId, end2endPracticeSlotId);
 
-export const getAllTestStatuses = (tests: TestsModel): { [slotId: string]: TestStatus; } => {
-  return tests.testStatus;
+export const getAllTestStatuses = (test: TestsModel): { [slotId: string]: TestStatus; } => {
+  return test.testStatus;
 };
