@@ -1,3 +1,25 @@
 page-test-results-search {
+  .component-label {
+    padding-top: 12px;
+  }
 
+  .candidate-info-input {
+    margin-top: 34px;
+    width: 100%;
+  }
+
+  .search-tests {
+    margin-top: 20px;
+    height: 56px;
+    width: 100%;
+  }
+
+  .search-tests-text {
+    font-size: 23px;
+  }
+
+  .clear-input {
+    cursor: pointer;
+    margin: auto -34px;
+  }
 }

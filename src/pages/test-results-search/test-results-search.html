@@ -9,30 +9,54 @@
 
   <my-tabs>
     <my-tab [tabTitle]="'Candidate details'">
-      <h3>Candidate details search will show here</h3>
+      <ion-grid>
+        <ion-row align-self-center>
+          <ion-col class="component-label" col-22>
+            <label>Search by</label>
+          </ion-col>
+          <ion-col col-34>
+            <input type="radio" 
+              id="search-by-driver-number"
+              class="gds-radio-button"
+              name="searchBy"
+              value="driverNumber"
+              [checked]="searchBy === 'driverNumber'"
+              (change)="searchByChanged($event.target.value)">
+            <label for="search-by-driver-number" class="radio-label">Driver number</label>
+          </ion-col>
+          <ion-col col-40>
+            <input type="radio" 
+              id="search-by-app-reference"
+              class="gds-radio-button"
+              name="searchBy"
+              value="appReference"
+              [checked]="searchBy === 'appReference'"
+              (change)="searchByChanged($event.target.value)">
+            <label for="search-by-app-reference" class="radio-label">Application reference</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-96>
+            <input
+              placeholder="Enter a driver number or application reference"
+              type="text"
+              id="candidate-info-input"
+              class="candidate-info candidate-info-input"
+              [class.ng-invalid]="invalid"
+              [value]="candidateInfo"
+              (change)="candidateInfoChanged($event.target.value)">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <button class="mes-primary-button search-tests" ion-button (click)="searchTests()">
+            <span class="search-tests-text">Search tests</span>
+          </button>
+        </ion-row>
+      </ion-grid>
     </my-tab>
     <my-tab [tabTitle]="'Advanced search'">
       <h3>Advanced search search will show here</h3>
     </my-tab>
   </my-tabs>
-
-  <!-- <ng-template let-person="person" #personEdit>
-    <person-edit [person]="person" (savePerson)="onPersonFormSubmit($event)"></person-edit>
-  </ng-template>
-  <ng-template #about>
-    <p>
-      Hi, I hope this demo was useful to learn more about dynamic components
-      in Angular, in specific about <code>ViewContainerRef</code>,
-      <code>ComponentResolverFactory</code> etc.
-    </p>
-    <p>
-      Also check out the <a href="https://juristr.com/blog/2017/07/ng2-dynamic-tab-component/">according blog article</a>. You
-      may also want to read the <a href="https://juristr.com/blog/2016/02/learning-ng2-creating-tab-component/">article about
-      creating basic tabs with <code>@ContentChildren</code> and <code>@QueryList</code></a>.
-    </p>
-    <p>
-      Visit me on <a href="https://twitter.com/juristr">Twitter</a> or on <a href="https://juristr.com/blog">blog</a>.
-    </p>
-  </ng-template> -->
 
 </ion-content>
