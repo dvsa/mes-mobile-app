@@ -56,12 +56,7 @@ export class SlotSelectorProvider {
     return gotValue;
   }
 
-  public isTestSlot = (slot:Slot) => {
-    if (has(slot, 'vehicleSlotType')) {
-      return true;
-    }
-    return false;
-  }
+  public isTestSlot = (slot:Slot) => has(slot, 'vehicleSlotType');
 
   private resolveComponentName = (slot:Slot) => {
 
