@@ -44,6 +44,7 @@ import {
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { TranslateService } from 'ng2-translate';
+import { WAITING_ROOM_PAGE } from '../page-names.constants';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -226,7 +227,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push('WaitingRoomPage');
+      this.navController.push(WAITING_ROOM_PAGE);
     }
   }
 

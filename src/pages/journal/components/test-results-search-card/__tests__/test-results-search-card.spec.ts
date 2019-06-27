@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { TestResultsSearchCardComponent } from '../test-results-search-card';
 import { NavControllerMock } from 'ionic-mocks';
+import { TEST_RESULTS_SEARCH_PAGE } from '../../../../page-names.constants';
 
 describe('TestResultsSearchCard ', () => {
   let component: TestResultsSearchCardComponent;
@@ -31,7 +32,7 @@ describe('TestResultsSearchCard ', () => {
       it('should trigger navigation to Fake Journal', () => {
         component.navigateToTestResultsSearch();
 
-        expect(navContoller.push).toHaveBeenCalledWith('TestResultsSearchPage');
+        expect(navContoller.push).toHaveBeenCalledWith(TEST_RESULTS_SEARCH_PAGE);
       });
     });
   });

@@ -43,6 +43,7 @@ import {
 } from '../../modules/tests/vehicle-details/vehicle-details.selector';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { GearboxCategoryChanged } from '../../modules/tests/vehicle-details/vehicle-details.actions';
+import { HEALTH_DECLARATION_PAGE } from '../page-names.constants';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -181,7 +182,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
-      this.navController.push('HealthDeclarationPage');
+      this.navController.push(HEALTH_DECLARATION_PAGE);
     }
   }
 

@@ -40,6 +40,14 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
+import {
+  TEST_REPORT_PAGE,
+  DEBRIEF_PAGE,
+  PASS_FINALISATION_PAGE,
+  HEALTH_DECLARATION_PAGE,
+  BACK_TO_OFFICE_PAGE,
+} from '../page-names.constants';
+import { includes } from 'lodash';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -271,9 +279,13 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
         this.store$.dispatch(new PersistTests());
-        this.navController.push('BackToOfficePage').then(() => {
-          // remove Test Report Page, Debrief Page, Pass Finalisation Page and Health Declaration Page
-          this.navController.remove(this.navController.getActive().index - 4, 4);
+        this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
+          this.navController.getViews().forEach((view) => {
+            if (includes([TEST_REPORT_PAGE, DEBRIEF_PAGE, PASS_FINALISATION_PAGE, HEALTH_DECLARATION_PAGE],
+              view.name)) {
+              this.navController.removeView(view);
+            }
+          });
         });
       })
       .catch((err) => {

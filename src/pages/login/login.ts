@@ -27,6 +27,7 @@ import { LoadPersistedTests, StartSendingCompletedTests } from '../../modules/te
 import { AppConfigError } from '../../providers/app-config/app-config.constants';
 import { LogsProvider } from '../../providers/logs/logs';
 import { LogType, Log } from '../../shared/models/log.model';
+import { JOURNAL_PAGE } from '../page-names.constants';
 
 @IonicPage()
 @Component({
@@ -71,7 +72,7 @@ export class LoginPage extends BasePageComponent {
     }
     if (!this.isIos()) {
       this.appConfigProvider.initialiseAppConfig();
-      this.navController.setRoot('JournalPage');
+      this.navController.setRoot(JOURNAL_PAGE);
       this.splashScreen.hide();
     }
   }
@@ -166,7 +167,7 @@ export class LoginPage extends BasePageComponent {
       this.hasDeviceTypeError = true;
       this.analytics.logException(`${this.deviceTypeError}-${this.deviceProvider.getDeviceType()}`, true);
     } else {
-      this.navController.setRoot('JournalPage');
+      this.navController.setRoot(JOURNAL_PAGE);
     }
   }
 

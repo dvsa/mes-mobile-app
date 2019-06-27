@@ -4,6 +4,7 @@ import { ModalController } from 'ionic-angular';
 import { App } from '../../../../app/app.component';
 import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
+import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../page-names.constants';
 
 @Component({
   selector: 'candidate-link',
@@ -29,10 +30,10 @@ export class CandidateLinkComponent {
   }
 
   openCandidateDetailsModal() {
-    let pageToOpen = 'CandidateDetailsPage';
+    let pageToOpen = CANDIDATE_DETAILS_PAGE;
 
     if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
-      pageToOpen = 'FakeCandidateDetailsPage';
+      pageToOpen = FAKE_CANDIDATE_DETAILS_PAGE;
     }
 
     // Modals are at the same level as the ion-nav so are not getting the zoom level class,

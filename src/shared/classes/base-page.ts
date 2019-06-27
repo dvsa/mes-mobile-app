@@ -1,5 +1,6 @@
 import { Platform, NavController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { LOGIN_PAGE } from '../../pages/page-names.constants';
 
 export abstract class BasePageComponent {
 
@@ -14,7 +15,7 @@ export abstract class BasePageComponent {
 
   ionViewWillEnter() {
     if (this.loginRequired && this.isIos() && !this.authenticationProvider.isAuthenticated()) {
-      this.navController.setRoot('LoginPage');
+      this.navController.setRoot(LOGIN_PAGE);
       return false;
     }
     return true;
@@ -27,7 +28,7 @@ export abstract class BasePageComponent {
   logout() {
     if (this.isIos()) {
       this.authenticationProvider.logout();
-      this.navController.setRoot('LoginPage', {
+      this.navController.setRoot(LOGIN_PAGE, {
         hasLoggedOut: true,
       });
     }

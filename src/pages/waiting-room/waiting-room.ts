@@ -32,6 +32,7 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
+import { COMMUNICATION_PAGE, WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE } from '../page-names.constants';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -193,9 +194,14 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
           this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfo());
-          this.navController.push('WaitingRoomToCarPage').then(() => {
-            // remove Communication Page and Waiting Room Page
-            this.navController.remove(this.navController.getActive().index - 2, 2);
+          this.navController.push(WAITING_ROOM_TO_CAR_PAGE).then(() => {
+            const communicationPage = this.navController.getViews().find(view => view.name === COMMUNICATION_PAGE);
+            if (communicationPage) {
+              this.navController.removeView(communicationPage);
+            }
+            this.navController.removeView(
+              this.navController.getViews().find(view => view.name === WAITING_ROOM_PAGE),
+            );
           });
         })
         .catch((err) => {
