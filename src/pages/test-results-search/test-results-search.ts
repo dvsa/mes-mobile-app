@@ -10,6 +10,9 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 export class TestResultsSearchPage extends BasePageComponent {
 
+  searchBy: string;
+  candidateInfo: string = '';
+
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -17,6 +20,18 @@ export class TestResultsSearchPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navController, authenticationProvider);
+  }
+
+  searchByChanged(val) {
+    this.searchBy = val;
+  }
+
+  candidateInfoChanged(val) {
+    this.candidateInfo = val;
+  }
+
+  searchTests() {
+    console.log('search tests with the following info', this.candidateInfo);
   }
 
 }

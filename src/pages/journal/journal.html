@@ -26,6 +26,11 @@
     <label id="unauth-text">You are offline. Some features may be unavailable.</label>
   </div>
 
+  <div *ngIf="pageState.incompleteTestCounter$ | async" id="incomplete-tests-indicator">
+    <img id="exclamation-icon" src="/assets/imgs/exclamation-black.png" />
+    <label id="incomplete-tests-text">You have {{pageState.incompleteTestCounter$ | async}} incomplete tests.</label>
+  </div>
+
   <ion-refresher (ionRefresh)="pullRefreshJournal($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"

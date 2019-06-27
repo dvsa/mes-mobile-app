@@ -95,7 +95,7 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
     }
 
     const startDate = new DateTime(this.slot.slotDetail.start);
-    if (startDate.daysDiff(this.dateTimeProvider.now()) !== 0) {
+    if (startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
       return false;
     }
 

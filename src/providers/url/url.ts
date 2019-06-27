@@ -9,20 +9,20 @@ export class UrlProvider {
     public appConfigProvider: AppConfigProvider,
   ) { }
 
-  getPersonalJournalUrl(staffNumber: string): any {
+  getPersonalJournalUrl(staffNumber: string): string {
     const urlTemplate = this.appConfigProvider.getAppConfig().journal.journalUrl;
     return urlTemplate.replace('{staffNumber}', isNil(staffNumber) ? '00000000' : staffNumber);
   }
 
-  getLogsServiceUrl(): any {
+  getLogsServiceUrl(): string {
     return this.appConfigProvider.getAppConfig().logsApiUrl;
   }
 
-  getLogsServiceApiKey(): any {
+  getLogsServiceApiKey(): string {
     return this.appConfigProvider.getAppConfig().logsPostApiKey;
   }
 
-  getTestResultServiceUrl(): any {
+  getTestResultServiceUrl(): string {
     return this.appConfigProvider.getAppConfig().tests.testSubmissionUrl;
   }
 

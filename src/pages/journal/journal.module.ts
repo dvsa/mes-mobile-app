@@ -16,6 +16,7 @@ import { JournalLogsEffects } from './journal.logs.effects';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { JournalComponentsModule } from './components/journal-components.module';
 import { TestsEffects } from '../../modules/tests/tests.effects';
+import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TestsEffects } from '../../modules/tests/tests.effects';
     SlotSelectorProvider,
     AnalyticsProvider,
     DateTimeProvider,
+    IncompleteTestsProvider,
   ],
 })
 export class JournalPageModule {}

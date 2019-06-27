@@ -7,6 +7,56 @@
 
 <ion-content padding>
 
-  <div>Search will be possible here</div>
+  <tabs>
+    <tab [tabTitle]="'Candidate details'">
+      <ion-grid>
+        <ion-row align-self-center>
+          <ion-col class="component-label" col-22>
+            <label>Search by</label>
+          </ion-col>
+          <ion-col col-34>
+            <input type="radio" 
+              id="search-by-driver-number"
+              class="gds-radio-button"
+              name="searchBy"
+              value="driverNumber"
+              [checked]="searchBy === 'driverNumber'"
+              (change)="searchByChanged($event.target.value)">
+            <label for="search-by-driver-number" class="radio-label">Driver number</label>
+          </ion-col>
+          <ion-col col-40>
+            <input type="radio" 
+              id="search-by-app-reference"
+              class="gds-radio-button"
+              name="searchBy"
+              value="appReference"
+              [checked]="searchBy === 'appReference'"
+              (change)="searchByChanged($event.target.value)">
+            <label for="search-by-app-reference" class="radio-label">Application reference</label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-96>
+            <input
+              placeholder="Enter a driver number or application reference"
+              type="text"
+              id="candidate-info-input"
+              class="candidate-info candidate-info-input"
+              [class.ng-invalid]="invalid"
+              [value]="candidateInfo"
+              (change)="candidateInfoChanged($event.target.value)">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <button class="mes-primary-button search-tests" ion-button (click)="searchTests()">
+            <span class="search-tests-text">Search tests</span>
+          </button>
+        </ion-row>
+      </ion-grid>
+    </tab>
+    <tab [tabTitle]="'Advanced search'">
+      <h3>Advanced search search will show here</h3>
+    </tab>
+  </tabs>
 
 </ion-content>

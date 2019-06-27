@@ -5,6 +5,7 @@ import { AppModule } from '../../../app/app.module';
 import { TestResultsSearchPage } from '../test-results-search';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { TestResultsSearchComponentsModule } from '../components/test-results-search-components.module';
 
 describe('TestResultsSearchPage', () => {
   let fixture: ComponentFixture<TestResultsSearchPage>;
@@ -18,6 +19,7 @@ describe('TestResultsSearchPage', () => {
       imports: [
         IonicModule,
         AppModule,
+        TestResultsSearchComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

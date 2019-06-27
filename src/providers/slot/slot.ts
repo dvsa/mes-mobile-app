@@ -69,25 +69,11 @@ export class SlotProvider {
   }
 
   /**
-   * Slice the journal slots and get the slots only for the relevant days
-   * | From regular working weekday we can see the next working weekday
-   * | From Friday we can navigate through weekend till Monday
    * @param slots Journal slots
    * @returns Only the relevant slots
    */
   getRelevantSlots = (slots: {[k: string]: SlotItem[]}): {[k: string]: SlotItem[]} => {
-    // we have to take in consideration if it's Friday
-    // so that we can navigate through the weekend till the next working weekday (Monday)
-    // if it's not Friday
-    // we need to check if it's Saturday so that we can navigate till Monday
-    // otherwise we just go to next day
-    const friday = 5;
-    const saturday = 6;
-    const today = this.dateTimeProvider.now().day();
-    const daysAhead = today === friday ? 4 : today === saturday ? 3 : 2;
-
     return Object.keys(slots)
-      .slice(0, daysAhead)
       .reduce(
         (acc: {[k: string]: SlotItem[]}, date) => ({
           ...acc,
