@@ -27,9 +27,15 @@ export const canNavigateToPreviousDay = (journal: JournalModel, today: DateTime)
 };
 
 export const canNavigateToNextDay = (journal: JournalModel): boolean => {
-  const availableDays = getAvailableDays(journal);
-  const nextDay = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
-  const today = DateTime.at(DateTime.today()).format('YYYY-MM-DD');
+  let traverseWeekend = false;
+  const nextDayAsDate = DateTime.at(journal.selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');
+  const dayAfterTomorrowAsDate = DateTime.at(DateTime.today()).add(2, Duration.DAY).format('YYYY-MM-DD');
+  const nextDayAsDay = DateTime.at(journal.selectedDate).add(1, Duration.DAY).day();
 
-  return availableDays.includes(nextDay) || nextDay < today;
+  // if the current day is a Friday(5) or Saturday(6), allow navigation to the Monday.
+  if ((DateTime.at(DateTime.today()).day() === 5 || DateTime.at(DateTime.today()).day() === 6) && nextDayAsDay !== 2) {
+    traverseWeekend = true;
+  }
+
+  return nextDayAsDate < dayAfterTomorrowAsDate || traverseWeekend;
 };
