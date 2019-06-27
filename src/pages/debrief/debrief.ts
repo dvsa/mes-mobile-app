@@ -238,11 +238,8 @@ export class DebriefPage extends PracticeableBasePageComponent {
       return;
     }
     this.navController.push('BackToOfficePage').then(() => {
-      console.log(`+++ NAV +++ there are ${this.navController.getActive().index} pages on the stack`);
       // remove Test Report Page and Debrief Page
-      this.navController.remove(this.navController.getActive().index - 1).then(() => {
-        console.log(`+++ NAV +++ there are now ${this.navController.getActive().index} pages on the stack`);
-      });
+      this.navController.remove(this.navController.getActive().index - 1);
     });
   }
 

@@ -272,11 +272,8 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         }
         this.store$.dispatch(new PersistTests());
         this.navController.push('BackToOfficePage').then(() => {
-          console.log(`+++ NAV +++ there are ${this.navController.getActive().index} pages on the stack`);
           // remove Test Report Page, Debrief Page, Pass Finalisation Page and Health Declaration Page
-          this.navController.remove(this.navController.getActive().index - 4, 4).then(() => {
-            console.log(`+++ NAV +++ there are now ${this.navController.getActive().index} pages on the stack`);
-          });
+          this.navController.remove(this.navController.getActive().index - 4, 4);
         });
       })
       .catch((err) => {
