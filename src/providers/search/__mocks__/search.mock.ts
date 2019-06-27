@@ -9,4 +9,6 @@ export class SearchProviderMock {
   applicationReferenceSearch =
     jasmine.createSpy('applicationReferenceSearch').and.returnValue(of(searchResultsMock));
 
+  advancedSearch =
+    jasmine.createSpy('advancedSearch').and.returnValue(of(searchResultsMock));
 }
