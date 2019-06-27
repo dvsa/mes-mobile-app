@@ -14,7 +14,7 @@ import * as journalActions from './journal.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   getError, getIsLoading, getSelectedDate, getLastRefreshed,
-  getLastRefreshedTime, getSlotsOnSelectedDate, getAllSlots,
+  getLastRefreshedTime, getSlotsOnSelectedDate,
 } from './journal.selector';
 import { getJournalState } from './journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
@@ -27,9 +27,6 @@ import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { TestStatus } from '../../modules/tests/test-status/test-status.model';
-import { getAllTestStatuses } from '../../modules/tests/tests.selector';
 import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 
 interface JournalPageState {
@@ -39,8 +36,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
-  testStatuses$: Observable<{ [slotId: string]: TestStatus; }>;
-  allSlots$: Observable<SlotItem[]>;
+  incompleteTestCounter$: Observable<number>;
 }
 
 @IonicPage()
@@ -62,7 +58,6 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
-  incompleteTestCounter: number;
 
   constructor(
     public navController: NavController,
@@ -113,17 +108,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getAppInfoState),
         map(getVersionNumber),
       ),
-      testStatuses$: this.store$.pipe(
-        select(getTests),
-        map(getAllTestStatuses),
-      ),
-      allSlots$: this.store$.pipe(
-        select(getJournalState),
-        map(getAllSlots),
-      ),
+      incompleteTestCounter$: this.incompleteTestsProvider.calculateIncompleteTests(),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, incompleteTestCounter$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
@@ -133,6 +121,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
+      incompleteTestCounter$,
     );
     this.subscription = merged$.subscribe();
   }
@@ -251,19 +240,4 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
 
   showEndToEndPracticeMode = (): boolean =>
     this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
-
-  updateIncompleteTests = (): number => {
-
-    let testsStatuses;
-    this.pageState.testStatuses$.subscribe((res) => {
-      testsStatuses = res;
-    });
-
-    let slots;
-    this.pageState.allSlots$.subscribe((res) => {
-      slots = res;
-    });
-
-    return this.incompleteTestsProvider.countIncompleteTests(testsStatuses, slots);
-  }
 }

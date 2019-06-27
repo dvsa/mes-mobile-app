@@ -33,6 +33,7 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { IncompleteTestsProvider } from '../../../providers/incomplete-tests/incomplete-tests';
 import { IncompleteTestsMock } from '../../../providers/incomplete-tests/__mocks__/incomplete-tests.mock';
+import { of } from 'rxjs/observable/of';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -147,6 +148,12 @@ describe('JournalPage', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
+      });
+      it('should display the countIncompleteTests indicator if incomplete tests', () => {
+        fixture.detectChanges();
+        component.pageState.incompleteTestCounter$ = of(3);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('#incomplete-tests-indicator'))).not.toBeNull();
       });
     });
 

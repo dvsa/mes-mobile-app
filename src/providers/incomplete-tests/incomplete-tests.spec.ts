@@ -5,6 +5,7 @@ import { SlotItem } from '../slot-selector/slot-item';
 import { AppConfigProvider } from '../app-config/app-config';
 import { AppConfigProviderMock } from '../app-config/__mocks__/app-config.mock';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
+import { StoreModule } from '@ngrx/store';
 
 describe('Incomplete Tests Provider', () => {
 
@@ -139,6 +140,9 @@ describe('Incomplete Tests Provider', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({}),
+      ],
       providers: [
         IncompleteTestsProvider,
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
@@ -160,28 +164,9 @@ describe('Incomplete Tests Provider', () => {
   });
 
   describe('countIncompleteTests', () => {
-    it('should return 2 tests in the past that arent submitted when passed the mock data', () => {
-      const result = incompleteTestsProvider.countIncompleteTests(testStatuses, slots);
-      expect(result).toEqual(2);
-    });
-  });
-
-  describe('isDateInPast', () => {
-    it('should return false if todays date', () => {
-      const result = incompleteTestsProvider.isDateInPast(new Date());
-      expect(result).toEqual(false);
-    });
-    it('should return false if tomorrows date', () => {
-      const date = new Date();
-      date.setDate(date.getDate() + 1);
-      const result = incompleteTestsProvider.isDateInPast(date);
-      expect(result).toEqual(false);
-    });
-    it('should return true if yesterdays date', () => {
-      const date = new Date();
-      date.setDate(date.getDate() - 1);
-      const result = incompleteTestsProvider.isDateInPast(date);
-      expect(result).toEqual(true);
+    it('should return 3 tests in the past that arent submitted', () => {
+      const result = incompleteTestsProvider.countIncompleteTests(slots, testStatuses);
+      expect(result).toEqual(3);
     });
   });
 });
