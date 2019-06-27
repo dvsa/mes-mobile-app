@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
 import { Observable } from 'rxjs/Observable';
+import { AdvancedSearchParams } from './search.models';
 
 @Injectable()
 export class SearchProvider {
@@ -11,54 +12,61 @@ export class SearchProvider {
     public urlProvider : UrlProvider,
   ) {}
 
-  driverNumberSearch(driverNumber: string): Observable<any> {
+  driverNumberSearch(driverNumber: string, isLDTM: boolean = false): Observable<any> {
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl().concat(`?driverNumber=${driverNumber}`),
+      this.urlProvider.getTestResultServiceUrl()
+        .concat(`?driverNumber=${driverNumber}&isLDTM=${isLDTM}`),
     );
   }
 
-  applicationReferenceSearch(applicationReference: String): Observable<any> {
+  applicationReferenceSearch(applicationReference: string, isLDTM : boolean = false): Observable<any> {
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl().concat(`?applicationReference=${applicationReference}`),
+      this.urlProvider.getTestResultServiceUrl()
+        .concat(`?applicationReference=${applicationReference}&isLDTM=${isLDTM}`),
     );
   }
 
-  advancedSearch(
-    isLDTM: boolean,
-    startDate?: string,
-    endDate?: string,
-    staffNumber?: string,
-    costCode?: string,
-    ) {
+  advancedSearch(advancedSearchParams: AdvancedSearchParams): Observable<any> {
 
-    const httpParams: HttpParams = new HttpParams();
+    const httpParams: string [] = [];
 
-    isLDTM ?
-    httpParams.set('isLDTM', 'true') :
-    httpParams.set('isLDTM', 'false') ;
+    advancedSearchParams.isLDTM ?
+     httpParams.push('isLDTM=true') : httpParams.push('isLDTM=false');
 
-    if (startDate) {
-      httpParams.set('startDate', startDate);
+    if (advancedSearchParams.startDate) {
+      httpParams.push(`startDate=${advancedSearchParams.startDate}`);
     }
 
-    if (endDate) {
-      httpParams.set('endDate', endDate);
+    if (advancedSearchParams.endDate) {
+      httpParams.push(`endDate=${advancedSearchParams.endDate}`);
     }
 
-    if (staffNumber) {
-      httpParams.set('staffNumber', staffNumber);
+    if (advancedSearchParams.staffNumber) {
+      httpParams.push(`staffNumber=${advancedSearchParams.staffNumber}`);
     }
 
-    if (costCode) {
-      httpParams.set('dtcCode', costCode);
+    if (advancedSearchParams.costCode) {
+      httpParams.push(`dtcCode=${advancedSearchParams.costCode}`);
     }
 
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl(),
-      {
-        params: httpParams,
-      },
+      this.urlProvider.getTestResultServiceUrl()
+        .concat(this.buildQueryString(httpParams)),
     );
+  }
+
+  private buildQueryString(parameters: string []): string {
+    let queryString = '';
+
+    parameters.forEach((param, index) => {
+      if (index === 0) {
+        queryString = queryString.concat(`?${param}`);
+      } else {
+        queryString = queryString.concat(`&${param}`);
+      }
+    });
+
+    return queryString;
   }
 
 }
