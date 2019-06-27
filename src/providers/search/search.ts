@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
 import { Observable } from 'rxjs/Observable';
 import { AdvancedSearchParams } from './search.models';
@@ -13,23 +13,23 @@ export class SearchProvider {
   ) {}
 
   driverNumberSearch(driverNumber: string): Observable<any> {
-    const httpParams = new HttpParams();
-    httpParams.set('driverNumber', driverNumber);
     return this.http.get(
       this.urlProvider.getTestResultServiceUrl(),
       {
-        params: httpParams,
+        params: {
+          driverNumber,
+        },
       },
     );
   }
 
   applicationReferenceSearch(applicationReference: string): Observable<any> {
-    const httpParams = new HttpParams();
-    httpParams.set('applicationReference', applicationReference);
     return this.http.get(
       this.urlProvider.getTestResultServiceUrl(),
       {
-        params: httpParams,
+        params: {
+          applicationReference,
+        },
       },
     );
   }

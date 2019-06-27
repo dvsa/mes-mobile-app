@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 const SEARCH_BY_DRIVER_NUMBER = 'driverNumber';
 const SEARCH_BY_APPLICATION_REFERENCE = 'appReference';
@@ -36,12 +38,23 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   searchTests() {
+    console.log('SEARCH Request');
     if (this.searchBy === SEARCH_BY_DRIVER_NUMBER) {
-      this.searchProvider.driverNumberSearch(this.candidateInfo);
+      this.searchProvider.driverNumberSearch(this.candidateInfo)
+      .pipe(
+        tap(data => console.log('Driver Number', JSON.stringify(data))),
+        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+      )
+      .subscribe();
     }
 
     if (this.searchBy === SEARCH_BY_APPLICATION_REFERENCE) {
-      this.searchProvider.applicationReferenceSearch(this.candidateInfo);
+      this.searchProvider.applicationReferenceSearch(this.candidateInfo)
+      .pipe(
+        tap(data => console.log('App Ref', JSON.stringify(data))),
+        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+      )
+      .subscribe();
     }
   }
 
