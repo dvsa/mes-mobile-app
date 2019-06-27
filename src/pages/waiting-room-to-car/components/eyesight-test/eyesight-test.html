@@ -6,14 +6,14 @@
     <ion-col align-self-center>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <ion-col col-32>
+        <ion-col col-48>
           <input type="radio" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-pass"
             class="gds-radio-button" [class.ng-invalid]="invalid"
             (change)="eyesightTestResultChanged($event.target.value)"
             [checked]="testPassed" value="P">
           <label for="eyesight-pass" class="radio-label">Pass</label>
         </ion-col>
-        <ion-col col-32>
+        <ion-col col-48>
           <input type="radio" formControlName="eyesightCtrl" name="eyesightCtrl" id="eyesight-fail"
             class="gds-radio-button" [class.ng-invalid]="invalid"
             (change)="eyesightTestResultChanged($event.target.value)"

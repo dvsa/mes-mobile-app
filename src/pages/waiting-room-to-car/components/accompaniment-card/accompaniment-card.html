@@ -4,28 +4,28 @@
     </ion-col>
     <ion-col align-self-center>
       <ion-row>
-        <ion-col col-32>
+        <ion-col col-48>
           <accompaniment [formGroup]="formGroup" 
             [accompaniment]="instructorAccompaniment"
-            accompanimentType="Ins"
+            accompanimentType="Instructor"
             (accompanimentChange)="instructorAccompanimentChanged()"></accompaniment>
         </ion-col>
-        <ion-col col-32>
+        <ion-col col-48>
             <accompaniment [formGroup]="formGroup" 
             [accompaniment]="supervisorAccompaniment"
-            accompanimentType="Sup"
+            accompanimentType="Supervisor"
             (accompanimentChange)="supervisorAccompanimentChanged()"></accompaniment>
         </ion-col>
       </ion-row>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <ion-col col-32>
+        <ion-col col-48>
           <accompaniment [formGroup]="formGroup" 
           [accompaniment]="interpreterAccompaniment"
           accompanimentType="Interpreter"
           (accompanimentChange)="interpreterAccompanimentChanged()"></accompaniment>
         </ion-col>
-        <ion-col col-32>
+        <ion-col col-48>
             <accompaniment [formGroup]="formGroup" 
             [accompaniment]="otherAccompaniment"
             accompanimentType="Other"
