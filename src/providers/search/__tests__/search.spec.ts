@@ -5,7 +5,7 @@ import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { SearchProvider } from '../search';
 import { AdvancedSearchParams } from '../search.models';
 
-fdescribe('SearchProvider', () => {
+describe('SearchProvider', () => {
 
   let searchProvider: SearchProvider;
   let httpMock: HttpTestingController;
