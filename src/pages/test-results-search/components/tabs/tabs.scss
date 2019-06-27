@@ -8,8 +8,8 @@ tabs {
   li {
     display: inline;
     border: 1px solid map-get($colors-gds, 'gds-grey-4');
-    border-width: 1px 1px 1px 1px;
-    border-bottom-color: black;
+    border-width: 1px;
+    border-bottom-color: map-get($colors-gds, 'gds-black');
     padding: 16px;
     background-color: map-get($colors-gds, 'gds-grey-4');
   }
@@ -17,7 +17,7 @@ tabs {
   li.active {
     background-color: map-get($colors, 'mes-white');
     border: solid;
-    border-width: 1px 1px 1px 1px;
+    border-width: 1px;
     border-bottom-color: map-get($colors, 'mes-white');
   }
 
@@ -29,6 +29,6 @@ tabs {
 
   #content {
     background-color: map-get($colors, 'mes-white');
-    border: 1px solid;
+    border: 1px solid map-get($colors-gds, 'gds-black');
   }
 }
