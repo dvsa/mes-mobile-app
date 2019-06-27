@@ -186,7 +186,7 @@ export class JournalEffects {
     ),
     switchMap(([action, selectedDate]) => {
       if (this.dateTimeProvider.now().daysDiff(selectedDate) < 0) {
-        return of(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
+        return of(new journalActions.SetSelectedDate(selectedDate));
       }
       return of();
     }),
