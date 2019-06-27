@@ -56,6 +56,8 @@ export class SlotSelectorProvider {
     return gotValue;
   }
 
+  public isTestSlot = (slot:Slot) => has(slot, 'vehicleSlotType');
+
   private resolveComponentName = (slot:Slot) => {
 
     if (this.isBookingEmptyOrNull(slot) &&
@@ -63,7 +65,7 @@ export class SlotSelectorProvider {
       return EmptySlotComponent;
     }
 
-    if (has(slot, 'vehicleSlotType')) {
+    if (this.isTestSlot(slot)) {
       return TestSlotComponent;
     }
     return ActivitySlotComponent;

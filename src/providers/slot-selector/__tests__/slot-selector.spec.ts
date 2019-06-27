@@ -117,4 +117,15 @@ describe('Slot Selector', () => {
 
     });
   });
+  describe('isTestSlot', () => {
+    it('should return true if test slot', () => {
+      const response = slotSelector.isTestSlot(singleSlotItemWithVehicleSlotType(1)[0].slotData);
+      expect(response).toEqual(true);
+    });
+    it('should return false if not a test slot', () => {
+      const response = slotSelector.isTestSlot(
+        singleSlotItemWithActivityCode(1)[0].slotData);
+      expect(response).toEqual(false);
+    });
+  });
 });

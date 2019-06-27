@@ -27,6 +27,7 @@ import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -35,6 +36,7 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
+  incompleteTestCounter$: Observable<number>;
 }
 
 @IonicPage()
@@ -70,6 +72,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     public analytics: AnalyticsProvider,
     public dateTimeProvider: DateTimeProvider,
     public appConfigProvider: AppConfigProvider,
+    public incompleteTestsProvider: IncompleteTestsProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
@@ -105,9 +108,10 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
         select(getAppInfoState),
         map(getVersionNumber),
       ),
+      incompleteTestCounter$: this.incompleteTestsProvider.calculateIncompleteTests(),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$, incompleteTestCounter$ } = this.pageState;
     // Merge observables into one
     const merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
@@ -117,6 +121,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
+      incompleteTestCounter$,
     );
     this.subscription = merged$.subscribe();
   }
@@ -230,10 +235,9 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     super.logout();
   }
 
-  showTestReportPracticeMode = () :boolean =>
+  showTestReportPracticeMode = (): boolean =>
     this.appConfigProvider.getAppConfig().journal.enableTestReportPracticeMode
 
-  showEndToEndPracticeMode = () :boolean =>
+  showEndToEndPracticeMode = (): boolean =>
     this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
-
 }

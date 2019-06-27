@@ -45,5 +45,20 @@ page-journal {
     background-color: #bdbdbd;
     margin: 0px 12px 0px;
   }
+  #incomplete-tests-indicator {
+    padding-top: 20px;
+    text-align: center;
+    background: map-get($colors-gds, gds-yellow);
+    height: 70px;
+    #incomplete-tests-text{
+      font-size: 20px;
+      font-weight: normal;
+      padding-bottom: 10px;
+    }
+    #exclamation-icon {
+      height: 37px;
+      vertical-align: middle;
+    }
+  }
 
 }
