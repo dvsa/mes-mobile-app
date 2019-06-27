@@ -28,11 +28,10 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   candidateInfoChanged(val) {
     this.candidateInfo = val;
-    console.log('candidate info', this.candidateInfo);
   }
 
   searchTests() {
-    console.log('search tests pressed', this.candidateInfo);
+    console.log('search tests with the following info', this.candidateInfo);
   }
 
 }
