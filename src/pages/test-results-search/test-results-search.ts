@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { SearchProvider } from '../../providers/search/search';
+
+const SEARCH_BY_DRIVER_NUMBER = 'driverNumber';
+const SEARCH_BY_APPLICATION_REFERENCE = 'appReference';
 
 @IonicPage()
 @Component({
@@ -18,20 +22,27 @@ export class TestResultsSearchPage extends BasePageComponent {
     public platform: Platform,
     public navParams: NavParams,
     public authenticationProvider: AuthenticationProvider,
+    public searchProvider: SearchProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
 
-  searchByChanged(val) {
+  searchByChanged(val: string) {
     this.searchBy = val;
   }
 
-  candidateInfoChanged(val) {
+  candidateInfoChanged(val: string) {
     this.candidateInfo = val;
   }
 
   searchTests() {
-    console.log('search tests with the following info', this.candidateInfo);
+    if (this.searchBy === SEARCH_BY_DRIVER_NUMBER) {
+      this.searchProvider.driverNumberSearch(this.candidateInfo);
+    }
+
+    if (this.searchBy === SEARCH_BY_APPLICATION_REFERENCE) {
+      this.searchProvider.applicationReferenceSearch(this.candidateInfo);
+    }
   }
 
 }

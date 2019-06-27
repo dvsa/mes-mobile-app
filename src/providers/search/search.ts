@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
 import { Observable } from 'rxjs/Observable';
 import { AdvancedSearchParams } from './search.models';
@@ -8,21 +8,29 @@ import { AdvancedSearchParams } from './search.models';
 export class SearchProvider {
 
   constructor(
-    public http: HttpClient,
-    public urlProvider : UrlProvider,
+    private http: HttpClient,
+    private urlProvider : UrlProvider,
   ) {}
 
-  driverNumberSearch(driverNumber: string, isLDTM: boolean = false): Observable<any> {
+  driverNumberSearch(driverNumber: string): Observable<any> {
+    const httpParams = new HttpParams();
+    httpParams.set('driverNumber', driverNumber);
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl()
-        .concat(`?driverNumber=${driverNumber}&isLDTM=${isLDTM}`),
+      this.urlProvider.getTestResultServiceUrl(),
+      {
+        params: httpParams,
+      },
     );
   }
 
-  applicationReferenceSearch(applicationReference: string, isLDTM : boolean = false): Observable<any> {
+  applicationReferenceSearch(applicationReference: string): Observable<any> {
+    const httpParams = new HttpParams();
+    httpParams.set('applicationReference', applicationReference);
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl()
-        .concat(`?applicationReference=${applicationReference}&isLDTM=${isLDTM}`),
+      this.urlProvider.getTestResultServiceUrl(),
+      {
+        params: httpParams,
+      },
     );
   }
 
