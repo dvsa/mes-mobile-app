@@ -15,7 +15,7 @@
             <label>Search by</label>
           </ion-col>
           <ion-col col-34>
-            <input type="radio" 
+            <input type="radio"
               id="search-by-driver-number"
               class="gds-radio-button"
               name="searchBy"
@@ -25,7 +25,7 @@
             <label for="search-by-driver-number" class="radio-label">Driver number</label>
           </ion-col>
           <ion-col col-40>
-            <input type="radio" 
+            <input type="radio"
               id="search-by-app-reference"
               class="gds-radio-button"
               name="searchBy"
@@ -58,5 +58,19 @@
       <h3>Advanced search search will show here</h3>
     </tab>
   </tabs>
+
+  <div class='results-error'>
+    <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
+      There were no results found
+    </p>
+    <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
+      Please check and try again.
+    </p>
+  </div>
+
+  <p *ngIf="searchResults.length > 0" class="results-message">
+    Displaying {{searchResults.length}} results found
+  </p>
+  <search-result *ngFor="let result of searchResults" [searchResult]=result></search-result>
 
 </ion-content>

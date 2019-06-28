@@ -6,7 +6,7 @@ export const searchResultsMock: SearchResultTestSchema [] = [
     applicationReference: '123456',
     category: 'B',
     costCode: 'abcd',
-    testDate: new Date('2019-06-24T09:00:00'),
+    testDate: '2019-06-24T09:00:00',
     driverNumber: 'ABC123EFG',
     candidateName: {
       firstName: 'Joe',
@@ -19,7 +19,7 @@ export const searchResultsMock: SearchResultTestSchema [] = [
     applicationReference: '234567',
     category: 'B',
     costCode: 'mnbv',
-    testDate: new Date('2019-06-24T010:00:00'),
+    testDate: '2019-06-24T010:00:00',
     driverNumber: 'ABC123EFG',
     candidateName: {
       firstName: 'Alan',

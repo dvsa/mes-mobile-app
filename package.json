@@ -104,7 +104,7 @@
   "devDependencies": {
     "@angular/cli": "1.4.8",
     "@angular/compiler-cli": "^5.2.11",
-    "@dvsa/mes-search-schema": "^1.0.1",
+    "@dvsa/mes-search-schema": "^1.0.2",
     "@dvsa/mes-journal-schema": "^1.0.7",
     "@dvsa/mes-test-schema": "^1.0.21",
     "@ionic-native-mocks/device": "^2.0.12",

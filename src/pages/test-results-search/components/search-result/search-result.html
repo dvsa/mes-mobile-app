@@ -1,0 +1,35 @@
+<ion-card>
+  <div class="indicator"></div>
+  <ion-grid>
+    <ion-row class='top-row'>
+      <ion-col col-24 no-padding>
+        {{searchResult.costCode}}
+      </ion-col>
+      <ion-col no-padding>
+        App ref: {{searchResult.applicationReference}}
+      </ion-col>
+    </ion-row>
+    <ion-row class='middle-row'>
+      <ion-col col-24 class='large-text' no-padding>
+        {{getTime()}}
+      </ion-col>
+      <ion-col class='small-text' no-padding>
+        {{getName()}}
+      </ion-col>
+      <ion-col col-8 class='large-text' no-padding>
+        {{searchResult.category}}
+      </ion-col>
+      <ion-col col-16 class='large-text' no-padding>
+        {{searchResult.activityCode}}
+      </ion-col>
+    </ion-row>
+    <ion-row class='bottom-row'>
+        <ion-col col-24 no-padding>
+          {{getDate()}}
+        </ion-col>
+        <ion-col no-padding>
+          Driver no: {{searchResult.driverNumber}}
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>
