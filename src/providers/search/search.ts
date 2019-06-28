@@ -30,6 +30,7 @@ export class SearchProvider {
 
     const httpParams: string [] = [];
 
+    // TODO -  remove this when https://jira.i-env.net/browse/MES-2135 is implemented
     advancedSearchParams.isLDTM ?
      httpParams.push('isLDTM=true') : httpParams.push('isLDTM=false');
 
