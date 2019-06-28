@@ -126,6 +126,33 @@ describe('JournalSelector', () => {
 
       expect(result).toBe(true);
     });
+
+    it('should return false if the current selected date is not a weekend and in the future', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          '2019-01-28': [
+            {
+              hasSlotChanged: false,
+              slotData: {},
+            },
+          ],
+          '2019-01-29': [
+            {
+              hasSlotChanged: false,
+              slotData: {},
+            },
+          ],
+        },
+        selectedDate: '2019-02-04',
+        examiner: { staffNumber: '123', individualId: 456 },
+      };
+
+      const result = canNavigateToNextDay(journal);
+
+      expect(result).toBe(false);
+    });
   });
 
   describe('canNavigateToPreviousDay', () => {
