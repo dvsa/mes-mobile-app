@@ -5,6 +5,7 @@ import { Details } from './candidate-details.model';
 
 import { SpecialNeedsCode } from './candidate-details.constants';
 import { SlotTypes } from '../../shared/models/slot-types';
+import { Application } from '../../shared/models/DJournal';
 
 export const getSlots = (journal: JournalModel) => {
   return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);
@@ -80,7 +81,7 @@ export const getDetails = (slot: any): Details => {
     slotType: getSlotType(slot),
     meetingPlace: slot.booking.application.meetingPlace,
     driverNumber: slot.booking.candidate.driverNumber,
-    applicationRef: slot.booking.application.applicationId,
+    applicationRef: getApplicationRef(slot.booking.application),
     specialNeeds: processSpecialNeeds(slot),
     candidateComments: {
       isSectionEmpty: isCandidateCommentsEmpty(slot),
@@ -102,3 +103,6 @@ export const processSpecialNeeds = (slot: any): string | string[] => {
 };
 
 export const getBusiness = (slot: any) => slot.booking.business;
+
+export const getApplicationRef = (application: Application) : string =>
+  `${application.applicationId}${application.bookingSequence}${application.checkDigit}`;
