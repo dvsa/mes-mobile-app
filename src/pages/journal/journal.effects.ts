@@ -176,23 +176,6 @@ export class JournalEffects {
   );
 
   @Effect()
-  loadJournalSuccessEffect$ = this.actions$.pipe(
-    ofType(journalActions.LOAD_JOURNAL_SUCCESS),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        map(getSelectedDate),
-      ),
-    ),
-    switchMap(([action, selectedDate]) => {
-      if (this.dateTimeProvider.now().daysDiff(selectedDate) < 0) {
-        return of(new journalActions.SetSelectedDate(selectedDate));
-      }
-      return of();
-    }),
-  );
-
-  @Effect()
   startTestEffect$ = this.actions$.pipe(
     ofType(journalActions.START_TEST),
     withLatestFrom(
