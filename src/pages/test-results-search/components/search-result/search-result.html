@@ -3,32 +3,32 @@
   <ion-grid>
     <ion-row class='top-row'>
       <ion-col col-24 no-padding>
-        EXTC1
+        {{searchResult.costCode}}
       </ion-col>
       <ion-col no-padding>
-        App ref: 87654321
+        App ref: {{searchResult.applicationReference}}
       </ion-col>
     </ion-row>
     <ion-row class='middle-row'>
       <ion-col col-24 class='time' no-padding>
-        11:07
+        {{getTime()}}
       </ion-col>
       <ion-col class='name' no-padding>
-        Miss Florence Pearson
+        {{getName()}}
       </ion-col>
       <ion-col col-8 class='category' no-padding>
-        B
+        {{searchResult.category}}
       </ion-col>
       <ion-col col-16 class='activity-code' no-padding>
-        1
+        {{searchResult.activityCode}}
       </ion-col>
     </ion-row>
     <ion-row class='bottom-row'>
         <ion-col col-24 no-padding>
-          02/07/2019
+          {{getDate()}}
         </ion-col>
         <ion-col no-padding>
-          Driver no: PEARS180479LM1XP
+          Driver no: {{searchResult.driverNumber}}
         </ion-col>
     </ion-row>
   </ion-grid>

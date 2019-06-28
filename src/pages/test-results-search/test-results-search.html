@@ -59,10 +59,6 @@
     </tab>
   </tabs>
 
-  <search-result></search-result>
-  <search-result></search-result>
-  <search-result></search-result>
-  <search-result></search-result>
-  <search-result></search-result>
+  <search-result *ngFor="let result of searchResults" [searchResult]=result></search-result>
 
 </ion-content>
