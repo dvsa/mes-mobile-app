@@ -14,7 +14,6 @@ import { SearchResultComponent } from './search-result/search-result';
   imports: [
     CommonModule,
     IonicModule,
-    SearchResultComponent,
   ],
   exports: [
     TabComponent,

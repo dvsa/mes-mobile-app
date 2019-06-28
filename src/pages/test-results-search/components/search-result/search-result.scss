@@ -1,0 +1,55 @@
+search-result {
+  .card-ios {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+  .indicator {
+    background: rgba(155, 155, 155, 0.5);
+    position: absolute;
+    height: 120px;
+    width: 8px;
+  }
+  .grid {
+    margin-left: 58px;
+    padding: 13px 0;
+  }
+  .top-row {
+    font-size: 20px;
+    font-weight: normal;
+    letter-spacing: -0.48px;
+  }
+  .middle-row {
+    .time {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.27px;
+      line-height: 42px;
+    }
+    .name {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.34px;
+      line-height: 25px;
+      display: flex;
+      align-self: center;
+    }
+    .category {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.27px;
+      line-height: 42px;
+    }
+    .activity-code {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.27px;
+      line-height: 42px;
+    }
+  }
+  .bottom-row {
+    font-size: 20px;
+    font-weight: normal;
+    letter-spacing: -0.48px;
+  }
+}
