@@ -4,13 +4,13 @@
     </ion-col>
     <ion-col align-self-center>
       <ion-row>
-        <ion-col col-32>
+        <ion-col col-48>
           <vehicle-details [formGroup]="formGroup" 
             [vehicleDetails]="schoolVehicleDetails"
             vehicleDetailsType="School car"
             (vehicleDetailsChange)="schoolVehicleDetailsChanged()"></vehicle-details>
         </ion-col>
-        <ion-col> 
+        <ion-col col-48> 
           <vehicle-details [formGroup]="formGroup" 
             [vehicleDetails]="dualVehicleDetails"
             vehicleDetailsType="Dual control"

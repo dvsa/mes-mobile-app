@@ -3,6 +3,7 @@ import {
   InstructorAccompanimentToggled,
   SupervisorAccompanimentToggled,
   OtherAccompanimentToggled,
+  InterpreterAccompanimentToggled,
 } from '../accompaniment.actions';
 
 describe('accompaniment reducer', () => {
@@ -30,4 +31,13 @@ describe('accompaniment reducer', () => {
     result = accompanimentReducer(result, new OtherAccompanimentToggled());
     expect(result.other).toBe(false);
   });
+
+  it('should toggle interpreter accompaniment when receiving the interpreter toggle action', () => {
+    let result;
+    result = accompanimentReducer({}, new InterpreterAccompanimentToggled());
+    expect(result.interpreter).toBe(true);
+    result = accompanimentReducer(result, new InterpreterAccompanimentToggled());
+    expect(result.interpreter).toBe(false);
+  });
+
 });

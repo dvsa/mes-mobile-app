@@ -21,6 +21,11 @@ export const accompanimentReducer = (state = initialState, action: accompaniment
         ...state,
         other: !state.other,
       };
+    case accompanimentActions.INTERPRETER_ACCOMPANIMENT_TOGGLED:
+      return {
+        ...state,
+        interpreter: !state.interpreter,
+      };
   }
   return state;
 };
