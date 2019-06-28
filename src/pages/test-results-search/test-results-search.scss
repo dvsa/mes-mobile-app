@@ -22,4 +22,24 @@ page-test-results-search {
     cursor: pointer;
     margin: auto -34px;
   }
+
+  p.results-message {
+    margin: 0;
+    font-size: 24px;
+    letter-spacing: 0px;
+    font-weight: 900;
+    line-height: 60px;
+  }
+
+  .results-error {
+    margin-top: 16px;
+    p.error-text {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0px;
+      font-weight: normal;
+      text-align: center;
+      line-height: 36px;
+    }
+  }
 }

@@ -22,6 +22,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   searchBy: SearchBy;
   candidateInfo: string = '';
   searchResults: SearchResultTestSchema[] = [];
+  hasSearched: boolean = false;
 
   constructor(
     public navController: NavController,
@@ -45,9 +46,9 @@ export class TestResultsSearchPage extends BasePageComponent {
     if (this.searchBy === SearchBy.DriverNumber) {
       this.searchProvider.driverNumberSearch(this.candidateInfo)
       .pipe(
-        tap(data => console.log('Driver Number', JSON.stringify(data))),
+        tap(() => this.hasSearched = true),
         map(results => this.searchResults = results),
-        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+        catchError(() => of(this.hasSearched = true)),
       )
       .subscribe();
     }
@@ -55,9 +56,9 @@ export class TestResultsSearchPage extends BasePageComponent {
     if (this.searchBy === SearchBy.ApplicationReferenece) {
       this.searchProvider.applicationReferenceSearch(this.candidateInfo)
       .pipe(
-        tap(data => console.log('App Ref', JSON.stringify(data))),
+        tap(() => this.hasSearched = true),
         map(results => this.searchResults = results),
-        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+        catchError(() => of(this.hasSearched = true)),
       )
       .subscribe();
     }

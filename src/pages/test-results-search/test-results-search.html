@@ -59,6 +59,18 @@
     </tab>
   </tabs>
 
+  <div class='results-error'>
+    <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
+      There were no results found
+    </p>
+    <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
+      Please check and try again.
+    </p>
+  </div>
+
+  <p *ngIf="searchResults.length > 0" class="results-message">
+    Displaying {{searchResults.length}} results found
+  </p>
   <search-result *ngFor="let result of searchResults" [searchResult]=result></search-result>
 
 </ion-content>
