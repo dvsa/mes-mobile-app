@@ -8,21 +8,31 @@ import { AdvancedSearchParams } from './search.models';
 export class SearchProvider {
 
   constructor(
-    public http: HttpClient,
-    public urlProvider : UrlProvider,
+    private http: HttpClient,
+    private urlProvider : UrlProvider,
   ) {}
 
-  driverNumberSearch(driverNumber: string, isLDTM: boolean = false): Observable<any> {
+  driverNumberSearch(driverNumber: string): Observable<any> {
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl()
-        .concat(`?driverNumber=${driverNumber}&isLDTM=${isLDTM}`),
+      this.urlProvider.getTestResultServiceUrl(),
+      {
+        params: {
+          driverNumber,
+          isLDTM: 'false',
+        },
+      },
     );
   }
 
-  applicationReferenceSearch(applicationReference: string, isLDTM : boolean = false): Observable<any> {
+  applicationReferenceSearch(applicationReference: string): Observable<any> {
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl()
-        .concat(`?applicationReference=${applicationReference}&isLDTM=${isLDTM}`),
+      this.urlProvider.getTestResultServiceUrl(),
+      {
+        params: {
+          applicationReference,
+          isLDTM: 'false',
+        },
+      },
     );
   }
 
