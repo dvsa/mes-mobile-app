@@ -20,31 +20,19 @@ search-result {
     letter-spacing: -0.48px;
   }
   .middle-row {
-    .time {
+    .large-text {
       font-size: 28px;
       font-weight: 900;
       letter-spacing: 0.27px;
       line-height: 42px;
     }
-    .name {
+    .small-text {
       font-size: 20px;
       font-weight: 600;
       letter-spacing: 0.34px;
       line-height: 25px;
       display: flex;
       align-self: center;
-    }
-    .category {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 0.27px;
-      line-height: 42px;
-    }
-    .activity-code {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 0.27px;
-      line-height: 42px;
     }
   }
   .bottom-row {
