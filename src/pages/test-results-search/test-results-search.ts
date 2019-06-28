@@ -6,8 +6,10 @@ import { SearchProvider } from '../../providers/search/search';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-const SEARCH_BY_DRIVER_NUMBER = 'driverNumber';
-const SEARCH_BY_APPLICATION_REFERENCE = 'appReference';
+enum SearchBy {
+  DriverNumber = 'driverNumber',
+  ApplicationReferenece = 'appReference',
+}
 
 @IonicPage()
 @Component({
@@ -16,7 +18,7 @@ const SEARCH_BY_APPLICATION_REFERENCE = 'appReference';
 })
 export class TestResultsSearchPage extends BasePageComponent {
 
-  searchBy: string;
+  searchBy: SearchBy;
   candidateInfo: string = '';
 
   constructor(
@@ -29,7 +31,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     super(platform, navController, authenticationProvider);
   }
 
-  searchByChanged(val: string) {
+  searchByChanged(val: SearchBy) {
     this.searchBy = val;
   }
 
@@ -38,8 +40,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   searchTests() {
-    console.log('SEARCH Request');
-    if (this.searchBy === SEARCH_BY_DRIVER_NUMBER) {
+    if (this.searchBy === SearchBy.DriverNumber) {
       this.searchProvider.driverNumberSearch(this.candidateInfo)
       .pipe(
         tap(data => console.log('Driver Number', JSON.stringify(data))),
@@ -48,7 +49,7 @@ export class TestResultsSearchPage extends BasePageComponent {
       .subscribe();
     }
 
-    if (this.searchBy === SEARCH_BY_APPLICATION_REFERENCE) {
+    if (this.searchBy === SearchBy.ApplicationReferenece) {
       this.searchProvider.applicationReferenceSearch(this.candidateInfo)
       .pipe(
         tap(data => console.log('App Ref', JSON.stringify(data))),
