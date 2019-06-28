@@ -18,6 +18,7 @@ export class SearchProvider {
       {
         params: {
           driverNumber,
+          isLDTM: 'false',
         },
       },
     );
@@ -29,6 +30,7 @@ export class SearchProvider {
       {
         params: {
           applicationReference,
+          isLDTM: 'false',
         },
       },
     );
