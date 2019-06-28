@@ -38,6 +38,8 @@ export class SearchProvider {
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): Observable<any> {
 
+    console.log('Advanced Search for', JSON.stringify(advancedSearchParams));
+
     const httpParams: string [] = [];
 
     // TODO -  remove this when https://jira.i-env.net/browse/MES-2135 is implemented

@@ -4,12 +4,14 @@ import { TabsComponent } from './tabs/tabs';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { SearchResultComponent } from './search-result/search-result';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search';
 
 @NgModule({
   declarations: [
     TabComponent,
     TabsComponent,
     SearchResultComponent,
+    AdvancedSearchComponent,
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { SearchResultComponent } from './search-result/search-result';
     TabComponent,
     TabsComponent,
     SearchResultComponent,
+    AdvancedSearchComponent,
   ],
 })
 export class TestResultsSearchComponentsModule {}
