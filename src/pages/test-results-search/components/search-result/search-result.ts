@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { DateTime } from '../../../../shared/helpers/date-time';
+import { Name } from '@dvsa/mes-test-schema/categories/B';
 
 @Component({
   selector: 'search-result',
@@ -19,11 +20,8 @@ export class SearchResultComponent {
     return new DateTime(this.searchResult.testDate).format('HH:mm');
   }
 
-  // TODO - Get name when it works
   getName(): string {
-    console.log('NAME', this.searchResult.candidateName);
-    // const name: Name = this.searchResult.candidateName;
-    // return `${name.title} ${name.firstName} ${name.lastName}`;
-    return 'name';
+    const name: Name = this.searchResult.candidateName;
+    return `${name.title} ${name.firstName} ${name.lastName}`;
   }
 }
