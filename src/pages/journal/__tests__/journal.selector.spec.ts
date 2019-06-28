@@ -69,6 +69,10 @@ describe('JournalSelector', () => {
   });
 
   describe('canNavigateToNextDay', () => {
+    beforeEach(() => {
+      spyOn(DateTime, 'today').and.returnValue(new DateTime('2019-01-29'));
+    });
+
     it('should return true if there are any next days', () => {
       const journal: JournalModel = {
         isLoading: true,
@@ -96,19 +100,52 @@ describe('JournalSelector', () => {
       expect(result).toBe(true);
     });
 
-    it('should return false if there are no next days', () => {
+    it('should return true if the current selected date is in the past', () => {
       const journal: JournalModel = {
         isLoading: true,
         lastRefreshed: new Date(0),
         slots: {
-          '2021-01-29': [
+          '2019-01-28': [
+            {
+              hasSlotChanged: false,
+              slotData: {},
+            },
+          ],
+          '2019-01-29': [
             {
               hasSlotChanged: false,
               slotData: {},
             },
           ],
         },
-        selectedDate: '2021-01-29',
+        selectedDate: '2019-01-28',
+        examiner: { staffNumber: '123', individualId: 456 },
+      };
+
+      const result = canNavigateToNextDay(journal);
+
+      expect(result).toBe(true);
+    });
+
+    it('should return false if the current selected date is not a weekend and in the future', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          '2019-01-28': [
+            {
+              hasSlotChanged: false,
+              slotData: {},
+            },
+          ],
+          '2019-01-29': [
+            {
+              hasSlotChanged: false,
+              slotData: {},
+            },
+          ],
+        },
+        selectedDate: '2019-02-04',
         examiner: { staffNumber: '123', individualId: 456 },
       };
 

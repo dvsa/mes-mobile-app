@@ -2,6 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { SearchProvider } from '../../providers/search/search';
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+
+enum SearchBy {
+  DriverNumber = 'driverNumber',
+  ApplicationReferenece = 'appReference',
+}
 
 @IonicPage()
 @Component({
@@ -10,7 +18,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 export class TestResultsSearchPage extends BasePageComponent {
 
-  searchBy: string;
+  searchBy: SearchBy;
   candidateInfo: string = '';
 
   constructor(
@@ -18,20 +26,37 @@ export class TestResultsSearchPage extends BasePageComponent {
     public platform: Platform,
     public navParams: NavParams,
     public authenticationProvider: AuthenticationProvider,
+    public searchProvider: SearchProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
 
-  searchByChanged(val) {
+  searchByChanged(val: SearchBy) {
     this.searchBy = val;
   }
 
-  candidateInfoChanged(val) {
+  candidateInfoChanged(val: string) {
     this.candidateInfo = val;
   }
 
   searchTests() {
-    console.log('search tests with the following info', this.candidateInfo);
+    if (this.searchBy === SearchBy.DriverNumber) {
+      this.searchProvider.driverNumberSearch(this.candidateInfo)
+      .pipe(
+        tap(data => console.log('Driver Number', JSON.stringify(data))),
+        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+      )
+      .subscribe();
+    }
+
+    if (this.searchBy === SearchBy.ApplicationReferenece) {
+      this.searchProvider.applicationReferenceSearch(this.candidateInfo)
+      .pipe(
+        tap(data => console.log('App Ref', JSON.stringify(data))),
+        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+      )
+      .subscribe();
+    }
   }
 
 }
