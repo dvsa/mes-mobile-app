@@ -43,6 +43,7 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
+import { PASS_FINALISATION_PAGE, BACK_TO_OFFICE_PAGE, TEST_REPORT_PAGE, DEBRIEF_PAGE } from '../page-names.constants';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -82,7 +83,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -90,7 +91,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
   }
 
   ngOnInit(): void {
@@ -234,10 +235,18 @@ export class DebriefPage extends PracticeableBasePageComponent {
     }
     this.store$.dispatch(new EndDebrief());
     if (this.outcome === 'Pass') {
-      this.navController.push('PassFinalisationPage');
+      this.navController.push(PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push('BackToOfficePage');
+    this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
+      const testReportPage = this.navController.getViews().find(view => view.name === TEST_REPORT_PAGE);
+      if (testReportPage) {
+        this.navController.removeView(testReportPage);
+      }
+      this.navController.removeView(
+        this.navController.getViews().find(view => view.name === DEBRIEF_PAGE),
+      );
+    });
   }
 
 }

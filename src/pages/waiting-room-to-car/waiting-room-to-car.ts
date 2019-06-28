@@ -71,6 +71,7 @@ import {
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
+import { WAITING_ROOM_TO_CAR_PAGE, TEST_REPORT_PAGE } from '../page-names.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -115,13 +116,13 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public questionProvider: QuestionProvider,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.tellMeQuestions = questionProvider.getTellMeQuestions();
     this.form = new FormGroup({});
   }
@@ -262,7 +263,12 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navCtrl.push('TestReportPage');
+      this.navController.push(TEST_REPORT_PAGE).then(() => {
+        // remove Waiting Room To Car Page
+        this.navController.removeView(
+          this.navController.getViews().find(view => view.name === WAITING_ROOM_TO_CAR_PAGE),
+        );
+      });
     }
   }
   updateForm(ctrl: string, value: any) {

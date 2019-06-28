@@ -19,6 +19,7 @@ import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { translateServiceMock } from '../../../../../shared/__mocks__/translate';
 import { end2endPracticeSlotId } from '../../../../../shared/mocks/test-slot-ids.mock';
+import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../../page-names.constants';
 
 class MockAppService extends App {
   getTextZoomClass() {
@@ -70,7 +71,7 @@ describe('CandidateLinkComponent', () => {
       it('should open CandidateDetailsPage when not in practice mode', () => {
         component.openCandidateDetailsModal();
         expect(component.modalController.create).toHaveBeenCalledWith(
-          'CandidateDetailsPage',
+          CANDIDATE_DETAILS_PAGE,
           { slotId: component.slotId, slotChanged: false },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
@@ -79,7 +80,7 @@ describe('CandidateLinkComponent', () => {
         component.slotId = `${end2endPracticeSlotId}_1`;
         component.openCandidateDetailsModal();
         expect(component.modalController.create).toHaveBeenCalledWith(
-          'FakeCandidateDetailsPage',
+          FAKE_CANDIDATE_DETAILS_PAGE,
           { slotId: component.slotId, slotChanged: false },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );

@@ -40,6 +40,14 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
+import {
+  TEST_REPORT_PAGE,
+  DEBRIEF_PAGE,
+  PASS_FINALISATION_PAGE,
+  HEALTH_DECLARATION_PAGE,
+  BACK_TO_OFFICE_PAGE,
+} from '../page-names.constants';
+import { includes } from 'lodash';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -78,7 +86,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -87,7 +95,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     public alertController: AlertController,
 
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 
@@ -101,7 +109,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   clickBack(): void {
     this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
-        this.navCtrl.pop();
+        this.navController.pop();
       })
       .catch((err) => {
         console.log(err);
@@ -271,7 +279,14 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
         this.store$.dispatch(new PersistTests());
-        this.navCtrl.push('BackToOfficePage');
+        this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
+          this.navController.getViews().forEach((view) => {
+            if (includes([TEST_REPORT_PAGE, DEBRIEF_PAGE, PASS_FINALISATION_PAGE, HEALTH_DECLARATION_PAGE],
+              view.name)) {
+              this.navController.removeView(view);
+            }
+          });
+        });
       })
       .catch((err) => {
         console.log(err);

@@ -9,6 +9,7 @@ import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mock
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 import { StartTest, ActivateTest } from '../../../journal.actions';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
+import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -61,7 +62,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe('OfficePage');
+        expect(calls.argsFor(0)[0]).toBe(OFFICE_PAGE);
       });
     });
 
@@ -72,7 +73,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe('CommunicationPage');
+        expect(calls.argsFor(0)[0]).toBe(COMMUNICATION_PAGE);
       });
     });
   });

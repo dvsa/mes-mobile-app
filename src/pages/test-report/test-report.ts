@@ -32,6 +32,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SetActivityCode } from '../../modules/tests/tests.actions';
+import { DEBRIEF_PAGE } from '../page-names.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -70,7 +71,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -80,7 +81,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
     public statusBar: StatusBar,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.displayOverlay = false;
   }
 
@@ -215,11 +216,11 @@ export class TestReportPage extends PracticeableBasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navCtrl.push('DebriefPage');
+        this.navController.push(DEBRIEF_PAGE);
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new SetActivityCode(null));
-        this.navCtrl.push('DebriefPage');
+        this.navController.push(DEBRIEF_PAGE);
         break;
     }
   }
@@ -230,12 +231,12 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   onContinue = (): void => {
     this.modal.dismiss()
-    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'pass' }));
+    .then(() => this.navController.push(DEBRIEF_PAGE));
   }
 
   onTerminate = (): void => {
     this.modal.dismiss()
-    .then(() => this.navCtrl.push('DebriefPage', { outcome: 'terminated' }));
+    .then(() => this.navController.push(DEBRIEF_PAGE));
   }
 }
 

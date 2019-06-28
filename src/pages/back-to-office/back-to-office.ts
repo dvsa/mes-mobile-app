@@ -19,14 +19,14 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
   constructor(
     store$: Store<StoreModel>,
     private deviceProvider: DeviceProvider,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
   }
 
   ionViewDidEnter(): void {
@@ -47,6 +47,6 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
       this.exitPracticeMode();
       return;
     }
-    this.navCtrl.popToRoot();
+    this.navController.popToRoot();
   }
 }

@@ -1,0 +1,15 @@
+export const BACK_TO_OFFICE_PAGE = 'BackToOfficePage';
+export const CANDIDATE_DETAILS_PAGE = 'CandidateDetailsPage';
+export const COMMUNICATION_PAGE = 'CommunicationPage';
+export const DEBRIEF_PAGE = 'DebriefPage';
+export const FAKE_CANDIDATE_DETAILS_PAGE = 'FakeCandidateDetailsPage';
+export const FAKE_JOURNAL_PAGE = 'FakeJournalPage';
+export const HEALTH_DECLARATION_PAGE = 'HealthDeclarationPage';
+export const JOURNAL_PAGE = 'JournalPage';
+export const LOGIN_PAGE = 'LoginPage';
+export const OFFICE_PAGE = 'OfficePage';
+export const PASS_FINALISATION_PAGE = 'PassFinalisationPage';
+export const TEST_REPORT_PAGE = 'TestReportPage';
+export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
+export const WAITING_ROOM_PAGE = 'WaitingRoomPage';
+export const WAITING_ROOM_TO_CAR_PAGE = 'WaitingRoomToCarPage';
