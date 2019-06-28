@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { PracticeEndToEndCardComponent } from '../practice-end-to-end-card';
 import { NavControllerMock } from 'ionic-mocks';
+import { FAKE_JOURNAL_PAGE } from '../../../../page-names.constants';
 
 describe('PracticeEndToEndCard ', () => {
   let component: PracticeEndToEndCardComponent;
@@ -31,7 +32,7 @@ describe('PracticeEndToEndCard ', () => {
       it('should trigger navigation to Fake Journal', () => {
         component.navigateToFakeJournal();
 
-        expect(navContoller.push).toHaveBeenCalledWith('FakeJournalPage');
+        expect(navContoller.push).toHaveBeenCalledWith(FAKE_JOURNAL_PAGE);
       });
     });
   });

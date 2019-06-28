@@ -22,7 +22,7 @@ import { PracticeModeBanner } from '../../../components/practice-mode-banner/pra
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;
   let component: BackToOfficePage;
-  let navCtrl: NavController;
+  let navController: NavController;
   let store$: Store<StoreModel>;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
@@ -55,7 +55,7 @@ describe('BackToOfficePage', () => {
       .then(() => {
         fixture = TestBed.createComponent(BackToOfficePage);
         component = fixture.componentInstance;
-        navCtrl = TestBed.get(NavController);
+        navController = TestBed.get(NavController);
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);
         deviceProvider = TestBed.get(DeviceProvider);
@@ -89,12 +89,12 @@ describe('BackToOfficePage', () => {
   describe('goToJournal', () => {
     it('should call the popToRoot method in the navcontroller if not in practice mode', () => {
       component.goToJournal();
-      expect(navCtrl.popToRoot).toHaveBeenCalled();
+      expect(navController.popToRoot).toHaveBeenCalled();
     });
     it('should call the popTo method in the navcontroller if in practice mode', () => {
       component.isPracticeMode = true;
       component.goToJournal();
-      expect(navCtrl.popTo).toHaveBeenCalled();
+      expect(navController.popTo).toHaveBeenCalled();
     });
   });
 });

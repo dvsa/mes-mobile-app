@@ -4,6 +4,7 @@ import { PlatformMock, NavControllerMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { BasePageComponent } from '../base-page';
+import { LOGIN_PAGE } from '../../../pages/page-names.constants';
 
 describe('Base Page', () => {
 
@@ -77,7 +78,7 @@ describe('Base Page', () => {
 
       expect(authenticationProvider.logout).toHaveBeenCalledTimes(1);
       expect(navController.setRoot).toHaveBeenCalledTimes(1);
-      expect(navController.setRoot).toHaveBeenCalledWith('LoginPage', {
+      expect(navController.setRoot).toHaveBeenCalledWith(LOGIN_PAGE, {
         hasLoggedOut: true,
       });
     });

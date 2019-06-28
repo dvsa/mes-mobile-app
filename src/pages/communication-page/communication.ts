@@ -44,6 +44,7 @@ import {
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { TranslateService } from 'ng2-translate';
+import { WAITING_ROOM_PAGE } from '../page-names.constants';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -88,7 +89,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,
-    public navCtrl: NavController,
+    public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceProvider: DeviceProvider,
@@ -97,7 +98,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     private insomnia: Insomnia,
     private translate: TranslateService,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
   }
 
@@ -121,7 +122,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   clickBack(): void {
     this.deviceAuthenticationProvider.triggerLockScreen()
       .then(() => {
-        this.navCtrl.pop();
+        this.navController.pop();
       })
       .catch((err) => {
         console.log(err);
@@ -226,7 +227,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push('WaitingRoomPage');
+      this.navController.push(WAITING_ROOM_PAGE);
     }
   }
 

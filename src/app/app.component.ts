@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../shared/models/store.model';
 import { LoadAppInfo } from '../modules/app-info/app-info.actions';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { LOGIN_PAGE } from '../pages/page-names.constants';
 
 declare let window: any;
 
@@ -13,7 +14,7 @@ declare let window: any;
   templateUrl: 'app.html',
 })
 export class App {
-  rootPage: any = 'LoginPage';
+  rootPage: any = LOGIN_PAGE;
   textZoom: number = 100;
   increasedContrast: Boolean = false;
 

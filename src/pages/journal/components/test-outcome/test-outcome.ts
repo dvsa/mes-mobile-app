@@ -7,6 +7,7 @@ import { TestStatus } from '../../../../modules/tests/test-status/test-status.mo
 import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions';
 import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
+import { COMMUNICATION_PAGE, OFFICE_PAGE } from '../../../page-names.constants';
 
 @Component({
   selector: 'test-outcome',
@@ -49,17 +50,17 @@ export class TestOutcomeComponent {
     } else {
       this.store$.dispatch(new StartTest(this.slotId));
     }
-    this.navController.push('CommunicationPage');
+    this.navController.push(COMMUNICATION_PAGE);
   }
 
   writeUpTest() {
     this.store$.dispatch(new ActivateTest(this.slotId));
-    this.navController.push('OfficePage');
+    this.navController.push(OFFICE_PAGE);
   }
 
   resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotId));
-    this.navController.push('CommunicationPage');
+    this.navController.push(COMMUNICATION_PAGE);
   }
 
   needsWriteUp(): boolean {

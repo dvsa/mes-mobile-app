@@ -42,6 +42,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { LoadLog, StartSendingLogs } from '../../../modules/logs/logs.actions';
 import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions';
+import { JOURNAL_PAGE } from '../../page-names.constants';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -110,7 +111,7 @@ describe('LoginPage', () => {
       expect(component.handleLoadingUI).toHaveBeenCalledWith(true);
       expect(component.initialisePersistentStorage).toHaveBeenCalled();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
-      expect(navController.setRoot).toHaveBeenCalledWith('JournalPage');
+      expect(navController.setRoot).toHaveBeenCalledWith(JOURNAL_PAGE);
       expect(component.hasUserLoggedOut).toBeFalsy();
       expect(splashScreen.hide).toHaveBeenCalled();
     }));

@@ -181,7 +181,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   constructor(
     store$: Store<StoreModel>,
     public toastController: ToastController,
-    public navCtrl: NavController,
+    public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
@@ -191,7 +191,7 @@ export class OfficePage extends PracticeableBasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
   ) {
-    super(platform, navCtrl, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
     this.showMeQuestions = questionProvider.getShowMeQuestions();
@@ -542,7 +542,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       this.exitPracticeMode();
       return;
     }
-    this.navCtrl.popToRoot();
+    this.navController.popToRoot();
   }
 
   defer() {

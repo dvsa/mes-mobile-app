@@ -11,7 +11,7 @@ export class ComponentLibraryPage {
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navController: NavController, public navParams: NavParams) {
   }
   ngAfterViewInit() {
     this.signatureArea.actionLess = true;

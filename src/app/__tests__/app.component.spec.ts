@@ -15,6 +15,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { translateServiceMock } from '../../shared/__mocks__/translate';
+import { LOGIN_PAGE } from '../../pages/page-names.constants';
 
 describe('App', () => {
   let fixture: ComponentFixture<App>;
@@ -56,7 +57,7 @@ describe('App', () => {
     });
 
     it('should have the correct root page', () => {
-      expect(component.rootPage).toBe('LoginPage');
+      expect(component.rootPage).toBe(LOGIN_PAGE);
     });
 
     it('should configure the locale to be English by default', () => {
