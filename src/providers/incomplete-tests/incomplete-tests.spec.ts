@@ -164,9 +164,9 @@ describe('Incomplete Tests Provider', () => {
   });
 
   describe('countIncompleteTests', () => {
-    it('should return 3 tests in the past that arent submitted', () => {
+    it('should return 4 tests in the past that arent submitted', () => {
       const result = incompleteTestsProvider.countIncompleteTests(slots, testStatuses);
-      expect(result).toEqual(3);
+      expect(result).toEqual(4);
     });
   });
 });
