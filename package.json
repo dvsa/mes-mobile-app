@@ -38,7 +38,7 @@
     "config:production": "cp src/environment/environment.production.ts src/environment/environment.ts",
     "config:local": "cp src/environment/environment.local.ts src/environment/environment.ts",
     "copy-mock-data": "cp -r mock/ src/assets/mock/",
-    "update-mock-data": "ts-node -P tsconfig.scripts.json bin/update-mock-data.ts"
+    "update-mock-data": "ts-node -P tsconfig.scripts.json mock/generate-local-journal.ts"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -104,14 +104,16 @@
   "devDependencies": {
     "@angular/cli": "1.4.8",
     "@angular/compiler-cli": "^5.2.11",
-    "@dvsa/mes-search-schema": "^1.0.2",
     "@dvsa/mes-journal-schema": "^1.0.7",
+    "@dvsa/mes-search-schema": "^1.0.2",
     "@dvsa/mes-test-schema": "^1.0.21",
+    "@hapi/joi": "^15.1.0",
     "@ionic-native-mocks/device": "^2.0.12",
     "@ionic-native-mocks/secure-storage": "^2.0.12",
     "@ionic/app-scripts": "^3.2.3",
     "@ngrx/store-devtools": "^5.2.0",
     "@types/hammerjs": "^2.0.36",
+    "@types/hapi__joi": "^15.0.2",
     "@types/jasmine": "2.5.41",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "^10.12.19",
@@ -124,6 +126,7 @@
     "cucumber-html-reporter": "^4.0.4",
     "cucumber-pretty": "^1.5.0",
     "dotenv-safe": "^6.1.0",
+    "enjoi": "^6.0.0",
     "git-rev-sync": "^1.12.0",
     "html-loader": "^0.5.1",
     "husky": "^1.2.0",
