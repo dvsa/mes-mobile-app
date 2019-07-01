@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { AdvancedSearchParams } from '../../../../providers/search/search.models';
 import * as moment from 'moment';
 
@@ -8,13 +8,16 @@ import * as moment from 'moment';
 })
 export class AdvancedSearchComponent {
 
+  @Input()
+  showSpinner: boolean;
+
+  @Output()
+  onSearchTests = new EventEmitter<AdvancedSearchParams>();
+
   dtcNumber: string = '';
   staffNumber: string = '';
   startDate: string = '';
   endDate: string = '';
-
-  @Output()
-  onSearchTests = new EventEmitter<AdvancedSearchParams>();
 
   constructor() {}
 

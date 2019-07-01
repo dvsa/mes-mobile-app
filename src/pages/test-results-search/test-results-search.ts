@@ -25,6 +25,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   searchResults: SearchResultTestSchema[] = [];
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
+  showAdvancedSearchSpinner: boolean = false;
 
   constructor(
     public navController: NavController,
@@ -45,8 +46,8 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   searchTests() {
-    this.showSearchSpinner = true;
     if (this.searchBy === SearchBy.DriverNumber) {
+      this.showSearchSpinner = true;
       this.searchProvider.driverNumberSearch(this.candidateInfo)
       .pipe(
         tap(() => this.hasSearched = true),
@@ -63,6 +64,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
+      this.showSearchSpinner = true;
       this.searchProvider.applicationReferenceSearch(this.candidateInfo)
       .pipe(
         tap(() => this.hasSearched = true),
@@ -80,12 +82,19 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
-    console.log('advanced search with', advancedSearchParams);
+    this.showAdvancedSearchSpinner = true;
     this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
         tap(data => console.log('Advanced Search', JSON.stringify(data))),
-        map(result => this.searchResults = result),
-        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+        tap(() => this.hasSearched = true),
+        map((result) => {
+          this.searchResults = result;
+          this.showAdvancedSearchSpinner = false;
+        }),
+        catchError((err) => {
+          this.showAdvancedSearchSpinner = false;
+          return of(console.log('ERROR', JSON.stringify(err)));
+        }),
       )
       .subscribe();
   }

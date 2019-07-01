@@ -49,8 +49,9 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <button class="mes-primary-button search-tests" ion-button (click)="searchTests()">
+    <button [attr.disabled]="showSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
       <span class="search-tests-text">Search tests</span>
     </button>
+    <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSpinner"></ion-spinner>
   </ion-row>
 </ion-grid>
