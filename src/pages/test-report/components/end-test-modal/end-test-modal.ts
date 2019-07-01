@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { IonicPage, ViewController } from 'ionic-angular';
 import { ModalEvent } from '../../test-report.constants';
