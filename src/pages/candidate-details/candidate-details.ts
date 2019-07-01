@@ -24,7 +24,7 @@ import {
   CandidateDetailsViewDidEnter,
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
-import { Business } from '../../shared/models/DJournal';
+import { Business } from '@dvsa/mes-journal-schema';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>;

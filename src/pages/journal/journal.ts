@@ -180,7 +180,7 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.toast.present();
   }
 
-  private createSlots = (emission: any) => {
+  private createSlots = (emission: SlotItem[]) => {
     // Clear any dynamically created slots before adding the latest
     this.slotContainer.clear();
 

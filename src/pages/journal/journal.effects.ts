@@ -5,7 +5,7 @@ import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, s
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
-import { groupBy } from 'lodash';
+import { groupBy, has } from 'lodash';
 
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
@@ -13,7 +13,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from './journal.reducer';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
+import { ExaminerWorkSchedule, TestSlot } from '@dvsa/mes-journal-schema';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
@@ -190,18 +190,19 @@ export class JournalEffects {
     ),
     switchMap(([action, slots, examiner]) => {
       const startTestAction = action as journalActions.StartTest;
-
-      const slot = slots.find(slot => slot.slotData.slotDetail.slotId === startTestAction.slotId);
+      const slotData = slots.map(slot => slot.slotData);
+      const slot: TestSlot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId &&
+        has(data, 'booking'));
       const { staffNumber, individualId } = examiner;
 
       return [
         new PopulateExaminer({ staffNumber, individualId }),
-        new PopulateApplicationReference(slot.slotData.booking.application),
-        new PopulateCandidateDetails(slot.slotData.booking.candidate),
-        new PopulateTestSlotAttributes(extractTestSlotAttributes(slot.slotData)),
-        new PopulateTestCentre(this.extractTestCentre(slot.slotData)),
+        new PopulateApplicationReference(slot.booking.application),
+        new PopulateCandidateDetails(slot.booking.candidate),
+        new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
+        new PopulateTestCentre(this.extractTestCentre(slot)),
         new SetTestStatusBooked(startTestAction.slotId.toString()),
-        new PopulateTestCategory(slot.slotData.booking.application.testCategory),
+        new PopulateTestCategory(slot.booking.application.testCategory),
       ];
     }),
   );

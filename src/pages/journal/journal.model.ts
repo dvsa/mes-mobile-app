@@ -1,12 +1,13 @@
 import { MesError } from '../../shared/models/mes-error.model';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { Examiner } from '@dvsa/mes-test-schema/categories/B';
+import { Booking, SlotDetail, TestCentre } from '@dvsa/mes-journal-schema';
 
 export type Slot = {
-  booking: any,
-  slotDetail: any,
-  testCentre: any,
-  vehicleSlotType: string,
+  booking?: Booking,
+  slotDetail: SlotDetail,
+  testCentre: TestCentre,
+  vehicleSlotType?: string,
   activityCode?: string,
 };
 

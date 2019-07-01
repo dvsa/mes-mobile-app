@@ -1,4 +1,4 @@
-import { Candidate } from '../../../../shared/models/DJournal';
+import { Candidate } from '@dvsa/mes-journal-schema';
 import { candidateReducer } from '../candidate.reducer';
 import { PopulateCandidateDetails } from '../candidate.actions';
 

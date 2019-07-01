@@ -10,7 +10,7 @@ import {
   PopulateTestSlotAttributes,
 } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
-import { Application } from '../../shared/models/DJournal';
+import { Application } from '@dvsa/mes-journal-schema';
 import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 
 @Injectable()

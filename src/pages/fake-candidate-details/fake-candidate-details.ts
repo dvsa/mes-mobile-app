@@ -7,7 +7,7 @@ import {
   NavParams,
 } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Business } from '../../shared/models/DJournal';
+import { Business } from '@dvsa/mes-journal-schema';
 import { Details } from '../candidate-details/candidate-details.model';
 import { getDetails, getBusiness, getCandidateName, getTime } from '../candidate-details/candidate-details.selector';
 import { fakeJournalTestSlots } from '../fake-journal/__mocks__/fake-journal.mock';

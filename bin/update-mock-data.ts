@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as moment from 'moment';
-import { ExaminerWorkSchedule } from '../src/shared/models/DJournal';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 
 /**
  *  The class below is also found in MES-Journal-Service in src/functions/getJournal/application/service/FindJournal.ts
@@ -41,7 +41,7 @@ class DateUpdater {
 
     let dateProcessing = this.createMoment(dateProcessingString);
 
-    this.data.personalCommitments.forEach(commitment => {
+    this.data.personalCommitments.forEach((commitment) => {
 
       const commitmentDateString = this.formatDate(commitment.startDate, commitment.startTime);
       const commitmentDate = this.createMoment(commitmentDateString);
@@ -63,7 +63,7 @@ class DateUpdater {
     const newDate = this.createMoment();
     let dateProcessing = this.createMoment(this.data.advanceTestSlots[0].slotDetail.start);
 
-    this.data.advanceTestSlots.forEach(slot => {
+    this.data.advanceTestSlots.forEach((slot) => {
       const slotDate = this.createMoment(slot.slotDetail.start);
 
       dateProcessing =
@@ -80,15 +80,15 @@ class DateUpdater {
     if (!deployments) {
       return this;
     }
-    
-    const newDate = this.createMoment().format('YYYY-MM-DD');;
-  
+
+    const newDate = this.createMoment().format('YYYY-MM-DD');
+
     deployments.forEach((deployment) => {
       deployment.date = newDate;
     });
 
     return this;
-  };
+  }
 
   public getData = (): ExaminerWorkSchedule => {
     return this.data;
@@ -103,7 +103,7 @@ class DateUpdater {
     const newDate = this.createMoment();
     let dateProcessing = this.createMoment(slots[0].slotDetail.start);
 
-    slots.forEach(slot => {
+    slots.forEach((slot) => {
       if (!slot.slotDetail || !slot.slotDetail.start) { return; }
 
       const slotDate = this.createMoment(slot.slotDetail.start);
@@ -152,9 +152,9 @@ class DateUpdater {
 
   private formatDate = (startDate: string, startTime: String): string => {
     if (startTime) {
-      return startDate + 'T' + startTime;
+      return `${startDate}T${startTime}`;
     }
-    return startDate + 'T00:00:00+00:00';
+    return `${startDate}T00:00:00+00:00`;
   }
 }
 

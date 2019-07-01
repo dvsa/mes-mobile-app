@@ -13,7 +13,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { Network } from '@ionic-native/network';
 import { NetworkMock } from 'ionic-mocks';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
-import { ExaminerWorkSchedule } from '../../../shared/models/DJournal';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';

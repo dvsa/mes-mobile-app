@@ -11,6 +11,8 @@ import { getJournalState } from '../../pages/journal/journal.reducer';
 import { getAllTestStatuses } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { Observable } from 'rxjs/Observable';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { has } from 'lodash';
 
 @Injectable()
 export class IncompleteTestsProvider {
@@ -51,9 +53,13 @@ export class IncompleteTestsProvider {
   }
 
   canStartTest(slot: SlotItem) {
-    if (slot && slot.slotData && slot.slotData.booking && slot.slotData.booking.application) {
+    if (!slot || !slot.slotData) {
+      return false;
+    }
+    const { slotData } = slot;
+    if (has(slotData, 'booking') && (<TestSlot>slotData).booking.application) {
       const allowedTestCategories = this.appConfig.getAppConfig().journal.allowedTestCategories;
-      if (allowedTestCategories.includes(slot.slotData.booking.application.testCategory)) {
+      if (allowedTestCategories.includes((<TestSlot>slotData).booking.application.testCategory)) {
         return true;
       }
     }
