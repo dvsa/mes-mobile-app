@@ -61,11 +61,11 @@ describe('SearchProvider', () => {
         isLDTM: false,
       };
 
-      searchProvider.advancedSearch(params).subscribe();
-
-      httpMock.expectOne(
-        'https://www.example.com/api/v1/test-result?isLDTM=false',
-      );
+      searchProvider.advancedSearch(params).subscribe(() => {
+        httpMock.expectOne(
+          'https://www.example.com/api/v1/test-result?isLDTM=false',
+        );
+      });
     });
   });
 });
