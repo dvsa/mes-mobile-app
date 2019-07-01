@@ -48,8 +48,6 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
-    // logic to show modal will be updated by Robert Hall as part of MES-2547
-    this.showRekeyModal();
     if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
       this.store$.dispatch(new StartE2EPracticeTest(this.slotId.toString()));
     } else {
