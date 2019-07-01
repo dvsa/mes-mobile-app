@@ -1,6 +1,6 @@
 practice-test-modal {
   @extend .modal-alert-wrapper;
-
+  
   .modal-alert {
     width: 400px;
   }
@@ -32,7 +32,6 @@ practice-test-modal {
     height: 56px;
     background: map-get($colors-gds, gds-grey-3);
     box-shadow: inset 0 -2px 0 0 map-get($colors-gds, gds-grey-1);
-    font-size: 20px;
     &.activated {
       background:  map-get($colors-gds, gds-grey-2);
     }
