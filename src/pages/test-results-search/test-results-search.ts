@@ -56,6 +56,7 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.showSearchSpinner = false;
         }),
         catchError(() => {
+          this.searchResults = [];
           this.showSearchSpinner = false;
           return of(this.hasSearched = true);
         }),
@@ -72,7 +73,8 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.searchResults = results;
           this.showSearchSpinner = false;
         }),
-        catchError(() => {
+        catchError((error) => {
+          this.searchResults = [];
           this.showSearchSpinner = false;
           return of(this.hasSearched = true);
         }),
@@ -85,13 +87,13 @@ export class TestResultsSearchPage extends BasePageComponent {
     this.showAdvancedSearchSpinner = true;
     this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
-        tap(data => console.log('Advanced Search', JSON.stringify(data))),
         tap(() => this.hasSearched = true),
-        map((result) => {
-          this.searchResults = result;
+        map((results) => {
+          this.searchResults = results;
           this.showAdvancedSearchSpinner = false;
         }),
         catchError((err) => {
+          this.searchResults = [];
           this.showAdvancedSearchSpinner = false;
           return of(console.log('ERROR', JSON.stringify(err)));
         }),
