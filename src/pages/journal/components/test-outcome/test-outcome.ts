@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController, Modal } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTest, ActivateTest } from '../../journal.actions';
@@ -8,6 +8,7 @@ import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions
 import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 import { COMMUNICATION_PAGE, OFFICE_PAGE } from '../../../page-names.constants';
+import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
 
 @Component({
   selector: 'test-outcome',
@@ -26,10 +27,12 @@ export class TestOutcomeComponent {
 
   canSubmitTest: boolean = false;
   outcome: string;
+  modal: Modal;
 
   constructor(
     private store$: Store<StoreModel>,
     public navController: NavController,
+    private modalController: ModalController,
   ) { }
 
   showOutcome(): boolean {
@@ -45,6 +48,8 @@ export class TestOutcomeComponent {
   }
 
   startTest() {
+    // logic to show modal will be updated by Robert Hall as part of MES-2547
+    this.showRekeyModal();
     if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
       this.store$.dispatch(new StartE2EPracticeTest(this.slotId.toString()));
     } else {
@@ -69,5 +74,25 @@ export class TestOutcomeComponent {
 
   showResumeTestButton(): boolean {
     return this.testStatus === TestStatus.Started;
+  }
+
+  showRekeyModal = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create('JournalRekeyModal', {}, options);
+    this.modal.present();
+  }
+
+  onModalDismiss = (event: ModalEvent): void => {
+    switch (event) {
+      case ModalEvent.CANCEL:
+        this.modal.dismiss();
+        break;
+      case ModalEvent.START:
+        // todo: Logic to be impliment later
+        break;
+      case ModalEvent.REKEY:
+        // todo: Logic to be impliment later
+        break;
+    }
   }
 }
