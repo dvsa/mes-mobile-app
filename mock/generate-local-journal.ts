@@ -4,10 +4,11 @@ import * as joi from '@hapi/joi';
 const journalSchema = require('@dvsa/mes-journal-schema/schema-examiner-work-schedule.json');
 import { writeFileSync } from 'fs';
 import { dirname, join } from 'path';
+import { getTodayAsIsoDate, getNextWorkingDayAsIsoDate } from './mock-date-utils';
 
-const today = new Date().toISOString().split('T')[0];
-// In order for the unit tests to pass, the local-journal.json file must include one test slot for tomorrow.
-const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+const today = getTodayAsIsoDate();
+// For unit tests to pass, the local-journal.json file must include one test slot for the next working day.
+const nextWorkingDay = getNextWorkingDayAsIsoDate();
 
 const localJournal: ExaminerWorkSchedule = {
   examiner: {
@@ -320,7 +321,7 @@ const localJournal: ExaminerWorkSchedule = {
       slotDetail: {
         duration: 57,
         slotId: 1007,
-        start: `${tomorrow}T14:32:00`,
+        start: `${nextWorkingDay}T14:32:00`,
       },
       testCentre: {
         centreId: 54321,

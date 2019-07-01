@@ -1,0 +1,13 @@
+import * as moment from 'moment';
+
+export const getTodayAsIsoDate = () => new Date().toISOString().split('T')[0];
+
+export const getNextWorkingDayAsIsoDate = () => {
+  const today = moment();
+  const sunday = 0;
+  let nextWorkingDay = today.add(1, 'day');
+  if (today.day() === sunday) {
+    nextWorkingDay = nextWorkingDay.add(1, 'day');
+  }
+  return nextWorkingDay.toISOString().split('T')[0];
+};

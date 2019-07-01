@@ -39,6 +39,7 @@ src/assets/mock/*
 fastlane/report.xml
 test/e2e/test.config.ts
 mock/local-journal.json
+mock/local-journal-non-test-activities.json
 
 .DS_Store
 Thumbs.db
