@@ -7,7 +7,7 @@ import { AppConfigProviderMock } from '../app-config/__mocks__/app-config.mock';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 import { StoreModule } from '@ngrx/store';
 
-fdescribe('Incomplete Tests Provider', () => {
+describe('Incomplete Tests Provider', () => {
 
   let incompleteTestsProvider: IncompleteTestsProvider;
 
