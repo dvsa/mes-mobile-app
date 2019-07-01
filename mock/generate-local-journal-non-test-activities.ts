@@ -3,8 +3,11 @@ import * as joi from '@hapi/joi';
 const journalSchema = require('@dvsa/mes-journal-schema/schema-examiner-work-schedule.json');
 import { writeFileSync } from 'fs';
 import { dirname, join } from 'path';
+import { getTodayAsIsoDate, getIsoDateDaysInFuture } from './mock-date-utils';
 
-const localNtas = {
+const today = getTodayAsIsoDate();
+
+const localNonTestActivities = {
   examiner: {
     staffNumber: '01234567',
     individualId: 9000000,
@@ -13,7 +16,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1000,
-        start: '2019-07-01T09:00:00',
+        start: `${today}T09:00:00`,
         duration: 57,
       },
       vehicleSlotType: 'B57mins',
@@ -26,7 +29,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1001,
-        start: '2019-07-01T10:15:00',
+        start: `${today}T10:15:00`,
         duration: 57,
       },
       vehicleSlotType: 'B57mins',
@@ -97,17 +100,17 @@ const localNtas = {
   personalCommitments: [
     {
       commitmentId: 123400,
-      startDate: '2019-07-01',
+      startDate: today,
       startTime: '10:00:00',
-      endDate: '2019-07-01',
+      endDate: today,
       endTime: '11:00:00',
       activityCode: '104',
       activityDescription: 'Medical appointment',
     },
     {
       commitmentId: 123401,
-      startDate: '2019-07-08',
-      endDate: '2019-07-08',
+      startDate: getIsoDateDaysInFuture(7),
+      endDate: getIsoDateDaysInFuture(7),
       activityCode: '081',
       activityDescription: 'Annual Leave',
     },
@@ -116,7 +119,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1111,
-        start: '2019-07-01T11:15:00',
+        start: `${today}T11:15:00`,
         duration: 57,
       },
       activityCode: '091',
@@ -130,7 +133,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1110,
-        start: '2019-07-01T12:15:00',
+        start: `${today}T12:15:00`,
         duration: 57,
       },
       activityCode: '089',
@@ -144,7 +147,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1200,
-        start: '2019-07-01T13:15:00',
+        start: `${today}T13:15:00`,
         duration: 57,
       },
       activityCode: '104',
@@ -160,7 +163,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1300,
-        start: '2019-07-01T09:00:00',
+        start: `${today}T09:00:00`,
         duration: 90,
       },
       testCentre: {
@@ -173,7 +176,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1301,
-        start: '2019-07-01T10:45:00',
+        start: `${today}T10:45:00`,
         duration: 90,
       },
       testCentre: {
@@ -186,7 +189,7 @@ const localNtas = {
     {
       slotDetail: {
         slotId: 1302,
-        start: '2019-07-01T12:30:00',
+        start: `${today}T12:30:00`,
         duration: 90,
       },
       testCentre: {
@@ -205,7 +208,7 @@ const localNtas = {
         centreName: 'Example Test Centre 3',
         costCode: 'EXTC 3',
       },
-      date: '2019-07-01',
+      date: today,
     },
     {
       deploymentId: 22222,
@@ -214,18 +217,18 @@ const localNtas = {
         centreName: 'Example Test Centre 4',
         costCode: 'EXTC 4',
       },
-      date: '2019-07-01',
+      date: today,
     },
   ],
 };
 
 const joiSchema = enjoi.schema(journalSchema);
-const validationResult = joi.validate(localNtas, joiSchema);
+const validationResult = joi.validate(localNonTestActivities, joiSchema);
 if (validationResult.error) {
   console.log('Generated local NTA journal did not match journal schema');
   console.log(validationResult.error);
   process.exit(1);
 }
 // tslint:disable-next-line:max-line-length
-writeFileSync(join(`${dirname(process.argv[1])}`, 'local-journal-non-test-activities.json'), JSON.stringify(localNtas, null, 2));
+writeFileSync(join(`${dirname(process.argv[1])}`, 'local-journal-non-test-activities.json'), JSON.stringify(localNonTestActivities, null, 2));
 console.log('Local NTA journal updated');

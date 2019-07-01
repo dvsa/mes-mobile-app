@@ -2,6 +2,12 @@ import * as moment from 'moment';
 
 export const getTodayAsIsoDate = () => new Date().toISOString().split('T')[0];
 
+export const getIsoDateDaysInFuture = (daysAhead: number) => {
+  const today = moment();
+  const futureDate = today.add(daysAhead, 'days');
+  return futureDate.format('YYYY-MM-DD');
+};
+
 export const getNextWorkingDayAsIsoDate = () => {
   const today = moment();
   const sunday = 0;
