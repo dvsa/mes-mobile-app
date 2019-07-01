@@ -40,46 +40,18 @@ export class SearchProvider {
 
     console.log('Advanced Search for', JSON.stringify(advancedSearchParams));
 
-    const httpParams: string [] = [];
-
-    // TODO -  remove this when https://jira.i-env.net/browse/MES-2135 is implemented
-    advancedSearchParams.isLDTM ?
-     httpParams.push('isLDTM=true') : httpParams.push('isLDTM=false');
-
-    if (advancedSearchParams.startDate) {
-      httpParams.push(`startDate=${advancedSearchParams.startDate}`);
-    }
-
-    if (advancedSearchParams.endDate) {
-      httpParams.push(`endDate=${advancedSearchParams.endDate}`);
-    }
-
-    if (advancedSearchParams.staffNumber) {
-      httpParams.push(`staffNumber=${advancedSearchParams.staffNumber}`);
-    }
-
-    if (advancedSearchParams.costCode) {
-      httpParams.push(`dtcCode=${advancedSearchParams.costCode}`);
-    }
-
     return this.http.get(
-      this.urlProvider.getTestResultServiceUrl()
-        .concat(this.buildQueryString(httpParams)),
+      this.urlProvider.getTestResultServiceUrl(),
+      {
+        params: {
+          // TODO -  remove this when https://jira.i-env.net/browse/MES-2135 is implemented
+          isLDTM: advancedSearchParams.isLDTM ? 'true' : 'false',
+          startDate: advancedSearchParams.startDate,
+          endDate: advancedSearchParams.endDate,
+          staffNumber: advancedSearchParams.staffNumber,
+          dtcCode: advancedSearchParams.costCode,
+        },
+      },
     );
   }
-
-  private buildQueryString(parameters: string []): string {
-    let queryString = '';
-
-    parameters.forEach((param, index) => {
-      if (index === 0) {
-        queryString = queryString.concat(`?${param}`);
-      } else {
-        queryString = queryString.concat(`&${param}`);
-      }
-    });
-
-    return queryString;
-  }
-
 }
