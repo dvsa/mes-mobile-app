@@ -6,6 +6,7 @@ import { SearchProvider } from '../../providers/search/search';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
+import { AdvancedSearchParams } from '../../providers/search/search.models';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -76,6 +77,17 @@ export class TestResultsSearchPage extends BasePageComponent {
       )
       .subscribe();
     }
+  }
+
+  advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
+    console.log('advanced search with', advancedSearchParams);
+    this.searchProvider.advancedSearch(advancedSearchParams)
+      .pipe(
+        tap(data => console.log('Advanced Search', JSON.stringify(data))),
+        map(result => this.searchResults = result),
+        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
+      )
+      .subscribe();
   }
 
 }

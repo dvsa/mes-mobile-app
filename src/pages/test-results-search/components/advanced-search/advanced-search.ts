@@ -1,9 +1,5 @@
-
-import { Component } from '@angular/core';
-import { SearchProvider } from '../../../../providers/search/search';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { AdvancedSearchParams } from '../../../../providers/search/search.models';
-import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import * as moment from 'moment';
 
 @Component({
@@ -17,7 +13,10 @@ export class AdvancedSearchComponent {
   startDate: string = '';
   endDate: string = '';
 
-  constructor(private searchProvider: SearchProvider) {}
+  @Output()
+  onSearchTests = new EventEmitter<AdvancedSearchParams>();
+
+  constructor() {}
 
   dtcNumberChanged(val: string) {
     this.dtcNumber = val;
@@ -44,12 +43,7 @@ export class AdvancedSearchComponent {
       costCode: this.dtcNumber,
     };
 
-    this.searchProvider.advancedSearch(advancedSearchParams)
-      .pipe(
-        tap(data => console.log('Advanced Search', JSON.stringify(data))),
-        catchError(err => of(console.log('ERROR', JSON.stringify(err)))),
-      )
-      .subscribe();
+    this.onSearchTests.emit(advancedSearchParams);
   }
 
   private dateToString(date: any) {

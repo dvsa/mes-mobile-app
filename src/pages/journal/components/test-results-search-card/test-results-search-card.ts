@@ -12,6 +12,7 @@ export class TestResultsSearchCardComponent {
   constructor(private navController: NavController) { }
 
   navigateToTestResultsSearch = () => {
+    console.log('navigating to ', TEST_RESULTS_SEARCH_PAGE);
     this.navController.push(TEST_RESULTS_SEARCH_PAGE);
   }
 

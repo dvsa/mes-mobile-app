@@ -56,7 +56,7 @@
       </ion-grid>
     </tab>
     <tab [tabTitle]="'Advanced search'">
-      <advanced-search></advanced-search>
+      <advanced-search (onSearchTests)="advancedSearch($event)"></advanced-search>
     </tab>
   </tabs>
 
