@@ -73,6 +73,7 @@ describe('FaultCommentComponent', () => {
       component.faultType = 'driving';
       component.faultCount = 16;
       component.outcome = '5';
+      component.shouldRender = true;
       const control = new FormControl(null);
       component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`, control);
 
@@ -92,6 +93,27 @@ describe('FaultCommentComponent', () => {
       component.faultType = 'driving';
       component.faultCount = 15;
       component.outcome = '5';
+      const control = new FormControl(null);
+      component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`, control);
+
+      component.ngOnChanges();
+      fixture.detectChanges();
+      expect(component.parentForm.
+        get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).toBeNull();
+    });
+
+    it('should clear validators for driving faults if > 15 driving faults and shouldRender is false', () => {
+      component.faultComment = {
+        comment: 'comment',
+        competencyDisplayName: 'Signals - timed',
+        competencyIdentifier: 'signalsTimed',
+        faultCount: 16,
+        source: CommentSource.SIMPLE,
+      };
+      component.faultType = 'driving';
+      component.faultCount = 16;
+      component.outcome = '5';
+      component.shouldRender = false;
       const control = new FormControl(null);
       component.parentForm.addControl(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`, control);
 

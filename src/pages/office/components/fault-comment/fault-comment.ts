@@ -33,6 +33,10 @@ export class FaultCommentComponent implements OnChanges {
 
   @Input()
   faultCount: number;
+
+  @Input()
+  shouldRender: boolean;
+
   @Output()
   faultCommentChange = new EventEmitter<CommentedCompetency>();
 
@@ -44,15 +48,27 @@ export class FaultCommentComponent implements OnChanges {
       this.outcome, FaultCommentComponent.fieldName);
 
     // mes 2393 - need to remove validations if < 16 faults as comments can
-    // only be entered if 16 or more.
-    if (fieldVisibility === VisibilityType.NotVisible ||
-      (this.faultType === ValidFaultTypes.DRIVING &&
-        this.faultCount && this.faultCount <= FaultCommentComponent.maxFaultCount)) {
+    // only be entered if 16 or more
+    if (fieldVisibility === VisibilityType.NotVisible || this.shouldClearDrivingFaultValidators()) {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {
       this.parentForm.get(this.formControlName).setValidators(Validators.required);
     }
     this.parentForm.get(this.formControlName).patchValue(this.faultComment.comment);
+  }
+
+  shouldClearDrivingFaultValidators(): boolean {
+    if (this.faultType !== ValidFaultTypes.DRIVING) {
+      return false;
+    }
+
+    if (!this.shouldRender) {
+      return true;
+    }
+
+    if (this.faultCount && this.faultCount <= FaultCommentComponent.maxFaultCount) {
+      return true;
+    }
   }
 
   faultCommentChanged(newComment: string): void {
