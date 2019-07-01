@@ -17,6 +17,12 @@ describe('Test Outcome', () => {
   let store$: Store<StoreModel>;
   let navController: NavController;
 
+  const testSlotDetail = {
+    duration: 57,
+    slotId: 123,
+    start: new Date().toUTCString(),
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TestOutcomeComponent],
@@ -37,7 +43,6 @@ describe('Test Outcome', () => {
       });
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
-
   }));
 
   describe('Class', () => {
@@ -48,19 +53,19 @@ describe('Test Outcome', () => {
 
     describe('startTest', () => {
       it('should dispatch a start test action with the slot', () => {
-        component.slotId = 123;
-        component.startTest();
+        component.slotDetail = testSlotDetail;
+        component.startTest(false);
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotDetail.slotId));
       });
     });
 
     describe('writeUpTest', () => {
       it('should dispatch an ActivateTest action and navigate to the Office page', () => {
-        component.slotId = 123;
+        component.slotDetail = testSlotDetail;
         component.writeUpTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(OFFICE_PAGE);
       });
@@ -68,10 +73,10 @@ describe('Test Outcome', () => {
 
     describe('resumeTest', () => {
       it('should dispatch an ActivateTest action and navigate to the Office page', () => {
-        component.slotId = 123;
+        component.slotDetail = testSlotDetail;
         component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(COMMUNICATION_PAGE);
       });
@@ -82,6 +87,7 @@ describe('Test Outcome', () => {
 
     describe('show start test button', () => {
       it('should show the start test button when the test status is Booked', () => {
+        component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
         const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
@@ -89,6 +95,7 @@ describe('Test Outcome', () => {
       });
 
       it('should not show the start test button when the test has a status other than booked', () => {
+        component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
         const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
@@ -98,6 +105,7 @@ describe('Test Outcome', () => {
 
     describe('show submit test button', () => {
       it('should show submit test button when canSubmitTest is true', () => {
+        component.slotDetail = testSlotDetail;
         component.canSubmitTest = true;
         fixture.detectChanges();
         const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
@@ -105,6 +113,7 @@ describe('Test Outcome', () => {
       });
 
       it('should not show submit test button when canSubmitTest is false', () => {
+        component.slotDetail = testSlotDetail;
         component.canSubmitTest = false;
         fixture.detectChanges();
         const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
@@ -114,6 +123,7 @@ describe('Test Outcome', () => {
 
     describe('show outcome', () => {
       it('should show activity code when an outcome is provided', () => {
+        component.slotDetail = testSlotDetail;
         component.outcome = '1234';
         fixture.detectChanges();
         const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
@@ -121,6 +131,7 @@ describe('Test Outcome', () => {
       });
 
       it('should not show activity code when an outcome is not provided', () => {
+        component.slotDetail = testSlotDetail;
         component.outcome = undefined;
         fixture.detectChanges();
         const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
@@ -130,6 +141,7 @@ describe('Test Outcome', () => {
 
     describe('start a test', () => {
       it('should call the startTest method when `Start test` is clicked', () => {
+        component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
         spyOn(component, 'startTest');
@@ -143,6 +155,7 @@ describe('Test Outcome', () => {
 
     describe('write up a test', () => {
       it('should call the writeUpTest method when `Write-up` is clicked', () => {
+        component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Decided;
         fixture.detectChanges();
         spyOn(component, 'writeUpTest');
@@ -156,6 +169,7 @@ describe('Test Outcome', () => {
 
     describe('resume a test', () => {
       it('should call the resumeTest method when `Resume` is clicked', () => {
+        component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
         spyOn(component, 'resumeTest');
@@ -167,5 +181,77 @@ describe('Test Outcome', () => {
       });
     });
 
+    describe('show rekey button', () => {
+      it('should show rekey button for a booked test if date is in past', () => {
+        component.slotDetail = testSlotDetail;
+
+        const dateTime = new Date();
+        dateTime.setDate(dateTime.getDate() - 1);
+
+        component.slotDetail.start = dateTime.toUTCString();
+        component.testStatus = TestStatus.Booked;
+        fixture.detectChanges();
+
+        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
+
+        expect(rekeyButton).not.toBeNull();
+      });
+      it('should show rekey button for a resumed test if date is in past', () => {
+        component.slotDetail = testSlotDetail;
+
+        const dateTime = new Date();
+        dateTime.setDate(dateTime.getDate() - 1);
+
+        component.slotDetail.start = dateTime.toUTCString();
+        component.testStatus = TestStatus.Started;
+        fixture.detectChanges();
+
+        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
+
+        expect(rekeyButton).not.toBeNull();
+      });
+      it('should hide rekey button for a booked test if date is today', () => {
+        component.slotDetail = testSlotDetail;
+
+        const dateTime = new Date();
+
+        component.slotDetail.start = dateTime.toUTCString();
+        component.testStatus = TestStatus.Booked;
+        fixture.detectChanges();
+
+        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
+
+        expect(rekeyButton).toBeNull();
+      });
+      it('should hide rekey button for a resumed test if date is today', () => {
+        component.slotDetail = testSlotDetail;
+
+        const dateTime = new Date();
+
+        component.slotDetail.start = dateTime.toUTCString();
+        component.testStatus = TestStatus.Started;
+        fixture.detectChanges();
+
+        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
+
+        expect(rekeyButton).toBeNull();
+      });
+      it('should display the rekey modal for a test today that has ended', () => {
+        component.slotDetail = testSlotDetail;
+
+        const dateTime = new Date();
+        dateTime.setHours(dateTime.getHours() - 2);
+
+        component.slotDetail.start = dateTime.toUTCString();
+        component.testStatus = TestStatus.Booked;
+        spyOn(component, 'displayRekeyModal');
+        fixture.detectChanges();
+
+        const startButton = fixture.debugElement.query(By.css('.mes-primary-button'));
+        startButton.triggerEventHandler('click', null);
+
+        expect(component.displayRekeyModal).toHaveBeenCalled();
+      });
+    });
   });
 });

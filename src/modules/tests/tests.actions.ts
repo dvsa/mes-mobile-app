@@ -17,6 +17,8 @@ export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
 export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
 export const START_TEST_REPORT_PRACTICE_TEST = '[Tests] Start practice test';
 
+export const MARK_AS_REKEY = '[Tests] Mark test as rekey';
+
 export class PersistTests implements Action {
   readonly type = PERSIST_TESTS;
 }
@@ -71,6 +73,11 @@ export class SendTestFailure implements Action {
   readonly type = SEND_TEST_FAILURE;
 }
 
+export class MarkAsRekey implements Action {
+  readonly type = MARK_AS_REKEY;
+  constructor(public slotId: string) {}
+}
+
 export type Types =
   | PersistTests
   | LoadPersistedTests
@@ -83,4 +90,5 @@ export type Types =
   | SendCompletedTestsFailure
   | SendTest
   | SendTestSuccess
-  | SendTestFailure;
+  | SendTestFailure
+  | MarkAsRekey;

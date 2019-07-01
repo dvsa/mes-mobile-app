@@ -137,10 +137,11 @@ describe('testsSelector', () => {
       testState.activityCode = ActivityCodes.CANDIDATE_NOT_HAPPY_WITH_AUTHORISED_OCCUPANT;
       const result = getTestOutcomeText(testState);
       expect(result).toBe(TestOutcome.Terminated);
+      expect(result).toBe('Terminated');
     });
   });
 
-  describe('isPassed', () => {
+  describe('getTestOutcomeClass', () => {
     const testState: StandardCarTestCATBSchema = {
       activityCode: ActivityCodes.PASS,
       category: 'x',

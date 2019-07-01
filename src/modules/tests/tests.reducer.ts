@@ -62,6 +62,17 @@ export function testsReducer(
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
+    case testActions.MARK_AS_REKEY:
+      return {
+        ...state,
+        startedTests: {
+          ...state.startedTests,
+          [slotId]: {
+            ...state.startedTests[slotId],
+            rekey: true,
+          },
+        },
+      };
     default:
       return slotId ? createStateObject(state, action, slotId) : state;
   }

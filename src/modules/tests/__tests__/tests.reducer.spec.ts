@@ -165,4 +165,16 @@ describe('testsReducer', () => {
     expect(result.currentTest.slotId).toBe('456');
   });
 
+  it('should set rekey to true when marked as rekeyed', () => {
+    const state: TestsModel = {
+      currentTest: { slotId: '123' },
+      startedTests: {},
+      testStatus: {},
+    };
+
+    const result = testsReducer(state, new testActions.MarkAsRekey('123'));
+
+    expect(result.startedTests['123'].rekey).toEqual(true);
+  });
+
 });

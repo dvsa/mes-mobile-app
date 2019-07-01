@@ -9,6 +9,7 @@ import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 import { COMMUNICATION_PAGE, OFFICE_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
+import { MarkAsRekey } from '../../../../modules/tests/tests.actions';
 
 @Component({
   selector: 'test-outcome',
@@ -17,7 +18,7 @@ import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.consta
 export class TestOutcomeComponent {
 
   @Input()
-  slotId: number;
+  slotDetail: any;
 
   @Input()
   canStartTest: boolean;
@@ -47,22 +48,18 @@ export class TestOutcomeComponent {
     return this.canSubmitTest;
   }
 
-  startTest() {
-    if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
-      this.store$.dispatch(new StartE2EPracticeTest(this.slotId.toString()));
-    } else {
-      this.store$.dispatch(new StartTest(this.slotId));
-    }
-    this.navController.push(COMMUNICATION_PAGE);
-  }
-
   writeUpTest() {
-    this.store$.dispatch(new ActivateTest(this.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
     this.navController.push(OFFICE_PAGE);
   }
 
   resumeTest() {
-    this.store$.dispatch(new ActivateTest(this.slotId));
+    if (this.showRekeyModal()) {
+      this.displayRekeyModal();
+    } else {
+      this.startTest(false);
+    }
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
     this.navController.push(COMMUNICATION_PAGE);
   }
 
@@ -74,10 +71,19 @@ export class TestOutcomeComponent {
     return this.testStatus === TestStatus.Started;
   }
 
-  showRekeyModal = (): void => {
+  displayRekeyModal = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create('JournalRekeyModal', {}, options);
+    this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
+  }
+
+  startTest(rekey: boolean) {
+    this.store$.dispatch(new StartTest(this.slotDetail.slotId));
+    if (rekey) {
+      this.store$.dispatch(new MarkAsRekey(this.slotDetail.slotId));
+    }
+    this.navController.push(COMMUNICATION_PAGE);
   }
 
   onModalDismiss = (event: ModalEvent): void => {
@@ -86,11 +92,60 @@ export class TestOutcomeComponent {
         this.modal.dismiss();
         break;
       case ModalEvent.START:
-        // todo: Logic to be impliment later
+        this.startTest(false);
         break;
       case ModalEvent.REKEY:
-        // todo: Logic to be impliment later
+        this.startTest(true);
         break;
+    }
+  }
+
+  rekeyTest() {
+    if (this.testStatus === TestStatus.Booked) {
+      this.startTest(true);
+    } else if (this.testStatus === TestStatus.Started) {
+      this.store$.dispatch(new MarkAsRekey(this.slotDetail.slotId));
+      this.resumeTest();
+    } else if (this.testStatus === TestStatus.Decided) {
+      this.writeUpTest();
+    }
+  }
+
+  showRekeyModal(): boolean {
+    const cutOffTime = new Date(this.slotDetail.start);
+    cutOffTime.setMinutes(cutOffTime.getMinutes() + this.slotDetail.duration);
+    const todaysDateTime = new Date();
+    if (todaysDateTime > cutOffTime) {
+      return true;
+    }
+    return false;
+  }
+
+  showRekeyButton(): boolean {
+    if (
+      this.testStatus === TestStatus.Completed ||
+      this.testStatus === TestStatus.Decided ||
+      this.testStatus === TestStatus.Submitted
+    ) {
+      return false;
+    }
+    const testDate = new Date(this.slotDetail.start).setUTCHours(0, 0, 0, 0);
+    const todaysDate = new Date().setUTCHours(0, 0, 0, 0);
+    if (testDate < todaysDate) {
+      return true;
+    }
+    return false;
+  }
+
+  clickStartTest() {
+    if (startsWith(this.slotDetail.slotId.toString(), end2endPracticeSlotId)) {
+      this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
+    } else {
+      if (this.showRekeyModal()) {
+        this.displayRekeyModal();
+      } else {
+        this.startTest(false);
+      }
     }
   }
 }
