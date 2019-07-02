@@ -21,7 +21,6 @@ import {
   getCurrentTest,
   getTestOutcome,
   isTestOutcomeSet,
-  getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
   getActivityCode,
@@ -120,7 +119,6 @@ interface OfficePageState {
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
-  testOutcomeClass$: Observable<string>;
   isPassed$: Observable<boolean>;
   isTestOutcomeSet$: Observable<boolean>;
   candidateName$: Observable<string>;
@@ -219,9 +217,6 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       testOutcomeText$: currentTest$.pipe(
         select(getTestOutcomeText),
-      ),
-      testOutcomeClass$: currentTest$.pipe(
-        select(getTestOutcomeClass),
       ),
       isPassed$: currentTest$.pipe(
         select(isPassed),

@@ -8,11 +8,11 @@ import { startsWith } from 'lodash';
 // temporary determination of test failure and success until service
 // that imnplements full business logic is implemented.
 const outcomeStatus: any[] = [
-  { outcomeCode: '1', outcomeText: 'Passed', outcomeColour: 'mes-green' },
-  { outcomeCode: '2', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-  { outcomeCode: '3', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-  { outcomeCode: '4', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-  { outcomeCode: '5', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
+  { outcomeCode: '1', outcomeText: 'Passed' },
+  { outcomeCode: '2', outcomeText: 'Unsuccessful' },
+  { outcomeCode: '3', outcomeText: 'Unsuccessful' },
+  { outcomeCode: '4', outcomeText: 'Unsuccessful' },
+  { outcomeCode: '5', outcomeText: 'Unsuccessful' },
 ];
 
 export const getCurrentTestSlotId = (tests: TestsModel) => tests.currentTest.slotId;
@@ -41,14 +41,6 @@ export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
     return true;
   }
   return false;
-};
-
-export const getTestOutcomeClass = (test: StandardCarTestCATBSchema) => {
-  const outcomeIndex = outcomeStatus.findIndex(status => status.outcomeCode === test.activityCode);
-  if (outcomeIndex > -1) {
-    return outcomeStatus[outcomeIndex].outcomeColour;
-  }
-  return 'mes-red';
 };
 
 export const isPassed = (test: StandardCarTestCATBSchema) => {
