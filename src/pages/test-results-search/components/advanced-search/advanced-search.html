@@ -1,9 +1,12 @@
 <ion-grid>
   <ion-row>
-    <ion-col col-46>
+    <ion-col align-self-center col-32>
+      <label>Test center</label>
+    </ion-col>
+    <ion-col>
       <ion-item no-padding no-lines class="my-ion-item">
         <ion-input
-          placeholder="DTC number"
+          placeholder="Enter a driving test center cost code"
           type="text"
           id="dtc-number"
           class="dtc-number"
@@ -11,13 +14,17 @@
           [class.ng-invalid]="invalid"
           [value]="dtcNumber"
           (change)="dtcNumberChanged($event.target.value)"></ion-input>
-        </ion-item> 
+      </ion-item> 
     </ion-col>
-    <ion-col col-4></ion-col>
-    <ion-col col-46>
+  </ion-row>
+  <ion-row>
+    <ion-col align-self-center col-32>
+      <label>Staff number</label>
+    </ion-col>
+    <ion-col>
       <ion-item no-padding no-lines class="my-ion-item">
         <ion-input
-          placeholder="DE or staff ID number"
+          placeholder="Enter a driving examiner number"
           type="text"
           id="staff-number"
           class="staff-number"
@@ -34,31 +41,34 @@
     </ion-col>
   </ion-row>
   <ion-row padding-top>
-    <ion-col class="component-label" col-22>
+    <ion-col align-self-center col-32>
       <label>Date range</label>
     </ion-col>
     <ion-col>
-      <ion-item>
-        <ion-label>from:</ion-label>
+      <!-- <ion-item> -->
+        <!-- <ion-label>from:</ion-label> -->
         <ion-datetime
           displayFormat="DD/MM/YYYY"
-          placeholder="select a date"
+          placeholder="Select a date"
           (ionChange)="startDateChanged($event)"></ion-datetime>
-      </ion-item>
+      <!-- </ion-item> -->
     </ion-col>
+    <ion-col class="component-label" col-6 text-center>
+        <label>to</label>
+      </ion-col>
     <ion-col>
-      <ion-item>
-        <ion-label>to:</ion-label>
+      <!-- <ion-item> -->
+        <!-- <ion-label>to:</ion-label> -->
         <ion-datetime
           displayFormat="DD/MM/YYYY"
-          placeholder="select a date"
+          placeholder="Select a date"
           (ionChange)="endDateChanged($event)"></ion-datetime>
-      </ion-item>
+      <!-- </ion-item> -->
     </ion-col>
   </ion-row>
   <ion-row>
     <button [attr.disabled]="showSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
-      <h3 class="search-tests-text">Search tests</h3>
+      <h3 class="search-tests-text">Search</h3>
     </button>
     <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSpinner"></ion-spinner>
   </ion-row>
