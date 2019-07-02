@@ -50,6 +50,6 @@ export class AdvancedSearchComponent {
   }
 
   private dateToString(date: any) {
-    return moment().year(date.year).month(date.month).day(date.day).format('YYYY-MM-DD');
+    return moment().year(date.year).month(date.month - 1).date(date.day).format('YYYY-MM-DD');
   }
 }
