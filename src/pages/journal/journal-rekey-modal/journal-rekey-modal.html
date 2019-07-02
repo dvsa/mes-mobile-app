@@ -1,0 +1,29 @@
+<ion-card class="modal-alert">
+  <modal-alert-title>Test time is expired</modal-alert-title>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-80>
+      <div class="modal-alert-message">
+        <div class="mes-data">Select if you'd like to start the test or rekey a paper test</div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-72>
+      <button ion-button class="mes-return-button start-test-button" (click)="onStartTest()">
+        <h3>Start the test</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-72>
+      <button ion-button class="mes-return-button rekey-test-button" (click)="onRekeyTest()">
+        <h3>Rekey a paper test</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="column-border-top" no-padding>
+      <button ion-button clear class="cancel-button" (click)="onCancel()">Cancel</button>
+    </ion-col>
+  </ion-row>
+</ion-card>

@@ -23,6 +23,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   candidateInfo: string = '';
   searchResults: SearchResultTestSchema[] = [];
   hasSearched: boolean = false;
+  showSearchSpinner: boolean = false;
 
   constructor(
     public navController: NavController,
@@ -43,12 +44,19 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   searchTests() {
+    this.showSearchSpinner = true;
     if (this.searchBy === SearchBy.DriverNumber) {
       this.searchProvider.driverNumberSearch(this.candidateInfo)
       .pipe(
         tap(() => this.hasSearched = true),
-        map(results => this.searchResults = results),
-        catchError(() => of(this.hasSearched = true)),
+        map((results) => {
+          this.searchResults = results;
+          this.showSearchSpinner = false;
+        }),
+        catchError(() => {
+          this.showSearchSpinner = false;
+          return of(this.hasSearched = true);
+        }),
       )
       .subscribe();
     }
@@ -57,8 +65,14 @@ export class TestResultsSearchPage extends BasePageComponent {
       this.searchProvider.applicationReferenceSearch(this.candidateInfo)
       .pipe(
         tap(() => this.hasSearched = true),
-        map(results => this.searchResults = results),
-        catchError(() => of(this.hasSearched = true)),
+        map((results) => {
+          this.searchResults = results;
+          this.showSearchSpinner = false;
+        }),
+        catchError(() => {
+          this.showSearchSpinner = false;
+          return of(this.hasSearched = true);
+        }),
       )
       .subscribe();
     }
