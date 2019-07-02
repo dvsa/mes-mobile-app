@@ -41,7 +41,7 @@
           "primaryTelephone": "01234 567890",
           "secondaryTelephone": "04321 098765",
           "dateOfBirth": "1983-09-27",
-          "ethnicOriginCode": "1271"
+          "ethnicOriginCode": 1271
         },
         "previousCancellation": [
           "Act of nature"
@@ -50,7 +50,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1001,
-        "start": "2019-07-02T08:10:00+01:00"
+        "start": "2019-07-02T08:10:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -92,7 +92,7 @@
           "mobileTelephone": "07654 123456",
           "emailAddress": "test@test.com",
           "dateOfBirth": "1979-10-20",
-          "ethnicOriginCode": "1272"
+          "ethnicOriginCode": 1272
         },
         "previousCancellation": [
           "DSA",
@@ -102,7 +102,7 @@
       "slotDetail": {
         "duration": 57,
         "slotId": 1003,
-        "start": "2019-07-02T10:14:00+01:00"
+        "start": "2019-07-02T10:14:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -148,13 +148,13 @@
           "gender": "F",
           "mobileTelephone": "07654 123456",
           "dateOfBirth": "1959-11-16",
-          "ethnicOriginCode": "1273"
+          "ethnicOriginCode": 1273
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1004,
-        "start": "2019-07-02T11:11:00+01:00"
+        "start": "2019-07-02T11:11:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -201,13 +201,13 @@
           "mobileTelephone": "07654 123456",
           "primaryTelephone": "01234 567890",
           "dateOfBirth": "1975-06-09",
-          "ethnicOriginCode": "1274"
+          "ethnicOriginCode": 1274
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1005,
-        "start": "2019-07-02T12:38:00+01:00"
+        "start": "2019-07-02T12:38:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -256,13 +256,13 @@
           "primaryTelephone": "01234 567890",
           "secondaryTelephone": "04321 098765",
           "dateOfBirth": "1950-02-27",
-          "ethnicOriginCode": "1275"
+          "ethnicOriginCode": 1275
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1006,
-        "start": "2019-07-02T13:35:00+01:00"
+        "start": "2019-07-02T13:35:00"
       },
       "testCentre": {
         "centreId": 54321,
@@ -303,13 +303,13 @@
           "gender": "M",
           "primaryTelephone": "01234 567890",
           "dateOfBirth": "1973-09-06",
-          "ethnicOriginCode": "1276"
+          "ethnicOriginCode": 1276
         }
       },
       "slotDetail": {
         "duration": 57,
         "slotId": 1007,
-        "start": "2019-07-03T14:32:00+01:00"
+        "start": "2019-07-03T14:32:00"
       },
       "testCentre": {
         "centreId": 54321,

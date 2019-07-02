@@ -1,22 +1,13 @@
 {
-  "staffNumber": 12345,
-  "examinerName": {
-    "title": "Mr",
-    "firstName": "Joe",
-    "secondName": "Frederic",
-    "thirdName": "Englbert",
-    "lastName": "Bloggs"
-  },
-  "permTestCentre": {
-    "centreId": 54321,
-    "centreName": "Example Test Centre",
-    "costCode": "EXTC"
+  "examiner": {
+    "staffNumber": "01234567",
+    "individualId": 9000000
   },
   "testSlots": [
     {
       "slotDetail": {
         "slotId": 1000,
-        "start": "2019-07-02T09:00:00+01:00",
+        "start": "2019-07-02T09:00:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -29,7 +20,7 @@
     {
       "slotDetail": {
         "slotId": 1001,
-        "start": "2019-07-02T10:15:00+01:00",
+        "start": "2019-07-02T10:15:00",
         "duration": 57
       },
       "vehicleSlotType": "B57mins",
@@ -41,14 +32,13 @@
       "booking": {
         "candidate": {
           "candidateId": 100,
-          "age": 17,
           "candidateName": {
             "title": "Miss",
             "firstName": "Aaa",
             "lastName": "Bbb"
           },
           "driverNumber": "AAAAA123456A78AA",
-          "gender": "Female",
+          "gender": "F",
           "candidateAddress": {
             "addressLine1": "1 Station Street",
             "addressLine2": "Someplace",
@@ -84,7 +74,7 @@
         ],
         "business": {
           "businessId": 1000,
-          "businessName": "Dave's Dodgy Driving Instructors",
+          "businessName": "Daves Dodgy Driving Instructors",
           "businessAddress": {
             "addressLine1": "Flat 1A",
             "addressLine2": "1 Example Street",
@@ -102,9 +92,9 @@
     {
       "commitmentId": 123400,
       "startDate": "2019-07-02",
-      "startTime": "10:00:00+01:00",
+      "startTime": "10:00:00",
       "endDate": "2019-07-02",
-      "endTime": "11:00:00+01:00",
+      "endTime": "11:00:00",
       "activityCode": "104",
       "activityDescription": "Medical appointment"
     },
@@ -120,7 +110,7 @@
     {
       "slotDetail": {
         "slotId": 1111,
-        "start": "2019-07-02T11:15:00+01:00",
+        "start": "2019-07-02T11:15:00",
         "duration": 57
       },
       "activityCode": "091",
@@ -134,7 +124,7 @@
     {
       "slotDetail": {
         "slotId": 1110,
-        "start": "2019-07-02T12:15:00+01:00",
+        "start": "2019-07-02T12:15:00",
         "duration": 57
       },
       "activityCode": "089",
@@ -148,7 +138,7 @@
     {
       "slotDetail": {
         "slotId": 1200,
-        "start": "2019-07-02T13:15:00+01:00",
+        "start": "2019-07-02T13:15:00",
         "duration": 57
       },
       "activityCode": "104",
@@ -164,7 +154,7 @@
     {
       "slotDetail": {
         "slotId": 1300,
-        "start": "2019-07-02T09:00:00+01:00",
+        "start": "2019-07-02T09:00:00",
         "duration": 90
       },
       "testCentre": {
@@ -177,7 +167,7 @@
     {
       "slotDetail": {
         "slotId": 1301,
-        "start": "2019-07-02T10:45:00+01:00",
+        "start": "2019-07-02T10:45:00",
         "duration": 90
       },
       "testCentre": {
@@ -190,7 +180,7 @@
     {
       "slotDetail": {
         "slotId": 1302,
-        "start": "2019-07-02T12:30:00+01:00",
+        "start": "2019-07-02T12:30:00",
         "duration": 90
       },
       "testCentre": {
