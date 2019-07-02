@@ -1,4 +1,5 @@
 import { App } from './../../../../../app/app.component';
+import { MockAppComponent } from '../../../../../app/__mocks__/app.component.mock';
 import {
   async,
   ComponentFixture,
@@ -21,11 +22,6 @@ import { translateServiceMock } from '../../../../../shared/__mocks__/translate'
 import { end2endPracticeSlotId } from '../../../../../shared/mocks/test-slot-ids.mock';
 import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../../page-names.constants';
 
-class MockAppService extends App {
-  getTextZoomClass() {
-    return 'text-zoom-regular';
-  }
-}
 class MockStore { }
 
 describe('CandidateLinkComponent', () => {
@@ -41,7 +37,7 @@ describe('CandidateLinkComponent', () => {
       providers: [
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
         { provide: ModalController, useFactory: () => modalControllerMock },
-        { provide: App, useClass: MockAppService },
+        { provide: App, useClass: MockAppComponent },
         { provide: Store, useClass: MockStore },
         { provide: SecureStorage, useClass: SecureStorageMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
