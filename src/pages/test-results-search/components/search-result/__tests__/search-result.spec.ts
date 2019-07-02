@@ -20,7 +20,6 @@ describe('SearchResultComponent', () => {
       ],
       providers: [
         { provide: App, useClass: MockAppComponent },
-
       ],
     })
       .compileComponents()
