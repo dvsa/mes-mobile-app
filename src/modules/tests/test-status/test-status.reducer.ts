@@ -21,6 +21,11 @@ export function testStatusReducer(state = initialState, action: testStatusAction
         ...state,
         [action.slotId]: TestStatus.Decided,
       };
+    case testStatusActions.SET_TEST_STATUS_WRITE_UP:
+      return {
+        ...state,
+        [action.slotId]: TestStatus.WriteUp,
+      };
     case testStatusActions.SET_TEST_STATUS_COMPLETED:
       return {
         ...state,

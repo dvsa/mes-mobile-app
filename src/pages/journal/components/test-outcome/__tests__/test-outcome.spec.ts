@@ -141,9 +141,22 @@ describe('Test Outcome', () => {
       });
     });
 
+    describe('debrief a test', () => {
+      it('should call the debriefTest method when `Debrief` is clicked', () => {
+        component.testStatus = TestStatus.Decided;
+        fixture.detectChanges();
+        spyOn(component, 'debriefTest');
+
+        const debriefButton = fixture.debugElement.query(By.css('.mes-secondary-button'));
+        debriefButton.triggerEventHandler('click', null);
+
+        expect(component.debriefTest).toHaveBeenCalled();
+      });
+    });
+
     describe('write up a test', () => {
       it('should call the writeUpTest method when `Write-up` is clicked', () => {
-        component.testStatus = TestStatus.Decided;
+        component.testStatus = TestStatus.WriteUp;
         fixture.detectChanges();
         spyOn(component, 'writeUpTest');
 
