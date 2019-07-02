@@ -4,7 +4,7 @@ import { flatten, times } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { SlotItem } from '../slot-selector/slot-item';
-import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { AppConfigProvider } from '../app-config/app-config';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotHasChanged } from './slot.actions';
@@ -83,6 +83,6 @@ export class SlotProvider {
       );
   }
 
-  getSlotDate = (slot: any): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
+  getSlotDate = (slot: SlotItem): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }

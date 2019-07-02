@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthenticationProvider } from '../authentication/authentication';
 import { UrlProvider } from '../url/url';
 import { DateTime } from '../../shared/helpers/date-time';
-import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { Observable } from 'rxjs/Observable';
 import { DataStoreProvider } from '../data-store/data-store';
 import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';

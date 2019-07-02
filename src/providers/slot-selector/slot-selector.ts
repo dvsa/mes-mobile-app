@@ -5,6 +5,7 @@ import { Slot } from '../../pages/journal/journal.model';
 import { ActivitySlotComponent } from '../../pages/journal/components/activity-slot/activity-slot';
 import { EmptySlotComponent } from '../../pages/journal/components/empty-slot/empty-slot';
 import { has, isEmpty, forOwn, isNil, isObject } from 'lodash';
+import { TestSlot } from '@dvsa/mes-journal-schema';
 @Injectable()
 export class SlotSelectorProvider {
 
@@ -24,18 +25,21 @@ export class SlotSelectorProvider {
     }
 
     for (const slotItem of slotItems) {
-      const slot: Slot = slotItem.slotData;
-      slotItem.component = this.resolveComponentName(slot);
+      slotItem.component = this.resolveComponentName(slotItem);
     }
     return slotItems;
   }
 
-  private isBookingEmptyOrNull = (slot:Slot):boolean => {
-    let gotValue:boolean = false;
-    if (has(slot, 'booking') && isEmpty(slot.booking)) {
+  private isBookingEmptyOrNull = (slot:SlotItem):boolean => {
+    const { slotData } = slot;
+    if (!has(slotData, 'booking')) {
       return true;
     }
-    gotValue = this.checkPropertiesHaveValues(slot.booking);
+    let gotValue:boolean = false;
+    if (isEmpty((<TestSlot>slotData).booking)) {
+      return true;
+    }
+    gotValue = this.checkPropertiesHaveValues((<TestSlot>slotData).booking);
     return !gotValue;
   }
 
@@ -58,16 +62,16 @@ export class SlotSelectorProvider {
 
   public isTestSlot = (slot:Slot) => has(slot, 'vehicleSlotType');
 
-  private resolveComponentName = (slot:Slot) => {
+  private resolveComponentName = (slot:SlotItem) => {
+    const { slotData } = slot;
 
-    if (this.isBookingEmptyOrNull(slot) &&
-        (!has(slot, 'activityCode') || slot.activityCode === null)) {
+    if (has(slotData, 'activityCode')) {
+      return ActivitySlotComponent;
+    }
+    if (this.isBookingEmptyOrNull(slot)) {
       return EmptySlotComponent;
     }
 
-    if (this.isTestSlot(slot)) {
-      return TestSlotComponent;
-    }
-    return ActivitySlotComponent;
+    return TestSlotComponent;
   }
 }

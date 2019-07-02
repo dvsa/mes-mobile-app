@@ -1,4 +1,4 @@
-import { Application, Candidate } from '../../../shared/models/DJournal';
+import { Application, Candidate } from '@dvsa/mes-journal-schema';
 
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 

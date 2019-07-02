@@ -4,6 +4,8 @@ import { TestSlotComponent } from '../../../pages/journal/components/test-slot/t
 import { SlotItem } from '../slot-item';
 import { ActivitySlotComponent } from '../../../pages/journal/components/activity-slot/activity-slot';
 import { EmptySlotComponent } from '../../../pages/journal/components/empty-slot/empty-slot';
+import { TestSlot, NonTestActivity } from '@dvsa/mes-journal-schema';
+import { Slot } from '../../../pages/journal/journal.model';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
@@ -21,7 +23,7 @@ describe('Slot Selector', () => {
   });
 
   const singleSlotItemWithActivityCode = (code) => {
-    const travelSlot = {
+    const travelSlot: NonTestActivity = {
       activityCode: code,
     };
     const journalSlots = [
@@ -37,11 +39,11 @@ describe('Slot Selector', () => {
   };
 
   const singleSlotItemWithVehicleSlotType = (code):SlotItem[] => {
-    const slot = {
+    const slot: TestSlot = {
       vehicleSlotType: code,
-      booking: {
+      booking:  {
         application: {
-          applicationId: '1234567',
+          applicationId: 1234567,
         },
       },
     };
@@ -119,12 +121,28 @@ describe('Slot Selector', () => {
   });
   describe('isTestSlot', () => {
     it('should return true if test slot', () => {
-      const response = slotSelector.isTestSlot(singleSlotItemWithVehicleSlotType(1)[0].slotData);
+      const slotItem = singleSlotItemWithVehicleSlotType(1)[0];
+      const { slotData } = slotItem;
+      const slot: Slot = {
+        booking: (<TestSlot>slotData).booking,
+        slotDetail: slotItem.slotData.slotDetail,
+        testCentre: slotItem.slotData.testCentre,
+        vehicleSlotType: (<TestSlot>slotData).vehicleSlotType,
+        activityCode: slotItem.activityCode,
+      };
+
+      const response = slotSelector.isTestSlot(slot);
       expect(response).toEqual(true);
     });
     it('should return false if not a test slot', () => {
-      const response = slotSelector.isTestSlot(
-        singleSlotItemWithActivityCode(1)[0].slotData);
+      const slotItem = singleSlotItemWithActivityCode(1)[0];
+      const slot: Slot = {
+        slotDetail: slotItem.slotData.slotDetail,
+        testCentre: slotItem.slotData.testCentre,
+        activityCode: slotItem.activityCode,
+      };
+
+      const response = slotSelector.isTestSlot(slot);
       expect(response).toEqual(false);
     });
   });

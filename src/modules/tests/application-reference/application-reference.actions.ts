@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Application } from '../../../shared/models/DJournal';
+import { Application } from '@dvsa/mes-journal-schema';
 
 export const POPULATE_APPLICATION_REFERENCE = '[JournalEffects] Populate Application Reference';
 

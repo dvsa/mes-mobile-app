@@ -5,7 +5,7 @@ import { Details } from './candidate-details.model';
 
 import { SpecialNeedsCode } from './candidate-details.constants';
 import { SlotTypes } from '../../shared/models/slot-types';
-import { Application } from '../../shared/models/DJournal';
+import { Application } from '@dvsa/mes-journal-schema';
 
 export const getSlots = (journal: JournalModel) => {
   return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);

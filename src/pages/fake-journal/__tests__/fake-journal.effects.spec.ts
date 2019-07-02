@@ -14,7 +14,7 @@ import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candi
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { PopulateTestCentre } from '../../../modules/tests/test-centre/test-centre.actions';
 import { SetTestStatusBooked } from '../../../modules/tests/test-status/test-status.actions';
-import { Application } from '../../../shared/models/DJournal';
+import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('Fake Journal Effects', () => {

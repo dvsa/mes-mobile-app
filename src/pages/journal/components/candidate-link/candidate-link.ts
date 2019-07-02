@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Name } from '../../../../shared/models/DJournal';
+import { Name } from '@dvsa/mes-journal-schema';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../../app/app.component';
 import { startsWith } from 'lodash';
