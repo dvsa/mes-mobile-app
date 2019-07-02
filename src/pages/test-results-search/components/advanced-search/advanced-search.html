@@ -1,31 +1,39 @@
 <ion-grid>
   <ion-row>
     <ion-col col-46>
-      <input
-        placeholder="DTC number"
-        type="text"
-        id="dtc-number"
-        class="dtc-number"
-        [class.ng-invalid]="invalid"
-        [value]="dtcNumber"
-        (change)="dtcNumberChanged($event.target.value)">
+      <ion-item no-padding no-lines class="my-ion-item">
+        <ion-input
+          placeholder="DTC number"
+          type="text"
+          id="dtc-number"
+          class="dtc-number"
+          clearInput
+          [class.ng-invalid]="invalid"
+          [value]="dtcNumber"
+          (change)="dtcNumberChanged($event.target.value)"></ion-input>
+        </ion-item> 
     </ion-col>
     <ion-col col-4></ion-col>
     <ion-col col-46>
-      <input
-        placeholder="DE or staff ID number"
-        type="text"
-        id="staff-number"
-        class="staff-number"
-        [class.ng-invalid]="invalid"
-        [value]="staffNumber"
-        (change)="staffNumberChanged($event.target.value)">
+      <ion-item no-padding no-lines class="my-ion-item">
+        <ion-input
+          placeholder="DE or staff ID number"
+          type="text"
+          id="staff-number"
+          class="staff-number"
+          clearInput
+          [class.ng-invalid]="invalid"
+          [value]="staffNumber"
+          (change)="staffNumberChanged($event.target.value)"></ion-input>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
-    <hr />
+    <ion-col>
+      <hr />
+    </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row padding-top>
     <ion-col class="component-label" col-22>
       <label>Date range</label>
     </ion-col>
