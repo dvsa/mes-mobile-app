@@ -83,6 +83,6 @@ export class SlotProvider {
       );
   }
 
-  getSlotDate = (slot: any): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
+  getSlotDate = (slot: SlotItem): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
 
 }
