@@ -10,6 +10,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 export class ViewTestResultPage extends BasePageComponent {
 
+  applicationReference: string = '';
+
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -17,6 +19,8 @@ export class ViewTestResultPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navController, authenticationProvider);
+
+    this.applicationReference = navParams.get('applicationReference');
   }
 
 }
