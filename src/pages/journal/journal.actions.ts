@@ -114,12 +114,12 @@ export class JournalRefresh implements Action {
 
 export class StartTest implements Action {
   readonly type = START_TEST;
-  constructor(public slotId: number) { }
+  constructor(public slotId: number, public rekey: boolean = false) { }
 }
 
 export class ActivateTest implements Action {
   readonly type = ACTIVATE_TEST;
-  constructor(public slotId: number) { }
+  constructor(public slotId: number, public rekey: boolean = false) { }
 }
 
 export type JournalActionTypes =

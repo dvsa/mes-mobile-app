@@ -9,7 +9,7 @@ import { groupBy, has } from 'lodash';
 
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from './journal.reducer';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
@@ -38,6 +38,7 @@ import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attribu
 import { PopulateExaminer } from '../../modules/tests/examiner/examiner.actions';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
 import { ExaminerSlotItems, ExaminerSlotItemsByDate } from './journal.model';
+import { MarkAsRekey } from '../../modules/tests/rekey/rekey.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -195,7 +196,7 @@ export class JournalEffects {
         has(data, 'booking'));
       const { staffNumber, individualId } = examiner;
 
-      return [
+      const arrayOfActions: Action[] = [
         new PopulateExaminer({ staffNumber, individualId }),
         new PopulateApplicationReference(slot.booking.application),
         new PopulateCandidateDetails(slot.booking.candidate),
@@ -204,6 +205,12 @@ export class JournalEffects {
         new SetTestStatusBooked(startTestAction.slotId.toString()),
         new PopulateTestCategory(slot.booking.application.testCategory),
       ];
+
+      if (startTestAction.rekey) {
+        arrayOfActions.push(new MarkAsRekey());
+      }
+
+      return arrayOfActions;
     }),
   );
 
@@ -261,4 +268,13 @@ export class JournalEffects {
       costCode: slotData.testCentre.costCode,
     };
   }
+
+  @Effect()
+  activateTestEffect$ = this.actions$.pipe(
+    ofType(journalActions.ACTIVATE_TEST),
+    map((action) => {
+      const activateTestAction = action as journalActions.ActivateTest;
+      return activateTestAction.rekey ? of(new MarkAsRekey()) : of();
+    }),
+  );
 }

@@ -10,6 +10,7 @@ import { AnalyticsProvider } from '../../../../../providers/analytics/analytics'
 import { StartTest, ActivateTest } from '../../../journal.actions';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
+import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -20,7 +21,7 @@ describe('Test Outcome', () => {
   const testSlotDetail = {
     duration: 57,
     slotId: 123,
-    start: new Date().toUTCString(),
+    start: new DateTime(),
   };
 
   beforeEach(async(() => {
@@ -54,7 +55,7 @@ describe('Test Outcome', () => {
     describe('startTest', () => {
       it('should dispatch a start test action with the slot', () => {
         component.slotDetail = testSlotDetail;
-        component.startTest(false);
+        component.startTest();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotDetail.slotId));
       });
@@ -100,24 +101,6 @@ describe('Test Outcome', () => {
         fixture.detectChanges();
         const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
         expect(startButton.length).toBe(0);
-      });
-    });
-
-    describe('show submit test button', () => {
-      it('should show submit test button when canSubmitTest is true', () => {
-        component.slotDetail = testSlotDetail;
-        component.canSubmitTest = true;
-        fixture.detectChanges();
-        const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
-        expect(submitButton.length).toBe(1);
-      });
-
-      it('should not show submit test button when canSubmitTest is false', () => {
-        component.slotDetail = testSlotDetail;
-        component.canSubmitTest = false;
-        fixture.detectChanges();
-        const submitButton = fixture.debugElement.queryAll(By.css('.mes-secondary-button'));
-        expect(submitButton.length).toBe(0);
       });
     });
 
@@ -185,10 +168,10 @@ describe('Test Outcome', () => {
       it('should show rekey button for a booked test if date is in past', () => {
         component.slotDetail = testSlotDetail;
 
-        const dateTime = new Date();
-        dateTime.setDate(dateTime.getDate() - 1);
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
 
-        component.slotDetail.start = dateTime.toUTCString();
+        component.slotDetail.start = dateTime;
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
 
@@ -199,10 +182,10 @@ describe('Test Outcome', () => {
       it('should show rekey button for a resumed test if date is in past', () => {
         component.slotDetail = testSlotDetail;
 
-        const dateTime = new Date();
-        dateTime.setDate(dateTime.getDate() - 1);
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
 
-        component.slotDetail.start = dateTime.toUTCString();
+        component.slotDetail.start = dateTime;
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
 
@@ -213,9 +196,9 @@ describe('Test Outcome', () => {
       it('should hide rekey button for a booked test if date is today', () => {
         component.slotDetail = testSlotDetail;
 
-        const dateTime = new Date();
+        const dateTime = new DateTime();
 
-        component.slotDetail.start = dateTime.toUTCString();
+        component.slotDetail.start = dateTime;
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
 
@@ -228,7 +211,7 @@ describe('Test Outcome', () => {
 
         const dateTime = new Date();
 
-        component.slotDetail.start = dateTime.toUTCString();
+        component.slotDetail.start = dateTime;
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
 
@@ -239,10 +222,10 @@ describe('Test Outcome', () => {
       it('should display the rekey modal for a test today that has ended', () => {
         component.slotDetail = testSlotDetail;
 
-        const dateTime = new Date();
-        dateTime.setHours(dateTime.getHours() - 2);
+        const dateTime = new DateTime();
+        dateTime.subtract(2, Duration.HOUR);
 
-        component.slotDetail.start = dateTime.toUTCString();
+        component.slotDetail.start = dateTime;
         component.testStatus = TestStatus.Booked;
         spyOn(component, 'displayRekeyModal');
         fixture.detectChanges();

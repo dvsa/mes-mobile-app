@@ -9,7 +9,7 @@ import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 import { COMMUNICATION_PAGE, OFFICE_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
-import { MarkAsRekey } from '../../../../modules/tests/tests.actions';
+import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 
 @Component({
   selector: 'test-outcome',
@@ -26,9 +26,9 @@ export class TestOutcomeComponent {
   @Input()
   testStatus: TestStatus;
 
-  canSubmitTest: boolean = false;
   outcome: string;
   modal: Modal;
+  isRekey: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -40,12 +40,20 @@ export class TestOutcomeComponent {
     return this.outcome !== undefined || this.outcome != null;
   }
 
+  showRekeyButton(): boolean {
+    return this.isTestIncomplete() && this.isDateInPast();
+  }
+
   showStartTestButton(): boolean {
     return this.testStatus === TestStatus.Booked;
   }
 
-  showSubmitTestButton(): boolean {
-    return this.canSubmitTest;
+  showResumeTestButton(): boolean {
+    return this.testStatus === TestStatus.Started;
+  }
+
+  showWriteUpButton(): boolean {
+    return this.testStatus === TestStatus.Decided;
   }
 
   writeUpTest() {
@@ -54,21 +62,23 @@ export class TestOutcomeComponent {
   }
 
   resumeTest() {
-    if (this.showRekeyModal()) {
-      this.displayRekeyModal();
-    } else {
-      this.startTest(false);
-    }
-    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
     this.navController.push(COMMUNICATION_PAGE);
   }
 
-  needsWriteUp(): boolean {
-    return this.testStatus === TestStatus.Decided;
+  startTest() {
+    if (this.isE2EPracticeMode() && this.testStatus === TestStatus.Booked) {
+      this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
+    } else {
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.isRekey));
+    }
+    this.navController.push(COMMUNICATION_PAGE);
   }
 
-  showResumeTestButton(): boolean {
-    return this.testStatus === TestStatus.Started;
+  rekeyTest() {
+    this.isRekey = true;
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
+    this.startOrResumeTestDependingOnStatus();
   }
 
   displayRekeyModal = (): void => {
@@ -78,74 +88,59 @@ export class TestOutcomeComponent {
     this.modal.present();
   }
 
-  startTest(rekey: boolean) {
-    this.store$.dispatch(new StartTest(this.slotDetail.slotId));
-    if (rekey) {
-      this.store$.dispatch(new MarkAsRekey(this.slotDetail.slotId));
-    }
-    this.navController.push(COMMUNICATION_PAGE);
-  }
-
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.CANCEL:
         this.modal.dismiss();
         break;
       case ModalEvent.START:
-        this.startTest(false);
+        this.startOrResumeTestDependingOnStatus();
         break;
       case ModalEvent.REKEY:
-        this.startTest(true);
+        this.isRekey = true;
+        this.startOrResumeTestDependingOnStatus();
         break;
     }
   }
 
-  rekeyTest() {
-    if (this.testStatus === TestStatus.Booked) {
-      this.startTest(true);
-    } else if (this.testStatus === TestStatus.Started) {
-      this.store$.dispatch(new MarkAsRekey(this.slotDetail.slotId));
-      this.resumeTest();
-    } else if (this.testStatus === TestStatus.Decided) {
-      this.writeUpTest();
-    }
+  shouldDisplayRekeyModal(): boolean {
+    return this.isTestIncomplete() && this.isTodaysDate() && this.hasTestTimeFinished();
   }
 
-  showRekeyModal(): boolean {
-    const cutOffTime = new Date(this.slotDetail.start);
-    cutOffTime.setMinutes(cutOffTime.getMinutes() + this.slotDetail.duration);
-    const todaysDateTime = new Date();
-    if (todaysDateTime > cutOffTime) {
-      return true;
-    }
-    return false;
-  }
-
-  showRekeyButton(): boolean {
-    if (
-      this.testStatus === TestStatus.Completed ||
-      this.testStatus === TestStatus.Decided ||
-      this.testStatus === TestStatus.Submitted
-    ) {
-      return false;
-    }
-    const testDate = new Date(this.slotDetail.start).setUTCHours(0, 0, 0, 0);
-    const todaysDate = new Date().setUTCHours(0, 0, 0, 0);
-    if (testDate < todaysDate) {
-      return true;
-    }
-    return false;
-  }
-
-  clickStartTest() {
-    if (startsWith(this.slotDetail.slotId.toString(), end2endPracticeSlotId)) {
-      this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
+  clickStartOrResumeTest() {
+    if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
+      this.displayRekeyModal();
     } else {
-      if (this.showRekeyModal()) {
-        this.displayRekeyModal();
-      } else {
-        this.startTest(false);
-      }
+      this.startOrResumeTestDependingOnStatus();
+    }
+  }
+
+  isE2EPracticeMode(): boolean {
+    return startsWith(this.slotDetail.slotId.toString(), end2endPracticeSlotId);
+  }
+
+  isDateInPast() {
+    return new DateTime().daysDiff(this.slotDetail.start) < 0;
+  }
+
+  isTodaysDate() {
+    return new DateTime().daysDiff(this.slotDetail.start) === 0;
+  }
+
+  isTestIncomplete(): boolean {
+    return [TestStatus.Booked, TestStatus.Started, TestStatus.Decided].includes(this.testStatus);
+  }
+
+  hasTestTimeFinished(): boolean {
+    const cutOffTime = new DateTime(this.slotDetail.start).add(this.slotDetail.duration, Duration.MINUTE);
+    return new DateTime() > cutOffTime;
+  }
+
+  startOrResumeTestDependingOnStatus() {
+    if (this.testStatus === TestStatus.Booked) {
+      this.startTest();
+    } else if (this.testStatus === TestStatus.Started) {
+      this.resumeTest();
     }
   }
 }
