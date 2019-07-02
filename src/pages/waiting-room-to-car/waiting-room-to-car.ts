@@ -276,9 +276,10 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
     if (this.form.valid) {
       this.navController.push(TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
-        this.navController.removeView(
-          this.navController.getViews().find(view => view.name === WAITING_ROOM_TO_CAR_PAGE),
-        );
+        const view = this.navController.getViews().find(view => view.name === WAITING_ROOM_TO_CAR_PAGE);
+        if (view) {
+          this.navController.removeView(view);
+        }
       });
     }
   }

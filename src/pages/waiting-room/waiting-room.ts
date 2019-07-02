@@ -199,9 +199,10 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
             if (communicationPage) {
               this.navController.removeView(communicationPage);
             }
-            this.navController.removeView(
-              this.navController.getViews().find(view => view.name === WAITING_ROOM_PAGE),
-            );
+            const waitingRoomPage = this.navController.getViews().find(view => view.name === WAITING_ROOM_PAGE);
+            if (waitingRoomPage) {
+              this.navController.removeView(waitingRoomPage);
+            }
           });
         })
         .catch((err) => {

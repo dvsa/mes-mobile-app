@@ -243,9 +243,10 @@ export class DebriefPage extends PracticeableBasePageComponent {
       if (testReportPage) {
         this.navController.removeView(testReportPage);
       }
-      this.navController.removeView(
-        this.navController.getViews().find(view => view.name === DEBRIEF_PAGE),
-      );
+      const debriefPage = this.navController.getViews().find(view => view.name === DEBRIEF_PAGE);
+      if (debriefPage) {
+        this.navController.removeView(debriefPage);
+      }
     });
   }
 
