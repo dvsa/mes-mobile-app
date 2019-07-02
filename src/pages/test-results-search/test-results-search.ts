@@ -73,7 +73,7 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.searchResults = results;
           this.showSearchSpinner = false;
         }),
-        catchError((error) => {
+        catchError(() => {
           this.searchResults = [];
           this.showSearchSpinner = false;
           return of(this.hasSearched = true);

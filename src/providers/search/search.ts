@@ -37,9 +37,6 @@ export class SearchProvider {
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): Observable<any> {
-
-    console.log('Advanced Search for', JSON.stringify(advancedSearchParams));
-
     return this.http.get(
       this.urlProvider.getTestResultServiceUrl(),
       {
