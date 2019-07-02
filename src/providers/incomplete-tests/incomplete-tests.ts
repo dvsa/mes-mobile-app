@@ -48,7 +48,8 @@ export class IncompleteTestsProvider {
       this.canStartTest(slot) &&
       this.isDateInPast(slot.slotData.slotDetail.start) &&
       this.slotSelector.isTestSlot(slot.slotData) &&
-      testStatuses[slot.slotData.slotDetail.slotId] !== TestStatus.Submitted);
+      testStatuses[slot.slotData.slotDetail.slotId] !== TestStatus.Submitted &&
+      testStatuses[slot.slotData.slotDetail.slotId] !== TestStatus.Completed);
     return slots.reduce(reducer, 0) as number;
   }
 

@@ -49,14 +49,14 @@
         </ion-row>
         <ion-row>
           <button [attr.disabled]="showSearchSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
-            <span class="search-tests-text">Search tests</span>
+            <h3 class="search-tests-text">Search tests</h3>
           </button>
           <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSearchSpinner"></ion-spinner>
         </ion-row>
       </ion-grid>
     </tab>
     <tab [tabTitle]="'Advanced search'">
-      <h3>Advanced search search will show here</h3>
+      <advanced-search (onSearchTests)="advancedSearch($event)" [showSpinner]="showAdvancedSearchSpinner"></advanced-search>
     </tab>
   </tabs>
 
