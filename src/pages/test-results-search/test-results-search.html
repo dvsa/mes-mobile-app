@@ -37,14 +37,17 @@
         </ion-row>
         <ion-row>
           <ion-col col-96>
-            <input
-              placeholder="Enter a driver number or application reference"
-              type="text"
-              id="candidate-info-input"
-              class="candidate-info candidate-info-input"
-              [class.ng-invalid]="invalid"
-              [value]="candidateInfo"
-              (change)="candidateInfoChanged($event.target.value)">
+            <ion-item no-padding no-lines class="my-ion-item">
+              <ion-input
+                placeholder="Enter a driver number or application reference"
+                type="text"
+                id="candidate-info-input"
+                class="candidate-info candidate-info-input"
+                clearInput="true"
+                [class.ng-invalid]="invalid"
+                [value]="candidateInfo"
+                (change)="candidateInfoChanged($event.target.value)"></ion-input>
+            </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
