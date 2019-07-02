@@ -19,6 +19,7 @@ import {
   ActivityCodeDescription,
 } from '../../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { TestOutcome } from '../tests.constants';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -124,17 +125,17 @@ describe('testsSelector', () => {
     };
     it('should retrieve a passed result for a pass activity code', () => {
       const result = getTestOutcomeText(testState);
-      expect(result).toBe('Passed');
+      expect(result).toBe(TestOutcome.Passed);
     });
     it('should retrieve an unsuccessful result for a fail activity code', () => {
       testState.activityCode = ActivityCodes.FAIL;
       const result = getTestOutcomeText(testState);
-      expect(result).toBe('Unsuccessful');
+      expect(result).toBe(TestOutcome.Failed);
     });
     it('should retrieve a terminated result for terminated activity code', () => {
       testState.activityCode = ActivityCodes.CANDIDATE_NOT_HAPPY_WITH_AUTHORISED_OCCUPANT;
       const result = getTestOutcomeText(testState);
-      expect(result).toBe('Terminated');
+      expect(result).toBe(TestOutcome.Terminated);
     });
   });
 
