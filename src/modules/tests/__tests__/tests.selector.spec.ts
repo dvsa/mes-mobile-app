@@ -1,7 +1,6 @@
 import {
   getCurrentTest,
   getTestStatus,
-  getTestOutcomeClass,
   isPassed,
   getTestOutcomeText,
   getActivityCode,
@@ -20,6 +19,7 @@ import {
   ActivityCodeDescription,
 } from '../../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { TestOutcome } from '../tests.constants';
 
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
@@ -125,57 +125,17 @@ describe('testsSelector', () => {
     };
     it('should retrieve a passed result for a pass activity code', () => {
       const result = getTestOutcomeText(testState);
-      expect(result).toBe('Passed');
+      expect(result).toBe(TestOutcome.Passed);
     });
     it('should retrieve an unsuccessful result for a fail activity code', () => {
       testState.activityCode = ActivityCodes.FAIL;
       const result = getTestOutcomeText(testState);
-      expect(result).toBe('Unsuccessful');
+      expect(result).toBe(TestOutcome.Failed);
     });
     it('should retrieve a terminated result for terminated activity code', () => {
       testState.activityCode = ActivityCodes.CANDIDATE_NOT_HAPPY_WITH_AUTHORISED_OCCUPANT;
       const result = getTestOutcomeText(testState);
-      expect(result).toBe('Terminated');
-    });
-  });
-
-  describe('getTestOutcomeClass', () => {
-    const testState: StandardCarTestCATBSchema = {
-      activityCode: ActivityCodes.PASS,
-      category: 'x',
-      journalData: {
-        examiner: { staffNumber: '12345' },
-        testCentre: { centreId: 1, costCode: '12345' },
-        testSlotAttributes: {
-          slotId: 12345,
-          vehicleSlotType: 'B57mins',
-          start: new DateTime().format('HH:mm'),
-          welshTest: false,
-          extendedTest: false,
-          specialNeeds: false,
-        },
-        candidate: {},
-        applicationReference: {
-          applicationId: 123,
-          bookingSequence: 1,
-          checkDigit: 2,
-        },
-      },
-
-    };
-    it('should return mes-green class for a pass activity code', () => {
-      const result = getTestOutcomeClass(testState);
-      expect(result).toBe('mes-green');
-    });
-    it('should return mes-red class for a fail activity code', () => {
-      testState.activityCode = ActivityCodes.FAIL;
-      const result = getTestOutcomeClass(testState);
-      expect(result).toBe('mes-red');
-    });
-    it('should return mes-red class for a terminated activity code', () => {
-      testState.activityCode = ActivityCodes.ILLEGAL_ACTIVITY_FROM_CANDIDATE;
-      const result = getTestOutcomeClass(testState);
-      expect(result).toBe('mes-red');
+      expect(result).toBe(TestOutcome.Terminated);
     });
   });
 

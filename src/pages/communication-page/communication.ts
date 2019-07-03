@@ -357,6 +357,8 @@ export class CommunicationPage extends PracticeableBasePageComponent {
 
     if (this.isBookedInWelsh && this.conductedLanguage !== CommunicationPage.englishLanguage) {
       this.dispatchCandidateChoseToProceedInWelsh();
+    } else {
+      this.dispatchCandidateChoseToProceedInEnglish();
     }
   }
 
