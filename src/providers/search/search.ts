@@ -51,4 +51,10 @@ export class SearchProvider {
       },
     );
   }
+
+  getTestResult(applicationReference: string, staffNumber: string): Observable<any> {
+    return this.http.get(
+      this.urlProvider.getTestResultServiceUrl().concat(`/${applicationReference}/${staffNumber}`),
+    );
+  }
 }

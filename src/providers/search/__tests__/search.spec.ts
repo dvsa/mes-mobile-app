@@ -68,4 +68,12 @@ describe('SearchProvider', () => {
       });
     });
   });
+
+  describe('getTestResult', () => {
+    it('should call the search endpoint and get a test result back', () => {
+      searchProvider.getTestResult('12345', '123456').subscribe();
+      httpMock.expectOne('https://www.example.com/api/v1/test-result/12345/123456');
+    });
+  });
+
 });

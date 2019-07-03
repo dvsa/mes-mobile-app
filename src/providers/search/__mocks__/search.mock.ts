@@ -11,4 +11,7 @@ export class SearchProviderMock {
 
   advancedSearch =
     jasmine.createSpy('advancedSearch').and.returnValue(of(searchResultsMock));
+
+  getTestResult =
+      jasmine.createSpy('getTestResult').and.returnValue(of(''));
 }
