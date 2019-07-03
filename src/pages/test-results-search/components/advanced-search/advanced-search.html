@@ -1,12 +1,12 @@
 <ion-grid>
   <ion-row>
-    <ion-col align-self-center col-32>
+    <ion-col align-self-center col-20>
       <label>Test centre</label>
     </ion-col>
-    <ion-col>
-      <ion-item no-padding no-lines class="my-ion-item">
+    <ion-col col-32>
+      <ion-item no-padding no-lines class="my-ion-item more-padding">
         <ion-input
-          placeholder="Enter a driving test centre cost code"
+          placeholder="DTC number"
           type="text"
           id="dtc-number"
           class="dtc-number"
@@ -16,15 +16,13 @@
           (change)="dtcNumberChanged($event.target.value)"></ion-input>
       </ion-item> 
     </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col align-self-center col-32>
-      <label>Staff number</label>
+    <ion-col align-self-center col-13>
+      <label>Staff ID</label>
     </ion-col>
     <ion-col>
       <ion-item no-padding no-lines class="my-ion-item">
         <ion-input
-          placeholder="Enter a driving examiner number"
+          placeholder="DE number"
           type="text"
           id="staff-number"
           class="staff-number"
@@ -37,11 +35,11 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <hr />
+      <hr class="advanced-search-divider" />
     </ion-col>
   </ion-row>
-  <ion-row padding-top>
-    <ion-col align-self-center col-32>
+  <ion-row padding-top padding-bottom>
+    <ion-col align-self-center col-20>
       <label>Date range</label>
     </ion-col>
     <ion-col>
@@ -50,7 +48,7 @@
         placeholder="Select start date"
         (ionChange)="startDateChanged($event)"></ion-datetime>
     </ion-col>
-    <ion-col class="component-label" col-6 text-center>
+    <ion-col class="component-label" text-center col-6>
         <label class="to-label">to</label>
       </ion-col>
     <ion-col>

@@ -76,7 +76,7 @@
   </div>
 
   <p *ngIf="searchResults.length > 0" class="results-message">
-    Displaying {{searchResults.length}} results found
+    Displaying <span>{{searchResults.length}}</span> results
   </p>
   <search-result *ngFor="let result of searchResults" [searchResult]=result></search-result>
 
