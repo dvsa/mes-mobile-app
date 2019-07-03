@@ -2,23 +2,25 @@ tabs {
   ul {
     list-style: none;
     padding: 0;
-    margin-bottom: 15px;
+    margin-bottom: 0;
   }
 
   li {
-    display: inline;
-    border: 1px solid map-get($colors-gds, 'gds-grey-4');
-    border-width: 1px;
-    border-bottom-color: map-get($colors-gds, 'gds-black');
+    display: inline-block;
     padding: 16px;
     background-color: map-get($colors-gds, 'gds-grey-4');
+    margin-right: 6px;
+    margin-bottom: 6px;
   }
 
   li.active {
+    position: relative;
+    top: 1px;
     background-color: map-get($colors, 'mes-white');
-    border: solid;
-    border-width: 1px;
-    border-bottom-color: map-get($colors, 'mes-white');
+    border: 1px solid map-get($colors-gds, 'gds-grey-1');
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 22px;
   }
 
   .nav {
@@ -29,6 +31,6 @@ tabs {
 
   #content {
     background-color: map-get($colors, 'mes-white');
-    border: 1px solid map-get($colors-gds, 'gds-black');
+    border: 1px solid map-get($colors-gds, 'gds-grey-1');
   }
 }
