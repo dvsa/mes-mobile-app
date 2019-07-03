@@ -15,13 +15,25 @@ tabs {
 
   li.active {
     position: relative;
-    top: 1px;
+    top: -2px;
     background-color: map-get($colors, 'mes-white');
     border: 1px solid map-get($colors, 'mes-white');
     border-bottom: 0;
     margin-bottom: 0;
     padding-bottom: 22px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  li.active:after {
+    display: block;
+    background-color: map-get($colors, 'mes-white');
+    border: 1px solid map-get($colors, 'mes-white');
+    content: "";
+    position: absolute;
+    left: -1px;
+    bottom: -6px;
+    height: 6px;
+    width: 100%;
   }
 
   .nav {
