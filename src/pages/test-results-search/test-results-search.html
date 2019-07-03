@@ -1,14 +1,14 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>Search test results</ion-title>
+    <ion-title>Search submitted test</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
   <tabs>
-    <tab [tabTitle]="'Candidate'">
+    <tab [tabTitle]="'Candidate details'">
       <ion-grid>
         <ion-row align-self-center>
           <ion-col class="component-label" col-22>
@@ -52,7 +52,10 @@
         </ion-row>
         <ion-row>
           <button [attr.disabled]="showSearchSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
-            <h3 class="search-tests-text">Search</h3>
+            <h3 class="search-tests-text">
+              <ion-icon name="search" class="search-icon"></ion-icon>
+              Search tests
+            </h3>
           </button>
           <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSearchSpinner"></ion-spinner>
         </ion-row>

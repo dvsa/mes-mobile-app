@@ -47,4 +47,16 @@ page-test-results-search {
     margin-left: 700px;
     position: absolute;
   }
+
+  .my-ion-item {
+    background: white;
+  }
+
+  .search-icon {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    padding-right: 3px;
+    font-weight: bolder;
+  }
 }
