@@ -4,7 +4,7 @@
       <ion-row>
         <ion-col col-auto>
         </ion-col>
-          <img id="eyesight-failure-icon" src="/assets/imgs/exclamation.png" />
+        <img id="eyesight-failure-icon" src="/assets/imgs/exclamation.png" />
         <ion-col>
           <ion-row>
             <h2 id="eyesight-failure-title">The candidate failed the eyesight test</h2>
@@ -13,8 +13,9 @@
             <label id="eyesight-failure-subtitle">Do you want to continue?</label>
           </ion-row>
           <ion-row justify-content-between>
-            <button id="confirm-eyesight-failure" class="mes-neutral-button" ion-button (click)="onContinue()"><label>Continue to debrief</label></button>
-            <button id="cancel-eyesight-failure" class="mes-neutral-button" ion-button (click)="onCancel()"><label>Cancel</label></button>
+            <button type="button" id="confirm-eyesight-failure" class="mes-neutral-button" ion-button (click)="onContinue()"><label>Continue
+                to debrief</label></button>
+            <button type="button" id="cancel-eyesight-failure" class="mes-neutral-button" ion-button (click)="onCancel()"><label>Cancel</label></button>
           </ion-row>
         </ion-col>
       </ion-row>
