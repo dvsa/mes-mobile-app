@@ -62,7 +62,6 @@
 
   <hr />
   
-  <test-results-search-card
-  ></test-results-search-card>
+  <test-results-search-card *ngIf="!(pageState.isLoading$ | async)"></test-results-search-card>
 
 </ion-content>
