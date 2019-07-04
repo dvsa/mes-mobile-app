@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { AdvancedSearchParams } from '../../../../providers/search/search.models';
-import { DateTime } from '../../../../shared/helpers/date-time';
 
 @Component({
   selector: 'advanced-search',
