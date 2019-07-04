@@ -4,16 +4,8 @@ import { TestsModel } from './tests.model';
 import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { startsWith } from 'lodash';
-
-// temporary determination of test failure and success until service
-// that imnplements full business logic is implemented.
-const outcomeStatus: any[] = [
-  { outcomeCode: '1', outcomeText: 'Passed', outcomeColour: 'mes-green' },
-  { outcomeCode: '2', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-  { outcomeCode: '3', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-  { outcomeCode: '4', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-  { outcomeCode: '5', outcomeText: 'Unsuccessful', outcomeColour: 'mes-red' },
-];
+import { TestOutcome } from './tests.constants';
+import { ActivityCodes } from '../../shared/models/activity-codes';
 
 export const getCurrentTestSlotId = (tests: TestsModel) => tests.currentTest.slotId;
 
@@ -29,11 +21,20 @@ export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testSt
 export const getTestOutcome = (test: StandardCarTestCATBSchema) => test.activityCode;
 
 export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
-  const outcomeIndex = outcomeStatus.findIndex(status => status.outcomeCode === test.activityCode);
-  if (outcomeIndex > -1) {
-    return outcomeStatus[outcomeIndex].outcomeText;
+  if (test.activityCode === ActivityCodes.PASS) {
+    return TestOutcome.Passed;
   }
-  return 'Terminated';
+
+  if (
+    test.activityCode === ActivityCodes.FAIL ||
+    test.activityCode === ActivityCodes.FAIL_CANDIDATE_STOPS_TEST ||
+    test.activityCode === ActivityCodes.FAIL_EYESIGHT ||
+    test.activityCode === ActivityCodes.FAIL_PUBLIC_SAFETY
+  ) {
+    return TestOutcome.Failed;
+  }
+
+  return TestOutcome.Terminated;
 };
 
 export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
@@ -43,20 +44,8 @@ export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
   return false;
 };
 
-export const getTestOutcomeClass = (test: StandardCarTestCATBSchema) => {
-  const outcomeIndex = outcomeStatus.findIndex(status => status.outcomeCode === test.activityCode);
-  if (outcomeIndex > -1) {
-    return outcomeStatus[outcomeIndex].outcomeColour;
-  }
-  return 'mes-red';
-};
-
 export const isPassed = (test: StandardCarTestCATBSchema) => {
-  const outcomeIndex = outcomeStatus.findIndex(status => status.outcomeCode === test.activityCode);
-  if (outcomeIndex > -1) {
-    return outcomeStatus[outcomeIndex].outcomeText === 'Passed';
-  }
-  return false;
+  return test.activityCode === ActivityCodes.PASS;
 };
 
 export const getActivityCode = (test: StandardCarTestCATBSchema) => {

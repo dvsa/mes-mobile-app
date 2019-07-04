@@ -282,7 +282,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
           this.navController.getViews().forEach((view) => {
             if (includes([TEST_REPORT_PAGE, DEBRIEF_PAGE, PASS_FINALISATION_PAGE, HEALTH_DECLARATION_PAGE],
-              view.name)) {
+              view.id)) {
               this.navController.removeView(view);
             }
           });
