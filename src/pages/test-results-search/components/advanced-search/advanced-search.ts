@@ -19,6 +19,20 @@ export class AdvancedSearchComponent {
   startDate: string = '';
   endDate: string = '';
 
+  customStartDateOptions: any = {
+    buttons: [{
+      text: 'Clear',
+      handler: () => this.startDate = '',
+    }],
+  };
+
+  customEndDateOptions: any = {
+    buttons: [{
+      text: 'Clear',
+      handler: () => this.endDate = '',
+    }],
+  };
+
   constructor() {}
 
   dtcNumberChanged(val: string) {
@@ -27,14 +41,6 @@ export class AdvancedSearchComponent {
 
   staffNumberChanged(val: string) {
     this.staffNumber = val;
-  }
-
-  startDateChanged(date: any) {
-    this.startDate = DateTime.datePickerInputToString(date);
-  }
-
-  endDateChanged(date: any) {
-    this.endDate = DateTime.datePickerInputToString(date);
   }
 
   searchTests() {
