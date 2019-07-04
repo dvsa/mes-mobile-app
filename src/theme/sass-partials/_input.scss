@@ -1,6 +1,7 @@
 input[type="text"],
 input[type="number"],
 ion-textarea,
+ion-datetime,
 ion-select {
   $input-border: 2px;
   $input-border-invalid: 4px;
@@ -35,4 +36,11 @@ ion-select.select {
   .select-placeholder {
     color: inherit;
   }
+}
+
+ion-input.input-ios .text-input-clear-icon {
+  right: 16px;
+  background-image: url("/assets/imgs/clear-icon.svg");
+  width: 30px;
+  background-size: 26px;
 }

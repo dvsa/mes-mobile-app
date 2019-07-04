@@ -1,56 +1,70 @@
 <ion-grid>
   <ion-row>
-    <ion-col col-46>
-      <input
-        placeholder="DTC number"
-        type="text"
-        id="dtc-number"
-        class="dtc-number"
-        [class.ng-invalid]="invalid"
-        [value]="dtcNumber"
-        (change)="dtcNumberChanged($event.target.value)">
+    <ion-col align-self-center col-lg-18 col-md-26>
+      <label>Test centre</label>
     </ion-col>
-    <ion-col col-4></ion-col>
-    <ion-col col-46>
-      <input
-        placeholder="DE or staff ID number"
-        type="text"
-        id="staff-number"
-        class="staff-number"
-        [class.ng-invalid]="invalid"
-        [value]="staffNumber"
-        (change)="staffNumberChanged($event.target.value)">
+    <ion-col col-lg-29 col-md-40>
+      <ion-item no-padding no-lines>
+        <ion-input
+          placeholder="DTC number"
+          type="text"
+          id="dtc-number"
+          class="dtc-number"
+          clearInput
+          [class.ng-invalid]="invalid"
+          [value]="dtcNumber"
+          (change)="dtcNumberChanged($event.target.value)"></ion-input>
+      </ion-item> 
+    </ion-col>
+    <ion-col col-md-30 col-lg-4></ion-col>
+    <ion-col align-self-center col-lg-12 col-md-26>
+      <label>Staff ID</label>
+    </ion-col>
+    <ion-col col-lg-29 col-md-40>
+      <ion-item no-padding no-lines>
+        <ion-input
+          placeholder="DE number"
+          type="text"
+          id="staff-number"
+          class="staff-number"
+          clearInput
+          [class.ng-invalid]="invalid"
+          [value]="staffNumber"
+          (change)="staffNumberChanged($event.target.value)"></ion-input>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
-    <hr />
+    <ion-col>
+      <hr class="advanced-search-divider" />
+    </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col class="component-label" col-22>
+  <ion-row padding-top padding-bottom>
+    <ion-col align-self-center col-md-26 col-lg-18>
       <label>Date range</label>
     </ion-col>
-    <ion-col>
-      <ion-item>
-        <ion-label>from:</ion-label>
-        <ion-datetime
-          displayFormat="DD/MM/YYYY"
-          placeholder="select a date"
-          (ionChange)="startDateChanged($event)"></ion-datetime>
-      </ion-item>
+    <ion-col col-md-28 col-lg-21>
+      <ion-datetime
+        displayFormat="DD/MM/YYYY"
+        placeholder="Select start date"
+        (ionChange)="startDateChanged($event)"></ion-datetime>
     </ion-col>
-    <ion-col>
-      <ion-item>
-        <ion-label>to:</ion-label>
-        <ion-datetime
-          displayFormat="DD/MM/YYYY"
-          placeholder="select a date"
-          (ionChange)="endDateChanged($event)"></ion-datetime>
-      </ion-item>
+    <ion-col class="component-label" col-md-9 col-lg-7 text-center>
+        <label class="to-label">to</label>
+      </ion-col>
+    <ion-col col-md-28 col-lg-21>
+      <ion-datetime
+        displayFormat="DD/MM/YYYY"
+        placeholder="Select end date"
+        (ionChange)="endDateChanged($event)"></ion-datetime>
     </ion-col>
   </ion-row>
   <ion-row>
     <button [attr.disabled]="showSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
-      <h3 class="search-tests-text">Search tests</h3>
+      <h3 class="search-tests-text">
+        <ion-icon name="search" class="search-icon"></ion-icon>
+        Search
+      </h3>
     </button>
     <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSpinner"></ion-spinner>
   </ion-row>

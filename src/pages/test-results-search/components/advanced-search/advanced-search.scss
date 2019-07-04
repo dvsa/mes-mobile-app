@@ -12,4 +12,35 @@ advanced-search {
     margin-left: 700px;
     position: absolute;
   }
+
+  .to-label {
+    font-weight: normal !important;
+  }
+
+  .search-icon {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    padding-right: 3px;
+    font-weight: bolder;
+  }
+
+  .advanced-search-divider {
+    height: 2px;
+    background-color: #bdbdbd;
+  }
+
+  .item-ios.item-block .item-inner {
+    padding-right: 0;
+  }
+
+  .text-input-ios {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .more-padding {
+    padding-right: 8px;
+  }
+
 }

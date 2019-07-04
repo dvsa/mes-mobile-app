@@ -27,8 +27,10 @@ page-test-results-search {
     margin: 0;
     font-size: 24px;
     letter-spacing: 0px;
-    font-weight: 900;
     line-height: 60px;
+    span {
+      font-weight: 900;
+    }
   }
 
   .results-error {
@@ -46,5 +48,22 @@ page-test-results-search {
     margin-top: 32px;
     margin-left: 700px;
     position: absolute;
+  }
+
+  .search-icon {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    padding-right: 3px;
+    font-weight: bolder;
+  }
+
+  .item-ios.item-block .item-inner {
+    padding-right: 0;
+  }
+
+  .text-input-ios {
+    margin-right: 0;
+    width: 100%;
   }
 }
