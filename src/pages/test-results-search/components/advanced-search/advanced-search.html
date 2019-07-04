@@ -1,10 +1,10 @@
 <ion-grid>
   <ion-row>
-    <ion-col align-self-center col-20>
+    <ion-col align-self-center col-lg-18 col-md-26>
       <label>Test centre</label>
     </ion-col>
-    <ion-col col-32>
-      <ion-item no-padding no-lines class="my-ion-item more-padding">
+    <ion-col col-lg-29 col-md-40>
+      <ion-item no-padding no-lines class="my-ion-item">
         <ion-input
           placeholder="DTC number"
           type="text"
@@ -16,11 +16,12 @@
           (change)="dtcNumberChanged($event.target.value)"></ion-input>
       </ion-item> 
     </ion-col>
-    <ion-col align-self-center col-13>
+    <ion-col col-md-30 col-lg-4></ion-col>
+    <ion-col align-self-center col-lg-12 col-md-26>
       <label>Staff ID</label>
     </ion-col>
-    <ion-col>
-      <ion-item no-padding no-lines class="my-ion-item">
+    <ion-col col-lg-29 col-md-40>
+      <ion-item no-padding no-lines class="my-ion-item" >
         <ion-input
           placeholder="DE number"
           type="text"
@@ -39,19 +40,19 @@
     </ion-col>
   </ion-row>
   <ion-row padding-top padding-bottom>
-    <ion-col align-self-center col-20>
+    <ion-col align-self-center col-md-26 col-lg-18>
       <label>Date range</label>
     </ion-col>
-    <ion-col>
+    <ion-col col-md-28 col-lg-21>
       <ion-datetime
         displayFormat="DD/MM/YYYY"
         placeholder="Select start date"
         (ionChange)="startDateChanged($event)"></ion-datetime>
     </ion-col>
-    <ion-col class="component-label" text-center col-6>
+    <ion-col class="component-label" col-md-9 col-lg-7 text-center>
         <label class="to-label">to</label>
       </ion-col>
-    <ion-col>
+    <ion-col col-md-28 col-lg-21>
       <ion-datetime
         displayFormat="DD/MM/YYYY"
         placeholder="Select end date"
