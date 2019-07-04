@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { AdvancedSearchParams } from '../../../../providers/search/search.models';
-import * as moment from 'moment';
+import { DateTime } from '../../../../shared/helpers/date-time';
 
 @Component({
   selector: 'advanced-search',
@@ -30,11 +30,11 @@ export class AdvancedSearchComponent {
   }
 
   startDateChanged(date: any) {
-    this.startDate = this.dateToString(date);
+    this.startDate = DateTime.datePickerInputToString(date);
   }
 
   endDateChanged(date: any) {
-    this.endDate = this.dateToString(date);
+    this.endDate = DateTime.datePickerInputToString(date);
   }
 
   searchTests() {
@@ -49,7 +49,4 @@ export class AdvancedSearchComponent {
     this.onSearchTests.emit(advancedSearchParams);
   }
 
-  private dateToString(date: any) {
-    return moment().year(date.year).month(date.month - 1).date(date.day).format('YYYY-MM-DD');
-  }
 }

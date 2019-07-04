@@ -50,6 +50,10 @@ export class DateTime {
   static today(): Date {
     return moment().toDate();
   }
+
+  static datePickerInputToString(date: any) {
+    return moment().year(date.year).month(date.month - 1).date(date.day).format('YYYY-MM-DD');
+  }
 }
 
 export enum Duration {
