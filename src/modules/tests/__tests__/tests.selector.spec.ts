@@ -31,7 +31,7 @@ describe('testsSelector', () => {
             welshTest: false,
             slotId: 123,
             start: '11:34',
-            vehicleSlotType: 'B57mins',
+            vehicleTypeCode: 'C',
             extendedTest: false,
             specialNeeds: false,
           },
@@ -50,6 +50,7 @@ describe('testsSelector', () => {
           },
         },
         activityCode: ActivityCodes.PASS,
+        rekey: false,
       };
       const journal: JournalModel = {
         isLoading: false,
@@ -108,7 +109,7 @@ describe('testsSelector', () => {
         testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
-          vehicleSlotType: 'B57mins',
+          vehicleTypeCode: 'C',
           start: new DateTime().format('HH:mm'),
           welshTest: false,
           extendedTest: false,
@@ -121,7 +122,7 @@ describe('testsSelector', () => {
           checkDigit: 2,
         },
       },
-
+      rekey: false,
     };
     it('should retrieve a passed result for a pass activity code', () => {
       const result = getTestOutcomeText(testState);
@@ -148,7 +149,7 @@ describe('testsSelector', () => {
         testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
-          vehicleSlotType: 'B57mins',
+          vehicleTypeCode: 'C',
           start: new DateTime().format('HH:mm'),
           welshTest: false,
           extendedTest: false,
@@ -161,7 +162,7 @@ describe('testsSelector', () => {
           checkDigit: 2,
         },
       },
-
+      rekey: false,
     };
     it('should return true for a passed activity code', () => {
       const result = isPassed(testState);
@@ -189,7 +190,7 @@ describe('testsSelector', () => {
         testCentre: { centreId: 1, costCode: '12345' },
         testSlotAttributes: {
           slotId: 12345,
-          vehicleSlotType: 'B57mins',
+          vehicleTypeCode: 'C',
           start: new DateTime().format('HH:mm'),
           welshTest: false,
           extendedTest: false,
@@ -202,7 +203,7 @@ describe('testsSelector', () => {
           checkDigit: 2,
         },
       },
-
+      rekey: false,
     };
     it('should return the DVSA_RADIO_FAILURE ActivityCode', () => {
       const activityCode = getActivityCode(testState);
