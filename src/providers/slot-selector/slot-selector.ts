@@ -30,12 +30,12 @@ export class SlotSelectorProvider {
     return slotItems;
   }
 
-  private isBookingEmptyOrNull = (slot:SlotItem):boolean => {
+  private isBookingEmptyOrNull = (slot: SlotItem): boolean => {
     const { slotData } = slot;
     if (!has(slotData, 'booking')) {
       return true;
     }
-    let gotValue:boolean = false;
+    let gotValue: boolean = false;
     if (isEmpty((<TestSlot>slotData).booking)) {
       return true;
     }
@@ -43,7 +43,7 @@ export class SlotSelectorProvider {
     return !gotValue;
   }
 
-  private checkPropertiesHaveValues = (obj:any):boolean => {
+  private checkPropertiesHaveValues = (obj: any): boolean => {
     let gotValue: boolean = false;
 
     forOwn(obj, (value, key) => {
@@ -60,9 +60,9 @@ export class SlotSelectorProvider {
     return gotValue;
   }
 
-  public isTestSlot = (slot:Slot) => has(slot, 'vehicleSlotType');
+  public isTestSlot = (slot: Slot) => has(slot, 'vehicleTypeCode');
 
-  private resolveComponentName = (slot:SlotItem) => {
+  private resolveComponentName = (slot: SlotItem) => {
     const { slotData } = slot;
 
     if (has(slotData, 'activityCode')) {

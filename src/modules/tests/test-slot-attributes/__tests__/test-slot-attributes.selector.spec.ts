@@ -1,10 +1,9 @@
 import {
-    getTestTime,
-    getVehicleSlotType,
-    getSlotId,
-    isWelshTest,
-    isSpecialNeeds,
-    isExtendedTest,
+  getTestTime,
+  getSlotId,
+  isWelshTest,
+  isSpecialNeeds,
+  isExtendedTest,
 } from '../test-slot-attributes.selector';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { DateTime } from '../../../../shared/helpers/date-time';
@@ -17,7 +16,7 @@ describe('testSlotAttributes selector', () => {
     slotId: 1234,
     specialNeeds: true,
     start: testTime,
-    vehicleSlotType: 'B57mins',
+    vehicleTypeCode: 'C',
     extendedTest: true,
     welshTest: true,
   };
@@ -25,12 +24,6 @@ describe('testSlotAttributes selector', () => {
   describe('getTestTime', () => {
     it('should return the time of the test', () => {
       expect(getTestTime(testSlotAttributes)).toBe(formattedTime);
-    });
-  });
-
-  describe('getVehicleSlotType', () => {
-    it('should return the vehicle slot type', () => {
-      expect(getVehicleSlotType(testSlotAttributes)).toBe('B57mins');
     });
   });
 

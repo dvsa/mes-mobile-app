@@ -7,7 +7,7 @@ export type Slot = {
   booking?: Booking,
   slotDetail: SlotDetail,
   testCentre: TestCentre,
-  vehicleSlotType?: string,
+  vehicleTypeCode?: string;
   activityCode?: string,
 };
 

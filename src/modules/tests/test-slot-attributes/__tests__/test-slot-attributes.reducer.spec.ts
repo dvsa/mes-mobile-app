@@ -10,7 +10,7 @@ describe('testSlotAttributes reducer', () => {
     slotId: 1234,
     specialNeeds: true,
     start: testTime,
-    vehicleSlotType: 'B57mins',
+    vehicleTypeCode: 'C',
     extendedTest: true,
     welshTest: null,
   };
