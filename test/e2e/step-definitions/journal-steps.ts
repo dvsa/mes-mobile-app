@@ -1,4 +1,4 @@
-import { by } from 'protractor';
+import { by, element } from 'protractor';
 import { getElement, clickElement, onJournalPageAs } from './generic-steps';
 
 const {
@@ -28,7 +28,15 @@ When('I start the test for {string}', (candidateName) => {
   const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Start test"]]
     [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
     h3[text() = "${candidateName}"]]`));
-  return clickElement(buttonElement);
+  clickElement(buttonElement);
+
+  // If the rekey dialog is shown so just select start test normally
+  const rekeyStartTestButton = element(by.id('rekey-start-test-button'));
+  rekeyStartTestButton.isPresent().then((result) => {
+    if (result) {
+      clickElement(rekeyStartTestButton);
+    }
+  });
 });
 
 When('I navigate to next day', () => {
