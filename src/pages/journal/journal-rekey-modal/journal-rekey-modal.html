@@ -9,21 +9,21 @@
   </ion-row>
   <ion-row justify-content-center>
     <ion-col no-padding col-72>
-      <button ion-button class="mes-return-button start-test-button" (click)="onStartTest()">
+      <button ion-button class="mes-return-button start-test-button" (click)="onStartTest()" id="rekey-start-test-button">
         <h3>Start the test</h3>
       </button>
     </ion-col>
   </ion-row>
   <ion-row justify-content-center>
     <ion-col no-padding col-72>
-      <button ion-button class="mes-return-button rekey-test-button" (click)="onRekeyTest()">
+      <button ion-button class="mes-return-button rekey-test-button" (click)="onRekeyTest()" id="rekey-rekey-test-button">
         <h3>Rekey a paper test</h3>
       </button>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col class="column-border-top" no-padding>
-      <button ion-button clear class="cancel-button" (click)="onCancel()">Cancel</button>
+      <button ion-button clear class="cancel-button" (click)="onCancel()" id="rekey-cancel-button">Cancel</button>
     </ion-col>
   </ion-row>
 </ion-card>
