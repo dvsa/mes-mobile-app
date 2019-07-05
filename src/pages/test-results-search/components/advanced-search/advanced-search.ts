@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { AdvancedSearchParams } from '../../../../providers/search/search.models';
-import { DateTime } from '../../../../shared/helpers/date-time';
 
 @Component({
   selector: 'advanced-search',
@@ -19,6 +18,20 @@ export class AdvancedSearchComponent {
   startDate: string = '';
   endDate: string = '';
 
+  customStartDateOptions: any = {
+    buttons: [{
+      text: 'Clear',
+      handler: () => this.startDate = '',
+    }],
+  };
+
+  customEndDateOptions: any = {
+    buttons: [{
+      text: 'Clear',
+      handler: () => this.endDate = '',
+    }],
+  };
+
   constructor() {}
 
   dtcNumberChanged(val: string) {
@@ -27,14 +40,6 @@ export class AdvancedSearchComponent {
 
   staffNumberChanged(val: string) {
     this.staffNumber = val;
-  }
-
-  startDateChanged(date: any) {
-    this.startDate = DateTime.datePickerInputToString(date);
-  }
-
-  endDateChanged(date: any) {
-    this.endDate = DateTime.datePickerInputToString(date);
   }
 
   searchTests() {
