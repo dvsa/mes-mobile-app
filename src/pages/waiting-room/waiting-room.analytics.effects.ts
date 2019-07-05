@@ -64,7 +64,7 @@ export class WaitingRoomAnalyticsEffects {
   );
 
   @Effect()
-  submitWaitingRoomInfoErrorEffect$ = this.actions$.pipe(
+  submitWaitingRoomInfoError$ = this.actions$.pipe(
     ofType(SUBMIT_WAITING_ROOM_INFO_ERROR),
     switchMap((action: SubmitWaitingRoomInfoError) => {
       this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,
@@ -74,7 +74,7 @@ export class WaitingRoomAnalyticsEffects {
   );
 
   @Effect()
-  submitWaitingRoomInfoErrorValidationEffect$ = this.actions$.pipe(
+  submitWaitingRoomInfoErrorValidation$ = this.actions$.pipe(
     ofType(WAITING_ROOM_VALIDATION_ERROR),
     switchMap((action: WaitingRoomValidationError) => {
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,

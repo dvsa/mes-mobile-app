@@ -283,7 +283,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
       });
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
-        if (this.isCtrlDirtyAndInvalid(controlName)) {
+        if (this.form.controls[controlName].invalid) {
           this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarValidationError(
             `${controlName} is invalid`,
           ));
