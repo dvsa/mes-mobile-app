@@ -34,7 +34,6 @@ import {
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { COMMUNICATION_PAGE, WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE } from '../page-names.constants';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -209,14 +208,18 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
           });
         })
         .catch((err) => {
-          console.log(err);
+          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoError(
+            'Error submitting Waiting Room Info',
+            err,
+          ));
         });
     } else {
-      const validation = this.getFormValidation();
-      Object.keys(validation).forEach((controlName) => {
+      Object.keys(this.getFormValidation()).forEach((controlName) => {
         if (this.isCtrlDirtyAndInvalid(controlName)) {
-          console.log(`${controlName} is invalid`);
-          this.analytics.logError(`Validation error (${AnalyticsScreenNames.WAITING_ROOM})`, `${controlName}`);
+          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoValidationError(
+            `Validation error`,
+            `${controlName} is invalid`,
+          ));
         }
       });
     }

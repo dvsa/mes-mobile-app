@@ -7,6 +7,10 @@ import { AnalyticsScreenNames, AnalyticsDimensionIndices } from '../../providers
 import {
   WAITING_ROOM_VIEW_DID_ENTER,
   WaitingRoomViewDidEnter,
+  SUBMIT_WAITING_ROOM_INFO_ERROR,
+  SubmitWaitingRoomInfoError,
+  SUBMIT_WAITING_ROOM_INFO_VALIDATION_ERROR,
+  SubmitWaitingRoomInfoValidationError,
 } from '../../pages/waiting-room/waiting-room.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -51,6 +55,24 @@ export class WaitingRoomAnalyticsEffects {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
       this.analytics.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM);
+      return of();
+    }),
+  );
+
+  @Effect()
+  submitWaitingRoomInfoErrorEffect$ = this.actions$.pipe(
+    ofType(SUBMIT_WAITING_ROOM_INFO_ERROR),
+    switchMap((action: SubmitWaitingRoomInfoError) => {
+      this.analytics.logError(`${action.errorDescription} (${AnalyticsScreenNames.WAITING_ROOM})`, action.errorMessage);
+      return of();
+    }),
+  );
+
+  @Effect()
+  submitWaitingRoomInfoErrorValidationEffect$ = this.actions$.pipe(
+    ofType(SUBMIT_WAITING_ROOM_INFO_VALIDATION_ERROR),
+    switchMap((action: SubmitWaitingRoomInfoValidationError) => {
+      this.analytics.logError(`${action.errorDescription} (${AnalyticsScreenNames.WAITING_ROOM})`, action.errorMessage);
       return of();
     }),
   );
