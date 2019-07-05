@@ -1,0 +1,41 @@
+<ion-card>
+  <ion-card-header>
+    <h4>Test details</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row class="mes-data-row-with-separator">
+        <ion-col col-40>
+          <label>Date</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.date }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator">
+        <ion-col col-40>
+          <label>Time</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.time }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator">
+        <ion-col col-40>
+          <label>Application reference</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.applicationReference }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row">
+        <ion-col col-40>
+          <label>Test Category</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.category }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
