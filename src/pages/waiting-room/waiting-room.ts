@@ -206,16 +206,12 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
           });
         })
         .catch((err) => {
-          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoError(
-            err,
-          ));
+          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoError(err));
         });
     } else {
-      Object.keys(this.getFormValidation()).forEach((controlName) => {
+      Object.keys(this.form.controls).forEach((controlName) => {
         if (this.isCtrlDirtyAndInvalid(controlName)) {
-          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoValidationError(
-            `${controlName} is invalid`,
-          ));
+          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is invalid`));
         }
       });
     }

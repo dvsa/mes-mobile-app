@@ -13,8 +13,8 @@ import {
   WaitingRoomViewDidEnter,
   SUBMIT_WAITING_ROOM_INFO_ERROR,
   SubmitWaitingRoomInfoError,
-  SUBMIT_WAITING_ROOM_INFO_VALIDATION_ERROR,
-  SubmitWaitingRoomInfoValidationError,
+  WAITING_ROOM_VALIDATION_ERROR,
+  WaitingRoomValidationError,
 } from '../../pages/waiting-room/waiting-room.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -75,8 +75,8 @@ export class WaitingRoomAnalyticsEffects {
 
   @Effect()
   submitWaitingRoomInfoErrorValidationEffect$ = this.actions$.pipe(
-    ofType(SUBMIT_WAITING_ROOM_INFO_VALIDATION_ERROR),
-    switchMap((action: SubmitWaitingRoomInfoValidationError) => {
+    ofType(WAITING_ROOM_VALIDATION_ERROR),
+    switchMap((action: WaitingRoomValidationError) => {
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,
         action.errorMessage);
       return of();
