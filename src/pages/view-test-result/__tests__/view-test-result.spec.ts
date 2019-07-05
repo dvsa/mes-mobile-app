@@ -5,6 +5,11 @@ import { AppModule } from '../../../app/app.module';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { ViewTestResultPage } from '../view-test-result';
+import { SearchProvider } from '../../../providers/search/search';
+import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
+import { MockComponent } from 'ng-mocks';
+import { TestDetailsComponent } from '../components/test-details/test-details';
+import { ExaminerDetailsComponent } from '../components/examiner-details/examiner-details';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -14,6 +19,8 @@ describe('ViewTestResultPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         ViewTestResultPage,
+        MockComponent(TestDetailsComponent),
+        MockComponent(ExaminerDetailsComponent),
       ],
       imports: [
         IonicModule,
@@ -24,6 +31,7 @@ describe('ViewTestResultPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: SearchProvider, useClass:  SearchProviderMock },
       ],
     })
       .compileComponents()
