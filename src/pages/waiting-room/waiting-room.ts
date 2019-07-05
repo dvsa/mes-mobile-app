@@ -33,7 +33,6 @@ import {
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { COMMUNICATION_PAGE, WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE } from '../page-names.constants';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -78,7 +77,6 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
-    public analytics: AnalyticsProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
