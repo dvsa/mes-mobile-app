@@ -28,6 +28,7 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { PopulateExaminer } from '../../../modules/tests/examiner/examiner.actions';
+import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 
 export class TestActions extends Actions {
   constructor() {
@@ -250,4 +251,17 @@ describe('Journal Effects', () => {
     });
   });
 
+  describe('activateTestEffect', () => {
+    it('should call theMarkAsRekey action', (done) => {
+      // ACT
+      actions$.next(new journalActions.ActivateTest(1234, true));
+      // ASSERT
+      effects.activateTestEffect$.subscribe((effect$) => {
+        effect$.subscribe((action) => {
+          expect(action instanceof rekeyActions.MarkAsRekey).toBe(true);
+          done();
+        });
+      });
+    });
+  });
 });

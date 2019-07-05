@@ -26,6 +26,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actions';
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { categoryReducer } from './category/category.reducer';
+import { rekeyReducer } from './rekey/rekey.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -112,6 +113,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             postTestDeclarations: postTestDeclarationsReducer,
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
+            rekey: rekeyReducer,
           }, combineReducers,
         )(
           // The redux pattern necessitates that the state tree be initialised
