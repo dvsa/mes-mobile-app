@@ -27,8 +27,8 @@ describe('Debrief Effects', () => {
             testStatus: {},
             startedTests: {
               [currentSlotId]: {
-                activityCode: ActivityCodes.PASS
-              }
+                activityCode: ActivityCodes.PASS,
+              },
             },
           }),
         }),
