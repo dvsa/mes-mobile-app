@@ -29,7 +29,11 @@ export class OfficeAnalyticsEffects {
   officeViewDidEnter$ = this.actions$.pipe(
     ofType(OFFICE_VIEW_DID_ENTER),
     switchMap((action: OfficeViewDidEnter) => {
-      this.analytics.setCurrentPage(AnalyticsScreenNames.OFFICE);
+      if (action.isPassed) {
+        this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_TEST_SUMMARY);
+      } else {
+        this.analytics.setCurrentPage(AnalyticsScreenNames.FAIL_TEST_SUMMARY);
+      }
       return of();
     }),
   );

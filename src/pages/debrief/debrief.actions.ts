@@ -5,6 +5,7 @@ export const END_DEBRIEF = '[DebriefPage] End Debrief';
 
 export class DebriefViewDidEnter implements Action {
   readonly type = DEBRIEF_VIEW_DID_ENTER;
+  constructor(public isPassed: boolean) {}
 }
 
 export class EndDebrief implements Action {

@@ -113,6 +113,8 @@ import { ActivityCodeModel, activityCodeModelList } from './components/activity-
 import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -175,6 +177,9 @@ export class OfficePage extends PracticeableBasePageComponent {
   weatherConditions: WeatherConditionSelection[];
   showMeQuestions: ShowMeQuestion[];
   activityCodeOptions: ActivityCodeModel[];
+  isPassed: boolean;
+
+  subscription: Subscription;
 
   constructor(
     store$: Store<StoreModel>,
@@ -198,7 +203,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.store$.dispatch(new OfficeViewDidEnter());
+    this.store$.dispatch(new OfficeViewDidEnter(this.isPassed));
   }
 
   ngOnInit(): void {
@@ -530,6 +535,20 @@ export class OfficePage extends PracticeableBasePageComponent {
         select(isWelshTest),
       ),
     };
+
+    const { isPassed$ } = this.pageState;
+
+    const merged$ = merge(
+      isPassed$.pipe(map(isPassed => this.isPassed = isPassed)),
+    );
+
+    this.subscription = merged$.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   popToRoot() {

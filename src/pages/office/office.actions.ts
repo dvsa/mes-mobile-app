@@ -5,6 +5,7 @@ export const COMPLETE_TEST = '[OfficePage] Complete Test';
 
 export class OfficeViewDidEnter implements Action {
   readonly type = OFFICE_VIEW_DID_ENTER;
+  constructor(public isPassed: boolean) {}
 }
 
 export class CompleteTest implements Action {

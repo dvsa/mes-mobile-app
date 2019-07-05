@@ -30,7 +30,11 @@ export class DebriefAnalyticsEffects {
   debriefViewDidEnter$ = this.actions$.pipe(
     ofType(DEBRIEF_VIEW_DID_ENTER),
     switchMap((action: DebriefViewDidEnter) => {
-      this.analytics.setCurrentPage(AnalyticsScreenNames.DEBRIEF);
+      if (action.isPassed) {
+        this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_DEBRIEF);
+      } else {
+        this.analytics.setCurrentPage(AnalyticsScreenNames.FAIL_DEBRIEF);
+      }
       return of();
     }),
   );

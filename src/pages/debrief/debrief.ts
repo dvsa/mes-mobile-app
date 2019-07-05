@@ -3,7 +3,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData, isPassed } from '../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -55,6 +55,8 @@ interface DebriefPageState {
   testResult$: Observable<string>;
   welshTest$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
+
+  isPassed$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -71,6 +73,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   subscription: Subscription;
   conductedLanguage: string;
   isBookedInWelsh: boolean;
+  isPassed: boolean;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
@@ -177,9 +180,12 @@ export class DebriefPage extends PracticeableBasePageComponent {
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
+      isPassed$: currentTest$.pipe(
+        select(isPassed),
+      ),
     };
 
-    const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
+    const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$, isPassed$ } = this.pageState;
 
     const merged$ = merge(
       testResult$.pipe(map(result => this.outcome = result)),
@@ -197,6 +203,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
         }),
       ),
       conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
+      isPassed$.pipe(map(isPassed => this.isPassed = isPassed)),
     );
     this.configureI18N(this.conductedLanguage === DebriefPage.welshLanguage);
     this.subscription = merged$.subscribe();
@@ -216,7 +223,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.store$.dispatch(new DebriefViewDidEnter());
+    this.store$.dispatch(new DebriefViewDidEnter(this.isPassed));
   }
 
   ionViewDidLeave(): void {
