@@ -103,9 +103,6 @@ export class TestOutcomeComponent {
 
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
-      case ModalEvent.CANCEL:
-        this.modal.dismiss();
-        break;
       case ModalEvent.START:
         this.startOrResumeTestDependingOnStatus();
         break;
