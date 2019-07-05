@@ -71,8 +71,8 @@ describe('Debrief Effects', () => {
         }
         if (result instanceof testsActions.PersistTests) {
           expect(result).toEqual(new testsActions.PersistTests());
+          done();
         }
-        done();
       });
     });
 
