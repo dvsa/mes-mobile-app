@@ -207,7 +207,6 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
         })
         .catch((err) => {
           this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoError(
-            'Error submitting Waiting Room Info',
             err,
           ));
         });
@@ -215,7 +214,6 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
       Object.keys(this.getFormValidation()).forEach((controlName) => {
         if (this.isCtrlDirtyAndInvalid(controlName)) {
           this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoValidationError(
-            `Validation error`,
             `${controlName} is invalid`,
           ));
         }

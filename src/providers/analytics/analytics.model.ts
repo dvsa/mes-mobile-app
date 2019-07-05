@@ -65,3 +65,8 @@ export enum JournalRefreshModes {
     MANUAL = 'MANUAL',
     AUTOMATIC = 'AUTOMATIC',
   }
+
+export enum AnalyticsErrorTypes {
+    SUBMIT_FORM_ERROR = 'submit form error',
+    VALIDATION_ERROR = 'validation error',
+  }

@@ -15,12 +15,12 @@ export class SubmitWaitingRoomInfo implements Action {
 
 export class SubmitWaitingRoomInfoError implements Action {
   readonly type = SUBMIT_WAITING_ROOM_INFO_ERROR;
-  constructor(public errorDescription: string, public errorMessage: string) { }
+  constructor(public errorMessage: string) { }
 }
 
 export class SubmitWaitingRoomInfoValidationError implements Action {
   readonly type = SUBMIT_WAITING_ROOM_INFO_VALIDATION_ERROR;
-  constructor(public errorDescription: string, public errorMessage: string) { }
+  constructor(public errorMessage: string) { }
 }
 
 export type Types =

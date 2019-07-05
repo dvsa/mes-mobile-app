@@ -3,7 +3,11 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { AnalyticsScreenNames, AnalyticsDimensionIndices } from '../../providers/analytics/analytics.model';
+import {
+  AnalyticsScreenNames,
+  AnalyticsDimensionIndices,
+  AnalyticsErrorTypes,
+} from '../../providers/analytics/analytics.model';
 import {
   WAITING_ROOM_VIEW_DID_ENTER,
   WaitingRoomViewDidEnter,
@@ -63,7 +67,8 @@ export class WaitingRoomAnalyticsEffects {
   submitWaitingRoomInfoErrorEffect$ = this.actions$.pipe(
     ofType(SUBMIT_WAITING_ROOM_INFO_ERROR),
     switchMap((action: SubmitWaitingRoomInfoError) => {
-      this.analytics.logError(`${action.errorDescription} (${AnalyticsScreenNames.WAITING_ROOM})`, action.errorMessage);
+      this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,
+        action.errorMessage);
       return of();
     }),
   );
@@ -72,7 +77,8 @@ export class WaitingRoomAnalyticsEffects {
   submitWaitingRoomInfoErrorValidationEffect$ = this.actions$.pipe(
     ofType(SUBMIT_WAITING_ROOM_INFO_VALIDATION_ERROR),
     switchMap((action: SubmitWaitingRoomInfoValidationError) => {
-      this.analytics.logError(`${action.errorDescription} (${AnalyticsScreenNames.WAITING_ROOM})`, action.errorMessage);
+      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,
+        action.errorMessage);
       return of();
     }),
   );
