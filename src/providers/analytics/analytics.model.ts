@@ -57,8 +57,8 @@ export enum AnalyticsDimensionIndices {
     JOURNAL_DAYS_FROM_TODAY = 2,
     CANDIDATE_WITH_SPECIAL_NEEDS = 3,
     CANDIDATE_WITH_CHECK = 4,
-    CANDIDATE_ID= 5,
-    TEST_ID= 6,
+    CANDIDATE_ID = 5,
+    TEST_ID = 6,
   }
 
 export enum JournalRefreshModes {

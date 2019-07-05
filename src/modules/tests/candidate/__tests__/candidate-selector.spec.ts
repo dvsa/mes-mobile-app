@@ -4,6 +4,7 @@ import {
   formatDriverNumber,
   getUntitledCandidateName,
   getPostalAddress,
+  getCandidateId,
 } from '../candidate.selector';
 import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 
@@ -23,6 +24,7 @@ describe('candidate selector', () => {
       addressLine5: 'United Kingdom',
       postcode: 'NG1 6HY',
     },
+    candidateId: 1001,
   };
   describe('getCandidateName', () => {
     it('should produce first and last name with a title prefix', () => {
@@ -54,6 +56,12 @@ describe('candidate selector', () => {
   describe('getPostalAddress', () => {
     it('should output the address', () => {
       expect(getPostalAddress(candidate)).toEqual(candidate.candidateAddress);
+    });
+  });
+
+  describe('getCandidateId', () => {
+    it('should output the candidate ID', () => {
+      expect(getCandidateId(candidate)).toEqual(1001);
     });
   });
 });
