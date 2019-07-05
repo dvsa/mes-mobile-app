@@ -22,3 +22,5 @@ export const formatDriverNumber = (driverNumber: string) => {
 export const getCandidateEmailAddress = (candidate: Candidate) => candidate.emailAddress ? candidate.emailAddress : '';
 
 export const getPostalAddress = (candidate: Candidate) => candidate.candidateAddress;
+
+export const getCandidateId = (candidate: Candidate) => candidate.candidateId;
