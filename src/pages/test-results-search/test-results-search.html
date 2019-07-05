@@ -1,7 +1,7 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>Search tests</ion-title>
+    <ion-title>Search submitted test</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -37,19 +37,25 @@
         </ion-row>
         <ion-row>
           <ion-col col-96>
-            <input
-              placeholder="Enter a driver number or application reference"
-              type="text"
-              id="candidate-info-input"
-              class="candidate-info candidate-info-input"
-              [class.ng-invalid]="invalid"
-              [value]="candidateInfo"
-              (change)="candidateInfoChanged($event.target.value)">
+            <ion-item no-padding no-lines>
+              <ion-input
+                placeholder="Enter a driver number or application reference"
+                type="text"
+                id="candidate-info-input"
+                class="candidate-info candidate-info-input"
+                clearInput
+                [class.ng-invalid]="invalid"
+                [value]="candidateInfo"
+                (change)="candidateInfoChanged($event.target.value)"></ion-input>
+            </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <button [attr.disabled]="showSearchSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
-            <h3 class="search-tests-text">Search tests</h3>
+            <h3 class="search-tests-text">
+              <ion-icon name="search" class="search-icon"></ion-icon>
+              Search
+            </h3>
           </button>
           <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSearchSpinner"></ion-spinner>
         </ion-row>
@@ -62,7 +68,7 @@
 
   <div class='results-error'>
     <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
-      There were no results found
+      There were no results found for your search.
     </p>
     <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
       Please check and try again.
@@ -70,7 +76,7 @@
   </div>
 
   <p *ngIf="searchResults.length > 0" class="results-message">
-    Displaying {{searchResults.length}} results found
+    Displaying <span>{{searchResults.length}}</span> results
   </p>
   <search-result *ngFor="let result of searchResults" [searchResult]=result></search-result>
 

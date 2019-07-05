@@ -75,6 +75,7 @@ describe('testsReducer', () => {
           category: '',
           journalData: null,
           activityCode: null,
+          rekey: false,
         },
         [testReportPracticeSlotId]: {
           testData: {
@@ -100,6 +101,7 @@ describe('testsReducer', () => {
           category: '',
           journalData: null,
           activityCode: null,
+          rekey: false,
         },
       },
       testStatus: {},

@@ -38,10 +38,10 @@ describe('Slot Selector', () => {
     expect(response[0].component).toBe(ActivitySlotComponent);
   };
 
-  const singleSlotItemWithVehicleSlotType = (code):SlotItem[] => {
+  const singleSlotItemWithVehicleTypeCode = (vehicleTypeCode: string): SlotItem[] => {
     const slot: TestSlot = {
-      vehicleSlotType: code,
-      booking:  {
+      vehicleTypeCode,
+      booking: {
         application: {
           applicationId: 1234567,
         },
@@ -54,7 +54,7 @@ describe('Slot Selector', () => {
   };
 
   const expectTestSlotComponentResolvedForVehicleSlotType = (code) => {
-    const journalSlots = singleSlotItemWithVehicleSlotType(code);
+    const journalSlots = singleSlotItemWithVehicleTypeCode(code);
     const response = slotSelector.getSlotTypes(journalSlots);
 
     expect(response.length).toBe(1);
@@ -121,13 +121,13 @@ describe('Slot Selector', () => {
   });
   describe('isTestSlot', () => {
     it('should return true if test slot', () => {
-      const slotItem = singleSlotItemWithVehicleSlotType(1)[0];
+      const slotItem = singleSlotItemWithVehicleTypeCode('C')[0];
       const { slotData } = slotItem;
       const slot: Slot = {
         booking: (<TestSlot>slotData).booking,
         slotDetail: slotItem.slotData.slotDetail,
         testCentre: slotItem.slotData.testCentre,
-        vehicleSlotType: (<TestSlot>slotData).vehicleSlotType,
+        vehicleTypeCode: (<TestSlot>slotData).vehicleTypeCode,
         activityCode: slotItem.activityCode,
       };
 

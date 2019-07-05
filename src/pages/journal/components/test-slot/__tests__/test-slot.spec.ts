@@ -308,7 +308,7 @@ describe('TestSlotComponent', () => {
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
 
-        expect(subByDirective.slotId).toEqual(mockSlot.slotDetail.slotId);
+        expect(subByDirective.slotDetail.slotId).toEqual(mockSlot.slotDetail.slotId);
         expect(subByDirective.canStartTest).toEqual(true);
         expect(subByDirective.testStatus).toBe(TestStatus.Booked);
       });

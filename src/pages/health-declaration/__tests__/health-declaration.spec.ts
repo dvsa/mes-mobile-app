@@ -48,7 +48,7 @@ describe('HealthDeclarationPage', () => {
     slotId: 123,
     specialNeeds: false,
     start: '',
-    vehicleSlotType: '',
+    vehicleTypeCode: '',
   };
 
   beforeEach(async(() => {

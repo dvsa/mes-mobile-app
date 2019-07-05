@@ -77,7 +77,7 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
   exitPracticeMode = (): void => {
     // As per bug request for Ionic 3 we need to get and pass in the view controller
     // for the page we want to get back to - https://github.com/ionic-team/ionic/issues/13672
-    this.navController.popTo(this.navController.getViews().find(view => view.name === FakeJournalPage.name));
+    this.navController.popTo(this.navController.getViews().find(view => view.id === FakeJournalPage.name));
   }
 
 }

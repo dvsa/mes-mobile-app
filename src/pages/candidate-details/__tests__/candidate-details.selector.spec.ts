@@ -101,7 +101,7 @@ describe('Candidate Details Selector', () => {
             {
               hasSlotChanged: false,
               slotData: {
-                vehicleSlotType: 'B57mins',
+                vehicleTypeCode: 'C',
               },
             },
           ],
@@ -114,7 +114,7 @@ describe('Candidate Details Selector', () => {
 
       expect(result).toEqual([
         {
-          vehicleSlotType: 'B57mins',
+          vehicleTypeCode: 'C',
         },
       ]);
     });

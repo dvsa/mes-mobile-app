@@ -9,6 +9,7 @@ import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 import { COMMUNICATION_PAGE, OFFICE_PAGE, PASS_FINALISATION_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
+import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 
 @Component({
   selector: 'test-outcome',
@@ -17,7 +18,7 @@ import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.consta
 export class TestOutcomeComponent {
 
   @Input()
-  slotId: number;
+  slotDetail: any;
 
   @Input()
   canStartTest: boolean;
@@ -25,9 +26,9 @@ export class TestOutcomeComponent {
   @Input()
   testStatus: TestStatus;
 
-  canSubmitTest: boolean = false;
   outcome: string;
   modal: Modal;
+  isRekey: boolean = false;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -39,35 +40,34 @@ export class TestOutcomeComponent {
     return this.outcome !== undefined || this.outcome != null;
   }
 
+  showRekeyButton(): boolean {
+    return this.isTestIncomplete() && this.isDateInPast();
+  }
+
   showStartTestButton(): boolean {
     return this.testStatus === TestStatus.Booked;
   }
 
-  showSubmitTestButton(): boolean {
-    return this.canSubmitTest;
+  showResumeTestButton(): boolean {
+    return this.testStatus === TestStatus.Started;
   }
 
-  startTest() {
-    if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
-      this.store$.dispatch(new StartE2EPracticeTest(this.slotId.toString()));
-    } else {
-      this.store$.dispatch(new StartTest(this.slotId));
-    }
-    this.navController.push(COMMUNICATION_PAGE);
+  showWriteUpButton(): boolean {
+    return this.testStatus === TestStatus.Decided;
   }
 
   writeUpTest() {
-    this.store$.dispatch(new ActivateTest(this.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
     this.navController.push(OFFICE_PAGE);
   }
 
   debriefTest() {
-    this.store$.dispatch(new ActivateTest(this.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
     this.navController.push(PASS_FINALISATION_PAGE);
   }
 
   resumeTest() {
-    this.store$.dispatch(new ActivateTest(this.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
     this.navController.push(COMMUNICATION_PAGE);
   }
 
@@ -79,13 +79,25 @@ export class TestOutcomeComponent {
     return this.testStatus === TestStatus.WriteUp;
   }
 
-  showResumeTestButton(): boolean {
-    return this.testStatus === TestStatus.Started;
+  startTest() {
+    if (this.isE2EPracticeMode() && this.testStatus === TestStatus.Booked) {
+      this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
+    } else {
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.isRekey));
+    }
+    this.navController.push(COMMUNICATION_PAGE);
   }
 
-  showRekeyModal = (): void => {
+  rekeyTest() {
+    this.isRekey = true;
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
+    this.startOrResumeTestDependingOnStatus();
+  }
+
+  displayRekeyModal = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create('JournalRekeyModal', {}, options);
+    this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
   }
 
@@ -95,11 +107,53 @@ export class TestOutcomeComponent {
         this.modal.dismiss();
         break;
       case ModalEvent.START:
-        // todo: Logic to be impliment later
+        this.startOrResumeTestDependingOnStatus();
         break;
       case ModalEvent.REKEY:
-        // todo: Logic to be impliment later
+        this.isRekey = true;
+        this.startOrResumeTestDependingOnStatus();
         break;
+    }
+  }
+
+  shouldDisplayRekeyModal(): boolean {
+    return this.isTestIncomplete() && this.isTodaysDate() && this.hasTestTimeFinished();
+  }
+
+  clickStartOrResumeTest() {
+    if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
+      this.displayRekeyModal();
+    } else {
+      this.startOrResumeTestDependingOnStatus();
+    }
+  }
+
+  isE2EPracticeMode(): boolean {
+    return startsWith(this.slotDetail.slotId.toString(), end2endPracticeSlotId);
+  }
+
+  isDateInPast() {
+    return new DateTime().daysDiff(this.slotDetail.start) < 0;
+  }
+
+  isTodaysDate() {
+    return new DateTime().daysDiff(this.slotDetail.start) === 0;
+  }
+
+  isTestIncomplete(): boolean {
+    return [TestStatus.Booked, TestStatus.Started, TestStatus.Decided].includes(this.testStatus);
+  }
+
+  hasTestTimeFinished(): boolean {
+    const cutOffTime = new DateTime(this.slotDetail.start).add(this.slotDetail.duration, Duration.MINUTE);
+    return new DateTime() > cutOffTime;
+  }
+
+  startOrResumeTestDependingOnStatus() {
+    if (this.testStatus === TestStatus.Booked) {
+      this.startTest();
+    } else if (this.testStatus === TestStatus.Started) {
+      this.resumeTest();
     }
   }
 }

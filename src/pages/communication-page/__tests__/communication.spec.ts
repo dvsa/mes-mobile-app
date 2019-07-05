@@ -61,7 +61,7 @@ describe('CommunicationPage', () => {
     slotId: 123,
     specialNeeds: false,
     start: '',
-    vehicleSlotType: '',
+    vehicleTypeCode: '',
   };
 
   beforeEach(async(() => {

@@ -19,7 +19,7 @@ const localNonTestActivities = {
         start: `${today}T09:00:00`,
         duration: 57,
       },
-      vehicleSlotType: 'B57mins',
+      vehicleTypeCode: 'C',
       testCentre: {
         centreId: 54321,
         centreName: 'Example Test Centre',
@@ -32,7 +32,7 @@ const localNonTestActivities = {
         start: `${today}T10:15:00`,
         duration: 57,
       },
-      vehicleSlotType: 'B57mins',
+      vehicleTypeCode: 'C',
       testCentre: {
         centreId: 54321,
         centreName: 'Example Test Centre',
@@ -171,7 +171,7 @@ const localNonTestActivities = {
         centreName: 'Example Test Centre 3',
         costCode: 'EXTC 3',
       },
-      vehicleSlotType: 'Voc90mins',
+      vehicleTypeCode: 'L',
     },
     {
       slotDetail: {
@@ -184,7 +184,7 @@ const localNonTestActivities = {
         centreName: 'Example Test Centre 3',
         costCode: 'EXTC 3',
       },
-      vehicleSlotType: 'Voc90mins',
+      vehicleTypeCode: 'L',
     },
     {
       slotDetail: {
@@ -197,7 +197,7 @@ const localNonTestActivities = {
         centreName: 'Example Test Centre 3',
         costCode: 'EXTC 3',
       },
-      vehicleSlotType: 'Voc90mins',
+      vehicleTypeCode: 'L',
     },
   ],
   deployments: [
