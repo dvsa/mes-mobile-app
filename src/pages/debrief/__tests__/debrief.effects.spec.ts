@@ -6,6 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as debriefActions from '../debrief.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 
 describe('Debrief Effects', () => {
 
@@ -24,7 +25,11 @@ describe('Debrief Effects', () => {
               slotId: currentSlotId,
             },
             testStatus: {},
-            startedTests: {},
+            startedTests: {
+              [currentSlotId]: {
+                activityCode: ActivityCodes.PASS,
+              },
+            },
           }),
         }),
       ],
@@ -39,7 +44,9 @@ describe('Debrief Effects', () => {
 
   describe('endDebriefEffect', () => {
 
-    it('should return SET_STATUS_DECIDED & PERSIST_TESTS actions', (done) => {
+    it('should return SET_TEST_STATUS_DECIDED & PERSIST_TESTS actions when passed test', (done) => {
+      // Set activity code as passed
+      actions$.next(new testsActions.SetActivityCode('1'));
       actions$.next(new debriefActions.EndDebrief());
 
       effects.endDebriefEffect$.subscribe((result) => {
@@ -50,6 +57,22 @@ describe('Debrief Effects', () => {
           expect(result).toEqual(new testsActions.PersistTests());
         }
         done();
+      });
+    });
+
+    it('should return SET_TEST_STATUS_WRITE_UP & PERSIST_TESTS actions when failed test', (done) => {
+      // Set activity code as failed
+      actions$.next(new testsActions.SetActivityCode('2'));
+      actions$.next(new debriefActions.EndDebrief());
+
+      effects.endDebriefEffect$.subscribe((result) => {
+        if (result instanceof testStatusActions.SetTestStatusWriteUp) {
+          expect(result).toEqual(new testStatusActions.SetTestStatusWriteUp(currentSlotId));
+        }
+        if (result instanceof testsActions.PersistTests) {
+          expect(result).toEqual(new testsActions.PersistTests());
+          done();
+        }
       });
     });
 

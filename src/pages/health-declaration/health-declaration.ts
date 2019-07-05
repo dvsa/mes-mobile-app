@@ -5,7 +5,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { HealthDeclarationViewDidEnter } from './health-declaration.actions';
+import { HealthDeclarationViewDidEnter, ContinueFromDeclaration } from './health-declaration.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
@@ -29,7 +29,6 @@ import {
   isProvisionalLicenseProvided,
 } from '../../modules/tests/pass-completion/pass-completion.selector';
 import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
@@ -278,7 +277,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         if (this.licenseProvided && resetLicenseProvided) {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
-        this.store$.dispatch(new PersistTests());
+        this.store$.dispatch(new ContinueFromDeclaration());
         this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
           this.navController.getViews().forEach((view) => {
             if (includes([TEST_REPORT_PAGE, DEBRIEF_PAGE, PASS_FINALISATION_PAGE, HEALTH_DECLARATION_PAGE],

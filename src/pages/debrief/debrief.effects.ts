@@ -8,7 +8,8 @@ import * as testsActions from '../../modules/tests/tests.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
+import { getCurrentTestSlotId, getCurrentTest, getTestOutcomeText } from '../../modules/tests/tests.selector';
+import { TestOutcome } from '../../modules/tests/tests.constants';
 
 @Injectable()
 export class DebriefEffects {
@@ -25,10 +26,19 @@ export class DebriefEffects {
         select(getTests),
         select(getCurrentTestSlotId),
       ),
+      this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestOutcomeText),
+      ),
     ),
-    switchMap(([action, slotId]) => {
+    switchMap(([action, slotId, testOutcome]) => {
+      // Passed test flow goes through additional pages before write up
+      const testStatusAction = testOutcome === TestOutcome.Passed ?
+        new testStatusActions.SetTestStatusDecided(slotId)
+        : new testStatusActions.SetTestStatusWriteUp(slotId);
       return [
-        new testStatusActions.SetTestStatusDecided(slotId),
+        testStatusAction,
         new testsActions.PersistTests(),
       ];
     }),

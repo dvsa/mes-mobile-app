@@ -14,6 +14,13 @@
         </span>
       </ion-col>
       <ng-template #nonRekey>
+        <ion-col *ngIf="needsDebrief()">
+          <span>
+            <button class="mes-secondary-button mes-warning-button" ion-button (click)="debriefTest()">
+              <h3 class="write-up-label">Resume</h3>
+            </button>
+          </span>
+        </ion-col>
         <ion-col *ngIf="showStartTestButton()">
           <span>
             <button class="mes-primary-button" ion-button (click)="clickStartOrResumeTest()" [disabled]="!canStartTest">

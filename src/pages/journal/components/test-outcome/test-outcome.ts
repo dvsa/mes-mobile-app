@@ -7,7 +7,7 @@ import { TestStatus } from '../../../../modules/tests/test-status/test-status.mo
 import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions';
 import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
-import { COMMUNICATION_PAGE, OFFICE_PAGE } from '../../../page-names.constants';
+import { COMMUNICATION_PAGE, OFFICE_PAGE, PASS_FINALISATION_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 
@@ -53,7 +53,7 @@ export class TestOutcomeComponent {
   }
 
   showWriteUpButton(): boolean {
-    return this.testStatus === TestStatus.Decided;
+    return this.testStatus === TestStatus.WriteUp;
   }
 
   writeUpTest() {
@@ -61,9 +61,22 @@ export class TestOutcomeComponent {
     this.navController.push(OFFICE_PAGE);
   }
 
+  debriefTest() {
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
+    this.navController.push(PASS_FINALISATION_PAGE);
+  }
+
   resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
     this.navController.push(COMMUNICATION_PAGE);
+  }
+
+  needsDebrief(): boolean {
+    return this.testStatus === TestStatus.Decided;
+  }
+
+  needsWriteUp(): boolean {
+    return this.testStatus === TestStatus.WriteUp;
   }
 
   startTest() {

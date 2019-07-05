@@ -256,11 +256,9 @@ describe('Journal Effects', () => {
       // ACT
       actions$.next(new journalActions.ActivateTest(1234, true));
       // ASSERT
-      effects.activateTestEffect$.subscribe((effect$) => {
-        effect$.subscribe((action) => {
-          expect(action instanceof rekeyActions.MarkAsRekey).toBe(true);
-          done();
-        });
+      effects.activateTestEffect$.subscribe((action) => {
+        expect(action instanceof rekeyActions.MarkAsRekey).toBe(true);
+        done();
       });
     });
   });
