@@ -274,7 +274,10 @@ export class JournalEffects {
     ofType(journalActions.ACTIVATE_TEST),
     filter((action: journalActions.ActivateTest) => action.rekey),
     map((action) => {
-      return new MarkAsRekey();
+      const activateTestAction = action as journalActions.ActivateTest;
+      if (activateTestAction.rekey) {
+        return new MarkAsRekey();
+      }
     }),
   );
 }
