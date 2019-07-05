@@ -137,7 +137,8 @@ describe('Test Outcome', () => {
     });
 
     describe('debrief a test', () => {
-      it('should call the debriefTest method when `Debrief` is clicked', () => {
+      it('should call the debriefTest method when `Resume` is clicked', () => {
+        component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Decided;
         fixture.detectChanges();
         spyOn(component, 'debriefTest');

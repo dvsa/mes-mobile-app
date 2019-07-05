@@ -53,7 +53,7 @@ export class TestOutcomeComponent {
   }
 
   showWriteUpButton(): boolean {
-    return this.testStatus === TestStatus.Decided;
+    return this.testStatus === TestStatus.WriteUp;
   }
 
   writeUpTest() {
