@@ -12,6 +12,8 @@ import { TestDetailsComponent } from '../components/test-details/test-details';
 import { ExaminerDetailsComponent } from '../components/examiner-details/examiner-details';
 import { categoryBTestResultMock } from '../__mocks__/cat-b-test-result.mock';
 import { By } from '@angular/platform-browser';
+import { ExaminerDetailsModel } from '../components/examiner-details/examiner-details.model';
+import { TestDetailsModel } from '../components/test-details/test-details.model';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -63,48 +65,34 @@ describe('ViewTestResultPage', () => {
         expect(component.loadingSpinner).toBeNull();
       });
     });
-    describe('generateData', () => {
-      it('should not do anything if test data is not set', () => {
-        component.generateTestDetails = jasmine.createSpy('generateTestDetails');
-        component.generateExaminerDetails = jasmine.createSpy('generateExaminerDetails');
-
-        component.generateData();
-
-        expect(component.generateTestDetails).not.toHaveBeenCalled();
-        expect(component.generateExaminerDetails).not.toHaveBeenCalled();
-      });
-      it('should call the correct functions to generate required data', () => {
-        component.testResult = categoryBTestResultMock;
-        component.generateTestDetails = jasmine.createSpy('generateTestDetails');
-        component.generateExaminerDetails = jasmine.createSpy('generateExaminerDetails');
-
-        component.generateData();
-
-        expect(component.generateTestDetails).toHaveBeenCalledTimes(1);
-        expect(component.generateExaminerDetails).toHaveBeenCalledTimes(1);
-
-      });
-    });
-    describe('generateTestDetails', () => {
+    describe('getTestDetails', () => {
       it('should correctly generate the data', () => {
         component.testResult = categoryBTestResultMock;
 
-        component.generateTestDetails();
+        const result: TestDetailsModel = component.getTestDetails();
 
-        expect(component.testDetails.applicationReference).toBe('123');
-        expect(component.testDetails.category).toBe('B');
-        expect(component.testDetails.date).toBe('Friday 5th July 2019');
-        expect(component.testDetails.time).toBe('09:00');
+        expect(result.applicationReference).toBe('123');
+        expect(result.category).toBe('B');
+        expect(result.date).toBe('Friday 5th July 2019');
+        expect(result.time).toBe('09:00');
+      });
+      it('should return null when there is no test result', () => {
+        const result: TestDetailsModel = component.getTestDetails();
+        expect(result).toBeNull();
       });
     });
-    describe('generateExaminerDetails', () => {
+    describe('getExaminerDetails', () => {
       it('should correctly generate the data', () => {
         component.testResult = categoryBTestResultMock;
 
-        component.generateExaminerDetails();
+        const result: ExaminerDetailsModel = component.getExaminerDetails();
 
-        expect(component.examinerDetails.staffNumber).toBe('mock-staff-number');
-        expect(component.examinerDetails.costCode).toBe('mock-cost-code');
+        expect(result.staffNumber).toBe('mock-staff-number');
+        expect(result.costCode).toBe('mock-cost-code');
+      });
+      it('should return null when there is no test result', () => {
+        const result: ExaminerDetailsModel = component.getExaminerDetails();
+        expect(result).toBeNull();
       });
     });
 
@@ -114,7 +102,6 @@ describe('ViewTestResultPage', () => {
     it('should hide the cards when the data is loading', () => {
       component.isLoading = true;
 
-      // fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('test-details'))).toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details'))).toBeNull();
     });

@@ -3,6 +3,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   category: 'B',
   activityCode: '2',
+  rekey: false,
   journalData: {
     applicationReference: {
       applicationId: 1,
@@ -27,7 +28,7 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
       specialNeeds: false,
       welshTest: false,
       examinerVisiting: false,
-      vehicleSlotType: 'mock-vehicle-slot-type',
+      vehicleTypeCode: 'mock-vehicle-type-code',
     },
   },
 };

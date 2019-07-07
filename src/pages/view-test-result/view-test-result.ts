@@ -22,8 +22,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
   applicationReference: string = '';
 
   testResult: StandardCarTestCATBSchema;
-  testDetails: TestDetailsModel;
-  examinerDetails: ExaminerDetailsModel;
 
   isLoading: boolean;
   loadingSpinner: Loading;
@@ -53,7 +51,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
           const buffer = Buffer.from(data, 'base64');
           const decompressedData = inflateSync(buffer).toString();
           this.testResult = JSON.parse(decompressedData) as StandardCarTestCATBSchema;
-          this.generateData();
           this.handleLoadingUI(false);
         }),
         catchError((error) => {
@@ -86,17 +83,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     }
   }
 
-  generateData(): void {
+  getTestDetails() : TestDetailsModel {
     if (!this.testResult) {
-      return;
+      return null;
     }
-
-    this.generateTestDetails();
-    this.generateExaminerDetails();
-
-  }
-
-  generateTestDetails() : void {
 
     const applicationReference: ApplicationReference =  this.testResult.journalData.applicationReference;
     const applicationReferenceString: string =
@@ -104,7 +94,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
 
     const startDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
 
-    this.testDetails = {
+    return {
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: applicationReferenceString,
@@ -112,11 +102,14 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     };
   }
 
-  generateExaminerDetails(): void {
-    this.examinerDetails = {
+  getExaminerDetails(): ExaminerDetailsModel {
+    if (!this.testResult) {
+      return null;
+    }
+
+    return {
       staffNumber: this.testResult.journalData.examiner.staffNumber,
       costCode: this.testResult.journalData.testCentre.costCode,
     };
   }
-
 }
