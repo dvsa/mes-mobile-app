@@ -12,7 +12,7 @@
 
 <ion-content padding>
   <div *ngIf="isLoading === false">
-      <test-details [data]="testDetails"></test-details>
-      <examiner-details [data]='examinerDetails'></examiner-details>
+      <test-details [data]="getTestDetails()"></test-details>
+      <examiner-details [data]='getExaminerDetails()'></examiner-details>
   </div>
 </ion-content>
