@@ -14,6 +14,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
   CompleteTest,
+  SavingWriteUpForLater,
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
@@ -542,7 +543,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   defer() {
     this.popToRoot();
-    // this.store$.dispatch(new DeferWriteup());
+    this.store$.dispatch(new SavingWriteUpForLater());
     this.store$.dispatch(new PersistTests());
   }
 

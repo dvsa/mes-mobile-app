@@ -40,6 +40,7 @@ export enum AnalyticsEventCategories {
     JOURNAL = 'journal',
     AUTHENTICATION = 'authentication',
     BACK_TO_OFFICE = 'back to office',
+    POST_TEST = 'post-test',
   }
 
 export enum AnalyticsEvents {
@@ -52,6 +53,7 @@ export enum AnalyticsEvents {
     REFRESH_JOURNAL = 'refresh journal',
     LOGIN = 'login',
     DEFER_WRITE_UP = 'defer write-up',
+    SAVE_WRITE_UP = 'save write-up',
   }
 
 export enum AnalyticsDimensionIndices {
