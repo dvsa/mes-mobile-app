@@ -306,21 +306,6 @@ export const enterPasscode = () => {
 };
 
 /**
- * Alternative way to enter text where the field element does not allow direct text entry.
- * Works by setting focus on the field and then sending browser actions rather than element actions.
- * @param field the field to enter the text into
- * @param text  the text you wish to enter into the field
- */
-export const enterTextIndirect = (field, text) => {
-  // Wait for field to be present
-  browser.wait(ExpectedConditions.presenceOf(field));
-  // Set focus on the field
-  field.click();
-  // Enter the text using browser actions rather than field send keys
-  browser.actions().sendKeys(text).perform();
-};
-
-/**
  * Output the page source to a file - For debug purposes only
  * @param fileName the name of the file to output to
  */
