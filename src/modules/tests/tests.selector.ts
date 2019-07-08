@@ -1,5 +1,5 @@
 import { TestStatus } from './test-status/test-status.model';
-import { StandardCarTestCATBSchema, JournalData } from '@dvsa/mes-test-schema/categories/B';
+import { StandardCarTestCATBSchema, JournalData, ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from './tests.model';
 import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
@@ -67,4 +67,10 @@ export const isEndToEndPracticeTest = (tests: TestsModel) : boolean =>
 
 export const getAllTestStatuses = (test: TestsModel): { [slotId: string]: TestStatus; } => {
   return test.testStatus;
+};
+
+export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): ActivityCode => {
+  if (testsModel && testsModel.startedTests && testsModel.startedTests[id]) {
+    return testsModel.startedTests[id].activityCode;
+  }
 };

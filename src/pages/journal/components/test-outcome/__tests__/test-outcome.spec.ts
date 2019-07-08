@@ -12,6 +12,7 @@ import { TestStatus } from '../../../../../modules/tests/test-status/test-status
 import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { SlotDetail } from '../../../../../shared/models/DJournal';
+import { ActivityCodes } from '../../../../../shared/models/activity-codes';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -30,7 +31,20 @@ describe('Test Outcome', () => {
       declarations: [TestOutcomeComponent],
       imports: [
         IonicModule.forRoot(TestOutcomeComponent),
-        StoreModule.forRoot({}),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {},
+            testStatus: {},
+            startedTests: {
+              1234: {
+                category: 'B',
+                activityCode: ActivityCodes.BAD_LIGHT,
+                journalData: null,
+                rekey: false,
+              },
+            },
+          }),
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -102,24 +116,6 @@ describe('Test Outcome', () => {
         fixture.detectChanges();
         const startButton = fixture.debugElement.queryAll(By.css('.mes-primary-button'));
         expect(startButton.length).toBe(0);
-      });
-    });
-
-    describe('show outcome', () => {
-      it('should show activity code when an outcome is provided', () => {
-        component.slotDetail = testSlotDetail;
-        component.outcome = '1234';
-        fixture.detectChanges();
-        const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
-        expect(outcome.length).toBe(1);
-      });
-
-      it('should not show activity code when an outcome is not provided', () => {
-        component.slotDetail = testSlotDetail;
-        component.outcome = undefined;
-        fixture.detectChanges();
-        const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
-        expect(outcome.length).toBe(0);
       });
     });
 
@@ -249,6 +245,23 @@ describe('Test Outcome', () => {
         startButton.triggerEventHandler('click', null);
 
         expect(component.displayRekeyModal).toHaveBeenCalled();
+      });
+
+      describe('showOutcome (DOM)', () => {
+        it('should display the activity code if one is available', () => {
+          component.slotDetail = testSlotDetail;
+          component.testStatus = TestStatus.Submitted;
+          fixture.detectChanges();
+          const outcomeCode = fixture.debugElement.query(By.css('.outcome'));
+          expect(outcomeCode).not.toBeNull();
+        });
+        it('should hide the activity code if none available', () => {
+          component.slotDetail = testSlotDetail;
+          component.slotDetail.slotId = null;
+          fixture.detectChanges();
+          const outcomeCode = fixture.debugElement.query(By.css('.outcome'));
+          expect(outcomeCode).toBeNull();
+        });
       });
     });
   });
