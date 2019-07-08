@@ -63,6 +63,11 @@ module.exports = function(config) {
     },
     browsers: ['ChromeHeadless'],
     singleRun: true,
+
+    parallelOptions: {
+      executors: 4
+    },
+
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',
@@ -74,7 +79,7 @@ module.exports = function(config) {
         ]
       }
     },
-    browserNoActivityTimeout: 60000,
+    browserNoActivityTimeout: 60000
   };
 
   config.set(_config);
