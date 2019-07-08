@@ -78,7 +78,8 @@ module.exports = function(config) {
           '--remote-debugging-port=9222'
         ]
       }
-    }
+    },
+    browserNoActivityTimeout: 60000,
   };
 
   config.set(_config);
