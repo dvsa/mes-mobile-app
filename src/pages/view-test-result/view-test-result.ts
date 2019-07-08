@@ -42,11 +42,9 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
 
     this.applicationReference = navParams.get('applicationReference');
 
-    console.log('CONSTRUCTOR');
   }
 
   ngOnInit(): void {
-    console.log('NG ON INIT');
     this.handleLoadingUI(true);
 
     this.subscription = this.searchProvider
