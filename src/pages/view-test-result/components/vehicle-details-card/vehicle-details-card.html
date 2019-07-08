@@ -4,7 +4,7 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <ion-row class="{{calculateClass(data.registrationNumber)}}" *ngIf="data.transmission">
+      <ion-row [ngClass]="calculateClass(data.registrationNumber)" *ngIf="data.transmission">
         <ion-col col-40>
           <label>Transmission</label>
         </ion-col>
@@ -12,7 +12,7 @@
           <span class="mes-data">{{ data.transmission }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="{{calculateClass(data.instructorRegistrationNumber)}}" *ngIf="data.registrationNumber">
+      <ion-row [ngClass]="calculateClass(data.instructorRegistrationNumber)" *ngIf="data.registrationNumber">
         <ion-col col-40>
           <label>Vehicle registration number</label>
         </ion-col>
