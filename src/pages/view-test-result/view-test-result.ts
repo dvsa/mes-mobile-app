@@ -4,14 +4,14 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
 import { StandardCarTestCATBSchema, ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
-import { inflateSync } from 'zlib';
 import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
+import { CompressionProvider } from '../../providers/compression/compression';
 
 @IonicPage()
 @Component({
@@ -35,25 +35,25 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     public loadingController: LoadingController,
     public authenticationProvider: AuthenticationProvider,
     public searchProvider: SearchProvider,
+    public compressionProvider: CompressionProvider,
 
   ) {
     super(platform, navController, authenticationProvider);
 
     this.applicationReference = navParams.get('applicationReference');
+
+    console.log('CONSTRUCTOR');
   }
 
   ngOnInit(): void {
+    console.log('NG ON INIT');
     this.handleLoadingUI(true);
 
     this.subscription = this.searchProvider
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
-        tap((data) => {
-          const buffer = Buffer.from(data, 'base64');
-          const decompressedData = inflateSync(buffer).toString();
-          this.testResult = JSON.parse(decompressedData) as StandardCarTestCATBSchema;
-          this.handleLoadingUI(false);
-        }),
+        map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
+        tap(() => this.handleLoadingUI(false)),
         catchError((error) => {
           console.log('ERROR', JSON.stringify(error));
           return of();
@@ -84,7 +84,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     }
   }
 
-  getTestDetails() : TestDetailsModel {
+  getTestDetails(): TestDetailsModel {
     if (!this.testResult) {
       return null;
     }
