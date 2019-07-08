@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTest, ActivateTest } from '../../journal.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
@@ -10,17 +10,8 @@ import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mo
 import { COMMUNICATION_PAGE, OFFICE_PAGE, PASS_FINALISATION_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
-import { SlotDetail } from '../../../../shared/models/DJournal';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
-import { getTests } from '../../../../modules/tests/tests.reducer';
-import { getActivityCodeBySlotId } from '../../../../modules/tests/tests.selector';
-import { map } from 'rxjs/operators';
-
-interface TestOutcomeComponentState {
-  testActivityCode$: Observable<ActivityCode>;
-}
 
 @Component({
   selector: 'test-outcome',
@@ -37,34 +28,17 @@ export class TestOutcomeComponent {
   @Input()
   testStatus: TestStatus;
 
+  @Input()
+  activityCode: ActivityCode;
+
   modal: Modal;
   isRekey: boolean = false;
-  subscription: Subscription;
-  componentState: TestOutcomeComponentState;
 
   constructor(
     private store$: Store<StoreModel>,
     public navController: NavController,
     private modalController: ModalController,
   ) { }
-
-  ngOnInit(): void {
-    this.componentState = {
-      testActivityCode$: this.store$.pipe(
-        select(getTests),
-        map(tests => getActivityCodeBySlotId(tests, this.slotDetail.slotId)),
-      ),
-    };
-
-    const { testActivityCode$ } = this.componentState;
-    this.subscription = testActivityCode$.subscribe();
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
 
   showOutcome(): boolean {
     return [TestStatus.Completed, TestStatus.Submitted].includes(this.testStatus);

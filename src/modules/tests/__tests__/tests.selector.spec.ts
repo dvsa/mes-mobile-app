@@ -290,7 +290,7 @@ describe('testsSelector', () => {
         testStatus: {},
       };
       const result = getActivityCodeBySlotId(testState, 1234);
-      expect(result).toBeUndefined();
+      expect(result).toBeNull();
     });
   });
 

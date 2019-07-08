@@ -73,4 +73,5 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
   if (testsModel && testsModel.startedTests && testsModel.startedTests[id]) {
     return testsModel.startedTests[id].activityCode;
   }
+  return null;
 };

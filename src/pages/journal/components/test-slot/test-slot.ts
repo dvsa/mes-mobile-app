@@ -14,12 +14,16 @@ import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
-import { getTestStatus } from '../../../../modules/tests/tests.selector';
+import { getTestStatus, getActivityCodeBySlotId } from '../../../../modules/tests/tests.selector';
 import { getSlotType } from '../../../candidate-details/candidate-details.selector';
 import { SlotTypes } from '../../../../shared/models/slot-types';
+import { map } from 'rxjs/operators';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
+  testActivityCode$: Observable<ActivityCode>;
 }
 
 @Component({
@@ -28,7 +32,7 @@ interface TestSlotComponentState {
 })
 export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
   @Input()
-  slot: any;
+  slot: TestSlot;
 
   @Input()
   hasSlotChanged: boolean;
@@ -54,11 +58,15 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
         select(getTests),
         select(tests => getTestStatus(tests, slotId)),
       ),
+      testActivityCode$: this.store$.pipe(
+        select(getTests),
+        map(tests => getActivityCodeBySlotId(tests, this.slot.slotDetail.slotId)),
+      ),
     };
 
-    const { testStatus$ } = this.componentState;
+    const { testStatus$, testActivityCode$ } = this.componentState;
 
-    this.subscription = merge(testStatus$).subscribe();
+    this.subscription = merge(testStatus$, testActivityCode$).subscribe();
   }
 
   ngOnDestroy(): void {
