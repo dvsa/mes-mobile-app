@@ -39,6 +39,7 @@ export enum AnalyticsEventCategories {
     ERROR = 'error',
     JOURNAL = 'journal',
     AUTHENTICATION = 'authentication',
+    BACK_TO_OFFICE = 'back to office',
   }
 
 export enum AnalyticsEvents {
@@ -50,6 +51,7 @@ export enum AnalyticsEvents {
     NAVIGATION = 'navigation',
     REFRESH_JOURNAL = 'refresh journal',
     LOGIN = 'login',
+    DEFER_WRITE_UP = 'defer write-up',
   }
 
 export enum AnalyticsDimensionIndices {
@@ -59,6 +61,10 @@ export enum AnalyticsDimensionIndices {
     CANDIDATE_WITH_CHECK = 4,
     CANDIDATE_ID = 5,
     TEST_ID = 6,
+    NUMBER_OF_DRIVING_FAULTS = 7,
+    NUMBER_OF_SERIOUS_FAULTS = 8,
+    NUMBER_OF_DANGEROUS_FAULTS = 9,
+    METHOD = 10,
   }
 
 export enum JournalRefreshModes {

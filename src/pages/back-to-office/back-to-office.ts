@@ -4,7 +4,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { BackToOfficeViewDidEnter } from './back-to-office.actions';
+import { BackToOfficeViewDidEnter, DeferWriteUp } from './back-to-office.actions';
 import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -47,6 +47,7 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
       this.exitPracticeMode();
       return;
     }
+    this.store$.dispatch(new DeferWriteUp());
     this.navController.popToRoot();
   }
 }
