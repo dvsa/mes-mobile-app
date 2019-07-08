@@ -10,6 +10,7 @@ import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mo
 import { COMMUNICATION_PAGE, OFFICE_PAGE, PASS_FINALISATION_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
+import { SlotDetail } from '../../../../shared/models/DJournal';
 
 @Component({
   selector: 'test-outcome',
@@ -18,7 +19,7 @@ import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 export class TestOutcomeComponent {
 
   @Input()
-  slotDetail: any;
+  slotDetail: SlotDetail;
 
   @Input()
   canStartTest: boolean;

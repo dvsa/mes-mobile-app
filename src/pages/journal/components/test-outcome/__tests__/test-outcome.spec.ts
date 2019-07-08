@@ -11,6 +11,7 @@ import { StartTest, ActivateTest } from '../../../journal.actions';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
+import { SlotDetail } from '../../../../../shared/models/DJournal';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -18,10 +19,10 @@ describe('Test Outcome', () => {
   let store$: Store<StoreModel>;
   let navController: NavController;
 
-  const testSlotDetail = {
+  const testSlotDetail: SlotDetail = {
     duration: 57,
     slotId: 123,
-    start: new DateTime(),
+    start: new DateTime().toString(),
   };
 
   beforeEach(async(() => {
@@ -185,7 +186,7 @@ describe('Test Outcome', () => {
         const dateTime = new DateTime();
         dateTime.subtract(1, Duration.DAY);
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
 
@@ -199,7 +200,7 @@ describe('Test Outcome', () => {
         const dateTime = new DateTime();
         dateTime.subtract(1, Duration.DAY);
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
 
@@ -212,7 +213,7 @@ describe('Test Outcome', () => {
 
         const dateTime = new DateTime();
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
 
@@ -223,9 +224,9 @@ describe('Test Outcome', () => {
       it('should hide rekey button for a resumed test if date is today', () => {
         component.slotDetail = testSlotDetail;
 
-        const dateTime = new Date();
+        const dateTime = new DateTime();
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
 
@@ -239,7 +240,7 @@ describe('Test Outcome', () => {
         const dateTime = new DateTime();
         dateTime.subtract(2, Duration.HOUR);
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
         spyOn(component, 'displayRekeyModal');
         fixture.detectChanges();
