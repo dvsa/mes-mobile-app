@@ -11,7 +11,7 @@ import { StartTest, ActivateTest } from '../../../journal.actions';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
-import { SlotDetail } from '../../../../../shared/models/DJournal';
+import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
 
 describe('Test Outcome', () => {
