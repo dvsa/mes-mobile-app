@@ -1,17 +1,17 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
-import { TestDetailsComponent } from '../test-details';
+import { TestDetailsCardComponent } from '../test-details-card';
 import { ConfigMock } from 'ionic-mocks';
 
-describe('TestDetailsComponent', () => {
-  let fixture: ComponentFixture<TestDetailsComponent>;
-  let component: TestDetailsComponent;
+describe('TestDetailsCardComponent', () => {
+  let fixture: ComponentFixture<TestDetailsCardComponent>;
+  let component: TestDetailsCardComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TestDetailsComponent,
+        TestDetailsCardComponent,
       ],
       imports: [
         IonicModule,
@@ -22,7 +22,7 @@ describe('TestDetailsComponent', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(TestDetailsComponent);
+        fixture = TestBed.createComponent(TestDetailsCardComponent);
         component = fixture.componentInstance;
       });
   }));

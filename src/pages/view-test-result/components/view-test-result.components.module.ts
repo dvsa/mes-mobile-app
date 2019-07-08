@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { TestDetailsComponent } from './test-details/test-details';
-import { ExaminerDetailsComponent } from './examiner-details/examiner-details';
+import { TestDetailsCardComponent } from './test-details-card/test-details-card';
+import { ExaminerDetailsCardComponent } from './examiner-details-card/examiner-details';
+import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 
 @NgModule({
   declarations: [
-    TestDetailsComponent,
-    ExaminerDetailsComponent,
+    TestDetailsCardComponent,
+    ExaminerDetailsCardComponent,
+    VehicleDetailsCardComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
   ],
   exports: [
-    TestDetailsComponent,
-    ExaminerDetailsComponent,
+    TestDetailsCardComponent,
+    ExaminerDetailsCardComponent,
+    VehicleDetailsCardComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}

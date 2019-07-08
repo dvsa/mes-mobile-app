@@ -12,7 +12,8 @@
 
 <ion-content padding>
   <div *ngIf="isLoading === false">
-      <test-details [data]="getTestDetails()"></test-details>
-      <examiner-details [data]='getExaminerDetails()'></examiner-details>
+      <test-details-card [data]="getTestDetails()"></test-details-card>
+      <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
+      <vehicle-details-card [data]='getVehicleDetails()'></vehicle-details-card>
   </div>
 </ion-content>

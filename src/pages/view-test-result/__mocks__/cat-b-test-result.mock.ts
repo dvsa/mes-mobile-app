@@ -31,4 +31,11 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
       vehicleTypeCode: 'mock-vehicle-type-code',
     },
   },
+  vehicleDetails: {
+    gearboxCategory: 'Manual',
+    registrationNumber: 'mock-vehicle-registration-number',
+  },
+  instructorDetails: {
+    registrationNumber: 1,
+  },
 };

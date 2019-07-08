@@ -6,11 +6,12 @@ import { SearchProvider } from '../../providers/search/search';
 import { StandardCarTestCATBSchema, ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { TestDetailsModel } from './components/test-details/test-details.model';
+import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
 import { inflateSync } from 'zlib';
 import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../shared/helpers/date-time';
-import { ExaminerDetailsModel } from './components/examiner-details/examiner-details.model';
+import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
+import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
 
 @IonicPage()
 @Component({
@@ -110,6 +111,18 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return {
       staffNumber: this.testResult.journalData.examiner.staffNumber,
       costCode: this.testResult.journalData.testCentre.costCode,
+    };
+  }
+
+  getVehicleDetails(): VehicleDetailsModel {
+    if (!this.testResult) {
+      return null;
+    }
+
+    return {
+      transmission: this.testResult.vehicleDetails.gearboxCategory,
+      registrationNumber: this.testResult.vehicleDetails.registrationNumber,
+      instructorRegistrationNumber: this.testResult.instructorDetails.registrationNumber,
     };
   }
 }
