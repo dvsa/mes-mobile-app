@@ -1,6 +1,6 @@
 export interface TestDetailsModel {
   date: string;
   time: string;
-  applicationReference: number;
+  applicationReference: string;
   category: string;
 }
