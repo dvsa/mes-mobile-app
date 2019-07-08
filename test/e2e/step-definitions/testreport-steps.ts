@@ -1,5 +1,5 @@
 import { Then, When } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
+import { getElement, clickElement, getParentContext } from './generic-steps';
 import { browser, by, element, ExpectedConditions } from 'protractor';
 import { TEST_CONFIG } from '../test.config';
 
@@ -32,7 +32,7 @@ const completeLegalRequirements = () => {
       });
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(webviewContext);
+      browser.driver.selectContext(getParentContext(webviewContext));
     });
   });
 };

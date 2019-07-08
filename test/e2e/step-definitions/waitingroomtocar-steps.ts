@@ -1,6 +1,6 @@
 import { When } from 'cucumber';
 import { getElement, clickElement, enterTextIndirect } from './generic-steps';
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -44,8 +44,13 @@ const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: b
   const transmissionRadio = getElement(by.id(transmissionSelector));
   clickElement(transmissionRadio);
 
-  const registrationField = element(by.id('registration'));
-  enterTextIndirect(registrationField, 'ABC');
+  const registrationField = getElement(by.id('registration'));
+  clickElement(registrationField);
+  browser.executeScript('document.getElementById("registration").value = "ABC";');
+
+  browser.driver.sleep(2000);
+
+  registrationField.sendKeys('123');
 
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
   clickElement(submitWRTC);
