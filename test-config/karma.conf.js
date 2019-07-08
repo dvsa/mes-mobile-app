@@ -63,11 +63,6 @@ module.exports = function(config) {
     },
     browsers: ['ChromeHeadless'],
     singleRun: true,
-
-    parallelOptions: {
-      executors: 4
-    },
-
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',
