@@ -64,6 +64,10 @@ module.exports = function(config) {
     browsers: ['ChromeHeadless'],
     singleRun: true,
 
+    parallelOptions: {
+      executors: 4
+    },
+
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',
@@ -74,7 +78,8 @@ module.exports = function(config) {
           '--remote-debugging-port=9222'
         ]
       }
-    }
+    },
+    browserNoActivityTimeout: 60000
   };
 
   config.set(_config);
