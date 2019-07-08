@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Loading, LoadingControll
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
-import { StandardCarTestCATBSchema, ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
@@ -12,6 +12,7 @@ import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
 import { CompressionProvider } from '../../providers/compression/compression';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
 
 @IonicPage()
 @Component({
@@ -86,17 +87,12 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     if (!this.testResult) {
       return null;
     }
-
-    const applicationReference: ApplicationReference =  this.testResult.journalData.applicationReference;
-    const applicationReferenceString: string =
-      `${applicationReference.applicationId}${applicationReference.bookingSequence}${applicationReference.checkDigit}`;
-
     const startDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
 
     return {
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
-      applicationReference: applicationReferenceString,
+      applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
       category: this.testResult.category,
     };
   }

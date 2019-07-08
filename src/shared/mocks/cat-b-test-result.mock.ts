@@ -7,8 +7,8 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   journalData: {
     applicationReference: {
       applicationId: 1,
-      bookingSequence: 2,
-      checkDigit: 3,
+      bookingSequence: 23,
+      checkDigit: 4,
     },
     candidate: {
 
