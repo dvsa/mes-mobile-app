@@ -77,7 +77,7 @@ describe('ViewTestResultPage', () => {
 
         const result: TestDetailsModel = component.getTestDetails();
 
-        expect(result.applicationReference).toBe(1234);
+        expect(result.applicationReference).toBe('1234');
         expect(result.category).toBe('B');
         expect(result.date).toBe('Friday 5th July 2019');
         expect(result.time).toBe('09:00');

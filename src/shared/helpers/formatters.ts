@@ -6,9 +6,7 @@ import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
  * @param appRef The application reference, as separate fields
  * @returns The app id, booking sequence (padded to 2 digits) and check digit
  */
-export const formatApplicationReference = (appRef: ApplicationReference): number => {
+export const formatApplicationReference = (appRef: ApplicationReference): string => {
   const formatter = Intl.NumberFormat('en-gb', { minimumIntegerDigits: 2 });
-  return Number(appRef.applicationId.toString() +
-                formatter.format(appRef.bookingSequence) +
-                appRef.checkDigit.toString());
+  return `${appRef.applicationId}${formatter.format(appRef.bookingSequence)}${appRef.checkDigit}`;
 };
