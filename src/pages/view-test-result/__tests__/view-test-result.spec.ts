@@ -8,12 +8,14 @@ import { ViewTestResultPage } from '../view-test-result';
 import { SearchProvider } from '../../../providers/search/search';
 import { SearchProviderMock } from '../../../providers/search/__mocks__/search.mock';
 import { MockComponent } from 'ng-mocks';
-import { TestDetailsComponent } from '../components/test-details/test-details';
-import { ExaminerDetailsComponent } from '../components/examiner-details/examiner-details';
+import { TestDetailsCardComponent } from '../components/test-details-card/test-details-card';
+import { ExaminerDetailsCardComponent } from '../components/examiner-details-card/examiner-details';
 import { categoryBTestResultMock } from '../__mocks__/cat-b-test-result.mock';
 import { By } from '@angular/platform-browser';
-import { ExaminerDetailsModel } from '../components/examiner-details/examiner-details.model';
-import { TestDetailsModel } from '../components/test-details/test-details.model';
+import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
+import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
+import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.model';
+import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -24,8 +26,9 @@ describe('ViewTestResultPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         ViewTestResultPage,
-        MockComponent(TestDetailsComponent),
-        MockComponent(ExaminerDetailsComponent),
+        MockComponent(TestDetailsCardComponent),
+        MockComponent(ExaminerDetailsCardComponent),
+        MockComponent(VehicleDetailsCardComponent),
       ],
       imports: [
         IonicModule,
@@ -95,6 +98,21 @@ describe('ViewTestResultPage', () => {
         expect(result).toBeNull();
       });
     });
+    describe('getVehicleDetails', () => {
+      it('should correctly generate the data', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result: VehicleDetailsModel = component.getVehicleDetails();
+
+        expect(result.transmission).toBe('Manual');
+        expect(result.registrationNumber).toBe('mock-vehicle-registration-number');
+        expect(result.instructorRegistrationNumber).toBe(1);
+      });
+      it('should return null when there is no test result', () => {
+        const result: VehicleDetailsModel = component.getVehicleDetails();
+        expect(result).toBeNull();
+      });
+    });
 
   });
 
@@ -102,14 +120,16 @@ describe('ViewTestResultPage', () => {
     it('should hide the cards when the data is loading', () => {
       component.isLoading = true;
 
-      expect(fixture.debugElement.query(By.css('test-details'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('examiner-details'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
     });
     it('should show the cards when the data is not loading', () => {
       component.isLoading = false;
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('test-details'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('examiner-details'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('test-details-card'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('examiner-details-card'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('vehicle-details-card'))).not.toBeNull();
     });
   });
 });
