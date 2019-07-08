@@ -10,12 +10,14 @@ import { SearchProviderMock } from '../../../providers/search/__mocks__/search.m
 import { MockComponent } from 'ng-mocks';
 import { TestDetailsCardComponent } from '../components/test-details-card/test-details-card';
 import { ExaminerDetailsCardComponent } from '../components/examiner-details-card/examiner-details';
-import { categoryBTestResultMock } from '../__mocks__/cat-b-test-result.mock';
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
 import { TestDetailsModel } from '../components/test-details-card/test-details-card.model';
 import { VehicleDetailsModel } from '../components/vehicle-details-card/vehicle-details-card.model';
 import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
+import { categoryBTestResultMock } from '../../../shared/mocks/cat-b-test-result.mock';
+import { CompressionProvider } from '../../../providers/compression/compression';
+import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -41,6 +43,7 @@ describe('ViewTestResultPage', () => {
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SearchProvider, useClass:  SearchProviderMock },
+        { provide: CompressionProvider, useClass: CompressionProviderMock },
       ],
     })
       .compileComponents()
