@@ -285,7 +285,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {
           this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarValidationError(
-            `${controlName} is invalid`,
+            `${controlName} is blank`,
           ));
         }
       });

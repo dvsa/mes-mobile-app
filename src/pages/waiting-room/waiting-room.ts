@@ -211,7 +211,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {
-          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is invalid`));
+          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is blank`));
         }
       });
     }
