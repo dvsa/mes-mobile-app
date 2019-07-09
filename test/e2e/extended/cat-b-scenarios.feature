@@ -35,6 +35,7 @@ Feature: Extended category B test scenarios
       And I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Miss Florence Pearson" is "1"
 
    Scenario: Candidate fails a test with a single dangerous fault
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
@@ -62,6 +63,7 @@ Feature: Extended category B test scenarios
       And I enter a comment for "dangerous" fault "Use of speed"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mr Ali Campbell" is "2"
 
    Scenario: Candidate fails a test with a single serious fault
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
@@ -86,6 +88,7 @@ Feature: Extended category B test scenarios
       And I enter a comment for "serious" fault "Controls - Accelerator"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mrs Jane Doe" is "2"
 
    Scenario: Examiner terminates the test in the interests of public safety
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
@@ -113,6 +116,7 @@ Feature: Extended category B test scenarios
       And I enter a comment for "dangerous" fault "Use of speed"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mr James Brown" is "4"
 
    Scenario: Candidate passes a test with 15 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
@@ -169,8 +173,8 @@ Feature: Extended category B test scenarios
       And I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mrs Jane Doe" is "1"
 
-   # This will fail until MES-2673 is fixed
    Scenario: Candidate fails a test with a dangerous and 16 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
       When I start the test for "Miss Theresa Shaw"
@@ -213,3 +217,4 @@ Feature: Extended category B test scenarios
       And I enter a comment for "dangerous" fault "Use of speed"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Miss Theresa Shaw" is "2"

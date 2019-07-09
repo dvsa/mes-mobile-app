@@ -68,3 +68,11 @@ Then('I have a non-test slot for {string} with code {string} at {string}', (desc
   [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`));
   return expect(slotLocator.isPresent()).to.eventually.be.true;
 });
+
+Then('the test result for {string} is {string}', (candidateName, testResult) => {
+  const testResultElement = getElement(by.xpath(`//test-outcome//span[@class='outcome']/h2
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+
+  return expect(testResultElement.getText()).to.eventually.equal(testResult);
+});

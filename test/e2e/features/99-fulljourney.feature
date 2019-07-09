@@ -25,6 +25,7 @@ Feature: Full end to end journey
       When I complete the office write up
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Miss Florence Pearson" is "1"
 
    Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
@@ -128,6 +129,7 @@ Feature: Full end to end journey
       And I enter a comment for "serious" fault "Controls - Accelerator"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mrs Jane Doe" is "2"
 
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
@@ -143,6 +145,7 @@ Feature: Full end to end journey
       When I select activity code "51 - Candidate failed to attend at test centre"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Miss Theresa Shaw" is "51"
 
    Scenario: Examiner terminates test as candidate failed to present ID (Only physical description mandatory)
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
@@ -164,6 +167,7 @@ Feature: Full end to end journey
       When I enter a candidate description
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mr Ali Campbell" is "20"
 
    Scenario: Examiner terminates test as candidate failed eye sight test
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
@@ -187,6 +191,7 @@ Feature: Full end to end journey
       And I complete the weather conditions
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Mr James Brown" is "3"
 
    Scenario: Candidate fails a test with 16 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
@@ -241,3 +246,4 @@ Feature: Full end to end journey
       And I enter a comment for "driving" fault "Clearance"
       And I upload the test
       Then I should see the "Journal" page
+      And the test result for "Miss Florence Pearson" is "2"
