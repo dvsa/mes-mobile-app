@@ -6,6 +6,7 @@ import {
   getActivityCode,
   isTestReportPracticeTest,
   isEndToEndPracticeTest,
+  getActivityCodeBySlotId,
 } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -260,6 +261,36 @@ describe('testsSelector', () => {
       testState.currentTest.slotId = end2endPracticeSlotId;
       const result = isEndToEndPracticeTest(testState);
       expect(result).toBeTruthy();
+    });
+  });
+
+  describe('getActivityCodeBySlotId', () => {
+    it('should return a valid activity code if available', () => {
+      const testState: TestsModel = {
+        currentTest: { slotId: null },
+        startedTests: {
+          1234: {
+            category: 'B',
+            activityCode: ActivityCodes.ACCIDENT,
+            journalData: null,
+            rekey: false,
+          },
+        },
+        testStatus: {},
+      };
+      const result = getActivityCodeBySlotId(testState, 1234);
+      expect(result).toEqual(ActivityCodes.ACCIDENT);
+    });
+    it('should return undefined if no activity code yet', () => {
+      const testState: TestsModel = {
+        currentTest: { slotId: null },
+        startedTests: {
+          1234: null,
+        },
+        testStatus: {},
+      };
+      const result = getActivityCodeBySlotId(testState, 1234);
+      expect(result).toBeNull();
     });
   });
 

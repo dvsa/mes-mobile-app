@@ -11,6 +11,8 @@ import { StartTest, ActivateTest } from '../../../journal.actions';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
 import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
+import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
+import { ActivityCodes } from '../../../../../shared/models/activity-codes';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -18,10 +20,10 @@ describe('Test Outcome', () => {
   let store$: Store<StoreModel>;
   let navController: NavController;
 
-  const testSlotDetail = {
+  const testSlotDetail: SlotDetail = {
     duration: 57,
     slotId: 123,
-    start: new DateTime(),
+    start: new DateTime().toString(),
   };
 
   beforeEach(async(() => {
@@ -29,7 +31,20 @@ describe('Test Outcome', () => {
       declarations: [TestOutcomeComponent],
       imports: [
         IonicModule.forRoot(TestOutcomeComponent),
-        StoreModule.forRoot({}),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {},
+            testStatus: {},
+            startedTests: {
+              1234: {
+                category: 'B',
+                activityCode: ActivityCodes.BAD_LIGHT,
+                journalData: null,
+                rekey: false,
+              },
+            },
+          }),
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -104,24 +119,6 @@ describe('Test Outcome', () => {
       });
     });
 
-    describe('show outcome', () => {
-      it('should show activity code when an outcome is provided', () => {
-        component.slotDetail = testSlotDetail;
-        component.outcome = '1234';
-        fixture.detectChanges();
-        const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
-        expect(outcome.length).toBe(1);
-      });
-
-      it('should not show activity code when an outcome is not provided', () => {
-        component.slotDetail = testSlotDetail;
-        component.outcome = undefined;
-        fixture.detectChanges();
-        const outcome = fixture.debugElement.queryAll(By.css('.outcome'));
-        expect(outcome.length).toBe(0);
-      });
-    });
-
     describe('start a test', () => {
       it('should call the startTest method when `Start test` is clicked', () => {
         component.slotDetail = testSlotDetail;
@@ -185,7 +182,7 @@ describe('Test Outcome', () => {
         const dateTime = new DateTime();
         dateTime.subtract(1, Duration.DAY);
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
 
@@ -199,7 +196,7 @@ describe('Test Outcome', () => {
         const dateTime = new DateTime();
         dateTime.subtract(1, Duration.DAY);
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
 
@@ -212,7 +209,7 @@ describe('Test Outcome', () => {
 
         const dateTime = new DateTime();
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
         fixture.detectChanges();
 
@@ -223,9 +220,9 @@ describe('Test Outcome', () => {
       it('should hide rekey button for a resumed test if date is today', () => {
         component.slotDetail = testSlotDetail;
 
-        const dateTime = new Date();
+        const dateTime = new DateTime();
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Started;
         fixture.detectChanges();
 
@@ -239,7 +236,7 @@ describe('Test Outcome', () => {
         const dateTime = new DateTime();
         dateTime.subtract(2, Duration.HOUR);
 
-        component.slotDetail.start = dateTime;
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
         spyOn(component, 'displayRekeyModal');
         fixture.detectChanges();
@@ -248,6 +245,23 @@ describe('Test Outcome', () => {
         startButton.triggerEventHandler('click', null);
 
         expect(component.displayRekeyModal).toHaveBeenCalled();
+      });
+
+      describe('showOutcome (DOM)', () => {
+        it('should display the activity code if one is available', () => {
+          component.slotDetail = testSlotDetail;
+          component.testStatus = TestStatus.Submitted;
+          fixture.detectChanges();
+          const outcomeCode = fixture.debugElement.query(By.css('.outcome'));
+          expect(outcomeCode).not.toBeNull();
+        });
+        it('should hide the activity code if none available', () => {
+          component.slotDetail = testSlotDetail;
+          component.slotDetail.slotId = null;
+          fixture.detectChanges();
+          const outcomeCode = fixture.debugElement.query(By.css('.outcome'));
+          expect(outcomeCode).toBeNull();
+        });
       });
     });
   });

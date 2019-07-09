@@ -10,6 +10,8 @@ import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mo
 import { COMMUNICATION_PAGE, OFFICE_PAGE, PASS_FINALISATION_PAGE } from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
+import { SlotDetail } from '@dvsa/mes-journal-schema';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 @Component({
   selector: 'test-outcome',
@@ -18,7 +20,7 @@ import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 export class TestOutcomeComponent {
 
   @Input()
-  slotDetail: any;
+  slotDetail: SlotDetail;
 
   @Input()
   canStartTest: boolean;
@@ -26,7 +28,9 @@ export class TestOutcomeComponent {
   @Input()
   testStatus: TestStatus;
 
-  outcome: string;
+  @Input()
+  activityCode: ActivityCode;
+
   modal: Modal;
   isRekey: boolean = false;
 
@@ -37,7 +41,7 @@ export class TestOutcomeComponent {
   ) { }
 
   showOutcome(): boolean {
-    return this.outcome !== undefined || this.outcome != null;
+    return [TestStatus.Completed, TestStatus.Submitted].includes(this.testStatus);
   }
 
   showRekeyButton(): boolean {

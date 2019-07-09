@@ -30,19 +30,21 @@ import { StartTest } from '../../../journal.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
 import { SpecialNeedsCode } from '../../../../candidate-details/candidate-details.constants';
+import { ActivityCodes } from '../../../../../shared/models/activity-codes';
+import { TestSlot } from '@dvsa/mes-journal-schema';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
   let component: TestSlotComponent;
   const startTime = '2019-02-01T11:22:33+00:00';
   let store$: Store<StoreModel>;
-  const mockSlot = {
+  const mockSlot: TestSlot = {
     slotDetail: {
       slotId: 1001,
       start: startTime,
       duration: 57,
     },
-    vehicleSlotType: 'B57mins',
+    vehicleSlotTypeCode: 57,
     testCentre: {
       centreId: 54321,
       centreName: 'Example Test Centre',
@@ -51,14 +53,13 @@ describe('TestSlotComponent', () => {
     booking: {
       candidate: {
         candidateId: 101,
-        age: 17,
         candidateName: {
           title: 'Miss',
           firstName: 'Florence',
           lastName: 'Pearson',
         },
         driverNumber: 'PEARS015220A99HC',
-        gender: 'Female',
+        gender: 'F',
         candidateAddress: {
           addressLine1: '1 Station Street',
           addressLine2: 'Someplace',
@@ -303,7 +304,7 @@ describe('TestSlotComponent', () => {
 
       it('should pass something to sub-component test-outcome input', () => {
         fixture.detectChanges();
-        component.componentState = { testStatus$: of(TestStatus.Booked) };
+        component.componentState = { testStatus$: of(TestStatus.Booked), testActivityCode$: of(ActivityCodes.PASS) };
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(TestOutcomeComponent))).componentInstance;
