@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
@@ -38,6 +38,8 @@ import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 import { TellMeQuestionSelected } from '../../../modules/tests/test-data/test-data.actions';
 import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { WaitingRoomToCarValidationError } from '../waiting-room-to-car.actions';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('WaitingRoomToCarPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarPage>;
@@ -172,5 +174,26 @@ describe('WaitingRoomToCarPage', () => {
       component.ionViewWillLeave();
       expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
     });
+  });
+  describe('onSubmit', () => {
+    it('should dispatch the appropriate WaitingRoomToCarValidationError actions', fakeAsync(() => {
+      fixture.detectChanges();
+
+      component.form = new FormGroup({
+        requiredControl1: new FormControl(null, [Validators.required]),
+        requiredControl2: new FormControl(null, [Validators.required]),
+        notRequiredControl: new FormControl(null),
+      });
+
+      component.onSubmit();
+      tick();
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('requiredControl1 is blank'));
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('requiredControl2 is blank'));
+      expect(store$.dispatch)
+        .not
+        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('notRequiredControl is blank'));
+    }));
   });
 });

@@ -61,8 +61,7 @@ export class JournalAnalyticsEffects {
           AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY,
           this.analytics.getDiffDays(action.day).toString());
 
-        this.analytics.setCurrentPage(
-          `${this.analytics.getDescriptiveDate(action.day)} ${AnalyticsScreenNames.JOURNAL}`);
+        this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
 
         return of();
       },

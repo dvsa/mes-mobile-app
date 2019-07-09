@@ -24,7 +24,7 @@ import {
 } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { SubmitWaitingRoomInfo } from '../waiting-room.actions';
+import { SubmitWaitingRoomInfo, WaitingRoomValidationError } from '../waiting-room.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
@@ -177,6 +177,17 @@ describe('WaitingRoomPage', () => {
       component.onSubmit();
       tick();
       expect(store$.dispatch).toHaveBeenCalledWith(new SubmitWaitingRoomInfo());
+    }));
+    it('should dispatch the WaitingRoomValidationError action', fakeAsync(() => {
+      const form = component.form;
+      form.get('insuranceCheckboxCtrl').setValue(false);
+      form.get('residencyCheckboxCtrl').setValue(false);
+      form.get('signatureAreaCtrl').setValue(null);
+      component.onSubmit();
+      tick();
+      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('insuranceCheckboxCtrl is blank'));
+      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('residencyCheckboxCtrl is blank'));
+      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('signatureAreaCtrl is blank'));
     }));
   });
   describe('rehydrateFields', () => {

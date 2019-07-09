@@ -206,8 +206,14 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
           });
         })
         .catch((err) => {
-          console.log(err);
+          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoError(err));
         });
+    } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is blank`));
+        }
+      });
     }
   }
 

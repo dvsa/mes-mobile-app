@@ -4,7 +4,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { WaitingRoomToCarViewDidEnter } from './waiting-room-to-car.actions';
+import * as waitingRoomToCarActions from './waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
@@ -228,7 +228,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   }
 
   ionViewDidEnter(): void {
-    this.store$.dispatch(new WaitingRoomToCarViewDidEnter());
+    this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
   }
 
   ionViewWillLeave(): void {
@@ -279,6 +279,14 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
         const view = this.navController.getViews().find(view => view.id === WAITING_ROOM_TO_CAR_PAGE);
         if (view) {
           this.navController.removeView(view);
+        }
+      });
+    } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          this.store$.dispatch(new waitingRoomToCarActions.WaitingRoomToCarValidationError(
+            `${controlName} is blank`,
+          ));
         }
       });
     }

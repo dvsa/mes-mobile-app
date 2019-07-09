@@ -57,10 +57,16 @@ export enum AnalyticsDimensionIndices {
     JOURNAL_DAYS_FROM_TODAY = 2,
     CANDIDATE_WITH_SPECIAL_NEEDS = 3,
     CANDIDATE_WITH_CHECK = 4,
-    CANDIDATE_ID= 5,
+    CANDIDATE_ID = 5,
+    TEST_ID = 6,
   }
 
 export enum JournalRefreshModes {
     MANUAL = 'MANUAL',
     AUTOMATIC = 'AUTOMATIC',
+  }
+
+export enum AnalyticsErrorTypes {
+    SUBMIT_FORM_ERROR = 'submit form error',
+    VALIDATION_ERROR = 'validation error',
   }
