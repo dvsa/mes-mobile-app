@@ -54,6 +54,8 @@ export enum AnalyticsEvents {
     LOGIN = 'login',
     DEFER_WRITE_UP = 'defer write-up',
     SAVE_WRITE_UP = 'save write-up',
+    SUBMIT_TEST = 'submit test',
+    RESUME_WRITE_UP = 'resume write-up',
   }
 
 export enum AnalyticsDimensionIndices {

@@ -29,6 +29,7 @@ export const JOURNAL_VIEW_DID_ENTER = '[JournalPage] Journal view did enter';
 export const JOURNAL_NAVIGATE_DAY = '[JournalPage] Navigate Day';
 export const JOURNAL_REFRESH = '[JournalPage] Journal Refresh';
 export const JOURNAL_REFRESH_ERROR = '[JournalPage] Journal Refresh Error';
+export const RESUMING_WRITE_UP = '[JournalPage] Resuming write-up';
 
 export class LoadJournal implements Action {
   readonly type = LOAD_JOURNAL;
@@ -102,6 +103,11 @@ export class JournalNavigateDay implements Action {
   constructor(public day: string) { }
 }
 
+export class ResumingWriteUp implements Action {
+  readonly type = RESUMING_WRITE_UP;
+  constructor(public slotId: string) { }
+}
+
 export class JournalRefreshError implements Action {
   readonly type = JOURNAL_REFRESH_ERROR;
   constructor(public errorDescription: string, public errorMessage: string) { }
@@ -137,6 +143,7 @@ export type JournalActionTypes =
   | StopPolling
   | JournalViewDidEnter
   | JournalNavigateDay
+  | ResumingWriteUp
   | JournalRefreshError
   | JournalRefresh
   | StartTest

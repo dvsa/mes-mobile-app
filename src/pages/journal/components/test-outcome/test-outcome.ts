@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { StartTest, ActivateTest } from '../../journal.actions';
+import { StartTest, ActivateTest, ResumingWriteUp } from '../../journal.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions';
 import { startsWith } from 'lodash';
@@ -62,6 +62,7 @@ export class TestOutcomeComponent {
 
   writeUpTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
+    this.store$.dispatch(new ResumingWriteUp(this.slotDetail.slotId.toString()));
     this.navController.push(OFFICE_PAGE);
   }
 
