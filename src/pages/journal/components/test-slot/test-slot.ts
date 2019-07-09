@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { get, isNil } from 'lodash';
 import { SlotComponent } from '../slot/slot';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -12,8 +12,6 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../../modules/tests/tests.reducer';
-import { Subscription } from 'rxjs/Subscription';
-import { merge } from 'rxjs/observable/merge';
 import { getTestStatus, getActivityCodeBySlotId } from '../../../../modules/tests/tests.selector';
 import { getSlotType } from '../../../candidate-details/candidate-details.selector';
 import { SlotTypes } from '../../../../shared/models/slot-types';
@@ -30,7 +28,7 @@ interface TestSlotComponentState {
   selector: 'test-slot',
   templateUrl: 'test-slot.html',
 })
-export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
+export class TestSlotComponent implements SlotComponent, OnInit {
   @Input()
   slot: TestSlot;
 
@@ -41,8 +39,6 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
   showLocation: boolean;
 
   componentState: TestSlotComponentState;
-
-  subscription: Subscription;
 
   constructor(
     public screenOrientation: ScreenOrientation,
@@ -63,15 +59,6 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
         map(tests => getActivityCodeBySlotId(tests, this.slot.slotDetail.slotId)),
       ),
     };
-
-    const { testStatus$ } = this.componentState;
-    this.subscription = merge(testStatus$).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   isIndicatorNeededForSlot(): boolean {
