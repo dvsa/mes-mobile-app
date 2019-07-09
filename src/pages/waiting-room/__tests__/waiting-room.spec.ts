@@ -185,9 +185,9 @@ describe('WaitingRoomPage', () => {
       form.get('signatureAreaCtrl').setValue(null);
       component.onSubmit();
       tick();
-      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('insuranceCheckboxCtrl is invalid'));
-      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('residencyCheckboxCtrl is invalid'));
-      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('signatureAreaCtrl is invalid'));
+      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('insuranceCheckboxCtrl is blank'));
+      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('residencyCheckboxCtrl is blank'));
+      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('signatureAreaCtrl is blank'));
     }));
   });
   describe('rehydrateFields', () => {

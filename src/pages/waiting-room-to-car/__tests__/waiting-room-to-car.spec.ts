@@ -188,12 +188,12 @@ describe('WaitingRoomToCarPage', () => {
       component.onSubmit();
       tick();
       expect(store$.dispatch)
-        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('requiredControl1 is invalid'));
+        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('requiredControl1 is blank'));
       expect(store$.dispatch)
-        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('requiredControl2 is invalid'));
+        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('requiredControl2 is blank'));
       expect(store$.dispatch)
         .not
-        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('notRequiredControl is invalid'));
+        .toHaveBeenCalledWith(new WaitingRoomToCarValidationError('notRequiredControl is blank'));
     }));
   });
 });
