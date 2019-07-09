@@ -1,6 +1,7 @@
 import { Then, When } from 'cucumber';
 import { getElement, clickElement } from './generic-steps';
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ExpectedConditions } from 'protractor';
+import { TEST_CONFIG } from '../test.config';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -23,7 +24,11 @@ const completeLegalRequirements = () => {
     browser.driver.selectContext('NATIVE_APP').then(() => {
       const legalRequirements = element.all(by.xpath('//XCUIElementTypeImage[@label="checkmark"]'));
       legalRequirements.each((legalRequirement) => {
-        legalRequirement.click();
+        browser.wait(ExpectedConditions.elementToBeClickable(legalRequirement));
+        legalRequirement.click().then((promise) => {
+          browser.sleep(TEST_CONFIG.ACTION_WAIT);
+          return promise;
+        });
       });
 
       // Switch back to WEBVIEW context

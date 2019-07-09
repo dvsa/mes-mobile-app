@@ -37,12 +37,3 @@ Feature: Comms Capture and Waiting Room
       And validation item "waiting-room-residency-validation-text" should be visible
       And validation item "waiting-room-signature-validation-text" should be "Enter a signature"
       And validation item "waiting-room-signature-validation-text" should be visible
-
-   Scenario: Candidate completes declaration and examiner proceeds to waiting room to car stage. Note using default email address
-      Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I start the test for "Mrs Jane Doe"
-      Then I should see the "Declaration - Jane Doe" page
-      And the candidate confirms their communication preference
-      And the candidate completes the declaration page
-      And I proceed to the car
-      Then I should see the "Jane Doe" page
