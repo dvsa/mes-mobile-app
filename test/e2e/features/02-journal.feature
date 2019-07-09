@@ -69,8 +69,3 @@ Feature: Journal
      And I have a non-test slot for "Medical appointment" with code "104" at "15:05"
      And I have a non-test slot for "Hospital appointment" with code "180" at "16:05"
      And I have a non-test slot for "Bad Weather" with code "133" at "18:35"
-
-   Scenario: Examiner goes to the waiting room to meet the candidate
-    Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-     When I start the test for "Mrs Jane Doe"
-     Then I should see the "Declaration - Jane Doe" page
