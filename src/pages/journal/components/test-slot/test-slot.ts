@@ -64,9 +64,8 @@ export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
       ),
     };
 
-    const { testStatus$, testActivityCode$ } = this.componentState;
-
-    this.subscription = merge(testStatus$, testActivityCode$).subscribe();
+    const { testStatus$ } = this.componentState;
+    this.subscription = merge(testStatus$).subscribe();
   }
 
   ngOnDestroy(): void {

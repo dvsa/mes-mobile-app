@@ -6,6 +6,7 @@ import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { getSlotType } from '../../../candidate-details/candidate-details.selector';
 import { SlotTypes } from '../../../../shared/models/slot-types';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 @Component({
   selector: 'fake-test-slot',
@@ -26,6 +27,9 @@ export class FakeTestSlotComponent {
 
   @Input()
   canStartTest: boolean;
+
+  @Input()
+  activityCode: ActivityCode;
 
   constructor(
     public screenOrientation: ScreenOrientation,
