@@ -63,6 +63,7 @@ export enum AnalyticsEvents {
     REMOVE_DRIVING_FAULT = 'remove driving fault',
     REMOVE_SERIOUS_FAULT = 'remove serious fault',
     REMOVE_DANGEROUS_FAULT = 'remove dangerous fault',
+    REMOVE_FAULT = 'remove fault',
     SELECT_SERIOUS_MODE = 'select serious mode',
     SELECT_DANGEROUS_MODE = 'select dangerous mode',
     SELECT_REMOVE_MODE = 'select remove mode',

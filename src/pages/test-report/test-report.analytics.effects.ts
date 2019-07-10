@@ -134,4 +134,92 @@ export class TestReportAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  removeDrivingFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.REMOVE_DRIVING_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveDrivingFault, boolean]) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.REMOVE_DRIVING_FAULT,
+        fullCompetencyLabels[action.payload.competency],
+      );
+      return of();
+    }),
+  );
+
+  @Effect()
+  removeManoeuvreDrivingFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.REMOVE_MANOEUVRE_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveManoeuvreFault, boolean]) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.REMOVE_DRIVING_FAULT,
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+      );
+      return of();
+    }),
+  );
+
+  @Effect()
+  controlledStopRemoveFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.CONTROLLED_STOP_REMOVE_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.REMOVE_FAULT,
+        fullCompetencyLabels['outcomeControlledStop'],
+      );
+      return of();
+    }),
+  );
+
+  @Effect()
+  showMeQuestionRemoveFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.REMOVE_FAULT,
+        'Show me question', // TODO remove magic string
+      );
+      return of();
+    }),
+  );
+
 }
