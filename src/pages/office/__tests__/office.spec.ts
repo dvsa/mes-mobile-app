@@ -65,7 +65,7 @@ import { LanguagePreferencesComponent } from '../components/language-preference/
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
 
-fdescribe('OfficePage', () => {
+describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
   let component: OfficePage;
   let navController: NavController;
