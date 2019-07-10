@@ -6,26 +6,29 @@ import { Platform } from 'ionic-angular';
 import { DateTime } from '../../shared/helpers/date-time';
 import { createHash } from 'crypto';
 import { DeviceProvider } from '../device/device';
+import { AuthenticationProvider } from '../authentication/authentication';
 
 @Injectable()
 export class AnalyticsProvider implements IAnalyticsProvider {
   private analyticsStartupError: string = 'Error starting Google Analytics';
   googleAnalyticsKey: string = '';
   uniqueDeviceId: string;
+  uniqueUserId: string;
   constructor(
     private appConfig: AppConfigProvider,
     public ga: GoogleAnalytics,
     public platform: Platform,
     private device: DeviceProvider,
+    private authProvider: AuthenticationProvider,
   ) { }
 
   initialiseAnalytics = (): Promise<any> =>
     new Promise((resolve) => {
       this.googleAnalyticsKey = this.appConfig.getAppConfig().googleAnalyticsId;
       this.platform.ready().then(() => {
-        this.uniqueDeviceId = createHash('sha256')
-          .update(this.device.getUniqueDeviceId() ? this.device.getUniqueDeviceId() : 'defaultDevice').digest('hex');
-        this.setUserId(this.uniqueDeviceId);
+        this.setDeviceId(this.device.getUniqueDeviceId());
+        this.setUserId(this.authProvider.getEmployeeId());
+        this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
         this.enableExceptionReporting();
       });
       resolve();
@@ -58,12 +61,12 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     });
   }
 
-  logEvent(category: string, event: string, label?: string, params?: any): void {
+  logEvent(category: string, event: string, label?: string, value?: number): void {
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
-          this.ga.trackEvent(category, event, label)
+          this.ga.trackEvent(category, event, label, value)
             .then((resp) => { })
             .catch(eventError => console.log('Error tracking event', eventError));
         })
@@ -98,14 +101,21 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   setUserId(userId: string): void {
+    this.uniqueUserId = createHash('sha256').update(userId || 'unavailable').digest('hex');
     this.ga
       .startTrackerWithId(this.googleAnalyticsKey)
       .then(() => {
-        this.ga.setUserId(userId)
+        this.addCustomDimension(AnalyticsDimensionIndices.USER_ID, this.uniqueUserId);
+        this.ga.setUserId(this.uniqueUserId)
           .then((resp) => { })
-          .catch(idError => console.log(`Error setting userid ${userId}`, idError));
+          .catch(idError => console.log(`Error setting userid ${this.uniqueUserId}`, idError));
       })
       .catch(error => console.log(`setUserId: ${this.analyticsStartupError}`, error));
+  }
+
+  setDeviceId(deviceId: string): void {
+    this.uniqueDeviceId = createHash('sha256').update(deviceId || 'defaultDevice').digest('hex');
+    this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
   }
 
   getDiffDays(userDate: string): number {
