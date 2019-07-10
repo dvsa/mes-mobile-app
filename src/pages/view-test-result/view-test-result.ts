@@ -13,6 +13,7 @@ import { ExaminerDetailsModel } from './components/examiner-details-card/examine
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
+import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
 
 @IonicPage()
 @Component({
@@ -117,6 +118,39 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       transmission: this.testResult.vehicleDetails.gearboxCategory,
       registrationNumber: this.testResult.vehicleDetails.registrationNumber,
       instructorRegistrationNumber: this.testResult.instructorDetails.registrationNumber,
+    };
+  }
+
+  getTestSummary(): TestSummaryCardModel {
+    if (!this.testResult) {
+      return null;
+    }
+
+    const accompaniedBy: string[] = [];
+
+    if (this.testResult.accompaniment.ADI) {
+      accompaniedBy.push('ADI');
+    }
+    if (this.testResult.accompaniment.interpreter) {
+      accompaniedBy.push('Interpreter');
+    }
+    if (this.testResult.accompaniment.supervisor) {
+      accompaniedBy.push('Supervisor');
+    }
+    if (this.testResult.accompaniment.other) {
+      accompaniedBy.push('Other');
+    }
+
+    return {
+      accompaniment: accompaniedBy,
+      provisionalLicenceProvided: this.testResult.passCompletion.provisionalLicenceProvided,
+      passCertificateNumber: this.testResult.passCompletion.passCertificateNumber,
+      routeNumber: this.testResult.testSummary.routeNumber,
+      independentDriving: this.testResult.testSummary.independentDriving,
+      candidateDescription: this.testResult.testSummary.candidateDescription,
+      debriefWitnessed: this.testResult.testSummary.debriefWitnessed,
+      weatherConditions: this.testResult.testSummary.weatherConditions,
+      D255: this.testResult.testSummary.D255,
     };
   }
 }

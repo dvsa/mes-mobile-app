@@ -18,6 +18,8 @@ import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/
 import { categoryBTestResultMock } from '../../../shared/mocks/cat-b-test-result.mock';
 import { CompressionProvider } from '../../../providers/compression/compression';
 import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
+import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
+import { TestSummaryCardComponent } from '../components/test-summary-card/test-summary-card';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -31,6 +33,7 @@ describe('ViewTestResultPage', () => {
         MockComponent(TestDetailsCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
         MockComponent(VehicleDetailsCardComponent),
+        MockComponent(TestSummaryCardComponent),
       ],
       imports: [
         IonicModule,
@@ -116,6 +119,25 @@ describe('ViewTestResultPage', () => {
         expect(result).toBeNull();
       });
     });
+    describe('getTestSummary', () => {
+      it('should return the correct data', () => {
+        component.testResult = categoryBTestResultMock;
+        const result: TestSummaryCardModel = component.getTestSummary();
+        expect(result.D255).toBeFalsy();
+        expect(result.accompaniment).toEqual(['ADI', 'Interpreter']);
+        expect(result.candidateDescription).toBe('mock-candidate-description');
+        expect(result.debriefWitnessed).toBeTruthy();
+        expect(result.independentDriving).toBe('Sat nav');
+        expect(result.passCertificateNumber).toBe('mock-pass-cert-number');
+        expect(result.provisionalLicenceProvided).toBeTruthy();
+        expect(result.routeNumber).toBe(12345);
+        expect(result.weatherConditions).toEqual(['Bright / dry roads', 'Icy']);
+      });
+      it('should return null when there is no test result', () => {
+        const result: TestSummaryCardModel = component.getTestSummary();
+        expect(result).toBeNull();
+      });
+    });
 
   });
 
@@ -126,6 +148,7 @@ describe('ViewTestResultPage', () => {
       expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
     });
     it('should show the cards when the data is not loading', () => {
       component.isLoading = false;
@@ -133,6 +156,7 @@ describe('ViewTestResultPage', () => {
       expect(fixture.debugElement.query(By.css('test-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('test-summary-card'))).not.toBeNull();
     });
   });
 });

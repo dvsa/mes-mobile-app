@@ -1,0 +1,81 @@
+<ion-card *ngIf="!shouldHideCard()">
+  <ion-card-header>
+    <h4>Test Summary</h4>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.accompaniment">
+        <ion-col col-40>
+          <label>Accompanied by</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ flattenArray(data.accompaniment) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.provisionalLicenceProvided">
+        <ion-col col-40>
+          <label>Licence provided</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ convertBooleanToString(data.provisionalLicenceProvided) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.passCertificateNumber">
+        <ion-col col-40>
+          <label>Certificate number</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.passCertificateNumber }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.routeNumber">
+        <ion-col col-40>
+          <label>Route number</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.routeNumber }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.independentDriving">
+        <ion-col col-40>
+          <label>Independent driving</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.independentDriving }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.candidateDescription">
+        <ion-col col-40>
+          <label>Physical description of candidate</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.candidateDescription }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.debriefWitnessed">
+        <ion-col col-40>
+          <label>Debrief witnessed</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ convertBooleanToString(data.debriefWitnessed) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.weatherConditions">
+        <ion-col col-40>
+          <label>Weather conditions</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ flattenArray(data.weatherConditions) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator" *ngIf="data.D255">
+        <ion-col col-40>
+          <label>D255</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ convertBooleanToString(data.D255) }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
