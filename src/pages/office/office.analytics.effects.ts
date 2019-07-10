@@ -96,7 +96,6 @@ export class OfficeAnalyticsEffects {
       const screenName = isPassed ? AnalyticsScreenNames.PASS_TEST_SUMMARY : AnalyticsScreenNames.FAIL_TEST_SUMMARY;
       this.analytics.logError(
         `${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`, validationErrorAction.errorMessage);
-      console.log('error message,', validationErrorAction.errorMessage);
 
       return of();
     }),

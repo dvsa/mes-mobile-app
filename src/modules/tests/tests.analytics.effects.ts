@@ -55,8 +55,6 @@ export class TestsAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
-      console.log('end of SET_TEST_STATUS_SUBMITTED effect');
-
       return of();
     }),
   );

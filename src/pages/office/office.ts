@@ -555,7 +555,6 @@ export class OfficePage extends PracticeableBasePageComponent {
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {
-          console.log('controlName', controlName);
           this.store$.dispatch(new ValidationError(`${controlName} is blank`));
         }
       });
