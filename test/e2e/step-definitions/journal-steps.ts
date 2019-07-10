@@ -39,9 +39,21 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
+When('I rekey a test for {string}', (candidateName) => {
+  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+  clickElement(buttonElement);
+});
+
 When('I navigate to next day', () => {
   const nextDayButtonElement = getElement(by.id('next-day-container'));
   return clickElement(nextDayButtonElement);
+});
+
+When('I navigate to previous day', () => {
+  const previousDayButtonElement = getElement(by.id('previous-day-container'));
+  return clickElement(previousDayButtonElement);
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
