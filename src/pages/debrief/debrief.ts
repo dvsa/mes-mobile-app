@@ -71,6 +71,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
   subscription: Subscription;
   conductedLanguage: string;
   isBookedInWelsh: boolean;
+  isPassed: boolean;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;

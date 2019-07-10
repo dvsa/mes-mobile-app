@@ -16,19 +16,19 @@ export interface IAnalyticsProvider {
 
 export enum AnalyticsScreenNames {
     CONTACT_DETAILS = 'contact details screen', // this may need removing as could be candidate details now
-    FAIL_RESULTS_DEBRIEF = 'fail results debrief screen',
     HEALTH_DECLARATION = 'health declaration screen',
     JOURNAL = 'journal screen',
-    OFFICE = 'office screen',
+    PASS_TEST_SUMMARY = 'pass test summary screen',
+    FAIL_TEST_SUMMARY = 'fail test summary screen',
     PASS_FINALISATION = 'pass finalisation screen',
-    PASS_RESULTS_DEBRIEF = 'pass results debrief screen',
     TEST = 'test report screen',
     TERMINATE_TEST = 'terminate test screen',
     WAITING_ROOM = 'waiting room screen',
     WAITING_ROOM_TO_CAR = 'waiting room to car screen',
     WELCOME = 'welcome screen',
     CANDIDATE_DETAILS = 'candidate details screen',
-    DEBRIEF = 'debrief screen',
+    PASS_DEBRIEF = 'pass debrief screen',
+    FAIL_DEBRIEF = 'fail debrief screen',
     LOGIN = 'login screen',
     BACK_TO_OFFICE = 'back to office screen',
   }
@@ -39,6 +39,8 @@ export enum AnalyticsEventCategories {
     ERROR = 'error',
     JOURNAL = 'journal',
     AUTHENTICATION = 'authentication',
+    BACK_TO_OFFICE = 'back to office',
+    POST_TEST = 'post-test',
   }
 
 export enum AnalyticsEvents {
@@ -50,6 +52,10 @@ export enum AnalyticsEvents {
     NAVIGATION = 'navigation',
     REFRESH_JOURNAL = 'refresh journal',
     LOGIN = 'login',
+    DEFER_WRITE_UP = 'defer write-up',
+    SAVE_WRITE_UP = 'save write-up',
+    SUBMIT_TEST = 'submit test',
+    RESUME_WRITE_UP = 'resume write-up',
   }
 
 export enum AnalyticsDimensionIndices {
@@ -59,6 +65,10 @@ export enum AnalyticsDimensionIndices {
     CANDIDATE_WITH_CHECK = 4,
     CANDIDATE_ID = 5,
     TEST_ID = 6,
+    NUMBER_OF_DRIVING_FAULTS = 7,
+    NUMBER_OF_SERIOUS_FAULTS = 8,
+    NUMBER_OF_DANGEROUS_FAULTS = 9,
+    METHOD = 10,
   }
 
 export enum JournalRefreshModes {

@@ -7,11 +7,15 @@ import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 
-export const getCurrentTestSlotId = (tests: TestsModel) => tests.currentTest.slotId;
+export const getCurrentTestSlotId = (tests: TestsModel): string => tests.currentTest.slotId;
 
-export const getCurrentTest = (tests: TestsModel) => {
+export const getCurrentTest = (tests: TestsModel): StandardCarTestCATBSchema => {
   const currentTestSlotId = tests.currentTest.slotId;
   return tests.startedTests[currentTestSlotId];
+};
+
+export const getTestById = (tests: TestsModel, slotId: string): StandardCarTestCATBSchema => {
+  return tests.startedTests[slotId];
 };
 
 export const getJournalData = (test: StandardCarTestCATBSchema): JournalData => test.journalData;
@@ -44,7 +48,7 @@ export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
   return false;
 };
 
-export const isPassed = (test: StandardCarTestCATBSchema) => {
+export const isPassed = (test: StandardCarTestCATBSchema): boolean => {
   return test.activityCode === ActivityCodes.PASS;
 };
 

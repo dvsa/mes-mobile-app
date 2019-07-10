@@ -14,6 +14,8 @@ import { StoreModel } from '../../shared/models/store.model';
 import {
   OfficeViewDidEnter,
   CompleteTest,
+  SavingWriteUpForLater,
+  ValidationError,
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
@@ -542,6 +544,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   defer() {
     this.popToRoot();
+    this.store$.dispatch(new SavingWriteUpForLater());
     this.store$.dispatch(new PersistTests());
   }
 
@@ -550,6 +553,11 @@ export class OfficePage extends PracticeableBasePageComponent {
     if (this.form.valid) {
       this.showFinishTestModal();
     } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        }
+      });
       this.createToast('Fill all mandatory fields');
       this.toast.present();
     }

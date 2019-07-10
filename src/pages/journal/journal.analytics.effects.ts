@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   JOURNAL_VIEW_DID_ENTER,
@@ -12,7 +12,10 @@ import {
   JOURNAL_REFRESH_ERROR,
   START_TEST,
   StartTest,
-  JournalRefreshError } from '../../pages/journal/journal.actions';
+  JournalRefreshError,
+  RESUMING_WRITE_UP,
+  ResumingWriteUp,
+} from '../../pages/journal/journal.actions';
 import {
     AnalyticsDimensionIndices,
     AnalyticsScreenNames,
@@ -20,13 +23,18 @@ import {
     AnalyticsEvents,
   } from '../../providers/analytics/analytics.model';
 import { SLOT_HAS_CHANGED, SlotHasChanged } from '../../providers/slot/slot.actions';
+import { StoreModel } from '../../shared/models/store.model';
+import { Store, select } from '@ngrx/store';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getTestById, isPassed } from '../../modules/tests/tests.selector';
 
 @Injectable()
 export class JournalAnalyticsEffects {
 
   constructor(
-    public analytics: AnalyticsProvider,
+    private analytics: AnalyticsProvider,
     private actions$: Actions,
+    private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
           .then(() => {})
@@ -109,6 +117,35 @@ export class JournalAnalyticsEffects {
     ofType(START_TEST),
     switchMap((action: StartTest) => {
       this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
+      return of();
+    }),
+  );
+
+  @Effect()
+  resumingWriteUpEffect$ = this.actions$.pipe(
+    ofType(RESUMING_WRITE_UP),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+      ),
+    ),
+    switchMap(([action, tests]) => {
+      const setTestStatusSubmittedAction = action as ResumingWriteUp;
+      const test = getTestById(tests, setTestStatusSubmittedAction.slotId);
+      const isTestPassed = isPassed(test);
+      const journalDataOfTest = test.journalData;
+
+      this.analytics.logEvent(
+        AnalyticsEventCategories.POST_TEST,
+        AnalyticsEvents.RESUME_WRITE_UP,
+        isTestPassed ? 'pass' : 'fail',
+      );
+
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
+
       return of();
     }),
   );
