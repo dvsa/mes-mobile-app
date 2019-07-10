@@ -138,4 +138,23 @@ export class TestReportEffects {
     delay(1000), // Added a 1 second delay to allow other action to complete/effects to fire
     map(() => new testsActions.PersistTests()),
   );
+
+  @Effect()
+  terminateTestFromTestReport$ = this.actions$.pipe(
+    ofType(
+      testReportActions.TERMINATE_TEST_FROM_TEST_REPORT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        withLatestFrom(
+          this.store$.pipe(
+            select(getTests),
+            map(getCurrentTest),
+          ),
+        ),
+      ),
+    ),
+    map(([action, currentTest]) => new testsActions.SetActivityCode(null)),
+  );
 }

@@ -10,6 +10,10 @@ import {
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
+import {
+  TerminateTestFromTestReport,
+  TERMINATE_TEST_FROM_TEST_REPORT,
+} from '../../pages/test-report/test-report.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { isPracticeMode } from '../../modules/tests/tests.selector';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -554,4 +558,15 @@ export class TestReportAnalyticsEffects {
     }),
   );
 
+  testTermination$ = this.actions$.pipe(
+    ofType(TERMINATE_TEST_FROM_TEST_REPORT),
+    switchMap((action: TerminateTestFromTestReport) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TERMINATION,
+        AnalyticsEvents.END_TEST,
+        'Test report - legal requirements not met',
+      );
+      return of();
+    }),
+  );
 }

@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform,
+  ModalController,
+  Modal,
+} from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
@@ -11,9 +18,20 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { StoreModel } from '../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
-import { TestReportViewDidEnter, CalculateTestResult } from './test-report.actions';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
-import { Competencies, LegalRequirements, ExaminerActions } from '../../modules/tests/test-data/test-data.constants';
+import {
+  TestReportViewDidEnter,
+  CalculateTestResult,
+  TerminateTestFromTestReport,
+} from './test-report.actions';
+import {
+  getCurrentTest,
+  getJournalData,
+} from '../../modules/tests/tests.selector';
+import {
+  Competencies,
+  LegalRequirements,
+  ExaminerActions,
+} from '../../modules/tests/test-data/test-data.constants';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestReportState } from './test-report.reducer';
@@ -26,7 +44,10 @@ import {
 } from './test-report.selector';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
 import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
-import { getCatBLegalRequirements, hasManoeuvreBeenCompleted } from '../../modules/tests/test-data/test-data.selector';
+import {
+  getCatBLegalRequirements,
+  hasManoeuvreBeenCompleted,
+} from '../../modules/tests/test-data/test-data.selector';
 import { ModalEvent } from './test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -51,7 +72,6 @@ interface TestReportPageState {
   templateUrl: 'test-report.html',
 })
 export class TestReportPage extends PracticeableBasePageComponent {
-
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;
@@ -149,13 +169,17 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
     const merged$ = merge(
       candidateUntitledName$,
-      isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
-      isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
-      isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
-      manoeuvres$.pipe(map(result => this.manoeuvresCompleted = result)),
-      isLegalRequirementsValid$.pipe(map(result => this.isLegalRequirementsValid = result)),
-      isEtaValid$.pipe(map(result => this.isEtaValid = result)),
-      catBLegalRequirements$.pipe(map(result => this.catBLegalRequirements = result)),
+      isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
+      isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
+      isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
+      manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
+      isLegalRequirementsValid$.pipe(
+        map(result => (this.isLegalRequirementsValid = result)),
+      ),
+      isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
+      catBLegalRequirements$.pipe(
+        map(result => (this.catBLegalRequirements = result)),
+      ),
     );
     this.subscription = merged$.subscribe();
   }
@@ -163,7 +187,9 @@ export class TestReportPage extends PracticeableBasePageComponent {
   ionViewWillEnter() {
     // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
     if (super.isIos() && this.isPracticeMode) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.screenOrientation.lock(
+        this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY,
+      );
       this.insomnia.keepAwake();
       this.statusBar.hide();
     }
@@ -194,9 +220,13 @@ export class TestReportPage extends PracticeableBasePageComponent {
   onEndTestClick = (): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     if (!this.isLegalRequirementsValid) {
-      this.modal = this.modalController.create('LegalRequirementsModal', {
-        legalRequirements: this.catBLegalRequirements,
-      }, options);
+      this.modal = this.modalController.create(
+        'LegalRequirementsModal',
+        {
+          legalRequirements: this.catBLegalRequirements,
+        },
+        options,
+      );
     } else if (!this.isEtaValid) {
       this.modal = this.modalController.create('EtaInvalidModal', {}, options);
     } else {
@@ -207,9 +237,13 @@ export class TestReportPage extends PracticeableBasePageComponent {
   }
 
   getBorderModeCSS(): string {
-    return this.isRemoveFaultMode ? 'remove-mode'
-    : this.isSeriousMode ? 'serious-mode'
-    : this.isDangerousMode ? 'dangerous-mode' : '';
+    return this.isRemoveFaultMode
+      ? 'remove-mode'
+      : this.isSeriousMode
+      ? 'serious-mode'
+      : this.isDangerousMode
+      ? 'dangerous-mode'
+      : '';
   }
 
   onModalDismiss = (event: ModalEvent): void => {
@@ -219,6 +253,10 @@ export class TestReportPage extends PracticeableBasePageComponent {
         this.navController.push(DEBRIEF_PAGE);
         break;
       case ModalEvent.TERMINATE:
+        this.store$.dispatch(new TerminateTestFromTestReport());
+        // TODO consolidate common functionality from the other methods of termination
+        // First, look at other page terminations
+        // Dispatch the set activity code action if from test report page
         this.store$.dispatch(new SetActivityCode(null));
         this.navController.push(DEBRIEF_PAGE);
         break;
@@ -230,13 +268,11 @@ export class TestReportPage extends PracticeableBasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss()
-    .then(() => this.navController.push(DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(DEBRIEF_PAGE));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss()
-    .then(() => this.navController.push(DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(DEBRIEF_PAGE));
   }
 }
 
