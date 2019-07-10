@@ -52,7 +52,6 @@ import { ModalEvent } from './test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SetActivityCode } from '../../modules/tests/tests.actions';
 import { DEBRIEF_PAGE } from '../page-names.constants';
 
 interface TestReportPageState {
@@ -254,10 +253,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        // TODO consolidate common functionality from the other methods of termination
-        // First, look at other page terminations
-        // Dispatch the set activity code action if from test report page
-        this.store$.dispatch(new SetActivityCode(null));
         this.navController.push(DEBRIEF_PAGE);
         break;
     }
