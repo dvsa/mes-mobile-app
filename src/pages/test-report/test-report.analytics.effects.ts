@@ -1,15 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, concatMap, withLatestFrom, map, filter } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames,
+  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents,
 } from '../../providers/analytics/analytics.model';
 import {
   TEST_REPORT_VIEW_DID_ENTER,
   TestReportViewDidEnter,
 } from '../../pages/test-report/test-report.actions';
+import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { isTestReportPracticeTest } from '../../modules/tests/tests.selector';
+import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
+import {
+  manoeuvreCompetencyLabels,
+  manoeuvreTypeLabels,
+} from './components/manoeuvre-competency/manoeuvre-competency.constants';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -17,6 +27,7 @@ export class TestReportAnalyticsEffects {
   constructor(
     public analytics: AnalyticsProvider,
     private actions$: Actions,
+    private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
           .then(() => {})
@@ -34,4 +45,93 @@ export class TestReportAnalyticsEffects {
       return of();
     }),
   );
+
+  @Effect()
+  addDrivingFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_DRIVING_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddDrivingFault, boolean]) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.ADD_DRIVING_FAULT,
+        fullCompetencyLabels[action.payload.competency],
+      );
+      return of();
+    }),
+  );
+
+  @Effect()
+  addManoeuvreDrivingFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_MANOEUVRE_DRIVING_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreDrivingFault, boolean]) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.ADD_DRIVING_FAULT,
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+      );
+      return of();
+    }),
+  );
+
+  @Effect()
+  controlledStopAddDrivingFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.CONTROLLED_STOP_ADD_DRIVING_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.ADD_DRIVING_FAULT,
+        fullCompetencyLabels['outcomeControlledStop'],
+      );
+      return of();
+    }),
+  );
+
+  @Effect()
+  showMeQuestionDrivingFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
+    concatMap(() => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.ADD_DRIVING_FAULT,
+        'Show me question', // TODO remove magic string
+      );
+      return of();
+    }),
+  );
+
 }

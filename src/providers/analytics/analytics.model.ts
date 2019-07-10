@@ -41,6 +41,7 @@ export enum AnalyticsEventCategories {
     AUTHENTICATION = 'authentication',
     BACK_TO_OFFICE = 'back to office',
     POST_TEST = 'post-test',
+    TEST_REPORT = 'test report',
   }
 
 export enum AnalyticsEvents {
@@ -56,6 +57,15 @@ export enum AnalyticsEvents {
     SAVE_WRITE_UP = 'save write-up',
     SUBMIT_TEST = 'submit test',
     RESUME_WRITE_UP = 'resume write-up',
+    ADD_DRIVING_FAULT = 'add driving fault',
+    ADD_SERIOUS_FAULT = 'add serious fault',
+    ADD_DANGEROUS_FAULT = 'add dangerous fault',
+    REMOVE_DRIVING_FAULT = 'remove driving fault',
+    REMOVE_SERIOUS_FAULT = 'remove serious fault',
+    REMOVE_DANGEROUS_FAULT = 'remove dangerous fault',
+    SELECT_SERIOUS_MODE = 'select serious mode',
+    SELECT_DANGEROUS_MODE = 'select dangerous mode',
+    SELECT_REMOVE_MODE = 'select remove mode',
   }
 
 export enum AnalyticsDimensionIndices {
@@ -69,6 +79,7 @@ export enum AnalyticsDimensionIndices {
     NUMBER_OF_SERIOUS_FAULTS = 8,
     NUMBER_OF_DANGEROUS_FAULTS = 9,
     METHOD = 10,
+    USER_ID = 11,
   }
 
 export enum JournalRefreshModes {
