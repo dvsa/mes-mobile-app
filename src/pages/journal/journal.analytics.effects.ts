@@ -50,6 +50,8 @@ export class JournalAnalyticsEffects {
     switchMap(
       () => {
         this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, '');
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, '');
         return of();
       },
     ),
