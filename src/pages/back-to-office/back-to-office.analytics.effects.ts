@@ -41,6 +41,7 @@ export class BackToOfficeAnalyticsEffects {
     }),
   );
 
+  @Effect()
   deferWriteUpEffect$ = this.actions$.pipe(
     ofType(DEFER_WRITE_UP),
     withLatestFrom(

@@ -39,9 +39,21 @@ When('I start the test for {string}', (candidateName) => {
   });
 });
 
+When('I rekey a test for {string}', (candidateName) => {
+  const buttonElement = getElement(by.xpath(`//button/span/h3[text()[normalize-space(.) = "Rekey"]]
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+  clickElement(buttonElement);
+});
+
 When('I navigate to next day', () => {
   const nextDayButtonElement = getElement(by.id('next-day-container'));
   return clickElement(nextDayButtonElement);
+});
+
+When('I navigate to previous day', () => {
+  const previousDayButtonElement = getElement(by.id('previous-day-container'));
+  return clickElement(previousDayButtonElement);
 });
 
 Then('I have a special needs slot for {string}', (candidateName) => {
@@ -67,4 +79,12 @@ Then('I have a non-test slot for {string} with code {string} at {string}', (desc
   const slotLocator = getElement(by.xpath(`//ion-row[ion-col/div/time/div/h2[text() = '${time}']]
   [ion-col/h3[normalize-space(text()) = '${description}']][ion-col[h2[text() = '${code}']]]`));
   return expect(slotLocator.isPresent()).to.eventually.be.true;
+});
+
+Then('the test result for {string} is {string}', (candidateName, testResult) => {
+  const testResultElement = getElement(by.xpath(`//test-outcome//span[@class='outcome']/h2
+    [ancestor::ion-row/ion-col/ion-grid/ion-row/ion-col/candidate-link/div/button/span/
+    h3[text() = "${candidateName}"]]`));
+
+  return expect(testResultElement.getText()).to.eventually.equal(testResult);
 });
