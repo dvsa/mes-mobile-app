@@ -7,7 +7,7 @@ import { gzipSync } from 'zlib';
 import { catchError } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
-import { isNull, unset, isObject } from 'lodash';
+import { isNull, unset, isObject, cloneDeep } from 'lodash';
 
 export interface TestToSubmit {
   index: number;
@@ -31,7 +31,8 @@ export class TestSubmissionProvider {
   submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any>> =>
     this.httpClient.post(
       this.urlProvider.getTestResultServiceUrl(),
-      this.compressData(this.removeNullFieldsDeep(testToSubmit.payload)),
+      this.compressData(this.removeNullFieldsDeep(cloneDeep(testToSubmit.payload))),
+      // Using cloneDeep() to prevent the initialState of the reducers from being modified
       { observe: 'response' },
     )
     // Note: Catching failures here (the inner observable) is what allows us to coordinate
