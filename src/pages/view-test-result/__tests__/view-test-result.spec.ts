@@ -23,6 +23,7 @@ import { TestSummaryCardComponent } from '../components/test-summary-card/test-s
 import { ViewTestHeaderComponent } from '../components/view-test-header/view-test-header';
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
+import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -38,6 +39,7 @@ describe('ViewTestResultPage', () => {
         MockComponent(VehicleDetailsCardComponent),
         MockComponent(TestSummaryCardComponent),
         MockComponent(ViewTestHeaderComponent),
+        MockComponent(DebriefCardComponent),
       ],
       imports: [
         IonicModule,
