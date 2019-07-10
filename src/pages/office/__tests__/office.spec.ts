@@ -1,7 +1,21 @@
 import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  IonicModule,
+  NavController,
+  NavParams,
+  Config,
+  Platform,
+  AlertController,
+  ToastController,
+} from 'ionic-angular';
+import {
+  NavControllerMock,
+  NavParamsMock,
+  ConfigMock,
+  PlatformMock,
+  AlertControllerMock,
+} from 'ionic-mocks';
 import { ComponentsModule } from '../../../components/components.module';
 import { AppModule } from '../../../app/app.module';
 import { OfficePage } from '../office';
@@ -45,11 +59,13 @@ import {
   ActivityCodeDescription,
 } from '../components/activity-code/activity-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { CompleteTest } from '../office.actions';
+import { CompleteTest, ValidationError } from '../office.actions';
 import { WelshTestChanged } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { LanguagePreferencesComponent } from '../components/language-preference/language-preferences';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
 
-describe('OfficePage', () => {
+fdescribe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
   let component: OfficePage;
   let navController: NavController;
@@ -127,6 +143,7 @@ describe('OfficePage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AlertController, useClass: AlertControllerMock },
+        { provide: ToastController, useClass: ToastControllerMock },
       ],
     })
       .compileComponents()
@@ -339,5 +356,25 @@ describe('OfficePage', () => {
       component.isWelshChanged(isWelsh);
       expect(store$.dispatch).toHaveBeenCalledWith(new WelshTestChanged(isWelsh));
     });
+  });
+
+  describe('onSubmit', () => {
+    it('should dispatch the appropriate ValidationError actions', fakeAsync(() => {
+      component.form = new FormGroup({
+        requiredControl1: new FormControl(null, [Validators.required]),
+        requiredControl2: new FormControl(null, [Validators.required]),
+        notRequiredControl: new FormControl(null),
+      });
+
+      component.onSubmit();
+      tick();
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new ValidationError('requiredControl1 is blank'));
+      expect(store$.dispatch)
+        .toHaveBeenCalledWith(new ValidationError('requiredControl2 is blank'));
+      expect(store$.dispatch)
+        .not
+        .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
+    }));
   });
 });

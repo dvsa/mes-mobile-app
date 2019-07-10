@@ -15,6 +15,7 @@ import {
   OfficeViewDidEnter,
   CompleteTest,
   SavingWriteUpForLater,
+  ValidationError,
 } from './office.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
@@ -552,6 +553,12 @@ export class OfficePage extends PracticeableBasePageComponent {
     if (this.form.valid) {
       this.showFinishTestModal();
     } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          console.log('controlName', controlName);
+          this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        }
+      });
       this.createToast('Fill all mandatory fields');
       this.toast.present();
     }

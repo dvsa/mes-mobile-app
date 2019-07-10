@@ -4,7 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { SET_TEST_STATUS_SUBMITTED, SetTestStatusSubmitted } from './test-status/test-status.actions';
-import { withLatestFrom, tap } from 'rxjs/operators';
+import { withLatestFrom, switchMap, concatMap } from 'rxjs/operators';
 import { getTests } from './tests.reducer';
 import {
   AnalyticsEventCategories,
@@ -12,6 +12,8 @@ import {
   AnalyticsDimensionIndices,
 } from '../../providers/analytics/analytics.model';
 import { getTestById, isPassed } from './tests.selector';
+import { SEND_COMPLETED_TESTS_FAILURE, SendCompletedTestsFailure } from './tests.actions';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -36,7 +38,7 @@ export class TestsAnalyticsEffects {
         select(getTests),
       ),
     ),
-    tap(([action, tests]) => {
+    concatMap(([action, tests]) => {
       const setTestStatusSubmittedAction = action as SetTestStatusSubmitted;
       const test = getTestById(tests, setTestStatusSubmittedAction.slotId);
       const isTestPassed = isPassed(test);
@@ -53,7 +55,18 @@ export class TestsAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
-      console.log('submitted test', isTestPassed);
+      console.log('end of SET_TEST_STATUS_SUBMITTED effect');
+
+      return of();
+    }),
+  );
+
+  @Effect()
+  sendCompletedTestsFailureEffect$ = this.actions$.pipe(
+    ofType(SEND_COMPLETED_TESTS_FAILURE),
+    switchMap((action: SendCompletedTestsFailure) => {
+      this.analytics.logError('Error connecting to microservice (test submission)', 'No message');
+      return of();
     }),
   );
 }
