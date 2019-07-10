@@ -38,4 +38,22 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   instructorDetails: {
     registrationNumber: 1,
   },
+  accompaniment: {
+    ADI: true,
+    interpreter: true,
+    other: false,
+    supervisor: false,
+  },
+  passCompletion: {
+    passCertificateNumber: 'mock-pass-cert-number',
+    provisionalLicenceProvided: true,
+  },
+  testSummary: {
+    D255: false,
+    candidateDescription: 'mock-candidate-description',
+    debriefWitnessed: true,
+    independentDriving: 'Sat nav',
+    routeNumber: 12345,
+    weatherConditions: ['Bright / dry roads', 'Icy'],
+  },
 };
