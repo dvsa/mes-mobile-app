@@ -6,6 +6,7 @@ import { ExaminerDetailsCardComponent } from './examiner-details-card/examiner-d
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { TestSummaryCardComponent } from './test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
+import { DebriefCardComponent } from './debrief-card/debrief-card';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
     VehicleDetailsCardComponent,
     TestSummaryCardComponent,
     ViewTestHeaderComponent,
+    DebriefCardComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
     VehicleDetailsCardComponent,
     TestSummaryCardComponent,
     ViewTestHeaderComponent,
+    DebriefCardComponent,
   ],
 })
 export class ViewTestResultComponentsModule {}

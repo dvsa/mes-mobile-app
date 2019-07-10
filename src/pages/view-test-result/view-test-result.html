@@ -12,10 +12,11 @@
 
 <ion-content padding>
   <div *ngIf="isLoading === false">
-      <view-test-header [data]="getHeaderDetails()"></view-test-header>
-      <test-details-card [data]="getTestDetails()"></test-details-card>
-      <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
-      <vehicle-details-card [data]='getVehicleDetails()'></vehicle-details-card>
-      <test-summary-card [data]='getTestSummary()'></test-summary-card>
+    <view-test-header [data]="getHeaderDetails()"></view-test-header>
+    <test-details-card [data]="getTestDetails()"></test-details-card>
+    <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
+    <vehicle-details-card [data]='getVehicleDetails()'></vehicle-details-card>
+    <debrief-card [data]='{}'></debrief-card>
+    <test-summary-card [data]='getTestSummary()'></test-summary-card>
   </div>
 </ion-content>
