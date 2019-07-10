@@ -14,6 +14,7 @@ import {
 import { getTestById, isPassed } from './tests.selector';
 import { SEND_COMPLETED_TESTS_FAILURE, SendCompletedTestsFailure } from './tests.actions';
 import { of } from 'rxjs/observable/of';
+import { TestsModel } from './tests.model';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -38,9 +39,8 @@ export class TestsAnalyticsEffects {
         select(getTests),
       ),
     ),
-    concatMap(([action, tests]) => {
-      const setTestStatusSubmittedAction = action as SetTestStatusSubmitted;
-      const test = getTestById(tests, setTestStatusSubmittedAction.slotId);
+    concatMap(([action, tests]: [SetTestStatusSubmitted, TestsModel]) => {
+      const test = getTestById(tests, action.slotId);
       const isTestPassed = isPassed(test);
       const journalDataOfTest = test.journalData;
 

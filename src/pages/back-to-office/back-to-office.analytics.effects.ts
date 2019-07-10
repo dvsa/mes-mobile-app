@@ -10,11 +10,13 @@ import {
   BACK_TO_OFFICE_VIEW_DID_ENTER,
   BackToOfficeViewDidEnter,
   DEFER_WRITE_UP,
+  DeferWriteUp,
 } from './back-to-office.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
+import { JournalData } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class BackToOfficeAnalyticsEffects {
@@ -53,7 +55,7 @@ export class BackToOfficeAnalyticsEffects {
         select(getJournalData),
       ),
     ),
-    switchMap(([action, isPassed, journalDataOfTest]) => {
+    switchMap(([action, isPassed, journalDataOfTest]: [DeferWriteUp, boolean, JournalData]) => {
       this.analytics.logEvent(
         AnalyticsEventCategories.BACK_TO_OFFICE,
         AnalyticsEvents.DEFER_WRITE_UP,

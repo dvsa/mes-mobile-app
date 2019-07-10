@@ -6,13 +6,19 @@ import {
   AnalyticsScreenNames, AnalyticsDimensionIndices, AnalyticsEventCategories, AnalyticsEvents, AnalyticsErrorTypes,
 } from '../../providers/analytics/analytics.model';
 import {
-  OFFICE_VIEW_DID_ENTER, SAVING_WRITE_UP_FOR_LATER, VALIDATION_ERROR, ValidationError,
+  OFFICE_VIEW_DID_ENTER,
+  SAVING_WRITE_UP_FOR_LATER,
+  VALIDATION_ERROR,
+  ValidationError,
+  SavingWriteUpForLater,
+  OfficeViewDidEnter,
 } from '../../pages/office/office.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
 import { of } from 'rxjs/observable/of';
+import { JournalData } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class OfficeAnalyticsEffects {
@@ -39,7 +45,7 @@ export class OfficeAnalyticsEffects {
         select(isPassed),
       ),
     ),
-    switchMap(([action, isPassed]) => {
+    switchMap(([action, isPassed]: [OfficeViewDidEnter, boolean]) => {
       if (isPassed) {
         this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_TEST_SUMMARY);
       } else {
@@ -65,7 +71,7 @@ export class OfficeAnalyticsEffects {
         select(getJournalData),
       ),
     ),
-    switchMap(([action, isPassed, journalDataOfTest]) => {
+    switchMap(([action, isPassed, journalDataOfTest]: [SavingWriteUpForLater, boolean, JournalData]) => {
       this.analytics.logEvent(
         AnalyticsEventCategories.POST_TEST,
         AnalyticsEvents.SAVE_WRITE_UP,
@@ -91,11 +97,10 @@ export class OfficeAnalyticsEffects {
         select(isPassed),
       ),
     ),
-    switchMap(([action, isPassed]) => {
-      const validationErrorAction = action as ValidationError;
+    switchMap(([action, isPassed]: [ValidationError, boolean]) => {
       const screenName = isPassed ? AnalyticsScreenNames.PASS_TEST_SUMMARY : AnalyticsScreenNames.FAIL_TEST_SUMMARY;
       this.analytics.logError(
-        `${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`, validationErrorAction.errorMessage);
+        `${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`, action.errorMessage);
 
       return of();
     }),

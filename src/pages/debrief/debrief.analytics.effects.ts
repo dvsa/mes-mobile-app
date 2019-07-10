@@ -7,7 +7,7 @@ import {
   AnalyticsScreenNames,
 } from '../../providers/analytics/analytics.model';
 import {
-  DEBRIEF_VIEW_DID_ENTER,
+  DEBRIEF_VIEW_DID_ENTER, DebriefViewDidEnter,
 } from '../../pages/debrief/debrief.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -40,7 +40,7 @@ export class DebriefAnalyticsEffects {
         select(isPassed),
       ),
     ),
-    switchMap(([action, isPassed]) => {
+    switchMap(([action, isPassed]: [DebriefViewDidEnter, boolean]) => {
       if (isPassed) {
         this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_DEBRIEF);
       } else {
