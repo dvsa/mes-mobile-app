@@ -19,6 +19,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
+  AnalyticsErrorTypes,
 } from '../../../providers/analytics/analytics.model';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -772,4 +773,23 @@ describe('Test Report Analytics Effects', () => {
       });
     });
   });
+
+  describe('testTermination', () => {
+    it('should call logEvent for the termination event', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.testTermination$.subscribe((result) => {
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TERMINATION,
+          AnalyticsEvents.END_TEST,
+          AnalyticsErrorTypes.TERMINATE_TEST,
+        );
+      });
+    });
+  });
+
 });

@@ -92,4 +92,5 @@ export enum JournalRefreshModes {
 export enum AnalyticsErrorTypes {
     SUBMIT_FORM_ERROR = 'submit form error',
     VALIDATION_ERROR = 'validation error',
+    TERMINATE_TEST = 'Test report - legal requirements not met',
   }
