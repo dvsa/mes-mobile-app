@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ViewTestHeader } from './view-test-header.model';
+import { ViewTestHeaderModel } from './view-test-header.model';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 
 @Component({
@@ -9,7 +9,7 @@ import { ActivityCodes } from '../../../../shared/models/activity-codes';
 export class ViewTestHeaderComponent {
 
   @Input()
-  data: ViewTestHeader;
+  data: ViewTestHeaderModel;
 
   constructor() {}
 

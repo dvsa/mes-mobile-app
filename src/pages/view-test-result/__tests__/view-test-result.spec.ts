@@ -21,6 +21,8 @@ import { CompressionProviderMock } from '../../../providers/compression/__mocks_
 import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
 import { TestSummaryCardComponent } from '../components/test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from '../components/view-test-header/view-test-header';
+import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
+import { TestOutcome } from '../../../modules/tests/tests.constants';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -140,7 +142,21 @@ describe('ViewTestResultPage', () => {
         expect(result).toBeNull();
       });
     });
+    describe('getHeaderDetails', () => {
+      it('should return the correct data', () => {
+        component.testResult = categoryBTestResultMock;
+        const result: ViewTestHeaderModel = component.getHeaderDetails();
 
+        expect(result.activityCode).toBe('2');
+        expect(result.candidateName).toBe('Miss Doris Pearson');
+        expect(result.candidateDriverNumber).toBe('mock-driver-number');
+        expect(result.testOutcome).toBe(TestOutcome.Failed);
+      });
+      it('should return null when there is no test result', () => {
+        const result: ViewTestHeaderModel = component.getHeaderDetails();
+        expect(result).toBeNull();
+      });
+    });
   });
 
   describe('DOM', () => {

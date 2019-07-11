@@ -14,7 +14,7 @@ import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-d
 import { CompressionProvider } from '../../providers/compression/compression';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
 import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
-import { ViewTestHeader } from './components/view-test-header/view-test-header.model';
+import { ViewTestHeaderModel } from './components/view-test-header/view-test-header.model';
 import { getCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../modules/tests/tests.selector';
 
@@ -157,7 +157,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     };
   }
 
-  getHeaderDetails(): ViewTestHeader {
+  getHeaderDetails(): ViewTestHeaderModel {
+    if (!this.testResult) {
+      return null;
+    }
     return {
       candidateName: getCandidateName(this.testResult.journalData.candidate),
       candidateDriverNumber: this.testResult.journalData.candidate.driverNumber,

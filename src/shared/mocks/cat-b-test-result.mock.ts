@@ -16,6 +16,7 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
         firstName: 'Doris',
         lastName: 'Pearson',
       },
+      driverNumber: 'mock-driver-number',
     },
     examiner: {
       individualId: 1,
