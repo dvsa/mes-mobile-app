@@ -11,7 +11,11 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
       checkDigit: 4,
     },
     candidate: {
-
+      candidateName: {
+        title: 'Miss',
+        firstName: 'Doris',
+        lastName: 'Pearson',
+      },
     },
     examiner: {
       individualId: 1,
