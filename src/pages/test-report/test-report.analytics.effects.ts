@@ -25,7 +25,7 @@ import {
 export class TestReportAnalyticsEffects {
 
   constructor(
-    public analytics: AnalyticsProvider,
+    private analytics: AnalyticsProvider,
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
@@ -42,7 +42,7 @@ export class TestReportAnalyticsEffects {
     ofType(TEST_REPORT_VIEW_DID_ENTER),
     switchMap((action: TestReportViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
-      return of();
+      return of({});
     }),
   );
 
@@ -63,8 +63,9 @@ export class TestReportAnalyticsEffects {
         AnalyticsEventCategories.TEST_REPORT,
         AnalyticsEvents.ADD_DRIVING_FAULT,
         fullCompetencyLabels[action.payload.competency],
+        action.payload.newFaultCount,
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -85,8 +86,9 @@ export class TestReportAnalyticsEffects {
         AnalyticsEventCategories.TEST_REPORT,
         AnalyticsEvents.ADD_DRIVING_FAULT,
         `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -107,8 +109,9 @@ export class TestReportAnalyticsEffects {
         AnalyticsEventCategories.TEST_REPORT,
         AnalyticsEvents.ADD_DRIVING_FAULT,
         fullCompetencyLabels['outcomeControlledStop'],
+        1,
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -129,8 +132,9 @@ export class TestReportAnalyticsEffects {
         AnalyticsEventCategories.TEST_REPORT,
         AnalyticsEvents.ADD_DRIVING_FAULT,
         'Show me question', // TODO remove magic string
+        1,
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -152,7 +156,7 @@ export class TestReportAnalyticsEffects {
         AnalyticsEvents.REMOVE_DRIVING_FAULT,
         fullCompetencyLabels[action.payload.competency],
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -174,7 +178,7 @@ export class TestReportAnalyticsEffects {
         AnalyticsEvents.REMOVE_DRIVING_FAULT,
         `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -196,7 +200,7 @@ export class TestReportAnalyticsEffects {
         AnalyticsEvents.REMOVE_FAULT,
         fullCompetencyLabels['outcomeControlledStop'],
       );
-      return of();
+      return of({});
     }),
   );
 
@@ -218,7 +222,7 @@ export class TestReportAnalyticsEffects {
         AnalyticsEvents.REMOVE_FAULT,
         'Show me question', // TODO remove magic string
       );
-      return of();
+      return of({});
     }),
   );
 

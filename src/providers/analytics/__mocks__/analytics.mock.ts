@@ -11,7 +11,7 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
       resolve();
     })
 
-  logEvent(category: string, event: string, params?: any) {}
+  logEvent(category: string, event: string, label?: string, value?: number) {}
 
   addCustomDimension(key: number, value: string) {}
 
@@ -20,4 +20,6 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
   logException(message: string, fatal: boolean) {}
 
   setUserId(userId: string) {}
+
+  setDeviceId(deviceId: string) {}
 }
