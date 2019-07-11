@@ -1,4 +1,4 @@
-import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../../../components/tick-indicator/tick-indicator';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
