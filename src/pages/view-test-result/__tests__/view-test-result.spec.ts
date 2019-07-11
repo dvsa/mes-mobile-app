@@ -126,10 +126,10 @@ describe('ViewTestResultPage', () => {
         expect(result.D255).toBeFalsy();
         expect(result.accompaniment).toEqual(['ADI', 'Interpreter']);
         expect(result.candidateDescription).toBe('mock-candidate-description');
-        expect(result.debriefWitnessed).toBeTruthy();
+        expect(result.debriefWitnessed).toBe(true);
         expect(result.independentDriving).toBe('Sat nav');
         expect(result.passCertificateNumber).toBe('mock-pass-cert-number');
-        expect(result.provisionalLicenceProvided).toBeTruthy();
+        expect(result.provisionalLicenceProvided).toBe(true);
         expect(result.routeNumber).toBe(12345);
         expect(result.weatherConditions).toEqual(['Bright / dry roads', 'Icy']);
       });
