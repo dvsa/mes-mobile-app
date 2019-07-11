@@ -78,6 +78,17 @@
   <p *ngIf="searchResults.length > 0" class="results-message">
     Displaying <span>{{searchResults.length}}</span> results
   </p>
-  <search-result *ngFor="let result of searchResults" [searchResult]=result></search-result>
 
+  <ion-list [virtualScroll]="searchResults">
+    <ion-item *virtualItem="let result">
+      <search-result [searchResult]=result></search-result>
+    </ion-item>
+  </ion-list>
+
+  <!-- <ion-list>
+    <ion-item *ngFor="let result of searchResults">
+      <search-result [searchResult]=result></search-result>
+    </ion-item>
+  </ion-list> -->
+  
 </ion-content>
