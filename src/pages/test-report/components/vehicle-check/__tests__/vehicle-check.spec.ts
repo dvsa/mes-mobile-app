@@ -7,7 +7,7 @@ import { testReportReducer } from '../../../test-report.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
-import { TickIndicatorComponent } from '../../tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../../../components/tick-indicator/tick-indicator';
 import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
 import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
 import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';

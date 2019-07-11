@@ -22,7 +22,7 @@ import { CompetencyButtonComponent } from '../components/competency-button/compe
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
-import { TickIndicatorComponent } from '../components/tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../components/tick-indicator/tick-indicator';
 import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';

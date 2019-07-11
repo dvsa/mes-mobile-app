@@ -8,7 +8,6 @@ import { ManoeuvresPopoverComponent } from '../components/manoeuvres-popover/man
 import { ManoeuvresComponent } from '../components/manoeuvres/manoeuvres';
 import { CompetencyComponent } from '../components/competency/competency';
 import { CompetencyButtonComponent } from '../components/competency-button/competency-button';
-import { TickIndicatorComponent } from '../components/tick-indicator/tick-indicator';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
 import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { SeriousTooltipComponent } from '../components/serious-tooltip/serious-tooltip';
@@ -31,7 +30,6 @@ import { TestReportModalModule } from './test-report-modal/test-report-modal.mod
     ManoeuvresComponent,
     CompetencyComponent,
     CompetencyButtonComponent,
-    TickIndicatorComponent,
     DrivingFaultSummaryComponent,
     ToolbarComponent,
     SeriousTooltipComponent,
@@ -58,7 +56,6 @@ import { TestReportModalModule } from './test-report-modal/test-report-modal.mod
     ManoeuvresComponent,
     CompetencyComponent,
     CompetencyButtonComponent,
-    TickIndicatorComponent,
     DrivingFaultSummaryComponent,
     ToolbarComponent,
     SeriousTooltipComponent,
