@@ -47,7 +47,7 @@ describe('Test Report Analytics Effects', () => {
     store$ = TestBed.get(Store);
   });
 
-  fdescribe('testReportViewDidEnter', () => {
+  describe('testReportViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', () => {
       // ARRANGE
       spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
@@ -60,7 +60,7 @@ describe('Test Report Analytics Effects', () => {
     });
   });
 
-  fdescribe('addDrivingFault', () => {
+  describe('addDrivingFault', () => {
 
     it('should call logEvent for this competency', () => {
       // ARRANGE
