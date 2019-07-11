@@ -182,6 +182,7 @@ describe('Test Report Effects', () => {
       // ASSERT
       effects.terminateTestFromTestReport$.subscribe((result) => {
         expect(result).toEqual(new testsActions.SetActivityCode(null));
+        done();
       });
     });
   });

@@ -772,5 +772,4 @@ describe('Test Report Analytics Effects', () => {
       });
     });
   });
-
 });
