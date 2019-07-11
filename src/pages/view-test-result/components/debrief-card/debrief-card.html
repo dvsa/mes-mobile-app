@@ -1,6 +1,6 @@
 <ion-card *ngIf="!shouldHideCard()">
   <ion-card-header>
-    <h4>Vehicle details</h4>
+    <h4>Debrief</h4>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
@@ -11,35 +11,34 @@
         <ion-col col-56>
           <ion-grid>
             <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.legalRequirements.normalStart1'></tick-indicator>
+              </ion-col>
               <ion-col>
-                <span class='tickwrapper'>
-                  <tick-indicator [ticked]='false'></tick-indicator>
-                </span>
-                <span class="mes-data">Normal stop (NS)</span>
+                <span class="mes-data">Normal start (NS)</span>
               </ion-col>
             </ion-row>
             <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.legalRequirements.normalStart2'></tick-indicator>
+              </ion-col>
               <ion-col>
-                <span class='tickwrapper'>
-                  <span class='tickwrapper'>
-                    <tick-indicator [ticked]='false'></tick-indicator>
-                  </span> </span>
-                  <span class="mes-data">Normal stop (NS)</span>
+                <span class="mes-data">Normal start (NS)</span>
               </ion-col>
             </ion-row>
             <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.legalRequirements.angledStart'></tick-indicator>
+              </ion-col>
               <ion-col>
-                <span class='tickwrapper'>
-                  <tick-indicator [ticked]='false'></tick-indicator>
-                </span>
                 <span class="mes-data">Angled start (AS)</span>
               </ion-col>
             </ion-row>
             <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.legalRequirements.hillStart'></tick-indicator>
+              </ion-col>
               <ion-col>
-                <span class='tickwrapper'>
-                  <tick-indicator [ticked]='false'></tick-indicator>
-                </span>
                 <span class="mes-data">Hill Start (HS) / Designated Start (DS)</span>
               </ion-col>
             </ion-row>

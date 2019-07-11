@@ -17,6 +17,7 @@ import { TestSummaryCardModel } from './components/test-summary-card/test-summar
 import { ViewTestHeaderModel } from './components/view-test-header/view-test-header.model';
 import { getCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../modules/tests/tests.selector';
+import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 
 @IonicPage()
 @Component({
@@ -166,6 +167,16 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       candidateDriverNumber: this.testResult.journalData.candidate.driverNumber,
       activityCode: this.testResult.activityCode,
       testOutcome: getTestOutcomeText(this.testResult),
+    };
+  }
+
+  getDebrief(): DebriefCardModel {
+    if (!this.testResult) {
+      return null;
+    }
+
+    return {
+      legalRequirements: this.testResult.testData.testRequirements,
     };
   }
 }
