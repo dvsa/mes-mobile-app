@@ -6,7 +6,10 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsErrorTypes,
+  AnalyticsScreenNames,
+  AnalyticsEventCategories,
+  AnalyticsEvents,
+  AnalyticsLabels,
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
@@ -564,7 +567,7 @@ export class TestReportAnalyticsEffects {
       this.analytics.logEvent(
         AnalyticsEventCategories.TERMINATION,
         AnalyticsEvents.END_TEST,
-        AnalyticsErrorTypes.TERMINATE_TEST,
+        AnalyticsLabels.TERMINATE_TEST,
       );
       return of();
     }),

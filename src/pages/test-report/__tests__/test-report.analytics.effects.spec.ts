@@ -19,7 +19,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsErrorTypes,
+  AnalyticsLabels,
 } from '../../../providers/analytics/analytics.model';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -786,7 +786,7 @@ describe('Test Report Analytics Effects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TERMINATION,
           AnalyticsEvents.END_TEST,
-          AnalyticsErrorTypes.TERMINATE_TEST,
+          AnalyticsLabels.TERMINATE_TEST,
         );
       });
     });
