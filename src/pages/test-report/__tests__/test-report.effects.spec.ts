@@ -170,4 +170,19 @@ describe('Test Report Effects', () => {
     });
 
   });
+
+  describe('terminateTestReport', () => {
+    beforeEach(() => {
+      store$.dispatch(new journalActions.StartTest(123456));
+    });
+
+    it('should dispatch an action terminating the test', (done) => {
+      // ACT
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.terminateTestFromTestReport$.subscribe((result) => {
+        expect(result).toEqual(new testsActions.SetActivityCode(null));
+      });
+    });
+  });
 });
