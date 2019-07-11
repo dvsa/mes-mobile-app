@@ -20,6 +20,7 @@ import { CompressionProvider } from '../../../providers/compression/compression'
 import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
 import { TestSummaryCardModel } from '../components/test-summary-card/test-summary-card-model';
 import { TestSummaryCardComponent } from '../components/test-summary-card/test-summary-card';
+import { ViewTestHeaderComponent } from '../components/view-test-header/view-test-header';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -34,6 +35,7 @@ describe('ViewTestResultPage', () => {
         MockComponent(ExaminerDetailsCardComponent),
         MockComponent(VehicleDetailsCardComponent),
         MockComponent(TestSummaryCardComponent),
+        MockComponent(ViewTestHeaderComponent),
       ],
       imports: [
         IonicModule,
@@ -152,6 +154,7 @@ describe('ViewTestResultPage', () => {
     });
     it('should show the cards when the data is not loading', () => {
       component.isLoading = false;
+      component.testResult = categoryBTestResultMock;
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('test-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).not.toBeNull();
