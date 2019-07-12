@@ -69,6 +69,96 @@ describe('Test Report Analytics Effects', () => {
     });
   });
 
+  describe('toggleRemoveFaultMode', () => {
+    it('should call logEvent for this competency', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions.next(new testReportActions.ToggleRemoveFaultMode());
+      // ASSERT
+      effects.toggleRemoveFaultMode$.subscribe((result) => {
+        expect(result).toEqual({});
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SELECT_REMOVE_MODE,
+        );
+      });
+    });
+    it('should not call logEvent for this competency when it is a practice test', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions.next(new testReportActions.ToggleRemoveFaultMode());
+      // ASSERT
+      effects.toggleRemoveFaultMode$.subscribe((result) => {
+        expect(result).toEqual({});
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('toggleSeriousFaultMode', () => {
+    it('should call logEvent for this competency', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions.next(new testReportActions.ToggleSeriousFaultMode());
+      // ASSERT
+      effects.toggleSeriousFaultMode$.subscribe((result) => {
+        expect(result).toEqual({});
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SELECT_SERIOUS_MODE,
+        );
+      });
+    });
+    it('should not call logEvent for this competency when it is a practice test', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions.next(new testReportActions.ToggleSeriousFaultMode());
+      // ASSERT
+      effects.toggleSeriousFaultMode$.subscribe((result) => {
+        expect(result).toEqual({});
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('toggleDangerousFaultMode', () => {
+    it('should call logEvent for this competency', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions.next(new testReportActions.ToggleDangerousFaultMode());
+      // ASSERT
+      effects.toggleDangerousFaultMode$.subscribe((result) => {
+        expect(result).toEqual({});
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SELECT_DANGEROUS_MODE,
+        );
+      });
+    });
+    it('should not call logEvent for this competency when it is a practice test', () => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions.next(new testReportActions.ToggleDangerousFaultMode());
+      // ASSERT
+      effects.toggleDangerousFaultMode$.subscribe((result) => {
+        expect(result).toEqual({});
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+      });
+    });
+  });
+
   describe('addDrivingFault', () => {
     it('should call logEvent for this competency', () => {
       // ARRANGE

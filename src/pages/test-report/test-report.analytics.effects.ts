@@ -8,11 +8,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents,
 } from '../../providers/analytics/analytics.model';
-import {
-  TEST_REPORT_VIEW_DID_ENTER,
-  TestReportViewDidEnter,
-} from '../../pages/test-report/test-report.actions';
-import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
+import * as testReportActions from '../../pages/test-report/test-report.actions';
+import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { isTestReportPracticeTest } from '../../modules/tests/tests.selector';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -39,9 +36,69 @@ export class TestReportAnalyticsEffects {
 
   @Effect()
   testReportViewDidEnter$ = this.actions$.pipe(
-    ofType(TEST_REPORT_VIEW_DID_ENTER),
-    switchMap((action: TestReportViewDidEnter) => {
+    ofType(testReportActions.TEST_REPORT_VIEW_DID_ENTER),
+    switchMap((action: testReportActions.TestReportViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
+      return of({});
+    }),
+  );
+
+  @Effect()
+  toggleRemoveFaultMode$ = this.actions$.pipe(
+    ofType(testReportActions.TOGGLE_REMOVE_FAULT_MODE),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testReportActions.ToggleRemoveFaultMode, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SELECT_REMOVE_MODE,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  toggleSeriousFaultMode$ = this.actions$.pipe(
+    ofType(testReportActions.TOGGLE_SERIOUS_FAULT_MODE),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testReportActions.ToggleSeriousFaultMode, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SELECT_SERIOUS_MODE,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  toggleDangerousFaultMode$ = this.actions$.pipe(
+    ofType(testReportActions.TOGGLE_DANGEROUS_FAULT_MODE),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testReportActions.ToggleDangerousFaultMode, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.SELECT_DANGEROUS_MODE,
+        );
+      }
       return of({});
     }),
   );
