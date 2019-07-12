@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DebriefCardModel } from './debrief-card.model';
+import { flattenArray } from '../../view-test-result-helpers';
 
 @Component({
   selector: 'debrief-card',
@@ -15,5 +16,7 @@ export class DebriefCardComponent {
   shouldHideCard(): boolean {
     return false;
   }
+
+  getFlattenArray = (data: string[]): string => flattenArray(data);
 
 }

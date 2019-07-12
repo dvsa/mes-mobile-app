@@ -18,6 +18,7 @@ import { ViewTestHeaderModel } from './components/view-test-header/view-test-hea
 import { getCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
+import { manoeuvreTypeLabels } from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
 
 @IonicPage()
 @Component({
@@ -177,6 +178,45 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
 
     return {
       legalRequirements: this.testResult.testData.testRequirements,
+      manoeuvres: this.getManoeuvres(),
+      controlledStop: this.testResult.testData.controlledStop.selected,
+      ecoControl: this.testResult.testData.eco.adviceGivenControl,
+      ecoPlanning: this.testResult.testData.eco.adviceGivenPlanning,
+      eta: this.getETA(),
     };
+  }
+
+  getManoeuvres(): string [] {
+    const manoeuvres = [];
+
+    if (this.testResult.testData.manoeuvres.forwardPark.selected) {
+      manoeuvres.push(manoeuvreTypeLabels.forwardPark);
+    }
+    if (this.testResult.testData.manoeuvres.reverseParkCarpark.selected) {
+      manoeuvres.push(manoeuvreTypeLabels.reverseParkCarpark);
+    }
+    if (this.testResult.testData.manoeuvres.reverseParkRoad.selected) {
+      manoeuvres.push(manoeuvreTypeLabels.reverseParkRoad);
+    }
+    if (this.testResult.testData.manoeuvres.reverseRight.selected) {
+      manoeuvres.push(manoeuvreTypeLabels.reverseRight);
+    }
+
+    return manoeuvres;
+  }
+
+  getETA(): string[] {
+    const eta: string[] = [];
+
+    if (this.testResult.testData.ETA.physical) {
+      eta.push('Physical');
+    }
+    if (this.testResult.testData.ETA.verbal) {
+      eta.push('Verbal');
+    }
+    if (eta.length === 0) {
+      eta.push('None');
+    }
+    return [];
   }
 }

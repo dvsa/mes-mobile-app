@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TestSummaryCardModel } from './test-summary-card-model';
+import { convertBooleanToString, flattenArray } from '../../view-test-result-helpers';
 
 @Component({
   selector: 'test-summary-card',
@@ -26,27 +27,8 @@ export class TestSummaryCardComponent {
     );
   }
 
-  flattenArray(array: string[]): string {
-    let result = '';
+  getConvertBooleanToString = (data: boolean): string => convertBooleanToString(data);
 
-    array.forEach((value, index) => {
-      if (index === 0) {
-        result = result.concat(value);
-        return;
-      }
-
-      if (index === array.length - 1) {
-        result = result.concat(` and ${ value }`);
-        return;
-      }
-      result = result.concat(`, ${value}`);
-    });
-
-    return result;
-  }
-
-  convertBooleanToString(value: boolean): string {
-    return value ? 'Yes' : 'No';
-  }
+  getFlattenArray = (data: string[]): string => flattenArray(data);
 
 }

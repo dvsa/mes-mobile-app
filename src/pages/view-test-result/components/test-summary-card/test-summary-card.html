@@ -9,7 +9,7 @@
           <label>Accompanied by</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{ flattenArray(data.accompaniment) }}</span>
+          <span class="mes-data">{{ getFlattenArray(data.accompaniment) }}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mes-data-row-with-separator" *ngIf="data.provisionalLicenceProvided">
@@ -17,7 +17,7 @@
           <label>Licence provided</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{ convertBooleanToString(data.provisionalLicenceProvided) }}</span>
+          <span class="mes-data">{{ getConvertBooleanToString(data.provisionalLicenceProvided) }}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mes-data-row-with-separator" *ngIf="data.passCertificateNumber">
@@ -57,7 +57,7 @@
           <label>Debrief witnessed</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{ convertBooleanToString(data.debriefWitnessed) }}</span>
+          <span class="mes-data">{{ getConvertBooleanToString(data.debriefWitnessed) }}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mes-data-row-with-separator" *ngIf="data.weatherConditions">
@@ -65,7 +65,7 @@
           <label>Weather conditions</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{ flattenArray(data.weatherConditions) }}</span>
+          <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mes-data-row-with-separator" *ngIf="data.D255">
@@ -73,7 +73,7 @@
           <label>D255</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{ convertBooleanToString(data.D255) }}</span>
+          <span class="mes-data">{{ getConvertBooleanToString(data.D255) }}</span>
         </ion-col>
       </ion-row>
     </ion-grid>
