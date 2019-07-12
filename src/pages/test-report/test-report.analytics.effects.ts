@@ -17,6 +17,7 @@ import {
   manoeuvreCompetencyLabels,
   manoeuvreTypeLabels,
 } from './components/manoeuvre-competency/manoeuvre-competency.constants';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -39,7 +40,7 @@ export class TestReportAnalyticsEffects {
     ofType(testReportActions.TEST_REPORT_VIEW_DID_ENTER),
     switchMap((action: testReportActions.TestReportViewDidEnter) => {
       this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
-      return of({});
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -58,8 +59,9 @@ export class TestReportAnalyticsEffects {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_REMOVE_MODE,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -78,8 +80,9 @@ export class TestReportAnalyticsEffects {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_SERIOUS_MODE,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -98,8 +101,9 @@ export class TestReportAnalyticsEffects {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_DANGEROUS_MODE,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -122,8 +126,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels[action.payload.competency],
           action.payload.newFaultCount,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -146,8 +151,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels[action.payload],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -170,8 +176,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels[action.payload],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -194,8 +201,9 @@ export class TestReportAnalyticsEffects {
           `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -218,8 +226,9 @@ export class TestReportAnalyticsEffects {
           `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -242,8 +251,9 @@ export class TestReportAnalyticsEffects {
           `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -266,8 +276,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels['outcomeControlledStop'],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -290,8 +301,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels['outcomeControlledStop'],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -314,8 +326,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels['outcomeControlledStop'],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -338,8 +351,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -362,8 +376,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -386,8 +401,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -410,8 +426,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels[action.payload.competency],
           action.payload.newFaultCount,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -434,8 +451,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels[action.payload],
           0,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -458,8 +476,9 @@ export class TestReportAnalyticsEffects {
           fullCompetencyLabels[action.payload],
           0,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -481,8 +500,9 @@ export class TestReportAnalyticsEffects {
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
           `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -504,8 +524,9 @@ export class TestReportAnalyticsEffects {
           AnalyticsEvents.REMOVE_FAULT,
           fullCompetencyLabels['outcomeControlledStop'],
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 
@@ -527,8 +548,9 @@ export class TestReportAnalyticsEffects {
           AnalyticsEvents.REMOVE_FAULT,
           fullCompetencyLabels['showMeQuestion'],
         );
+        return of(new AnalyticRecorded());
       }
-      return of({});
+      return of(new AnalyticNotRecorded());
     }),
   );
 

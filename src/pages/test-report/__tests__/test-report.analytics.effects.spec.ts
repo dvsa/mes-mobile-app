@@ -27,6 +27,7 @@ import {
   manoeuvreTypeLabels,
   manoeuvreCompetencyLabels,
 } from '../components/manoeuvre-competency/manoeuvre-competency.constants';
+import { AnalyticRecorded, AnalyticNotRecorded } from '../../../providers/analytics/analytics.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -63,7 +64,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.TestReportViewDidEnter());
       // ASSERT
       effects.testReportViewDidEnter$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledWith(AnalyticsScreenNames.TEST);
       });
     });
@@ -78,7 +79,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_REMOVE_MODE,
@@ -93,7 +94,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -108,7 +109,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_SERIOUS_MODE,
@@ -123,7 +124,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -138,7 +139,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_DANGEROUS_MODE,
@@ -153,7 +154,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -171,7 +172,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -191,7 +192,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -206,7 +207,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -223,7 +224,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -238,7 +239,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -255,7 +256,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -273,7 +274,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -294,7 +295,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -312,7 +313,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -333,7 +334,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -351,7 +352,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -372,7 +373,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -387,7 +388,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -404,7 +405,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -419,7 +420,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -436,7 +437,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -451,7 +452,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopAddDangerousFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -468,7 +469,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopAddDangerousFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -483,7 +484,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -500,7 +501,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -515,7 +516,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -532,7 +533,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -547,7 +548,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -564,7 +565,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -582,7 +583,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.removeDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
@@ -602,7 +603,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.removeDrivingFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -617,7 +618,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_SERIOUS_FAULT,
@@ -634,7 +635,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -649,7 +650,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DANGEROUS_FAULT,
@@ -666,7 +667,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -684,7 +685,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.removeManoeuvreFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
@@ -704,7 +705,7 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.removeManoeuvreFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -719,7 +720,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_FAULT,
@@ -735,7 +736,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
@@ -750,7 +751,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_FAULT,
@@ -766,7 +767,7 @@ describe('Test Report Analytics Effects', () => {
       actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
-        expect(result).toEqual({});
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
       });
     });
