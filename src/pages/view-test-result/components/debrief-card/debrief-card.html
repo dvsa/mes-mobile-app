@@ -45,8 +45,65 @@
           </ion-grid>
         </ion-col>
       </ion-row>
-
-
+      <ion-row class="mes-data-row-with-separator">
+        <ion-col col-40>
+          <label>Manoeuvre(s)</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{getFlattenArray(data.manoeuvres)}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator">
+        <ion-col col-40>
+          <label>Controlled Stop</label>
+        </ion-col>
+        <ion-col col-56>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.controlledStop'></tick-indicator>
+              </ion-col>
+              <ion-col>
+                <span class="mes-data" *ngIf="data.controlledStop">Completed</span>
+                <span class="mes-data" *ngIf="!data.controlledStop">Not Completed</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator">
+        <ion-col col-40>
+          <label>Eco</label>
+        </ion-col>
+        <ion-col col-56>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.ecoControl'></tick-indicator>
+              </ion-col>
+              <ion-col>
+                <span class="mes-data">Control</span>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-7>
+                <tick-indicator [ticked]='data.ecoPlanning'></tick-indicator>
+              </ion-col>
+              <ion-col>
+                <span class="mes-data">Planning</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>ETA</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{getFlattenArray(data.eta)}}</span>
+          </ion-col>
+        </ion-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>
