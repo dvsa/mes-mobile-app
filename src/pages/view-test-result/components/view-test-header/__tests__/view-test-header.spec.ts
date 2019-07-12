@@ -50,9 +50,4 @@ describe('ViewTestHeaderComponent', () => {
       });
     });
   });
-
-  describe('DOM', () => {
-
-  });
-
 });
