@@ -40,4 +40,5 @@ export enum fullCompetencyLabels {
   positionNormalStops = 'Position/normal stop',
   awarenessPlanning = 'Awareness planning',
   outcomeControlledStop = 'Controlled stop',
+  showMeQuestion = 'Show me question',
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, concatMap, withLatestFrom, map, filter } from 'rxjs/operators';
+import { switchMap, concatMap, withLatestFrom, map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
@@ -57,14 +57,15 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
     concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddDrivingFault, boolean]) => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.ADD_DRIVING_FAULT,
-        fullCompetencyLabels[action.payload.competency],
-        action.payload.newFaultCount,
-      );
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DRIVING_FAULT,
+          fullCompetencyLabels[action.payload.competency],
+          action.payload.newFaultCount,
+        );
+      }
       return of({});
     }),
   );
@@ -80,14 +81,15 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
     concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreDrivingFault, boolean]) => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.ADD_DRIVING_FAULT,
-        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
-        1,
-      );
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DRIVING_FAULT,
+          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+          1,
+        );
+      }
       return of({});
     }),
   );
@@ -103,14 +105,15 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
-    concatMap(() => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.ADD_DRIVING_FAULT,
-        fullCompetencyLabels['outcomeControlledStop'],
-        1,
-      );
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopAddDrivingFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DRIVING_FAULT,
+          fullCompetencyLabels['outcomeControlledStop'],
+          1,
+        );
+      }
       return of({});
     }),
   );
@@ -126,14 +129,15 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
-    concatMap(() => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.ADD_DRIVING_FAULT,
-        'Show me question', // TODO remove magic string
-        1,
-      );
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionDrivingFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DRIVING_FAULT,
+          fullCompetencyLabels['showMeQuestion'],
+          1,
+        );
+      }
       return of({});
     }),
   );
@@ -149,19 +153,20 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
     concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveDrivingFault, boolean]) => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.REMOVE_DRIVING_FAULT,
-        fullCompetencyLabels[action.payload.competency],
-      );
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_DRIVING_FAULT,
+          fullCompetencyLabels[action.payload.competency],
+        );
+      }
       return of({});
     }),
   );
 
   @Effect()
-  removeManoeuvreDrivingFault$ = this.actions$.pipe(
+  removeManoeuvreFault$ = this.actions$.pipe(
     ofType(
       testDataActions.REMOVE_MANOEUVRE_FAULT,
     ),
@@ -171,13 +176,14 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
     concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveManoeuvreFault, boolean]) => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.REMOVE_DRIVING_FAULT,
-        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
-      );
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_DRIVING_FAULT,
+          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        );
+      }
       return of({});
     }),
   );
@@ -193,13 +199,14 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
-    concatMap(() => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.REMOVE_FAULT,
-        fullCompetencyLabels['outcomeControlledStop'],
-      );
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopRemoveFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_FAULT,
+          fullCompetencyLabels['outcomeControlledStop'],
+        );
+      }
       return of({});
     }),
   );
@@ -215,13 +222,14 @@ export class TestReportAnalyticsEffects {
         map(isTestReportPracticeTest),
       ),
     ),
-    filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
-    concatMap(() => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.REMOVE_FAULT,
-        'Show me question', // TODO remove magic string
-      );
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionRemoveFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_FAULT,
+          fullCompetencyLabels['showMeQuestion'],
+        );
+      }
       return of({});
     }),
   );
