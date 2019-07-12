@@ -71,6 +71,54 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  addSeriousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_SERIOUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddSeriousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SERIOUS_FAULT,
+          fullCompetencyLabels[action.payload],
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  addDangerousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_DANGEROUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddDangerousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DANGEROUS_FAULT,
+          fullCompetencyLabels[action.payload],
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
   addManoeuvreDrivingFault$ = this.actions$.pipe(
     ofType(
       testDataActions.ADD_MANOEUVRE_DRIVING_FAULT,
@@ -86,6 +134,54 @@ export class TestReportAnalyticsEffects {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
+          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  addManoeuvreSeriousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreSeriousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SERIOUS_FAULT,
+          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  addManoeuvreDangerousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreDangerousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DANGEROUS_FAULT,
           `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
           1,
         );
@@ -119,6 +215,54 @@ export class TestReportAnalyticsEffects {
   );
 
   @Effect()
+  controlledStopAddSeriousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopAddSeriousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SERIOUS_FAULT,
+          fullCompetencyLabels['outcomeControlledStop'],
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  controlledStopAddDangerousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopAddDangerousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DANGEROUS_FAULT,
+          fullCompetencyLabels['outcomeControlledStop'],
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
   showMeQuestionDrivingFault$ = this.actions$.pipe(
     ofType(
       testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
@@ -134,6 +278,54 @@ export class TestReportAnalyticsEffects {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
+          fullCompetencyLabels['showMeQuestion'],
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  showMeQuestionSeriousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionSeriousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_SERIOUS_FAULT,
+          fullCompetencyLabels['showMeQuestion'],
+          1,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  showMeQuestionDangerousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionDangerousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.ADD_DANGEROUS_FAULT,
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
@@ -159,6 +351,55 @@ export class TestReportAnalyticsEffects {
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
           fullCompetencyLabels[action.payload.competency],
+          action.payload.newFaultCount,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  removeSeriousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.REMOVE_SERIOUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveSeriousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_SERIOUS_FAULT,
+          fullCompetencyLabels[action.payload],
+          0,
+        );
+      }
+      return of({});
+    }),
+  );
+
+  @Effect()
+  removeDangerousFault$ = this.actions$.pipe(
+    ofType(
+      testDataActions.REMOVE_DANGEROUS_FAULT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isTestReportPracticeTest),
+      ),
+    ),
+    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveDangerousFault, boolean]) => {
+      if (!isTestReportPracticeTest) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.REMOVE_DANGEROUS_FAULT,
+          fullCompetencyLabels[action.payload],
+          0,
         );
       }
       return of({});
