@@ -49,6 +49,13 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     enableTestReportPracticeMode: true,
     enableEndToEndPracticeMode: true,
     enableLogoutButton: true,
+    testPermissionPeriods: [
+      {
+        testCategory: 'B',
+        from: '2019-01-01',
+        to: null,
+      },
+    ],
   },
   tests: {
     testSubmissionUrl: 'https://www.example.com/api/v1/test-result',

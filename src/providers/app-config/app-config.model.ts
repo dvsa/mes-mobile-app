@@ -26,6 +26,7 @@ export type AppConfig = {
     enableTestReportPracticeMode: boolean,
     enableEndToEndPracticeMode: boolean,
     enableLogoutButton: boolean,
+    testPermissionPeriods: TestPermissionPeriod[],
   },
   tests: {
     testSubmissionUrl: string,
@@ -36,3 +37,9 @@ export type AppConfig = {
     autoSendInterval: number,
   },
 };
+
+export interface TestPermissionPeriod {
+  testCategory: string;
+  from: string;
+  to: string | null;
+}
