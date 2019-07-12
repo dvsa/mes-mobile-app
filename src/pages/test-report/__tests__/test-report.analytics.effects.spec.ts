@@ -31,12 +31,12 @@ import {
 describe('Test Report Analytics Effects', () => {
 
   let effects: TestReportAnalyticsEffects;
-  let actions: ReplaySubject<any>;
+  let actions$: ReplaySubject<any>;
   let analyticsProviderMock;
   let store$: Store<StoreModel>;
 
   beforeEach(() => {
-    actions = new ReplaySubject(1);
+    actions$ = new ReplaySubject(1);
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
@@ -45,7 +45,7 @@ describe('Test Report Analytics Effects', () => {
       ],
       providers: [
         TestReportAnalyticsEffects,
-        provideMockActions(() => actions),
+        provideMockActions(() => actions$),
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         Store,
       ],
@@ -60,7 +60,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
       // ACT
-      actions.next(new testReportActions.TestReportViewDidEnter());
+      actions$.next(new testReportActions.TestReportViewDidEnter());
       // ASSERT
       effects.testReportViewDidEnter$.subscribe((result) => {
         expect(result).toEqual({});
@@ -75,7 +75,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testReportActions.ToggleRemoveFaultMode());
+      actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
         expect(result).toEqual({});
@@ -90,7 +90,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testReportActions.ToggleRemoveFaultMode());
+      actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
         expect(result).toEqual({});
@@ -105,7 +105,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testReportActions.ToggleSeriousFaultMode());
+      actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
         expect(result).toEqual({});
@@ -120,7 +120,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testReportActions.ToggleSeriousFaultMode());
+      actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
         expect(result).toEqual({});
@@ -135,7 +135,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testReportActions.ToggleDangerousFaultMode());
+      actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
         expect(result).toEqual({});
@@ -150,7 +150,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testReportActions.ToggleDangerousFaultMode());
+      actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
         expect(result).toEqual({});
@@ -165,7 +165,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.AddDrivingFault({
+      actions$.next(new testDataActions.AddDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 1,
       }));
@@ -185,7 +185,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.AddDrivingFault({
+      actions$.next(new testDataActions.AddDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 1,
       }));
@@ -203,7 +203,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -220,7 +220,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -235,7 +235,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -252,7 +252,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -267,7 +267,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.AddManoeuvreDrivingFault({
+      actions$.next(new testDataActions.AddManoeuvreDrivingFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -288,7 +288,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.AddManoeuvreDrivingFault({
+      actions$.next(new testDataActions.AddManoeuvreDrivingFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -306,7 +306,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.AddManoeuvreSeriousFault({
+      actions$.next(new testDataActions.AddManoeuvreSeriousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -327,7 +327,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.AddManoeuvreSeriousFault({
+      actions$.next(new testDataActions.AddManoeuvreSeriousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -345,7 +345,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.AddManoeuvreDangerousFault({
+      actions$.next(new testDataActions.AddManoeuvreDangerousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -366,7 +366,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.AddManoeuvreDangerousFault({
+      actions$.next(new testDataActions.AddManoeuvreDangerousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -384,7 +384,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ControlledStopAddDrivingFault());
+      actions$.next(new testDataActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -401,7 +401,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ControlledStopAddDrivingFault());
+      actions$.next(new testDataActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -416,7 +416,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ControlledStopAddSeriousFault());
+      actions$.next(new testDataActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -433,7 +433,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ControlledStopAddSeriousFault());
+      actions$.next(new testDataActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -448,7 +448,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ControlledStopAddDangerousFault());
+      actions$.next(new testDataActions.ControlledStopAddDangerousFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -465,7 +465,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ControlledStopAddDangerousFault());
+      actions$.next(new testDataActions.ControlledStopAddDangerousFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -480,7 +480,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionDrivingFault());
+      actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -497,7 +497,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionDrivingFault());
+      actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -512,7 +512,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionSeriousFault());
+      actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -529,7 +529,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionSeriousFault());
+      actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -544,7 +544,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionDangerousFault());
+      actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -561,7 +561,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionDangerousFault());
+      actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -576,7 +576,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.RemoveDrivingFault({
+      actions$.next(new testDataActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 0,
       }));
@@ -596,7 +596,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.RemoveDrivingFault({
+      actions$.next(new testDataActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 1,
       }));
@@ -614,7 +614,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -631,7 +631,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -646,7 +646,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -663,7 +663,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
+      actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -678,7 +678,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.RemoveManoeuvreFault({
+      actions$.next(new testDataActions.RemoveManoeuvreFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -698,7 +698,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.RemoveManoeuvreFault({
+      actions$.next(new testDataActions.RemoveManoeuvreFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -716,7 +716,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ControlledStopRemoveFault());
+      actions$.next(new testDataActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -732,7 +732,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ControlledStopRemoveFault());
+      actions$.next(new testDataActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -747,7 +747,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionRemoveFault());
+      actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
         expect(result).toEqual({});
@@ -763,7 +763,7 @@ describe('Test Report Analytics Effects', () => {
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions.next(new testDataActions.ShowMeQuestionRemoveFault());
+      actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
         expect(result).toEqual({});
