@@ -16,8 +16,8 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   uniqueUserId: string;
   constructor(
     private appConfig: AppConfigProvider,
-    public ga: GoogleAnalytics,
-    public platform: Platform,
+    private ga: GoogleAnalytics,
+    private platform: Platform,
     private device: DeviceProvider,
     private authProvider: AuthenticationProvider,
   ) { }
@@ -62,6 +62,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   logEvent(category: string, event: string, label?: string, value?: number): void {
+    console.log('logEvent', category, event, label), value;
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
@@ -75,6 +76,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   addCustomDimension(key: number, value: string): void {
+    console.log('addCustomDimension', key, value);
     this.ga
       .startTrackerWithId(this.googleAnalyticsKey)
       .then(() => {
