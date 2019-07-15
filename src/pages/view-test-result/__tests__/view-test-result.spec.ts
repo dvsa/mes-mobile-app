@@ -1,6 +1,17 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, PlatformMock, LoadingControllerMock } from 'ionic-mocks';
+import {
+  IonicModule,
+  NavController,
+  NavParams,
+  Platform,
+  LoadingController,
+} from 'ionic-angular';
+import {
+  NavControllerMock,
+  NavParamsMock,
+  PlatformMock,
+  LoadingControllerMock,
+} from 'ionic-mocks';
 import { AppModule } from '../../../app/app.module';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
@@ -26,6 +37,7 @@ import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { manoeuvreTypeLabels } from '../../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -43,17 +55,23 @@ describe('ViewTestResultPage', () => {
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
       ],
-      imports: [
-        IonicModule,
-        AppModule,
-      ],
+      imports: [IonicModule, AppModule],
       providers: [
-        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        {
+          provide: NavController,
+          useFactory: () => NavControllerMock.instance(),
+        },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
-        { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
-        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: SearchProvider, useClass:  SearchProviderMock },
+        {
+          provide: LoadingController,
+          useFactory: () => LoadingControllerMock.instance(),
+        },
+        {
+          provide: AuthenticationProvider,
+          useClass: AuthenticationProviderMock,
+        },
+        { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: CompressionProvider, useClass: CompressionProviderMock },
       ],
     })
@@ -119,7 +137,9 @@ describe('ViewTestResultPage', () => {
         const result: VehicleDetailsModel = component.getVehicleDetails();
 
         expect(result.transmission).toBe('Manual');
-        expect(result.registrationNumber).toBe('mock-vehicle-registration-number');
+        expect(result.registrationNumber).toBe(
+          'mock-vehicle-registration-number',
+        );
         expect(result.instructorRegistrationNumber).toBe(1);
       });
       it('should return null when there is no test result', () => {
@@ -188,7 +208,10 @@ describe('ViewTestResultPage', () => {
       });
       it('should return the correct values for the manoeuvres', () => {
         component.testResult = categoryBTestResultMock;
-        expect(component.getManoeuvres()).toEqual([manoeuvreTypeLabels.forwardPark , manoeuvreTypeLabels.reverseRight]);
+        expect(component.getManoeuvres()).toEqual([
+          manoeuvreTypeLabels.forwardPark,
+          manoeuvreTypeLabels.reverseRight,
+        ]);
       });
     });
     describe('getETA', () => {
@@ -210,7 +233,8 @@ describe('ViewTestResultPage', () => {
 
         expect(result).toEqual({
           code: 'S1',
-          description: 'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
+          description:
+            'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
           shortName: 'Rear windscreen',
         });
       });
@@ -225,10 +249,102 @@ describe('ViewTestResultPage', () => {
 
         expect(result).toEqual({
           code: 'T2',
-          // tslint:disable-next-line:max-line-length
-          description: 'Tell me where you would find the information for the recommended tyre pressures for this car and how tyre pressures should be checked.',
+          description:
+            // tslint:disable-next-line:max-line-length
+            'Tell me where you would find the information for the recommended tyre pressures for this car and how tyre pressures should be checked.',
           shortName: 'Tyre pressures',
         });
+      });
+    });
+    describe('getDangerousFaults', () => {
+      it('should return the correct data', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result = component.getDangerousFaults();
+
+        expect(result).toEqual([{
+          comment: 'mock-ancillary-controls-comment',
+          competencyIdentifier: 'ancillaryControls',
+          competencyDisplayName: 'Ancillary Controls',
+          source: 'simple',
+          faultCount: 1,
+        }]);
+      });
+    });
+    describe('getSeriousFaults', () => {
+      it('should return the correct data', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result = component.getSeriousFaults();
+
+        expect(result).toEqual([
+          {
+            comment: 'mock-clearance-comments',
+            competencyIdentifier: 'clearance',
+            competencyDisplayName: 'Clearance',
+            source: 'simple',
+            faultCount: 1,
+          },
+          {
+            faultCount: 1,
+            competencyDisplayName: 'Controlled Stop',
+            competencyIdentifier: 'controlledStop',
+            source: 'controlledStop',
+            comment: 'mock-controlled-stop-comments',
+          },
+        ]);
+      });
+    });
+    describe('getDrivingFaults', () => {
+      it('should return the correct data', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result = component.getDrivingFaults();
+
+        expect(result).toEqual([{
+          comment: 'mock-awareness-planning-comment',
+          competencyIdentifier: 'awarenessPlanning',
+          competencyDisplayName: 'Awareness planning',
+          faultCount: 2,
+          source: 'simple',
+        }]);
+      });
+    });
+    describe('getControlledStopFault', () => {
+      it('should find a controlled stop fault if there is one avalible', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result = component.getControlledStopFault(CompetencyOutcome.S);
+
+        expect(result).toEqual([{
+          faultCount: 1,
+          competencyDisplayName: 'Controlled Stop',
+          competencyIdentifier: 'controlledStop',
+          source: 'controlledStop',
+          comment: 'mock-controlled-stop-comments',
+        }]);
+      });
+      it('should return an empty array if there is no fault for that fault type', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result = component.getControlledStopFault(CompetencyOutcome.DF);
+
+        expect(result).toEqual([]);
+      });
+    });
+    describe('updateVehicleChecksLabel', () => {
+      it('should update the label to Vehicle checks', () => {
+        const mockFault = {
+          faultCount: 1,
+          competencyDisplayName: 'vehicleChecks',
+          competencyIdentifier: 'vehicleChecks',
+          source: 'vehicleChecks',
+          comment: 'mock-vehicle-checks-comments',
+        };
+
+        const result = component.updateVehicleChecksLabel(mockFault);
+
+        expect(result.competencyDisplayName).toEqual('Vehicle checks');
       });
     });
   });
@@ -241,11 +357,19 @@ describe('ViewTestResultPage', () => {
       expect(fixture.debugElement.query(By.css('.error'))).toBeNull();
 
       expect(fixture.debugElement.query(By.css('view-test-header'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('test-details-card')),
+      ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('examiner-details-card')),
+      ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card')),
+      ).toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('test-summary-card')),
+      ).toBeNull();
     });
     it('should hide the cards and show the error message when there has been an error', () => {
       component.isLoading = false;
@@ -255,11 +379,19 @@ describe('ViewTestResultPage', () => {
       expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
 
       expect(fixture.debugElement.query(By.css('view-test-header'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('test-details-card')),
+      ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('examiner-details-card')),
+      ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card')),
+      ).toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('test-summary-card')),
+      ).toBeNull();
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
@@ -269,12 +401,22 @@ describe('ViewTestResultPage', () => {
 
       expect(fixture.debugElement.query(By.css('.error'))).toBeNull();
 
-      expect(fixture.debugElement.query(By.css('view-test-header'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('test-details-card'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('examiner-details-card'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('vehicle-details-card'))).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('view-test-header')),
+      ).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('test-details-card')),
+      ).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('examiner-details-card')),
+      ).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('vehicle-details-card')),
+      ).not.toBeNull();
       expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('test-summary-card'))).not.toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('test-summary-card')),
+      ).not.toBeNull();
     });
   });
 });
