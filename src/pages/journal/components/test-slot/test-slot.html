@@ -18,8 +18,7 @@
           <ion-grid no-padding>
             <ion-row align-items-center nowrap>
               <ion-col class="exclamation-col">
-                <indicators [showExclamationIndicator]="isIndicatorNeededForSlot()"
-                  [testStatus]="componentState.testStatus$ | async">
+                <indicators [showExclamationIndicator]="isIndicatorNeededForSlot()" [testStatus]="componentState.testStatus$ | async">
                 </indicators>
               </ion-col>
               <ion-col>
@@ -33,8 +32,8 @@
           <ion-grid no-padding>
             <ion-row align-items-center>
               <ion-col col-64>
-                <candidate-link [slotId]="slot.slotDetail.slotId" [slotChanged]="hasSlotChanged"
-                  [name]="slot.booking.candidate.candidateName" [isPortrait]="isPortrait()">
+                <candidate-link [slotId]="slot.slotDetail.slotId" [slotChanged]="hasSlotChanged" [name]="slot.booking.candidate.candidateName"
+                  [isPortrait]="isPortrait()">
                 </candidate-link>
               </ion-col>
               <ion-col col-32 text-end>
@@ -44,9 +43,8 @@
           </ion-grid>
         </ion-col>
         <ion-col class="test-outcome-col" no-padding padding-right>
-          <test-outcome [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()"
-            [testStatus]="componentState.testStatus$ | async"
-            [activityCode]="componentState.testActivityCode$ | async"></test-outcome>
+          <test-outcome [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()" [testStatus]="componentState.testStatus$ | async"
+            [activityCode]="componentState.testActivityCode$ | async" [specialRequirements]="isIndicatorNeededForSlot()"></test-outcome>
         </ion-col>
       </ion-row>
       <ion-row class="slot-footer" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
@@ -55,10 +53,10 @@
           </progressive-access>
         </ion-col>
         <ion-col class="vehicle-details-col" no-padding>
-          <vehicle-details [height]="slot.booking.application.vehicleHeight"
-            [width]="slot.booking.application.vehicleWidth" [length]="slot.booking.application.vehicleLength"
-            [seats]="slot.booking.application.vehicleSeats" [transmission]="slot.booking.application.vehicleGearbox"
-            [showDimensions]="showVehicleDetails()" [showNumberOfSeats]="showVehicleDetails()">
+          <vehicle-details [height]="slot.booking.application.vehicleHeight" [width]="slot.booking.application.vehicleWidth"
+            [length]="slot.booking.application.vehicleLength" [seats]="slot.booking.application.vehicleSeats"
+            [transmission]="slot.booking.application.vehicleGearbox" [showDimensions]="showVehicleDetails()"
+            [showNumberOfSeats]="showVehicleDetails()">
           </vehicle-details>
         </ion-col>
       </ion-row>

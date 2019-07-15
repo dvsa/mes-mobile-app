@@ -12,6 +12,7 @@ import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.consta
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { CandidateDetailsCheckProvider } from '../../../../providers/candidate-details-check/candidate-details-check';
 
 @Component({
   selector: 'test-outcome',
@@ -31,6 +32,9 @@ export class TestOutcomeComponent {
   @Input()
   activityCode: ActivityCode;
 
+  @Input()
+  specialRequirements: boolean;
+
   modal: Modal;
   isRekey: boolean = false;
 
@@ -38,6 +42,7 @@ export class TestOutcomeComponent {
     private store$: Store<StoreModel>,
     public navController: NavController,
     private modalController: ModalController,
+    private candidateDetailsCheck: CandidateDetailsCheckProvider,
   ) { }
 
   showOutcome(): boolean {
@@ -106,6 +111,13 @@ export class TestOutcomeComponent {
     this.modal.present();
   }
 
+  displayForceCheckModal = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create('JournalForceCheckModal', {}, options);
+    this.modal.onDidDismiss(this.onModalDismiss);
+    this.modal.present();
+  }
+
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.START:
@@ -123,10 +135,14 @@ export class TestOutcomeComponent {
   }
 
   clickStartOrResumeTest() {
-    if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
-      this.displayRekeyModal();
+    if (this.specialRequirements && !this.candidateDetailsCheck.isCandidateDetailsSeen(this.slotDetail.slotId)) {
+      this.displayForceCheckModal();
     } else {
-      this.startOrResumeTestDependingOnStatus();
+      if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
+        this.displayRekeyModal();
+      } else {
+        this.startOrResumeTestDependingOnStatus();
+      }
     }
   }
 

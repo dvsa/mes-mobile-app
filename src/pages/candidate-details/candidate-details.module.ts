@@ -23,4 +23,4 @@ import { ComponentsModule } from '../../components/components.module';
     AnalyticsProvider,
   ],
 })
-export class CandidateDetailsPageModule {}
+export class CandidateDetailsPageModule { }

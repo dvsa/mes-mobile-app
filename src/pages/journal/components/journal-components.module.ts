@@ -45,10 +45,10 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
     IonicModule,
     PracticeTestModalModule,
   ],
-  entryComponents:[
+  entryComponents: [
     TestSlotComponent,
   ],
-  exports:[
+  exports: [
     TimeComponent,
     CandidateLinkComponent,
     TestOutcomeComponent,
@@ -68,4 +68,4 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
     TestResultsSearchCardComponent,
   ],
 })
-export class JournalComponentsModule {}
+export class JournalComponentsModule { }

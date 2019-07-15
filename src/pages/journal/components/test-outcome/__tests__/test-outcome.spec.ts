@@ -13,6 +13,10 @@ import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constant
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
+import { CandidateDetailsCheckProviderMock }
+  from '../../../../../providers/candidate-details-check/__mocks__/candidate-details-check.mock';
+import { CandidateDetailsCheckProvider }
+  from '../../../../../providers/candidate-details-check/candidate-details-check';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -49,6 +53,7 @@ describe('Test Outcome', () => {
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        { provide: CandidateDetailsCheckProvider, useClass: CandidateDetailsCheckProviderMock },
       ],
     })
       .compileComponents()
@@ -261,6 +266,21 @@ describe('Test Outcome', () => {
           fixture.detectChanges();
           const outcomeCode = fixture.debugElement.query(By.css('.outcome'));
           expect(outcomeCode).toBeNull();
+        });
+      });
+
+      describe('show force detail check modal', () => {
+        it('should display the force detail check modal', () => {
+          component.specialRequirements = true;
+          component.slotDetail = testSlotDetail;
+          component.testStatus = TestStatus.Booked;
+          spyOn(component, 'displayForceCheckModal');
+          fixture.detectChanges();
+
+          const startButton = fixture.debugElement.query(By.css('.mes-primary-button'));
+          startButton.triggerEventHandler('click', null);
+
+          expect(component.displayForceCheckModal).toHaveBeenCalled();
         });
       });
     });
