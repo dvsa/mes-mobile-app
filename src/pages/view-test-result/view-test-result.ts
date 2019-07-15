@@ -33,6 +33,7 @@ import {
   getVehicleCheckDangerousFaults,
   getDrivingFaults,
   getVehicleCheckDrivingFaults,
+  getControlledStopFaultAndComment,
 } from '../debrief/debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
@@ -260,31 +261,46 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
 
   getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: TestData = get(this.testResult, 'testData');
-    // TODO - Controlled Stop
     return [
       ...getDangerousFaults(testData.dangerousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.D),
+      ...this.getControlledStop(CompetencyOutcome.D),
       ...getVehicleCheckDangerousFaults(testData.vehicleChecks),
     ];
   }
 
   getSeriousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: TestData = get(this.testResult, 'testData');
-    // TODO - Controlled Stop
     return [
       ...getSeriousFaults(testData.seriousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
+      ...this.getControlledStop(CompetencyOutcome.S),
       ...getVehicleCheckSeriousFaults(testData.vehicleChecks),
     ];
   }
 
   getDrivingFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: TestData = get(this.testResult, 'testData');
-    // TODO - Controlled Stop
     return [
       ...getDrivingFaults(testData.drivingFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.DF),
+      ...this.getControlledStop(CompetencyOutcome.DF),
       ...getVehicleCheckDrivingFaults(testData.vehicleChecks),
     ];
+  }
+
+  getControlledStop(competencyOutcome: CompetencyOutcome): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+    const testData: TestData = get(this.testResult, 'testData');
+
+    return getControlledStopFaultAndComment(testData.controlledStop, competencyOutcome)
+      .map((result) => {
+        return {
+          faultCount: 1,
+          competencyDisplayName: result.competencyDisplayName,
+          competencyIdentifier: result.competencyIdentifier,
+          source: result.source,
+          comment: result.comment,
+        };
+      });
   }
 }
