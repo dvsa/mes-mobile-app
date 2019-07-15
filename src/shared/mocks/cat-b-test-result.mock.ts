@@ -61,4 +61,43 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
     routeNumber: 12345,
     weatherConditions: ['Bright / dry roads', 'Icy'],
   },
+  testData: {
+    controlledStop: {
+      selected: true,
+    },
+    eco: {
+      completed: true,
+      adviceGivenControl: true,
+      adviceGivenPlanning: false,
+    },
+    ETA: {
+      physical: false,
+      verbal: true,
+    },
+    manoeuvres: {
+      forwardPark: {
+        selected: true,
+      },
+      reverseParkCarpark: {
+        selected: false,
+      },
+      reverseRight: {
+        selected: true,
+      },
+    },
+    testRequirements: {
+      angledStart: true,
+      hillStart: false,
+      normalStart1: true,
+      normalStart2: false,
+    },
+    vehicleChecks: {
+      showMeQuestion: {
+        code: 'S1',
+      },
+      tellMeQuestion: {
+        code: 'T2',
+      },
+    },
+  },
 };
