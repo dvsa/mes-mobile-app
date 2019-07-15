@@ -1,3 +1,5 @@
+import { TestPermissionPeriod } from '../../providers/app-config/app-config.model';
+
 export interface EnvironmentFile {
   isRemote: boolean;
   configUrl: string;
@@ -31,6 +33,7 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     enableTestReportPracticeMode: boolean;
     enableEndToEndPracticeMode: boolean;
     enableLogoutButton: boolean;
+    testPermissionPeriods: TestPermissionPeriod[]
   };
   tests: {
     testSubmissionUrl: string,

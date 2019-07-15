@@ -30,6 +30,13 @@ export const environment: LocalEnvironmentFile = {
     enableTestReportPracticeMode: true,
     enableEndToEndPracticeMode: true,
     enableLogoutButton: true,
+    testPermissionPeriods: [
+      {
+        testCategory: 'B',
+        from: '2019-01-01',
+        to: null,
+      },
+    ],
   },
   tests: {
     testSubmissionUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/test-results',

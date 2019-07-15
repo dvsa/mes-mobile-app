@@ -5,7 +5,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { vehicleDetails } from './test-slot.constants';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
-import { DateTime } from '../../../../shared/helpers/date-time';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { Store, select } from '@ngrx/store';
@@ -45,7 +44,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public appConfig: AppConfigProvider,
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const { slotId } = this.slot.slotDetail;
@@ -64,7 +63,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   isIndicatorNeededForSlot(): boolean {
     const specialNeeds: boolean = this.isSpecialNeedsSlot();
     const checkNeeded: boolean = this.slot.booking.application.entitlementCheck || false;
-    const nonStandardTest: boolean = getSlotType(this.slot) !==  SlotTypes.STANDARD_TEST;
+    const nonStandardTest: boolean = getSlotType(this.slot) !== SlotTypes.STANDARD_TEST;
 
     return specialNeeds || checkNeeded || nonStandardTest;
   }
@@ -74,7 +73,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     return !isNil(specialNeeds) && specialNeeds.length > 0;
   }
 
-  isPortrait() : boolean {
+  isPortrait(): boolean {
     return this.screenOrientation.type === this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY ||
       this.screenOrientation.type === this.screenOrientation.ORIENTATIONS.PORTRAIT;
   }
@@ -84,22 +83,31 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canStartTest(): boolean {
-    if (!this.appConfig.getAppConfig().journal.allowTests) {
-      return false;
-    }
+    const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
+    const { testCategory } = this.slot.booking.application;
+    const { start } = this.slot.slotDetail;
+    const startAsDate = new Date(start);
+    startAsDate.setHours(0, 0, 0, 0);
+    const periodsPermittingStart = testPermissionPeriods.filter((period) => {
+      const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startAsDate, period.from);
+      const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startAsDate, period.to);
+      return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
+    });
+    return periodsPermittingStart.length > 0;
+  }
 
-    const startDate = new DateTime(this.slot.slotDetail.start);
-    if (startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
-      return false;
-    }
+  private hasPeriodStartCriteria(slotDate: Date, periodFrom: string) {
+    const periodStartDate = new Date(periodFrom);
+    periodStartDate.setHours(0, 0, 0, 0);
+    return slotDate >= periodStartDate;
+  }
 
-    const testCategory = this.slot.booking.application.testCategory;
-    const allowedTestCategories = this.appConfig.getAppConfig().journal.allowedTestCategories;
-
-    if (allowedTestCategories.includes(testCategory)) {
+  private hasPeriodEndCritiera(slotDate: Date, periodTo: string) {
+    if (periodTo === null) {
       return true;
     }
-
-    return false;
+    const periodEndDate = new Date(periodTo);
+    periodEndDate.setHours(0, 0, 0, 0);
+    return slotDate <= periodEndDate;
   }
 }
