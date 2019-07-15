@@ -223,7 +223,7 @@ describe('TestSlotComponent', () => {
       });
     });
 
-    fdescribe('canStartTest', () => {
+    describe('canStartTest', () => {
       let getAppConfigSpy;
       beforeEach(() => {
         getAppConfigSpy = jasmine.createSpy('getAppConfig');

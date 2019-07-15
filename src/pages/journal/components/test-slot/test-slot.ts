@@ -89,12 +89,23 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     const startAsDate = new Date(start);
     startAsDate.setHours(0, 0, 0, 0);
     const periodsPermittingStart = testPermissionPeriods.filter((period) => {
-      const periodStartDate = new Date(period.from);
-      const periodEndDate = new Date(period.to);
-      return period.testCategory === testCategory
-        && periodStartDate <= startAsDate
-        && (periodEndDate >= startAsDate || period.to === null);
+      const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startAsDate, period.from);
+      const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startAsDate, period.to);
+      return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
     });
     return periodsPermittingStart.length > 0;
+  }
+
+  private hasPeriodStartCriteria(slotDate: Date, periodFrom: string) {
+    const periodStartDate = new Date(periodFrom);
+    return slotDate >= periodStartDate;
+  }
+
+  private hasPeriodEndCritiera(slotDate: Date, periodTo: string) {
+    if (periodTo === null) {
+      return true;
+    }
+    const periodEndDate = new Date(periodTo);
+    return slotDate <= periodEndDate;
   }
 }
