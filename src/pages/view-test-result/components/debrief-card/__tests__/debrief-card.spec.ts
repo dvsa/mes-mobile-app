@@ -37,9 +37,4 @@ describe('DebriefCardComponent', () => {
     });
 
   });
-
-  describe('DOM', () => {
-
-  });
-
 });

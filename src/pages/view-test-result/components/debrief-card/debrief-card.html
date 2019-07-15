@@ -1,4 +1,4 @@
-<ion-card *ngIf="!shouldHideCard()">
+<ion-card>
   <ion-card-header>
     <h4>Debrief</h4>
   </ion-card-header>
@@ -117,7 +117,8 @@
           <label>Tell me question(s)</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{data.tellMeQuestion.code}}</span>
+          <span class="mes-data">
+            <span class="question-code">{{data.tellMeQuestion.code}}</span> - {{data.tellMeQuestion.shortName}}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mes-data-row">
@@ -125,7 +126,8 @@
           <label>Show me question(s)</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data">{{data.showMeQuestion.code}}</span>
+          <span class="mes-data">
+            <span class="question-code">{{data.showMeQuestion.code}}</span> - {{data.showMeQuestion.shortName}}</span>
         </ion-col>
       </ion-row>
     </ion-grid>
