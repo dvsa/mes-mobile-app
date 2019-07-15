@@ -144,17 +144,6 @@ export class TestReportEffects {
     ofType(
       testReportActions.TERMINATE_TEST_FROM_TEST_REPORT,
     ),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        withLatestFrom(
-          this.store$.pipe(
-            select(getTests),
-            map(getCurrentTest),
-          ),
-        ),
-      ),
-    ),
-    map(([action, currentTest]) => new testsActions.SetActivityCode(null)),
+    map(() => new testsActions.SetActivityCode(null)),
   );
 }
