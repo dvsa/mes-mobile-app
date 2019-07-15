@@ -31,7 +31,7 @@ Given('I am not logged in', () => {
       browser.wait(ExpectedConditions.presenceOf(usernameFld));
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(webviewContext);
+      browser.driver.selectContext(getParentContext(webviewContext));
     });
   });
 });
@@ -83,7 +83,7 @@ Then('I should see the Microsoft login page', () => {
       expect(usernameFld.isPresent()).to.eventually.be.true;
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(webviewContext);
+      browser.driver.selectContext(getParentContext(webviewContext));
     });
   });
 });
@@ -190,7 +190,7 @@ export const logInToApplication = (username, password) => {
       signInButtonElement.click();
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(webviewContext);
+      browser.driver.selectContext(getParentContext(webviewContext));
 
       // Wait for journal page to load
       const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
@@ -213,22 +213,26 @@ export const loggedInAs = (staffNumber) => {
  * Logs out of the application and takes them to the login page if they were logged in else returns current page
  */
 export const logout = () => {
-  browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-  browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-  const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
-  logout.isPresent().then((result) => {
-    if (result) {
-      browser.wait(ExpectedConditions.elementToBeClickable(logout));
-      logout.click().then(() => {
-        // After logout click sign in to get us to the login screen
-        browser.sleep(TEST_CONFIG.ACTION_WAIT);
-        browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-        const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
-        clickElement(signIn);
-      });
-    } else {
-      return Promise.resolve();
-    }
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    browser.driver.selectContext(getParentContext(webviewContext));
+    browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
+    browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
+    const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
+    logout.isPresent().then((result) => {
+      if (result) {
+        browser.wait(ExpectedConditions.elementToBeClickable(logout));
+        logout.click().then(() => {
+          // After logout click sign in to get us to the login screen
+          browser.sleep(TEST_CONFIG.ACTION_WAIT);
+          browser.driver.selectContext(getParentContext(webviewContext));
+          browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
+          const signIn = element(by.xpath('//span[contains(text(), "Sign in")]'));
+          clickElement(signIn);
+        });
+      } else {
+        return Promise.resolve();
+      }
+    });
   });
 };
 
@@ -294,26 +298,11 @@ export const enterPasscode = () => {
       browser.actions().sendKeys('PASSWORD').sendKeys(Key.ENTER).perform();
 
       // Switch back to WEBVIEW context
-      browser.driver.selectContext(webviewContext).then(() => {
+      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
         browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
       });
     });
   });
-};
-
-/**
- * Alternative way to enter text where the field element does not allow direct text entry.
- * Works by setting focus on the field and then sending browser actions rather than element actions.
- * @param field the field to enter the text into
- * @param text  the text you wish to enter into the field
- */
-export const enterTextIndirect = (field, text) => {
-  // Wait for field to be present
-  browser.wait(ExpectedConditions.presenceOf(field));
-  // Set focus on the field
-  field.click();
-  // Enter the text using browser actions rather than field send keys
-  browser.actions().sendKeys(text).perform();
 };
 
 /**
@@ -362,4 +351,8 @@ const getPageType = (pageName : string) => {
     default:
       return 'page-waiting-room';
   }
+};
+
+export const getParentContext = (currentContext: string) => {
+  return `${currentContext.substring(0, currentContext.indexOf('.'))}.1`;
 };

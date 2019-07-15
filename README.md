@@ -58,7 +58,7 @@ You can run the Appium testsuite against an iOS simulator.
 
 Pre-requisites
 
-- iPad Pro 10.5 Simulator running iOS 12.1 (If you are running the latest version of XCode you will need to manually download this `XCode > Preferences ... > Components > iOS 12.1 Simulator`)
+- iPad Pro 10.5 Simulator running iOS 12.1 (If you are running the latest version of XCode you will need to manually download this `XCode > Preferences ... > Components > iOS 12.1 Simulator`). iOS 12.1 is the default but there is now support for 12.2 which may save you having to download the 12.1 simulator (see below)
 - Carthage (`brew install carthage` - https://github.com/appium/appium/blob/HEAD/docs/en/drivers/ios-xcuitest.md - dependancy of XCUITest driver)
 - Notes : if you get /usr/local/share/man issues 
           try: sudo chown -R $(whoami):admin /usr/local/share/man (don't sudo brew)
@@ -66,7 +66,7 @@ Pre-requisites
 To run against the simulator
 
 - Build the application `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0" --emulator`
-- Run Appium `npx appium`
+- Run Appium `npx appium` (To reduce wait times you can install appium globally and use that instead)
 - Add/Update the test/e2e/test.config.ts
 - In another tab execute the simulator based testsuite `npm run test:e2e-simulator-bdd`
 - Once complete generate the report `npm run test:generate-report`
@@ -74,6 +74,8 @@ To run against the simulator
 You can run individual features e.g. `npm run test:e2e-simulator-bdd -- --specs='test/e2e/features/01-login.feature'`
 
 You can also run an individual tag e.g. `npm run test:e2e-simulator-bdd -- --cucumberOpts.tags='@smoke'`
+
+To run against a simulator with a different iOS version e.g. `npm run test:e2e-simulator-bdd -- --capabilities.platformVersion='12.2'`
 
 #### Troubleshooting
 

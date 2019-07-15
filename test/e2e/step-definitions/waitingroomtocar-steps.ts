@@ -1,6 +1,7 @@
 import { When } from 'cucumber';
-import { getElement, clickElement, enterTextIndirect } from './generic-steps';
-import { element, by } from 'protractor';
+import { getElement, clickElement, getParentContext } from './generic-steps';
+import { element, by, browser } from 'protractor';
+import { TEST_CONFIG } from '../test.config';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -44,8 +45,21 @@ const completeWaitingRoomPage = (withDriverFault: boolean, manualTransmission: b
   const transmissionRadio = getElement(by.id(transmissionSelector));
   clickElement(transmissionRadio);
 
-  const registrationField = element(by.id('registration'));
-  enterTextIndirect(registrationField, 'ABC');
+  // Because registration number field is uppercaseAlphanumOnly we have to go native to get round this
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    // Switch to NATIVE context
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      // Get the registration number field
+      const registrationField = element(by.xpath(`//XCUIElementTypeOther[XCUIElementTypeOther[
+        @name="Vehicle registration number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField`));
+      registrationField.sendKeys('AB12CDE');
+
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
+        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+      });
+    });
+  });
 
   const submitWRTC = getElement(by.xpath('//button[span[h3[text()="Continue to test report"]]]'));
   clickElement(submitWRTC);
