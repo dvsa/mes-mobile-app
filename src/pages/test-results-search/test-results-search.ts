@@ -26,6 +26,8 @@ export class TestResultsSearchPage extends BasePageComponent {
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
   showAdvancedSearchSpinner: boolean = false;
+  // TODO set `displayAdvancedSearch` based on examinerRole
+  displayAdvancedSearch: boolean = false;
 
   constructor(
     public navController: NavController,
