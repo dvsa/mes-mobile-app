@@ -98,6 +98,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
 
   private hasPeriodStartCriteria(slotDate: Date, periodFrom: string) {
     const periodStartDate = new Date(periodFrom);
+    periodStartDate.setHours(0, 0, 0, 0);
     return slotDate >= periodStartDate;
   }
 
@@ -106,6 +107,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
       return true;
     }
     const periodEndDate = new Date(periodTo);
+    periodEndDate.setHours(0, 0, 0, 0);
     return slotDate <= periodEndDate;
   }
 }

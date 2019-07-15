@@ -253,6 +253,18 @@ describe('TestSlotComponent', () => {
         });
         expect(component.canStartTest()).toBe(false);
       });
+      it('should allow the test when there are multiple expired ranges and a subsequent valid range', () => {
+        getAppConfigSpy.and.returnValue({
+          journal: {
+            testPermissionPeriods: [
+              { testCategory: 'B', from: '2018-01-01', to: '2018-03-01' },
+              { testCategory: 'B', from: '2018-05-01', to: '2018-07-01' },
+              { testCategory: 'B', from: '2019-01-01', to: '2019-02-01' },
+            ],
+          },
+        });
+        expect(component.canStartTest()).toBe(true);
+      });
       it('should allow the test when there is a permission range including the slot date', () => {
         getAppConfigSpy.and.returnValue({
           journal: {
