@@ -1,3 +1,5 @@
+import { ExaminerRole } from './constants/examiner-role.constants';
+
 export type AppConfig = {
   configUrl: string
   googleAnalyticsId: string,
@@ -17,7 +19,7 @@ export type AppConfig = {
   },
   approvedDeviceIdentifiers: string[],
   timeTravelDate?: string,
-  role: string;
+  role: ExaminerRole;
   journal: {
     journalUrl: string,
     autoRefreshInterval: number

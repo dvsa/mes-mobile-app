@@ -84,6 +84,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canStartTest(): boolean {
+    console.log(`Role is ${this.appConfig.getAppConfig().role}`);
     const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
     const { testCategory } = this.slot.booking.application;
     const startDate = new DateTime(this.slot.slotDetail.start);

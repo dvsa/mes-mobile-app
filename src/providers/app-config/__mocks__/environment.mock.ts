@@ -1,4 +1,5 @@
 import { EnvironmentFile, LocalEnvironmentFile } from '../../../environment/models/environment.model';
+import { ExaminerRole } from '../constants/examiner-role.constants';
 
 export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
@@ -40,7 +41,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     'iPad7,4',
     'x86_64',
   ],
-  role: 'DE',
+  role: ExaminerRole.DE,
   journal: {
     journalUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/personal',
     autoRefreshInterval: 1000 * 60 * 15,
