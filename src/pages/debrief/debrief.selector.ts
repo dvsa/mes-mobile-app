@@ -22,6 +22,9 @@ import {
 } from '../../shared/models/fault-marking.model';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 
+// TODO - A lot of these are used in multiple places (Debrief, View Test Result, Office),
+// should be refactored into a more common area.
+
 export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFaults): string[] => {
   const faultsEncountered: string[] = [];
   forOwn(faults, (value, key) => {

@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Loading, LoadingControll
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { StandardCarTestCATBSchema, TestData } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
@@ -24,6 +24,18 @@ import { ShowMeQuestion } from '../../providers/question/show-me-question.model'
 import showMeQuestionConstants from '../../providers/question/show-me-question.constants';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import tellMeQuestionConstants from '../../providers/question/tell-me-question.constants';
+import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
+import {
+  getManoeuvreFaults,
+  getVehicleCheckSeriousFaults,
+  getSeriousFaults,
+  getDangerousFaults,
+  getVehicleCheckDangerousFaults,
+  getDrivingFaults,
+  getVehicleCheckDrivingFaults,
+} from '../debrief/debrief.selector';
+import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
 
 @IonicPage()
 @Component({
@@ -191,6 +203,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       eta: this.getETA(),
       showMeQuestion: this.getShowMeQuestion(),
       tellMeQuestion: this.getTellMeQuestion(),
+      dangerousFaults: this.getDangerousFaults(),
+      seriousFaults: this.getSeriousFaults(),
+      drivingFaults: this.getDrivingFaults(),
+      drivingFaultCount: getDrivingFaultSummaryCount(this.testResult.testData),
     };
   }
 
@@ -240,5 +256,35 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
   getTellMeQuestion(): TellMeQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
     return tellMeQuestionConstants.find(question => question.code ===  tellMeQuestionCode);
+  }
+
+  getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+    const testData: TestData = get(this.testResult, 'testData');
+    // TODO - Controlled Stop
+    return [
+      ...getDangerousFaults(testData.dangerousFaults),
+      ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.D),
+      ...getVehicleCheckDangerousFaults(testData.vehicleChecks),
+    ];
+  }
+
+  getSeriousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+    const testData: TestData = get(this.testResult, 'testData');
+    // TODO - Controlled Stop
+    return [
+      ...getSeriousFaults(testData.seriousFaults),
+      ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
+      ...getVehicleCheckSeriousFaults(testData.vehicleChecks),
+    ];
+  }
+
+  getDrivingFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+    const testData: TestData = get(this.testResult, 'testData');
+    // TODO - Controlled Stop
+    return [
+      ...getDrivingFaults(testData.drivingFaults),
+      ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.DF),
+      ...getVehicleCheckDrivingFaults(testData.vehicleChecks),
+    ];
   }
 }
