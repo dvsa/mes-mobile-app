@@ -26,7 +26,6 @@ import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { manoeuvreTypeLabels } from '../../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;

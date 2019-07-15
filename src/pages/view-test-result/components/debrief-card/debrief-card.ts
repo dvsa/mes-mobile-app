@@ -13,10 +13,6 @@ export class DebriefCardComponent {
 
   constructor() {}
 
-  shouldHideCard(): boolean {
-    return false;
-  }
-
   getFlattenArray = (data: string[]): string => flattenArray(data);
 
 }
