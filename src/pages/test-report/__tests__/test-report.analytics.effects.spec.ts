@@ -775,12 +775,12 @@ describe('Test Report Analytics Effects', () => {
   });
 
   describe('testTermination', () => {
-    it('should call logEvent for the termination event', () => {
+    it('should call logEvent for the termination event', (done) => {
       // ARRANGE
       spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
-      actions.next(new testReportActions.TerminateTestFromTestReport());
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
       // ASSERT
       effects.testTermination$.subscribe((result) => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
@@ -788,8 +788,8 @@ describe('Test Report Analytics Effects', () => {
           AnalyticsEvents.END_TEST,
           AnalyticsLabels.TERMINATE_TEST,
         );
+        done();
       });
     });
   });
-
 });
