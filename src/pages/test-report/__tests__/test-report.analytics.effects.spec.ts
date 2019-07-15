@@ -19,6 +19,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
+  AnalyticsLabels,
 } from '../../../providers/analytics/analytics.model';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -773,4 +774,36 @@ describe('Test Report Analytics Effects', () => {
     });
   });
 
+  describe('testTermination', () => {
+    it('should call logEvent for the termination event', (done) => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.testTermination$.subscribe((result) => {
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TERMINATION,
+          AnalyticsEvents.END_TEST,
+          AnalyticsLabels.TERMINATE_TEST,
+        );
+        done();
+      });
+    });
+
+    it('should not call logEvent for termination when it is a practice test', (done) => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.testTermination$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        done();
+      });
+    });
+  });
 });

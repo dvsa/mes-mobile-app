@@ -7,6 +7,7 @@ export const TOGGLE_DANGEROUS_FAULT_MODE = '[TestReportPage] Toggle Dangerous Fa
 export const VALIDATE_LEGAL_REQUIREMENTS = '[TestReportPage] Validated Legal Requirements';
 export const CALCULATE_TEST_RESULT = '[TestResultPage] Calculate Test Result';
 export const VALIDATE_ETA = '[TestReportPage] Validate ETA';
+export const TERMINATE_TEST_FROM_TEST_REPORT = '[TestReportPage] Terminate test';
 
 export class TestReportViewDidEnter implements Action {
   readonly type = TEST_REPORT_VIEW_DID_ENTER;
@@ -39,6 +40,10 @@ export class CalculateTestResult implements Action {
   readonly type = CALCULATE_TEST_RESULT;
 }
 
+export class TerminateTestFromTestReport implements Action {
+  readonly type = TERMINATE_TEST_FROM_TEST_REPORT;
+}
+
 export type Types =
   | TestReportViewDidEnter
   | ToggleSeriousFaultMode
@@ -46,4 +51,5 @@ export type Types =
   | ToggleRemoveFaultMode
   | ValidateLegalRequirements
   | ValidateEta
-  | CalculateTestResult;
+  | CalculateTestResult
+  | TerminateTestFromTestReport;
