@@ -44,7 +44,6 @@ export class AdvancedSearchComponent {
 
   searchTests() {
     const advancedSearchParams: AdvancedSearchParams = {
-      isLDTM: true,
       startDate: this.startDate,
       endDate: this.endDate,
       staffNumber: this.staffNumber,

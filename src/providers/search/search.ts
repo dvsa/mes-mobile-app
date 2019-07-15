@@ -18,7 +18,6 @@ export class SearchProvider {
       {
         params: {
           driverNumber,
-          isLDTM: 'false',
         },
       },
     );
@@ -30,7 +29,6 @@ export class SearchProvider {
       {
         params: {
           applicationReference,
-          isLDTM: 'false',
         },
       },
     );
@@ -41,8 +39,6 @@ export class SearchProvider {
       this.urlProvider.getTestResultServiceUrl(),
       {
         params: {
-          // TODO -  remove this when https://jira.i-env.net/browse/MES-2135 is implemented
-          isLDTM: advancedSearchParams.isLDTM ? 'true' : 'false',
           startDate: advancedSearchParams.startDate,
           endDate: advancedSearchParams.endDate,
           staffNumber: advancedSearchParams.staffNumber,
