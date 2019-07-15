@@ -11,7 +11,7 @@ import {
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { isTestReportPracticeTest } from '../../modules/tests/tests.selector';
+import { isPracticeMode } from '../../modules/tests/tests.selector';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import {
   manoeuvreCompetencyLabels,
@@ -50,11 +50,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testReportActions.ToggleRemoveFaultMode, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testReportActions.ToggleRemoveFaultMode, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_REMOVE_MODE,
@@ -71,11 +71,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testReportActions.ToggleSeriousFaultMode, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testReportActions.ToggleSeriousFaultMode, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_SERIOUS_MODE,
@@ -92,11 +92,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testReportActions.ToggleDangerousFaultMode, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testReportActions.ToggleDangerousFaultMode, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_DANGEROUS_MODE,
@@ -115,11 +115,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddDrivingFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.AddDrivingFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -140,11 +140,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddSeriousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.AddSeriousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -165,11 +165,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddDangerousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.AddDangerousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -190,11 +190,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreDrivingFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.AddManoeuvreDrivingFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -215,11 +215,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreSeriousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.AddManoeuvreSeriousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -240,11 +240,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.AddManoeuvreDangerousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.AddManoeuvreDangerousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -265,11 +265,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopAddDrivingFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopAddDrivingFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -290,11 +290,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopAddSeriousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopAddSeriousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -315,11 +315,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopAddDangerousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopAddDangerousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -340,11 +340,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionDrivingFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionDrivingFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -365,11 +365,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionSeriousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionSeriousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -390,11 +390,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionDangerousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionDangerousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -415,11 +415,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveDrivingFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.RemoveDrivingFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
@@ -440,11 +440,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveSeriousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.RemoveSeriousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_SERIOUS_FAULT,
@@ -465,11 +465,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveDangerousFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.RemoveDangerousFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DANGEROUS_FAULT,
@@ -490,11 +490,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.RemoveManoeuvreFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.RemoveManoeuvreFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
@@ -514,11 +514,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ControlledStopRemoveFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopRemoveFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_FAULT,
@@ -538,11 +538,11 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isTestReportPracticeTest),
+        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isTestReportPracticeTest]: [testDataActions.ShowMeQuestionRemoveFault, boolean]) => {
-      if (!isTestReportPracticeTest) {
+    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionRemoveFault, boolean]) => {
+      if (!isPracticeMode) {
         this.analytics.logEvent(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_FAULT,
