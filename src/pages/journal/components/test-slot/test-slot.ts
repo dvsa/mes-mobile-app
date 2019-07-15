@@ -17,6 +17,7 @@ import { SlotTypes } from '../../../../shared/models/slot-types';
 import { map } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { DateTime } from '../../../../shared/helpers/date-time';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -85,29 +86,30 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   canStartTest(): boolean {
     const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
     const { testCategory } = this.slot.booking.application;
-    const { start } = this.slot.slotDetail;
-    const startAsDate = new Date(start);
-    startAsDate.setHours(0, 0, 0, 0);
+    const startDate = new DateTime(this.slot.slotDetail.start);
+
+    if (startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
+      return false;
+    }
+
     const periodsPermittingStart = testPermissionPeriods.filter((period) => {
-      const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startAsDate, period.from);
-      const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startAsDate, period.to);
+      const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startDate, period.from);
+      const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startDate, period.to);
       return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
     });
     return periodsPermittingStart.length > 0;
   }
 
-  private hasPeriodStartCriteria(slotDate: Date, periodFrom: string) {
-    const periodStartDate = new Date(periodFrom);
-    periodStartDate.setHours(0, 0, 0, 0);
-    return slotDate >= periodStartDate;
+  private hasPeriodStartCriteria(slotDate: DateTime, periodFrom: string) {
+    const periodStartDate = new DateTime(periodFrom);
+    return slotDate.daysDiff(periodStartDate) <= 0;
   }
 
-  private hasPeriodEndCritiera(slotDate: Date, periodTo: string) {
+  private hasPeriodEndCritiera(slotDate: DateTime, periodTo: string) {
     if (periodTo === null) {
       return true;
     }
-    const periodEndDate = new Date(periodTo);
-    periodEndDate.setHours(0, 0, 0, 0);
-    return slotDate <= periodEndDate;
+    const periodEndDate = new DateTime(periodTo);
+    return slotDate.daysDiff(periodEndDate) >= 0;
   }
 }
