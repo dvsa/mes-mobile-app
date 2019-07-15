@@ -265,7 +265,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ...getDangerousFaults(testData.dangerousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.D),
       ...this.getControlledStop(CompetencyOutcome.D),
-      ...getVehicleCheckDangerousFaults(testData.vehicleChecks),
+      ...getVehicleCheckDangerousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
     ];
   }
 
@@ -275,7 +275,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ...getSeriousFaults(testData.seriousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStop(CompetencyOutcome.S),
-      ...getVehicleCheckSeriousFaults(testData.vehicleChecks),
+      ...getVehicleCheckSeriousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
     ];
   }
 
@@ -285,7 +285,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ...getDrivingFaults(testData.drivingFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.DF),
       ...this.getControlledStop(CompetencyOutcome.DF),
-      ...getVehicleCheckDrivingFaults(testData.vehicleChecks),
+      ...getVehicleCheckDrivingFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
     ];
   }
 
@@ -302,5 +302,16 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
           comment: result.comment,
         };
       });
+  }
+
+  updateVehicleChecksLabel(vehicleCheck: CommentedCompetency & MultiFaultAssignableCompetency)
+  : (CommentedCompetency & MultiFaultAssignableCompetency) {
+    return {
+      faultCount: vehicleCheck.faultCount,
+      competencyDisplayName: 'Vehicle checks',
+      competencyIdentifier: vehicleCheck.competencyIdentifier,
+      source: vehicleCheck.source,
+      comment: vehicleCheck.comment,
+    };
   }
 }
