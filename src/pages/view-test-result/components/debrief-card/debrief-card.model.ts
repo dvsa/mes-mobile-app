@@ -1,10 +1,14 @@
 import { TestRequirements } from '@dvsa/mes-test-schema/categories/B';
+import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
+import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
 
 export interface DebriefCardModel {
-  legalRequirements: TestRequirements;
-  manoeuvres: string[];
-  controlledStop: boolean;
-  ecoControl: boolean;
-  ecoPlanning: boolean;
-  eta: string[];
+  legalRequirements?: TestRequirements;
+  manoeuvres?: string[];
+  controlledStop?: boolean;
+  ecoControl?: boolean;
+  ecoPlanning?: boolean;
+  eta?: string[];
+  showMeQuestion?: ShowMeQuestion;
+  tellMeQuestion?: TellMeQuestion;
 }

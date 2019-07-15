@@ -19,6 +19,11 @@ import { getCandidateName } from '../../modules/tests/candidate/candidate.select
 import { getTestOutcomeText } from '../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 import { manoeuvreTypeLabels } from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+import { get } from 'lodash';
+import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
+import showMeQuestionConstants from '../../providers/question/show-me-question.constants';
+import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
+import tellMeQuestionConstants from '../../providers/question/tell-me-question.constants';
 
 @IonicPage()
 @Component({
@@ -34,6 +39,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
   isLoading: boolean;
   loadingSpinner: Loading;
   subscription: Subscription;
+  showErrorMessage: boolean = false;
 
   constructor(
     public navController: NavController,
@@ -60,7 +66,8 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
         map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
         tap(() => this.handleLoadingUI(false)),
         catchError((error) => {
-          console.log('ERROR', JSON.stringify(error));
+          this.showErrorMessage = true;
+          this.handleLoadingUI(false);
           return of();
         }),
       ).subscribe();
@@ -93,6 +100,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     if (!this.testResult) {
       return null;
     }
+
     const startDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
 
     return {
@@ -118,11 +126,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     if (!this.testResult) {
       return null;
     }
-
     return {
-      transmission: this.testResult.vehicleDetails.gearboxCategory,
-      registrationNumber: this.testResult.vehicleDetails.registrationNumber,
-      instructorRegistrationNumber: this.testResult.instructorDetails.registrationNumber,
+      transmission: get(this.testResult, 'vehicleDetails.gearboxCategory'),
+      registrationNumber: get(this.testResult, 'vehicleDetails.registrationNumber'),
+      instructorRegistrationNumber: get(this.testResult, 'instructorDetails.registrationNumber'),
     };
   }
 
@@ -130,33 +137,33 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     if (!this.testResult) {
       return null;
     }
-
     const accompaniedBy: string[] = [];
 
-    if (this.testResult.accompaniment.ADI) {
+    if (get(this.testResult, 'accompaniment.ADI')) {
       accompaniedBy.push('ADI');
     }
-    if (this.testResult.accompaniment.interpreter) {
+    if (get(this.testResult, 'accompaniment.interpreter')) {
       accompaniedBy.push('Interpreter');
     }
-    if (this.testResult.accompaniment.supervisor) {
+    if (get(this.testResult, 'accompaniment.supervisor')) {
       accompaniedBy.push('Supervisor');
     }
-    if (this.testResult.accompaniment.other) {
+    if (get(this.testResult, 'accompaniment.other')) {
       accompaniedBy.push('Other');
     }
 
     return {
       accompaniment: accompaniedBy,
-      provisionalLicenceProvided: this.testResult.passCompletion.provisionalLicenceProvided,
-      passCertificateNumber: this.testResult.passCompletion.passCertificateNumber,
-      routeNumber: this.testResult.testSummary.routeNumber,
-      independentDriving: this.testResult.testSummary.independentDriving,
-      candidateDescription: this.testResult.testSummary.candidateDescription,
-      debriefWitnessed: this.testResult.testSummary.debriefWitnessed,
-      weatherConditions: this.testResult.testSummary.weatherConditions,
-      D255: this.testResult.testSummary.D255,
+      provisionalLicenceProvided: get(this.testResult, 'passCompletion.provisionalLicenceProvided'),
+      passCertificateNumber: get(this.testResult, 'passCompletion.passCertificateNumber'),
+      routeNumber: get(this.testResult, 'testSummary.routeNumber'),
+      independentDriving: get(this.testResult, 'testSummary.independentDriving'),
+      candidateDescription: get(this.testResult, 'testSummary.candidateDescription'),
+      debriefWitnessed: get(this.testResult, 'testSummary.debriefWitnessed'),
+      weatherConditions: get(this.testResult, 'testSummary.weatherConditions'),
+      D255: get(this.testResult, 'testSummary.D255'),
     };
+
   }
 
   getHeaderDetails(): ViewTestHeaderModel {
@@ -177,46 +184,62 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     }
 
     return {
-      legalRequirements: this.testResult.testData.testRequirements,
+      legalRequirements: get(this.testResult, 'testData.testRequirements'),
       manoeuvres: this.getManoeuvres(),
-      controlledStop: this.testResult.testData.controlledStop.selected,
-      ecoControl: this.testResult.testData.eco.adviceGivenControl,
-      ecoPlanning: this.testResult.testData.eco.adviceGivenPlanning,
+      controlledStop: get(this.testResult, 'testData.controlledStop.selected'),
+      ecoControl: get(this.testResult, 'testData.eco.adviceGivenControl'),
+      ecoPlanning: get(this.testResult, 'testData.eco.adviceGivenPlanning'),
       eta: this.getETA(),
+      showMeQuestion: this.getShowMeQuestion(),
+      tellMeQuestion: this.getTellMeQuestion(),
     };
   }
 
-  getManoeuvres(): string [] {
+  getManoeuvres() : string [] {
     const manoeuvres = [];
 
-    if (this.testResult.testData.manoeuvres.forwardPark.selected) {
+    if (get(this.testResult, 'testData.manoeuvres.forwardPark.selected')) {
       manoeuvres.push(manoeuvreTypeLabels.forwardPark);
     }
-    if (this.testResult.testData.manoeuvres.reverseParkCarpark.selected) {
+    if (get(this.testResult, 'testData.manoeuvres.reverseParkCarpark.selected')) {
       manoeuvres.push(manoeuvreTypeLabels.reverseParkCarpark);
     }
-    if (this.testResult.testData.manoeuvres.reverseParkRoad.selected) {
+    if (get(this.testResult, 'testData.manoeuvres.reverseParkRoad.selected')) {
       manoeuvres.push(manoeuvreTypeLabels.reverseParkRoad);
     }
-    if (this.testResult.testData.manoeuvres.reverseRight.selected) {
+    if (get(this.testResult, 'testData.manoeuvres.reverseRight.selected')) {
       manoeuvres.push(manoeuvreTypeLabels.reverseRight);
+    }
+
+    if (manoeuvres.length === 0) {
+      manoeuvres.push('None');
     }
 
     return manoeuvres;
   }
 
-  getETA(): string[] {
+  getETA() : string [] {
     const eta: string[] = [];
 
-    if (this.testResult.testData.ETA.physical) {
+    if (get(this.testResult, 'testData.ETA.physical')) {
       eta.push('Physical');
     }
-    if (this.testResult.testData.ETA.verbal) {
+    if (get(this.testResult, 'testData.ETA.verbal')) {
       eta.push('Verbal');
     }
     if (eta.length === 0) {
       eta.push('None');
     }
-    return [];
+    return eta;
+  }
+
+  getShowMeQuestion() : ShowMeQuestion {
+    const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
+    return showMeQuestionConstants.find(question => question.code === showMeQuestionCode);
+  }
+
+  getTellMeQuestion(): TellMeQuestion {
+    const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
+    return tellMeQuestionConstants.find(question => question.code ===  tellMeQuestionCode);
   }
 }
