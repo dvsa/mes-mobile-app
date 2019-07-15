@@ -162,6 +162,7 @@ export class AppConfigProvider {
       googleAnalyticsId: data.googleAnalyticsId,
       approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       timeTravelDate: data.timeTravelDate,
+      role: data.role,
       journal: {
         journalUrl: data.journal.journalUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,

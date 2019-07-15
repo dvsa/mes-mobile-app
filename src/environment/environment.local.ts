@@ -21,6 +21,7 @@ export const environment: LocalEnvironmentFile = {
     'iPad7,4',
     'x86_64',
   ],
+  role: 'DE',
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
     autoRefreshInterval: 1000 * 60 * 10,

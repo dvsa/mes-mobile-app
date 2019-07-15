@@ -17,6 +17,7 @@ export type AppConfig = {
   },
   approvedDeviceIdentifiers: string[],
   timeTravelDate?: string,
+  role: string;
   journal: {
     journalUrl: string,
     autoRefreshInterval: number

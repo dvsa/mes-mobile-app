@@ -24,6 +24,7 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
   googleAnalyticsId: string;
   approvedDeviceIdentifiers: string[];
   timeTravelDate?: string;
+  role: string;
   journal: {
     journalUrl: string;
     autoRefreshInterval: number;
