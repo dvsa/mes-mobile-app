@@ -31,6 +31,7 @@ import { ProgressiveAccessComponent } from '../../progressive-access/progressive
 import { SpecialNeedsCode } from '../../../../candidate-details/candidate-details.constants';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
 import { TestSlot } from '@dvsa/mes-journal-schema';
+import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -314,6 +315,18 @@ describe('TestSlotComponent', () => {
           },
         });
         expect(component.canStartTest()).toBe(true);
+      });
+      it('should disallow starting of tests that arent today', () => {
+        getAppConfigSpy.and.returnValue({
+          journal: {
+            testPermissionPeriods: [
+              { testCategory: 'B', from: '2019-01-01', to: null },
+            ],
+          },
+        });
+        component.slot.slotDetail.start =
+          DateTime.at(startTime).add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
+        expect(component.canStartTest()).toBeFalsy();
       });
     });
 
