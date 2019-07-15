@@ -24,6 +24,9 @@ import { ViewTestHeaderComponent } from '../components/view-test-header/view-tes
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
+import { manoeuvreTypeLabels } from '../../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -159,43 +162,120 @@ describe('ViewTestResultPage', () => {
         expect(result).toBeNull();
       });
     });
+    describe('getDebrief', () => {
+      it('should return the correct data', () => {
+        component.testResult = categoryBTestResultMock;
+        const result: DebriefCardModel = component.getDebrief();
+
+        expect(result.legalRequirements).toEqual({
+          angledStart: true,
+          hillStart: false,
+          normalStart1: true,
+          normalStart2: false,
+        });
+
+        expect(result.controlledStop).toEqual(true);
+        expect(result.ecoControl).toEqual(true);
+        expect(result.ecoPlanning).toEqual(false);
+      });
+      it('should return null when there is no test result', () => {
+        const result: DebriefCardModel = component.getDebrief();
+        expect(result).toBeNull();
+      });
+    });
+    describe('getManoeuvres', () => {
+      it('should return None where no manoeuvre has been completed', () => {
+        expect(component.getManoeuvres()).toEqual(['None']);
+      });
+      it('should return the correct values for the manoeuvres', () => {
+        component.testResult = categoryBTestResultMock;
+        expect(component.getManoeuvres()).toEqual([manoeuvreTypeLabels.forwardPark , manoeuvreTypeLabels.reverseRight]);
+      });
+    });
+    describe('getETA', () => {
+      it('should return None when there have been no ETAs', () => {
+        expect(component.getETA()).toEqual(['None']);
+      });
+      it('should return the correct values for the ETAs', () => {
+        component.testResult = categoryBTestResultMock;
+        expect(component.getETA()).toEqual(['Verbal']);
+      });
+    });
+    describe('getShowMeQuestion', () => {
+      it('should return undefined if there is no show me question', () => {
+        expect(component.getShowMeQuestion()).toBeUndefined();
+      });
+      it('should return the correct value for a show me question', () => {
+        component.testResult = categoryBTestResultMock;
+        const result = component.getShowMeQuestion();
+
+        expect(result).toEqual({
+          code: 'S1',
+          description: 'When it is safe to do so can you show me how you wash and clean the rear windscreen.',
+          shortName: 'Rear windscreen',
+        });
+      });
+    });
+    describe('getTellMeQuestion', () => {
+      it('should return undefined if there is no tell me question', () => {
+        expect(component.getTellMeQuestion()).toBeUndefined();
+      });
+      it('should return the correct value for the tell me question', () => {
+        component.testResult = categoryBTestResultMock;
+        const result = component.getTellMeQuestion();
+
+        expect(result).toEqual({
+          code: 'T2',
+          // tslint:disable-next-line:max-line-length
+          description: 'Tell me where you would find the information for the recommended tyre pressures for this car and how tyre pressures should be checked.',
+          shortName: 'Tyre pressures',
+        });
+      });
+    });
   });
 
   describe('DOM', () => {
-    it('should hide the cards when the data is loading', () => {
+    it('should hide the cards and error message when the data is loading', () => {
       component.isLoading = true;
       component.showErrorMessage = false;
 
+      expect(fixture.debugElement.query(By.css('.error'))).toBeNull();
+
+      expect(fixture.debugElement.query(By.css('view-test-header'))).toBeNull();
       expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
     });
-    it('should hide the cards when there has been an error', () => {
+    it('should hide the cards and show the error message when there has been an error', () => {
       component.isLoading = false;
       component.showErrorMessage = true;
+      fixture.detectChanges();
 
+      expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
+
+      expect(fixture.debugElement.query(By.css('view-test-header'))).toBeNull();
       expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('debrief-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
     });
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
       component.showErrorMessage = false;
       component.testResult = categoryBTestResultMock;
-
       fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('.error'))).toBeNull();
+
+      expect(fixture.debugElement.query(By.css('view-test-header'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('test-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('debrief-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('test-summary-card'))).not.toBeNull();
-    });
-    it('should show an error message if there has been an error', () => {
-      component.isLoading = false;
-      component.showErrorMessage = true;
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
     });
   });
 });

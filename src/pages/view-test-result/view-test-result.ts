@@ -163,7 +163,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       weatherConditions: get(this.testResult, 'testSummary.weatherConditions'),
       D255: get(this.testResult, 'testSummary.D255'),
     };
-
   }
 
   getHeaderDetails(): ViewTestHeaderModel {
