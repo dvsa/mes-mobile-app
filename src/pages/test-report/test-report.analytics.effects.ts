@@ -13,10 +13,6 @@ import {
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
-import {
-  TerminateTestFromTestReport,
-  TERMINATE_TEST_FROM_TEST_REPORT,
-} from '../../pages/test-report/test-report.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { isPracticeMode } from '../../modules/tests/tests.selector';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -562,14 +558,23 @@ export class TestReportAnalyticsEffects {
   );
 
   testTermination$ = this.actions$.pipe(
-    ofType(TERMINATE_TEST_FROM_TEST_REPORT),
-    switchMap((action: TerminateTestFromTestReport) => {
-      this.analytics.logEvent(
-        AnalyticsEventCategories.TERMINATION,
-        AnalyticsEvents.END_TEST,
-        AnalyticsLabels.TERMINATE_TEST,
-      );
-      return of();
+    ofType(testReportActions.TERMINATE_TEST_FROM_TEST_REPORT),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+        map(isPracticeMode),
+      ),
+    ),
+    concatMap(([action, isPracticeMode]: [testReportActions.TerminateTestFromTestReport, boolean]) => {
+      if (!isPracticeMode) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.TERMINATION,
+          AnalyticsEvents.END_TEST,
+          AnalyticsLabels.TERMINATE_TEST,
+        );
+        return of(new AnalyticRecorded());
+      }
+      return of(new AnalyticNotRecorded);
     }),
   );
 }
