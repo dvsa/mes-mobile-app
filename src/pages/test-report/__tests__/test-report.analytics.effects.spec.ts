@@ -791,5 +791,19 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
+
+    it('should not call logEvent for termination when it is a practice test', (done) => {
+      // ARRANGE
+      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.showMeQuestionRemoveFault$.subscribe((result) => {
+        expect(result instanceof AnalyticNotRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        done();
+      });
+    });
   });
 });
