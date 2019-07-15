@@ -164,20 +164,38 @@ describe('ViewTestResultPage', () => {
   describe('DOM', () => {
     it('should hide the cards when the data is loading', () => {
       component.isLoading = true;
+      component.showErrorMessage = false;
 
       expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
       expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
     });
-    it('should show the cards when the data is not loading', () => {
+    it('should hide the cards when there has been an error', () => {
       component.isLoading = false;
+      component.showErrorMessage = true;
+
+      expect(fixture.debugElement.query(By.css('test-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('examiner-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('vehicle-details-card'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('test-summary-card'))).toBeNull();
+    });
+    it('should show the cards when the data is not loading and there is no error', () => {
+      component.isLoading = false;
+      component.showErrorMessage = false;
       component.testResult = categoryBTestResultMock;
+
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('test-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('examiner-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('vehicle-details-card'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('test-summary-card'))).not.toBeNull();
+    });
+    it('should show an error message if there has been an error', () => {
+      component.isLoading = false;
+      component.showErrorMessage = true;
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
     });
   });
 });
