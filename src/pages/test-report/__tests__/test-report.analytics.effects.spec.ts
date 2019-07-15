@@ -799,7 +799,7 @@ describe('Test Report Analytics Effects', () => {
       // ACT
       actions$.next(new testReportActions.TerminateTestFromTestReport());
       // ASSERT
-      effects.showMeQuestionRemoveFault$.subscribe((result) => {
+      effects.testTermination$.subscribe((result) => {
         expect(result instanceof AnalyticNotRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
         done();
