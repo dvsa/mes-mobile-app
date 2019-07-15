@@ -293,6 +293,16 @@ describe('TestSlotComponent', () => {
         });
         expect(component.canStartTest()).toBe(true);
       });
+      it('should allow the test when there is a non-date bounded permission range', () => {
+        getAppConfigSpy.and.returnValue({
+          journal: {
+            testPermissionPeriods: [
+              { testCategory: 'B', from: '2019-02-01', to: null },
+            ],
+          },
+        });
+        expect(component.canStartTest()).toBe(true);
+      });
     });
 
     describe('isSpecialNeedsSlot', () => {

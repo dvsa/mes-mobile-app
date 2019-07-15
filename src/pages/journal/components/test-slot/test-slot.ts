@@ -83,20 +83,18 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canStartTest(): boolean {
-    try {
-      const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
-      const { testCategory } = this.slot.booking.application;
-      const { start } = this.slot.slotDetail;
-      const startAsDate = new Date(start);
-      startAsDate.setHours(0, 0, 0, 0);
-      const periodsPermittingStart = testPermissionPeriods.filter((period) => {
-        // tslint:disable-next-line:max-line-length
-        return period.testCategory === testCategory && new Date(period.from) <= startAsDate && new Date(period.to) >= startAsDate;
-      });
-      return periodsPermittingStart.length > 0;
-    } catch (err) {
-      console.log('error determining whether slot was allowed by rules');
-    }
-    return false;
+    const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
+    const { testCategory } = this.slot.booking.application;
+    const { start } = this.slot.slotDetail;
+    const startAsDate = new Date(start);
+    startAsDate.setHours(0, 0, 0, 0);
+    const periodsPermittingStart = testPermissionPeriods.filter((period) => {
+      const periodStartDate = new Date(period.from);
+      const periodEndDate = new Date(period.to);
+      return period.testCategory === testCategory
+        && periodStartDate <= startAsDate
+        && (periodEndDate >= startAsDate || period.to === null);
+    });
+    return periodsPermittingStart.length > 0;
   }
 }
