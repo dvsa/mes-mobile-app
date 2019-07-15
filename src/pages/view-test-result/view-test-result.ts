@@ -264,7 +264,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return [
       ...getDangerousFaults(testData.dangerousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.D),
-      ...this.getControlledStop(CompetencyOutcome.D),
+      ...this.getControlledStopFault(CompetencyOutcome.D),
       ...getVehicleCheckDangerousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
     ];
   }
@@ -274,7 +274,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return [
       ...getSeriousFaults(testData.seriousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
-      ...this.getControlledStop(CompetencyOutcome.S),
+      ...this.getControlledStopFault(CompetencyOutcome.S),
       ...getVehicleCheckSeriousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
     ];
   }
@@ -284,12 +284,13 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return [
       ...getDrivingFaults(testData.drivingFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.DF),
-      ...this.getControlledStop(CompetencyOutcome.DF),
+      ...this.getControlledStopFault(CompetencyOutcome.DF),
       ...getVehicleCheckDrivingFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
     ];
   }
 
-  getControlledStop(competencyOutcome: CompetencyOutcome): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
+  getControlledStopFault(competencyOutcome: CompetencyOutcome):
+    (CommentedCompetency & MultiFaultAssignableCompetency)[] {
     const testData: TestData = get(this.testResult, 'testData');
 
     return getControlledStopFaultAndComment(testData.controlledStop, competencyOutcome)

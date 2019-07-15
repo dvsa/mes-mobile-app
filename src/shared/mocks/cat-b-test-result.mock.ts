@@ -64,6 +64,8 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   testData: {
     controlledStop: {
       selected: true,
+      fault: 'S',
+      faultComments: 'mock-controlled-stop-comments',
     },
     dangerousFaults: {
       ancillaryControls: true,
