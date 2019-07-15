@@ -65,6 +65,14 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
     controlledStop: {
       selected: true,
     },
+    dangerousFaults: {
+      ancillaryControls: true,
+      ancillaryControlsComments: 'mock-ancillary-controls-comment',
+    },
+    drivingFaults: {
+      awarenessPlanning: 2,
+      awarenessPlanningComments: 'mock-awareness-planning-comment',
+    },
     eco: {
       completed: true,
       adviceGivenControl: true,
@@ -84,6 +92,10 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
       reverseRight: {
         selected: true,
       },
+    },
+    seriousFaults: {
+      clearance: true,
+      clearanceComments: 'mock-clearance-comments',
     },
     testRequirements: {
       angledStart: true,
