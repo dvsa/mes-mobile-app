@@ -14,7 +14,7 @@ export interface IAnalyticsProvider {
 }
 
 export enum AnalyticsScreenNames {
-  CONTACT_DETAILS = 'contact details screen', // this may need removing as could be candidate details now
+  COMMUNICATION = 'communication screen',
   HEALTH_DECLARATION = 'health declaration screen',
   JOURNAL = 'journal screen',
   PASS_TEST_SUMMARY = 'pass test summary screen',
@@ -42,6 +42,8 @@ export enum AnalyticsEventCategories {
   POST_TEST = 'post-test',
   TEST_REPORT = 'test report',
   TERMINATION = 'test termination',
+  PRACTICE_TEST = 'practice test',
+  PRACTICE_MODE = 'practice mode',
 }
 
 export enum AnalyticsEvents {

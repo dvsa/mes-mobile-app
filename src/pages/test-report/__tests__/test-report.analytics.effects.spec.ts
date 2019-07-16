@@ -19,7 +19,6 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsLabels,
 } from '../../../providers/analytics/analytics.model';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -28,7 +27,7 @@ import {
   manoeuvreTypeLabels,
   manoeuvreCompetencyLabels,
 } from '../components/manoeuvre-competency/manoeuvre-competency.constants';
-import { AnalyticRecorded, AnalyticNotRecorded } from '../../../providers/analytics/analytics.actions';
+import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -55,10 +54,11 @@ describe('Test Report Analytics Effects', () => {
     effects = TestBed.get(TestReportAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
+    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
   });
 
   describe('testReportViewDidEnter', () => {
-    it('should call setCurrentPage and addCustomDimension', () => {
+    it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
       spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
       // ACT
@@ -66,105 +66,121 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.testReportViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledWith(AnalyticsScreenNames.TEST);
+        done();
       });
     });
   });
 
   describe('toggleRemoveFaultMode', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_REMOVE_MODE,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
       effects.toggleRemoveFaultMode$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.SELECT_REMOVE_MODE}`,
+        );
+        done();
       });
     });
   });
 
   describe('toggleSeriousFaultMode', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_SERIOUS_MODE,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
       effects.toggleSeriousFaultMode$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.SELECT_SERIOUS_MODE}`,
+        );
+        done();
       });
     });
   });
 
   describe('toggleDangerousFaultMode', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.SELECT_DANGEROUS_MODE,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
       effects.toggleDangerousFaultMode$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.SELECT_DANGEROUS_MODE}`,
+        );
+        done();
       });
     });
   });
 
   describe('addDrivingFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.AddDrivingFault({
@@ -174,17 +190,18 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.addDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
           fullCompetencyLabels[Competencies.controlsGears],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.AddDrivingFault({
@@ -193,80 +210,100 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addDrivingFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DRIVING_FAULT}`,
+          fullCompetencyLabels[Competencies.controlsGears],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('addSeriousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
           fullCompetencyLabels[Competencies.controlsGears],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_SERIOUS_FAULT}`,
+          fullCompetencyLabels[Competencies.controlsGears],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('addDangerousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
           fullCompetencyLabels[Competencies.controlsGears],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DANGEROUS_FAULT}`,
+          fullCompetencyLabels[Competencies.controlsGears],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('addManoeuvreDrivingFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.AddManoeuvreDrivingFault({
@@ -276,6 +313,7 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.addManoeuvreDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
@@ -283,11 +321,11 @@ describe('Test Report Analytics Effects', () => {
           `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.AddManoeuvreDrivingFault({
@@ -296,16 +334,23 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreDrivingFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DRIVING_FAULT}`,
+          // tslint:disable-next-line:max-line-length
+          `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('addManoeuvreSeriousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.AddManoeuvreSeriousFault({
@@ -315,6 +360,7 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.addManoeuvreSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
@@ -322,11 +368,11 @@ describe('Test Report Analytics Effects', () => {
           `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.AddManoeuvreSeriousFault({
@@ -335,16 +381,23 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreSeriousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_SERIOUS_FAULT}`,
+          // tslint:disable-next-line:max-line-length
+          `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('addManoeuvreDangerousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.AddManoeuvreDangerousFault({
@@ -354,6 +407,7 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.addManoeuvreDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
@@ -361,11 +415,11 @@ describe('Test Report Analytics Effects', () => {
           `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.AddManoeuvreDangerousFault({
@@ -374,208 +428,257 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.addManoeuvreDangerousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DANGEROUS_FAULT}`,
+          // tslint:disable-next-line:max-line-length
+          `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('controlledStopAddDrivingFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
           fullCompetencyLabels['outcomeControlledStop'],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DRIVING_FAULT}`,
+          fullCompetencyLabels['outcomeControlledStop'],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('controlledStopAddSeriousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
           fullCompetencyLabels['outcomeControlledStop'],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_SERIOUS_FAULT}`,
+          fullCompetencyLabels['outcomeControlledStop'],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('controlledStopAddDangerousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ControlledStopAddDangerousFault());
       // ASSERT
-      effects.controlledStopAddDrivingFault$.subscribe((result) => {
+      effects.controlledStopAddDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
           fullCompetencyLabels['outcomeControlledStop'],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ControlledStopAddDangerousFault());
       // ASSERT
-      effects.controlledStopAddDrivingFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+      effects.controlledStopAddDangerousFault$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DANGEROUS_FAULT}`,
+          fullCompetencyLabels['outcomeControlledStop'],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('showMeQuestionDrivingFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DRIVING_FAULT,
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DRIVING_FAULT}`,
+          fullCompetencyLabels['showMeQuestion'],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('showMeQuestionSeriousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_SERIOUS_FAULT,
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_SERIOUS_FAULT}`,
+          fullCompetencyLabels['showMeQuestion'],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('showMeQuestionDangerousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.ADD_DANGEROUS_FAULT,
           fullCompetencyLabels['showMeQuestion'],
           1,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.ADD_DANGEROUS_FAULT}`,
+          fullCompetencyLabels['showMeQuestion'],
+          1,
+        );
+        done();
       });
     });
   });
 
   describe('removeDrivingFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.RemoveDrivingFault({
@@ -585,99 +688,120 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.removeDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
           fullCompetencyLabels[Competencies.controlsGears],
           0,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
-        newFaultCount: 1,
+        newFaultCount: 0,
       }));
       // ASSERT
       effects.removeDrivingFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_DRIVING_FAULT}`,
+          fullCompetencyLabels[Competencies.controlsGears],
+          0,
+        );
+        done();
       });
     });
   });
 
   describe('removeSeriousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_SERIOUS_FAULT,
           fullCompetencyLabels[Competencies.controlsGears],
           0,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_SERIOUS_FAULT}`,
+          fullCompetencyLabels[Competencies.controlsGears],
+          0,
+        );
+        done();
       });
     });
   });
 
   describe('removeDangerousFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DANGEROUS_FAULT,
           fullCompetencyLabels[Competencies.controlsGears],
           0,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_DANGEROUS_FAULT}`,
+          fullCompetencyLabels[Competencies.controlsGears],
+          0,
+        );
+        done();
       });
     });
   });
 
   describe('removeManoeuvreDrivingFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.RemoveManoeuvreFault({
@@ -687,17 +811,18 @@ describe('Test Report Analytics Effects', () => {
       // ASSERT
       effects.removeManoeuvreFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_DRIVING_FAULT,
           // tslint:disable-next-line:max-line-length
           `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.RemoveManoeuvreFault({
@@ -706,104 +831,91 @@ describe('Test Report Analytics Effects', () => {
       }));
       // ASSERT
       effects.removeManoeuvreFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_DRIVING_FAULT}`,
+          // tslint:disable-next-line:max-line-length
+          `${manoeuvreTypeLabels[ManoeuvreTypes.reverseRight]} - ${manoeuvreCompetencyLabels[ManoeuvreCompetencies.controlFault]}`,
+        );
+        done();
       });
     });
   });
 
   describe('controlledStopRemoveFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_FAULT,
           fullCompetencyLabels['outcomeControlledStop'],
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_FAULT}`,
+          fullCompetencyLabels['outcomeControlledStop'],
+        );
+        done();
       });
     });
   });
 
   describe('showMeQuestionRemoveFault', () => {
-    it('should call logEvent for this competency', () => {
+    it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new journalActions.StartTest(123456));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.REMOVE_FAULT,
           fullCompetencyLabels['showMeQuestion'],
         );
+        done();
       });
     });
-    it('should not call logEvent for this competency when it is a practice test', () => {
+    it('should call logEvent for this competency, prefixed with practice test', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
       actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
-      });
-    });
-  });
-
-  describe('testTermination', () => {
-    it('should call logEvent for the termination event', (done) => {
-      // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
-      store$.dispatch(new journalActions.StartTest(123456));
-      // ACT
-      actions$.next(new testReportActions.TerminateTestFromTestReport());
-      // ASSERT
-      effects.testTermination$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
-          AnalyticsEventCategories.TERMINATION,
-          AnalyticsEvents.END_TEST,
-          AnalyticsLabels.TERMINATE_TEST,
-        );
-        done();
-      });
-    });
-
-    it('should not call logEvent for termination when it is a practice test', (done) => {
-      // ARRANGE
-      spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
-      // ACT
-      actions$.next(new testReportActions.TerminateTestFromTestReport());
-      // ASSERT
-      effects.testTermination$.subscribe((result) => {
-        expect(result instanceof AnalyticNotRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent).not.toHaveBeenCalled();
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_FAULT}`,
+          fullCompetencyLabels['showMeQuestion'],
+          );
         done();
       });
     });
   });
+
 });
