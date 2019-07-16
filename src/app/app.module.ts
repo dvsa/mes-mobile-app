@@ -39,7 +39,6 @@ import { IonicGestureConfig } from '../gestures/ionic-gesture-config';
 import { WeatherConditionProvider } from '../providers/weather-conditions/weather-condition';
 import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
-import { CandidateDetailsCheckProvider } from '../providers/candidate-details-check/candidate-details-check';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -99,7 +98,6 @@ export function createTranslateLoader(http: Http) {
     TestPersistenceProvider,
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     OutcomeBehaviourMapProvider,
-    CandidateDetailsCheckProvider,
   ],
 })
 export class AppModule { }

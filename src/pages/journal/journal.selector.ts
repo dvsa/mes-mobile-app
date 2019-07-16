@@ -4,6 +4,8 @@ import { isNil } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 
+export const getCheckComplete = (journal: JournalModel) => journal.checkComplete;
+
 export const getSlots = (journal: JournalModel) => journal.slots;
 
 export const getSlotsOnSelectedDate = (journal: JournalModel) => journal.slots[journal.selectedDate];
@@ -44,10 +46,10 @@ export const canNavigateToNextDay = (journal: JournalModel): boolean => {
 export const getAllSlots = (journal: JournalModel): SlotItem[] => {
   const slotArray: SlotItem[] = [];
   Object.values(journal.slots)
-  .forEach((dayOfSlots) => {
-    dayOfSlots.forEach((slot) => {
-      slotArray.push(slot);
+    .forEach((dayOfSlots) => {
+      dayOfSlots.forEach((slot) => {
+        slotArray.push(slot);
+      });
     });
-  });
   return slotArray;
 };

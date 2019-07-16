@@ -18,7 +18,12 @@ export type JournalModel = {
   error?: MesError,
   selectedDate: string,
   examiner: Examiner,
+  checkComplete: CheckComplete[],
 };
+
+export interface CheckComplete {
+  slotId: number;
+}
 
 export interface ExaminerSlotItems {
   examiner: Examiner;

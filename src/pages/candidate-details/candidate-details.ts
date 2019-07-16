@@ -11,7 +11,10 @@ import { StoreModel } from '../../shared/models/store.model';
 import { TestCategory } from '../../shared/models/test-category';
 import { getJournalState } from '../journal/journal.reducer';
 import { Details } from './candidate-details.model';
-import { ClearChangedSlot } from '../journal/journal.actions';
+import {
+  ClearChangedSlot,
+  CandidateDetailsSeen,
+} from '../journal/journal.actions';
 import {
   getSlotById,
   getSlots,
@@ -25,7 +28,6 @@ import {
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 import { Business } from '@dvsa/mes-journal-schema';
-import { CandidateDetailsCheckProvider } from '../../providers/candidate-details-check/candidate-details-check';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>;
@@ -52,7 +54,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private store$: Store<StoreModel>,
-    private candidateDetailsCheck: CandidateDetailsCheckProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.slotId = navParams.get('slotId');
@@ -105,7 +106,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
     }
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
-    this.candidateDetailsCheck.candidateDetailsViewed(this.slotId);
+    this.store$.dispatch(new CandidateDetailsSeen(this.slotId));
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

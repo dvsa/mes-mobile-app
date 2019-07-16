@@ -1,12 +1,15 @@
 import { JournalForceCheckModal } from './journal-force-check-modal';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { AppModule } from '../../../app/app.module';
+import { AppModule } from '../../../../app/app.module';
 import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import {
   ModalAlertTitleComponent,
-} from '../../test-report/components/test-report-modal/modal-alert-title/modal-alert-title';
+} from '../../../test-report/components/test-report-modal/modal-alert-title/modal-alert-title';
+import {
+  ModalReturnButtonComponent,
+} from '../../../test-report/components/test-report-modal/modal-return-button/modal-return-button';
 
 describe('JournalForceCheckModal', () => {
   let fixture: ComponentFixture<JournalForceCheckModal>;
@@ -17,6 +20,7 @@ describe('JournalForceCheckModal', () => {
       declarations: [
         JournalForceCheckModal,
         ModalAlertTitleComponent,
+        ModalReturnButtonComponent,
       ],
       imports: [
         AppModule,
@@ -45,7 +49,7 @@ describe('JournalForceCheckModal', () => {
     it('should call onCancel when the Cancel button is clicked', () => {
       fixture.detectChanges();
       spyOn(component, 'onCancel');
-      const button = fixture.debugElement.query(By.css('button.force-check-return-button'));
+      const button = fixture.debugElement.query(By.css('modal-return-button'));
       button.triggerEventHandler('click', null);
 
       fixture.detectChanges();

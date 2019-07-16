@@ -11,6 +11,7 @@ export const initialState: JournalModel = {
   slots: {},
   selectedDate: '',
   examiner: null,
+  checkComplete: [],
 };
 
 export function journalReducer(state = initialState, action: journalActions.JournalActionTypes): JournalModel {
@@ -20,6 +21,13 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         ...state,
         isLoading: true,
         error: { message: '', status: 0, statusText: '' },
+      };
+    case journalActions.CANDIDATE_DETAILS_SEEN:
+      return {
+        ...state,
+        checkComplete: state.checkComplete.concat({
+          slotId: action.slotId,
+        }),
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {

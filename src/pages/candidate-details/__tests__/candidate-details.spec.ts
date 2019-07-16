@@ -11,9 +11,6 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { MockComponent } from 'ng-mocks';
 import { DisplayAddressComponent } from '../../../components/display-address/display-address';
-import { CandidateDetailsCheckProvider } from '../../../providers/candidate-details-check/candidate-details-check';
-import { CandidateDetailsCheckProviderMock }
-  from '../../../providers/candidate-details-check/__mocks__/candidate-details-check.mock';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;
@@ -36,7 +33,6 @@ describe('CandidateDetailsPage', () => {
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
-        { provide: CandidateDetailsCheckProvider, useClass: CandidateDetailsCheckProviderMock },
       ],
     })
       .compileComponents()
