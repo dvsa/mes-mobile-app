@@ -60,6 +60,7 @@ export class TestResultsSearchPage extends BasePageComponent {
         tap(() => this.hasSearched = true),
         map((results) => {
           this.searchResults = results;
+
           this.showSearchSpinner = false;
         }),
         catchError(() => {
@@ -106,6 +107,13 @@ export class TestResultsSearchPage extends BasePageComponent {
         }),
       )
       .subscribe();
+  }
+
+  myHeaderFn(record: any, recordIndex: any): string {
+    if (recordIndex === 0) {
+      return '';
+    }
+    return null;
   }
 
 }
