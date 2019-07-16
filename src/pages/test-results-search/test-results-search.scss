@@ -66,4 +66,36 @@ page-test-results-search {
     margin-right: 0;
     width: 100%;
   }
+
+  .search-inputs {
+    position: absolute;
+    width: 800px;
+    z-index: 100;
+  }
+
+  @media screen and (min-width: 900px) {
+    .search-inputs {
+      position: absolute;
+      width: 1080px;
+      z-index: 100;
+    }
+  }
+
+  .test-results-list {
+
+    .list-header {
+      height: 480px;
+      visibility: hidden;
+    }
+
+    .item-ios {
+      background-color: map-get($colors, 'mes-background');
+      padding: 0;
+    }
+
+    ion-label.label.label-ios {
+      margin: 0;
+    }
+  }
+  
 }
