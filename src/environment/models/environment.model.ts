@@ -1,4 +1,5 @@
 import { TestPermissionPeriod } from '../../providers/app-config/app-config.model';
+import { ExaminerRole } from '../../providers/app-config/constants/examiner-role.constants';
 
 export interface EnvironmentFile {
   isRemote: boolean;
@@ -24,6 +25,7 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
   googleAnalyticsId: string;
   approvedDeviceIdentifiers: string[];
   timeTravelDate?: string;
+  role: ExaminerRole;
   journal: {
     journalUrl: string;
     autoRefreshInterval: number;

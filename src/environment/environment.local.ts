@@ -1,4 +1,5 @@
 import { LocalEnvironmentFile } from './models/environment.model';
+import { ExaminerRole } from '../providers/app-config/constants/examiner-role.constants';
 
 export const environment: LocalEnvironmentFile = {
   isRemote: false,
@@ -21,6 +22,7 @@ export const environment: LocalEnvironmentFile = {
     'iPad7,4',
     'x86_64',
   ],
+  role: ExaminerRole.DE,
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
     autoRefreshInterval: 1000 * 60 * 10,
