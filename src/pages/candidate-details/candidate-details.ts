@@ -28,12 +28,14 @@ import {
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 import { Business } from '@dvsa/mes-journal-schema';
+import { getCheckComplete } from '../journal/journal.selector';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>;
   time$: Observable<string>;
   details$: Observable<Details>;
   business$: Observable<Business>;
+  checkComplete$: Observable<number[]>;
 }
 
 @IonicPage()
@@ -88,6 +90,11 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
         map(slots => getSlotById(slots, this.slotId)),
         select(getBusiness),
       ),
+      checkComplete$: this.store$.pipe(
+        select(getJournalState),
+        select(getCheckComplete),
+        map(checkComplete => checkComplete.map(item => item.slotId)),
+      ),
     };
 
     const { name$, time$, details$, business$ } = this.pageState;
@@ -106,7 +113,14 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
     }
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
-    this.store$.dispatch(new CandidateDetailsSeen(this.slotId));
+    this.pageState.checkComplete$.subscribe(
+      (result) => {
+        if (!result.includes(this.slotId)) {
+          this.store$.dispatch(new CandidateDetailsSeen(this.slotId));
+        }
+      },
+    );
+
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
