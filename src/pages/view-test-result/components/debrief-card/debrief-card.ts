@@ -15,4 +15,9 @@ export class DebriefCardComponent {
 
   getFlattenArray = (data: string[]): string => flattenArray(data);
 
+  showNoFaultsMessage = () : boolean =>
+    this.data.drivingFaultCount === 0 &&
+    this.data.seriousFaults.length === 0 &&
+    this.data.dangerousFaults.length === 0
+
 }

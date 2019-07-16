@@ -1,14 +1,15 @@
 <ion-card *ngIf="!shouldHideCard()">
   <ion-card-header>
-    <h4>Test Summary</h4>
+    <h4>Test summary</h4>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.accompaniment">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Accompanied by</label>
         </ion-col>
         <ion-col col-56>
+          <span class=mes-data *ngIf="data.accompaniment.length === 0">None</span>
           <span class="mes-data">{{ getFlattenArray(data.accompaniment) }}</span>
         </ion-col>
       </ion-row>
@@ -28,7 +29,7 @@
           <span class="mes-data">{{ data.passCertificateNumber }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.routeNumber">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Route number</label>
         </ion-col>
@@ -36,7 +37,7 @@
           <span class="mes-data">{{ data.routeNumber }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.independentDriving">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Independent driving</label>
         </ion-col>
@@ -44,7 +45,7 @@
           <span class="mes-data">{{ data.independentDriving }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.candidateDescription">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Physical description of candidate</label>
         </ion-col>
@@ -52,7 +53,7 @@
           <span class="mes-data">{{ data.candidateDescription }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.debriefWitnessed">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Debrief witnessed</label>
         </ion-col>
@@ -60,15 +61,16 @@
           <span class="mes-data">{{ getConvertBooleanToString(data.debriefWitnessed) }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row-with-separator" *ngIf="data.weatherConditions">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Weather conditions</label>
         </ion-col>
         <ion-col col-56>
+          <span class="mes-data" *ngIf="data.weatherConditions.length === 0">None Selected</span>
           <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row" *ngIf="data.D255">
+      <ion-row class="mes-data-row">
         <ion-col col-40>
           <label>D255</label>
         </ion-col>
