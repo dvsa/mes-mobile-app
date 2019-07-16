@@ -19,9 +19,16 @@ import {
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTestSlotId, getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import {
+  getCurrentTestSlotId,
+  getCurrentTest,
+  getJournalData,
+} from '../../modules/tests/tests.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
+import { TestsModel } from '../../modules/tests/tests.model';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 
 @Injectable()
 export class WaitingRoomAnalyticsEffects {
@@ -31,18 +38,16 @@ export class WaitingRoomAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-    .then(() => {})
-    .catch(() => {
-      console.log('error initialising analytics');
-    },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
   waitingRoomViewDidEnter$ = this.actions$.pipe(
     ofType(WAITING_ROOM_VIEW_DID_ENTER),
     withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+      ),
       this.store$.pipe(
         select(getTests),
         select(getCurrentTestSlotId),
@@ -55,31 +60,45 @@ export class WaitingRoomAnalyticsEffects {
         select(getCandidateId),
         ),
     ),
-    switchMap(([action, slotId, candidateId]: [WaitingRoomViewDidEnter, string, number]) => {
+    switchMap(([action, tests, slotId, candidateId]: [WaitingRoomViewDidEnter, TestsModel, string, number]) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
-      this.analytics.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM);
-      return of();
+      this.analytics.setCurrentPage(
+        formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests),
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
   submitWaitingRoomInfoError$ = this.actions$.pipe(
     ofType(SUBMIT_WAITING_ROOM_INFO_ERROR),
-    switchMap((action: SubmitWaitingRoomInfoError) => {
-      this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+      ),
+    ),
+    switchMap(([action, tests]: [SubmitWaitingRoomInfoError, TestsModel]) => {
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests);
+      this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
         action.errorMessage);
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
   submitWaitingRoomInfoErrorValidation$ = this.actions$.pipe(
     ofType(WAITING_ROOM_VALIDATION_ERROR),
-    switchMap((action: WaitingRoomValidationError) => {
-      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.WAITING_ROOM})`,
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+      ),
+    ),
+    switchMap(([action, tests]: [WaitingRoomValidationError, TestsModel]) => {
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests);
+      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
         action.errorMessage);
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
