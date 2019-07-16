@@ -12,7 +12,9 @@
           <ion-grid>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.legalRequirements.normalStart1'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.legalRequirements.normalStart1'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data">Normal start (NS)</span>
@@ -20,7 +22,9 @@
             </ion-row>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.legalRequirements.normalStart2'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.legalRequirements.normalStart2'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data">Normal start (NS)</span>
@@ -28,7 +32,9 @@
             </ion-row>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.legalRequirements.angledStart'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.legalRequirements.angledStart'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data">Angled start (AS)</span>
@@ -36,7 +42,9 @@
             </ion-row>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.legalRequirements.hillStart'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.legalRequirements.hillStart'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data">Hill Start (HS) / Designated Start (DS)</span>
@@ -61,7 +69,9 @@
           <ion-grid>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.controlledStop'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.controlledStop'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data" *ngIf="data.controlledStop">Completed</span>
@@ -79,7 +89,9 @@
           <ion-grid>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.ecoControl'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.ecoControl'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data">Control</span>
@@ -87,7 +99,9 @@
             </ion-row>
             <ion-row>
               <ion-col col-7>
-                <tick-indicator [ticked]='data.ecoPlanning'></tick-indicator>
+                <div class="checked-badge-container">
+                  <tick-indicator [ticked]='data.ecoPlanning'></tick-indicator>
+                </div>
               </ion-col>
               <ion-col>
                 <span class="mes-data">Planning</span>
