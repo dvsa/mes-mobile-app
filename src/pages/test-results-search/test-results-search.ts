@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
+import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { AdvancedSearchParams } from '../../providers/search/search.models';
+import { ExaminerRole } from '../../providers/app-config/constants/examiner-role.constants';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -26,8 +28,6 @@ export class TestResultsSearchPage extends BasePageComponent {
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
   showAdvancedSearchSpinner: boolean = false;
-  // TODO set `displayAdvancedSearch` based on examinerRole
-  displayAdvancedSearch: boolean = false;
 
   constructor(
     public navController: NavController,
@@ -35,12 +35,17 @@ export class TestResultsSearchPage extends BasePageComponent {
     public navParams: NavParams,
     public authenticationProvider: AuthenticationProvider,
     public searchProvider: SearchProvider,
+    private appConfig: AppConfigProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
 
   searchByChanged(val: SearchBy) {
     this.searchBy = val;
+  }
+
+  displayAdvancedSearch() {
+    return this.appConfig.getAppConfig().role === ExaminerRole.LDTM;
   }
 
   candidateInfoChanged(val: string) {
