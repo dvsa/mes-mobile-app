@@ -1,9 +1,9 @@
 <ion-grid>
   <ion-row>
-    <ion-col align-self-center col-lg-18 col-md-26>
+    <ion-col align-self-center col-18>
       <label>Test centre</label>
     </ion-col>
-    <ion-col col-lg-29 col-md-40>
+    <ion-col col-28>
       <ion-item no-padding no-lines>
         <ion-input
           placeholder="DTC number"
@@ -16,11 +16,11 @@
           (change)="dtcNumberChanged($event.target.value)"></ion-input>
       </ion-item> 
     </ion-col>
-    <ion-col col-md-30 col-lg-4></ion-col>
-    <ion-col align-self-center col-lg-12 col-md-26>
+    <ion-col col-3></ion-col>
+    <ion-col align-self-center col-14>
       <label>Staff ID</label>
     </ion-col>
-    <ion-col col-lg-29 col-md-40>
+    <ion-col col-28>
       <ion-item no-padding no-lines>
         <ion-input
           placeholder="DE number"
@@ -45,8 +45,8 @@
     </ion-col>
     <ion-col col-md-28 col-lg-21>
       <ion-datetime
-        displayFormat="DD/MM/YYYY"
         placeholder="Select start date"
+        displayFormat="DD/MM/YYYY"
         [pickerOptions]="customStartDateOptions"
         [(ngModel)]="startDate"></ion-datetime>
     </ion-col>
@@ -55,8 +55,8 @@
       </ion-col>
     <ion-col col-md-28 col-lg-21>
       <ion-datetime
-        displayFormat="DD/MM/YYYY"
         placeholder="Select end date"
+        displayFormat="DD/MM/YYYY"
         [pickerOptions]="customEndDateOptions"
         [(ngModel)]="endDate"></ion-datetime>
     </ion-col>

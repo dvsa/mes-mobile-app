@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Platform } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, PlatformMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, PlatformMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../app/app.module';
 import { TestResultsSearchPage } from '../test-results-search';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -27,6 +27,7 @@ describe('TestResultsSearchPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SearchProvider, useClass: SearchProviderMock },
       ],
