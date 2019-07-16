@@ -102,8 +102,8 @@ export class TestResultsSearchPage extends BasePageComponent {
       .subscribe();
   }
 
-  myHeaderFn(record: any, recrodIndex: any): string {
-    if (recrodIndex === 0) {
+  myHeaderFn(record: any, recordIndex: any): string {
+    if (recordIndex === 0) {
       return '';
     }
     return null;
