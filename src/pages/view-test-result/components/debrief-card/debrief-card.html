@@ -75,7 +75,7 @@
               </ion-col>
               <ion-col>
                 <span class="mes-data" *ngIf="data.controlledStop">Completed</span>
-                <span class="mes-data" *ngIf="!data.controlledStop">Not Completed</span>
+                <span class="mes-data" *ngIf="!data.controlledStop">Not completed</span>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -115,6 +115,7 @@
           <label>Fault descriptions</label>
         </ion-col>
         <ion-col col-56>
+          <span class="mes-data" *ngIf="showNoFaultsMessage()"> No faults recorded</span>
           <ion-grid>
             <ion-row *ngIf="data.dangerousFaults.length !== 0">
               <ion-col><span class='mes-data bold'>{{data.dangerousFaults.length}} dangerous faults</span></ion-col>
