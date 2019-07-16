@@ -9,7 +9,7 @@
 
   <div class="search-inputs">
     <tabs (activeTabSelected)="activeSearchTabSelected($event)">
-      <tab [tabTitle]="'Candidate details'">
+      <tab [tabTitle]="'Candidate details'" id="tab-search-candidate-details">
         <ion-grid>
           <ion-row align-self-center>
             <ion-col class="component-label" col-22>
@@ -62,7 +62,7 @@
           </ion-row>
         </ion-grid>
       </tab>
-      <tab [tabTitle]="'Advanced search'">
+      <tab [tabTitle]="'Advanced search'" *ngIf="displayAdvancedSearch()" id="tab-search-advanced">
         <advanced-search (onSearchTests)="advancedSearch($event)" [showSpinner]="showAdvancedSearchSpinner"></advanced-search>
       </tab>
     </tabs>
