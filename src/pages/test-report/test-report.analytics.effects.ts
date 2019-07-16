@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents,
+  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsLabels,
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
@@ -461,6 +461,26 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_FAULT, tests),
         fullCompetencyLabels['showMeQuestion'],
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  testTermination$ = this.actions$.pipe(
+    ofType(
+      testReportActions.TERMINATE_TEST_FROM_TEST_REPORT,
+    ),
+    withLatestFrom(
+      this.store$.pipe(
+        select(getTests),
+      ),
+    ),
+    concatMap(([action, tests]: [testReportActions.TerminateTestFromTestReport, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TERMINATION, tests),
+        formatAnalyticsText(AnalyticsEvents.END_TEST, tests),
+        AnalyticsLabels.TERMINATE_TEST,
       );
       return of(new AnalyticRecorded());
     }),

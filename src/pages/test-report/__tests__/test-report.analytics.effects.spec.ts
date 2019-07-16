@@ -19,6 +19,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
+  AnalyticsLabels,
 } from '../../../providers/analytics/analytics.model';
 import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -912,6 +913,43 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.REMOVE_FAULT}`,
           fullCompetencyLabels['showMeQuestion'],
+          );
+        done();
+      });
+    });
+  });
+
+  describe('testTermination', () => {
+    it('should call logEvent for termination event', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.testTermination$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TERMINATION,
+          AnalyticsEvents.END_TEST,
+          AnalyticsLabels.TERMINATE_TEST,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for termination event, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new testReportActions.TerminateTestFromTestReport());
+      // ASSERT
+      effects.testTermination$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TERMINATION}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.END_TEST}`,
+          AnalyticsLabels.TERMINATE_TEST,
           );
         done();
       });
