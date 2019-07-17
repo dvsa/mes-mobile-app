@@ -31,11 +31,11 @@ describe('TestSummaryCardComponent', () => {
     describe('shouldHideCard', () => {
       it('should return true if there is no data', () => {
         component.data = {};
-        expect(component.shouldHideCard()).toBeTruthy();
+        expect(component.shouldHideCard()).toEqual(true);
       });
       it('should return false if there is data', () => {
         component.data = { routeNumber: 12345 };
-        expect(component.shouldHideCard()).toBeFalsy();
+        expect(component.shouldHideCard()).toEqual(false);
       });
     });
   });

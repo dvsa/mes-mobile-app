@@ -74,7 +74,7 @@ describe('TestDataReducer reducer', () => {
   describe('ADD SERIOUS FAULT', () => {
     it('should add a serious fault when none exist', () => {
       const result = testDataReducer(initialState, new AddSeriousFault(Competencies.followingDistance));
-      expect(result.seriousFaults.followingDistance).toBeTruthy();
+      expect(result.seriousFaults.followingDistance).toEqual(true);
     });
     it('should update serious fault which already exists', () => {
       const state: TestData = {
@@ -84,7 +84,7 @@ describe('TestDataReducer reducer', () => {
       };
 
       const result = testDataReducer(state, new AddSeriousFault(Competencies.followingDistance));
-      expect(result.seriousFaults.followingDistance).toBeTruthy();
+      expect(result.seriousFaults.followingDistance).toEqual(true);
     });
     it('should not remove an existing serious fault when a new one is added', () => {
       const state: TestData = {
@@ -94,8 +94,8 @@ describe('TestDataReducer reducer', () => {
       };
 
       const result = testDataReducer(state, new AddSeriousFault(Competencies.judgementCrossing));
-      expect(result.seriousFaults.followingDistance).toBeTruthy();
-      expect(result.seriousFaults.judgementCrossing).toBeTruthy();
+      expect(result.seriousFaults.followingDistance).toEqual(true);
+      expect(result.seriousFaults.judgementCrossing).toEqual(true);
     });
   });
 
@@ -209,7 +209,7 @@ describe('TestDataReducer reducer', () => {
   describe('ADD_DANGEROUS_FAULT', () => {
     it('should add a dangerous fault when none exists', () => {
       const result = testDataReducer(initialState, new AddDangerousFault(Competencies.followingDistance));
-      expect(result.dangerousFaults.followingDistance).toBeTruthy();
+      expect(result.dangerousFaults.followingDistance).toEqual(true);
     });
 
     it('should update dangerous fault which already exists', () => {
@@ -220,7 +220,7 @@ describe('TestDataReducer reducer', () => {
       };
 
       const result = testDataReducer(state, new AddDangerousFault(Competencies.followingDistance));
-      expect(result.dangerousFaults.followingDistance).toBeTruthy();
+      expect(result.dangerousFaults.followingDistance).toEqual(true);
     });
 
     it('should not remove an existing dangerous fault when a new one is added', () => {
@@ -231,8 +231,8 @@ describe('TestDataReducer reducer', () => {
       };
 
       const result = testDataReducer(state, new AddDangerousFault(Competencies.judgementCrossing));
-      expect(result.dangerousFaults.followingDistance).toBeTruthy();
-      expect(result.dangerousFaults.judgementCrossing).toBeTruthy();
+      expect(result.dangerousFaults.followingDistance).toEqual(true);
+      expect(result.dangerousFaults.judgementCrossing).toEqual(true);
     });
   });
 
@@ -244,7 +244,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
 
-      expect(result.testRequirements.normalStart1).toBeTruthy();
+      expect(result.testRequirements.normalStart1).toEqual(true);
     });
 
     it('should toggle normal start 1 to incomplete (false) when dispatched second time', () => {
@@ -255,7 +255,7 @@ describe('TestDataReducer reducer', () => {
       const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
       const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart1));
 
-      expect(result.testRequirements.normalStart1).toBeFalsy();
+      expect(result.testRequirements.normalStart1).toEqual(false);
     });
   });
 
@@ -267,7 +267,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart2));
 
-      expect(result.testRequirements.normalStart2).toBeTruthy();
+      expect(result.testRequirements.normalStart2).toEqual(true);
     });
 
     it('should toggle normal start 2 to incomplete (false) when dispatched second time', () => {
@@ -278,7 +278,7 @@ describe('TestDataReducer reducer', () => {
       const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart2));
       const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart2));
 
-      expect(result.testRequirements.normalStart2).toBeFalsy();
+      expect(result.testRequirements.normalStart2).toEqual(false);
     });
   });
 
@@ -290,7 +290,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.angledStart));
 
-      expect(result.testRequirements.angledStart).toBeTruthy();
+      expect(result.testRequirements.angledStart).toEqual(true);
     });
 
     it('should toggle angled start to incomplete (false) when dispatched second time', () => {
@@ -301,7 +301,7 @@ describe('TestDataReducer reducer', () => {
       const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.angledStart));
       const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.angledStart));
 
-      expect(result.testRequirements.angledStart).toBeFalsy();
+      expect(result.testRequirements.angledStart).toEqual(false);
     });
   });
 
@@ -313,7 +313,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.hillStart));
 
-      expect(result.testRequirements.hillStart).toBeTruthy();
+      expect(result.testRequirements.hillStart).toEqual(true);
     });
 
     it('should toggle hill start to incomplete (false) when dispatched second time', () => {
@@ -324,7 +324,7 @@ describe('TestDataReducer reducer', () => {
       const modifiedState = testDataReducer(state, new ToggleLegalRequirement(LegalRequirements.hillStart));
       const result = testDataReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.hillStart));
 
-      expect(result.testRequirements.hillStart).toBeFalsy();
+      expect(result.testRequirements.hillStart).toEqual(false);
 
     });
   });
@@ -335,7 +335,7 @@ describe('TestDataReducer reducer', () => {
         eco: {},
       };
       const result = testDataReducer(state, new ToggleEco());
-      expect(result.eco.completed).toBeTruthy();
+      expect(result.eco.completed).toEqual(true);
     });
 
     it('should toggle eco (false when dispatched second time)', () => {
@@ -344,7 +344,7 @@ describe('TestDataReducer reducer', () => {
       };
       const modifiedState = testDataReducer(state, new ToggleEco());
       const result = testDataReducer(modifiedState, new ToggleEco());
-      expect(result.eco.completed).toBeFalsy();
+      expect(result.eco.completed).toEqual(false);
     });
   });
   describe('TOGGLE_CONTROL_ECO', () => {
@@ -353,8 +353,8 @@ describe('TestDataReducer reducer', () => {
         eco: {},
       };
       const result = testDataReducer(state, new ToggleControlEco());
-      expect(result.eco.adviceGivenControl).toBeTruthy();
-      expect(result.eco.completed).toBeTruthy();
+      expect(result.eco.adviceGivenControl).toEqual(true);
+      expect(result.eco.completed).toEqual(true);
     });
 
     it('should toggle control eco fault (false when dispatched second time) and leave eco as completed', () => {
@@ -363,8 +363,8 @@ describe('TestDataReducer reducer', () => {
       };
       const modifiedState = testDataReducer(state, new ToggleControlEco());
       const result = testDataReducer(modifiedState, new ToggleControlEco());
-      expect(result.eco.adviceGivenControl).toBeFalsy();
-      expect(result.eco.completed).toBeTruthy();
+      expect(result.eco.adviceGivenControl).toEqual(false);
+      expect(result.eco.completed).toEqual(true);
     });
   });
 
@@ -374,8 +374,8 @@ describe('TestDataReducer reducer', () => {
         eco: {},
       };
       const result = testDataReducer(state, new TogglePlanningEco());
-      expect(result.eco.adviceGivenPlanning).toBeTruthy();
-      expect(result.eco.completed).toBeTruthy();
+      expect(result.eco.adviceGivenPlanning).toEqual(true);
+      expect(result.eco.completed).toEqual(true);
     });
 
     it('should toggle planning eco fault (false when dispatched second time) and leave eco as completed', () => {
@@ -384,8 +384,8 @@ describe('TestDataReducer reducer', () => {
       };
       const modifiedState = testDataReducer(state, new TogglePlanningEco());
       const result = testDataReducer(modifiedState, new TogglePlanningEco());
-      expect(result.eco.adviceGivenPlanning).toBeFalsy();
-      expect(result.eco.completed).toBeTruthy();
+      expect(result.eco.adviceGivenPlanning).toEqual(false);
+      expect(result.eco.completed).toEqual(true);
     });
   });
   describe('TOGGLE_CONTROLLED_STOP', () => {
@@ -394,7 +394,7 @@ describe('TestDataReducer reducer', () => {
         controlledStop: {},
       };
       const result = testDataReducer(state, new ToggleControlledStop());
-      expect(result.controlledStop.selected).toBeTruthy();
+      expect(result.controlledStop.selected).toEqual(true);
     });
 
     it('should remove the controlled stop property when dispatched second time', () => {
@@ -417,7 +417,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
 
-      expect(result.ETA.verbal).toBeTruthy();
+      expect(result.ETA.verbal).toEqual(true);
     });
 
     it('should toggle ETA verbal to false when dispatched second time', () => {
@@ -428,7 +428,7 @@ describe('TestDataReducer reducer', () => {
       const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
       const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.verbal));
 
-      expect(result.ETA.verbal).toBeFalsy();
+      expect(result.ETA.verbal).toEqual(false);
     });
   });
 
@@ -440,7 +440,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
 
-      expect(result.ETA.physical).toBeTruthy();
+      expect(result.ETA.physical).toBe(true);
     });
 
     it('should toggle ETA physical to false when dispatched second time', () => {
@@ -451,7 +451,7 @@ describe('TestDataReducer reducer', () => {
       const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
       const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.physical));
 
-      expect(result.ETA.physical).toBeFalsy();
+      expect(result.ETA.physical).toEqual(false);
     });
   });
 

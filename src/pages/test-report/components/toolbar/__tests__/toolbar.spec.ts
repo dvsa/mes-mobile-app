@@ -88,8 +88,8 @@ describe('ToolbarComponent', () => {
     it('should not show any tooltips in default mode', () => {
 
       fixture.detectChanges();
-      expect(component.isSeriousMode).toBeFalsy();
-      expect(component.isDangerousMode).toBeFalsy();
+      expect(component.isSeriousMode).toEqual(false);
+      expect(component.isDangerousMode).toEqual(false);
 
       expect(fixture.debugElement.query(By.css('#serious-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeDefined();
@@ -106,9 +106,9 @@ describe('ToolbarComponent', () => {
 
       fixture.detectChanges();
 
-      expect(component.isSeriousMode).toBeTruthy();
-      expect(component.isDangerousMode).toBeFalsy();
-      expect(component.isRemoveFaultMode).toBeFalsy();
+      expect(component.isSeriousMode).toEqual(true);
+      expect(component.isDangerousMode).toEqual(false);
+      expect(component.isRemoveFaultMode).toEqual(false);
 
       expect(fixture.debugElement.query(By.css('#serious-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('serious-tooltip'))).toBeDefined();
@@ -124,9 +124,9 @@ describe('ToolbarComponent', () => {
       component.isDangerousMode = true;
 
       fixture.detectChanges();
-      expect(component.isRemoveFaultMode).toBeFalsy();
-      expect(component.isSeriousMode).toBeFalsy();
-      expect(component.isDangerousMode).toBeTruthy();
+      expect(component.isRemoveFaultMode).toEqual(false);
+      expect(component.isSeriousMode).toEqual(false);
+      expect(component.isDangerousMode).toEqual(true);
 
       expect(fixture.debugElement.query(By.css('#serious-button'))).toBeDefined();
       expect(fixture.debugElement.query(By.css('#dangerous-button'))).toBeDefined();

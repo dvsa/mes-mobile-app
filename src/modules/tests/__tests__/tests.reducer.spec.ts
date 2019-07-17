@@ -118,8 +118,8 @@ describe('testsReducer', () => {
     expect(output.startedTests[testReportPracticeSlotId].testData.vehicleChecks.tellMeQuestion.outcome)
       .toBeUndefined();
 
-    expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toBeTruthy();
-    expect(output.startedTests[1].testData.drivingFaults.clearance).toBeTruthy();
+    expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toEqual(true);
+    expect(output.startedTests[1].testData.drivingFaults.clearance).toEqual(1);
     expect(output.startedTests[1].testData.vehicleChecks.tellMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
     expect(output.startedTests[1].testData.vehicleChecks.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
   });

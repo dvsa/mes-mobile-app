@@ -245,7 +245,7 @@ describe('Candidate Details Selector', () => {
         },
       };
       const result = isCandidateSpecialNeeds(slot);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
   });
 
@@ -396,13 +396,13 @@ describe('Candidate Details Selector', () => {
       const slot = {
         booking: {
           application: {
-            entitlementCheck: 'true',
+            entitlementCheck: true,
           },
           previousCancellation: [],
         },
       };
       const result = isCandidateCheckNeeded(slot);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
   });
 
@@ -412,13 +412,13 @@ describe('Candidate Details Selector', () => {
         hasSlotChanged: true,
         booking: {
           application: {
-            entitlementCheck: 'true',
+            entitlementCheck: true,
           },
           previousCancellation: [],
         },
       };
       const result = getSlotChanged(slot);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
   });
 
@@ -479,7 +479,7 @@ describe('Candidate Details Selector', () => {
         hasSlotChanged: true,
         booking: {
           application: {
-            entitlementCheck: 'true',
+            entitlementCheck: true,
           },
           previousCancellation: [],
           business: mockBusiness,

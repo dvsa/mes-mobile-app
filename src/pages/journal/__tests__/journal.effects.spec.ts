@@ -81,10 +81,6 @@ describe('Journal Effects', () => {
     appConfigProvider = TestBed.get(AppConfigProvider);
   });
 
-  it('should create the journal effects', () => {
-    expect(effects).toBeTruthy();
-  });
-
   it('should dispatch the success action when the journal loads successfully', (done) => {
     // ARRANGE
     spyOn(journalProvider, 'getJournal').and.callThrough();
@@ -146,9 +142,9 @@ describe('Journal Effects', () => {
       expect(slotProvider.getRelevantSlots).toHaveBeenCalledTimes(0);
 
       if (result instanceof journalActions.JournalRefreshError) {
-        expect(result instanceof journalActions.JournalRefreshError).toBeTruthy();
+        expect(result instanceof journalActions.JournalRefreshError).toEqual(true);
       } else if (result instanceof journalActions.LoadJournalFailure) {
-        expect(result instanceof journalActions.LoadJournalFailure).toBeTruthy();
+        expect(result instanceof journalActions.LoadJournalFailure).toEqual(true);
       } else {
         fail('Unknown Action Sent');
       }

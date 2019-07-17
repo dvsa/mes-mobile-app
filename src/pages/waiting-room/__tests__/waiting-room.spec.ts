@@ -207,8 +207,8 @@ describe('WaitingRoomPage', () => {
       component.rehydrateFields();
       fixture.detectChanges();
 
-      expect(form.get('insuranceCheckboxCtrl').value).toBeTruthy();
-      expect(form.get('residencyCheckboxCtrl').value).toBeTruthy();
+      expect(form.get('insuranceCheckboxCtrl').value).toEqual(true);
+      expect(form.get('residencyCheckboxCtrl').value).toEqual(true);
       expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
     });
   });

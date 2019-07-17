@@ -36,7 +36,7 @@ describe('VehicleDetailsCardComponent', () => {
           transmission: undefined,
         };
 
-        expect(component.shouldHideCard).toBeTruthy();
+        expect(component.shouldHideCard()).toEqual(true);
       });
     });
   });

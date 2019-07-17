@@ -58,10 +58,6 @@ describe('Test Report Effects', () => {
     store$ = TestBed.get(Store);
   });
 
-  it('should create the test report effects', () => {
-    expect(effects).toBeTruthy();
-  });
-
   describe('validateCatBLegalRequirements', () => {
 
     beforeEach(() => {

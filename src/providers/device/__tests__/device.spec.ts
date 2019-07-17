@@ -33,7 +33,7 @@ describe('Device Provider', () => {
     it('should return true if the device in supported devices list', () => {
       spyOn(deviceProvider, 'getDeviceType').and.returnValue('iPad7,4');
       const deviceValid = deviceProvider.validDeviceType();
-      expect(deviceValid).toBeTruthy();
+      expect(deviceValid).toEqual(true);
     });
   });
 
@@ -41,7 +41,7 @@ describe('Device Provider', () => {
     it('should return false if the device is not in supported devices list', () => {
       spyOn(deviceProvider, 'getDeviceType').and.returnValue('nonIpad7,4');
       const deviceValid = deviceProvider.validDeviceType();
-      expect(deviceValid).toBeFalsy();
+      expect(deviceValid).toEqual(false);
     });
   });
 

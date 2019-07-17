@@ -182,7 +182,7 @@ describe('TestDataSelectors', () => {
 
   describe('hasSeriousFault', () => {
     it('should return true if a competency has a serious fault', () => {
-      expect(hasSeriousFault(state, Competencies.awarenessPlanning)).toBeTruthy();
+      expect(hasSeriousFault(state, Competencies.awarenessPlanning)).toEqual(true);
     });
     it('should return false if a competency does not have a serious fault', () => {
       expect(hasSeriousFault(state, Competencies.controlsClutch)).toBeFalsy();
@@ -191,7 +191,7 @@ describe('TestDataSelectors', () => {
 
   describe('hasDangerousFault', () => {
     it('should return true if a competency has a dangerous fault', () => {
-      expect(hasDangerousFault(state, Competencies.useOfSpeed)).toBeTruthy();
+      expect(hasDangerousFault(state, Competencies.useOfSpeed)).toEqual(true);
     });
     it('should return false if a competency does not have a dangerous fault', () => {
       expect(hasDangerousFault(state, Competencies.useOfMirrorsSignalling)).toBeFalsy();
@@ -202,10 +202,10 @@ describe('TestDataSelectors', () => {
     it('should return all the properties of testRequirements', () => {
       const result = getTestRequirements(state);
 
-      expect(result.normalStart1).toBeTruthy();
-      expect(result.normalStart2).toBeTruthy();
-      expect(result.angledStart).toBeTruthy();
-      expect(result.hillStart).toBeTruthy();
+      expect(result.normalStart1).toEqual(true);
+      expect(result.normalStart2).toEqual(true);
+      expect(result.angledStart).toEqual(true);
+      expect(result.hillStart).toEqual(true);
     });
   });
 
@@ -279,7 +279,7 @@ describe('TestDataSelectors', () => {
           forwardPark: { selected: true },
         },
       };
-      expect(hasManoeuvreBeenCompleted(state)).toBeTruthy();
+      expect(hasManoeuvreBeenCompleted(state)).toEqual(true);
     });
   });
 
@@ -357,7 +357,7 @@ describe('TestDataSelectors', () => {
           },
         } as TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toBeTruthy();
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a driving fault', () => {
         const state = {
@@ -371,7 +371,7 @@ describe('TestDataSelectors', () => {
           },
         } as TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toBeTruthy();
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a serious fault', () => {
         const state = {
@@ -385,7 +385,7 @@ describe('TestDataSelectors', () => {
           },
         } as TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toBeTruthy();
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return true if vehicle checks have been completed with a dangerous fault', () => {
         const state = {
@@ -399,7 +399,7 @@ describe('TestDataSelectors', () => {
           },
         } as TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toBeTruthy();
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
       it('should return false if show me question outcome is not defined', () => {
         const state = {
@@ -412,7 +412,7 @@ describe('TestDataSelectors', () => {
           },
         } as TestData;
 
-        expect(hasVehicleChecksBeenCompleted(state)).toBeFalsy();
+        expect(hasVehicleChecksBeenCompleted(state)).toEqual(false);
       });
     });
     describe('getCatBLegalRequirements', () => {

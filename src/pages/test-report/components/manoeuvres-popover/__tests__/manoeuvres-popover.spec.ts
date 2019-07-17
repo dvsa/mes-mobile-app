@@ -54,8 +54,8 @@ describe('ManoeuvresPopoverComponent', () => {
     it('should display the correct competencies against each manoeuvre', () => {
       component.recordManoeuvreSelection(ManoeuvreTypes.reverseParkRoad);
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#reverseParkRoad-controlFault'))).toBeTruthy();
-      expect(fixture.debugElement.query(By.css('#reverseParkRoad-observationFault'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('#reverseParkRoad-controlFault'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('#reverseParkRoad-observationFault'))).not.toBeNull();
       expect(fixture.debugElement.query(By.css('#reverseRight-controlFault'))).toBeNull();
       expect(fixture.debugElement.query(By.css('#reverseRight-observationFault'))).toBeNull();
       expect(fixture.debugElement.query(By.css('#reverseParkCarpark-controlFault'))).toBeNull();

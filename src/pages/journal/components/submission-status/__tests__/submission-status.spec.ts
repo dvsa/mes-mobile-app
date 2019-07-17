@@ -33,23 +33,23 @@ describe('PracticeTestModal', () => {
     describe('showBanner', () => {
       it('should show banner if test status is completed', () => {
         component.testStatus = TestStatus.Completed;
-        expect(component.showBanner()).toBeTruthy();
+        expect(component.showBanner()).toEqual(true);
       });
       it('should not show banner if test status is booked', () => {
         component.testStatus = TestStatus.Booked;
-        expect(component.showBanner()).toBeFalsy();
+        expect(component.showBanner()).toEqual(false);
       });
       it('should not show banner if test status is decided', () => {
         component.testStatus = TestStatus.Decided;
-        expect(component.showBanner()).toBeFalsy();
+        expect(component.showBanner()).toEqual(false);
       });
       it('should not show banner if test status is started', () => {
         component.testStatus = TestStatus.Started;
-        expect(component.showBanner()).toBeFalsy();
+        expect(component.showBanner()).toEqual(false);
       });
       it('should not show banner if test status is submitted', () => {
         component.testStatus = TestStatus.Submitted;
-        expect(component.showBanner()).toBeFalsy();
+        expect(component.showBanner()).toEqual(false);
       });
     });
   });

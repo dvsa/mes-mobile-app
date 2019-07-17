@@ -168,17 +168,17 @@ describe('testsSelector', () => {
     };
     it('should return true for a passed activity code', () => {
       const result = isPassed(testState);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
     it('should return false for a failed activity code', () => {
       testState.activityCode = ActivityCodes.FAIL;
       const result = isPassed(testState);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
     it('should return false for a terminated activity code', () => {
       testState.activityCode = ActivityCodes.MECHANICAL_FAILURE;
       const result = isPassed(testState);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
   });
 
@@ -223,19 +223,19 @@ describe('testsSelector', () => {
 
     it('should return false when no tests started', () => {
       const result = isTestReportPracticeTest(testState);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it('should return false when slot id is numeric', () => {
       testState.currentTest.slotId = '1';
       const result = isTestReportPracticeTest(testState);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it('should return true when slot id starts with practice', () => {
       testState.currentTest.slotId = testReportPracticeSlotId;
       const result = isTestReportPracticeTest(testState);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
   });
 
@@ -248,19 +248,19 @@ describe('testsSelector', () => {
 
     it('should return false when no tests started', () => {
       const result = isEndToEndPracticeTest(testState);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it('should return false when slot id is numeric', () => {
       testState.currentTest.slotId = '1';
       const result = isEndToEndPracticeTest(testState);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it('should return true when slot id starts with practice', () => {
       testState.currentTest.slotId = end2endPracticeSlotId;
       const result = isEndToEndPracticeTest(testState);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
   });
 

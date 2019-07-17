@@ -65,49 +65,49 @@ describe('OutcomeBehaviourMapProvider', () => {
   describe('isVisible', () => {
     it(`should return true for an outcome and field that has display Y`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('1', 'routeNumber', 'x');
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
     it(`should return false for an outcome and field that has display N`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('3', 'routeNumber', 'x');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
     it(`should return true for an outcome and field that has display A and has a value`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('4', 'faultComment', 'x');
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
     it(`should return false for an outcome and field that has display A and has no value`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('4', 'faultComment', null);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it(`should return true for a non-existant outcome`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('40', 'faultComment', 'x');
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
     it(`should return false for a non-existant field`, () => {
       const result = outcomeBehaviourMapProvider.isVisible('4', 'fakefield', 'x');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
   });
 
   describe('hasDefault', () => {
     it(`should return false if defaultValue field is not present`, () => {
       const result = outcomeBehaviourMapProvider.hasDefault('1', 'independentDriving');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it(`should return false if defaultValue field is present but is null`, () => {
       const result = outcomeBehaviourMapProvider.hasDefault('1', 'routeNumber');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
     it(`should return false if defaultValue field is present but is empty string`, () => {
       const result = outcomeBehaviourMapProvider.hasDefault('1', 'routeNumber');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it(`should return true if defaultValue field is present and non null`, () => {
       const result = outcomeBehaviourMapProvider.hasDefault('3', 'routeNumber');
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
 
   });
@@ -137,26 +137,26 @@ describe('OutcomeBehaviourMapProvider', () => {
   describe('showNotApplicable', () => {
     it(`should return false if showNotApplicable is false`, () => {
       const result = outcomeBehaviourMapProvider.showNotApplicable('1', 'independentDriving');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it(`should return false if showNotApplicable field is missing`, () => {
       const result = outcomeBehaviourMapProvider.showNotApplicable('1', 'routeNumber');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it(`should return false if showNotApplicable field is true`, () => {
       const result = outcomeBehaviourMapProvider.showNotApplicable('4', 'independentDriving');
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
     it(`should return false if called with non existant outcome`, () => {
       const result = outcomeBehaviourMapProvider.showNotApplicable('x', 'routeNumber');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it(`should return false if called with non existant field`, () => {
       const result = outcomeBehaviourMapProvider.showNotApplicable('4', 'fakeroute');
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
   });
 
@@ -297,8 +297,8 @@ describe('OutcomeBehaviourMapProvider', () => {
         const independent = outcomeBehaviourMapProvider.showNotApplicable('4', 'independentDriving');
         const showMe = outcomeBehaviourMapProvider.showNotApplicable('4', 'showMeQuestion');
 
-        expect(independent).toBeTruthy();
-        expect(showMe).toBeTruthy();
+        expect(independent).toEqual(true);
+        expect(showMe).toEqual(true);
       });
     });
     describe('outcome 11', () => {
@@ -344,8 +344,8 @@ describe('OutcomeBehaviourMapProvider', () => {
         const independent = outcomeBehaviourMapProvider.showNotApplicable('11', 'independentDriving');
         const showMe = outcomeBehaviourMapProvider.showNotApplicable('11', 'showMeQuestion');
 
-        expect(independent).toBeTruthy();
-        expect(showMe).toBeTruthy();
+        expect(independent).toEqual(true);
+        expect(showMe).toEqual(true);
       });
     });
     describe('outcome 20', () => {
@@ -437,8 +437,8 @@ describe('OutcomeBehaviourMapProvider', () => {
         outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
         const independent = outcomeBehaviourMapProvider.showNotApplicable('22', 'independentDriving');
         const showMe = outcomeBehaviourMapProvider.showNotApplicable('22', 'showMeQuestion');
-        expect(independent).toBeTruthy();
-        expect(showMe).toBeTruthy();
+        expect(independent).toEqual(true);
+        expect(showMe).toEqual(true);
       });
 
       it(`should return visibility A for tellMeQuestion`, () => {
@@ -487,7 +487,7 @@ describe('OutcomeBehaviourMapProvider', () => {
       it(`should return showNotApplicable true for independent driving`, () => {
         outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
         const independent = outcomeBehaviourMapProvider.showNotApplicable('23', 'independentDriving');
-        expect(independent).toBeTruthy();
+        expect(independent).toEqual(true);
       });
 
       it(`should return visibility N for eta, eco and faultComment fields`, () => {

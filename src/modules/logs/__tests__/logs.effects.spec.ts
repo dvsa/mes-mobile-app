@@ -67,10 +67,6 @@ describe('Logs Effects', () => {
     dataStoreMock = TestBed.get(DataStoreProvider);
   });
 
-  it('should create the logs effects', () => {
-    expect(effects).toBeTruthy();
-  });
-
   it('should dispatch the persist logs action when the logs post successfully', (done) => {
     // ARRANGE
     const timeStamps: number[] = [12345678];
