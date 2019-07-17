@@ -16,10 +16,10 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { Candidate } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import * as journalActions from '../../journal/journal.actions';
-import * as testsActions from '../../../modules/tests/tests.actions';
+import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
-import { testReportPracticeModeSlot } from '../../../modules/tests/__mocks__/tests.mock';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
@@ -29,7 +29,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.WAITING_ROOM_TO_CAR;
   // tslint:disable-next-line:max-line-length
-  const screenNamePracticeTest = `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
+  const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
   const mockCandidate: Candidate = {
     candidateId: 1001,
   };
@@ -78,7 +78,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     });
     it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
@@ -88,9 +88,9 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, testReportPracticeModeSlot.slotDetail.slotId);
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
         expect(analyticsProviderMock.setCurrentPage)
-          .toHaveBeenCalledWith(screenNamePracticeTest);
+          .toHaveBeenCalledWith(screenNamePracticeMode);
         done();
       });
     });
@@ -116,7 +116,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
@@ -124,7 +124,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
       effects.waitingRoomToCarError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeTest})`,
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeMode})`,
           'error 123');
         done();
       });
@@ -150,7 +150,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
@@ -158,7 +158,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
       effects.waitingRoomToCarValidationError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeTest})`,
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeMode})`,
           'formControl1');
         done();
       });
