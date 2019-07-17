@@ -1,5 +1,5 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -62,7 +62,7 @@ interface CommunicationPageState {
   selector: 'communication',
   templateUrl: 'communication.html',
 })
-export class CommunicationPage extends PracticeableBasePageComponent {
+export class CommunicationPage extends PracticeableBasePageComponent implements OnInit, OnDestroy {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
