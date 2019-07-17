@@ -15,11 +15,11 @@ import {
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as journalActions from '../../journal/journal.actions';
-import * as testsActions from '../../../modules/tests/tests.actions';
-import { testReportPracticeModeSlot } from '../../../modules/tests/__mocks__/tests.mock';
+import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
 import { Candidate } from '@dvsa/mes-journal-schema';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('Waiting Room Analytics Effects', () => {
 
@@ -28,7 +28,7 @@ describe('Waiting Room Analytics Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.WAITING_ROOM;
-  const screenNamePracticeTest = `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsScreenNames.WAITING_ROOM}`;
+  const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM}`;
   const mockCandidate: Candidate = {
     candidateId: 1001,
   };
@@ -77,7 +77,7 @@ describe('Waiting Room Analytics Effects', () => {
     });
     it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomActions.WaitingRoomViewDidEnter());
@@ -87,9 +87,9 @@ describe('Waiting Room Analytics Effects', () => {
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, testReportPracticeModeSlot.slotDetail.slotId);
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
         expect(analyticsProviderMock.setCurrentPage)
-          .toHaveBeenCalledWith(screenNamePracticeTest);
+          .toHaveBeenCalledWith(screenNamePracticeMode);
         done();
       });
     });
@@ -114,7 +114,7 @@ describe('Waiting Room Analytics Effects', () => {
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomActions.SubmitWaitingRoomInfoError('error 123'));
@@ -122,7 +122,7 @@ describe('Waiting Room Analytics Effects', () => {
       effects.submitWaitingRoomInfoError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeTest})`,
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeMode})`,
           'error 123');
         done();
       });
@@ -148,7 +148,7 @@ describe('Waiting Room Analytics Effects', () => {
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomActions.WaitingRoomValidationError('formControl1'));
@@ -156,7 +156,7 @@ describe('Waiting Room Analytics Effects', () => {
       effects.submitWaitingRoomInfoErrorValidation$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeTest})`,
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeMode})`,
           'formControl1');
         done();
       });
