@@ -224,11 +224,9 @@ describe('JournalSelector', () => {
         }],
       };
 
-      const result = getCheckComplete(journal);
+      const result = getCheckComplete(journal, 1234);
 
-      expect(result).toEqual([{
-        slotId: 1234,
-      }]);
+      expect(result).toBe(true);
     });
 
   });

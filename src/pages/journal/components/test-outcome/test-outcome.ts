@@ -45,7 +45,7 @@ export class TestOutcomeComponent implements OnInit {
   modal: Modal;
   isRekey: boolean = false;
 
-  candidateDetailsViewed: number[];
+  candidateDetailsViewed: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -56,8 +56,7 @@ export class TestOutcomeComponent implements OnInit {
   ngOnInit() {
     const seenCandidateDetails$ = this.store$.pipe(
       select(getJournalState),
-      select(getCheckComplete),
-      map(checkComplete => checkComplete.map(item => item.slotId)),
+      map(journalData => getCheckComplete(journalData, this.slotDetail.slotId)),
     );
     seenCandidateDetails$.subscribe(
       (candidateDetails) => {
@@ -155,16 +154,15 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   clickStartOrResumeTest() {
-    const candidateSeen = this.candidateDetailsViewed.includes(this.slotDetail.slotId);
-    if (this.specialRequirements && !candidateSeen) {
+    if (this.specialRequirements && !this.candidateDetailsViewed) {
       this.displayForceCheckModal();
-    } else {
-      if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
-        this.displayRekeyModal();
-      } else {
-        this.startOrResumeTestDependingOnStatus();
-      }
+      return;
     }
+    if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
+      this.displayRekeyModal();
+      return;
+    }
+    this.startOrResumeTestDependingOnStatus();
   }
 
   isE2EPracticeMode(): boolean {

@@ -35,7 +35,7 @@ interface CandidateDetailsPageState {
   time$: Observable<string>;
   details$: Observable<Details>;
   business$: Observable<Business>;
-  checkComplete$: Observable<number[]>;
+  checkComplete$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -92,8 +92,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       ),
       checkComplete$: this.store$.pipe(
         select(getJournalState),
-        select(getCheckComplete),
-        map(checkComplete => checkComplete.map(item => item.slotId)),
+        map(journalData => getCheckComplete(journalData, this.slotId)),
       ),
     };
 
@@ -115,7 +114,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
     this.pageState.checkComplete$.subscribe(
       (result) => {
-        if (!result.includes(this.slotId)) {
+        if (!result) {
           this.store$.dispatch(new CandidateDetailsSeen(this.slotId));
         }
       },
