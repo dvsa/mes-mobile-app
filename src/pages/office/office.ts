@@ -596,6 +596,9 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   candidateDescriptionChanged(candidateDescription: string) {
+    if (candidateDescription.length > 1000) {
+      return;
+    }
     this.store$.dispatch(new CandidateDescriptionChanged(candidateDescription));
   }
 
@@ -604,10 +607,16 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   additionalInformationChanged(additionalInformation: string): void {
+    if (additionalInformation.length > 5000) {
+      return;
+    }
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 
   dangerousFaultCommentChanged(dangerousFaultComment: CommentedCompetency) {
+    if (dangerousFaultComment.comment.length > 1000) {
+      return;
+    }
     if (dangerousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment),
@@ -637,6 +646,9 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {
+    if (seriousFaultComment.comment.length > 1000) {
+      return;
+    }
     if (seriousFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment),
@@ -663,6 +675,9 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {
+    if (drivingFaultComment.comment.length > 1000) {
+      return;
+    }
     if (drivingFaultComment.source === CommentSource.SIMPLE) {
       this.store$.dispatch(
         new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment),

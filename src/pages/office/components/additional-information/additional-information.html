@@ -8,6 +8,7 @@
     <ion-row>
       <ion-col col-32>
         <textarea id="additional-information" class="mes-data" name="additionalInformation"
+          maxlength="5000"
           formControlName="additionalInformation" [value]="additionalInformation"
           (change)="additionalInformationChanged($event.target.value)">
       </textarea>
