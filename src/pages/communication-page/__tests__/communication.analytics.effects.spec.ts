@@ -20,7 +20,7 @@ import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candi
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
-fdescribe('Communication Analytics Effects', () => {
+describe('Communication Analytics Effects', () => {
 
   let effects: CommunicationAnalyticsEffects;
   let analyticsProviderMock;
