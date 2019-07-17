@@ -149,8 +149,8 @@ describe('WaitingRoomToCarPage', () => {
         fixture.detectChanges();
         const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
-        expect(eyesightFailureConfirmation).toBeTruthy();
-        expect(formAfterEyesight.nativeElement.hidden).toBeTruthy();
+        expect(eyesightFailureConfirmation).not.toBeNull();
+        expect(formAfterEyesight.nativeElement.hidden).toEqual(true);
       });
       // tslint:disable-next-line:max-line-length
       it('should show the rest of the form and not render eyesight failure confirmation when page state indicates pass is selected', () => {
@@ -160,7 +160,7 @@ describe('WaitingRoomToCarPage', () => {
         const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
         expect(eyesightFailureConfirmation).toBeNull();
-        expect(formAfterEyesight.nativeElement.hidden).toBeFalsy();
+        expect(formAfterEyesight.nativeElement.hidden).toEqual(false);
       });
       it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();

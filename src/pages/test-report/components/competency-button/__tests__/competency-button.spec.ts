@@ -67,7 +67,7 @@ describe('CompetencyButtonComponent', () => {
 
         expect(button).toBeDefined();
         expect(button.nativeElement.className).toContain('activated');
-        expect(component.touchState).toBeTruthy();
+        expect(component.touchState).toEqual(true);
       });
 
       it('should remove the activated class after a specified delay when the button is not pressed', (done) => {
@@ -80,7 +80,7 @@ describe('CompetencyButtonComponent', () => {
 
             expect(button).toBeDefined();
             expect(button.nativeElement.className).not.toContain('activated');
-            expect(component.touchState).toBeFalsy();
+            expect(component.touchState).toEqual(false);
             done();
           },
           component.touchStateDelay);

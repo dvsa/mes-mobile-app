@@ -40,10 +40,6 @@ describe('Fake Journal Effects', () => {
     store$ = TestBed.get(Store);
   });
 
-  it('should create the fake journal effects', () => {
-    expect(effects).toBeTruthy();
-  });
-
   describe('startE2EPracticeTestEffect', () => {
     const testId = `${end2endPracticeSlotId}_1`;
     beforeEach(() => {

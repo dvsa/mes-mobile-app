@@ -48,7 +48,7 @@ describe('TimeComponent', () => {
       it('should be time-test-complete-text', () => {
         fixture.detectChanges();
         const timeSpan: any = componentEl.query(By.css('h2'));
-        expect(timeSpan.classes['time-test-complete-text']).toBeTruthy();
+        expect(timeSpan.classes['time-test-complete-text']).not.toBeNull();
       });
     });
   });

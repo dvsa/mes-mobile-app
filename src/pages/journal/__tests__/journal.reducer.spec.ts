@@ -115,7 +115,7 @@ describe('Journal Reducer', () => {
       };
       const action = new ClearChangedSlot(1234);
       const result = journalReducer(stateWithChangedSlot, action);
-      expect(result.slots[slotDate][0].hasSlotChanged).toBeFalsy();
+      expect(result.slots[slotDate][0].hasSlotChanged).toEqual(false);
 
     });
   });

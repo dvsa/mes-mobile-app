@@ -29,13 +29,13 @@ describe('testSlotAttributes selector', () => {
 
   describe('isExtendedTest', () => {
     it('should return true if test is an extended test', () => {
-      expect(isExtendedTest(testSlotAttributes)).toBeTruthy();
+      expect(isExtendedTest(testSlotAttributes)).toEqual(true);
     });
   });
 
   describe('isSpecialNeeds', () => {
     it('should return true if special needs', () => {
-      expect(isSpecialNeeds(testSlotAttributes)).toBeTruthy();
+      expect(isSpecialNeeds(testSlotAttributes)).toEqual(true);
     });
   });
 
@@ -47,7 +47,7 @@ describe('testSlotAttributes selector', () => {
 
   describe('isWelshTest', () => {
     it('should return if the test is welsh', () => {
-      expect(isWelshTest(testSlotAttributes)).toBeTruthy();
+      expect(isWelshTest(testSlotAttributes)).toEqual(true);
     });
   });
 

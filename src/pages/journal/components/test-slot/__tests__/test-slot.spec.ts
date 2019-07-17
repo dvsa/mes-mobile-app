@@ -180,47 +180,47 @@ describe('TestSlotComponent', () => {
 
       it('should return correct value for showing vehicle details', () => {
         component.slot.booking.application.testCategory = 'A';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'A1';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'A2';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'AM';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'B';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'B1';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'B+E';
-        expect(component.showVehicleDetails()).toBeFalsy();
+        expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'C';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'C1';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'C1+E';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'C+E';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'D';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'D1';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'D+E';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'D1+E';
-        expect(component.showVehicleDetails()).toBeTruthy();
+        expect(component.showVehicleDetails()).toEqual(true);
       });
       it('should return true for isPortrait() if device is portrait', () => {
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY;
-        expect(component.isPortrait()).toBeTruthy();
+        expect(component.isPortrait()).toEqual(true);
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.PORTRAIT;
-        expect(component.isPortrait()).toBeTruthy();
+        expect(component.isPortrait()).toEqual(true);
       });
       it('should return false for isPortrait() if device is landscape', () => {
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY;
-        expect(component.isPortrait()).toBeFalsy();
+        expect(component.isPortrait()).toEqual(false);
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE;
-        expect(component.isPortrait()).toBeFalsy();
+        expect(component.isPortrait()).toEqual(false);
       });
     });
 
@@ -326,7 +326,7 @@ describe('TestSlotComponent', () => {
         });
         component.slot.slotDetail.start =
           DateTime.at(startTime).add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
-        expect(component.canStartTest()).toBeFalsy();
+        expect(component.canStartTest()).toEqual(false);
       });
     });
 
@@ -355,7 +355,7 @@ describe('TestSlotComponent', () => {
         const indicatorComponent = fixture.debugElement.query(
           By.directive(MockComponent(IndicatorsComponent))).componentInstance;
         expect(indicatorComponent).toBeDefined();
-        expect(indicatorComponent.showExclamationIndicator).toBeFalsy();
+        expect(indicatorComponent.showExclamationIndicator).toEqual(false);
       });
 
       it('should pass something to sub-component time input', () => {
@@ -371,7 +371,7 @@ describe('TestSlotComponent', () => {
         expect(subByDirective.name.title).toBe('Miss');
         expect(subByDirective.name.firstName).toBe('Florence');
         expect(subByDirective.name.lastName).toBe('Pearson');
-        expect(subByDirective.isPortrait).toBeFalsy();
+        expect(subByDirective.isPortrait).toEqual(false);
       });
 
       it('should pass something to sub-component test-category input', () => {
@@ -423,7 +423,7 @@ describe('TestSlotComponent', () => {
         fixture.detectChanges();
         const subByDirective = fixture.debugElement.query(
           By.directive(MockComponent(LanguageComponent))).componentInstance;
-        expect(subByDirective.welshLanguage).toBeFalsy();
+        expect(subByDirective.welshLanguage).toEqual(false);
       });
 
       it('should pass something to sub-component location input', () => {

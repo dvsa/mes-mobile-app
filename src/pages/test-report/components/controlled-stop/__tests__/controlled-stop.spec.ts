@@ -195,7 +195,7 @@ describe('ControlledStopComponent', () => {
         .componentInstance as CompetencyButtonComponent;
 
       fixture.detectChanges();
-      expect(competencyButton.ripple).toBeFalsy();
+      expect(competencyButton.ripple).toEqual(false);
     });
 
     describe('Tick button effects', () => {

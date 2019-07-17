@@ -31,7 +31,7 @@ describe('JournalSelector', () => {
 
   describe('getIsLoading', () => {
     it('should fetch the loading status from the state', () => {
-      expect(getIsLoading(state)).toBeTruthy();
+      expect(getIsLoading(state)).toEqual(true);
     });
   });
 

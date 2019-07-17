@@ -80,7 +80,7 @@ describe('Authentication interceptor', () => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       const next: any = {
         handle: (request: HttpRequest<any>) => {
-          expect(request.headers.has('Authorization')).toBeTruthy();
+          expect(request.headers.has('Authorization')).toEqual(true);
           expect(request.headers.get('Authorization')).toEqual('token');
           return of({});
         },

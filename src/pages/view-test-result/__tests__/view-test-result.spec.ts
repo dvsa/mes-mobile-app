@@ -88,7 +88,7 @@ describe('ViewTestResultPage', () => {
       it('should setup a loading spinner when isLoading is set to true', () => {
         component.handleLoadingUI(true);
 
-        expect(component.isLoading).toBeTruthy();
+        expect(component.isLoading).toEqual(true);
         expect(component.loadingSpinner).not.toBeNull;
       });
       it('should remove the loading spinner when isLoading is set to false', () => {
@@ -96,7 +96,7 @@ describe('ViewTestResultPage', () => {
 
         component.handleLoadingUI(false);
 
-        expect(component.isLoading).toBeFalsy();
+        expect(component.isLoading).toEqual(false);
         expect(component.loadingSpinner).toBeNull();
       });
     });
@@ -151,7 +151,7 @@ describe('ViewTestResultPage', () => {
       it('should return the correct data', () => {
         component.testResult = categoryBTestResultMock;
         const result: TestSummaryCardModel = component.getTestSummary();
-        expect(result.D255).toBeFalsy();
+        expect(result.D255).toEqual(false);
         expect(result.accompaniment).toEqual(['ADI', 'Interpreter']);
         expect(result.candidateDescription).toBe('mock-candidate-description');
         expect(result.debriefWitnessed).toBe(true);

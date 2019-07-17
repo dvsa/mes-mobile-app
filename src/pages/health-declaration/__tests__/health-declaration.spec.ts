@@ -208,8 +208,8 @@ describe('HealthDeclarationPage', () => {
       component.rehydrateFields();
       fixture.detectChanges();
 
-      expect(form.get('healthCheckboxCtrl').value).toBeTruthy();
-      expect(form.get('receiptCheckboxCtrl').value).toBeTruthy();
+      expect(form.get('healthCheckboxCtrl').value).toEqual(true);
+      expect(form.get('receiptCheckboxCtrl').value).toEqual(true);
       expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
     });
   });

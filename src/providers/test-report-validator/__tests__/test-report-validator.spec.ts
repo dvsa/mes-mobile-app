@@ -30,7 +30,7 @@ describe('TestReportValidator', () => {
       };
       // ASSERT
       testReportValidatorProvider.validateCatBLegalRequirements(testResult).subscribe((result) => {
-        expect(result).toBeTruthy();
+        expect(result).toEqual(true);
         done();
       });
     });
@@ -47,7 +47,7 @@ describe('TestReportValidator', () => {
       };
       // ASSERT
       testReportValidatorProvider.validateCatBLegalRequirements(testResult).subscribe((result) => {
-        expect(result).toBeFalsy();
+        expect(result).toEqual(false);
         done();
       });
     });

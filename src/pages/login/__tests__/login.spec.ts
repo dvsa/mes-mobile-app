@@ -112,7 +112,7 @@ describe('LoginPage', () => {
       expect(component.initialisePersistentStorage).toHaveBeenCalled();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
       expect(navController.setRoot).toHaveBeenCalledWith(JOURNAL_PAGE);
-      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(component.hasUserLoggedOut).toEqual(false);
       expect(splashScreen.hide).toHaveBeenCalled();
     }));
 
@@ -128,7 +128,7 @@ describe('LoginPage', () => {
       tick();
       expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
       expect(component.appInitError === AuthenticationError.NO_INTERNET);
-      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(component.hasUserLoggedOut).toEqual(false);
       expect(splashScreen.hide).toHaveBeenCalled();
     }));
 
@@ -145,7 +145,7 @@ describe('LoginPage', () => {
       component.login();
       tick();
       expect(appConfigProvider.loadRemoteConfig).toHaveBeenCalled();
-      expect(component.hasUserLoggedOut).toBeFalsy();
+      expect(component.hasUserLoggedOut).toEqual(false);
       expect(component.appInitError === AuthenticationError.USER_NOT_AUTHORISED);
       expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
 
@@ -156,64 +156,64 @@ describe('LoginPage', () => {
       component.appInitError = AuthenticationError.NO_INTERNET;
       component.hasUserLoggedOut = false;
 
-      expect(component.isInternetConnectionError()).toBeTruthy();
+      expect(component.isInternetConnectionError()).toEqual(true);
     });
 
     it('should return false for isInternetConnectError when criteria is not met', () => {
       component.appInitError = AuthenticationError.NO_INTERNET;
       component.hasUserLoggedOut = true;
 
-      expect(component.isInternetConnectionError()).toBeFalsy();
+      expect(component.isInternetConnectionError()).toEqual(false);
 
       component.appInitError = undefined;
       component.hasUserLoggedOut = false;
 
-      expect(component.isInternetConnectionError()).toBeFalsy();
+      expect(component.isInternetConnectionError()).toEqual(false);
     });
 
     it('should return true for isUserCancelledError when criteria is met', () => {
       component.appInitError = AuthenticationError.USER_CANCELLED;
       component.hasUserLoggedOut = false;
 
-      expect(component.isUserCancelledError()).toBeTruthy();
+      expect(component.isUserCancelledError()).toEqual(true);
     });
 
     it('should return false for isUserCancelledError when criteria is not met', () => {
       component.appInitError = AuthenticationError.USER_CANCELLED;
       component.hasUserLoggedOut = true;
 
-      expect(component.isUserCancelledError()).toBeFalsy();
+      expect(component.isUserCancelledError()).toEqual(false);
 
       component.appInitError = undefined;
       component.hasUserLoggedOut = false;
 
-      expect(component.isUserCancelledError()).toBeFalsy();
+      expect(component.isUserCancelledError()).toEqual(false);
     });
 
     it('should return true for isUnknownError when criteria is met', () => {
       component.appInitError = AuthenticationError.NO_RESPONSE;
       component.hasUserLoggedOut = false;
 
-      expect(component.isUnknownError()).toBeTruthy();
+      expect(component.isUnknownError()).toEqual(true);
     });
 
     it('should return false for isUnknownError when criteria is not met', () => {
       component.appInitError = AuthenticationError.USER_CANCELLED;
       component.hasUserLoggedOut = false;
 
-      expect(component.isUnknownError()).toBeFalsy();
+      expect(component.isUnknownError()).toEqual(false);
 
       component.appInitError = undefined;
       component.hasUserLoggedOut = true;
 
-      expect(component.isUnknownError()).toBeFalsy();
+      expect(component.isUnknownError()).toEqual(false);
     });
 
     it('should return true for isUserNotAuthorised when criteria is met', () => {
       component.appInitError = AuthenticationError.USER_NOT_AUTHORISED;
       component.hasUserLoggedOut = false;
 
-      expect(component.isUserNotAuthorised()).toBeTruthy();
+      expect(component.isUserNotAuthorised()).toEqual(true);
     });
 
     it('should dispatch LOAD_LOG, START_SENDING_LOGS, START_SENDING_COMPLETED_LOGS action', fakeAsync(() => {

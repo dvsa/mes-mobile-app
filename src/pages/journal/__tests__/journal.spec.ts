@@ -130,7 +130,7 @@ describe('JournalPage', () => {
       component.pageState.slots$.subscribe(slots => noOfSlotsReturned = slots.length);
 
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
-      expect(slotsList.children.every(child => child.name === 'test-slot')).toBeTruthy();
+      expect(slotsList.children.every(child => child.name === 'test-slot')).toEqual(true);
     });
 
     describe('test report practice mode', () => {

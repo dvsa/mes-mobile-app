@@ -85,7 +85,7 @@ describe('debriefSelector', () => {
         drivingFaults: localDrivingFaults,
       };
       const result = displayDrivingFaultComments(testData);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it('should return true if there are more than 15 driving faults and no serious or dangerous faults', () => {
@@ -104,7 +104,7 @@ describe('debriefSelector', () => {
         drivingFaults: localDrivingFaults,
       };
       const result = displayDrivingFaultComments(testData);
-      expect(result).toBeTruthy();
+      expect(result).toEqual(true);
     });
 
     it('should return false if there are more than 15 driving faults and a serious fault', () => {
@@ -126,7 +126,7 @@ describe('debriefSelector', () => {
         drivingFaults: localDrivingFaults,
       };
       const result = displayDrivingFaultComments(testData);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
     });
 
     it('should return false if there are more than 15 driving faults and a dangerous fault', () => {
@@ -148,7 +148,7 @@ describe('debriefSelector', () => {
         drivingFaults: localDrivingFaults,
       };
       const result = displayDrivingFaultComments(testData);
-      expect(result).toBeFalsy();
+      expect(result).toEqual(false);
 
     });
 
