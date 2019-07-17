@@ -62,7 +62,6 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   logEvent(category: string, event: string, label?: string, value?: number): void {
-    console.log('logEvent', category, event, label), value;
     this.platform.ready().then(() => {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
@@ -76,7 +75,6 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   addCustomDimension(key: number, value: string): void {
-    console.log('addCustomDimension', key, value);
     this.ga
       .startTrackerWithId(this.googleAnalyticsKey)
       .then(() => {

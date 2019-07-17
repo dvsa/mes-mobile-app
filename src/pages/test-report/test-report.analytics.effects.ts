@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, concatMap, withLatestFrom, map } from 'rxjs/operators';
+import { switchMap, concatMap, withLatestFrom } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames,
-  AnalyticsEventCategories,
-  AnalyticsEvents,
-  AnalyticsLabels,
+  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsLabels,
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { isPracticeMode } from '../../modules/tests/tests.selector';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import {
   manoeuvreCompetencyLabels,
   manoeuvreTypeLabels,
 } from './components/manoeuvre-competency/manoeuvre-competency.constants';
-import { AnalyticRecorded, AnalyticNotRecorded } from '../../providers/analytics/analytics.actions';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { TestsModel } from '../../modules/tests/tests.model';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -30,12 +28,7 @@ export class TestReportAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-          .then(() => {})
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
@@ -53,18 +46,14 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testReportActions.ToggleRemoveFaultMode, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.SELECT_REMOVE_MODE,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testReportActions.ToggleRemoveFaultMode, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.SELECT_REMOVE_MODE, tests),
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -74,18 +63,14 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testReportActions.ToggleSeriousFaultMode, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.SELECT_SERIOUS_MODE,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testReportActions.ToggleSeriousFaultMode, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.SELECT_SERIOUS_MODE, tests),
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -95,18 +80,14 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testReportActions.ToggleDangerousFaultMode, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.SELECT_DANGEROUS_MODE,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testReportActions.ToggleDangerousFaultMode, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.SELECT_DANGEROUS_MODE, tests),
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -118,20 +99,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.AddDrivingFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DRIVING_FAULT,
-          fullCompetencyLabels[action.payload.competency],
-          action.payload.newFaultCount,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.AddDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        fullCompetencyLabels[action.payload.competency],
+        action.payload.newFaultCount,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -143,20 +120,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.AddSeriousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_SERIOUS_FAULT,
-          fullCompetencyLabels[action.payload],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.AddSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        fullCompetencyLabels[action.payload],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -168,20 +141,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.AddDangerousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DANGEROUS_FAULT,
-          fullCompetencyLabels[action.payload],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.AddDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
+        fullCompetencyLabels[action.payload],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -193,20 +162,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.AddManoeuvreDrivingFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DRIVING_FAULT,
-          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.AddManoeuvreDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -218,20 +183,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.AddManoeuvreSeriousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_SERIOUS_FAULT,
-          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.AddManoeuvreSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -243,20 +204,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.AddManoeuvreDangerousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DANGEROUS_FAULT,
-          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.AddManoeuvreDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -268,20 +225,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopAddDrivingFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DRIVING_FAULT,
-          fullCompetencyLabels['outcomeControlledStop'],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ControlledStopAddDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        fullCompetencyLabels['outcomeControlledStop'],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -293,20 +246,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopAddSeriousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_SERIOUS_FAULT,
-          fullCompetencyLabels['outcomeControlledStop'],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ControlledStopAddSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        fullCompetencyLabels['outcomeControlledStop'],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -318,20 +267,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopAddDangerousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DANGEROUS_FAULT,
-          fullCompetencyLabels['outcomeControlledStop'],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ControlledStopAddDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
+        fullCompetencyLabels['outcomeControlledStop'],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -343,20 +288,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionDrivingFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DRIVING_FAULT,
-          fullCompetencyLabels['showMeQuestion'],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ShowMeQuestionDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
+        fullCompetencyLabels['showMeQuestion'],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -368,20 +309,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionSeriousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_SERIOUS_FAULT,
-          fullCompetencyLabels['showMeQuestion'],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ShowMeQuestionSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
+        fullCompetencyLabels['showMeQuestion'],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -393,20 +330,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionDangerousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.ADD_DANGEROUS_FAULT,
-          fullCompetencyLabels['showMeQuestion'],
-          1,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ShowMeQuestionDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
+        fullCompetencyLabels['showMeQuestion'],
+        1,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -418,20 +351,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.RemoveDrivingFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.REMOVE_DRIVING_FAULT,
-          fullCompetencyLabels[action.payload.competency],
-          action.payload.newFaultCount,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.RemoveDrivingFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_DRIVING_FAULT, tests),
+        fullCompetencyLabels[action.payload.competency],
+        action.payload.newFaultCount,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -443,20 +372,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.RemoveSeriousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.REMOVE_SERIOUS_FAULT,
-          fullCompetencyLabels[action.payload],
-          0,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.RemoveSeriousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_SERIOUS_FAULT, tests),
+        fullCompetencyLabels[action.payload],
+        0,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -468,20 +393,16 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.RemoveDangerousFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.REMOVE_DANGEROUS_FAULT,
-          fullCompetencyLabels[action.payload],
-          0,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.RemoveDangerousFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_DANGEROUS_FAULT, tests),
+        fullCompetencyLabels[action.payload],
+        0,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -493,19 +414,15 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.RemoveManoeuvreFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.REMOVE_DRIVING_FAULT,
-          `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.RemoveManoeuvreFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_DRIVING_FAULT, tests),
+        `${manoeuvreTypeLabels[action.payload.manoeuvre]} - ${manoeuvreCompetencyLabels[action.payload.competency]}`,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -517,19 +434,15 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ControlledStopRemoveFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.REMOVE_FAULT,
-          fullCompetencyLabels['outcomeControlledStop'],
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ControlledStopRemoveFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_FAULT, tests),
+        fullCompetencyLabels['outcomeControlledStop'],
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -541,40 +454,36 @@ export class TestReportAnalyticsEffects {
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testDataActions.ShowMeQuestionRemoveFault, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TEST_REPORT,
-          AnalyticsEvents.REMOVE_FAULT,
-          fullCompetencyLabels['showMeQuestion'],
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded());
+    concatMap(([action, tests]: [testDataActions.ShowMeQuestionRemoveFault, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.REMOVE_FAULT, tests),
+        fullCompetencyLabels['showMeQuestion'],
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
+  @Effect()
   testTermination$ = this.actions$.pipe(
-    ofType(testReportActions.TERMINATE_TEST_FROM_TEST_REPORT),
+    ofType(
+      testReportActions.TERMINATE_TEST_FROM_TEST_REPORT,
+    ),
     withLatestFrom(
       this.store$.pipe(
         select(getTests),
-        map(isPracticeMode),
       ),
     ),
-    concatMap(([action, isPracticeMode]: [testReportActions.TerminateTestFromTestReport, boolean]) => {
-      if (!isPracticeMode) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.TERMINATION,
-          AnalyticsEvents.END_TEST,
-          AnalyticsLabels.TERMINATE_TEST,
-        );
-        return of(new AnalyticRecorded());
-      }
-      return of(new AnalyticNotRecorded);
+    concatMap(([action, tests]: [testReportActions.TerminateTestFromTestReport, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TERMINATION, tests),
+        formatAnalyticsText(AnalyticsEvents.END_TEST, tests),
+        AnalyticsLabels.TERMINATE_TEST,
+      );
+      return of(new AnalyticRecorded());
     }),
   );
+
 }
