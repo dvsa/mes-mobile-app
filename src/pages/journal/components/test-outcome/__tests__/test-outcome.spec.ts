@@ -13,6 +13,7 @@ import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constant
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
+import { JournalModel } from '../../../journal.model';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -24,6 +25,19 @@ describe('Test Outcome', () => {
     duration: 57,
     slotId: 123,
     start: new DateTime().toString(),
+  };
+
+  const journal: JournalModel = {
+    isLoading: false,
+    lastRefreshed: new Date(),
+    slots: {},
+    selectedDate: 'dummy',
+    examiner: { staffNumber: '123', individualId: 456 },
+    checkComplete: [
+      {
+        slotId: 123456,
+      },
+    ],
   };
 
   beforeEach(async(() => {
@@ -39,11 +53,13 @@ describe('Test Outcome', () => {
               1234: {
                 category: 'B',
                 activityCode: ActivityCodes.BAD_LIGHT,
-                journalData: null,
+                journalData: {
+                },
                 rekey: false,
               },
             },
           }),
+          journal: () => (journal),
         }),
       ],
       providers: [
@@ -261,6 +277,37 @@ describe('Test Outcome', () => {
           fixture.detectChanges();
           const outcomeCode = fixture.debugElement.query(By.css('.outcome'));
           expect(outcomeCode).toBeNull();
+        });
+      });
+
+      describe('show force detail check modal', () => {
+        it('should display the force detail check modal', () => {
+          component.specialRequirements = true;
+          component.slotDetail = testSlotDetail;
+          component.testStatus = TestStatus.Booked;
+          spyOn(component, 'displayForceCheckModal');
+          fixture.detectChanges();
+
+          const startButton = fixture.debugElement.query(By.css('.mes-primary-button'));
+          startButton.triggerEventHandler('click', null);
+
+          expect(component.displayForceCheckModal).toHaveBeenCalled();
+        });
+      });
+
+      describe('candidate details seen, force detail check modal should not be seen', () => {
+        it('should not display the force detail check modal', () => {
+          component.specialRequirements = true;
+          component.slotDetail = testSlotDetail;
+          component.testStatus = TestStatus.Booked;
+          component.slotDetail.slotId = 123456;
+          spyOn(component, 'displayForceCheckModal');
+          fixture.detectChanges();
+
+          const startButton = fixture.debugElement.query(By.css('.mes-primary-button'));
+          startButton.triggerEventHandler('click', null);
+
+          expect(component.displayForceCheckModal).toHaveBeenCalledTimes(0);
         });
       });
     });

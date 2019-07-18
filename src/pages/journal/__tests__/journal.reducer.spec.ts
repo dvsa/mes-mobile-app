@@ -1,5 +1,12 @@
 import { initialState, journalReducer } from '../journal.reducer';
-import { LoadJournal, LoadJournalSuccess, UnloadJournal, UnsetError, ClearChangedSlot } from '../journal.actions';
+import {
+  LoadJournal,
+  LoadJournalSuccess,
+  UnloadJournal,
+  UnsetError,
+  ClearChangedSlot,
+  CandidateDetailsSeen,
+} from '../journal.actions';
 import { SlotItem } from '../../../providers/slot-selector/slot-item';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
 
@@ -84,6 +91,7 @@ describe('Journal Reducer', () => {
         selectedDate: 'dummy',
         slots: { ['2019-01-13']: [new SlotItem({}, false)] },
         examiner: { staffNumber: '123', individualId: 456 },
+        checkComplete: [],
       };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
@@ -116,6 +124,25 @@ describe('Journal Reducer', () => {
       const action = new ClearChangedSlot(1234);
       const result = journalReducer(stateWithChangedSlot, action);
       expect(result.slots[slotDate][0].hasSlotChanged).toEqual(false);
+
+    });
+  });
+
+  describe('[JournalPage] Check Complete', () => {
+    it('Candidate details was checked', () => {
+      const slotDate = '2019-01-13';
+      const stateWithChangedSlot = {
+        ...initialState,
+        selectedDate: slotDate,
+        checkComplete: [],
+      };
+      const action = new CandidateDetailsSeen(1234);
+      const result = journalReducer(stateWithChangedSlot, action);
+
+      expect(result.checkComplete.length).toEqual(1);
+      expect(result.checkComplete[0]).toEqual({
+        slotId: 1234,
+      });
 
     });
   });

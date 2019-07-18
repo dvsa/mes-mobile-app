@@ -18,6 +18,7 @@ export const UNSET_ERROR = '[JournalPage] Unset Error';
 export const SELECT_PREVIOUS_DAY = '[JournalPage] Select Previous Day';
 export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
 export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
+export const CANDIDATE_DETAILS_SEEN = '[JournalPage] Candidate Details Seen';
 
 export const START_TEST = '[TestOutcomeComponent] Start Test';
 // Differs from START_TEST in that it won't trigger the journal -> test state copy effect
@@ -128,6 +129,11 @@ export class ActivateTest implements Action {
   constructor(public slotId: number, public rekey: boolean = false) { }
 }
 
+export class CandidateDetailsSeen implements Action {
+  readonly type = CANDIDATE_DETAILS_SEEN;
+  constructor(public slotId: number) { }
+}
+
 export type JournalActionTypes =
   | LoadJournal
   | LoadJournalSilent
@@ -147,4 +153,5 @@ export type JournalActionTypes =
   | JournalRefreshError
   | JournalRefresh
   | StartTest
-  | ActivateTest;
+  | ActivateTest
+  | CandidateDetailsSeen;

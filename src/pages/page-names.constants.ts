@@ -14,3 +14,4 @@ export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const WAITING_ROOM_PAGE = 'WaitingRoomPage';
 export const WAITING_ROOM_TO_CAR_PAGE = 'WaitingRoomToCarPage';
 export const VIEW_TEST_RESULT_PAGE = 'ViewTestResultPage';
+export const JOURNAL_FORCE_CHECK_MODAL = 'JournalForceCheckModal';
