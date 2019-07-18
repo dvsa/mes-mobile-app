@@ -25,9 +25,10 @@ export function journalReducer(state = initialState, action: journalActions.Jour
     case journalActions.CANDIDATE_DETAILS_SEEN:
       return {
         ...state,
-        checkComplete: state.checkComplete.concat({
-          slotId: action.slotId,
-        }),
+        checkComplete: [
+          ...state.checkComplete,
+          { slotId: action.slotId },
+        ],
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
