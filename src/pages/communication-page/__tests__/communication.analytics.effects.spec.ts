@@ -27,7 +27,7 @@ describe('Communication Analytics Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.COMMUNICATION;
-  const screenNamePracticeTest = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.COMMUNICATION}`;
+  const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.COMMUNICATION}`;
   const mockCandidate: Candidate = {
     candidateId: 1001,
   };
@@ -88,7 +88,7 @@ describe('Communication Analytics Effects', () => {
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
         expect(analyticsProviderMock.setCurrentPage)
-          .toHaveBeenCalledWith(screenNamePracticeTest);
+          .toHaveBeenCalledWith(screenNamePracticeMode);
         done();
       });
     });
