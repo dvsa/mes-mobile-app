@@ -1,47 +1,45 @@
 import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car.analytics.effects';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
-import { of } from 'rxjs/observable/of';
 import {
   AnalyticsDimensionIndices,
   AnalyticsScreenNames,
   AnalyticsErrorTypes,
+  AnalyticsEventCategories,
 } from '../../../providers/analytics/analytics.model';
+import { StoreModel } from '../../../shared/models/store.model';
+import { Candidate } from '@dvsa/mes-journal-schema';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import * as journalActions from '../../journal/journal.actions';
+import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
+import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
   let effects: WaitingRoomToCarAnalyticsEffects;
   let analyticsProviderMock;
   let actions$: any;
+  let store$: Store<StoreModel>;
+  const screenName = AnalyticsScreenNames.WAITING_ROOM_TO_CAR;
+  // tslint:disable-next-line:max-line-length
+  const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
+  const mockCandidate: Candidate = {
+    candidateId: 1001,
+  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          tests: () => ({
-            currentTest: {
-              slotId: '123',
-            },
-            testStatus: {},
-            startedTests: {
-              123: {
-                vehicleDetails: {},
-                accompaniment: {},
-                testData: {},
-                journalData: {
-                  candidate: {
-                    candidateId: 1001,
-                  },
-                },
-              },
-            },
-          }),
+          tests: testsReducer,
         }),
       ],
       providers: [
@@ -53,68 +51,118 @@ describe('Waiting Room To Car Analytics Effects', () => {
     });
     effects = TestBed.get(WaitingRoomToCarAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
+    store$ = TestBed.get(Store);
+    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
+    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
+    spyOn(analyticsProviderMock, 'logError').and.callThrough();
   });
 
   describe('waitingRoomToCarViewDidEnter', () => {
-    it('should call setCurrentPage and addCustomDimension', fakeAsync((done) => {
+    it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
-      spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
-      tick();
       // ASSERT
       effects.waitingRoomToCarViewDidEnter$.subscribe((result) => {
-        expect(result instanceof of).toBe(true);
-        expect(effects.analytics.addCustomDimension)
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
-        expect(effects.analytics.addCustomDimension)
+        expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, '123');
-        expect(effects.analytics.setCurrentPage)
-          .toHaveBeenCalledWith(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
+        expect(analyticsProviderMock.setCurrentPage)
+          .toHaveBeenCalledWith(screenName);
         done();
       });
-    }));
+    });
+    it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      // ACT
+      actions$.next(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
+      // ASSERT
+      effects.waitingRoomToCarViewDidEnter$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
+        expect(analyticsProviderMock.setCurrentPage)
+          .toHaveBeenCalledWith(screenNamePracticeMode);
+        done();
+      });
+    });
 
   });
 
   describe('waitingRoomToCarError', () => {
-    it('should call logError', fakeAsync((done) => {
+    it('should call logError', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logError').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
-      tick();
       // ASSERT
       effects.waitingRoomToCarError$.subscribe((result) => {
-        expect(result instanceof of).toBe(true);
-        expect(effects.analytics.logError)
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
         // tslint:disable-next-line:max-line-length
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${AnalyticsScreenNames.WAITING_ROOM_TO_CAR})`,
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
           'error 123');
         done();
       });
-    }));
+    });
+    it('should call logError, prefixed with practice mode', (done) => {
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      // ACT
+      actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
+      // ASSERT
+      effects.waitingRoomToCarError$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeMode})`,
+          'error 123');
+        done();
+      });
+    });
 
   });
 
   describe('waitingRoomToCarValidationError', () => {
-    it('should call logError', fakeAsync((done) => {
+    it('should call logError', (done) => {
       // ARRANGE
-      spyOn(analyticsProviderMock, 'logError').and.callThrough();
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
-      tick();
       // ASSERT
       effects.waitingRoomToCarValidationError$.subscribe((result) => {
-        expect(result instanceof of).toBe(true);
-        expect(effects.analytics.logError)
-        // tslint:disable-next-line:max-line-length
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${AnalyticsScreenNames.WAITING_ROOM_TO_CAR})`,
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
           'formControl1');
         done();
       });
-    }));
+    });
+    it('should call logError, prefixed with practice mode', (done) => {
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      // ACT
+      actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
+      // ASSERT
+      effects.waitingRoomToCarValidationError$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeMode})`,
+          'formControl1');
+        done();
+      });
+    });
 
   });
 

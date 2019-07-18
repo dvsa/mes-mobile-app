@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
@@ -22,6 +22,9 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId, getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { TestsModel } from '../../modules/tests/tests.model';
 
 @Injectable()
 export class WaitingRoomToCarAnalyticsEffects {
@@ -31,55 +34,73 @@ export class WaitingRoomToCarAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-          .then(() => {})
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
   waitingRoomToCarViewDidEnter$ = this.actions$.pipe(
     ofType(WAITING_ROOM_TO_CAR_VIEW_DID_ENTER),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTestSlotId),
-      ),
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getJournalData),
-        select(getCandidate),
-        select(getCandidateId),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
         ),
-    ),
-    switchMap(([action, slotId, candidateId]: [WaitingRoomToCarViewDidEnter, string, number]) => {
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getCandidate),
+          select(getCandidateId),
+          ),
+      ),
+    )),
+    switchMap(([action, tests, slotId, candidateId]: [WaitingRoomToCarViewDidEnter, TestsModel, string, number]) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
-      this.analytics.setCurrentPage(AnalyticsScreenNames.WAITING_ROOM_TO_CAR);
-      return of();
+      this.analytics.setCurrentPage(
+        formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM_TO_CAR, tests),
+      );
+      return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
   waitingRoomToCarError$ = this.actions$.pipe(
     ofType(WAITING_ROOM_TO_CAR_ERROR),
-    switchMap((action: WaitingRoomToCarError) => {
-      this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${AnalyticsScreenNames.WAITING_ROOM_TO_CAR})`,
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [WaitingRoomToCarError, TestsModel]) => {
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM_TO_CAR, tests);
+      this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
         action.errorMessage);
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
   waitingRoomToCarValidationError$ = this.actions$.pipe(
     ofType(WAITING_ROOM_TO_CAR_VALIDATION_ERROR),
-    switchMap((action: WaitingRoomToCarValidationError) => {
-      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${AnalyticsScreenNames.WAITING_ROOM_TO_CAR})`,
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [WaitingRoomToCarValidationError, TestsModel]) => {
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM_TO_CAR, tests);
+      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
         action.errorMessage);
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
