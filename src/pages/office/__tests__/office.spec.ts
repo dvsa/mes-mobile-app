@@ -31,12 +31,15 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   ShowMeQuestionSelected,
+  AddDangerousFaultComment,
+  AddSeriousFaultComment,
+  AddDrivingFaultComment,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests, SetActivityCode } from '../../../modules/tests/tests.actions';
 import {
-  WeatherConditionsChanged,
+  WeatherConditionsChanged, CandidateDescriptionChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
 import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
@@ -51,7 +54,11 @@ import { AdditionalInformationComponent } from '../components/additional-informa
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
-import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
+import {
+  CommentedCompetency,
+  MultiFaultAssignableCompetency,
+  CommentSource,
+} from '../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../components/activity-code/activity-code';
 import {
   ActivityCodeModel,
@@ -376,5 +383,92 @@ describe('OfficePage', () => {
         .not
         .toHaveBeenCalledWith(new ValidationError('notRequiredControl is blank'));
     }));
+  });
+
+  describe('input changed functions', () => {
+    it('should dispatch CandidateDescriptionChanged with the description value', () => {
+      const candidateDescription = 'this is the candidates description';
+      component.candidateDescriptionChanged(candidateDescription);
+      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateDescriptionChanged(candidateDescription));
+    });
+
+    it('should not dispatch CandidateDescriptionChanged when description value length is more the 1000', () => {
+      // tslint:disable-next-line
+      const candidateDescription = 'tallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtatto1';
+      component.candidateDescriptionChanged(candidateDescription);
+      expect(store$.dispatch).not.toHaveBeenCalled();
+    });
+
+    it('should dispatch AddDangerousFaultComment with the comment value', () => {
+      const dangerousFaultComment: CommentedCompetency = {
+        source: CommentSource.SIMPLE,
+        comment: 'this is dangerous fault comment',
+        competencyIdentifier: 'steering',
+        competencyDisplayName: 'steering',
+      };
+      component.dangerousFaultCommentChanged(dangerousFaultComment);
+      expect(store$.dispatch).toHaveBeenCalledWith(
+        new AddDangerousFaultComment(dangerousFaultComment.competencyIdentifier, dangerousFaultComment.comment));
+    });
+
+    it('should not dispatch AddDangerousFaultComment when comment is longer then 1000 characters', () => {
+      const dangerousFaultComment: CommentedCompetency = {
+        source: CommentSource.SIMPLE,
+        // tslint:disable-next-line
+        comment: 'tallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtatto1',
+        competencyIdentifier: 'steering',
+        competencyDisplayName: 'steering',
+      };
+      component.dangerousFaultCommentChanged(dangerousFaultComment);
+      expect(store$.dispatch).not.toHaveBeenCalled();
+    });
+
+    it('should dispatch AddSeriousFaultComment with the comment value', () => {
+      const seriousFaultComment: CommentedCompetency = {
+        source: CommentSource.SIMPLE,
+        comment: 'this is serious fault comment',
+        competencyIdentifier: 'steering',
+        competencyDisplayName: 'steering',
+      };
+      component.seriousFaultCommentChanged(seriousFaultComment);
+      expect(store$.dispatch).toHaveBeenCalledWith(
+        new AddSeriousFaultComment(seriousFaultComment.competencyIdentifier, seriousFaultComment.comment));
+    });
+
+    it('should not dispatch AddSeriousFaultComment when comment is longer then 1000 characters', () => {
+      const seriousFaultComment: CommentedCompetency = {
+        source: CommentSource.SIMPLE,
+        // tslint:disable-next-line
+        comment: 'tallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtatto1',
+        competencyIdentifier: 'steering',
+        competencyDisplayName: 'steering',
+      };
+      component.seriousFaultCommentChanged(seriousFaultComment);
+      expect(store$.dispatch).not.toHaveBeenCalled();
+    });
+
+    it('should dispatch AddDrivingFaultComment with the comment value', () => {
+      const drivingFaultComment: CommentedCompetency = {
+        source: CommentSource.SIMPLE,
+        comment: 'this is driving fault comment',
+        competencyIdentifier: 'steering',
+        competencyDisplayName: 'steering',
+      };
+      component.drivingFaultCommentChanged(drivingFaultComment);
+      expect(store$.dispatch).toHaveBeenCalledWith(
+        new AddDrivingFaultComment(drivingFaultComment.competencyIdentifier, drivingFaultComment.comment));
+    });
+
+    it('should not dispatch AddDrivingFaultComment when comment is longer then 1000 characters', () => {
+      const drivingFaultComment: CommentedCompetency = {
+        source: CommentSource.SIMPLE,
+        // tslint:disable-next-line
+        comment: 'tallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtatto1',
+        competencyIdentifier: 'steering',
+        competencyDisplayName: 'steering',
+      };
+      component.drivingFaultCommentChanged(drivingFaultComment);
+      expect(store$.dispatch).not.toHaveBeenCalled();
+    });
   });
 });

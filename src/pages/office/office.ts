@@ -607,9 +607,6 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   additionalInformationChanged(additionalInformation: string): void {
-    if (additionalInformation.length > 5000) {
-      return;
-    }
     this.store$.dispatch(new AdditionalInformationChanged(additionalInformation));
   }
 

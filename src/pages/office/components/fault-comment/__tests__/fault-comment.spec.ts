@@ -45,7 +45,7 @@ describe('FaultCommentComponent', () => {
       });
   }));
 
-  describe('DOM', () => {
+  fdescribe('DOM', () => {
     it('should display the fault competency display name', () => {
       component.faultComment = {
         comment: 'comment',
