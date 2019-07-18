@@ -13,6 +13,7 @@ import * as testsActions from '../../modules/tests/tests.actions';
 import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class TestReportEffects {
@@ -39,14 +40,16 @@ export class TestReportEffects {
       testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
       testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
     ),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getTestData),
-        map(getCatBLegalRequirements),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          map(getCatBLegalRequirements),
+        ),
       ),
-    ),
+    )),
     concatMap(([action, catBLegalRequirements]) => {
       return this.testReportValidator.validateCatBLegalRequirements(catBLegalRequirements)
         .pipe(
@@ -64,13 +67,15 @@ export class TestReportEffects {
       testDataActions.REMOVE_SERIOUS_FAULT,
       testDataActions.TOGGLE_ETA,
     ),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getTestData),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+        ),
       ),
-    ),
+    )),
     concatMap(([action, testData]) => {
       return this.testReportValidator.validateCatBEta(testData)
         .pipe(
@@ -84,12 +89,14 @@ export class TestReportEffects {
     ofType(
       testReportActions.CALCULATE_TEST_RESULT,
     ),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        map(getCurrentTest),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          map(getCurrentTest),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, currentTest]) => {
       return this.testResultProvider.calculateCatBTestResult(currentTest.testData)
         .pipe(
@@ -128,12 +135,14 @@ export class TestReportEffects {
       testDataActions.TOGGLE_ETA,
       testDataActions.TOGGLE_LEGAL_REQUIREMENT,
     ),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        map(isTestReportPracticeTest),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          map(isTestReportPracticeTest),
+        ),
       ),
-    ),
+    )),
     filter(([action, isTestReportPracticeTest]) => !isTestReportPracticeTest),
     delay(1000), // Added a 1 second delay to allow other action to complete/effects to fire
     map(() => new testsActions.PersistTests()),

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 
 import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
 import * as testSummaryActions from '../../modules/tests/test-summary/test-summary.actions';
@@ -11,6 +11,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class OfficeEffects {
@@ -42,12 +43,14 @@ export class OfficeEffects {
   @Effect()
   completeTestEffect$ = this.actions$.pipe(
     ofType(officeActions.COMPLETE_TEST),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTestSlotId),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, slotId]) => {
       return [
         new testStatusActions.SetTestStatusCompleted(slotId),

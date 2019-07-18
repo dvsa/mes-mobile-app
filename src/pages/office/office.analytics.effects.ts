@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { withLatestFrom, switchMap } from 'rxjs/operators';
+import { withLatestFrom, switchMap, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames, AnalyticsDimensionIndices, AnalyticsEventCategories, AnalyticsEvents, AnalyticsErrorTypes,
@@ -38,13 +38,15 @@ export class OfficeAnalyticsEffects {
   @Effect()
   officeViewDidEnter$ = this.actions$.pipe(
     ofType(OFFICE_VIEW_DID_ENTER),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(isPassed),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, isPassed]: [OfficeViewDidEnter, boolean]) => {
       if (isPassed) {
         this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_TEST_SUMMARY);
@@ -59,18 +61,20 @@ export class OfficeAnalyticsEffects {
   @Effect()
   savingWriteUpForLaterEffect$ = this.actions$.pipe(
     ofType(SAVING_WRITE_UP_FOR_LATER),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(isPassed),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+        ),
       ),
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getJournalData),
-      ),
-    ),
+    )),
     switchMap(([action, isPassed, journalDataOfTest]: [SavingWriteUpForLater, boolean, JournalData]) => {
       this.analytics.logEvent(
         AnalyticsEventCategories.POST_TEST,
@@ -90,13 +94,15 @@ export class OfficeAnalyticsEffects {
   @Effect()
   validationErrorEffect$ = this.actions$.pipe(
     ofType(VALIDATION_ERROR),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(isPassed),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, isPassed]: [ValidationError, boolean]) => {
       const screenName = isPassed ? AnalyticsScreenNames.PASS_TEST_SUMMARY : AnalyticsScreenNames.FAIL_TEST_SUMMARY;
       this.analytics.logError(

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, concatMap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from '../journal/journal.reducer';
@@ -47,12 +47,14 @@ export class CandidateDetailsAnalyticsEffects {
   @Effect()
     candidateView$ = this.actions$.pipe(
       ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
-      withLatestFrom(
-        this.store$.pipe(
-          select(getJournalState),
-          map(getSlots),
+      concatMap(action => of(action).pipe(
+        withLatestFrom(
+          this.store$.pipe(
+            select(getJournalState),
+            map(getSlots),
+          ),
         ),
-      ),
+      )),
       switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
         const slot = getSlotById(slots, action.slotId);
         const specNeeds = isCandidateSpecialNeeds(slot);

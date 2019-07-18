@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
@@ -33,13 +33,15 @@ export class DebriefAnalyticsEffects {
   @Effect()
   debriefViewDidEnter$ = this.actions$.pipe(
     ofType(DEBRIEF_VIEW_DID_ENTER),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(isPassed),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, isPassed]: [DebriefViewDidEnter, boolean]) => {
       if (isPassed) {
         this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_DEBRIEF);

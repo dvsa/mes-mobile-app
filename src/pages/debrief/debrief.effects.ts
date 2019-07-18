@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 
 import * as debriefActions from './debrief.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
@@ -10,6 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId, getCurrentTest, getTestOutcomeText } from '../../modules/tests/tests.selector';
 import { TestOutcome } from '../../modules/tests/tests.constants';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class DebriefEffects {
@@ -21,17 +22,19 @@ export class DebriefEffects {
   @Effect()
   endDebriefEffect$ = this.actions$.pipe(
     ofType(debriefActions.END_DEBRIEF),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTestSlotId),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestOutcomeText),
+        ),
       ),
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getTestOutcomeText),
-      ),
-    ),
+    )),
     switchMap(([action, slotId, testOutcome]) => {
       // Passed test flow goes through additional pages before write up
       const testStatusAction = testOutcome === TestOutcome.Passed ?

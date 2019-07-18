@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames, AnalyticsDimensionIndices, AnalyticsEventCategories, AnalyticsEvents,
@@ -44,18 +44,20 @@ export class BackToOfficeAnalyticsEffects {
   @Effect()
   deferWriteUpEffect$ = this.actions$.pipe(
     ofType(DEFER_WRITE_UP),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(isPassed),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+        ),
       ),
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getJournalData),
-      ),
-    ),
+    )),
     switchMap(([action, isPassed, journalDataOfTest]: [DeferWriteUp, boolean, JournalData]) => {
       this.analytics.logEvent(
         AnalyticsEventCategories.BACK_TO_OFFICE,

@@ -9,6 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { CONTINUE_FROM_DECLARATION } from './health-declaration.actions';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class HealthDeclarationEffects {
@@ -20,12 +21,14 @@ export class HealthDeclarationEffects {
   @Effect()
   endHealthDeclarationEffect$ = this.actions$.pipe(
     ofType(CONTINUE_FROM_DECLARATION),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTestSlotId),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
       ),
-    ),
+    )),
     concatMap(([action, slotId]) => {
       return [
         new testStatusActions.SetTestStatusWriteUp(slotId),
