@@ -45,24 +45,16 @@ describe('PassFinalisationPage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
-  describe('DOM', () => {
-    // Unit tests for the components template
-  });
-  describe('onSubmit', () => {
-    // Unit tests for the components TypeScript class
-    it('should dispatch the PersistTests action', () => {
-      const form = component.form;
-      form.get('provisionalLicenseProvidedCtrl').setValue(true);
-      form.get('passCertificateNumberCtrl').setValue(true);
-      form.get('transmissionCtrl').setValue('Manual');
-      component.onSubmit();
-      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+    describe('onSubmit', () => {
+      // Unit tests for the components TypeScript class
+      it('should dispatch the PersistTests action', () => {
+        const form = component.form;
+        form.get('provisionalLicenseProvidedCtrl').setValue(true);
+        form.get('passCertificateNumberCtrl').setValue(true);
+        form.get('transmissionCtrl').setValue('Manual');
+        component.onSubmit();
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+      });
     });
   });
 });

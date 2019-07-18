@@ -157,10 +157,6 @@ describe('OfficePage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
 
     describe('weatherConditionsChanged', () => {
       it('should dispatch a weather conditions changed action with the weather condition values', () => {

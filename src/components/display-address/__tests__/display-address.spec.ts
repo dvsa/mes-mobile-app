@@ -19,12 +19,6 @@ describe('DisplayAddressComponent', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should hide the address if not available', () => {
       fixture.detectChanges();

@@ -60,10 +60,6 @@ describe('CompetencyComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('getLabel', () => {
       it('should get the correct label for a competency', () => {
         component.competency = Competencies.controlsSteering;

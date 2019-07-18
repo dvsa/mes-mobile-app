@@ -15,7 +15,6 @@ import { ExaminerRole } from '../../../providers/app-config/constants/examiner-r
 
 describe('TestResultsSearchPage', () => {
   let fixture: ComponentFixture<TestResultsSearchPage>;
-  let component: TestResultsSearchPage;
   let appConfigProviderMock: AppConfigProvider;
 
   beforeEach(async(() => {
@@ -42,46 +41,36 @@ describe('TestResultsSearchPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(TestResultsSearchPage);
         appConfigProviderMock = TestBed.get(AppConfigProvider);
-        component = fixture.componentInstance;
       });
   }));
 
-  describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
-  });
-
   describe('DOM', () => {
-  });
-
-  describe('advanced search', () => {
-    describe('when the user is an LDTM', () => {
-      beforeEach(() => {
-        spyOn(appConfigProviderMock, 'getAppConfig').and.returnValue({
-          role: ExaminerRole.LDTM,
+    describe('advanced search', () => {
+      describe('when the user is an LDTM', () => {
+        beforeEach(() => {
+          spyOn(appConfigProviderMock, 'getAppConfig').and.returnValue({
+            role: ExaminerRole.LDTM,
+          });
+          fixture.detectChanges();
         });
-        fixture.detectChanges();
-      });
 
-      it('displays the advanced search', () => {
-        expect(fixture.debugElement.query(By.css('#tab-search-advanced'))).not.toBeNull();
-      });
-    });
-
-    describe('when the user is a DE', () => {
-      beforeEach(() => {
-        spyOn(appConfigProviderMock, 'getAppConfig').and.returnValue({
-          role: ExaminerRole.DE,
+        it('displays the advanced search', () => {
+          expect(fixture.debugElement.query(By.css('#tab-search-advanced'))).not.toBeNull();
         });
-        fixture.detectChanges();
       });
 
-      it('only displays the candidate search', () => {
-        expect(fixture.debugElement.query(By.css('#tab-search-candidate-details'))).not.toBeNull();
-        expect(fixture.debugElement.query(By.css('#tab-search-advanced'))).toBeNull();
+      describe('when the user is a DE', () => {
+        beforeEach(() => {
+          spyOn(appConfigProviderMock, 'getAppConfig').and.returnValue({
+            role: ExaminerRole.DE,
+          });
+          fixture.detectChanges();
+        });
+
+        it('only displays the candidate search', () => {
+          expect(fixture.debugElement.query(By.css('#tab-search-candidate-details'))).not.toBeNull();
+          expect(fixture.debugElement.query(By.css('#tab-search-advanced'))).toBeNull();
+        });
       });
     });
   });

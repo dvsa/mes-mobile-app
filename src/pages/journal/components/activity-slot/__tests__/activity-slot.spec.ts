@@ -32,10 +32,6 @@ describe('ActivitySlotComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('formatActivityCode', () => {
       beforeEach(() => {
         component.slot = {};

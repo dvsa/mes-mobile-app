@@ -33,12 +33,6 @@ describe('EndTestModal', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should call onContinue when the Continue to debrief button is clicked', () => {
       fixture.detectChanges();

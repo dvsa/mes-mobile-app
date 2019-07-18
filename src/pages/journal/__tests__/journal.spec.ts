@@ -79,11 +79,6 @@ describe('JournalPage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('logout', () => {
       it('should dispatch an UnloadJournal action and call base page logout', () => {
         spyOn(BasePageComponent.prototype, 'logout');

@@ -44,10 +44,6 @@ describe('LegalRequirementsModal', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('getLegalRequirementsText', () => {
       it('should return an array of length 6', () => {
         const legalRequirements = component.getLegalRequirementsText();

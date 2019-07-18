@@ -50,9 +50,6 @@ describe('ToolbarComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
     describe('togglRemoveFaultMode', () => {
       it('should dispatch a TOGGLE_REMOVE_FAULT_MODE action', () => {
         component.toggleRemoveFaultMode();

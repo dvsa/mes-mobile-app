@@ -17,12 +17,6 @@ describe('ProgressiveAccessComponent', () => {
     });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     describe('Welsh language indicator description', () => {
       it('should render text when the language is Welsh', () => {

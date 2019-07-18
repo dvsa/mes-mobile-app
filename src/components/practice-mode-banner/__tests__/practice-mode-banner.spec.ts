@@ -25,10 +25,6 @@ describe('PracticeModeBanner', () => {
       });
   }));
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
     describe('exitPracticeMode', () => {
       it('should take the user back to the root page', () => {
         component.exitPracticeMode();

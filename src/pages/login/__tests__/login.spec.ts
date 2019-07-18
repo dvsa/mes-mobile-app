@@ -93,9 +93,6 @@ describe('LoginPage', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
 
     it('should login successfully', fakeAsync(() => {
       component.platform.ready =

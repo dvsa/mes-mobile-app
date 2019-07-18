@@ -19,12 +19,6 @@ describe('VehicleDetailsComponent', () => {
     });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should show vehicle details when showDimensions is true', () => {
       component.showDimensions = true;

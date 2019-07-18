@@ -41,10 +41,6 @@ describe('Eco component', () => {
   }));
 
   describe('Class', () => {
-    it('should compile', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('Record that Eco has been assessed', () => {
       it('should dispatch a TOGGLE_ECO action', () => {
         component.toggleEco();

@@ -24,10 +24,6 @@ describe('PracticeEndToEndCard ', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('navigateToFakeJournal', () => {
       it('should trigger navigation to Fake Journal', () => {
         component.navigateToFakeJournal();
@@ -37,7 +33,4 @@ describe('PracticeEndToEndCard ', () => {
     });
   });
 
-  describe('DOM', () => {
-
-  });
 });

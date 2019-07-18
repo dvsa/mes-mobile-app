@@ -47,12 +47,6 @@ describe('ManoeuvresComponent', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     describe('Button', () => {
       it('should show provided label', () => {

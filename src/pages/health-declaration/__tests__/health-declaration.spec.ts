@@ -108,109 +108,104 @@ describe('HealthDeclarationPage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
+    describe('ionViewDidEnter', () => {
+      it('should dispatch HealthDeclarationViewDidEnter', () => {
+        component.ionViewDidEnter();
+        expect(store$.dispatch).toHaveBeenCalledWith(new HealthDeclarationViewDidEnter());
+      });
+      describe('clickBack', () => {
+        it('should should trigger the lock screen', () => {
+          component.clickBack();
+          expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+        });
+      });
 
-  describe('ionViewDidEnter', () => {
-    it('should dispatch HealthDeclarationViewDidEnter', () => {
-      component.ionViewDidEnter();
-      expect(store$.dispatch).toHaveBeenCalledWith(new HealthDeclarationViewDidEnter());
-    });
-    describe('clickBack', () => {
-      it('should should trigger the lock screen', () => {
-        component.clickBack();
-        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+      describe('Declaration Validation', () => {
+        it('form should only be valid when all fields are set', () => {
+          const form = component.form;
+          form.get('healthCheckboxCtrl').setValue(true);
+          expect(form.get('healthCheckboxCtrl').status).toEqual('VALID');
+          form.get('receiptCheckboxCtrl').setValue(true);
+          expect(form.get('receiptCheckboxCtrl').status).toEqual('VALID');
+          expect(form.valid).toEqual(false);
+          form.get('signatureAreaCtrl').setValue('any date you like.');
+          expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
+          expect(form.valid).toEqual(true);
+        });
+      });
+      describe('healthDeclarationChanged', () => {
+        it('should dispatch a ToggleHealthDeclaration action', () => {
+          component.healthDeclarationChanged();
+          expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ToggleHealthDeclaration());
+        });
+      });
+      describe('receiptDeclarationChanged', () => {
+        it('should dispatch a ToggleReceiptDeclaration action', () => {
+          component.receiptDeclarationChanged();
+          expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ToggleReceiptDeclaration());
+        });
+      });
+
+      describe('persistAndNavigate', () => {
+        it('should dispatch a ProvisionalLicenseNotReceived if passed true and licenseProvided is true', () => {
+          component.licenseProvided = true;
+          component.persistAndNavigate(true);
+          expect(store$.dispatch).not.toHaveBeenCalledWith(new passCompletionActions.ProvisionalLicenseNotReceived());
+        });
       });
     });
-
-    describe('Declaration Validation', () => {
-      it('form should only be valid when all fields are set', () => {
+    describe('onSubmit', () => {
+      it('should call the persist and navigate method if all fields set', fakeAsync(() => {
+        spyOn(component, 'persistAndNavigate');
         const form = component.form;
-        form.get('healthCheckboxCtrl').setValue(true);
-        expect(form.get('healthCheckboxCtrl').status).toEqual('VALID');
-        form.get('receiptCheckboxCtrl').setValue(true);
-        expect(form.get('receiptCheckboxCtrl').status).toEqual('VALID');
-        expect(form.valid).toEqual(false);
-        form.get('signatureAreaCtrl').setValue('any date you like.');
-        expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
+        fixture.detectChanges();
+        component.pageState.healthDeclarationAccepted$ = of(true);
+        component.pageState.passCertificateNumberReceived$ = of(true);
+        component.pageState.signature$ = of('sig');
+        component.rehydrateFields();
+        component.healthDeclarationAccepted = true;
+        component.onSubmit();
+        fixture.detectChanges();
         expect(form.valid).toEqual(true);
-      });
+        expect(component.persistAndNavigate).toHaveBeenCalled();
+      }));
+
+      it('should show the confirmation modal if health checkbox not set', fakeAsync(() => {
+        spyOn(component, 'showConfirmHealthDeclarationModal');
+        const form = component.form;
+        fixture.detectChanges();
+        component.pageState.healthDeclarationAccepted$ = of(false);
+        component.pageState.passCertificateNumberReceived$ = of(true);
+        component.pageState.signature$ = of('sig');
+        component.rehydrateFields();
+        component.onSubmit();
+        fixture.detectChanges();
+        expect(form.valid).toEqual(true);
+        expect(component.showConfirmHealthDeclarationModal).toHaveBeenCalled();
+      }));
+
     });
-    describe('healthDeclarationChanged', () => {
-      it('should dispatch a ToggleHealthDeclaration action', () => {
-        component.healthDeclarationChanged();
-        expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ToggleHealthDeclaration());
+    describe('rehydrateFields', () => {
+      it('should set the field values from the page state', () => {
+        const form = component.form;
+
+        form.get('healthCheckboxCtrl').setValue(null);
+        form.get('receiptCheckboxCtrl').setValue(null);
+        form.get('signatureAreaCtrl').setValue(null);
+
+        fixture.detectChanges();
+
+        component.pageState.healthDeclarationAccepted$ = of(true);
+        component.pageState.passCertificateNumberReceived$ = of(true);
+        component.pageState.signature$ = of('abc123');
+
+        component.rehydrateFields();
+        fixture.detectChanges();
+
+        expect(form.get('healthCheckboxCtrl').value).toEqual(true);
+        expect(form.get('receiptCheckboxCtrl').value).toEqual(true);
+        expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
       });
-    });
-    describe('receiptDeclarationChanged', () => {
-      it('should dispatch a ToggleReceiptDeclaration action', () => {
-        component.receiptDeclarationChanged();
-        expect(store$.dispatch).toHaveBeenCalledWith(new postTestDeclarationsActions.ToggleReceiptDeclaration());
-      });
-    });
-
-    describe('persistAndNavigate', () => {
-      it('should dispatch a ProvisionalLicenseNotReceived if passed true and licenseProvided is true', () => {
-        component.licenseProvided = true;
-        component.persistAndNavigate(true);
-        expect(store$.dispatch).not.toHaveBeenCalledWith(new passCompletionActions.ProvisionalLicenseNotReceived());
-      });
-    });
-  });
-  describe('onSubmit', () => {
-    it('should call the persist and navigate method if all fields set', fakeAsync(() => {
-      spyOn(component, 'persistAndNavigate');
-      const form = component.form;
-      fixture.detectChanges();
-      component.pageState.healthDeclarationAccepted$ = of(true);
-      component.pageState.passCertificateNumberReceived$ = of(true);
-      component.pageState.signature$ = of('sig');
-      component.rehydrateFields();
-      component.healthDeclarationAccepted = true;
-      component.onSubmit();
-      fixture.detectChanges();
-      expect(form.valid).toEqual(true);
-      expect(component.persistAndNavigate).toHaveBeenCalled();
-    }));
-
-    it('should show the confirmation modal if health checkbox not set', fakeAsync(() => {
-      spyOn(component, 'showConfirmHealthDeclarationModal');
-      const form = component.form;
-      fixture.detectChanges();
-      component.pageState.healthDeclarationAccepted$ = of(false);
-      component.pageState.passCertificateNumberReceived$ = of(true);
-      component.pageState.signature$ = of('sig');
-      component.rehydrateFields();
-      component.onSubmit();
-      fixture.detectChanges();
-      expect(form.valid).toEqual(true);
-      expect(component.showConfirmHealthDeclarationModal).toHaveBeenCalled();
-    }));
-
-  });
-  describe('rehydrateFields', () => {
-    it('should set the field values from the page state', () => {
-      const form = component.form;
-
-      form.get('healthCheckboxCtrl').setValue(null);
-      form.get('receiptCheckboxCtrl').setValue(null);
-      form.get('signatureAreaCtrl').setValue(null);
-
-      fixture.detectChanges();
-
-      component.pageState.healthDeclarationAccepted$ = of(true);
-      component.pageState.passCertificateNumberReceived$ = of(true);
-      component.pageState.signature$ = of('abc123');
-
-      component.rehydrateFields();
-      fixture.detectChanges();
-
-      expect(form.get('healthCheckboxCtrl').value).toEqual(true);
-      expect(form.get('receiptCheckboxCtrl').value).toEqual(true);
-      expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
     });
   });
 
