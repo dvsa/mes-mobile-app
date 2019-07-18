@@ -34,6 +34,7 @@ import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { TranslateService, TranslateModule } from 'ng2-translate';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
+import { PrivacyNoticeComponent } from '../components/privacy-notice/privacy-notice';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -71,6 +72,7 @@ describe('CommunicationPage', () => {
         ProvidedEmailComponent,
         NewEmailComponent,
         MockComponent(PostalAddressComponent),
+        MockComponent(PrivacyNoticeComponent),
       ],
       imports: [
         IonicModule,

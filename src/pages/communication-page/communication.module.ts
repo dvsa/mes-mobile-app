@@ -9,6 +9,7 @@ import { PostalAddressComponent } from './components/postal-address/postal-addre
 import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { CommunicationAnalyticsEffects } from './communication.analytics.effects';
+import { PrivacyNoticeComponent } from './components/privacy-notice/privacy-notice';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CommunicationAnalyticsEffects } from './communication.analytics.effects
     ProvidedEmailComponent,
     NewEmailComponent,
     PostalAddressComponent,
+    PrivacyNoticeComponent,
   ],
   imports: [
     IonicPageModule.forChild(CommunicationPage),
