@@ -132,7 +132,7 @@
                     <span class="mes-data">{{dangerousFault.competencyDisplayName}}</span>
                   </ion-col>
                 </ion-row>
-                <ion-row>
+                <ion-row *ngIf="dangerousFault.comment">
                   <ion-col>
                     <span class="mes-data">- {{dangerousFault.comment}}</span>
                   </ion-col>
@@ -142,7 +142,7 @@
             <ion-row *ngIf="data.seriousFaults.length !== 0">
               <ion-col><span class='mes-data bold'>{{data.seriousFaults.length}} serious faults</span></ion-col>
             </ion-row>
-            <ion-row *ngFor="let seriousFault of data.seriousFaults">
+            <ion-row *ngFor="let seriousFault of data.seriousFaults" >
               <ion-col col-7>
                 <div class="badge-container">
                   <serious-fault-badge [showBadge]="true"></serious-fault-badge>
@@ -154,7 +154,7 @@
                     <span class="mes-data">{{seriousFault.competencyDisplayName}}</span>
                   </ion-col>
                 </ion-row>
-                <ion-row>
+                <ion-row *ngIf="seriousFault.comment">
                   <ion-col>
                     <span class="mes-data">- {{seriousFault.comment}}</span>
                   </ion-col>

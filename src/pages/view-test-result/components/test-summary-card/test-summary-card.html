@@ -34,6 +34,7 @@
           <label>Route number</label>
         </ion-col>
         <ion-col col-56>
+          <span class="mes-data" *ngIf="!data.routeNumber">None</span>
           <span class="mes-data">{{ data.routeNumber }}</span>
         </ion-col>
       </ion-row>
@@ -42,6 +43,7 @@
           <label>Independent driving</label>
         </ion-col>
         <ion-col col-56>
+            <span class="mes-data" *ngIf="!data.independentDriving">None</span>
           <span class="mes-data">{{ data.independentDriving }}</span>
         </ion-col>
       </ion-row>
@@ -50,6 +52,7 @@
           <label>Physical description of candidate</label>
         </ion-col>
         <ion-col col-56>
+          <span class="mes-data" *ngIf="!data.candidateDescription">None</span>
           <span class="mes-data">{{ data.candidateDescription }}</span>
         </ion-col>
       </ion-row>
@@ -66,7 +69,7 @@
           <label>Weather conditions</label>
         </ion-col>
         <ion-col col-56>
-          <span class="mes-data" *ngIf="data.weatherConditions.length === 0">None Selected</span>
+          <span class="mes-data" *ngIf="data.weatherConditions.length === 0">None</span>
           <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
         </ion-col>
       </ion-row>
