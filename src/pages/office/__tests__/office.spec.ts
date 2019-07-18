@@ -51,7 +51,10 @@ import { AdditionalInformationComponent } from '../components/additional-informa
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
 import { FaultCommentCardComponent } from '../components/fault-comment-card/fault-comment-card';
-import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../shared/models/fault-marking.model';
+import {
+  CommentedCompetency,
+  MultiFaultAssignableCompetency,
+} from '../../../shared/models/fault-marking.model';
 import { ActivityCodeComponent } from '../components/activity-code/activity-code';
 import {
   ActivityCodeModel,

@@ -659,7 +659,6 @@ export class OfficePage extends PracticeableBasePageComponent {
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
     }
-
   }
 
   drivingFaultCommentChanged(drivingFaultComment: CommentedCompetency) {

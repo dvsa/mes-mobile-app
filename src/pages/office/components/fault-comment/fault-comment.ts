@@ -53,6 +53,7 @@ export class FaultCommentComponent implements OnChanges {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {
       this.parentForm.get(this.formControlName).setValidators(Validators.required);
+      this.parentForm.get(this.formControlName).setValidators(Validators.maxLength(1000));
     }
     this.parentForm.get(this.formControlName).patchValue(this.faultComment.comment);
   }
@@ -72,6 +73,9 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   faultCommentChanged(newComment: string): void {
+    if (newComment.length > 1000) {
+      return;
+    }
     const { comment, ...commentedCompetencyWithoutComment } = this.faultComment;
     const commentedCompetency: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency) = {
       comment: newComment,
