@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 
-import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, catchError, withLatestFrom, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -50,11 +50,13 @@ export class LogsEffects {
   @Effect()
   persistLogEffect$ = this.actions$.pipe(
     ofType(logsActions.PERSIST_LOG),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getLogsState),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getLogsState),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, logs]) => {
       this.saveLogs(logs);
       return of();
@@ -90,11 +92,13 @@ export class LogsEffects {
   @Effect()
   sendLogsEffect$ = this.actions$.pipe(
     ofType(logsActions.SEND_LOGS),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getLogsState),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getLogsState),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, logs]) => {
       if (this.networkStateProvider.getNetworkState() === ConnectionStatus.OFFLINE) {
         return of();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, filter, map, withLatestFrom } from 'rxjs/operators';
+import { switchMap, catchError, filter, map, withLatestFrom, concatMap } from 'rxjs/operators';
 import { TestPersistenceProvider } from '../../providers/test-persistence/test-persistence';
 import { from } from 'rxjs/observable/from';
 import * as testActions from './tests.actions';
@@ -37,12 +37,14 @@ export class TestsEffects {
   @Effect({ dispatch: false })
   persistTestsEffect$ = this.actions$.pipe(
     ofType(testActions.PERSIST_TESTS),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(isPracticeMode),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(isPracticeMode),
+        ),
       ),
-    ),
+    )),
     filter(([action, isPracticeMode]) => !isPracticeMode),
     switchMap(() => this.testPersistenceProvider.persistAllTests()),
     catchError((err) => {
@@ -93,11 +95,13 @@ export class TestsEffects {
   @Effect()
   sendCompletedTestsEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_COMPLETED_TESTS),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
       ),
-    ),
+    )),
     filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE),
     switchMap(([action, tests]) => {
 
@@ -146,12 +150,14 @@ export class TestsEffects {
   @Effect()
   setTestStatusCompletedEffect$ = this.actions$.pipe(
     ofType(testStatusActions.SET_TEST_STATUS_COMPLETED),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+        ),
       ),
-    ),
+    )),
     map(([action, currentTest]) => {
       return new testActions.SendCompletedTests();
     }),

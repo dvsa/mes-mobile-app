@@ -34,11 +34,13 @@ export class TestsAnalyticsEffects {
   @Effect()
   setTestStatusSubmittedEffect$ = this.actions$.pipe(
     ofType(SET_TEST_STATUS_SUBMITTED),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
       ),
-    ),
+    )),
     concatMap(([action, tests]: [SetTestStatusSubmitted, TestsModel]) => {
       const test = getTestById(tests, action.slotId);
       const isTestPassed = isPassed(test);

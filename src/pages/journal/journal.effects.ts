@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith, tap } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, startWith, tap, concatMap }
+  from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
@@ -179,16 +180,18 @@ export class JournalEffects {
   @Effect()
   startTestEffect$ = this.actions$.pipe(
     ofType(journalActions.START_TEST),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        map(getSlotsOnSelectedDate),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getJournalState),
+          map(getSlotsOnSelectedDate),
+        ),
+        this.store$.pipe(
+          select(getJournalState),
+          map(journal => journal.examiner),
+        ),
       ),
-      this.store$.pipe(
-        select(getJournalState),
-        map(journal => journal.examiner),
-      ),
-    ),
+    )),
     switchMap(([action, slots, examiner]) => {
       const startTestAction = action as journalActions.StartTest;
       const slotData = slots.map(slot => slot.slotData);
@@ -217,16 +220,18 @@ export class JournalEffects {
   @Effect()
   selectPreviousDayEffect$ = this.actions$.pipe(
     ofType(journalActions.SELECT_PREVIOUS_DAY),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        map(getSelectedDate),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getJournalState),
+          map(getSelectedDate),
+        ),
+        this.store$.pipe(
+          select(getJournalState),
+          map(journal => canNavigateToPreviousDay(journal, this.dateTimeProvider.now())),
+        ),
       ),
-      this.store$.pipe(
-        select(getJournalState),
-        map(journal => canNavigateToPreviousDay(journal, this.dateTimeProvider.now())),
-      ),
-    ),
+    )),
     filter(([action, selectedDate, canNavigateToPreviousDay]) => canNavigateToPreviousDay),
     switchMap(([action, selectedDate, canNavigateToPreviousDay]) => {
       const previousDay = DateTime.at(selectedDate).add(-1, Duration.DAY).format('YYYY-MM-DD');
@@ -241,16 +246,18 @@ export class JournalEffects {
   @Effect()
   selectNextDayEffect$ = this.actions$.pipe(
     ofType(journalActions.SELECT_NEXT_DAY),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getJournalState),
-        map(getSelectedDate),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getJournalState),
+          map(getSelectedDate),
+        ),
+        this.store$.pipe(
+          select(getJournalState),
+          map(canNavigateToNextDay),
+        ),
       ),
-      this.store$.pipe(
-        select(getJournalState),
-        map(canNavigateToNextDay),
-      ),
-    ),
+    )),
     filter(([action, selectedDate, canNavigateToNextDay]) => canNavigateToNextDay),
     switchMap(([action, selectedDate, canNavigateToNextDay]) => {
       const nextDay = DateTime.at(selectedDate).add(1, Duration.DAY).format('YYYY-MM-DD');

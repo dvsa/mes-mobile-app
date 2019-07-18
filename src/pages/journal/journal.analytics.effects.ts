@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   JOURNAL_VIEW_DID_ENTER,
@@ -126,11 +126,13 @@ export class JournalAnalyticsEffects {
   @Effect()
   resumingWriteUpEffect$ = this.actions$.pipe(
     ofType(RESUMING_WRITE_UP),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, tests]) => {
       const setTestStatusSubmittedAction = action as ResumingWriteUp;
       const test = getTestById(tests, setTestStatusSubmittedAction.slotId);
