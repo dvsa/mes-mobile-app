@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 
 import * as waitingRoomActions from './waiting-room.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
@@ -9,6 +9,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class WaitingRoomEffects {
@@ -20,12 +21,14 @@ export class WaitingRoomEffects {
   @Effect()
   submitWaitingRoomInfoEffect$ = this.actions$.pipe(
     ofType(waitingRoomActions.SUBMIT_WAITING_ROOM_INFO),
-    withLatestFrom(
-      this.store$.pipe(
-        select(getTests),
-        select(getCurrentTestSlotId),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
       ),
-    ),
+    )),
     switchMap(([action, slotId]) => {
       return [
         new testStatusActions.SetTestStatusStarted(slotId),
