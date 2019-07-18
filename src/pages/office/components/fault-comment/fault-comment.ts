@@ -73,6 +73,9 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   faultCommentChanged(newComment: string): void {
+    if (newComment.length > 1000) {
+      return;
+    }
     const { comment, ...commentedCompetencyWithoutComment } = this.faultComment;
     const commentedCompetency: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency) = {
       comment: newComment,

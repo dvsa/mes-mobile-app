@@ -48,6 +48,9 @@ export class CandidateDescriptionComponent implements OnChanges {
   }
 
   candidateDescriptionChanged(candidateDescription: string): void {
+    if (candidateDescription.length > 1000) {
+      return;
+    }
     this.candidateDescriptionChange.emit(candidateDescription);
   }
 
