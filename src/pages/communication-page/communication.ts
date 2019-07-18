@@ -22,7 +22,7 @@ import {
   getPostalAddress,
 } from '../../modules/tests/candidate/candidate.selector';
 import {
-  CommunicationViewDidEnter,
+  CommunicationViewDidEnter, CommunicationValidationError,
 } from './communication.actions';
 import { map, take } from 'rxjs/operators';
 import {
@@ -228,6 +228,12 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.navController.push(WAITING_ROOM_PAGE);
+    } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          this.store$.dispatch(new CommunicationValidationError(`${controlName} is blank`));
+        }
+      });
     }
   }
 

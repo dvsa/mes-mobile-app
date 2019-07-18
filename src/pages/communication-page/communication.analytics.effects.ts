@@ -4,11 +4,13 @@ import { of } from 'rxjs/observable/of';
 import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
-  AnalyticsScreenNames, AnalyticsDimensionIndices,
+  AnalyticsScreenNames, AnalyticsDimensionIndices, AnalyticsErrorTypes,
 } from '../../providers/analytics/analytics.model';
 import {
   COMMUNICATION_VIEW_DID_ENTER,
   CommunicationViewDidEnter,
+  COMMUNICATION_VALIDATION_ERROR,
+  CommunicationValidationError,
 } from './communication.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
@@ -58,6 +60,24 @@ export class CommunicationAnalyticsEffects {
       this.analytics.setCurrentPage(
         formatAnalyticsText(AnalyticsScreenNames.COMMUNICATION, tests),
       );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  communicationValidationError$ = this.actions$.pipe(
+    ofType(COMMUNICATION_VALIDATION_ERROR),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [CommunicationValidationError, TestsModel]) => {
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.COMMUNICATION, tests);
+      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
+        action.errorMessage);
       return of(new AnalyticRecorded());
     }),
   );

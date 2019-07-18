@@ -10,6 +10,7 @@ import {
   AnalyticsDimensionIndices,
   AnalyticsScreenNames,
   AnalyticsEventCategories,
+  AnalyticsErrorTypes,
 } from '../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Candidate } from '@dvsa/mes-journal-schema';
@@ -89,6 +90,40 @@ describe('Communication Analytics Effects', () => {
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenNamePracticeMode);
+        done();
+      });
+    });
+
+  });
+
+  describe('communicationValidationError', () => {
+    it('should call logError', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      // ACT
+      actions$.next(new communicationActions.CommunicationValidationError('formControl1'));
+      // ASSERT
+      effects.communicationValidationError$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
+          'formControl1');
+        done();
+      });
+    });
+    it('should call logError, prefixed with practice mode', (done) => {
+      // ARRANGE
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      // ACT
+      actions$.next(new communicationActions.CommunicationValidationError('formControl1'));
+      // ASSERT
+      effects.communicationValidationError$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logError)
+          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeMode})`,
+          'formControl1');
         done();
       });
     });
