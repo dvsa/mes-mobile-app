@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OverlayCallback } from '../../test-report';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -13,7 +13,7 @@ import { CompetencyOutcome } from '../../../../shared/models/competency-outcome'
   selector: 'manoeuvres',
   templateUrl: 'manoeuvres.html',
 })
-export class ManoeuvresComponent implements OnInit, OnDestroy {
+export class ManoeuvresComponent implements OnInit {
 
   @Input()
   controlLabel: String;
@@ -50,7 +50,7 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

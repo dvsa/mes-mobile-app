@@ -209,23 +209,21 @@ export class DebriefPage extends PracticeableBasePageComponent {
     }
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
   ionViewDidEnter(): void {
     this.store$.dispatch(new DebriefViewDidEnter());
   }
 
   ionViewDidLeave(): void {
+    super.ionViewDidLeave();
     if (this.isTestReportPracticeMode) {
       if (super.isIos()) {
         this.screenOrientation.unlock();
         this.insomnia.allowSleepAgain();
       }
+    }
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 

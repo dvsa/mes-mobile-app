@@ -107,12 +107,12 @@ export class CompetencyComponent {
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
     )
-    .pipe(tap(this.canButtonRipple));
+      .pipe(tap(this.canButtonRipple));
 
     this.subscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

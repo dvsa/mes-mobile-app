@@ -157,9 +157,11 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.inputSubscriptions) {
+      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    }
   }
 
   ionViewDidEnter(): void {

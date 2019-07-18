@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -43,7 +43,7 @@ import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-
   selector: 'page-view-test-result',
   templateUrl: 'view-test-result.html',
 })
-export class ViewTestResultPage extends BasePageComponent implements OnInit, OnDestroy {
+export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
 
@@ -86,7 +86,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ).subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -211,7 +211,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     };
   }
 
-  getManoeuvres() : string [] {
+  getManoeuvres(): string[] {
     const manoeuvres = [];
 
     if (get(this.testResult, 'testData.manoeuvres.forwardPark.selected')) {
@@ -234,7 +234,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return manoeuvres;
   }
 
-  getETA() : string [] {
+  getETA(): string[] {
     const eta: string[] = [];
 
     if (get(this.testResult, 'testData.ETA.physical')) {
@@ -249,14 +249,14 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return eta;
   }
 
-  getShowMeQuestion() : ShowMeQuestion {
+  getShowMeQuestion(): ShowMeQuestion {
     const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
     return showMeQuestionConstants.find(question => question.code === showMeQuestionCode);
   }
 
   getTellMeQuestion(): TellMeQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
-    return tellMeQuestionConstants.find(question => question.code ===  tellMeQuestionCode);
+    return tellMeQuestionConstants.find(question => question.code === tellMeQuestionCode);
   }
 
   getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
@@ -306,7 +306,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
   }
 
   updateVehicleChecksLabel(vehicleCheck: CommentedCompetency & MultiFaultAssignableCompetency)
-  : (CommentedCompetency & MultiFaultAssignableCompetency) {
+    : (CommentedCompetency & MultiFaultAssignableCompetency) {
     return {
       faultCount: vehicleCheck.faultCount,
       competencyDisplayName: 'Vehicle checks',

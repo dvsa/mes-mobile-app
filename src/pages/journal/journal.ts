@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import {
   IonicPage, Loading, LoadingController, NavController,
   NavParams, Platform, Refresher, Toast, ToastController,
@@ -45,7 +45,7 @@ interface JournalPageState {
   templateUrl: 'journal.html',
 })
 
-export class JournalPage extends BasePageComponent implements OnInit, OnDestroy {
+export class JournalPage extends BasePageComponent implements OnInit {
 
   @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
 
@@ -126,9 +126,11 @@ export class JournalPage extends BasePageComponent implements OnInit, OnDestroy 
     this.subscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     // Using .merge helps with unsubscribing
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   ionViewWillEnter() {

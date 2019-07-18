@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -27,7 +27,7 @@ interface VehicleChecksCardComponentState {
   selector: 'vehicle-checks-card',
   templateUrl: 'vehicle-checks-card.html',
 })
-export class VehicleChecksCardComponent implements OnInit, OnDestroy {
+export class VehicleChecksCardComponent implements OnInit {
 
   componentState: VehicleChecksCardComponentState;
   hasFault: boolean = false;
@@ -65,7 +65,7 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

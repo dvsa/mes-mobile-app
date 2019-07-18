@@ -50,7 +50,7 @@ export class ControlledStopComponent implements OnInit {
   selectedControlledStop: boolean = false;
   controlledStopOutcome: CompetencyOutcome;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
     const currentTest$ = this.store$.pipe(
@@ -98,7 +98,7 @@ export class ControlledStopComponent implements OnInit {
 
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

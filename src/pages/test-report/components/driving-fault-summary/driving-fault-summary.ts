@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
@@ -16,13 +16,13 @@ interface DrivingFaultSummaryState {
   selector: 'driving-fault-summary',
   templateUrl: 'driving-fault-summary.html',
 })
-export class DrivingFaultSummaryComponent implements OnInit, OnDestroy {
+export class DrivingFaultSummaryComponent implements OnInit {
 
   componentState: DrivingFaultSummaryState;
   subscription: Subscription;
 
   constructor(
-    private store$: Store<StoreModel>) {}
+    private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
     this.componentState = {
@@ -39,8 +39,10 @@ export class DrivingFaultSummaryComponent implements OnInit, OnDestroy {
     this.subscription = count$.subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

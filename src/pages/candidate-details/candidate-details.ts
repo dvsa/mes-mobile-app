@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -38,7 +38,7 @@ interface CandidateDetailsPageState {
   selector: 'page-candidate-details',
   templateUrl: 'candidate-details.html',
 })
-export class CandidateDetailsPage extends BasePageComponent implements OnInit, OnDestroy {
+export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   pageState: CandidateDetailsPageState;
   subscription: Subscription;
   slotId: number;
@@ -105,8 +105,11 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
     }
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   ionViewDidEnter(): void {

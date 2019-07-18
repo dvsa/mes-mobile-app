@@ -211,9 +211,11 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     this.restoreRadioValidators();
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.subscription.unsubscribe();
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   configureI18N(isWelsh: boolean): void {

@@ -35,7 +35,7 @@ export class EcoComponent implements OnInit {
 
   constructor(
     private store$: Store<StoreModel>,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -69,7 +69,7 @@ export class EcoComponent implements OnInit {
     this.subscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

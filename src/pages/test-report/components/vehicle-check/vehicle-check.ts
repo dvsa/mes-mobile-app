@@ -39,7 +39,7 @@ export class VehicleCheckComponent implements OnInit {
 
   subscription: Subscription;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
 
@@ -80,7 +80,7 @@ export class VehicleCheckComponent implements OnInit {
     this.subscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

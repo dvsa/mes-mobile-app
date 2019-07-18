@@ -296,10 +296,15 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.subscription.unsubscribe();
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (this.inputSubscriptions) {
+      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    }
   }
 
 }

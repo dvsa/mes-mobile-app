@@ -209,8 +209,8 @@ export class TestReportPage extends PracticeableBasePageComponent {
     this.displayOverlay = !this.displayOverlay;
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -239,10 +239,10 @@ export class TestReportPage extends PracticeableBasePageComponent {
     return this.isRemoveFaultMode
       ? 'remove-mode'
       : this.isSeriousMode
-      ? 'serious-mode'
-      : this.isDangerousMode
-      ? 'dangerous-mode'
-      : '';
+        ? 'serious-mode'
+        : this.isDangerousMode
+          ? 'dangerous-mode'
+          : '';
   }
 
   onModalDismiss = (event: ModalEvent): void => {

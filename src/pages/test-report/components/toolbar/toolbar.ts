@@ -57,11 +57,12 @@ export class ToolbarComponent {
     this.subscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
+
   toggleRemoveFaultMode(): void {
     this.store$.dispatch(new ToggleRemoveFaultMode());
   }
