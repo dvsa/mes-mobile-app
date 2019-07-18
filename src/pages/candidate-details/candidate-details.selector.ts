@@ -104,5 +104,5 @@ export const processSpecialNeeds = (slot: any): string | string[] => {
 
 export const getBusiness = (slot: any) => slot.booking.business;
 
-export const getApplicationRef = (application: Application) : string =>
+export const getApplicationRef = (application: Application): string =>
   `${application.applicationId}${application.bookingSequence}${application.checkDigit}`;

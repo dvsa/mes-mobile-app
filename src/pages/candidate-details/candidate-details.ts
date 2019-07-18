@@ -11,7 +11,10 @@ import { StoreModel } from '../../shared/models/store.model';
 import { TestCategory } from '../../shared/models/test-category';
 import { getJournalState } from '../journal/journal.reducer';
 import { Details } from './candidate-details.model';
-import { ClearChangedSlot } from '../journal/journal.actions';
+import {
+  ClearChangedSlot,
+  CandidateDetailsSeen,
+} from '../journal/journal.actions';
 import {
   getSlotById,
   getSlots,
@@ -25,12 +28,14 @@ import {
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
 import { Business } from '@dvsa/mes-journal-schema';
+import { getCheckComplete } from '../journal/journal.selector';
 
 interface CandidateDetailsPageState {
   name$: Observable<string>;
   time$: Observable<string>;
   details$: Observable<Details>;
   business$: Observable<Business>;
+  checkComplete$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -58,7 +63,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
   }
 
   ngOnInit(): void {
-
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
 
     this.pageState = {
@@ -86,6 +90,10 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
         map(slots => getSlotById(slots, this.slotId)),
         select(getBusiness),
       ),
+      checkComplete$: this.store$.pipe(
+        select(getJournalState),
+        map(journalData => getCheckComplete(journalData, this.slotId)),
+      ),
     };
 
     const { name$, time$, details$, business$ } = this.pageState;
@@ -104,6 +112,14 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit, O
       this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
     }
     this.store$.dispatch(new ClearChangedSlot(this.slotId));
+    this.pageState.checkComplete$.subscribe(
+      (result) => {
+        if (!result) {
+          this.store$.dispatch(new CandidateDetailsSeen(this.slotId));
+        }
+      },
+    );
+
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

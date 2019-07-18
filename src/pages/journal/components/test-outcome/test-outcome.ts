@@ -1,23 +1,31 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StartTest, ActivateTest, ResumingWriteUp } from '../../journal.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions';
 import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
-import { COMMUNICATION_PAGE, OFFICE_PAGE, PASS_FINALISATION_PAGE } from '../../../page-names.constants';
+import {
+  COMMUNICATION_PAGE,
+  OFFICE_PAGE,
+  PASS_FINALISATION_PAGE,
+  JOURNAL_FORCE_CHECK_MODAL,
+} from '../../../page-names.constants';
 import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { getCheckComplete } from '../../journal.selector';
+import { getJournalState } from '../../journal.reducer';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'test-outcome',
   templateUrl: 'test-outcome.html',
 })
-export class TestOutcomeComponent {
+export class TestOutcomeComponent implements OnInit {
 
   @Input()
   slotDetail: SlotDetail;
@@ -31,14 +39,30 @@ export class TestOutcomeComponent {
   @Input()
   activityCode: ActivityCode;
 
+  @Input()
+  specialRequirements: boolean;
+
   modal: Modal;
   isRekey: boolean = false;
+
+  candidateDetailsViewed: boolean;
 
   constructor(
     private store$: Store<StoreModel>,
     public navController: NavController,
     private modalController: ModalController,
   ) { }
+
+  ngOnInit() {
+    const seenCandidateDetails$ = this.store$.pipe(
+      select(getJournalState),
+      map(journalData => getCheckComplete(journalData, this.slotDetail.slotId)),
+    );
+    seenCandidateDetails$.subscribe(
+      (candidateDetails) => {
+        this.candidateDetailsViewed = candidateDetails;
+      });
+  }
 
   showOutcome(): boolean {
     return [TestStatus.Completed, TestStatus.Submitted].includes(this.testStatus);
@@ -106,6 +130,13 @@ export class TestOutcomeComponent {
     this.modal.present();
   }
 
+  displayForceCheckModal = (): void => {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create(JOURNAL_FORCE_CHECK_MODAL, {}, options);
+    this.modal.onDidDismiss(this.onModalDismiss);
+    this.modal.present();
+  }
+
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.START:
@@ -123,11 +154,15 @@ export class TestOutcomeComponent {
   }
 
   clickStartOrResumeTest() {
+    if (this.specialRequirements && !this.candidateDetailsViewed) {
+      this.displayForceCheckModal();
+      return;
+    }
     if (this.shouldDisplayRekeyModal() && !this.isE2EPracticeMode()) {
       this.displayRekeyModal();
-    } else {
-      this.startOrResumeTestDependingOnStatus();
+      return;
     }
+    this.startOrResumeTestDependingOnStatus();
   }
 
   isE2EPracticeMode(): boolean {
