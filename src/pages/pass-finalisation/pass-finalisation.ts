@@ -151,15 +151,22 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
         }),
       ),
     };
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
-    ];
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  ionViewWillEnter(): boolean {
+    this.inputSubscriptions = [
+      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
+    ];
+
+    return true;
+  }
+
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.inputSubscriptions) {
+      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    }
   }
 
   ionViewDidEnter(): void {

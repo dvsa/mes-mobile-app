@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
@@ -50,7 +50,7 @@ interface WaitingRoomPageState {
   selector: 'page-waiting-room',
   templateUrl: 'waiting-room.html',
 })
-export class WaitingRoomPage extends PracticeableBasePageComponent implements OnInit, OnDestroy {
+export class WaitingRoomPage extends PracticeableBasePageComponent implements OnInit {
 
   static readonly welshLanguage: string = 'Cymraeg';
 
@@ -68,6 +68,10 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   isBookedInWelsh: boolean;
 
   conductedLanguage: string;
+
+  inputSubscriptions: Subscription[] = [];
+
+  merged$: Observable<boolean | string>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -145,33 +149,52 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
     this.rehydrateFields();
 
     const { welshTest$, conductedLanguage$ } = this.pageState;
-    const merged$ = merge(
+    this.merged$ = merge(
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
-      );
+    );
 
     this.configureI18N(this.conductedLanguage === WaitingRoomPage.welshLanguage);
-    this.subscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.subscription.unsubscribe();
+  ionViewWillEnter(): boolean {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+
+    return true;
+  }
+
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (this.inputSubscriptions) {
+      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    }
   }
 
   rehydrateFields(): void {
-    this.pageState.insuranceDeclarationAccepted$
-      .subscribe((val) => {
-        this.form.controls['insuranceCheckboxCtrl'].setValue(val);
-      });
-    this.pageState.residencyDeclarationAccepted$
-      .subscribe((val) => {
-        this.form.controls['residencyCheckboxCtrl'].setValue(val);
-      });
-    this.pageState.signature$
-      .subscribe((val) => {
-        this.form.controls['signatureAreaCtrl'].setValue(val);
-      });
+    this.inputSubscriptions.push(
+      this.pageState.insuranceDeclarationAccepted$
+        .subscribe((val) => {
+          this.form.controls['insuranceCheckboxCtrl'].setValue(val);
+        }),
+    );
+    this.inputSubscriptions.push(
+      this.pageState.residencyDeclarationAccepted$
+        .subscribe((val) => {
+          this.form.controls['residencyCheckboxCtrl'].setValue(val);
+        }),
+    );
+    this.inputSubscriptions.push(
+      this.pageState.signature$
+        .subscribe((val) => {
+          this.form.controls['signatureAreaCtrl'].setValue(val);
+        }),
+    );
   }
 
   configureI18N(isWelsh: boolean): void {

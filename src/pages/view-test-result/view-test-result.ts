@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -8,6 +8,7 @@ import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
@@ -46,7 +47,7 @@ import { ViewTestResultViewDidEnter } from './view-test-result.actions';
   selector: 'page-view-test-result',
   templateUrl: 'view-test-result.html',
 })
-export class ViewTestResultPage extends BasePageComponent implements OnInit, OnDestroy {
+export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
 
@@ -56,6 +57,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
   loadingSpinner: Loading;
   subscription: Subscription;
   showErrorMessage: boolean = false;
+  testResult$ = new Observable<object | StandardCarTestCATBSchema>();
 
   constructor(
     public navController: NavController,
@@ -90,7 +92,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ).subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

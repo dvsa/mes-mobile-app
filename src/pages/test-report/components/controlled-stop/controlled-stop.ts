@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
@@ -38,7 +38,7 @@ interface ControlledStopComponentState {
   selector: 'controlled-stop',
   templateUrl: 'controlled-stop.html',
 })
-export class ControlledStopComponent implements OnInit {
+export class ControlledStopComponent implements OnInit, OnDestroy {
 
   componentState: ControlledStopComponentState;
   subscription: Subscription;
@@ -49,8 +49,9 @@ export class ControlledStopComponent implements OnInit {
 
   selectedControlledStop: boolean = false;
   controlledStopOutcome: CompetencyOutcome;
+  merged$: Observable<boolean | CompetencyOutcome>;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
     const currentTest$ = this.store$.pipe(
@@ -86,15 +87,13 @@ export class ControlledStopComponent implements OnInit {
       controlledStopOutcome$,
     } = this.componentState;
 
-    const merged$ = merge(
+    this.subscription = merge(
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       selectedControlledStop$.pipe(map(value => this.selectedControlledStop = value)),
       controlledStopOutcome$.pipe(map(outcome => this.controlledStopOutcome = outcome)),
-    );
-
-    this.subscription = merged$.subscribe();
+    ).subscribe();
 
   }
 
