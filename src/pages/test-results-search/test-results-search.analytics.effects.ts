@@ -44,7 +44,10 @@ export class TestResultsSearchAnalyticsEffects {
   performApplicationReferenceSearch$ = this.actions$.pipe(
     ofType(PERFORM_APPLICATION_REFERENCE_SEARCH),
     switchMap((action: PerformApplicationReferenceSearch) => {
-      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.APPLICATION_REFERENCE_SEARCH);
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+        AnalyticsEvents.APPLICATION_REFERENCE_SEARCH,
+      );
       return of(new AnalyticRecorded());
     }),
   );
@@ -53,16 +56,22 @@ export class TestResultsSearchAnalyticsEffects {
   performDriverNumberSearch$ = this.actions$.pipe(
     ofType(PERFORM_DRIVER_NUMBER_SEARCH),
     switchMap((action: PerformDriverNumberSearch) => {
-      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.DRIVER_NUMBER_SEARCH);
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+        AnalyticsEvents.DRIVER_NUMBER_SEARCH,
+      );
       return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
-  performAdvancedSearch$ = this.actions$.pipe(
+  performLDTMSearch$ = this.actions$.pipe(
     ofType(PERFORM_LDTM_SEARCH),
     switchMap((action: PerformLDTMSearch) => {
-      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.LDTM_SEARCH);
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+        AnalyticsEvents.LDTM_SEARCH,
+      );
       return of(new AnalyticRecorded());
     }),
   );

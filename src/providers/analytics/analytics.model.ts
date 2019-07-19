@@ -30,7 +30,7 @@ export enum AnalyticsScreenNames {
   FAIL_DEBRIEF = 'fail debrief screen',
   LOGIN = 'login screen',
   BACK_TO_OFFICE = 'back to office screen',
-  TEST_RESULTS_SEARCH = 'test results search screen',
+  TEST_RESULTS_SEARCH = 'test result search screen',
 }
 
 export enum AnalyticsEventCategories {
@@ -45,7 +45,7 @@ export enum AnalyticsEventCategories {
   TERMINATION = 'test termination',
   PRACTICE_TEST = 'practice test',
   PRACTICE_MODE = 'practice mode',
-  SEARCH = 'search',
+  TEST_RESULTS_SEARCH = 'test results search',
 }
 
 export enum AnalyticsEvents {
