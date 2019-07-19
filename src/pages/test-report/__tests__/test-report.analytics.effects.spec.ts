@@ -960,9 +960,10 @@ describe('Test Report Analytics Effects', () => {
   });
 
   describe('toggleLegalRequirement', () => {
-    it('should call logEvent for normal start', (done) => {
+    it('should call logEvent for normal start completed', (done) => {
       // ARRANGE
       store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
       actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ASSERT
@@ -972,7 +973,26 @@ describe('Test Report Analytics Effects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           AnalyticsEventCategories.TEST_REPORT,
           AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
-          legalRequirementsLabels[LegalRequirements.normalStart1],
+          `${legalRequirementsLabels[LegalRequirements.normalStart1]} - ${legalRequirementToggleValues.completed}`,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for normal start uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      // ACT
+      actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      // ASSERT
+      effects.toggleLegalRequirement$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels[LegalRequirements.normalStart1]} - ${legalRequirementToggleValues.uncompleted}`,
         );
         done();
       });
@@ -1014,10 +1034,28 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
+    it('should call logEvent for selected manoeuvre', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions$.next(new testDataActions.RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad));
+      // ASSERT
+      effects.manoeuvreCompletedEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.completed}`,
+        );
+        done();
+      });
+    });
 
     it('should call logEvent for normal start, prefixed with practice test', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
       actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ASSERT
@@ -1027,7 +1065,7 @@ describe('Test Report Analytics Effects', () => {
         expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT}`,
-          legalRequirementsLabels[LegalRequirements.normalStart1],
+          `${legalRequirementsLabels[LegalRequirements.normalStart1]} - ${legalRequirementToggleValues.completed}`,
         );
         done();
       });

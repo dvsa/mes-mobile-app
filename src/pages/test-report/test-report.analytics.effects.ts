@@ -23,8 +23,8 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../shared/constants/legal-requirements/catb-legal-requirements';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { getEco } from '../../modules/tests/test-data/test-data.selector';
-import { Eco } from '@dvsa/mes-test-schema/categories/B';
+import { getEco, getTestRequirements } from '../../modules/tests/test-data/test-data.selector';
+import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -546,16 +546,27 @@ export class TestReportAnalyticsEffects {
         this.store$.pipe(
           select(getTests),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getTestRequirements),
+        ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ToggleLegalRequirement, TestsModel]) => {
-      this.analytics.logEvent(
-        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
-        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
-        legalRequirementsLabels[action.payload],
-      );
-      return of(new AnalyticRecorded());
-    }),
+    concatMap(
+      ([action, tests, testRequirements]: [testDataActions.ToggleLegalRequirement, TestsModel, TestRequirements]) => {
+        const toggleValue = testRequirements[action.payload]
+          ? legalRequirementToggleValues.completed
+          : legalRequirementToggleValues.uncompleted;
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+          `${legalRequirementsLabels[action.payload]} - ${toggleValue}`,
+        );
+        return of(new AnalyticRecorded());
+      },
+    ),
   );
 
   @Effect()
@@ -584,6 +595,28 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
         `${legalRequirementsLabels['eco']} - ${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  manoeuvreCompletedEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.RECORD_MANOEUVRES_SELECTION,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.completed}`,
       );
       return of(new AnalyticRecorded());
     }),
