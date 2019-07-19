@@ -30,6 +30,7 @@ export enum AnalyticsScreenNames {
   FAIL_DEBRIEF = 'fail debrief screen',
   LOGIN = 'login screen',
   BACK_TO_OFFICE = 'back to office screen',
+  TEST_RESULTS_SEARCH = 'test result search screen',
 }
 
 export enum AnalyticsEventCategories {
@@ -44,6 +45,7 @@ export enum AnalyticsEventCategories {
   TERMINATION = 'test termination',
   PRACTICE_TEST = 'practice test',
   PRACTICE_MODE = 'practice mode',
+  TEST_RESULTS_SEARCH = 'test results search',
 }
 
 export enum AnalyticsEvents {
@@ -69,6 +71,9 @@ export enum AnalyticsEvents {
   SELECT_SERIOUS_MODE = 'select serious mode',
   SELECT_DANGEROUS_MODE = 'select dangerous mode',
   SELECT_REMOVE_MODE = 'select remove mode',
+  APPLICATION_REFERENCE_SEARCH = 'perform application reference search',
+  DRIVER_NUMBER_SEARCH = 'perform driver number search',
+  LDTM_SEARCH = 'perform ldtm search',
 }
 
 export enum AnalyticsLabels {
