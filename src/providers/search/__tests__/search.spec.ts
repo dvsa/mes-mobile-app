@@ -4,6 +4,8 @@ import { UrlProvider } from '../../url/url';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { SearchProvider } from '../search';
 import { AdvancedSearchParams } from '../search.models';
+import { AppConfigProvider } from '../../app-config/app-config';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 
 describe('SearchProvider', () => {
 
@@ -18,6 +20,7 @@ describe('SearchProvider', () => {
       providers: [
         SearchProvider,
         { provide: UrlProvider, useClass: UrlProviderMock },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock }
       ],
     });
 
