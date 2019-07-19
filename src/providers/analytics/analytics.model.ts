@@ -31,6 +31,7 @@ export enum AnalyticsScreenNames {
   LOGIN = 'login screen',
   BACK_TO_OFFICE = 'back to office screen',
   TEST_RESULTS_SEARCH = 'test result search screen',
+  VIEW_TEST_RESULT = 'view test result screen',
 }
 
 export enum AnalyticsEventCategories {
