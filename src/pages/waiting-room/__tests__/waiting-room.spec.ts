@@ -106,11 +106,6 @@ describe('WaitingRoomPage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('declaration status', () => {
       it('should emit a residency declaration toggle action when changed', () => {
         component.residencyDeclarationChanged();

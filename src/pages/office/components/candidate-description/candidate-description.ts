@@ -41,12 +41,16 @@ export class CandidateDescriptionComponent implements OnChanges {
     if (visibilityType === VisibilityType.NotVisible) {
       this.formGroup.get(CandidateDescriptionComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(CandidateDescriptionComponent.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(CandidateDescriptionComponent.fieldName).setValidators([
+        Validators.required, Validators.maxLength(1000)]);
     }
     this.formControl.patchValue(this.candidateDescription);
   }
 
   candidateDescriptionChanged(candidateDescription: string): void {
+    if (candidateDescription.length > 1000) {
+      return;
+    }
     this.candidateDescriptionChange.emit(candidateDescription);
   }
 

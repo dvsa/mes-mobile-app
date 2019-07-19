@@ -49,10 +49,6 @@ describe('ControlledStopComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should compile', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('ControlledStopAddDrivingFault', () => {
       it('should dispatch an CONTROLLED_STOP_ADD_DRIVING_FAULT action for press', () => {
 

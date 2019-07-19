@@ -39,12 +39,6 @@ describe('DrivingFaultSummary', () => {
     store$ = TestBed.get(Store);
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     let componentEl: DebugElement;
 

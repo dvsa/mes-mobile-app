@@ -24,10 +24,6 @@ describe('TestResultsSearchCard ', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('navigateToFakeJournal', () => {
       it('should trigger navigation to Fake Journal', () => {
         component.navigateToTestResultsSearch();

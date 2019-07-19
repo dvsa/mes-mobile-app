@@ -35,10 +35,6 @@ describe('Examiner Takes Action Component', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     it('should dispatch a TOGGLE_ETA_VERBAL action', () => {
       component.eta = ExaminerActions.verbal;
       component.toggleETA();

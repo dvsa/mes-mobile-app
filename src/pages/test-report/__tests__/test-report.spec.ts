@@ -127,10 +127,6 @@ describe('TestReportPage', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('onModalDismiss', () => {
       it('should navigate to debrief page when passed a CONTINUE event', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);

@@ -19,12 +19,6 @@ describe('LocationComponent', () => {
     });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     describe('location icon', () => {
       it('should display test centre name', () => {

@@ -16,9 +16,13 @@ import {
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPassed, getJournalData, getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { of } from 'rxjs/observable/of';
-import { JournalData } from '@dvsa/mes-test-schema/categories/B';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { TestsModel } from '../../modules/tests/tests.model';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
 
 @Injectable()
 export class OfficeAnalyticsEffects {
@@ -27,12 +31,7 @@ export class OfficeAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-          .then(() => {})
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
@@ -42,27 +41,7 @@ export class OfficeAnalyticsEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getTests),
-          select(getCurrentTest),
-          select(isPassed),
         ),
-      ),
-    )),
-    switchMap(([action, isPassed]: [OfficeViewDidEnter, boolean]) => {
-      if (isPassed) {
-        this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_TEST_SUMMARY);
-      } else {
-        this.analytics.setCurrentPage(AnalyticsScreenNames.FAIL_TEST_SUMMARY);
-      }
-
-      return of();
-    }),
-  );
-
-  @Effect()
-  savingWriteUpForLaterEffect$ = this.actions$.pipe(
-    ofType(SAVING_WRITE_UP_FOR_LATER),
-    concatMap(action => of(action).pipe(
-      withLatestFrom(
         this.store$.pipe(
           select(getTests),
           select(getCurrentTest),
@@ -72,22 +51,65 @@ export class OfficeAnalyticsEffects {
           select(getTests),
           select(getCurrentTest),
           select(getJournalData),
+          select(getCandidate),
+          select(getCandidateId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
         ),
       ),
     )),
-    switchMap(([action, isPassed, journalDataOfTest]: [SavingWriteUpForLater, boolean, JournalData]) => {
+    switchMap(
+      ([action, tests, isPassed, candidateId, slotId]: [OfficeViewDidEnter, TestsModel, boolean, number, string]) => {
+        const screenName = isPassed
+          ? formatAnalyticsText(AnalyticsScreenNames.PASS_TEST_SUMMARY, tests)
+          : formatAnalyticsText(AnalyticsScreenNames.FAIL_TEST_SUMMARY, tests);
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+        this.analytics.setCurrentPage(screenName);
+        return of(new AnalyticRecorded());
+      },
+    ),
+  );
+
+  @Effect()
+  savingWriteUpForLaterEffect$ = this.actions$.pipe(
+    ofType(SAVING_WRITE_UP_FOR_LATER),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getCandidate),
+          select(getCandidateId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+      ),
+    )),
+    switchMap(([action, tests, isPassed, candidateId, slotId]:
+      [SavingWriteUpForLater, TestsModel, boolean, number, string]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+
       this.analytics.logEvent(
-        AnalyticsEventCategories.POST_TEST,
-        AnalyticsEvents.SAVE_WRITE_UP,
+        formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
+        formatAnalyticsText(AnalyticsEvents.SAVE_WRITE_UP, tests),
         isPassed ? 'pass' : 'fail',
       );
-
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
-
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -98,17 +120,20 @@ export class OfficeAnalyticsEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
           select(getCurrentTest),
           select(isPassed),
         ),
       ),
     )),
-    switchMap(([action, isPassed]: [ValidationError, boolean]) => {
+    switchMap(([action, tests, isPassed]: [ValidationError, TestsModel, boolean]) => {
       const screenName = isPassed ? AnalyticsScreenNames.PASS_TEST_SUMMARY : AnalyticsScreenNames.FAIL_TEST_SUMMARY;
-      this.analytics.logError(
-        `${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`, action.errorMessage);
-
-      return of();
+      const formattedScreenName = formatAnalyticsText(screenName, tests);
+      this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
+        action.errorMessage);
+      return of(new AnalyticRecorded());
     }),
   );
 }

@@ -27,12 +27,6 @@ describe('TickIndicatorComponent', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should not be ticked when tick is false', () => {
       component.ticked = false;

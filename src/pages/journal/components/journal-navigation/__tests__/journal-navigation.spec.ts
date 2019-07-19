@@ -17,7 +17,6 @@ import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 
 describe('JournalNavigationComponent', () => {
-  let component: JournalNavigationComponent;
   let fixture: ComponentFixture<JournalNavigationComponent>;
   let store$: Store<StoreModel>;
   let dateTimeProvider: DateTimeProvider;
@@ -38,18 +37,11 @@ describe('JournalNavigationComponent', () => {
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(JournalNavigationComponent);
-      component = fixture.componentInstance;
     });
 
     store$ = TestBed.get(Store);
     dateTimeProvider = TestBed.get(DateTimeProvider);
   }));
-
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
 
   describe('DOM', () => {
     let componentEl: DebugElement;

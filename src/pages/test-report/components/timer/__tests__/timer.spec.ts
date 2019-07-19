@@ -24,10 +24,6 @@ describe('TimerComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('generateTimerString', () => {
       it('should create the correct string when given 5 seconds', () => {
         component.seconds = 5;

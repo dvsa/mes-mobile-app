@@ -118,7 +118,7 @@ export class JournalAnalyticsEffects {
   testOutcomeStartTest$ = this.actions$.pipe(
     ofType(START_TEST),
     switchMap((action: StartTest) => {
-      this.analytics.logEvent(AnalyticsEventCategories.CLICK, AnalyticsEvents.START_TEST);
+      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.START_TEST, action.slotId.toString());
       return of();
     }),
   );

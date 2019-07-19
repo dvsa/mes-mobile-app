@@ -22,7 +22,6 @@ import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
-  let component: VehicleChecksCardComponent;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
 
@@ -47,19 +46,12 @@ describe('VehicleChecksCardComponent', () => {
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(VehicleChecksCardComponent);
-        component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         store$.dispatch(new StartTest(105));
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });
   }));
-
-  describe('Class', () => {
-    it('should compile', () => {
-      expect(component).toBeDefined();
-    });
-  });
 
   describe('DOM', () => {
     it('should not display the card when no fault marked', () => {

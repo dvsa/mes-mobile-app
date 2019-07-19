@@ -34,9 +34,4 @@ describe('TestDetailsCardComponent', () => {
     });
 
   });
-
-  describe('DOM', () => {
-
-  });
-
 });

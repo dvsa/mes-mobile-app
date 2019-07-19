@@ -18,12 +18,6 @@ describe('IndicatorsComponent', () => {
     });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     describe('exclamation indicator', () => {
       it('should render when visibility is configured', () => {

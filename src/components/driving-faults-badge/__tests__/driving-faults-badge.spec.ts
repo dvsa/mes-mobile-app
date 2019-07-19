@@ -19,12 +19,6 @@ describe('DrivingFaultsBadgeComponent', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should display the number of faults in the DOM', () => {
       component.count = 5;

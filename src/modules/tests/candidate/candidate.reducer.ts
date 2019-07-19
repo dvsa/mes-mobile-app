@@ -2,7 +2,21 @@ import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 import * as candidateActions from './candidate.actions';
 
-export const initialState = null;
+export const initialState: Candidate = {
+  candidateId: null,
+  candidateName: {},
+  driverNumber: '',
+  dateOfBirth: '',
+  gender: null,
+  candidateAddress: {},
+  primaryTelephone: '',
+  secondaryTelephone: '',
+  mobileTelephone: '',
+  emailAddress: '',
+  prn: null,
+  previousADITests: null,
+  ethnicityCode: '',
+};
 
 export function candidateReducer(
   state = initialState,

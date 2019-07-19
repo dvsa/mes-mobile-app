@@ -59,10 +59,6 @@ describe('CandidateLinkComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('openCandidateDetailsModal', () => {
       it('should open CandidateDetailsPage when not in practice mode', () => {
         component.openCandidateDetailsModal();

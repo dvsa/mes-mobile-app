@@ -52,7 +52,6 @@ export class AnalyticsProvider implements IAnalyticsProvider {
       this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
-          this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
           this.ga.trackView(name)
             .then((resp) => { })
             .catch(pageError => console.log('Error setting page', pageError));

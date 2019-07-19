@@ -33,12 +33,6 @@ describe('PracticeTestModal', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should call onCancel when the Return to test button is clicked', () => {
       fixture.detectChanges();

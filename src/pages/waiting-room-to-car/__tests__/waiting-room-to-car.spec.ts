@@ -117,10 +117,6 @@ describe('WaitingRoomToCarPage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
     it('should get tell me question from the question provider', () => {
       expect(component.tellMeQuestions.length).toBe(2);
     });

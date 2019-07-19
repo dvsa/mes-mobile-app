@@ -31,10 +31,6 @@ describe('CompetencyButtonComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     it('should call the tap function when a tap event is triggered', () => {
       const tapSpy = jasmine.createSpy('onTapEvent');
       component.onTapEvent = tapSpy;

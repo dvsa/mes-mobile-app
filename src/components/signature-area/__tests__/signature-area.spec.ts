@@ -25,10 +25,6 @@ describe('SignatureAreaComponent', () => {
     });
   }));
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
     describe('signature', () => {
       it('setSignature should update the signature property and call signatureDataChangedDispatch', () => {
         spyOn(component, 'signatureDataChangedDispatch');
