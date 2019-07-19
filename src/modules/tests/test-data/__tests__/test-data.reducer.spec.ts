@@ -348,44 +348,40 @@ describe('TestDataReducer reducer', () => {
     });
   });
   describe('TOGGLE_CONTROL_ECO', () => {
-    it('should toggle control eco fault (true when dispatched first time) and set eco completed', () => {
+    it('should toggle control eco fault (true when dispatched first time)', () => {
       const state: TestData = {
         eco: {},
       };
       const result = testDataReducer(state, new ToggleControlEco());
       expect(result.eco.adviceGivenControl).toEqual(true);
-      expect(result.eco.completed).toEqual(true);
     });
 
-    it('should toggle control eco fault (false when dispatched second time) and leave eco as completed', () => {
+    it('should toggle control eco fault (false when dispatched second time)', () => {
       const state: TestData = {
         eco: {},
       };
       const modifiedState = testDataReducer(state, new ToggleControlEco());
       const result = testDataReducer(modifiedState, new ToggleControlEco());
       expect(result.eco.adviceGivenControl).toEqual(false);
-      expect(result.eco.completed).toEqual(true);
     });
   });
 
   describe('TOGGLE_PLANNING_ECO', () => {
-    it('should toggle the planning eco fault (true when dispatched first time) and set eco completed', () => {
+    it('should toggle the planning eco fault (true when dispatched first time)', () => {
       const state: TestData = {
         eco: {},
       };
       const result = testDataReducer(state, new TogglePlanningEco());
       expect(result.eco.adviceGivenPlanning).toEqual(true);
-      expect(result.eco.completed).toEqual(true);
     });
 
-    it('should toggle planning eco fault (false when dispatched second time) and leave eco as completed', () => {
+    it('should toggle planning eco fault (false when dispatched second time)', () => {
       const state: TestData = {
         eco: {},
       };
       const modifiedState = testDataReducer(state, new TogglePlanningEco());
       const result = testDataReducer(modifiedState, new TogglePlanningEco());
       expect(result.eco.adviceGivenPlanning).toEqual(false);
-      expect(result.eco.completed).toEqual(true);
     });
   });
   describe('TOGGLE_CONTROLLED_STOP', () => {
