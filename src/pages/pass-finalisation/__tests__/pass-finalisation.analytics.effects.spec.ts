@@ -7,7 +7,6 @@ import * as passFinalisationActions from '../pass-finalisation.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
-  AnalyticsDimensionIndices,
   AnalyticsScreenNames,
   AnalyticsEventCategories,
 } from '../../../providers/analytics/analytics.model';
@@ -51,9 +50,7 @@ describe('Pass Finalisation Analytics Effects', () => {
     effects = TestBed.get(PassFinalisationAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
     spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logError').and.callThrough();
   });
 
   describe('passFinalisationViewDidEnter', () => {
@@ -66,10 +63,6 @@ describe('Pass Finalisation Analytics Effects', () => {
       // ASSERT
       effects.passFinalisationViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
-        expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, '123');
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenName);
         done();
@@ -84,10 +77,6 @@ describe('Pass Finalisation Analytics Effects', () => {
       // ASSERT
       effects.passFinalisationViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
-        expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenNamePracticeMode);
         done();
