@@ -22,7 +22,7 @@
         (welshTextSelect)="dispatchCandidateChoseToProceedInWelsh()"
         (englishTextSelect)="dispatchCandidateChoseToProceedInEnglish()">
       </conducted-language>
-      <privacy-notice></privacy-notice>
+      <privacy-notice [isWelsh]="this.isBookedInWelsh"></privacy-notice>
       <div class="mes-full-width-card" id="declaration-section">
 
         <ion-row class="mes-validated-row">
