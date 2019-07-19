@@ -3,7 +3,8 @@ Feature: Waiting Room to Car
    @smoke
    Scenario: Waiting room to Car validation
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
-      When I start the test for "Miss Theresa Shaw"
+      When I check candidate details for "Miss Theresa Shaw"
+      And I start the test for "Miss Theresa Shaw"
       Then I should see the "Declaration - Theresa Shaw" page
       And the candidate enters a new email address
       And the candidate confirms their communication preference

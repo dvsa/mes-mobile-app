@@ -2,14 +2,16 @@ Feature: Comms Capture and Waiting Room
 
    Scenario: Comms Capture screen populated for candidate
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I start the test for "Mrs Jane Doe"
+      When I check candidate details for "Mrs Jane Doe"
+      And I start the test for "Mrs Jane Doe"
       Then the communication page candidate name should be "Mrs Jane Doe"
       And the communication page candidate driver number should be "DOEXX 625220 A99HC"
       And the email "jane.doe@example.com" has been provided and is preselected
 
    Scenario: Waiting room screen populated for candidate
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
-      When I start the test for "Miss Theresa Shaw"
+      When I check candidate details for "Miss Theresa Shaw"
+      And I start the test for "Miss Theresa Shaw"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then the waiting room candidate name should be "Miss Theresa Shaw"
