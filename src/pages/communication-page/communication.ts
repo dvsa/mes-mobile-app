@@ -1,5 +1,5 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -22,7 +22,7 @@ import {
   getPostalAddress,
 } from '../../modules/tests/candidate/candidate.selector';
 import {
-  CommunicationViewDidEnter,
+  CommunicationViewDidEnter, CommunicationValidationError,
 } from './communication.actions';
 import { map, take } from 'rxjs/operators';
 import {
@@ -62,7 +62,7 @@ interface CommunicationPageState {
   selector: 'communication',
   templateUrl: 'communication.html',
 })
-export class CommunicationPage extends PracticeableBasePageComponent {
+export class CommunicationPage extends PracticeableBasePageComponent implements OnInit, OnDestroy {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
@@ -228,6 +228,12 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.navController.push(WAITING_ROOM_PAGE);
+    } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          this.store$.dispatch(new CommunicationValidationError(`${controlName} is blank`));
+        }
+      });
     }
   }
 
