@@ -65,7 +65,7 @@ interface PassFinalisationPageState {
 })
 export class PassFinalisationPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
-
+  passCertificateCtrl: string = 'passCertificateNumberCtrl';
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
 
@@ -196,12 +196,20 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   getFormValidation(): { [key: string]: FormControl } {
     return {
       provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
-      passCertificateNumberCtrl: new FormControl(null, [Validators.required]),
+      passCertificateNumberCtrl: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(8),
+      ]),
       transmissionCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  }
+
+  passCertificateValidation() {
+    const ctrlHasErrors = this.form.get(this.passCertificateCtrl).errors ? true : false;
+    return ctrlHasErrors && this.form.get(this.passCertificateCtrl).dirty;
   }
 
   /**

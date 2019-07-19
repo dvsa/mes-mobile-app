@@ -92,7 +92,8 @@
         </ion-row>
 
         <ion-row class="mes-validated-row mes-row-separator" id="provisional-license-card">
-          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl')"></div>
+          <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
+          passCertificateValidation()"></div>
           <ion-col class="component-label" col-36 align-self-center>
             <label>Pass certificate number</label>
           </ion-col>
@@ -101,15 +102,18 @@
             <ion-row>
               <ion-col>
                 <input #passCertificateNumberInput formControlName="passCertificateNumberCtrl"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl')" type="text"
+                  [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
+                  passCertificateValidation()"
+                  type="text"
                   value="{{pageState.passCertificateNumber$ | async}}" id="pass-certificate-number"
                   class="pass-cert-input">
               </ion-col>
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
-              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl')"
+              <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
+                passCertificateValidation()"
                 id="pass-finalisation-certificate-number-validation-text">
-                Enter a certificate number
+                Enter a valid certificate number (max 8 characters)
               </div>
             </ion-row>
           </ion-col>

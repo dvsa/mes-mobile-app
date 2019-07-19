@@ -10,6 +10,12 @@ import { of } from 'rxjs/observable/of';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { AdvancedSearchParams } from '../../providers/search/search.models';
 import { ExaminerRole } from '../../providers/app-config/constants/examiner-role.constants';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import {
+  TestResultSearchViewDidEnter, PerformApplicationReferenceSearch, PerformDriverNumberSearch, PerformLDTMSearch,
+
+} from './test-results-search.actions';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -38,8 +44,13 @@ export class TestResultsSearchPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public searchProvider: SearchProvider,
     private appConfig: AppConfigProvider,
+    private store$: Store<StoreModel>,
   ) {
     super(platform, navController, authenticationProvider);
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new TestResultSearchViewDidEnter());
   }
 
   searchByChanged(val: SearchBy) {
@@ -56,13 +67,13 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   searchTests() {
     if (this.searchBy === SearchBy.DriverNumber) {
+      this.store$.dispatch(new PerformDriverNumberSearch());
       this.showSearchSpinner = true;
       this.subscription = this.searchProvider.driverNumberSearch(this.candidateInfo)
         .pipe(
           tap(() => this.hasSearched = true),
           map((results) => {
             this.searchResults = results;
-
             this.showSearchSpinner = false;
           }),
           catchError(() => {
@@ -75,6 +86,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
+      this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
       this.subscription = this.searchProvider.applicationReferenceSearch(this.candidateInfo)
         .pipe(
@@ -94,6 +106,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
+    this.store$.dispatch(new PerformLDTMSearch());
     this.showAdvancedSearchSpinner = true;
     this.subscription = this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
