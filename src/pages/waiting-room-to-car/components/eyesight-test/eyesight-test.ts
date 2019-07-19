@@ -41,8 +41,8 @@ export class EyesightTestComponent implements OnChanges {
   get testPassed(): boolean {
     return this.eyesightPassRadioChecked;
   }
+
   get testFailed(): boolean {
     return this.eyesightFailRadioChecked;
   }
-
 }
