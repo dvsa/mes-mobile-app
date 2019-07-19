@@ -58,23 +58,19 @@ export class TestOutcomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.seenCandidateDetails$ = this.store$.pipe(
+    const seenCandidateDetails$ = this.store$.pipe(
       select(getJournalState),
       map(journalData => getCheckComplete(journalData, this.slotDetail.slotId)),
     );
-  }
 
-  ionViewWillEnter(): void {
-    if (this.seenCandidateDetails$) {
-      this.subscription = this.seenCandidateDetails$.subscribe(
-        (candidateDetails: boolean) => {
-          this.candidateDetailsViewed = candidateDetails;
-        });
-    }
+    this.subscription = seenCandidateDetails$.subscribe(
+      (candidateDetails: boolean) => {
+        this.candidateDetailsViewed = candidateDetails;
+      });
   }
 
   ionViewDidLeave(): void {
-    if (this.seenCandidateDetails$) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
