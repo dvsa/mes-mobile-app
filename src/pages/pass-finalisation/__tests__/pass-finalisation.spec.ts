@@ -44,17 +44,39 @@ describe('PassFinalisationPage', () => {
       });
   }));
 
-  describe('Class', () => {
-    describe('onSubmit', () => {
-      // Unit tests for the components TypeScript class
-      it('should dispatch the PersistTests action', () => {
-        const form = component.form;
-        form.get('provisionalLicenseProvidedCtrl').setValue(true);
-        form.get('passCertificateNumberCtrl').setValue(true);
-        form.get('transmissionCtrl').setValue('Manual');
-        component.onSubmit();
-        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
-      });
+  describe('onSubmit', () => {
+    // Unit tests for the components TypeScript class
+    it('should dispatch the PersistTests action', () => {
+      const form = component.form;
+      form.get('provisionalLicenseProvidedCtrl').setValue(true);
+      form.get('passCertificateNumberCtrl').setValue('A123456*');
+      form.get('transmissionCtrl').setValue('Manual');
+      component.onSubmit();
+      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+    });
+  });
+  describe('formControls', () => {
+    it('should contain a maxlength validation error when passCertificateNumberCtrl fails to meet maxlength', () => {
+      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
+      formCtrl.setValue('A123456B1');
+      expect(formCtrl.hasError('maxlength')).toBe(true);
+    });
+    it('should contain no validation errors when passCertificateNumberCtrl ends with digit', () => {
+      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
+      formCtrl.setValue('A1234567');
+      expect(formCtrl.hasError('maxlength')).toBe(false);
+    });
+    it('should contain no validation errors when passCertificateNumberCtrl ends with underscore', () => {
+      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
+      formCtrl.setValue('A123456_');
+      expect(formCtrl.hasError('pattern')).toBe(false);
+      expect(formCtrl.hasError('maxlength')).toBe(false);
+    });
+    it('should contain no validation errors when passCertificateNumberCtrl ends with letter', () => {
+      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
+      formCtrl.setValue('A123456B');
+      expect(formCtrl.hasError('pattern')).toBe(false);
+      expect(formCtrl.hasError('maxlength')).toBe(false);
     });
   });
 });

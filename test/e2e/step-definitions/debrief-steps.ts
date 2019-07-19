@@ -14,7 +14,7 @@ When('I end the debrief', () => {
 
 When('I complete the pass details', () => {
   const passCertificateNumberField = getElement(by.id('pass-certificate-number'));
-  passCertificateNumberField.sendKeys('123456789');
+  passCertificateNumberField.sendKeys('A123456&');
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);
   continuePassFinalisation();
