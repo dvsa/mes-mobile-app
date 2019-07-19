@@ -27,7 +27,6 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
 
   private practiceableBasePageState: PracticeableBasePageState;
   private practiceableBasePageSubscription: Subscription;
-  private mergedPracticeModes$: Observable<boolean>;
 
   constructor(
     public platform: Platform,
@@ -61,18 +60,13 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
       isEndToEndPracticeMode$,
     } = this.practiceableBasePageState;
 
-    this.mergedPracticeModes$ = merge(
+    const merged$ = merge(
       isPracticeMode$.pipe(map(value => this.isPracticeMode = value)),
       isTestReportPracticeMode$.pipe(map(value => this.isTestReportPracticeMode = value)),
       isEndToEndPracticeMode$.pipe(map(value => this.isEndToEndPracticeMode = value)),
     );
-  }
 
-  ionViewWillEnter(): boolean {
-    if (this.mergedPracticeModes$) {
-      this.practiceableBasePageSubscription = this.mergedPracticeModes$.subscribe();
-    }
-    return true;
+    this.practiceableBasePageSubscription = merged$.subscribe();
   }
 
   ionViewDidLeave(): void {

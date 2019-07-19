@@ -129,12 +129,11 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   }
 
   ionViewWillEnter(): boolean {
-    const authed = super.ionViewWillEnter();
-    if (authed && this.merged$) {
+    if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
 
-    return authed;
+    return true;
   }
 
   ionViewDidEnter(): void {
