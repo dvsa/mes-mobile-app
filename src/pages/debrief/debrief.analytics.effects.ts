@@ -13,6 +13,9 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, isPassed } from '../../modules/tests/tests.selector';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { TestsModel } from '../../modules/tests/tests.model';
 
 @Injectable()
 export class DebriefAnalyticsEffects {
@@ -22,12 +25,7 @@ export class DebriefAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-          .then(() => {})
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
@@ -37,18 +35,20 @@ export class DebriefAnalyticsEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
           select(getCurrentTest),
           select(isPassed),
         ),
-      ),
-    )),
-    switchMap(([action, isPassed]: [DebriefViewDidEnter, boolean]) => {
-      if (isPassed) {
-        this.analytics.setCurrentPage(AnalyticsScreenNames.PASS_DEBRIEF);
-      } else {
-        this.analytics.setCurrentPage(AnalyticsScreenNames.FAIL_DEBRIEF);
-      }
-      return of();
+      )),
+    ),
+    switchMap(([action, tests, isPassed]: [DebriefViewDidEnter, TestsModel, boolean]) => {
+      const screenName = isPassed
+        ? formatAnalyticsText(AnalyticsScreenNames.PASS_DEBRIEF, tests)
+        : formatAnalyticsText(AnalyticsScreenNames.FAIL_DEBRIEF, tests);
+      this.analytics.setCurrentPage(screenName);
+      return of(new AnalyticRecorded());
     }),
   );
 

@@ -14,9 +14,13 @@ import {
 } from './back-to-office.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPassed, getJournalData, getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { JournalData } from '@dvsa/mes-test-schema/categories/B';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { TestsModel } from '../../modules/tests/tests.model';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
 
 @Injectable()
 export class BackToOfficeAnalyticsEffects {
@@ -25,19 +29,23 @@ export class BackToOfficeAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
   backToOfficeViewDidEnter$ = this.actions$.pipe(
     ofType(BACK_TO_OFFICE_VIEW_DID_ENTER),
-    switchMap((action: BackToOfficeViewDidEnter) => {
-      this.analytics.setCurrentPage(AnalyticsScreenNames.BACK_TO_OFFICE);
-      return of();
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [BackToOfficeViewDidEnter, TestsModel]) => {
+      const screenName = formatAnalyticsText(AnalyticsScreenNames.BACK_TO_OFFICE, tests);
+      this.analytics.setCurrentPage(screenName);
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -48,6 +56,9 @@ export class BackToOfficeAnalyticsEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
           select(getCurrentTest),
           select(isPassed),
         ),
@@ -55,22 +66,26 @@ export class BackToOfficeAnalyticsEffects {
           select(getTests),
           select(getCurrentTest),
           select(getJournalData),
+          select(getCandidate),
+          select(getCandidateId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
         ),
       ),
     )),
-    switchMap(([action, isPassed, journalDataOfTest]: [DeferWriteUp, boolean, JournalData]) => {
+    switchMap(([action, tests, isPassed, candidateId, slotId]:
+      [DeferWriteUp, TestsModel, boolean, number, string]) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+
       this.analytics.logEvent(
-        AnalyticsEventCategories.BACK_TO_OFFICE,
-        AnalyticsEvents.DEFER_WRITE_UP,
+        formatAnalyticsText(AnalyticsEventCategories.BACK_TO_OFFICE, tests),
+        formatAnalyticsText(AnalyticsEvents.DEFER_WRITE_UP, tests),
         isPassed ? 'pass' : 'fail',
       );
-
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
-
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 }

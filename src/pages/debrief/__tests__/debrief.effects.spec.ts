@@ -6,12 +6,16 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as debriefActions from '../debrief.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
+import * as journalActions from '../../journal/journal.actions';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { StoreModel } from '../../../shared/models/store.model';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
 
 describe('Debrief Effects', () => {
 
   let effects: DebriefEffects;
   let actions$: any;
+  let store$: Store<StoreModel>;
 
   const currentSlotId = '1234';
 
@@ -20,17 +24,7 @@ describe('Debrief Effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          tests: () => ({
-            currentTest: {
-              slotId: currentSlotId,
-            },
-            testStatus: {},
-            startedTests: {
-              [currentSlotId]: {
-                activityCode: ActivityCodes.PASS,
-              },
-            },
-          }),
+          tests: testsReducer,
         }),
       ],
       providers: [
@@ -40,17 +34,21 @@ describe('Debrief Effects', () => {
       ],
     });
     effects = TestBed.get(DebriefEffects);
+    store$ = TestBed.get(Store);
   });
 
   describe('endDebriefEffect', () => {
 
     it('should return SET_TEST_STATUS_DECIDED & PERSIST_TESTS actions when passed test', (done) => {
       // Set activity code as passed
-      actions$.next(new testsActions.SetActivityCode('1'));
+      store$.dispatch(new journalActions.StartTest(1234));
+      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+
       actions$.next(new debriefActions.EndDebrief());
 
       effects.endDebriefEffect$.subscribe((result) => {
-        if (result instanceof testStatusActions.SetTestStatusDecided) {
+        if (result instanceof testStatusActions.SetTestStatusDecided ||
+          result instanceof testStatusActions.SetTestStatusWriteUp) {
           expect(result).toEqual(new testStatusActions.SetTestStatusDecided(currentSlotId));
         }
         if (result instanceof testsActions.PersistTests) {
@@ -62,17 +60,20 @@ describe('Debrief Effects', () => {
 
     it('should return SET_TEST_STATUS_WRITE_UP & PERSIST_TESTS actions when failed test', (done) => {
       // Set activity code as failed
-      actions$.next(new testsActions.SetActivityCode('2'));
+      store$.dispatch(new journalActions.StartTest(1234));
+      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+
       actions$.next(new debriefActions.EndDebrief());
 
       effects.endDebriefEffect$.subscribe((result) => {
-        if (result instanceof testStatusActions.SetTestStatusWriteUp) {
+        if (result instanceof testStatusActions.SetTestStatusWriteUp ||
+          result instanceof testStatusActions.SetTestStatusDecided) {
           expect(result).toEqual(new testStatusActions.SetTestStatusWriteUp(currentSlotId));
         }
         if (result instanceof testsActions.PersistTests) {
           expect(result).toEqual(new testsActions.PersistTests());
-          done();
         }
+        done();
       });
     });
 
