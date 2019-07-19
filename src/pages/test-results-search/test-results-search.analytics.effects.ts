@@ -7,10 +7,13 @@ import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import {
   TEST_RESULT_SEARCH_VIEW_DID_ENTER,
   TestResultSearchViewDidEnter,
-  PERFORM_STANDARD_SEARCH,
-  PerformStandardSearch,
-  PERFORM_ADVANCED_SEARCH,
-  PerformAdvancedSearch,
+  PERFORM_APPLICATION_REFERENCE_SEARCH,
+  PerformApplicationReferenceSearch,
+  PERFORM_DRIVER_NUMBER_SEARCH,
+  PERFORM_LDTM_SEARCH,
+  PerformDriverNumberSearch,
+  PerformLDTMSearch,
+
 } from './test-results-search.actions';
 import {
   AnalyticsScreenNames,
@@ -38,19 +41,28 @@ export class TestResultsSearchAnalyticsEffects {
   );
 
   @Effect()
-  performStandardSearch$ = this.actions$.pipe(
-    ofType(PERFORM_STANDARD_SEARCH),
-    switchMap((action: PerformStandardSearch) => {
-      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.STANDARD_SEARCH);
+  performApplicationReferenceSearch$ = this.actions$.pipe(
+    ofType(PERFORM_APPLICATION_REFERENCE_SEARCH),
+    switchMap((action: PerformApplicationReferenceSearch) => {
+      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.APPLICATION_REFERENCE_SEARCH);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  performDriverNumberSearch$ = this.actions$.pipe(
+    ofType(PERFORM_DRIVER_NUMBER_SEARCH),
+    switchMap((action: PerformDriverNumberSearch) => {
+      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.DRIVER_NUMBER_SEARCH);
       return of(new AnalyticRecorded());
     }),
   );
 
   @Effect()
   performAdvancedSearch$ = this.actions$.pipe(
-    ofType(PERFORM_ADVANCED_SEARCH),
-    switchMap((action: PerformAdvancedSearch) => {
-      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.ADVANCED_SEARCH);
+    ofType(PERFORM_LDTM_SEARCH),
+    switchMap((action: PerformLDTMSearch) => {
+      this.analytics.logEvent(AnalyticsEventCategories.SEARCH, AnalyticsEvents.LDTM_SEARCH);
       return of(new AnalyticRecorded());
     }),
   );

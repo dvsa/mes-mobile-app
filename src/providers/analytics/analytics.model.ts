@@ -71,8 +71,9 @@ export enum AnalyticsEvents {
   SELECT_SERIOUS_MODE = 'select serious mode',
   SELECT_DANGEROUS_MODE = 'select dangerous mode',
   SELECT_REMOVE_MODE = 'select remove mode',
-  STANDARD_SEARCH = 'perform standard search',
-  ADVANCED_SEARCH = 'perform advanced search',
+  APPLICATION_REFERENCE_SEARCH = 'perform application reference search',
+  DRIVER_NUMBER_SEARCH = 'perform driver number search',
+  LDTM_SEARCH = 'perform ldtm search',
 }
 
 export enum AnalyticsLabels {

@@ -12,9 +12,8 @@ import { ExaminerRole } from '../../providers/app-config/constants/examiner-role
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import {
-  TestResultSearchViewDidEnter,
-  PerformAdvancedSearch,
-  PerformStandardSearch,
+  TestResultSearchViewDidEnter, PerformApplicationReferenceSearch, PerformDriverNumberSearch, PerformLDTMSearch,
+
 } from './test-results-search.actions';
 
 enum SearchBy {
@@ -66,6 +65,7 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   searchTests() {
     if (this.searchBy === SearchBy.DriverNumber) {
+      this.store$.dispatch(new PerformDriverNumberSearch());
       this.showSearchSpinner = true;
       this.searchProvider.driverNumberSearch(this.candidateInfo)
       .pipe(
@@ -86,7 +86,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
-      this.store$.dispatch(new PerformStandardSearch());
+      this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
       this.searchProvider.applicationReferenceSearch(this.candidateInfo)
       .pipe(
@@ -107,7 +107,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
-    this.store$.dispatch(new PerformAdvancedSearch());
+    this.store$.dispatch(new PerformLDTMSearch());
     this.showAdvancedSearchSpinner = true;
     this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
