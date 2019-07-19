@@ -68,20 +68,19 @@ export class TestResultsSearchPage extends BasePageComponent {
       this.store$.dispatch(new PerformDriverNumberSearch());
       this.showSearchSpinner = true;
       this.searchProvider.driverNumberSearch(this.candidateInfo)
-      .pipe(
-        tap(() => this.hasSearched = true),
-        map((results) => {
-          this.searchResults = results;
-
-          this.showSearchSpinner = false;
-        }),
-        catchError(() => {
-          this.searchResults = [];
-          this.showSearchSpinner = false;
-          return of(this.hasSearched = true);
-        }),
-      )
-      .subscribe();
+        .pipe(
+          tap(() => this.hasSearched = true),
+          map((results) => {
+            this.searchResults = results;
+            this.showSearchSpinner = false;
+          }),
+          catchError(() => {
+            this.searchResults = [];
+            this.showSearchSpinner = false;
+            return of(this.hasSearched = true);
+          }),
+        )
+        .subscribe();
       // TODO - Need to Unsubscribe
     }
 
@@ -89,19 +88,19 @@ export class TestResultsSearchPage extends BasePageComponent {
       this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
       this.searchProvider.applicationReferenceSearch(this.candidateInfo)
-      .pipe(
-        tap(() => this.hasSearched = true),
-        map((results) => {
-          this.searchResults = results;
-          this.showSearchSpinner = false;
-        }),
-        catchError(() => {
-          this.searchResults = [];
-          this.showSearchSpinner = false;
-          return of(this.hasSearched = true);
-        }),
-      )
-      .subscribe();
+        .pipe(
+          tap(() => this.hasSearched = true),
+          map((results) => {
+            this.searchResults = results;
+            this.showSearchSpinner = false;
+          }),
+          catchError(() => {
+            this.searchResults = [];
+            this.showSearchSpinner = false;
+            return of(this.hasSearched = true);
+          }),
+        )
+        .subscribe();
       // TODO - Need to unsubscribe
     }
   }
@@ -123,7 +122,7 @@ export class TestResultsSearchPage extends BasePageComponent {
         }),
       )
       .subscribe();
-      // TODO - Need to Unsubscribe
+    // TODO - Need to Unsubscribe
   }
 
   myHeaderFn(record: any, recordIndex: any): string {

@@ -10,6 +10,7 @@ import { NetworkStateProvider, ConnectionStatus } from '../network-state/network
 import { from } from 'rxjs/observable/from';
 import { AppConfigProvider } from '../app-config/app-config';
 import { DateTimeProvider } from '../date-time/date-time';
+import { timeout } from 'rxjs/operators/timeout';
 
 type JournalCache = {
   dateStored: string,
@@ -35,7 +36,8 @@ export class JournalProvider {
     if (lastRefreshed === null) {
       if (!this.authProvider.isInUnAuthenticatedMode() &&
         networkStatus === ConnectionStatus.ONLINE) {
-        return this.http.get(journalUrl);
+        return this.http.get(journalUrl)
+          .pipe(timeout(this.appConfigProvider.getAppConfig().requestTimeout));
       }
       return this.getOfflineJournal();
     }
@@ -45,7 +47,8 @@ export class JournalProvider {
       headers: new HttpHeaders().set('If-Modified-Since', modifiedSinceValue),
     };
     if (!this.authProvider.isInUnAuthenticatedMode() && networkStatus === ConnectionStatus.ONLINE) {
-      return this.http.get(journalUrl, options);
+      return this.http.get(journalUrl, options)
+        .pipe(timeout(this.appConfigProvider.getAppConfig().requestTimeout));
     }
     return this.getOfflineJournal();
   }

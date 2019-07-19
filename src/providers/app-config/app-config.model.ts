@@ -39,6 +39,7 @@ export type AppConfig = {
     url: string,
     autoSendInterval: number,
   },
+  requestTimeout: number
 };
 
 export interface TestPermissionPeriod {
