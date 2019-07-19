@@ -45,4 +45,5 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     url: string,
     autoSendInterval: number;
   };
+  requestTimeout: number;
 }
