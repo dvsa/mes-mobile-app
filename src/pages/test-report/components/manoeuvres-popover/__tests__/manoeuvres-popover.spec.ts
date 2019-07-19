@@ -48,9 +48,6 @@ describe('ManoeuvresPopoverComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
     it('should display the correct competencies against each manoeuvre', () => {
       component.recordManoeuvreSelection(ManoeuvreTypes.reverseParkRoad);
       fixture.detectChanges();

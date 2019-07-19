@@ -43,13 +43,6 @@ describe('CandidateDetailsPage', () => {
       });
   }));
 
-  describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('specialNeedsIsPopulated', () => {
     it('returns true for a populated array', () => {
       const specialNeedsString: string[] = ['one', 'two', 'three', 'four'];

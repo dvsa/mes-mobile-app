@@ -19,12 +19,6 @@ describe('SeriousFaultBadgeComponenet', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should display badge if showBadge is true', () => {
       component.showBadge = true;

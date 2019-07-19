@@ -55,10 +55,6 @@ describe('VehicleCheckComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should compile', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('addFault', () => {
       it('should dispatch SHOW_ME_QUESTION_SERIOUS_FAULT when serious mode is on', () => {
         fixture.detectChanges();

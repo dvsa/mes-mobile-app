@@ -52,10 +52,6 @@ describe('App', () => {
 
   describe('Class', () => {
 
-    it('should create the App component', () => {
-      expect(component).toBeDefined();
-    });
-
     it('should have the correct root page', () => {
       expect(component.rootPage).toBe(LOGIN_PAGE);
     });

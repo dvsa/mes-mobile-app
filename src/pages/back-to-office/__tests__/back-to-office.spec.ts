@@ -65,10 +65,6 @@ describe('BackToOfficePage', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
     describe('ionViewDidEnter', () => {
       it('should disable test inhibitions when not in practice mode', () => {
         component.ionViewDidEnter();

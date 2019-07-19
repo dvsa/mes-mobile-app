@@ -22,12 +22,6 @@ describe('TimeComponent', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     let componentEl: DebugElement;
 

@@ -78,11 +78,6 @@ describe('Test Outcome', () => {
   }));
 
   describe('Class', () => {
-    // Unit tests for the components TypeScript class
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('startTest', () => {
       it('should dispatch a start test action with the slot', () => {
         component.slotDetail = testSlotDetail;

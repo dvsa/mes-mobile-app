@@ -26,10 +26,6 @@ describe('PracticeTestModal', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     describe('showBanner', () => {
       it('should show banner if test status is completed', () => {
         component.testStatus = TestStatus.Completed;

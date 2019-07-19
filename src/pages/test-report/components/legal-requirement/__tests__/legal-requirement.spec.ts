@@ -38,10 +38,6 @@ describe('LegalRequirementComponent', () => {
   }));
 
   describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-
     it('should dispatch a TOGGLE_NORMAL_START_1 action', () => {
       component.legalRequirement = LegalRequirements.normalStart1;
       component.toggleLegalRequirement();

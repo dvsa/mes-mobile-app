@@ -17,12 +17,6 @@ describe('LanguageComponent', () => {
     });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     describe('Welsh language image indicator', () => {
       it('should render an image when the language is Welsh', () => {

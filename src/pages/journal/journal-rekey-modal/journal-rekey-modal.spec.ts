@@ -37,12 +37,6 @@ describe('JournalRekeyModal', () => {
       });
   }));
 
-  describe('Class', () => {
-    it('should create', () => {
-      expect(component).toBeDefined();
-    });
-  });
-
   describe('DOM', () => {
     it('should call onStartTest when the Start test button is clicked', () => {
       fixture.detectChanges();
