@@ -49,6 +49,7 @@ export class ControlledStopComponent implements OnInit {
 
   selectedControlledStop: boolean = false;
   controlledStopOutcome: CompetencyOutcome;
+  merged$: Observable<boolean | CompetencyOutcome>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -86,7 +87,7 @@ export class ControlledStopComponent implements OnInit {
       controlledStopOutcome$,
     } = this.componentState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
@@ -94,8 +95,12 @@ export class ControlledStopComponent implements OnInit {
       controlledStopOutcome$.pipe(map(outcome => this.controlledStopOutcome = outcome)),
     );
 
-    this.subscription = merged$.subscribe();
+  }
 
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

@@ -58,6 +58,7 @@ export class ManoeuvreCompetencyComponent implements OnInit {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
   manoeuvreCompetencyOutcome: ManoeuvreOutcome | null;
+  merged$: Observable<boolean | ManoeuvreOutcome>;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -99,14 +100,19 @@ export class ManoeuvreCompetencyComponent implements OnInit {
       manoeuvreCompetencyOutcome$,
     } = this.componentState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       manoeuvreCompetencyOutcome$.pipe(map(outcome => this.manoeuvreCompetencyOutcome = outcome)),
     );
 
-    this.subscription = merged$.subscribe();
+  }
+
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

@@ -28,6 +28,8 @@ export class ToolbarComponent {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
 
+  merged$: Observable<boolean>;
+
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
@@ -48,13 +50,17 @@ export class ToolbarComponent {
 
     const { isRemoveFaultMode$, isSeriousMode$, isDangerousMode$ } = this.componentState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
     );
+  }
 
-    this.subscription = merged$.subscribe();
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

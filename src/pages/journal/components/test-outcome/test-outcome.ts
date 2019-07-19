@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
@@ -20,6 +21,7 @@ import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { getCheckComplete } from '../../journal.selector';
 import { getJournalState } from '../../journal.reducer';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'test-outcome',
@@ -46,6 +48,8 @@ export class TestOutcomeComponent implements OnInit {
   isRekey: boolean = false;
 
   candidateDetailsViewed: boolean;
+  subscription: Subscription;
+  seenCandidateDetails$: Observable<boolean>;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -54,14 +58,25 @@ export class TestOutcomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const seenCandidateDetails$ = this.store$.pipe(
+    this.seenCandidateDetails$ = this.store$.pipe(
       select(getJournalState),
       map(journalData => getCheckComplete(journalData, this.slotDetail.slotId)),
     );
-    seenCandidateDetails$.subscribe(
-      (candidateDetails) => {
-        this.candidateDetailsViewed = candidateDetails;
-      });
+  }
+
+  ionViewWillEnter(): void {
+    if (this.seenCandidateDetails$) {
+      this.subscription = this.seenCandidateDetails$.subscribe(
+        (candidateDetails: boolean) => {
+          this.candidateDetailsViewed = candidateDetails;
+        });
+    }
+  }
+
+  ionViewDidLeave(): void {
+    if (this.seenCandidateDetails$) {
+      this.subscription.unsubscribe();
+    }
   }
 
   showOutcome(): boolean {

@@ -82,6 +82,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   inputSubscriptions: Subscription[] = [];
   isBookedInWelsh: boolean;
   conductedLanguage: string;
+  merged$: Observable<string | boolean>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -190,7 +191,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
     const { welshTest$, licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       licenseProvided$.pipe(map(val => this.licenseProvided = val)),
       healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
@@ -198,7 +199,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     );
 
     this.configureI18N(this.conductedLanguage === HealthDeclarationPage.welshLanguage);
-    this.subscription = merged$.subscribe();
 
   }
 
@@ -236,6 +236,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   receiptDeclarationChanged(): void {
     this.store$.dispatch(new postTestDeclarationsActions.ToggleReceiptDeclaration());
   }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
@@ -294,6 +295,13 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
+  }
+
+  ionViewWillEnter(): boolean {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+    return true;
   }
 
   ionViewDidLeave(): void {

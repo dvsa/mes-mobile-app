@@ -87,6 +87,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   modal: Modal;
   catBLegalRequirements: CatBLegalRequirements;
+  merged$: Observable<boolean | string>
 
   constructor(
     store$: Store<StoreModel>,
@@ -166,7 +167,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       catBLegalRequirements$,
     } = this.pageState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       candidateUntitledName$,
       isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
@@ -180,10 +181,9 @@ export class TestReportPage extends PracticeableBasePageComponent {
         map(result => (this.catBLegalRequirements = result)),
       ),
     );
-    this.subscription = merged$.subscribe();
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): boolean {
     // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
     if (super.isIos() && this.isPracticeMode) {
       this.screenOrientation.lock(
@@ -191,6 +191,10 @@ export class TestReportPage extends PracticeableBasePageComponent {
       );
       this.insomnia.keepAwake();
       this.statusBar.hide();
+    }
+
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
     }
     return true;
   }

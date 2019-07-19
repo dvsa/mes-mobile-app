@@ -8,6 +8,7 @@ import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
@@ -53,6 +54,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   loadingSpinner: Loading;
   subscription: Subscription;
   showErrorMessage: boolean = false;
+  testResult$: Observable<object | StandardCarTestCATBSchema>;
 
   constructor(
     public navController: NavController,
@@ -73,7 +75,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   ngOnInit(): void {
     this.handleLoadingUI(true);
 
-    this.subscription = this.searchProvider
+    this.testResult$ = this.searchProvider
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
@@ -83,7 +85,15 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
           this.handleLoadingUI(false);
           return of();
         }),
-      ).subscribe();
+      );
+  }
+
+  ionViewWillEnter(): boolean {
+    if (this.testResult$) {
+      this.subscription = this.testResult$.subscribe();
+    }
+
+    return true;
   }
 
   ionViewDidLeave(): void {

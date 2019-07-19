@@ -32,6 +32,7 @@ export class EcoComponent implements OnInit {
   adviceGivenPlanning: boolean = false;
   adviceGivenControl: boolean = false;
   componentState: EcoComponentState;
+  merged$: Observable<boolean>;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -60,13 +61,18 @@ export class EcoComponent implements OnInit {
 
     const { completed$, adviceGivenPlanning$, adviceGivenControl$ } = this.componentState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       completed$,
       adviceGivenPlanning$.pipe(map(toggle => this.adviceGivenPlanning = toggle)),
       adviceGivenControl$.pipe(map(toggle => this.adviceGivenControl = toggle)),
     );
 
-    this.subscription = merged$.subscribe();
+  }
+
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

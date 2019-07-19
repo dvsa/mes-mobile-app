@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -28,6 +29,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
   showAdvancedSearchSpinner: boolean = false;
+  subscription: Subscription;
 
   constructor(
     public navController: NavController,
@@ -55,45 +57,45 @@ export class TestResultsSearchPage extends BasePageComponent {
   searchTests() {
     if (this.searchBy === SearchBy.DriverNumber) {
       this.showSearchSpinner = true;
-      this.searchProvider.driverNumberSearch(this.candidateInfo)
-      .pipe(
-        tap(() => this.hasSearched = true),
-        map((results) => {
-          this.searchResults = results;
+      this.subscription = this.searchProvider.driverNumberSearch(this.candidateInfo)
+        .pipe(
+          tap(() => this.hasSearched = true),
+          map((results) => {
+            this.searchResults = results;
 
-          this.showSearchSpinner = false;
-        }),
-        catchError(() => {
-          this.searchResults = [];
-          this.showSearchSpinner = false;
-          return of(this.hasSearched = true);
-        }),
-      )
-      .subscribe();
+            this.showSearchSpinner = false;
+          }),
+          catchError(() => {
+            this.searchResults = [];
+            this.showSearchSpinner = false;
+            return of(this.hasSearched = true);
+          }),
+        )
+        .subscribe();
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
       this.showSearchSpinner = true;
-      this.searchProvider.applicationReferenceSearch(this.candidateInfo)
-      .pipe(
-        tap(() => this.hasSearched = true),
-        map((results) => {
-          this.searchResults = results;
-          this.showSearchSpinner = false;
-        }),
-        catchError(() => {
-          this.searchResults = [];
-          this.showSearchSpinner = false;
-          return of(this.hasSearched = true);
-        }),
-      )
-      .subscribe();
+      this.subscription = this.searchProvider.applicationReferenceSearch(this.candidateInfo)
+        .pipe(
+          tap(() => this.hasSearched = true),
+          map((results) => {
+            this.searchResults = results;
+            this.showSearchSpinner = false;
+          }),
+          catchError(() => {
+            this.searchResults = [];
+            this.showSearchSpinner = false;
+            return of(this.hasSearched = true);
+          }),
+        )
+        .subscribe();
     }
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
     this.showAdvancedSearchSpinner = true;
-    this.searchProvider.advancedSearch(advancedSearchParams)
+    this.subscription = this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
         tap(() => this.hasSearched = true),
         map((results) => {
@@ -114,6 +116,12 @@ export class TestResultsSearchPage extends BasePageComponent {
       return '';
     }
     return null;
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

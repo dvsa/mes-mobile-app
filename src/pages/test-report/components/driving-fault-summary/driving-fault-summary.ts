@@ -33,10 +33,12 @@ export class DrivingFaultSummaryComponent implements OnInit {
         select(getDrivingFaultSummaryCount),
       ),
     };
+  }
 
-    const { count$ } = this.componentState;
-
-    this.subscription = count$.subscribe();
+  ionViewWillEnter(): void {
+    if (this.componentState && this.componentState.count$) {
+      this.subscription = this.componentState.count$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

@@ -151,10 +151,15 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
         }),
       ),
     };
+    this.store$.dispatch(new PopulatePassCompletion());
+  }
+
+  ionViewWillEnter(): boolean {
     this.inputSubscriptions = [
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
     ];
-    this.store$.dispatch(new PopulatePassCompletion());
+
+    return true;
   }
 
   ionViewDidLeave(): void {

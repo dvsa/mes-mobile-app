@@ -21,6 +21,7 @@ import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../test-re
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { isEmpty } from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'vehicle-check',
@@ -38,6 +39,7 @@ export class VehicleCheckComponent implements OnInit {
   isDangerousMode: boolean = false;
 
   subscription: Subscription;
+  merged$: Observable<void | boolean>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -65,7 +67,7 @@ export class VehicleCheckComponent implements OnInit {
       select(isRemoveFaultMode),
     );
 
-    const merged$ = merge(
+    this.merged$ = merge(
       vehicleChecks$.pipe(map((vehicleChecks: VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
         this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;
@@ -76,8 +78,12 @@ export class VehicleCheckComponent implements OnInit {
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
     );
+  }
 
-    this.subscription = merged$.subscribe();
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

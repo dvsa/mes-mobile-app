@@ -86,6 +86,7 @@ export class CommunicationPage extends PracticeableBasePageComponent {
   selectNewEmail: boolean;
   conductedLanguage: string;
   isBookedInWelsh: boolean;
+  merged$: Observable<string | boolean>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -193,14 +194,13 @@ export class CommunicationPage extends PracticeableBasePageComponent {
       conductedLanguage$,
     } = this.pageState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value)),
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
     );
-    this.subscription = merged$.subscribe();
 
     if (this.shouldPreselectADefaultValue()) {
       this.initialiseDefaultSelections();
@@ -209,6 +209,14 @@ export class CommunicationPage extends PracticeableBasePageComponent {
     this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
     this.restoreRadiosFromState();
     this.restoreRadioValidators();
+  }
+
+  ionViewWillEnter(): boolean {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+
+    return true;
   }
 
   ionViewDidLeave(): void {

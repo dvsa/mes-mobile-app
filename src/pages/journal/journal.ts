@@ -58,6 +58,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
+  merged$: Observable<number | void>;
 
   constructor(
     public navController: NavController,
@@ -113,7 +114,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
     const { selectedDate$, slots$, error$, isLoading$, incompleteTestCounter$ } = this.pageState;
     // Merge observables into one
-    const merged$ = merge(
+    this.merged$ = merge(
       selectedDate$.pipe(map(this.setSelectedDate)),
       slots$.pipe(
         map(this.createSlots),
@@ -123,7 +124,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
       isLoading$.pipe(map(this.handleLoadingUI)),
       incompleteTestCounter$,
     );
-    this.subscription = merged$.subscribe();
   }
 
   ionViewDidLeave(): void {
@@ -137,6 +137,11 @@ export class JournalPage extends BasePageComponent implements OnInit {
     super.ionViewWillEnter();
     this.loadJournalManually();
     this.setupPolling();
+
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+
     return true;
   }
 

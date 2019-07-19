@@ -48,6 +48,7 @@ export class CompetencyComponent {
 
   competencyState: CompetencyState;
   subscription: Subscription;
+  merged$: Observable<number | boolean>;
 
   isRemoveFaultMode: boolean = false;
   faultCount: number;
@@ -99,7 +100,7 @@ export class CompetencyComponent {
       hasDangerousFault$,
     } = this.competencyState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       drivingFaultCount$.pipe(map(count => this.faultCount = count)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
@@ -108,8 +109,12 @@ export class CompetencyComponent {
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
     )
       .pipe(tap(this.canButtonRipple));
+  }
 
-    this.subscription = merged$.subscribe();
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

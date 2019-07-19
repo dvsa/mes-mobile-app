@@ -34,6 +34,7 @@ export class VehicleChecksCardComponent implements OnInit {
   hasShowMeFault: boolean = false;
 
   subscription: Subscription;
+  merged$: Observable<boolean>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -59,10 +60,16 @@ export class VehicleChecksCardComponent implements OnInit {
 
     const { hasVehicleChecksFault$, showMeQuestionOutcome$ } = this.componentState;
 
-    this.subscription = merge(
+    this.merged$ = merge(
       hasVehicleChecksFault$.pipe(map(val => this.hasFault = val)),
       showMeQuestionOutcome$.pipe(map(val => this.hasShowMeFault = val !== CompetencyOutcome.P)),
-    ).subscribe();
+    );
+  }
+
+  ionViewWillEnter(): void {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {
