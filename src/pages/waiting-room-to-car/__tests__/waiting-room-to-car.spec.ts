@@ -18,7 +18,7 @@ import {
 import { of } from 'rxjs/observable/of';
 import {
   EyesightResultReset,
-} from '../../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
+} from '../../../modules/tests/eyesight-test/eyesight-test.actions';
 import { QuestionProvider } from '../../../providers/question/question';
 import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';

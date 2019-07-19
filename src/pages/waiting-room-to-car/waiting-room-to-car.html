@@ -14,7 +14,8 @@
       <ion-grid>
 
         <eyesight-test [formGroup]="form"
-          [testState]="pageState.eyesightTestResult$ | async"
+          [eyesightPassRadioChecked]="pageState.eyesightPassRadioChecked$ | async"
+          [eyesightFailRadioChecked]="pageState.eyesightFailRadioChecked$ | async"
           (eyesightTestResultChange)="eyesightTestResultChanged($event)"></eyesight-test>
 
         <ion-row *ngIf="pageState.eyesightFailRadioChecked$ | async">

@@ -8,7 +8,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class EyesightTestComponent implements OnChanges {
 
   @Input()
-  testState: string;
+  eyesightPassRadioChecked: boolean;
+
+  @Input()
+  eyesightFailRadioChecked: boolean;
 
   @Input()
   formGroup: FormGroup;
@@ -23,7 +26,7 @@ export class EyesightTestComponent implements OnChanges {
       this.formControl  = new FormControl('', [Validators.required]);
       this.formGroup.addControl('eyesightCtrl', this.formControl);
     }
-    this.formControl.patchValue(this.testState);
+    // this.formControl.patchValue(this.eyesightPassRadioChecked);
   }
   eyesightTestResultChanged(result: string): void {
     if (this.formControl.valid) {
@@ -36,10 +39,10 @@ export class EyesightTestComponent implements OnChanges {
   }
 
   get testPassed(): boolean {
-    return this.testState === 'P';
+    return this.eyesightPassRadioChecked;
   }
   get testFailed(): boolean {
-    return this.testState === 'F';
+    return this.eyesightFailRadioChecked;
   }
 
 }

@@ -47,12 +47,12 @@ import {
   EyesightResultFailed,
   EyesightResultReset,
   EyesightTestResult,
-} from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
-import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
+} from '../../modules/tests/eyesight-test/eyesight-test.actions';
+import { getEyesightTestComplete } from '../../modules/tests/eyesight-test/eyesight-test.reducer';
 import {
   isFailed,
   isPassed,
-} from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
+} from '../../modules/tests/eyesight-test/eyesight-test.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
@@ -88,7 +88,6 @@ interface WaitingRoomToCarPageState {
   interpreterAccompaniment$: Observable<boolean>;
   eyesightPassRadioChecked$: Observable<boolean>;
   eyesightFailRadioChecked$: Observable<boolean>;
-  eyesightTestResult$: Observable<string>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   tellMeQuestionSelected$: Observable<boolean>;
@@ -181,15 +180,12 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
         select(getInterpreterAccompaniment),
       ),
       eyesightPassRadioChecked$: currentTest$.pipe(
-        select(getEyesightTestResult),
+        select(getEyesightTestComplete),
         map(isPassed),
       ),
       eyesightFailRadioChecked$: currentTest$.pipe(
-        select(getEyesightTestResult),
+        select(getEyesightTestComplete),
         map(isFailed),
-      ),
-      eyesightTestResult$: currentTest$.pipe(
-        select(getEyesightTestResult),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -325,7 +321,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
-  eyesightTestResultChanged(result: string): void {
+  eyesightTestResultChanged(result: EyesightTestResult): void {
     if (result === EyesightTestResult.Pass) {
       this.store$.dispatch(new EyesightResultPasssed());
       return;

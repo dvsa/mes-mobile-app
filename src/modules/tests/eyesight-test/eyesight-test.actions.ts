@@ -12,6 +12,9 @@ export class EyesightResultFailed implements Action {
   readonly type = EYESIGHT_RESULT_FAILED;
 }
 
+/**
+ * Resets `eyesightTestComplete` to `false` and remove the serious fault if one exists.
+ */
 export class EyesightResultReset implements Action {
   readonly type = EYESIGHT_RESULT_RESET;
 }
@@ -20,6 +23,7 @@ export enum EyesightTestResult {
   Pass = 'P',
   Fail = 'F',
 }
+
 export type Types =
   | EyesightResultPasssed
   | EyesightResultFailed
