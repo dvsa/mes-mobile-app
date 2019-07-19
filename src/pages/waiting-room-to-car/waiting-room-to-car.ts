@@ -50,8 +50,8 @@ import {
 } from '../../modules/tests/eyesight-test/eyesight-test.actions';
 import { getEyesightTestComplete } from '../../modules/tests/eyesight-test/eyesight-test.reducer';
 import {
-  isFailed,
-  isPassed,
+  isEyesightFailed,
+  isEyesightPassed,
 } from '../../modules/tests/eyesight-test/eyesight-test.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
@@ -181,11 +181,11 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
       ),
       eyesightPassRadioChecked$: currentTest$.pipe(
         select(getEyesightTestComplete),
-        map(isPassed),
+        map(isEyesightPassed),
       ),
       eyesightFailRadioChecked$: currentTest$.pipe(
         select(getEyesightTestComplete),
-        map(isFailed),
+        map(isEyesightFailed),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
