@@ -87,7 +87,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   modal: Modal;
   catBLegalRequirements: CatBLegalRequirements;
-  merged$: Observable<boolean | string>
+  merged$: Observable<boolean | string>;
 
   constructor(
     store$: Store<StoreModel>,
