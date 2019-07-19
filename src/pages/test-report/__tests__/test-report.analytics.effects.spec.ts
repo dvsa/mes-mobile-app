@@ -12,6 +12,7 @@ import {
   Competencies,
   ManoeuvreCompetencies,
   ManoeuvreTypes,
+  LegalRequirements,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
@@ -29,6 +30,8 @@ import {
   manoeuvreCompetencyLabels,
 } from '../components/manoeuvre-competency/manoeuvre-competency.constants';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { legalRequirementsLabels, legalRequirementToggleValues }
+  from '../../../shared/constants/legal-requirements/catb-legal-requirements';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -951,6 +954,99 @@ describe('Test Report Analytics Effects', () => {
           `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.END_TEST}`,
           AnalyticsLabels.TERMINATE_TEST,
           );
+        done();
+      });
+    });
+  });
+
+  describe('toggleLegalRequirement', () => {
+    it('should call logEvent for normal start', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      // ACT
+      actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      // ASSERT
+      effects.toggleLegalRequirement$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          legalRequirementsLabels[LegalRequirements.normalStart1],
+        );
+        done();
+      });
+    });
+    it('should call logEvent for eco completed', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testDataActions.ToggleEco());
+      // ACT
+      actions$.next(new testDataActions.ToggleEco());
+      // ASSERT
+      effects.toggleEco$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels['eco']} - ${legalRequirementToggleValues.completed}`,
+        );
+        done();
+      });
+    });
+    it('should call logEvent for eco uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testDataActions.ToggleEco());
+      store$.dispatch(new testDataActions.ToggleEco());
+      // ACT
+      actions$.next(new testDataActions.ToggleEco());
+      // ASSERT
+      effects.toggleEco$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels['eco']} - ${legalRequirementToggleValues.uncompleted}`,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for normal start, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      // ACT
+      actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      // ASSERT
+      effects.toggleLegalRequirement$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT}`,
+          legalRequirementsLabels[LegalRequirements.normalStart1],
+        );
+        done();
+      });
+    });
+    it('should call logEvent for eco, prefixed with practice test', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
+      store$.dispatch(new testDataActions.ToggleEco());
+      // ACT
+      actions$.next(new testDataActions.ToggleEco());
+      // ASSERT
+      effects.toggleEco$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEventCategories.TEST_REPORT}`,
+          `${AnalyticsEventCategories.PRACTICE_TEST} - ${AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT}`,
+          `${legalRequirementsLabels['eco']} - ${legalRequirementToggleValues.completed}`,
+        );
         done();
       });
     });
