@@ -20,7 +20,7 @@ describe('SearchProvider', () => {
       providers: [
         SearchProvider,
         { provide: UrlProvider, useClass: UrlProviderMock },
-        { provide: AppConfigProvider, useClass: AppConfigProviderMock }
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
       ],
     });
 
