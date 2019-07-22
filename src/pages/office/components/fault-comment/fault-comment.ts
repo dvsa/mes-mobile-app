@@ -89,7 +89,7 @@ export class FaultCommentComponent implements OnChanges {
     return `faultComment-${this.faultComment.source}-${this.faultType}-${this.faultComment.competencyIdentifier}`;
   }
 
-  get isFieldNotVisible() {
+  get isFieldNotVisible(): boolean {
     const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
       this.outcome, FaultCommentComponent.fieldName);
 
