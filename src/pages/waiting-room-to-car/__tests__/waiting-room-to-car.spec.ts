@@ -86,6 +86,7 @@ describe('WaitingRoomToCarPage', () => {
                       outcome: CompetencyOutcome.P,
                     },
                   },
+                  seriousFaults: [],
                 },
                 journalData: {
                   candidate: {
