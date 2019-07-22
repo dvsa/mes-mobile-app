@@ -15,10 +15,10 @@
       <ion-row>
         <div [formGroup]="parentForm">
           <textarea *ngIf="isFieldNotVisible" row="5" class="mes-data" [formControlName]="formControlName" [class.ng-invalid]="invalid"
-            maxlength="1000"
             [value]="faultComment.comment" (change)="faultCommentChanged($event.target.value)">
           </textarea>
           <textarea *ngIf="!isFieldNotVisible" row="5" class="mes-data" [formControlName]="formControlName" [class.ng-invalid]="invalid"
+            maxlength="1000"
             [value]="faultComment.comment" (change)="faultCommentChanged($event.target.value)">
           </textarea>
         </div>
