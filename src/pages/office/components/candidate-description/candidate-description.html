@@ -10,6 +10,7 @@
     <ion-row>
       <ion-col col-64>
         <textarea id="physical-description" formControlName="candidateDescription" class="vehicle-reg-input mes-data"
+          maxlength="1000"
           [class.ng-invalid]="invalid" [value]="candidateDescription"
           (change)="candidateDescriptionChanged($event.target.value)">
         </textarea>

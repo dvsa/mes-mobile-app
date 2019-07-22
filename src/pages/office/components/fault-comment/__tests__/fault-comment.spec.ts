@@ -79,8 +79,9 @@ describe('FaultCommentComponent', () => {
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.
-        get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).not.toBeNull();
+
+      const validator = component.parentForm.get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator;
+      expect(validator).not.toBeNull();
     });
 
     it('should clear validators from the form field if < 16 driving faults.', () => {
@@ -99,8 +100,9 @@ describe('FaultCommentComponent', () => {
 
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(component.parentForm.
-        get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator).toBeNull();
+
+      const validator = component.parentForm.get(`faultComment-${CommentSource.SIMPLE}-driving-signalsTimed`).validator;
+      expect(validator).toBeNull();
     });
 
     it('should clear validators for driving faults if > 15 driving faults and shouldRender is false', () => {
