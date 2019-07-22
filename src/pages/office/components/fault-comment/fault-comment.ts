@@ -44,12 +44,10 @@ export class FaultCommentComponent implements OnChanges {
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
   ngOnChanges(): void {
-    const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
-      this.outcome, FaultCommentComponent.fieldName);
 
     // mes 2393 - need to remove validations if < 16 faults as comments can
     // only be entered if 16 or more
-    if (fieldVisibility === VisibilityType.NotVisible || this.shouldClearDrivingFaultValidators()) {
+    if (this.isFieldNotVisible || this.shouldClearDrivingFaultValidators()) {
       this.parentForm.get(this.formControlName).clearValidators();
     } else {
       this.parentForm.get(this.formControlName).setValidators([Validators.required, Validators.maxLength(1000)]);
@@ -89,6 +87,13 @@ export class FaultCommentComponent implements OnChanges {
 
   get formControlName() {
     return `faultComment-${this.faultComment.source}-${this.faultType}-${this.faultComment.competencyIdentifier}`;
+  }
+
+  get isFieldNotVisible(): boolean {
+    const fieldVisibility = this.outcomeBehaviourProvider.getVisibilityType(
+      this.outcome, FaultCommentComponent.fieldName);
+
+    return fieldVisibility === VisibilityType.NotVisible;
   }
 
 }
