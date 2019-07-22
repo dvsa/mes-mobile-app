@@ -14,15 +14,15 @@
       <ion-grid>
 
         <eyesight-test [formGroup]="form"
-          [eyesightPassRadioChecked]="pageState.eyesightPassRadioChecked$ | async"
-          [eyesightFailRadioChecked]="pageState.eyesightFailRadioChecked$ | async"
+          [eyesightPassRadioChecked]="(pageState.eyesightTestComplete$ | async) && !(pageState.eyesightTestFailed$ | async)"
+          [eyesightFailRadioChecked]="pageState.eyesightTestFailed$ | async"
           (eyesightTestResultChange)="eyesightTestResultChanged($event)"></eyesight-test>
 
-        <ion-row *ngIf="pageState.eyesightFailRadioChecked$ | async">
+        <ion-row *ngIf="pageState.eyesightTestFailed$ | async">
           <eyesight-failure-confirmation [cancelFn]="eyesightFailCancelled"></eyesight-failure-confirmation>
         </ion-row>
 
-        <ion-row no-padding [hidden]="pageState.eyesightFailRadioChecked$ | async" id="post-eyesight-form-content">
+        <ion-row no-padding [hidden]="pageState.eyesightTestFailed$ | async" id="post-eyesight-form-content">
           <ion-col no-padding>
             <tell-me-question-card [formGroup]="form"
               [tellMeQuestion]="pageState.tellMeQuestion$ | async"
@@ -64,7 +64,7 @@
         </ion-row>
 
       </ion-grid>
-      <ion-footer [hidden]="pageState.eyesightFailRadioChecked$ | async">
+      <ion-footer [hidden]="pageState.eyesightTestFailed$ | async">
         <ion-row class="mes-full-width-card">
           <button type="submit" class="mes-primary-button" id="continue-to-test-report-button" ion-button>
             <h3>Continue to test report</h3>

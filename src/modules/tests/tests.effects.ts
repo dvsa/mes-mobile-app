@@ -5,6 +5,8 @@ import { TestPersistenceProvider } from '../../providers/test-persistence/test-p
 import { from } from 'rxjs/observable/from';
 import * as testActions from './tests.actions';
 import * as testStatusActions from './test-status/test-status.actions';
+import * as eyesightTestActions from './eyesight-test/eyesight-test.actions';
+import * as testDataActions from './test-data/test-data.actions';
 import { of } from 'rxjs/observable/of';
 import { PopulateApplicationReference } from './application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from './candidate/candidate.actions';
@@ -22,6 +24,7 @@ import { find, startsWith } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
+import { Competencies } from './test-data/test-data.constants';
 
 @Injectable()
 export class TestsEffects {
@@ -174,4 +177,19 @@ export class TestsEffects {
     }),
   );
 
+  @Effect()
+  eyesightTestPassedEffect$ = this.actions$.pipe(
+    ofType(eyesightTestActions.EYESIGHT_RESULT_PASSED, eyesightTestActions.EYESIGHT_RESULT_RESET),
+    map((action) => {
+      return new testDataActions.RemoveSeriousFault(Competencies.eyesightTest);
+    }),
+  );
+
+  @Effect()
+  eyesightTestFailedEffect$ = this.actions$.pipe(
+    ofType(eyesightTestActions.EYESIGHT_RESULT_FAILED),
+    map((action) => {
+      return new testDataActions.AddSeriousFault(Competencies.eyesightTest);
+    }),
+  );
 }

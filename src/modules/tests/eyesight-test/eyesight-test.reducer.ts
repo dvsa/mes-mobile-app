@@ -9,7 +9,6 @@ export const eyesightTestReducer = (
 ): boolean => {
   switch (action.type) {
     case EYESIGHT_RESULT_PASSED:
-      return true;
     case EYESIGHT_RESULT_FAILED:
       return true;
     case EYESIGHT_RESULT_RESET:

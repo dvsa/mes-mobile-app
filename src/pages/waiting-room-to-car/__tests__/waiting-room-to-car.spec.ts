@@ -141,7 +141,8 @@ describe('WaitingRoomToCarPage', () => {
       // tslint:disable-next-line:max-line-length
       it('should hide the rest of the form and show eyesight failure confirmation when page state indicates fail is selected', () => {
         fixture.detectChanges();
-        component.pageState.eyesightFailRadioChecked$ = of(true);
+        component.pageState.eyesightTestComplete$ = of(true);
+        component.pageState.eyesightTestFailed$ = of(true);
         fixture.detectChanges();
         const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
@@ -151,7 +152,7 @@ describe('WaitingRoomToCarPage', () => {
       // tslint:disable-next-line:max-line-length
       it('should show the rest of the form and not render eyesight failure confirmation when page state indicates pass is selected', () => {
         fixture.detectChanges();
-        component.pageState.eyesightPassRadioChecked$ = of(true);
+        component.pageState.eyesightTestComplete$ = of(true);
         fixture.detectChanges();
         const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));

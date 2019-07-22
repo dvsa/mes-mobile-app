@@ -48,11 +48,6 @@ import {
   EyesightResultReset,
   EyesightTestResult,
 } from '../../modules/tests/eyesight-test/eyesight-test.actions';
-import { getEyesightTestComplete } from '../../modules/tests/eyesight-test/eyesight-test.reducer';
-import {
-  isEyesightFailed,
-  isEyesightPassed,
-} from '../../modules/tests/eyesight-test/eyesight-test.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
@@ -70,10 +65,13 @@ import {
   tellMeQuestionOutcome,
   getVehicleChecks,
   getTellMeQuestion,
+  hasSeriousFault,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { WAITING_ROOM_TO_CAR_PAGE, TEST_REPORT_PAGE } from '../page-names.constants';
+import { getEyesightTestComplete } from '../../modules/tests/eyesight-test/eyesight-test.reducer';
+import { Competencies } from '../../modules/tests/test-data/test-data.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -86,8 +84,8 @@ interface WaitingRoomToCarPageState {
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  eyesightPassRadioChecked$: Observable<boolean>;
-  eyesightFailRadioChecked$: Observable<boolean>;
+  eyesightTestComplete$: Observable<boolean>;
+  eyesightTestFailed$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   tellMeQuestionSelected$: Observable<boolean>;
@@ -179,13 +177,12 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      eyesightPassRadioChecked$: currentTest$.pipe(
+      eyesightTestComplete$: currentTest$.pipe(
         select(getEyesightTestComplete),
-        map(isEyesightPassed),
       ),
-      eyesightFailRadioChecked$: currentTest$.pipe(
-        select(getEyesightTestComplete),
-        map(isEyesightFailed),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(testData => hasSeriousFault(testData, Competencies.eyesightTest)),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
