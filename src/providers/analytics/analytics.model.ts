@@ -51,6 +51,7 @@ export enum AnalyticsEventCategories {
 
 export enum AnalyticsEvents {
   START_TEST = 'start test',
+  REKEY_TEST = 'rekey test',
   END_TEST = 'end test',
   APP_LOAD = 'app load',
   SLOT_CHANGED = 'slot changed',
