@@ -41,7 +41,8 @@ Feature: Office page
 
    Scenario: Office page validation for fail
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I start the test for "Mrs Jane Doe"
+      When I check candidate details for "Mrs Jane Doe"
+      And I start the test for "Mrs Jane Doe"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Jane Doe" page
