@@ -36,7 +36,7 @@ describe('ControlledStopComponent', () => {
       ],
       imports: [
         IonicModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport : testReportReducer }),
+        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
       ],
     })
       .compileComponents()

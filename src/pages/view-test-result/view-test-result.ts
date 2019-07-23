@@ -54,7 +54,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   loadingSpinner: Loading;
   subscription: Subscription;
   showErrorMessage: boolean = false;
-  testResult$: Observable<object | StandardCarTestCATBSchema>;
+  testResult$ = new Observable<object | StandardCarTestCATBSchema>();
 
   constructor(
     public navController: NavController,
@@ -75,7 +75,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   ngOnInit(): void {
     this.handleLoadingUI(true);
 
-    this.testResult$ = this.searchProvider
+    this.subscription = this.searchProvider
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
         map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
@@ -85,15 +85,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
           this.handleLoadingUI(false);
           return of();
         }),
-      );
-  }
-
-  ionViewWillEnter(): boolean {
-    if (this.testResult$) {
-      this.subscription = this.testResult$.subscribe();
-    }
-
-    return true;
+      ).subscribe();
   }
 
   ionViewDidLeave(): void {

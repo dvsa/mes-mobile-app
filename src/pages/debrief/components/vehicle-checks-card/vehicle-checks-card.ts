@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -27,14 +27,13 @@ interface VehicleChecksCardComponentState {
   selector: 'vehicle-checks-card',
   templateUrl: 'vehicle-checks-card.html',
 })
-export class VehicleChecksCardComponent implements OnInit {
+export class VehicleChecksCardComponent implements OnInit, OnDestroy {
 
   componentState: VehicleChecksCardComponentState;
   hasFault: boolean = false;
   hasShowMeFault: boolean = false;
 
   subscription: Subscription;
-  merged$: Observable<boolean>;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -60,19 +59,14 @@ export class VehicleChecksCardComponent implements OnInit {
 
     const { hasVehicleChecksFault$, showMeQuestionOutcome$ } = this.componentState;
 
-    this.merged$ = merge(
+    this.subscription = merge(
       hasVehicleChecksFault$.pipe(map(val => this.hasFault = val)),
       showMeQuestionOutcome$.pipe(map(val => this.hasShowMeFault = val !== CompetencyOutcome.P)),
-    );
+    ).subscribe();
+
   }
 
-  ionViewWillEnter(): void {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
-  }
-
-  ionViewDidLeave(): void {
+  ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

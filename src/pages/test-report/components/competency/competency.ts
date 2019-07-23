@@ -107,14 +107,12 @@ export class CompetencyComponent {
       hasSeriousFault$.pipe(map(toggle => this.hasSeriousFault = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       hasDangerousFault$.pipe(map(toggle => this.hasDangerousFault = toggle)),
-    )
-      .pipe(tap(this.canButtonRipple));
+    ).pipe(tap(this.canButtonRipple));
+
   }
 
   ionViewWillEnter(): void {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
+    this.subscription = this.merged$.subscribe();
   }
 
   ionViewDidLeave(): void {

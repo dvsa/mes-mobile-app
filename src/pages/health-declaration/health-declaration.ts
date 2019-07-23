@@ -82,7 +82,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   inputSubscriptions: Subscription[] = [];
   isBookedInWelsh: boolean;
   conductedLanguage: string;
-  merged$: Observable<string | boolean>;
+  merged$: Observable<boolean | string>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -202,6 +202,11 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   }
 
+  ionViewWillEnter(): boolean {
+    this.subscription = this.merged$.subscribe();
+    return true;
+  }
+
   rehydrateFields(): void {
     this.inputSubscriptions.push(
       this.pageState.healthDeclarationAccepted$
@@ -295,13 +300,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
-  }
-
-  ionViewWillEnter(): boolean {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
-    return true;
   }
 
   ionViewDidLeave(): void {

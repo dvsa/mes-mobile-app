@@ -72,7 +72,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
   conductedLanguage: string;
   isBookedInWelsh: boolean;
   isPassed: boolean;
-  merged$: Observable<string | boolean | void>;
 
   // Used for now to test displaying pass/fail/terminated messages
   public outcome: string;
@@ -183,7 +182,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
     const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
 
-    this.merged$ = merge(
+    this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result)),
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       etaFaults$.pipe(
@@ -199,7 +198,8 @@ export class DebriefPage extends PracticeableBasePageComponent {
         }),
       ),
       conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
-    );
+    ).subscribe();
+
     this.configureI18N(this.conductedLanguage === DebriefPage.welshLanguage);
   }
 
@@ -207,14 +207,6 @@ export class DebriefPage extends PracticeableBasePageComponent {
     if (this.isBookedInWelsh && isWelsh) {
       this.translate.use('cy');
     }
-  }
-
-  ionViewWillEnter(): boolean {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
-
-    return true;
   }
 
   ionViewDidEnter(): void {
@@ -232,6 +224,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
     if (this.subscription) {
       this.subscription.unsubscribe();
+
     }
   }
 

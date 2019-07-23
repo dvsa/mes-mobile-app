@@ -87,7 +87,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
 
   modal: Modal;
   catBLegalRequirements: CatBLegalRequirements;
-  merged$: Observable<boolean | string>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -167,7 +166,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       catBLegalRequirements$,
     } = this.pageState;
 
-    this.merged$ = merge(
+    this.subscription = merge(
       candidateUntitledName$,
       isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
@@ -180,7 +179,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       catBLegalRequirements$.pipe(
         map(result => (this.catBLegalRequirements = result)),
       ),
-    );
+    ).subscribe();
   }
 
   ionViewWillEnter(): boolean {
@@ -193,9 +192,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
       this.statusBar.hide();
     }
 
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
     return true;
   }
 

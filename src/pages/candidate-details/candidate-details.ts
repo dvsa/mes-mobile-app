@@ -49,7 +49,6 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   slotId: number;
   slotChanged: boolean = false;
   testCategory = TestCategory.B;
-  merged$: Observable<string | Business>;
 
   constructor(
     public navController: NavController,
@@ -99,7 +98,7 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
 
     const { name$, time$, details$, business$ } = this.pageState;
 
-    this.merged$ = merge(
+    const merged$ = merge(
       name$,
       time$,
       details$.pipe(
@@ -107,6 +106,8 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
       ),
       business$,
     );
+
+    this.subscription = merged$.subscribe();
 
     if (this.slotChanged) {
       this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
@@ -119,21 +120,12 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
         }
       },
     );
-
   }
 
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  ionViewWillEnter(): boolean {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
-
-    return true;
   }
 
   ionViewDidEnter(): void {

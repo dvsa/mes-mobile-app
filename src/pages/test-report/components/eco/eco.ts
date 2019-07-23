@@ -66,13 +66,10 @@ export class EcoComponent implements OnInit {
       adviceGivenPlanning$.pipe(map(toggle => this.adviceGivenPlanning = toggle)),
       adviceGivenControl$.pipe(map(toggle => this.adviceGivenControl = toggle)),
     );
-
   }
 
   ionViewWillEnter(): void {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
+    this.subscription = this.merged$.subscribe();
   }
 
   ionViewDidLeave(): void {

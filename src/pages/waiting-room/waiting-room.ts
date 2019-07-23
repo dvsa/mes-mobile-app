@@ -69,9 +69,9 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
 
   conductedLanguage: string;
 
-  merged$: Observable<boolean | string>;
-
   inputSubscriptions: Subscription[] = [];
+
+  merged$: Observable<boolean | string>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -158,9 +158,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   ionViewWillEnter(): boolean {
-    if (this.merged$) {
-      this.subscription = this.merged$.subscribe();
-    }
+    this.subscription = this.merged$.subscribe();
 
     return true;
   }
