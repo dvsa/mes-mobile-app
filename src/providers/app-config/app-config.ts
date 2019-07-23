@@ -10,6 +10,7 @@ import { NetworkStateProvider, ConnectionStatus } from '../network-state/network
 import { AppConfigError } from './app-config.constants';
 import { AuthenticationError } from './../authentication/authentication.constants';
 import { Platform } from 'ionic-angular';
+import { timeout } from 'rxjs/operators';
 
 declare let cordova: any;
 
@@ -118,12 +119,17 @@ export class AppConfigProvider {
     new Promise((resolve, reject) => {
       if (this.networkState.getNetworkState() === ConnectionStatus.ONLINE) {
         this.httpClient.get<any>(this.environmentFile.configUrl)
+          .pipe(timeout(30000))
           .subscribe(
             (data) => {
               this.dataStore.setItem('CONFIG', JSON.stringify(data));
               resolve(data);
             },
-            error => reject(error),
+            (error) => {
+              this.getCachedRemoteConfig()
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+            },
           );
       } else {
         this.getCachedRemoteConfig()
