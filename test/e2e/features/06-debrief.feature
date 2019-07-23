@@ -25,12 +25,13 @@ Feature: Debrief including Health Declaration
       When I try to confirm the pass certificate details
       Then validation item "pass-finalisation-licence-received-validation-text" should be "Select a response"
       And validation item "pass-finalisation-licence-received-validation-text" should be visible
-      And validation item "pass-finalisation-certificate-number-validation-text" should be "Enter a certificate number"
+      And validation item "pass-finalisation-certificate-number-validation-text" should be "Enter a valid certificate number (max 8 characters)"
       And validation item "pass-finalisation-certificate-number-validation-text" should be visible
 
    Scenario: The transmission value from the WRTC is carried through to the pass test debrief
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I start the test for "Mrs Jane Doe"
+      When I check candidate details for "Mrs Jane Doe"
+      And I start the test for "Mrs Jane Doe"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Jane Doe" page
@@ -48,7 +49,8 @@ Feature: Debrief including Health Declaration
 
    Scenario: For a pass the health declaration shows the correct information and validation is enforced
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
-      When I start the test for "Mr Ali Campbell"
+      When I check candidate details for "Mr Ali Campbell"
+      And I start the test for "Mr Ali Campbell"
       And the candidate requests to receive results by post
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Ali Campbell" page

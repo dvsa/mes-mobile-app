@@ -52,6 +52,7 @@ export class AppConfigProviderMock {
         url: localEnvironmentMock.logs.url,
         autoSendInterval: localEnvironmentMock.logs.autoSendInterval,
       },
+      requestTimeout: localEnvironmentMock.requestTimeout,
     };
   }
 }

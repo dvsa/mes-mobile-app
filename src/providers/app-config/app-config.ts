@@ -182,5 +182,6 @@ export class AppConfigProvider {
         url: data.logs.url,
         autoSendInterval: data.logs.autoSendInterval,
       },
+      requestTimeout: data.requestTimeout,
     } as AppConfig)
 }

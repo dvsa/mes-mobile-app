@@ -38,6 +38,9 @@ import {
 } from '../debrief/debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import { ViewTestResultViewDidEnter } from './view-test-result.actions';
 
 @IonicPage()
 @Component({
@@ -64,6 +67,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     public authenticationProvider: AuthenticationProvider,
     public searchProvider: SearchProvider,
     public compressionProvider: CompressionProvider,
+    private store$: Store<StoreModel>,
 
   ) {
     super(platform, navController, authenticationProvider);
@@ -92,6 +96,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new ViewTestResultViewDidEnter());
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
