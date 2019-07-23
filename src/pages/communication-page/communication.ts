@@ -212,7 +212,9 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   }
 
   ionViewWillEnter(): boolean {
-    this.subscription = this.merged$.subscribe();
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
 
     return true;
   }

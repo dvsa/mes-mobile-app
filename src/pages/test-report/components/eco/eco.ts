@@ -69,7 +69,9 @@ export class EcoComponent implements OnInit {
   }
 
   ionViewWillEnter(): void {
-    this.subscription = this.merged$.subscribe();
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

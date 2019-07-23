@@ -58,7 +58,9 @@ export class ToolbarComponent {
   }
 
   ionViewWillEnter(): void {
-    this.subscription = this.merged$.subscribe();
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
   }
 
   ionViewDidLeave(): void {

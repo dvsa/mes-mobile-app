@@ -158,7 +158,9 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   ionViewWillEnter(): boolean {
-    this.subscription = this.merged$.subscribe();
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
 
     return true;
   }
