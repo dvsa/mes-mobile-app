@@ -37,7 +37,6 @@ import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
-  CandidateChoseSupportCentreAsCommunicationPreference,
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
@@ -68,7 +67,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   static readonly updatedEmail: string = 'Updated';
   static readonly email: CommunicationMethod = 'Email';
   static readonly post: CommunicationMethod = 'Post';
-  static readonly supportCentre: CommunicationMethod = 'Support Centre';
   static readonly welshLanguage: ConductedLanguage = 'Cymraeg';
   static readonly englishLanguage: ConductedLanguage = 'English';
 
@@ -277,17 +275,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     );
   }
 
-  dispatchCandidateChoseSupportCentre(): void {
-    this.setCommunicationType(CommunicationPage.supportCentre);
-    this.store$.dispatch(
-      new CandidateChoseSupportCentreAsCommunicationPreference(CommunicationPage.supportCentre),
-    );
-  }
-
-  isSupportCentreSelected() {
-    return this.communicationType === CommunicationPage.supportCentre;
-  }
-
   getFormValidation(): { [key: string]: FormControl } {
     return {
       radioCtrl: new FormControl('', Validators.required),
@@ -389,7 +376,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
    * Function to conditionally dispatch 'dispatchCandidateChoseNewEmail' action
    * to cover edge case candidate action.
    *
-   * Candidate selects new email -> app crashes -> candidate selects Post/Support Centre ->
+   * Candidate selects new email -> app crashes -> candidate selects Post ->
    * app crashes -> candidate selects new email (previous state value exists so examiner clicks continue)
    *
    * As state change for new email happens on text input, the expected action

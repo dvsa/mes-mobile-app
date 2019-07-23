@@ -24,11 +24,6 @@ export const communicationPreferencesReducer = (
         ...state,
         communicationMethod: action.communicationMethod,
       };
-    case communicationPrefActions.CANDIDATE_CONFIRMED_COMMUNICATION_PREFERENCE_AS_SUPPORT_CENTRE:
-      return {
-        ...state,
-        communicationMethod: action.communicationMethod,
-      };
     case communicationPrefActions.CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_WELSH:
       return {
         ...state,

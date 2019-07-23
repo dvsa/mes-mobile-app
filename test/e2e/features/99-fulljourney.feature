@@ -175,7 +175,7 @@ Feature: Full end to end journey
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
       When I check candidate details for "Mr James Brown"
       And I start the test for "Mr James Brown"
-      And the candidate requests to receive results by calling the support centre
+      And the candidate requests to receive results by post
       And the candidate confirms their communication preference
       Then I should see the "Declaration - James Brown" page
       And the candidate completes the declaration page
