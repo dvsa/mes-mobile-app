@@ -622,4 +622,51 @@ export class TestReportAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  showMeQuestionCompletedEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_PASSED,
+      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.completed}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  showMeQuestionUncompletedEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.uncompleted}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
 }

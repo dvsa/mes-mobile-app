@@ -1088,6 +1088,47 @@ describe('Test Report Analytics Effects', () => {
         done();
       });
     });
+
+    it('should call logEvent for show me / tell me completed', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      const showMeQuestionPassedAction = new testDataActions.ShowMeQuestionPassed();
+      store$.dispatch(showMeQuestionPassedAction);
+      // ACT
+      actions$.next(showMeQuestionPassedAction);
+      // ASSERT
+      effects.showMeQuestionCompletedEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.completed}`,
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent for show me / tell me uncompleted', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testDataActions.ShowMeQuestionPassed());
+      const showMeQuestionRemoveFaultAction = new testDataActions.ShowMeQuestionRemoveFault();
+      store$.dispatch(showMeQuestionRemoveFaultAction);
+      // ACT
+      actions$.next(showMeQuestionRemoveFaultAction);
+      // ASSERT
+      effects.showMeQuestionUncompletedEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledTimes(1);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_REPORT,
+          AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT,
+          `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.uncompleted}`,
+        );
+        done();
+      });
+    });
   });
 
 });
