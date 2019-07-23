@@ -14,8 +14,10 @@ export const SEND_TEST_FAILURE = '[Tests] Send Test Failure';
 export const PERSIST_TESTS = '[Tests] Persist';
 export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
 export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
-export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
 export const START_TEST_REPORT_PRACTICE_TEST = '[Tests] Start practice test';
+
+export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
+export const TEST_OUTCOME_CHANGED = '[TestReportEffects] Test outcome changed';
 
 export class PersistTests implements Action {
   readonly type = PERSIST_TESTS;
@@ -33,6 +35,10 @@ export class LoadPersistedTestsSuccess implements Action {
 export class SetActivityCode implements Action {
   readonly type = SET_ACTIVITY_CODE;
   constructor(public payload: ActivityCode) {}
+}
+
+export class TestOutcomeChanged implements Action {
+  readonly type = TEST_OUTCOME_CHANGED;
 }
 
 export class StartTestReportPracticeTest implements Action {
@@ -76,6 +82,7 @@ export type Types =
   | LoadPersistedTests
   | LoadPersistedTestsSuccess
   | SetActivityCode
+  | TestOutcomeChanged
   | StartTestReportPracticeTest
   | StartSendingCompletedTests
   | SendCompletedTests

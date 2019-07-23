@@ -11,8 +11,13 @@ import {
   AnalyticsEvents,
   AnalyticsDimensionIndices,
 } from '../../providers/analytics/analytics.model';
-import { getTestById, isPassed } from './tests.selector';
-import { SEND_COMPLETED_TESTS_FAILURE, SendCompletedTestsFailure } from './tests.actions';
+import { getTestById, isPassed, getCurrentTest } from './tests.selector';
+import {
+  SEND_COMPLETED_TESTS_FAILURE,
+  SendCompletedTestsFailure,
+  TEST_OUTCOME_CHANGED,
+  TestOutcomeChanged,
+} from './tests.actions';
 import { of } from 'rxjs/observable/of';
 import { TestsModel } from './tests.model';
 
@@ -66,6 +71,34 @@ export class TestsAnalyticsEffects {
     ofType(SEND_COMPLETED_TESTS_FAILURE),
     switchMap((action: SendCompletedTestsFailure) => {
       this.analytics.logError('Error connecting to microservice (test submission)', 'No message');
+      return of();
+    }),
+  );
+
+  @Effect()
+  testOutcomeChangedEffect$ = this.actions$.pipe(
+    ofType(TEST_OUTCOME_CHANGED),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [TestOutcomeChanged, TestsModel]) => {
+      const test = getCurrentTest(tests);
+      const journalDataOfTest = test.journalData;
+
+      this.analytics.logEvent(
+        AnalyticsEventCategories.TEST_REPORT,
+        AnalyticsEvents.TEST_OUTCOME_CHANGED,
+      );
+
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
+
       return of();
     }),
   );
