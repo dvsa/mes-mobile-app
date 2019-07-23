@@ -219,16 +219,6 @@ describe('CommunicationPage', () => {
       });
     });
 
-    describe('Support centre selected', () => {
-      it('should dispatch a CandidateChoseSupportCentreAsCommunicationPreference action', () => {
-        component.dispatchCandidateChoseSupportCentre();
-        expect(store$.dispatch)
-          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseSupportCentreAsCommunicationPreference(
-            CommunicationPage.supportCentre,
-          ));
-      });
-    });
-
     describe('Welsh text selected', () => {
       it('it should dispatch CandidateChoseToProceedWithTestInWelsh action', () => {
         component.dispatchCandidateChoseToProceedInWelsh();
@@ -308,8 +298,6 @@ describe('CommunicationPage', () => {
         fixture.detectChanges();
         const { debugElement } = fixture;
         expect(debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe('Select how to receive the test results');
-        expect(debugElement.query(By.css('#support-centre + label')).nativeElement.innerHTML.trim())
-          .toBe('By calling the support centre');
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
         fixture.detectChanges();
@@ -319,8 +307,6 @@ describe('CommunicationPage', () => {
           fixture.detectChanges();
           expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)
             .toBe((<any>welshTranslations).communication.instructionHeader);
-          expect(fixture.debugElement.query(By.css('#support-centre + label')).nativeElement.innerHTML.trim())
-            .toBe((<any>welshTranslations).communication.optionCallCentre);
           done();
         });
         store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
