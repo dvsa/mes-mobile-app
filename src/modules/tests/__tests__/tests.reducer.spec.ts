@@ -55,6 +55,7 @@ describe('testsReducer', () => {
             drivingFaults: {
               clearance: 1,
             },
+            eyesightTest: {},
             manoeuvres: {},
             seriousFaults: {
               signalsTimed: true,

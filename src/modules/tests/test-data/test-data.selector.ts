@@ -137,6 +137,10 @@ export const hasManoeuvreBeenCompleted = (data: TestData) => {
 
 export const hasControlledStopBeenCompleted = (data: TestData) => data.controlledStop.selected;
 
+export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
+
+export const hasEyesightTestGotSeriousFault = (data: TestData) => data.eyesightTest.seriousFault;
+
 export const hasLegalRequirementBeenCompleted = (data: TestRequirements, legalRequirement: LegalRequirements) => {
   return data[legalRequirement];
 };

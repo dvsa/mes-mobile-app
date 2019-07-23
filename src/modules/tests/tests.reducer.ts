@@ -12,7 +12,6 @@ import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
-import { eyesightTestReducer } from './eyesight-test/eyesight-test.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
 import { testStatusReducer } from './test-status/test-status.reducer';
@@ -104,7 +103,6 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
               applicationReference: applicationReferenceReducer,
             },
             preTestDeclarations: preTestDeclarationsReducer,
-            eyesightTestComplete: eyesightTestReducer,
             accompaniment: accompanimentReducer,
             vehicleDetails: vehicleDetailsReducer,
             instructorDetails: instructorDetailsReducer,

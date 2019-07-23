@@ -30,13 +30,20 @@ export const TOGGLE_ETA = '[Eta] Toggle Eta';
 export const TOGGLE_ECO = '[Eco] Toggle Eco';
 export const TOGGLE_CONTROL_ECO = '[Eco] Toggle Control Eco';
 export const TOGGLE_PLANNING_ECO = '[Eco] Toggle Planning Eco';
+
 export const TOGGLE_CONTROLLED_STOP = '[ControlledStop] Toggle Controlled Stop';
 export const CONTROLLED_STOP_ADD_DRIVING_FAULT = '[ControlledStop] Add Driving Fault';
 export const CONTROLLED_STOP_ADD_SERIOUS_FAULT = '[ControlledStop] Add Serious Fault';
 export const CONTROLLED_STOP_ADD_DANGEROUS_FAULT = '[ControlledStop] Add Dangerous Fault';
 export const CONTROLLED_STOP_REMOVE_FAULT = '[ControlledStop] Remove Fault';
 export const ADD_CONTROLLED_STOP_COMMENT = '[ControlledStop] Add Comment';
+
 export const ADD_DRIVING_FAULT_COMMENT = '[Office] Add driving fault comment';
+
+export const EYESIGHT_TEST_PASSED = '[EyesightTest] Set passed';
+export const EYESIGHT_TEST_FAILED = '[EyesightTest] Set failed';
+export const EYESIGHT_TEST_RESET = '[EyesightTest] Reset state';
+export const EYESIGHT_TEST_ADD_COMMENT = '[EyesightTest] Add comment';
 
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
 export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
@@ -105,6 +112,23 @@ export class ControlledStopRemoveFault implements Action {
 
 export class AddControlledStopComment implements Action {
   readonly type = ADD_CONTROLLED_STOP_COMMENT;
+  constructor(public comment: string) { }
+}
+
+export class EyesightTestPassed implements Action {
+  readonly type = EYESIGHT_TEST_PASSED;
+}
+
+export class EyesightTestFailed implements Action {
+  readonly type = EYESIGHT_TEST_FAILED;
+}
+
+export class EyesightTestReset implements Action {
+  readonly type = EYESIGHT_TEST_RESET;
+}
+
+export class EyesightTestAddComment implements Action {
+  readonly type = EYESIGHT_TEST_ADD_COMMENT;
   constructor(public comment: string) { }
 }
 
@@ -245,6 +269,10 @@ export type Types =
   | ControlledStopAddSeriousFault
   | ControlledStopAddDangerousFault
   | ControlledStopRemoveFault
+  | EyesightTestPassed
+  | EyesightTestFailed
+  | EyesightTestReset
+  | EyesightTestAddComment
   | AddControlledStopComment
   | TellMeQuestionSelected
   | TellMeQuestionCorrect

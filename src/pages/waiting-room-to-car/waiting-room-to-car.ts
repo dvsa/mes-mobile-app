@@ -42,12 +42,6 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import {
-  EyesightResultPasssed,
-  EyesightResultFailed,
-  EyesightResultReset,
-  EyesightTestResult,
-} from '../../modules/tests/eyesight-test/eyesight-test.actions';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
@@ -57,6 +51,9 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
+  EyesightTestReset,
+  EyesightTestPassed,
+  EyesightTestFailed,
 } from '../../modules/tests/test-data/test-data.actions';
 import {
   isTellMeQuestionSelected,
@@ -65,13 +62,12 @@ import {
   tellMeQuestionOutcome,
   getVehicleChecks,
   getTellMeQuestion,
-  hasSeriousFault,
+  hasEyesightTestBeenCompleted,
+  hasEyesightTestGotSeriousFault,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
 import { WAITING_ROOM_TO_CAR_PAGE, TEST_REPORT_PAGE } from '../page-names.constants';
-import { getEyesightTestComplete } from '../../modules/tests/eyesight-test/eyesight-test.reducer';
-import { Competencies } from '../../modules/tests/test-data/test-data.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -178,11 +174,12 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
         select(getInterpreterAccompaniment),
       ),
       eyesightTestComplete$: currentTest$.pipe(
-        select(getEyesightTestComplete),
+        select(getTestData),
+        select(hasEyesightTestBeenCompleted),
       ),
       eyesightTestFailed$: currentTest$.pipe(
         select(getTestData),
-        select(testData => hasSeriousFault(testData, Competencies.eyesightTest)),
+        select(hasEyesightTestGotSeriousFault),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -300,7 +297,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
 
   eyesightFailCancelled = () => {
     this.updateForm('eyesightCtrl', null);
-    this.store$.dispatch(new EyesightResultReset());
+    this.store$.dispatch(new EyesightTestReset());
   }
 
   tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
@@ -318,12 +315,9 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
-  eyesightTestResultChanged(result: EyesightTestResult): void {
-    if (result === EyesightTestResult.Pass) {
-      this.store$.dispatch(new EyesightResultPasssed());
-      return;
-    }
-    this.store$.dispatch(new EyesightResultFailed());
+  eyesightTestResultChanged(passed: boolean): void {
+    const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
+    this.store$.dispatch(action);
   }
 
 }

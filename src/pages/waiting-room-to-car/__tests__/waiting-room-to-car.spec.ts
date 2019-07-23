@@ -16,9 +16,6 @@ import {
   EyesightFailureConfirmationComponent,
 } from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { of } from 'rxjs/observable/of';
-import {
-  EyesightResultReset,
-} from '../../../modules/tests/eyesight-test/eyesight-test.actions';
 import { QuestionProvider } from '../../../providers/question/question';
 import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
@@ -36,7 +33,7 @@ import { AccompanimentCardComponent } from '../components/accompaniment-card/acc
 import { AccompanimentComponent } from '../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
-import { TellMeQuestionSelected } from '../../../modules/tests/test-data/test-data.actions';
+import { TellMeQuestionSelected, EyesightTestReset } from '../../../modules/tests/test-data/test-data.actions';
 import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -162,7 +159,7 @@ describe('WaitingRoomToCarPage', () => {
       });
       it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();
-        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightResultReset());
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightTestReset());
       });
     });
 

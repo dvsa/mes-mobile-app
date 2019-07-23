@@ -38,7 +38,6 @@ export enum Competencies {
   pedestrianCrossings = 'pedestrianCrossings',
   positionNormalStops = 'positionNormalStops',
   awarenessPlanning = 'awarenessPlanning',
-  eyesightTest = 'eyesightTest',
 }
 
 export enum ManoeuvreTypes {
