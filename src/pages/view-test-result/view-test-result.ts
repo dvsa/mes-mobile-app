@@ -277,7 +277,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStopFault(CompetencyOutcome.S),
       ...getVehicleCheckSeriousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
-      ...this.getEyesightTestSeriousFault(testData.eyesightTest)
+      ...this.getEyesightTestSeriousFault(testData.eyesightTest),
     ];
   }
 
