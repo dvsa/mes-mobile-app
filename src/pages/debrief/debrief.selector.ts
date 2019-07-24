@@ -8,6 +8,7 @@ import {
   StandardCarTestCATBSchema,
   VehicleChecks,
   ControlledStop,
+  EyesightTest,
 } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
@@ -137,7 +138,7 @@ export const getVehicleCheckDrivingFaults =
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-        competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+        competencyDisplayName: 'Show Me/Tell Me',
         source: CommentSource.VEHICLE_CHECKS,
         faultCount: 1,
       };
@@ -170,6 +171,23 @@ export const getControlledStopFaultAndComment =
     };
     returnCompetencies.push(result);
     return returnCompetencies;
+  };
+
+export const getEyesightTestSeriousFault = (eyesightTest: EyesightTest) => {
+  return eyesightTest.seriousFault ? ['eyesightTest'] : [];
+};
+
+export const getEyesightTestSeriousFaultAndComment =
+  (eyesightTest: EyesightTest): CommentedCompetency[] => {
+    if (!eyesightTest.seriousFault) {
+      return [];
+    }
+    return [{
+      competencyDisplayName: 'Eyesight Test',
+      competencyIdentifier: 'eyesightTest',
+      comment: eyesightTest.faultComments || '',
+      source: CommentSource.EYESIGHT_TEST,
+    }];
   };
 
 export const anySeriousFaults = (data: TestData): boolean => {

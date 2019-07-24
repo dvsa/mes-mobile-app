@@ -87,6 +87,7 @@ import {
   getControlledStopFaultAndComment,
   getVehicleCheckSeriousFaults,
   getVehicleCheckDangerousFaults,
+  getEyesightTestSeriousFaultAndComment,
 } from '../debrief/debrief.selector';
 import { WeatherConditionSelection } from '../../providers/weather-conditions/weather-conditions.model';
 import { WeatherConditionProvider } from '../../providers/weather-conditions/weather-condition';
@@ -420,31 +421,9 @@ export class OfficePage extends PracticeableBasePageComponent {
         map((data) => {
           return [
             ...getDangerousFaults(data.dangerousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              })),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.D).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              })),
-            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: 'Show Me/Tell Me',
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              }),
-            ),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.D).map(this.parseCompetency),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.D).map(this.parseCompetency),
+            ...getVehicleCheckDangerousFaults(data.vehicleChecks).map(this.parseCompetency),
           ];
         }),
       ),
@@ -453,31 +432,10 @@ export class OfficePage extends PracticeableBasePageComponent {
         map((data) => {
           return [
             ...getSeriousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              })),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.S).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              })),
-            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: 'Show Me/Tell Me',
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              }),
-            ),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(this.parseCompetency),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.S).map(this.parseCompetency),
+            ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(this.parseCompetency),
+            ...getEyesightTestSeriousFaultAndComment(data.eyesightTest).map(this.parseCompetency),
           ];
         }),
       ),
@@ -486,31 +444,9 @@ export class OfficePage extends PracticeableBasePageComponent {
         map((data) => {
           return [
             ...getDrivingFaults(data.drivingFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              })),
-            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: result.competencyDisplayName,
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              })),
-            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(
-              (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
-                faultCount: 1,
-                competencyDisplayName: 'Show Me/Tell Me',
-                competencyIdentifier: result.competencyIdentifier,
-                source: result.source,
-                comment: result.comment,
-              }),
-            ),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.DF).map(this.parseCompetency),
+            ...getControlledStopFaultAndComment(data.controlledStop, CompetencyOutcome.DF).map(this.parseCompetency),
+            ...getVehicleCheckDrivingFaults(data.vehicleChecks).map(this.parseCompetency),
           ];
         }),
       ),
@@ -733,4 +669,13 @@ export class OfficePage extends PracticeableBasePageComponent {
     }
     this.popToRoot();
   }
+
+  private parseCompetency =
+    (result: CommentedCompetency): (CommentedCompetency & MultiFaultAssignableCompetency) => ({
+      faultCount: 1,
+      competencyDisplayName: result.competencyDisplayName,
+      competencyIdentifier: result.competencyIdentifier,
+      source: result.source,
+      comment: result.comment,
+    })
 }

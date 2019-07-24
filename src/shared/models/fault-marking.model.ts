@@ -17,4 +17,5 @@ export enum CommentSource {
   VEHICLE_CHECKS = 'vehicleChecks',
   CONTROLLED_STOP = 'controlledStop',
   MANOEUVRES = 'Manoeuvres',
+  EYESIGHT_TEST = 'eyesightTest',
 }
