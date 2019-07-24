@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Loading, LoadingControll
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
-import { StandardCarTestCATBSchema, TestData } from '@dvsa/mes-test-schema/categories/B';
+import { StandardCarTestCATBSchema, TestData, EyesightTest } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
@@ -34,6 +34,7 @@ import {
   getDrivingFaults,
   getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
+  getEyesightTestSeriousFaultAndComment,
 } from '../debrief/debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
@@ -276,6 +277,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
       ...this.getControlledStopFault(CompetencyOutcome.S),
       ...getVehicleCheckSeriousFaults(testData.vehicleChecks).map(result => this.updateVehicleChecksLabel(result)),
+      ...this.getEyesightTestSeriousFault(testData.eyesightTest)
     ];
   }
 
@@ -294,15 +296,21 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     const testData: TestData = get(this.testResult, 'testData');
 
     return getControlledStopFaultAndComment(testData.controlledStop, competencyOutcome)
-      .map((result) => {
-        return {
-          faultCount: 1,
-          competencyDisplayName: result.competencyDisplayName,
-          competencyIdentifier: result.competencyIdentifier,
-          source: result.source,
-          comment: result.comment,
-        };
-      });
+      .map(this.parseResult);
+  }
+
+  getEyesightTestSeriousFault(eyesightTest: EyesightTest) {
+    return getEyesightTestSeriousFaultAndComment(eyesightTest).map(this.parseResult);
+  }
+
+  parseResult(result: CommentedCompetency) {
+    return {
+      faultCount: 1,
+      competencyDisplayName: result.competencyDisplayName,
+      competencyIdentifier: result.competencyIdentifier,
+      source: result.source,
+      comment: result.comment,
+    };
   }
 
   updateVehicleChecksLabel(vehicleCheck: CommentedCompetency & MultiFaultAssignableCompetency)
