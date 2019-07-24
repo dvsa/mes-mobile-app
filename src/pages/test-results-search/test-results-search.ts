@@ -15,6 +15,9 @@ import {
   TestResultSearchViewDidEnter, PerformApplicationReferenceSearch, PerformDriverNumberSearch, PerformLDTMSearch,
 
 } from './test-results-search.actions';
+import { Log, LogType } from '../../shared/models/log.model';
+import { Logs } from '../../shared/helpers/logs';
+import { SaveLog } from '../../modules/logs/logs.actions';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -74,7 +77,10 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.searchResults = results;
             this.showSearchSpinner = false;
           }),
-          catchError(() => {
+          catchError((err) => {
+            const log: Log = Logs
+              .createLog(LogType.ERROR, `Seaching tests by driver number (${this.candidateInfo})`, err);
+            this.store$.dispatch(new SaveLog(log));
             this.searchResults = [];
             this.showSearchSpinner = false;
             return of(this.hasSearched = true);
@@ -94,7 +100,9 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.searchResults = results;
             this.showSearchSpinner = false;
           }),
-          catchError(() => {
+          catchError((err) => {
+            this.store$.dispatch(new SaveLog(Logs
+              .createLog(LogType.ERROR, `Seaching tests by app ref (${this.candidateInfo})`, err)));
             this.searchResults = [];
             this.showSearchSpinner = false;
             return of(this.hasSearched = true);
@@ -116,6 +124,8 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.showAdvancedSearchSpinner = false;
         }),
         catchError((err) => {
+          const log: Log = Logs.createLog(LogType.ERROR, `Advanced search with params (${advancedSearchParams})`, err);
+          this.store$.dispatch(new SaveLog(log));
           this.searchResults = [];
           this.showAdvancedSearchSpinner = false;
           return of(console.log('ERROR', JSON.stringify(err)));

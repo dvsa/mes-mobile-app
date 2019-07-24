@@ -6,6 +6,7 @@ import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { gunzipSync } from 'zlib';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { HttpClient } from '@angular/common/http';
+import { StoreModule, Store } from '@ngrx/store';
 
 describe('TestSubmissionProvider', () => {
 
@@ -18,11 +19,13 @@ describe('TestSubmissionProvider', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        StoreModule.forRoot({}),
       ],
       providers: [
         TestSubmissionProvider,
         HttpClient,
         { provide: UrlProvider, useClass: UrlProviderMock },
+        Store,
       ],
     });
 

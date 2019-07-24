@@ -8,6 +8,11 @@ import { catchError } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
 import { isNull, unset, isObject, cloneDeep } from 'lodash';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { Logs } from '../../shared/helpers/logs';
+import { LogType } from '../../shared/models/log.model';
 
 export interface TestToSubmit {
   index: number;
@@ -19,9 +24,10 @@ export interface TestToSubmit {
 export class TestSubmissionProvider {
 
   constructor(
-    public httpClient : HttpClient,
-    public urlProvider : UrlProvider,
-  ) {}
+    public httpClient: HttpClient,
+    public urlProvider: UrlProvider,
+    private store$: Store<StoreModel>,
+  ) { }
 
   submitTests = (testsToSubmit: TestToSubmit[]): Observable<HttpResponse<any>[]> => {
     const requests: Observable<any>[] = testsToSubmit.map(test => this.submitTest(test));
@@ -35,11 +41,15 @@ export class TestSubmissionProvider {
       // Using cloneDeep() to prevent the initialState of the reducers from being modified
       { observe: 'response' },
     )
-    // Note: Catching failures here (the inner observable) is what allows us to coordinate
-    // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
-    .pipe(
-      catchError(err => of(err)),
-    )
+      // Note: Catching failures here (the inner observable) is what allows us to coordinate
+      // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
+      .pipe(
+        catchError((err) => {
+          this.store$.dispatch(new SaveLog(Logs
+            .createLog(LogType.ERROR, `Submitting test with slot ID ${testToSubmit.slotId}`, err)));
+          return of(err);
+        }),
+      )
 
   compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')

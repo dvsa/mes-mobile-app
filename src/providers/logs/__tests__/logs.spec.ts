@@ -4,20 +4,32 @@ import { UrlProvider } from '../../url/url';
 import { UrlProviderMock, LOGS_SERVICE_URL } from '../../url/__mocks__/url.mock';
 import { LogsProvider } from '../logs';
 import { LogType } from '../../../shared/models/log.model';
+import { AuthenticationProvider } from '../../authentication/authentication';
+import { AuthenticationProviderMock } from '../../authentication/__mocks__/authentication.mock';
+import { Device } from '@ionic-native/device';
+import { Store, StoreModule } from '@ngrx/store';
 
 describe('LogsProvider', () => {
   let logsProvider: LogsProvider;
   let httpMock: HttpTestingController;
-  let urlProviderMock:  UrlProvider;
+  let urlProviderMock: UrlProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        StoreModule.forRoot({
+          appInfo: () => ({
+            versionNumber: '5',
+          }),
+        }),
       ],
       providers: [
         LogsProvider,
         { provide: UrlProvider, useClass: UrlProviderMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        Device,
+        Store,
       ],
     });
 

@@ -11,6 +11,7 @@ import { DataStoreProvider } from '../../data-store/data-store';
 import { DataStoreProviderMock } from '../../data-store/__mocks__/data-store.mock';
 import { Platform } from 'ionic-angular';
 import { PlatformMock } from 'ionic-mocks';
+import { StoreModule, Store } from '@ngrx/store';
 
 describe('App Config Provider', () => {
 
@@ -20,12 +21,16 @@ describe('App Config Provider', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        StoreModule.forRoot({}),
+      ],
       providers: [
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
+        Store,
       ],
     });
 
