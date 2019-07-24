@@ -20,6 +20,10 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   ShowMeQuestionSelected,
+  EyesightTestPassed,
+  EyesightTestFailed,
+  EyesightTestReset,
+  EyesightTestAddComment,
 } from '../test-data.actions';
 import {
   Competencies,
@@ -581,4 +585,75 @@ describe('TestDataReducer reducer', () => {
     });
   });
 
+  describe('EYESIGHT_TEST_PASSED', () => {
+    it('updates the complete status to true', () => {
+      const state: TestData = {
+        eyesightTest: {},
+      };
+      const result = testDataReducer(state, new EyesightTestPassed());
+      expect(result.eyesightTest.complete).toEqual(true);
+    });
+
+    it('removes an eyesight test serious fault', () => {
+      const state: TestData = {
+        eyesightTest: {
+          complete: true,
+          seriousFault: true,
+        },
+      };
+      const result = testDataReducer(state, new EyesightTestPassed());
+      expect(result.eyesightTest.complete).toEqual(true);
+      expect(result.eyesightTest.seriousFault).toEqual(false);
+    });
+  });
+
+  describe('EYESIGHT_TEST_FAILED', () => {
+    it('updates the eyesight status to failed', () => {
+      const state: TestData = {
+        eyesightTest: {
+          complete: false,
+        },
+      };
+      const result = testDataReducer(state, new EyesightTestFailed());
+      expect(result.eyesightTest.complete).toBe(true);
+      expect(result.eyesightTest.seriousFault).toBe(true);
+    });
+  });
+
+  describe('EYESIGHT_TEST_RESET', () => {
+    it('updates the complete status to false', () => {
+      const state: TestData = {
+        eyesightTest: {
+          complete: true,
+        },
+      };
+      const result = testDataReducer(state, new EyesightTestReset());
+      expect(result.eyesightTest.complete).toBe(false);
+    });
+
+    it('removes an eyesight test serious fault', () => {
+      const state: TestData = {
+        eyesightTest: {
+          complete: true,
+          seriousFault: true,
+        },
+      };
+      const result = testDataReducer(state, new EyesightTestReset());
+      expect(result.eyesightTest.complete).toBe(false);
+      expect(result.eyesightTest.seriousFault).toBe(false);
+    });
+  });
+
+  describe('EYESIGHT_TEST_ADD_COMMENT', () => {
+    it('sets the eyesight test fault comments', () => {
+      const state: TestData = {
+        eyesightTest: {
+          complete: true,
+          seriousFault: true,
+        },
+      };
+      const result = testDataReducer(state, new EyesightTestAddComment('Eyesight test comment'));
+      expect(result.eyesightTest.faultComments).toEqual('Eyesight test comment');
+    });
+  });
 });
