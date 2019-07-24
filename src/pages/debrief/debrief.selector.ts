@@ -93,7 +93,7 @@ export const getVehicleCheckDangerousFaults =
     const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: 'Show Me/Tell Me',
       source: CommentSource.VEHICLE_CHECKS,
       faultCount: 1,
 
@@ -174,12 +174,12 @@ export const getControlledStopFaultAndComment =
   };
 
 export const getEyesightTestSeriousFault = (eyesightTest: EyesightTest) => {
-  return eyesightTest.seriousFault ? ['eyesightTest'] : [];
+  return eyesightTest && eyesightTest.seriousFault ? ['eyesightTest'] : [];
 };
 
 export const getEyesightTestSeriousFaultAndComment =
   (eyesightTest: EyesightTest): CommentedCompetency[] => {
-    if (!eyesightTest.seriousFault) {
+    if (!eyesightTest || !eyesightTest.seriousFault) {
       return [];
     }
     return [{

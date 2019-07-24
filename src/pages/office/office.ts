@@ -104,6 +104,7 @@ import {
   AddControlledStopComment,
   AddManoeuvreComment,
   AddShowMeTellMeComment,
+  EyesightTestAddComment,
 } from '../../modules/tests/test-data/test-data.actions';
 import {
   MultiFaultAssignableCompetency,
@@ -591,9 +592,10 @@ export class OfficePage extends PracticeableBasePageComponent {
 
     } else if (seriousFaultComment.source === CommentSource.CONTROLLED_STOP) {
       this.store$.dispatch(new AddControlledStopComment(seriousFaultComment.comment));
-
     } else if (seriousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(seriousFaultComment.comment));
+    } else if (seriousFaultComment.source === CommentSource.EYESIGHT_TEST) {
+      this.store$.dispatch(new EyesightTestAddComment(seriousFaultComment.comment));
     }
   }
 

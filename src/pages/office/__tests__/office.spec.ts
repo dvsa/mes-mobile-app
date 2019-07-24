@@ -125,6 +125,7 @@ describe('OfficePage', () => {
                       outcome: '',
                     },
                   },
+                  eyesightTest: {},
                 },
                 activityCode: '28',
                 journalData: {

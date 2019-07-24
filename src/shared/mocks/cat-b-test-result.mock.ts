@@ -84,6 +84,11 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
       physical: false,
       verbal: true,
     },
+    eyesightTest: {
+      complete: true,
+      seriousFault: false,
+      faultComments: 'mock-eyesight-test-comments',
+    },
     manoeuvres: {
       forwardPark: {
         selected: true,
