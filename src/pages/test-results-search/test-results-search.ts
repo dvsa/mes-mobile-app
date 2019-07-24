@@ -35,7 +35,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
   showAdvancedSearchSpinner: boolean = false;
-  subscription: Subscription;
+  subscription: Subscription = Subscription.EMPTY;
 
   constructor(
     public navController: NavController,
@@ -67,6 +67,7 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   searchTests() {
     if (this.searchBy === SearchBy.DriverNumber) {
+      this.subscription.unsubscribe();
       this.store$.dispatch(new PerformDriverNumberSearch());
       this.showSearchSpinner = true;
       this.subscription = this.searchProvider.driverNumberSearch(this.candidateInfo)
@@ -86,6 +87,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
+      this.subscription.unsubscribe();
       this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
       this.subscription = this.searchProvider.applicationReferenceSearch(this.candidateInfo)
@@ -106,6 +108,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
+    this.subscription.unsubscribe();
     this.store$.dispatch(new PerformLDTMSearch());
     this.showAdvancedSearchSpinner = true;
     this.subscription = this.searchProvider.advancedSearch(advancedSearchParams)
@@ -122,7 +125,6 @@ export class TestResultsSearchPage extends BasePageComponent {
         }),
       )
       .subscribe();
-    // TODO - Need to Unsubscribe
   }
 
   myHeaderFn(record: any, recordIndex: any): string {
