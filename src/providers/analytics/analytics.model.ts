@@ -75,6 +75,8 @@ export enum AnalyticsEvents {
   APPLICATION_REFERENCE_SEARCH = 'perform application reference search',
   DRIVER_NUMBER_SEARCH = 'perform driver number search',
   LDTM_SEARCH = 'perform ldtm search',
+  TOGGLE_LEGAL_REQUIREMENT = 'toggle legal requirement',
+  TEST_OUTCOME_CHANGED = 'test outcome changed',
 }
 
 export enum AnalyticsLabels {

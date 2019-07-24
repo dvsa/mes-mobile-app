@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, withLatestFrom, map, concatMap, delay, filter } from 'rxjs/operators';
 import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, isTestReportPracticeTest } from '../../modules/tests/tests.selector';
@@ -14,6 +14,7 @@ import * as  testDataActions from '../../modules/tests/test-data/test-data.actio
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class TestReportEffects {
@@ -100,7 +101,15 @@ export class TestReportEffects {
     switchMap(([action, currentTest]) => {
       return this.testResultProvider.calculateCatBTestResult(currentTest.testData)
         .pipe(
-          map((result: ActivityCode) => new testsActions.SetActivityCode(result)),
+          switchMap((result: ActivityCode) => {
+
+            const actions: Action[] = [new testsActions.SetActivityCode(result)];
+            if (!isEmpty(currentTest.activityCode) && currentTest.activityCode !== result) {
+              actions.push(new testsActions.TestOutcomeChanged());
+            }
+
+            return actions;
+          }),
         );
     }),
   );

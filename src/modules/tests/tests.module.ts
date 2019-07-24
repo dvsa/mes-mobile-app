@@ -6,6 +6,7 @@ import { TestsEffects } from './tests.effects';
 import { TestSubmissionProvider } from '../../providers/test-submission/test-submission';
 import { TestsAnalyticsEffects } from './tests.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
+import { TestDataEffects } from './test-data/test-data.effects';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
     EffectsModule.forFeature([
       TestsEffects,
       TestsAnalyticsEffects,
+      TestDataEffects,
     ]),
   ],
   providers:[
