@@ -8,7 +8,6 @@ import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
 import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
@@ -57,7 +56,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   loadingSpinner: Loading;
   subscription: Subscription;
   showErrorMessage: boolean = false;
-  testResult$ = new Observable<object | StandardCarTestCATBSchema>();
 
   constructor(
     public navController: NavController,
