@@ -84,6 +84,7 @@ describe('WaitingRoomToCarPage', () => {
                     },
                   },
                   seriousFaults: [],
+                  eyesightTest: {},
                 },
                 journalData: {
                   candidate: {
