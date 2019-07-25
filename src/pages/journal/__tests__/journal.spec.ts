@@ -1,3 +1,5 @@
+import { MockAppComponent } from './../../../app/__mocks__/app.component.mock';
+import { App } from './../../../app/app.component';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import {
   Config, Platform,
@@ -65,6 +67,7 @@ describe('JournalPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: IncompleteTestsProvider, useClass: IncompleteTestsMock },
+        { provide: App, useClass: MockAppComponent },
       ],
     })
       .compileComponents()
