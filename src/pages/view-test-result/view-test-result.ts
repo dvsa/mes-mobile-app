@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform,
+  Loading,
+  LoadingController,
+} from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
@@ -40,6 +47,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
+import { ErrorTypes } from '../../shared/models/error-message';
 import { ViewTestResultViewDidEnter } from './view-test-result.actions';
 import { LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
@@ -60,6 +68,8 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   loadingSpinner: Loading;
   subscription: Subscription;
   showErrorMessage: boolean = false;
+  errorLink: string;
+  additionalErrorText: boolean;
 
   constructor(
     public navController: NavController,
@@ -89,6 +99,8 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
         catchError((err) => {
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
+          this.errorLink = ErrorTypes.SEARCH;
+          this.additionalErrorText = true;
           this.showErrorMessage = true;
           this.handleLoadingUI(false);
           return of();
@@ -335,5 +347,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       source: vehicleCheck.source,
       comment: vehicleCheck.comment,
     };
+  }
+
+  // on exit error modal
+  goBack = (): void => {
+    this.navController.pop();
   }
 }

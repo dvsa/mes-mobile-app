@@ -17,6 +17,7 @@ import { PracticeModeBanner } from './practice-mode-banner/practice-mode-banner'
 import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
 import { ModalAlertTitleComponent } from './modal-alert-title/modal-alert-title';
 import { ModalReturnButtonComponent } from './modal-return-button/modal-return-button';
+import { ErrorMessageComponent } from './error-message/error-message';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ModalReturnButtonComponent } from './modal-return-button/modal-return-b
     TickIndicatorComponent,
     ModalAlertTitleComponent,
     ModalReturnButtonComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -55,6 +57,7 @@ import { ModalReturnButtonComponent } from './modal-return-button/modal-return-b
     TickIndicatorComponent,
     ModalAlertTitleComponent,
     ModalReturnButtonComponent,
+    ErrorMessageComponent,
   ],
 })
 export class ComponentsModule { }

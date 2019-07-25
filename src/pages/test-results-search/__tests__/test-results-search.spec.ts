@@ -12,6 +12,8 @@ import { By } from '@angular/platform-browser';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { App } from '../../../app/app.component';
+import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 
 describe('TestResultsSearchPage', () => {
   let fixture: ComponentFixture<TestResultsSearchPage>;
@@ -35,6 +37,7 @@ describe('TestResultsSearchPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: App, useClass: MockAppComponent },
       ],
     })
       .compileComponents()

@@ -1,7 +1,7 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import {
   IonicPage, Loading, LoadingController, NavController,
-  NavParams, Platform, Refresher, Toast, ToastController,
+  NavParams, Platform, Refresher, ModalController,
 } from 'ionic-angular';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -28,6 +28,9 @@ import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
+import { ERROR_PAGE } from '../page-names.constants';
+import { App } from './../../app/app.component';
+import { ErrorTypes } from '../../shared/models/error-message';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -54,19 +57,18 @@ export class JournalPage extends BasePageComponent implements OnInit {
   loadingSpinner: Loading;
   pageRefresher: Refresher;
   isUnauthenticated: boolean;
-  toast: Toast;
   subscription: Subscription;
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
   merged$: Observable<void | number>;
 
   constructor(
+    public modalController: ModalController,
     public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     public navParams: NavParams,
     public loadingController: LoadingController,
-    public toastController: ToastController,
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
@@ -74,6 +76,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public dateTimeProvider: DateTimeProvider,
     public appConfigProvider: AppConfigProvider,
     public incompleteTestsProvider: IncompleteTestsProvider,
+    private app: App,
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
@@ -185,8 +188,15 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   showError = (error: MesError): void => {
     if (error === undefined || error.message === '') return;
-    this.createToast(error.message);
-    this.toast.present();
+
+    // Modals are at the same level as the ion-nav so are not getting the zoom level class,
+    // this needs to be passed in the create options.
+    const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
+    const errorModal = this.modalController.create(
+      ERROR_PAGE,
+      { type: ErrorTypes.JOURNAL_REFRESH },
+      { cssClass: zoomClass });
+    errorModal.present();
   }
 
   private createSlots = (emission: SlotItem[]) => {
@@ -207,23 +217,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
       lastLocation = slot.slotData.testCentre.centreName;
     }
-  }
-
-  private createToast = (errorMessage: string) => {
-    // TODO: This is just a temporary way to display the error.
-    // Initiate a conversation with the team about how to handle errors.
-
-    this.toast = this.toastController.create({
-      message: errorMessage,
-      position: 'middle',
-      dismissOnPageChange: true,
-      cssClass: 'mes-toast-message-error',
-      duration: 5000,
-    });
-
-    this.toast.onDidDismiss(() => {
-      this.store$.dispatch(new journalActions.UnsetError());
-    });
   }
 
   public pullRefreshJournal = (refresher: Refresher) => {

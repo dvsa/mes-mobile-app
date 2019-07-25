@@ -1,6 +1,7 @@
+import { ErrorTypes } from './../../shared/models/error-message';
 import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -19,6 +20,9 @@ import {
 import { Log, LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
+import { ERROR_PAGE } from '../page-names.constants';
+import { MesError } from '../../shared/models/mes-error.model';
+import { App } from '../../app/app.component';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -41,6 +45,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   subscription: Subscription = Subscription.EMPTY;
 
   constructor(
+    public modalController: ModalController,
     public navController: NavController,
     public platform: Platform,
     public navParams: NavParams,
@@ -49,6 +54,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     private appConfig: AppConfigProvider,
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
+    private app: App,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -87,6 +93,12 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.store$.dispatch(new SaveLog(log));
             this.searchResults = [];
             this.showSearchSpinner = false;
+
+            if (err) {
+              this.showError(err);
+              return of(this.hasSearched = false);
+            }
+
             return of(this.hasSearched = true);
           }),
         )
@@ -109,6 +121,12 @@ export class TestResultsSearchPage extends BasePageComponent {
               .createLog(LogType.ERROR, `Searching tests by app ref (${this.candidateInfo})`, err)));
             this.searchResults = [];
             this.showSearchSpinner = false;
+
+            if (err) {
+              this.showError(err);
+              return of(this.hasSearched = false);
+            }
+
             return of(this.hasSearched = true);
           }),
         )
@@ -133,6 +151,10 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.store$.dispatch(new SaveLog(log));
           this.searchResults = [];
           this.showAdvancedSearchSpinner = false;
+          if (err) {
+            this.showError(err);
+            this.hasSearched = false;
+          }
           return of(console.log('ERROR', JSON.stringify(err)));
         }),
       )
@@ -150,6 +172,19 @@ export class TestResultsSearchPage extends BasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  showError = (error: MesError): void => {
+    if (error === undefined || error.message === '') return;
+
+    // Modals are at the same level as the ion-nav so are not getting the zoom level class,
+    // this needs to be passed in the create options.
+    const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
+    const errorModal = this.modalController.create(
+      ERROR_PAGE,
+      { type: ErrorTypes.SEARCH },
+      { cssClass: zoomClass });
+    errorModal.present();
   }
 
 }
