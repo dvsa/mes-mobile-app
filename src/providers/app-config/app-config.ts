@@ -12,10 +12,10 @@ import { AuthenticationError } from './../authentication/authentication.constant
 import { Platform } from 'ionic-angular';
 import { timeout } from 'rxjs/operators';
 import { SaveLog } from '../../modules/logs/logs.actions';
-import { Logs } from '../../shared/helpers/logs';
 import { LogType } from '../../shared/models/log.model';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store } from '@ngrx/store';
+import { LogHelper } from '../logs/logsHelper';
 
 declare let cordova: any;
 
@@ -61,6 +61,7 @@ export class AppConfigProvider {
     public dataStore: DataStoreProvider,
     public platform: Platform,
     private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) { }
 
   public initialiseAppConfig = (): Promise<void> => {
@@ -85,7 +86,7 @@ export class AppConfigProvider {
     this.getRemoteData()
       .then(data => this.mapRemoteConfig(data))
       .catch((error) => {
-        this.store$.dispatch(new SaveLog(Logs.createLog(LogType.ERROR, 'Loading remote config', error)));
+        this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error)));
         if (error && error.status === 403) {
           return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
         }
@@ -133,7 +134,7 @@ export class AppConfigProvider {
               resolve(data);
             },
             (error) => {
-              this.store$.dispatch(new SaveLog(Logs
+              this.store$.dispatch(new SaveLog(this.logHelper
                 .createLog(LogType.ERROR, 'Getting remote config failed, using cached data', error)));
               this.getCachedRemoteConfig()
                 .then(data => resolve(data))

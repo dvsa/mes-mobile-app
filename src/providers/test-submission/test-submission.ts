@@ -11,8 +11,8 @@ import { isNull, unset, isObject, cloneDeep } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
-import { Logs } from '../../shared/helpers/logs';
 import { LogType } from '../../shared/models/log.model';
+import { LogHelper } from '../logs/logsHelper';
 
 export interface TestToSubmit {
   index: number;
@@ -27,6 +27,7 @@ export class TestSubmissionProvider {
     public httpClient: HttpClient,
     public urlProvider: UrlProvider,
     private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) { }
 
   submitTests = (testsToSubmit: TestToSubmit[]): Observable<HttpResponse<any>[]> => {
@@ -45,7 +46,7 @@ export class TestSubmissionProvider {
       // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
       .pipe(
         catchError((err) => {
-          this.store$.dispatch(new SaveLog(Logs
+          this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Submitting test with slot ID ${testToSubmit.slotId}`, err)));
           return of(err);
         }),

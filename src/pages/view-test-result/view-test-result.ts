@@ -41,8 +41,8 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { ViewTestResultViewDidEnter } from './view-test-result.actions';
 import { LogType } from '../../shared/models/log.model';
-import { Logs } from '../../shared/helpers/logs';
 import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 @IonicPage()
 @Component({
@@ -69,7 +69,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     public searchProvider: SearchProvider,
     public compressionProvider: CompressionProvider,
     private store$: Store<StoreModel>,
-
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -86,7 +86,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
         map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
-          this.store$.dispatch(new SaveLog(Logs
+          this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.showErrorMessage = true;
           this.handleLoadingUI(false);

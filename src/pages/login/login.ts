@@ -28,7 +28,7 @@ import { AppConfigError } from '../../providers/app-config/app-config.constants'
 import { LogsProvider } from '../../providers/logs/logs';
 import { LogType } from '../../shared/models/log.model';
 import { JOURNAL_PAGE } from '../page-names.constants';
-import { Logs } from '../../shared/helpers/logs';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 @IonicPage()
 @Component({
@@ -60,6 +60,7 @@ export class LoginPage extends BasePageComponent {
     public loadingController: LoadingController,
     public alertCtrl: AlertController,
     public logProvider: LogsProvider,
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider, false);
 
@@ -133,7 +134,7 @@ export class LoginPage extends BasePageComponent {
   }
 
   dispatchLog(message: string) {
-    this.store$.dispatch(new SaveLog(Logs.createLog(LogType.ERROR, 'User login', message)));
+    this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'User login', message)));
     this.store$.dispatch(new SendLogs());
   }
 

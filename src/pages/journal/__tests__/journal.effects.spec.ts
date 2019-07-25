@@ -30,6 +30,8 @@ import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/dat
 import { PopulateExaminer } from '../../../modules/tests/examiner/examiner.actions';
 import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 import { SaveLog } from '../../../modules/logs/logs.actions';
+import { LogHelper } from '../../../providers/logs/logsHelper';
+import { Device } from '@ionic-native/device';
 
 export class TestActions extends Actions {
   constructor() {
@@ -58,6 +60,9 @@ describe('Journal Effects', () => {
       imports: [
         StoreModule.forRoot({
           journal: journalReducer,
+          appInfo: () => ({
+            versionNumber: '5',
+          }),
         }),
       ],
       providers: [
@@ -72,6 +77,8 @@ describe('Journal Effects', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         Store,
         SlotProvider,
+        LogHelper,
+        Device,
       ],
     });
     journalProvider = TestBed.get(JournalProvider);
