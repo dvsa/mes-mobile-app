@@ -109,7 +109,7 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
     this.subscription.unsubscribe();
-    this.store$.dispatch(new PerformLDTMSearch());
+    this.store$.dispatch(new PerformLDTMSearch(advancedSearchParams));
     this.showAdvancedSearchSpinner = true;
     this.subscription = this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
