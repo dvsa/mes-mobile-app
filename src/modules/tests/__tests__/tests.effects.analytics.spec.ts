@@ -140,8 +140,9 @@ describe('Tests Analytics Effects', () => {
       store$.dispatch(new journalActions.StartTest(12345));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new testSlotAttributesActions.PopulateTestSlotAttributes(mockTestSlotAttributes));
+      const eventLabel = 'fail to pass';
       // ACT
-      actions$.next(new testsActions.TestOutcomeChanged());
+      actions$.next(new testsActions.TestOutcomeChanged(eventLabel));
       // ASSERT
       effects.testOutcomeChangedEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -149,6 +150,7 @@ describe('Tests Analytics Effects', () => {
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.TEST_REPORT,
             AnalyticsEvents.TEST_OUTCOME_CHANGED,
+            eventLabel,
           );
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
