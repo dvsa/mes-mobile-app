@@ -173,8 +173,12 @@ describe('TestDataSelectors', () => {
             outcome: CompetencyOutcome.S,
           },
         },
+        eyesightTest: {
+          complete: true,
+          seriousFault: true,
+        },
       };
-      expect(getSeriousFaultSummaryCount(failedState)).toBe(4);
+      expect(getSeriousFaultSummaryCount(failedState)).toBe(5);
     });
   });
 

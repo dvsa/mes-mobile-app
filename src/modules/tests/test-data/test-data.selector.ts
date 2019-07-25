@@ -36,17 +36,19 @@ export const getSeriousFaultSummaryCount = (data: TestData): number => {
 
   // The way how we store serious faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
-  const { seriousFaults, manoeuvres, controlledStop, vehicleChecks } = data;
+  const { seriousFaults, manoeuvres, controlledStop, vehicleChecks, eyesightTest } = data;
 
   const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
   const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S ? 1 : 0;
   const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
+  const eyesightTestSeriousFaults = eyesightTest.seriousFault ? 1 : 0;
 
   const result =
     seriousFaultSumOfSimpleCompetencies +
     sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) +
     vehicleCheckSeriousFaults +
-    controlledStopSeriousFaults;
+    controlledStopSeriousFaults +
+    eyesightTestSeriousFaults;
 
   return result;
 };
