@@ -200,6 +200,8 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
       conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
     );
 
+    this.subscription = this.merged$.subscribe();
+
     if (this.shouldPreselectADefaultValue()) {
       this.initialiseDefaultSelections();
     }
@@ -210,7 +212,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   }
 
   ionViewWillEnter(): boolean {
-    if (this.merged$) {
+    if (this.subscription.closed && this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
 
