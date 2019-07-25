@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -34,6 +35,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
   showAdvancedSearchSpinner: boolean = false;
+  subscription: Subscription = Subscription.EMPTY;
 
   constructor(
     public navController: NavController,
@@ -65,9 +67,10 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   searchTests() {
     if (this.searchBy === SearchBy.DriverNumber) {
+      this.subscription.unsubscribe();
       this.store$.dispatch(new PerformDriverNumberSearch());
       this.showSearchSpinner = true;
-      this.searchProvider.driverNumberSearch(this.candidateInfo)
+      this.subscription = this.searchProvider.driverNumberSearch(this.candidateInfo)
         .pipe(
           tap(() => this.hasSearched = true),
           map((results) => {
@@ -81,13 +84,13 @@ export class TestResultsSearchPage extends BasePageComponent {
           }),
         )
         .subscribe();
-      // TODO - Need to Unsubscribe
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
+      this.subscription.unsubscribe();
       this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
-      this.searchProvider.applicationReferenceSearch(this.candidateInfo)
+      this.subscription = this.searchProvider.applicationReferenceSearch(this.candidateInfo)
         .pipe(
           tap(() => this.hasSearched = true),
           map((results) => {
@@ -101,14 +104,14 @@ export class TestResultsSearchPage extends BasePageComponent {
           }),
         )
         .subscribe();
-      // TODO - Need to unsubscribe
     }
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
+    this.subscription.unsubscribe();
     this.store$.dispatch(new PerformLDTMSearch());
     this.showAdvancedSearchSpinner = true;
-    this.searchProvider.advancedSearch(advancedSearchParams)
+    this.subscription = this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
         tap(() => this.hasSearched = true),
         map((results) => {
@@ -122,7 +125,6 @@ export class TestResultsSearchPage extends BasePageComponent {
         }),
       )
       .subscribe();
-    // TODO - Need to Unsubscribe
   }
 
   myHeaderFn(record: any, recordIndex: any): string {
@@ -130,6 +132,12 @@ export class TestResultsSearchPage extends BasePageComponent {
       return '';
     }
     return null;
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

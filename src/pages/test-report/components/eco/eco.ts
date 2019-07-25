@@ -32,10 +32,11 @@ export class EcoComponent implements OnInit {
   adviceGivenPlanning: boolean = false;
   adviceGivenControl: boolean = false;
   componentState: EcoComponentState;
+  merged$: Observable<boolean>;
 
   constructor(
     private store$: Store<StoreModel>,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -46,7 +46,7 @@ import { ViewTestResultViewDidEnter } from './view-test-result.actions';
   selector: 'page-view-test-result',
   templateUrl: 'view-test-result.html',
 })
-export class ViewTestResultPage extends BasePageComponent implements OnInit, OnDestroy {
+export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
 
@@ -90,7 +90,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ).subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

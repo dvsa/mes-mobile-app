@@ -12,7 +12,7 @@ import { getTestData } from '../../../../modules/tests/test-data/test-data.reduc
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getManoeuvres } from '../../../../modules/tests/test-data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode  } from '../../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
@@ -107,6 +107,7 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = merged$.subscribe();
+
   }
 
   ngOnDestroy(): void {
@@ -217,12 +218,12 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
     clearTimeout(this.rippleTimeout);
   }
 
-  onTouchStart():void {
+  onTouchStart(): void {
     clearTimeout(this.touchTimeout);
     this.touchState = true;
   }
 
-  onTouchEnd():void {
+  onTouchEnd(): void {
     // defer the removal of the touch state to allow the page to render
     this.touchTimeout = setTimeout(() => this.touchState = false, this.touchStateDelay);
   }

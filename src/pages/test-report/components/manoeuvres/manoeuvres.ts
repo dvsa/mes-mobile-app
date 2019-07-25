@@ -1,3 +1,4 @@
+import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { OverlayCallback } from '../../test-report';
 import { StoreModel } from '../../../../shared/models/store.model';
@@ -7,6 +8,7 @@ import { getManoeuvres, sumManoeuvreFaults } from '../../../../modules/tests/tes
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 @Component({
@@ -30,20 +32,21 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   displayPopover: boolean;
+  manoeuvres$: Observable<Manoeuvres>;
 
   constructor(private store$: Store<StoreModel>) {
     this.displayPopover = false;
   }
 
   ngOnInit(): void {
-    const manoeuvres$ = this.store$.pipe(
+    this.manoeuvres$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),
       select(getManoeuvres),
     );
 
-    this.subscription = manoeuvres$.subscribe((manoeuvres) => {
+    this.subscription = this.manoeuvres$.subscribe((manoeuvres: Manoeuvres) => {
       this.drivingFaults = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
       this.hasSeriousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
       this.hasDangerousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;
