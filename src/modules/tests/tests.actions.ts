@@ -39,6 +39,7 @@ export class SetActivityCode implements Action {
 
 export class TestOutcomeChanged implements Action {
   readonly type = TEST_OUTCOME_CHANGED;
+  constructor(public payload: string) {}
 }
 
 export class StartTestReportPracticeTest implements Action {
