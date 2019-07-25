@@ -19,6 +19,8 @@ import {
   ToggleETA,
   TogglePlanningEco,
   ToggleControlEco,
+  EyesightTestFailed,
+  EyesightTestPassed,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
 import { DebriefComponentsModule } from '../components/debrief-components.module';
@@ -406,4 +408,19 @@ describe('DebriefPage', () => {
     });
   });
 
+  describe('Eyesight Test', () => {
+    it('should display the eyesight test serious fault', () => {
+      store$.dispatch(new EyesightTestFailed());
+      fixture.detectChanges();
+      const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
+      expect(seriousLabel.innerHTML).toBe(fullCompetencyLabels.eyesightTest);
+    });
+
+    it('should not display a eyesight test serious fault if the test is passed', () => {
+      store$.dispatch(new EyesightTestPassed());
+      fixture.detectChanges();
+      const label = fixture.debugElement.query(By.css('#serious-fault .counter-label'));
+      expect(label).toBeNull();
+    });
+  });
 });
