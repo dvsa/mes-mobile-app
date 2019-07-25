@@ -12,6 +12,8 @@ import {
   ValidationError,
   SavingWriteUpForLater,
   OfficeViewDidEnter,
+  COMPLETE_TEST,
+  CompleteTest,
 } from '../../pages/office/office.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
@@ -23,6 +25,8 @@ import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
+import { isRekey } from '../../modules/tests/rekey/rekey.selector';
+import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
 
 @Injectable()
 export class OfficeAnalyticsEffects {
@@ -133,6 +137,44 @@ export class OfficeAnalyticsEffects {
       const formattedScreenName = formatAnalyticsText(screenName, tests);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${formattedScreenName})`,
         action.errorMessage);
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  completeTest$ = this.actions$.pipe(
+    ofType(COMPLETE_TEST),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getRekeyIndicator),
+          select(isRekey),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getCandidate),
+          select(getCandidateId),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+      ),
+    )),
+    switchMap(([action, isRekey, candidateId, slotId]: [CompleteTest, boolean, number, string]) => {
+
+      this.analytics.logEvent(
+        AnalyticsEventCategories.POST_TEST,
+        isRekey ? AnalyticsEvents.COMPLETE_REKEY_TEST : AnalyticsEvents.COMPLETE_TEST,
+      );
+
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+
       return of(new AnalyticRecorded());
     }),
   );

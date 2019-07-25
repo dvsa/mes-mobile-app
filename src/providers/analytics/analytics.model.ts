@@ -51,6 +51,7 @@ export enum AnalyticsEventCategories {
 
 export enum AnalyticsEvents {
   START_TEST = 'start test',
+  REKEY_TEST = 'rekey test',
   END_TEST = 'end test',
   APP_LOAD = 'app load',
   SLOT_CHANGED = 'slot changed',
@@ -60,7 +61,10 @@ export enum AnalyticsEvents {
   LOGIN = 'login',
   DEFER_WRITE_UP = 'defer write-up',
   SAVE_WRITE_UP = 'save write-up',
+  COMPLETE_TEST = 'complete test',
+  COMPLETE_REKEY_TEST = 'complete rekey test',
   SUBMIT_TEST = 'submit test',
+  SUBMIT_REKEY_TEST = 'submit rekey test',
   RESUME_WRITE_UP = 'resume write-up',
   ADD_DRIVING_FAULT = 'add driving fault',
   ADD_SERIOUS_FAULT = 'add serious fault',

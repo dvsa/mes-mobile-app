@@ -20,6 +20,7 @@ import {
 } from './tests.actions';
 import { of } from 'rxjs/observable/of';
 import { TestsModel } from './tests.model';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -49,11 +50,12 @@ export class TestsAnalyticsEffects {
     concatMap(([action, tests]: [SetTestStatusSubmitted, TestsModel]) => {
       const test = getTestById(tests, action.slotId);
       const isTestPassed = isPassed(test);
+      const isRekey: boolean = test.rekey;
       const journalDataOfTest = test.journalData;
 
       this.analytics.logEvent(
         AnalyticsEventCategories.POST_TEST,
-        AnalyticsEvents.SUBMIT_TEST,
+        isRekey ? AnalyticsEvents.SUBMIT_REKEY_TEST : AnalyticsEvents.SUBMIT_TEST,
         isTestPassed ? 'pass' : 'fail',
       );
 
@@ -62,7 +64,7 @@ export class TestsAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -71,7 +73,7 @@ export class TestsAnalyticsEffects {
     ofType(SEND_COMPLETED_TESTS_FAILURE),
     switchMap((action: SendCompletedTestsFailure) => {
       this.analytics.logError('Error connecting to microservice (test submission)', 'No message');
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -99,7 +101,7 @@ export class TestsAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 }

@@ -23,6 +23,7 @@ import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candi
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 
 describe('Office Analytics Effects', () => {
 
@@ -306,4 +307,51 @@ describe('Office Analytics Effects', () => {
     });
   });
 
+  describe('completeTest', () => {
+    it('should log an event COMPLETE_TEST event when the test is not a rekey', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      // ACT
+      actions$.next(new officeActions.CompleteTest());
+      // ASSERT
+      effects.completeTest$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.COMPLETE_TEST,
+          );
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, '123');
+        done();
+      });
+    });
+    it('should log an event COMPLETE_REKEY_TEST event when the test is a rekey', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new rekeyActions.MarkAsRekey());
+      // ACT
+      actions$.next(new officeActions.CompleteTest());
+      // ASSERT
+      effects.completeTest$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.POST_TEST,
+            AnalyticsEvents.COMPLETE_REKEY_TEST,
+          );
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, '123');
+        done();
+      });
+    });
+  });
 });

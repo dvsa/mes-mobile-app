@@ -27,6 +27,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestById, isPassed } from '../../modules/tests/tests.selector';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 
 @Injectable()
 export class JournalAnalyticsEffects {
@@ -36,12 +37,7 @@ export class JournalAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics()
-          .then(() => {})
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
+    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
@@ -52,7 +48,7 @@ export class JournalAnalyticsEffects {
         this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
         this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, '');
         this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, '');
-        return of();
+        return of(new AnalyticRecorded());
       },
     ),
   );
@@ -71,9 +67,7 @@ export class JournalAnalyticsEffects {
           AnalyticsDimensionIndices.JOURNAL_DAYS_FROM_TODAY,
           this.analytics.getDiffDays(action.day).toString());
 
-        this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
-
-        return of();
+        return of(new AnalyticRecorded());
       },
     ),
   );
@@ -84,7 +78,7 @@ export class JournalAnalyticsEffects {
     switchMap(
       (action: JournalRefresh) => {
         this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.REFRESH_JOURNAL, action.mode);
-        return of();
+        return of(new AnalyticRecorded());
       },
     ),
   );
@@ -95,7 +89,7 @@ export class JournalAnalyticsEffects {
     switchMap(
       (action: JournalRefreshError) => {
         this.analytics.logError(action.errorDescription, action.errorMessage);
-        return of();
+        return of(new AnalyticRecorded());
       },
     ),
   );
@@ -109,7 +103,7 @@ export class JournalAnalyticsEffects {
           AnalyticsEventCategories.JOURNAL,
           AnalyticsEvents.SLOT_CHANGED,
           action.slotId.toString());
-        return of();
+        return of(new AnalyticRecorded());
       },
     ),
   );
@@ -118,8 +112,12 @@ export class JournalAnalyticsEffects {
   testOutcomeStartTest$ = this.actions$.pipe(
     ofType(START_TEST),
     switchMap((action: StartTest) => {
-      this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.START_TEST, action.slotId.toString());
-      return of();
+      if (action.rekey) {
+        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.REKEY_TEST, action.slotId.toString());
+      } else {
+        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.START_TEST, action.slotId.toString());
+      }
+      return of(new AnalyticRecorded());
     }),
   );
 
@@ -150,7 +148,7 @@ export class JournalAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
-      return of();
+      return of(new AnalyticRecorded());
     }),
   );
 
