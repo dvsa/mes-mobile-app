@@ -10,6 +10,8 @@ import {
   getDrivingFaults,
   displayDrivingFaultComments,
   getManoeuvreFaults,
+  getEyesightTestSeriousFaultAndComment,
+  getEyesightTestSeriousFault,
 } from '../debrief.selector';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 
@@ -201,4 +203,24 @@ describe('debriefSelector', () => {
     });
   });
 
+  describe('getEyesightTestSeriousFault', () => {
+    it('should return an array with the correctly formatted fault object', () => {
+      const result = getEyesightTestSeriousFault({
+        complete: true,
+        seriousFault: true,
+      });
+      expect(result[0]).toBe('eyesightTest');
+    });
+  });
+
+  describe('getEyesightTestSeriousFaultAndComment', () => {
+    it('should return the comments', () => {
+      const result = getEyesightTestSeriousFaultAndComment({
+        seriousFault: true,
+        complete: true,
+        faultComments: 'Eyesight test comment',
+      });
+      expect(result[0].comment).toBe('Eyesight test comment');
+    });
+  });
 });
