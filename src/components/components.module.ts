@@ -15,6 +15,7 @@ import { ConductedLanguageComponent } from './conducted-language/conducted-langu
 import { DisplayAddressComponent } from './display-address/display-address';
 import { PracticeModeBanner } from './practice-mode-banner/practice-mode-banner';
 import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
+import { ErrorMessageComponent } from './error-message/error-message';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
     DisplayAddressComponent,
     PracticeModeBanner,
     TickIndicatorComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -49,6 +51,7 @@ import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
     DisplayAddressComponent,
     PracticeModeBanner,
     TickIndicatorComponent,
+    ErrorMessageComponent,
   ],
 })
 export class ComponentsModule { }

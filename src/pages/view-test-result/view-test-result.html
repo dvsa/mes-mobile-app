@@ -11,7 +11,10 @@
 </ion-header>
 
 <ion-content padding>
-  <h3 *ngIf="!isLoading && showErrorMessage" class="error">Unable to retrive the test result.</h3>
+  <div *ngIf="!isLoading && showErrorMessage">
+    <error-message returnTo="{{errorLink}}" showAdditionalText="{{additionalErrorText}}" (exitModal)="goBack()">
+    </error-message>
+  </div>
   <div *ngIf="!isLoading && !showErrorMessage">
     <view-test-header [data]="getHeaderDetails()"></view-test-header>
     <test-details-card [data]="getTestDetails()"></test-details-card>

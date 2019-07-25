@@ -352,7 +352,6 @@ describe('ViewTestResultPage', () => {
   describe('DOM', () => {
     it('should hide the cards and error message when the data is loading', () => {
       component.isLoading = true;
-      component.showErrorMessage = false;
 
       expect(fixture.debugElement.query(By.css('.error'))).toBeNull();
 
@@ -373,7 +372,6 @@ describe('ViewTestResultPage', () => {
     });
     it('should hide the cards and show the error message when there has been an error', () => {
       component.isLoading = false;
-      component.showErrorMessage = true;
       fixture.detectChanges();
 
       expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
@@ -396,7 +394,6 @@ describe('ViewTestResultPage', () => {
 
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      component.showErrorMessage = false;
       component.testResult = categoryBTestResultMock;
       fixture.detectChanges();
 
