@@ -106,7 +106,6 @@ export class TestReportEffects {
             const actions: Action[] = [new testsActions.SetActivityCode(result)];
             if (!isEmpty(currentTest.activityCode) && currentTest.activityCode !== result) {
               const label = result === '1' ? 'fail to pass' : 'pass to fail';
-              console.log('the label is', label);
               actions.push(new testsActions.TestOutcomeChanged(label));
             }
 
