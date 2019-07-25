@@ -92,6 +92,7 @@ export class TestsAnalyticsEffects {
       this.analytics.logEvent(
         AnalyticsEventCategories.TEST_REPORT,
         AnalyticsEvents.TEST_OUTCOME_CHANGED,
+        action.payload,
       );
 
       this.analytics.addCustomDimension(
