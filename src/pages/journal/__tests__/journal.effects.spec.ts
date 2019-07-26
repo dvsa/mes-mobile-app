@@ -29,6 +29,9 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { PopulateExaminer } from '../../../modules/tests/examiner/examiner.actions';
 import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
+import { SaveLog } from '../../../modules/logs/logs.actions';
+import { LogHelper } from '../../../providers/logs/logsHelper';
+import { Device } from '@ionic-native/device';
 
 export class TestActions extends Actions {
   constructor() {
@@ -57,6 +60,9 @@ describe('Journal Effects', () => {
       imports: [
         StoreModule.forRoot({
           journal: journalReducer,
+          appInfo: () => ({
+            versionNumber: '5',
+          }),
         }),
       ],
       providers: [
@@ -71,6 +77,8 @@ describe('Journal Effects', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         Store,
         SlotProvider,
+        LogHelper,
+        Device,
       ],
     });
     journalProvider = TestBed.get(JournalProvider);
@@ -123,7 +131,56 @@ describe('Journal Effects', () => {
       expect(result instanceof journalActions.LoadJournalSuccess).toBe(true);
       done();
     });
+  });
 
+  it('should save a log if a timeout error occurs', (done) => {
+    // ARRANGE
+    spyOn(journalProvider, 'getJournal').and.callThrough();
+    spyOn(journalProvider, 'saveJournalForOffline').and.callThrough();
+    spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
+    spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
+    spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+    spyOn(store$, 'dispatch').and.callThrough();
+    (<any>journalProvider).setupTimeoutError();
+    // ACT
+    actions$.next(new journalActions.LoadJournal());
+    // ASSERT
+    effects.loadJournal$.subscribe((result) => {
+      expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(journalProvider.saveJournalForOffline).not.toHaveBeenCalled();
+      expect(slotProvider.detectSlotChanges).not.toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
+      expect(slotProvider.extendWithEmptyDays).not.toHaveBeenCalled();
+      expect(slotProvider.getRelevantSlots).not.toHaveBeenCalled();
+      expect(result instanceof journalActions.LoadJournalSuccess).toBe(true);
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(journalActions.JournalRefresh));
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(SaveLog));
+      done();
+    });
+  });
+
+  it('should save a log if an actual error occurs', (done) => {
+    // ARRANGE
+    spyOn(journalProvider, 'getJournal').and.callThrough();
+    spyOn(journalProvider, 'saveJournalForOffline').and.callThrough();
+    spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
+    spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
+    spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
+    spyOn(store$, 'dispatch').and.callThrough();
+    (<any>journalProvider).setupActualError();
+    // ACT
+    actions$.next(new journalActions.LoadJournal());
+    // ASSERT
+    effects.loadJournal$.subscribe((result) => {
+      expect(journalProvider.getJournal).toHaveBeenCalled();
+      expect(journalProvider.saveJournalForOffline).not.toHaveBeenCalled();
+      expect(slotProvider.detectSlotChanges).not.toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
+      expect(slotProvider.extendWithEmptyDays).not.toHaveBeenCalled();
+      expect(slotProvider.getRelevantSlots).not.toHaveBeenCalled();
+      expect(result instanceof journalActions.LoadJournalSuccess).toBe(false);
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(journalActions.JournalRefresh));
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(SaveLog));
+      done();
+    });
   });
 
   it('should dispatch the failure action when the journal fails to load', (done) => {

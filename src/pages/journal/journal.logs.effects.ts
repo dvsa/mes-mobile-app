@@ -14,25 +14,7 @@ export class JournalLogsEffects {
 
   constructor(
     private actions$: Actions,
-    private authenticationProvider: AuthenticationProvider) {}
-
-  @Effect()
-  loadJournalLogEffect$ = this.actions$.pipe(
-    ofType(journalActions.LOAD_JOURNAL),
-    switchMap((action: journalActions.LoadJournal) => {
-      const log: Log = this.createLog(LogType.INFO, action.type);
-      return of(new logsActions.SaveLog(log));
-    }),
-  );
-
-  @Effect()
-  loadJournalSuccessLogEffect$ = this.actions$.pipe(
-    ofType(journalActions.LOAD_JOURNAL_SUCCESS),
-    switchMap((action: journalActions.LoadJournalSuccess) => {
-      const log: Log = this.createLog(LogType.INFO, action.type);
-      return of(new logsActions.SaveLog(log));
-    }),
-  );
+    private authenticationProvider: AuthenticationProvider) { }
 
   @Effect()
   loadJournalFailureLogEffect$ = this.actions$.pipe(
@@ -44,37 +26,10 @@ export class JournalLogsEffects {
   );
 
   @Effect()
-  loadJournalSilentLogEffect$ = this.actions$.pipe(
-    ofType(journalActions.LOAD_JOURNAL_SILENT),
-    switchMap((action: journalActions.LoadJournalSilent) => {
-      const log: Log = this.createLog(LogType.INFO, action.type);
-      return of(new logsActions.SaveLog(log));
-    }),
-  );
-
-  @Effect()
   loadJournalSilentFailureLogEffect$ = this.actions$.pipe(
     ofType(journalActions.LOAD_JOURNAL_SILENT_FAILURE),
     switchMap((action: journalActions.LoadJournalSilentFailure) => {
       const log: Log = this.createLog(LogType.WARNING, action.type);
-      return of(new logsActions.SaveLog(log));
-    }),
-  );
-
-  @Effect()
-  selectPreviousDayLogEffect$ = this.actions$.pipe(
-    ofType(journalActions.SELECT_PREVIOUS_DAY),
-    switchMap((action: journalActions.SelectPreviousDay) => {
-      const log: Log = this.createLog(LogType.INFO, action.type);
-      return of(new logsActions.SaveLog(log));
-    }),
-  );
-
-  @Effect()
-  selectNextDayLogEffect$ = this.actions$.pipe(
-    ofType(journalActions.SELECT_NEXT_DAY),
-    switchMap((action: journalActions.SelectNextDay) => {
-      const log: Log = this.createLog(LogType.INFO, action.type);
       return of(new logsActions.SaveLog(log));
     }),
   );

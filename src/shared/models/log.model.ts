@@ -1,4 +1,4 @@
-export enum  LogType {
+export enum LogType {
   DEBUG = 'debug',
   INFO = 'info',
   WARNING = 'warning',

@@ -16,6 +16,9 @@ import {
   TestResultSearchViewDidEnter, PerformApplicationReferenceSearch, PerformDriverNumberSearch, PerformLDTMSearch,
 
 } from './test-results-search.actions';
+import { Log, LogType } from '../../shared/models/log.model';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -45,6 +48,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     public searchProvider: SearchProvider,
     private appConfig: AppConfigProvider,
     private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -77,7 +81,10 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.searchResults = results;
             this.showSearchSpinner = false;
           }),
-          catchError(() => {
+          catchError((err) => {
+            const log: Log = this.logHelper
+              .createLog(LogType.ERROR, `Seaching tests by driver number (${this.candidateInfo})`, err);
+            this.store$.dispatch(new SaveLog(log));
             this.searchResults = [];
             this.showSearchSpinner = false;
             return of(this.hasSearched = true);
@@ -97,7 +104,9 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.searchResults = results;
             this.showSearchSpinner = false;
           }),
-          catchError(() => {
+          catchError((err) => {
+            this.store$.dispatch(new SaveLog(this.logHelper
+              .createLog(LogType.ERROR, `Seaching tests by app ref (${this.candidateInfo})`, err)));
             this.searchResults = [];
             this.showSearchSpinner = false;
             return of(this.hasSearched = true);
@@ -119,6 +128,9 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.showAdvancedSearchSpinner = false;
         }),
         catchError((err) => {
+          const log: Log = this.logHelper
+            .createLog(LogType.ERROR, `Advanced search with params (${advancedSearchParams})`, err);
+          this.store$.dispatch(new SaveLog(log));
           this.searchResults = [];
           this.showAdvancedSearchSpinner = false;
           return of(console.log('ERROR', JSON.stringify(err)));

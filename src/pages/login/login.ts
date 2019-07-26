@@ -26,8 +26,9 @@ import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { LoadPersistedTests, StartSendingCompletedTests } from '../../modules/tests/tests.actions';
 import { AppConfigError } from '../../providers/app-config/app-config.constants';
 import { LogsProvider } from '../../providers/logs/logs';
-import { LogType, Log } from '../../shared/models/log.model';
+import { LogType } from '../../shared/models/log.model';
 import { JOURNAL_PAGE } from '../page-names.constants';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 @IonicPage()
 @Component({
@@ -59,6 +60,7 @@ export class LoginPage extends BasePageComponent {
     public loadingController: LoadingController,
     public alertCtrl: AlertController,
     public logProvider: LogsProvider,
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider, false);
 
@@ -132,8 +134,7 @@ export class LoginPage extends BasePageComponent {
   }
 
   dispatchLog(message: string) {
-    const log: Log = this.createLog(LogType.INFO, message);
-    this.store$.dispatch(new SaveLog(log));
+    this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'User login', message)));
     this.store$.dispatch(new SendLogs());
   }
 
@@ -213,14 +214,6 @@ export class LoginPage extends BasePageComponent {
       this.loadingSpinner.dismiss();
       this.loadingSpinner = null;
     }
-  }
-
-  private createLog(logType: LogType, message: string): Log {
-    return {
-      message,
-      type: logType,
-      timestamp: Date.now(),
-    };
   }
 
 }
