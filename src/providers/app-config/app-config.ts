@@ -10,6 +10,12 @@ import { NetworkStateProvider, ConnectionStatus } from '../network-state/network
 import { AppConfigError } from './app-config.constants';
 import { AuthenticationError } from './../authentication/authentication.constants';
 import { Platform } from 'ionic-angular';
+import { timeout } from 'rxjs/operators';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogType } from '../../shared/models/log.model';
+import { StoreModel } from '../../shared/models/store.model';
+import { Store } from '@ngrx/store';
+import { LogHelper } from '../logs/logsHelper';
 
 declare let cordova: any;
 
@@ -54,6 +60,8 @@ export class AppConfigProvider {
     public networkState: NetworkStateProvider,
     public dataStore: DataStoreProvider,
     public platform: Platform,
+    private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) { }
 
   public initialiseAppConfig = (): Promise<void> => {
@@ -78,6 +86,7 @@ export class AppConfigProvider {
     this.getRemoteData()
       .then(data => this.mapRemoteConfig(data))
       .catch((error) => {
+        this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error)));
         if (error && error.status === 403) {
           return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
         }
@@ -118,12 +127,19 @@ export class AppConfigProvider {
     new Promise((resolve, reject) => {
       if (this.networkState.getNetworkState() === ConnectionStatus.ONLINE) {
         this.httpClient.get<any>(this.environmentFile.configUrl)
+          .pipe(timeout(30000))
           .subscribe(
             (data) => {
               this.dataStore.setItem('CONFIG', JSON.stringify(data));
               resolve(data);
             },
-            error => reject(error),
+            (error) => {
+              this.store$.dispatch(new SaveLog(this.logHelper
+                .createLog(LogType.ERROR, 'Getting remote config failed, using cached data', error)));
+              this.getCachedRemoteConfig()
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+            },
           );
       } else {
         this.getCachedRemoteConfig()
@@ -182,5 +198,6 @@ export class AppConfigProvider {
         url: data.logs.url,
         autoSendInterval: data.logs.autoSendInterval,
       },
+      requestTimeout: data.requestTimeout,
     } as AppConfig)
 }

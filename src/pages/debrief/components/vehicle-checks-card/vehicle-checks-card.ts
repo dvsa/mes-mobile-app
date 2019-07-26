@@ -63,6 +63,7 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
       hasVehicleChecksFault$.pipe(map(val => this.hasFault = val)),
       showMeQuestionOutcome$.pipe(map(val => this.hasShowMeFault = val !== CompetencyOutcome.P)),
     ).subscribe();
+
   }
 
   ngOnDestroy(): void {

@@ -393,6 +393,7 @@ describe('ViewTestResultPage', () => {
         fixture.debugElement.query(By.css('test-summary-card')),
       ).toBeNull();
     });
+
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
       component.showErrorMessage = false;

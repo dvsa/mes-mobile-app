@@ -20,8 +20,12 @@ Given('I am on the journal page as {string}', (username) => {
 });
 
 When('I view candidate details for {string}', (candidateName) => {
-  const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
-  return clickElement(buttonElement);
+  return viewCandidateDetails(candidateName);
+});
+
+When('I check candidate details for {string}', (candidateName) => {
+  viewCandidateDetails(candidateName);
+  closeCandidateDetailsDialog();
 });
 
 When('I start the test for {string}', (candidateName) => {
@@ -88,3 +92,14 @@ Then('the test result for {string} is {string}', (candidateName, testResult) => 
 
   return expect(testResultElement.getText()).to.eventually.equal(testResult);
 });
+
+const viewCandidateDetails = (candidateName) => {
+  const buttonElement = getElement(by.xpath(`//h3[text()[normalize-space(.) = "${candidateName}"]]`));
+  return clickElement(buttonElement);
+};
+
+const closeCandidateDetailsDialog = () => {
+  const closeCandidateDetailDialog = element(
+    by.xpath('//page-candidate-details//button/span[normalize-space(text()) = "Close"]'));
+  clickElement(closeCandidateDetailDialog);
+};

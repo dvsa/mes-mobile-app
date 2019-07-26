@@ -82,6 +82,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   inputSubscriptions: Subscription[] = [];
   isBookedInWelsh: boolean;
   conductedLanguage: string;
+  merged$: Observable<boolean | string>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -190,7 +191,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
     const { welshTest$, licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       licenseProvided$.pipe(map(val => this.licenseProvided = val)),
       healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
@@ -198,8 +199,15 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     );
 
     this.configureI18N(this.conductedLanguage === HealthDeclarationPage.welshLanguage);
-    this.subscription = merged$.subscribe();
 
+  }
+
+  ionViewWillEnter(): boolean {
+    if (this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+
+    return true;
   }
 
   rehydrateFields(): void {
@@ -236,6 +244,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   receiptDeclarationChanged(): void {
     this.store$.dispatch(new postTestDeclarationsActions.ToggleReceiptDeclaration());
   }
+
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
@@ -296,10 +305,15 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.subscription.unsubscribe();
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (this.inputSubscriptions) {
+      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    }
   }
 
 }

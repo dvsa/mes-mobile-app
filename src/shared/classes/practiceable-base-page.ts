@@ -10,7 +10,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { StoreModel } from '../models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { isPracticeMode, isTestReportPracticeTest, isEndToEndPracticeTest } from '../../modules/tests/tests.selector';
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { FakeJournalPage } from '../../pages/fake-journal/fake-journal';
 
 interface PracticeableBasePageState {
@@ -19,7 +19,7 @@ interface PracticeableBasePageState {
   isEndToEndPracticeMode$: Observable<boolean>;
 }
 
-export abstract class PracticeableBasePageComponent extends BasePageComponent implements OnInit, OnDestroy {
+export abstract class PracticeableBasePageComponent extends BasePageComponent implements OnInit {
 
   public isPracticeMode: boolean;
   public isTestReportPracticeMode: boolean;
@@ -65,10 +65,11 @@ export abstract class PracticeableBasePageComponent extends BasePageComponent im
       isTestReportPracticeMode$.pipe(map(value => this.isTestReportPracticeMode = value)),
       isEndToEndPracticeMode$.pipe(map(value => this.isEndToEndPracticeMode = value)),
     );
+
     this.practiceableBasePageSubscription = merged$.subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.practiceableBasePageSubscription) {
       this.practiceableBasePageSubscription.unsubscribe();
     }

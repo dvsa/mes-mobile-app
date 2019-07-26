@@ -166,7 +166,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       catBLegalRequirements$,
     } = this.pageState;
 
-    const merged$ = merge(
+    this.subscription = merge(
       candidateUntitledName$,
       isRemoveFaultMode$.pipe(map(result => (this.isRemoveFaultMode = result))),
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
@@ -179,11 +179,10 @@ export class TestReportPage extends PracticeableBasePageComponent {
       catBLegalRequirements$.pipe(
         map(result => (this.catBLegalRequirements = result)),
       ),
-    );
-    this.subscription = merged$.subscribe();
+    ).subscribe();
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): boolean {
     // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
     if (super.isIos() && this.isPracticeMode) {
       this.screenOrientation.lock(
@@ -192,6 +191,7 @@ export class TestReportPage extends PracticeableBasePageComponent {
       this.insomnia.keepAwake();
       this.statusBar.hide();
     }
+
     return true;
   }
 
@@ -209,8 +209,8 @@ export class TestReportPage extends PracticeableBasePageComponent {
     this.displayOverlay = !this.displayOverlay;
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -239,10 +239,10 @@ export class TestReportPage extends PracticeableBasePageComponent {
     return this.isRemoveFaultMode
       ? 'remove-mode'
       : this.isSeriousMode
-      ? 'serious-mode'
-      : this.isDangerousMode
-      ? 'dangerous-mode'
-      : '';
+        ? 'serious-mode'
+        : this.isDangerousMode
+          ? 'dangerous-mode'
+          : '';
   }
 
   onModalDismiss = (event: ModalEvent): void => {

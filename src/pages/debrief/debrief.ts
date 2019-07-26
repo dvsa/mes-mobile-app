@@ -184,7 +184,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
     const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
 
-    const merged$ = merge(
+    this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result)),
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       etaFaults$.pipe(
@@ -200,9 +200,9 @@ export class DebriefPage extends PracticeableBasePageComponent {
         }),
       ),
       conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
-    );
+    ).subscribe();
+
     this.configureI18N(this.conductedLanguage === DebriefPage.welshLanguage);
-    this.subscription = merged$.subscribe();
   }
 
   configureI18N(isWelsh: boolean): void {
@@ -211,23 +211,22 @@ export class DebriefPage extends PracticeableBasePageComponent {
     }
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
   ionViewDidEnter(): void {
     this.store$.dispatch(new DebriefViewDidEnter());
   }
 
   ionViewDidLeave(): void {
+    super.ionViewDidLeave();
     if (this.isTestReportPracticeMode) {
       if (super.isIos()) {
         this.screenOrientation.unlock();
         this.insomnia.allowSleepAgain();
       }
+    }
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+
     }
   }
 

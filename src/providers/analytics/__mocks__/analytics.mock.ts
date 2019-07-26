@@ -22,4 +22,8 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
   setUserId(userId: string) {}
 
   setDeviceId(deviceId: string) {}
+
+  getDescriptiveDate(userDate: string) { return 'Tomorrow'; }
+
+  getDiffDays(userDate: string) { return '4'; }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading, LoadingController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -38,13 +38,19 @@ import {
 } from '../debrief/debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import { ViewTestResultViewDidEnter } from './view-test-result.actions';
+import { LogType } from '../../shared/models/log.model';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 @IonicPage()
 @Component({
   selector: 'page-view-test-result',
   templateUrl: 'view-test-result.html',
 })
-export class ViewTestResultPage extends BasePageComponent implements OnInit, OnDestroy {
+export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
 
@@ -63,7 +69,8 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     public authenticationProvider: AuthenticationProvider,
     public searchProvider: SearchProvider,
     public compressionProvider: CompressionProvider,
-
+    private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -79,7 +86,9 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       .pipe(
         map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
         tap(() => this.handleLoadingUI(false)),
-        catchError((error) => {
+        catchError((err) => {
+          this.store$.dispatch(new SaveLog(this.logHelper
+            .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
           this.showErrorMessage = true;
           this.handleLoadingUI(false);
           return of();
@@ -87,10 +96,14 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
       ).subscribe();
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new ViewTestResultViewDidEnter());
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
@@ -212,7 +225,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     };
   }
 
-  getManoeuvres() : string [] {
+  getManoeuvres(): string[] {
     const manoeuvres = [];
 
     if (get(this.testResult, 'testData.manoeuvres.forwardPark.selected')) {
@@ -235,7 +248,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return manoeuvres;
   }
 
-  getETA() : string [] {
+  getETA(): string[] {
     const eta: string[] = [];
 
     if (get(this.testResult, 'testData.ETA.physical')) {
@@ -250,14 +263,14 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
     return eta;
   }
 
-  getShowMeQuestion() : ShowMeQuestion {
+  getShowMeQuestion(): ShowMeQuestion {
     const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
     return showMeQuestionConstants.find(question => question.code === showMeQuestionCode);
   }
 
   getTellMeQuestion(): TellMeQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
-    return tellMeQuestionConstants.find(question => question.code ===  tellMeQuestionCode);
+    return tellMeQuestionConstants.find(question => question.code === tellMeQuestionCode);
   }
 
   getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
@@ -314,7 +327,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit, OnD
   }
 
   updateVehicleChecksLabel(vehicleCheck: CommentedCompetency & MultiFaultAssignableCompetency)
-  : (CommentedCompetency & MultiFaultAssignableCompetency) {
+    : (CommentedCompetency & MultiFaultAssignableCompetency) {
     return {
       faultCount: vehicleCheck.faultCount,
       competencyDisplayName: 'Vehicle checks',

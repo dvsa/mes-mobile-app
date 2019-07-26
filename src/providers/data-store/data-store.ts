@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { SecureStorageObject, SecureStorage } from '@ionic-native/secure-storage';
 import { NetworkStateProvider } from '../network-state/network-state';
 import { Platform } from 'ionic-angular';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogType } from '../../shared/models/log.model';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import { LogHelper } from '../logs/logsHelper';
 
 @Injectable()
 export class DataStoreProvider {
@@ -12,7 +17,10 @@ export class DataStoreProvider {
   constructor(
     public platform: Platform,
     public secureStorage: SecureStorage,
-    public networkState: NetworkStateProvider) {
+    public networkState: NetworkStateProvider,
+    private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
+  ) {
   }
 
   setSecureContainer(container: SecureStorageObject): void {
@@ -63,6 +71,9 @@ export class DataStoreProvider {
     }
     return this.secureContainer.set(key, value).then((response: string) => {
       return response;
+    }).catch((error) => {
+      this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'Setting local storage item', error)));
+      return error;
     });
   }
   /**

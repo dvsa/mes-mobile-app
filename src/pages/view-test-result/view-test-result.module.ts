@@ -4,6 +4,8 @@ import { ViewTestResultPage } from './view-test-result';
 import { SearchProvider } from '../../providers/search/search';
 import { ViewTestResultComponentsModule } from './components/view-test-result.components.module';
 import { CompressionProvider } from '../../providers/compression/compression';
+import { EffectsModule } from '@ngrx/effects';
+import { ViewTestResultAnalyticsEffects } from './view-test-result.analytics.effects';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,7 @@ import { CompressionProvider } from '../../providers/compression/compression';
   imports: [
     IonicPageModule.forChild(ViewTestResultPage),
     ViewTestResultComponentsModule,
+    EffectsModule.forFeature([ViewTestResultAnalyticsEffects]),
   ],
   providers: [
     SearchProvider,

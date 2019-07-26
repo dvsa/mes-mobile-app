@@ -7,3 +7,8 @@ export enum legalRequirementsLabels {
   eco = 'Eco (control and planning)',
   vehicleChecks = 'Show me / Tell me',
 }
+
+export enum legalRequirementToggleValues {
+  completed = 'completed',
+  uncompleted = 'uncompleted',
+}

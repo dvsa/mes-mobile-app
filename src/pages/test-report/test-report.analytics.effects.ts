@@ -19,6 +19,12 @@ import {
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { legalRequirementsLabels, legalRequirementToggleValues }
+  from '../../shared/constants/legal-requirements/catb-legal-requirements';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
+import { getEco, getTestRequirements } from '../../modules/tests/test-data/test-data.selector';
+import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -525,6 +531,139 @@ export class TestReportAnalyticsEffects {
         formatAnalyticsText(AnalyticsEventCategories.TERMINATION, tests),
         formatAnalyticsText(AnalyticsEvents.END_TEST, tests),
         AnalyticsLabels.TERMINATE_TEST,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  toggleLegalRequirement$ = this.actions$.pipe(
+    ofType(
+      testDataActions.TOGGLE_LEGAL_REQUIREMENT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getTestRequirements),
+        ),
+      ),
+    )),
+    concatMap(
+      ([action, tests, testRequirements]: [testDataActions.ToggleLegalRequirement, TestsModel, TestRequirements]) => {
+        const toggleValue = testRequirements[action.payload]
+          ? legalRequirementToggleValues.completed
+          : legalRequirementToggleValues.uncompleted;
+        this.analytics.logEvent(
+          formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+          formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+          `${legalRequirementsLabels[action.payload]} - ${toggleValue}`,
+        );
+        return of(new AnalyticRecorded());
+      },
+    ),
+  );
+
+  @Effect()
+  toggleEco$ = this.actions$.pipe(
+    ofType(
+      testDataActions.TOGGLE_ECO,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestData),
+          select(getEco),
+        ),
+      ),
+    )),
+    concatMap(([action, tests, eco]: [testDataActions.ToggleEco, TestsModel, Eco]) => {
+      const toggleValue = eco.completed
+        ? legalRequirementToggleValues.completed
+        : legalRequirementToggleValues.uncompleted;
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['eco']} - ${toggleValue}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  manoeuvreCompletedEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.RECORD_MANOEUVRES_SELECTION,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['manoeuvre']} - ${legalRequirementToggleValues.completed}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  showMeQuestionCompletedEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_PASSED,
+      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.completed}`,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  showMeQuestionUncompletedEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+    ),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+      this.analytics.logEvent(
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
+        `${legalRequirementsLabels['vehicleChecks']} - ${legalRequirementToggleValues.uncompleted}`,
       );
       return of(new AnalyticRecorded());
     }),

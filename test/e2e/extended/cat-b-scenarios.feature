@@ -39,7 +39,8 @@ Feature: Extended category B test scenarios
 
    Scenario: Candidate fails a test with a single dangerous fault
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
-      When I start the test for "Mr Ali Campbell"
+      When I check candidate details for "Mr Ali Campbell"
+      And I start the test for "Mr Ali Campbell"
       And the candidate requests to receive results by post
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Ali Campbell" page
@@ -67,7 +68,8 @@ Feature: Extended category B test scenarios
 
    Scenario: Candidate fails a test with a single serious fault
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I start the test for "Mrs Jane Doe"
+      When I check candidate details for "Mrs Jane Doe"
+      And I start the test for "Mrs Jane Doe"
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
@@ -92,7 +94,8 @@ Feature: Extended category B test scenarios
 
    Scenario: Examiner terminates the test in the interests of public safety
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
-      When I start the test for "Mr James Brown"
+      When I check candidate details for "Mr James Brown"
+      And I start the test for "Mr James Brown"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then I should see the "Declaration - James Brown" page
@@ -120,7 +123,8 @@ Feature: Extended category B test scenarios
 
    Scenario: Candidate passes a test with 15 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
-      When I start the test for "Mrs Jane Doe"
+      When I check candidate details for "Mrs Jane Doe"
+      And I start the test for "Mrs Jane Doe"
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then I should see the "Declaration - Jane Doe" page
@@ -177,7 +181,8 @@ Feature: Extended category B test scenarios
 
    Scenario: Candidate fails a test with a dangerous and 16 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
-      When I start the test for "Miss Theresa Shaw"
+      When I check candidate details for "Miss Theresa Shaw"
+      And I start the test for "Miss Theresa Shaw"
       Then I should see the "Declaration - Theresa Shaw" page
       And the candidate requests to receive results by post
       And the candidate confirms their communication preference

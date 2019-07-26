@@ -19,11 +19,6 @@ When('the candidate requests to receive results by post', () => {
   clickElement(postalAddressRadio);
 });
 
-When('the candidate requests to receive results by calling the support centre', () => {
-  const supportCentreRadio = getElement(by.id('support-centre'));
-  clickElement(supportCentreRadio);
-});
-
 When(/^the candidate confirms their (communication preference|declaration)$/, (pageName) => {
   const pageType = (pageName === 'communication preference' ? 'communication' : 'page-waiting-room');
   const continueButton = getElement(by.xpath(`//${pageType}//button[@id = 'continue-button']`));

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { getTests } from '../../../../modules/tests/tests.reducer';
@@ -21,12 +21,13 @@ import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../test-re
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { isEmpty } from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'vehicle-check',
   templateUrl: 'vehicle-check.html',
 })
-export class VehicleCheckComponent implements OnInit {
+export class VehicleCheckComponent implements OnInit, OnDestroy {
 
   selectedShowMeQuestion: boolean = false;
 
@@ -37,9 +38,11 @@ export class VehicleCheckComponent implements OnInit {
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
 
+  merged$: Observable<void | boolean>;
+
   subscription: Subscription;
 
-  constructor(private store$: Store<StoreModel>) {}
+  constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
 
@@ -65,7 +68,7 @@ export class VehicleCheckComponent implements OnInit {
       select(isRemoveFaultMode),
     );
 
-    const merged$ = merge(
+    this.subscription = merge(
       vehicleChecks$.pipe(map((vehicleChecks: VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
         this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;
@@ -75,9 +78,8 @@ export class VehicleCheckComponent implements OnInit {
       isSeriousMode$.pipe(map(toggle => this.isSeriousMode = toggle)),
       isDangerousMode$.pipe(map(toggle => this.isDangerousMode = toggle)),
       isRemoveFaultMode$.pipe(map(toggle => this.isRemoveFaultMode = toggle)),
-    );
+    ).subscribe();
 
-    this.subscription = merged$.subscribe();
   }
 
   ngOnDestroy(): void {

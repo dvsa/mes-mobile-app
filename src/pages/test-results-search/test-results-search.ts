@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
@@ -9,6 +10,15 @@ import { of } from 'rxjs/observable/of';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { AdvancedSearchParams } from '../../providers/search/search.models';
 import { ExaminerRole } from '../../providers/app-config/constants/examiner-role.constants';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import {
+  TestResultSearchViewDidEnter, PerformApplicationReferenceSearch, PerformDriverNumberSearch, PerformLDTMSearch,
+
+} from './test-results-search.actions';
+import { Log, LogType } from '../../shared/models/log.model';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogHelper } from '../../providers/logs/logsHelper';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -28,6 +38,7 @@ export class TestResultsSearchPage extends BasePageComponent {
   hasSearched: boolean = false;
   showSearchSpinner: boolean = false;
   showAdvancedSearchSpinner: boolean = false;
+  subscription: Subscription = Subscription.EMPTY;
 
   constructor(
     public navController: NavController,
@@ -36,8 +47,14 @@ export class TestResultsSearchPage extends BasePageComponent {
     public authenticationProvider: AuthenticationProvider,
     public searchProvider: SearchProvider,
     private appConfig: AppConfigProvider,
+    private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new TestResultSearchViewDidEnter());
   }
 
   searchByChanged(val: SearchBy) {
@@ -54,46 +71,56 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   searchTests() {
     if (this.searchBy === SearchBy.DriverNumber) {
+      this.subscription.unsubscribe();
+      this.store$.dispatch(new PerformDriverNumberSearch());
       this.showSearchSpinner = true;
-      this.searchProvider.driverNumberSearch(this.candidateInfo)
-      .pipe(
-        tap(() => this.hasSearched = true),
-        map((results) => {
-          this.searchResults = results;
-
-          this.showSearchSpinner = false;
-        }),
-        catchError(() => {
-          this.searchResults = [];
-          this.showSearchSpinner = false;
-          return of(this.hasSearched = true);
-        }),
-      )
-      .subscribe();
+      this.subscription = this.searchProvider.driverNumberSearch(this.candidateInfo)
+        .pipe(
+          tap(() => this.hasSearched = true),
+          map((results) => {
+            this.searchResults = results;
+            this.showSearchSpinner = false;
+          }),
+          catchError((err) => {
+            const log: Log = this.logHelper
+              .createLog(LogType.ERROR, `Seaching tests by driver number (${this.candidateInfo})`, err);
+            this.store$.dispatch(new SaveLog(log));
+            this.searchResults = [];
+            this.showSearchSpinner = false;
+            return of(this.hasSearched = true);
+          }),
+        )
+        .subscribe();
     }
 
     if (this.searchBy === SearchBy.ApplicationReferenece) {
+      this.subscription.unsubscribe();
+      this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
-      this.searchProvider.applicationReferenceSearch(this.candidateInfo)
-      .pipe(
-        tap(() => this.hasSearched = true),
-        map((results) => {
-          this.searchResults = results;
-          this.showSearchSpinner = false;
-        }),
-        catchError(() => {
-          this.searchResults = [];
-          this.showSearchSpinner = false;
-          return of(this.hasSearched = true);
-        }),
-      )
-      .subscribe();
+      this.subscription = this.searchProvider.applicationReferenceSearch(this.candidateInfo)
+        .pipe(
+          tap(() => this.hasSearched = true),
+          map((results) => {
+            this.searchResults = results;
+            this.showSearchSpinner = false;
+          }),
+          catchError((err) => {
+            this.store$.dispatch(new SaveLog(this.logHelper
+              .createLog(LogType.ERROR, `Seaching tests by app ref (${this.candidateInfo})`, err)));
+            this.searchResults = [];
+            this.showSearchSpinner = false;
+            return of(this.hasSearched = true);
+          }),
+        )
+        .subscribe();
     }
   }
 
   advancedSearch(advancedSearchParams: AdvancedSearchParams): void {
+    this.subscription.unsubscribe();
+    this.store$.dispatch(new PerformLDTMSearch(advancedSearchParams));
     this.showAdvancedSearchSpinner = true;
-    this.searchProvider.advancedSearch(advancedSearchParams)
+    this.subscription = this.searchProvider.advancedSearch(advancedSearchParams)
       .pipe(
         tap(() => this.hasSearched = true),
         map((results) => {
@@ -101,6 +128,9 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.showAdvancedSearchSpinner = false;
         }),
         catchError((err) => {
+          const log: Log = this.logHelper
+            .createLog(LogType.ERROR, `Advanced search with params (${advancedSearchParams})`, err);
+          this.store$.dispatch(new SaveLog(log));
           this.searchResults = [];
           this.showAdvancedSearchSpinner = false;
           return of(console.log('ERROR', JSON.stringify(err)));
@@ -114,6 +144,12 @@ export class TestResultsSearchPage extends BasePageComponent {
       return '';
     }
     return null;
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

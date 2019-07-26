@@ -6,6 +6,9 @@ import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { gunzipSync } from 'zlib';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { HttpClient } from '@angular/common/http';
+import { StoreModule, Store } from '@ngrx/store';
+import { LogHelper } from '../../logs/logsHelper';
+import { Device } from '@ionic-native/device';
 
 describe('TestSubmissionProvider', () => {
 
@@ -18,11 +21,19 @@ describe('TestSubmissionProvider', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        StoreModule.forRoot({
+          appInfo: () => ({
+            versionNumber: '5',
+          }),
+        }),
       ],
       providers: [
         TestSubmissionProvider,
         HttpClient,
         { provide: UrlProvider, useClass: UrlProviderMock },
+        Store,
+        LogHelper,
+        Device,
       ],
     });
 

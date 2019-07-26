@@ -193,16 +193,6 @@ export function testDataReducer(
         },
       };
     case testDataActions.TOGGLE_CONTROL_ECO:
-      if (!state.eco.adviceGivenControl) {
-        return {
-          ...state,
-          eco: {
-            ...state.eco,
-            adviceGivenControl: !state.eco.adviceGivenControl,
-            completed: true,
-          },
-        };
-      }
       return {
         ...state,
         eco: {
@@ -211,16 +201,6 @@ export function testDataReducer(
         },
       };
     case testDataActions.TOGGLE_PLANNING_ECO:
-      if (!state.eco.adviceGivenPlanning) {
-        return {
-          ...state,
-          eco: {
-            ...state.eco,
-            adviceGivenPlanning: !state.eco.adviceGivenPlanning,
-            completed: true,
-          },
-        };
-      }
       return {
         ...state,
         eco: {

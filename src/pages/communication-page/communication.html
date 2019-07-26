@@ -49,15 +49,6 @@
                 [isPostalAddressChosen]="isPostSelected()" (postalRadioSelect)="dispatchCandidateChosePost($event)">
               </postal-address>
 
-              <ion-row class="communication-option">
-                <div class="validation-bar communication-validation-bar" [class.ng-invalid]="invalid"></div>
-                <input type="radio" id="support-centre" class="gds-radio-button" formControlName="radioCtrl"
-                  name="radioCtrl" (click)="dispatchCandidateChoseSupportCentre('Support Centre')"
-                  [value]="isSupportCentreSelected()" [checked]="isSupportCentreSelected()">
-                <label for="support-centre"
-                  class="radio-label">{{ 'communication.optionCallCentre' | translate }}</label>
-              </ion-row>
-
               <ion-row class="validation-message-row" align-items-center>
                 <div class="validation-text"></div>
               </ion-row>

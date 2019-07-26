@@ -48,4 +48,5 @@ export const environment: LocalEnvironmentFile = {
     url: 'https://dev.mes.dev-dvsacloud.uk/v1/logs/dev',
     autoSendInterval: 1000 * 60,
   },
+  requestTimeout: 20000,
 };

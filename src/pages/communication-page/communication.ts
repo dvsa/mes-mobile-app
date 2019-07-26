@@ -1,5 +1,5 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -37,7 +37,6 @@ import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
-  CandidateChoseSupportCentreAsCommunicationPreference,
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
@@ -62,13 +61,12 @@ interface CommunicationPageState {
   selector: 'communication',
   templateUrl: 'communication.html',
 })
-export class CommunicationPage extends PracticeableBasePageComponent implements OnInit, OnDestroy {
+export class CommunicationPage extends PracticeableBasePageComponent implements OnInit {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
   static readonly email: CommunicationMethod = 'Email';
   static readonly post: CommunicationMethod = 'Post';
-  static readonly supportCentre: CommunicationMethod = 'Support Centre';
   static readonly welshLanguage: ConductedLanguage = 'Cymraeg';
   static readonly englishLanguage: ConductedLanguage = 'English';
 
@@ -86,6 +84,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   selectNewEmail: boolean;
   conductedLanguage: string;
   isBookedInWelsh: boolean;
+  merged$: Observable<string | boolean>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -193,14 +192,15 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
       conductedLanguage$,
     } = this.pageState;
 
-    const merged$ = merge(
+    this.merged$ = merge(
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value)),
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
     );
-    this.subscription = merged$.subscribe();
+
+    this.subscription = this.merged$.subscribe();
 
     if (this.shouldPreselectADefaultValue()) {
       this.initialiseDefaultSelections();
@@ -211,9 +211,19 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     this.restoreRadioValidators();
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.subscription.unsubscribe();
+  ionViewWillEnter(): boolean {
+    if (this.subscription.closed && this.merged$) {
+      this.subscription = this.merged$.subscribe();
+    }
+
+    return true;
+  }
+
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   configureI18N(isWelsh: boolean): void {
@@ -275,17 +285,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     this.store$.dispatch(
       new CandidateChosePostAsCommunicationPreference(CommunicationPage.post),
     );
-  }
-
-  dispatchCandidateChoseSupportCentre(): void {
-    this.setCommunicationType(CommunicationPage.supportCentre);
-    this.store$.dispatch(
-      new CandidateChoseSupportCentreAsCommunicationPreference(CommunicationPage.supportCentre),
-    );
-  }
-
-  isSupportCentreSelected() {
-    return this.communicationType === CommunicationPage.supportCentre;
   }
 
   getFormValidation(): { [key: string]: FormControl } {
@@ -389,7 +388,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
    * Function to conditionally dispatch 'dispatchCandidateChoseNewEmail' action
    * to cover edge case candidate action.
    *
-   * Candidate selects new email -> app crashes -> candidate selects Post/Support Centre ->
+   * Candidate selects new email -> app crashes -> candidate selects Post ->
    * app crashes -> candidate selects new email (previous state value exists so examiner clicks continue)
    *
    * As state change for new email happens on text input, the expected action

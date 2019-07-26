@@ -65,7 +65,7 @@ interface PassFinalisationPageState {
 })
 export class PassFinalisationPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
-
+  passCertificateCtrl: string = 'passCertificateNumberCtrl';
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
 
@@ -151,15 +151,22 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
         }),
       ),
     };
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
-    ];
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  ionViewWillEnter(): boolean {
+    this.inputSubscriptions = [
+      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
+    ];
+
+    return true;
+  }
+
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.inputSubscriptions) {
+      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+    }
   }
 
   ionViewDidEnter(): void {
@@ -189,12 +196,20 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   getFormValidation(): { [key: string]: FormControl } {
     return {
       provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
-      passCertificateNumberCtrl: new FormControl(null, [Validators.required]),
+      passCertificateNumberCtrl: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(8),
+      ]),
       transmissionCtrl: new FormControl(null, [Validators.required]),
     };
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  }
+
+  passCertificateValidation() {
+    const ctrlHasErrors = this.form.get(this.passCertificateCtrl).errors ? true : false;
+    return ctrlHasErrors && this.form.get(this.passCertificateCtrl).dirty;
   }
 
   /**
