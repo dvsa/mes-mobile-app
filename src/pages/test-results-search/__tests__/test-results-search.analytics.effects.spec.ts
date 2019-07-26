@@ -7,6 +7,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
+  AnalyticsDimensionIndices,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { TestResultsSearchAnalyticsEffects } from '../test-results-search.analytics.effects';
@@ -32,6 +33,7 @@ describe('Test Results Search Analytics Effects', () => {
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
     spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
+    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
   });
 
   describe('testResultSearchViewDidEnter', () => {
@@ -41,8 +43,7 @@ describe('Test Results Search Analytics Effects', () => {
       // ASSERT
       effects.testResultSearchViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.setCurrentPage)
-          .toHaveBeenCalledWith(screenName);
+        expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledWith(screenName);
         done();
       });
     });
@@ -54,11 +55,10 @@ describe('Test Results Search Analytics Effects', () => {
       // ASSERT
       effects.performApplicationReferenceSearch$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent)
-          .toHaveBeenCalledWith(
-            AnalyticsEventCategories.TEST_RESULTS_SEARCH,
-            AnalyticsEvents.APPLICATION_REFERENCE_SEARCH,
-          );
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+          AnalyticsEvents.APPLICATION_REFERENCE_SEARCH,
+        );
         done();
       });
     });
@@ -70,28 +70,67 @@ describe('Test Results Search Analytics Effects', () => {
       // ASSERT
       effects.performDriverNumberSearch$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent)
-          .toHaveBeenCalledWith(
-            AnalyticsEventCategories.TEST_RESULTS_SEARCH,
-            AnalyticsEvents.DRIVER_NUMBER_SEARCH,
-          );
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+          AnalyticsEvents.DRIVER_NUMBER_SEARCH,
+        );
         done();
       });
     });
   });
   describe('performLDTMSearch', () => {
-    it('should call logEvent', (done) => {
+    it('should call logEvent with the correct custom dimensions when no search params are provided', (done) => {
       // ACT
-      actions$.next(new testResultSearchActions.PerformLDTMSearch());
+      actions$.next(new testResultSearchActions.PerformLDTMSearch({}));
       // ASSERT
       effects.performLDTMSearch$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent)
-          .toHaveBeenCalledWith(
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+          AnalyticsEvents.LDTM_SEARCH,
+        );
+        expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+          AnalyticsDimensionIndices.IS_DATE_RANGE_SEARCHED,
+          'false',
+        );
+        expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+          AnalyticsDimensionIndices.IS_STAFF_ID_SEARCHED,
+          'false',
+        );
+        expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+          AnalyticsDimensionIndices.IS_TEST_CENTRE_SEARCHED,
+          'false',
+        );
+        done();
+      });
+      it('should call logEvent with the correct custom dimensions when search params are provided', (done) => {
+        // ACT
+        actions$.next(new testResultSearchActions.PerformLDTMSearch({
+          costCode: 'mock-cost-code',
+          staffNumber: 'mock-staff-number',
+          startDate: 'mock-start-date',
+        }));
+        // ASSERT
+        effects.performLDTMSearch$.subscribe((result) => {
+          expect(result instanceof AnalyticRecorded).toBe(true);
+          expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
             AnalyticsEventCategories.TEST_RESULTS_SEARCH,
             AnalyticsEvents.LDTM_SEARCH,
           );
-        done();
+          expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+            AnalyticsDimensionIndices.IS_DATE_RANGE_SEARCHED,
+            'true',
+          );
+          expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+            AnalyticsDimensionIndices.IS_STAFF_ID_SEARCHED,
+            'true',
+          );
+          expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+            AnalyticsDimensionIndices.IS_TEST_CENTRE_SEARCHED,
+            'true',
+          );
+          done();
+        });
       });
     });
   });

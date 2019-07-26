@@ -19,6 +19,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
+  AnalyticsDimensionIndices,
  } from '../../providers/analytics/analytics.model';
 
 @Injectable()
@@ -68,6 +69,21 @@ export class TestResultsSearchAnalyticsEffects {
   performLDTMSearch$ = this.actions$.pipe(
     ofType(PERFORM_LDTM_SEARCH),
     switchMap((action: PerformLDTMSearch) => {
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.IS_DATE_RANGE_SEARCHED,
+        action.advancedSearchParams.startDate || action.advancedSearchParams.endDate ? 'true' : 'false',
+      );
+
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.IS_STAFF_ID_SEARCHED,
+        action.advancedSearchParams.staffNumber ? 'true' : 'false',
+      );
+
+      this.analytics.addCustomDimension(
+        AnalyticsDimensionIndices.IS_TEST_CENTRE_SEARCHED,
+        action.advancedSearchParams.costCode ? 'true' : 'false',
+      );
+
       this.analytics.logEvent(
         AnalyticsEventCategories.TEST_RESULTS_SEARCH,
         AnalyticsEvents.LDTM_SEARCH,

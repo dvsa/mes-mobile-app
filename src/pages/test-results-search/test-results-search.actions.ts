@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { AdvancedSearchParams } from '../../providers/search/search.models';
 
 export const TEST_RESULT_SEARCH_VIEW_DID_ENTER = '[TestResultSearch] Test Result Search Did Enter';
 export const PERFORM_APPLICATION_REFERENCE_SEARCH = '[TestResultSearch] Performed an application reference search';
@@ -19,6 +20,7 @@ export class PerformDriverNumberSearch implements Action {
 
 export class PerformLDTMSearch implements Action {
   readonly type = PERFORM_LDTM_SEARCH;
+  constructor(public advancedSearchParams: AdvancedSearchParams) {}
 }
 
 export type Types =
