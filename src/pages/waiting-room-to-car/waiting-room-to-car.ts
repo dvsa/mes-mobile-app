@@ -42,17 +42,6 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import {
-  EyesightResultPasssed,
-  EyesightResultFailed,
-  EyesightResultReset,
-  EyesightTestResult,
-} from '../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
-import { getEyesightTestResult } from '../../modules/tests/eyesight-test-result/eyesight-test-result.reducer';
-import {
-  isFailed,
-  isPassed,
-} from '../../modules/tests/eyesight-test-result/eyesight-test-result.selector';
 import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
@@ -62,6 +51,9 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
+  EyesightTestReset,
+  EyesightTestPassed,
+  EyesightTestFailed,
 } from '../../modules/tests/test-data/test-data.actions';
 import {
   isTellMeQuestionSelected,
@@ -70,6 +62,8 @@ import {
   tellMeQuestionOutcome,
   getVehicleChecks,
   getTellMeQuestion,
+  hasEyesightTestBeenCompleted,
+  hasEyesightTestGotSeriousFault,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -86,9 +80,8 @@ interface WaitingRoomToCarPageState {
   supervisorAccompaniment$: Observable<boolean>;
   otherAccompaniment$: Observable<boolean>;
   interpreterAccompaniment$: Observable<boolean>;
-  eyesightPassRadioChecked$: Observable<boolean>;
-  eyesightFailRadioChecked$: Observable<boolean>;
-  eyesightTestResult$: Observable<string>;
+  eyesightTestComplete$: Observable<boolean>;
+  eyesightTestFailed$: Observable<boolean>;
   gearboxAutomaticRadioChecked$: Observable<boolean>;
   gearboxManualRadioChecked$: Observable<boolean>;
   tellMeQuestionSelected$: Observable<boolean>;
@@ -180,16 +173,13 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
         select(getAccompaniment),
         select(getInterpreterAccompaniment),
       ),
-      eyesightPassRadioChecked$: currentTest$.pipe(
-        select(getEyesightTestResult),
-        map(isPassed),
+      eyesightTestComplete$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestBeenCompleted),
       ),
-      eyesightFailRadioChecked$: currentTest$.pipe(
-        select(getEyesightTestResult),
-        map(isFailed),
-      ),
-      eyesightTestResult$: currentTest$.pipe(
-        select(getEyesightTestResult),
+      eyesightTestFailed$: currentTest$.pipe(
+        select(getTestData),
+        select(hasEyesightTestGotSeriousFault),
       ),
       gearboxAutomaticRadioChecked$: currentTest$.pipe(
         select(getVehicleDetails),
@@ -307,7 +297,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
 
   eyesightFailCancelled = () => {
     this.updateForm('eyesightCtrl', null);
-    this.store$.dispatch(new EyesightResultReset());
+    this.store$.dispatch(new EyesightTestReset());
   }
 
   tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
@@ -325,12 +315,9 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new TellMeQuestionDrivingFault());
   }
 
-  eyesightTestResultChanged(result: string): void {
-    if (result === EyesightTestResult.Pass) {
-      this.store$.dispatch(new EyesightResultPasssed());
-      return;
-    }
-    this.store$.dispatch(new EyesightResultFailed());
+  eyesightTestResultChanged(passed: boolean): void {
+    const action = passed ? new EyesightTestPassed() : new EyesightTestFailed();
+    this.store$.dispatch(action);
   }
 
 }

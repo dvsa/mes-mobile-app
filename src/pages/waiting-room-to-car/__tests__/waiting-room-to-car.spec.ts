@@ -16,9 +16,6 @@ import {
   EyesightFailureConfirmationComponent,
 } from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { of } from 'rxjs/observable/of';
-import {
-  EyesightResultReset,
-} from '../../../modules/tests/eyesight-test-result/eyesight-test-result.actions';
 import { QuestionProvider } from '../../../providers/question/question';
 import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
 import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
@@ -36,7 +33,7 @@ import { AccompanimentCardComponent } from '../components/accompaniment-card/acc
 import { AccompanimentComponent } from '../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
-import { TellMeQuestionSelected } from '../../../modules/tests/test-data/test-data.actions';
+import { TellMeQuestionSelected, EyesightTestReset } from '../../../modules/tests/test-data/test-data.actions';
 import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -86,6 +83,8 @@ describe('WaitingRoomToCarPage', () => {
                       outcome: CompetencyOutcome.P,
                     },
                   },
+                  seriousFaults: [],
+                  eyesightTest: {},
                 },
                 journalData: {
                   candidate: {
@@ -141,7 +140,8 @@ describe('WaitingRoomToCarPage', () => {
       // tslint:disable-next-line:max-line-length
       it('should hide the rest of the form and show eyesight failure confirmation when page state indicates fail is selected', () => {
         fixture.detectChanges();
-        component.pageState.eyesightFailRadioChecked$ = of(true);
+        component.pageState.eyesightTestComplete$ = of(true);
+        component.pageState.eyesightTestFailed$ = of(true);
         fixture.detectChanges();
         const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
@@ -151,7 +151,7 @@ describe('WaitingRoomToCarPage', () => {
       // tslint:disable-next-line:max-line-length
       it('should show the rest of the form and not render eyesight failure confirmation when page state indicates pass is selected', () => {
         fixture.detectChanges();
-        component.pageState.eyesightPassRadioChecked$ = of(true);
+        component.pageState.eyesightTestComplete$ = of(true);
         fixture.detectChanges();
         const eyesightFailureConfirmation = fixture.debugElement.query(By.css('eyesight-failure-confirmation'));
         const formAfterEyesight = fixture.debugElement.query(By.css('#post-eyesight-form-content'));
@@ -160,7 +160,7 @@ describe('WaitingRoomToCarPage', () => {
       });
       it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();
-        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightResultReset());
+        expect(store$.dispatch).toHaveBeenCalledWith(new EyesightTestReset());
       });
     });
 

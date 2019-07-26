@@ -1,6 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+enum EyesightTestResult {
+  Pass = 'P',
+  Fail = 'F',
+}
+
 @Component({
   selector: 'eyesight-test',
   templateUrl: 'eyesight-test.html',
@@ -8,13 +13,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class EyesightTestComponent implements OnChanges {
 
   @Input()
-  testState: string;
+  eyesightPassRadioChecked: boolean;
+
+  @Input()
+  eyesightFailRadioChecked: boolean;
 
   @Input()
   formGroup: FormGroup;
 
   @Output()
-  eyesightTestResultChange = new EventEmitter<string>();
+  eyesightTestResultChange = new EventEmitter<boolean>();
 
   formControl: FormControl;
 
@@ -23,11 +31,11 @@ export class EyesightTestComponent implements OnChanges {
       this.formControl  = new FormControl('', [Validators.required]);
       this.formGroup.addControl('eyesightCtrl', this.formControl);
     }
-    this.formControl.patchValue(this.testState);
+    this.formControl.patchValue(this.eyesightPassRadioChecked);
   }
   eyesightTestResultChanged(result: string): void {
     if (this.formControl.valid) {
-      this.eyesightTestResultChange.emit(result);
+      this.eyesightTestResultChange.emit(result === EyesightTestResult.Pass);
     }
   }
 
@@ -36,10 +44,10 @@ export class EyesightTestComponent implements OnChanges {
   }
 
   get testPassed(): boolean {
-    return this.testState === 'P';
-  }
-  get testFailed(): boolean {
-    return this.testState === 'F';
+    return this.eyesightPassRadioChecked;
   }
 
+  get testFailed(): boolean {
+    return this.eyesightFailRadioChecked;
+  }
 }

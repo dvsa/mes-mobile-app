@@ -27,6 +27,7 @@ import {
   getVehicleCheckDangerousFaults,
   getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
+  getEyesightTestSeriousFault,
 } from './debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {
@@ -110,6 +111,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
             ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
             ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
+            ...getEyesightTestSeriousFault(data.eyesightTest),
           ];
         }),
       ),

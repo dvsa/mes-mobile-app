@@ -17,6 +17,8 @@ import {
   getShowMeQuestionOptions,
   getSeriousFaultSummaryCount,
   getDangerousFaultSummaryCount,
+  hasEyesightTestBeenCompleted,
+  hasEyesightTestGotSeriousFault,
 } from '../test-data.selector';
 import { Competencies } from '../test-data.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
@@ -68,7 +70,33 @@ describe('TestDataSelectors', () => {
         outcome: CompetencyOutcome.P,
       },
     },
+    eyesightTest: {
+      complete: true,
+      seriousFault: false,
+    },
   };
+
+  describe('hasEyesightTestBeenCompleted', () => {
+    it('should return true if the eyesight test is complete', () => {
+      expect(hasEyesightTestBeenCompleted(state)).toBe(true);
+    });
+
+    it('should return false if the eyesight test is not complete', () => {
+      const newState: TestData = { ...state, eyesightTest: { complete: false } };
+      expect(hasEyesightTestBeenCompleted(newState)).toBe(false);
+    });
+  });
+
+  describe('hasEyesightTestGotSeriousFault', () => {
+    it('should return true if the eyesight test has a serious fault', () => {
+      const newState: TestData = { ...state, eyesightTest: { seriousFault: true } };
+      expect(hasEyesightTestGotSeriousFault(newState)).toBe(true);
+    });
+
+    it('should return false if the eyesight test does not have a serious fault', () => {
+      expect(hasEyesightTestGotSeriousFault(state)).toBe(false);
+    });
+  });
 
   describe('getShowMeQuestionOptions', () => {
     const outcomeBehaviourMapProvider = new OutcomeBehaviourMapProvider();
@@ -145,8 +173,12 @@ describe('TestDataSelectors', () => {
             outcome: CompetencyOutcome.S,
           },
         },
+        eyesightTest: {
+          complete: true,
+          seriousFault: true,
+        },
       };
-      expect(getSeriousFaultSummaryCount(failedState)).toBe(4);
+      expect(getSeriousFaultSummaryCount(failedState)).toBe(5);
     });
   });
 

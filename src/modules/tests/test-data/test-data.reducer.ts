@@ -13,6 +13,7 @@ export const initialState: TestData = {
   ETA: {},
   eco: {},
   controlledStop: {},
+  eyesightTest: {},
   vehicleChecks: {
     tellMeQuestion: {},
     showMeQuestion: {},
@@ -205,6 +206,38 @@ export function testDataReducer(
         eco: {
           ...state.eco,
           adviceGivenPlanning: !state.eco.adviceGivenPlanning,
+        },
+      };
+    case testDataActions.EYESIGHT_TEST_PASSED:
+      return {
+        ...state,
+        eyesightTest: {
+          complete: true,
+          seriousFault: false,
+        },
+      };
+    case testDataActions.EYESIGHT_TEST_FAILED:
+      return {
+        ...state,
+        eyesightTest: {
+          complete: true,
+          seriousFault: true,
+        },
+      };
+    case testDataActions.EYESIGHT_TEST_RESET:
+      return {
+        ...state,
+        eyesightTest: {
+          complete: false,
+          seriousFault: false,
+        },
+      };
+    case testDataActions.EYESIGHT_TEST_ADD_COMMENT:
+      return {
+        ...state,
+        eyesightTest: {
+          ...state.eyesightTest,
+          faultComments: action.comment,
         },
       };
     case testDataActions.TOGGLE_CONTROLLED_STOP:

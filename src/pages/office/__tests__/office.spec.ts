@@ -31,6 +31,7 @@ import {
   AddDangerousFault,
   AddSeriousFault,
   ShowMeQuestionSelected,
+  EyesightTestFailed,
 } from '../../../modules/tests/test-data/test-data.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
@@ -125,6 +126,7 @@ describe('OfficePage', () => {
                       outcome: '',
                     },
                   },
+                  eyesightTest: {},
                 },
                 activityCode: '28',
                 journalData: {
@@ -260,6 +262,12 @@ describe('OfficePage', () => {
     });
     it('should display serious fault comment textbox if there are any', () => {
       store$.dispatch(new AddSeriousFault(Competencies.judgementOvertaking));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
+    });
+
+    it('should display the serious fault comment textbox if the eyesight test is failed', () => {
+      store$.dispatch(new EyesightTestFailed());
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#seriousFaultComment'))).toBeDefined();
     });

@@ -63,7 +63,8 @@
       "reverseParkCarpark": "[CY] Reverse park (car park)",
       "forwardPark": "[CY] Forward park",
       "vehicleChecks": "[CY] Vehicle checks",
-      "controlledStop": "[CY] Controlled stop"
+      "controlledStop": "[CY] Controlled stop",
+      "eyesightTest": "[CY] Eyesight test"
     },
     "dangerousFault": "[CY] Dangerous fault",
     "dangerousFaultsCardDescription": "[CY] dangerous faults",
