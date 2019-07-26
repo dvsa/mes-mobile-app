@@ -3,7 +3,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
-import { AnalyticsScreenNames } from '../../../providers/analytics/analytics.model';
+import { AnalyticsScreenNames, AnalyticsDimensionIndices } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { ViewTestResultAnalyticsEffects } from '../view-test-result.analytics.effects';
 import * as viewTestResultActions from '../view-test-result.actions';
@@ -27,17 +27,22 @@ describe('View Test Results Analytics Effects', () => {
     effects = TestBed.get(ViewTestResultAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
+    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
   });
 
   describe('viewTestResultViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ACT
-      actions$.next(new viewTestResultActions.ViewTestResultViewDidEnter());
+      actions$.next(new viewTestResultActions.ViewTestResultViewDidEnter('12345'));
       // ASSERT
       effects.viewTestResultViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenName);
+        expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+          AnalyticsDimensionIndices.APPLICATION_REFERENCE,
+          '12345',
+        );
         done();
       });
     });

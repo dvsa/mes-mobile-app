@@ -102,7 +102,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.store$.dispatch(new ViewTestResultViewDidEnter());
+    this.store$.dispatch(new ViewTestResultViewDidEnter(this.applicationReference));
   }
 
   handleLoadingUI = (isLoading: boolean): void => {
