@@ -41,7 +41,7 @@ export const getSeriousFaultSummaryCount = (data: TestData): number => {
   const seriousFaultSumOfSimpleCompetencies = Object.keys(pickBy(seriousFaults)).length;
   const vehicleCheckSeriousFaults = vehicleChecks.showMeQuestion.outcome === CompetencyOutcome.S ? 1 : 0;
   const controlledStopSeriousFaults = (controlledStop && controlledStop.fault === CompetencyOutcome.S) ? 1 : 0;
-  const eyesightTestSeriousFaults = eyesightTest.seriousFault ? 1 : 0;
+  const eyesightTestSeriousFaults = (eyesightTest && eyesightTest.seriousFault) ? 1 : 0;
 
   const result =
     seriousFaultSumOfSimpleCompetencies +
