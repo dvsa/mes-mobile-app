@@ -14,13 +14,15 @@ import {
 } from './back-to-office.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { getCurrentTest, isPassed, getJournalData, getCurrentTestSlotId } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
+import { getApplicationReference } from '../../modules/tests/application-reference/application-reference.reducer';
+import { getApplicationNumber } from '../../modules/tests/application-reference/application-reference.selector';
 
 @Injectable()
 export class BackToOfficeAnalyticsEffects {
@@ -71,14 +73,17 @@ export class BackToOfficeAnalyticsEffects {
         ),
         this.store$.pipe(
           select(getTests),
-          select(getCurrentTestSlotId),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getApplicationReference),
+          select(getApplicationNumber),
         ),
       ),
     )),
-    switchMap(([action, tests, isPassed, candidateId, slotId]:
+    switchMap(([action, tests, isPassed, candidateId, applicationReference]:
       [DeferWriteUp, TestsModel, boolean, number, string]) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
 
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.BACK_TO_OFFICE, tests),

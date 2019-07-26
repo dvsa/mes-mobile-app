@@ -13,13 +13,15 @@ import {
   AnalyticsEventCategories,
 } from '../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../shared/models/store.model';
-import { Candidate } from '@dvsa/mes-journal-schema';
+import { Candidate, Application } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import * as journalActions from '../../journal/journal.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import * as applicationReferenceActions
+  from '../../../modules/tests/application-reference/application-reference.actions';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
@@ -32,6 +34,11 @@ describe('Waiting Room To Car Analytics Effects', () => {
   const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
   const mockCandidate: Candidate = {
     candidateId: 1001,
+  };
+  const mockApplication: Application = {
+    applicationId: 123456,
+    bookingSequence: 78,
+    checkDigit: 9,
   };
 
   beforeEach(() => {
@@ -62,6 +69,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new journalActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
       // ASSERT
@@ -70,7 +78,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, '123');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenName);
         done();
@@ -80,6 +88,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarViewDidEnter());
       // ASSERT
@@ -88,7 +97,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_ID, end2endPracticeSlotId);
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenNamePracticeMode);
         done();

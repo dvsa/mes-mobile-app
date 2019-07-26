@@ -21,6 +21,7 @@ import {
 import { of } from 'rxjs/observable/of';
 import { TestsModel } from './tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -60,7 +61,9 @@ export class TestsAnalyticsEffects {
       );
 
       this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
+        AnalyticsDimensionIndices.APPLICATION_REFERENCE,
+        formatApplicationReference(journalDataOfTest.applicationReference),
+      );
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
@@ -98,7 +101,9 @@ export class TestsAnalyticsEffects {
       );
 
       this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
+        AnalyticsDimensionIndices.APPLICATION_REFERENCE,
+        formatApplicationReference(journalDataOfTest.applicationReference),
+      );
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
