@@ -18,9 +18,11 @@ import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTestSlotId, getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
+import { getApplicationReference } from '../../modules/tests/application-reference/application-reference.reducer';
+import { getApplicationNumber } from '../../modules/tests/application-reference/application-reference.selector';
 
 @Injectable()
 export class CommunicationAnalyticsEffects {
@@ -43,7 +45,10 @@ export class CommunicationAnalyticsEffects {
         ),
         this.store$.pipe(
           select(getTests),
-          select(getCurrentTestSlotId),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getApplicationReference),
+          select(getApplicationNumber),
         ),
         this.store$.pipe(
           select(getTests),
@@ -54,9 +59,12 @@ export class CommunicationAnalyticsEffects {
           ),
       ),
     )),
-    switchMap(([action, tests, slotId, candidateId]: [CommunicationViewDidEnter, TestsModel, string, number]) => {
+    switchMap((
+      [action, tests, applicationReference, candidateId]:
+      [CommunicationViewDidEnter, TestsModel, string, number],
+    ) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
       this.analytics.setCurrentPage(
         formatAnalyticsText(AnalyticsScreenNames.COMMUNICATION, tests),
       );

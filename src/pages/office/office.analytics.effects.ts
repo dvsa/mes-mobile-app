@@ -18,7 +18,7 @@ import {
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest, isPassed, getJournalData, getCurrentTestSlotId } from '../../modules/tests/tests.selector';
+import { getCurrentTest, isPassed, getJournalData } from '../../modules/tests/tests.selector';
 import { of } from 'rxjs/observable/of';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 import { TestsModel } from '../../modules/tests/tests.model';
@@ -27,6 +27,8 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
+import { getApplicationReference } from '../../modules/tests/application-reference/application-reference.reducer';
+import { getApplicationNumber } from '../../modules/tests/application-reference/application-reference.selector';
 
 @Injectable()
 export class OfficeAnalyticsEffects {
@@ -60,20 +62,25 @@ export class OfficeAnalyticsEffects {
         ),
         this.store$.pipe(
           select(getTests),
-          select(getCurrentTestSlotId),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getApplicationReference),
+          select(getApplicationNumber),
         ),
       ),
     )),
-    switchMap(
-      ([action, tests, isPassed, candidateId, slotId]: [OfficeViewDidEnter, TestsModel, boolean, number, string]) => {
-        const screenName = isPassed
+    switchMap((
+        [action, tests, isPassed, candidateId, applicationReference]:
+        [OfficeViewDidEnter, TestsModel, boolean, number, string],
+      ) => {
+      const screenName = isPassed
           ? formatAnalyticsText(AnalyticsScreenNames.PASS_TEST_SUMMARY, tests)
           : formatAnalyticsText(AnalyticsScreenNames.FAIL_TEST_SUMMARY, tests);
-        this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
-        this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
-        this.analytics.setCurrentPage(screenName);
-        return of(new AnalyticRecorded());
-      },
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
+      this.analytics.setCurrentPage(screenName);
+      return of(new AnalyticRecorded());
+    },
     ),
   );
 
@@ -99,14 +106,17 @@ export class OfficeAnalyticsEffects {
         ),
         this.store$.pipe(
           select(getTests),
-          select(getCurrentTestSlotId),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getApplicationReference),
+          select(getApplicationNumber),
         ),
       ),
     )),
-    switchMap(([action, tests, isPassed, candidateId, slotId]:
+    switchMap(([action, tests, isPassed, candidateId, applicationReference]:
       [SavingWriteUpForLater, TestsModel, boolean, number, string]) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
 
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.POST_TEST, tests),
@@ -161,11 +171,17 @@ export class OfficeAnalyticsEffects {
         ),
         this.store$.pipe(
           select(getTests),
-          select(getCurrentTestSlotId),
+          select(getCurrentTest),
+          select(getJournalData),
+          select(getApplicationReference),
+          select(getApplicationNumber),
         ),
       ),
     )),
-    switchMap(([action, isRekey, candidateId, slotId]: [CompleteTest, boolean, number, string]) => {
+    switchMap((
+      [action, isRekey, candidateId, applicationReference]:
+      [CompleteTest, boolean, number, string],
+    ) => {
 
       this.analytics.logEvent(
         AnalyticsEventCategories.POST_TEST,
@@ -173,7 +189,7 @@ export class OfficeAnalyticsEffects {
       );
 
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, `${slotId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, `${applicationReference}`);
 
       return of(new AnalyticRecorded());
     }),

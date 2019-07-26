@@ -28,6 +28,7 @@ import { Store, select } from '@ngrx/store';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestById, isPassed } from '../../modules/tests/tests.selector';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
 
 @Injectable()
 export class JournalAnalyticsEffects {
@@ -47,7 +48,7 @@ export class JournalAnalyticsEffects {
       () => {
         this.analytics.setCurrentPage(AnalyticsScreenNames.JOURNAL);
         this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, '');
-        this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_ID, '');
+        this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '');
         return of(new AnalyticRecorded());
       },
     ),
@@ -144,7 +145,9 @@ export class JournalAnalyticsEffects {
       );
 
       this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.TEST_ID, journalDataOfTest.testSlotAttributes.slotId.toString());
+        AnalyticsDimensionIndices.APPLICATION_REFERENCE,
+        formatApplicationReference(journalDataOfTest.applicationReference),
+      );
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
