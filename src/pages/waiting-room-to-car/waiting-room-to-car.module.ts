@@ -8,44 +8,20 @@ import { InputRestrictionNumbersDirective } from '../../directives/input-restric
 import {
   InputRestrictionUppercaseAlphanumDirective,
 } from '../../directives/input-restriction-uppercasealphanum.directive';
-import {
-  EyesightFailureConfirmationComponent,
-} from './components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { ComponentsModule } from '../../components/components.module';
-import { VehicleRegistrationComponent } from './components/vehicle-registration/vehicle-registration';
-import { InstructorRegistrationComponent } from './components/instructor-registration/instructor-registration';
-import { TransmissionComponent } from './components/transmission/transmission';
-import { TellMeQuestionComponent } from './components/tell-me-question/tell-me-question';
-import { TellMeQuestionCardComponent } from './components/tell-me-question-card/tell-me-question-card';
-import { TellMeQuestionOutcomeComponent } from './components/tell-me-question-outcome/tell-me-question-outcome';
-import { AccompanimentComponent } from './components/accompaniment/accompaniment';
-import { AccompanimentCardComponent } from './components/accompaniment-card/accompaniment-card';
-import { VehicleDetailsCardComponent } from './components/vehicle-details-card/vehicle-details-card';
-import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details';
-import { EyesightTestComponent } from './components/eyesight-test/eyesight-test';
+import { WaitingRoomToCarComponentsModule } from './components/waiting-room-to-car.components.module';
 
 @NgModule({
   declarations: [
     WaitingRoomToCarPage,
     InputRestrictionNumbersDirective,
     InputRestrictionUppercaseAlphanumDirective,
-    EyesightTestComponent,
-    EyesightFailureConfirmationComponent,
-    VehicleRegistrationComponent,
-    InstructorRegistrationComponent,
-    TransmissionComponent,
-    TellMeQuestionCardComponent,
-    TellMeQuestionComponent,
-    TellMeQuestionOutcomeComponent,
-    AccompanimentCardComponent,
-    AccompanimentComponent,
-    VehicleDetailsCardComponent,
-    VehicleDetailsComponent,
   ],
   imports: [
     IonicPageModule.forChild(WaitingRoomToCarPage),
     EffectsModule.forFeature([WaitingRoomToCarAnalyticsEffects]),
     ComponentsModule,
+    WaitingRoomToCarComponentsModule,
   ],
   providers: [
     AnalyticsProvider,
