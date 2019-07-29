@@ -7,6 +7,9 @@ import { SpecialNeedsCode } from './candidate-details.constants';
 import { SlotTypes } from '../../shared/models/slot-types';
 import { Application } from '@dvsa/mes-journal-schema';
 
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
+import { formatApplicationReference } from '../../shared/helpers/formatters';
+
 export const getSlots = (journal: JournalModel) => {
   return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);
 };
@@ -104,5 +107,11 @@ export const processSpecialNeeds = (slot: any): string | string[] => {
 
 export const getBusiness = (slot: any) => slot.booking.business;
 
-export const getApplicationRef = (application: Application): string =>
-  `${application.applicationId}${application.bookingSequence}${application.checkDigit}`;
+export const getApplicationRef = (application: Application): string => {
+  const applicationReference: ApplicationReference = {
+    applicationId: application.applicationId,
+    bookingSequence: application.bookingSequence,
+    checkDigit: application.checkDigit,
+  };
+  return formatApplicationReference(applicationReference);
+};

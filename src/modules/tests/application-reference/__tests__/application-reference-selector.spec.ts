@@ -11,7 +11,7 @@ describe('application reference selector', () => {
   };
   describe('getApplicationNumber', () => {
     it('should combine the application reference fields to produce a formatted application number ', () => {
-      expect(getApplicationNumber(applicationReference)).toBe('123456789');
+      expect(getApplicationNumber(applicationReference)).toBe('1234567089');
     });
   });
 });
