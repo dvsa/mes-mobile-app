@@ -9,12 +9,11 @@ import {
   isCandidateSpecialNeeds,
   isCandidateCheckNeeded,
   getSlotChanged,
-  getSlotType,
   processSpecialNeeds,
   getBusiness,
 } from '../candidate-details.selector';
-import { SpecialNeedsCode } from '../candidate-details.constants';
 import { SlotTypes } from '../../../shared/models/slot-types';
+import { SpecialNeedsCode, getSlotType } from '../../../shared/helpers/get-slot-type';
 
 describe('Candidate Details Selector', () => {
   describe('processSpecialNeeds', () => {
