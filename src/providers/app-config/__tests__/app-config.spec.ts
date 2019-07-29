@@ -14,6 +14,7 @@ import { PlatformMock } from 'ionic-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
 import { Device } from '@ionic-native/device';
+import { LogHelperMock } from '../../logs/__mocks__/logsHelper.mock';
 
 describe('App Config Provider', () => {
 
@@ -37,7 +38,7 @@ describe('App Config Provider', () => {
         { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         Store,
-        LogHelper,
+        { provide: LogHelper, useClass: LogHelperMock },
         Device,
       ],
     });

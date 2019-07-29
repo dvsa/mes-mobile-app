@@ -32,6 +32,7 @@ import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { Device } from '@ionic-native/device';
+import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 
 export class TestActions extends Actions {
   constructor() {
@@ -77,7 +78,7 @@ describe('Journal Effects', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         Store,
         SlotProvider,
-        LogHelper,
+        { provide: LogHelper, useClass: LogHelperMock },
         Device,
       ],
     });

@@ -83,7 +83,7 @@ export class TestResultsSearchPage extends BasePageComponent {
           }),
           catchError((err) => {
             const log: Log = this.logHelper
-              .createLog(LogType.ERROR, `Seaching tests by driver number (${this.candidateInfo})`, err);
+              .createLog(LogType.ERROR, `Searching tests by driver number`, err);
             this.store$.dispatch(new SaveLog(log));
             this.searchResults = [];
             this.showSearchSpinner = false;
@@ -106,7 +106,7 @@ export class TestResultsSearchPage extends BasePageComponent {
           }),
           catchError((err) => {
             this.store$.dispatch(new SaveLog(this.logHelper
-              .createLog(LogType.ERROR, `Seaching tests by app ref (${this.candidateInfo})`, err)));
+              .createLog(LogType.ERROR, `Searching tests by app ref (${this.candidateInfo})`, err)));
             this.searchResults = [];
             this.showSearchSpinner = false;
             return of(this.hasSearched = true);
