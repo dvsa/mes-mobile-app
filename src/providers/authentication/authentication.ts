@@ -27,7 +27,7 @@ export class AuthenticationProvider {
   ) {
   }
 
-  public initialiseAuthentication = ():void => {
+  public initialiseAuthentication = (): void => {
     this.authenticationSettings = this.appConfig.getAppConfig().authentication;
     this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
     this.jwtDecode = jwtDecode;
@@ -144,7 +144,9 @@ export class AuthenticationProvider {
   private successfulLogin = (authResponse: AuthenticationResult) => {
     const decodedToken = this.jwtDecode(authResponse.accessToken);
     const employeeId = decodedToken[this.employeeIdKey];
-    this.employeeId = Array.isArray(employeeId) ? employeeId[0] : employeeId;
+    const employeeIdClaim = Array.isArray(employeeId) ? employeeId[0] : employeeId;
+    const numericEmployeeId = Number.parseInt(employeeIdClaim, 10);
+    this.employeeId = numericEmployeeId.toString();
 
     this.isUserAuthenticated = true;
   }

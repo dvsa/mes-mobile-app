@@ -37,7 +37,7 @@ describe('Authentication', () => {
     testPersistenceProvider = TestBed.get(TestPersistenceProvider);
     authenticationProvider.initialiseAuthentication();
     authenticationProvider.jwtDecode = () => ({
-      'local-employeeIdKey': ['a'],
+      'local-employeeIdKey': ['12345678'],
     });
   }));
 
@@ -93,17 +93,27 @@ describe('Authentication', () => {
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getEmployeeId()).toEqual('a');
+      expect(authenticationProvider.getEmployeeId()).toEqual('12345678');
     });
 
     it('should set the correct employeeId when it is a string', async () => {
       authenticationProvider.jwtDecode = () => ({
-        'local-employeeIdKey': 'string',
+        'local-employeeIdKey': '12345678',
       });
       await authenticationProvider.login();
 
       expect(authenticationProvider.isAuthenticated()).toEqual(true);
-      expect(authenticationProvider.getEmployeeId()).toEqual('string');
+      expect(authenticationProvider.getEmployeeId()).toEqual('12345678');
+    });
+
+    it('should strip leading zeroes from the employeeId', async () => {
+      authenticationProvider.jwtDecode = () => ({
+        'local-employeeIdKey': '00123456',
+      });
+      await authenticationProvider.login();
+
+      expect(authenticationProvider.isAuthenticated()).toEqual(true);
+      expect(authenticationProvider.getEmployeeId()).toEqual('123456');
     });
 
     describe('logout', () => {
