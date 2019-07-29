@@ -15,6 +15,8 @@ import { ConductedLanguageComponent } from './conducted-language/conducted-langu
 import { DisplayAddressComponent } from './display-address/display-address';
 import { PracticeModeBanner } from './practice-mode-banner/practice-mode-banner';
 import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
+import { ModalAlertTitleComponent } from './modal-alert-title/modal-alert-title';
+import { ModalReturnButtonComponent } from './modal-return-button/modal-return-button';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
     DisplayAddressComponent,
     PracticeModeBanner,
     TickIndicatorComponent,
+    ModalAlertTitleComponent,
+    ModalReturnButtonComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -49,6 +53,8 @@ import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
     DisplayAddressComponent,
     PracticeModeBanner,
     TickIndicatorComponent,
+    ModalAlertTitleComponent,
+    ModalReturnButtonComponent,
   ],
 })
 export class ComponentsModule { }

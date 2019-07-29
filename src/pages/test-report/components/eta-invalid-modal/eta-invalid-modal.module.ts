@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { EtaInvalidModal } from './eta-invalid-modal';
-import { TestReportModalModule } from '../test-report-modal/test-report-modal.module';
+import { ComponentsModule } from '../../../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +9,7 @@ import { TestReportModalModule } from '../test-report-modal/test-report-modal.mo
   ],
   imports: [
     IonicPageModule.forChild(EtaInvalidModal),
-    TestReportModalModule,
+    ComponentsModule,
   ],
   exports: [
     EtaInvalidModal,
