@@ -6,7 +6,6 @@ import {
   Platform,
   Loading,
   LoadingController,
-  ViewController,
 } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -73,7 +72,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   additionalErrorText: boolean;
 
   constructor(
-    public viewController: ViewController,
     public navController: NavController,
     public platform: Platform,
     public navParams: NavParams,

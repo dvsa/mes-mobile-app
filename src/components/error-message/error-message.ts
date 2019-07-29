@@ -6,14 +6,10 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 })
 export class ErrorMessageComponent {
 
-  @Input()
-  returnTo: string;
+  @Input() returnTo: string;
+  @Input() showAdditionalText: boolean;
 
-  @Input()
-  showAdditionalText: boolean;
-
-  @Output()
-  exitModal = new EventEmitter<string>();
+  @Output() exitModal = new EventEmitter<string>();
 
   constructor() { }
 
