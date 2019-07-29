@@ -4,12 +4,7 @@ import { AppModule } from '../../../../app/app.module';
 import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
-import {
-  ModalAlertTitleComponent,
-} from '../../../test-report/components/test-report-modal/modal-alert-title/modal-alert-title';
-import {
-  ModalReturnButtonComponent,
-} from '../../../test-report/components/test-report-modal/modal-return-button/modal-return-button';
+import { ComponentsModule } from '../../../../components/components.module';
 
 describe('JournalForceCheckModal', () => {
   let fixture: ComponentFixture<JournalForceCheckModal>;
@@ -19,12 +14,11 @@ describe('JournalForceCheckModal', () => {
     TestBed.configureTestingModule({
       declarations: [
         JournalForceCheckModal,
-        ModalAlertTitleComponent,
-        ModalReturnButtonComponent,
       ],
       imports: [
         AppModule,
         IonicModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
