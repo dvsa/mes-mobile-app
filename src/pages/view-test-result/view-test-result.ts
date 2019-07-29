@@ -147,6 +147,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
       category: this.testResult.category,
+      specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
+      entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
+      slotType: this.testResult.journalData.testSlotAttributes.slotType,
+      previousCancellations: this.testResult.journalData.testSlotAttributes.previousCancellation,
     };
   }
 
@@ -158,6 +162,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     return {
       staffNumber: this.testResult.journalData.examiner.staffNumber,
       costCode: this.testResult.journalData.testCentre.costCode,
+      testCentreName: this.testResult.journalData.testCentre.centreName,
     };
   }
 

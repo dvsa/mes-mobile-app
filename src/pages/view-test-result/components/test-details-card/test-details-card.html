@@ -36,6 +36,44 @@
           <span class="mes-data">{{ data.category }}</span>
         </ion-col>
       </ion-row>
+      <ion-row class="mes-data-row">
+        <ion-col col-40>
+          <label>Slot type</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.slotType }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row">
+        <ion-col col-40>
+          <label>Special requirements</label>
+          <img *ngIf="data.specialNeeds)"
+            alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png" class="exclamation-indicator" />
+        </ion-col>
+        <ion-col col-56>
+          <div *ngFor="let specialNeed of data.specialNeeds" class="mes-data">-
+            - {{specialNeed}}
+          </div>
+        </ion-col>        
+      </ion-row>
+      <ion-row *ngIf="data.entitlementCheck" class="mes-data-row">
+        <ion-col col-40>
+          <label>Entitlement check</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">Entitlement check is required.</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row">
+        <ion-col col-40>
+          <label>Additional information</label>
+        </ion-col>
+        <ion-col col-56>
+          <div *ngFor="let previousCancellation of data.previousCancellations" class="mes-data">
+            - {{previousCancellation}}
+          </div>
+        </ion-col>        
+      </ion-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>

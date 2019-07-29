@@ -1,5 +1,6 @@
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { DateTime } from '../../../shared/helpers/date-time';
+import { getSlotType } from '../../../shared/helpers/get-slot-type';
 
 export const getTestTime = (attributes: TestSlotAttributes) => DateTime.at(attributes.start).format('HH:mm');
 export const isExtendedTest = (attributes: TestSlotAttributes) => attributes.extendedTest || false;
@@ -12,9 +13,11 @@ export const extractTestSlotAttributes = (slotData): TestSlotAttributes => ({
   start: slotData.slotDetail.start,
   specialNeeds: slotData.booking.application.specialNeeds ? true : false,
   specialNeedsCode: slotData.booking.application.specialNeedsCode,
+  specialNeedsArray: slotData.booking.application.specialNeeds,
   vehicleTypeCode: slotData.vehicleTypeCode,
   extendedTest: slotData.booking.application.extendedTest,
   examinerVisiting: slotData.examinerVisiting,
   previousCancellation: slotData.booking.previousCancellation,
   entitlementCheck: slotData.booking.application.entitlementCheck,
+  slotType: getSlotType(slotData),
 });
