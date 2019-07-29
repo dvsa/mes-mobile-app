@@ -1,6 +1,7 @@
 <ion-header></ion-header>
 
 <ion-content padding>
-  <error-message returnTo="{{errorLink}}" showAdditionalText="{{showAdditionalText}}" (exitModal)="goBack()">
+  <error-message class="error" returnTo="{{errorType}}" showAdditionalText="{{showAdditionalText}}"
+    (exitModal)="goBack()">
   </error-message>
 </ion-content>

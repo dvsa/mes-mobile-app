@@ -9,7 +9,7 @@ export class ErrorMessageComponent {
   @Input() returnTo: string;
   @Input() showAdditionalText: boolean;
 
-  @Output() exitModal = new EventEmitter<string>();
+  @Output() exitModal = new EventEmitter<void>();
 
   constructor() { }
 

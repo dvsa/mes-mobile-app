@@ -12,7 +12,8 @@
 
 <ion-content padding>
   <div *ngIf="!isLoading && showErrorMessage">
-    <error-message returnTo="{{errorLink}}" showAdditionalText="{{additionalErrorText}}" (exitModal)="goBack()">
+    <error-message class="error" returnTo="{{errorLink}}" showAdditionalText="{{additionalErrorText}}"
+      (exitModal)="goBack()">
     </error-message>
   </div>
   <div *ngIf="!isLoading && !showErrorMessage">

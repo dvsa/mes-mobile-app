@@ -351,7 +351,7 @@ describe('ViewTestResultPage', () => {
     });
   });
 
-  describe('DOM', () => {
+  fdescribe('DOM', () => {
     it('should hide the cards and error message when the data is loading', () => {
       component.isLoading = true;
 
