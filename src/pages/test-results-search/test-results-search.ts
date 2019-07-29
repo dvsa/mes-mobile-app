@@ -1,3 +1,4 @@
+import { ErrorTypes } from './../../shared/models/error-message';
 import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
@@ -181,7 +182,7 @@ export class TestResultsSearchPage extends BasePageComponent {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const errorModal = this.modalController.create(
       ERROR_PAGE,
-      { type: 'SEARCH' },
+      { type: ErrorTypes.SEARCH },
       { cssClass: zoomClass });
     errorModal.present();
   }

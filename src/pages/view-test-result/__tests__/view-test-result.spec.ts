@@ -377,7 +377,7 @@ describe('ViewTestResultPage', () => {
       component.showErrorMessage = true;
       fixture.detectChanges();
 
-      // expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
 
       expect(fixture.debugElement.query(By.css('view-test-header'))).toBeNull();
       expect(

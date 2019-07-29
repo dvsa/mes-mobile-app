@@ -9,16 +9,14 @@ import { ErrorTypes } from '../../shared/models/error-message';
 })
 export class ErrorPage {
 
-  private errorType: string;
-  public errorLink: string;
+  public errorType: ErrorTypes;
   public showAdditionalText: boolean;
 
   constructor(public navController: NavController, public navParams: NavParams) { }
 
   ngOnInit(): void {
     this.errorType = this.navParams.get('type');
-    this.errorLink = ErrorTypes[this.errorType];
-    this.showAdditionalText = this.errorType === 'SEARCH';
+    this.showAdditionalText = this.errorType === ErrorTypes.SEARCH;
   }
 
   goBack = (): void => {

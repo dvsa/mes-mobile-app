@@ -30,6 +30,7 @@ import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 import { ERROR_PAGE } from '../page-names.constants';
 import { App } from './../../app/app.component';
+import { ErrorTypes } from '../../shared/models/error-message';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -193,7 +194,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const errorModal = this.modalController.create(
       ERROR_PAGE,
-      { type: 'JOURNAL_REFRESH' },
+      { type: ErrorTypes.JOURNAL_REFRESH },
       { cssClass: zoomClass });
     errorModal.present();
   }
