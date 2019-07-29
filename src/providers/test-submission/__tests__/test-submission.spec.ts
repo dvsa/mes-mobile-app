@@ -8,6 +8,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { HttpClient } from '@angular/common/http';
 import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
+import { DeviceMock } from '@ionic-native-mocks/device';
 import { Device } from '@ionic-native/device';
 
 describe('TestSubmissionProvider', () => {
@@ -33,7 +34,7 @@ describe('TestSubmissionProvider', () => {
         { provide: UrlProvider, useClass: UrlProviderMock },
         Store,
         LogHelper,
-        Device,
+        { provide: Device, useClass: DeviceMock },
       ],
     });
 

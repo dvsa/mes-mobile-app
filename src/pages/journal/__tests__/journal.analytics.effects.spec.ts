@@ -94,11 +94,11 @@ describe('Journal Analytics Effects', () => {
       effects.journalRefresh$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent)
-        .toHaveBeenCalledWith(
-          AnalyticsEventCategories.JOURNAL,
-          AnalyticsEvents.REFRESH_JOURNAL,
-          JournalRefreshModes.AUTOMATIC,
-        );
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.JOURNAL,
+            AnalyticsEvents.REFRESH_JOURNAL,
+            JournalRefreshModes.AUTOMATIC,
+          );
         done();
       });
     });
@@ -111,10 +111,10 @@ describe('Journal Analytics Effects', () => {
       effects.journalRefreshError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-        .toHaveBeenCalledWith(
-          'error-description',
-          'error-message',
-        );
+          .toHaveBeenCalledWith(
+            'error-description',
+            'error-message',
+          );
         done();
       });
     });
@@ -128,45 +128,45 @@ describe('Journal Analytics Effects', () => {
       effects.slotChanged$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent)
-        .toHaveBeenCalledWith(
-          AnalyticsEventCategories.JOURNAL,
-          AnalyticsEvents.SLOT_CHANGED,
-          '12345',
-        );
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.JOURNAL,
+            AnalyticsEvents.SLOT_CHANGED,
+            '12345',
+          );
         done();
       });
     });
   });
 
   describe('testOutcomeStartTest', () => {
-    it('should log an Start Test event if isRekey is false', (done) => {
+    it('should log an start Test event if isRekey is false', (done) => {
       // ACT
       actions$.next(new journalActions.StartTest(12345, false));
       // ASSERT
       effects.testOutcomeStartTest$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logEvent)
-        .toHaveBeenCalledWith(
-          AnalyticsEventCategories.JOURNAL,
-          AnalyticsEvents.START_TEST,
-          '12345',
-        );
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.JOURNAL,
+            AnalyticsEvents.START_TEST,
+            '12345',
+          );
         done();
       });
-      it('should log an Rekey Test event if isRekey is true', (done) => {
-        // ACT
-        actions$.next(new journalActions.StartTest(12345, true));
-        // ASSERT
-        effects.testOutcomeStartTest$.subscribe((result) => {
-          expect(result instanceof AnalyticRecorded).toBe(true);
-          expect(analyticsProviderMock.logEvent)
+    });
+    it('should log an Rekey Test event if isRekey is true', (done) => {
+      // ACT
+      actions$.next(new journalActions.StartTest(12345, true));
+      // ASSERT
+      effects.testOutcomeStartTest$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.JOURNAL,
             AnalyticsEvents.REKEY_TEST,
             '12345',
           );
-          done();
-        });
+        done();
       });
     });
   });
