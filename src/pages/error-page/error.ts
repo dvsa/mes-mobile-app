@@ -10,13 +10,11 @@ import { ErrorTypes } from '../../shared/models/error-message';
 export class ErrorPage {
 
   public errorType: ErrorTypes;
-  public showAdditionalText: boolean;
 
   constructor(public navController: NavController, public navParams: NavParams) { }
 
   ngOnInit(): void {
     this.errorType = this.navParams.get('type');
-    this.showAdditionalText = this.errorType === ErrorTypes.SEARCH;
   }
 
   goBack = (): void => {

@@ -99,7 +99,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
         catchError((err) => {
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Getting test result for app ref (${this.applicationReference})`, err)));
-          this.errorLink = ErrorTypes.SEARCH;
+          this.errorLink = ErrorTypes.SEARCH_RESULT;
           this.additionalErrorText = true;
           this.showErrorMessage = true;
           this.handleLoadingUI(false);

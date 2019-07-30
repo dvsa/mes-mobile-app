@@ -96,7 +96,8 @@ export class TestResultsSearchPage extends BasePageComponent {
 
             if (err) {
               this.showError(err);
-              return of(this.hasSearched = false);
+              this.hasSearched = false;
+              return of();
             }
 
             return of(this.hasSearched = true);
@@ -124,7 +125,8 @@ export class TestResultsSearchPage extends BasePageComponent {
 
             if (err) {
               this.showError(err);
-              return of(this.hasSearched = false);
+              this.hasSearched = false;
+              return of();
             }
 
             return of(this.hasSearched = true);
