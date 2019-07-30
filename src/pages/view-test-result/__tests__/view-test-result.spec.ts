@@ -349,6 +349,13 @@ describe('ViewTestResultPage', () => {
         expect(result.competencyDisplayName).toEqual('Vehicle checks');
       });
     });
+
+    describe('goBack', () => {
+      it('should navigation the user back to the last page', () => {
+        component.goBack();
+        expect(component.navController.pop).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('DOM', () => {

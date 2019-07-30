@@ -1,7 +1,7 @@
 import { ErrorTypes } from './../../shared/models/error-message';
 import { Subscription } from 'rxjs/Subscription';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, ViewController } from 'ionic-angular';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -46,6 +46,7 @@ export class TestResultsSearchPage extends BasePageComponent {
 
   constructor(
     public modalController: ModalController,
+    public viewController: ViewController,
     public navController: NavController,
     public platform: Platform,
     public navParams: NavParams,
