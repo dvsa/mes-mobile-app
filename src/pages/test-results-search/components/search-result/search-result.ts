@@ -1,10 +1,9 @@
-import { MesError } from './../../../../shared/models/mes-error.model';
 import { Component, Input } from '@angular/core';
 import { SearchResultTestSchema } from '@dvsa/mes-search-schema';
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { Name } from '@dvsa/mes-test-schema/categories/B';
 import { ModalController } from 'ionic-angular';
-import { VIEW_TEST_RESULT_PAGE, ERROR_PAGE } from '../../../page-names.constants';
+import { VIEW_TEST_RESULT_PAGE } from '../../../page-names.constants';
 import { App } from '../../../../app/app.component';
 
 @Component({
