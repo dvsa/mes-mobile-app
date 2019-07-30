@@ -192,6 +192,7 @@ Feature: Full end to end journey
       When I enter a candidate description
       And I complete the debrief witnessed
       And I complete the weather conditions
+      And I enter a comment for "serious" fault "Eyesight Test"
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Mr James Brown" is "3"

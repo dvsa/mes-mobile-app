@@ -19,7 +19,7 @@ Feature: Debrief including Health Declaration
       And the debrief candidate name should be "Miss Florence Pearson"
       And the debrief candidate driver number should be "PEARS 015220 A99HC"
       And I should see "manual" transmission is selected
-      And I should see the application reference "123456731"
+      And I should see the application reference "1234567031"
       And validation item "pass-finalisation-licence-received-validation-text" should not be visible
       And validation item "pass-finalisation-certificate-number-validation-text" should not be visible
       When I try to confirm the pass certificate details
