@@ -8,7 +8,7 @@ import { ErrorPage } from './../error';
 import { ErrorMessageComponent } from '../../../components/error-message/error-message';
 import { By } from '@angular/platform-browser';
 
-fdescribe('ErrorPage', () => {
+describe('ErrorPage', () => {
   let fixture: ComponentFixture<ErrorPage>;
   let component: ErrorPage;
 
@@ -42,7 +42,7 @@ fdescribe('ErrorPage', () => {
   });
 
   describe('DOM', () => {
-    it('should display the error message', () => {
+    it('should display an error message', () => {
       expect(fixture.debugElement.query(By.css('.error'))).not.toBeNull();
     });
   });
