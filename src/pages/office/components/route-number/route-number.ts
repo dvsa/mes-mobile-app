@@ -4,7 +4,6 @@ import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { StringType } from '../../../../shared/helpers/string-type';
 
 @Component({
   selector: 'route-number',
@@ -51,11 +50,7 @@ export class RouteNumberComponent implements OnChanges {
   }
 
   routeNumberChanged(routeNumber: string): void {
-    if (this.formControl.valid) {
-      if (StringType.isNumeric(routeNumber)) {
-        this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
-      }
-    }
+    this.routeNumberChange.emit(Number.parseInt(routeNumber, 10) || null);
   }
 
   get invalid(): boolean {
