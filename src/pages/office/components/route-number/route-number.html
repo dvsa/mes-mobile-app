@@ -7,13 +7,13 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
       <ion-col col-12>
-        <input type="number" id="route" class="vehicle-reg-input mes-data" numbersOnly formControlName="routeNumber"
-          (change)="routeNumberChanged($event.target.value)">
+        <input type="number" id="route" class="vehicle-reg-input mes-data" numbersOnly inputmode="numeric" pattern="[0-9]*"
+        formControlName="routeNumber" (change)="routeNumberChanged($event.target.value)">
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>
       <div class="validation-text" [class.ng-invalid]="invalid" id="office-route-number-validation-text">
-        Enter the route number
+        Enter the route number (max 2 digits)
       </div>
     </ion-row>
   </ion-col>

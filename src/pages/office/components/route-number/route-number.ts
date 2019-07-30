@@ -44,7 +44,8 @@ export class RouteNumberComponent implements OnChanges {
     if (visibilityType === VisibilityType.NotVisible) {
       this.formGroup.get(RouteNumberComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(RouteNumberComponent.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(RouteNumberComponent.fieldName).setValidators([
+        Validators.required, Validators.min(1), Validators.max(99), Validators.pattern(/^[0-9]*$/)]);
     }
     this.formControl.patchValue(this.routeNumber);
   }
