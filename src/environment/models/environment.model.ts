@@ -6,6 +6,7 @@ export interface EnvironmentFile {
   configUrl: string;
   daysToCacheJournalData: number;
   daysToCacheLogs: number;
+  enableDevTools: boolean;
   logoutClearsTestPersistence?: boolean;
   logsPostApiKey: string;
   logsApiUrl: string;

@@ -5,6 +5,7 @@ export const environment: EnvironmentFile = {
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/prod',
   daysToCacheJournalData: 14,
   daysToCacheLogs: 7,
+  enableDevTools: false,
   logsPostApiKey: '',
   logsApiUrl: '',
   logsAutoSendInterval: 6000,
