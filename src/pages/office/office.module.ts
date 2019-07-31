@@ -7,10 +7,12 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { OfficeComponentsModule } from './components/office.components.module';
 import { OfficeEffects } from './office.effects';
+import { InputRestrictionNumbersDirective } from '../../directives/input-restriction-numbers.directive';
 
 @NgModule({
   declarations: [
     OfficePage,
+    InputRestrictionNumbersDirective,
   ],
   imports: [
     IonicPageModule.forChild(OfficePage),

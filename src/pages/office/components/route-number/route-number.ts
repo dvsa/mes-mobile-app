@@ -4,7 +4,6 @@ import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { StringType } from '../../../../shared/helpers/string-type';
 
 @Component({
   selector: 'route-number',
@@ -44,17 +43,14 @@ export class RouteNumberComponent implements OnChanges {
     if (visibilityType === VisibilityType.NotVisible) {
       this.formGroup.get(RouteNumberComponent.fieldName).clearValidators();
     } else {
-      this.formGroup.get(RouteNumberComponent.fieldName).setValidators([Validators.required]);
+      this.formGroup.get(RouteNumberComponent.fieldName).setValidators([
+        Validators.required, Validators.min(1), Validators.max(99), Validators.pattern(/^[0-9]*$/)]);
     }
     this.formControl.patchValue(this.routeNumber);
   }
 
   routeNumberChanged(routeNumber: string): void {
-    if (this.formControl.valid) {
-      if (StringType.isNumeric(routeNumber)) {
-        this.routeNumberChange.emit(Number.parseInt(routeNumber, 10));
-      }
-    }
+    this.routeNumberChange.emit(Number.parseInt(routeNumber, 10) || null);
   }
 
   get invalid(): boolean {
