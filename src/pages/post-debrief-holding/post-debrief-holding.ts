@@ -4,6 +4,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
+import { PostDebriefHoldingViewDidEnter } from './post-debrief-holding.actions';
 
 @IonicPage()
 @Component({
@@ -19,6 +20,10 @@ export class PostDebriefHoldingPage extends PracticeableBasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
+  }
+
+  ionViewDidEnter(): void {
+    this.store$.dispatch(new PostDebriefHoldingViewDidEnter());
   }
 
 }
