@@ -1,0 +1,12 @@
+<ion-header>
+  <practice-mode-banner *ngIf="isPracticeMode"></practice-mode-banner>
+</ion-header>
+<ion-content no-bounce id="non-pass-finalisation-page">
+  <ion-footer>
+    <ion-row class="mes-full-width-card mes-row-separator">
+      <button type="submit" class="mes-primary-button" ion-button>
+        <h3 (click)="continue()">Continue</h3>
+      </button>
+    </ion-row>
+  </ion-footer>
+</ion-content>
