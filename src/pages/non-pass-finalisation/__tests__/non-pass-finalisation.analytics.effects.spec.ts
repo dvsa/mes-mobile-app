@@ -58,7 +58,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
       // ACT
       actions$.next(new nonPassFinalisationActions.NonPassFinalisationViewDidEnter());
       // ASSERT
-      effects.postDebriefHoldingViewDidEnterEffect$.subscribe((result) => {
+      effects.nonPassFinalisationViewDidEnterEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenName);
@@ -72,7 +72,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
       // ACT
       actions$.next(new nonPassFinalisationActions.NonPassFinalisationViewDidEnter());
       // ASSERT
-      effects.postDebriefHoldingViewDidEnterEffect$.subscribe((result) => {
+      effects.nonPassFinalisationViewDidEnterEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(practiceScreenName);

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
-import { getCandidateName } from '../../modules/tests/candidate/candidate.selector';
+import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
 import { NonPassFinalisationViewDidEnter } from './non-pass-finalisation.actions';
 
 interface NonPassFinalisationPageState {
@@ -40,7 +40,7 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
       select(getCurrentTest),
       select(getJournalData),
       select(getCandidate),
-      select(getCandidateName),
+      select(getUntitledCandidateName),
     );
     this.pageState = {
       candidateName$,

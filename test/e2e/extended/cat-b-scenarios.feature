@@ -56,6 +56,10 @@ Feature: Extended category B test scenarios
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
       When I end the debrief
+      Then I am on the post debrief holding page
+      When I continue to the non pass finalisation page
+      Then I should see the "Finalise outcome - Ali Campbell" page
+      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -82,6 +86,10 @@ Feature: Extended category B test scenarios
       And I continue to debrief
       Then I should see the Debrief page with outcome "Unsuccessful"
       When I end the debrief
+      Then I am on the post debrief holding page
+      When I continue to the non pass finalisation page
+      Then I should see the "Jane Doe" page
+      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -109,6 +117,10 @@ Feature: Extended category B test scenarios
       Then I should see the Debrief page with outcome "Terminated"
       And I see a "dangerous" fault for "Use of speed"
       When I end the debrief
+      Then I am on the post debrief holding page
+      When I continue to the non pass finalisation page
+      Then I should see the "Finalise outcome - James Brown" page
+      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -221,6 +233,10 @@ Feature: Extended category B test scenarios
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Clearance"
       When I end the debrief
+      Then I am on the post debrief holding page
+      When I continue to the non pass finalisation page
+      Then I should see the "Finalise outcome - Theresa Shaw" page
+      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -306,6 +322,10 @@ Feature: Extended category B test scenarios
       And I see a "driving" fault for "Following distance"
       And I see a "driving" fault for "Vehicle checks"
       When I end the debrief
+      Then I am on the post debrief holding page
+      When I continue to the non pass finalisation page
+      Then I should see the "Finalise outcome - Carly Doe" page
+      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page

@@ -24,7 +24,7 @@ export class NonPassFinalisationAnalyticsEffects {
   }
 
   @Effect()
-  postDebriefHoldingViewDidEnterEffect$ = this.actions$.pipe(
+  nonPassFinalisationViewDidEnterEffect$ = this.actions$.pipe(
     ofType(NON_PASS_FINALISATION_VIEW_DID_ENTER),
     concatMap(action => of(action).pipe(
       withLatestFrom(
