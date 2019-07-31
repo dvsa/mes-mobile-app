@@ -10,6 +10,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateName } from '../../modules/tests/candidate/candidate.selector';
+import { NonPassFinalisationViewDidEnter } from './non-pass-finalisation.actions';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -44,6 +45,10 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
     this.pageState = {
       candidateName$,
     };
+  }
+
+  ionViewDidEnter(): void {
+    this.store$.dispatch(new NonPassFinalisationViewDidEnter());
   }
 
   continue() {

@@ -33,6 +33,7 @@ export enum AnalyticsScreenNames {
   TEST_RESULTS_SEARCH = 'test result search screen',
   VIEW_TEST_RESULT = 'view test result screen',
   POST_DEBRIEF_HOLDING = 'post debrief holding screen',
+  NON_PASS_FINALISATION = 'non pass finalisation',
 }
 
 export enum AnalyticsEventCategories {

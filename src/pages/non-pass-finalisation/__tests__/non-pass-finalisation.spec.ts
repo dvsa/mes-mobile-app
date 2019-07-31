@@ -8,18 +8,18 @@ import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
-import { PostDebriefHoldingPage } from '../post-debrief-holding';
-import { PostDebriefHoldingViewDidEnter } from '../post-debrief-holding.actions';
+import { NonPassFinalisationPage } from '../non-pass-finalisation';
+import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.actions';
 
-describe('PostDebriefHoldingPage', () => {
-  let fixture: ComponentFixture<PostDebriefHoldingPage>;
-  let component: PostDebriefHoldingPage;
+describe('NonPassFinalisationPage', () => {
+  let fixture: ComponentFixture<NonPassFinalisationPage>;
+  let component: NonPassFinalisationPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PostDebriefHoldingPage,
+        NonPassFinalisationPage,
         MockComponent(PracticeModeBanner),
       ],
       imports: [
@@ -35,7 +35,7 @@ describe('PostDebriefHoldingPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PostDebriefHoldingPage);
+        fixture = TestBed.createComponent(NonPassFinalisationPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
@@ -46,7 +46,7 @@ describe('PostDebriefHoldingPage', () => {
     describe('ionViewDidEnter', () => {
       it('should dispatch a view did enter action', () => {
         component.ionViewDidEnter();
-        expect(store$.dispatch).toHaveBeenCalledWith(new PostDebriefHoldingViewDidEnter());
+        expect(store$.dispatch).toHaveBeenCalledWith(new NonPassFinalisationViewDidEnter());
       });
     });
   });
