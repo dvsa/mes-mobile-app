@@ -14,6 +14,7 @@ import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/a
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
 import { App } from '../../../app/app.component';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
+import { ComponentsModule } from '../../../components/components.module';
 
 describe('TestResultsSearchPage', () => {
   let fixture: ComponentFixture<TestResultsSearchPage>;
@@ -30,6 +31,7 @@ describe('TestResultsSearchPage', () => {
         IonicModule,
         AppModule,
         TestResultsSearchComponentsModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },

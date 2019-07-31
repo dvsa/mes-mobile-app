@@ -7,6 +7,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { App } from '../../../app/app.component';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
+import { ComponentsModule } from '../../../components/components.module';
 
 describe('RekeySearchPage', () => {
   let fixture: ComponentFixture<RekeySearchPage>;
@@ -20,6 +21,7 @@ describe('RekeySearchPage', () => {
       imports: [
         IonicModule,
         AppModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
