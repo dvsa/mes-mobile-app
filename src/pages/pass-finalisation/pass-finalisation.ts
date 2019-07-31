@@ -44,6 +44,17 @@ import {
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { GearboxCategoryChanged } from '../../modules/tests/vehicle-details/vehicle-details.actions';
 import { HEALTH_DECLARATION_PAGE } from '../page-names.constants';
+import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
+import { isDebriefWitnessed, getD255 } from '../../modules/tests/test-summary/test-summary.selector';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import {
+  D255Yes,
+  D255No,
+  DebriefWitnessed,
+  DebriefUnwitnessed,
+} from '../../modules/tests/test-summary/test-summary.actions';
+import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -56,6 +67,9 @@ interface PassFinalisationPageState {
   transmission$: Observable<GearboxCategory>;
   transmissionAutomaticRadioChecked$: Observable<boolean>;
   transmissionManualRadioChecked$: Observable<boolean>;
+  d255$: Observable<boolean>;
+  debriefWitnessed$: Observable<boolean>;
+  isWelshTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -150,6 +164,19 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
           if (val) this.form.controls['transmissionCtrl'].setValue('Manual');
         }),
       ),
+      debriefWitnessed$: currentTest$.pipe(
+        select(getTestSummary),
+        select(isDebriefWitnessed),
+      ),
+      d255$: currentTest$.pipe(
+        select(getTestSummary),
+        select(getD255),
+      ),
+      isWelshTest$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
+      ),
     };
     this.store$.dispatch(new PopulatePassCompletion());
   }
@@ -227,6 +254,22 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
+  }
+
+  d255Changed(d255: boolean): void {
+    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
+  }
+
+  debriefWitnessed(): void {
+    this.store$.dispatch(new DebriefWitnessed());
+  }
+
+  debriefUnwitnessed(): void {
+    this.store$.dispatch(new DebriefUnwitnessed());
+  }
+
+  isWelshChanged(isWelsh: boolean) {
+    this.store$.dispatch(new WelshTestChanged(isWelsh));
   }
 
 }

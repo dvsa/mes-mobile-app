@@ -101,23 +101,26 @@
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
               <ion-col>
-                <input #passCertificateNumberInput formControlName="passCertificateNumberCtrl"
-                  [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
-                  passCertificateValidation()"
-                  type="text"
-                  value="{{pageState.passCertificateNumber$ | async}}" id="pass-certificate-number"
-                  class="pass-cert-input">
+                <input #passCertificateNumberInput formControlName="passCertificateNumberCtrl" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
+                  passCertificateValidation()" type="text" value="{{pageState.passCertificateNumber$ | async}}"
+                  id="pass-certificate-number" class="pass-cert-input">
               </ion-col>
             </ion-row>
             <ion-row class="validation-message-row" align-items-center>
               <div class="validation-text" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
-                passCertificateValidation()"
-                id="pass-finalisation-certificate-number-validation-text">
+                passCertificateValidation()" id="pass-finalisation-certificate-number-validation-text">
                 Enter a valid certificate number (max 8 characters)
               </div>
             </ion-row>
           </ion-col>
         </ion-row>
+        <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
+          (welshChanged)="isWelshChanged($event)"></language-preferences>
+        <d255 [display]=true [d255]="pageState.d255$ | async"
+          [outcome]="pageState.testOutcome$ | async" [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
+        <debrief-witnessed [display]=true [formGroup]="form"
+          [debriefWitnessed]="pageState.debriefWitnessed$ | async" [outcome]="pageState.testOutcome$ | async"
+          (debriefWitnessedChange)="debriefWitnessedChanged($event)"></debrief-witnessed>
       </ion-grid>
       <ion-footer>
         <ion-row class="mes-full-width-card mes-row-separator">
