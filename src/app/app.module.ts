@@ -46,7 +46,7 @@ export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
-const enableDevTools = environment.enableDevTools;
+const enableDevTools = (environment && environment.enableDevTools) === true;
 
 @NgModule({
   declarations: [App],
