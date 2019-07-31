@@ -14,34 +14,23 @@ page-test-results-search {
     width: 100%;
   }
 
-  .search-tests-text {
-    font-size: 23px;
-  }
-
   .clear-input {
     cursor: pointer;
     margin: auto -34px;
   }
 
   p.results-message {
-    margin: 0;
-    font-size: 24px;
-    letter-spacing: 0px;
-    line-height: 60px;
+    margin-top: 24px;
     span {
       font-weight: 900;
     }
   }
 
   .results-error {
-    margin-top: 16px;
+    margin-top: 24px;
     p.error-text {
       margin: 0;
-      font-size: 24px;
-      letter-spacing: 0px;
-      font-weight: normal;
       text-align: center;
-      line-height: 36px;
     }
   }
   .search-spinner {
@@ -71,6 +60,7 @@ page-test-results-search {
     position: absolute;
     width: 800px;
     z-index: 100;
+    margin-top: -16px;
   }
 
   @media screen and (min-width: 900px) {
@@ -78,14 +68,21 @@ page-test-results-search {
       position: absolute;
       width: 1080px;
       z-index: 100;
+      margin-top: -16px;
     }
   }
 
   .test-results-list {
 
     .list-header {
-      height: 480px;
+      height: 442px;
       visibility: hidden;
+      .text-zoom-large & {
+        height: 454px;
+      }
+      .text-zoom-x-large & {
+        height: 482px;
+      }
     }
 
     .item-ios {
