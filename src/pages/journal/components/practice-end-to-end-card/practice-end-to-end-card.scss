@@ -1,0 +1,18 @@
+practice-end-to-end-card {
+  .practice-mode-card {
+    padding: 12px;
+    h4 {
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+    }
+    .mes-secondary-button {
+      height: 74px;
+      width: 220px;
+      h3 {
+        color: map-get($colors-gds, gds-black);
+      }
+    }
+  }
+}

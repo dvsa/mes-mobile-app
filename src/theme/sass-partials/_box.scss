@@ -7,8 +7,14 @@
   }
 }
 
-@mixin box-shadow($top, $left, $blur, $color) {
-  -webkit-box-shadow: $top $left $blur $color;
-  -moz-box-shadow: $top $left $blur $color;
-  box-shadow: $top $left $blur $color;
+.mes-full-width-card {
+  &.box-shadow {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+  }
+  padding: 32px;
+}
+
+.mes-full-width-card-separator {
+  height: 2px;
+  background-color: map-get($colors-gds, 'gds-grey-5');
 }

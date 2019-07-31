@@ -1,24 +1,34 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      {{title}}
-    </ion-title>
-  </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
-  <img width=150 src="assets/imgs/dvsa-logo.png" />
-
-    <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input type="text" value=""></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label fixed>Password</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-    <div>
-      <button margin-left margin-top ion-button (click)="navToJournal()">Log in</button>
+<ion-content>
+  <div class="login-grid">
+    <div *ngIf="hasUserLoggedOut">
+      <h2>You've signed out</h2>
+      <h3> <span class="link" (click)="login()">Sign in</span> again.</h3>
     </div>
+    <div *ngIf="isInternetConnectionError()">
+      <h2>You're offline</h2>
+      <h3>Close the app, turn on mobile data or wifi, and then try again.</h3>
+    </div>
+    <div *ngIf="isUserCancelledError()">
+      <h2>You've cancelled sign in</h2>
+      <h3><span class="link" (click)="login()">Sign in</span> to continue.</h3>
+    </div>
+    <div *ngIf="isUnknownError()">
+      <h2>Sorry, something went wrong</h2>
+      <h3>Please try again later.</h3>
+      <span class="link error-details-link" (click)="showErrorDetails()">Show error details</span>
+    </div>
+    <div *ngIf="hasDeviceTypeError">
+      <h2>Unsupported device</h2>
+      <h3>Install the application on an approved device</h3>
+    </div>
+    <div *ngIf="isUserNotAuthorised()">
+      <h2>You're not authorised to use this app</h2>
+      <h3>Speak to your line manager if you want to use this app.</h3>
+      <h3>If you think you’re already authorised,<br/> you can try to <span class="link" (click)="login()">sign in</span> again.</h3>
+    </div>
+  </div>
 </ion-content>

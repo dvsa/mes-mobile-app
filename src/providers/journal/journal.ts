@@ -1,94 +1,124 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IJournal, IJournalResp } from './journal-model';
-import { DateTimeUtility } from '../../shared/utils/datetime';
+import { AuthenticationProvider } from '../authentication/authentication';
+import { UrlProvider } from '../url/url';
+import { DateTime } from '../../shared/helpers/date-time';
+import { ExaminerWorkSchedule } from '../../shared/models/DJournal';
+import { Observable } from 'rxjs/Observable';
+import { DataStoreProvider } from '../data-store/data-store';
+import { NetworkStateProvider, ConnectionStatus } from '../network-state/network-state';
+import { from } from 'rxjs/observable/from';
 import { AppConfigProvider } from '../app-config/app-config';
-import 'rxjs/Rx';
+import { DateTimeProvider } from '../date-time/date-time';
 
-/*
-  Generated class for the JournalProvider provider.
+type JournalCache = {
+  dateStored: string,
+  data: ExaminerWorkSchedule,
+};
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class JournalProvider {
-  journalResp: IJournalResp;
-
-  private apiUrl: string;
-
   constructor(
-    private httpClient: HttpClient,
-    private dateTimeUtil: DateTimeUtility,
-    private appConfig: AppConfigProvider
-  ) {
-    this.apiUrl = this.appConfig.getJournalApiUrl();
+    public http: HttpClient,
+    public urlProvider: UrlProvider,
+    public authProvider: AuthenticationProvider,
+    public dataStore: DataStoreProvider,
+    public networkStateProvider: NetworkStateProvider,
+    private appConfigProvider: AppConfigProvider,
+    private dateTimeProvider: DateTimeProvider,
+  ) { }
+
+  getJournal(lastRefreshed: Date): Observable<ExaminerWorkSchedule> {
+    const staffNumber = this.authProvider.getEmployeeId();
+    const journalUrl = this.urlProvider.getPersonalJournalUrl(staffNumber);
+    const networkStatus = this.networkStateProvider.getNetworkState();
+    if (lastRefreshed === null) {
+      if (!this.authProvider.isInUnAuthenticatedMode() &&
+        networkStatus === ConnectionStatus.ONLINE) {
+        return this.http.get(journalUrl);
+      }
+      return this.getOfflineJournal();
+    }
+
+    const modifiedSinceValue = lastRefreshed.toUTCString();
+    const options = {
+      headers: new HttpHeaders().set('If-Modified-Since', modifiedSinceValue),
+    };
+    if (!this.authProvider.isInUnAuthenticatedMode() && networkStatus === ConnectionStatus.ONLINE) {
+      return this.http.get(journalUrl, options);
+    }
+    return this.getOfflineJournal();
   }
 
-  transformSlotData(slots) {
-    return slots.reduce((curr: IJournal[], next) => {
-      const {
-        activityCode,
-        details,
-        slot: { testCentreName = '', start = '', vehicleSlotType: slotType = null },
-        booking: {
-          candidate: {
-            candidateName = {
-              firstName: '',
-              lastName: '',
-              secondName: '',
-              thirdName: '',
-              title: ''
-            },
-            _candidateId: candidateId = 0,
-            driverNumber = '',
-            candidateAddress = {
-              line1: '',
-              line2: '',
-              line3: '',
-              line4: '',
-              line5: '',
-              postcode: ''
-            },
-            email = '',
-            mobileTelephone = ''
-          },
-          application: { checkMarker = false, _applicationId: appId = '', specialNeeds = null }
+  /**
+   * getOfflineJournal
+   * retrieves the journal from local store when network offline
+   * @returns Observable
+   */
+  getOfflineJournal(): Observable<ExaminerWorkSchedule> {
+    return from(this.getAndConvertOfflineJournal());
+  }
+
+  /**
+   * getAndconvertOfflineJournal
+   * retrieves the journal data or empties the cache data
+   * and returns empty collection if cached data is too old
+   * @returns Promise<ExaminerWorkSchedule>
+   */
+  getAndConvertOfflineJournal = (): Promise<ExaminerWorkSchedule> =>
+    this.dataStore.getItem('JOURNAL')
+      .then((data) => {
+        const journalCache: JournalCache = JSON.parse(data);
+        const cachedDate = DateTime.at(journalCache.dateStored);
+        if (this.isCacheTooOld(cachedDate, new DateTime())) {
+          return this.emptyCachedData();
         }
-      } = next;
+        return journalCache.data;
+      })
+      .catch(error => error)
 
-      let journalEntry: IJournal = {
-        candidateId,
-        candidateName,
-        candidateAddress,
-        email,
-        mobileTelephone,
-        driverNumber,
-        appId,
-        testCentreName,
-        checkMarker,
-        specialNeeds,
-        slotType,
-        startTime: this.dateTimeUtil.getTime(start)
+  /**
+   * saveJournalForOffline
+   * routine to save the retrieved journal data
+   * only saves the data if we have retrieved the data
+   * while online
+   * @returns Observable
+   */
+
+  saveJournalForOffline = (journalData: ExaminerWorkSchedule) => {
+    if (this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE) {
+      const journalDataToStore: JournalCache = {
+        dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
+        data: journalData,
       };
-
-      if (details) {
-        journalEntry = { ...journalEntry, details };
-      }
-
-      if (activityCode) {
-        journalEntry = { ...journalEntry, activityCode };
-      }
-
-      return curr.concat(journalEntry);
-    }, []);
+      this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then((response) => { });
+    }
   }
 
-  getData(email: string) {
-    const endpoint = `${this.apiUrl}?email=${email}`;
-    return this.httpClient.get<any>(endpoint).map((res) => {
-      const { testSlots } = JSON.parse(res.body.data).data;
-      return this.transformSlotData(testSlots);
-    });
+  /**
+   * isCacheTooOld
+   * Helper method to determine if the cache data is too old
+   * @returns boolean
+   */
+
+  isCacheTooOld = (dateStored: DateTime, now: DateTime): boolean => {
+    return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().daysToCacheJournalData;
   }
+
+  /**
+   * emptyCachedData
+   * overwrites the local storage with empty data
+   * and returns empty collection
+   */
+
+  emptyCachedData = () => {
+    const emptyJournalData: ExaminerWorkSchedule = {};
+    const journalDataToStore: JournalCache = {
+      dateStored: this.dateTimeProvider.now().format('YYYY/MM/DD'),
+      data: emptyJournalData,
+    };
+    this.dataStore.setItem('JOURNAL', JSON.stringify(journalDataToStore)).then(() => { });
+    return emptyJournalData;
+  }
+
 }

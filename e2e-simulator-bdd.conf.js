@@ -1,32 +1,33 @@
-var appPath = __dirname + '/platforms/ios/build/emulator/Mobile Examiner Beta.app';
+var appPath = __dirname + '/platforms/ios/build/emulator/DrivingExaminerService.app';
 
 exports.config = {
   seleniumAddress: 'http://localhost:4723/wd/hub',
   allScriptsTimeout: 11000,
   capabilities: {
     platformName: 'iOS',
-    platformVersion: '12.0',
+    platformVersion: '12.1',
     deviceName: 'iPad Pro (10.5-inch)',
     browserName: '',
     autoWebview: true,
     //fullReset: true,
     app: appPath,
     automationName: 'XCUITest',
-    isHeadless: true
+    isHeadless: false, 
+    newCommandTimeout: 180
   },
   specs: ['./test/e2e/features/*.feature'],
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
     compiler: 'ts:ts-node/register',
-    format: 'json:./test-reports/cucumber-report.json',
+    format: ['json:./test-reports/cucumber-report.json', 'node_modules/cucumber-pretty'],
     require: ['./test/e2e/step-definitions/*.ts']
   },
   baseUrl: '',
   useAllAngular2AppRoots: true,
   beforeLaunch: function() {
     require('ts-node').register({
-      project: 'e2e'
+      project: 'test/e2e/tsconfig.e2espec.json'
     });
 
     var fs = require('fs');

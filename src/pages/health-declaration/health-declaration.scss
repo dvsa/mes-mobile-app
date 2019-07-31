@@ -1,24 +1,49 @@
 page-health-declaration {
-  ion-icon {
-    vertical-align: middle;
-    display: inline;
+  ion-content > div {
+    background-color: map-get($colors, "mes-white");
+
+    #candidate-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      #continue-button {
+        padding: 8px 24px;
+      }
+    }
+    .declaration-checkbox-row {
+      margin: 0 28px;
+    }
+    .declaration-signature-row {
+      height: 250px;
+      .declaration-signature-col {
+        height: inherit;
+        margin: 0 28px;
+        margin-bottom: -50px;
+      }
+    }
+    .signature-area-padding {
+      height: 18px;
+    }
   }
-  .candidate-name {
-    font-size: 44px;
-    font-weight: bold;
-    padding-bottom: 1em;
+}
+.confirm-declaration-modal {
+  .alert-head:before {
+    display: inline-block;
+    font-size: 68px;
+    content: '\f276';
+    display: inline-block;
+    font-family: "Ionicons";
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    text-rendering: auto;
+    text-transform: none;
   }
-  .candidate-numbers {
-    font-size: 24px;
-    padding-bottom: 1em;
-  }
-  .decleration {
-    margin-top: 76px;
-  }
-  ion-card-header {
-    margin-bottom: 0em !important;
-  }
-  ion-card-content {
-    padding-bottom: 3em !important;
+  .alert-title {
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }

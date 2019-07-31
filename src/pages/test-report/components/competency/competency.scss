@@ -1,0 +1,16 @@
+competency {
+  competency-button {
+
+    .label {
+      width: 100%;
+      justify-content: center;
+    }
+    .competency-label {
+      margin-left: 20px;
+    }
+
+    .fault-wrapper {
+      display: flex;
+    }
+  }
+}

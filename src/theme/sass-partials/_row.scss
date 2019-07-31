@@ -1,0 +1,35 @@
+.mes-data-row {
+  padding: 22px 0;
+}
+
+.mes-row-separator {
+  border-bottom: 2px solid map-get($colors-gds, gds-grey-5);
+}
+
+.mes-data-row-with-separator {
+  @extend .mes-data-row;
+  @extend .mes-row-separator;
+}
+
+.mes-validated-row,
+.mes-component-row {
+  padding: 0;
+  min-height: 120px;
+  .col {
+    padding: 0;
+  }
+  .component-label {
+    padding-left: 32px;
+  }
+  .spacing-row,
+  .validation-message-row {
+    min-height: 32px;
+    padding-left: 2px;
+  }
+}
+
+.mes-component-row::before {
+  display: inline-block;
+  width: 8px;
+  content: '';
+}

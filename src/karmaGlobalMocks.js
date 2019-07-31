@@ -1,0 +1,40 @@
+const mock = () => {
+  let storage = {};
+  return {
+    getItem: key => (key in storage ? storage[key] : null),
+    setItem: (key, value) => (storage[key] = value || ''),
+    removeItem: key => delete storage[key],
+    clear: () => (storage = {}),
+  };
+};
+
+Object.defineProperty(window, 'localStorage', { value: mock() });
+Object.defineProperty(window, 'sessionStorage', { value: mock() });
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ['-webkit-appearance'],
+});
+
+const cordova = {
+  plugins: {
+    ASAM: {
+      toggle: (flag, cb) => {
+        console.log('Calling ASAM plugin mock');
+        cb(true);
+      },
+    },
+    DeviceAuthentication: {
+      runAuthentication: (prompt, successCB, failedCB) => {
+        console.log('Calling Device Auth plugin mock');
+        successCB(true);
+      },
+    },
+    AppConfig: {
+      getValue: (key) => {
+        console.log('Calling App Config plugin mock')
+        return 'AppConfigMock';
+      }
+    }
+  },
+};
+
+Object.defineProperty(window, 'cordova', { value: cordova });

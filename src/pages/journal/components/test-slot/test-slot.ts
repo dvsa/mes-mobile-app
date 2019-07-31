@@ -1,0 +1,111 @@
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { get, isNil } from 'lodash';
+import { SlotComponent } from '../slot/slot';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { vehicleDetails } from './test-slot.constants';
+import { TestCategory } from '../../../../shared/models/test-category';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { DateTime } from '../../../../shared/helpers/date-time';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { Store, select } from '@ngrx/store';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { Observable } from 'rxjs/Observable';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { getTestStatus } from '../../../../modules/tests/tests.selector';
+import { getSlotType } from '../../../candidate-details/candidate-details.selector';
+import { SlotTypes } from '../../../../shared/models/slot-types';
+
+interface TestSlotComponentState {
+  testStatus$: Observable<TestStatus>;
+}
+
+@Component({
+  selector: 'test-slot',
+  templateUrl: 'test-slot.html',
+})
+export class TestSlotComponent implements SlotComponent, OnInit, OnDestroy {
+  @Input()
+  slot: any;
+
+  @Input()
+  hasSlotChanged: boolean;
+
+  @Input()
+  showLocation: boolean;
+
+  componentState: TestSlotComponentState;
+
+  subscription: Subscription;
+
+  constructor(
+    public screenOrientation: ScreenOrientation,
+    public appConfig: AppConfigProvider,
+    public dateTimeProvider: DateTimeProvider,
+    public store$: Store<StoreModel>,
+  ) {}
+
+  ngOnInit(): void {
+    const { slotId } = this.slot.slotDetail;
+    this.componentState = {
+      testStatus$: this.store$.pipe(
+        select(getTests),
+        select(tests => getTestStatus(tests, slotId)),
+      ),
+    };
+
+    const { testStatus$ } = this.componentState;
+
+    this.subscription = merge(testStatus$).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  isIndicatorNeededForSlot(): boolean {
+    const specialNeeds: boolean = this.isSpecialNeedsSlot();
+    const checkNeeded: boolean = this.slot.booking.application.entitlementCheck || false;
+    const nonStandardTest: boolean = getSlotType(this.slot) !==  SlotTypes.STANDARD_TEST;
+
+    return specialNeeds || checkNeeded || nonStandardTest;
+  }
+
+  isSpecialNeedsSlot(): boolean {
+    const specialNeeds = get(this.slot, 'booking.application.specialNeeds', '');
+    return !isNil(specialNeeds) && specialNeeds.length > 0;
+  }
+
+  isPortrait() : boolean {
+    return this.screenOrientation.type === this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY ||
+      this.screenOrientation.type === this.screenOrientation.ORIENTATIONS.PORTRAIT;
+  }
+
+  showVehicleDetails(): boolean {
+    return vehicleDetails[this.slot.booking.application.testCategory as TestCategory];
+  }
+
+  canStartTest(): boolean {
+    if (!this.appConfig.getAppConfig().journal.allowTests) {
+      return false;
+    }
+
+    const startDate = new DateTime(this.slot.slotDetail.start);
+    if (startDate.daysDiff(this.dateTimeProvider.now()) !== 0) {
+      return false;
+    }
+
+    const testCategory = this.slot.booking.application.testCategory;
+    const allowedTestCategories = this.appConfig.getAppConfig().journal.allowedTestCategories;
+
+    if (allowedTestCategories.includes(testCategory)) {
+      return true;
+    }
+
+    return false;
+  }
+}

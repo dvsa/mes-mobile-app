@@ -1,2 +1,21 @@
-page-home {
+page-login {
+  .login-grid {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & div{
+      max-width: 80%;
+      text-align: center;
+    }
+  }
+  .link {
+    text-decoration: underline;
+    color: map-get($colors-gds, 'gds-blue');
+    &.error-details-link {
+      font-size: 14px;
+      padding-top: 5px;
+    }
+  }
 }

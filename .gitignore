@@ -13,6 +13,7 @@ log.txt
 npm-debug.log*
 .env
 *.DS_Store
+.editorconfig
 
 .idea/
 .sourcemaps/
@@ -33,6 +34,10 @@ www/
 $RECYCLE.BIN/
 typings/cordova-*
 test-reports/
+src/environment/environment.ts
+src/assets/mock/*
+fastlane/report.xml
+test/e2e/test.config.ts
 
 .DS_Store
 Thumbs.db

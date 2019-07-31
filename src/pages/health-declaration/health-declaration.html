@@ -1,37 +1,119 @@
 <ion-header>
-  <mes-header [title]='getTitle()' [helpPage]="helpPage"></mes-header>
-  <page-header [deviceLocked]="true"></page-header>
+  <practice-mode-banner *ngIf="isPracticeMode"></practice-mode-banner>
+  <ion-navbar>
+    <ion-title>{{ 'healthDeclaration.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
+    <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
+      <button ion-button (click)="logout()">Logout</button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
-<ion-content padding class="mes-main-content">
-  <ion-card class="mes-card">
-    <ion-card-header class="mes-main-card-header">
-      <span class="mes-header-lg">Declaration</span>
-    </ion-card-header>
-    <ion-card-content>
-      <div text-center class="candidate-name">{{getCandidateName() | uppercase}}</div>
-      <div text-center class="mes-header-md mes-label-spacing">Driver number</div>
-      <div text-center class="candidate-numbers">{{getDriverNumber()}}</div>
-      <div text-center class="mes-header-md mes-label-spacing">Pass certificate number</div>
-      <div text-center class="candidate-numbers">{{getCertificateNumber()}}</div>
-      <span class="mes-text-md decleration">You must declare any change to your health status since you last applied for a license.
-        It is a criminal
-        offense for you (or anyone else) to make a false statement in order for you to obtain a driving license and can
-        lead to prosecution.
-      </span>
+
+<ion-content no-bounce>
+  <lock-screen-indicator></lock-screen-indicator>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-row class="mes-full-width-card" id="candidate-section">
+      <ion-col>
+        <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
+        <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
+      </ion-col>
+      <ion-col col-auto>
+        <button type="submit" id="continue-button" class="mes-primary-button" float-right ion-button>
+          <h3>{{ 'common.continue' | translate }}</h3>
+        </button>
+      </ion-col>
+    </ion-row>
+    <div class="mes-full-width-card-separator"></div>
+    <div class="mes-full-width-card" id="declaration-section">
+      <ion-row>
+        <ion-col>
+          <h4>{{ 'healthDeclaration.declarationIntent' | translate }}:</h4>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ul>
+            <li>
+              <p>{{ 'healthDeclaration.healthDeclaration' | translate }}</p>
+            </li>
+          </ul>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('healthCheckboxCtrl')"></div>
+        <ion-col>
+          <ion-row>
+            <ion-col class="declaration-checkbox-row">
+              <input formControlName="healthCheckboxCtrl" type="checkbox" class="gds-checkbox"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('healthCheckboxCtrl')" id="health-declaration-checkbox"
+                [checked]="pageState.healthDeclarationAccepted$ | async" (click)="healthDeclarationChanged()">
+              <label for="health-declaration-checkbox">{{ 'healthDeclaration.confirm' | translate }}</label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div id="health-change-validation-text" class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('healthCheckboxCtrl')">
+                {{ 'healthDeclaration.healthDeclarationValidation' | translate }}
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col></ion-col>
+      </ion-row>
       <div>
-        <input type="checkbox" name="health" id="confirm-health" [(ngModel)]="health-confirmation"
-               class="mes-checkbox-button">
-        <label class="checkbox-label" for="confirm-health">I confirm</label>
+        <ul>
+          <li>
+            <p>
+              {{ 'healthDeclaration.certificateReceived' | translate }}: {{pageState.passCertificateNumber$ | async}}
+            </p>
+          </li>
+        </ul>
       </div>
-      <div class="mes-divider"></div>
-      <div>
-        <mes-signature-pad></mes-signature-pad>
-      </div>
-    </ion-card-content>
-  </ion-card>
-  <div margin>
-    <button float-right (click)="continue()" class="mes-cta-button-primary" id="continue" [disabled]="validation()">
-      Continue
-    </button>
-  </div>
+      <ion-row>
+        <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('receiptCheckboxCtrl')"></div>
+        <ion-col>
+          <ion-row>
+            <ion-col class="declaration-checkbox-row">
+              <input formControlName="receiptCheckboxCtrl" type="checkbox" class="gds-checkbox"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('receiptCheckboxCtrl')" id="receipt-declaration-checkbox"
+                [checked]="pageState.passCertificateNumberReceived$ | async" (click)="receiptDeclarationChanged()">
+              <label for="receipt-declaration-checkbox">{{ 'healthDeclaration.confirm' | translate }}</label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div id="pass-certificate-receipt-validation-text" class="validation-text-with-row-spacing"
+                [class.ng-invalid.withRowMargin]="isCtrlDirtyAndInvalid('receiptCheckboxCtrl')">
+                {{ 'healthDeclaration.certificateReceivedValidation' | translate }}
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <div class="signature-area-padding"></div>
+      <ion-row>
+        <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')"></div>
+        <ion-col>
+          <ion-row>
+            <ion-col>
+              <div id="health-declaration-signature-validation-text" class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
+                {{ 'healthDeclaration.signatureValidation' | translate }}
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="declaration-signature-row">
+            <ion-col class="declaration-signature-col">
+              <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
+                signHereText="{{ 'healthDeclaration.signaturePrompt' | translate }}"
+                retryButtonText="{{ 'healthDeclaration.signatureRetry' | translate }}">
+              </signature-area>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
 </ion-content>

@@ -1,43 +1,66 @@
 export interface IAnalyticsProvider {
-  setCurrentPage(name: string);
+  setCurrentPage(name: string): void;
 
-  logEvent(category: string, event: string, params?: any);
+  addCustomDimension(key: number, value: string): void;
 
-  logError(message: string);
+  logEvent(category: string, event: string, label?:string, params?: any): void;
 
-  setUserId(userId: string);
+  logError(type:string, message: string): void;
+
+  logException(message: string, fatal: boolean): void;
+
+  setUserId(userId: string): void;
+  initialiseAnalytics(): Promise<any>;
+
 }
 
 export enum AnalyticsScreenNames {
-  CONTACT_DETAILS = 'contact details page',
-  FAIL_RESULTS_DEBRIEF = 'fail results debrief page',
-  HELP_CANDIDATE_DETAILS = 'help candidate details page',
-  HELP_DEBRIEF = 'help debrief page',
-  HELP_FINALISATION = 'help finalisation page',
-  HELP_GUIDE = 'help guide page',
-  HELP_HEALTH_DECLARATION = 'help health declaration page',
-  HELP_JOURNAL = 'help journal page',
-  HELP_TEST_REPORT = 'help test report page',
-  HELP_WAITING_ROOM = 'help waiting room',
-  HELP_WAITING_ROOM_TO_CAR = 'help waiting room to car page',
-  HEALTH_DECLARATION = 'health declaration page',
-  JOURNAL = 'journal page',
-  OFFICE = 'office page',
-  PASS_FINALISATION = 'pass finalisation page',
-  PASS_RESULTS_DEBRIEF = 'pass results debrief page',
-  TEST = 'test report page',
-  WAITING_ROOM = 'waiting room page',
-  WAITING_ROOM_TO_CAR = 'waiting room to car page',
-  WELCOME = 'welcome page'
-}
+    CONTACT_DETAILS = 'contact details screen', // this may need removing as could be candidate details now
+    FAIL_RESULTS_DEBRIEF = 'fail results debrief screen',
+    HEALTH_DECLARATION = 'health declaration screen',
+    JOURNAL = 'journal screen',
+    OFFICE = 'office screen',
+    PASS_FINALISATION = 'pass finalisation screen',
+    PASS_RESULTS_DEBRIEF = 'pass results debrief screen',
+    TEST = 'test report screen',
+    TERMINATE_TEST = 'terminate test screen',
+    WAITING_ROOM = 'waiting room screen',
+    WAITING_ROOM_TO_CAR = 'waiting room to car screen',
+    WELCOME = 'welcome screen',
+    CANDIDATE_DETAILS = 'candidate details screen',
+    DEBRIEF = 'debrief screen',
+    LOGIN = 'login screen',
+    BACK_TO_OFFICE = 'back to office screen',
+  }
 
 export enum AnalyticsEventCategories {
-  CLICK = 'click',
-  LIFECYCLE = 'lifecycle'
-}
+    CLICK = 'click',
+    LIFECYCLE = 'lifecycle',
+    ERROR = 'error',
+    JOURNAL = 'journal',
+    AUTHENTICATION = 'authentication',
+  }
 
 export enum AnalyticsEvents {
-  START_TEST = 'start test',
-  END_TEST = 'end test',
-  APP_LOAD = 'app load'
-}
+    START_TEST = 'start test',
+    END_TEST = 'end test',
+    APP_LOAD = 'app load',
+    SLOT_CHANGED = 'slot changed',
+    SLOT_CHANGE_VIEWED = 'slot change viewed',
+    NAVIGATION = 'navigation',
+    REFRESH_JOURNAL = 'refresh journal',
+    LOGIN = 'login',
+  }
+
+export enum AnalyticsDimensionIndices {
+    DEVICE_ID = 1,
+    JOURNAL_DAYS_FROM_TODAY = 2,
+    CANDIDATE_WITH_SPECIAL_NEEDS = 3,
+    CANDIDATE_WITH_CHECK = 4,
+    CANDIDATE_ID= 5,
+  }
+
+export enum JournalRefreshModes {
+    MANUAL = 'MANUAL',
+    AUTOMATIC = 'AUTOMATIC',
+  }

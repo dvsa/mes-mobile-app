@@ -1,0 +1,27 @@
+legal-requirements {
+  .mes-test-report-button {
+    width: 118px;
+
+    .label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tickwrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    &.complete {
+      border: 2px solid map-get($colors-gds, "gds-green");
+      color: map-get($colors-gds, "gds-green");
+
+      .competency-label {
+        font-weight: bold;
+      }
+    }
+  }
+
+
+}

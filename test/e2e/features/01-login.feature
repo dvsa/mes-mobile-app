@@ -1,13 +1,12 @@
 Feature: Login
 
-   Scenario: Viewing login page
-    Given I am a mobile app user 
+   Scenario: User presented login screen
+    Given I am not logged in 
     When I launch the mobile app
-    Then I should see the login screen
+    Then I should see the Microsoft login page
     
-# TEMPORARILY REPLACED WITH WELCOME PAGE
-   Scenario: User logs in to MES
-    Given I am on the login page
-#    When I click the "Login" button
-     When I click the "Ok" button
-    Then I successfully log in and see the journal page
+  @smoke
+  Scenario: User logs into the application
+    Given I am not logged in
+    When I log in to the application as "mobexaminer1"
+    Then I should see the "Journal" page

@@ -1,0 +1,38 @@
+<ion-card class="modal-alert">
+  <ion-row>
+    <ion-col class="center-icon" no-padding>
+      <ion-icon class="practice-icon" ios="md-car"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding>
+      <h2 class="modal-alert-header">Practice a test (cat B)</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-80>
+      <div class="modal-alert-message">
+        <div class="mes-data">Select if you'd like to start with<br/>or without a driving fault on<br/>vehicle checks</div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-72>
+      <button ion-button class="mes-return-button fault-button" (click)="onFault()">
+        <h3>Start with a driving fault</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding col-72>
+      <button ion-button class="mes-return-button no-fault-button" (click)="onNoFault()">
+        <h3>Start without a driving fault</h3>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="column-border-top" no-padding>
+      <button ion-button clear class="cancel-button" (click)="onCancel()">Cancel</button>
+    </ion-col>
+  </ion-row>
+</ion-card>

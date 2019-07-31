@@ -1,0 +1,19 @@
+driving-faults-badge {
+   div {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    .counter-background {
+      display: flex;
+      justify-content: center;
+      background-color: map-get($colors-gds, 'gds-black');
+      color: map-get($colors, 'mes-white');
+      border-radius: 13px;
+      .count {
+        font-size: 15px;
+        font-weight: bold;
+        align-self: center;
+      }
+    }
+  }
+}

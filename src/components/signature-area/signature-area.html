@@ -1,0 +1,14 @@
+
+<div class="signature-area" [class.ng-invalid]="isvalid === false" (blur)="onTouched($event)">
+    <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
+    <button (click)="clear()" class="retry-button" [disabled]="!signature">
+        <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
+        <label id="retry-button-label" class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</label>
+    </button>
+    <div class="sign-here-wrapper">
+        <div id="sign-here-image" class="image" [ngStyle]="{'background-image':'url(' + signHereImage + ')'}">
+            <label id="sign-here-label" class="text">{{signHereText? signHereText : "Sign here"}}</label>
+        </div>
+        <div class="signature-line"></div>
+    </div>
+</div>

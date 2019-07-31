@@ -1,79 +1,291 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { DeviceAuthentication } from '../../types/device-authentication';
-import { PostTestSummaryPage } from '../post-test-summary/post-test-summary';
-import { Page } from 'ionic-angular/navigation/nav-util';
-import { MesSignaturePadComponent } from '../../components/mes-signature-pad/mes-signature-pad';
-import { IJournal, ICandidateName } from '../../providers/journal/journal-model';
-import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { HelpHealthDeclarationPage } from '../../help/pages/help-health-declaration/help-health-declaration';
+import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
+import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
+import { Store, select } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import { HealthDeclarationViewDidEnter } from './health-declaration.actions';
+import { Observable } from 'rxjs/Observable';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
+import * as postTestDeclarationsActions
+  from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getPostTestDeclarations } from '../../modules/tests/post-test-declarations/post-test-declarations.reducer';
+import {
+  getHealthDeclarationStatus,
+  getReceiptDeclarationStatus,
+  getSignatureStatus,
+} from '../../modules/tests/post-test-declarations/post-test-declarations.selector';
+import {
+  getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
+} from '../../modules/tests/candidate/candidate.selector';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { map } from 'rxjs/operators';
+import {
+  getPassCertificateNumber,
+  isProvisionalLicenseProvided,
+} from '../../modules/tests/pass-completion/pass-completion.selector';
+import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
+import { PersistTests } from '../../modules/tests/tests.actions';
+import { Subscription } from 'rxjs/Subscription';
+import { merge } from 'rxjs/observable/merge';
+import { TranslateService } from 'ng2-translate';
+import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { ProvisionalLicenseNotReceived } from '../../modules/tests/pass-completion/pass-completion.actions';
+import {
+  getCommunicationPreference,
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
+interface HealthDeclarationPageState {
+  healthDeclarationAccepted$: Observable<boolean>;
+  passCertificateNumberReceived$: Observable<boolean>;
+  signature$: Observable<string>;
+  candidateName$: Observable<string>;
+  candidateUntitledName$: Observable<string>;
+  candidateDriverNumber$: Observable<string>;
+  passCertificateNumber$: Observable<string>;
+  licenseProvided$: Observable<boolean>;
+  welshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
+}
+@IonicPage()
 @Component({
   selector: 'page-health-declaration',
-  templateUrl: 'health-declaration.html'
+  templateUrl: 'health-declaration.html',
 })
-export class HealthDeclarationPage {
-  signaturePadOptions: any;
-  postTestSummaryPage: Page = PostTestSummaryPage;
-  confirmation: boolean;
-  slotDetail: IJournal;
-  passCertificateNumber: string;
-  helpPage: Page = HelpHealthDeclarationPage;
+export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
-  @ViewChild(MesSignaturePadComponent)
-  signaturePad: MesSignaturePadComponent;
+  static readonly welshLanguage: string = 'Cymraeg';
+
+  @ViewChild(SignatureAreaComponent)
+  signatureArea: SignatureAreaComponent;
+
+  @ViewChild(Navbar) navBar: Navbar;
+
+  pageState: HealthDeclarationPageState;
+  form: FormGroup;
+  licenseProvided: boolean;
+  healthDeclarationAccepted: boolean;
+  subscription: Subscription;
+  inputSubscriptions: Subscription[] = [];
+  isBookedInWelsh: boolean;
+  conductedLanguage: string;
 
   constructor(
+    store$: Store<StoreModel>,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public configService: AppConfigProvider,
-    private deviceAuth: DeviceAuthentication,
-    public logging: AnalyticsProvider
+    public platform: Platform,
+    public authenticationProvider: AuthenticationProvider,
+    private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private translate: TranslateService,
+    public alertController: AlertController,
+
   ) {
-    this.signaturePadOptions = configService.getSignaturePadOptions();
-    this.slotDetail = this.navParams.get('slotDetail');
-    this.passCertificateNumber = this.navParams.get('passNumber');
+    super(platform, navCtrl, authenticationProvider, store$);
+    this.form = new FormGroup(this.getFormValidation());
   }
 
-  ionViewDidEnter() {
-    this.logging.setCurrentPage(AnalyticsScreenNames.HEALTH_DECLARATION);
+  ionViewDidEnter(): void {
+    this.store$.dispatch(new HealthDeclarationViewDidEnter());
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.clickBack();
+    };
   }
 
-  validation() {
-    return !this.confirmation || !this.signaturePad.getSignature();
-  }
-
-  continue() {
-    this.deviceAuth
-      .runAuthentication('Please authenticate yourself to proceed')
-      .then((isAuthenticated: boolean) => {
-        if (isAuthenticated) {
-          this.navCtrl.push(this.postTestSummaryPage, { slotDetail: this.slotDetail });
-        }
+  clickBack(): void {
+    this.deviceAuthenticationProvider.triggerLockScreen()
+      .then(() => {
+        this.navCtrl.pop();
       })
-      .catch((errorMsg: string) => {
-        if (errorMsg === 'cordova_not_available' || errorMsg === 'plugin_not_installed') {
-          this.navCtrl.push(this.postTestSummaryPage, { slotDetail: this.slotDetail });
-        }
+      .catch((err) => {
+        console.log(err);
       });
   }
 
-  getTitle(): string {
-    return `${this.getCandidateName()} - Health Declaration`;
+  getFormValidation(): { [key: string]: FormControl } {
+    return {
+      healthCheckboxCtrl: new FormControl(''),
+      receiptCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
+      signatureAreaCtrl: new FormControl(null, [Validators.required]),
+    };
   }
 
-  getCandidateName(): string {
-    const name: ICandidateName = this.slotDetail.candidateName;
-    return `${name.firstName} ${name.lastName}`;
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.signatureArea.drawCompleteAction = postTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
+    this.signatureArea.clearAction = postTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
+
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+
+    this.pageState = {
+      healthDeclarationAccepted$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getHealthDeclarationStatus),
+      ),
+      passCertificateNumberReceived$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getReceiptDeclarationStatus),
+      ),
+      signature$: currentTest$.pipe(
+        select(getPostTestDeclarations),
+        select(getSignatureStatus),
+      ),
+      candidateName$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getJournalData),
+        select(getCandidate),
+        select(getCandidateName),
+      ),
+      candidateUntitledName$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getJournalData),
+        select(getCandidate),
+        select(getUntitledCandidateName),
+      ),
+      candidateDriverNumber$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getJournalData),
+        select(getCandidate),
+        select(getCandidateDriverNumber),
+        map(formatDriverNumber),
+      ),
+      passCertificateNumber$: currentTest$.pipe(
+        select(getPassCompletion),
+        select(getPassCertificateNumber),
+      ),
+      licenseProvided$: currentTest$.pipe(
+        select(getPassCompletion),
+        map(isProvisionalLicenseProvided),
+      ),
+      welshTest$: currentTest$.pipe(
+        select(getJournalData),
+        select(getTestSlotAttributes),
+        select(isWelshTest),
+      ),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+      ),
+    };
+    this.rehydrateFields();
+
+    const { welshTest$, licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
+
+    const merged$ = merge(
+      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
+      licenseProvided$.pipe(map(val => this.licenseProvided = val)),
+      healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
+      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
+    );
+
+    this.configureI18N(this.conductedLanguage === HealthDeclarationPage.welshLanguage);
+    this.subscription = merged$.subscribe();
+
   }
 
-  getDriverNumber(): string {
-    return this.slotDetail.driverNumber;
+  rehydrateFields(): void {
+    this.inputSubscriptions.push(
+      this.pageState.healthDeclarationAccepted$
+        .subscribe((val) => {
+          this.form.controls['healthCheckboxCtrl'].setValue(val);
+        }),
+    );
+    this.inputSubscriptions.push(
+      this.pageState.passCertificateNumberReceived$
+        .subscribe((val) => {
+          this.form.controls['receiptCheckboxCtrl'].setValue(val);
+        }),
+    );
+    this.inputSubscriptions.push(
+      this.pageState.signature$
+        .subscribe((val) => {
+          this.form.controls['signatureAreaCtrl'].setValue(val);
+        }),
+    );
   }
 
-  getCertificateNumber(): string {
-    return this.passCertificateNumber;
+  configureI18N(isWelsh: boolean): void {
+    if (this.isBookedInWelsh && isWelsh) {
+      this.translate.use('cy');
+    }
   }
+
+  healthDeclarationChanged(): void {
+    this.store$.dispatch(new postTestDeclarationsActions.ToggleHealthDeclaration());
+  }
+
+  receiptDeclarationChanged(): void {
+    this.store$.dispatch(new postTestDeclarationsActions.ToggleReceiptDeclaration());
+  }
+  onSubmit() {
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      if (!this.healthDeclarationAccepted) {
+        this.showConfirmHealthDeclarationModal();
+      } else {
+        this.persistAndNavigate(false);
+      }
+    }
+  }
+
+  showConfirmHealthDeclarationModal() {
+    const shortMessage = 'Remind the candidate to contact DVLA';
+    const extendedMessage =
+      // tslint:disable-next-line:max-line-length
+      `You need to give the provisional license back to the candidate.<br/>The field 'Driver license received' will be automatically changed to 'no'.<br/>${shortMessage}`;
+    const alert = this.alertController.create({
+      title: 'The candidate has not confirmed the health declaration',
+      message: this.licenseProvided ? extendedMessage : shortMessage,
+      cssClass: 'confirm-declaration-modal',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => { },
+        },
+        {
+          text: 'Continue',
+          handler: () => this.persistAndNavigate(true),
+        },
+      ],
+      enableBackdropDismiss: false,
+    });
+    alert.present();
+  }
+
+  persistAndNavigate(resetLicenseProvided: boolean) {
+    this.deviceAuthenticationProvider.triggerLockScreen()
+      .then(() => {
+        if (this.licenseProvided && resetLicenseProvided) {
+          this.store$.dispatch(new ProvisionalLicenseNotReceived());
+        }
+        this.store$.dispatch(new PersistTests());
+        this.navCtrl.push('BackToOfficePage');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  isCtrlDirtyAndInvalid(controlName: string): boolean {
+    return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.subscription.unsubscribe();
+    this.inputSubscriptions.forEach(sub => sub.unsubscribe());
+  }
+
 }

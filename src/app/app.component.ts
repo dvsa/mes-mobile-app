@@ -1,94 +1,84 @@
-import { Component, ViewChild } from '@angular/core';
-import { Platform, NavController, ViewController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Device } from '@ionic-native/device';
-import { Content } from 'ionic-angular/navigation/nav-interfaces';
-import { DEFAULT_LANG, SYS_OPTIONS, AVAILABLE_LANG } from './constants';
-import { TranslateService } from 'ng2-translate';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Insomnia } from '@ionic-native/insomnia';
-import { Globalization } from '@ionic-native/globalization';
-import { WelcomePage } from '../pages/welcome-page/welcome-page';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
-import { AppConfigProvider } from '../providers/app-config/app-config';
-import { AnalyticsEventCategories, AnalyticsEvents } from '../providers/analytics/analytics.model';
+import { Store } from '@ngrx/store';
+
+import { StoreModel } from '../shared/models/store.model';
+import { LoadAppInfo } from '../modules/app-info/app-info.actions';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+
+declare let window: any;
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class App {
-  @ViewChild('content')
-  nav: NavController;
-  @ViewChild('ionContent')
-  ionContent: Content;
-  @ViewChild('ionContent')
-  header: Content;
-  rootPage: any = WelcomePage;
+  rootPage: any = 'LoginPage';
+  textZoom: number = 100;
+  increasedContrast: Boolean = false;
 
   constructor(
-    public platform: Platform,
-    public statusBar: StatusBar,
-    public splashScreen: SplashScreen,
+    private store$: Store<StoreModel>,
+    private statusBar: StatusBar,
+    private platform: Platform,
     private translate: TranslateService,
-    screenOrientation: ScreenOrientation,
-    insomnia: Insomnia,
-    globalization: Globalization,
-    private device: Device,
-    private ga: GoogleAnalytics,
-    private appConfig: AppConfigProvider
   ) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.overlaysWebView(false);
-      statusBar.backgroundColorByName('black');
-      splashScreen.hide();
-
-      translate.setDefaultLang(DEFAULT_LANG);
-
-      if (platform.is('cordova')) {
-        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-        insomnia.keepAwake();
-        globalization.getPreferredLanguage().then((res) => {
-          this.setDefaultLanguage(res.value);
-        });
-
-        this.ga
-          .startTrackerWithId(this.appConfig.getGoogleAnalyticsKey())
-          .then(() => {
-            this.ga.setUserId(this.device.uuid);
-            this.ga
-              .addCustomDimension(
-                this.appConfig.getGoogleAnalyticsUserIdDimension(),
-                this.device.uuid
-              )
-              .then();
-            this.ga.trackEvent(AnalyticsEventCategories.LIFECYCLE, AnalyticsEvents.APP_LOAD).then();
-          })
-          .catch((e) => console.log('Error starting GA', e));
-      } else {
-        const browserLanguage = translate.getBrowserLang() || DEFAULT_LANG;
-        this.setDefaultLanguage(browserLanguage);
-      }
-    });
+    platform.ready()
+      .then(() => {
+        this.configureLocale();
+        this.configureStatusBar();
+        this.configureAccessibility();
+        this.loadAppInfo();
+      });
   }
 
-  setDefaultLanguage(language: string) {
-    const langCode = this.getAvailableLangCode(language);
-    this.translate.use(langCode);
-    SYS_OPTIONS.systemLanguage = langCode;
+  configureLocale() {
+    this.translate.setDefaultLang('en');
   }
 
-  getAvailableLangCode(lang) {
-    const langCode = lang.substring(0, 2).toLowerCase();
-    return AVAILABLE_LANG.some((x) => x.code === langCode) ? lang : DEFAULT_LANG;
+  configureStatusBar() {
+    this.statusBar.styleLightContent();
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString('#000000');
   }
 
-  ngOnInit() {
-    this.nav.viewWillEnter.subscribe((viewController: ViewController) => {
-      this.ionContent.resize();
-      this.header.resize();
-    });
+  loadAppInfo() {
+    this.store$.dispatch(new LoadAppInfo());
+  }
+
+  configureAccessibility() {
+    if (this.platform.is('ios') && window && window.MobileAccessibility) {
+      window.MobileAccessibility.updateTextZoom();
+      window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+      window.MobileAccessibility.isDarkerSystemColorsEnabled(
+        (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
+    }
+    if (typeof this.platform.resume.subscribe === 'function') {
+      this.platform.resume.subscribe(() => {
+        window.MobileAccessibility.usePreferredTextZoom(true);
+        window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+      });
+    }
+  }
+
+  getTextZoomCallback = (zoomLevel: number) => {
+    // Default iOS zoom levels are: 88%, 94%, 100%, 106%, 119%, 131%, 144%
+    this.textZoom = zoomLevel;
+    window.MobileAccessibility.usePreferredTextZoom(false);
+  }
+
+  public getTextZoom(zoom: number): string {
+    if (!zoom) return 'regular';
+    if (zoom >= 131) return 'x-large';
+    if (zoom >= 106) return 'large';
+    return 'regular';
+  }
+
+  public getTextZoomClass(): string {
+    return `text-zoom-${this.getTextZoom(this.textZoom)}`;
+  }
+
+  public getIncreasedContrastClass(): string {
+    return this.increasedContrast ? 'increased-contrast' : '';
   }
 }

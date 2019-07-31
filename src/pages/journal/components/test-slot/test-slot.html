@@ -1,0 +1,66 @@
+<location *ngIf="showLocation" [location]="slot.testCentre.centreName">
+</location>
+<ion-card [ngClass]="{'test-slot-portrait-mode': isPortrait()}">
+  <ion-row class="slot-row" align-items-center nowrap>
+    <div class="slot-changed-indicator" [ngClass]="{ 'slot-changed': hasSlotChanged }"></div>
+    <ion-grid>
+      <ion-row class="slot-header" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
+        <ion-col no-padding>
+          <language align-items-center [welshLanguage]="slot.booking.application.welshTest">
+          </language>
+        </ion-col>
+        <ion-col no-padding>
+          <submission-status float-end [testStatus]="componentState.testStatus$ | async"></submission-status>
+        </ion-col>
+      </ion-row>
+      <ion-row class="slot-main" align-items-center>
+        <ion-col class="time-exclamation-col" col-32>
+          <ion-grid no-padding>
+            <ion-row align-items-center nowrap>
+              <ion-col class="exclamation-col">
+                <indicators [showExclamationIndicator]="isIndicatorNeededForSlot()"
+                  [testStatus]="componentState.testStatus$ | async">
+                </indicators>
+              </ion-col>
+              <ion-col>
+                <time [time]="slot.slotDetail.start" [testComplete]="testComplete">
+                </time>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col class="candidate-details-col" no-padding>
+          <ion-grid no-padding>
+            <ion-row align-items-center>
+              <ion-col col-64>
+                <candidate-link [slotId]="slot.slotDetail.slotId" [slotChanged]="hasSlotChanged"
+                  [name]="slot.booking.candidate.candidateName" [isPortrait]="isPortrait()">
+                </candidate-link>
+              </ion-col>
+              <ion-col col-32 text-end>
+                <test-category [category]="slot.booking.application.testCategory"></test-category>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col class="test-outcome-col" no-padding padding-right>
+          <test-outcome [slotId]="slot.slotDetail.slotId" [canStartTest]="canStartTest()"
+            [testStatus]="componentState.testStatus$ | async"></test-outcome>
+        </ion-col>
+      </ion-row>
+      <ion-row class="slot-footer" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
+        <ion-col class="progressive-access-col" col-32>
+          <progressive-access align-items-center [progressiveAccess]="slot.booking.application.progressiveAccess">
+          </progressive-access>
+        </ion-col>
+        <ion-col class="vehicle-details-col" no-padding>
+          <vehicle-details [height]="slot.booking.application.vehicleHeight"
+            [width]="slot.booking.application.vehicleWidth" [length]="slot.booking.application.vehicleLength"
+            [seats]="slot.booking.application.vehicleSeats" [transmission]="slot.booking.application.vehicleGearbox"
+            [showDimensions]="showVehicleDetails()" [showNumberOfSeats]="showVehicleDetails()">
+          </vehicle-details>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-row>
+</ion-card>
