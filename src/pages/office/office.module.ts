@@ -7,7 +7,6 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { OfficeComponentsModule } from './components/office.components.module';
 import { OfficeEffects } from './office.effects';
-import { DirectivesModule } from '../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,6 @@ import { DirectivesModule } from '../../directives/directives.module';
     ]),
     ComponentsModule,
     OfficeComponentsModule,
-    DirectivesModule,
   ],
   providers: [
     AnalyticsProvider,

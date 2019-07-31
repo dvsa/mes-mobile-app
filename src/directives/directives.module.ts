@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from 'ionic-angular';
 import { InputRestrictionNumbersDirective } from './input-restriction-numbers.directive';
 import { InputRestrictionUppercaseAlphanumDirective } from './input-restriction-uppercasealphanum.directive';
 
@@ -9,10 +7,7 @@ import { InputRestrictionUppercaseAlphanumDirective } from './input-restriction-
     InputRestrictionNumbersDirective,
     InputRestrictionUppercaseAlphanumDirective,
   ],
-  imports: [
-    CommonModule,
-    IonicModule,
-  ],
+  imports: [],
   exports: [
     InputRestrictionNumbersDirective,
     InputRestrictionUppercaseAlphanumDirective,
