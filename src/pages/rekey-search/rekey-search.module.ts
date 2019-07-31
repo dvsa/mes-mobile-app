@@ -4,6 +4,8 @@ import { RekeySearchPage } from './rekey-search';
 import { SearchProvider } from '../../providers/search/search';
 import { EffectsModule } from '@ngrx/effects';
 import { RekeySearchAnalyticsEffects } from './rekey-search.analytics.effects';
+import { ComponentsModule } from '../../components/components.module';
+import { DirectivesModule } from '../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,8 @@ import { RekeySearchAnalyticsEffects } from './rekey-search.analytics.effects';
   imports: [
     IonicPageModule.forChild(RekeySearchPage),
     EffectsModule.forFeature([RekeySearchAnalyticsEffects]),
+    ComponentsModule,
+    DirectivesModule,
   ],
   providers: [
     SearchProvider,

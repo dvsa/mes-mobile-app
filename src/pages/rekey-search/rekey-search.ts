@@ -14,6 +14,11 @@ import { RekeySearchViewDidEnter } from './rekey-search.actions';
 })
 export class RekeySearchPage extends BasePageComponent {
 
+  staffNumber: string = '';
+  applicationReference: string = '';
+  searchResults: any[] = [];
+  hasSearched: boolean = false;
+  showSearchSpinner: boolean = false;
   subscription: Subscription = Subscription.EMPTY;
 
   constructor(
@@ -35,6 +40,22 @@ export class RekeySearchPage extends BasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  staffNumberChanged(val: string) {
+    this.staffNumber = val;
+  }
+
+  applicationReferenceChanged(val: string) {
+    this.applicationReference = val;
+  }
+
+  searchTests() {
+    this.showSearchSpinner = true;
+    setTimeout(() => {
+      this.showSearchSpinner = false;
+      this.hasSearched = true;
+    }, 1000);
   }
 
 }
