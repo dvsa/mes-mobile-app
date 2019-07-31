@@ -13,7 +13,7 @@
       font-weight:normal;
     }
     & + label:before {
-      width: 36px;
+      min-width: 36px;
       height: 36px;
       margin-right:15px;
     }

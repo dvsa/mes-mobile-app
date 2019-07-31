@@ -178,14 +178,11 @@
 </ion-content>
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
-    <ion-col col-36>
-      <button id="defer-button" ion-button (click)="defer()">
+    <ion-col>
+      <button float-left id="defer-button" ion-button (click)="defer()">
         <h3>Save and continue later</h3>
       </button>
-    </ion-col>
-    <ion-col col-40></ion-col>
-    <ion-col col-20>
-      <button class="mes-primary-button padding-x-5" ion-button (click)="onSubmit()">
+      <button float-right class="mes-primary-button padding-x-5" ion-button (click)="onSubmit()">
         <h3>Upload</h3>
       </button>
     </ion-col>

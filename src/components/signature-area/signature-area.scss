@@ -57,7 +57,7 @@ signature-area {
     display: flex;
     position: relative;
     bottom: 237px;
-    width: 100px;
+    min-width: 100px;
     float: right;
     right: 10px;
     z-index: 11;

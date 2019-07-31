@@ -8,10 +8,11 @@ practice-end-to-end-card {
       font-size: 20px;
     }
     .mes-secondary-button {
-      height: 74px;
-      width: 220px;
+      min-height: 74px;
+      min-width: 220px;
       h3 {
         color: map-get($colors-gds, gds-black);
+        line-height: 1.4em;
       }
     }
   }
