@@ -5,7 +5,8 @@ candidate-section {
     align-items: center;
 
     #continue-button {
-      padding: 8px 24px;
+      min-height: 56px;
+      min-width: 132px;
     }
   }
 }

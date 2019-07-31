@@ -14,14 +14,14 @@
           [checked]="independentDriving === 'Sat nav'" (change)="independentDrivingChanged($event.target.value)">
         <label for="independent-driving-satnav" class="radio-label">Sat Nav</label>
       </ion-col>
-      <ion-col>
+      <ion-col align-self-center>
         <input type="radio" id="independent-driving-trafficsigns" class="gds-radio-button"
           formControlName="independentDriving" name="independentDriving" value='Traffic signs'
           [class.ng-invalid]="invalid" [checked]="independentDriving === 'Traffic signs'"
           (change)="independentDrivingChanged($event.target.value)">
         <label for="independent-driving-trafficsigns" class="radio-label">Traffic signs</label>
       </ion-col>
-      <ion-col [hidden]="!showNotApplicable">
+      <ion-col align-self-center [hidden]="!showNotApplicable">
         <input type="radio" id="independent-driving-na" class="gds-radio-button" formControlName="independentDriving"
           name="independentDriving" value='N/A' [class.ng-invalid]="invalid" [checked]="independentDriving === 'N/A'"
           (change)="independentDrivingChanged($event.target.value)">
