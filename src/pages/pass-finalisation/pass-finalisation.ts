@@ -260,12 +260,8 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     this.store$.dispatch(d255 ? new D255Yes() : new D255No());
   }
 
-  debriefWitnessed(): void {
-    this.store$.dispatch(new DebriefWitnessed());
-  }
-
-  debriefUnwitnessed(): void {
-    this.store$.dispatch(new DebriefUnwitnessed());
+  debriefWitnessedChanged(debriefWitnessed: boolean) {
+    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
   }
 
   isWelshChanged(isWelsh: boolean) {
