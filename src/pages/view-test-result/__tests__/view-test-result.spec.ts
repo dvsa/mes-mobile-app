@@ -38,6 +38,7 @@ import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
 import { manoeuvreTypeLabels } from '../../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { ErrorMessageComponent } from '../../../components/error-message/error-message';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -54,6 +55,7 @@ describe('ViewTestResultPage', () => {
         MockComponent(TestSummaryCardComponent),
         MockComponent(ViewTestHeaderComponent),
         MockComponent(DebriefCardComponent),
+        MockComponent(ErrorMessageComponent),
       ],
       imports: [IonicModule, AppModule],
       providers: [
@@ -347,12 +349,18 @@ describe('ViewTestResultPage', () => {
         expect(result.competencyDisplayName).toEqual('Vehicle checks');
       });
     });
+
+    describe('goBack', () => {
+      it('should navigation the user back to the last page', () => {
+        component.goBack();
+        expect(component.navController.pop).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('DOM', () => {
     it('should hide the cards and error message when the data is loading', () => {
       component.isLoading = true;
-      component.showErrorMessage = false;
 
       expect(fixture.debugElement.query(By.css('.error'))).toBeNull();
 
@@ -396,7 +404,6 @@ describe('ViewTestResultPage', () => {
 
     it('should show the cards when the data is not loading and there is no error', () => {
       component.isLoading = false;
-      component.showErrorMessage = false;
       component.testResult = categoryBTestResultMock;
       fixture.detectChanges();
 

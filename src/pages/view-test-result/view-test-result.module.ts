@@ -6,12 +6,14 @@ import { ViewTestResultComponentsModule } from './components/view-test-result.co
 import { CompressionProvider } from '../../providers/compression/compression';
 import { EffectsModule } from '@ngrx/effects';
 import { ViewTestResultAnalyticsEffects } from './view-test-result.analytics.effects';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
     ViewTestResultPage,
   ],
   imports: [
+    ComponentsModule,
     IonicPageModule.forChild(ViewTestResultPage),
     ViewTestResultComponentsModule,
     EffectsModule.forFeature([ViewTestResultAnalyticsEffects]),
@@ -21,4 +23,4 @@ import { ViewTestResultAnalyticsEffects } from './view-test-result.analytics.eff
     CompressionProvider,
   ],
 })
-export class ViewTestResultPageModule {}
+export class ViewTestResultPageModule { }

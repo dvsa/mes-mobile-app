@@ -1,6 +1,6 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
-import { NavControllerMock, NavParamsMock, PlatformMock, ViewControllerMock } from 'ionic-mocks';
+import { IonicModule, NavController, NavParams, Platform, ModalController, ViewController } from 'ionic-angular';
+import { NavControllerMock, NavParamsMock, PlatformMock, ModalControllerMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../app/app.module';
 import { TestResultsSearchPage } from '../test-results-search';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -12,9 +12,13 @@ import { By } from '@angular/platform-browser';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { ExaminerRole } from '../../../providers/app-config/constants/examiner-role.constants';
+import { App } from '../../../app/app.component';
+import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 
 describe('TestResultsSearchPage', () => {
   let fixture: ComponentFixture<TestResultsSearchPage>;
+  let component: TestResultsSearchPage;
+  let modalController: ModalController;
   let appConfigProviderMock: AppConfigProvider;
 
   beforeEach(async(() => {
@@ -31,15 +35,19 @@ describe('TestResultsSearchPage', () => {
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SearchProvider, useClass: SearchProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: App, useClass: MockAppComponent },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(TestResultsSearchPage);
+        component = fixture.componentInstance;
+        modalController = TestBed.get(ModalController);
         appConfigProviderMock = TestBed.get(AppConfigProvider);
       });
   }));
@@ -71,6 +79,14 @@ describe('TestResultsSearchPage', () => {
           expect(fixture.debugElement.query(By.css('#tab-search-candidate-details'))).not.toBeNull();
           expect(fixture.debugElement.query(By.css('#tab-search-advanced'))).toBeNull();
         });
+
+      });
+    });
+
+    describe('search submitted', () => {
+      it('should display a modal on error', () => {
+        component.showError({ status: 500, statusText: 'error', message: 'error' });
+        expect(modalController.create).toHaveBeenCalled();
       });
     });
   });
