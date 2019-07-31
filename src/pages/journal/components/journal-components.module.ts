@@ -19,6 +19,7 @@ import { SubmissionStatusComponent } from './submission-status/submission-status
 import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practice-end-to-end-card';
 import { ProgressiveAccessComponent } from './progressive-access/progressive-access';
 import { TestResultsSearchCardComponent } from './test-results-search-card/test-results-search-card';
+import { RekeySearchCardComponent } from './rekey-search-card/rekey-search-card';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
     PracticeEndToEndCardComponent,
     ProgressiveAccessComponent,
     TestResultsSearchCardComponent,
+    RekeySearchCardComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +68,7 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
     PracticeEndToEndCardComponent,
     ProgressiveAccessComponent,
     TestResultsSearchCardComponent,
+    RekeySearchCardComponent,
   ],
 })
 export class JournalComponentsModule { }
