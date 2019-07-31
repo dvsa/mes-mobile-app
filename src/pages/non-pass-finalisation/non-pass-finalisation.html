@@ -1,5 +1,8 @@
 <ion-header>
   <practice-mode-banner *ngIf="isPracticeMode"></practice-mode-banner>
+  <ion-navbar>
+    <ion-title>Finalise outcome - {{ pageState.candidateName$ | async }}</ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content no-bounce id="non-pass-finalisation-page">
   <ion-footer>

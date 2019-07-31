@@ -2,9 +2,18 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { BACK_TO_OFFICE_PAGE } from '../page-names.constants';
+import { Observable } from 'rxjs/Observable';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidateName } from '../../modules/tests/candidate/candidate.selector';
+
+interface NonPassFinalisationPageState {
+  candidateName$: Observable<string>;
+}
 
 @IonicPage()
 @Component({
@@ -13,6 +22,8 @@ import { BACK_TO_OFFICE_PAGE } from '../page-names.constants';
 })
 export class NonPassFinalisationPage extends PracticeableBasePageComponent {
 
+  pageState: NonPassFinalisationPageState;
+
   constructor(
     store$: Store<StoreModel>,
     navController: NavController,
@@ -20,6 +31,19 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
     public authenticationProvider: AuthenticationProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
+  }
+
+  ngOnInit() {
+    const candidateName$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getJournalData),
+      select(getCandidate),
+      select(getCandidateName),
+    );
+    this.pageState = {
+      candidateName$,
+    };
   }
 
   continue() {
