@@ -2,10 +2,11 @@ page-view-test-result {
   .nav-close-text{
     font-weight: bold;
   }
-  .close-cross{
-    height: 15px;
-    width: auto;
-    margin-left: 5px;
+  .nav-close ion-icon {
+    margin: -1px 0 0;
+    display: inherit;
+    min-width: 28px;
+    font-size: 3.4rem;
   }
   .card-content-ios{
     padding: 0;
