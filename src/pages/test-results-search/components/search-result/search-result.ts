@@ -33,6 +33,9 @@ export class SearchResultComponent {
   openTestResult(): void {
     // Modals are at the same level as the ion-nav so are not getting the zoom level class,
     // this needs to be passed in the create options.
+
+    console.log('### We are here in openTestResult()');
+
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const testResultModal = this.modalController.create(
       VIEW_TEST_RESULT_PAGE,
@@ -41,5 +44,7 @@ export class SearchResultComponent {
     );
 
     testResultModal.present();
+
+    console.log('### We are here after the testResultModal.present');
   }
 }

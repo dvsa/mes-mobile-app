@@ -28,7 +28,7 @@
           <span class="mes-data">{{ data.applicationReference }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Test category</label>
         </ion-col>
@@ -36,7 +36,7 @@
           <span class="mes-data">{{ data.category }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Slot type</label>
         </ion-col>
@@ -44,19 +44,17 @@
           <span class="mes-data">{{ data.slotType }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Special requirements</label>
-          <img *ngIf="data.specialNeeds)"
-            alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png" class="exclamation-indicator" />
         </ion-col>
         <ion-col col-56>
-          <div *ngFor="let specialNeed of data.specialNeeds" class="mes-data">-
+          <div *ngFor="let specialNeed of data.specialNeeds" class="mes-data">
             - {{specialNeed}}
           </div>
         </ion-col>        
       </ion-row>
-      <ion-row *ngIf="data.entitlementCheck" class="mes-data-row">
+      <ion-row *ngIf="data.entitlementCheck" class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Entitlement check</label>
         </ion-col>

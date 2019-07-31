@@ -83,9 +83,9 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
+    console.log('### We are here in view test result Constructor');
 
     this.applicationReference = navParams.get('applicationReference');
-
   }
 
   ngOnInit(): void {
@@ -206,6 +206,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       debriefWitnessed: get(this.testResult, 'testSummary.debriefWitnessed'),
       weatherConditions: get(this.testResult, 'testSummary.weatherConditions'),
       D255: get(this.testResult, 'testSummary.D255'),
+      additionalInformation: get(this.testResult, 'testSummary.additionalInformation'),
     };
   }
 

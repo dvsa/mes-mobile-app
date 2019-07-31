@@ -13,7 +13,8 @@ export const extractTestSlotAttributes = (slotData): TestSlotAttributes => ({
   start: slotData.slotDetail.start,
   specialNeeds: slotData.booking.application.specialNeeds ? true : false,
   specialNeedsCode: slotData.booking.application.specialNeedsCode,
-  specialNeedsArray: slotData.booking.application.specialNeeds,
+  specialNeedsArray:
+    slotData.booking.application.specialNeeds ? slotData.booking.application.specialNeeds.split(';') : ['None'],
   vehicleTypeCode: slotData.vehicleTypeCode,
   extendedTest: slotData.booking.application.extendedTest,
   examinerVisiting: slotData.examinerVisiting,
