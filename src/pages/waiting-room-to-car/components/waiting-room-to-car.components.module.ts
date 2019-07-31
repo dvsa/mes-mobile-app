@@ -14,6 +14,7 @@ import { AccompanimentCardComponent } from './accompaniment-card/accompaniment-c
 import { AccompanimentComponent } from './accompaniment/accompaniment';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { VehicleDetailsComponent } from './vehicle-details/vehicle-details';
     CommonModule,
     ComponentsModule,
     IonicModule,
+    DirectivesModule,
   ],
   exports: [
     EyesightTestComponent,

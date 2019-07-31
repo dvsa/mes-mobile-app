@@ -6,7 +6,6 @@ import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car/waiting
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/components.module';
 import { WaitingRoomToCarComponentsModule } from './components/waiting-room-to-car.components.module';
-import { DirectivesModule } from '../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { DirectivesModule } from '../../directives/directives.module';
     EffectsModule.forFeature([WaitingRoomToCarAnalyticsEffects]),
     ComponentsModule,
     WaitingRoomToCarComponentsModule,
-    DirectivesModule,
   ],
   providers: [
     AnalyticsProvider,

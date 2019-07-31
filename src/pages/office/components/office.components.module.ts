@@ -15,6 +15,7 @@ import { AdditionalInformationComponent } from './additional-information/additio
 import { IndependentDrivingComponent } from './independent-driving/independent-driving';
 import { ActivityCodeComponent } from './activity-code/activity-code';
 import { LanguagePreferencesComponent } from './language-preference/language-preferences';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { LanguagePreferencesComponent } from './language-preference/language-pre
     CommonModule,
     ComponentsModule,
     IonicModule,
+    DirectivesModule,
   ],
   exports: [
     FaultCommentComponent,
