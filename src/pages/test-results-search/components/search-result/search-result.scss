@@ -1,38 +1,17 @@
 search-result {
   .card-ios {
-    margin-left: 0;
-    margin-right: 0;
+    margin: 12px 0 8px;
     width: 100%;
     border-left: 8px solid #9b9b9b;
   }
   .grid {
-    margin-left: 58px;
+    margin-left: 40px;
     padding: 13px 0;
   }
   .top-row {
-    font-size: 20px;
-    font-weight: normal;
     letter-spacing: -0.48px;
   }
-  .middle-row {
-    .large-text {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 0.27px;
-      line-height: 42px;
-    }
-    .small-text {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: 0.34px;
-      line-height: 25px;
-      display: flex;
-      align-self: center;
-    }
-  }
   .bottom-row {
-    font-size: 20px;
-    font-weight: normal;
     letter-spacing: -0.48px;
   }
 }

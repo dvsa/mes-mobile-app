@@ -53,7 +53,7 @@
           </ion-row>
           <ion-row padding-top>
             <button [attr.disabled]="showSearchSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
-              <h3 class="search-tests-text">
+              <h3>
                 <ion-icon name="search" class="search-icon"></ion-icon>
                 Search
               </h3>
@@ -67,16 +67,16 @@
       </tab>
     </tabs>
 
-    <div class='results-error'>
-      <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
+    <div class='results-error' *ngIf="hasSearched && searchResults.length === 0">
+      <p class="error-text">
         There were no results found for your search.
       </p>
-      <p *ngIf="hasSearched && searchResults.length === 0" class="error-text">
+      <p class="error-text">
         Please check and try again.
       </p>
     </div>
 
-    <p *ngIf="searchResults.length > 0" class="results-message">
+    <p class="results-message" *ngIf="searchResults.length > 0">
       Displaying <span>{{searchResults.length}}</span> results
     </p>
 

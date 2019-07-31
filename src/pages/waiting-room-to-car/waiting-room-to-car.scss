@@ -1,4 +1,7 @@
 page-waiting-room-to-car {
+  ion-content.content-ios {
+    background-color: map-get($colors, "mes-white");
+  }
   ion-content > div {
     background-color: map-get($colors, "mes-white");
     .mes-full-width-card {
@@ -8,15 +11,18 @@ page-waiting-room-to-car {
         height: 56px;
       }
     }
-    ion-footer button {
-      width: 100%;
-      height: 56px;
-    }
     .manual-label-top-spacing {
       label {
         display: block;
         margin-top: 42px;
       }
+    }
+  }
+  ion-footer {
+    background-color: map-get($colors, "mes-white");
+    button {
+      width: 100%;
+      height: 56px;
     }
   }
 }

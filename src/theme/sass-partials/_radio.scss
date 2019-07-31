@@ -17,7 +17,7 @@
     content: '';
     border: 2px solid black;
     border-radius: 100%;
-    width: $radio-width;
+    min-width: $radio-width;
     height: $radio-height;
     margin-right: 0.6em;
   }
@@ -32,7 +32,7 @@
       $radio-width-invalid: $radio-width - $radio-border-invalid;
       $radio-height-invalid: $radio-height - $radio-border-invalid;
       border: $radio-border-invalid solid map-get($colors, "mes-validation-error");
-      width: $radio-width-invalid;
+      min-width: $radio-width-invalid;
       height: $radio-height-invalid;
     }
   }
