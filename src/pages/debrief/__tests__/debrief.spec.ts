@@ -34,7 +34,7 @@ import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../debrief.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
-import { PASS_FINALISATION_PAGE, BACK_TO_OFFICE_PAGE } from '../../page-names.constants';
+import { PASS_FINALISATION_PAGE, POST_DEBRIEF_HOLDING_PAGE } from '../../page-names.constants';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -357,12 +357,12 @@ describe('DebriefPage', () => {
       it('should navigate to BackToOfficePage when outcome = fail', () => {
         component.outcome = 'Fail';
         component.endDebrief();
-        expect(navController.push).toHaveBeenCalledWith(BACK_TO_OFFICE_PAGE);
+        expect(navController.push).toHaveBeenCalledWith(POST_DEBRIEF_HOLDING_PAGE);
       });
       it('should navigate to the BackToOfficePage when outcomes = terminated', () => {
         component.outcome = 'Terminated';
         component.endDebrief();
-        expect(navController.push).toHaveBeenCalledWith(BACK_TO_OFFICE_PAGE);
+        expect(navController.push).toHaveBeenCalledWith(POST_DEBRIEF_HOLDING_PAGE);
       });
       it('should navigate back to the root when this is a test report practice test', () => {
         component.isTestReportPracticeMode = true;

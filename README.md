@@ -104,7 +104,7 @@ security set-keychain-settings -t 1900 -l /Users/$USERNAME/Library/Keychains/$KE
 ### Reporting logs to the logs service
 
 The mobile app authenticates to the [mes-logs-service](https://github.com/dvsa/mes-logs-service) (where app logs are sent) using an API Gateway API key.
-An API kye for this purpose is created in each environment by Terraform. To obtain it, assume a role with read permission and run:
+An API key for this purpose is created in each environment by Terraform. To obtain it, assume a role with read permission and run:
 
 ```shell
 bin/fetch-logs-api-key.sh <env>
