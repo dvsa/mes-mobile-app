@@ -40,10 +40,13 @@ import { WeatherConditionProvider } from '../providers/weather-conditions/weathe
 import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { LogHelper } from '../providers/logs/logsHelper';
+import { environment } from '../environment/environment';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
+
+const enableDevTools = environment && environment.enableDevTools;
 
 @NgModule({
   declarations: [App],
@@ -51,7 +54,7 @@ export function createTranslateLoader(http: Http) {
     BrowserModule,
     IonicModule.forRoot(App, { mode: 'ios' }),
     StoreModule.forRoot({}),
-    StoreDevtoolsModule.instrument(),
+    ...(enableDevTools ? [StoreDevtoolsModule.instrument()] : []),
     EffectsModule.forRoot([]),
     AppInfoModule,
     LogsModule,
