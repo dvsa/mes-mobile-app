@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
+import { TestSlot, NonTestActivity, PersonalCommitment } from '@dvsa/mes-journal-schema';
 import { SlotComponent } from '../../components/test-slot/slot/slot';
-import { TestSlot, NonTestActivity } from '@dvsa/mes-journal-schema';
 
 export class SlotItem {
   constructor(
@@ -8,5 +8,6 @@ export class SlotItem {
     public hasSlotChanged: boolean,
     public component?: Type<SlotComponent>,
     public activityCode?: string,
+    public personalCommitment?: PersonalCommitment[],
   ) { }
 }
