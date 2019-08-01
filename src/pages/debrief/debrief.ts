@@ -44,12 +44,7 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
-import {
-  PASS_FINALISATION_PAGE,
-  TEST_REPORT_PAGE,
-  DEBRIEF_PAGE,
-  POST_DEBRIEF_HOLDING_PAGE,
-} from '../page-names.constants';
+import { PASS_FINALISATION_PAGE, BACK_TO_OFFICE_PAGE, TEST_REPORT_PAGE, DEBRIEF_PAGE } from '../page-names.constants';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -245,7 +240,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
       this.navController.push(PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(POST_DEBRIEF_HOLDING_PAGE).then(() => {
+    this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
       const testReportPage = this.navController.getViews().find(view => view.id === TEST_REPORT_PAGE);
       if (testReportPage) {
         this.navController.removeView(testReportPage);

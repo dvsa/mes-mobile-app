@@ -3,9 +3,9 @@ export interface IAnalyticsProvider {
 
   addCustomDimension(key: number, value: string): void;
 
-  logEvent(category: string, event: string, label?: string, params?: any): void;
+  logEvent(category: string, event: string, label?:string, params?: any): void;
 
-  logError(type: string, message: string): void;
+  logError(type:string, message: string): void;
 
   logException(message: string, fatal: boolean): void;
 
@@ -32,8 +32,6 @@ export enum AnalyticsScreenNames {
   BACK_TO_OFFICE = 'back to office screen',
   TEST_RESULTS_SEARCH = 'test result search screen',
   VIEW_TEST_RESULT = 'view test result screen',
-  POST_DEBRIEF_HOLDING = 'post debrief holding screen',
-  NON_PASS_FINALISATION = 'non pass finalisation',
 }
 
 export enum AnalyticsEventCategories {
@@ -86,7 +84,7 @@ export enum AnalyticsEvents {
 }
 
 export enum AnalyticsLabels {
-  TERMINATE_TEST = 'Test report - legal requirements not met',
+TERMINATE_TEST = 'Test report - legal requirements not met',
 }
 
 export enum AnalyticsDimensionIndices {

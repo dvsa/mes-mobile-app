@@ -115,10 +115,6 @@ Feature: Full end to end journey
       And I see a "driving" fault for "Vehicle checks"
 
       When I end the debrief
-      Then I am on the post debrief holding page
-      When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Jane Doe" page
-      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -143,10 +139,6 @@ Feature: Full end to end journey
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
       When I end the debrief
-      Then I am on the post debrief holding page
-      When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Theresa Shaw" page
-      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -166,10 +158,6 @@ Feature: Full end to end journey
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
       When I end the debrief
-      Then I am on the post debrief holding page
-      When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Ali Campbell" page
-      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -196,10 +184,6 @@ Feature: Full end to end journey
       And I fail the eye sight test
       Then I should see the Debrief page with outcome "Unsuccessful"
       When I end the debrief
-      Then I am on the post debrief holding page
-      When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - James Brown" page
-      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -252,10 +236,6 @@ Feature: Full end to end journey
       And I see a "driving" fault for "Signals - Timed"
       And I see a "driving" fault for "Clearance"
       When I end the debrief
-      Then I am on the post debrief holding page
-      When I continue to the non pass finalisation page
-      Then I should see the "Finalise outcome - Florence Pearson" page
-      When I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
