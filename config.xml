@@ -96,5 +96,6 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-device-authentication" spec="https://github.com/dvsa/cordova-plugin-device-authentication" />
     <plugin name="cordova-plugin-appconfig" spec="1.1.4" />
+    <hook src="scripts/editPlist.js" type="before_build" />
     <engine name="ios" spec="^4.5.5" />
 </widget>
