@@ -13,7 +13,7 @@ import { SlotTypes } from '../../../../shared/models/slot-types';
 const testTime = new DateTime().toString();
 const formattedTime = DateTime.at(testTime).format('HH:mm');
 
-fdescribe('testSlotAttributes selector', () => {
+describe('testSlotAttributes selector', () => {
   const testSlotAttributes: TestSlotAttributes = {
     slotId: 1234,
     specialNeeds: true,
