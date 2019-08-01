@@ -33,7 +33,7 @@ import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
-import { HttpErrorResponse } from '@angular/common/http'
+import { HttpErrorResponse } from '@angular/common/http';
 import { defer } from 'rxjs/observable/defer';
 
 export class TestActions extends Actions {
@@ -186,7 +186,7 @@ describe('Journal Effects', () => {
     });
   });
 
-  fit('should dispatch the failure action when the journal fails to load', (done) => {
+  it('should dispatch the failure action when the journal fails to load', (done) => {
     // ARRANGE
     spyOn(journalProvider, 'getJournal').and.returnValue(asyncError(new HttpErrorResponse({
       error: 'Error message',
@@ -209,11 +209,11 @@ describe('Journal Effects', () => {
         expect(result instanceof journalActions.JournalRefreshError).toEqual(true);
       } else if (result instanceof journalActions.LoadJournalFailure) {
         expect(result instanceof journalActions.LoadJournalFailure).toEqual(true);
-        expect(result.payload.message).toBe('Test message');
-        done();
+        expect(result.payload.message).toBe('Http failure response for (unknown url): 403 Forbidden');
       } else {
         fail('Unknown Action Sent');
       }
+      done();
     });
 
   });
