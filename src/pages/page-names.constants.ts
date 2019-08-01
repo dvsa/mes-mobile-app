@@ -9,6 +9,7 @@ export const JOURNAL_PAGE = 'JournalPage';
 export const LOGIN_PAGE = 'LoginPage';
 export const OFFICE_PAGE = 'OfficePage';
 export const PASS_FINALISATION_PAGE = 'PassFinalisationPage';
+export const REKEY_SEARCH_PAGE = 'RekeySearchPage';
 export const TEST_REPORT_PAGE = 'TestReportPage';
 export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const WAITING_ROOM_PAGE = 'WaitingRoomPage';
