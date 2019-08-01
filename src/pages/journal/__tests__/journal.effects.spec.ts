@@ -33,6 +33,8 @@ import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
+import { HttpErrorResponse } from '@angular/common/http'
+import { defer } from 'rxjs/observable/defer';
 
 export class TestActions extends Actions {
   constructor() {
@@ -184,9 +186,13 @@ describe('Journal Effects', () => {
     });
   });
 
-  it('should dispatch the failure action when the journal fails to load', (done) => {
+  fit('should dispatch the failure action when the journal fails to load', (done) => {
     // ARRANGE
-    spyOn(journalProvider, 'getJournal').and.throwError;
+    spyOn(journalProvider, 'getJournal').and.returnValue(asyncError(new HttpErrorResponse({
+      error: 'Error message',
+      status: 403,
+      statusText: 'Forbidden',
+    })));
     spyOn(slotProvider, 'detectSlotChanges').and.callThrough();
     spyOn(slotProvider, 'extendWithEmptyDays').and.callThrough();
     spyOn(slotProvider, 'getRelevantSlots').and.callThrough();
@@ -203,11 +209,11 @@ describe('Journal Effects', () => {
         expect(result instanceof journalActions.JournalRefreshError).toEqual(true);
       } else if (result instanceof journalActions.LoadJournalFailure) {
         expect(result instanceof journalActions.LoadJournalFailure).toEqual(true);
+        expect(result.payload.message).toBe('Test message');
+        done();
       } else {
         fail('Unknown Action Sent');
       }
-
-      done();
     });
 
   });
@@ -317,3 +323,7 @@ describe('Journal Effects', () => {
     });
   });
 });
+
+function asyncError<T>(errorObject: any) {
+  return defer(() => Promise.reject(errorObject));
+}
