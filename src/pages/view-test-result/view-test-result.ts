@@ -83,7 +83,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     private logHelper: LogHelper,
   ) {
     super(platform, navController, authenticationProvider);
-    console.log('### We are here in view test result Constructor');
 
     this.applicationReference = navParams.get('applicationReference');
   }
