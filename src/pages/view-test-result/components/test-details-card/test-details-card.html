@@ -39,6 +39,9 @@
       <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Slot type</label>
+          <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
+            class="exclamation-indicator"
+            *ngIf="data.slotType !== 'Standard Test'" />
         </ion-col>
         <ion-col col-56>
           <span class="mes-data">{{ data.slotType }}</span>
@@ -47,6 +50,9 @@
       <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Special requirements</label>
+          <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
+            class="exclamation-indicator"
+            *ngIf="specialNeedsIsPopulated(data.specialNeeds)" />
         </ion-col>
         <ion-col col-56>
           <div *ngFor="let specialNeed of data.specialNeeds" class="mes-data">
@@ -57,6 +63,8 @@
       <ion-row *ngIf="data.entitlementCheck" class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>Entitlement check</label>
+          <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
+            class="exclamation-indicator" />
         </ion-col>
         <ion-col col-56>
           <span class="mes-data">Entitlement check is required.</span>

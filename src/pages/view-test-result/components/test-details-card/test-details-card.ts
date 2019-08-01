@@ -12,4 +12,8 @@ export class TestDetailsCardComponent {
 
   constructor() {}
 
+  specialNeedsIsPopulated(specialNeedsArray: string[]): boolean {
+    return specialNeedsArray.length > 0 && specialNeedsArray[0] !== 'None';
+  }
+
 }
