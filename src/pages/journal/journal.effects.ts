@@ -137,7 +137,7 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           return [
             new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message),
             new journalActions.LoadJournalSilentFailure(err),
