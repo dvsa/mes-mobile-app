@@ -143,7 +143,7 @@ describe('FaultCommentComponent', () => {
       expect(drivingFaultBadge.count).toBe(3);
     });
 
-    it('should emit fault comment if under 1000 characters', () => {
+    it('should emit fault comment', () => {
       spyOn(component.faultCommentChange, 'emit');
       const faultComment = 'this is a fault comment';
       component.faultComment = {
@@ -157,20 +157,6 @@ describe('FaultCommentComponent', () => {
       expect(component.faultCommentChange.emit).toHaveBeenCalled();
     });
 
-    it('should not emit fault comment if over 1000 characters', () => {
-      spyOn(component.faultCommentChange, 'emit');
-      // tslint:disable-next-line
-      const faultComment = 'tallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtatto1';
-      component.faultComment = {
-        comment: faultComment,
-        competencyDisplayName: 'display',
-        competencyIdentifier: 'id',
-        source: CommentSource.SIMPLE,
-      };
-      component.faultType = 'driving';
-      component.faultCommentChanged(faultComment);
-      expect(component.faultCommentChange.emit).not.toHaveBeenCalled();
-    });
   });
 
 });

@@ -32,19 +32,11 @@ describe('CandidateDescriptionComponent', () => {
   }));
 
   describe('class', () => {
-    it('should emit candidate description if under 1000 characters', () => {
+    it('should emit candidate description', () => {
       spyOn(component.candidateDescriptionChange, 'emit');
       const candidateDescription = 'this is the candidate description';
       component.candidateDescriptionChanged(candidateDescription);
       expect(component.candidateDescriptionChange.emit).toHaveBeenCalledWith(candidateDescription);
-    });
-
-    it('should not emit candidate description if over 1000 characters', () => {
-      spyOn(component.candidateDescriptionChange, 'emit');
-      // tslint:disable-next-line
-      const candidateDescription = 'tallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtattotallwtatto1';
-      component.candidateDescriptionChanged(candidateDescription);
-      expect(component.candidateDescriptionChange.emit).not.toHaveBeenCalled();
     });
   });
 });
