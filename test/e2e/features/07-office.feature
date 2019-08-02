@@ -24,7 +24,7 @@ Feature: Office page
       And the activity code should be "1 - Pass"
       And I try to upload the test
       Then the tell me question should be "T5 - Headlights & tail lights"
-      And validation item "office-route-number-validation-text" should be "Enter the route number"
+      And validation item "office-route-number-validation-text" should be "Enter the route number (max 2 digits)"
       And validation item "office-route-number-validation-text" should be visible
       And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
       And validation item "office-independent-driving-validation-text" should be visible
@@ -71,7 +71,7 @@ Feature: Office page
       And the activity code should be "2 - Fail"
       And I try to upload the test
       Then the tell me question should be "T1 - Brakes"
-      And validation item "office-route-number-validation-text" should be "Enter the route number"
+      And validation item "office-route-number-validation-text" should be "Enter the route number (max 2 digits)"
       And validation item "office-route-number-validation-text" should be visible
       And validation item "office-independent-driving-validation-text" should be "Select the method of independent driving"
       And validation item "office-independent-driving-validation-text" should be visible
