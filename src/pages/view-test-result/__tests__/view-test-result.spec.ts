@@ -112,6 +112,10 @@ describe('ViewTestResultPage', () => {
         expect(result.category).toBe('B');
         expect(result.date).toBe('Friday 5th July 2019');
         expect(result.time).toBe('09:00');
+        expect(result.specialNeeds).toEqual(['special need 1', 'special need 2']);
+        expect(result.entitlementCheck).toBe(true);
+        expect(result.slotType).toBe('slot-type-mock');
+        expect(result.previousCancellations).toEqual(['Act of nature', 'DSA']);
       });
       it('should return null when there is no test result', () => {
         const result: TestDetailsModel = component.getTestDetails();
@@ -126,6 +130,7 @@ describe('ViewTestResultPage', () => {
 
         expect(result.staffNumber).toBe('mock-staff-number');
         expect(result.costCode).toBe('mock-cost-code');
+        expect(result.testCentreName).toBe('mock-centre-name');
       });
       it('should return null when there is no test result', () => {
         const result: ExaminerDetailsModel = component.getExaminerDetails();

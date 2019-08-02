@@ -281,6 +281,7 @@ export class JournalEffects {
     return {
       centreId: slotData.testCentre.centreId,
       costCode: slotData.testCentre.costCode,
+      centreName: slotData.testCentre.centreName,
     };
   }
 

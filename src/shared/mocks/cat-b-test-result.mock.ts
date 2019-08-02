@@ -25,12 +25,17 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
     testCentre: {
       centreId: 1,
       costCode: 'mock-cost-code',
+      centreName: 'mock-centre-name',
     },
     testSlotAttributes: {
       slotId: 1,
       start: '2019-07-05T09:00:00',
       extendedTest: false,
       specialNeeds: false,
+      specialNeedsArray: ['special need 1', 'special need 2'],
+      entitlementCheck: true,
+      slotType: 'slot-type-mock',
+      previousCancellation: ['Act of nature', 'DSA'],
       welshTest: false,
       examinerVisiting: false,
       vehicleTypeCode: 'mock-vehicle-type-code',
