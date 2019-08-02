@@ -3,9 +3,8 @@ import { isEmpty } from 'lodash';
 import { JournalModel } from '../journal/journal.model';
 import { Details } from './candidate-details.model';
 
-import { SpecialNeedsCode } from './candidate-details.constants';
-import { SlotTypes } from '../../shared/models/slot-types';
 import { Application } from '@dvsa/mes-journal-schema';
+import { getSlotType } from '../../shared/helpers/get-slot-type';
 
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
@@ -39,43 +38,6 @@ export const getPhoneNumber = (candidate: any): string => {
   if (!isEmpty(candidate.primaryTelephone)) return candidate.primaryTelephone;
   if (!isEmpty(candidate.secondaryTelephone)) return candidate.secondaryTelephone;
   return 'No phone number provided';
-};
-
-export const getSlotType = (slot: any): string => {
-  const specialNeedsExtendedTest = slot.booking.application.specialNeedsExtendedTest;
-  const specialNeedsCode = slot.booking.application.specialNeedsCode;
-  const vehicleSlotTypeCode = slot.vehicleSlotTypeCode;
-
-  // Check special case
-  // Jira ticket is available here for more details: https://jira.i-env.net/browse/MES-1698
-  if (vehicleSlotTypeCode === 6) {
-    if (specialNeedsCode !== SpecialNeedsCode.NONE) {
-      return SlotTypes.SINGLE_SLOT_SPECIAL_NEEDS;
-    }
-  }
-
-  if (vehicleSlotTypeCode === 14) {
-    if (specialNeedsCode !== SpecialNeedsCode.NONE) {
-      return SlotTypes.SINGLE_SLOT_SPECIAL_NEEDS;
-    }
-  }
-
-  // These are the non special cases
-
-  if (specialNeedsExtendedTest) {
-    if (specialNeedsCode === SpecialNeedsCode.NONE) {
-      return SlotTypes.EXTENDED_TEST;
-    }
-    return SlotTypes.EXTENDED_TEST_SPECIAL_NEEDS;
-  }
-
-  if (specialNeedsCode === SpecialNeedsCode.NONE) {
-    return SlotTypes.STANDARD_TEST;
-  }
-  if (specialNeedsCode === SpecialNeedsCode.YES) {
-    return SlotTypes.STANDARD_TEST;
-  }
-  return SlotTypes.SPECIAL_NEEDS_EXTRA_TIME;
 };
 
 export const getDetails = (slot: any): Details => {

@@ -73,12 +73,20 @@
           <span class="mes-data">{{ getFlattenArray(data.weatherConditions) }}</span>
         </ion-col>
       </ion-row>
-      <ion-row class="mes-data-row">
+      <ion-row class="mes-data-row-with-separator">
         <ion-col col-40>
           <label>D255</label>
         </ion-col>
         <ion-col col-56>
           <span class="mes-data">{{ getConvertBooleanToString(data.D255) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mes-data-row">
+        <ion-col col-40>
+          <label>Additional information</label>
+        </ion-col>
+        <ion-col col-56>
+          <span class="mes-data">{{ data.additionalInformation }}</span>
         </ion-col>
       </ion-row>
     </ion-grid>

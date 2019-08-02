@@ -12,12 +12,12 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getTestStatus, getActivityCodeBySlotId } from '../../../../modules/tests/tests.selector';
-import { getSlotType } from '../../../candidate-details/candidate-details.selector';
 import { SlotTypes } from '../../../../shared/models/slot-types';
 import { map } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { DateTime } from '../../../../shared/helpers/date-time';
+import { getSlotType } from '../../../../shared/helpers/get-slot-type';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;

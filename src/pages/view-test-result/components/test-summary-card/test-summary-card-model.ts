@@ -10,4 +10,5 @@ export interface TestSummaryCardModel {
   debriefWitnessed?: boolean;
   weatherConditions?: WeatherConditions[];
   D255?: boolean;
+  additionalInformation?: string;
 }
