@@ -166,12 +166,12 @@ describe('TestPersistenceProvider', () => {
       const keysToDelete = ['12345678'];
       const result = testPersistenceProvider.deleteTestsFromTestObject(testState.startedTests, keysToDelete);
       expect(result).toEqual({ 23456789: testState.startedTests[23456789] });
+    });
 
-      it('should delete the correct tests from the test status object', () => {
-        const keysToDelete = ['12345678'];
-        const result = testPersistenceProvider.deleteTestsFromTestObject(testState.testStatus, keysToDelete);
-        expect(result).toEqual({ 23456789: TestStatus.Booked });
-      });
+    it('should delete the correct tests from the test status object', () => {
+      const keysToDelete = ['12345678'];
+      const result = testPersistenceProvider.deleteTestsFromTestObject(testState.testStatus, keysToDelete);
+      expect(result).toEqual({ 23456789: TestStatus.Booked });
     });
   });
   describe('shouldResetCurrentTest', () => {
