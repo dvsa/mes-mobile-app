@@ -18,6 +18,7 @@ import { DateTime } from '../../shared/helpers/date-time';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type LogCache = {
   dateStored: string,
@@ -110,7 +111,7 @@ export class LogsEffects {
             const timestamps = logs.map(log => log.timestamp);
             return new logsActions.SendLogsSuccess(timestamps);
           }),
-          catchError((err: any) => {
+          catchError((err: HttpErrorResponse) => {
             return of(new logsActions.SendLogsFailure(err));
           }),
         );

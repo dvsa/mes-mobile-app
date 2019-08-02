@@ -6,6 +6,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 
 import * as appInfoActions from './app-info.actions';
 import { AppInfoProvider } from '../../providers/app-info/app-info';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class AppInfoEffects {
@@ -22,7 +23,7 @@ export class AppInfoEffects {
         .getVersionNumber()
         .pipe(
           map((versionNumber: string) => new appInfoActions.LoadAppInfoSuccess(versionNumber)),
-          catchError(err => of(new appInfoActions.LoadAppInfoFailure(err))),
+          catchError((err: HttpErrorResponse) => of(new appInfoActions.LoadAppInfoFailure(err))),
         );
     }),
   );

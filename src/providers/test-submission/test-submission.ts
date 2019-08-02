@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { UrlProvider } from '../url/url';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { gzipSync } from 'zlib';
 import { catchError } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -35,7 +35,7 @@ export class TestSubmissionProvider {
     return forkJoin(requests);
   }
 
-  submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any>> =>
+  submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any> | HttpErrorResponse> =>
     this.httpClient.post(
       this.urlProvider.getTestResultServiceUrl(),
       this.compressData(this.removeNullFieldsDeep(cloneDeep(testToSubmit.payload))),
@@ -45,9 +45,9 @@ export class TestSubmissionProvider {
       // Note: Catching failures here (the inner observable) is what allows us to coordinate
       // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
       .pipe(
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           this.store$.dispatch(new SaveLog(this.logHelper
-            .createLog(LogType.ERROR, `Submitting test with slot ID ${testToSubmit.slotId}`, err)));
+            .createLog(LogType.ERROR, `Submitting test with slot ID ${testToSubmit.slotId}`, err.message)));
           return of(err);
         }),
       )

@@ -23,6 +23,7 @@ import { LogHelper } from '../../providers/logs/logsHelper';
 import { ERROR_PAGE } from '../page-names.constants';
 import { MesError } from '../../shared/models/mes-error.model';
 import { App } from '../../app/app.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
@@ -88,9 +89,9 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.searchResults = results;
             this.showSearchSpinner = false;
           }),
-          catchError((err) => {
+          catchError((err: HttpErrorResponse) => {
             const log: Log = this.logHelper
-              .createLog(LogType.ERROR, `Searching tests by driver number`, err);
+              .createLog(LogType.ERROR, `Searching tests by driver number`, err.message);
             this.store$.dispatch(new SaveLog(log));
             this.searchResults = [];
             this.showSearchSpinner = false;
@@ -118,9 +119,11 @@ export class TestResultsSearchPage extends BasePageComponent {
             this.searchResults = results;
             this.showSearchSpinner = false;
           }),
-          catchError((err) => {
+          catchError((err: HttpErrorResponse) => {
             this.store$.dispatch(new SaveLog(this.logHelper
-              .createLog(LogType.ERROR, `Searching tests by app ref (${this.candidateInfo})`, err)));
+              .createLog(
+                LogType.ERROR, `Searching tests by app ref (${this.candidateInfo})`, err.message,
+              )));
             this.searchResults = [];
             this.showSearchSpinner = false;
 
@@ -148,9 +151,11 @@ export class TestResultsSearchPage extends BasePageComponent {
           this.searchResults = results;
           this.showAdvancedSearchSpinner = false;
         }),
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           const log: Log = this.logHelper
-            .createLog(LogType.ERROR, `Advanced search with params (${advancedSearchParams})`, err);
+            .createLog(
+              LogType.ERROR, `Advanced search with params (${advancedSearchParams})`, err.message,
+            );
           this.store$.dispatch(new SaveLog(log));
           this.searchResults = [];
           this.showAdvancedSearchSpinner = false;
