@@ -44,10 +44,8 @@ import { of } from 'rxjs/observable/of';
 import { MockComponent } from 'ng-mocks';
 import { RouteNumberComponent } from '../components/route-number/route-number';
 import { CandidateDescriptionComponent } from '../components/candidate-description/candidate-description';
-import { DebriefWitnessedComponent } from '../components/debrief-witnessed/debrief-witnessed';
 import { ShowMeQuestionComponent } from '../components/show-me-question/show-me-question';
 import { WeatherConditionsComponent } from '../components/weather-conditions/weather-conditions';
-import { D255Component } from '../components/d255/d255';
 import { AdditionalInformationComponent } from '../components/additional-information/additional-information';
 import { IdentificationComponent } from '../components/identification/identification';
 import { IndependentDrivingComponent } from '../components/independent-driving/independent-driving';
@@ -65,7 +63,6 @@ import {
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest, ValidationError } from '../office.actions';
 import { WelshTestChanged } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
-import { LanguagePreferencesComponent } from '../components/language-preference/language-preferences';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
 
@@ -81,16 +78,13 @@ describe('OfficePage', () => {
         OfficePage,
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
-        MockComponent(DebriefWitnessedComponent),
         MockComponent(IdentificationComponent),
         MockComponent(ShowMeQuestionComponent),
         MockComponent(WeatherConditionsComponent),
-        MockComponent(D255Component),
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
         MockComponent(ActivityCodeComponent),
-        MockComponent(LanguagePreferencesComponent),
       ],
       imports: [
         IonicModule,
