@@ -43,6 +43,8 @@ import { MarkAsRekey } from '../../modules/tests/rekey/rekey.actions';
 import { LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class JournalEffects {
@@ -98,10 +100,12 @@ export class JournalEffects {
                 lastRefreshed,
               ),
             ),
-            catchError((err) => {
+            catchError((err: HttpErrorResponse) => {
               // For HTTP 304 NOT_MODIFIED we just use the slots we already have cached
               if (err.status !== 304) {
-                this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err)));
+                this.store$.dispatch(new SaveLog(
+                  this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
+                ));
               }
 
               if (err.status === 304 || err.message === 'Timeout has occurred') {
@@ -112,7 +116,8 @@ export class JournalEffects {
                   lastRefreshed,
                 ));
               }
-              return of(err);
+
+              return ErrorObservable.create(err);
             }),
           );
       }),
@@ -132,7 +137,7 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL_SILENT),
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.AUTOMATIC).pipe(
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           return [
             new journalActions.JournalRefreshError('AutomaticJournalRefresh', err.message),
             new journalActions.LoadJournalSilentFailure(err),
@@ -147,7 +152,7 @@ export class JournalEffects {
     ofType(journalActions.LOAD_JOURNAL),
     switchMap(
       () => this.callJournalProvider$(JournalRefreshModes.MANUAL).pipe(
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           return [
             new journalActions.JournalRefreshError('ManualJournalRefresh', err.message),
             new journalActions.LoadJournalFailure(err),
