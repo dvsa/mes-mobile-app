@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { merge } from 'lodash';
 
 import { AppConfig } from './app-config.model';
@@ -85,8 +85,10 @@ export class AppConfigProvider {
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
       .then(data => this.mapRemoteConfig(data))
-      .catch((error) => {
-        this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error)));
+      .catch((error: HttpErrorResponse) => {
+        this.store$.dispatch(new SaveLog(
+          this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error.message)),
+        );
         if (error && error.status === 403) {
           return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
         }
