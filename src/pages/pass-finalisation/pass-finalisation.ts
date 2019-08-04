@@ -55,6 +55,8 @@ import {
   DebriefUnwitnessed,
 } from '../../modules/tests/test-summary/test-summary.actions';
 import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from '../office/office-behaviour-map';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -82,9 +84,8 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   passCertificateCtrl: string = 'passCertificateNumberCtrl';
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
-
   inputSubscriptions: Subscription[] = [];
-
+  testOutcome: string = '1';
   form: FormGroup;
 
   constructor(
@@ -93,9 +94,11 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     public navParams: NavParams,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
+    private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup(this.getFormValidation());
+    this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
   ngOnInit(): void {

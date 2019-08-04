@@ -117,11 +117,11 @@
         <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
           (welshChanged)="isWelshChanged($event)"></language-preferences>
 
-        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="pageState.testOutcome$ | async"
+        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome"
           [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
 
         <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
-          [outcome]="pageState.testOutcome$ | async" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
+          [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
         </debrief-witnessed>
 
       </ion-grid>
