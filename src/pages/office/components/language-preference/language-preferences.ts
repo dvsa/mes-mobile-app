@@ -26,9 +26,9 @@ export class LanguagePreferencesComponent implements OnChanges {
     this.formControl.patchValue(this.isWelsh);
   }
 
-  isWelshChanged(isWelsh: boolean): void {
+  isWelshChanged(isWelsh: string): void {
     if (this.formControl.valid) {
-      this.welshChanged.emit(isWelsh);
+      this.welshChanged.emit(isWelsh === 'true');
     }
   }
 
