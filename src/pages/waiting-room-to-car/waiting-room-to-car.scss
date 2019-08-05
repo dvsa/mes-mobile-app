@@ -25,4 +25,7 @@ page-waiting-room-to-car {
       height: 56px;
     }
   }
+  .mes-component-row::before {
+    width: 0px;
+  }
 }
