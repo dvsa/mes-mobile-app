@@ -57,6 +57,7 @@ import {
 import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office/office-behaviour-map';
+import { ActivityCodes } from '../../shared/models/activity-codes';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -85,7 +86,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   @ViewChild('passCertificateNumberInput')
   passCertificateNumberInput: ElementRef;
   inputSubscriptions: Subscription[] = [];
-  testOutcome: string = '1';
+  testOutcome: string = ActivityCodes.PASS;
   form: FormGroup;
 
   constructor(
