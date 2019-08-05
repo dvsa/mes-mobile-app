@@ -4,9 +4,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { getSlotType } from '../../../candidate-details/candidate-details.selector';
 import { SlotTypes } from '../../../../shared/models/slot-types';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { getSlotType } from '../../../../shared/helpers/get-slot-type';
 
 @Component({
   selector: 'fake-test-slot',

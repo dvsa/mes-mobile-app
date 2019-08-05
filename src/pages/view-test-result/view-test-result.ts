@@ -85,7 +85,6 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     super(platform, navController, authenticationProvider);
 
     this.applicationReference = navParams.get('applicationReference');
-
   }
 
   ngOnInit(): void {
@@ -147,6 +146,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
       category: this.testResult.category,
+      specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
+      entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
+      slotType: this.testResult.journalData.testSlotAttributes.slotType,
+      previousCancellations: this.testResult.journalData.testSlotAttributes.previousCancellation,
     };
   }
 
@@ -158,6 +161,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     return {
       staffNumber: this.testResult.journalData.examiner.staffNumber,
       costCode: this.testResult.journalData.testCentre.costCode,
+      testCentreName: this.testResult.journalData.testCentre.centreName,
     };
   }
 
@@ -201,6 +205,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       debriefWitnessed: get(this.testResult, 'testSummary.debriefWitnessed'),
       weatherConditions: get(this.testResult, 'testSummary.weatherConditions'),
       D255: get(this.testResult, 'testSummary.D255'),
+      additionalInformation: get(this.testResult, 'testSummary.additionalInformation'),
     };
   }
 

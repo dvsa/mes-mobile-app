@@ -28,10 +28,10 @@ import { of } from 'rxjs/observable/of';
 import { StartTest } from '../../../journal.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
-import { SpecialNeedsCode } from '../../../../candidate-details/candidate-details.constants';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
+import { SpecialNeedsCode } from '../../../../../shared/helpers/get-slot-type';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
