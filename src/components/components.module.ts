@@ -18,6 +18,9 @@ import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
 import { ModalAlertTitleComponent } from './modal-alert-title/modal-alert-title';
 import { ModalReturnButtonComponent } from './modal-return-button/modal-return-button';
 import { ErrorMessageComponent } from './error-message/error-message';
+import { D255Component } from '../pages/office/components/d255/d255';
+import { DebriefWitnessedComponent } from '../pages/office/components/debrief-witnessed/debrief-witnessed';
+import { LanguagePreferencesComponent } from '../pages/office/components/language-preference/language-preferences';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { ErrorMessageComponent } from './error-message/error-message';
     ModalAlertTitleComponent,
     ModalReturnButtonComponent,
     ErrorMessageComponent,
+    LanguagePreferencesComponent,
+    D255Component,
+    DebriefWitnessedComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -58,6 +64,9 @@ import { ErrorMessageComponent } from './error-message/error-message';
     ModalAlertTitleComponent,
     ModalReturnButtonComponent,
     ErrorMessageComponent,
+    LanguagePreferencesComponent,
+    D255Component,
+    DebriefWitnessedComponent,
   ],
 })
 export class ComponentsModule { }

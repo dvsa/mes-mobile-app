@@ -17,6 +17,12 @@ When('I complete the pass details', () => {
   passCertificateNumberField.sendKeys('A123456&');
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);
+  const d255YesRadio = getElement(by.id('d255-yes'));
+  clickElement(d255YesRadio);
+  const englishPrefRadio = getElement(by.id('lang-pref-english'));
+  clickElement(englishPrefRadio);
+  const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
+  clickElement(debreifWitnessedRadio);
   continuePassFinalisation();
 });
 
