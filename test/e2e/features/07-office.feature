@@ -30,14 +30,10 @@ Feature: Office page
       And validation item "office-independent-driving-validation-text" should be visible
       And validation item "office-candidate-description-validation-text" should be "Describe the candidate"
       And validation item "office-candidate-description-validation-text" should be visible
-      And validation item "office-debrief-witnessed-validation-text" should be "Was the debrief witnessed?"
-      And validation item "office-debrief-witnessed-validation-text" should be visible
       And validation item "office-show-me-validation-text" should be "Select the show me question"
       And validation item "office-show-me-validation-text" should be visible
       And validation item "office-weather-validation-text" should be "Select weather conditions"
       And validation item "office-weather-validation-text" should be visible
-      And validation item "office-d255-validation-text" should be "Select D255"
-      And validation item "office-d255-validation-text" should be visible
 
    Scenario: Office page validation for fail
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
@@ -81,13 +77,9 @@ Feature: Office page
       And validation item "office-independent-driving-validation-text" should be visible
       And validation item "office-candidate-description-validation-text" should be "Describe the candidate"
       And validation item "office-candidate-description-validation-text" should be visible
-      And validation item "office-debrief-witnessed-validation-text" should be "Was the debrief witnessed?"
-      And validation item "office-debrief-witnessed-validation-text" should be visible
       And validation item "office-show-me-validation-text" should be "Select the show me question"
       And validation item "office-show-me-validation-text" should be visible
       And validation item "office-weather-validation-text" should be "Select weather conditions"
       And validation item "office-weather-validation-text" should be visible
-      And validation item "office-d255-validation-text" should be "Select D255"
-      And validation item "office-d255-validation-text" should be visible
       And I have a "dangerous" fault for "Use of speed" requiring a comment
       And I have a "serious" fault for "Controls - Accelerator" requiring a comment
