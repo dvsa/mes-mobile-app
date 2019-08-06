@@ -113,7 +113,7 @@ export const getVehicleCheckSeriousFaults =
     const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: 'Show Me/Tell Me',
       source: CommentSource.VEHICLE_CHECKS,
       faultCount: 1,
     };
