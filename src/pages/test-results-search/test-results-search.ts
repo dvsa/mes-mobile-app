@@ -27,7 +27,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 enum SearchBy {
   DriverNumber = 'driverNumber',
-  ApplicationReferenece = 'appReference',
+  ApplicationReference = 'appReference',
 }
 
 @IonicPage()
@@ -37,7 +37,7 @@ enum SearchBy {
 })
 export class TestResultsSearchPage extends BasePageComponent {
 
-  searchBy: SearchBy;
+  searchBy: SearchBy = SearchBy.ApplicationReference;
   candidateInfo: string = '';
   searchResults: SearchResultTestSchema[] = [];
   hasSearched: boolean = false;
@@ -108,7 +108,7 @@ export class TestResultsSearchPage extends BasePageComponent {
         .subscribe();
     }
 
-    if (this.searchBy === SearchBy.ApplicationReferenece) {
+    if (this.searchBy === SearchBy.ApplicationReference) {
       this.subscription.unsubscribe();
       this.store$.dispatch(new PerformApplicationReferenceSearch());
       this.showSearchSpinner = true;
