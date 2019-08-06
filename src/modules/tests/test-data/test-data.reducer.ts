@@ -297,7 +297,7 @@ export function testDataReducer(
           ...state.vehicleChecks,
           tellMeQuestion: {
             code: action.tellMeQuestion.code as string,
-            description: action.tellMeQuestion.description as string,
+            description: action.tellMeQuestion.shortName as string,
           },
         },
       };

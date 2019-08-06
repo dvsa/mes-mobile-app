@@ -533,7 +533,7 @@ describe('TestDataReducer reducer', () => {
       };
       const result = testDataReducer(oldState, new TellMeQuestionSelected(newQuestionPayload));
       expect(result.vehicleChecks.tellMeQuestion.code).toBe('T1');
-      expect(result.vehicleChecks.tellMeQuestion.description).toBe('desc');
+      expect(result.vehicleChecks.tellMeQuestion.description).toBe('name');
       expect(result.vehicleChecks.tellMeQuestion.outcome).toBeUndefined();
     });
 
