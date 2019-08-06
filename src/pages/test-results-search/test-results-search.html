@@ -15,16 +15,6 @@
             <ion-col class="component-label" col-22>
               <label>Search by</label>
             </ion-col>
-            <ion-col col-34>
-              <input type="radio"
-                id="search-by-driver-number"
-                class="gds-radio-button"
-                name="searchBy"
-                value="driverNumber"
-                [checked]="searchBy === 'driverNumber'"
-                (change)="searchByChanged($event.target.value)">
-              <label for="search-by-driver-number" class="radio-label">Driver number</label>
-            </ion-col>
             <ion-col col-40>
               <input type="radio"
                 id="search-by-app-reference"
@@ -35,12 +25,22 @@
                 (change)="searchByChanged($event.target.value)">
               <label for="search-by-app-reference" class="radio-label">Application reference</label>
             </ion-col>
+            <ion-col col-34>
+              <input type="radio"
+                id="search-by-driver-number"
+                class="gds-radio-button"
+                name="searchBy"
+                value="driverNumber"
+                [checked]="searchBy === 'driverNumber'"
+                (change)="searchByChanged($event.target.value)">
+              <label for="search-by-driver-number" class="radio-label">Driver number</label>
+            </ion-col>
           </ion-row>
           <ion-row style="padding-top: 12px;">
             <ion-col col-96>
               <ion-item no-padding no-lines>
                 <ion-input
-                  placeholder="Enter a driver number or application reference"
+                  [placeholder]="searchBy === 'appReference' ? 'Enter an application reference' : 'Enter a driver number'"
                   type="text"
                   id="candidate-info-input"
                   class="candidate-info candidate-info-input"
