@@ -10,12 +10,20 @@
   </ion-header>
 
   <ion-content padding>
-    <h2>
-      {{ name }}
-      <span class="test-start-time">
-        {{ time | date: "HH:mm" }}
-      </span>
-    </h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h2>
+           {{ name }}
+          </h2>
+        </ion-col>
+        <ion-col col-12>
+          <h2 class="test-start-time">
+            {{ time | date: "HH:mm" }}
+          </h2>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
     <ion-card>
       <ion-card-header>
