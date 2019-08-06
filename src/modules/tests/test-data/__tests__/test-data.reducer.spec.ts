@@ -556,7 +556,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer({}, new ShowMeQuestionSelected(newQuestionPayload));
       expect(result.vehicleChecks.showMeQuestion.code).toBe('S1');
-      expect(result.vehicleChecks.showMeQuestion.description).toBe('desc');
+      expect(result.vehicleChecks.showMeQuestion.description).toBe('name');
     });
 
     it('should update the show me question details', () => {
@@ -577,7 +577,7 @@ describe('TestDataReducer reducer', () => {
 
       const result = testDataReducer(oldState, new ShowMeQuestionSelected(newQuestionPayload));
       expect(result.vehicleChecks.showMeQuestion.code).toBe('S1');
-      expect(result.vehicleChecks.showMeQuestion.description).toBe('desc');
+      expect(result.vehicleChecks.showMeQuestion.description).toBe('name');
     });
   });
 
