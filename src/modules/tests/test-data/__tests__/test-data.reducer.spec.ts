@@ -569,6 +569,7 @@ describe('TestDataReducer reducer', () => {
       const oldState: TestData = {
         vehicleChecks: {
           showMeQuestion: {
+            outcome: 'S',
             code: 'S2',
             description: 'desc2',
           },
@@ -578,6 +579,7 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(oldState, new ShowMeQuestionSelected(newQuestionPayload));
       expect(result.vehicleChecks.showMeQuestion.code).toBe('S1');
       expect(result.vehicleChecks.showMeQuestion.description).toBe('desc');
+      expect(result.vehicleChecks.showMeQuestion.outcome).toBe('S');
     });
   });
 
