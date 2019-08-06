@@ -554,7 +554,11 @@ describe('TestDataReducer reducer', () => {
         shortName: 'name',
       };
 
-      const result = testDataReducer({}, new ShowMeQuestionSelected(newQuestionPayload));
+      const result = testDataReducer({
+        vehicleChecks: {
+          showMeQuestion: {},
+        }
+      }, new ShowMeQuestionSelected(newQuestionPayload));
       expect(result.vehicleChecks.showMeQuestion.code).toBe('S1');
       expect(result.vehicleChecks.showMeQuestion.description).toBe('desc');
     });
