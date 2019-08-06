@@ -29,6 +29,7 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
   role: ExaminerRole;
   journal: {
     journalUrl: string;
+    searchBookingUrl: string
     autoRefreshInterval: number;
     numberOfDaysToView: number;
     allowTests: boolean;

@@ -58,13 +58,13 @@
                 Search booked tests
               </h3>
             </button>
-            <ion-spinner class="search-spinner" name="bubbles" *ngIf="showSearchSpinner"></ion-spinner>
+            <ion-spinner class="search-spinner" name="bubbles" *ngIf="(pageState.isLoading$ | async)"></ion-spinner>
           </ion-row>
         </ion-grid>
       </tab>
     </tabs>
 
-    <div class='results-error' *ngIf="hasSearched && searchResults.length === 0">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && searchResults.length === 0">
       <p class="error-text">
         There were no results found for your search.
       </p>

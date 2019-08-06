@@ -41,6 +41,7 @@ import { OutcomeBehaviourMapProvider } from '../providers/outcome-behaviour-map/
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { LogHelper } from '../providers/logs/logsHelper';
 import { environment } from '../environment/environment';
+import { RekeySearchProvider } from '../providers/rekey-search/rekey-search';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -103,6 +104,7 @@ const enableDevTools = environment && environment.enableDevTools;
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     OutcomeBehaviourMapProvider,
     LogHelper,
+    RekeySearchProvider,
   ],
 })
 export class AppModule { }

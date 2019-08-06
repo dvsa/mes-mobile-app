@@ -26,4 +26,10 @@ export class UrlProvider {
     return this.appConfigProvider.getAppConfig().tests.testSubmissionUrl;
   }
 
+  getRekeySearchUrl(staffNumber: string): string {
+    console.log('the config', this.appConfigProvider.getAppConfig().journal);
+    const urlTemplate = this.appConfigProvider.getAppConfig().journal.searchBookingUrl;
+    return urlTemplate.replace('{staffNumber}', isNil(staffNumber) ? '00000000' : staffNumber);
+  }
+
 }

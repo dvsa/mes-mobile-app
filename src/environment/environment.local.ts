@@ -26,6 +26,7 @@ export const environment: LocalEnvironmentFile = {
   role: ExaminerRole.DE,
   journal: {
     journalUrl: '/assets/mock/local-journal.json',
+    searchBookingUrl: 'dummy/search/booking/url',
     autoRefreshInterval: 1000 * 60 * 10,
     numberOfDaysToView: 7,
     allowTests: true,
