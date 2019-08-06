@@ -338,6 +338,7 @@ describe('Office Analytics Effects', () => {
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.POST_TEST,
             AnalyticsEvents.COMPLETE_TEST,
+            'pass',
           );
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
@@ -362,6 +363,7 @@ describe('Office Analytics Effects', () => {
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.POST_TEST,
             AnalyticsEvents.COMPLETE_REKEY_TEST,
+            'pass',
           );
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');

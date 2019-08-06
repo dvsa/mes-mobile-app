@@ -176,20 +176,26 @@ export class OfficeAnalyticsEffects {
           select(getApplicationReference),
           select(getApplicationNumber),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(isPassed),
+        ),
       ),
     )),
     switchMap((
-      [action, isRekey, candidateId, applicationReference]:
-      [CompleteTest, boolean, number, string],
+      [action, isRekey, candidateId, applicationReference, isPassed]:
+      [CompleteTest, boolean, number, string, boolean],
     ) => {
+
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
 
       this.analytics.logEvent(
         AnalyticsEventCategories.POST_TEST,
         isRekey ? AnalyticsEvents.COMPLETE_REKEY_TEST : AnalyticsEvents.COMPLETE_TEST,
+        isPassed ? 'pass' : 'fail',
       );
-
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, `${applicationReference}`);
 
       return of(new AnalyticRecorded());
     }),
