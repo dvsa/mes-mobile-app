@@ -183,6 +183,7 @@ export class AppConfigProvider {
       role: data.role,
       journal: {
         journalUrl: data.journal.journalUrl,
+        searchBookingUrl: data.journal.searchBookingUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
         numberOfDaysToView: data.journal.numberOfDaysToView,
         allowTests: data.journal.allowTests,

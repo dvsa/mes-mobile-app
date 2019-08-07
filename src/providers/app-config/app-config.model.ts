@@ -22,6 +22,7 @@ export type AppConfig = {
   role: ExaminerRole;
   journal: {
     journalUrl: string,
+    searchBookingUrl: string,
     autoRefreshInterval: number
     numberOfDaysToView: number,
     allowTests: boolean,

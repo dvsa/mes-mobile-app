@@ -21,6 +21,8 @@ import { ErrorMessageComponent } from './error-message/error-message';
 import { D255Component } from '../pages/office/components/d255/d255';
 import { DebriefWitnessedComponent } from '../pages/office/components/debrief-witnessed/debrief-witnessed';
 import { LanguagePreferencesComponent } from '../pages/office/components/language-preference/language-preferences';
+import { TabComponent } from './tab/tab';
+import { TabsComponent } from './tabs/tabs';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { LanguagePreferencesComponent } from '../pages/office/components/languag
     LanguagePreferencesComponent,
     D255Component,
     DebriefWitnessedComponent,
+    TabComponent,
+    TabsComponent,
   ],
   imports: [
     SignaturePadModule,
@@ -67,6 +71,8 @@ import { LanguagePreferencesComponent } from '../pages/office/components/languag
     LanguagePreferencesComponent,
     D255Component,
     DebriefWitnessedComponent,
+    TabComponent,
+    TabsComponent,
   ],
 })
 export class ComponentsModule { }

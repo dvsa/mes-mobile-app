@@ -5,6 +5,7 @@ import { TestResultsSearchComponentsModule } from './components/test-results-sea
 import { SearchProvider } from '../../providers/search/search';
 import { EffectsModule } from '@ngrx/effects';
 import { TestResultsSearchAnalyticsEffects } from './test-results-search.analytics.effects';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { TestResultsSearchAnalyticsEffects } from './test-results-search.analyti
     IonicPageModule.forChild(TestResultsSearchPage),
     TestResultsSearchComponentsModule,
     EffectsModule.forFeature([TestResultsSearchAnalyticsEffects]),
+    ComponentsModule,
   ],
   providers: [
     SearchProvider,
