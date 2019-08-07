@@ -87,6 +87,7 @@ export class TestResultsSearchAnalyticsEffects {
       searchParametersUsed.forEach((searchParameter) => {
         if (label === '') {
           label = searchParameter;
+          return;
         }
         label = `${label}, ${searchParameter}`;
       });
