@@ -8,10 +8,14 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { App } from '../../../app/app.component';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 import { ComponentsModule } from '../../../components/components.module';
+import { StoreModule, Store } from '@ngrx/store';
+import { rekeySearchReducer, RekeySearchModel } from '../rekey-search.reducer';
+import { RekeySearchViewDidEnter, SearchBookedTest } from '../rekey-search.actions';
 
-describe('RekeySearchPage', () => {
+fdescribe('RekeySearchPage', () => {
   let fixture: ComponentFixture<RekeySearchPage>;
   let component: RekeySearchPage;
+  let store$: Store<RekeySearchModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,6 +26,9 @@ describe('RekeySearchPage', () => {
         IonicModule,
         AppModule,
         ComponentsModule,
+        StoreModule.forRoot({
+          rekeySearch: rekeySearchReducer,
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -31,12 +38,14 @@ describe('RekeySearchPage', () => {
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: App, useClass: MockAppComponent },
+        Store,
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(RekeySearchPage);
         component = fixture.componentInstance;
+        store$ = TestBed.get(Store);
       });
   }));
 
@@ -44,6 +53,40 @@ describe('RekeySearchPage', () => {
 
     it('should create', () => {
       expect(component).toBeDefined();
+    });
+
+    it('should dispatch RekeySearchViewDidEnter action', () => {
+      spyOn(store$, 'dispatch');
+
+      component.ionViewDidEnter();
+
+      expect(store$.dispatch).toHaveBeenCalledWith(new RekeySearchViewDidEnter());
+    });
+
+    it('should set staffNumber property', () => {
+      const staffNumber = 'staff-number';
+      component.staffNumberChanged(staffNumber);
+      expect(component.staffNumber).toBe(staffNumber);
+    });
+
+    it('should set applicationReference property', () => {
+      const applicationReference = 'application-reference';
+      component.applicationReferenceChanged(applicationReference);
+      expect(component.applicationReference).toBe(applicationReference);
+    });
+
+    it('should dispatch SearchBookedTest with the right params', () => {
+      const staffNumber = 'staff-number';
+      const applicationReference = 'application-reference';
+
+      component.staffNumberChanged(staffNumber);
+      component.applicationReferenceChanged(applicationReference);
+
+      spyOn(store$, 'dispatch');
+
+      component.searchTests();
+
+      expect(store$.dispatch).toHaveBeenCalledWith(new SearchBookedTest(applicationReference, staffNumber));
     });
   });
 });

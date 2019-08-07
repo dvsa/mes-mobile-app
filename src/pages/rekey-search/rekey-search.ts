@@ -73,9 +73,7 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
   }
 
   searchTests() {
-
     this.store$.dispatch(new SearchBookedTest(this.applicationReference, this.staffNumber));
-
   }
 
 }
