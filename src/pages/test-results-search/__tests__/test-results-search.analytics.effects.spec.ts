@@ -7,6 +7,7 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
+  AnalyticsDimensionIndices,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { TestResultsSearchAnalyticsEffects } from '../test-results-search.analytics.effects';
@@ -47,6 +48,7 @@ describe('Test Results Search Analytics Effects', () => {
       });
     });
   });
+
   describe('performApplicationReferenceSearch', () => {
     it('should call logEvent', (done) => {
       // ACT
@@ -62,6 +64,7 @@ describe('Test Results Search Analytics Effects', () => {
       });
     });
   });
+
   describe('performDriverNumberSearch', () => {
     it('should call logEvent', (done) => {
       // ACT
@@ -77,6 +80,7 @@ describe('Test Results Search Analytics Effects', () => {
       });
     });
   });
+
   describe('performLDTMSearch', () => {
     it('should call logEvent with the correct custom dimensions when no search params are provided', (done) => {
       // ACT
@@ -91,39 +95,41 @@ describe('Test Results Search Analytics Effects', () => {
         );
         done();
       });
-      it('should call logEvent with the correct custom dimensions when 1 search param is provided', (done) => {
-        // ACT
-        actions$.next(new testResultSearchActions.PerformLDTMSearch({
-          costCode: 'mock-cost-code',
-        }));
-        // ASSERT
-        effects.performLDTMSearch$.subscribe((result) => {
-          expect(result instanceof AnalyticRecorded).toBe(true);
-          expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
-            AnalyticsEventCategories.TEST_RESULTS_SEARCH,
-            AnalyticsEvents.LDTM_SEARCH,
-            'test centre',
-          );
-          done();
-        });
-        it('should call logEvent with the correct custom dimensions when all search params are provided', (done) => {
-        // ACT
-          actions$.next(new testResultSearchActions.PerformLDTMSearch({
-            costCode: 'mock-cost-code',
-            staffNumber: 'mock-staff-number',
-            startDate: 'mock-start-date',
-          }));
-        // ASSERT
-          effects.performLDTMSearch$.subscribe((result) => {
-            expect(result instanceof AnalyticRecorded).toBe(true);
-            expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
-            AnalyticsEventCategories.TEST_RESULTS_SEARCH,
-            AnalyticsEvents.LDTM_SEARCH,
-            'date, staff id, test centre',
-          );
-            done();
-          });
-        });
+    });
+
+    it('should call logEvent with the correct custom dimensions when 1 search param is provided', (done) => {
+      // ACT
+      actions$.next(new testResultSearchActions.PerformLDTMSearch({
+        costCode: 'mock-cost-code',
+      }));
+      // ASSERT
+      effects.performLDTMSearch$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+          AnalyticsEvents.LDTM_SEARCH,
+          'test centre',
+        );
+        done();
+      });
+    });
+
+    it('should call logEvent with the correct custom dimensions when all search params are provided', (done) => {
+    // ACT
+      actions$.next(new testResultSearchActions.PerformLDTMSearch({
+        costCode: 'mock-cost-code',
+        staffNumber: 'mock-staff-number',
+        startDate: 'mock-start-date',
+      }));
+    // ASSERT
+      effects.performLDTMSearch$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.TEST_RESULTS_SEARCH,
+          AnalyticsEvents.LDTM_SEARCH,
+          'date, staff id, test centre',
+        );
+        done();
       });
     });
   });
