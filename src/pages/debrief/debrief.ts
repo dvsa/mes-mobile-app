@@ -113,10 +113,7 @@ export class DebriefPage extends PracticeableBasePageComponent {
         map((data) => {
           return [
             ...getSeriousOrDangerousFaults(data.seriousFaults),
-            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map((fault) => {
-              console.log('fault', fault);
-              return fault.competencyIdentifier;
-            }),
+            ...getManoeuvreFaults(data.manoeuvres, CompetencyOutcome.S).map(fault => fault.competencyIdentifier),
             ...getControlledStopFault(data.controlledStop, CompetencyOutcome.S),
             ...getVehicleCheckSeriousFaults(data.vehicleChecks).map(fault => fault.competencyIdentifier),
             ...getEyesightTestSeriousFault(data.eyesightTest),
