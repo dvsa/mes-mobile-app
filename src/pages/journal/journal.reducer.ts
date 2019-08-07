@@ -23,6 +23,9 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         error: { message: '', status: 0, statusText: '' },
       };
     case journalActions.CANDIDATE_DETAILS_SEEN:
+      if (state.checkComplete.findIndex(checkComplete => checkComplete.slotId === action.slotId) !== -1) {
+        return state;
+      }
       return {
         ...state,
         checkComplete: [
