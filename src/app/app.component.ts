@@ -9,6 +9,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { LOGIN_PAGE } from '../pages/page-names.constants';
 
 declare let window: any;
+declare let cordova: any;
 
 @Component({
   templateUrl: 'app.html',
@@ -30,6 +31,10 @@ export class App {
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();
+
+        if (cordova && cordova.plugins && cordova.plugins.DisableShakeToEdit) {
+          cordova.plugins.DisableShakeToEdit.pluginInitialize();
+        }
       });
   }
 
