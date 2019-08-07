@@ -19,7 +19,6 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsDimensionIndices,
  } from '../../providers/analytics/analytics.model';
 
 @Injectable()
@@ -69,24 +68,33 @@ export class TestResultsSearchAnalyticsEffects {
   performLDTMSearch$ = this.actions$.pipe(
     ofType(PERFORM_LDTM_SEARCH),
     switchMap((action: PerformLDTMSearch) => {
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.IS_DATE_RANGE_SEARCHED,
-        action.advancedSearchParams.startDate || action.advancedSearchParams.endDate ? 'true' : 'false',
-      );
 
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.IS_STAFF_ID_SEARCHED,
-        action.advancedSearchParams.staffNumber ? 'true' : 'false',
-      );
+      const searchParametersUsed: string[] = [];
+      let label: string = '';
 
-      this.analytics.addCustomDimension(
-        AnalyticsDimensionIndices.IS_TEST_CENTRE_SEARCHED,
-        action.advancedSearchParams.costCode ? 'true' : 'false',
-      );
+      if (action.advancedSearchParams.startDate || action.advancedSearchParams.endDate) {
+        searchParametersUsed.push('date');
+      }
+
+      if (action.advancedSearchParams.staffNumber) {
+        searchParametersUsed.push('staff id');
+      }
+
+      if (action.advancedSearchParams.costCode) {
+        searchParametersUsed.push('test centre');
+      }
+
+      searchParametersUsed.forEach((searchParameter) => {
+        if (label === '') {
+          label = searchParameter;
+        }
+        label = `${label}, ${searchParameter}`;
+      });
 
       this.analytics.logEvent(
         AnalyticsEventCategories.TEST_RESULTS_SEARCH,
         AnalyticsEvents.LDTM_SEARCH,
+        label,
       );
       return of(new AnalyticRecorded());
     }),
