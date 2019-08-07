@@ -94,13 +94,8 @@ export enum AnalyticsDimensionIndices {
   CANDIDATE_WITH_CHECK = 4,
   CANDIDATE_ID = 5,
   APPLICATION_REFERENCE = 6,
-  IS_STAFF_ID_SEARCHED = 7,
-  IS_TEST_CENTRE_SEARCHED = 8,
-  IS_DATE_RANGE_SEARCHED = 9,
   METHOD = 10,
   USER_ID = 11,
-  REKEY_TEST_BOOKED_WITH = 12,
-  REKEY_TEST_COMPLETED_BY = 13,
 }
 
 export enum JournalRefreshModes {
