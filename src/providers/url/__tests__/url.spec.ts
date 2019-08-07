@@ -46,4 +46,18 @@ describe('UrlProvider', () => {
       expect(url).toBe('https://www.example.com/api/v1/test-result');
     });
   });
+
+  describe('getRekeySearchlUrl', () => {
+    it('should format the URL template from the AppConfigProvider with the provided staffNumber', () => {
+      const url = urlProvider.getRekeySearchUrl('12345678');
+      expect(url).toBe('https://www.example.com/api/v1/journals/12345678/search');
+    });
+
+    it('should format the URL with an unmapped staffNumber when no staffNumber is provided', () => {
+      const urlWithNull = urlProvider.getRekeySearchUrl(null);
+      expect(urlWithNull).toBe('https://www.example.com/api/v1/journals/00000000/search');
+      const urlWithUndefined = urlProvider.getRekeySearchUrl(undefined);
+      expect(urlWithUndefined).toBe('https://www.example.com/api/v1/journals/00000000/search');
+    });
+  });
 });

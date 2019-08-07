@@ -12,7 +12,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { rekeySearchReducer, RekeySearchModel } from '../rekey-search.reducer';
 import { RekeySearchViewDidEnter, SearchBookedTest } from '../rekey-search.actions';
 
-fdescribe('RekeySearchPage', () => {
+describe('RekeySearchPage', () => {
   let fixture: ComponentFixture<RekeySearchPage>;
   let component: RekeySearchPage;
   let store$: Store<RekeySearchModel>;
