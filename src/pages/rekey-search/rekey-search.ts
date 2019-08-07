@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { getIsLoading, getHasSearched } from './rekey-search.selector';
 import { getRekeySearchState } from './rekey-search.reducer';
+import { TestSlot } from '@dvsa/mes-journal-schema';
 
 interface RekeySearchPageState {
   isLoading$: Observable<boolean>;
@@ -27,7 +28,7 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
 
   staffNumber: string = '';
   applicationReference: string = '';
-  searchResults: any[] = [];
+  searchResults: TestSlot[] = [];
   subscription: Subscription = Subscription.EMPTY;
 
   constructor(

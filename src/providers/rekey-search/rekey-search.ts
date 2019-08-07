@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { RekeySearchParams } from './rekey-search.model';
 import { UrlProvider } from '../url/url';
 import { Observable } from 'rxjs/Observable';
+import { TestSlot } from '@dvsa/mes-journal-schema';
 
 @Injectable()
 export class RekeySearchProvider {
@@ -12,7 +13,7 @@ export class RekeySearchProvider {
     private urlProvider: UrlProvider,
   ) { }
 
-  getTest(rekeySearchParams: RekeySearchParams): Observable<any> {
+  getTest(rekeySearchParams: RekeySearchParams): Observable<TestSlot> {
     return this.httpClient.get(
       this.urlProvider.getRekeySearchUrl(rekeySearchParams.staffNumber),
       {
