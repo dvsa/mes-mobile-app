@@ -81,23 +81,27 @@
           </ion-row>
         </ion-col>
       </ion-row>
+      
       <div class="signature-area-padding"></div>
       <ion-row>
         <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')"></div>
         <ion-col>
           <ion-row>
             <ion-col>
-              <div id="waiting-room-signature-validation-text" class="validation-text-with-row-spacing"
-                [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
-                {{ 'waitingRoom.signatureValidation' | translate }}
-              </div>
             </ion-col>
           </ion-row>
           <ion-row class="declaration-signature-row">
             <ion-col class="declaration-signature-col">
+                <h4>{{ 'waitingRoom.signaturePrompt' | translate }}</h4>
+                
+                <div id="waiting-room-signature-validation-text" class="validation-text-with-row-spacing"
+                [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
+                {{ 'waitingRoom.signatureValidation' | translate }}
+              </div>
+              
               <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
                 retryButtonText="{{ 'waitingRoom.signatureRetry' | translate }}"
-                signHereText="{{ 'waitingRoom.signaturePrompt' | translate }}">
+                signHereText=" ">
               </signature-area>
             </ion-col>
           </ion-row>
