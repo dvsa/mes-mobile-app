@@ -7,7 +7,6 @@ import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
   AnalyticsEvents,
-  AnalyticsDimensionIndices,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { TestResultsSearchAnalyticsEffects } from '../test-results-search.analytics.effects';
