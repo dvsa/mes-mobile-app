@@ -337,6 +337,7 @@ export function testDataReducer(
         vehicleChecks: {
           ...state.vehicleChecks,
           showMeQuestion: {
+            ...state.vehicleChecks.showMeQuestion,
             code: action.showMeQuestion.code as string,
             description: action.showMeQuestion.shortName as string,
           },

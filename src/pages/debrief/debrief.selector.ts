@@ -22,6 +22,7 @@ import {
   CommentSource,
 } from '../../shared/models/fault-marking.model';
 import { ActivityCodes } from '../../shared/models/activity-codes';
+import { CompetencyDisplayName } from '../../shared/models/competency-display-name';
 
 // TODO - A lot of these are used in multiple places (Debrief, View Test Result, Office),
 // should be refactored into a more common area.
@@ -93,7 +94,7 @@ export const getVehicleCheckDangerousFaults =
     const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: 'Show Me/Tell Me',
+      competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
       source: CommentSource.VEHICLE_CHECKS,
       faultCount: 1,
 
@@ -113,7 +114,7 @@ export const getVehicleCheckSeriousFaults =
     const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
       comment: vehicleChecks.showMeTellMeComments || '',
       competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-      competencyDisplayName: CommentSource.VEHICLE_CHECKS,
+      competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
       source: CommentSource.VEHICLE_CHECKS,
       faultCount: 1,
     };
@@ -138,7 +139,7 @@ export const getVehicleCheckDrivingFaults =
       const competency: CommentedCompetency & MultiFaultAssignableCompetency = {
         comment: vehicleChecks.showMeTellMeComments || '',
         competencyIdentifier: CommentSource.VEHICLE_CHECKS,
-        competencyDisplayName: 'Show Me/Tell Me',
+        competencyDisplayName: CompetencyDisplayName.SHOW_ME_TELL_ME,
         source: CommentSource.VEHICLE_CHECKS,
         faultCount: 1,
       };
@@ -164,7 +165,7 @@ export const getControlledStopFaultAndComment =
       return returnCompetencies;
     }
     const result: CommentedCompetency = {
-      competencyDisplayName: 'Controlled Stop',
+      competencyDisplayName: CompetencyDisplayName.CONTROLLED_STOP,
       competencyIdentifier: 'controlledStop',
       comment: controlledStop.faultComments || '',
       source: CommentSource.CONTROLLED_STOP,
@@ -183,7 +184,7 @@ export const getEyesightTestSeriousFaultAndComment =
       return [];
     }
     return [{
-      competencyDisplayName: 'Eyesight Test',
+      competencyDisplayName: CompetencyDisplayName.EYESIGHT_TEST,
       competencyIdentifier: 'eyesightTest',
       comment: eyesightTest.faultComments || '',
       source: CommentSource.EYESIGHT_TEST,
