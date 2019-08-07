@@ -57,6 +57,9 @@ describe('testSlotAttributes selector', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           welshTest: true,
           specialNeeds: 'special need 1;special need 2',
           specialNeedsCode: 'YES',
@@ -84,7 +87,7 @@ describe('testSlotAttributes selector', () => {
       expect(testSlotAttributes.specialNeeds).toBe(true);
       expect(testSlotAttributes.specialNeedsCode).toBe(slotData.booking.application.specialNeedsCode);
       expect(testSlotAttributes.specialNeedsArray).toEqual(['special need 1', 'special need 2']);
-      expect(testSlotAttributes.vehicleTypeCode).toBe(slotData. vehicleTypeCode);
+      expect(testSlotAttributes.vehicleTypeCode).toBe(slotData.vehicleTypeCode);
       expect(testSlotAttributes.extendedTest).toBe(slotData.booking.application.extendedTest);
       expect(testSlotAttributes.examinerVisiting).toBe(slotData.examinerVisiting);
       expect(testSlotAttributes.previousCancellation).toBe(slotData.booking.previousCancellation);

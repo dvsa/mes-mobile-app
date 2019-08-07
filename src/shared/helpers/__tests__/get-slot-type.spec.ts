@@ -7,6 +7,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: false,
           specialNeedsCode: SpecialNeedsCode.YES,
         },
@@ -23,6 +26,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: false,
           specialNeedsCode: SpecialNeedsCode.YES,
         },
@@ -39,6 +45,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: true,
           specialNeedsCode: SpecialNeedsCode.NONE,
         },
@@ -55,6 +64,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: true,
           specialNeedsCode: SpecialNeedsCode.YES,
         },
@@ -71,6 +83,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: false,
           specialNeedsCode: SpecialNeedsCode.NONE,
         },
@@ -87,6 +102,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: false,
           specialNeedsCode: SpecialNeedsCode.NONE,
         },
@@ -103,6 +121,9 @@ describe('getSlotType', () => {
     const slotData = {
       booking: {
         application: {
+          applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
           specialNeedsExtendedTest: false,
           specialNeedsCode: SpecialNeedsCode.EXTRA,
         },

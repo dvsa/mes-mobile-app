@@ -44,6 +44,8 @@ describe('Slot Selector', () => {
       booking: {
         application: {
           applicationId: 1234567,
+          bookingSequence: 3,
+          checkDigit: 1,
         },
       },
     };
