@@ -54,7 +54,7 @@ export const getManoeuvreFaults = (
         }
         const manoeuvreFaultSummary: CommentedCompetency & MultiFaultAssignableCompetency = {
           comment: competencyComment || '',
-          competencyIdentifier: type,
+          competencyIdentifier: `${type}${manoeuvreCompetencyLabels[key]}` ,
           competencyDisplayName: [manoeuvreTypeLabels[type], manoeuvreCompetencyLabels[key]].join(' - '),
           source: `${CommentSource.MANOEUVRES}-${type}-${manoeuvreCompetencyLabels[key]}`,
           faultCount: 1,
