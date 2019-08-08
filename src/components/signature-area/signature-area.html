@@ -8,12 +8,16 @@
                 {{ isValidText || "Enter a Signature" }}
             </div>
         </ion-col>
+        <ion-col>
+            <button (click)="clear()" class="retry-button" [disabled]="!signature">
+                <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}">
+                </div>
+                <label id="retry-button-label"
+                    class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</label>
+            </button>
+        </ion-col>
     </ion-row>
     <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
-    <button (click)="clear()" class="retry-button" [disabled]="!signature">
-        <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
-        <label id="retry-button-label" class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</label>
-    </button>
     <div class="sign-here-wrapper">
         <div class="signature-line"></div>
     </div>

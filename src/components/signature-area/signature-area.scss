@@ -55,12 +55,7 @@ signature-area {
 
   .retry-button {
     display: flex;
-    position: relative;
-    bottom: 237px;
-    min-width: 100px;
     float: right;
-    right: 10px;
-    z-index: 11;
     background-color: transparent;
     &:disabled {
       color: map-get($colors, darkerGrey);
