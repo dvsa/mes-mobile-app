@@ -22,7 +22,6 @@ describe('Compression Provider', () => {
       const compressedData = gzipSync(JSON.stringify(categoryBTestResultMock)).toString('base64');
       const result = compressionProvider.extractCatBTestResult(compressedData);
       expect(result).toEqual(categoryBTestResultMock);
-
     });
   });
 });

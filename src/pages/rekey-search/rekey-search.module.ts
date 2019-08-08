@@ -9,6 +9,7 @@ import { RekeySearchEffects } from './rekey-search.effects';
 import { StoreModule } from '@ngrx/store';
 import { rekeySearchReducer } from './rekey-search.reducer';
 import { RekeySearchProvider } from '../../providers/rekey-search/rekey-search';
+import { CompressionProvider } from '../../providers/compression/compression';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { RekeySearchProvider } from '../../providers/rekey-search/rekey-search';
   ],
   providers: [
     RekeySearchProvider,
+    CompressionProvider,
   ],
 })
 export class RekeySearchPageModule {}
