@@ -92,9 +92,9 @@
           </ion-row>
           <ion-row>
             <ion-col col-3></ion-col>
-            <ion-col col-24><h5>{{ 'waitingRoom.signaturePrompt' | translate }}</h5></ion-col>
+            <ion-col col-auto><h5>{{ 'waitingRoom.signaturePrompt' | translate }}</h5></ion-col>
             <ion-col>
-                <div id="waiting-room-signature-validation-text" class="validation-text-with-row-spacing"
+                <div id="waiting-room-signature-validation-text" class="validation-text"
                 [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
                 {{ 'waitingRoom.signatureValidation' | translate }}
               </div>
