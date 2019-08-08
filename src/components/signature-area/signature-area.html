@@ -1,5 +1,5 @@
 
-<div class="signature-area" [class.ng-invalid]="isvalid === false" (blur)="onTouched($event)">
+<div class="signature-area" (blur)="onTouched($event)">
     <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
     <button (click)="clear()" class="retry-button" [disabled]="!signature">
         <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
