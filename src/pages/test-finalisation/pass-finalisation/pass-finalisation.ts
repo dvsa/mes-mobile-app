@@ -1,10 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
 } from './pass-finalisation.actions';
@@ -13,59 +13,60 @@ import {
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
-} from '../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
+} from '../../../modules/tests/pass-completion/pass-completion.actions';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
   isProvisionalLicenseNotProvided,
-} from '../../modules/tests/pass-completion/pass-completion.selector';
+} from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../modules/tests/candidate/candidate.selector';
-import { getApplicationReference } from '../../modules/tests/application-reference/application-reference.reducer';
+} from '../../../modules/tests/candidate/candidate.selector';
+import { getApplicationReference } from '../../../modules/tests/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../modules/tests/application-reference/application-reference.selector';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+} from '../../../modules/tests/application-reference/application-reference.selector';
+import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { PersistTests } from '../../../modules/tests/tests.actions';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
-import { GearboxCategoryChanged } from '../../modules/tests/vehicle-details/vehicle-details.actions';
-import { HEALTH_DECLARATION_PAGE } from '../page-names.constants';
-import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
-import { isDebriefWitnessed, getD255 } from '../../modules/tests/test-summary/test-summary.selector';
-import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+import { HEALTH_DECLARATION_PAGE } from '../../page-names.constants';
+import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
+import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
+import { getTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import {
   D255Yes,
   D255No,
   DebriefWitnessed,
   DebriefUnwitnessed,
-} from '../../modules/tests/test-summary/test-summary.actions';
-import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../office/office-behaviour-map';
-import { ActivityCodes } from '../../shared/models/activity-codes';
+} from '../../../modules/tests/test-summary/test-summary.actions';
+import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from '../../office/office-behaviour-map';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
-} from '../../modules/tests/communication-preferences/communication-preferences.actions';
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
   candidateDriverNumber$: Observable<string>;
+  testOutcomeText$: Observable<string>;
   applicationNumber$: Observable<string>;
   provisionalLicenseProvidedRadioChecked$: Observable<boolean>;
   provisionalLicenseNotProvidedRadioChecked$: Observable<boolean>;
@@ -128,6 +129,9 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
         select(getCandidate),
         select(getCandidateDriverNumber),
         map(formatDriverNumber),
+      ),
+      testOutcomeText$: currentTest$.pipe(
+        select(getTestOutcomeText),
       ),
       applicationNumber$: currentTest$.pipe(
         select(getJournalData),

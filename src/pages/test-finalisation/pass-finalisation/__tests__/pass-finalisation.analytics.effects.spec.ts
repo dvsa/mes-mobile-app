@@ -4,20 +4,20 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as passFinalisationActions from '../pass-finalisation.actions';
-import { AnalyticsProvider } from '../../../providers/analytics/analytics';
-import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
 import {
   AnalyticsScreenNames,
   AnalyticsEventCategories,
-} from '../../../providers/analytics/analytics.model';
-import { StoreModel } from '../../../shared/models/store.model';
+} from '../../../../providers/analytics/analytics.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { Candidate } from '@dvsa/mes-journal-schema';
-import { testsReducer } from '../../../modules/tests/tests.reducer';
-import * as journalActions from '../../journal/journal.actions';
-import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
-import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
-import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
-import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { testsReducer } from '../../../../modules/tests/tests.reducer';
+import * as journalActions from '../../../journal/journal.actions';
+import * as fakeJournalActions from '../../../fake-journal/fake-journal.actions';
+import { PopulateCandidateDetails } from '../../../../modules/tests/candidate/candidate.actions';
+import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
+import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 
 describe('Pass Finalisation Analytics Effects', () => {
 

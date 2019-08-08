@@ -1,12 +1,12 @@
 <ion-row class="mes-validated-row mes-row-separator" id="lang-pref-card" [formGroup]="formGroup">
     <div class="validation-bar"></div>
-    <ion-col class="component-label" col-36 align-self-center>
+    <ion-col class="component-label" col-32 align-self-center>
       <label>Test language</label>
     </ion-col>
     <ion-col align-self-center>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <ion-col col-32>
+        <ion-col col-36>
           <input type="radio" id="lang-pref-english" class="gds-radio-button" name="languagePreferences"
             formControlName="languagePreferences" value=false [checked]="(isWelsh === false)"
             (change)="isWelshChanged($event.target.value)">

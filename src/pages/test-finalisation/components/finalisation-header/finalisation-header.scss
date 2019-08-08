@@ -1,0 +1,23 @@
+finalisation-header {
+  .header-card {
+    margin-left: 32px;
+  }
+  .top-row {
+    margin-top: 24px;
+  }
+  .bottom-row {
+    margin-bottom: 24px;
+  }
+  .pass {
+    color: map-get($colors-gds, 'gds-green');
+  }
+  .fail {
+    color: map-get($colors-gds, 'gds-red');
+  }
+  .terminated {
+    color: map-get($colors-gds, "gds-grey-1");
+  }
+  div {
+    display:inline;
+  }
+}

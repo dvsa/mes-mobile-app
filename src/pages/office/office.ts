@@ -32,9 +32,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import {
   getRouteNumber,
   getCandidateDescription,
-  getD255,
   getAdditionalInformation,
-  isDebriefWitnessed,
   getWeatherConditions,
   getIdentification,
   getIndependentDriving,
@@ -45,10 +43,6 @@ import {
   RouteNumberChanged,
   IndependentDrivingTypeChanged,
   IdentificationUsedChanged,
-  DebriefWitnessed,
-  DebriefUnwitnessed,
-  D255Yes,
-  D255No,
   CandidateDescriptionChanged,
   WeatherConditionsChanged,
   AdditionalInformationChanged,
@@ -116,14 +110,6 @@ import { behaviourMap } from './office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
-import {
-  CandidateChoseToProceedWithTestInWelsh,
-  CandidateChoseToProceedWithTestInEnglish,
-} from '../../modules/tests/communication-preferences/communication-preferences.actions';
-import {
-  getCommunicationPreference,
-} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
-import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -138,22 +124,18 @@ interface OfficePageState {
   displayRouteNumber$: Observable<boolean>;
   displayIndependentDriving$: Observable<boolean>;
   displayCandidateDescription$: Observable<boolean>;
-  displayDebriefWitnessed$: Observable<boolean>;
   displayIdentification$: Observable<boolean>;
   displayShowMeQuestion$: Observable<boolean>;
   displayTellMeQuestion$: Observable<boolean>;
   displayWeatherConditions$: Observable<boolean>;
-  displayD255$: Observable<boolean>;
   displayAdditionalInformation$: Observable<boolean>;
   displayEco$: Observable<boolean>;
   displayEta$: Observable<boolean>;
   displayDrivingFault$: Observable<boolean>;
   displaySeriousFault$: Observable<boolean>;
   displayDangerousFault$: Observable<boolean>;
-  debriefWitnessed$: Observable<boolean>;
   identification$: Observable<Identification>;
   independentDriving$: Observable<IndependentDriving>;
-  d255$: Observable<boolean>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
   showMeQuestion$: Observable<ShowMeQuestion>;
@@ -167,7 +149,6 @@ interface OfficePageState {
   weatherConditions$: Observable<WeatherConditions[]>;
   dangerousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
   seriousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
-  isWelshTest$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -278,14 +259,6 @@ export class OfficePage extends PracticeableBasePageComponent {
         map(([outcome, candidate]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'candidateDescription', candidate)),
       ),
-      displayDebriefWitnessed$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(isDebriefWitnessed))),
-        map(([outcome, debrief]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'debriefWitnessed', debrief)),
-      ),
       displayIdentification$: currentTest$.pipe(
         select(getTestOutcome),
         withLatestFrom(currentTest$.pipe(
@@ -319,14 +292,6 @@ export class OfficePage extends PracticeableBasePageComponent {
           select(getWeatherConditions))),
         map(([outcome, weather]) =>
           this.outcomeBehaviourProvider.isVisible(outcome, 'weatherConditions', weather)),
-      ),
-      displayD255$: currentTest$.pipe(
-        select(getTestOutcome),
-        withLatestFrom(currentTest$.pipe(
-          select(getTestSummary),
-          select(getD255))),
-        map(([outcome, d255]) =>
-          this.outcomeBehaviourProvider.isVisible(outcome, 'weatherConditions', d255)),
       ),
       displayAdditionalInformation$: currentTest$.pipe(
         select(getTestOutcome),
@@ -384,17 +349,9 @@ export class OfficePage extends PracticeableBasePageComponent {
         select(getTestSummary),
         select(getIndependentDriving),
       ),
-      debriefWitnessed$: currentTest$.pipe(
-        select(getTestSummary),
-        select(isDebriefWitnessed),
-      ),
       identification$: currentTest$.pipe(
         select(getTestSummary),
         select(getIdentification),
-      ),
-      d255$: currentTest$.pipe(
-        select(getTestSummary),
-        select(getD255),
       ),
       additionalInformation$: currentTest$.pipe(
         select(getTestSummary),
@@ -470,11 +427,6 @@ export class OfficePage extends PracticeableBasePageComponent {
         select(getTestSummary),
         select(getWeatherConditions),
       ),
-      isWelshTest$: currentTest$.pipe(
-        select(getCommunicationPreference),
-        select(getConductedLanguage),
-        map(conductedLanguage => conductedLanguage === 'Cymraeg'),
-      ),
     };
   }
 
@@ -511,24 +463,12 @@ export class OfficePage extends PracticeableBasePageComponent {
     this.store$.dispatch(new ShowMeQuestionSelected(showMeQuestion));
   }
 
-  debriefWitnessed(): void {
-    this.store$.dispatch(new DebriefWitnessed());
-  }
-
-  debriefUnwitnessed(): void {
-    this.store$.dispatch(new DebriefUnwitnessed());
-  }
-
   identificationChanged(identification: Identification): void {
     this.store$.dispatch(new IdentificationUsedChanged(identification));
   }
 
   independentDrivingChanged(independentDriving: IndependentDriving): void {
     this.store$.dispatch(new IndependentDrivingTypeChanged(independentDriving));
-  }
-
-  d255Changed(d255: boolean): void {
-    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
   }
 
   weatherConditionsChanged(weatherConditions: WeatherConditions[]): void {
@@ -541,10 +481,6 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   candidateDescriptionChanged(candidateDescription: string) {
     this.store$.dispatch(new CandidateDescriptionChanged(candidateDescription));
-  }
-
-  debriefWitnessedChanged(debriefWitnessed: boolean) {
-    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
   }
 
   additionalInformationChanged(additionalInformation: string): void {
@@ -574,14 +510,6 @@ export class OfficePage extends PracticeableBasePageComponent {
     } else if (dangerousFaultComment.source === CommentSource.VEHICLE_CHECKS) {
       this.store$.dispatch(new AddShowMeTellMeComment(dangerousFaultComment.comment));
     }
-  }
-
-  isWelshChanged(isWelsh: boolean) {
-    this.store$.dispatch(
-      isWelsh
-        ? new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
-        : new CandidateChoseToProceedWithTestInEnglish('English'),
-    );
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {

@@ -120,12 +120,11 @@ Feature: Extended category B test scenarios
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - James Brown" page
-      When I continue to the back to office page
+      When I select activity code "4 - Fail in the interests of public safety"
+      And I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      And the office page test outcome is "Terminated"
-      When I select activity code "4 - Fail in the interests of public safety"
       Then the office page test outcome is "Unsuccessful"
       When I complete the office write up with Not applicable to independent driving and show me question
       And I enter a comment for "dangerous" fault "Use of speed"
