@@ -90,21 +90,11 @@
             <ion-col>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col col-3></ion-col>
-            <ion-col col-auto><h5>{{ 'waitingRoom.signaturePrompt' | translate }}</h5></ion-col>
-            <ion-col>
-                <div id="waiting-room-signature-validation-text" class="validation-text"
-                [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
-                {{ 'waitingRoom.signatureValidation' | translate }}
-              </div>
-            </ion-col>
-            </ion-row>
             <ion-row class="declaration-signature-row">
               <ion-col class="declaration-signature-col">
               <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
                 retryButtonText="{{ 'waitingRoom.signatureRetry' | translate }}"
-                signHereText=" ">
+                [showValidText]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
               </signature-area>
             </ion-col>
           </ion-row>

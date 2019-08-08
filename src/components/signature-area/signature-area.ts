@@ -35,6 +35,12 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   @Input()
   public signHereText: string;
 
+  @Input()
+  public isValidText: string;
+
+  @Input()
+  public showValidText: boolean;
+
   constructor(private store$: Store<StoreModel>) {
     this.signature = null;
     this.isvalid = null;

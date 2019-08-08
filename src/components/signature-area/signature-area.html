@@ -1,5 +1,15 @@
-
 <div class="signature-area" (blur)="onTouched($event)">
+    <ion-row>
+        <ion-col col-3></ion-col>
+        <ion-col col-auto>
+            <h5>{{signHereText || "Sign Here"}}</h5>
+        </ion-col>
+        <ion-col>
+            <div id="waiting-room-signature-validation-text" class="validation-text" [class.ng-invalid]="showValidText">
+                {{ isValidText || "Enter a Signature" }}
+            </div>
+        </ion-col>
+    </ion-row>
     <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
     <button (click)="clear()" class="retry-button" [disabled]="!signature">
         <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
