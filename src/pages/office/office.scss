@@ -12,6 +12,15 @@ page-office {
   .mes-primary-button {
     min-width: 150px;
   }
+  .character-count {
+    color: map-get($colors-gds, gds-grey-1);
+    font-weight: initial;
+    letter-spacing: initial;
+    &.ng-invalid {
+      font-weight: 600;
+      letter-spacing: -0.49px;
+    }
+  }
   ion-content {
         ion-select{
           width: 452px;

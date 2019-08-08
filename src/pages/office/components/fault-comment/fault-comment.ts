@@ -40,6 +40,7 @@ export class FaultCommentComponent implements OnChanges {
   @Output()
   faultCommentChange = new EventEmitter<CommentedCompetency>();
 
+  faultCommentCharsRemaining: number = null;
   static readonly fieldName: string = 'faultComment';
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
@@ -70,15 +71,26 @@ export class FaultCommentComponent implements OnChanges {
   }
 
   faultCommentChanged(newComment: string): void {
-    if (newComment.length > 1000) {
-      return;
-    }
     const { comment, ...commentedCompetencyWithoutComment } = this.faultComment;
     const commentedCompetency: CommentedCompetency | (CommentedCompetency & MultiFaultAssignableCompetency) = {
       comment: newComment,
       ...commentedCompetencyWithoutComment,
     };
     this.faultCommentChange.emit(commentedCompetency);
+  }
+
+  characterCountChanged(charactersRemaining: number) {
+    this.faultCommentCharsRemaining = charactersRemaining;
+  }
+
+  getCharacterCountText() {
+    const characterString = Math.abs(this.faultCommentCharsRemaining) === 1 ? 'character' : 'characters';
+    const endString = this.faultCommentCharsRemaining < 0 ? 'too many' : 'remaining';
+    return `You have ${Math.abs(this.faultCommentCharsRemaining)} ${characterString} ${endString}`;
+  }
+
+  charactersExceeded(): boolean {
+    return this.faultCommentCharsRemaining < 0;
   }
 
   get invalid(): boolean {

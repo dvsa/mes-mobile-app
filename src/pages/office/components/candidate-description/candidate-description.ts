@@ -27,6 +27,7 @@ export class CandidateDescriptionComponent implements OnChanges {
 
   private formControl: FormControl;
   static readonly fieldName: string = 'candidateDescription';
+  candidateDescriptionCharsRemaining: number = null;
 
   constructor(private outcomeBehaviourProvider: OutcomeBehaviourMapProvider) { }
 
@@ -48,10 +49,21 @@ export class CandidateDescriptionComponent implements OnChanges {
   }
 
   candidateDescriptionChanged(candidateDescription: string): void {
-    if (candidateDescription.length > 1000) {
-      return;
-    }
     this.candidateDescriptionChange.emit(candidateDescription);
+  }
+
+  characterCountChanged(charactersRemaining: number) {
+    this.candidateDescriptionCharsRemaining = charactersRemaining;
+  }
+
+  getCharacterCountText() {
+    const characterString = Math.abs(this.candidateDescriptionCharsRemaining) === 1 ? 'character' : 'characters';
+    const endString = this.candidateDescriptionCharsRemaining < 0 ? 'too many' : 'remaining';
+    return `You have ${Math.abs(this.candidateDescriptionCharsRemaining)} ${characterString} ${endString}`;
+  }
+
+  charactersExceeded(): boolean {
+    return this.candidateDescriptionCharsRemaining < 0;
   }
 
   get invalid(): boolean {

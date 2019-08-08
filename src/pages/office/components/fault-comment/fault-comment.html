@@ -15,13 +15,16 @@
       <ion-row>
         <div [formGroup]="parentForm">
           <textarea *ngIf="!isFieldNotVisible && !shouldClearDrivingFaultValidators()" row="5" class="mes-data" [formControlName]="formControlName" [class.ng-invalid]="invalid"
-            maxlength="1000"
+            charLimit="1000" charCount (onCharacterCountChanged)="characterCountChanged($event)"
             [value]="faultComment.comment" (change)="faultCommentChanged($event.target.value)">
           </textarea>
+          <div class="character-count validation-text" [ngClass]="{'ng-invalid': charactersExceeded()}">
+            {{getCharacterCountText()}}
+          </div>
         </div>
       </ion-row>
       <ion-row class="validation-message-row" align-items-center>
-        <div class="validation-text" [class.ng-invalid]="invalid">
+        <div class="validation-text" [class.ng-invalid]="invalid" *ngIf="invalid && !charactersExceeded()">
           Provide a comment
         </div>
       </ion-row>
