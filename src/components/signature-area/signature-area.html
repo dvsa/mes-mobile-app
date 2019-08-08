@@ -17,8 +17,8 @@
             </button>
         </ion-col>
     </ion-row>
-    <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
-    <div class="sign-here-wrapper">
+    <ion-row align-items-center class="signature-wrapper">
+        <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
         <div class="signature-line"></div>
-    </div>
+    </ion-row>
 </div>
