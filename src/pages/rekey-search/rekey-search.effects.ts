@@ -25,7 +25,7 @@ export class RekeySearchEffects {
         staffNumber: action.staffNumber,
       };
       return this.rekeySearchProvider.getTest(rekeySearchParams).pipe(
-        map(response => this.compressionProvider.extractTestSlotResult(response)),
+        map(response => this.compressionProvider.extractTestSlotResult(response.toString())),
         map((testSlot: any) => new rekeySearchActions.SearchBookedTestSuccess(testSlot)),
         catchError((err: any) => {
           return of(new rekeySearchActions.SearchBookedTestFailure(err));

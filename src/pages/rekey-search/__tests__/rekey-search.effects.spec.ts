@@ -9,6 +9,8 @@ import { RekeySearchProvider } from '../../../providers/rekey-search/rekey-searc
 import { RekeySearchProviderMock } from '../../../providers/rekey-search/__mocks__/rekey-search.mock';
 import * as rekeySearchActions from '../rekey-search.actions';
 import { defer } from 'rxjs/observable/defer';
+import { CompressionProvider } from '../../../providers/compression/compression';
+import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
 
 describe('Rekey Search Effects', () => {
 
@@ -31,6 +33,7 @@ describe('Rekey Search Effects', () => {
         RekeySearchEffects,
         provideMockActions(() => actions$),
         { provide: RekeySearchProvider, useClass: RekeySearchProviderMock },
+        { provide: CompressionProvider, useClass: CompressionProviderMock },
         Store,
       ],
     });
