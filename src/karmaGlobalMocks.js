@@ -22,9 +22,6 @@ const cordova = {
         cb(true);
       },
     },
-    DisableShakeToEdit: {
-      pluginInitialize: () => { },
-    },
     DeviceAuthentication: {
       runAuthentication: (prompt, successCB, failedCB) => {
         console.log('Calling Device Auth plugin mock');
