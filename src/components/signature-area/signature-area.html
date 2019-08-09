@@ -1,7 +1,7 @@
 <div class="signature-area" (blur)="onTouched($event)">
     <ion-row>
         <ion-col col-auto>
-            <h5>{{signHereText || "Sign Here"}}</h5>
+            <h5 class="sign-here-label">{{signHereText || "Sign here"}}</h5>
         </ion-col>
         <ion-col>
             <div id="waiting-room-signature-validation-text" class="validation-text" [class.ng-invalid]="showValidText">
@@ -17,8 +17,9 @@
             </button>
         </ion-col>
     </ion-row>
-    <ion-row align-items-center class="signature-wrapper">
-        <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
-        <div class="signature-line"></div>
-    </ion-row>
-</div>
+    <div>
+        <ion-row align-items-center class="signature-wrapper">
+            <signature-pad (onEndEvent)="drawComplete()" [class.ng-invalid]="showValidText"></signature-pad>
+            <div class="signature-line"></div>
+        </ion-row>
+    </div>
