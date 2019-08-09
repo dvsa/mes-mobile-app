@@ -30,6 +30,8 @@ describe('Rekey Search Reducer', () => {
       booking: {
         application: {
           applicationId: 12345,
+          bookingSequence: 11,
+          checkDigit: 1,
         },
       },
     };
