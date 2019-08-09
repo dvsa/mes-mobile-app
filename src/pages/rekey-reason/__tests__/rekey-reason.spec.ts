@@ -6,8 +6,6 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { AppModule } from '../../../app/app.module';
-import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -17,7 +15,6 @@ describe('RekeyReasonPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         RekeyReasonPage,
-        MockComponent(PracticeModeBanner),
       ],
       imports: [
         IonicModule,
