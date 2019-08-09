@@ -91,7 +91,7 @@
               <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
                 retryButtonText="{{ 'waitingRoom.signatureRetry' | translate }}"
                 signHereText="{{ 'waitingRoom.signaturePrompt' | translate}}"
-                isValidText="{{ 'waitingRoom.signatureValidation' | translate}}"
+                validationErrorText="{{ 'waitingRoom.signatureValidation' | translate}}"
                 [showValidText]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
               </signature-area>
             </ion-col>

@@ -36,7 +36,7 @@ export class SignatureAreaComponent implements ControlValueAccessor {
   public signHereText: string;
 
   @Input()
-  public isValidText: string;
+  public validationErrorText: string;
 
   @Input()
   public showValidText: boolean;

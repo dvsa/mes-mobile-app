@@ -5,7 +5,7 @@
         </ion-col>
         <ion-col>
             <div id="waiting-room-signature-validation-text" class="validation-text" [class.ng-invalid]="showValidText">
-                {{ isValidText || "Enter a Signature" }}
+                {{ validationErrorText || "Enter a Signature" }}
             </div>
         </ion-col>
         <ion-col>
@@ -17,9 +17,8 @@
             </button>
         </ion-col>
     </ion-row>
-    <div>
-        <ion-row align-items-center class="signature-wrapper">
-            <signature-pad (onEndEvent)="drawComplete()" [class.ng-invalid]="showValidText"></signature-pad>
-            <div class="signature-line"></div>
-        </ion-row>
-    </div>
+    <ion-row align-items-center class="signature-wrapper">
+        <signature-pad (onEndEvent)="drawComplete()" [class.ng-invalid]="showValidText"></signature-pad>
+        <div class="signature-line"></div>
+    </ion-row>
+</div>

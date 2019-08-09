@@ -102,7 +102,7 @@
               <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
                 retryButtonText="{{ 'healthDeclaration.signatureRetry' | translate }}"
                 signHereText="{{ 'healthDeclaration.signaturePrompt' | translate}}"
-                isValidText="{{ 'healthDeclaration.signatureValidation' | translate}}"
+                validationErrorText="{{ 'healthDeclaration.signatureValidation' | translate}}"
                 [showValidText]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
               </signature-area>
             </ion-col>
