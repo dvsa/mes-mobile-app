@@ -4,6 +4,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
+import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
 
 @IonicPage()
 @Component({
@@ -19,5 +20,9 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
     public store$: Store<StoreModel>,
   ) {
     super(platform, navController, authenticationProvider, store$);
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new RekeyReasonViewDidEnter());
   }
 }
