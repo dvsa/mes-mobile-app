@@ -54,10 +54,13 @@ import {
   DebriefWitnessed,
   DebriefUnwitnessed,
 } from '../../modules/tests/test-summary/test-summary.actions';
-import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office/office-behaviour-map';
 import { ActivityCodes } from '../../shared/models/activity-codes';
+import {
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
+} from '../../modules/tests/communication-preferences/communication-preferences.actions';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -269,7 +272,11 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
   }
 
   isWelshChanged(isWelsh: boolean) {
-    this.store$.dispatch(new WelshTestChanged(isWelsh));
+    this.store$.dispatch(
+      isWelsh ?
+        new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
   }
 
 }

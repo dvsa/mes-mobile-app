@@ -62,9 +62,12 @@ import {
 } from '../components/activity-code/activity-code.constants';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest, ValidationError } from '../office.actions';
-import { WelshTestChanged } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
+import {
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -352,10 +355,15 @@ describe('OfficePage', () => {
   });
 
   describe('isWelshChanged', () => {
-    it('should dispatch a WelshTestChanged action', () => {
+    it('should dispatch a CandidateChoseToProceedInWelshLanguage action when welsh is toggled true', () => {
       const isWelsh = true;
       component.isWelshChanged(isWelsh);
-      expect(store$.dispatch).toHaveBeenCalledWith(new WelshTestChanged(isWelsh));
+      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInWelsh('Cymraeg'));
+    });
+    it('should dispatch a CandidateChoseToProceedInEnglishLanguage action when welsh is toggled false', () => {
+      const isWelsh = false;
+      component.isWelshChanged(isWelsh);
+      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInEnglish('English'));
     });
   });
 
