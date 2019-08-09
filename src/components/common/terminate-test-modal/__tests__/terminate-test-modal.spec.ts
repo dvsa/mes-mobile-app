@@ -2,16 +2,16 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../app/app.module';
+import { AppModule } from '../../../../app/app.module';
 import { TerminateTestModal } from '../terminate-test-modal';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
-import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 // tslint:disable-next-line:max-line-length
-import { DeviceAuthenticationProviderMock } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
+import { DeviceAuthenticationProviderMock } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
 
 describe('TerminateTestModal', () => {
   let fixture: ComponentFixture<TerminateTestModal>;

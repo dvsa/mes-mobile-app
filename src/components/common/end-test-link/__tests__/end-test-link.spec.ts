@@ -2,8 +2,8 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { EndTestLinkComponent } from '../end-test-link';
 import { IonicModule, ModalController, NavController } from 'ionic-angular';
 import { ModalControllerMock, NavControllerMock } from 'ionic-mocks';
-import { AppModule } from '../../../app/app.module';
-import { DEBRIEF_PAGE } from '../../../pages/page-names.constants';
+import { AppModule } from '../../../../app/app.module';
+import { DEBRIEF_PAGE } from '../../../../pages/page-names.constants';
 
 describe('EndTestLinkComponent', () => {
   let fixture: ComponentFixture<EndTestLinkComponent>;

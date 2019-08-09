@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, Modal, NavController } from 'ionic-angular';
-import { DEBRIEF_PAGE } from '../../pages/page-names.constants';
+import { DEBRIEF_PAGE } from '../../../pages/page-names.constants';
 
 @Component({
   selector: 'end-test-link',

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from '../../components/common/common.components.module';
 import { FakeCandidateDetailsPage } from './fake-candidate-details';
 
 @NgModule({

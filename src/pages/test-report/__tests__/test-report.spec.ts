@@ -22,7 +22,7 @@ import { CompetencyButtonComponent } from '../components/competency-button/compe
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
-import { TickIndicatorComponent } from '../../../components/tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../components/common/tick-indicator/tick-indicator';
 import { ToolbarComponent } from '../components/toolbar/toolbar';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
@@ -43,7 +43,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
-import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { StatusBar } from '@ionic-native/status-bar';
 import { DEBRIEF_PAGE } from '../../page-names.constants';
 

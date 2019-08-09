@@ -18,7 +18,7 @@ import {
 import { of } from 'rxjs/observable/of';
 import { QuestionProvider } from '../../../providers/question/question';
 import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
-import { EndTestLinkComponent } from '../../../components/end-test-link/end-test-link';
+import { EndTestLinkComponent } from '../../../components/common/end-test-link/end-test-link';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
@@ -34,7 +34,7 @@ import { AccompanimentComponent } from '../components/accompaniment/accompanimen
 import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 import { TellMeQuestionSelected, EyesightTestReset } from '../../../modules/tests/test-data/test-data.actions';
-import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 

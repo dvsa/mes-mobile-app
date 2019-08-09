@@ -7,7 +7,7 @@ import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-deta
 import { TestSummaryCardComponent } from './test-summary-card/test-summary-card';
 import { ViewTestHeaderComponent } from './view-test-header/view-test-header';
 import { DebriefCardComponent } from './debrief-card/debrief-card';
-import { ComponentsModule } from '../../../components/components.module';
+import { ComponentsModule } from '../../../components/common/common.components.module';
 
 @NgModule({
   declarations: [

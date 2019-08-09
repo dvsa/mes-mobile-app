@@ -4,7 +4,7 @@ import { OfficePage } from './office';
 import { EffectsModule } from '@ngrx/effects';
 import { OfficeAnalyticsEffects } from './office.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from '../../components/common/common.components.module';
 import { OfficeComponentsModule } from './components/office.components.module';
 import { OfficeEffects } from './office.effects';
 

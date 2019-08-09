@@ -6,7 +6,7 @@ import { ViewTestResultComponentsModule } from './components/view-test-result.co
 import { CompressionProvider } from '../../providers/compression/compression';
 import { EffectsModule } from '@ngrx/effects';
 import { ViewTestResultAnalyticsEffects } from './view-test-result.analytics.effects';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from '../../components/common/common.components.module';
 
 @NgModule({
   declarations: [

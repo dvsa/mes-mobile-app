@@ -1,7 +1,7 @@
 import { Component, ViewChild, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-import { StoreModel } from '../../shared/models/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 
 @Component({

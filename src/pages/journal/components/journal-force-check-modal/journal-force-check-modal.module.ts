@@ -1,7 +1,7 @@
 import { JournalForceCheckModal } from './journal-force-check-modal';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ComponentsModule } from '../../../../components/components.module';
+import { ComponentsModule } from '../../../../components/common/common.components.module';
 
 @NgModule({
   declarations: [

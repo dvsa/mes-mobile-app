@@ -4,7 +4,7 @@ import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../app/app.module';
 import { EtaInvalidModal } from '../eta-invalid-modal';
 import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../../../components/components.module';
+import { ComponentsModule } from '../../../../../components/common/common.components.module';
 
 describe('LegalRequirementsModal', () => {
   let fixture: ComponentFixture<EtaInvalidModal>;

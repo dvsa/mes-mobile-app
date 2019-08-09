@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
-import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 
 @IonicPage()
 @Component({

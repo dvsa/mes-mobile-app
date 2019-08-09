@@ -7,7 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import * as waitingRoomActions from './waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
+import { SignatureAreaComponent } from '../../components/common/signature-area/signature-area';
 import { getPreTestDeclarations } from '../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions from '../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import {

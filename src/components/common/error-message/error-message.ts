@@ -1,4 +1,4 @@
-import { ErrorTypes } from './../../shared/models/error-message';
+import { ErrorTypes } from '../../../shared/models/error-message';
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 enum additionalText {

@@ -7,7 +7,7 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { PostDebriefHoldingPage } from '../post-debrief-holding';
 import { PostDebriefHoldingViewDidEnter } from '../post-debrief-holding.actions';
 

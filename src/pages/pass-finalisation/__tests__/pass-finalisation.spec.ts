@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { D255Component } from '../../office/components/d255/d255';
 import { LanguagePreferencesComponent } from '../../office/components/language-preference/language-preferences';
 import { DebriefWitnessedComponent } from '../../office/components/debrief-witnessed/debrief-witnessed';
