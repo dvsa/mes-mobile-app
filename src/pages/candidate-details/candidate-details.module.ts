@@ -4,7 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { CandidateDetailsPage } from './candidate-details';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { CandidateDetailsAnalyticsEffects } from './candidate-details.analytics.effects';
-import { ComponentsModule } from '../../components/common/common.components.module';
+import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [

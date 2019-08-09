@@ -2,26 +2,26 @@ import { Subscription } from 'rxjs/Subscription';
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../../../shared/models/store.model';
-import { StartTest, ActivateTest, ResumingWriteUp } from '../../journal.actions';
-import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions';
+import { StartTest, ActivateTest, ResumingWriteUp } from '../../../pages/journal/journal.actions';
+import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
+import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith } from 'lodash';
-import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import {
   COMMUNICATION_PAGE,
   OFFICE_PAGE,
   PASS_FINALISATION_PAGE,
   JOURNAL_FORCE_CHECK_MODAL,
-} from '../../../page-names.constants';
-import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
-import { DateTime, Duration } from '../../../../shared/helpers/date-time';
+} from '../../../pages/page-names.constants';
+import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
+import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
-import { getCheckComplete } from '../../journal.selector';
-import { getJournalState } from '../../journal.reducer';
+import { getCheckComplete } from '../../../pages/journal/journal.selector';
+import { getJournalState } from '../../../pages/journal/journal.reducer';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { StoreModel } from '../../../shared/models/store.model';
 
 @Component({
   selector: 'test-outcome',

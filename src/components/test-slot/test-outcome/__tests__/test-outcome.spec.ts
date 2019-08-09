@@ -1,19 +1,19 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
 import { TestOutcomeComponent } from '../test-outcome';
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
-import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mocks__/analytics.mock';
-import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
-import { StartTest, ActivateTest } from '../../../journal.actions';
-import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
-import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
-import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
+import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
+import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
+import { StartTest, ActivateTest } from '../../../../pages/journal/journal.actions';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../pages/page-names.constants';
+import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
-import { ActivityCodes } from '../../../../../shared/models/activity-codes';
-import { JournalModel } from '../../../journal.model';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { JournalModel } from '../../../../pages/journal/journal.model';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;

@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Name } from '@dvsa/mes-journal-schema';
 import { ModalController } from 'ionic-angular';
-import { App } from '../../../../app/app.component';
 import { startsWith } from 'lodash';
-import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
-import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../page-names.constants';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { App } from '../../../app/app.component';
+import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../pages/page-names.constants';
 
 @Component({
   selector: 'candidate-link',

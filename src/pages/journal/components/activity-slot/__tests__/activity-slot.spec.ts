@@ -2,12 +2,12 @@ import { ActivitySlotComponent } from '../activity-slot';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { MockComponent } from 'ng-mocks';
-import { TimeComponent } from '../../time/time';
+import { TimeComponent } from '../../../../../components/test-slot/time/time';
 import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
 import { ConfigMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
-import { LocationComponent } from '../../location/location';
+import { LocationComponent } from '../../../../../components/test-slot/location/location';
 
 describe('ActivitySlotComponent', () => {
   let fixture: ComponentFixture<ActivitySlotComponent>;

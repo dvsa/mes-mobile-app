@@ -5,7 +5,7 @@ import { TestResultsSearchComponentsModule } from './components/test-results-sea
 import { SearchProvider } from '../../providers/search/search';
 import { EffectsModule } from '@ngrx/effects';
 import { TestResultsSearchAnalyticsEffects } from './test-results-search.analytics.effects';
-import { ComponentsModule } from '../../components/common/common.components.module';
+import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [

@@ -4,7 +4,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { AppModule, createTranslateLoader } from '../../../../../app/app.module';
-import { ComponentsModule } from '../../../../../components/common/common.components.module';
+import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import {
   initialState as preTestDeclarationInitialState,
 } from '../../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';

@@ -1,8 +1,8 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { AppModule } from '../../../../../app/app.module';
+import { AppModule } from '../../../../app/app.module';
 import { SubmissionStatusComponent } from '../submission-status';
-import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 
 describe('PracticeTestModal', () => {
   let fixture: ComponentFixture<SubmissionStatusComponent>;

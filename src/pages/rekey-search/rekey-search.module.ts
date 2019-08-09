@@ -3,7 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { RekeySearchPage } from './rekey-search';
 import { EffectsModule } from '@ngrx/effects';
 import { RekeySearchAnalyticsEffects } from './rekey-search.analytics.effects';
-import { ComponentsModule } from '../../components/common/common.components.module';
+import { ComponentsModule } from '../../components/common/common-components.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { RekeySearchEffects } from './rekey-search.effects';
 import { StoreModule } from '@ngrx/store';

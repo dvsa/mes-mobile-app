@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IndicatorsComponent } from '../indicators';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 
 describe('IndicatorsComponent', () => {
   let component: IndicatorsComponent;

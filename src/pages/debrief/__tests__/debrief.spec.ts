@@ -9,7 +9,7 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../components/common/common.components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { StoreModel } from '../../../shared/models/store.model';
 import { StoreModule, Store } from '@ngrx/store';
 import {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { ComponentsModule } from '../../../components/common/common.components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { EyesightTestComponent } from './eyesight-test/eyesight-test';
 import { EyesightFailureConfirmationComponent } from './eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { VehicleRegistrationComponent } from './vehicle-registration/vehicle-registration';

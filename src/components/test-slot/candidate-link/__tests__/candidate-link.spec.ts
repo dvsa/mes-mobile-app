@@ -1,5 +1,3 @@
-import { App } from './../../../../../app/app.component';
-import { MockAppComponent } from '../../../../../app/__mocks__/app.component.mock';
 import {
   async,
   ComponentFixture,
@@ -14,13 +12,15 @@ import { By } from '@angular/platform-browser';
 import { CandidateLinkComponent } from '../candidate-link';
 import { Store } from '@ngrx/store';
 import { SecureStorage } from '@ionic-native/secure-storage';
-import { DataStoreProvider } from '../../../../../providers/data-store/data-store';
-import { DataStoreProviderMock } from '../../../../../providers/data-store/__mocks__/data-store.mock';
+import { DataStoreProvider } from '../../../../providers/data-store/data-store';
+import { DataStoreProviderMock } from '../../../../providers/data-store/__mocks__/data-store.mock';
 import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { translateServiceMock } from '../../../../../shared/__mocks__/translate';
-import { end2endPracticeSlotId } from '../../../../../shared/mocks/test-slot-ids.mock';
-import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../../page-names.constants';
+import { translateServiceMock } from '../../../../shared/__mocks__/translate';
+import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
+import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../../pages/page-names.constants';
+import { App } from '../../../../app/app.component';
+import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 
 class MockStore { }
 

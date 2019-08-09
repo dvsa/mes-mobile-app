@@ -12,26 +12,26 @@ import { CandidateLinkComponent } from '../../candidate-link/candidate-link';
 import { TestCategoryComponent } from '../../test-category/test-category';
 import { VehicleDetailsComponent } from '../../vehicle-details/vehicle-details';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
+import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { LanguageComponent } from '../../language/language';
-import { LocationComponent } from '../../location/location';
-import { AppConfigProvider } from '../../../../../providers/app-config/app-config';
-import { AppConfigProviderMock } from '../../../../../providers/app-config/__mocks__/app-config.mock';
-import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
-import { StoreModel } from '../../../../../shared/models/store.model';
-import { SetTestStatusDecided } from '../../../../../modules/tests/test-status/test-status.actions';
+import { testsReducer } from '../../../../modules/tests/tests.reducer';
+import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { SetTestStatusDecided } from '../../../../modules/tests/test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
-import { StartTest } from '../../../journal.actions';
+import { StartTest } from '../../../../pages/journal/journal.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
-import { ActivityCodes } from '../../../../../shared/models/activity-codes';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { TestSlot } from '@dvsa/mes-journal-schema';
-import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
-import { SpecialNeedsCode } from '../../../../../shared/helpers/get-slot-type';
+import { DateTime, Duration } from '../../../../shared/helpers/date-time';
+import { SpecialNeedsCode } from '../../../../shared/helpers/get-slot-type';
+import { LocationComponent } from '../../location/location';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -101,8 +101,8 @@ describe('TestSlotComponent', () => {
       declarations: [
         TestSlotComponent,
         MockComponent(LanguageComponent),
-        MockComponent(LocationComponent),
         MockComponent(IndicatorsComponent),
+        MockComponent(LocationComponent),
         MockComponent(TimeComponent),
         MockComponent(TestCategoryComponent),
         MockComponent(TestOutcomeComponent),
