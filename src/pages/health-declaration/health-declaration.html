@@ -98,17 +98,15 @@
         <ion-col>
           <ion-row>
             <ion-col>
-              <div id="health-declaration-signature-validation-text" class="validation-text-with-row-spacing"
-                [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
-                {{ 'healthDeclaration.signatureValidation' | translate }}
-              </div>
             </ion-col>
           </ion-row>
           <ion-row class="declaration-signature-row">
             <ion-col class="declaration-signature-col">
               <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
                 signHereText="{{ 'healthDeclaration.signaturePrompt' | translate }}"
-                retryButtonText="{{ 'healthDeclaration.signatureRetry' | translate }}">
+                retryButtonText="{{ 'healthDeclaration.signatureRetry' | translate }}"
+                isValidText="{{ 'healthDeclaration.signatureValidation' | translate }}"
+                [showValidText]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
               </signature-area>
             </ion-col>
           </ion-row>
