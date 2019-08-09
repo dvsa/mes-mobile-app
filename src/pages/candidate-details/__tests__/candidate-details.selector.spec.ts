@@ -169,6 +169,9 @@ describe('Candidate Details Selector', () => {
       const slot = {
         booking: {
           application: {
+            applicationId: '123456',
+            bookingSequence: '3',
+            checkDigit: '1',
             specialNeeds: '',
           },
           previousCancellation: [],
@@ -184,6 +187,9 @@ describe('Candidate Details Selector', () => {
       const slot = {
         booking: {
           application: {
+            applicationId: '123456',
+            bookingSequence: '3',
+            checkDigit: '1',
             specialNeeds: '',
           },
           previousCancellation: ['Act of nature'],
@@ -256,6 +262,9 @@ describe('Candidate Details Selector', () => {
           vehicleSlotTypeCode: 6,
           booking: {
             application: {
+              applicationId: 1234567,
+              bookingSequence: 3,
+              checkDigit: 1,
               specialNeedsCode: SpecialNeedsCode.YES,
             },
           },
@@ -271,6 +280,9 @@ describe('Candidate Details Selector', () => {
           vehicleSlotTypeCode: 14,
           booking: {
             application: {
+              applicationId: 1234567,
+              bookingSequence: 3,
+              checkDigit: 1,
               specialNeedsCode: SpecialNeedsCode.YES,
             },
           },
@@ -281,17 +293,20 @@ describe('Candidate Details Selector', () => {
     });
 
     describe('specialNeedsExtendedTest is true', () => {
-      const specialNeedsExtendedTest = true;
+      const specialNeedsExtendedTestValue = true;
 
       describe('specialNeedsCode is NONE', () => {
-        const specialNeedsCode = SpecialNeedsCode.NONE;
+        const specialNeedsCodeValue = SpecialNeedsCode.NONE;
 
         it('should return Extended Test', () => {
           const slot = {
             booking: {
               application: {
-                specialNeedsExtendedTest,
-                specialNeedsCode,
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                specialNeedsExtendedTest: specialNeedsExtendedTestValue,
+                specialNeedsCode: specialNeedsCodeValue,
               },
             },
           };
@@ -301,14 +316,17 @@ describe('Candidate Details Selector', () => {
       });
 
       describe('specialNeedsCode is YES', () => {
-        const specialNeedsCode = SpecialNeedsCode.YES;
+        const specialNeedsCodeValue = SpecialNeedsCode.YES;
 
         it('should return Extended Test Special Needs', () => {
           const slot = {
             booking: {
               application: {
-                specialNeedsExtendedTest,
-                specialNeedsCode,
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                specialNeedsExtendedTest: specialNeedsExtendedTestValue,
+                specialNeedsCode: specialNeedsCodeValue,
               },
             },
           };
@@ -318,14 +336,17 @@ describe('Candidate Details Selector', () => {
       });
 
       describe('specialNeedsCode is EXTRA', () => {
-        const specialNeedsCode = SpecialNeedsCode.EXTRA;
+        const specialNeedsCodeValue = SpecialNeedsCode.EXTRA;
 
         it('should return Extended Test Special Needs', () => {
           const slot = {
             booking: {
               application: {
-                specialNeedsExtendedTest,
-                specialNeedsCode,
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                specialNeedsExtendedTest: specialNeedsExtendedTestValue,
+                specialNeedsCode: specialNeedsCodeValue,
               },
             },
           };
@@ -336,17 +357,20 @@ describe('Candidate Details Selector', () => {
     });
 
     describe('specialNeedsExtendedTest is false', () => {
-      const specialNeedsExtendedTest = false;
+      const specialNeedsExtendedTestValue = false;
 
       describe('specialNeedsCode is NONE', () => {
-        const specialNeedsCode = SpecialNeedsCode.NONE;
+        const specialNeedsCodeValue = SpecialNeedsCode.NONE;
 
         it('should return Standard Test', () => {
           const slot = {
             booking: {
               application: {
-                specialNeedsExtendedTest,
-                specialNeedsCode,
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                specialNeedsExtendedTest: specialNeedsExtendedTestValue,
+                specialNeedsCode: specialNeedsCodeValue,
               },
             },
           };
@@ -356,14 +380,17 @@ describe('Candidate Details Selector', () => {
       });
 
       describe('specialNeedsCode is YES', () => {
-        const specialNeedsCode = SpecialNeedsCode.YES;
+        const specialNeedsCodeValue = SpecialNeedsCode.YES;
 
         it('should return Standard Test', () => {
           const slot = {
             booking: {
               application: {
-                specialNeedsExtendedTest,
-                specialNeedsCode,
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                specialNeedsExtendedTest: specialNeedsExtendedTestValue,
+                specialNeedsCode: specialNeedsCodeValue,
               },
             },
           };
@@ -373,14 +400,17 @@ describe('Candidate Details Selector', () => {
       });
 
       describe('specialNeedsCode is EXTRA', () => {
-        const specialNeedsCode = SpecialNeedsCode.EXTRA;
+        const specialNeedsCodeValue = SpecialNeedsCode.EXTRA;
 
         it('should return Special Needs Extra Time', () => {
           const slot = {
             booking: {
               application: {
-                specialNeedsExtendedTest,
-                specialNeedsCode,
+                applicationId: 1234567,
+                bookingSequence: 3,
+                checkDigit: 1,
+                specialNeedsExtendedTest: specialNeedsExtendedTestValue,
+                specialNeedsCode: specialNeedsCodeValue,
               },
             },
           };

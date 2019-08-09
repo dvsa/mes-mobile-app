@@ -66,6 +66,9 @@ describe('Incomplete Tests Provider', () => {
       slotData: {
         booking: {
           application: {
+            applicationId: 1234567,
+            bookingSequence: 3,
+            checkDigit: 1,
             testCategory: 'B',
           },
         },
@@ -81,6 +84,9 @@ describe('Incomplete Tests Provider', () => {
       slotData: {
         booking: {
           application: {
+            applicationId: 1234567,
+            bookingSequence: 3,
+            checkDigit: 1,
             testCategory: 'B',
           },
         },
@@ -96,6 +102,9 @@ describe('Incomplete Tests Provider', () => {
       slotData: {
         booking: {
           application: {
+            applicationId: 1234567,
+            bookingSequence: 3,
+            checkDigit: 1,
             testCategory: 'B',
           },
         },
@@ -111,6 +120,9 @@ describe('Incomplete Tests Provider', () => {
       slotData: {
         booking: {
           application: {
+            applicationId: 1234567,
+            bookingSequence: 3,
+            checkDigit: 1,
             testCategory: 'B',
           },
         },
@@ -126,6 +138,9 @@ describe('Incomplete Tests Provider', () => {
       slotData: {
         booking: {
           application: {
+            applicationId: 1234567,
+            bookingSequence: 3,
+            checkDigit: 1,
             testCategory: 'B',
           },
         },
