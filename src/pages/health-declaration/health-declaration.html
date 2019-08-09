@@ -92,20 +92,17 @@
           </ion-row>
         </ion-col>
       </ion-row>
+
       <div class="signature-area-padding"></div>
-      <ion-row>
+      <ion-row class="signature-validation-row">
         <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('signatureAreaCtrl')"></div>
-        <ion-col>
-          <ion-row>
-            <ion-col>
-            </ion-col>
-          </ion-row>
-          <ion-row class="declaration-signature-row">
-            <ion-col class="declaration-signature-col">
+        <ion-col no-padding>
+          <ion-row no-padding class="declaration-signature-row">
+            <ion-col no-padding class="declaration-signature-col">
               <signature-area formControlName="signatureAreaCtrl" [signature]="pageState.signature$ | async"
-                signHereText="{{ 'healthDeclaration.signaturePrompt' | translate }}"
                 retryButtonText="{{ 'healthDeclaration.signatureRetry' | translate }}"
-                isValidText="{{ 'healthDeclaration.signatureValidation' | translate }}"
+                signHereText="{{ 'healthDeclaration.signaturePrompt' | translate}}"
+                isValidText="{{ 'healthDeclaration.signatureValidation' | translate}}"
                 [showValidText]="isCtrlDirtyAndInvalid('signatureAreaCtrl')">
               </signature-area>
             </ion-col>
