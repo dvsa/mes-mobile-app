@@ -4,7 +4,8 @@ import { SignatureAreaComponent } from '../signature-area';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-class TestStore {}
+import { IonicModule } from 'ionic-angular';
+class TestStore { }
 describe('SignatureAreaComponent', () => {
   let fixture: ComponentFixture<SignatureAreaComponent>;
   let component: SignatureAreaComponent;
@@ -15,6 +16,7 @@ describe('SignatureAreaComponent', () => {
         MockComponent(SignaturePad),
       ],
       imports: [
+        IonicModule,
       ],
       providers: [
         { provide: Store, useClass: TestStore },
@@ -53,13 +55,13 @@ describe('SignatureAreaComponent', () => {
       it('sign line text should equal the signHereText property', () => {
         component.signHereText = 'sign here for millions';
         fixture.detectChanges();
-        const signHereElement: HTMLElement = fixture.debugElement.query(By.css('#sign-here-label')).nativeElement;
+        const signHereElement: HTMLElement = fixture.debugElement.query(By.css('.sign-here-label')).nativeElement;
         expect(signHereElement.textContent).toEqual('sign here for millions');
       });
       it('sign line text should default when the signHereText property is falsy', () => {
         component.signHereText = undefined;
         fixture.detectChanges();
-        const signHereElement: HTMLElement = fixture.debugElement.query(By.css('#sign-here-label')).nativeElement;
+        const signHereElement: HTMLElement = fixture.debugElement.query(By.css('.sign-here-label')).nativeElement;
         expect(signHereElement.textContent).toEqual('Sign here');
       });
     });
@@ -93,20 +95,6 @@ describe('SignatureAreaComponent', () => {
           By.css('#retry-icon')).nativeElement;
         expect(retryImageElement.getAttribute('style'))
           .toEqual('background-image: url("/assets/imgs/waiting-room/retry.png");');
-      });
-      it('signHereImage, when set, should change the sign here image source attribute', () => {
-        component.signHereImage = '/some/path';
-        fixture.detectChanges();
-        const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
-          By.css('#sign-here-image')).nativeElement;
-        expect(notValidHeaderElement.getAttribute('style')).toEqual('background-image: url("/some/path");');
-      });
-      it('signHereImage, when not set, should default the sign here image source attribute', () => {
-        fixture.detectChanges();
-        const notValidHeaderElement: HTMLElement = fixture.debugElement.query(
-          By.css('#sign-here-image')).nativeElement;
-        expect(notValidHeaderElement.getAttribute('style'))
-          .toEqual('background-image: url("/assets/imgs/waiting-room/sign-here.png");');
       });
     });
   });

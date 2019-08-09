@@ -1,14 +1,24 @@
-
-<div class="signature-area" [class.ng-invalid]="isvalid === false" (blur)="onTouched($event)">
-    <signature-pad (onEndEvent)="drawComplete()"></signature-pad>
-    <button (click)="clear()" class="retry-button" [disabled]="!signature">
-        <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}"></div>
-        <label id="retry-button-label" class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</label>
-    </button>
-    <div class="sign-here-wrapper">
-        <div id="sign-here-image" class="image" [ngStyle]="{'background-image':'url(' + signHereImage + ')'}">
-            <label id="sign-here-label" class="text">{{signHereText? signHereText : "Sign here"}}</label>
-        </div>
+<div class="signature-area" (blur)="onTouched($event)">
+    <ion-row>
+        <ion-col col-auto>
+            <h5 class="sign-here-label">{{signHereText || "Sign here"}}</h5>
+        </ion-col>
+        <ion-col>
+            <div id="waiting-room-signature-validation-text" class="validation-text" [class.ng-invalid]="showValidText">
+                {{ validationErrorText || "Enter a Signature" }}
+            </div>
+        </ion-col>
+        <ion-col>
+            <button (click)="clear()" class="retry-button" [disabled]="!signature">
+                <div id="retry-icon" class="retry-icon" [ngStyle]="{'background-image':'url(' + retryImage + ')'}">
+                </div>
+                <label id="retry-button-label"
+                    class="sign-here-text">{{retryButtonText? retryButtonText : "Retry"}}</label>
+            </button>
+        </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="signature-wrapper">
+        <signature-pad (onEndEvent)="drawComplete()" [class.ng-invalid]="showValidText"></signature-pad>
         <div class="signature-line"></div>
-    </div>
+    </ion-row>
 </div>
