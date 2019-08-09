@@ -35,6 +35,7 @@ export enum AnalyticsScreenNames {
   POST_DEBRIEF_HOLDING = 'post debrief holding screen',
   NON_PASS_FINALISATION = 'non pass finalisation',
   REKEY_SEARCH = 'rekey search screen',
+  REKEY_REASON = 'rekey reason screen',
 }
 
 export enum AnalyticsEventCategories {
