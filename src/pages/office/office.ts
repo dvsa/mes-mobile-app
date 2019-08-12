@@ -62,7 +62,7 @@ import {
 import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime, isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
   getETAFaultText,
@@ -114,9 +114,16 @@ import {
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from './office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
-import { WelshTestChanged } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
+import {
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
+} from '../../modules/tests/communication-preferences/communication-preferences.actions';
+import {
+  getCommunicationPreference,
+} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -464,9 +471,9 @@ export class OfficePage extends PracticeableBasePageComponent {
         select(getWeatherConditions),
       ),
       isWelshTest$: currentTest$.pipe(
-        select(getJournalData),
-        select(getTestSlotAttributes),
-        select(isWelshTest),
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
+        map(conductedLanguage => conductedLanguage === 'Cymraeg'),
       ),
     };
   }
@@ -570,7 +577,11 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   isWelshChanged(isWelsh: boolean) {
-    this.store$.dispatch(new WelshTestChanged(isWelsh));
+    this.store$.dispatch(
+      isWelsh
+        ? new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
   }
 
   seriousFaultCommentChanged(seriousFaultComment: CommentedCompetency) {

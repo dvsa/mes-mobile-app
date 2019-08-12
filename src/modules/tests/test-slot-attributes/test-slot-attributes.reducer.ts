@@ -18,13 +18,9 @@ export function testSlotsAttributesReducer(
   switch (action.type) {
     case testSlotAttributesActions.POPULATE_TEST_SLOT_ATTRIBUTES:
       return action.payload;
-    case testSlotAttributesActions.WELSH_TEST_CHANGED:
-      return {
-        ...state,
-        welshTest: action.isWelsh,
-      };
+    default:
+      return state;
   }
-  return state;
 }
 
 export const getTestSlotAttributes = createFeatureSelector<TestSlotAttributes>('testSlotAttributes');
