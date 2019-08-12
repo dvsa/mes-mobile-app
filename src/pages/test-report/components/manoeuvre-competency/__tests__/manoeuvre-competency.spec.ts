@@ -1,11 +1,15 @@
 import { AppModule } from '../../../../../app/app.module';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
-import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
+import {
+  DrivingFaultsBadgeComponent,
+} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
-import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
-import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
+import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import {
+  DangerousFaultBadgeComponent,
+} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
 import { StartTest } from '../../../../journal/journal.actions';

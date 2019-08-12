@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { SlotComponent } from '../../pages/journal/components/slot/slot';
+import { SlotComponent } from '../../components/test-slot/slot/slot';
 import { TestSlot, NonTestActivity } from '@dvsa/mes-journal-schema';
 
 export class SlotItem {

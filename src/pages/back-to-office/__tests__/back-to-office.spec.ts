@@ -17,7 +17,7 @@ import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.m
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/practice-mode-banner/practice-mode-banner';
+import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;

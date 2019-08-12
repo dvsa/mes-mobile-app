@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import { SlotProvider } from '../slot';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { TestSlotComponent } from '../../../pages/journal/components/test-slot/test-slot';
+import { TestSlotComponent } from '../../../components/test-slot/test-slot/test-slot';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { AppConfigProvider } from '../../app-config/app-config';

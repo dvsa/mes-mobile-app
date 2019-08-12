@@ -4,7 +4,7 @@ import { AppModule } from '../../../app/app.module';
 import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../components/components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 
 describe('JournalRekeyModal', () => {
   let fixture: ComponentFixture<JournalRekeyModal>;

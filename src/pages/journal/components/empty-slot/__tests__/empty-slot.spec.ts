@@ -5,10 +5,10 @@ import { IonicModule, Config } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { cloneDeep } from 'lodash';
-import { TimeComponent } from '../../time/time';
+import { TimeComponent } from '../../../../../components/test-slot/time/time';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
-import { LocationComponent } from '../../location/location';
+import { LocationComponent } from '../../../../../components/test-slot/location/location';
 
 describe('EmptySlotComponent', () => {
   let fixture: ComponentFixture<EmptySlotComponent>;

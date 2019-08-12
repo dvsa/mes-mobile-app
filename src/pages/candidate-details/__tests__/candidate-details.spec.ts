@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { MockComponent } from 'ng-mocks';
-import { DisplayAddressComponent } from '../../../components/display-address/display-address';
+import { DisplayAddressComponent } from '../../../components/common/display-address/display-address';
 
 describe('CandidateDetailsPage', () => {
   let fixture: ComponentFixture<CandidateDetailsPage>;

@@ -7,7 +7,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { App } from '../../../app/app.component';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
-import { ComponentsModule } from '../../../components/components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { StoreModule, Store } from '@ngrx/store';
 import { rekeySearchReducer, RekeySearchModel } from '../rekey-search.reducer';
 import { RekeySearchViewDidEnter, SearchBookedTest } from '../rekey-search.actions';

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { NonPassFinalisationPage } from './non-pass-finalisation';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [

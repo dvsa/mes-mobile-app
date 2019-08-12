@@ -4,7 +4,7 @@ import { PassFinalisationPage } from './pass-finalisation';
 import { EffectsModule } from '@ngrx/effects';
 import { PassFinalisationAnalyticsEffects } from './pass-finalisation.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [

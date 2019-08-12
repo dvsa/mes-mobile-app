@@ -7,7 +7,7 @@ import { DeviceAuthenticationProvider } from '../../../providers/device-authenti
 import { Insomnia } from '@ionic-native/insomnia';
 import { AppModule } from '../../../app/app.module';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { ComponentsModule } from '../../../components/components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';

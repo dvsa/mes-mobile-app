@@ -7,10 +7,14 @@ import { testReportReducer } from '../../../test-report.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
-import { TickIndicatorComponent } from '../../../../../components/tick-indicator/tick-indicator';
-import { DrivingFaultsBadgeComponent } from '../../../../../components/driving-faults-badge/driving-faults-badge';
-import { SeriousFaultBadgeComponent } from '../../../../../components/serious-fault-badge/serious-fault-badge';
-import { DangerousFaultBadgeComponent } from '../../../../../components/dangerous-fault-badge/dangerous-fault-badge';
+import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
+import {
+  DrivingFaultsBadgeComponent,
+} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+import {
+  DangerousFaultBadgeComponent,
+} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { StartTest } from '../../../../journal/journal.actions';
 import { By } from '@angular/platform-browser';
 import {

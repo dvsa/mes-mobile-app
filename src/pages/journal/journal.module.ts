@@ -17,6 +17,7 @@ import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { JournalComponentsModule } from './components/journal-components.module';
 import { TestsEffects } from '../../modules/tests/tests.effects';
 import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
+import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomp
   ],
   imports: [
     JournalComponentsModule,
+    TestSlotComponentsModule,
     IonicPageModule.forChild(JournalPage),
     StoreModule.forFeature('journal', journalReducer),
     EffectsModule.forFeature([

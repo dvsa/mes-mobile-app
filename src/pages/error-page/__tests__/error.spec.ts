@@ -5,7 +5,7 @@ import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ioni
 import { MockComponent } from 'ng-mocks';
 
 import { ErrorPage } from './../error';
-import { ErrorMessageComponent } from '../../../components/error-message/error-message';
+import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 import { By } from '@angular/platform-browser';
 
 describe('ErrorPage', () => {

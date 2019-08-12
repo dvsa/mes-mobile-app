@@ -23,7 +23,6 @@ import { MockedJournalModule } from '../__mocks__/journal.module.mock';
 import { UnloadJournal, LoadJournal, LoadJournalSuccess } from '../journal.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { StoreModel } from '../../../shared/models/store.model';
-
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
@@ -36,6 +35,7 @@ import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/a
 import { IncompleteTestsProvider } from '../../../providers/incomplete-tests/incomplete-tests';
 import { IncompleteTestsMock } from '../../../providers/incomplete-tests/__mocks__/incomplete-tests.mock';
 import { of } from 'rxjs/observable/of';
+import { TestSlotComponentsModule } from '../../../components/test-slot/test-slot-components.module';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -47,6 +47,7 @@ describe('JournalPage', () => {
       declarations: [JournalPage],
       imports: [
         JournalComponentsModule,
+        TestSlotComponentsModule,
         IonicModule,
         AppModule,
         StoreModule.forRoot({

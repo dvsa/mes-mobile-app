@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
+import { SignatureAreaComponent } from '../../components/common/signature-area/signature-area';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { HealthDeclarationViewDidEnter, ContinueFromDeclaration } from './health-declaration.actions';

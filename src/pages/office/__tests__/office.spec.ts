@@ -16,7 +16,7 @@ import {
   PlatformMock,
   AlertControllerMock,
 } from 'ionic-mocks';
-import { ComponentsModule } from '../../../components/components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { AppModule } from '../../../app/app.module';
 import { OfficePage } from '../office';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';

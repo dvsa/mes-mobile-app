@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SlotComponent } from '../slot/slot';
+import { SlotComponent } from '../../../../components/test-slot/slot/slot';
 import { isNil, has } from 'lodash';
 import { Activity, activities } from '../../../../providers/slot-selector/activity.constants';
 

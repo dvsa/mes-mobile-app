@@ -8,7 +8,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { ComponentsModule } from './../../../components/components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { HealthDeclarationViewDidEnter } from '../health-declaration.actions';

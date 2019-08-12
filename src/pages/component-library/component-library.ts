@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SignatureAreaComponent } from './../../components/signature-area/signature-area';
+import { SignatureAreaComponent } from '../../components/common/signature-area/signature-area';
 
 @IonicPage()
 @Component({

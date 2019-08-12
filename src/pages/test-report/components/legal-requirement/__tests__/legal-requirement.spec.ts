@@ -2,7 +2,7 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { LegalRequirementComponent } from '../legal-requirement';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../competency-button/competency-button';
-import { TickIndicatorComponent } from '../../../../../components/tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
 import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModule, Store } from '@ngrx/store';
