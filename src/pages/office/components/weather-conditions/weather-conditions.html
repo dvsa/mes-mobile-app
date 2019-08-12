@@ -9,7 +9,7 @@
     <ion-row>
       <ion-select value="weather" multiple="true" okText="Submit" cancelText="Cancel"
         placeholder="Select weather conditions" formControlName="weatherConditions" [class.ng-invalid]="invalid"
-        (ionChange)="weatherConditionsChanged($event)" [selectOptions]="{cssClass:'mes-select'}">
+        (ionChange)="weatherConditionsChanged($event)" [selectOptions]="{cssClass:'mes-select', enableBackdropDismiss:false}">
         <ion-option [value]="weatherCondition.weatherConditionDescription"
           *ngFor="let weatherCondition of weatherConditionsOptions">
           {{weatherCondition.weatherConditionNumber}} - {{weatherCondition.weatherConditionDescription}}
