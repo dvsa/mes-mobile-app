@@ -64,7 +64,7 @@
       </tab>
     </tabs>
 
-    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot | async)">
+    <div class='results-error' *ngIf="(pageState.hasSearched$ | async) && isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async)">
       <p class="error-text">
         There were no results found for your search.
       </p>
