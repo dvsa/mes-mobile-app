@@ -45,12 +45,6 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { GearboxCategoryChanged } from '../../modules/tests/vehicle-details/vehicle-details.actions';
 import { HEALTH_DECLARATION_PAGE } from '../page-names.constants';
 import {
-  D255Yes,
-  D255No,
-  DebriefWitnessed,
-  DebriefUnwitnessed,
-} from '../../modules/tests/test-summary/test-summary.actions';
-import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
@@ -237,14 +231,6 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     const subscription = changeStream$
       .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
     return subscription;
-  }
-
-  d255Changed(d255: boolean): void {
-    this.store$.dispatch(d255 ? new D255Yes() : new D255No());
-  }
-
-  debriefWitnessedChanged(debriefWitnessed: boolean) {
-    this.store$.dispatch(debriefWitnessed ? new DebriefWitnessed() : new DebriefUnwitnessed());
   }
 
   isWelshChanged(isWelsh: boolean) {
