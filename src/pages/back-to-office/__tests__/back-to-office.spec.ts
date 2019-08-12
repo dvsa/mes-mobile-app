@@ -18,6 +18,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
+import { By } from '@angular/platform-browser';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;
@@ -37,7 +38,28 @@ describe('BackToOfficePage', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({}),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            startedTests: {
+              123: {
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Post',
+                  conductedLanguage: 'Cymraeg',
+                },
+                rekey: true,
+              },
+            },
+          }),
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -79,6 +101,30 @@ describe('BackToOfficePage', () => {
         expect(screenOrientation.unlock).toHaveBeenCalled();
         expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('When the test is a rekey', () => {
+    it('the continue button redirects to reason for rekey page', () => {
+      fixture.detectChanges();
+
+      spyOn(component, 'goToReasonForRekey');
+      expect(fixture.debugElement.query(By.css('button.rekey-button'))).toBeDefined();
+      const button = fixture.debugElement.query(By.css('button.rekey-button'));
+      button.triggerEventHandler('click', null);
+
+      fixture.detectChanges();
+      expect(component.goToReasonForRekey).toHaveBeenCalled();
+    });
+  });
+
+  describe('When the test is not a rekey', () => {
+    it('the continue write up and return to journal buttons are shown', () => {
+      fixture.detectChanges();
+
+      spyOn(component, 'getRekey').and.returnValue(false);
+      expect(fixture.debugElement.query(By.css('button.continue_writeup'))).toBeDefined();
+      expect(fixture.debugElement.query(By.css('button.return-journal'))).toBeDefined();
     });
   });
 
