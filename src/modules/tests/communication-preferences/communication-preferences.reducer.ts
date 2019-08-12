@@ -5,7 +5,7 @@ import { createFeatureSelector } from '@ngrx/store';
 export const initialState: CommunicationPreferences = {
   updatedEmail: '',
   communicationMethod: 'Not provided',
-  conductedLanguage: null,
+  conductedLanguage: 'Not provided',
 };
 
 export const communicationPreferencesReducer = (
