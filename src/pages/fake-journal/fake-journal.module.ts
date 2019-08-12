@@ -6,6 +6,7 @@ import { ComponentsModule } from '../../components/common/common-components.modu
 import { EffectsModule } from '@ngrx/effects';
 import { FakeJournalEffects } from './fake-journal.effects';
 import { FakeJournalComponentsModule } from './components/fake-journal-components.module';
+import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FakeJournalComponentsModule } from './components/fake-journal-component
   imports: [
     FakeJournalComponentsModule,
     JournalComponentsModule,
+    TestSlotComponentsModule,
     IonicPageModule.forChild(FakeJournalPage),
     ComponentsModule,
     EffectsModule.forFeature([

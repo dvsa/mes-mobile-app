@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { FakeTestSlotComponent } from './fake-test-slot/fake-test-slot';
 import { JournalComponentsModule } from '../../journal/components/journal-components.module';
+import { TestSlotComponentsModule } from '../../../components/test-slot/test-slot-components.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { JournalComponentsModule } from '../../journal/components/journal-compon
     CommonModule,
     IonicModule,
     JournalComponentsModule,
+    TestSlotComponentsModule,
   ],
   entryComponents:[
     FakeTestSlotComponent,
