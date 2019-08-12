@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { rekeySearchReducer } from './rekey-search.reducer';
 import { RekeySearchProvider } from '../../providers/rekey-search/rekey-search';
 import { CompressionProvider } from '../../providers/compression/compression';
+import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CompressionProvider } from '../../providers/compression/compression';
       RekeySearchAnalyticsEffects,
     ]),
     ComponentsModule,
+    TestSlotComponentsModule,
     DirectivesModule,
   ],
   providers: [
