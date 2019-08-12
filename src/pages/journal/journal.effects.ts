@@ -45,6 +45,9 @@ import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { SetExaminerBooked } from '../../modules/tests/examiner-booked/examiner-booked.actions';
+import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
+import { SetExaminerKeyed } from '../../modules/tests/examiner-keyed/examiner-keyed.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -220,6 +223,9 @@ export class JournalEffects {
         new PopulateTestCentre(this.extractTestCentre(slot)),
         new SetTestStatusBooked(startTestAction.slotId.toString()),
         new PopulateTestCategory(slot.booking.application.testCategory),
+        new SetExaminerBooked(parseInt(staffNumber, 10)),
+        new SetExaminerConducted(parseInt(staffNumber, 10)),
+        new SetExaminerKeyed(parseInt(staffNumber, 10)),
       ];
 
       if (startTestAction.rekey) {
