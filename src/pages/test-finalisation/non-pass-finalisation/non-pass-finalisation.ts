@@ -41,7 +41,10 @@ import {
   D255Yes,
   D255No,
 } from '../../../modules/tests/test-summary/test-summary.actions';
-import { WelshTestChanged } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import {
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -167,6 +170,10 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
   }
 
   isWelshChanged(isWelsh: boolean) {
-    this.store$.dispatch(new WelshTestChanged(isWelsh));
+    this.store$.dispatch(
+      isWelsh ?
+        new CandidateChoseToProceedWithTestInWelsh('Cymraeg')
+        : new CandidateChoseToProceedWithTestInEnglish('English'),
+    );
   }
 }

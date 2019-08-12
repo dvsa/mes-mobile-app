@@ -64,10 +64,6 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest, ValidationError } from '../office.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
-import {
-  CandidateChoseToProceedWithTestInWelsh,
-  CandidateChoseToProceedWithTestInEnglish,
-} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
