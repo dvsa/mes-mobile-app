@@ -10,7 +10,7 @@ const expect = chai.expect;
 When('I continue to the back to office page', () => {
   enterD255();
   enterDebriefWitnessed();
-  const continueToBackToOfficeButton = getElement(by.id('continue-to-back-to-office'));
+  const continueToBackToOfficeButton = getElement(by.id('continue-button'));
   clickElement(continueToBackToOfficeButton);
 });
 

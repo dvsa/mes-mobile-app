@@ -110,7 +110,7 @@ Feature: Full end to end journey
       And I see a "serious" fault for "Controls - Accelerator"
       And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Controls - Accelerator"
-      And I see a "driving" fault for "Reverse right"
+      And I see a "driving" fault for "Reverse right - Control"
       And I see a "driving" fault for "Controlled stop"
       And I see a "driving" fault for "Vehicle checks"
 
@@ -206,7 +206,6 @@ Feature: Full end to end journey
       And the office page test outcome is "Unsuccessful"
       And the office activity code should be "3 - Fail due to eyesight"
       When I enter a candidate description
-      And I complete the debrief witnessed
       And I complete the weather conditions
       And I enter a comment for "serious" fault "Eyesight Test"
       And I upload the test
@@ -256,7 +255,7 @@ Feature: Full end to end journey
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Florence Pearson" page
       When I continue to the back to office page
-      Then I am on the back to office page
+      And I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"

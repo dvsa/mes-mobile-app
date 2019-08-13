@@ -70,9 +70,9 @@ Feature: Debrief including Health Declaration
       And the health declaration candidate driver number should be "CAMPB 805220 A89HC"
       And the pass certificate number should be "A123456&"
       And validation item "pass-certificate-receipt-validation-text" should not be visible
-      And validation item "health-declaration-signature-validation-text" should not be visible
+      And validation item "waiting-room-signature-validation-text" should not be visible
       When I try to confirm the health declaration
       Then validation item "pass-certificate-receipt-validation-text" should be "Confirm that you have received the pass certificate number"
       And validation item "pass-certificate-receipt-validation-text" should be visible
-      And validation item "health-declaration-signature-validation-text" should be "Enter a signature"
-      And validation item "health-declaration-signature-validation-text" should be visible
+      And validation item "waiting-room-signature-validation-text" should be "Enter a signature"
+      And validation item "waiting-room-signature-validation-text" should be visible
