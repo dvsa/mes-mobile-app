@@ -110,6 +110,9 @@ import { behaviourMap } from './office-behaviour-map';
 import { ActivityCodeModel, activityCodeModelList } from './components/activity-code/activity-code.constants';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
+import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
+import { isRekey } from '../../modules/tests/rekey/rekey.selector';
+import { REKEY_REASON_PAGE } from '../page-names.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -149,6 +152,7 @@ interface OfficePageState {
   weatherConditions$: Observable<WeatherConditions[]>;
   dangerousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
   seriousFaults$: Observable<(MultiFaultAssignableCompetency | CommentedCompetency)[]>;
+  isRekey$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -203,6 +207,10 @@ export class OfficePage extends PracticeableBasePageComponent {
     this.pageState = {
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
+      ),
+      isRekey$: currentTest$.pipe(
+        select(getRekeyIndicator),
+        select(isRekey),
       ),
       testOutcome$: currentTest$.pipe(
         select(getTestOutcome),
@@ -602,6 +610,21 @@ export class OfficePage extends PracticeableBasePageComponent {
       ],
     });
     alert.present();
+  }
+
+  goToReasonForRekey() {
+    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
+    if (this.form.valid) {
+      this.navController.push(REKEY_REASON_PAGE);
+    } else {
+      Object.keys(this.form.controls).forEach((controlName) => {
+        if (this.form.controls[controlName].invalid) {
+          this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+        }
+      });
+      this.createToast('Fill all mandatory fields');
+      this.toast.present();
+    }
   }
 
   completeTest() {
