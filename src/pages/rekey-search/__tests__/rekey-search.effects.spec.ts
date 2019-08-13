@@ -10,12 +10,14 @@ import { RekeySearchProviderMock } from '../../../providers/rekey-search/__mocks
 import * as rekeySearchActions from '../rekey-search.actions';
 import { defer } from 'rxjs/observable/defer';
 import { CompressionProvider } from '../../../providers/compression/compression';
+import { CompressionProviderMock } from '../../../providers/compression/__mocks__/compression.mock';
 
 describe('Rekey Search Effects', () => {
 
   let effects: RekeySearchEffects;
   let actions$: any;
   let rekeySearchProvider: RekeySearchProvider;
+  let compressionProvider: CompressionProvider;
 
   const appRef = '123456';
   const staffNumber = '654321';
@@ -32,21 +34,24 @@ describe('Rekey Search Effects', () => {
         RekeySearchEffects,
         provideMockActions(() => actions$),
         { provide: RekeySearchProvider, useClass: RekeySearchProviderMock },
-        CompressionProvider,
+        { provide: CompressionProvider, useClass: CompressionProviderMock },
         Store,
       ],
     });
     effects = TestBed.get(RekeySearchEffects);
     rekeySearchProvider = TestBed.get(RekeySearchProvider);
+    compressionProvider = TestBed.get(CompressionProvider);
   });
 
   it('should dispatch the SearchBookedTestSuccess action when searched with success', (done) => {
 
     spyOn(rekeySearchProvider, 'getTest').and.callThrough();
+    spyOn(compressionProvider, 'extractTestSlotResult');
 
     actions$.next(new rekeySearchActions.SearchBookedTest(appRef, staffNumber));
 
     effects.getTest$.subscribe((result) => {
+      expect(compressionProvider.extractTestSlotResult).toHaveBeenCalled();
       expect(result instanceof rekeySearchActions.SearchBookedTestSuccess).toBeTruthy();
       done();
     });
