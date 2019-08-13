@@ -2,20 +2,18 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../app/app.module';
+import { AppModule } from '../../../../app/app.module';
 import { PassFinalisationPage } from '../pass-finalisation';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import { PersistTests } from '../../../modules/tests/tests.actions';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
-import { D255Component } from '../../office/components/d255/d255';
-import { LanguagePreferencesComponent } from '../../office/components/language-preference/language-preferences';
-import { DebriefWitnessedComponent } from '../../office/components/debrief-witnessed/debrief-witnessed';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
+import { TestFinalisationComponentsModule } from '../../components/test-finalisation.module';
 
 describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationPage>;
@@ -27,11 +25,8 @@ describe('PassFinalisationPage', () => {
       declarations: [
         PassFinalisationPage,
         MockComponent(PracticeModeBanner),
-        MockComponent(LanguagePreferencesComponent),
-        MockComponent(D255Component),
-        MockComponent(DebriefWitnessedComponent),
       ],
-      imports: [IonicModule, AppModule],
+      imports: [IonicModule, AppModule, TestFinalisationComponentsModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },

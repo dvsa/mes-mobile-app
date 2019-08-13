@@ -1,13 +1,13 @@
-<ion-row *ngIf="display" class="mes-validated-row mes-row-separator" id="debrief-card" [formGroup]="formGroup">
+<ion-row *ngIf="display" class="mes-validated-row" id="debrief-card" [formGroup]="formGroup">
   <div class="validation-bar" [class.ng-invalid]="invalid">
   </div>
-  <ion-col class="component-label" col-36 align-self-center>
-    <label>Debrief witnessed?</label>
+  <ion-col class="component-label" col-32 align-self-center>
+    <label>Debrief witnessed</label>
   </ion-col>
   <ion-col align-self-center>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col col-32>
+      <ion-col col-36>
         <input type="radio" formControlName="debriefWitnessed" id="debrief-witnessed-yes" name="debriefWitnessed"
           formControlName="debriefWitnessed" class="gds-radio-button" [class.ng-invalid]="invalid" value="Yes"
           [checked]="debriefWitnessed === true" (change)="debriefWitnessedChanged($event.target.value)">

@@ -11,30 +11,16 @@ When('I complete the office write up', () => {
   enterRouteNumber('2');
   enterIndependentDriving('satnav');
   enterCandidateDescription();
-  enterDebriefWitnessed();
   enterShowMe('S5 - Horn');
   enterWeatherConditions();
-  enterD255();
 });
 
 When('I complete the office write up with Not applicable to independent driving and show me question', () => {
   enterRouteNumber('4');
   enterIndependentDriving('na');
   enterCandidateDescription();
-  enterDebriefWitnessed();
   enterShowMe('N/A - Not applicable');
   enterWeatherConditions();
-  enterD255();
-});
-
-When('I select activity code {string}', (activityCodeDesc) => {
-  const activitySelector = getElement(by.id('activity-code-selector'));
-  clickElement(activitySelector);
-  const activityItem = getElement(by.xpath(`//button/span/div[@class='alert-radio-label']
-  [normalize-space(text()) = '${activityCodeDesc}']`));
-  clickElement(activityItem);
-  const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
-  clickElement(submitDialog);
 });
 
 When('I upload the test', () => {
@@ -49,10 +35,6 @@ When('I enter a candidate description', () => {
   enterCandidateDescription();
 });
 
-When('I complete the debrief witnessed', () => {
-  enterDebriefWitnessed();
-});
-
 When('I complete the weather conditions', () => {
   enterWeatherConditions();
 });
@@ -64,7 +46,7 @@ When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel
   commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
-Then('the activity code should be {string}', (activityCode) => {
+Then('the office activity code should be {string}', (activityCode) => {
   const acitivityCodeField = getElement(by.id('activity-code-selector'));
   return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
 });
@@ -118,11 +100,6 @@ const enterRouteNumber = (routeNumber) => {
   routeField.sendKeys(routeNumber);
 };
 
-const enterDebriefWitnessed = () => {
-  const debriefWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
-  clickElement(debriefWitnessedRadio);
-};
-
 const enterIndependentDriving = (type) => {
   const satnavRadio = getElement(by.id(`independent-driving-${type}`));
   clickElement(satnavRadio);
@@ -146,9 +123,4 @@ const enterWeatherConditions = () => {
   clickElement(weatherItem2);
   const submitDialog = getElement(by.xpath('//button[span[text() = "Submit"]]'));
   clickElement(submitDialog);
-};
-
-const enterD255 = () => {
-  const d255Radio = getElement(by.id('d255-yes'));
-  clickElement(d255Radio);
 };

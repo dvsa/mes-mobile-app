@@ -5,20 +5,17 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content>
   <div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
 
-        <ion-row class="mes-component-row mes-row-separator" id="candidate-section" align-items-center>
-          <ion-col class="component-label">
-            <h2 id="candidate-name">{{pageState.candidateName$ | async}}</h2>
-            <h3 id="candidate-driver-number">{{pageState.candidateDriverNumber$ | async}}</h3>
-          </ion-col>
-        </ion-row>
+        <finalisation-header [candidateName]="pageState.candidateName$ | async"
+          [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
+          [outcomeText]="pageState.testOutcomeText$ | async"></finalisation-header>
 
         <ion-row class="mes-component-row mes-row-separator" id="application-reference-card" align-items-center>
-          <ion-col class="component-label" col-36>
+          <ion-col class="component-label" col-32>
             <label>Application reference</label>
           </ion-col>
           <ion-col>
@@ -29,13 +26,13 @@
         <ion-row class="mes-validated-row mes-row-separator" id="provisional-license-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('provisionalLicenseProvidedCtrl')">
           </div>
-          <ion-col class="component-label" col-36 align-self-center>
+          <ion-col class="component-label" col-32 align-self-center>
             <label>Provisional licence received</label>
           </ion-col>
           <ion-col align-self-center>
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
-              <ion-col col-32>
+              <ion-col col-36>
                 <input formControlName="provisionalLicenseProvidedCtrl" type="radio" id="license-received" value="yes"
                   [checked]="pageState.provisionalLicenseProvidedRadioChecked$ | async" class="gds-radio-button"
                   (click)="provisionalLicenseReceived()">
@@ -60,13 +57,13 @@
         <ion-row class="mes-validated-row mes-row-separator" id="transmission-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionCtrl')">
           </div>
-          <ion-col class="component-label" col-36 align-self-center>
+          <ion-col class="component-label" col-32 align-self-center>
             <label>Transmission</label>
           </ion-col>
           <ion-col align-self-center>
             <ion-row class="spacing-row"></ion-row>
             <ion-row>
-              <ion-col col-32>
+              <ion-col col-36>
                 <input type="radio" id="transmission-manual" formControlName="transmissionCtrl" name="transmissionCtrl"
                   class="gds-radio-button" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionCtrl')"
                   (click)="transmissionChanged($event.target.value)" value='Manual'
@@ -94,7 +91,7 @@
         <ion-row class="mes-validated-row mes-row-separator" id="provisional-license-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('passCertificateNumberCtrl') ||
           passCertificateValidation()"></div>
-          <ion-col class="component-label" col-36 align-self-center>
+          <ion-col class="component-label" col-32 align-self-center>
             <label>Pass certificate number</label>
           </ion-col>
           <ion-col align-self-center>
@@ -114,24 +111,25 @@
             </ion-row>
           </ion-col>
         </ion-row>
+
+        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
+          (d255Change)="d255Changed($event)"></d255>
+
         <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
           (welshChanged)="isWelshChanged($event)"></language-preferences>
-
-        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome"
-          [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
 
         <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
           [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
         </debrief-witnessed>
 
       </ion-grid>
-      <ion-footer>
-        <ion-row class="mes-full-width-card mes-row-separator">
-          <button type="submit" class="mes-primary-button" ion-button>
-            <h3>Continue</h3>
-          </button>
-        </ion-row>
-      </ion-footer>
     </form>
   </div>
 </ion-content>
+<ion-footer>
+  <ion-row class="mes-full-width-card mes-row-separator">
+    <button (click)="onSubmit()" class="mes-primary-button" ion-button>
+      <h3>Continue</h3>
+    </button>
+  </ion-row>
+</ion-footer>

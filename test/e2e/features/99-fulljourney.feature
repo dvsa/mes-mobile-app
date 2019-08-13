@@ -146,12 +146,12 @@ Feature: Full end to end journey
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Theresa Shaw" page
-      When I continue to the back to office page
+      When I select activity code "51 - Candidate failed to attend at test centre"
+      And I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Terminated"
-      When I select activity code "51 - Candidate failed to attend at test centre"
       And I upload the test
       Then I should see the "Journal" page
       And the test result for "Miss Theresa Shaw" is "51"
@@ -169,12 +169,12 @@ Feature: Full end to end journey
       Then I am on the post debrief holding page
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Ali Campbell" page
-      When I continue to the back to office page
+      When I select activity code "20 - Documents not produced"
+      And I continue to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Terminated"
-      When I select activity code "20 - Documents not produced"
       And I try to upload the test
       Then validation item "office-candidate-description-validation-text" should be "Describe the candidate"
       And validation item "office-candidate-description-validation-text" should be visible
@@ -204,7 +204,7 @@ Feature: Full end to end journey
       And I continue to the office write up
       Then I should see the "Office" page
       And the office page test outcome is "Unsuccessful"
-      And the activity code should be "3 - Fail due to eyesight"
+      And the office activity code should be "3 - Fail due to eyesight"
       When I enter a candidate description
       And I complete the debrief witnessed
       And I complete the weather conditions

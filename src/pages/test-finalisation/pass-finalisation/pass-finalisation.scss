@@ -1,7 +1,10 @@
 page-pass-finalisation {
   ion-content > div {
     background-color: map-get($colors, "mes-white");
-    ion-footer button {
+  }
+  ion-footer {
+    background-color: map-get($colors, "mes-white");
+    button {
       width: 100%;
       min-height: 56px;
     }

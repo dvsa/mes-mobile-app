@@ -64,10 +64,6 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest, ValidationError } from '../office.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
-import {
-  CandidateChoseToProceedWithTestInWelsh,
-  CandidateChoseToProceedWithTestInEnglish,
-} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -87,7 +83,6 @@ describe('OfficePage', () => {
         MockComponent(AdditionalInformationComponent),
         MockComponent(IndependentDrivingComponent),
         MockComponent(FaultCommentCardComponent),
-        MockComponent(ActivityCodeComponent),
       ],
       imports: [
         IonicModule,
@@ -351,19 +346,6 @@ describe('OfficePage', () => {
       component.isPracticeMode = true;
       component.popToRoot();
       expect(navController.popTo).toHaveBeenCalled();
-    });
-  });
-
-  describe('isWelshChanged', () => {
-    it('should dispatch a CandidateChoseToProceedInWelshLanguage action when welsh is toggled true', () => {
-      const isWelsh = true;
-      component.isWelshChanged(isWelsh);
-      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInWelsh('Cymraeg'));
-    });
-    it('should dispatch a CandidateChoseToProceedInEnglishLanguage action when welsh is toggled false', () => {
-      const isWelsh = false;
-      component.isWelshChanged(isWelsh);
-      expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInEnglish('English'));
     });
   });
 

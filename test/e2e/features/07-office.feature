@@ -21,7 +21,7 @@ Feature: Office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      And the activity code should be "1 - Pass"
+      And the office activity code should be "1 - Pass"
       And I try to upload the test
       Then the tell me question should be "T5 - Headlights & tail lights"
       And validation item "office-route-number-validation-text" should be "Enter the route number (max 2 digits)"
@@ -68,7 +68,7 @@ Feature: Office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
-      And the activity code should be "2 - Fail"
+      And the office activity code should be "2 - Fail"
       And I try to upload the test
       Then the tell me question should be "T1 - Brakes"
       And validation item "office-route-number-validation-text" should be "Enter the route number (max 2 digits)"
