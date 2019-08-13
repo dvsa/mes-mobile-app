@@ -183,7 +183,6 @@ describe('SlotProvider', () => {
       },
       testSlots: cloneDeep(oldSlots['2019-01-21'].map(slot => slot.slotData)),
       nonTestActivities: cloneDeep(oldNonTestActivities),
-      personalCommitments: [],
     };
 
     describe('when there are no slots in the new journal', () => {
