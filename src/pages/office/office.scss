@@ -6,7 +6,7 @@ page-office {
       padding: 0;
     }
     .component-label {
-      padding-left: 32px;
+      padding-left: 16px;
     }
   }
   .mes-primary-button {
@@ -22,8 +22,13 @@ page-office {
     }
   }
   ion-content {
-        ion-select{
-          width: 452px;
+        ion-select {
+          max-width: initial;
+          width: 100%;
+          margin-right: 48px;
+        }
+        textarea {
+          width: 100%;
         }
         input.vehicle-reg-input {
           width: 66px;
@@ -40,6 +45,18 @@ page-office {
             display: block;
             margin-top: 42px;
           }
+        }
+        .fault-badge.col {
+          padding-left: 16px;
+        }
+        .component-label.col {
+          padding-left: 16px;
+        }
+        ion-col[align-self-start].component-label {
+          padding-top: 20px;
+        }
+        .textarea-input.col {
+          padding-right: 48px;
         }
       }
       .unsuccessful {

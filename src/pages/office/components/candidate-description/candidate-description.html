@@ -2,13 +2,13 @@
   [formGroup]="formGroup">
   <div class="validation-bar" [class.ng-invalid]="invalid">
   </div>
-  <ion-col class="component-label" col-32 align-self-center>
+  <ion-col class="component-label" col-32 align-self-start>
     <label>Physical description of the candidate</label>
   </ion-col>
-  <ion-col align-self-center>
+  <ion-col align-self-center padding-left>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col col-64>
+      <ion-col class="textarea-input">
         <textarea id="physical-description" formControlName="candidateDescription" class="vehicle-reg-input mes-data"
           charLimit="1000" charCount
           [class.ng-invalid]="invalid" [value]="candidateDescription"

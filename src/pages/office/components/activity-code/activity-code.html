@@ -1,9 +1,9 @@
-<ion-row class="mes-validated-row mes-row-separator" id="activity-code-card" [formGroup]="formGroup">
+<ion-row class="mes-validated-row mes-row-separator" id="activity-code-card" [formGroup]="formGroup" nowrap>
     <div class="validation-bar" [class.ng-invalid]="invalid"></div>
     <ion-col class="component-label" col-32 align-self-center>
       <label>Activity code</label>
     </ion-col>
-    <ion-col align-self-center>
+    <ion-col col-64 align-self-center padding-left>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
         <ion-select id="activity-code-selector" placeholder="Select an activity code" okText="Submit" cancelText="Cancel"

@@ -2,18 +2,18 @@
   <ion-row>
     <div class="validation-bar" [class.ng-invalid]="invalid">
     </div>
-    <ion-col class="component-label" align-self-center col-1 [ngSwitch]="faultType">
+    <ion-col class="fault-badge" align-self-start col-4 no-padding [ngSwitch]="faultType">
       <dangerous-fault-badge [showBadge]="true" *ngSwitchCase="'dangerous'"></dangerous-fault-badge>
       <serious-fault-badge [showBadge]="true" *ngSwitchCase="'serious'"></serious-fault-badge>
       <driving-faults-badge [count]="faultComment.faultCount" *ngSwitchCase="'driving'"></driving-faults-badge>
     </ion-col>
-    <ion-col class="component-label" col-29 align-self-center>
+    <ion-col class="component-label" col-28 align-self-start>
       <label class="fault-label">{{faultComment.competencyDisplayName}}</label>
     </ion-col>
-    <ion-col>
+    <ion-col padding-left>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <div [formGroup]="parentForm">
+        <ion-col class="textarea-input" [formGroup]="parentForm">
           <textarea *ngIf="!isFieldNotVisible && !shouldClearDrivingFaultValidators()" row="5" class="mes-data" [formControlName]="formControlName" [class.ng-invalid]="invalid"
             charLimit="1000" charCount (onCharacterCountChanged)="characterCountChanged($event)"
             [value]="faultComment.comment" (change)="faultCommentChanged($event.target.value)">
@@ -21,7 +21,7 @@
           <div class="character-count validation-text" [ngClass]="{'ng-invalid': charactersExceeded()}">
             {{getCharacterCountText()}}
           </div>
-        </div>
+        </ion-col>
       </ion-row>
       <ion-row class="validation-message-row" align-items-center>
         <div class="validation-text" [class.ng-invalid]="invalid" *ngIf="invalid && !charactersExceeded()">
