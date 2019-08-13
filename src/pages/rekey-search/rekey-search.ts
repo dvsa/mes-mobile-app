@@ -8,13 +8,15 @@ import { StoreModel } from '../../shared/models/store.model';
 import { RekeySearchViewDidEnter, SearchBookedTest } from './rekey-search.actions';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { getIsLoading, getHasSearched } from './rekey-search.selector';
+import { getIsLoading, getHasSearched, getBookedTestSlot } from './rekey-search.selector';
 import { getRekeySearchState } from './rekey-search.reducer';
 import { TestSlot } from '@dvsa/mes-journal-schema';
+import { isEmpty } from 'lodash';
 
 interface RekeySearchPageState {
   isLoading$: Observable<boolean>;
   hasSearched$: Observable<boolean>;
+  bookedTestSlot$: Observable<TestSlot>;
 }
 
 @IonicPage()
@@ -52,6 +54,10 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
         select(getRekeySearchState),
         map(getHasSearched),
       ),
+      bookedTestSlot$: this.store$.pipe(
+        select(getRekeySearchState),
+        map(getBookedTestSlot),
+      ),
     };
   }
 
@@ -75,6 +81,10 @@ export class RekeySearchPage extends BasePageComponent implements OnInit {
 
   searchTests() {
     this.store$.dispatch(new SearchBookedTest(this.applicationReference, this.staffNumber));
+  }
+
+  isBookedTestSlotEmpty(bookedTestsSlot: TestSlot) {
+    return isEmpty(bookedTestsSlot);
   }
 
 }
