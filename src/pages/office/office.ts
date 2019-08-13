@@ -453,17 +453,8 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   onSubmit() {
-    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
-    if (this.form.valid) {
+    if (this.isFormValid()) {
       this.showFinishTestModal();
-    } else {
-      Object.keys(this.form.controls).forEach((controlName) => {
-        if (this.form.controls[controlName].invalid) {
-          this.store$.dispatch(new ValidationError(`${controlName} is blank`));
-        }
-      });
-      this.createToast('Fill all mandatory fields');
-      this.toast.present();
     }
   }
 
@@ -613,18 +604,24 @@ export class OfficePage extends PracticeableBasePageComponent {
   }
 
   goToReasonForRekey() {
+    if (this.isFormValid()) {
+      this.navController.push(REKEY_REASON_PAGE);
+    }
+  }
+
+  isFormValid() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(REKEY_REASON_PAGE);
-    } else {
-      Object.keys(this.form.controls).forEach((controlName) => {
-        if (this.form.controls[controlName].invalid) {
-          this.store$.dispatch(new ValidationError(`${controlName} is blank`));
-        }
-      });
-      this.createToast('Fill all mandatory fields');
-      this.toast.present();
+      return true;
     }
+    Object.keys(this.form.controls).forEach((controlName) => {
+      if (this.form.controls[controlName].invalid) {
+        this.store$.dispatch(new ValidationError(`${controlName} is blank`));
+      }
+    });
+    this.createToast('Fill all mandatory fields');
+    this.toast.present();
+    return false;
   }
 
   completeTest() {
