@@ -4,16 +4,16 @@
   <ion-col class="component-label" col-32 align-self-center>
     <label>Debrief witnessed</label>
   </ion-col>
-  <ion-col align-self-center>
+  <ion-col align-self-center padding-left>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col col-36>
+      <ion-col col-48>
         <input type="radio" formControlName="debriefWitnessed" id="debrief-witnessed-yes" name="debriefWitnessed"
           formControlName="debriefWitnessed" class="gds-radio-button" [class.ng-invalid]="invalid" value="Yes"
           [checked]="debriefWitnessed === true" (change)="debriefWitnessedChanged($event.target.value)">
         <label for="debrief-witnessed-yes" class="radio-label">Yes</label>
       </ion-col>
-      <ion-col col-32>
+      <ion-col>
         <input type="radio" formControlName="debriefWitnessed" id="debrief-witnessed-no" name="debriefWitnessed"
           formControlName="debriefWitnessed" class="gds-radio-button" [class.ng-invalid]="invalid" value="No"
           [checked]="debriefWitnessed === false" (change)="debriefWitnessedChanged($event.target.value)">

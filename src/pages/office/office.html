@@ -62,7 +62,7 @@
               <ion-col class="component-label" col-32 align-self-center>
                 <label>Tell me question</label>
               </ion-col>
-              <ion-col align-self-center>
+              <ion-col align-self-center padding-left>
                 <ion-row class="spacing-row"></ion-row>
                 <ion-row>
                   <ion-col col-64 class="mes-data" id="tell-me-question-text">{{pageState.tellMeQuestionText$ | async}}</ion-col>
@@ -98,10 +98,10 @@
         <ion-card-content>
           <ion-grid>
             <ion-row align-items-start class="mes-data">
-              <ion-col col-34>
+              <ion-col col-32>
                 <h4 class="fault-heading">ETA</h4>
               </ion-col>
-              <ion-col align-self-start>
+              <ion-col align-self-start padding-left>
                 <div id="etaFaults">{{pageState.etaFaults$ | async}}</div>
               </ion-col>
             </ion-row>
@@ -113,10 +113,10 @@
         <ion-card-content>
           <ion-grid>
             <ion-row align-items-start class="mes-data">
-              <ion-col col-34>
+              <ion-col col-32>
                 <h4 class="fault-heading">ECO</h4>
               </ion-col>
-              <ion-col align-self-start>
+              <ion-col align-self-start padding-left>
                 <div id="ecoFaults">{{pageState.ecoFaults$ | async}}</div>
               </ion-col>
             </ion-row>
@@ -151,13 +151,13 @@
         <ion-card-content>
           <ion-row class="driving-fault-no-commentary-row" id="driving-fault-commentary-label"
             *ngFor="let drivingFault of (pageState.drivingFaults$ | async)">
-            <ion-col class="component-label" align-self-center col-1>
+            <ion-col class="fault-badge" align-self-center col-4>
               <div class="counter-icon">
                 <driving-faults-badge class="counter driving-faults" [count]="drivingFault.faultCount">
                 </driving-faults-badge>
               </div>
             </ion-col>
-            <ion-col class="component-label" col-58 align-self-center>
+            <ion-col class="component-label" align-self-center>
               <label class="fault-label">{{drivingFault.competencyDisplayName}}</label>
             </ion-col>
           </ion-row>

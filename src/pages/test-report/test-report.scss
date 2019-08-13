@@ -2,6 +2,18 @@ $report-mode-border-width: 4px;
 $toolbar-height: 68px;
 page-test-report {
 
+  // ensure the content on the test report page doesn't grow with larger accessibility text
+  ion-content {
+    div, span {
+      .text-zoom-regular &,
+      .text-zoom-large &,
+      .text-zoom-x-large & {
+        font-size: 20px;
+        line-height: 26px;
+      }
+    }
+  }
+
   .content-ios {
     background-color: map-get($colors-gds, 'gds-grey-3');
   }
@@ -35,10 +47,14 @@ page-test-report {
 
   .section-header {
     color: map-get($colors-gds, 'gds-black');
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 25px;
-    margin-left: 4px;
+    .text-zoom-regular &,
+    .text-zoom-large &,
+    .text-zoom-x-large & {
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 25px;
+      margin-left: 4px;
+    }
   }
   .divider {
     border-top: 1px solid map-get($colors-gds, 'gds-grey-1');

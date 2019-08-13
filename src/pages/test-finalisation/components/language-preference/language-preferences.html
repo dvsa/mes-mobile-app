@@ -3,16 +3,16 @@
     <ion-col class="component-label" col-32 align-self-center>
       <label>Test language</label>
     </ion-col>
-    <ion-col align-self-center>
+    <ion-col align-self-center padding-left>
       <ion-row class="spacing-row"></ion-row>
       <ion-row>
-        <ion-col col-36>
+        <ion-col col-48>
           <input type="radio" id="lang-pref-english" class="gds-radio-button" name="languagePreferences"
             formControlName="languagePreferences" value=false [checked]="(isWelsh === false)"
             (change)="isWelshChanged($event.target.value)">
           <label for="lang-pref-english" class="radio-label">English</label>
         </ion-col>
-        <ion-col col-32>
+        <ion-col>
           <input type="radio" id="lang-pref-welsh" class="gds-radio-button" name="languagePreferences"
             formControlName="languagePreferences" [class.ng-invalid]="invalid" value=true
             [checked]="(isWelsh === true)" (change)="isWelshChanged($event.target.value)">
