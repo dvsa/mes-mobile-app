@@ -21,6 +21,10 @@ describe('TestPersistenceProvider', () => {
       startedTests: {
         12345678: {
           rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
           category: 'B',
           activityCode: '1',
           journalData: {
@@ -49,6 +53,10 @@ describe('TestPersistenceProvider', () => {
         },
         23456789: {
           rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
           category: 'B',
           activityCode: '1',
           journalData: {

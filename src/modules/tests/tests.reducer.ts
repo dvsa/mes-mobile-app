@@ -26,6 +26,10 @@ import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actio
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { categoryReducer } from './category/category.reducer';
 import { rekeyReducer } from './rekey/rekey.reducer';
+import { examinerBookedReducer } from './examiner-booked/examiner-booked.reducer';
+import { examinerConductedReducer } from './examiner-conducted/examiner-conducted.reducer';
+import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
+import { changeMarkerReducer } from './change-marker/change-marker';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -112,6 +116,10 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
             rekey: rekeyReducer,
+            examinerBooked: examinerBookedReducer,
+            examinerConducted: examinerConductedReducer,
+            examinerKeyed: examinerKeyedReducer,
+            changeMarker: changeMarkerReducer,
           }, combineReducers,
         )(
           // The redux pattern necessitates that the state tree be initialised

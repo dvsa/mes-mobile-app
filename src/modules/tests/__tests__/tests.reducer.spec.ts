@@ -77,6 +77,10 @@ describe('testsReducer', () => {
           journalData: null,
           activityCode: null,
           rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
         },
         [testReportPracticeSlotId]: {
           testData: {
@@ -103,6 +107,10 @@ describe('testsReducer', () => {
           journalData: null,
           activityCode: null,
           rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
         },
       },
       testStatus: {},

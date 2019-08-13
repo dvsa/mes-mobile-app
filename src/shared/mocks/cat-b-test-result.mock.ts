@@ -4,6 +4,10 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   category: 'B',
   activityCode: '2',
   rekey: false,
+  changeMarker: false,
+  examinerBooked: 1,
+  examinerConducted: 1,
+  examinerKeyed: 1,
   journalData: {
     applicationReference: {
       applicationId: 1,

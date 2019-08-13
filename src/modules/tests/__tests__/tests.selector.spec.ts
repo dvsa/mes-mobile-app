@@ -52,6 +52,10 @@ describe('testsSelector', () => {
         },
         activityCode: ActivityCodes.PASS,
         rekey: false,
+        changeMarker: false,
+        examinerBooked: 1,
+        examinerConducted: 1,
+        examinerKeyed: 1,
       };
       const journal: JournalModel = {
         isLoading: false,
@@ -125,6 +129,10 @@ describe('testsSelector', () => {
         },
       },
       rekey: false,
+      changeMarker: false,
+      examinerBooked: 1,
+      examinerConducted: 1,
+      examinerKeyed: 1,
     };
     it('should retrieve a passed result for a pass activity code', () => {
       const result = getTestOutcomeText(testState);
@@ -166,6 +174,10 @@ describe('testsSelector', () => {
         },
       },
       rekey: false,
+      changeMarker: false,
+      examinerBooked: 1,
+      examinerConducted: 1,
+      examinerKeyed: 1,
     };
     it('should return true for a passed activity code', () => {
       const result = isPassed(testState);
@@ -207,6 +219,10 @@ describe('testsSelector', () => {
         },
       },
       rekey: false,
+      changeMarker: false,
+      examinerBooked: 1,
+      examinerConducted: 1,
+      examinerKeyed: 1,
     };
     it('should return the DVSA_RADIO_FAILURE ActivityCode', () => {
       const activityCode = getActivityCode(testState);
@@ -275,6 +291,10 @@ describe('testsSelector', () => {
             activityCode: ActivityCodes.ACCIDENT,
             journalData: null,
             rekey: false,
+            changeMarker: false,
+            examinerBooked: 1,
+            examinerConducted: 1,
+            examinerKeyed: 1,
           },
         },
         testStatus: {},
