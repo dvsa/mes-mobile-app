@@ -5,12 +5,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content>
   <div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-grid>
 
-          <finalisation-header [candidateName]="pageState.candidateName$ | async"
+        <finalisation-header [candidateName]="pageState.candidateName$ | async"
           [candidateDriverNumber]="pageState.candidateDriverNumber$ | async"
           [outcomeText]="pageState.testOutcomeText$ | async"></finalisation-header>
 
@@ -111,24 +111,25 @@
             </ion-row>
           </ion-col>
         </ion-row>
+
+        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
+          (d255Change)="d255Changed($event)"></d255>
+
         <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
           (welshChanged)="isWelshChanged($event)"></language-preferences>
-
-        <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome"
-          [formGroup]="form" (d255Change)="d255Changed($event)"></d255>
 
         <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
           [outcome]="testOutcome" (debriefWitnessedChange)="debriefWitnessedChanged($event)">
         </debrief-witnessed>
 
       </ion-grid>
-      <ion-footer>
-        <ion-row class="mes-full-width-card mes-row-separator">
-          <button type="submit" class="mes-primary-button" ion-button>
-            <h3>Continue</h3>
-          </button>
-        </ion-row>
-      </ion-footer>
     </form>
   </div>
 </ion-content>
+<ion-footer>
+  <ion-row class="mes-full-width-card mes-row-separator">
+    <button (click)="onSubmit()" class="mes-primary-button" ion-button>
+      <h3>Continue</h3>
+    </button>
+  </ion-row>
+</ion-footer>
