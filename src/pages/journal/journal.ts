@@ -31,6 +31,7 @@ import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomp
 import { ERROR_PAGE } from '../page-names.constants';
 import { App } from './../../app/app.component';
 import { ErrorTypes } from '../../shared/models/error-message';
+import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-commitment';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -216,6 +217,10 @@ export class JournalPage extends BasePageComponent implements OnInit {
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
       lastLocation = slot.slotData.testCentre.centreName;
+
+      // if this is a personal commitment assign it to the component
+      (<PersonalCommitmentSlotComponent>componentRef.instance).personalCommitments =
+        slot.personalCommitment;
     }
   }
 

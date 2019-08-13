@@ -16,6 +16,7 @@ const localJournal: ExaminerWorkSchedule = {
     individualId: 9000000,
   },
   nonTestActivities: [],
+  personalCommitments: [],
   testSlots: [
     {
       booking: {

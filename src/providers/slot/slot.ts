@@ -44,7 +44,12 @@ export class SlotProvider {
         }
       }
 
-      return new SlotItem(newSlot, differenceFound);
+      const personalCommitment =
+        newJournal.personalCommitments.filter(commitment => commitment.slotId === newSlot.slotDetail.slotId);
+
+      // add personalCommitment information to SlotItem, component and activityCode set to null
+      // as they are not constructed at this stage.
+      return new SlotItem(newSlot, differenceFound, null, null, personalCommitment);
     });
   }
 
