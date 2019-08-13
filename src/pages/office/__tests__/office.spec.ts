@@ -127,6 +127,7 @@ describe('OfficePage', () => {
                     driverNumber: '123',
                   },
                 },
+                rekey: false,
               },
             },
           }),
@@ -266,6 +267,7 @@ describe('OfficePage', () => {
 
     describe('deferring the write up', () => {
       it('should dispatch an action to persist tests + pop navstack to root when pressing save and continue', () => {
+        fixture.detectChanges();
         const saveAndContinueButton = fixture.debugElement.query(By.css('#defer-button'));
         saveAndContinueButton.triggerEventHandler('click', null);
         fixture.detectChanges();
