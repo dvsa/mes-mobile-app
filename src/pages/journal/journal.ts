@@ -31,6 +31,7 @@ import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomp
 import { ERROR_PAGE } from '../page-names.constants';
 import { App } from './../../app/app.component';
 import { ErrorTypes } from '../../shared/models/error-message';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 
