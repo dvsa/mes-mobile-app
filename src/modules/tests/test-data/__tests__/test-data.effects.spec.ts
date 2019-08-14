@@ -7,6 +7,8 @@ import * as journalActions from '../../../../pages/journal/journal.actions';
 import { testsReducer } from '../../tests.reducer';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
+import { Competencies } from '../test-data.constants';
+import { FaultPayload } from '../test-data.models';
 
 describe('Test Data Effects', () => {
 
@@ -30,6 +32,26 @@ describe('Test Data Effects', () => {
     });
     effects = TestBed.get(TestDataEffects);
     store$ = TestBed.get(Store);
+  });
+
+  describe('throttleAddDrivingFaultEffect', () => {
+    it('should dispatch an action to add driving fault', (done) => {
+      const faultPayload: FaultPayload = {
+        competency: Competencies.ancillaryControls,
+        newFaultCount: 1,
+      };
+      const throttleAddDrivingFault = new testDataActions.ThrottleAddDrivingFault(faultPayload);
+      // ARRANGE - setup the store
+      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(throttleAddDrivingFault);
+      // ACT - replay the action for the effect
+      actions$.next(throttleAddDrivingFault);
+      // ASSERT
+      effects.throttleAddDrivingFaultEffect$.subscribe((result) => {
+        expect(result).toEqual(new testDataActions.AddDrivingFault(faultPayload));
+        done();
+      });
+    });
   });
 
   describe('setEcoControlCompletedEffect', () => {
