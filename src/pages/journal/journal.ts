@@ -31,6 +31,8 @@ import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomp
 import { ERROR_PAGE } from '../page-names.constants';
 import { App } from './../../app/app.component';
 import { ErrorTypes } from '../../shared/models/error-message';
+import { DeviceProvider } from '../../providers/device/device';
+import { Insomnia } from '@ionic-native/insomnia';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -77,6 +79,10 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public appConfigProvider: AppConfigProvider,
     public incompleteTestsProvider: IncompleteTestsProvider,
     private app: App,
+    private deviceProvider: DeviceProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
+
   ) {
     super(platform, navController, authenticationProvider);
     this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
@@ -156,6 +162,12 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new journalActions.JournalViewDidEnter());
+
+    if (super.isIos()) {
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+      this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   loadJournalManually() {
