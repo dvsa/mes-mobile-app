@@ -10,8 +10,11 @@ const expect = chai.expect;
 When('I continue to the back to office page', () => {
   enterD255();
   enterDebriefWitnessed();
-  const continueToBackToOfficeButton = getElement(by.id('continue-button'));
-  clickElement(continueToBackToOfficeButton);
+  clickContinue();
+});
+
+When('I click continue to proceed to the back to office page', () => {
+  clickContinue();
 });
 
 When('I complete d255', () => {
@@ -55,3 +58,8 @@ Then('the nonpassfinalisation page test outcome is {string}', (testOutcome : str
   const testOutcomeField = getElement(by.id('office-page-test-outcome'));
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
+
+const clickContinue = () => {
+  const continueToBackToOfficeButton = getElement(by.xpath('//non-pass-finalisation//button[@id = "continue-button"]'));
+  clickElement(continueToBackToOfficeButton);
+};
