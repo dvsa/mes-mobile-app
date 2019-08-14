@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform, Modal, ModalController, LoadingController, Loading } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter, RekeyReasonViewDidLeave } from './rekey-reason.actions';
+import { RekeyReasonViewDidLeave, IpadIssueSelected } from './rekey-reason.actions';
 import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,6 +14,7 @@ import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
 import { RekeyReasonUploadModel } from './rekey-reason.model';
 import { getUploadStatus } from './rekey-reason.selector';
+import { FormGroup, FormControl } from '@angular/forms';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
@@ -25,9 +25,14 @@ interface RekeyReasonPageState {
   selector: 'page-rekey-reason',
   templateUrl: 'rekey-reason.html',
 })
-export class RekeyReasonPage extends PracticeableBasePageComponent {
+export class RekeyReasonPage {
+
+  formGroup: FormGroup;
+
+  ipadIssueBoolean: boolean;
 
   pageState: RekeyReasonPageState;
+
   subscription: Subscription = Subscription.EMPTY;
 
   isUploading: boolean = false;
@@ -45,7 +50,13 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
     private modalController: ModalController,
     public loadingController: LoadingController,
   ) {
-    super(platform, navController, authenticationProvider, store$);
+    this.formGroup = new FormGroup({
+      ipadIssue: new FormControl(false),
+    });
+  }
+
+  ipadIssue() {
+    console.log('Form changed');
   }
 
   ngOnInit(): void {
@@ -61,10 +72,6 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
     this.subscription = merge(
       uploadStatus$.pipe(map(this.handleUploadOutcome)),
     ).subscribe();
-  }
-
-  ionViewDidEnter() {
-    this.store$.dispatch(new RekeyReasonViewDidEnter());
   }
 
   ionViewDidLeave(): void {
@@ -120,6 +127,11 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
       this.loadingSpinner.dismiss();
       this.loadingSpinner = null;
     }
+  }
+
+  ipadIssueSelected() {
+    this.store$.dispatch(new IpadIssueSelected(this.formGroup.controls['ipadIssue'].value));
+    console.log('asd');
   }
 
 }

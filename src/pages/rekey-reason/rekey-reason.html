@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <ion-title>Rekey Reason</ion-title>
@@ -6,8 +5,27 @@
 </ion-header>
 
 <ion-content no-bounce padding>
-  Rekey Reason
+  <ion-card>
+    <div [formGroup]="formGroup">
+      <ion-grid>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <input id="ipadIssue" type="checkbox" class="gds-checkbox" formControlName="ipadIssue" (change)="ipadIssueSelected()">
+            <!-- <input id="ipadIssue" type="checkbox" class="gds-checkbox"> -->
+            <label for="ipadIssue">Ipad Issue</label>
+          </ion-col>
+          <ion-col col-56>
+            <!-- <input type="radio" id="d255-yes" class="gds-radio-button" name="d255" formControlName="d255" value="Yes"
+            [class.ng-invalid]="invalid" [checked]="d255 === true" (change)="d255Changed($event.target.value)"> -->
+            <span *ngIf="pageState.ipadIssueSelected$ | async" class="mes-data">asd</span>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </div>
+  </ion-card>
 </ion-content>
+
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
     <button type="submit" class="mes-primary-button" ion-button (click)="onUploadPressed()">

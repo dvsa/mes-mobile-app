@@ -1,7 +1,9 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons ion-buttons start navPop>
-      <button ion-button center class="nav-close"><ion-icon name="md-close"></ion-icon>Close</button>
+      <button ion-button center class="nav-close">
+        <ion-icon name="md-close"></ion-icon>Close
+      </button>
     </ion-buttons>
     <ion-title>
       Test details - {{ pageState.name }}
@@ -94,8 +96,7 @@
         <ion-row *ngIf="pageState.details.entitlementCheck.show" class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Entitlement check</label>
-            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-              class="exclamation-indicator" />
+            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png" class="exclamation-indicator" />
           </ion-col>
           <ion-col col-56>
             <div class="mes-data">Entitlement check is required.</div>
