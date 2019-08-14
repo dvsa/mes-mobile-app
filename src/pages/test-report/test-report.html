@@ -13,7 +13,12 @@
   <ion-grid
     no-padding
     class="grid-layout"
-    [ngClass]="getBorderModeCSS()">
+    [ngClass]="{
+      'remove-mode': isRemoveFaultMode,
+      'fault-mode': isRemoveFaultMode && !isSeriousMode && !isDangerousMode,
+      'serious-mode': isSeriousMode,
+      'dangerous-mode': isDangerousMode
+    }">
     <ion-row class="first-row-adjust">
       <!-- Column 1-->
       <ion-col col-32>

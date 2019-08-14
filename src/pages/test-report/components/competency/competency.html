@@ -2,6 +2,11 @@
   [onTap]="onTap"
   [onPress]="onPress"
   [ripple]="allowRipple"
+  [ngClass]="{
+    'fault': faultCount > 0,
+    'serious-fault': hasSeriousFault,
+    'dangerous-fault': hasDangerousFault
+  }"
 >
 
   <driving-faults-badge class="driving-faults" [count]="faultCount"></driving-faults-badge>
