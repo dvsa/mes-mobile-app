@@ -7,7 +7,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
-  AddDrivingFault,
+  ThrottleAddDrivingFault,
   AddSeriousFault,
   AddDangerousFault,
   RemoveDrivingFault,
@@ -200,7 +200,7 @@ export class CompetencyComponent {
 
     if (wasPress) {
       const competency = this.competency;
-      return this.store$.dispatch(new AddDrivingFault({
+      return this.store$.dispatch(new ThrottleAddDrivingFault({
         competency,
         newFaultCount: this.faultCount ? this.faultCount + 1 : 1,
       }));
