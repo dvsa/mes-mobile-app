@@ -33,6 +33,11 @@ toolbar {
       background-color: map-get($colors-gds, "gds-black");
       color: map-get($colors, "mes-white");
     }
+    &.wiggle {
+      background-color: map-get($colors-gds, "gds-grey-1");
+      border-color: map-get($colors-gds, "gds-grey-1");
+      color: map-get($colors, "mes-white");
+    }
   }
   #serious-button {
     width: 88px;

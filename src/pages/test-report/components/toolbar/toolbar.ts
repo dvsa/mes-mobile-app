@@ -5,7 +5,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { getTestReportState } from '../../test-report.reducer';
-import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
+import { isRemoveFaultMode, isSeriousMode, isDangerousMode, noFaultToRemoveWarning } from '../../test-report.selector';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 
@@ -13,6 +13,7 @@ interface ToolbarComponentState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   isRemoveFaultMode$: Observable<boolean>;
+  noFaultToRemove$: Observable<boolean>;
 }
 
 @Component({
@@ -27,6 +28,7 @@ export class ToolbarComponent {
   isRemoveFaultMode: boolean = false;
   isSeriousMode: boolean = false;
   isDangerousMode: boolean = false;
+  noFaultToRemove: boolean = false;
 
   constructor(private store$: Store<StoreModel>) { }
 
@@ -44,14 +46,22 @@ export class ToolbarComponent {
         select(getTestReportState),
         select(isDangerousMode),
       ),
+      noFaultToRemove$: this.store$.pipe(
+        select(getTestReportState),
+        select(noFaultToRemoveWarning),
+      ),
     };
 
-    const { isRemoveFaultMode$, isSeriousMode$, isDangerousMode$ } = this.componentState;
+    const { isRemoveFaultMode$, isSeriousMode$, isDangerousMode$, noFaultToRemove$ } = this.componentState;
 
     const merged$ = merge(
       isRemoveFaultMode$.pipe(map(result => this.isRemoveFaultMode = result)),
       isSeriousMode$.pipe(map(result => this.isSeriousMode = result)),
       isDangerousMode$.pipe(map(result => this.isDangerousMode = result)),
+      noFaultToRemove$.pipe(map((result) => {
+        this.noFaultToRemove = result;
+        console.log(result);
+      })),
     );
 
     this.subscription = merged$.subscribe();

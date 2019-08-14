@@ -4,6 +4,8 @@ export const TEST_REPORT_VIEW_DID_ENTER = '[TestReportPage] Test Report did ente
 export const TOGGLE_REMOVE_FAULT_MODE = '[TestReportPage] Toggle Remove Fault Mode';
 export const TOGGLE_SERIOUS_FAULT_MODE = '[TestReportPage] Toggle Serious Fault Mode';
 export const TOGGLE_DANGEROUS_FAULT_MODE = '[TestReportPage] Toggle Dangerous Fault Mode';
+export const SET_NO_FAULT_TO_REMOVE = '[TestReportPage] Set No Fault To Remove';
+export const CLEAR_NO_FAULT_TO_REMOVE = '[TestReportPage] Clear No Fault To Remove';
 export const VALIDATE_LEGAL_REQUIREMENTS = '[TestReportPage] Validated Legal Requirements';
 export const CALCULATE_TEST_RESULT = '[TestResultPage] Calculate Test Result';
 export const VALIDATE_ETA = '[TestReportPage] Validate ETA';
@@ -22,6 +24,13 @@ export class ToggleSeriousFaultMode implements Action {
 
 export class ToggleDangerousFaultMode implements Action {
   readonly type = TOGGLE_DANGEROUS_FAULT_MODE;
+}
+
+export class SetNoFaultToRemove implements Action {
+  readonly type = SET_NO_FAULT_TO_REMOVE;
+}
+export class ClearNoFaultToRemove implements Action {
+  readonly type = CLEAR_NO_FAULT_TO_REMOVE;
 }
 
 export class ValidateLegalRequirements implements Action {
@@ -49,6 +58,8 @@ export type Types =
   | ToggleSeriousFaultMode
   | ToggleDangerousFaultMode
   | ToggleRemoveFaultMode
+  | SetNoFaultToRemove
+  | ClearNoFaultToRemove
   | ValidateLegalRequirements
   | ValidateEta
   | CalculateTestResult
