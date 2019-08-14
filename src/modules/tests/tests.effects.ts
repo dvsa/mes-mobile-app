@@ -22,6 +22,8 @@ import { find, startsWith } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
+import { getRekeyIndicator } from './rekey/rekey.reducer';
+import { isRekey } from './rekey/rekey.selector';
 
 @Injectable()
 export class TestsEffects {
@@ -43,9 +45,15 @@ export class TestsEffects {
           select(getTests),
           select(isPracticeMode),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getRekeyIndicator),
+          map(isRekey),
+        ),
       ),
     )),
-    filter(([action, isPracticeMode]) => !isPracticeMode),
+    filter(([action, isPracticeMode, isRekey]) => !isPracticeMode && !isRekey),
     switchMap(() => this.testPersistenceProvider.persistAllTests()),
     catchError((err) => {
       console.log(`Error persisting tests: ${err}`);
