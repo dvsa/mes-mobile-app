@@ -110,7 +110,7 @@ Feature: Full end to end journey
       And I see a "serious" fault for "Controls - Accelerator"
       And I see a "driving" fault for "Move off - Safety"
       And I see a "driving" fault for "Controls - Accelerator"
-      And I see a "driving" fault for "Reverse right"
+      And I see a "driving" fault for "Reverse right - Control"
       And I see a "driving" fault for "Controlled stop"
       And I see a "driving" fault for "Vehicle checks"
 
