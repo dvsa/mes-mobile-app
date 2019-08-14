@@ -36,11 +36,20 @@ import { IncompleteTestsProvider } from '../../../providers/incomplete-tests/inc
 import { IncompleteTestsMock } from '../../../providers/incomplete-tests/__mocks__/incomplete-tests.mock';
 import { of } from 'rxjs/observable/of';
 import { TestSlotComponentsModule } from '../../../components/test-slot/test-slot-components.module';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { Insomnia } from '@ionic-native/insomnia';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
   let component: JournalPage;
   let store$: Store<StoreModel>;
+  let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
+  let deviceProvider: DeviceProvider;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -69,6 +78,9 @@ describe('JournalPage', () => {
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: IncompleteTestsProvider, useClass: IncompleteTestsMock },
         { provide: App, useClass: MockAppComponent },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
       ],
     })
       .compileComponents()
@@ -76,10 +88,13 @@ describe('JournalPage', () => {
         fixture = TestBed.createComponent(JournalPage);
         component = fixture.componentInstance;
         component.subscription = new Subscription();
+        screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
+        deviceProvider = TestBed.get(DeviceProvider);
+        store$ = TestBed.get(Store);
+        spyOn(store$, 'dispatch');
       });
 
-    store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -96,6 +111,15 @@ describe('JournalPage', () => {
       it('should dispatch a LoadJournal action', () => {
         component.loadJournalManually();
         expect(store$.dispatch).toHaveBeenCalledWith(new LoadJournal());
+      });
+    });
+
+    describe('ionViewDidEnter', () => {
+      it('should disable test inhibitions', () => {
+        component.ionViewDidEnter();
+        expect(deviceProvider.disableSingleAppMode).toHaveBeenCalled();
+        expect(screenOrientation.unlock).toHaveBeenCalled();
+        expect(insomnia.allowSleepAgain).toHaveBeenCalled();
       });
     });
   });
