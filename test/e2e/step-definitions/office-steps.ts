@@ -41,14 +41,15 @@ When('I complete the weather conditions', () => {
 
 When('I enter a comment for {string} fault {string}', (faultSeverity, faultLabel) => {
   const commentsField = getElement(by.xpath(`//fault-comment-card[@faulttype='${faultSeverity}']
-  //ion-row[ion-col/label[text() = '${faultLabel}']]/ion-col/ion-row/div/textarea`));
+  //ion-row[ion-col/label[text() = '${faultLabel}']]//textarea`));
 
   commentsField.sendKeys(`Comment for ${faultSeverity} fault: ${faultLabel}`);
 });
 
 Then('the office activity code should be {string}', (activityCode) => {
-  const acitivityCodeField = getElement(by.id('activity-code-selector'));
-  return expect(acitivityCodeField.getText()).to.eventually.equal(activityCode);
+  const activityCodeField = getElement(
+    by.xpath('//page-office//ion-select[@id = "activity-code-selector"]/div[@class = "select-text"]'));
+  return expect(activityCodeField.getText()).to.eventually.equal(activityCode);
 });
 
 Then('I have a {string} fault for {string} requiring a comment', (faultSeverity, faultLabel) => {

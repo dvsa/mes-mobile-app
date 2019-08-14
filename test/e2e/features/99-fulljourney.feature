@@ -147,7 +147,7 @@ Feature: Full end to end journey
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Theresa Shaw" page
       When I select activity code "51 - Candidate failed to attend at test centre"
-      And I continue to the back to office page
+      And I click continue to proceed to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
@@ -170,7 +170,7 @@ Feature: Full end to end journey
       When I continue to the non pass finalisation page
       Then I should see the "Finalise outcome - Ali Campbell" page
       When I select activity code "20 - Documents not produced"
-      And I continue to the back to office page
+      And I click continue to proceed to the back to office page
       Then I am on the back to office page
       And I continue to the office write up
       Then I should see the "Office" page
