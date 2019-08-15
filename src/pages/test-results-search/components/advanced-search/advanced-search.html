@@ -14,7 +14,7 @@
           [class.ng-invalid]="invalid"
           [value]="dtcNumber"
           (change)="dtcNumberChanged($event.target.value)"></ion-input>
-      </ion-item> 
+      </ion-item>
     </ion-col>
     <ion-col col-3></ion-col>
     <ion-col align-self-center col-14>
@@ -24,10 +24,11 @@
       <ion-item no-padding no-lines>
         <ion-input
           placeholder="DE number"
-          type="text"
+          type="number"
           id="staff-number"
           class="staff-number"
           clearInput
+          numbersOnly
           [class.ng-invalid]="invalid"
           [value]="staffNumber"
           (change)="staffNumberChanged($event.target.value)"></ion-input>
