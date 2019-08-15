@@ -67,6 +67,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   static readonly updatedEmail: string = 'Updated';
   static readonly email: CommunicationMethod = 'Email';
   static readonly post: CommunicationMethod = 'Post';
+  static readonly notProvided: CommunicationMethod = 'Not provided';
   static readonly welshLanguage: ConductedLanguage = 'Cymraeg';
   static readonly englishLanguage: ConductedLanguage = 'English';
 
@@ -79,10 +80,10 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   pageState: CommunicationPageState;
   candidateProvidedEmail: string;
   communicationEmail: string;
-  communicationType: string;
+  communicationType: CommunicationMethod;
   selectProvidedEmail: boolean;
   selectNewEmail: boolean;
-  conductedLanguage: string;
+  conductedLanguage: ConductedLanguage;
   isBookedInWelsh: boolean;
   merged$: Observable<string | boolean>;
 
@@ -195,9 +196,9 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     this.merged$ = merge(
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
-      communicationType$.pipe(map(value => this.communicationType = value)),
+      communicationType$.pipe(map(value => this.communicationType = value as CommunicationMethod)),
       welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
-      conductedLanguage$.pipe(map(value => this.conductedLanguage = value)),
+      conductedLanguage$.pipe(map(value => this.conductedLanguage = value as ConductedLanguage)),
     );
 
     this.subscription = this.merged$.subscribe();
@@ -262,7 +263,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     );
   }
 
-  setCommunicationType(communicationChoice: string, emailType: string = null) {
+  setCommunicationType(communicationChoice: CommunicationMethod, emailType: string = null) {
     this.communicationType = communicationChoice;
     this.emailType = emailType;
     this.verifyNewEmailFormControl(communicationChoice);
@@ -380,8 +381,8 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     }
   }
 
-  shouldPreselectADefaultValue() {
-    return this.communicationType === null;
+  shouldPreselectADefaultValue(): boolean {
+    return this.communicationType === CommunicationPage.notProvided;
   }
 
   /**
