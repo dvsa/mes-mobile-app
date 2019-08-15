@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { switchMap, map, withLatestFrom, concatMap } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { getJournalState } from '../journal/journal.reducer';
+import { switchMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
     AnalyticsDimensionIndices,
@@ -14,8 +11,6 @@ import {
 } from '../../providers/analytics/analytics.model';
 
 import {
-    getSlotById,
-    getSlots,
     isCandidateSpecialNeeds,
     getCandidateId,
     isCandidateCheckNeeded,
@@ -34,7 +29,6 @@ export class CandidateDetailsAnalyticsEffects {
   constructor(
     public analytics: AnalyticsProvider,
     private actions$: Actions,
-    private store$: Store<StoreModel>,
   ) {
     this.analytics.initialiseAnalytics()
           .then(() => {})
@@ -47,19 +41,10 @@ export class CandidateDetailsAnalyticsEffects {
   @Effect()
     candidateView$ = this.actions$.pipe(
       ofType(CANDIDATE_DETAILS_VIEW_DID_ENTER),
-      concatMap(action => of(action).pipe(
-        withLatestFrom(
-          this.store$.pipe(
-            select(getJournalState),
-            map(getSlots),
-          ),
-        ),
-      )),
-      switchMap(([action, slots]: [CandidateDetailsViewDidEnter, any[]]) => {
-        const slot = getSlotById(slots, action.slotId);
-        const specNeeds = isCandidateSpecialNeeds(slot);
-        const candidateCheck = isCandidateCheckNeeded(slot);
-        const candidateId = getCandidateId(slot);
+      switchMap((action: CandidateDetailsViewDidEnter) => {
+        const specNeeds = isCandidateSpecialNeeds(action.slot);
+        const candidateCheck = isCandidateCheckNeeded(action.slot);
+        const candidateId = getCandidateId(action.slot);
 
         this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, candidateId);
         this.analytics.addCustomDimension(

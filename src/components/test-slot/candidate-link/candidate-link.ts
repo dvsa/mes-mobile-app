@@ -12,7 +12,7 @@ import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../pa
 })
 export class CandidateLinkComponent {
   @Input()
-  slotId: number | string;
+  slot: any;
 
   @Input()
   slotChanged: boolean;
@@ -32,7 +32,7 @@ export class CandidateLinkComponent {
   openCandidateDetailsModal() {
     let pageToOpen = CANDIDATE_DETAILS_PAGE;
 
-    if (startsWith(this.slotId.toString(), end2endPracticeSlotId)) {
+    if (startsWith(this.slot.slotDetail.slotId.toString(), end2endPracticeSlotId)) {
       pageToOpen = FAKE_CANDIDATE_DETAILS_PAGE;
     }
 
@@ -41,7 +41,7 @@ export class CandidateLinkComponent {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const profileModal = this.modalController.create(
       pageToOpen,
-      { slotId: this.slotId, slotChanged: this.slotChanged },
+      { slot: this.slot, slotChanged: this.slotChanged },
       { cssClass: zoomClass });
     profileModal.present();
   }

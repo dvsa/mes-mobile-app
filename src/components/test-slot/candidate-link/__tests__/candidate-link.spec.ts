@@ -21,6 +21,7 @@ import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mo
 import { CANDIDATE_DETAILS_PAGE, FAKE_CANDIDATE_DETAILS_PAGE } from '../../../../pages/page-names.constants';
 import { App } from '../../../../app/app.component';
 import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
+import { bookedTestSlotMock } from '../../../../shared/mocks/test-slot-data.mock';
 
 class MockStore { }
 
@@ -52,7 +53,7 @@ describe('CandidateLinkComponent', () => {
         component.name.title = 'Mr';
         component.name.firstName = 'Joe';
         component.name.lastName = 'Bloggs';
-        component.slotId = 12345;
+        component.slot = bookedTestSlotMock;
         component.slotChanged = false;
         component.isPortrait = true;
       });
@@ -64,16 +65,22 @@ describe('CandidateLinkComponent', () => {
         component.openCandidateDetailsModal();
         expect(component.modalController.create).toHaveBeenCalledWith(
           CANDIDATE_DETAILS_PAGE,
-          { slotId: component.slotId, slotChanged: false },
+          { slot: component.slot, slotChanged: false },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
       });
       it('should open FakeCandidateDetailsPage when in practice mode', () => {
-        component.slotId = `${end2endPracticeSlotId}_1`;
+        component.slot = {
+          ...bookedTestSlotMock,
+          slotDetail: {
+            ...bookedTestSlotMock,
+            slotId: `${end2endPracticeSlotId}_1`,
+          },
+        };
         component.openCandidateDetailsModal();
         expect(component.modalController.create).toHaveBeenCalledWith(
           FAKE_CANDIDATE_DETAILS_PAGE,
-          { slotId: component.slotId, slotChanged: false },
+          { slot: component.slot, slotChanged: false },
           { cssClass: 'modal-fullscreen text-zoom-regular' },
         );
       });

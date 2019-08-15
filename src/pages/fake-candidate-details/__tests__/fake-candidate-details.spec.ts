@@ -8,7 +8,6 @@ import { AuthenticationProviderMock } from '../../../providers/authentication/__
 import { FakeCandidateDetailsPage } from '../fake-candidate-details';
 import { MockComponent } from 'ng-mocks';
 import { DisplayAddressComponent } from '../../../components/common/display-address/display-address';
-import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('FakeCandidateDetailsPage', () => {
   let fixture: ComponentFixture<FakeCandidateDetailsPage>;
@@ -35,7 +34,7 @@ describe('FakeCandidateDetailsPage', () => {
       .then(() => {
         fixture = TestBed.createComponent(FakeCandidateDetailsPage);
         component = fixture.componentInstance;
-        component.slotId = `${end2endPracticeSlotId}_1`;
+        component.slot = {};
       });
   }));
 

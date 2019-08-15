@@ -1,6 +1,5 @@
 import { isEmpty } from 'lodash';
 
-import { JournalModel } from '../journal/journal.model';
 import { Details } from './candidate-details.model';
 
 import { Application } from '@dvsa/mes-journal-schema';
@@ -8,13 +7,6 @@ import { getSlotType } from '../../shared/helpers/get-slot-type';
 
 import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
-
-export const getSlots = (journal: JournalModel) => {
-  return journal.slots[journal.selectedDate].map(slotItem => slotItem.slotData);
-};
-
-// TODO: replace any with Slot types when we have the data structure
-export const getSlotById = (slots: any[], slotId: number): any => slots.find(slot => slot.slotDetail.slotId === slotId);
 
 export const getCandidateName = (slot: any): string => {
   const { title, firstName, lastName } = slot.booking.candidate.candidateName;

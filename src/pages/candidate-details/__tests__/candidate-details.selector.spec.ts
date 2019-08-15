@@ -1,6 +1,4 @@
 import {
-  getSlots,
-  getSlotById,
   getTime,
   getCandidateName,
   getPhoneNumber,
@@ -87,65 +85,6 @@ describe('Candidate Details Selector', () => {
       const result = processSpecialNeeds(slot);
 
       expect(result).toEqual('None');
-    });
-  });
-
-  describe('getSlots', () => {
-    it('returns the correct test slot array from the journal data', () => {
-      const journal = {
-        isLoading: false,
-        lastRefreshed: new Date(0),
-        slots: {
-          '2019-01-17': [
-            {
-              hasSlotChanged: false,
-              slotData: {
-                vehicleTypeCode: 'C',
-              },
-            },
-          ],
-        },
-        selectedDate: '2019-01-17',
-        examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
-      };
-
-      const result = getSlots(journal);
-
-      expect(result).toEqual([
-        {
-          vehicleTypeCode: 'C',
-        },
-      ]);
-    });
-  });
-
-  describe('getSlotById', () => {
-    it('returns the right slot after giving an id', () => {
-      const selectedSlotId = 12345;
-      const slots = [
-        {
-          vehicleSlotType: 'B57mins',
-          slotDetail: {
-            slotId: selectedSlotId,
-          },
-        },
-        {
-          vehicleSlotType: 'A57mins',
-          slotDetail: {
-            slotId: 54321,
-          },
-        },
-      ];
-
-      const result = getSlotById(slots, selectedSlotId);
-
-      expect(result).toEqual({
-        vehicleSlotType: 'B57mins',
-        slotDetail: {
-          slotId: 12345,
-        },
-      });
     });
   });
 

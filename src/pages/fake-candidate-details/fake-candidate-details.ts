@@ -7,10 +7,9 @@ import {
   NavParams,
 } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Business } from '@dvsa/mes-journal-schema';
+import { Business, TestSlot } from '@dvsa/mes-journal-schema';
 import { Details } from '../candidate-details/candidate-details.model';
 import { getDetails, getBusiness, getCandidateName, getTime } from '../candidate-details/candidate-details.selector';
-import { fakeJournalTestSlots } from '../fake-journal/__mocks__/fake-journal.mock';
 
 @IonicPage()
 @Component({
@@ -20,7 +19,7 @@ import { fakeJournalTestSlots } from '../fake-journal/__mocks__/fake-journal.moc
 
 export class FakeCandidateDetailsPage extends BasePageComponent {
 
-  slotId: string;
+  slot: TestSlot;
 
   name: string;
   time: string;
@@ -34,16 +33,14 @@ export class FakeCandidateDetailsPage extends BasePageComponent {
     public navParams: NavParams,
   ) {
     super(platform, navController, authenticationProvider);
-    this.slotId = this.navParams.get('slotId');
+    this.slot = this.navParams.get('slot');
   }
 
   ngOnInit(): void {
-    const slot = fakeJournalTestSlots.find(testSlot => testSlot.slotDetail.slotId === this.slotId);
-
-    this.name = getCandidateName(slot);
-    this.time = getTime(slot);
-    this.details = getDetails(slot);
-    this.business = getBusiness(slot);
+    this.name = getCandidateName(this.slot);
+    this.time = getTime(this.slot);
+    this.details = getDetails(this.slot);
+    this.business = getBusiness(this.slot);
   }
 
   specialNeedsIsPopulated(specialNeeds: string | string[]): boolean {
