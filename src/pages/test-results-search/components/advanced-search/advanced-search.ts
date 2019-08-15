@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { AdvancedSearchParams } from '../../../../providers/search/search.models';
+import { removeLeadingZeros } from '../../../../shared/helpers/formatters';
 
 @Component({
   selector: 'advanced-search',
@@ -46,7 +47,7 @@ export class AdvancedSearchComponent {
     const advancedSearchParams: AdvancedSearchParams = {
       startDate: this.startDate,
       endDate: this.endDate,
-      staffNumber: this.staffNumber,
+      staffNumber: removeLeadingZeros(this.staffNumber),
       costCode: this.dtcNumber,
     };
 
