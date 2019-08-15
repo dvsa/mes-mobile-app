@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SlotComponent } from '../../../../components/test-slot/slot/slot';
 import { isNil, has } from 'lodash';
 import { Activity, activities } from '../../../../providers/slot-selector/activity.constants';
+import { removeLeadingZeros } from '../../../../shared/helpers/formatters';
 
 @Component({
   selector: 'activity-slot',
@@ -24,8 +25,7 @@ export class ActivitySlotComponent implements SlotComponent {
     if (isNil(activityCode)) {
       return '0';
     }
-    // Remove leading zeros (e.g. 089 -> 89)
-    return activityCode.replace(/^0+(?!$)/, '');
+    return removeLeadingZeros(activityCode);
   }
 
   public getTitle(): string {
