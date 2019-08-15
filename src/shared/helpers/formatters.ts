@@ -12,5 +12,5 @@ export const formatApplicationReference = (appRef: ApplicationReference): string
 };
 
 export const removeLeadingZeros = (value: string): string => {
-  return this.value.replace(/^0+(?!$)/, '');
+  return value.replace(/^0+(?!$)/, '');
 };
