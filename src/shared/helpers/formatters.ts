@@ -10,3 +10,7 @@ export const formatApplicationReference = (appRef: ApplicationReference): string
   const formatter = Intl.NumberFormat('en-gb', { minimumIntegerDigits: 2 });
   return `${appRef.applicationId}${formatter.format(appRef.bookingSequence)}${appRef.checkDigit}`;
 };
+
+export const removeLeadingZeros = (value: string): string => {
+  return this.value.replace(/^0+(?!$)/, '');
+};
