@@ -4,7 +4,7 @@
       <button ion-button center class="nav-close"><ion-icon name="md-close"></ion-icon>Close</button>
     </ion-buttons>
     <ion-title>
-      Test details - {{ pageState.name$ | async }}
+      Test details - {{ pageState.name }}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -14,12 +14,12 @@
     <ion-row>
       <ion-col>
         <h2>
-          {{ pageState.name$ | async }}
+          {{ pageState.name }}
         </h2>
       </ion-col>
       <ion-col col-12>
         <h2 class="test-start-time">
-          {{ pageState.time$ | async | date: "HH:mm" }}
+          {{ pageState.time | date: "HH:mm" }}
         </h2>
       </ion-col>
     </ion-row>
@@ -36,7 +36,7 @@
             <label>Test category</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{(pageState.details$ | async).testCategory}}</span>
+            <span class="mes-data">{{pageState.details.testCategory}}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
@@ -44,18 +44,18 @@
             <label>Slot type</label>
             <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
-              *ngIf="(pageState.details$ | async).slotType !== 'Standard Test'" />
+              *ngIf="pageState.details.slotType !== 'Standard Test'" />
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{ (pageState.details$ | async).slotType }}</span>
+            <span class="mes-data">{{ pageState.details.slotType }}</span>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="(pageState.details$| async).meetingPlace" class="mes-data-row-with-separator" id="meetingPlace">
+        <ion-row *ngIf="pageState.details.meetingPlace" class="mes-data-row-with-separator" id="meetingPlace">
           <ion-col col-40>
             <label>Meeting place</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{(pageState.details$ | async).meetingPlace}}</span>
+            <span class="mes-data">{{ pageState.details.meetingPlace }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
@@ -63,7 +63,7 @@
             <label>Driver number</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{ (pageState.details$ | async).driverNumber }}</span>
+            <span class="mes-data">{{ pageState.details.driverNumber }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
@@ -71,7 +71,7 @@
             <label>Application number</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{ (pageState.details$ | async).applicationRef }}</span>
+            <span class="mes-data">{{ pageState.details.applicationRef }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
@@ -79,19 +79,19 @@
             <label>Special requirements</label>
             <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
               class="exclamation-indicator"
-              *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)" />
+              *ngIf="specialNeedsIsPopulated(pageState.details.specialNeeds)" />
           </ion-col>
           <ion-col col-56>
-            <div class="mes-data" *ngIf="!specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
-              {{(pageState.details$ | async).specialNeeds}}
+            <div class="mes-data" *ngIf="!specialNeedsIsPopulated(pageState.details.specialNeeds)">
+              {{pageState.details.specialNeeds}}
             </div>
-            <div *ngIf="specialNeedsIsPopulated((pageState.details$ | async).specialNeeds)">
-              <div *ngFor="let specialNeed of (pageState.details$ | async).specialNeeds" class="mes-data">-
+            <div *ngIf="specialNeedsIsPopulated(pageState.details.specialNeeds)">
+              <div *ngFor="let specialNeed of pageState.details.specialNeeds" class="mes-data">-
                 {{specialNeed}}</div>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="(pageState.details$ | async).entitlementCheck.show" class="mes-data-row-with-separator">
+        <ion-row *ngIf="pageState.details.entitlementCheck.show" class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Entitlement check</label>
             <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
@@ -106,14 +106,14 @@
             <label>Additional information</label>
           </ion-col>
           <ion-col col-56>
-            <div class="mes-data" *ngIf="(pageState.details$ | async).candidateComments.isSectionEmpty">
+            <div class="mes-data" *ngIf="pageState.details.candidateComments.isSectionEmpty">
               None
             </div>
-            <div *ngIf="!(pageState.details$ | async).candidateComments.isSectionEmpty">
-              <div *ngIf="(pageState.details$ | async).candidateComments.previousCancellations?.length > 0">
+            <div *ngIf="!pageState.details.candidateComments.isSectionEmpty">
+              <div *ngIf="pageState.details.candidateComments.previousCancellations?.length > 0">
                 <div class="mes-data">Previous cancellations</div>
                 <div
-                  *ngFor="let previousCancellation of (pageState.details$ | async).candidateComments.previousCancellations"
+                  *ngFor="let previousCancellation of pageState.details.candidateComments.previousCancellations"
                   class="mes-data">
                   - {{previousCancellation}}
                 </div>
@@ -135,7 +135,7 @@
             <label>Phone number</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{ (pageState.details$ | async).phoneNumber }}</span>
+            <span class="mes-data">{{ pageState.details.phoneNumber }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row-with-separator">
@@ -143,38 +143,38 @@
             <label>Email</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{ (pageState.details$ | async).email }}</span>
+            <span class="mes-data">{{ pageState.details.email }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mes-data-row">
           <ion-col col-40>
             <label>Address</label>
           </ion-col>
-          <display-address [address]="(pageState.details$ | async).address"></display-address>
+          <display-address [address]="pageState.details.address"></display-address>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngIf="(pageState.business$ | async)">
+  <ion-card *ngIf="pageState.business">
     <ion-card-header>
       <h4>Business contact details</h4>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row *ngIf="(pageState.business$ | async).telephone" class="mes-data-row-with-separator">
+        <ion-row *ngIf="pageState.business.telephone" class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Phone number</label>
           </ion-col>
           <ion-col col-56>
-            <span class="mes-data">{{ (pageState.business$ | async).telephone }}</span>
+            <span class="mes-data">{{ pageState.business.telephone }}</span>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="(pageState.business$ | async).businessAddress" class="mes-data-row-with-separator">
+        <ion-row *ngIf="pageState.business.businessAddress" class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Address</label>
           </ion-col>
           <ion-col col-56>
-            <display-address [address]="(pageState.business$ | async).businessAddress"></display-address>
+            <display-address [address]="pageState.business.businessAddress"></display-address>
           </ion-col>
         </ion-row>
       </ion-grid>

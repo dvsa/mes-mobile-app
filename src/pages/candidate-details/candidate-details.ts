@@ -1,23 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { map } from 'rxjs/operators';
-import { merge } from 'rxjs/observable/merge';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { StoreModel } from '../../shared/models/store.model';
 import { TestCategory } from '../../shared/models/test-category';
-import { getJournalState } from '../journal/journal.reducer';
 import { Details } from './candidate-details.model';
 import {
   ClearChangedSlot,
   CandidateDetailsSeen,
 } from '../journal/journal.actions';
 import {
-  getSlotById,
-  getSlots,
   getCandidateName,
   getTime,
   getDetails,
@@ -27,13 +20,13 @@ import {
   CandidateDetailsViewDidEnter,
   CandidateDetailsSlotChangeViewed,
 } from './candidate-details.actions';
-import { Business } from '@dvsa/mes-journal-schema';
+import { Business, TestSlot } from '@dvsa/mes-journal-schema';
 
 interface CandidateDetailsPageState {
-  name$: Observable<string>;
-  time$: Observable<string>;
-  details$: Observable<Details>;
-  business$: Observable<Business>;
+  name: string;
+  time: string;
+  details: Details;
+  business: Business;
 }
 
 @IonicPage()
@@ -43,8 +36,7 @@ interface CandidateDetailsPageState {
 })
 export class CandidateDetailsPage extends BasePageComponent implements OnInit {
   pageState: CandidateDetailsPageState;
-  subscription: Subscription;
-  slotId: number;
+  slot: TestSlot;
   slotChanged: boolean = false;
   testCategory = TestCategory.B;
 
@@ -56,68 +48,31 @@ export class CandidateDetailsPage extends BasePageComponent implements OnInit {
     private store$: Store<StoreModel>,
   ) {
     super(platform, navController, authenticationProvider);
-    this.slotId = navParams.get('slotId');
+    this.slot = navParams.get('slot');
     this.slotChanged = navParams.get('slotChanged');
   }
 
   ngOnInit(): void {
-    this.store$.dispatch(new ClearChangedSlot(this.slotId));
+    this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
 
     this.pageState = {
-      name$: this.store$.pipe(
-        select(getJournalState),
-        select(getSlots),
-        map(slots => getSlotById(slots, this.slotId)),
-        select(getCandidateName),
-      ),
-      time$: this.store$.pipe(
-        select(getJournalState),
-        select(getSlots),
-        map(slots => getSlotById(slots, this.slotId)),
-        select(getTime),
-      ),
-      details$: this.store$.pipe(
-        select(getJournalState),
-        select(getSlots),
-        map(slots => getSlotById(slots, this.slotId)),
-        select(getDetails),
-      ),
-      business$: this.store$.pipe(
-        select(getJournalState),
-        select(getSlots),
-        map(slots => getSlotById(slots, this.slotId)),
-        select(getBusiness),
-      ),
+      name: getCandidateName(this.slot),
+      time: getTime(this.slot),
+      details: getDetails(this.slot),
+      business: getBusiness(this.slot),
     };
 
-    const { name$, time$, details$, business$ } = this.pageState;
-
-    const merged$ = merge(
-      name$,
-      time$,
-      details$.pipe(
-        map(details => this.testCategory = details.testCategory as TestCategory),
-      ),
-      business$,
-    );
-
-    this.subscription = merged$.subscribe();
+    this.testCategory = this.pageState.details.testCategory as TestCategory;
 
     if (this.slotChanged) {
-      this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slotId));
+      this.store$.dispatch(new CandidateDetailsSlotChangeViewed(this.slot.slotDetail.slotId));
     }
-    this.store$.dispatch(new ClearChangedSlot(this.slotId));
-  }
-
-  ionViewDidLeave(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.store$.dispatch(new ClearChangedSlot(this.slot.slotDetail.slotId));
   }
 
   ionViewDidEnter(): void {
-    this.store$.dispatch(new CandidateDetailsViewDidEnter(this.slotId));
-    this.store$.dispatch(new CandidateDetailsSeen(this.slotId));
+    this.store$.dispatch(new CandidateDetailsViewDidEnter(this.slot));
+    this.store$.dispatch(new CandidateDetailsSeen(this.slot.slotDetail.slotId));
   }
 
   handleDoneButtonClick(): void {
