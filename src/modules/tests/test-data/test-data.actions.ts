@@ -18,6 +18,7 @@ export const ADD_MANOEUVRE_DANGEROUS_FAULT = '[Manoeuvres] Add Manoeuvre Dangero
 export const ADD_MANOEUVRE_COMMENT = '[Manoeuvres] Add Manoeuvre Comment';
 export const REMOVE_MANOEUVRE_FAULT = '[Manoeuvres] Remove Manoeuvre Fault';
 export const ADD_DRIVING_FAULT = '[Competency] Add Driving Fault';
+export const THROTTLE_ADD_DRIVING_FAULT = '[Competency] Debounce Add Driving Fault';
 export const ADD_SERIOUS_FAULT = '[Competency] Add Serious Fault';
 export const ADD_SERIOUS_FAULT_COMMENT = '[Office] Add Serious Fault Comment';
 export const ADD_DANGEROUS_FAULT = '[Competency] Add Dangerous Fault';
@@ -137,6 +138,10 @@ export class AddDrivingFault implements Action {
   constructor(public payload: FaultPayload) { }
   readonly type = ADD_DRIVING_FAULT;
 }
+export class ThrottleAddDrivingFault implements Action {
+  constructor(public payload: FaultPayload) { }
+  readonly type = THROTTLE_ADD_DRIVING_FAULT;
+}
 export class AddSeriousFault implements Action {
   constructor(public payload: Competencies) { }
   readonly type = ADD_SERIOUS_FAULT;
@@ -252,6 +257,7 @@ export type Types =
   | AddManoeuvreComment
   | RemoveManoeuvreFault
   | AddDrivingFault
+  | ThrottleAddDrivingFault
   | AddDrivingFaultComment
   | AddSeriousFault
   | AddSeriousFaultComment

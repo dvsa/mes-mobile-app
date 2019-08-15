@@ -12,6 +12,7 @@ import {
   RemoveDrivingFault,
   RemoveDangerousFault,
   RemoveSeriousFault,
+  ThrottleAddDrivingFault,
 } from '../../../../../modules/tests/test-data/test-data.actions';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
@@ -72,13 +73,13 @@ describe('CompetencyComponent', () => {
     });
 
     describe('addDrivingFault', () => {
-      it('should dispatch an ADD_DRIVING_FAULT action for press', () => {
+      it('should dispatch a THROTTLE_ADD_DRIVING_FAULT action for press', () => {
         component.competency = Competencies.controlsSteering;
 
         const storeDispatchSpy = spyOn(store$, 'dispatch');
         component.addOrRemoveFault(true);
 
-        expect(storeDispatchSpy).toHaveBeenCalledWith(new AddDrivingFault({
+        expect(storeDispatchSpy).toHaveBeenCalledWith(new ThrottleAddDrivingFault({
           competency: component.competency,
           newFaultCount: 1,
         }));

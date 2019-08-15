@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { withLatestFrom, concatMap, switchMap } from 'rxjs/operators';
+import { withLatestFrom, concatMap, switchMap, throttleTime } from 'rxjs/operators';
 import * as testDataActions from './../test-data/test-data.actions';
 import { of } from 'rxjs/observable/of';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -17,6 +17,17 @@ export class TestDataEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {}
+
+  @Effect()
+  throttleAddDrivingFaultEffect$ = this.actions$.pipe(
+    ofType(
+      testDataActions.THROTTLE_ADD_DRIVING_FAULT,
+    ),
+    throttleTime(250),
+    concatMap((action: testDataActions.ThrottleAddDrivingFault) => {
+      return of(new testDataActions.AddDrivingFault(action.payload));
+    }),
+  );
 
   @Effect()
   setEcoControlCompletedEffect$ = this.actions$.pipe(
