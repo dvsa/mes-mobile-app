@@ -46,7 +46,8 @@ export class AdvancedSearchComponent {
     const advancedSearchParams: AdvancedSearchParams = {
       startDate: this.startDate,
       endDate: this.endDate,
-      staffNumber: this.staffNumber,
+      // We need to remove any leading zeros from the staff number
+      staffNumber: this.staffNumber.replace(/^0+(?!$)/, ''),
       costCode: this.dtcNumber,
     };
 
