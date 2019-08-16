@@ -30,7 +30,6 @@ page-test-report {
     }
     &.remove-mode {
       border: $report-mode-border-width solid map-get($colors-gds, 'gds-black');
-      background-color: darken(map-get($colors-gds, 'gds-grey-3'), 60%);
     }
   }
   .grid[no-padding] {
@@ -82,7 +81,6 @@ page-test-report {
     left: 0px;
     width: 100%;
     height: calc(100% - #{$toolbar-height});
-    z-index: 120;
     visibility: hidden;
     &.contract{
       top: $toolbar-height + $report-mode-border-width;
@@ -90,6 +88,12 @@ page-test-report {
       width: calc(100% - #{$report-mode-border-width *2});
       height: calc(100% - #{$toolbar-height + $report-mode-border-width*2});
     }
+  }
+  .report-overlay-modal {
+    z-index: 220;
+  }
+  .report-overlay-remove {
+    z-index: 120;
   }
   @keyframes showAnimation {
     0% {
@@ -127,12 +131,12 @@ page-test-report {
 
   .show-overlay {
     animation-name: showAnimation;
-    animation-duration: 0.4s;
+    animation-duration: 0.25s;
     animation-fill-mode: forwards;
   }
   .hide-overlay {
     animation-name: hideAnimation;
-    animation-duration: 0.2s;
+    animation-duration: 0.15s;
     animation-fill-mode: forwards;
   }
 }

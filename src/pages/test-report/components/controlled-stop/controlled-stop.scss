@@ -1,4 +1,7 @@
 controlled-stop {
+  competency-button {
+    position: relative;
+  }
 
   competency-button.controlled-stop-tick {
 
@@ -18,6 +21,8 @@ controlled-stop {
   }
 
   competency-button.controlled-stop-competency {
+    display: flex;       // this styling is neccessary to ensure z-index
+    flex-flow: column;   // works on competency buttons
     .competency-button {
       margin-left: 8px;
 

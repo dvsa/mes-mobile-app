@@ -18,6 +18,12 @@
       [onTap]="onTap"
       [onPress]="onPress"
       [ripple]="canButtonRipple()"
+      [ngClass]="{
+        'checked': selectedShowMeQuestion,
+        'fault': hasShowMeDrivingFault(),
+        'serious-fault': hasSeriousFault(),
+        'dangerous-fault': hasDangerousFault()
+      }"
     >
       <driving-faults-badge class="driving-faults" [count]="getDrivingFaultCount()"></driving-faults-badge>
       <div class='competency-label'>Show me / Tell me</div>

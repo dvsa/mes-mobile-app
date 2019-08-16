@@ -6,29 +6,19 @@ competency-button {
     padding-left: 5px;
     padding-right: 5px;
   }
-    
-  div.competency-button {
-    .remove-mode & {
-      background-color: darken(white, 60%);
-      opacity: 0.2;
-    }
-  }
-  &.fault div.competency-button {
+  &.fault {
     .remove-mode.fault-mode & {
-      background-color: white;
-      opacity: 1;
+      z-index: 160;
     }
   }
-  &.serious-fault div.competency-button {
+  &.serious-fault {
     .remove-mode.serious-mode & {
-      background-color: white;
-      opacity: 1;
+      z-index: 160;
     }
   }
-  &.dangerous-fault div.competency-button {
+  &.dangerous-fault {
     .remove-mode.dangerous-mode & {
-      background-color: white;
-      opacity: 1;
+      z-index: 160;
     }
   }
 

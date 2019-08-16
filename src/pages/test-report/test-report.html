@@ -15,7 +15,8 @@
     class="grid-layout"
     [ngClass]="{
       'remove-mode': isRemoveFaultMode,
-      'fault-mode': isRemoveFaultMode && !isSeriousMode && !isDangerousMode,
+      'add-mode': !isRemoveFaultMode,
+      'fault-mode': !isSeriousMode && !isDangerousMode,
       'serious-mode': isSeriousMode,
       'dangerous-mode': isDangerousMode
     }">
@@ -394,6 +395,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="report-overlay" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="displayOverlay"
-    [class.hide-overlay]="!displayOverlay"></div>
+  <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="displayOverlay"
+  [class.hide-overlay]="!displayOverlay"></div>
+  <div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="isRemoveFaultMode"
+  [class.hide-overlay]="!isRemoveFaultMode"></div>
 </ion-content>

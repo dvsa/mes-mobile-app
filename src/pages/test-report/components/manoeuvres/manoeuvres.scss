@@ -9,10 +9,11 @@ manoeuvres {
     border: 1px solid rgba(11, 12, 12, 0.4);
     box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
     border-radius: 10px;
+    position: relative;
 
     &.promoted {
       position: relative;
-      z-index: 170;
+      z-index: 270;
     }
     &.activated {
       background: #eee;
@@ -95,28 +96,20 @@ manoeuvres {
       display: inline-block;
       margin-right: 2px;
     }
-    
-    .remove-mode & {
-      background-color: map-get($colors-gds, 'gds-grey-1');
-      opacity: 0.2;
-    }
 
     &.fault {
       .remove-mode.fault-mode & {
-        background-color: white;
-        opacity: 1;
+        z-index: 270;
       }
     }
     &.serious-fault {
       .remove-mode.serious-mode & {
-        background-color: white;
-        opacity: 1;
+        z-index: 270;
       }
     }
     &.dangerous-fault {
       .remove-mode.dangerous-mode & {
-        background-color: white;
-        opacity: 1;
+        z-index: 270;
       }
     }
   }
