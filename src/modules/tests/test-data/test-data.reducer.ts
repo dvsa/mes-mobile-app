@@ -53,7 +53,6 @@ export function testDataReducer(
           ...state.manoeuvres,
           [action.fieldName]: {
             ...state.manoeuvres[action.fieldName],
-            [action.controlOrObservation]: action.faultType,
             [`${action.controlOrObservation.toLocaleLowerCase()}FaultComments`]: action.comment,
           },
         },
