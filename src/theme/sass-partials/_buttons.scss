@@ -162,15 +162,3 @@
     }
   }
 }
-
-button {
-  &.wiggle { 
-    animation: wiggle 100ms infinite;
-    animation-timing-function: linear;   
-  }
-  @keyframes wiggle {
-    0% { transform: translate(4px, 0); }
-    50% { transform: translate(-4px, 0); }
-    100% { transform: translate(4px, 0); }
-  }
-}

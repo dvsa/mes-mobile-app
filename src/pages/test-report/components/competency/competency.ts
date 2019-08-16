@@ -29,8 +29,6 @@ import {
   ToggleRemoveFaultMode,
   ToggleSeriousFaultMode,
   ToggleDangerousFaultMode,
-  SetNoFaultToRemove,
-  ClearNoFaultToRemove,
 } from '../../test-report.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 
@@ -236,8 +234,6 @@ export class CompetencyComponent {
       this.store$.dispatch(new ToggleRemoveFaultMode());
       return;
     }
-    this.store$.dispatch(new SetNoFaultToRemove());
-    this.noFaultTimeout = setTimeout(() => this.store$.dispatch(new ClearNoFaultToRemove()), 150);
 
   }
 

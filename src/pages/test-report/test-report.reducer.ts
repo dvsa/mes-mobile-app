@@ -7,7 +7,6 @@ export const initialState: TestReportModel = {
   seriousMode: false,
   dangerousMode: false,
   removeFaultMode: false,
-  noFaultToRemoveWarning: false,
   isLegalRequirementsValid: false,
   isEtaValid: true,
 };
@@ -28,16 +27,6 @@ export function testReportReducer(state = initialState, action: testReportAction
       return {
         ...state,
         dangerousMode: !state.dangerousMode,
-      };
-    case testReportActions.SET_NO_FAULT_TO_REMOVE:
-      return {
-        ...state,
-        noFaultToRemoveWarning: true,
-      };
-    case testReportActions.CLEAR_NO_FAULT_TO_REMOVE:
-      return {
-        ...state,
-        noFaultToRemoveWarning: false,
       };
     case testReportActions.VALIDATE_LEGAL_REQUIREMENTS:
       return {
