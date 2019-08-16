@@ -4,11 +4,12 @@ import * as joi from '@hapi/joi';
 const journalSchema = require('@dvsa/mes-journal-schema/schema-examiner-work-schedule.json');
 import { writeFileSync } from 'fs';
 import { dirname, join } from 'path';
-import { getTodayAsIsoDate, getNextWorkingDayAsIsoDate } from './mock-date-utils';
+import { getTodayAsIsoDate, getNextWorkingDayAsIsoDate, getPreviousWorkingDayAsIsoDate } from './mock-date-utils';
 
 const today = getTodayAsIsoDate();
 // For unit tests to pass, the local-journal.json file must include one test slot for the next working day.
 const nextWorkingDay = getNextWorkingDayAsIsoDate();
+const previousWorkingDay = getPreviousWorkingDayAsIsoDate();
 
 const localJournal: ExaminerWorkSchedule = {
   examiner: {
@@ -322,6 +323,53 @@ const localJournal: ExaminerWorkSchedule = {
         duration: 57,
         slotId: 1007,
         start: `${nextWorkingDay}T14:32:00`,
+      },
+      testCentre: {
+        centreId: 54321,
+        centreName: 'Example Test Centre',
+        costCode: 'EXTC1',
+      },
+      vehicleTypeCode: 'C',
+      vehicleSlotTypeCode: 7,
+      examinerVisiting: false,
+    },
+    {
+      booking: {
+        application: {
+          applicationId: 1234501,
+          bookingSequence: 7,
+          checkDigit: 7,
+          entitlementCheck: false,
+          extendedTest: false,
+          progressiveAccess: false,
+          testCategory: 'B',
+          vehicleGearbox: 'Manual',
+          welshTest: false,
+        },
+        candidate: {
+          candidateAddress: {
+            addressLine1: '1 Hangar Lane',
+            addressLine2: 'Someplace',
+            addressLine3: 'Sometown',
+            postcode: 'AB78 9CD',
+          },
+          candidateId: 107,
+          candidateName: {
+            firstName: 'Jenny',
+            lastName: 'Lewis',
+            title: 'Dr',
+          },
+          driverNumber: 'LEWIS375220A99HC',
+          gender: 'F',
+          primaryTelephone: '01234 567890',
+          dateOfBirth: '1973-09-06',
+          ethnicityCode: 'A',
+        },
+      },
+      slotDetail: {
+        duration: 57,
+        slotId: 1007,
+        start: `${previousWorkingDay}T14:32:00`,
       },
       testCentre: {
         centreId: 54321,
