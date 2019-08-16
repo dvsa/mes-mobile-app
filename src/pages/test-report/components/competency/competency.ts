@@ -25,11 +25,7 @@ import {
 } from '../../../../modules/tests/test-data/test-data.selector';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
-import {
-  ToggleRemoveFaultMode,
-  ToggleSeriousFaultMode,
-  ToggleDangerousFaultMode,
-} from '../../test-report.actions';
+import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';
 import { Competencies } from '../../../../modules/tests/test-data/test-data.constants';
 
 interface CompetencyState {
@@ -61,7 +57,6 @@ export class CompetencyComponent {
   hasDangerousFault: boolean = false;
 
   allowRipple: boolean = true;
-  noFaultTimeout: any;
 
   constructor(
     private store$: Store<StoreModel>,
@@ -232,7 +227,6 @@ export class CompetencyComponent {
         newFaultCount: this.faultCount ? this.faultCount - 1 : 0,
       }));
       this.store$.dispatch(new ToggleRemoveFaultMode());
-      return;
     }
 
   }

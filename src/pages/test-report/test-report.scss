@@ -60,19 +60,11 @@ page-test-report {
     border-top: 1px solid map-get($colors-gds, 'gds-grey-1');
     margin: 4px 8px;
   }
-  .remove-mode .divider {
-    opacity: 0.2;
-    border-color: darken(map-get($colors-gds, 'gds-grey-1'), 60%);
-  }
 
   .dark-divider {
     border-top: 1px solid #2f3233;
     box-shadow: 0 1px 0 0 map-get($colors, 'mes-white');
     margin: 4px 8px;
-  }
-  .remove-mode .dark-divider {
-    opacity: 0.2;
-    box-shadow: 0 1px 0 0 darken(map-get($colors, 'mes-white'), 60%);
   }
   .report-overlay {
     background-color: rgba(0, 0, 0, 0.85);
