@@ -32,7 +32,7 @@
           <ion-grid no-padding>
             <ion-row align-items-center>
               <ion-col col-64>
-                <candidate-link [slotId]="slot.slotDetail.slotId" [slotChanged]="hasSlotChanged"
+                <candidate-link [slot]="slot" [slotChanged]="hasSlotChanged"
                   [name]="slot.booking.candidate.candidateName" [isPortrait]="isPortrait()">
                 </candidate-link>
               </ion-col>
