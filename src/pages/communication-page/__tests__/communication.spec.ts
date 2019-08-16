@@ -98,8 +98,8 @@ describe('CommunicationPage', () => {
                 },
                 communicationPreferences: {
                   updatedEmail: '',
-                  communicationMethod: 'Post',
-                  conductedLanguage: 'Cymraeg',
+                  communicationMethod: 'Not provided',
+                  conductedLanguage: 'Not provided',
                 },
               },
             },
@@ -278,11 +278,18 @@ describe('CommunicationPage', () => {
         expect(returnValue).toBe(false);
       });
 
-      it('should return true for shouldPreselectADefaultValue() if communication type is null', () => {
-        component.communicationType = null;
+      it('should return true for shouldPreselectADefaultValue() if communication type is \'Not provided\'', () => {
+        component.communicationType = 'Not provided';
         const returnValue = component.shouldPreselectADefaultValue();
         expect(returnValue).toBe(true);
       });
+
+      it('should return false for shouldPreselectADefaultValue() if communication type is null', () => {
+        component.communicationType = null;
+        const returnValue = component.shouldPreselectADefaultValue();
+        expect(returnValue).toBe(false);
+      });
+
     });
     describe('clickBack', () => {
       it('should should trigger the lock screen', () => {
@@ -290,6 +297,7 @@ describe('CommunicationPage', () => {
         expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
     });
+
   });
 
   describe('DOM', () => {
