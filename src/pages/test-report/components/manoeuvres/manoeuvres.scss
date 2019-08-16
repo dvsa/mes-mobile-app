@@ -9,10 +9,11 @@ manoeuvres {
     border: 1px solid rgba(11, 12, 12, 0.4);
     box-shadow: 0 1px 0 0 map-get($colors-gds, "gds-grey-1");
     border-radius: 10px;
+    position: relative;
 
     &.promoted {
       position: relative;
-      z-index: 170;
+      z-index: 270;
     }
     &.activated {
       background: #eee;
@@ -94,6 +95,22 @@ manoeuvres {
     serious-fault-badge {
       display: inline-block;
       margin-right: 2px;
+    }
+
+    &.fault {
+      .remove-mode.fault-mode & {
+        z-index: 270;
+      }
+    }
+    &.serious-fault {
+      .remove-mode.serious-mode & {
+        z-index: 270;
+      }
+    }
+    &.dangerous-fault {
+      .remove-mode.dangerous-mode & {
+        z-index: 270;
+      }
     }
   }
 }

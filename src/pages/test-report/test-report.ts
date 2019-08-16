@@ -235,16 +235,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
     this.modal.present();
   }
 
-  getBorderModeCSS(): string {
-    return this.isRemoveFaultMode
-      ? 'remove-mode'
-      : this.isSeriousMode
-        ? 'serious-mode'
-        : this.isDangerousMode
-          ? 'dangerous-mode'
-          : '';
-  }
-
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.CONTINUE:

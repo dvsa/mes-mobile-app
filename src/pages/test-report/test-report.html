@@ -13,7 +13,13 @@
   <ion-grid
     no-padding
     class="grid-layout"
-    [ngClass]="getBorderModeCSS()">
+    [ngClass]="{
+      'remove-mode': isRemoveFaultMode,
+      'add-mode': !isRemoveFaultMode,
+      'fault-mode': !isSeriousMode && !isDangerousMode,
+      'serious-mode': isSeriousMode,
+      'dangerous-mode': isDangerousMode
+    }">
     <ion-row class="first-row-adjust">
       <!-- Column 1-->
       <ion-col col-32>
@@ -389,6 +395,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="report-overlay" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="displayOverlay"
-    [class.hide-overlay]="!displayOverlay"></div>
+  <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="displayOverlay"
+  [class.hide-overlay]="!displayOverlay"></div>
+  <div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="isRemoveFaultMode"
+  [class.hide-overlay]="!isRemoveFaultMode"></div>
 </ion-content>

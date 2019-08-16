@@ -18,6 +18,12 @@
       [onTap]="onTap"
       [onPress]="onPress"
       [ripple]="canButtonRipple()"
+      [ngClass]="{
+        'checked': selectedControlledStop,
+        'fault': faultCount() > 0,
+        'serious-fault': hasSeriousFault(),
+        'dangerous-fault': hasDangerousFault()
+      }"
     >
       <driving-faults-badge class="driving-faults" [count]="faultCount()"></driving-faults-badge>
       <div class='competency-label'>Controlled stop</div>

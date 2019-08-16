@@ -6,7 +6,10 @@
       ion-button
       no-padding
       (click)="toggleRemoveFaultMode()"
-      [ngClass]="isRemoveFaultMode ? 'active' : 'inactive'"
+      [ngClass]="{
+        'active': isRemoveFaultMode,
+        'inactive': !isRemoveFaultMode
+      }"
         >
         Remove
       </button>
