@@ -4,6 +4,9 @@ import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { Device } from '@ionic-native/device';
 import { DeviceMock } from '@ionic-native-mocks/device';
+import { LogHelperMock } from '../../logs/__mocks__/logsHelper.mock';
+import { StoreModule, Store } from '@ngrx/store';
+import { LogHelper } from '../../logs/logsHelper';
 
 describe('Device Provider', () => {
 
@@ -11,10 +14,19 @@ describe('Device Provider', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({
+          appInfo: () => ({
+            versionNumber: '5',
+          }),
+        }),
+      ],
       providers: [
         DeviceProvider,
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: Device, useClass: DeviceMock },
+        Store,
+        { provide: LogHelper, useClass: LogHelperMock },
       ],
     });
 
