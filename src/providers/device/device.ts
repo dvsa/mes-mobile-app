@@ -2,6 +2,11 @@ import { IDeviceProvider } from './device.model';
 import { Injectable } from '@angular/core';
 import { Device } from '@ionic-native/device';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
+import { SaveLog } from '../../modules/logs/logs.actions';
+import { LogType } from '../../shared/models/log.model';
+import { Store } from '@ngrx/store';
+import { StoreModel } from '../../shared/models/store.model';
+import { LogHelper } from '../logs/logsHelper';
 
 declare let cordova: any;
 
@@ -12,6 +17,8 @@ export class DeviceProvider implements IDeviceProvider {
   constructor(
     public appConfig: AppConfigProvider,
     public device: Device,
+    private store$: Store<StoreModel>,
+    private logHelper: LogHelper,
   ) {
   }
 
@@ -44,7 +51,12 @@ export class DeviceProvider implements IDeviceProvider {
     return new Promise((resolve, reject) => {
       if (cordova && cordova.plugins && cordova.plugins.ASAM) {
         cordova.plugins.ASAM.toggle(enabled, (didSucceed: boolean) => {
-          console.log(`Call to ${enabled ? 'enable' : 'disable'} ASAM ${didSucceed ? 'succeeded' : 'failed'}`);
+          const logMessage = `Call to ${enabled ? 'enable' : 'disable'} ASAM ${didSucceed ? 'succeeded' : 'failed'}`;
+          console.log(logMessage);
+          if (!didSucceed) {
+            const logError = `${enabled ? 'Enabling' : 'Disabling'} ASAM`;
+            this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, logError, logMessage)));
+          }
           return resolve(didSucceed);
         });
       } else {
