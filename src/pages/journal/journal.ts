@@ -34,6 +34,7 @@ import { ErrorTypes } from '../../shared/models/error-message';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
+import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-commitment';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -229,6 +230,10 @@ export class JournalPage extends BasePageComponent implements OnInit {
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
       lastLocation = slot.slotData.testCentre.centreName;
+
+      // if this is a personal commitment assign it to the component
+      (<PersonalCommitmentSlotComponent>componentRef.instance).personalCommitments =
+        slot.personalCommitment;
     }
   }
 
