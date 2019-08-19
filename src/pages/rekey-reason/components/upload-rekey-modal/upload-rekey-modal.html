@@ -1,0 +1,20 @@
+<ion-card id="upload-rekey-modal-card" class="modal-alert">
+  <ion-row>
+    <ion-col class="center-icon" no-padding>
+      <ion-icon class="warning-icon" ios="md-alert"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col no-padding>
+      <h2 class="modal-alert-header">Are you sure you<br/>want to upload<br/>this rekeyed test?</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="column-border-top column-border-right" no-padding>
+      <button ion-button clear class="cancel-button" (click)="onCancel()">Cancel</button>
+    </ion-col>
+    <ion-col class="column-border-top" no-padding>
+      <button ion-button clear class="upload-button" (click)="onUpload()">Upload</button>
+    </ion-col>
+  </ion-row>
+</ion-card>

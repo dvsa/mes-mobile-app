@@ -17,3 +17,13 @@ export const getNextWorkingDayAsIsoDate = () => {
   }
   return nextWorkingDay.toISOString().split('T')[0];
 };
+
+export const getPreviousWorkingDayAsIsoDate = () => {
+  const today = moment();
+  const sunday = 0;
+  let previousWorkingDay = today.add(-1, 'day');
+  if (today.day() === sunday) {
+    previousWorkingDay = previousWorkingDay.add(-1, 'day');
+  }
+  return previousWorkingDay.toISOString().split('T')[0];
+};
