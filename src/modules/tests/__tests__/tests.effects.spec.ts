@@ -58,6 +58,7 @@ describe('Tests Effects', () => {
   describe('persistTestsEffect', () => {
     it('should respond to a PERSIST_TESTS action and delegate to the persistence provider', (done) => {
       // ARRANGE
+      store$.dispatch(new StartTest(12345));
       testPersistenceProviderMock.persistTests.and.returnValue(Promise.resolve());
       // ACT
       actions$.next(new testsActions.PersistTests());

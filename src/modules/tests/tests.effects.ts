@@ -61,9 +61,7 @@ export class TestsEffects {
     switchMap(([aciton, tests]) => {
       return this.testPersistenceProvider.persistTests(
         this.getSaveableTestsObject(tests),
-      )
-        .then(() => console.log('saved successfuly'))
-        .catch(err => console.log('error', err));
+      );
     }),
     catchError((err) => {
       console.log(`Error persisting tests: ${err}`);
