@@ -58,12 +58,12 @@ describe('Tests Effects', () => {
   describe('persistTestsEffect', () => {
     it('should respond to a PERSIST_TESTS action and delegate to the persistence provider', (done) => {
       // ARRANGE
-      testPersistenceProviderMock.persistAllTests.and.returnValue(Promise.resolve());
+      testPersistenceProviderMock.persistTests.and.returnValue(Promise.resolve());
       // ACT
       actions$.next(new testsActions.PersistTests());
       // ASSERT
       effects.persistTestsEffect$.subscribe(() => {
-        expect(testPersistenceProviderMock.persistAllTests).toHaveBeenCalled();
+        expect(testPersistenceProviderMock.persistTests).toHaveBeenCalled();
         done();
       });
     });

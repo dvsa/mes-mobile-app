@@ -106,9 +106,9 @@ describe('TestPersistenceProvider', () => {
     dataStoreProvider = TestBed.get(DataStoreProvider);
   });
 
-  describe('persistAllTests', () => {
+  describe('persistTests', () => {
     it('should take the tests state slice and pass it to the data store provider stringified', async () => {
-      await testPersistenceProvider.persistAllTests();
+      await testPersistenceProvider.persistTests(testState);
 
       expect(dataStoreProvider.setItem).toHaveBeenCalledTimes(1);
       expect(dataStoreProvider.setItem.calls.first().args[0]).toBe('TESTS');
