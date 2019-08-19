@@ -19,6 +19,7 @@ import { SubmissionStatusComponent } from './submission-status/submission-status
 import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practice-end-to-end-card';
 import { ProgressiveAccessComponent } from './progressive-access/progressive-access';
 import { TestResultsSearchCardComponent } from './test-results-search-card/test-results-search-card';
+import { PersonalCommitmentSlotComponent } from '../personal-commitment/personal-commitment';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
     PracticeEndToEndCardComponent,
     ProgressiveAccessComponent,
     TestResultsSearchCardComponent,
+    PersonalCommitmentSlotComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
   ],
   entryComponents: [
     TestSlotComponent,
+    PersonalCommitmentSlotComponent,
   ],
   exports: [
     TimeComponent,
@@ -66,6 +69,7 @@ import { TestResultsSearchCardComponent } from './test-results-search-card/test-
     PracticeEndToEndCardComponent,
     ProgressiveAccessComponent,
     TestResultsSearchCardComponent,
+    PersonalCommitmentSlotComponent,
   ],
 })
 export class JournalComponentsModule { }
