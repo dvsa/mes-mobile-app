@@ -9,7 +9,7 @@ export const vehicleDetails = {
   [TestCategory.AM]: false,
   [TestCategory.B]: false,
   [TestCategory.B1]: false,
-  [TestCategory.BE]: false,
+  [TestCategory.BE]: true,
   [TestCategory.C]: true,
   [TestCategory.C1]: true,
   [TestCategory.C1E]: true,
