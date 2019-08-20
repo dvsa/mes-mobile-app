@@ -6,6 +6,8 @@ import { ActivitySlotComponent } from '../../pages/journal/components/activity-s
 import { EmptySlotComponent } from '../../pages/journal/components/empty-slot/empty-slot';
 import { has, isEmpty, forOwn, isNil, isObject } from 'lodash';
 import { TestSlot } from '@dvsa/mes-journal-schema';
+import { PersonalCommitmentSlotComponent } from '../../pages/journal/personal-commitment/personal-commitment';
+
 @Injectable()
 export class SlotSelectorProvider {
 
@@ -63,11 +65,16 @@ export class SlotSelectorProvider {
   public isTestSlot = (slot: Slot) => has(slot, 'vehicleTypeCode');
 
   private resolveComponentName = (slot: SlotItem) => {
-    const { slotData } = slot;
+    const { slotData, personalCommitment } = slot;
+
+    if (!isEmpty(personalCommitment)) {
+      return PersonalCommitmentSlotComponent;
+    }
 
     if (has(slotData, 'activityCode')) {
       return ActivitySlotComponent;
     }
+
     if (this.isBookingEmptyOrNull(slot)) {
       return EmptySlotComponent;
     }
