@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
+import { RekeyReasonViewDidEnter, RekeyReasonViewDidLeave } from './rekey-reason.actions';
 import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -73,6 +73,13 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
 
   ionViewDidEnter() {
     this.store$.dispatch(new RekeyReasonViewDidEnter());
+  }
+
+  ionViewDidLeave(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.store$.dispatch(new RekeyReasonViewDidLeave());
   }
 
   onUploadPressed = (): void => {

@@ -11,6 +11,10 @@ export const initialState: RekeyReasonModel = {
 
 export function rekeyReasonReducer(state = initialState, action: testActions.Types | rekeyReasonActions.Types) {
   switch (action.type) {
+    case rekeyReasonActions.REKEY_REASON_VIEW_DID_LEAVE:
+      return {
+        ...initialState,
+      };
     case testActions.SEND_CURRENT_TEST:
       return {
         ...state,
