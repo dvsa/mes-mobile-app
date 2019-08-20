@@ -1,5 +1,5 @@
 import * as journalActions from '../../pages/journal/journal.actions';
-import * as testActions from './tests.actions';
+import * as testsActions from './tests.actions';
 
 import { TestsModel } from './tests.model';
 import * as testStatusActions from './test-status/test-status.actions';
@@ -45,13 +45,13 @@ export const initialState: TestsModel = {
  */
 export function testsReducer(
   state = initialState,
-  action: testActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types) {
+  action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types) {
 
   const slotId = deriveSlotId(state, action);
   switch (action.type){
-    case testActions.LOAD_PERSISTED_TESTS_SUCCESS:
-      return (<testActions.LoadPersistedTestsSuccess>action).tests;
-    case testActions.SET_ACTIVITY_CODE:
+    case testsActions.LOAD_PERSISTED_TESTS_SUCCESS:
+      return (<testsActions.LoadPersistedTestsSuccess>action).tests;
+    case testsActions.SET_ACTIVITY_CODE:
       return {
         ...state,
         startedTests: {
@@ -62,7 +62,7 @@ export function testsReducer(
           },
         },
       };
-    case testActions.START_TEST_REPORT_PRACTICE_TEST:
+    case testsActions.START_TEST_REPORT_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
@@ -72,12 +72,12 @@ export function testsReducer(
 }
 
 const deriveSlotId = (state: TestsModel, action: Action): string | null => {
-  if (action instanceof testActions.StartTestReportPracticeTest) {
+  if (action instanceof testsActions.StartTestReportPracticeTest) {
     return testReportPracticeSlotId;
   }
 
-  if (action instanceof journalActions.StartTest
-      || action instanceof journalActions.ActivateTest
+  if (action instanceof testsActions.StartTest
+      || action instanceof testsActions.ActivateTest
       || action instanceof fakeJournalActions.StartE2EPracticeTest) {
     return `${action.slotId}`;
   }

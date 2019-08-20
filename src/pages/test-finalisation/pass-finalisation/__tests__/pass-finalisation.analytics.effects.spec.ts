@@ -13,7 +13,7 @@ import {
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Candidate } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../../modules/tests/tests.reducer';
-import * as journalActions from '../../../journal/journal.actions';
+import * as testsActions from '../../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../../fake-journal/fake-journal.actions';
 import { PopulateCandidateDetails } from '../../../../modules/tests/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
@@ -56,7 +56,7 @@ describe('Pass Finalisation Analytics Effects', () => {
   describe('passFinalisationViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new passFinalisationActions.PassFinalisationViewDidEnter());

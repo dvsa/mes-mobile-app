@@ -14,7 +14,7 @@ import {
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
-import * as journalActions from '../../journal/journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
@@ -66,7 +66,7 @@ describe('Waiting Room Analytics Effects', () => {
   describe('waitingRoomViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -108,7 +108,7 @@ describe('Waiting Room Analytics Effects', () => {
   describe('submitWaitingRoomInfoError', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomActions.SubmitWaitingRoomInfoError('error 123'));
@@ -142,7 +142,7 @@ describe('Waiting Room Analytics Effects', () => {
   describe('submitWaitingRoomInfoErrorValidation', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new waitingRoomActions.WaitingRoomValidationError('formControl1'));

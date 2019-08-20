@@ -11,20 +11,33 @@ import { PopulateCandidateDetails } from './candidate/candidate.actions';
 import { testReportPracticeModeSlot } from './__mocks__/tests.mock';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { StoreModel } from '../../shared/models/store.model';
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { getTests } from './tests.reducer';
 import { getCurrentTest, isPracticeMode } from './tests.selector';
 import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submission/test-submission';
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-import { find, startsWith, omit } from 'lodash';
+import { find, startsWith, omit, has } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
 import { getRekeyIndicator } from './rekey/rekey.reducer';
 import { isRekey } from './rekey/rekey.selector';
 import { TestsModel } from './tests.model';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { getJournalState } from '../../pages/journal/journal.reducer';
+import { getSlotsOnSelectedDate } from '../../pages/journal/journal.selector';
+import { PopulateExaminer } from './examiner/examiner.actions';
+import { PopulateTestSlotAttributes } from './test-slot-attributes/test-slot-attributes.actions';
+import { extractTestSlotAttributes } from './test-slot-attributes/test-slot-attributes.selector';
+import { PopulateTestCentre } from './test-centre/test-centre.actions';
+import { extractTestCentre } from './test-centre/test-centre.selector';
+import { PopulateTestCategory } from './category/category.actions';
+import { SetExaminerBooked } from './examiner-booked/examiner-booked.actions';
+import { SetExaminerConducted } from './examiner-conducted/examiner-conducted.actions';
+import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
+import { MarkAsRekey } from './rekey/rekey.actions';
 
 @Injectable()
 export class TestsEffects {
@@ -96,6 +109,61 @@ export class TestsEffects {
         return of();
       }),
     )),
+  );
+
+  @Effect()
+  startTestEffect$ = this.actions$.pipe(
+    ofType(testActions.START_TEST),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getJournalState),
+          map(getSlotsOnSelectedDate),
+        ),
+        this.store$.pipe(
+          select(getJournalState),
+          map(journal => journal.examiner),
+        ),
+      ),
+    )),
+    switchMap(([action, slots, examiner]) => {
+      const startTestAction = action as testActions.StartTest;
+      const slotData = slots.map(slot => slot.slotData);
+      const slot: TestSlot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId &&
+        has(data, 'booking'));
+      const { staffNumber, individualId } = examiner;
+
+      const arrayOfActions: Action[] = [
+        new PopulateExaminer({ staffNumber, individualId }),
+        new PopulateApplicationReference(slot.booking.application),
+        new PopulateCandidateDetails(slot.booking.candidate),
+        new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
+        new PopulateTestCentre(extractTestCentre(slot)),
+        new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
+        new PopulateTestCategory(slot.booking.application.testCategory),
+        new SetExaminerBooked(parseInt(staffNumber, 10)),
+        new SetExaminerConducted(parseInt(staffNumber, 10)),
+        new SetExaminerKeyed(parseInt(staffNumber, 10)),
+      ];
+
+      if (startTestAction.rekey) {
+        arrayOfActions.push(new MarkAsRekey());
+      }
+
+      return arrayOfActions;
+    }),
+  );
+
+  @Effect()
+  activateTestEffect$ = this.actions$.pipe(
+    ofType(testActions.ACTIVATE_TEST),
+    filter((action: testActions.ActivateTest) => action.rekey),
+    map((action) => {
+      const activateTestAction = action as testActions.ActivateTest;
+      if (activateTestAction.rekey) {
+        return new MarkAsRekey();
+      }
+    }),
   );
 
   @Effect()

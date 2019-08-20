@@ -13,7 +13,7 @@ import { MockComponent } from 'ng-mocks';
 import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import {
   DrivingFaultsBadgeComponent,

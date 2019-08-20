@@ -7,7 +7,7 @@ import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/an
 import { AnalyticsScreenNames, AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
-import * as journalActions from '../../journal/journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
@@ -52,7 +52,7 @@ describe('Post Debrief Holding Analytics Effects', () => {
   describe('backToOfficeViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new postDebriefHoldingActions.PostDebriefHoldingViewDidEnter());

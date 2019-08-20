@@ -6,48 +6,34 @@ import { switchMap, map, withLatestFrom, takeUntil, mapTo, filter, catchError, s
 import { of } from 'rxjs/observable/of';
 import { interval } from 'rxjs/observable/interval';
 
-import { groupBy, has } from 'lodash';
+import { groupBy } from 'lodash';
 
 import * as journalActions from './journal.actions';
 import { JournalProvider } from '../../providers/journal/journal';
-import { Store, select, Action } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getJournalState } from './journal.reducer';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { ExaminerWorkSchedule, TestSlot } from '@dvsa/mes-journal-schema';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
 import { SlotProvider } from '../../providers/slot/slot';
 import { JournalRefreshModes } from '../../providers/analytics/analytics.model';
 import {
   getSelectedDate, getLastRefreshed, getSlots,
-  canNavigateToPreviousDay, canNavigateToNextDay, getSlotsOnSelectedDate,
+  canNavigateToPreviousDay, canNavigateToNextDay,
 } from './journal.selector';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { Examiner } from '@dvsa/mes-test-schema/categories/B';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
-import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
-import { TestCentre, Examiner } from '@dvsa/mes-test-schema/categories/B';
-import {
-  PopulateTestSlotAttributes,
-} from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
-import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
-import { SetTestStatusBooked } from '../../modules/tests/test-status/test-status.actions';
-import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
-import { PopulateExaminer } from '../../modules/tests/examiner/examiner.actions';
-import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
 import { ExaminerSlotItems, ExaminerSlotItemsByDate } from './journal.model';
-import { MarkAsRekey } from '../../modules/tests/rekey/rekey.actions';
 import { LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { SetExaminerBooked } from '../../modules/tests/examiner-booked/examiner-booked.actions';
-import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
-import { SetExaminerKeyed } from '../../modules/tests/examiner-keyed/examiner-keyed.actions';
 
 @Injectable()
 export class JournalEffects {
@@ -194,49 +180,6 @@ export class JournalEffects {
   );
 
   @Effect()
-  startTestEffect$ = this.actions$.pipe(
-    ofType(journalActions.START_TEST),
-    concatMap(action => of(action).pipe(
-      withLatestFrom(
-        this.store$.pipe(
-          select(getJournalState),
-          map(getSlotsOnSelectedDate),
-        ),
-        this.store$.pipe(
-          select(getJournalState),
-          map(journal => journal.examiner),
-        ),
-      ),
-    )),
-    switchMap(([action, slots, examiner]) => {
-      const startTestAction = action as journalActions.StartTest;
-      const slotData = slots.map(slot => slot.slotData);
-      const slot: TestSlot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId &&
-        has(data, 'booking'));
-      const { staffNumber, individualId } = examiner;
-
-      const arrayOfActions: Action[] = [
-        new PopulateExaminer({ staffNumber, individualId }),
-        new PopulateApplicationReference(slot.booking.application),
-        new PopulateCandidateDetails(slot.booking.candidate),
-        new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
-        new PopulateTestCentre(this.extractTestCentre(slot)),
-        new SetTestStatusBooked(startTestAction.slotId.toString()),
-        new PopulateTestCategory(slot.booking.application.testCategory),
-        new SetExaminerBooked(parseInt(staffNumber, 10)),
-        new SetExaminerConducted(parseInt(staffNumber, 10)),
-        new SetExaminerKeyed(parseInt(staffNumber, 10)),
-      ];
-
-      if (startTestAction.rekey) {
-        arrayOfActions.push(new MarkAsRekey());
-      }
-
-      return arrayOfActions;
-    }),
-  );
-
-  @Effect()
   selectPreviousDayEffect$ = this.actions$.pipe(
     ofType(journalActions.SELECT_PREVIOUS_DAY),
     concatMap(action => of(action).pipe(
@@ -288,23 +231,4 @@ export class JournalEffects {
     }),
   );
 
-  extractTestCentre = (slotData): TestCentre => {
-    return {
-      centreId: slotData.testCentre.centreId,
-      costCode: slotData.testCentre.costCode,
-      centreName: slotData.testCentre.centreName,
-    };
-  }
-
-  @Effect()
-  activateTestEffect$ = this.actions$.pipe(
-    ofType(journalActions.ACTIVATE_TEST),
-    filter((action: journalActions.ActivateTest) => action.rekey),
-    map((action) => {
-      const activateTestAction = action as journalActions.ActivateTest;
-      if (activateTestAction.rekey) {
-        return new MarkAsRekey();
-      }
-    }),
-  );
 }

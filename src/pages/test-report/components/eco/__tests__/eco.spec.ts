@@ -8,7 +8,7 @@ import { StoreModel } from '../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
 import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { ToggleEco, TogglePlanningEco, ToggleControlEco }
   from '../../../../../modules/tests/test-data/test-data.actions';
 

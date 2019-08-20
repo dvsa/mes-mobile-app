@@ -15,8 +15,8 @@ import {
 import { StoreModel } from '../../../shared/models/store.model';
 import { Candidate, Application } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import * as journalActions from '../../journal/journal.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
@@ -66,7 +66,7 @@ describe('Communication Analytics Effects', () => {
   describe('communicationViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -108,7 +108,7 @@ describe('Communication Analytics Effects', () => {
   describe('communicationValidationError', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new communicationActions.CommunicationValidationError('formControl1'));

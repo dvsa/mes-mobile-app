@@ -14,7 +14,6 @@ import {
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { StoreModel } from '../../../shared/models/store.model';
-import * as journalActions from '../../journal/journal.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -68,7 +67,7 @@ describe('Back To Office Analytics Effects', () => {
   describe('backToOfficeViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new backToOfficeActions.BackToOfficeViewDidEnter());
@@ -100,7 +99,7 @@ describe('Back To Office Analytics Effects', () => {
   describe('deferWriteUpEffect', () => {
     it('should call logEvent with pass page and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -124,7 +123,7 @@ describe('Back To Office Analytics Effects', () => {
     });
     it('should call logEvent with fail page and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));

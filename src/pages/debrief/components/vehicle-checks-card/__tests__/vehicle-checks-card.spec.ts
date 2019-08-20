@@ -4,7 +4,7 @@ import { IonicModule, Config } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import {
   TellMeQuestionCorrect,
   ShowMeQuestionPassed,

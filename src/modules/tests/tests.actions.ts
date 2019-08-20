@@ -16,6 +16,10 @@ export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
 export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
 export const START_TEST_REPORT_PRACTICE_TEST = '[Tests] Start practice test';
 
+export const START_TEST = '[Tests] Start Test';
+// Differs from START_TEST in that it won't trigger the journal -> test state copy effect
+export const ACTIVATE_TEST = '[Tests] Activate Test';
+
 export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
 export const TEST_OUTCOME_CHANGED = '[TestReportEffects] Test outcome changed';
 
@@ -40,6 +44,16 @@ export class SetActivityCode implements Action {
 export class TestOutcomeChanged implements Action {
   readonly type = TEST_OUTCOME_CHANGED;
   constructor(public payload: string) {}
+}
+
+export class StartTest implements Action {
+  readonly type = START_TEST;
+  constructor(public slotId: number, public rekey: boolean = false) { }
+}
+
+export class ActivateTest implements Action {
+  readonly type = ACTIVATE_TEST;
+  constructor(public slotId: number, public rekey: boolean = false) { }
 }
 
 export class StartTestReportPracticeTest implements Action {
@@ -84,6 +98,8 @@ export type Types =
   | LoadPersistedTestsSuccess
   | SetActivityCode
   | TestOutcomeChanged
+  | StartTest
+  | ActivateTest
   | StartTestReportPracticeTest
   | StartSendingCompletedTests
   | SendCompletedTests

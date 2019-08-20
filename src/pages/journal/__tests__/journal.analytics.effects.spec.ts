@@ -13,6 +13,7 @@ import {
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { JournalAnalyticsEffects } from '../journal.analytics.effects';
 import * as journalActions from '../journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
 import { Store, StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
 import * as slotActions from '../../../providers/slot/slot.actions';
@@ -141,7 +142,7 @@ describe('Journal Analytics Effects', () => {
   describe('testOutcomeStartTest', () => {
     it('should log an start Test event if isRekey is false', (done) => {
       // ACT
-      actions$.next(new journalActions.StartTest(12345, false));
+      actions$.next(new testsActions.StartTest(12345, false));
       // ASSERT
       effects.testOutcomeStartTest$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -156,7 +157,7 @@ describe('Journal Analytics Effects', () => {
     });
     it('should log an Rekey Test event if isRekey is true', (done) => {
       // ACT
-      actions$.next(new journalActions.StartTest(12345, true));
+      actions$.next(new testsActions.StartTest(12345, true));
       // ASSERT
       effects.testOutcomeStartTest$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
