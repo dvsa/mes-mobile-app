@@ -36,6 +36,7 @@ export enum AnalyticsScreenNames {
   NON_PASS_FINALISATION = 'non pass finalisation',
   REKEY_SEARCH = 'rekey search screen',
   REKEY_REASON = 'rekey reason screen',
+  REKEY_UPLOADED = 'rekey uploaded screen',
 }
 
 export enum AnalyticsEventCategories {

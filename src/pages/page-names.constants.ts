@@ -19,3 +19,4 @@ export const JOURNAL_FORCE_CHECK_MODAL = 'JournalForceCheckModal';
 export const ERROR_PAGE = 'ErrorPage';
 export const POST_DEBRIEF_HOLDING_PAGE = 'PostDebriefHoldingPage';
 export const REKEY_REASON_PAGE = 'RekeyReasonPage';
+export const REKEY_UPLOADED_PAGE = 'RekeyUploadedPage';
