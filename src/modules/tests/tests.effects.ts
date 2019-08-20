@@ -18,10 +18,13 @@ import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submi
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
-import { find, startsWith } from 'lodash';
+import { find, startsWith, omit } from 'lodash';
 import { HttpResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
+import { getRekeyIndicator } from './rekey/rekey.reducer';
+import { isRekey } from './rekey/rekey.selector';
+import { TestsModel } from './tests.model';
 
 @Injectable()
 export class TestsEffects {
@@ -41,17 +44,46 @@ export class TestsEffects {
       withLatestFrom(
         this.store$.pipe(
           select(getTests),
+        ),
+        this.store$.pipe(
+          select(getTests),
           select(isPracticeMode),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getRekeyIndicator),
+          map(isRekey),
         ),
       ),
     )),
-    filter(([action, isPracticeMode]) => !isPracticeMode),
-    switchMap(() => this.testPersistenceProvider.persistAllTests()),
+    filter(([action, tests, isPracticeMode, isRekey]) => !isPracticeMode && !isRekey),
+    switchMap(([action, tests]) => {
+      return this.testPersistenceProvider.persistTests(
+        this.getSaveableTestsObject(tests),
+      );
+    }),
     catchError((err) => {
       console.log(`Error persisting tests: ${err}`);
       return of();
     }),
   );
+
+  getSaveableTestsObject(tests: TestsModel): TestsModel {
+    const testsNotToSave = Object.keys(tests.startedTests).filter((key) => {
+      return startsWith(key, testReportPracticeSlotId) ||
+        startsWith(key, end2endPracticeSlotId) ||
+        tests.startedTests[key].rekey;
+    });
+
+    return {
+      currentTest: {
+        slotId: testsNotToSave.includes(tests.currentTest.slotId) ? null : tests.currentTest.slotId,
+      },
+      startedTests: omit(tests.startedTests, testsNotToSave),
+      testStatus: omit(tests.testStatus, testsNotToSave),
+    };
+  }
 
   @Effect()
   loadPersistedTestsEffect$ = this.actions$.pipe(

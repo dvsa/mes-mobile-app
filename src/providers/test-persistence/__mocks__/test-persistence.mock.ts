@@ -1,5 +1,5 @@
 export class TestPersistenceProviderMock {
-  persistAllTests = jasmine.createSpy('persistAllTests');
+  persistTests = jasmine.createSpy('persistTests');
   loadPersistedTests = jasmine.createSpy('loadPersistedTests');
   clearPersistedTests = jasmine.createSpy('clearPersistedTests');
 }
