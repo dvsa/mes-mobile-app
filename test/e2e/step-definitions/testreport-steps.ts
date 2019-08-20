@@ -16,25 +16,26 @@ const endTest = () => {
   clickElement(endTestButton);
 };
 
-// This needs to be correctly re-implemented with the Test Report page
 const completeLegalRequirements = () => {
-  // Click all the legal requirements - having to go native as normal find and click not working. Not sure why.
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      const legalRequirements = element.all(by.xpath('//XCUIElementTypeImage[@label="checkmark"]'));
-      legalRequirements.each((legalRequirement) => {
-        browser.wait(ExpectedConditions.elementToBeClickable(legalRequirement));
-        legalRequirement.click().then((promise) => {
-          browser.sleep(TEST_CONFIG.ACTION_WAIT);
-          return promise;
-        });
-      });
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext));
-    });
+  const legalRequirements = element.all(by.xpath('//legal-requirement/competency-button[@class="legal-button"]'));
+  legalRequirements.each((legalRequirement) => {
+    longPressButton(legalRequirement);
   });
+};
+
+const completeEco = () => {
+  const ecoCheckmark = getElement(by.xpath('//competency-button[@class="eco-tick"]'));
+  longPressButton(ecoCheckmark);
+};
+
+const completeShowMe = () => {
+  const showMeCheckmark = getElement(by.xpath('//competency-button[@class="show-me-question-tick"]'));
+  longPressButton(showMeCheckmark);
+};
+
+const completeControlledStop = () => {
+  const controlledStopCheckmark = getElement(by.xpath('//competency-button[@class="controlled-stop-tick"]'));
+  longPressButton(controlledStopCheckmark);
 };
 
 When('I end the test', () => {
@@ -54,9 +55,18 @@ When('I end and terminate the test', () => {
 
 When('I complete the test', () => {
   completeLegalRequirements();
-
   completeManouveure();
+  completeEco();
+  completeShowMe();
+  endTest();
+});
 
+When('I complete the test with controlled stop', () => {
+  completeLegalRequirements();
+  completeManouveure();
+  completeEco();
+  completeShowMe();
+  completeControlledStop();
   endTest();
 });
 
