@@ -24,17 +24,17 @@ const completeLegalRequirements = () => {
 };
 
 const completeEco = () => {
-  const ecoCheckmark = getElement(by.xpath('//competency-button[@class="eco-tick"]'));
+  const ecoCheckmark = getElement(by.xpath('//competency-button[contains(@class, "eco-tick")]'));
   longPressButton(ecoCheckmark);
 };
 
 const completeShowMe = () => {
-  const showMeCheckmark = getElement(by.xpath('//competency-button[@class="show-me-question-tick"]'));
+  const showMeCheckmark = getElement(by.xpath('//competency-button[contains(@class, "show-me-question-tick")]'));
   longPressButton(showMeCheckmark);
 };
 
 const completeControlledStop = () => {
-  const controlledStopCheckmark = getElement(by.xpath('//competency-button[@class="controlled-stop-tick"]'));
+  const controlledStopCheckmark = getElement(by.xpath('//competency-button[contains(@class, "controlled-stop-tick")]'));
   longPressButton(controlledStopCheckmark);
 };
 
