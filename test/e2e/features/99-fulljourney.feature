@@ -11,7 +11,7 @@ Feature: Full end to end journey
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page
       Then I should see the "Test report - Florence Pearson" page
-      And I complete the test
+      And I complete the test with controlled stop
       And I continue to debrief
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
