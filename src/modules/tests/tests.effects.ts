@@ -58,7 +58,7 @@ export class TestsEffects {
       ),
     )),
     filter(([action, tests, isPracticeMode, isRekey]) => !isPracticeMode && !isRekey),
-    switchMap(([aciton, tests]) => {
+    switchMap(([action, tests]) => {
       return this.testPersistenceProvider.persistTests(
         this.getSaveableTestsObject(tests),
       );
