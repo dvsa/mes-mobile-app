@@ -148,13 +148,13 @@ describe('Tests Effects', () => {
     });
   });
 
-  describe('sendTestSuccessEffect', () => {
+  describe('sendCurrentTestSuccessEffect', () => {
     it('should dispatch the TestStatusSubmitted action', (done) => {
       const currentTestSlotId = '12345';
       // ACT
-      actions$.next(new testsActions.SendTestSuccess(currentTestSlotId));
+      actions$.next(new testsActions.SendCurrentTestSuccess(currentTestSlotId));
       // ASSERT
-      effects.sendTestSuccessEffect$.subscribe((result) => {
+      effects.sendCurrentTestSuccessEffect$.subscribe((result) => {
         if (result instanceof testStatusActions.SetTestStatusSubmitted)  {
           expect(result).toEqual(new testStatusActions.SetTestStatusSubmitted(currentTestSlotId));
         }

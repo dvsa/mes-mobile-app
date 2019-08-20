@@ -1,20 +1,50 @@
 <ion-card id="upload-rekey-modal-card" class="modal-alert">
-  <ion-row>
-    <ion-col class="center-icon" no-padding>
-      <ion-icon class="warning-icon" ios="md-alert"></ion-icon>
-    </ion-col>
-  </ion-row>
-  <ion-row justify-content-center>
-    <ion-col no-padding>
-      <h2 class="modal-alert-header">Are you sure you<br/>want to upload<br/>this rekeyed test?</h2>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="column-border-top column-border-right" no-padding>
-      <button ion-button clear class="cancel-button" (click)="onCancel()">Cancel</button>
-    </ion-col>
-    <ion-col class="column-border-top" no-padding>
-      <button ion-button clear class="upload-button" (click)="onUpload()">Upload</button>
-    </ion-col>
-  </ion-row>
+  <ion-grid no-padding>
+
+    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.isUploading$ | async) && !(pageState.hasUploaded$ | async)">
+      <ion-col no-padding>
+        <ion-row class="modal-icon" justify-content-center>
+          <ion-icon class="warning-icon" ios="md-alert"></ion-icon>
+        </ion-row>
+        <ion-row class="modal-message" justify-content-center>
+          <h2 class="modal-alert-header" *ngIf="!(pageState.hasTriedUploading$ | async)">Are you sure you<br/>want to upload<br/>this rekeyed test?</h2>
+          <h2 class="modal-alert-header" *ngIf="(pageState.hasTriedUploading$ | async)">This test could not<br/>be uploaded</h2>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row align-items-center class="message-wrapper" *ngIf="(pageState.isUploading$ | async) && !(pageState.hasUploaded$ | async)">
+      <ion-col no-padding>
+        <ion-row class="modal-icon" justify-content-center>
+          <ion-spinner class="upload-spinner" name="circles"></ion-spinner>
+        </ion-row>
+        <ion-row class="modal-message" justify-content-center align-items-center>
+          <h2 class="modal-alert-header">Uploading...</h2>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row align-items-center class="message-wrapper" *ngIf="(pageState.hasUploaded$ | async)">
+      <ion-col no-padding>
+        <ion-row class="modal-icon" justify-content-center>
+          <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
+        </ion-row>
+        <ion-row class="modal-message" justify-content-center align-items-center>
+          <h2 class="modal-alert-header">Rekeyed test<br/>uploaded</h2>
+          <button ion-button class="mes-primary-button" (click)="onContinue()">
+            <h3>Return to journal</h3>
+          </button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!(pageState.hasUploaded$ | async)">
+      <ion-col class="column-border-top column-border-right" no-padding>
+        <button ion-button clear class="cancel-button" (click)="onCancel()" [disabled]="isUploading">Cancel</button>
+      </ion-col>
+      <ion-col class="column-border-top" no-padding>
+        <button ion-button clear class="upload-button" (click)="onUpload()" [disabled]="isUploading">{{!hasTriedUploading? 'Upload' : 'Retry'}}</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-card>

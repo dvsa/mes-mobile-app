@@ -6,6 +6,12 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
 import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+interface RekeyReasonPageState {
+  isUploading$: Observable<boolean>;
+}
 
 @IonicPage()
 @Component({
@@ -14,7 +20,12 @@ import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.c
 })
 export class RekeyReasonPage extends PracticeableBasePageComponent {
 
+  pageState: RekeyReasonPageState;
+  subscription: Subscription = Subscription.EMPTY;
+
   modal: Modal;
+
+  count: number = 0;
 
   constructor(
     public navController: NavController,
@@ -32,19 +43,22 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
 
   onUploadPressed = (): void => {
     // TODO - if form valid
+    this.count = this.count + 1;
+
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    this.modal = this.modalController.create('UploadRekeyModal', {}, options);
+    this.modal = this.modalController.create('UploadRekeyModal', { success: this.count > 1 }, options);
     this.modal.onDidDismiss(this.onModalDismiss);
     this.modal.present();
   }
 
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
-      case ModalEvent.UPLOAD:
-        console.log('UPLOAD');
-        break;
       case ModalEvent.CANCEL:
-        console.log('CANCEL');
+        console.log('CANCEL PRESSED');
+        break;
+      case ModalEvent.CONTINUE:
+        console.log('CONTINUE PRESSED');
+        this.navController.popToRoot();
         break;
     }
   }
