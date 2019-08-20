@@ -1,5 +1,5 @@
 export type RekeyReasonModel = {
   isUploading: boolean,
-  hasUploaded: boolean,
-  hasTriedUploading: boolean,
+  hasUploadSucceeded: boolean,
+  hasUploadFailed: boolean,
 };

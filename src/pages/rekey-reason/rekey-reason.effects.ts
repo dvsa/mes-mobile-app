@@ -29,10 +29,6 @@ export class OfficeEffects {
       ),
     )),
     switchMap(([action, slotId]: [testActions.SendCurrentTestSuccess, string]) => {
-      if (action.slotId === slotId) {
-        // cancel the spinner
-        console.log('sendCurrentTestSuccessEffect');
-      }
       return [
         new testStatusActions.SetTestStatusCompleted(slotId),
       ];

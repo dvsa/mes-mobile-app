@@ -66,7 +66,6 @@ export class SendCompletedTestsFailure implements Action {
 
 export class SendCurrentTest implements Action {
   readonly type = SEND_CURRENT_TEST;
-  constructor(public success: boolean) {}
 }
 
 export class SendCurrentTestSuccess implements Action {

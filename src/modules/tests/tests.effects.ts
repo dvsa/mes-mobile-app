@@ -222,11 +222,11 @@ export class TestsEffects {
 
       return this.testSubmissionProvider.submitTests(testToSubmit)
         .pipe(
-          delay(2000), // *** TODO - REMOVE THIS DELAY ***
+          delay(1000),
           switchMap((responses: HttpResponse<any>[]) => {
             return responses.map((response, index) => {
               const matchedTests = find(testToSubmit, ['index', index]);
-              if (response.status === HttpStatusCodes.CREATED || action.success) {
+              if (response.status === HttpStatusCodes.CREATED) {
                 return new testActions.SendCurrentTestSuccess(matchedTests.slotId);
               }
               return new testActions.SendCurrentTestFailure(matchedTests.slotId);
