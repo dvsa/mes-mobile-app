@@ -13,10 +13,11 @@ import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
-import { RekeyReasonModel } from './rekey-reason.model';
+import { RekeyReasonUploadModel } from './rekey-reason.model';
+import { getUploadStatus } from './rekey-reason-selector';
 
 interface RekeyReasonPageState {
-  rekeyReasonState$: Observable<RekeyReasonModel>;
+  uploadStatus$: Observable<RekeyReasonUploadModel>;
 }
 
 @IonicPage()
@@ -49,25 +50,16 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
 
   ngOnInit(): void {
     this.pageState = {
-      rekeyReasonState$: this.store$.pipe(
+      uploadStatus$: this.store$.pipe(
         select(getRekeyReasonState),
+        select(getUploadStatus),
       ),
     };
 
-    const { rekeyReasonState$ } = this.pageState;
+    const { uploadStatus$ } = this.pageState;
 
     this.subscription = merge(
-      rekeyReasonState$.pipe(map((rekeyReasonState) => {
-
-        this.handleLoadingUI(rekeyReasonState.isUploading);
-
-        if (rekeyReasonState.hasUploadSucceeded) {
-          return this.navController.push(REKEY_UPLOADED_PAGE);
-        }
-        if (rekeyReasonState.hasUploadFailed) {
-          return this.onShowModal(true);
-        }
-      })),
+      uploadStatus$.pipe(map(this.handleUploadOutcome)),
     ).subscribe();
   }
 
@@ -99,6 +91,19 @@ export class RekeyReasonPage extends PracticeableBasePageComponent {
       case ModalEvent.UPLOAD:
         this.store$.dispatch(new SendCurrentTest());
         break;
+    }
+  }
+
+  handleUploadOutcome = (uploadStatus: RekeyReasonUploadModel): void => {
+
+    this.handleLoadingUI(uploadStatus.isUploading);
+
+    if (uploadStatus.hasUploadSucceeded) {
+      this.navController.push(REKEY_UPLOADED_PAGE);
+      return;
+    }
+    if (uploadStatus.hasUploadFailed) {
+      this.onShowModal(true);
     }
   }
 
