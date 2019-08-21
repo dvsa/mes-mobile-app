@@ -38,6 +38,8 @@ import { SetExaminerBooked } from './examiner-booked/examiner-booked.actions';
 import { SetExaminerConducted } from './examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
+import { getRekeySearchState } from '../../pages/rekey-search/rekey-search.reducer';
+import { getBookedTestSlot } from '../../pages/rekey-search/rekey-search.selector';
 
 @Injectable()
 export class TestsEffects {
@@ -124,13 +126,22 @@ export class TestsEffects {
           select(getJournalState),
           map(journal => journal.examiner),
         ),
+        this.store$.pipe(
+          select(getRekeySearchState),
+          map(getBookedTestSlot),
+        ),
       ),
     )),
-    switchMap(([action, slots, examiner]) => {
+    switchMap(([action, slots, examiner, rekeyTestSlot]) => {
       const startTestAction = action as testActions.StartTest;
       const slotData = slots.map(slot => slot.slotData);
-      const slot: TestSlot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId &&
+      let slot: TestSlot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId &&
         has(data, 'booking'));
+
+      if (slot === undefined) {
+        slot = rekeyTestSlot;
+      }
+
       const { staffNumber, individualId } = examiner;
 
       const arrayOfActions: Action[] = [
