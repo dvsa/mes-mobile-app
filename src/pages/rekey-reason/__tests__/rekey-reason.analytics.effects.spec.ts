@@ -7,7 +7,7 @@ import {
   AnalyticsScreenNames,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
-import * as rekeyReasonActions from '../../../modules/tests/rekey-reason/rekey-reason.actions';
+import * as rekeyReasonActions from '../rekey-reason.actions';
 import { RekeyReasonAnalyticsEffects } from '../rekey-reason.analytics.effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { testsReducer } from '../../../modules/tests/tests.reducer';

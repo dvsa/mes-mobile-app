@@ -3,7 +3,7 @@ import { IonicPage, NavController, Platform, Modal, ModalController, LoadingCont
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidLeave } from './rekey-reason.actions';
+import { RekeyReasonViewDidLeave, RekeyReasonViewDidEnter } from './rekey-reason.actions';
 import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -142,6 +142,10 @@ export class RekeyReasonPage {
     this.subscription = merge(
       uploadStatus$.pipe(map(this.handleUploadOutcome)),
     ).subscribe();
+  }
+
+  ionViewDidEnter() {
+    this.store$.dispatch(new RekeyReasonViewDidEnter());
   }
 
   ionViewDidLeave(): void {

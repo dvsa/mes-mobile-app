@@ -15,10 +15,7 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import { getCandidateId } from '../../modules/tests/candidate/candidate.selector';
 import { getApplicationReference } from '../../modules/tests/application-reference/application-reference.reducer';
 import { getApplicationNumber } from '../../modules/tests/application-reference/application-reference.selector';
-import {
-  REKEY_REASON_VIEW_DID_ENTER,
-  RekeyReasonViewDidEnter,
-} from '../../modules/tests/rekey-reason/rekey-reason.actions';
+import { REKEY_REASON_VIEW_DID_ENTER, RekeyReasonViewDidEnter } from './rekey-reason.actions';
 
 @Injectable()
 export class RekeyReasonAnalyticsEffects {
@@ -55,9 +52,9 @@ export class RekeyReasonAnalyticsEffects {
       ),
     )),
     switchMap((
-      [action, tests, candidateId, applicationReference]:
+        [action, tests, candidateId, applicationReference]:
         [RekeyReasonViewDidEnter, TestsModel, number, string],
-    ) => {
+      ) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.REKEY_REASON, tests);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
