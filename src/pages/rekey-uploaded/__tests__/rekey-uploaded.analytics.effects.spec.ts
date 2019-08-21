@@ -1,0 +1,69 @@
+import { RekeyUploadedAnalyticsEffects } from '../rekey-uploaded.analytics.effects';
+import { TestBed } from '@angular/core/testing';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { StoreModule, Store } from '@ngrx/store';
+import { provideMockActions } from '@ngrx/effects/testing';
+import * as rekeyUploadedActions from '../rekey-uploaded.actions';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import {
+  AnalyticsScreenNames,
+} from '../../../providers/analytics/analytics.model';
+import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import * as journalActions from '../../journal/journal.actions';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
+import { Candidate } from '@dvsa/mes-journal-schema';
+
+describe('Rekey Uploaded Analytics Effects', () => {
+
+  let effects: RekeyUploadedAnalyticsEffects;
+  let analyticsProviderMock;
+  let actions$: any;
+  let store$: Store<StoreModel>;
+  const screenName = AnalyticsScreenNames.REKEY_UPLOADED;
+  const mockCandidate: Candidate = {
+    candidateId: 1001,
+  };
+
+  beforeEach(() => {
+    actions$ = new ReplaySubject(1);
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({
+          tests: testsReducer,
+        }),
+      ],
+      providers: [
+        RekeyUploadedAnalyticsEffects,
+        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        provideMockActions(() => actions$),
+        Store,
+      ],
+    });
+    effects = TestBed.get(RekeyUploadedAnalyticsEffects);
+    analyticsProviderMock = TestBed.get(AnalyticsProvider);
+    store$ = TestBed.get(Store);
+    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
+  });
+
+  describe('rekeyUploadedViewDidEnter', () => {
+    it('should call setCurrentPage', (done) => {
+      // ARRANGE
+      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      // ACT
+      actions$.next(new rekeyUploadedActions.RekeyUploadedViewDidEnter());
+      // ASSERT
+      effects.rekeyUploadedViewDidEnter$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.setCurrentPage)
+          .toHaveBeenCalledWith(screenName);
+        done();
+      });
+    });
+
+  });
+
+});

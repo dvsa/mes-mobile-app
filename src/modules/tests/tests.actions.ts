@@ -1,15 +1,15 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
-import { ActivityCode, StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
 export const SEND_COMPLETED_TEST_SUCCESS = '[TestsEffects] Send Completed Tests Success';
 export const SEND_COMPLETED_TESTS_FAILURE = '[TestsEffects] Send Completed Tests Failure';
 
-export const SEND_TEST = '[TestsEffects] Send Test';
-export const SEND_TEST_SUCCESS = '[Tests] Send Test Success';
-export const SEND_TEST_FAILURE = '[Tests] Send Test Failure';
+export const SEND_CURRENT_TEST = '[TestsEffects] Send Current Test';
+export const SEND_CURRENT_TEST_SUCCESS = '[Tests] Send Test Success';
+export const SEND_CURRENT_TEST_FAILURE = '[Tests] Send Test Failure';
 
 export const PERSIST_TESTS = '[Tests] Persist';
 export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
@@ -78,18 +78,18 @@ export class SendCompletedTestsFailure implements Action {
   readonly type = SEND_COMPLETED_TESTS_FAILURE;
 }
 
-export class SendTest implements Action {
-  readonly type = SEND_TEST;
-  constructor(public payload: StandardCarTestCATBSchema) {}
+export class SendCurrentTest implements Action {
+  readonly type = SEND_CURRENT_TEST;
 }
 
-export class SendTestSuccess implements Action {
-  readonly type = SEND_TEST_SUCCESS;
+export class SendCurrentTestSuccess implements Action {
+  readonly type = SEND_CURRENT_TEST_SUCCESS;
   constructor(public slotId: string) {}
 }
 
-export class SendTestFailure implements Action {
-  readonly type = SEND_TEST_FAILURE;
+export class SendCurrentTestFailure implements Action {
+  readonly type = SEND_CURRENT_TEST_FAILURE;
+  constructor(public slotId: string) {}
 }
 
 export type Types =
@@ -105,6 +105,6 @@ export type Types =
   | SendCompletedTests
   | SendCompletedTestSuccess
   | SendCompletedTestsFailure
-  | SendTest
-  | SendTestSuccess
-  | SendTestFailure;
+  | SendCurrentTest
+  | SendCurrentTestSuccess
+  | SendCurrentTestFailure;

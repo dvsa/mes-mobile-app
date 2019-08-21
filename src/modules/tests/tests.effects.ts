@@ -13,7 +13,7 @@ import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mo
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select, Action } from '@ngrx/store';
 import { getTests } from './tests.reducer';
-import { getCurrentTest, isPracticeMode } from './tests.selector';
+import { getCurrentTest, isPracticeMode, getCurrentTestSlotId } from './tests.selector';
 import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submission/test-submission';
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
@@ -208,7 +208,8 @@ export class TestsEffects {
       const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
         slotId !== testReportPracticeSlotId &&
         !startsWith(slotId, end2endPracticeSlotId) &&
-        tests.testStatus[slotId] === TestStatus.Completed),
+        tests.testStatus[slotId] === TestStatus.Completed) &&
+        !tests.startedTests[slotId].rekey,
       );
 
       const completedTests: TestToSubmit[] = completedTestKeys.map((slotId: string, index: number) => ({
@@ -264,9 +265,48 @@ export class TestsEffects {
   );
 
   @Effect()
-  sendTestSuccessEffect$ = this.actions$.pipe(
-    ofType(testActions.SEND_TEST_SUCCESS),
-    switchMap((action: testActions.SendTestSuccess) => {
+  sendCurrentTestEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_CURRENT_TEST),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    switchMap(([action, tests]: [testActions.SendCurrentTest, TestsModel]) => {
+      const slotId = getCurrentTestSlotId(tests);
+      const test = getCurrentTest(tests);
+
+      if (!test || this.networkStateProvider.getNetworkState() !== ConnectionStatus.ONLINE) {
+        return of(new testActions.SendCurrentTestFailure(slotId));
+      }
+
+      const testToSubmit: TestToSubmit[] = [{
+        slotId,
+        index: 0,
+        payload: test,
+      }];
+
+      return this.testSubmissionProvider.submitTests(testToSubmit)
+        .pipe(
+          switchMap((responses: HttpResponse<any>[]) => {
+            return responses.map((response, index) => {
+              const matchedTests = find(testToSubmit, ['index', index]);
+              if (response.status === HttpStatusCodes.CREATED) {
+                return new testActions.SendCurrentTestSuccess(matchedTests.slotId);
+              }
+              return new testActions.SendCurrentTestFailure(matchedTests.slotId);
+            });
+          }),
+        );
+    }),
+  );
+
+  @Effect()
+  sendCurrentTestSuccessEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_CURRENT_TEST_SUCCESS),
+    switchMap((action: testActions.SendCurrentTestSuccess) => {
       return [
         new testStatusActions.SetTestStatusSubmitted(action.slotId),
         new testActions.PersistTests(),

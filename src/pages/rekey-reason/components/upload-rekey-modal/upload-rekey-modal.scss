@@ -1,12 +1,22 @@
 upload-rekey-modal {
+  ion-card {
+    min-height: 365px;
+  }
+  .message-wrapper {
+    min-height: 308px;
+  }
   @extend .modal-alert-wrapper;
 
   .modal-alert {
     width: 400px;
   }
 
-  .center-icon {
-    text-align: center;
+  .modal-icon {
+    min-height: 152px;
+  }
+
+  .modal-message {
+    min-height: 156px;
   }
 
   .warning-icon {

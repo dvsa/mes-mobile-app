@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { ModalEvent } from './upload-rekey-modal.constants';
 
 @IonicPage()
@@ -9,9 +9,14 @@ import { ModalEvent } from './upload-rekey-modal.constants';
 })
 export class UploadRekeyModal {
 
+  retryMode: boolean = false;
+
   constructor(
     private viewCtrl: ViewController,
-  ) {}
+    public params: NavParams,
+  ) {
+    this.retryMode = params.get('retryMode');
+  }
 
   onCancel() {
     this.viewCtrl.dismiss(ModalEvent.CANCEL);
