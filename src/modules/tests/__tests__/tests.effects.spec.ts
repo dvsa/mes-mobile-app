@@ -28,6 +28,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { PopulateExaminer } from '../examiner/examiner.actions';
 import journalSlotsDataMock from '../../../pages/journal/__mocks__/journal-slots-data.mock';
+import { journalReducer } from '../../../pages/journal/journal.reducer';
 
 describe('Tests Effects', () => {
 
@@ -41,6 +42,7 @@ describe('Tests Effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
+          journal: journalReducer,
           tests: testsReducer,
         }),
       ],
