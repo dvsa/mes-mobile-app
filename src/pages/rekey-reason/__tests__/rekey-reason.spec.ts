@@ -8,7 +8,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { AppModule } from '../../../app/app.module';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { RekeyReasonModel } from '../rekey-reason.model';
-import { getUploadStatus } from '../rekey-reason-selector';
+import { getUploadStatus } from '../rekey-reason.selector';
 import { SendCurrentTest, SendCurrentTestSuccess, SendCurrentTestFailure } from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
 import { REKEY_UPLOADED_PAGE } from '../../page-names.constants';

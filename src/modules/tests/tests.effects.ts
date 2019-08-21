@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, filter, map, withLatestFrom, concatMap, delay } from 'rxjs/operators';
+import { switchMap, catchError, filter, map, withLatestFrom, concatMap } from 'rxjs/operators';
 import { TestPersistenceProvider } from '../../providers/test-persistence/test-persistence';
 import { from } from 'rxjs/observable/from';
 import * as testActions from './tests.actions';
@@ -222,7 +222,6 @@ export class TestsEffects {
 
       return this.testSubmissionProvider.submitTests(testToSubmit)
         .pipe(
-          delay(1000),
           switchMap((responses: HttpResponse<any>[]) => {
             return responses.map((response, index) => {
               const matchedTests = find(testToSubmit, ['index', index]);

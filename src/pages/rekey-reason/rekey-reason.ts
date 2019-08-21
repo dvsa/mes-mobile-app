@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
 import { RekeyReasonUploadModel } from './rekey-reason.model';
-import { getUploadStatus } from './rekey-reason-selector';
+import { getUploadStatus } from './rekey-reason.selector';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
