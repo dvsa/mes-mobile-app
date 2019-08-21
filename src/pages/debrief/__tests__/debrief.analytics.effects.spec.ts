@@ -12,7 +12,6 @@ import {
 } from '../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import * as journalActions from '../../journal/journal.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
@@ -54,7 +53,7 @@ describe('Debrief Analytics Effects', () => {
   describe('debriefViewDidEnter', () => {
     it('should call setCurrentPage with pass page', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
@@ -68,7 +67,7 @@ describe('Debrief Analytics Effects', () => {
     });
     it('should call setCurrentPage with fail page', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());

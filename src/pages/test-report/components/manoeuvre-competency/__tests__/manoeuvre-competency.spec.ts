@@ -12,7 +12,7 @@ import {
 } from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { ManoeuvreCompetencyComponent } from '../manoeuvre-competency';
 import {
   AddManoeuvreDrivingFault,

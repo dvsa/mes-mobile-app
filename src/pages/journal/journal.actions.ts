@@ -20,10 +20,6 @@ export const SELECT_NEXT_DAY = '[JournalPage] Select Next Day';
 export const SET_SELECTED_DAY = '[JournalEffects] Set Selected Day';
 export const CANDIDATE_DETAILS_SEEN = '[JournalPage] Candidate Details Seen';
 
-export const START_TEST = '[TestOutcomeComponent] Start Test';
-// Differs from START_TEST in that it won't trigger the journal -> test state copy effect
-export const ACTIVATE_TEST = '[TestOutcomeComponent] Activate Test';
-
 // Analytic actions
 
 export const JOURNAL_VIEW_DID_ENTER = '[JournalPage] Journal view did enter';
@@ -119,16 +115,6 @@ export class JournalRefresh implements Action {
   constructor(public mode: string) { }
 }
 
-export class StartTest implements Action {
-  readonly type = START_TEST;
-  constructor(public slotId: number, public rekey: boolean = false) { }
-}
-
-export class ActivateTest implements Action {
-  readonly type = ACTIVATE_TEST;
-  constructor(public slotId: number, public rekey: boolean = false) { }
-}
-
 export class CandidateDetailsSeen implements Action {
   readonly type = CANDIDATE_DETAILS_SEEN;
   constructor(public slotId: number) { }
@@ -152,6 +138,4 @@ export type JournalActionTypes =
   | ResumingWriteUp
   | JournalRefreshError
   | JournalRefresh
-  | StartTest
-  | ActivateTest
   | CandidateDetailsSeen;

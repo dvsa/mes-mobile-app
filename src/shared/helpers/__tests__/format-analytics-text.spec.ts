@@ -1,6 +1,5 @@
 import { TestsModel } from '../../../modules/tests/tests.model';
 import * as fakeJournalActions from '../../../pages/fake-journal/fake-journal.actions';
-import * as journalActions from '../../../pages/journal/journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
@@ -38,7 +37,7 @@ describe('formatAnalyticsText', () => {
 
   it('should not prefix regular tests with any additional text', () => {
     const state = { ...initialState };
-    const action = new journalActions.StartTest(slotId);
+    const action = new testsActions.StartTest(slotId);
     const tests: TestsModel = testsReducer(state, action);
 
     const result = formatAnalyticsText(eventString, tests);

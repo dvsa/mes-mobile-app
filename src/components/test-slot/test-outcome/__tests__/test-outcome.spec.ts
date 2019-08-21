@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
 import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
-import { StartTest, ActivateTest } from '../../../../pages/journal/journal.actions';
+import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../pages/page-names.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';

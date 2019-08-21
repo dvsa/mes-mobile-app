@@ -29,7 +29,7 @@ import {
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;

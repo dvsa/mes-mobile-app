@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import { ConfigMock } from 'ionic-mocks';
 import { Subscription } from 'rxjs/Subscription';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { AddDrivingFault } from '../../../../../modules/tests/test-data/test-data.actions';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
 

@@ -10,12 +10,14 @@ import {
   JOURNAL_REFRESH,
   JournalRefresh,
   JOURNAL_REFRESH_ERROR,
-  START_TEST,
-  StartTest,
   JournalRefreshError,
   RESUMING_WRITE_UP,
   ResumingWriteUp,
 } from '../../pages/journal/journal.actions';
+import {
+  START_TEST,
+  StartTest,
+} from '../../modules/tests/tests.actions';
 import {
     AnalyticsDimensionIndices,
     AnalyticsScreenNames,

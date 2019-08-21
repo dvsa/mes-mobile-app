@@ -14,7 +14,7 @@ export const bookedTestMock: TestSlot = {
       progressiveAccess: false,
       specialNeeds: 'Candidate has dyslexia',
       specialNeedsExtendedTest: false,
-      testCategory: 'A1',
+      testCategory: 'B',
       welshTest: false,
     },
     candidate: {

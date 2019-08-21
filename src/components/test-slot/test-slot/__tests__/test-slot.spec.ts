@@ -24,7 +24,7 @@ import { TestStatus } from '../../../../modules/tests/test-status/test-status.mo
 import { StoreModel } from '../../../../shared/models/store.model';
 import { SetTestStatusDecided } from '../../../../modules/tests/test-status/test-status.actions';
 import { of } from 'rxjs/observable/of';
-import { StartTest } from '../../../../pages/journal/journal.actions';
+import { StartTest } from '../../../../modules/tests/tests.actions';
 import { SubmissionStatusComponent } from '../../submission-status/submission-status';
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';

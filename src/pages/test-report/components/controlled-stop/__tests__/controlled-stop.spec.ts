@@ -15,7 +15,7 @@ import { SeriousFaultBadgeComponent } from '../../../../../components/common/ser
 import {
   DangerousFaultBadgeComponent,
 } from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 import {
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,

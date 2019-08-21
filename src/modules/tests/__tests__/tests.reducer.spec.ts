@@ -1,10 +1,9 @@
 import { testsReducer } from '../tests.reducer';
-import * as journalActions from '../../../pages/journal/journal.actions';
 import * as candidateReducer from '../candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
 import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from '../tests.model';
-import * as testActions from './../tests.actions';
+import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { testReportPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
@@ -24,7 +23,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
     const slotId = 123;
-    const action = new journalActions.StartTest(slotId);
+    const action = new testsActions.StartTest(slotId);
 
     const output = testsReducer(state, action);
 
@@ -38,7 +37,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
     const slotId = testReportPracticeSlotId;
-    const action = new testActions.StartTestReportPracticeTest(slotId);
+    const action = new testsActions.StartTestReportPracticeTest(slotId);
 
     const output = testsReducer(state, action);
 
@@ -116,7 +115,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
     const slotId = testReportPracticeSlotId;
-    const action = new testActions.StartTestReportPracticeTest(slotId);
+    const action = new testsActions.StartTestReportPracticeTest(slotId);
 
     const output = testsReducer(state, action);
 
@@ -140,7 +139,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
     const slotId = '123';
-    const action = new testActions.StartTestReportPracticeTest(slotId);
+    const action = new testsActions.StartTestReportPracticeTest(slotId);
 
     const output = testsReducer(state, action);
 
@@ -154,7 +153,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
 
-    const result = testsReducer(state, new journalActions.StartTest(123));
+    const result = testsReducer(state, new testsActions.StartTest(123));
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
@@ -169,7 +168,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
 
-    const result = testsReducer(state, new journalActions.ActivateTest(456));
+    const result = testsReducer(state, new testsActions.ActivateTest(456));
 
     expect(result.currentTest.slotId).toBe('456');
   });

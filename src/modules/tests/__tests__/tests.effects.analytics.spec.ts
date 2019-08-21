@@ -15,7 +15,6 @@ import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions
 import { TestsAnalyticsEffects } from '../tests.analytics.effects';
 import * as testsActions from '../tests.actions';
 import * as testStatusActions from '../test-status/test-status.actions';
-import * as journalActions from '../../../pages/journal/journal.actions';
 import * as candidateActions from '../candidate/candidate.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
 import * as applicationReferenceActions from '../application-reference/application-reference.actions';
@@ -65,7 +64,7 @@ describe('Tests Analytics Effects', () => {
   describe('setTestStatusSubmittedEffect', () => {
     it('should set an action saying the test has been submitted if it is not a rekey', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -89,7 +88,7 @@ describe('Tests Analytics Effects', () => {
     });
     it('should set an action saying the test has been submitted if it is a rekey', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -135,7 +134,7 @@ describe('Tests Analytics Effects', () => {
   describe('testOutcomeChangedEffect', () => {
     it('should log an event', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       const eventLabel = 'fail to pass';

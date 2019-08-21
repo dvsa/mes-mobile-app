@@ -27,8 +27,6 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { PopulateExaminer } from '../../../modules/tests/examiner/examiner.actions';
-import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 import { SaveLog } from '../../../modules/logs/logs.actions';
 import { LogHelper } from '../../../providers/logs/logsHelper';
 import { Device } from '@ionic-native/device';
@@ -283,43 +281,6 @@ describe('Journal Effects', () => {
       expect(result).toEqual({ type: journalActions.LOAD_JOURNAL_SILENT });
       actions$.next(new journalActions.StopPolling());
       done();
-    });
-  });
-
-  describe('startTestEffect', () => {
-    it('should copy the examiner from the journal state into the test state', (done) => {
-      const selectedDate: string = new DateTime().format('YYYY-MM-DD');
-      const examiner = { staffNumber: '123', individualId: 456 };
-      store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
-      store$.dispatch(
-        new journalActions.LoadJournalSuccess(
-          { examiner, slotItemsByDate: journalSlotsDataMock },
-          ConnectionStatus.ONLINE,
-          false,
-          new Date(),
-        ),
-      ); // Load in mock journal state
-      // ACT
-      actions$.next(new journalActions.StartTest(1001));
-      // ASSERT
-      effects.startTestEffect$.subscribe((result) => {
-        if (result instanceof PopulateExaminer) {
-          expect(result.payload).toEqual(examiner);
-          done();
-        }
-      });
-    });
-  });
-
-  describe('activateTestEffect', () => {
-    it('should call theMarkAsRekey action', (done) => {
-      // ACT
-      actions$.next(new journalActions.ActivateTest(1234, true));
-      // ASSERT
-      effects.activateTestEffect$.subscribe((result) => {
-        expect(result instanceof rekeyActions.MarkAsRekey).toBe(true);
-        done();
-      });
     });
   });
 });

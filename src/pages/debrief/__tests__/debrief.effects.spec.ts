@@ -6,7 +6,6 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import * as debriefActions from '../debrief.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import * as journalActions from '../../journal/journal.actions';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
@@ -41,7 +40,7 @@ describe('Debrief Effects', () => {
 
     it('should return SET_TEST_STATUS_DECIDED & PERSIST_TESTS actions when passed test', (done) => {
       // Set activity code as passed
-      store$.dispatch(new journalActions.StartTest(1234));
+      store$.dispatch(new testsActions.StartTest(1234));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
 
       actions$.next(new debriefActions.EndDebrief());
@@ -60,7 +59,7 @@ describe('Debrief Effects', () => {
 
     it('should return SET_TEST_STATUS_WRITE_UP & PERSIST_TESTS actions when failed test', (done) => {
       // Set activity code as failed
-      store$.dispatch(new journalActions.StartTest(1234));
+      store$.dispatch(new testsActions.StartTest(1234));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
 
       actions$.next(new debriefActions.EndDebrief());

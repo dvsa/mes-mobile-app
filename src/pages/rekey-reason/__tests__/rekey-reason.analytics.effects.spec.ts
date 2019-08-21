@@ -12,7 +12,7 @@ import { RekeyReasonAnalyticsEffects } from '../rekey-reason.analytics.effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../shared/models/store.model';
-import * as journalActions from '../../journal/journal.actions';
+import * as testsActions from '../../../modules/tests/tests.actions';
 import * as candidateActions from '../../../modules/tests/candidate/candidate.actions';
 import { Candidate } from '../../../shared/models/DJournal';
 
@@ -51,7 +51,7 @@ describe('Rekey Reason Analytics Effects', () => {
   describe('rekeyReasonViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new journalActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
       // ACT
       actions$.next(new rekeyReasonActions.RekeyReasonViewDidEnter());

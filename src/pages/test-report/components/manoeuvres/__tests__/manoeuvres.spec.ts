@@ -17,7 +17,7 @@ import {
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
-import { StartTest } from '../../../../journal/journal.actions';
+import { StartTest } from '../../../../../modules/tests/tests.actions';
 
 describe('ManoeuvresComponent', () => {
   let fixture: ComponentFixture<ManoeuvresComponent>;

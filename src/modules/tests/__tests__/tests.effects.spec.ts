@@ -6,6 +6,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { TestPersistenceProviderMock } from '../../../providers/test-persistence/__mocks__/test-persistence.mock';
 import * as testsActions from '../tests.actions';
 import * as testStatusActions from '../test-status/test-status.actions';
+import * as rekeyActions from '../rekey/rekey.actions';
+import * as journalActions from '../../../pages/journal/journal.actions';
 import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
@@ -18,12 +20,15 @@ import { initialState, testsReducer } from '../tests.reducer';
 import { TestSubmissionProvider } from '../../../providers/test-submission/test-submission';
 import { TestSubmissionProviderMock } from '../../../providers/test-submission/__mocks__/test-submission.mock';
 import { Store, StoreModule } from '@ngrx/store';
-import { NetworkStateProvider } from '../../../providers/network-state/network-state';
+import { NetworkStateProvider, ConnectionStatus } from '../../../providers/network-state/network-state';
 import { NetworkStateProviderMock } from '../../../providers/network-state/__mocks__/network-state.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
-import { StartTest } from '../../../pages/journal/journal.actions';
 import { StoreModel } from '../../../shared/models/store.model';
+import { DateTime } from '../../../shared/helpers/date-time';
+import { PopulateExaminer } from '../examiner/examiner.actions';
+import journalSlotsDataMock from '../../../pages/journal/__mocks__/journal-slots-data.mock';
+import { journalReducer } from '../../../pages/journal/journal.reducer';
 
 describe('Tests Effects', () => {
 
@@ -37,6 +42,7 @@ describe('Tests Effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
+          journal: journalReducer,
           tests: testsReducer,
         }),
       ],
@@ -58,7 +64,7 @@ describe('Tests Effects', () => {
   describe('persistTestsEffect', () => {
     it('should respond to a PERSIST_TESTS action and delegate to the persistence provider', (done) => {
       // ARRANGE
-      store$.dispatch(new StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345));
       testPersistenceProviderMock.persistTests.and.returnValue(Promise.resolve());
       // ACT
       actions$.next(new testsActions.PersistTests());
@@ -119,11 +125,11 @@ describe('Tests Effects', () => {
       const currentTestSlotId2 = '1234567'; // Mocked as a 500 http error response
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(testReportPracticeModeSlot.slotDetail.slotId));
-      store$.dispatch(new StartTest(Number(currentTestSlotId)));
+      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId)));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId));
-      store$.dispatch(new StartTest(Number(currentTestSlotId1)));
+      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId1)));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId1));
-      store$.dispatch(new StartTest(Number(currentTestSlotId2)));
+      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId2)));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId2));
       // ACT
       actions$.next(new testsActions.SendCompletedTests());
@@ -161,6 +167,43 @@ describe('Tests Effects', () => {
         if (result instanceof testsActions.PersistTests) {
           expect(result).toEqual(new testsActions.PersistTests());
         }
+        done();
+      });
+    });
+  });
+
+  describe('startTestEffect', () => {
+    it('should copy the examiner from the journal state into the test state', (done) => {
+      const selectedDate: string = new DateTime().format('YYYY-MM-DD');
+      const examiner = { staffNumber: '123', individualId: 456 };
+      store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
+      store$.dispatch(
+        new journalActions.LoadJournalSuccess(
+          { examiner, slotItemsByDate: journalSlotsDataMock },
+          ConnectionStatus.ONLINE,
+          false,
+          new Date(),
+        ),
+      ); // Load in mock journal state
+      // ACT
+      actions$.next(new testsActions.StartTest(1001));
+      // ASSERT
+      effects.startTestEffect$.subscribe((result) => {
+        if (result instanceof PopulateExaminer) {
+          expect(result.payload).toEqual(examiner);
+          done();
+        }
+      });
+    });
+  });
+
+  describe('activateTestEffect', () => {
+    it('should call theMarkAsRekey action', (done) => {
+      // ACT
+      actions$.next(new testsActions.ActivateTest(1234, true));
+      // ASSERT
+      effects.activateTestEffect$.subscribe((result) => {
+        expect(result instanceof rekeyActions.MarkAsRekey).toBe(true);
         done();
       });
     });

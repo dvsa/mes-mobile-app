@@ -8,7 +8,6 @@ import { StoreModule, Store } from '@ngrx/store';
 import { TestReportEffects } from '../test-report.effects';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
-import * as journalActions from '../../journal/journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -61,7 +60,7 @@ describe('Test Report Effects', () => {
   describe('validateCatBLegalRequirements', () => {
 
     beforeEach(() => {
-      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456));
     });
 
     it('should dispatch a success action when the effect is triggered and test is valid', (done) => {
@@ -93,7 +92,7 @@ describe('Test Report Effects', () => {
 
   describe('validateCatBTestEta', () => {
     beforeEach(() => {
-      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456));
     });
 
     it('should dispatch a success action when the effect is triggered and the eta is valid', (done) => {
@@ -127,7 +126,7 @@ describe('Test Report Effects', () => {
   describe('calculateTestResult', () => {
 
     beforeEach(() => {
-      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456));
     });
 
     it('should dispatch an action containing the correct result for a test', (done) => {
@@ -147,7 +146,7 @@ describe('Test Report Effects', () => {
   describe('persistTestReport', () => {
 
     beforeEach(() => {
-      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456));
     });
 
     it('should dispatch an action requesting the test data to be saved when triggered', (done) => {
@@ -169,7 +168,7 @@ describe('Test Report Effects', () => {
 
   describe('terminateTestReport', () => {
     beforeEach(() => {
-      store$.dispatch(new journalActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456));
     });
 
     it('should dispatch an action terminating the test', (done) => {
