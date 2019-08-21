@@ -3,9 +3,18 @@ import { IonicPage, NavController, Platform, Modal, ModalController, LoadingCont
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidLeave, IpadIssueSelected } from './rekey-reason.actions';
+import { RekeyReasonViewDidLeave } from './rekey-reason.actions';
 import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
+import {
+  IpadIssueSelected,
+  IpadIssueTechFault,
+  IpadIssueLost,
+  IpadIssueStolen,
+  IpadIssueBroken,
+  OtherSelected,
+  OtherReasonUpdated,
+} from '../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { REKEY_UPLOADED_PAGE } from '../page-names.constants';
 import { getRekeyReasonState } from './rekey-reason.reducer';
@@ -14,10 +23,32 @@ import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
 import { RekeyReasonUploadModel } from './rekey-reason.model';
 import { getUploadStatus } from './rekey-reason.selector';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  getReasonForRekey,
+  getRekeyIpadIssueSelected,
+  getRekeyIpadIssueTechFault,
+  getRekeyIpadIssueBroken,
+  getRekeyIpadIssueStolen,
+  getRekeyIpadIssueLost,
+  getRekeyTransferSelected,
+  getRekeyOtherSelected,
+  getRekeyOtherReasonUpdated,
+} from '../../modules/tests/rekey-reason/rekey-reason.selector';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
+  ipadIssueSelected$: Observable<boolean>;
+  ipadIssueTechFault$: Observable<boolean>;
+  ipadIssueLost$: Observable<boolean>;
+  ipadIssueStolen$: Observable<boolean>;
+  ipadIssueBroken$: Observable<boolean>;
+  transferSelected$: Observable<boolean>;
+  // TODO: Add transfer staff number into the page state
+  otherSelected$: Observable<boolean>;
+  otherReasonUpdated$: Observable<string>;
 }
 
 @IonicPage()
@@ -69,10 +100,40 @@ export class RekeyReasonPage {
   }
 
   ngOnInit(): void {
+    const currentReasonForRekey$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getReasonForRekey),
+    );
+
     this.pageState = {
       uploadStatus$: this.store$.pipe(
         select(getRekeyReasonState),
         select(getUploadStatus),
+      ),
+      ipadIssueSelected$: currentReasonForRekey$.pipe(
+        select(getRekeyIpadIssueSelected),
+      ),
+      ipadIssueTechFault$: currentReasonForRekey$.pipe(
+        select(getRekeyIpadIssueTechFault),
+      ),
+      ipadIssueLost$: currentReasonForRekey$.pipe(
+        select(getRekeyIpadIssueLost),
+      ),
+      ipadIssueStolen$: currentReasonForRekey$.pipe(
+        select(getRekeyIpadIssueStolen),
+      ),
+      ipadIssueBroken$: currentReasonForRekey$.pipe(
+        select(getRekeyIpadIssueBroken),
+      ),
+      transferSelected$: currentReasonForRekey$.pipe(
+        select(getRekeyTransferSelected),
+      ),
+      otherSelected$: currentReasonForRekey$.pipe(
+        select(getRekeyOtherSelected),
+      ),
+      otherReasonUpdated$: currentReasonForRekey$.pipe(
+        select(getRekeyOtherReasonUpdated),
       ),
     };
 

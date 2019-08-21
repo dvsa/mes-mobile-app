@@ -6,7 +6,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { AppModule } from '../../../app/app.module';
-import { testsReducer } from '../../../modules/tests/tests.reducer';
+// import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { RekeyReasonModel } from '../rekey-reason.model';
 import { getUploadStatus } from '../rekey-reason.selector';
 import { SendCurrentTest, SendCurrentTestSuccess, SendCurrentTestFailure } from '../../../modules/tests/tests.actions';
