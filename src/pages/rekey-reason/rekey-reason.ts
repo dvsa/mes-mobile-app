@@ -42,6 +42,8 @@ export class RekeyReasonPage {
   modal: Modal;
   loadingSpinner: Loading;
 
+  reasonCharsRemaining: number = null;
+
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -52,6 +54,13 @@ export class RekeyReasonPage {
   ) {
     this.formGroup = new FormGroup({
       ipadIssue: new FormControl(false),
+      ipadIssueTechFault: new FormControl(false),
+      ipadIssueLost: new FormControl(false),
+      ipadIssueStolen: new FormControl(false),
+      ipadIssueBroken: new FormControl(false),
+      transferSelected: new FormControl(false),
+      otherSelected: new FormControl(false),
+      otherReasonUpdated: new FormControl('', Validators.minLength(1)),
     });
   }
 
@@ -130,8 +139,46 @@ export class RekeyReasonPage {
   }
 
   ipadIssueSelected() {
+    console.log('asdasdasdASSAASD');
     this.store$.dispatch(new IpadIssueSelected(this.formGroup.controls['ipadIssue'].value));
-    console.log('asd');
+  }
+  ipadIssueTechFaultChanged() {
+    this.store$.dispatch(new IpadIssueTechFault(this.formGroup.controls['ipadIssueTechFault'].value === 'true'));
+  }
+  ipadIssueLostChanged() {
+    this.store$.dispatch(new IpadIssueLost(this.formGroup.controls['ipadIssueLost'].value === 'true'));
+  }
+  ipadIssueStolenChanged() {
+    this.store$.dispatch(new IpadIssueStolen(this.formGroup.controls['ipadIssueStolen'].value === 'true'));
+  }
+  ipadIssueBrokenChanged() {
+    this.store$.dispatch(new IpadIssueBroken(this.formGroup.controls['ipadIssueBroken'].value === 'true'));
+  }
+  otherSelected() {
+    this.store$.dispatch(new OtherSelected(this.formGroup.controls['otherSelected'].value));
+  }
+  otherReasonUpdatedChanged() {
+    this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
+  }
+
+  reasonValue(): string {
+    return this.formGroup.controls['otherReasonUpdated'].value;
+  }
+
+  characterCountChanged(charactersRemaining: number) {
+    this.reasonCharsRemaining = charactersRemaining;
+  }
+  getCharacterCountText() {
+    const characterString = Math.abs(this.reasonCharsRemaining) === 1 ? 'character' : 'characters';
+    const endString = this.reasonCharsRemaining < 0 ? 'too many' : 'remaining';
+    return `You have ${Math.abs(this.reasonCharsRemaining)} ${characterString} ${endString}`;
+  }
+  charactersExceeded(): boolean {
+    return this.reasonCharsRemaining < 0;
+  }
+
+  invalidReason(): boolean {
+    return !this.formGroup.controls['otherReasonUpdated'].valid;
   }
 
 }

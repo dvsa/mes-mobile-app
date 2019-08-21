@@ -12,13 +12,24 @@ import { getUploadStatus } from '../rekey-reason.selector';
 import { SendCurrentTest, SendCurrentTestSuccess, SendCurrentTestFailure } from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
 import { REKEY_UPLOADED_PAGE } from '../../page-names.constants';
+import { AppInfoModel } from '../../../modules/app-info/app-info.model';
+import {
+  IpadIssueTechFault,
+  OtherSelected,
+  IpadIssueSelected,
+  IpadIssueLost,
+  IpadIssueStolen,
+  IpadIssueBroken,
+  OtherReasonUpdated,
+} from '../../../modules/tests/rekey-reason/rekey-reason.actions';
 
-describe('RekeyReasonPage', () => {
+fdescribe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
   let component: RekeyReasonPage;
   let loadingController: LoadingController;
   let navContoller: NavController;
   let modalController: ModalController;
+  let store$: Store<AppInfoModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,7 +39,32 @@ describe('RekeyReasonPage', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({
-          tests: testsReducer,
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                rekeyReason: {
+                  ipadIssue: {
+                    selected: true,
+                    broken: false,
+                    lost: false,
+                    technicalFault: false,
+                    stolen: false,
+                  },
+                  other: {
+                    selected: true,
+                    reason: '',
+                  },
+                  transfer: {
+                    selected: false,
+                  },
+                },
+              },
+            },
+          }),
         }),
         AppModule,
       ],
@@ -50,6 +86,8 @@ describe('RekeyReasonPage', () => {
         navContoller = TestBed.get(NavController);
         modalController = TestBed.get(ModalController);
       });
+    store$ = TestBed.get(Store);
+    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -122,5 +160,73 @@ describe('RekeyReasonPage', () => {
       });
     });
 
+  });
+
+  describe('Selecting issue emits the correct event', () => {
+    it('clicking ipad issue while its showing emits ipad issue selected event', () => {
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#ipadIssue');
+      expect(elem.checked).toBeFalsy();
+      elem.click();
+      expect(elem.checked).toBeTruthy();
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueSelected(false));
+    });
+
+    it('clicking other reason emits ipad issue selected event', () => {
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#otherSelected');
+      expect(elem.checked).toBeFalsy();
+      elem.click();
+      expect(elem.checked).toBeTruthy();
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(new OtherSelected(false));
+    });
+
+    it('clicking ipad issue tech fault emits the correct event', () => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#ipadIssueTechFault');
+      elem.click();
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueTechFault(true));
+    });
+
+    it('clicking ipad issue lost emits the correct event', () => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#ipadIssueLost');
+      elem.click();
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueLost(true));
+    });
+
+    it('clicking ipad issue stolen emits the correct event', () => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#ipadIssueStolen');
+      elem.click();
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueStolen(true));
+    });
+
+    it('clicking ipad issue broken emits the correct event', () => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#ipadIssueBroken');
+      elem.click();
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueBroken(true));
+    });
+
+    it('entering value into reason for rekey emits the correct event', () => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#otherReasonUpdated');
+      elem.value = 'some random value';
+      elem.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(OtherReasonUpdated));
+    });
   });
 });

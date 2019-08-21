@@ -6,18 +6,50 @@
 
 <ion-content no-bounce padding>
   <ion-card>
+    <ion-card-header>
+      <h4>Reason for use</h4>
+    </ion-card-header>
     <div [formGroup]="formGroup">
       <ion-grid>
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <input id="ipadIssue" type="checkbox" class="gds-checkbox" formControlName="ipadIssue" (change)="ipadIssueSelected()">
-            <!-- <input id="ipadIssue" type="checkbox" class="gds-checkbox"> -->
-            <label for="ipadIssue">Ipad Issue</label>
+            <label for="ipadIssue">iPad Issue</label>
           </ion-col>
           <ion-col col-56>
-            <!-- <input type="radio" id="d255-yes" class="gds-radio-button" name="d255" formControlName="d255" value="Yes"
-            [class.ng-invalid]="invalid" [checked]="d255 === true" (change)="d255Changed($event.target.value)"> -->
-            <span *ngIf="pageState.ipadIssueSelected$ | async" class="mes-data">asd</span>
+            <div class="selected-border" id="ipadIssueSection" *ngIf="pageState.ipadIssueSelected$ | async">
+              <input id="ipadIssueTechFault" type="radio" class="gds-radio-button" name="ipadIssueTechFault"
+                formControlName="ipadIssueTechFault" value="true" [checked]="pageState.ipadIssueTechFault$ | async"
+                (change)="ipadIssueTechFaultChanged()">
+              <label for="ipadIssueTechFault" class="radio-label">Tech Fault</label>
+              <input id="ipadIssueLost" type="radio" class="gds-radio-button" name="ipadIssueLost" formControlName="ipadIssueLost"
+                [checked]="pageState.ipadIssueLost$ | async" value="true" (change)="ipadIssueLostChanged()">
+              <label for="ipadIssueLost" class="radio-label">Lost</label>
+              <input id="ipadIssueStolen" type="radio" class="gds-radio-button" name="ipadIssueStolen" formControlName="ipadIssueStolen"
+                [checked]="pageState.ipadIssueStolen$ | async" value="true" (change)="ipadIssueStolenChanged()">
+              <label for="ipadIssueStolen" class="radio-label">Stolen</label>
+              <input id="ipadIssueBroken" type="radio" class="gds-radio-button" name="ipadIssueBroken" formControlName="ipadIssueBroken"
+                [checked]="pageState.ipadIssueBroken$ | async" value="true" (change)="ipadIssueBrokenChanged()">
+              <label for="ipadIssueBroken" class="radio-label">Broken</label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <input id="otherSelected" type="checkbox" class="gds-checkbox" formControlName="otherSelected" (change)="otherSelected()">
+            <label for="otherSelected">
+              Other (specify reason)
+            </label>
+          </ion-col>
+          <ion-col col-56>
+            <div class="selected-border" id="reasonSection" *ngIf="pageState.otherSelected$ | async">
+              <textarea id="otherReasonUpdated" formControlName="otherReasonUpdated" charLimit="200" charCount
+                (onCharacterCountChanged)="characterCountChanged($event)" [class.ng-invalid]="invalid" (change)="otherReasonUpdatedChanged()">
+                </textarea>
+              <div class="character-count validation-text" [ngClass]="{'ng-invalid': charactersExceeded()}">
+                {{getCharacterCountText()}}
+              </div>
+            </div>
           </ion-col>
         </ion-row>
 

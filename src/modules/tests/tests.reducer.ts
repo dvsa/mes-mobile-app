@@ -30,6 +30,7 @@ import { examinerBookedReducer } from './examiner-booked/examiner-booked.reducer
 import { examinerConductedReducer } from './examiner-conducted/examiner-conducted.reducer';
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
+import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -99,7 +100,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
         ...nestedCombineReducers(
           {
             category: categoryReducer,
-            journalData:  {
+            journalData: {
               examiner: examinerReducer,
               testCentre: testCentreReducer,
               testSlotAttributes: testSlotsAttributesReducer,
@@ -116,6 +117,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
             rekey: rekeyReducer,
+            rekeyReason: rekeyReasonReducer,
             examinerBooked: examinerBookedReducer,
             examinerConducted: examinerConductedReducer,
             examinerKeyed: examinerKeyedReducer,

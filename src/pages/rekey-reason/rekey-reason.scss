@@ -14,6 +14,31 @@ page-rekey-reason {
     font-size: 3.4rem;
   }
 
+  .selected-border{
+    border-width: 0 0 0 4px;
+    border-style: solid;
+    padding: 0 0 0 16px;
+    border-color: map-get($colors-gds, 'gds-grey-2');
+  }
+
+  .character-count {
+    color: map-get($colors-gds, gds-grey-1);
+    font-weight: initial;
+    letter-spacing: initial;
+    &.ng-invalid {
+      font-weight: 600;
+      letter-spacing: -0.49px;
+    }
+  }
+
+  .radio-label{
+    margin: 20px 0 20px 0;
+  }
+
+  textarea#otherReasonUpdated {
+    word-wrap: break-word;
+  }
+
   .card-content-ios{
     padding: 0;
   }
