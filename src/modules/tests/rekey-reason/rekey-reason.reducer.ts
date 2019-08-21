@@ -12,6 +12,7 @@ import {
   REKEY_REASON_OTHER_REASON_UPDATED,
 } from './rekey-reason.actions';
 import { createFeatureSelector } from '@ngrx/store';
+
 export const initialState: RekeyReason = {
   ipadIssue: {
     selected: false,
@@ -28,6 +29,7 @@ export const initialState: RekeyReason = {
     selected: false,
   },
 };
+
 export function rekeyReasonReducer(state = initialState, action: Types): RekeyReason {
   switch (action.type) {
     case REKEY_REASON_IPAD_ISSUE_SELECTED:
