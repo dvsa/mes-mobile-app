@@ -5,7 +5,6 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import * as rekeySearchActions from './rekey-search.actions';
 import { of } from 'rxjs/observable/of';
 import { CompressionProvider } from '../../providers/compression/compression';
-import { bookedTestMock } from '../../providers/rekey-search/__mocks__/booked-test.mock';
 
 @Injectable()
 export class RekeySearchEffects {
@@ -27,7 +26,7 @@ export class RekeySearchEffects {
       };
       return this.rekeySearchProvider.getTest(rekeySearchParams).pipe(
         map(response => this.compressionProvider.extractTestSlotResult(response.toString())),
-        map((testSlot: any) => new rekeySearchActions.SearchBookedTestSuccess(bookedTestMock)),
+        map((testSlot: any) => new rekeySearchActions.SearchBookedTestSuccess(testSlot)),
         catchError((err: any) => {
           return of(new rekeySearchActions.SearchBookedTestFailure(err));
         }),
