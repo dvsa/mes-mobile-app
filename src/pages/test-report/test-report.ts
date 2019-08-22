@@ -154,7 +154,50 @@ export class TestReportPage extends PracticeableBasePageComponent {
         select(getCatBLegalRequirements),
       ),
     };
+    this.setupSubscription();
 
+  }
+
+  ionViewWillEnter(): boolean {
+    // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
+    if (super.isIos() && this.isPracticeMode) {
+      this.screenOrientation.lock(
+        this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY,
+      );
+      this.insomnia.keepAwake();
+      this.statusBar.hide();
+    }
+
+    return true;
+  }
+
+  ionViewDidEnter(): void {
+
+    // it is possible that we come back to the page from the terminate screen
+    // so need to re-establish the subscription if it doesn't exists or is closed
+    if (!this.subscription || this.subscription.closed) {
+      this.setupSubscription();
+    }
+    this.store$.dispatch(new TestReportViewDidEnter());
+  }
+
+  ionViewWillLeave() {
+    if (super.isIos() && this.isPracticeMode) {
+      this.statusBar.show();
+    }
+  }
+
+  toggleReportOverlay(): void {
+    this.displayOverlay = !this.displayOverlay;
+  }
+
+  ionViewDidLeave(): void {
+    super.ionViewDidLeave();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  setupSubscription() {
     const {
       candidateUntitledName$,
       isRemoveFaultMode$,
@@ -180,40 +223,6 @@ export class TestReportPage extends PracticeableBasePageComponent {
         map(result => (this.catBLegalRequirements = result)),
       ),
     ).subscribe();
-  }
-
-  ionViewWillEnter(): boolean {
-    // ionViewWillEnter lifecylce event used to ensure screen orientation is correct before page transition
-    if (super.isIos() && this.isPracticeMode) {
-      this.screenOrientation.lock(
-        this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY,
-      );
-      this.insomnia.keepAwake();
-      this.statusBar.hide();
-    }
-
-    return true;
-  }
-
-  ionViewDidEnter(): void {
-    this.store$.dispatch(new TestReportViewDidEnter());
-  }
-
-  ionViewWillLeave() {
-    if (super.isIos() && this.isPracticeMode) {
-      this.statusBar.show();
-    }
-  }
-
-  toggleReportOverlay(): void {
-    this.displayOverlay = !this.displayOverlay;
-  }
-
-  ionViewDidLeave(): void {
-    super.ionViewDidLeave();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   onEndTestClick = (): void => {
