@@ -8,21 +8,24 @@ import { Store, StoreModule } from '@ngrx/store';
 import { AppModule } from '../../../app/app.module';
 import { RekeyReasonModel } from '../rekey-reason.model';
 import { getUploadStatus } from '../rekey-reason.selector';
-import { SendCurrentTest, SendCurrentTestSuccess, SendCurrentTestFailure } from '../../../modules/tests/tests.actions';
+import {
+  SendCurrentTest,
+  SendCurrentTestSuccess,
+  SendCurrentTestFailure,
+  StartTest,
+} from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
 import { REKEY_UPLOADED_PAGE } from '../../page-names.constants';
 import { AppInfoModel } from '../../../modules/app-info/app-info.model';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
 import {
-  IpadIssueTechFault,
-  OtherSelected,
   IpadIssueSelected,
-  IpadIssueLost,
-  IpadIssueStolen,
-  IpadIssueBroken,
+  OtherSelected,
   OtherReasonUpdated,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
+import { By } from '@angular/platform-browser';
 
-fdescribe('RekeyReasonPage', () => {
+describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
   let component: RekeyReasonPage;
   let loadingController: LoadingController;
@@ -38,32 +41,8 @@ fdescribe('RekeyReasonPage', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({
-          tests: () => ({
-            currentTest: {
-              slotId: '123',
-            },
-            testStatus: {},
-            startedTests: {
-              123: {
-                rekeyReason: {
-                  ipadIssue: {
-                    selected: true,
-                    broken: false,
-                    lost: false,
-                    technicalFault: false,
-                    stolen: false,
-                  },
-                  other: {
-                    selected: true,
-                    reason: '',
-                  },
-                  transfer: {
-                    selected: false,
-                  },
-                },
-              },
-            },
-          }),
+          tests: testsReducer,
+          rekeyReason: rekeyReasonReducer,
         }),
         AppModule,
       ],
@@ -86,7 +65,6 @@ fdescribe('RekeyReasonPage', () => {
         modalController = TestBed.get(ModalController);
       });
     store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
   }));
 
   describe('Class', () => {
@@ -163,63 +141,24 @@ fdescribe('RekeyReasonPage', () => {
 
   describe('Selecting issue emits the correct event', () => {
     it('clicking ipad issue while its showing emits ipad issue selected event', () => {
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#ipadIssue');
-      expect(elem.checked).toBeFalsy();
-      elem.click();
-      expect(elem.checked).toBeTruthy();
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new IpadIssueSelected(true));
       fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueSelected(false));
+      expect(fixture.debugElement.query(By.css('#ipadIssue'))).toBeDefined();
     });
 
     it('clicking other reason emits ipad issue selected event', () => {
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#otherSelected');
-      expect(elem.checked).toBeFalsy();
-      elem.click();
-      expect(elem.checked).toBeTruthy();
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new OtherSelected(true));
       fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(new OtherSelected(false));
-    });
-
-    it('clicking ipad issue tech fault emits the correct event', () => {
-      fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#ipadIssueTechFault');
-      elem.click();
-      fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueTechFault(true));
-    });
-
-    it('clicking ipad issue lost emits the correct event', () => {
-      fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#ipadIssueLost');
-      elem.click();
-      fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueLost(true));
-    });
-
-    it('clicking ipad issue stolen emits the correct event', () => {
-      fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#ipadIssueStolen');
-      elem.click();
-      fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueStolen(true));
+      expect(fixture.debugElement.query(By.css('#otherSelected'))).toBeDefined();
     });
 
     it('clicking ipad issue broken emits the correct event', () => {
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new OtherSelected(true));
       fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#ipadIssueBroken');
-      elem.click();
-      fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(new IpadIssueBroken(true));
-    });
-
-    it('entering value into reason for rekey emits the correct event', () => {
-      fixture.detectChanges();
+      spyOn(store$, 'dispatch');
       const compiled = fixture.debugElement.nativeElement;
       const elem = compiled.querySelector('#otherReasonUpdated');
       elem.value = 'some random value';

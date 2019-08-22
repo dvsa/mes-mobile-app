@@ -49,7 +49,7 @@ export function testsReducer(
   action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types) {
 
   const slotId = deriveSlotId(state, action);
-  switch (action.type){
+  switch (action.type) {
     case testsActions.LOAD_PERSISTED_TESTS_SUCCESS:
       return (<testsActions.LoadPersistedTestsSuccess>action).tests;
     case testsActions.SET_ACTIVITY_CODE:
@@ -78,8 +78,8 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   }
 
   if (action instanceof testsActions.StartTest
-      || action instanceof testsActions.ActivateTest
-      || action instanceof fakeJournalActions.StartE2EPracticeTest) {
+    || action instanceof testsActions.ActivateTest
+    || action instanceof fakeJournalActions.StartE2EPracticeTest) {
     return `${action.slotId}`;
   }
 
