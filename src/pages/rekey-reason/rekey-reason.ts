@@ -204,7 +204,6 @@ export class RekeyReasonPage {
   }
 
   ipadIssueSelected() {
-    console.log('asdasdasdASSAASD');
     this.store$.dispatch(new IpadIssueSelected(this.formGroup.controls['ipadIssue'].value));
   }
   ipadIssueTechFaultChanged() {
