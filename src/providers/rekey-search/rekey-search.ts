@@ -3,6 +3,7 @@ import { RekeySearchParams } from './rekey-search.model';
 import { HttpClient } from '@angular/common/http';
 import { UrlProvider } from '../url/url';
 import { Observable } from 'rxjs/Observable';
+
 @Injectable()
 export class RekeySearchProvider {
 

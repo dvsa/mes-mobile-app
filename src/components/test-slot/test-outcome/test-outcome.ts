@@ -6,7 +6,7 @@ import { StartTest, ActivateTest } from '../../../modules/tests/tests.actions';
 import { ResumingWriteUp } from '../../../pages/journal/journal.actions';
 import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
-import { startsWith } from 'lodash';
+import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import {
   COMMUNICATION_PAGE,
@@ -16,13 +16,16 @@ import {
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
-import { SlotDetail } from '@dvsa/mes-journal-schema';
+import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { getCheckComplete } from '../../../pages/journal/journal.selector';
 import { getJournalState } from '../../../pages/journal/journal.reducer';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../shared/models/store.model';
+import { getRekeySearchState } from '../../../pages/rekey-search/rekey-search.reducer';
+import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.selector';
+import { merge } from 'rxjs/observable/merge';
 
 @Component({
   selector: 'test-outcome',
@@ -47,6 +50,7 @@ export class TestOutcomeComponent implements OnInit {
 
   modal: Modal;
   isRekey: boolean = false;
+  isTestSlotOnRekeySearch: boolean = false;
 
   candidateDetailsViewed: boolean;
   subscription: Subscription;
@@ -64,10 +68,30 @@ export class TestOutcomeComponent implements OnInit {
       map(journalData => getCheckComplete(journalData, this.slotDetail.slotId)),
     );
 
-    this.subscription = seenCandidateDetails$.subscribe(
-      (candidateDetails: boolean) => {
-        this.candidateDetailsViewed = candidateDetails;
-      });
+    const bookedTestSlot$ = this.store$.pipe(
+      select(getRekeySearchState),
+      map(getBookedTestSlot),
+    );
+
+    const merged$ = merge(
+      seenCandidateDetails$.pipe(
+        map(candidateDetails => this.candidateDetailsViewed = candidateDetails),
+      ),
+      bookedTestSlot$.pipe(
+        map((testSlot: TestSlot) => {
+          if (isEmpty(testSlot)) {
+            this.isTestSlotOnRekeySearch = false;
+            return;
+          }
+
+          if (testSlot.slotDetail.slotId === this.slotDetail.slotId) {
+            this.isTestSlotOnRekeySearch = true;
+          }
+        }),
+      ),
+    );
+
+    this.subscription = merged$.subscribe();
   }
 
   ionViewDidLeave(): void {
@@ -81,7 +105,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showRekeyButton(): boolean {
-    return this.isTestIncomplete() && this.isDateInPast();
+    return this.isTestIncomplete() && this.isDateInPast() || this.isTestSlotOnRekeySearch;
   }
 
   showStartTestButton(): boolean {

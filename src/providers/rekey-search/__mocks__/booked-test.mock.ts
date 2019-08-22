@@ -41,7 +41,7 @@ export const bookedTestMock: TestSlot = {
   slotDetail: {
     duration: 57,
     slotId: 9191911223,
-    start: '2019-08-08T08:10:00',
+    start: '2019-08-22T08:10:00',
   },
   testCentre: {
     centreId: 54321,
