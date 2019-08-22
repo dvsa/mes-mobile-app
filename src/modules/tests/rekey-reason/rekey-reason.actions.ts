@@ -2,15 +2,15 @@ import { Action } from '@ngrx/store';
 
 export const REKEY_REASON_VIEW_DID_LEAVE = '[RekeyReasonPage] Rekey Reason view did leave';
 export const REKEY_REASON_VIEW_DID_ENTER = '[RekeyReasonPage] Rekey Reason view did enter';
-export const REKEY_REASON_IPAD_ISSUE_SELECTED = '[RekeyReasonPage] Rekey Reason Ipad Issue Selected';
-export const REKEY_REASON_IPAD_ISSUE_TECH_FAULT = '[RekeyReasonPage] Rekey Reason Ipad Issue Tech Fault Selected';
-export const REKEY_REASON_IPAD_ISSUE_LOST = '[RekeyReasonPage] Rekey Reason Ipad Issue Lost Selected';
-export const REKEY_REASON_IPAD_ISSUE_STOLEN = '[RekeyReasonPage] Rekey Reason Ipad Issue Stolen Selected';
-export const REKEY_REASON_IPAD_ISSUE_BROKEN = '[RekeyReasonPage] Rekey Reason Ipad Issue Broken Selected';
-export const REKEY_REASON_TRANSFER_SELECTED = '[RekeyReasonPage] Rekey Reason Transfer Selected';
-export const REKEY_REASON_TRANSFER_STAFF_UPDATED = '[RekeyReasonPage] Rekey Reason Transfer Staff Number Updated';
-export const REKEY_REASON_OTHER_SELECTED = '[RekeyReasonPage] Rekey Reason Other Selected';
-export const REKEY_REASON_OTHER_REASON_UPDATED = '[RekeyReasonPage] Rekey Reason Other Reason Updated';
+export const IPAD_ISSUE_SELECTED = '[RekeyReasonPage] Rekey Reason Ipad Issue Selected';
+export const IPAD_ISSUE_TECH_FAULT = '[RekeyReasonPage] Rekey Reason Ipad Issue Tech Fault Selected';
+export const IPAD_ISSUE_LOST = '[RekeyReasonPage] Rekey Reason Ipad Issue Lost Selected';
+export const IPAD_ISSUE_STOLEN = '[RekeyReasonPage] Rekey Reason Ipad Issue Stolen Selected';
+export const IPAD_ISSUE_BROKEN = '[RekeyReasonPage] Rekey Reason Ipad Issue Broken Selected';
+export const TRANSFER_SELECTED = '[RekeyReasonPage] Rekey Reason Transfer Selected';
+export const TRANSFER_STAFF_UPDATED = '[RekeyReasonPage] Rekey Reason Transfer Staff Number Updated';
+export const OTHER_SELECTED = '[RekeyReasonPage] Rekey Reason Other Selected';
+export const OTHER_REASON_UPDATED = '[RekeyReasonPage] Rekey Reason Other Reason Updated';
 
 export class RekeyReasonViewDidLeave implements Action {
   readonly type = REKEY_REASON_VIEW_DID_LEAVE;
@@ -20,47 +20,43 @@ export class RekeyReasonViewDidEnter implements Action {
 }
 
 export class IpadIssueSelected implements Action {
-  readonly type = REKEY_REASON_IPAD_ISSUE_SELECTED;
+  readonly type = IPAD_ISSUE_SELECTED;
   constructor(public selectedValue: boolean) { }
 }
 
-export class IpadIssueTechFault implements Action {
-  readonly type = REKEY_REASON_IPAD_ISSUE_TECH_FAULT;
-  constructor(public selectedValue: boolean) { }
+export class IpadIssueTechFaultSelected implements Action {
+  readonly type = IPAD_ISSUE_TECH_FAULT;
 }
 
-export class IpadIssueLost implements Action {
-  readonly type = REKEY_REASON_IPAD_ISSUE_LOST;
-  constructor(public selectedValue: boolean) { }
+export class IpadIssueLostSelected implements Action {
+  readonly type = IPAD_ISSUE_LOST;
 }
 
-export class IpadIssueStolen implements Action {
-  readonly type = REKEY_REASON_IPAD_ISSUE_STOLEN;
-  constructor(public selectedValue: boolean) { }
+export class IpadIssueStolenSelected implements Action {
+  readonly type = IPAD_ISSUE_STOLEN;
 }
 
-export class IpadIssueBroken implements Action {
-  readonly type = REKEY_REASON_IPAD_ISSUE_BROKEN;
-  constructor(public selectedValue: boolean) { }
+export class IpadIssueBrokenSelected implements Action {
+  readonly type = IPAD_ISSUE_BROKEN;
 }
 
 export class TransferSelected implements Action {
-  readonly type = REKEY_REASON_TRANSFER_SELECTED;
+  readonly type = TRANSFER_SELECTED;
   constructor(public selectedValue: boolean) { }
 }
 
 export class TransferStaffNumber implements Action {
-  readonly type = REKEY_REASON_TRANSFER_STAFF_UPDATED;
+  readonly type = TRANSFER_STAFF_UPDATED;
   constructor(public staffNumber: number) { }
 }
 
 export class OtherSelected implements Action {
-  readonly type = REKEY_REASON_OTHER_SELECTED;
+  readonly type = OTHER_SELECTED;
   constructor(public selectedValue: boolean) { }
 }
 
 export class OtherReasonUpdated implements Action {
-  readonly type = REKEY_REASON_OTHER_REASON_UPDATED;
+  readonly type = OTHER_REASON_UPDATED;
   constructor(public otherReason: string) { }
 }
 
@@ -68,10 +64,10 @@ export type Types =
   | RekeyReasonViewDidLeave
   | RekeyReasonViewDidEnter
   | IpadIssueSelected
-  | IpadIssueTechFault
-  | IpadIssueLost
-  | IpadIssueStolen
-  | IpadIssueBroken
+  | IpadIssueTechFaultSelected
+  | IpadIssueLostSelected
+  | IpadIssueStolenSelected
+  | IpadIssueBrokenSelected
   | TransferSelected
   | TransferStaffNumber
   | OtherSelected

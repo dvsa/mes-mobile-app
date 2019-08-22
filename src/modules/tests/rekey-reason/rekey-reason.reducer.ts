@@ -1,15 +1,15 @@
 import { RekeyReason } from '@dvsa/mes-test-schema/categories/B';
 import {
   Types,
-  REKEY_REASON_IPAD_ISSUE_SELECTED,
-  REKEY_REASON_IPAD_ISSUE_TECH_FAULT,
-  REKEY_REASON_IPAD_ISSUE_LOST,
-  REKEY_REASON_IPAD_ISSUE_STOLEN,
-  REKEY_REASON_IPAD_ISSUE_BROKEN,
-  REKEY_REASON_TRANSFER_SELECTED,
-  REKEY_REASON_TRANSFER_STAFF_UPDATED,
-  REKEY_REASON_OTHER_SELECTED,
-  REKEY_REASON_OTHER_REASON_UPDATED,
+  IPAD_ISSUE_SELECTED,
+  IPAD_ISSUE_TECH_FAULT,
+  IPAD_ISSUE_LOST,
+  IPAD_ISSUE_STOLEN,
+  IPAD_ISSUE_BROKEN,
+  TRANSFER_SELECTED,
+  TRANSFER_STAFF_UPDATED,
+  OTHER_SELECTED,
+  OTHER_REASON_UPDATED,
 } from './rekey-reason.actions';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -32,7 +32,7 @@ export const initialState: RekeyReason = {
 
 export function rekeyReasonReducer(state = initialState, action: Types): RekeyReason {
   switch (action.type) {
-    case REKEY_REASON_IPAD_ISSUE_SELECTED:
+    case IPAD_ISSUE_SELECTED:
       return {
         ...state,
         ipadIssue: {
@@ -43,43 +43,43 @@ export function rekeyReasonReducer(state = initialState, action: Types): RekeyRe
           stolen: false,
         },
       };
-    case REKEY_REASON_IPAD_ISSUE_TECH_FAULT:
+    case IPAD_ISSUE_TECH_FAULT:
       return {
         ...state,
         ipadIssue: {
           ...initialState.ipadIssue,
           selected: true,
-          technicalFault: action.selectedValue,
+          technicalFault: true,
         },
       };
-    case REKEY_REASON_IPAD_ISSUE_LOST:
+    case IPAD_ISSUE_LOST:
       return {
         ...state,
         ipadIssue: {
           ...initialState.ipadIssue,
           selected: true,
-          lost: action.selectedValue,
+          lost: true,
         },
       };
-    case REKEY_REASON_IPAD_ISSUE_STOLEN:
+    case IPAD_ISSUE_STOLEN:
       return {
         ...state,
         ipadIssue: {
           ...initialState.ipadIssue,
           selected: true,
-          stolen: action.selectedValue,
+          stolen: true,
         },
       };
-    case REKEY_REASON_IPAD_ISSUE_BROKEN:
+    case IPAD_ISSUE_BROKEN:
       return {
         ...state,
         ipadIssue: {
           ...initialState.ipadIssue,
           selected: true,
-          broken: action.selectedValue,
+          broken: true,
         },
       };
-    case REKEY_REASON_TRANSFER_SELECTED:
+    case TRANSFER_SELECTED:
       return {
         ...state,
         transfer: {
@@ -87,7 +87,7 @@ export function rekeyReasonReducer(state = initialState, action: Types): RekeyRe
           selected: action.selectedValue,
         },
       };
-    case REKEY_REASON_TRANSFER_STAFF_UPDATED:
+    case TRANSFER_STAFF_UPDATED:
       return {
         ...state,
         transfer: {
@@ -96,7 +96,7 @@ export function rekeyReasonReducer(state = initialState, action: Types): RekeyRe
           // TODO: Add Staff Number here as transfer staff number
         },
       };
-    case REKEY_REASON_OTHER_SELECTED:
+    case OTHER_SELECTED:
       return {
         ...state,
         other: {
@@ -104,7 +104,7 @@ export function rekeyReasonReducer(state = initialState, action: Types): RekeyRe
           selected: action.selectedValue,
         },
       };
-    case REKEY_REASON_OTHER_REASON_UPDATED:
+    case OTHER_REASON_UPDATED:
       return {
         ...state,
         other: {

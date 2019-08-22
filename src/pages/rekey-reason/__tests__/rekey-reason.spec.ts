@@ -140,21 +140,21 @@ describe('RekeyReasonPage', () => {
   });
 
   describe('Selecting issue emits the correct event', () => {
-    it('clicking ipad issue while its showing emits ipad issue selected event', () => {
+    it('emiting ipadIssueSelected shows the ipadIssue section', () => {
       store$.dispatch(new StartTest(103, true));
       store$.dispatch(new IpadIssueSelected(true));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#ipadIssue'))).toBeDefined();
     });
 
-    it('clicking other reason emits ipad issue selected event', () => {
+    it('clicking other reason emits other selected event', () => {
       store$.dispatch(new StartTest(103, true));
       store$.dispatch(new OtherSelected(true));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#otherSelected'))).toBeDefined();
     });
 
-    it('clicking ipad issue broken emits the correct event', () => {
+    it('entering other reason emits the reason updated event', () => {
       store$.dispatch(new StartTest(103, true));
       store$.dispatch(new OtherSelected(true));
       fixture.detectChanges();

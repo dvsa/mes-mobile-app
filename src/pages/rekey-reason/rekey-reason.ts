@@ -8,10 +8,10 @@ import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.c
 import { Observable } from 'rxjs/Observable';
 import {
   IpadIssueSelected,
-  IpadIssueTechFault,
-  IpadIssueLost,
-  IpadIssueStolen,
-  IpadIssueBroken,
+  IpadIssueTechFaultSelected,
+  IpadIssueLostSelected,
+  IpadIssueStolenSelected,
+  IpadIssueBrokenSelected,
   OtherSelected,
   OtherReasonUpdated,
 } from '../../modules/tests/rekey-reason/rekey-reason.actions';
@@ -26,29 +26,20 @@ import { getUploadStatus } from './rekey-reason.selector';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   getReasonForRekey,
-  getRekeyIpadIssueSelected,
-  getRekeyIpadIssueTechFault,
-  getRekeyIpadIssueBroken,
-  getRekeyIpadIssueStolen,
-  getRekeyIpadIssueLost,
-  getRekeyTransferSelected,
-  getRekeyOtherSelected,
-  getRekeyOtherReasonUpdated,
+  getRekeyIpadIssue,
+  getRekeyTransfer,
+  getRekeyOther,
 } from '../../modules/tests/rekey-reason/rekey-reason.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
+import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
-  ipadIssueSelected$: Observable<boolean>;
-  ipadIssueTechFault$: Observable<boolean>;
-  ipadIssueLost$: Observable<boolean>;
-  ipadIssueStolen$: Observable<boolean>;
-  ipadIssueBroken$: Observable<boolean>;
-  transferSelected$: Observable<boolean>;
+  ipadIssue$: Observable<IpadIssue>;
+  transfer$: Observable<Transfer>;
   // TODO: Add transfer staff number into the page state
-  otherSelected$: Observable<boolean>;
-  otherReasonUpdated$: Observable<string>;
+  other$: Observable<Other>;
 }
 
 @IonicPage()
@@ -95,10 +86,6 @@ export class RekeyReasonPage {
     });
   }
 
-  ipadIssue() {
-    console.log('Form changed');
-  }
-
   ngOnInit(): void {
     const currentReasonForRekey$ = this.store$.pipe(
       select(getTests),
@@ -111,29 +98,14 @@ export class RekeyReasonPage {
         select(getRekeyReasonState),
         select(getUploadStatus),
       ),
-      ipadIssueSelected$: currentReasonForRekey$.pipe(
-        select(getRekeyIpadIssueSelected),
+      ipadIssue$: currentReasonForRekey$.pipe(
+        select(getRekeyIpadIssue),
       ),
-      ipadIssueTechFault$: currentReasonForRekey$.pipe(
-        select(getRekeyIpadIssueTechFault),
+      transfer$: currentReasonForRekey$.pipe(
+        select(getRekeyTransfer),
       ),
-      ipadIssueLost$: currentReasonForRekey$.pipe(
-        select(getRekeyIpadIssueLost),
-      ),
-      ipadIssueStolen$: currentReasonForRekey$.pipe(
-        select(getRekeyIpadIssueStolen),
-      ),
-      ipadIssueBroken$: currentReasonForRekey$.pipe(
-        select(getRekeyIpadIssueBroken),
-      ),
-      transferSelected$: currentReasonForRekey$.pipe(
-        select(getRekeyTransferSelected),
-      ),
-      otherSelected$: currentReasonForRekey$.pipe(
-        select(getRekeyOtherSelected),
-      ),
-      otherReasonUpdated$: currentReasonForRekey$.pipe(
-        select(getRekeyOtherReasonUpdated),
+      other$: currentReasonForRekey$.pipe(
+        select(getRekeyOther),
       ),
     };
 
@@ -203,23 +175,24 @@ export class RekeyReasonPage {
     }
   }
 
-  ipadIssueSelected() {
-    this.store$.dispatch(new IpadIssueSelected(this.formGroup.controls['ipadIssue'].value));
+  ipadIssueSelected(checked: boolean) {
+    this.store$.dispatch(new IpadIssueSelected(checked));
   }
   ipadIssueTechFaultChanged() {
-    this.store$.dispatch(new IpadIssueTechFault(this.formGroup.controls['ipadIssueTechFault'].value === 'true'));
+    this.store$.dispatch(new IpadIssueTechFaultSelected());
   }
   ipadIssueLostChanged() {
-    this.store$.dispatch(new IpadIssueLost(this.formGroup.controls['ipadIssueLost'].value === 'true'));
+    this.store$.dispatch(new IpadIssueLostSelected());
   }
   ipadIssueStolenChanged() {
-    this.store$.dispatch(new IpadIssueStolen(this.formGroup.controls['ipadIssueStolen'].value === 'true'));
+    this.store$.dispatch(new IpadIssueStolenSelected());
   }
   ipadIssueBrokenChanged() {
-    this.store$.dispatch(new IpadIssueBroken(this.formGroup.controls['ipadIssueBroken'].value === 'true'));
+    this.store$.dispatch(new IpadIssueBrokenSelected());
   }
-  otherSelected() {
-    this.store$.dispatch(new OtherSelected(this.formGroup.controls['otherSelected'].value));
+  otherSelected(checked: boolean) {
+    this.formGroup.controls['otherReasonUpdated'].setValue('');
+    this.store$.dispatch(new OtherSelected(checked));
   }
   otherReasonUpdatedChanged() {
     this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
