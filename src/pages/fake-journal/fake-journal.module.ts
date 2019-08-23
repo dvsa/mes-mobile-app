@@ -7,12 +7,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { FakeJournalEffects } from './fake-journal.effects';
 import { FakeJournalComponentsModule } from './components/fake-journal-components.module';
 import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
+import { JournalPageModule } from '../journal/journal.module';
 
 @NgModule({
   declarations: [
     FakeJournalPage,
   ],
   imports: [
+    JournalPageModule,
     FakeJournalComponentsModule,
     JournalComponentsModule,
     TestSlotComponentsModule,
