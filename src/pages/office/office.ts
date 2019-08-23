@@ -112,7 +112,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
-import { REKEY_REASON_PAGE } from '../page-names.constants';
+import { REKEY_REASON_PAGE, JOURNAL_PAGE } from '../page-names.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -443,7 +443,8 @@ export class OfficePage extends PracticeableBasePageComponent {
       this.exitPracticeMode();
       return;
     }
-    this.navController.popToRoot();
+    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+    this.navController.popTo(journalPage);
   }
 
   defer() {

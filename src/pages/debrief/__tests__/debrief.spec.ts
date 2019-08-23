@@ -367,7 +367,7 @@ describe('DebriefPage', () => {
       it('should navigate back to the root when this is a test report practice test', () => {
         component.isTestReportPracticeMode = true;
         component.endDebrief();
-        expect(navController.popToRoot).toHaveBeenCalled();
+        expect(navController.popTo).toHaveBeenCalled();
       });
     });
 

@@ -79,9 +79,9 @@ describe('RekeyUploadOutcomePage', () => {
     });
 
     describe('goToJournal', () => {
-      it('should call the popToRoot method in the navcontroller', () => {
+      it('should call the popTo method in the navcontroller', () => {
         component.goToJournal();
-        expect(navController.popToRoot).toHaveBeenCalled();
+        expect(navController.popTo).toHaveBeenCalled();
       });
     });
   });

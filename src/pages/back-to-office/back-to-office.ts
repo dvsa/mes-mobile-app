@@ -8,6 +8,7 @@ import { BackToOfficeViewDidEnter, DeferWriteUp } from './back-to-office.actions
 import { DeviceProvider } from '../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
+import { JOURNAL_PAGE } from '../page-names.constants';
 
 @IonicPage()
 @Component({
@@ -48,6 +49,7 @@ export class BackToOfficePage extends PracticeableBasePageComponent {
       return;
     }
     this.store$.dispatch(new DeferWriteUp());
-    this.navController.popToRoot();
+    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+    this.navController.popTo(journalPage);
   }
 }

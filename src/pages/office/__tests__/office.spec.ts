@@ -273,7 +273,7 @@ describe('OfficePage', () => {
         fixture.detectChanges();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
-        expect(navController.popToRoot).toHaveBeenCalled();
+        expect(navController.popTo).toHaveBeenCalled();
       });
     });
 
@@ -340,9 +340,9 @@ describe('OfficePage', () => {
   });
 
   describe('popToRoot', () => {
-    it('should call the popToRoot method in the navcontroller if not in practice mode', () => {
+    it('should call the popTo method in the navcontroller if not in practice mode', () => {
       component.popToRoot();
-      expect(navController.popToRoot).toHaveBeenCalled();
+      expect(navController.popTo).toHaveBeenCalled();
     });
     it('should call the popTo method in the navcontroller if in practice mode.', () => {
       component.isPracticeMode = true;
