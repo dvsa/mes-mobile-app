@@ -192,7 +192,7 @@ describe('TestSlotComponent', () => {
         component.slot.booking.application.testCategory = 'B1';
         expect(component.showVehicleDetails()).toEqual(false);
         component.slot.booking.application.testCategory = 'B+E';
-        expect(component.showVehicleDetails()).toEqual(false);
+        expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'C';
         expect(component.showVehicleDetails()).toEqual(true);
         component.slot.booking.application.testCategory = 'C1';
