@@ -102,7 +102,7 @@ describe('RekeyReasonPage', () => {
     describe('handleUploadOutcome', () => {
       beforeEach(() => {
         spyOn(component, 'handleLoadingUI');
-        spyOn(component, 'onShowModal');
+        spyOn(component, 'onShowUploadRekeyModal');
       });
 
       it('should display the loading spiner when an upload is in progress', () => {
