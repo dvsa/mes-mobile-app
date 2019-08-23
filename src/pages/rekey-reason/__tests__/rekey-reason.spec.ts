@@ -24,7 +24,6 @@ import {
   OtherReasonUpdated,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
 import { By } from '@angular/platform-browser';
-import { HttpErrorResponse } from '@angular/common/http';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -116,7 +115,7 @@ describe('RekeyReasonPage', () => {
         expect(component.handleLoadingUI).toHaveBeenCalledWith(true);
       });
       it('should display the retry modal when an upload fails', () => {
-        const action = new SendCurrentTestFailure(new HttpErrorResponse({ status: 500 }));
+        const action = new SendCurrentTestFailure(false);
         const result: RekeyReasonModel = rekeyReasonReducer(null, action);
         const uploadStatus = getUploadStatus(result);
 
@@ -127,7 +126,7 @@ describe('RekeyReasonPage', () => {
 
       });
       it('should navigate to the next page and not display the retry modal when an upload is a duplicate', () => {
-        const action = new SendCurrentTestFailure(new HttpErrorResponse({ status: 409 }));
+        const action = new SendCurrentTestFailure(true);
         const result: RekeyReasonModel = rekeyReasonReducer(null, action);
         const uploadStatus = getUploadStatus(result);
 

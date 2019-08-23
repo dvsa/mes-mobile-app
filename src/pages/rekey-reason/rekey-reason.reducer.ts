@@ -2,7 +2,6 @@ import * as testActions from './../../modules/tests/tests.actions';
 import * as rekeyActions from './../../modules/tests/rekey/rekey.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { RekeyReasonModel } from './rekey-reason.model';
-import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 
 export const initialState: RekeyReasonModel = {
   uploadStatus: {
@@ -41,7 +40,7 @@ export function rekeyReasonReducer(state = initialState, action: testActions.Typ
         uploadStatus: {
           ...initialState.uploadStatus,
           hasUploadFailed: true,
-          isDuplicate: action.error && action.error.status === HttpStatusCodes.CONFLICT,
+          isDuplicate: action.isDuplicateUpload,
         },
       };
     default:

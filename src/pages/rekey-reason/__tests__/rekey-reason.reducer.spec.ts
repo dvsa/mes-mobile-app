@@ -5,7 +5,6 @@ import {
   SendCurrentTestFailure,
 } from './../../../modules/tests/tests.actions';
 import { RekeyReasonModel } from '../rekey-reason.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { EndRekey } from '../../../modules/tests/rekey/rekey.actions';
 
 describe('Rekey Reason Reducer', () => {
@@ -60,7 +59,7 @@ describe('Rekey Reason Reducer', () => {
 
   describe('[Tests] Send Test Failure', () => {
     it('should toggle has upload failed state', () => {
-      const action = new SendCurrentTestFailure(new HttpErrorResponse({ status: 500 }));
+      const action = new SendCurrentTestFailure(false);
       const result: RekeyReasonModel = rekeyReasonReducer(initialState, action);
 
       expect(result).toEqual({
@@ -75,7 +74,7 @@ describe('Rekey Reason Reducer', () => {
 
   describe('[Tests] Send Test Failure', () => {
     it('should toggle has upload failed state and duplicate', () => {
-      const action = new SendCurrentTestFailure(new HttpErrorResponse({ status: 409 }));
+      const action = new SendCurrentTestFailure(true);
       const result: RekeyReasonModel = rekeyReasonReducer(initialState, action);
 
       expect(result).toEqual({

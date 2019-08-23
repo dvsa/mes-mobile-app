@@ -301,7 +301,7 @@ export class TestsEffects {
             if (response.status === HttpStatusCodes.CREATED) {
               return new testActions.SendCurrentTestSuccess();
             }
-            return new testActions.SendCurrentTestFailure(new HttpErrorResponse(response));
+            return new testActions.SendCurrentTestFailure(response.status === HttpStatusCodes.CONFLICT);
           }),
         );
     }),
@@ -327,7 +327,7 @@ export class TestsEffects {
   );
 
   @Effect()
-  sendCurrentTestFailuresEffect$ = this.actions$.pipe(
+  sendCurrentTestFailureEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_CURRENT_TEST_FAILURE),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -337,13 +337,12 @@ export class TestsEffects {
         ),
       ),
     )),
+    filter(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => action.isDuplicateUpload),
     switchMap(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => {
-      if (action.error.status === HttpStatusCodes.CONFLICT) {
-        return [
-          new testStatusActions.SetTestStatusSubmitted(slotId),
-          new testActions.PersistTests(),
-        ];
-      }
+      return [
+        new testStatusActions.SetTestStatusSubmitted(slotId),
+        new testActions.PersistTests(),
+      ];
       return of();
     }),
   );

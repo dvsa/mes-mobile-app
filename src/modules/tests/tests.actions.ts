@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
@@ -89,7 +88,7 @@ export class SendCurrentTestSuccess implements Action {
 
 export class SendCurrentTestFailure implements Action {
   readonly type = SEND_CURRENT_TEST_FAILURE;
-  constructor(public error: HttpErrorResponse) { }
+  constructor(public isDuplicateUpload: boolean) { }
 }
 
 export type Types =
