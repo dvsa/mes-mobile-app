@@ -112,19 +112,6 @@ export class JournalAnalyticsEffects {
   );
 
   @Effect()
-  testOutcomeStartTest$ = this.actions$.pipe(
-    ofType(START_TEST),
-    switchMap((action: StartTest) => {
-      if (action.rekey) {
-        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.REKEY_TEST, action.slotId.toString());
-      } else {
-        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.START_TEST, action.slotId.toString());
-      }
-      return of(new AnalyticRecorded());
-    }),
-  );
-
-  @Effect()
   resumingWriteUpEffect$ = this.actions$.pipe(
     ofType(RESUMING_WRITE_UP),
     concatMap(action => of(action).pipe(

@@ -142,6 +142,13 @@ describe('JournalPage', () => {
       );
     });
 
+    it('should display the countIncompleteTests indicator if incomplete tests', () => {
+      fixture.detectChanges();
+      component.pageState.incompleteTestCounter$ = of(3);
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#incomplete-tests-indicator'))).not.toBeNull();
+    });
+
     // TODO - Come back and look at this test
     xit('there should be one slot for every journal entry', () => {
       const slotsList = componentEl.query(By.css('ion-list'));
@@ -154,48 +161,6 @@ describe('JournalPage', () => {
 
       expect(slotsList.children.length).toBe(noOfSlotsReturned);
       expect(slotsList.children.every(child => child.name === 'test-slot')).toEqual(true);
-    });
-
-    describe('test report practice mode', () => {
-      it('should show test report practice mode banner when config is set to true', () => {
-        component.showTestReportPracticeMode =
-          jasmine.createSpy('showTestReportPracticeMode').and.returnValue(true);
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).not.toBeNull();
-
-      });
-      it('should not show test report practice mode banner when config is set to false', () => {
-        component.showTestReportPracticeMode =
-          jasmine.createSpy('showTestReportPracticeMode').and.returnValue(false);
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('#testReportPracticeMode'))).toBeNull();
-      });
-      it('should display the countIncompleteTests indicator if incomplete tests', () => {
-        fixture.detectChanges();
-        component.pageState.incompleteTestCounter$ = of(3);
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('#incomplete-tests-indicator'))).not.toBeNull();
-      });
-    });
-
-    describe('end to end practice mode', () => {
-      it('should show the end to end practice mode banner when config is set to true', () => {
-        component.showEndToEndPracticeMode =
-          jasmine.createSpy('showEndToEndPracticeMode').and.returnValue(true);
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).not.toBeNull();
-
-      });
-      it('should not show the end to end practice mode banner when config is set to false', () => {
-        component.showEndToEndPracticeMode =
-          jasmine.createSpy('showEndToEndPracticeMode').and.returnValue(false);
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('#endToendPracticeMode'))).toBeNull();
-      });
     });
   });
 });
