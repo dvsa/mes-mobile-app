@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-import { ModalEvent } from './upload-rekey-modal.constants';
+import { UploadRekeyModalEvent } from './upload-rekey-modal.constants';
 
 @IonicPage()
 @Component({
@@ -19,11 +19,11 @@ export class UploadRekeyModal {
   }
 
   onCancel() {
-    this.viewCtrl.dismiss(ModalEvent.CANCEL);
+    this.viewCtrl.dismiss(UploadRekeyModalEvent.CANCEL);
   }
 
   onUpload() {
-    this.viewCtrl.dismiss(ModalEvent.UPLOAD);
+    this.viewCtrl.dismiss(UploadRekeyModalEvent.UPLOAD);
   }
 
 }

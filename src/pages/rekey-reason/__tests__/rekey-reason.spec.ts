@@ -87,14 +87,14 @@ describe('RekeyReasonPage', () => {
       });
     });
 
-    describe('onShowModal', () => {
+    describe('onShowUploadRekeyModal', () => {
       const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
       it('should display an upload modal', () => {
-        component.onShowModal();
+        component.onShowUploadRekeyModal();
         expect(modalController.create).toHaveBeenCalledWith('UploadRekeyModal', { retryMode: false }, options);
       });
       it('should display an upload modal in retry mode', () => {
-        component.onShowModal(true);
+        component.onShowUploadRekeyModal(true);
         expect(modalController.create).toHaveBeenCalledWith('UploadRekeyModal', { retryMode: true }, options);
       });
     });
@@ -122,7 +122,7 @@ describe('RekeyReasonPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(component.onShowModal).toHaveBeenCalledWith(true);
+        expect(component.onShowUploadRekeyModal).toHaveBeenCalledWith(true);
 
       });
       it('should navigate to the next page and not display the retry modal when an upload is a duplicate', () => {

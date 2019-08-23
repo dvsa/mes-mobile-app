@@ -5,7 +5,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
-import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
+import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
   IpadIssueSelected,
@@ -35,6 +35,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
+import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
@@ -130,19 +131,19 @@ export class RekeyReasonPage extends BasePageComponent {
 
   onUploadPressed = (): void => {
     // TODO - if form valid
-    this.onShowModal();
+    this.onShowUploadRekeyModal();
   }
 
-  onShowModal = (retryMode: boolean = false): void => {
+  onShowUploadRekeyModal = (retryMode: boolean = false): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create('UploadRekeyModal', { retryMode }, options);
-    this.modal.onDidDismiss(this.onModalDismiss);
+    this.modal.onDidDismiss(this.onUploadRekeyModalDismiss);
     this.modal.present();
   }
 
-  onModalDismiss = (event: ModalEvent): void => {
+  onUploadRekeyModalDismiss = (event: UploadRekeyModalEvent): void => {
     switch (event) {
-      case ModalEvent.UPLOAD:
+      case UploadRekeyModalEvent.UPLOAD:
         this.store$.dispatch(new SendCurrentTest());
         break;
     }
@@ -157,7 +158,7 @@ export class RekeyReasonPage extends BasePageComponent {
       return;
     }
     if (uploadStatus.hasUploadFailed) {
-      this.onShowModal(true);
+      this.onShowUploadRekeyModal(true);
     }
   }
 
@@ -229,6 +230,25 @@ export class RekeyReasonPage extends BasePageComponent {
       this.navController.popTo(journalPage);
     }
     this.store$.dispatch(new EndRekey());
+  }
+
+  onExitRekeyPressed(): void {
+    this.showExitRekeyModel();
+  }
+
+  showExitRekeyModel(): void {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create('ExitRekeyModal', { }, options);
+    this.modal.onDidDismiss(this.onExitRekeyModalDismiss);
+    this.modal.present();
+  }
+
+  onExitRekeyModalDismiss(event: ExitRekeyModalEvent): void {
+    switch (event) {
+      case ExitRekeyModalEvent.EXIT_REKEY:
+        console.log('exit rekey should happen now');
+        break;
+    }
   }
 
 }
