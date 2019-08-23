@@ -45,7 +45,7 @@ describe('Rekey Reason Reducer', () => {
 
   describe('[Tests] Send Test Success', () => {
     it('should toggle has upload succeeded state', () => {
-      const action = new SendCurrentTestSuccess('1');
+      const action = new SendCurrentTestSuccess();
       const result: RekeyReasonModel = rekeyReasonReducer(initialState, action);
 
       expect(result).toEqual({
@@ -60,7 +60,7 @@ describe('Rekey Reason Reducer', () => {
 
   describe('[Tests] Send Test Failure', () => {
     it('should toggle has upload failed state', () => {
-      const action = new SendCurrentTestFailure('1', new HttpErrorResponse({ status: 500 }));
+      const action = new SendCurrentTestFailure(new HttpErrorResponse({ status: 500 }));
       const result: RekeyReasonModel = rekeyReasonReducer(initialState, action);
 
       expect(result).toEqual({
@@ -75,7 +75,7 @@ describe('Rekey Reason Reducer', () => {
 
   describe('[Tests] Send Test Failure', () => {
     it('should toggle has upload failed state and duplicate', () => {
-      const action = new SendCurrentTestFailure('1', new HttpErrorResponse({ status: 409 }));
+      const action = new SendCurrentTestFailure(new HttpErrorResponse({ status: 409 }));
       const result: RekeyReasonModel = rekeyReasonReducer(initialState, action);
 
       expect(result).toEqual({

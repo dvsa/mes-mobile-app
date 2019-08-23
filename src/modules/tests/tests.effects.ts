@@ -299,9 +299,9 @@ export class TestsEffects {
         .pipe(
           map((response: HttpResponse<any> | HttpErrorResponse) => {
             if (response.status === HttpStatusCodes.CREATED) {
-              return new testActions.SendCurrentTestSuccess(slotId);
+              return new testActions.SendCurrentTestSuccess();
             }
-            return new testActions.SendCurrentTestFailure(slotId, new HttpErrorResponse(response));
+            return new testActions.SendCurrentTestFailure(new HttpErrorResponse(response));
           }),
         );
     }),
@@ -310,9 +310,17 @@ export class TestsEffects {
   @Effect()
   sendCurrentTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_CURRENT_TEST_SUCCESS),
-    switchMap((action: testActions.SendCurrentTestSuccess) => {
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+      ),
+    )),
+    switchMap(([action, slotId]: [testActions.SendCurrentTestSuccess, string]) => {
       return [
-        new testStatusActions.SetTestStatusSubmitted(action.slotId),
+        new testStatusActions.SetTestStatusSubmitted(slotId),
         new testActions.PersistTests(),
       ];
     }),
@@ -321,10 +329,18 @@ export class TestsEffects {
   @Effect()
   sendCurrentTestFailuresEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_CURRENT_TEST_FAILURE),
-    switchMap((action: testActions.SendCurrentTestFailure) => {
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+      ),
+    )),
+    switchMap(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => {
       if (action.error.status === HttpStatusCodes.CONFLICT) {
         return [
-          new testStatusActions.SetTestStatusSubmitted(action.slotId),
+          new testStatusActions.SetTestStatusSubmitted(slotId),
           new testActions.PersistTests(),
         ];
       }

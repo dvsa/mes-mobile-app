@@ -157,8 +157,9 @@ describe('Tests Effects', () => {
   describe('sendCurrentTestSuccessEffect', () => {
     it('should dispatch the TestStatusSubmitted action', (done) => {
       const currentTestSlotId = '12345';
+      store$.dispatch(new testsActions.StartTest(12345));
       // ACT
-      actions$.next(new testsActions.SendCurrentTestSuccess(currentTestSlotId));
+      actions$.next(new testsActions.SendCurrentTestSuccess());
       // ASSERT
       effects.sendCurrentTestSuccessEffect$.subscribe((result) => {
         if (result instanceof testStatusActions.SetTestStatusSubmitted)  {

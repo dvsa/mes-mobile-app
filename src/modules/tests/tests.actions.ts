@@ -85,12 +85,11 @@ export class SendCurrentTest implements Action {
 
 export class SendCurrentTestSuccess implements Action {
   readonly type = SEND_CURRENT_TEST_SUCCESS;
-  constructor(public slotId: string) {}
 }
 
 export class SendCurrentTestFailure implements Action {
   readonly type = SEND_CURRENT_TEST_FAILURE;
-  constructor(public slotId: string, public error: HttpErrorResponse) { }
+  constructor(public error: HttpErrorResponse) { }
 }
 
 export type Types =
