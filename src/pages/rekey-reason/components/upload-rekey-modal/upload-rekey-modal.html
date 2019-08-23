@@ -8,7 +8,7 @@
         </ion-row>
         <ion-row class="modal-message" justify-content-center>
           <h2 class="modal-alert-header" *ngIf="!(retryMode)">Are you sure you<br/>want to upload<br/>this rekeyed test?</h2>
-          <h2 class="modal-alert-header" *ngIf="(retryMode)">This test could not<br/>be uploaded</h2>
+          <h2 class="modal-alert-header" *ngIf="(retryMode)">Rekeyed test did<br/>not upload</h2>
         </ion-row>
       </ion-col>
     </ion-row>
@@ -18,7 +18,7 @@
         <button ion-button clear class="cancel-button" (click)="onCancel()" [disabled]="isUploading">Cancel</button>
       </ion-col>
       <ion-col class="column-border-top" no-padding>
-        <button ion-button clear class="upload-button" (click)="onUpload()" [disabled]="isUploading">{{retryMode? 'Retry' : 'Upload'}}</button>
+        <button ion-button clear class="upload-button" (click)="onUpload()" [disabled]="isUploading">{{retryMode? 'Try again' : 'Upload'}}</button>
       </ion-col>
     </ion-row>
   </ion-grid>

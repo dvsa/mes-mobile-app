@@ -1,4 +1,4 @@
-page-rekey-uploaded {
+page-rekey-upload-outcome {
 
   ion-grid {
     height: 100%;
@@ -8,9 +8,17 @@ page-rekey-uploaded {
     height: 100%;
   }
 
-  .tick-icon {
+  h2 {
+    text-align: center;
+  }
+
+  .tick-icon,
+  .warning-icon {
     margin: 40px 0px 16px;
     font-size: 84px;
+  }
+
+  .tick-icon {
     color: map-get($colors-gds, 'gds-dark-green');
   }
 

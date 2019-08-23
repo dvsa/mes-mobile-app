@@ -15,7 +15,7 @@ import {
   StartTest,
 } from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
-import { REKEY_UPLOADED_PAGE } from '../../page-names.constants';
+import { REKEY_UPLOAD_OUTCOME_PAGE } from '../../page-names.constants';
 import { AppInfoModel } from '../../../modules/app-info/app-info.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import {
@@ -24,6 +24,7 @@ import {
   OtherReasonUpdated,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
 import { By } from '@angular/platform-browser';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -115,7 +116,7 @@ describe('RekeyReasonPage', () => {
         expect(component.handleLoadingUI).toHaveBeenCalledWith(true);
       });
       it('should display the retry modal when an upload fails', () => {
-        const action = new SendCurrentTestFailure('1');
+        const action = new SendCurrentTestFailure('1', new HttpErrorResponse({ status: 500 }));
         const result: RekeyReasonModel = rekeyReasonReducer(null, action);
         const uploadStatus = getUploadStatus(result);
 
@@ -125,7 +126,19 @@ describe('RekeyReasonPage', () => {
         expect(component.onShowModal).toHaveBeenCalledWith(true);
 
       });
-      it('should display the retry modal when an upload succeeds', () => {
+      it('should navigate to the next page and not display the retry modal when an upload is a duplicate', () => {
+        const action = new SendCurrentTestFailure('1', new HttpErrorResponse({ status: 409 }));
+        const result: RekeyReasonModel = rekeyReasonReducer(null, action);
+        const uploadStatus = getUploadStatus(result);
+
+        component.handleUploadOutcome(uploadStatus);
+
+        expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
+        expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(component.onShowModal).not.toHaveBeenCalled();
+
+      });
+      it('should navigate to next page and not display the retry modal when an upload succeeds', () => {
         const action = new SendCurrentTestSuccess('1');
         const result: RekeyReasonModel = rekeyReasonReducer(null, action);
         const uploadStatus = getUploadStatus(result);
@@ -133,10 +146,10 @@ describe('RekeyReasonPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOADED_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(component.onShowModal).not.toHaveBeenCalled();
       });
     });
-
   });
 
   describe('Selecting issue emits the correct event', () => {

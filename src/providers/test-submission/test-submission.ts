@@ -4,7 +4,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { UrlProvider } from '../url/url';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { gzipSync } from 'zlib';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
 import { isNull, unset, isObject, cloneDeep } from 'lodash';
@@ -13,6 +13,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogType } from '../../shared/models/log.model';
 import { LogHelper } from '../logs/logsHelper';
+import { AppConfigProvider } from '../app-config/app-config';
 
 export interface TestToSubmit {
   index: number;
@@ -28,6 +29,7 @@ export class TestSubmissionProvider {
     public urlProvider: UrlProvider,
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
+    private appConfig: AppConfigProvider,
   ) { }
 
   submitTests = (testsToSubmit: TestToSubmit[]): Observable<HttpResponse<any>[]> => {
@@ -45,6 +47,7 @@ export class TestSubmissionProvider {
       // Note: Catching failures here (the inner observable) is what allows us to coordinate
       // subsequent success/fail actions in sendCompletedTestsEffect$ (the outer observable)
       .pipe(
+        timeout(this.appConfig.getAppConfig().requestTimeout),
         catchError((err: HttpErrorResponse) => {
           this.store$.dispatch(new SaveLog(this.logHelper
             .createLog(LogType.ERROR, `Submitting test with slot ID ${testToSubmit.slotId}`, err.message)));

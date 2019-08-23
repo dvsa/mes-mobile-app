@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform, Modal, ModalController, LoadingController, Loading } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidLeave, RekeyReasonViewDidEnter } from './rekey-reason.actions';
+import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
 import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -16,7 +17,7 @@ import {
   OtherReasonUpdated,
 } from '../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
-import { REKEY_UPLOADED_PAGE } from '../page-names.constants';
+import { REKEY_UPLOAD_OUTCOME_PAGE } from '../page-names.constants';
 import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -33,6 +34,7 @@ import {
 import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
+import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
@@ -47,14 +49,13 @@ interface RekeyReasonPageState {
   selector: 'page-rekey-reason',
   templateUrl: 'rekey-reason.html',
 })
-export class RekeyReasonPage {
+export class RekeyReasonPage extends BasePageComponent {
 
   formGroup: FormGroup;
 
   ipadIssueBoolean: boolean;
 
   pageState: RekeyReasonPageState;
-
   subscription: Subscription = Subscription.EMPTY;
 
   isUploading: boolean = false;
@@ -74,6 +75,7 @@ export class RekeyReasonPage {
     private modalController: ModalController,
     public loadingController: LoadingController,
   ) {
+    super(platform, navController, authenticationProvider);
     this.formGroup = new FormGroup({
       ipadIssue: new FormControl(false),
       ipadIssueTechFault: new FormControl(false),
@@ -124,7 +126,6 @@ export class RekeyReasonPage {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.store$.dispatch(new RekeyReasonViewDidLeave());
   }
 
   onUploadPressed = (): void => {
@@ -151,8 +152,8 @@ export class RekeyReasonPage {
 
     this.handleLoadingUI(uploadStatus.isUploading);
 
-    if (uploadStatus.hasUploadSucceeded) {
-      this.navController.push(REKEY_UPLOADED_PAGE);
+    if (uploadStatus.hasUploadSucceeded || uploadStatus.isDuplicate) {
+      this.navController.push(REKEY_UPLOAD_OUTCOME_PAGE);
       return;
     }
     if (uploadStatus.hasUploadFailed) {
@@ -216,6 +217,12 @@ export class RekeyReasonPage {
 
   invalidReason(): boolean {
     return !this.formGroup.controls['otherReasonUpdated'].valid;
+  }
+
+  onExitRekey = (): void => {
+    // TODO - modal confirmation
+    this.navController.popToRoot();
+    this.store$.dispatch(new EndRekey());
   }
 
 }

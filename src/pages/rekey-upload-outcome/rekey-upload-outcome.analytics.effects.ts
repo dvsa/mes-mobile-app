@@ -5,9 +5,9 @@ import { switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AnalyticsScreenNames } from '../../providers/analytics/analytics.model';
 import {
-  REKEY_UPLOADED_VIEW_DID_ENTER,
-  RekeyUploadedViewDidEnter,
-} from './rekey-uploaded.actions';
+  REKEY_UPLOAD_OUTCOME_VIEW_DID_ENTER,
+  RekeyUploadOutcomeViewDidEnter,
+} from './rekey-upload-outcome.actions';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -16,7 +16,7 @@ import { TestsModel } from '../../modules/tests/tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 
 @Injectable()
-export class RekeyUploadedAnalyticsEffects {
+export class RekeyUploadOutcomeAnalyticsEffects {
   constructor(
     private analytics: AnalyticsProvider,
     private actions$: Actions,
@@ -27,7 +27,7 @@ export class RekeyUploadedAnalyticsEffects {
 
   @Effect()
   rekeyUploadedViewDidEnter$ = this.actions$.pipe(
-    ofType(REKEY_UPLOADED_VIEW_DID_ENTER),
+    ofType(REKEY_UPLOAD_OUTCOME_VIEW_DID_ENTER),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -35,7 +35,7 @@ export class RekeyUploadedAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [RekeyUploadedViewDidEnter, TestsModel]) => {
+    switchMap(([action, tests]: [RekeyUploadOutcomeViewDidEnter, TestsModel]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.REKEY_UPLOADED, tests);
       this.analytics.setCurrentPage(screenName);
       return of(new AnalyticRecorded());

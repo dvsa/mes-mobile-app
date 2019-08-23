@@ -78,8 +78,8 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   }
 
   if (action instanceof testsActions.StartTest
-    || action instanceof testsActions.ActivateTest
-    || action instanceof fakeJournalActions.StartE2EPracticeTest) {
+      || action instanceof testsActions.ActivateTest
+      || action instanceof fakeJournalActions.StartE2EPracticeTest) {
     return `${action.slotId}`;
   }
 

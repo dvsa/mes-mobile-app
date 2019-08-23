@@ -1,12 +1,22 @@
 <ion-content no-bounce id="back-to-office-page">
   <ion-grid>
-    <ion-row align-items-center class="message-wrapper">
+    <ion-row align-items-center class="message-wrapper" *ngIf="!(pageState.duplicateUpload$ | async)">
       <ion-col no-padding>
         <ion-row justify-content-center>
           <ion-icon class="tick-icon" ios="ios-checkmark-circle"></ion-icon>
         </ion-row>
         <ion-row justify-content-center>
           <h2 class="modal-alert-header">Rekeyed test uploaded successfully</h2>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="message-wrapper" *ngIf="pageState.duplicateUpload$ | async">
+      <ion-col no-padding>
+        <ion-row justify-content-center>
+          <ion-icon class="warning-icon" ios="md-alert"></ion-icon>
+        </ion-row>
+        <ion-row justify-content-center>
+          <h2 class="modal-alert-header">Rekeyed test has already been uploaded</h2>
         </ion-row>
       </ion-col>
     </ion-row>

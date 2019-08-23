@@ -1,9 +1,9 @@
-import { RekeyUploadedAnalyticsEffects } from '../rekey-uploaded.analytics.effects';
+import { RekeyUploadOutcomeAnalyticsEffects } from '../rekey-upload-outcome.analytics.effects';
 import { TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as rekeyUploadedActions from '../rekey-uploaded.actions';
+import * as rekeyUploadedActions from '../rekey-upload-outcome.actions';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
@@ -18,7 +18,7 @@ import { Candidate } from '@dvsa/mes-journal-schema';
 
 describe('Rekey Uploaded Analytics Effects', () => {
 
-  let effects: RekeyUploadedAnalyticsEffects;
+  let effects: RekeyUploadOutcomeAnalyticsEffects;
   let analyticsProviderMock;
   let actions$: any;
   let store$: Store<StoreModel>;
@@ -36,13 +36,13 @@ describe('Rekey Uploaded Analytics Effects', () => {
         }),
       ],
       providers: [
-        RekeyUploadedAnalyticsEffects,
+        RekeyUploadOutcomeAnalyticsEffects,
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         provideMockActions(() => actions$),
         Store,
       ],
     });
-    effects = TestBed.get(RekeyUploadedAnalyticsEffects);
+    effects = TestBed.get(RekeyUploadOutcomeAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
     spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
@@ -54,7 +54,7 @@ describe('Rekey Uploaded Analytics Effects', () => {
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(mockCandidate));
       // ACT
-      actions$.next(new rekeyUploadedActions.RekeyUploadedViewDidEnter());
+      actions$.next(new rekeyUploadedActions.RekeyUploadOutcomeViewDidEnter());
       // ASSERT
       effects.rekeyUploadedViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
