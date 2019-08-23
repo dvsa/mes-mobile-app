@@ -91,18 +91,18 @@ export class JournalEffects {
             ),
             catchError((err: HttpErrorResponse) => {
               // For HTTP 304 NOT_MODIFIED we just use the slots we already have cached
-              if (err.status !== 304 || err.message === 'Timeout has occurred') {
-                this.store$.dispatch(new SaveLog(
-                  this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
-                ));
-              }
-
               if (err.status === 304) {
                 return of(new journalActions.LoadJournalSuccess(
                   { examiner, slotItemsByDate: slots },
                   this.networkStateProvider.getNetworkState(),
                   this.authProvider.isInUnAuthenticatedMode(),
                   lastRefreshed,
+                ));
+              } else if (err.message === 'Timeout has occurred') {
+                return of(new journalActions.JournalRefreshError('Retrieving Journal', err.message))
+              } else {
+                this.store$.dispatch(new SaveLog(
+                  this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
                 ));
               }
 
