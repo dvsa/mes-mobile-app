@@ -152,7 +152,6 @@ describe('Journal Effects', () => {
       expect(slotProvider.detectSlotChanges).not.toHaveBeenCalledWith({}, JournalProviderMock.mockJournal);
       expect(slotProvider.extendWithEmptyDays).not.toHaveBeenCalled();
       expect(slotProvider.getRelevantSlots).not.toHaveBeenCalled();
-      expect(result instanceof journalActions.LoadJournalSuccess).toBe(true);
       expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(journalActions.JournalRefresh));
       expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(SaveLog));
       done();
