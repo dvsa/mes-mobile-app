@@ -98,13 +98,15 @@ export class JournalEffects {
                   this.authProvider.isInUnAuthenticatedMode(),
                   lastRefreshed,
                 ));
-              } else if (err.message === 'Timeout has occurred') {
-                return of(new journalActions.JournalRefreshError('Retrieving Journal', err.message))
-              } else {
-                this.store$.dispatch(new SaveLog(
-                  this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
-                ));
               }
+
+              if (err.message === 'Timeout has occurred') {
+                return of(new journalActions.JournalRefreshError('Retrieving Journal', err.message));
+              }
+
+              this.store$.dispatch(new SaveLog(
+                this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
+              ));
 
               return ErrorObservable.create(err);
             }),
