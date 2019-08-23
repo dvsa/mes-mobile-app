@@ -10,6 +10,8 @@ import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
 import { DeviceMock } from '@ionic-native-mocks/device';
 import { Device } from '@ionic-native/device';
+import { AppConfigProvider } from '../../app-config/app-config';
+import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 
 describe('TestSubmissionProvider', () => {
 
@@ -30,6 +32,7 @@ describe('TestSubmissionProvider', () => {
       ],
       providers: [
         TestSubmissionProvider,
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         HttpClient,
         { provide: UrlProvider, useClass: UrlProviderMock },
         Store,

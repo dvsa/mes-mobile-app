@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { RekeyUploadedPage } from './rekey-uploaded';
+import { RekeyUploadOutcomePage } from './rekey-upload-outcome';
 import { EffectsModule } from '@ngrx/effects';
-import { RekeyUploadedAnalyticsEffects } from './rekey-uploaded.analytics.effects';
+import { RekeyUploadOutcomeAnalyticsEffects } from './rekey-upload-outcome.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [
-    RekeyUploadedPage,
+    RekeyUploadOutcomePage,
   ],
   imports: [
-    IonicPageModule.forChild(RekeyUploadedPage),
-    EffectsModule.forFeature([RekeyUploadedAnalyticsEffects]),
+    IonicPageModule.forChild(RekeyUploadOutcomePage),
+    EffectsModule.forFeature([RekeyUploadOutcomeAnalyticsEffects]),
     ComponentsModule,
   ],
   providers: [
     AnalyticsProvider,
   ],
 })
-export class RekeyUploadedPageModule {}
+export class RekeyUploadOutcomePageModule {}

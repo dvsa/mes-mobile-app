@@ -19,7 +19,7 @@ import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { NetworkStateProvider, ConnectionStatus } from '../../providers/network-state/network-state';
 import { find, startsWith, omit, has } from 'lodash';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
 import { getRekeyIndicator } from './rekey/rekey.reducer';
@@ -289,26 +289,19 @@ export class TestsEffects {
       const slotId = getCurrentTestSlotId(tests);
       const test = getCurrentTest(tests);
 
-      if (!test || this.networkStateProvider.getNetworkState() !== ConnectionStatus.ONLINE) {
-        return of(new testActions.SendCurrentTestFailure(slotId));
-      }
-
-      const testToSubmit: TestToSubmit[] = [{
+      const testToSubmit: TestToSubmit = {
         slotId,
         index: 0,
         payload: test,
-      }];
+      };
 
-      return this.testSubmissionProvider.submitTests(testToSubmit)
+      return this.testSubmissionProvider.submitTest(testToSubmit)
         .pipe(
-          switchMap((responses: HttpResponse<any>[]) => {
-            return responses.map((response, index) => {
-              const matchedTests = find(testToSubmit, ['index', index]);
-              if (response.status === HttpStatusCodes.CREATED) {
-                return new testActions.SendCurrentTestSuccess(matchedTests.slotId);
-              }
-              return new testActions.SendCurrentTestFailure(matchedTests.slotId);
-            });
+          map((response: HttpResponse<any> | HttpErrorResponse) => {
+            if (response.status === HttpStatusCodes.CREATED) {
+              return new testActions.SendCurrentTestSuccess();
+            }
+            return new testActions.SendCurrentTestFailure(response.status === HttpStatusCodes.CONFLICT);
           }),
         );
     }),
@@ -317,11 +310,40 @@ export class TestsEffects {
   @Effect()
   sendCurrentTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_CURRENT_TEST_SUCCESS),
-    switchMap((action: testActions.SendCurrentTestSuccess) => {
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+      ),
+    )),
+    switchMap(([action, slotId]: [testActions.SendCurrentTestSuccess, string]) => {
       return [
-        new testStatusActions.SetTestStatusSubmitted(action.slotId),
+        new testStatusActions.SetTestStatusSubmitted(slotId),
         new testActions.PersistTests(),
       ];
     }),
   );
+
+  @Effect()
+  sendCurrentTestFailureEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_CURRENT_TEST_FAILURE),
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTestSlotId),
+        ),
+      ),
+    )),
+    filter(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => action.isDuplicateUpload),
+    switchMap(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => {
+      return [
+        new testStatusActions.SetTestStatusSubmitted(slotId),
+        new testActions.PersistTests(),
+      ];
+    }),
+  );
+
 }
