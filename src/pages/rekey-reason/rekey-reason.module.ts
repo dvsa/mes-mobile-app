@@ -5,6 +5,7 @@ import { RekeyReasonAnalyticsEffects } from './rekey-reason.analytics.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { rekeyReasonReducer } from './rekey-reason.reducer';
+import { DirectivesModule } from '../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { rekeyReasonReducer } from './rekey-reason.reducer';
     EffectsModule.forFeature([
       RekeyReasonAnalyticsEffects,
     ]),
+    DirectivesModule,
   ],
 })
-export class RekeyReasonPageModule {}
+export class RekeyReasonPageModule { }

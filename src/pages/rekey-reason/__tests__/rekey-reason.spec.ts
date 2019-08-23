@@ -6,12 +6,24 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { AppModule } from '../../../app/app.module';
-import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { RekeyReasonModel } from '../rekey-reason.model';
 import { getUploadStatus } from '../rekey-reason.selector';
-import { SendCurrentTest, SendCurrentTestSuccess, SendCurrentTestFailure } from '../../../modules/tests/tests.actions';
+import {
+  SendCurrentTest,
+  SendCurrentTestSuccess,
+  SendCurrentTestFailure,
+  StartTest,
+} from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
 import { REKEY_UPLOADED_PAGE } from '../../page-names.constants';
+import { AppInfoModel } from '../../../modules/app-info/app-info.model';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import {
+  IpadIssueSelected,
+  OtherSelected,
+  OtherReasonUpdated,
+} from '../../../modules/tests/rekey-reason/rekey-reason.actions';
+import { By } from '@angular/platform-browser';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -19,6 +31,7 @@ describe('RekeyReasonPage', () => {
   let loadingController: LoadingController;
   let navContoller: NavController;
   let modalController: ModalController;
+  let store$: Store<AppInfoModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,6 +42,7 @@ describe('RekeyReasonPage', () => {
         IonicModule,
         StoreModule.forRoot({
           tests: testsReducer,
+          rekeyReason: rekeyReasonReducer,
         }),
         AppModule,
       ],
@@ -50,6 +64,7 @@ describe('RekeyReasonPage', () => {
         navContoller = TestBed.get(NavController);
         modalController = TestBed.get(ModalController);
       });
+    store$ = TestBed.get(Store);
   }));
 
   describe('Class', () => {
@@ -122,5 +137,34 @@ describe('RekeyReasonPage', () => {
       });
     });
 
+  });
+
+  describe('Selecting issue emits the correct event', () => {
+    it('emiting ipadIssueSelected shows the ipadIssue section', () => {
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new IpadIssueSelected(true));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#ipadIssue'))).toBeDefined();
+    });
+
+    it('clicking other reason emits other selected event', () => {
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new OtherSelected(true));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#otherSelected'))).toBeDefined();
+    });
+
+    it('entering other reason emits the reason updated event', () => {
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new OtherSelected(true));
+      fixture.detectChanges();
+      spyOn(store$, 'dispatch');
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#otherReasonUpdated');
+      elem.value = 'some random value';
+      elem.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(OtherReasonUpdated));
+    });
   });
 });
