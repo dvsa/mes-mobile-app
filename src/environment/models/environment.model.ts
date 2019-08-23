@@ -34,10 +34,12 @@ export interface LocalEnvironmentFile extends EnvironmentFile {
     numberOfDaysToView: number;
     allowTests: boolean;
     allowedTestCategories: string[];
-    enableTestReportPracticeMode: boolean;
-    enableEndToEndPracticeMode: boolean;
     enableLogoutButton: boolean;
     testPermissionPeriods: TestPermissionPeriod[]
+  };
+  dashboard: {
+    enableTestReportPracticeMode: boolean;
+    enableEndToEndPracticeMode: boolean;
   };
   tests: {
     testSubmissionUrl: string,

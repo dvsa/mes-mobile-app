@@ -31,8 +31,6 @@ export const environment: LocalEnvironmentFile = {
     numberOfDaysToView: 7,
     allowTests: true,
     allowedTestCategories: ['B'],
-    enableTestReportPracticeMode: true,
-    enableEndToEndPracticeMode: true,
     enableLogoutButton: true,
     testPermissionPeriods: [
       {
@@ -41,6 +39,10 @@ export const environment: LocalEnvironmentFile = {
         to: null,
       },
     ],
+  },
+  dashboard: {
+    enableTestReportPracticeMode: true,
+    enableEndToEndPracticeMode: true,
   },
   tests: {
     testSubmissionUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/test-results',
