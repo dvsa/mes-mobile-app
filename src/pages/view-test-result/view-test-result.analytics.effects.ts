@@ -26,5 +26,4 @@ export class ViewTestResultAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
-
 }
