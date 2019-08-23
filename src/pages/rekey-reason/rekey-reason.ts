@@ -17,7 +17,7 @@ import {
   OtherReasonUpdated,
 } from '../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
-import { REKEY_UPLOAD_OUTCOME_PAGE } from '../page-names.constants';
+import { REKEY_UPLOAD_OUTCOME_PAGE, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
 import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -221,7 +221,13 @@ export class RekeyReasonPage extends BasePageComponent {
 
   onExitRekey = (): void => {
     // TODO - modal confirmation
-    this.navController.popToRoot();
+    const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
+    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+    if (rekeySearchPage) {
+      this.navController.popTo(rekeySearchPage);
+    } else {
+      this.navController.popTo(journalPage);
+    }
     this.store$.dispatch(new EndRekey());
   }
 

@@ -28,7 +28,7 @@ describe('PracticeModeBanner', () => {
     describe('exitPracticeMode', () => {
       it('should take the user back to the root page', () => {
         component.exitPracticeMode();
-        expect(navController.popToRoot).toHaveBeenCalled();
+        expect(navController.popTo).toHaveBeenCalled();
       });
     });
   });

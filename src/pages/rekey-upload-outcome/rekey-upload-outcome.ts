@@ -14,6 +14,7 @@ import { getRekeyReasonState } from './../rekey-reason/rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { getUploadStatus } from './../rekey-reason/rekey-reason.selector';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
+import { REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
 
 interface RekeyUploadOutcomePageState {
   duplicateUpload$: Observable<boolean>;
@@ -63,7 +64,13 @@ export class RekeyUploadOutcomePage extends BasePageComponent {
   }
 
   goToJournal() {
-    this.navController.popToRoot();
+    const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
+    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+    if (rekeySearchPage) {
+      this.navController.popTo(rekeySearchPage);
+    } else {
+      this.navController.popTo(journalPage);
+    }
     this.store$.dispatch(new EndRekey());
   }
 }

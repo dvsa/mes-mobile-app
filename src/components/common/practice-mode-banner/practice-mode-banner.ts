@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { JOURNAL_PAGE } from '../../../pages/page-names.constants';
 
 @Component({
   selector: 'practice-mode-banner',
@@ -13,6 +14,7 @@ export class PracticeModeBanner {
   ) {}
 
   exitPracticeMode() {
-    this.navController.popToRoot({ animate: false });
+    const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
+    this.navController.popTo(journalPage, { animate: false });
   }
 }
