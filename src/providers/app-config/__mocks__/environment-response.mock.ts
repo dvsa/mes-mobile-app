@@ -7,9 +7,11 @@ export const environmentResponseMock = {
     numberOfDaysToView: 7,
     allowTests: true,
     allowedTestCategories: ['B'],
+    enableLogoutButton: true,
+  },
+  dashboard: {
     enableTestReportPracticeMode: true,
     enableEndToEndPracticeMode: true,
-    enableLogoutButton: true,
   },
   tests: {
     testSubmissionUrl: 'https://example.com/api/v1/test-result',

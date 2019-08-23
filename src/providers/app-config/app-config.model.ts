@@ -27,11 +27,13 @@ export type AppConfig = {
     numberOfDaysToView: number,
     allowTests: boolean,
     allowedTestCategories: string[],
-    enableTestReportPracticeMode: boolean,
-    enableEndToEndPracticeMode: boolean,
     enableLogoutButton: boolean,
     testPermissionPeriods: TestPermissionPeriod[],
   },
+  dashboard: {
+    enableTestReportPracticeMode: boolean,
+    enableEndToEndPracticeMode: boolean,
+  };
   tests: {
     testSubmissionUrl: string,
     autoSendInterval: number,

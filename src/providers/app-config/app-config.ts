@@ -188,10 +188,12 @@ export class AppConfigProvider {
         numberOfDaysToView: data.journal.numberOfDaysToView,
         allowTests: data.journal.allowTests,
         allowedTestCategories: data.journal.allowedTestCategories,
-        enableTestReportPracticeMode: data.journal.enableTestReportPracticeMode,
-        enableEndToEndPracticeMode: data.journal.enableEndToEndPracticeMode,
         enableLogoutButton: data.journal.enableLogoutButton,
         testPermissionPeriods: data.journal.testPermissionPeriods,
+      },
+      dashboard: {
+        enableTestReportPracticeMode: data.dashboard.enableTestReportPracticeMode,
+        enableEndToEndPracticeMode: data.dashboard.enableEndToEndPracticeMode,
       },
       tests: {
         testSubmissionUrl: data.tests.testSubmissionUrl,
