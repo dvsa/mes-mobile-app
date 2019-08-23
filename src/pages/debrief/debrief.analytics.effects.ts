@@ -51,5 +51,4 @@ export class DebriefAnalyticsEffects {
       return of(new AnalyticRecorded());
     }),
   );
-
 }
