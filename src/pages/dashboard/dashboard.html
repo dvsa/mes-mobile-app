@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons start>
+            <button ion-button (click)="logout()" *ngIf="authenticationProvider.logoutEnabled()">
+                <span>Logout</span>
+                <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
+            </button>
+            <h6 *ngIf="!authenticationProvider.logoutEnabled()" class="version-number">Version {{pageState.appVersion$
+                | async}}</h6>
+            <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
+        </ion-buttons>
+        <ion-title>My dashboard</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+    <profile-header></profile-header>
+    <hr />
+    <h2>{{pageState.todaysDate$}}</h2>
+    <go-to-journal-card></go-to-journal-card>
+    <test-results-search-card></test-results-search-card>
+    <hr *ngIf="showEndToEndPracticeMode() || showTestReportPracticeMode()" />
+    <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode()"></practice-test-report-card>
+    <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode()"></practice-end-to-end-card>
+</ion-content>

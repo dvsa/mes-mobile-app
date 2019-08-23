@@ -1,0 +1,44 @@
+test-results-search-card {
+  .search-card {
+    h1, h4 {
+      color: map-get($colors, mes-white);
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mes-neutral-button {
+      width: 300px;
+
+      &.activated {
+        h3 {
+          color: map-get($colors, mes-white);
+        }
+        background:  map-get($colors-gds, gds-grey-1);
+      }
+
+      h3 {
+        color: map-get($colors-gds, gds-dark-green);
+      }
+    }
+
+    #card-content-wrapper {
+      display: flex;
+      align-items: center;
+      height: 240px;
+      padding: 24px;
+      background: map-get($colors-gds, gds-dark-green);
+      width: 100%;
+    }
+
+    #search-icon {
+      color: map-get($colors, mes-white);
+      margin-bottom: 18px;
+      font-size: 72px;
+      font-weight: 900;
+    }
+  }
+}

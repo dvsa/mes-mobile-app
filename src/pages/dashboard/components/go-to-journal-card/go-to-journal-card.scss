@@ -1,0 +1,40 @@
+go-to-journal-card {
+  .go-to-journal-card {
+
+    h1, h4 {
+      color: map-get($colors, mes-white);
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mes-primary-button {
+      width: 300px;
+
+      h3 {
+        color: map-get($colors, mes-white);
+      }
+
+    }
+
+    #card-content-wrapper {
+      display: flex;
+      align-items: center;
+      height: 240px;
+      padding: 24px;
+      background: map-get($colors, mes-white);
+      width: 100%;
+    }
+
+    #pin-icon {
+      clear: both;
+      color: map-get($colors-gds, gds-dark-green);
+      margin-bottom: 18px;
+      font-size: 72px;
+      font-weight: 900;
+    }
+  }
+}

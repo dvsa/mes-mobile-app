@@ -1,0 +1,44 @@
+page-dashboard {
+
+  h2 { 
+    margin: 12px 12px 0px;
+  }
+
+  hr {
+    background-color: #bdbdbd;
+    height: 2px;
+    margin: 0px 12px 0px;
+  }
+  .version-number {
+    color: map-get($colors, mes-secondary-header);
+    margin-top: -4px;
+  }
+  .last-sync {
+    color: map-get($colors, mes-secondary-header);
+    margin-top: -4px;
+  }
+  #unauthenticated-mode-indicator {
+    text-align: center;
+    padding: 16px 0;
+    background: map-get($colors-gds, 'gds-red');
+    #unauth-text {
+      color: map-get($colors, 'mes-white');
+      font-size: 20px;
+      font-weight: normal;
+      letter-spacing: 0.34px;
+      }
+    }
+    .toolbar-ios ion-title {
+    height: 100% !important;
+  }
+  ion-buttons[start] .button-inner{
+    flex-flow: column;
+    align-items: flex-start;
+    line-height: 25px;
+  }
+  ion-buttons[end] .button-inner{
+    flex-flow: column;
+    align-items: flex-end;
+    line-height: 25px;
+  }
+}

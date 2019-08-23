@@ -1,0 +1,29 @@
+profile-header {
+  .profile-header {
+
+    padding: 12px;
+
+    h1, h4 {
+      color: map-get($colors, mes-white);
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #card-content-wrapper {
+      height: 240px;
+      padding: 24px;
+      background: map-get($colors, mes-white);
+      width: 100%;
+    }
+
+    #contact-icon {
+      clear: both;
+      font-size: 96px;
+      font-weight: 900;
+    }
+  }
+}

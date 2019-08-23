@@ -1,0 +1,16 @@
+practice-test-report-card {
+  .practice-mode-card {
+    background-color: map-get($colors, secondary-button);
+    padding: 10px;
+
+    h4 {
+        margin-left: 27px;
+        line-height: 42px;
+    }
+
+    #checkmark-circle {
+       font-size: 36px;
+       margin-top: 4px;
+    }
+  }
+}
