@@ -343,7 +343,6 @@ export class TestsEffects {
         new testStatusActions.SetTestStatusSubmitted(slotId),
         new testActions.PersistTests(),
       ];
-      return of();
     }),
   );
 
