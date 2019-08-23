@@ -15,10 +15,6 @@ import {
   ResumingWriteUp,
 } from '../../pages/journal/journal.actions';
 import {
-  START_TEST,
-  StartTest,
-} from '../../modules/tests/tests.actions';
-import {
     AnalyticsDimensionIndices,
     AnalyticsScreenNames,
     AnalyticsEventCategories,
