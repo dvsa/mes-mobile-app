@@ -33,7 +33,7 @@
       <ion-card-content class="card-content-ios" no-bounce>
         <ion-grid class="grid">
           <activity-code id="activity-code-card" [formGroup]="form" [activityCodeModel]="pageState.activityCode$ | async"
-            [activityCodeOptions]="activityCodeOptions" (activityCodeChange)="activityCodeChanged($event)" [disabled]="true"></activity-code>
+            [activityCodeOptions]="activityCodeOptions" (activityCodeChange)="activityCodeChanged($event)" [disabled]="pageState.disableActivityCode$ | async"></activity-code>
 
           <div no-padding [hidden]="!(pageState.isTestOutcomeSet$ | async)">
             <route-number [display]="pageState.displayRouteNumber$ | async" [routeNumber]="pageState.routeNumber$ | async"

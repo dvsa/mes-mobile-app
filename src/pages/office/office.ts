@@ -116,6 +116,7 @@ import { REKEY_REASON_PAGE, JOURNAL_PAGE } from '../page-names.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
+  disableActivityCode$: Observable<boolean>;
   startTime$: Observable<string>;
   testOutcome$: Observable<string>;
   testOutcomeText$: Observable<string>;
@@ -207,6 +208,10 @@ export class OfficePage extends PracticeableBasePageComponent {
     this.pageState = {
       activityCode$: currentTest$.pipe(
         select(getActivityCode),
+      ),
+      disableActivityCode$: currentTest$.pipe(
+        select(getActivityCode),
+        select(activityCodeModel => this.activityCodeDisabled(activityCodeModel)),
       ),
       isRekey$: currentTest$.pipe(
         select(getRekeyIndicator),
@@ -640,4 +645,8 @@ export class OfficePage extends PracticeableBasePageComponent {
       source: result.source,
       comment: result.comment,
     })
+
+  activityCodeDisabled(activityCodeModel: ActivityCodeModel): boolean {
+    return activityCodeModel ? true : false;
+  }
 }
