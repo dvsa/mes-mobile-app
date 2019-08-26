@@ -34,6 +34,7 @@ import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 
 @Injectable()
 export class JournalEffects {
@@ -91,13 +92,7 @@ export class JournalEffects {
             ),
             catchError((err: HttpErrorResponse) => {
               // For HTTP 304 NOT_MODIFIED we just use the slots we already have cached
-              if (err.status !== 304) {
-                this.store$.dispatch(new SaveLog(
-                  this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
-                ));
-              }
-
-              if (err.status === 304 || err.message === 'Timeout has occurred') {
+              if (err.status === HttpStatusCodes.NOT_MODIFIED) {
                 return of(new journalActions.LoadJournalSuccess(
                   { examiner, slotItemsByDate: slots },
                   this.networkStateProvider.getNetworkState(),
@@ -105,6 +100,14 @@ export class JournalEffects {
                   lastRefreshed,
                 ));
               }
+
+              if (err.message === 'Timeout has occurred') {
+                return of(new journalActions.JournalRefreshError('Retrieving Journal', err.message));
+              }
+
+              this.store$.dispatch(new SaveLog(
+                this.logHelper.createLog(LogType.ERROR, 'Retrieving Journal', err.message),
+              ));
 
               return ErrorObservable.create(err);
             }),
