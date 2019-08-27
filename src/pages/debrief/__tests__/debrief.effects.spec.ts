@@ -57,7 +57,7 @@ describe('Debrief Effects', () => {
       });
     });
 
-    it('should return SET_TEST_STATUS_WRITE_UP & PERSIST_TESTS actions when failed test', (done) => {
+    it('should return SET_TEST_STATUS_DECIDED & PERSIST_TESTS actions when failed test', (done) => {
       // Set activity code as failed
       store$.dispatch(new testsActions.StartTest(1234));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
@@ -67,7 +67,7 @@ describe('Debrief Effects', () => {
       effects.endDebriefEffect$.subscribe((result) => {
         if (result instanceof testStatusActions.SetTestStatusWriteUp ||
           result instanceof testStatusActions.SetTestStatusDecided) {
-          expect(result).toEqual(new testStatusActions.SetTestStatusWriteUp(currentSlotId));
+          expect(result).toEqual(new testStatusActions.SetTestStatusDecided(currentSlotId));
         }
         if (result instanceof testsActions.PersistTests) {
           expect(result).toEqual(new testsActions.PersistTests());

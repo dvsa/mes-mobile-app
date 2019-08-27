@@ -13,6 +13,7 @@ import {
   OFFICE_PAGE,
   PASS_FINALISATION_PAGE,
   JOURNAL_FORCE_CHECK_MODAL,
+  NON_PASS_FINALISATION_PAGE,
 } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
@@ -26,6 +27,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { getRekeySearchState } from '../../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.selector';
 import { merge } from 'rxjs/observable/merge';
+import { ActivityCodes } from '../../../shared/models/activity-codes';
 
 @Component({
   selector: 'test-outcome',
@@ -128,7 +130,11 @@ export class TestOutcomeComponent implements OnInit {
 
   debriefTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
-    this.navController.push(PASS_FINALISATION_PAGE);
+    if (this.activityCode === ActivityCodes.PASS) {
+      this.navController.push(PASS_FINALISATION_PAGE);
+    } else {
+      this.navController.push(NON_PASS_FINALISATION_PAGE);
+    }
   }
 
   resumeTest() {
