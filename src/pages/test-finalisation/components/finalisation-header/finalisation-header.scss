@@ -1,12 +1,13 @@
 finalisation-header {
   .header-card {
-    margin-left: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
   .top-row {
-    margin-top: 24px;
+    padding-top: 24px;
   }
   .bottom-row {
-    margin-bottom: 24px;
+    padding-bottom: 24px;
   }
   .pass {
     color: map-get($colors-gds, 'gds-dark-green-3');
@@ -19,5 +20,8 @@ finalisation-header {
   }
   div {
     display:inline;
+  }
+  .align-col-right {
+    text-align: right;
   }
 }
