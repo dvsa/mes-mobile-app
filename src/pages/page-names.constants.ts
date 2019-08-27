@@ -20,3 +20,4 @@ export const ERROR_PAGE = 'ErrorPage';
 export const POST_DEBRIEF_HOLDING_PAGE = 'PostDebriefHoldingPage';
 export const REKEY_REASON_PAGE = 'RekeyReasonPage';
 export const REKEY_UPLOAD_OUTCOME_PAGE = 'RekeyUploadOutcomePage';
+export const NON_PASS_FINALISATION_PAGE = 'NonPassFinalisationPage';
