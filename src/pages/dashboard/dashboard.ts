@@ -105,8 +105,8 @@ export class DashboardPage extends PracticeableBasePageComponent {
   }
 
   showTestReportPracticeMode = (): boolean =>
-    this.appConfigProvider.getAppConfig().dashboard.enableTestReportPracticeMode
+    this.appConfigProvider.getAppConfig().journal.enableTestReportPracticeMode
 
   showEndToEndPracticeMode = (): boolean =>
-    this.appConfigProvider.getAppConfig().dashboard.enableEndToEndPracticeMode
+    this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
 }

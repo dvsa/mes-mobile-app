@@ -12,7 +12,8 @@ go-to-journal-card {
     }
 
     .mes-primary-button {
-      width: 300px;
+      width: 340px;
+      margin-top: 30px;
 
       h3 {
         color: map-get($colors, mes-white);
@@ -28,13 +29,10 @@ go-to-journal-card {
       background: map-get($colors, mes-white);
       width: 100%;
     }
-
-    #pin-icon {
-      clear: both;
-      color: map-get($colors-gds, gds-dark-green);
-      margin-bottom: 18px;
-      font-size: 72px;
-      font-weight: 900;
-    }
   }
+}
+
+ion-card img.icon-journal {
+  width: 112px;
+  height: 92px
 }

@@ -7,9 +7,12 @@ profile-header {
       color: map-get($colors, mes-white);
     }
 
+    h2 {
+      margin: 0px;
+    }
+
     .row {
         display: flex;
-        justify-content: center;
         align-items: center;
     }
 
