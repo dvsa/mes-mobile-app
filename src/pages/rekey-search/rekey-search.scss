@@ -36,6 +36,18 @@ page-rekey-search {
     position: absolute;
   }
 
+  ion-spinner {
+    * {
+      stroke: white;
+    }
+
+    &.spinner-circles circle,
+    &.spinner-bubbles circle,
+    &.spinner-dots circle {
+      fill: white;
+    }
+  }
+  
   .search-icon {
     display: inline-block;
     position: relative;
