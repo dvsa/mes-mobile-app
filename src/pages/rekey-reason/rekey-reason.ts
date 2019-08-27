@@ -1,5 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, Modal, ModalController, LoadingController, Loading } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  Platform,
+  Modal,
+  ModalController,
+  LoadingController,
+  Loading,
+  ToastController,
+  Toast,
+} from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
@@ -59,6 +69,8 @@ export class RekeyReasonPage extends BasePageComponent {
   pageState: RekeyReasonPageState;
   subscription: Subscription = Subscription.EMPTY;
 
+  toast: Toast;
+
   isUploading: boolean = false;
   hasUploaded: boolean = false;
   hasTriedUploading: boolean = false;
@@ -75,6 +87,7 @@ export class RekeyReasonPage extends BasePageComponent {
     public store$: Store<StoreModel>,
     private modalController: ModalController,
     public loadingController: LoadingController,
+    public toastController: ToastController,
   ) {
     super(platform, navController, authenticationProvider);
     this.formGroup = new FormGroup({
@@ -85,7 +98,7 @@ export class RekeyReasonPage extends BasePageComponent {
       ipadIssueBroken: new FormControl(false),
       transferSelected: new FormControl(false),
       otherSelected: new FormControl(false),
-      otherReasonUpdated: new FormControl('', Validators.minLength(1)),
+      otherReasonUpdated: new FormControl('', [Validators.minLength(1), Validators.required]),
     });
   }
 
@@ -130,8 +143,9 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   onUploadPressed = (): void => {
-    // TODO - if form valid
-    this.onShowUploadRekeyModal();
+    if (this.formIsValid()) {
+      this.onShowUploadRekeyModal();
+    }
   }
 
   onShowUploadRekeyModal = (retryMode: boolean = false): void => {
@@ -175,6 +189,36 @@ export class RekeyReasonPage extends BasePageComponent {
       this.loadingSpinner.dismiss();
       this.loadingSpinner = null;
     }
+  }
+
+  formIsValid() {
+    const rekeyReasonProvided = this.formGroup.get('ipadIssue').value ||
+      (this.formGroup.get('otherSelected').value);
+
+    const reasonForRekeyIsValid = !this.formGroup.get('otherSelected').value ||
+      (this.formGroup.get('otherSelected').value
+        && this.formGroup.get('otherReasonUpdated').valid);
+
+    if (rekeyReasonProvided && reasonForRekeyIsValid) {
+      return true;
+    }
+
+    if (!rekeyReasonProvided) {
+      this.createToast('Provide at least one reason for rekey');
+    }
+    this.toast.present();
+  }
+
+  private createToast = (errorMessage: string) => {
+    this.toast = this.toastController.create({
+      message: errorMessage,
+      position: 'top',
+      dismissOnPageChange: true,
+      cssClass: 'mes-toast-message-error',
+      duration: 5000,
+      showCloseButton: true,
+      closeButtonText: 'X',
+    });
   }
 
   ipadIssueSelected(checked: boolean) {
@@ -246,7 +290,7 @@ export class RekeyReasonPage extends BasePageComponent {
 
   showExitRekeyModal(): void {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
-    this.modal = this.modalController.create('ExitRekeyModal', { }, options);
+    this.modal = this.modalController.create('ExitRekeyModal', {}, options);
     this.modal.onDidDismiss(this.onExitRekeyModalDismiss);
     this.modal.present();
   }

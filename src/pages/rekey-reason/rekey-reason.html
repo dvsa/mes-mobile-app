@@ -55,6 +55,11 @@
               <div class="character-count validation-text" [ngClass]="{'ng-invalid': charactersExceeded()}">
                 {{getCharacterCountText()}}
               </div>
+              <ion-row class="validation-message-row" align-items-center>
+                <div [class.ng-invalid]="true" *ngIf="!this.formGroup.get('otherReasonUpdated').valid" class="validation-text">
+                  Please fill in a reason for rekey
+                </div>
+              </ion-row>
             </div>
           </ion-col>
         </ion-row>
@@ -63,7 +68,6 @@
     </div>
   </ion-card>
 </ion-content>
-
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
     <button type="submit" class="mes-primary-button" ion-button (click)="onUploadPressed()">
