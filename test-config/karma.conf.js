@@ -65,7 +65,7 @@ module.exports = function(config) {
     singleRun: true,
 
     parallelOptions: {
-      executors: 4
+      executors: 2
     },
 
     customLaunchers: {
