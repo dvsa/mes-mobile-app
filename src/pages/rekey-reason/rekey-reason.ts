@@ -180,22 +180,28 @@ export class RekeyReasonPage extends BasePageComponent {
   ipadIssueSelected(checked: boolean) {
     this.store$.dispatch(new IpadIssueSelected(checked));
   }
+
   ipadIssueTechFaultChanged() {
     this.store$.dispatch(new IpadIssueTechFaultSelected());
   }
+
   ipadIssueLostChanged() {
     this.store$.dispatch(new IpadIssueLostSelected());
   }
+
   ipadIssueStolenChanged() {
     this.store$.dispatch(new IpadIssueStolenSelected());
   }
+
   ipadIssueBrokenChanged() {
     this.store$.dispatch(new IpadIssueBrokenSelected());
   }
+
   otherSelected(checked: boolean) {
     this.formGroup.controls['otherReasonUpdated'].setValue('');
     this.store$.dispatch(new OtherSelected(checked));
   }
+
   otherReasonUpdatedChanged() {
     this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
   }
@@ -207,11 +213,13 @@ export class RekeyReasonPage extends BasePageComponent {
   characterCountChanged(charactersRemaining: number) {
     this.reasonCharsRemaining = charactersRemaining;
   }
+
   getCharacterCountText() {
     const characterString = Math.abs(this.reasonCharsRemaining) === 1 ? 'character' : 'characters';
     const endString = this.reasonCharsRemaining < 0 ? 'too many' : 'remaining';
     return `You have ${Math.abs(this.reasonCharsRemaining)} ${characterString} ${endString}`;
   }
+
   charactersExceeded(): boolean {
     return this.reasonCharsRemaining < 0;
   }
@@ -220,7 +228,7 @@ export class RekeyReasonPage extends BasePageComponent {
     return !this.formGroup.controls['otherReasonUpdated'].valid;
   }
 
-  onExitRekey = (): void => {
+  exitRekey = (): void => {
     // TODO - modal confirmation
     const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
@@ -233,20 +241,20 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   onExitRekeyPressed(): void {
-    this.showExitRekeyModel();
+    this.showExitRekeyModal();
   }
 
-  showExitRekeyModel(): void {
+  showExitRekeyModal(): void {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create('ExitRekeyModal', { }, options);
     this.modal.onDidDismiss(this.onExitRekeyModalDismiss);
     this.modal.present();
   }
 
-  onExitRekeyModalDismiss(event: ExitRekeyModalEvent): void {
+  onExitRekeyModalDismiss = (event: ExitRekeyModalEvent): void => {
     switch (event) {
       case ExitRekeyModalEvent.EXIT_REKEY:
-        console.log('exit rekey should happen now');
+        this.exitRekey();
         break;
     }
   }

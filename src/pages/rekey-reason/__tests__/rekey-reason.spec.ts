@@ -134,7 +134,7 @@ describe('RekeyReasonPage', () => {
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
         expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
-        expect(component.onShowModal).not.toHaveBeenCalled();
+        expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
 
       });
       it('should navigate to next page and not display the retry modal when an upload succeeds', () => {
@@ -146,7 +146,7 @@ describe('RekeyReasonPage', () => {
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
         expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
-        expect(component.onShowModal).not.toHaveBeenCalled();
+        expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
       });
     });
   });
