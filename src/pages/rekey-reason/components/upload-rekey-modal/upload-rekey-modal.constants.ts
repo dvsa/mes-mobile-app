@@ -1,4 +1,4 @@
-export enum ModalEvent {
+export enum UploadRekeyModalEvent {
   CANCEL = 'cancel',
   UPLOAD = 'upload',
 }

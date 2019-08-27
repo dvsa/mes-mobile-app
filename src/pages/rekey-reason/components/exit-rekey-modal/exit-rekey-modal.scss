@@ -1,0 +1,43 @@
+exit-rekey-modal {
+  ion-card {
+    min-height: 365px;
+  }
+  .message-wrapper {
+    min-height: 308px;
+  }
+  @extend .modal-alert-wrapper;
+
+  .modal-alert {
+    width: 400px;
+  }
+
+  .modal-icon {
+    min-height: 152px;
+  }
+
+  .modal-message {
+    min-height: 156px;
+  }
+
+  .warning-icon {
+    margin: 40px 0px 16px;
+    font-size: 96px;
+  }
+
+  .modal-alert-header {
+    margin: 0 0 36px;
+  }
+
+  .cancel-button {
+    color: map-get($colors-gds, gds-black);
+  }
+
+  .exit-rekey-button {
+    color: map-get($colors-gds, gds-red);
+  }
+
+  .modal-alert-message {
+    margin-bottom: 24px;
+  }
+
+}

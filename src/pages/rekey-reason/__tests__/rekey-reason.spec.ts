@@ -87,14 +87,14 @@ describe('RekeyReasonPage', () => {
       });
     });
 
-    describe('onShowModal', () => {
+    describe('onShowUploadRekeyModal', () => {
       const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
       it('should display an upload modal', () => {
-        component.onShowModal();
+        component.onShowUploadRekeyModal();
         expect(modalController.create).toHaveBeenCalledWith('UploadRekeyModal', { retryMode: false }, options);
       });
       it('should display an upload modal in retry mode', () => {
-        component.onShowModal(true);
+        component.onShowUploadRekeyModal(true);
         expect(modalController.create).toHaveBeenCalledWith('UploadRekeyModal', { retryMode: true }, options);
       });
     });
@@ -102,7 +102,7 @@ describe('RekeyReasonPage', () => {
     describe('handleUploadOutcome', () => {
       beforeEach(() => {
         spyOn(component, 'handleLoadingUI');
-        spyOn(component, 'onShowModal');
+        spyOn(component, 'onShowUploadRekeyModal');
       });
 
       it('should display the loading spiner when an upload is in progress', () => {
@@ -122,7 +122,7 @@ describe('RekeyReasonPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(component.onShowModal).toHaveBeenCalledWith(true);
+        expect(component.onShowUploadRekeyModal).toHaveBeenCalledWith(true);
 
       });
       it('should navigate to the next page and not display the retry modal when an upload is a duplicate', () => {
@@ -134,7 +134,7 @@ describe('RekeyReasonPage', () => {
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
         expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
-        expect(component.onShowModal).not.toHaveBeenCalled();
+        expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
 
       });
       it('should navigate to next page and not display the retry modal when an upload succeeds', () => {
@@ -146,7 +146,7 @@ describe('RekeyReasonPage', () => {
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
         expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
-        expect(component.onShowModal).not.toHaveBeenCalled();
+        expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
       });
     });
   });

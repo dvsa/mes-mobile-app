@@ -5,7 +5,7 @@ import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
-import { ModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
+import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
   IpadIssueSelected,
@@ -35,6 +35,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
+import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
@@ -130,19 +131,19 @@ export class RekeyReasonPage extends BasePageComponent {
 
   onUploadPressed = (): void => {
     // TODO - if form valid
-    this.onShowModal();
+    this.onShowUploadRekeyModal();
   }
 
-  onShowModal = (retryMode: boolean = false): void => {
+  onShowUploadRekeyModal = (retryMode: boolean = false): void => {
     const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
     this.modal = this.modalController.create('UploadRekeyModal', { retryMode }, options);
-    this.modal.onDidDismiss(this.onModalDismiss);
+    this.modal.onDidDismiss(this.onUploadRekeyModalDismiss);
     this.modal.present();
   }
 
-  onModalDismiss = (event: ModalEvent): void => {
+  onUploadRekeyModalDismiss = (event: UploadRekeyModalEvent): void => {
     switch (event) {
-      case ModalEvent.UPLOAD:
+      case UploadRekeyModalEvent.UPLOAD:
         this.store$.dispatch(new SendCurrentTest());
         break;
     }
@@ -157,7 +158,7 @@ export class RekeyReasonPage extends BasePageComponent {
       return;
     }
     if (uploadStatus.hasUploadFailed) {
-      this.onShowModal(true);
+      this.onShowUploadRekeyModal(true);
     }
   }
 
@@ -179,22 +180,28 @@ export class RekeyReasonPage extends BasePageComponent {
   ipadIssueSelected(checked: boolean) {
     this.store$.dispatch(new IpadIssueSelected(checked));
   }
+
   ipadIssueTechFaultChanged() {
     this.store$.dispatch(new IpadIssueTechFaultSelected());
   }
+
   ipadIssueLostChanged() {
     this.store$.dispatch(new IpadIssueLostSelected());
   }
+
   ipadIssueStolenChanged() {
     this.store$.dispatch(new IpadIssueStolenSelected());
   }
+
   ipadIssueBrokenChanged() {
     this.store$.dispatch(new IpadIssueBrokenSelected());
   }
+
   otherSelected(checked: boolean) {
     this.formGroup.controls['otherReasonUpdated'].setValue('');
     this.store$.dispatch(new OtherSelected(checked));
   }
+
   otherReasonUpdatedChanged() {
     this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
   }
@@ -206,11 +213,13 @@ export class RekeyReasonPage extends BasePageComponent {
   characterCountChanged(charactersRemaining: number) {
     this.reasonCharsRemaining = charactersRemaining;
   }
+
   getCharacterCountText() {
     const characterString = Math.abs(this.reasonCharsRemaining) === 1 ? 'character' : 'characters';
     const endString = this.reasonCharsRemaining < 0 ? 'too many' : 'remaining';
     return `You have ${Math.abs(this.reasonCharsRemaining)} ${characterString} ${endString}`;
   }
+
   charactersExceeded(): boolean {
     return this.reasonCharsRemaining < 0;
   }
@@ -219,7 +228,7 @@ export class RekeyReasonPage extends BasePageComponent {
     return !this.formGroup.controls['otherReasonUpdated'].valid;
   }
 
-  onExitRekey = (): void => {
+  exitRekey = (): void => {
     // TODO - modal confirmation
     const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
@@ -229,6 +238,25 @@ export class RekeyReasonPage extends BasePageComponent {
       this.navController.popTo(journalPage);
     }
     this.store$.dispatch(new EndRekey());
+  }
+
+  onExitRekeyPressed(): void {
+    this.showExitRekeyModal();
+  }
+
+  showExitRekeyModal(): void {
+    const options = { cssClass: 'mes-modal-alert text-zoom-regular' };
+    this.modal = this.modalController.create('ExitRekeyModal', { }, options);
+    this.modal.onDidDismiss(this.onExitRekeyModalDismiss);
+    this.modal.present();
+  }
+
+  onExitRekeyModalDismiss = (event: ExitRekeyModalEvent): void => {
+    switch (event) {
+      case ExitRekeyModalEvent.EXIT_REKEY:
+        this.exitRekey();
+        break;
+    }
   }
 
 }
