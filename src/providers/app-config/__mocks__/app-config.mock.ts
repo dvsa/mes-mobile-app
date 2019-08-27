@@ -40,12 +40,10 @@ export class AppConfigProviderMock {
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
         allowTests: localEnvironmentMock.journal.allowTests,
         allowedTestCategories: localEnvironmentMock.journal.allowedTestCategories,
+        enableTestReportPracticeMode: localEnvironmentMock.journal.enableTestReportPracticeMode,
+        enableEndToEndPracticeMode: localEnvironmentMock.journal.enableEndToEndPracticeMode,
         enableLogoutButton: localEnvironmentMock.journal.enableLogoutButton,
         testPermissionPeriods: localEnvironmentMock.journal.testPermissionPeriods,
-      },
-      dashboard: {
-        enableTestReportPracticeMode: localEnvironmentMock.dashboard.enableTestReportPracticeMode,
-        enableEndToEndPracticeMode: localEnvironmentMock.dashboard.enableEndToEndPracticeMode,
       },
       tests: {
         testSubmissionUrl: localEnvironmentMock.tests.testSubmissionUrl,
