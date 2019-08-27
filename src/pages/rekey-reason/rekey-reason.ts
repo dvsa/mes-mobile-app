@@ -206,10 +206,6 @@ export class RekeyReasonPage extends BasePageComponent {
     if (!rekeyReasonProvided) {
       this.createToast('Provide at least one reason for rekey');
     }
-
-    if (!reasonForRekeyIsValid) {
-      this.createToast('You must specify the reason for rekey');
-    }
     this.toast.present();
   }
 
