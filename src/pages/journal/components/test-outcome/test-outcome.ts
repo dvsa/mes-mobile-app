@@ -13,8 +13,9 @@ import {
   OFFICE_PAGE,
   PASS_FINALISATION_PAGE,
   JOURNAL_FORCE_CHECK_MODAL,
-} from '../../../page-names.constants';
-import { ModalEvent } from '../../journal-rekey-modal/journal-rekey-modal.constants';
+  NON_PASS_FINALISATION_PAGE,
+} from '../../../../pages/page-names.constants';
+import { ModalEvent } from '../../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
@@ -22,6 +23,7 @@ import { getCheckComplete } from '../../journal.selector';
 import { getJournalState } from '../../journal.reducer';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
 
 @Component({
   selector: 'test-outcome',
@@ -103,7 +105,11 @@ export class TestOutcomeComponent implements OnInit {
 
   debriefTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
-    this.navController.push(PASS_FINALISATION_PAGE);
+    if (this.activityCode === ActivityCodes.PASS) {
+      this.navController.push(PASS_FINALISATION_PAGE);
+    } else {
+      this.navController.push(NON_PASS_FINALISATION_PAGE);
+    }
   }
 
   resumeTest() {
