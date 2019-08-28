@@ -4,7 +4,7 @@ Feature: Journal
     Given I am on the journal page as "mobexaminer1"
      When I view candidate details for "Mrs Jane Doe"
      Then I should see the "Test details - Mrs Jane Doe" page
-      And I should see the "Driver number" contains "DOEXX625220A99HC"
+      And I should see the "Driver number" contains "DOEXX625364A99HC"
       And I should see the "Slot type" contains "Standard Test"
       And I should see the "Additional information" contains "Previous cancellations"
       And I should see the "Additional information" contains "- DSA"
