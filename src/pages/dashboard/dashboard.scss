@@ -4,10 +4,30 @@ page-dashboard {
     margin: 12px 12px 0px;
   }
 
+  .card-ios {
+    border-radius: 5px;
+  }
+
+  .go-to-journal-card {
+    @media (orientation: landscape) {
+      margin-right: 9px;
+      width: calc(100% - 21px);
+    }
+  }
+  .search-card {
+    @media (orientation: landscape) {
+      margin-left: 9px;
+      width: calc(100% - 21px);
+    }
+    @media (orientation: portrait) {
+      margin-top: 0px;
+    }
+  }
+
   .content-ios hr {
     background-color: #979797;
     height: 2px;
-    margin: 0px 12px 0px;
+    margin: 0px 14px 0px;
   }
   .version-number {
     color: map-get($colors, mes-secondary-header);
