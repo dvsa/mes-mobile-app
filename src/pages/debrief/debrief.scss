@@ -17,7 +17,7 @@ page-debrief > * {
     }
   }
   .passed {
-    border: 8px solid map-get($colors-gds, "gds-turquoise");
+    border: 8px solid map-get($colors-gds, "gds-dark-green-3");
   }
   .failed {
     border: 8px solid map-get($colors-gds, "gds-red");

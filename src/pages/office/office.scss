@@ -59,8 +59,16 @@ page-office {
           padding-right: 48px;
         }
       }
-      .unsuccessful {
-        color: map-get($colors, "mes-red");
+      #test-outcome-text {
+        .pass {
+          color: map-get($colors-gds, 'gds-dark-green-3');
+        }
+        .fail {
+          color: map-get($colors-gds, 'gds-red');
+        }
+        .terminated {
+          color: map-get($colors-gds, "gds-grey-1");
+        }
       }
       .inline-mode {
         display: inline;
