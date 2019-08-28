@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <ion-title>Search test bookings</ion-title>
@@ -6,7 +5,7 @@
 </ion-header>
 
 <ion-content no-bounce padding>
-  
+
   <div class="search-inputs">
     <tabs (activeTabSelected)="activeSearchTabSelected($event)">
       <tab [tabTitle]="'Rekey backlog'" id="tab-search-rekey">
@@ -17,18 +16,10 @@
             </ion-col>
             <ion-col col-32>
               <ion-item no-padding no-lines>
-                <ion-input
-                  placeholder="Application reference"
-                  type="number"
-                  id="application-reference"
-                  class="application-reference"
-                  clearInput
-                  numbersOnly
-                  [class.ng-invalid]="invalid"
-                  [value]="applicationReference"
-                  (change)="applicationReferenceChanged($event.target.value)">
+                <ion-input placeholder="Application reference" type="number" id="application-reference" class="application-reference"
+                  clearInput numbersOnly [class.ng-invalid]="invalid" [value]="applicationReference" (change)="applicationReferenceChanged($event.target.value)">
                 </ion-input>
-              </ion-item> 
+              </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -37,22 +28,15 @@
             </ion-col>
             <ion-col col-32>
               <ion-item no-padding no-lines>
-                <ion-input
-                  placeholder="Staff number"
-                  type="number"
-                  id="staff-number"
-                  class="staff-number"
-                  clearInput
-                  numbersOnly
-                  [class.ng-invalid]="invalid"
-                  [value]="staffNumber"
-                  (change)="staffNumberChanged($event.target.value)">
+                <ion-input placeholder="Staff number" type="number" id="staff-number" class="staff-number" clearInput
+                  numbersOnly [class.ng-invalid]="invalid" [value]="staffNumber" (change)="staffNumberChanged($event.target.value)">
                 </ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row padding-top>
-            <button [attr.disabled]="showSearchSpinner ? 'true' : null" class="mes-primary-button search-tests" ion-button (click)="searchTests()">
+            <button [disabled]="(pageState.isLoading$ | async)" class="mes-primary-button search-tests" ion-button
+              (click)="searchTests()">
               <h3>
                 <ion-icon name="search" class="search-icon"></ion-icon>
                 Search booked tests
