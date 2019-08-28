@@ -5,7 +5,7 @@ Feature: Comms Capture and Waiting Room
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
       Then the communication page candidate name should be "Mrs Jane Doe"
-      And the communication page candidate driver number should be "DOEXX 625220 A99HC"
+      And the communication page candidate driver number should be "DOEXX 625364 A99HC"
       And the email "jane.doe@example.com" has been provided and is preselected
 
    Scenario: Waiting room screen populated for candidate
@@ -15,7 +15,7 @@ Feature: Comms Capture and Waiting Room
       And the candidate enters a new email address
       And the candidate confirms their communication preference
       Then the waiting room candidate name should be "Miss Theresa Shaw"
-      And the waiting room candidate driver number should be "SHAWX 885220 A99HC"
+      And the waiting room candidate driver number should be "SHAWX 744220 A99HC"
 
    @smoke
    Scenario: Communications and Waiting room validation
