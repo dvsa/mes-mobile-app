@@ -1,4 +1,14 @@
 go-to-journal-card {
+  button[clear] {
+    width: 100%;
+    padding: 0px;
+    background-color: initial;
+    &.activated {
+      .go-to-journal-card #card-content-wrapper {
+        background: darken(map-get($colors, 'mes-white'), 10);
+      }
+    }
+  }
   .go-to-journal-card {
 
     h1, h4 {

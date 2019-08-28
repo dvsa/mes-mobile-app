@@ -1,4 +1,14 @@
 test-results-search-card {
+  button[clear] {
+    width: 100%;
+    padding: 0px;
+    background-color: initial;
+    &.activated {
+      .search-card #card-content-wrapper {
+        background: darken(map-get($colors-gds, gds-dark-green), 5);
+      }
+    }
+  }
   .search-card {
     h1, h4 {
       color: map-get($colors, mes-white);
@@ -19,10 +29,7 @@ test-results-search-card {
       margin-top: 30px;
 
       &.activated {
-        h3 {
-          color: map-get($colors, mes-white);
-        }
-        background:  map-get($colors-gds, gds-grey-1);
+        background:  darken(map-get($colors, mes-white), 10);
       }
 
       h3 {
