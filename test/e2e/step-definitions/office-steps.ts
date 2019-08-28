@@ -67,7 +67,7 @@ Then('the tell me question should be {string}', (tellMeQuestion : string) => {
 });
 
 Then('the office page test outcome is {string}', (testOutcome : string) => {
-  const testOutcomeField = getElement(by.id('office-page-test-outcome'));
+  const testOutcomeField = getElement(by.xpath('//div[@id="test-outcome-text"]/span'));
   return expect(testOutcomeField.getText()).to.eventually.equal(testOutcome);
 });
 
