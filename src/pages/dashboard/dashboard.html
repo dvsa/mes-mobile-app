@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="logout()" *ngIf="authenticationProvider.logoutEnabled()">
+      <button ion-button (click)="logout()" *ngIf="isLogoutEnabled()">
         <span>Logout</span>
         <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       </button>
-      <h6 *ngIf="!authenticationProvider.logoutEnabled()" class="version-number">Version {{pageState.appVersion$
+      <h6 *ngIf="!isLogoutEnabled()" class="version-number">Version {{pageState.appVersion$
         | async}}</h6>
       <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
     </ion-buttons>
@@ -15,7 +15,7 @@
 <ion-content no-bounce>
   <profile-header [employeeId]="employeeId" [name]="name" [role]="role"></profile-header>
   <hr/>
-  <h4 class="date">{{pageState.todaysDate$}}</h4>
+  <h4 class="date">{{todaysDate}}</h4>
   <ion-grid no-padding>
     <ion-row>
       <ion-col no-padding col-96 col-lg-32>

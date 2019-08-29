@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
@@ -13,7 +13,6 @@ import { map } from 'rxjs/operators';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
-import { DateTime } from '../../shared/helpers/date-time';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -21,7 +20,6 @@ import { ExaminerRoleDescription } from '../../providers/app-config/constants/ex
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
-  todaysDate$: Date | DateTime | string;
 }
 
 @IonicPage()
@@ -31,21 +29,15 @@ interface DashboardPageState {
 })
 export class DashboardPage extends PracticeableBasePageComponent {
 
-  static readonly welshLanguage: string = 'Cymraeg';
-
   @ViewChild(Navbar) navBar: Navbar;
 
   pageState: DashboardPageState;
-  licenseProvided: boolean;
-  healthDeclarationAccepted: boolean;
   subscription: Subscription;
-  inputSubscriptions: Subscription[] = [];
-  isBookedInWelsh: boolean;
-  conductedLanguage: string;
   merged$: Observable<boolean | string>;
   employeeId: string;
   name: string;
   role: string;
+  todaysDate: string;
 
   constructor(
     store$: Store<StoreModel>,
@@ -54,7 +46,6 @@ export class DashboardPage extends PracticeableBasePageComponent {
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
-    public alertController: AlertController,
     public appConfigProvider: AppConfigProvider,
     private dateTimeProvider: DateTimeProvider,
     private deviceProvider: DeviceProvider,
@@ -65,6 +56,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
     this.name = this.authenticationProvider.getEmployeeName() || 'Unknown Name';
     this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
+    this.todaysDate = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
   }
 
   ionViewDidEnter(): void {
@@ -95,7 +87,6 @@ export class DashboardPage extends PracticeableBasePageComponent {
         select(getAppInfoState),
         map(getVersionNumber),
       ),
-      todaysDate$: this.dateTimeProvider.now().format('dddd Do MMMM YYYY'),
     };
   }
 
@@ -112,10 +103,6 @@ export class DashboardPage extends PracticeableBasePageComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-
-    if (this.inputSubscriptions) {
-      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
-    }
   }
 
   showTestReportPracticeMode = (): boolean =>
@@ -123,4 +110,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
 
   showEndToEndPracticeMode = (): boolean =>
     this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
+
+  isLogoutEnabled = (): boolean =>
+    this.authenticationProvider.logoutEnabled()
 }

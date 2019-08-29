@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { GoToJournalCardComponent } from './go-to-journal-card/go-to-journal-card';
 import { PracticeTestModalModule } from './practice-test-modal/practice-test-modal.module';
-import { PracticeTestComponentsModule } from './practice-test-components.module';
 import { TestResultsSearchCardComponent } from './test-results-search-card/test-results-search-card';
 import { RekeySearchCardComponent } from './rekey-search-card/rekey-search-card';
 import { ProfileHeaderComponent } from './profile-header/profile-header';
+import { PracticeTestReportCardComponent } from './practice-test-report-card/practice-test-report-card';
+import { PracticeEndToEndCardComponent } from './practice-end-to-end-card/practice-end-to-end-card';
 
 @NgModule({
   declarations: [
@@ -14,19 +15,21 @@ import { ProfileHeaderComponent } from './profile-header/profile-header';
     RekeySearchCardComponent,
     GoToJournalCardComponent,
     ProfileHeaderComponent,
+    PracticeTestReportCardComponent,
+    PracticeEndToEndCardComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
     PracticeTestModalModule,
-    PracticeTestComponentsModule,
   ],
   exports: [
-    PracticeTestComponentsModule,
     TestResultsSearchCardComponent,
     RekeySearchCardComponent,
     GoToJournalCardComponent,
     ProfileHeaderComponent,
+    PracticeTestReportCardComponent,
+    PracticeEndToEndCardComponent,
   ],
 })
 export class DashboardComponentsModule { }
