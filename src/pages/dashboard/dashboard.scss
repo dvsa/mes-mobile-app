@@ -1,6 +1,6 @@
 page-dashboard {
 
-  h2 { 
+  h4 { 
     margin: 24px 12px 0px;
   }
 
@@ -42,7 +42,7 @@ page-dashboard {
   }
 
   .content-ios hr {
-    background-color: #979797;
+    background-color: map-get($colors-gds, 'gds-grey-2');
     height: 2px;
     margin: 0px 14px 0px;
   }
