@@ -14,6 +14,9 @@ import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { DateTime } from '../../shared/helpers/date-time';
+import { DeviceProvider } from '../../providers/device/device';
+import { Insomnia } from '@ionic-native/insomnia';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -40,8 +43,6 @@ export class DashboardPage extends PracticeableBasePageComponent {
   conductedLanguage: string;
   merged$: Observable<boolean | string>;
 
-  public myDashboard: string;
-
   constructor(
     store$: Store<StoreModel>,
     public navController: NavController,
@@ -52,6 +53,9 @@ export class DashboardPage extends PracticeableBasePageComponent {
     public alertController: AlertController,
     public appConfigProvider: AppConfigProvider,
     private dateTimeProvider: DateTimeProvider,
+    private deviceProvider: DeviceProvider,
+    public screenOrientation: ScreenOrientation,
+    public insomnia: Insomnia,
   ) {
     super(platform, navController, authenticationProvider, store$);
   }
@@ -61,6 +65,11 @@ export class DashboardPage extends PracticeableBasePageComponent {
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.clickBack();
     };
+    if (super.isIos()) {
+      this.screenOrientation.unlock();
+      this.insomnia.allowSleepAgain();
+      this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   clickBack(): void {
@@ -74,8 +83,6 @@ export class DashboardPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit(): void {
-    this.myDashboard = 'Marlon';
-
     this.pageState = {
       appVersion$: this.store$.pipe(
         select(getAppInfoState),
