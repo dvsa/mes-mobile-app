@@ -4,6 +4,6 @@ export enum ExaminerRole {
 }
 
 export enum ExaminerRoleDescription {
-  LDTM = 'Local Driving Test Managers',
+  LDTM = 'Local Driving Test Manager',
   DE = 'Driving Examiner',
 }

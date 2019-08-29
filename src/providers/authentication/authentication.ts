@@ -16,6 +16,8 @@ export class AuthenticationProvider {
   private employeeId: string;
   private isUserAuthenticated: boolean;
   private inUnAuthenticatedMode: boolean;
+  private employeeNameKey: string;
+  private employeeName: string;
   public jwtDecode: any;
 
   constructor(
@@ -30,6 +32,8 @@ export class AuthenticationProvider {
   public initialiseAuthentication = (): void => {
     this.authenticationSettings = this.appConfig.getAppConfig().authentication;
     this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
+    // TODO - get the name key correctly (will also vary between dev and production)
+    this.employeeNameKey = 'name';
     this.jwtDecode = jwtDecode;
     this.isUserAuthenticated = false;
     this.inUnAuthenticatedMode = false;
@@ -59,6 +63,10 @@ export class AuthenticationProvider {
 
   public getEmployeeId = (): string => {
     return this.employeeId;
+  }
+
+  public getEmployeeName = (): string => {
+    return this.employeeName;
   }
 
   public login = () => {
@@ -147,6 +155,7 @@ export class AuthenticationProvider {
     const employeeIdClaim = Array.isArray(employeeId) ? employeeId[0] : employeeId;
     const numericEmployeeId = Number.parseInt(employeeIdClaim, 10);
     this.employeeId = numericEmployeeId.toString();
+    this.employeeName = decodedToken[this.employeeNameKey];
 
     this.isUserAuthenticated = true;
   }

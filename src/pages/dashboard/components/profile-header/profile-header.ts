@@ -8,6 +8,12 @@ import { Component, Input } from '@angular/core';
 export class ProfileHeaderComponent {
 
   @Input()
+  name: string;
+
+  @Input()
+  role: string;
+
+  @Input()
   employeeId: string;
 
 }

@@ -44,6 +44,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
   conductedLanguage: string;
   merged$: Observable<boolean | string>;
   employeeId: string;
+  name: string;
   role: string;
 
   constructor(
@@ -62,6 +63,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
+    this.name = this.authenticationProvider.getEmployeeName() || 'Unknown Name';
     this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
   }
 

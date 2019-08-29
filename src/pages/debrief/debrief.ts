@@ -49,7 +49,7 @@ import {
   TEST_REPORT_PAGE,
   DEBRIEF_PAGE,
   POST_DEBRIEF_HOLDING_PAGE,
-  JOURNAL_PAGE,
+  DASHBOARD_PAGE,
 } from '../page-names.constants';
 
 interface DebriefPageState {
@@ -238,8 +238,8 @@ export class DebriefPage extends PracticeableBasePageComponent {
 
   endDebrief(): void {
     if (this.isTestReportPracticeMode) {
-      const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
-      this.navController.popTo(journalPage, { animate: false });
+      const dashboardPage = this.navController.getViews().find(view => view.id === DASHBOARD_PAGE);
+      this.navController.popTo(dashboardPage, { animate: false });
       return;
     }
     this.store$.dispatch(new EndDebrief());
