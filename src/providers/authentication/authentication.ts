@@ -32,7 +32,7 @@ export class AuthenticationProvider {
   public initialiseAuthentication = (): void => {
     this.authenticationSettings = this.appConfig.getAppConfig().authentication;
     this.employeeIdKey = this.appConfig.getAppConfig().authentication.employeeIdKey;
-    // TODO - get the name key correctly (will also vary between dev and production)
+    // TODO MES-2788 - get the name key correctly (will also vary between dev and production)
     this.employeeNameKey = 'name';
     this.jwtDecode = jwtDecode;
     this.isUserAuthenticated = false;
