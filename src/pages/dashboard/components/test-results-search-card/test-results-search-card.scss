@@ -35,6 +35,10 @@ test-results-search-card {
 
       h3 {
         color: map-get($colors-gds, gds-dark-green);
+        .text-zoom-x-large & {
+          line-height: 1.5em;
+          white-space: normal;
+        }
       }
     }
 
