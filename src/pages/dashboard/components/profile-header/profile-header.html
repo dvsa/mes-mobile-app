@@ -1,16 +1,20 @@
 <div class="profile-header">
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row>
-      <ion-col col-12="col-12">
-        <ion-icon name="contact" id="contact-icon"></ion-icon>
+      <ion-col col-9 col-lg-7 align-self-center>
+        <ion-icon ios="md-contact" id="contact-icon"></ion-icon>
       </ion-col>
-      <ion-col>
+      <ion-col align-self-center>
         <ion-row>
-          <h2 class="role">Driving Examiner</h2>
+          <h2 class="name">Graham O'Brien</h2>
         </ion-row>
         <ion-row>
-          Staff number:
-          <strong>{{getEmployeeId}}</strong>
+          <ion-col no-padding class="role">
+            <span>Driving Examiner</span>
+          </ion-col>
+          <ion-col no-padding class="staff-number">
+            <span>Staff number: </span><span class="employee-id">{{employeeId}}</span>
+          </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>

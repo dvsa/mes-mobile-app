@@ -17,6 +17,7 @@ import { DateTime } from '../../shared/helpers/date-time';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -42,6 +43,8 @@ export class DashboardPage extends PracticeableBasePageComponent {
   isBookedInWelsh: boolean;
   conductedLanguage: string;
   merged$: Observable<boolean | string>;
+  employeeId: string;
+  role: string;
 
   constructor(
     store$: Store<StoreModel>,
@@ -58,6 +61,8 @@ export class DashboardPage extends PracticeableBasePageComponent {
     public insomnia: Insomnia,
   ) {
     super(platform, navController, authenticationProvider, store$);
+    this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
+    this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
   }
 
   ionViewDidEnter(): void {

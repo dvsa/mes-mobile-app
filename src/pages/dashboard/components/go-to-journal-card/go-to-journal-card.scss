@@ -28,6 +28,7 @@ go-to-journal-card {
     .mes-primary-button {
       min-width: 320px;
       margin-top: 30px;
+      box-shadow: 0 2px 0 0 darken(map-get($colors-gds, gds-dark-green), 10);
 
       h3 {
         color: map-get($colors, mes-white);

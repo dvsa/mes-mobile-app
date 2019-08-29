@@ -11,9 +11,17 @@ profile-header {
       margin: 0px;
     }
 
-    .row {
-        display: flex;
-        align-items: center;
+    .role {
+      margin-top: -4px;
+    }
+
+    .staff-number {
+      margin-top: -4px;
+      margin-right: 2px;
+      text-align: right;
+      .employee-id {
+        font-weight: bold;
+      }
     }
 
     #card-content-wrapper {
@@ -24,9 +32,8 @@ profile-header {
     }
 
     #contact-icon {
-      clear: both;
-      font-size: 96px;
-      font-weight: 900;
+      margin-left: 2px;
+      font-size: 72px;
     }
   }
 }

@@ -1,25 +1,56 @@
 rekey-search-card {
-  .search-card {
+  button[clear] {
+    width: 100%;
+    padding: 0px;
+    background-color: initial;
+    &.activated {
+      .rekey-search-card #card-content-wrapper {
+        background: darken(map-get($colors-gds, gds-blue), 10);
+      }
+    }
+  }
+  .rekey-search-card {
     h1, h4 {
       color: map-get($colors, mes-white);
     }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-row {
+      height: 92px;
+    }
+
     .mes-neutral-button {
-      h3 {
-        color: map-get($colors-gds, gds-blue);
-      }
+      min-width: 320px;
+      margin-top: 30px;
+      box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.25);
+      
       &.activated {
-        background:  map-get($colors-gds, gds-grey-4);
+        background:  darken(map-get($colors, mes-white), 10);
+      }
+
+      h3 {
+        color: map-get($colors-gds, gds-blue);;
       }
     }
+
     #card-content-wrapper {
-      padding: 8px 12px;
-      background: map-get($colors-gds, gds-blue);
-    }
-    #search-icon {
-      color: map-get($colors, mes-white);
-      margin: 10px 12px 0px 2px;
-      font-size: 42px;
-      font-weight: 900;
+      display: flex;
+      align-items: center;
+      height: 240px;
+      padding: 24px;
+      background: map-get($colors-gds, gds-blue);;
+      width: 100%;
     }
   }
+}
+
+ion-card img.icon-search-rekey-tests {
+  margin-top: 10px;
+  width: 72px;
+  height: 72px
 }

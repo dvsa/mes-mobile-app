@@ -13,14 +13,19 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-bounce>
-  <h2>{{pageState.todaysDate$}}</h2>
+  <profile-header [employeeId]="employeeId"></profile-header>
+  <hr/>
+  <h2 class="date">{{pageState.todaysDate$}}</h2>
   <ion-grid no-padding>
     <ion-row>
-      <ion-col no-padding col-96 col-lg-48>
+      <ion-col no-padding col-96 col-lg-32>
         <go-to-journal-card></go-to-journal-card>
       </ion-col>
-      <ion-col no-padding col-96 col-lg-48>
+      <ion-col no-padding col-48 col-lg-32>
         <test-results-search-card></test-results-search-card>
+      </ion-col>
+      <ion-col no-padding col-48 col-lg-32>
+        <rekey-search-card></rekey-search-card>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'profile-header',
@@ -8,11 +7,7 @@ import { AuthenticationProvider } from '../../../../providers/authentication/aut
 
 export class ProfileHeaderComponent {
 
+  @Input()
   employeeId: string;
 
-  constructor(
-    public authenticationPovider: AuthenticationProvider,
-  ) {
-    this.employeeId = this.authenticationPovider.getEmployeeId();
-  }
 }

@@ -1,17 +1,16 @@
-<ion-card class="search-card">
-  <div id="card-content-wrapper">
-    <ion-grid>
-      <ion-row>
-        <ion-icon name="search" id="search-icon"></ion-icon>
-        <ion-col align-self-center>
-          <h4 id="search-text">Search for test bookings to rekey</h4>
-        </ion-col>
-        <ion-col col-36 align-self-center>
-          <button class="mes-neutral-button" ion-button float-right (click)="navigateToRekeySearch()">
-            <h3>Search bookings</h3>
+<button clear (click)="navigateToRekeySearch()">
+  <ion-card class="rekey-search-card">
+    <div id="card-content-wrapper">
+      <ion-grid>
+        <ion-row class="icon-row">
+          <img src="assets/imgs/dashboard/search-rekey.png" alt="Search test bookings to rekey" class="icon-search-rekey-tests"/>
+        </ion-row>
+        <ion-row>
+          <button class="mes-neutral-button" ion-button >
+            <h3>Search test bookings to rekey</h3>
           </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-</ion-card>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
+</button>

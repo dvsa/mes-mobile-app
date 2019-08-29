@@ -1,7 +1,7 @@
 page-dashboard {
 
   h2 { 
-    margin: 12px 12px 0px;
+    margin: 24px 12px 0px;
   }
 
   .card-ios {
@@ -10,17 +10,31 @@ page-dashboard {
 
   .go-to-journal-card {
     @media (orientation: landscape) {
-      margin-right: 9px;
-      width: calc(100% - 21px);
+      margin-right: 6px;
+      width: calc(100% - 18px);
     }
   }
   .search-card {
     @media (orientation: landscape) {
-      margin-left: 9px;
-      width: calc(100% - 21px);
+      margin-left: 8px;
+      margin-right: 8px;
+      width: calc(100% - 16px);
     }
     @media (orientation: portrait) {
       margin-top: 0px;
+      margin-right: 8px;
+      width: calc(100% - 20px);
+    }
+  }
+  .rekey-search-card {
+    @media (orientation: landscape) {
+      margin-left: 6px;
+      width: calc(100% - 18px);
+    }
+    @media (orientation: portrait) {
+      margin-top: 0px;
+      margin-left: 8px;
+      width: calc(100% - 20px);
     }
   }
   .practice-mode-card {
