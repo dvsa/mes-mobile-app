@@ -22,7 +22,7 @@ import {
   getPostalAddress,
 } from '../../modules/tests/candidate/candidate.selector';
 import {
-  CommunicationViewDidEnter, CommunicationValidationError,
+  CommunicationViewDidEnter, CommunicationValidationError, CommunicationSubmitInfo, CommunicationSubmitInfoError,
 } from './communication.actions';
 import { map, take } from 'rxjs/operators';
 import {
@@ -43,7 +43,7 @@ import {
 import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { TranslateService } from 'ng2-translate';
-import { WAITING_ROOM_PAGE } from '../page-names.constants';
+import { WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE, COMMUNICATION_PAGE } from '../page-names.constants';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -120,13 +120,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   }
 
   clickBack(): void {
-    this.deviceAuthenticationProvider.triggerLockScreen()
-      .then(() => {
-        this.navController.pop();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.navController.pop();
   }
 
   ngOnInit(): void {
@@ -238,7 +232,24 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(WAITING_ROOM_PAGE);
+      this.deviceAuthenticationProvider.triggerLockScreen()
+        .then(() => {
+          this.store$.dispatch(new CommunicationSubmitInfo());
+          this.navController.push(WAITING_ROOM_TO_CAR_PAGE)
+            .then(() => {
+              const waitingRoomPage = this.navController.getViews().find(view => view.id === WAITING_ROOM_PAGE);
+              if (waitingRoomPage) {
+                this.navController.removeView(waitingRoomPage);
+              }
+              const communicationPage = this.navController.getViews().find(view => view.id === COMMUNICATION_PAGE);
+              if (communicationPage) {
+                this.navController.removeView(communicationPage);
+              }
+            });
+        })
+        .catch((err) => {
+          this.store$.dispatch(new CommunicationSubmitInfoError(err));
+        });
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {

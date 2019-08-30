@@ -1,4 +1,4 @@
-import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CommunicationPage } from '../communication';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -35,6 +35,7 @@ import { TranslateService, TranslateModule } from 'ng2-translate';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../components/privacy-notice/privacy-notice';
+import { CommunicationSubmitInfo } from '../communication.actions';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -179,7 +180,14 @@ describe('CommunicationPage', () => {
 
     });
 
-    describe('Communication validation', () => {
+    describe('Submit', () => {
+      it('should dispatch the SubmitCommunicationInfo action', fakeAsync(() => {
+        const form = component.form;
+        form.get('radioCtrl').setValue(true);
+        component.onSubmit();
+        tick();
+        expect(store$.dispatch).toHaveBeenCalledWith(new CommunicationSubmitInfo());
+      }));
       it('form should only be valid whenever all form controls are initialised', () => {
         const form = component.form;
         form.get('radioCtrl').setValue(true);
@@ -292,9 +300,9 @@ describe('CommunicationPage', () => {
 
     });
     describe('clickBack', () => {
-      it('should should trigger the lock screen', () => {
+      it('should not should trigger the lock screen', () => {
         component.clickBack();
-        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
+        expect(deviceAuthenticationProvider.triggerLockScreen).not.toHaveBeenCalled();
       });
     });
 
