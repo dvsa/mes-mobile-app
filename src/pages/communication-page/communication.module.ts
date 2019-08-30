@@ -7,6 +7,7 @@ import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { CommunicationAnalyticsEffects } from './communication.analytics.effects';
 import { CommunicationComponentsModule } from './components/communication.components.module';
+import { CommunicationEffects } from './communication.effects';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CommunicationComponentsModule } from './components/communication.compon
   imports: [
     IonicPageModule.forChild(CommunicationPage),
     EffectsModule.forFeature([
+      CommunicationEffects,
       CommunicationAnalyticsEffects,
     ]),
     ComponentsModule,

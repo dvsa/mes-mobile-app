@@ -32,7 +32,7 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
-import { COMMUNICATION_PAGE, WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE } from '../page-names.constants';
+import { COMMUNICATION_PAGE } from '../page-names.constants';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -94,7 +94,13 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
 
   clickBack(): void {
-    this.navController.pop();
+    this.deviceAuthenticationProvider.triggerLockScreen()
+      .then(() => {
+        this.navController.pop();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   ngOnInit(): void {
@@ -214,23 +220,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.deviceAuthenticationProvider.triggerLockScreen()
-        .then(() => {
-          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfo());
-          this.navController.push(WAITING_ROOM_TO_CAR_PAGE).then(() => {
-            const communicationPage = this.navController.getViews().find(view => view.id === COMMUNICATION_PAGE);
-            if (communicationPage) {
-              this.navController.removeView(communicationPage);
-            }
-            const waitingRoomPage = this.navController.getViews().find(view => view.id === WAITING_ROOM_PAGE);
-            if (waitingRoomPage) {
-              this.navController.removeView(waitingRoomPage);
-            }
-          });
-        })
-        .catch((err) => {
-          this.store$.dispatch(new waitingRoomActions.SubmitWaitingRoomInfoError(err));
-        });
+      this.navController.push(COMMUNICATION_PAGE);
     } else {
       Object.keys(this.form.controls).forEach((controlName) => {
         if (this.form.controls[controlName].invalid) {

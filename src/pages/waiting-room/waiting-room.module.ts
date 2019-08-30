@@ -7,7 +7,6 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/common/common-components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from 'ng2-translate';
-import { WaitingRoomEffects } from './waiting-room.effects';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { WaitingRoomEffects } from './waiting-room.effects';
   imports: [
     IonicPageModule.forChild(WaitingRoomPage),
     EffectsModule.forFeature([
-      WaitingRoomEffects,
       WaitingRoomAnalyticsEffects,
     ]),
     ComponentsModule,
