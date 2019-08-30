@@ -9,7 +9,7 @@ import { StartE2EPracticeTest } from '../../../fake-journal/fake-journal.actions
 import { startsWith } from 'lodash';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 import {
-  COMMUNICATION_PAGE,
+  WAITING_ROOM_PAGE,
   OFFICE_PAGE,
   PASS_FINALISATION_PAGE,
   JOURNAL_FORCE_CHECK_MODAL,
@@ -108,7 +108,7 @@ export class TestOutcomeComponent implements OnInit {
 
   resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
-    this.navController.push(COMMUNICATION_PAGE);
+    this.navController.push(WAITING_ROOM_PAGE);
   }
 
   needsDebrief(): boolean {
@@ -125,7 +125,7 @@ export class TestOutcomeComponent implements OnInit {
     } else {
       this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.isRekey));
     }
-    this.navController.push(COMMUNICATION_PAGE);
+    this.navController.push(WAITING_ROOM_PAGE);
   }
 
   rekeyTest() {
