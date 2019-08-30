@@ -9,4 +9,4 @@ Feature: Login
   Scenario: User logs into the application
     Given I am not logged in
     When I log in to the application as "mobexaminer1"
-    Then I should see the "Journal" page
+    Then I should see the "My dashboard" page

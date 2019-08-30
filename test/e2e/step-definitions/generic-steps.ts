@@ -50,6 +50,9 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
 
   buttonElement.isPresent().then((isStartPresent) => {
     if (!isStartPresent) {
+      // Go back to dashboard
+      const backButton = getElement(by.xpath('//page-journal//button//span[text()="Back"]'));
+      clickElement(backButton);
       // Logout
       logout();
       // Login
@@ -59,6 +62,15 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       // Small wait to make sure the action has initiated
         browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
       });
+
+      // I should first hit the landing page
+      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+      browser.wait(ExpectedConditions.presenceOf(employeeId));
+
+      // Navigate to journal page
+      const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
+      clickElement(goToJournalButton);
+
       // If the journal page is loaded we should have a refresh button
       const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
       browser.wait(ExpectedConditions.presenceOf(refreshButton));
@@ -91,10 +103,10 @@ Then('I should see the Microsoft login page', () => {
 When('I log in to the application as {string}', (username) => {
   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
 
-  // If the journal page is loaded we should have a refresh button
-  const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-  browser.wait(ExpectedConditions.presenceOf(refreshButton));
-  return expect(refreshButton.isPresent()).to.eventually.be.true;
+  // If the dashboard has loaded we should see the employee id
+  const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+  browser.wait(ExpectedConditions.presenceOf(employeeId));
+  return expect(employeeId.isPresent()).to.eventually.be.true;
 });
 
 Then('I should see the {string} page', (pageTitle) => {
@@ -192,9 +204,9 @@ export const logInToApplication = (username, password) => {
       // Switch back to WEBVIEW context
       browser.driver.selectContext(getParentContext(webviewContext));
 
-      // Wait for journal page to load
-      const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
-      browser.wait(ExpectedConditions.presenceOf(refreshButton));
+      // Wait for dashboard page to load
+      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+      browser.wait(ExpectedConditions.presenceOf(employeeId));
     });
   });
 };
@@ -205,8 +217,8 @@ export const logInToApplication = (username, password) => {
  */
 export const loggedInAs = (staffNumber) => {
   browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
-  const logout = element(by.xpath(`//input[@id="employeeId"][@value="${staffNumber}"]`));
-  return logout.isPresent();
+  const staffNumberField = element(by.xpath(`//span[@class="employee-id" and text()="${staffNumber}"]`));
+  return staffNumberField.isPresent();
 };
 
 /**
@@ -322,6 +334,11 @@ export const logPageSource = (fileName: string) => {
 };
 
 export const onJournalPageAs = (username) => {
+  loadApplication().then(() => {
+    // Small wait to make sure the action has initiated
+    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+  });
+
   loggedInAs(TEST_CONFIG.users[username].employeeId).then((response) => {
     if (!response) {
         // If not logged in as the right user logout and log in as the correct user
@@ -330,10 +347,13 @@ export const onJournalPageAs = (username) => {
     }
   });
 
-  loadApplication().then(() => {
-      // Small wait to make sure the action has initiated
-    browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
-  });
+  // I should first hit the landing page
+  const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+  browser.wait(ExpectedConditions.presenceOf(employeeId));
+
+  // Navigate to journal page
+  const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
+  clickElement(goToJournalButton);
 
   // If the journal page is loaded we should have a refresh button
   const refreshButton = element(by.xpath('//button/span/span/span[text() = "Refresh"]'));
