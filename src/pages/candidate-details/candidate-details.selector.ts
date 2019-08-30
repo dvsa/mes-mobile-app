@@ -80,7 +80,7 @@ export const getDetails = (slot: any): Details => {
     slotType: getSlotType(slot),
     meetingPlace: slot.booking.application.meetingPlace,
     driverNumber: slot.booking.candidate.driverNumber,
-    applicationRef: slot.booking.application.applicationId,
+    applicationRef: getApplicationRef(slot.booking.application),
     specialNeeds: processSpecialNeeds(slot),
     candidateComments: {
       isSectionEmpty: isCandidateCommentsEmpty(slot),
@@ -102,3 +102,8 @@ export const processSpecialNeeds = (slot: any): string | string[] => {
 };
 
 export const getBusiness = (slot: any) => slot.booking.business;
+
+export const getApplicationRef = (appRef: any) => {
+  const formatter = Intl.NumberFormat('en-gb', { minimumIntegerDigits: 2 });
+  return `${appRef.applicationId}${formatter.format(appRef.bookingSequence)}${appRef.checkDigit}`;
+};
