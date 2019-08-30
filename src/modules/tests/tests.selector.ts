@@ -6,6 +6,7 @@ import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mo
 import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
 import { ActivityCodes } from '../../shared/models/activity-codes';
+import { DateTime } from '../../shared/helpers/date-time';
 
 export const getCurrentTestSlotId = (tests: TestsModel): string => tests.currentTest.slotId;
 
@@ -78,4 +79,38 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
     return testsModel.startedTests[id].activityCode;
   }
   return null;
+};
+
+export const getUnsubmittedTests = (tests: TestsModel): StandardCarTestCATBSchema[] => {
+  const unsubmitedTestsKeys: string[] = Object.keys(tests.testStatus).filter(slotId =>
+    tests.testStatus[slotId] === TestStatus.Decided);
+
+  return unsubmitedTestsKeys.map((slotId: string) => tests.startedTests[slotId]);
+};
+
+export const getUnsubmittedTestsCount = (tests: TestsModel): number =>
+  Object.keys(tests.testStatus).filter(slotId => tests.testStatus[slotId] === TestStatus.Decided).length;
+
+export const getOldestUnsubmittedTest = (tests: TestsModel): StandardCarTestCATBSchema => {
+  const unsubmitedTestsKeys: string[] = Object.keys(tests.testStatus).filter(slotId =>
+    tests.testStatus[slotId] === TestStatus.Decided);
+
+  let oldestTest: StandardCarTestCATBSchema;
+
+  unsubmitedTestsKeys.forEach((slotId: string) => {
+    if (!oldestTest) {
+      console.log('setting oldest for first time', slotId);
+      oldestTest = tests.startedTests[slotId];
+      return;
+    }
+
+    const oldestStartDate: DateTime = new DateTime(oldestTest.journalData.testSlotAttributes.start);
+    const currentStartDate: DateTime = new DateTime(tests.startedTests[slotId].journalData.testSlotAttributes.start);
+    // console.log('comparing', oldestStartDate, currentStartDate);
+    if (currentStartDate.isBefore(oldestStartDate)) {
+      console.log('setting', slotId);
+      oldestTest = tests.startedTests[slotId];
+    }
+  });
+  return oldestTest;
 };

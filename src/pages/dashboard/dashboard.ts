@@ -17,9 +17,12 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 import { BasePageComponent } from '../../shared/classes/base-page';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { getUnsubmittedTestsCount } from '../../modules/tests/tests.selector';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
+  unsubmittedTestsCount$: Observable<number>;
 }
 
 @IonicPage()
@@ -86,6 +89,10 @@ export class DashboardPage extends BasePageComponent {
       appVersion$: this.store$.pipe(
         select(getAppInfoState),
         map(getVersionNumber),
+      ),
+      unsubmittedTestsCount$: this.store$.pipe(
+        select(getTests),
+        select(getUnsubmittedTestsCount),
       ),
     };
   }

@@ -27,4 +27,10 @@ describe('DateTime', () => {
     expect(today.daysDiff(new Date(yesterday.format('YYYY-MM-DD')))).toBe(-1);
   });
 
+  it('should correctly calculate the earliest date', () => {
+    expect(today.isBefore(tomorrow)).toBe(true);
+    expect(today.isBefore(today)).toBe(false);
+    expect(today.isBefore(yesterday)).toBe(false);
+  });
+
 });
