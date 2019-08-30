@@ -1,13 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
-      <button ion-button (click)="logout()" *ngIf="authenticationProvider.logoutEnabled()">
-        <span>Logout</span>
-        <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
-      </button>
-      <h6 *ngIf="!authenticationProvider.logoutEnabled()" class="version-number">Version {{pageState.appVersion$ | async}}</h6>
-      <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}" />
-    </ion-buttons>
     <ion-title>Journal</ion-title>
     <ion-buttons end>
       <button ion-button (click)="refreshJournal()">
@@ -47,23 +39,5 @@
   <ion-list>
     <ng-template #slotContainer></ng-template>
   </ion-list>
-
-  <hr *ngIf="showEndToEndPracticeMode() || showTestReportPracticeMode()"/>
-
-  <practice-test-report-card
-    id="testReportPracticeMode"
-    *ngIf="!(pageState.isLoading$ | async) && showTestReportPracticeMode()"
-  ></practice-test-report-card>
-
-  <practice-end-to-end-card
-    id="endToendPracticeMode"
-    *ngIf="!(pageState.isLoading$ | async) && showEndToEndPracticeMode()"
-  ></practice-end-to-end-card>
-
-  <hr />
-  
-  <test-results-search-card *ngIf="!(pageState.isLoading$ | async)"></test-results-search-card>
-
-  <rekey-search-card *ngIf="!(pageState.isLoading$ | async)"></rekey-search-card>
 
 </ion-content>

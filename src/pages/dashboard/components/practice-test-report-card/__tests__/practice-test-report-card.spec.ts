@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, AlertController, ModalController } from 'ionic-angular';
 import { PracticeTestReportCardComponent } from '../practice-test-report-card';
 import { NavControllerMock, AlertControllerMock, ModalControllerMock } from 'ionic-mocks';
-import { journalReducer } from '../../../journal.reducer';
+import { journalReducer } from '../../../../journal/journal.reducer';
 import { StoreModule } from '@ngrx/store';
 
 describe('PracticeTestReportCard ', () => {

@@ -15,10 +15,6 @@ import {
   ResumingWriteUp,
 } from '../../pages/journal/journal.actions';
 import {
-  START_TEST,
-  StartTest,
-} from '../../modules/tests/tests.actions';
-import {
     AnalyticsDimensionIndices,
     AnalyticsScreenNames,
     AnalyticsEventCategories,
@@ -109,19 +105,6 @@ export class JournalAnalyticsEffects {
         return of(new AnalyticRecorded());
       },
     ),
-  );
-
-  @Effect()
-  testOutcomeStartTest$ = this.actions$.pipe(
-    ofType(START_TEST),
-    switchMap((action: StartTest) => {
-      if (action.rekey) {
-        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.REKEY_TEST, action.slotId.toString());
-      } else {
-        this.analytics.logEvent(AnalyticsEventCategories.JOURNAL, AnalyticsEvents.START_TEST, action.slotId.toString());
-      }
-      return of(new AnalyticRecorded());
-    }),
   );
 
   @Effect()

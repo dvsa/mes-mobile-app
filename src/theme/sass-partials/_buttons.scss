@@ -44,11 +44,20 @@
   background: map-get($colors, mes-white);
   border-radius: 10px;
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
+  margin: 0 0.2em;
+  height: initial;
   &.activated {
     background:  map-get($colors-gds, gds-grey-1);
   }
   h3 {
     color : map-get($colors, mes-black);
+    .text-zoom-regular &,
+    .text-zoom-large &,
+    .text-zoom-x-large & {
+      line-height: 2em;
+    }
+    min-height: 44px;
+    padding-top: 1px
   }
 }
 

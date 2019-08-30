@@ -13,7 +13,6 @@ import {
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { JournalAnalyticsEffects } from '../journal.analytics.effects';
 import * as journalActions from '../journal.actions';
-import * as testsActions from '../../../modules/tests/tests.actions';
 import { Store, StoreModule } from '@ngrx/store';
 import { journalReducer } from '../journal.reducer';
 import * as slotActions from '../../../providers/slot/slot.actions';
@@ -132,39 +131,6 @@ describe('Journal Analytics Effects', () => {
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.JOURNAL,
             AnalyticsEvents.SLOT_CHANGED,
-            '12345',
-          );
-        done();
-      });
-    });
-  });
-
-  describe('testOutcomeStartTest', () => {
-    it('should log an start Test event if isRekey is false', (done) => {
-      // ACT
-      actions$.next(new testsActions.StartTest(12345, false));
-      // ASSERT
-      effects.testOutcomeStartTest$.subscribe((result) => {
-        expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent)
-          .toHaveBeenCalledWith(
-            AnalyticsEventCategories.JOURNAL,
-            AnalyticsEvents.START_TEST,
-            '12345',
-          );
-        done();
-      });
-    });
-    it('should log an Rekey Test event if isRekey is true', (done) => {
-      // ACT
-      actions$.next(new testsActions.StartTest(12345, true));
-      // ASSERT
-      effects.testOutcomeStartTest$.subscribe((result) => {
-        expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.logEvent)
-          .toHaveBeenCalledWith(
-            AnalyticsEventCategories.JOURNAL,
-            AnalyticsEvents.REKEY_TEST,
             '12345',
           );
         done();

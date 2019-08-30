@@ -254,10 +254,4 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.store$.dispatch(new journalActions.UnloadJournal());
     super.logout();
   }
-
-  showTestReportPracticeMode = (): boolean =>
-    this.appConfigProvider.getAppConfig().journal.enableTestReportPracticeMode
-
-  showEndToEndPracticeMode = (): boolean =>
-    this.appConfigProvider.getAppConfig().journal.enableEndToEndPracticeMode
 }

@@ -1,0 +1,39 @@
+profile-header {
+  .profile-header {
+
+    padding: 12px;
+
+    h1, h4 {
+      color: map-get($colors, mes-white);
+    }
+
+    h2 {
+      margin: 0px;
+    }
+
+    .role {
+      margin-top: -4px;
+    }
+
+    .staff-number {
+      margin-top: -4px;
+      margin-right: 2px;
+      text-align: right;
+      .employee-id {
+        font-weight: bold;
+      }
+    }
+
+    #card-content-wrapper {
+      height: 240px;
+      padding: 24px;
+      background: map-get($colors, mes-white);
+      width: 100%;
+    }
+
+    #contact-icon {
+      margin-left: 2px;
+      font-size: 72px;
+    }
+  }
+}
