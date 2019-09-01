@@ -64,7 +64,8 @@ Given('I am logged in as {string} and I have a test for {string}', (username, ca
       });
 
       // I should first hit the landing page
-      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+      const employeeId = element(
+        by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
       browser.wait(ExpectedConditions.presenceOf(employeeId));
 
       // Navigate to journal page
@@ -104,7 +105,8 @@ When('I log in to the application as {string}', (username) => {
   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
 
   // If the dashboard has loaded we should see the employee id
-  const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+  const employeeId = element(
+    by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
   browser.wait(ExpectedConditions.presenceOf(employeeId));
   return expect(employeeId.isPresent()).to.eventually.be.true;
 });
@@ -205,7 +207,8 @@ export const logInToApplication = (username, password) => {
       browser.driver.selectContext(getParentContext(webviewContext));
 
       // Wait for dashboard page to load
-      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+      const employeeId = element(
+        by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
       browser.wait(ExpectedConditions.presenceOf(employeeId));
     });
   });
