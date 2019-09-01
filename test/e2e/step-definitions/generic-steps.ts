@@ -348,7 +348,8 @@ export const onJournalPageAs = (username) => {
   });
 
   // I should first hit the landing page
-  const employeeId = element(by.xpath('//span[@class="employee-id"]'));
+  const employeeId = element(
+    by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
   browser.wait(ExpectedConditions.presenceOf(employeeId));
 
   // Navigate to journal page
