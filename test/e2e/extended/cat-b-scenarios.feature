@@ -3,10 +3,10 @@ Feature: Extended category B test scenarios
    Scenario: Examiner completes a passed test with driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page
@@ -41,10 +41,10 @@ Feature: Extended category B test scenarios
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
       When I check candidate details for "Mr Ali Campbell"
       And I start the test for "Mr Ali Campbell"
-      And the candidate requests to receive results by post
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Ali Campbell" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Ali Campbell" page
+      And the candidate requests to receive results by post
       And I proceed to the car
       Then I should see the "Ali Campbell" page
       And I complete the waiting room to car page
@@ -70,9 +70,9 @@ Feature: Extended category B test scenarios
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Jane Doe" page
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page with a tell me driver fault
@@ -96,10 +96,10 @@ Feature: Extended category B test scenarios
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
       When I check candidate details for "Mr James Brown"
       And I start the test for "Mr James Brown"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - James Brown" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - James Brown" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "James Brown" page
       And I complete the waiting room to car page
@@ -125,10 +125,10 @@ Feature: Extended category B test scenarios
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Jane Doe" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page
@@ -183,11 +183,10 @@ Feature: Extended category B test scenarios
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
       When I check candidate details for "Miss Theresa Shaw"
       And I start the test for "Miss Theresa Shaw"
+      And the candidate completes the declaration page
+      And the candidate confirms their declaration
       Then I should see the "Declaration - Theresa Shaw" page
       And the candidate requests to receive results by post
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Theresa Shaw" page
-      And the candidate completes the declaration page
       And I proceed to the car
       Then I should see the "Theresa Shaw" page
       And I complete the waiting room to car page
@@ -242,10 +241,10 @@ Feature: Extended category B test scenarios
       Given I am on the journal page as "mobexaminer1"
       When I navigate to previous day
       And I rekey a test for "Miss Doris Pearson"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Doris Pearson" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Doris Pearson" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Doris Pearson" page
       And I complete the waiting room to car page
@@ -287,9 +286,9 @@ Feature: Extended category B test scenarios
       When I navigate to previous day
       And I navigate to previous day
       And I rekey a test for "Mrs Carly Doe"
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Carly Doe" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Carly Doe" page
       And I proceed to the car
       Then I should see the "Carly Doe" page
       And I complete the waiting room to car page with a tell me driver fault

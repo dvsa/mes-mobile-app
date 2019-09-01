@@ -36,7 +36,7 @@ When('the candidate completes the declaration page', () => {
 
 When('I proceed to the car', () => {
   // Examiner clicks continue button then enters passcode
-  const continueButton = getElement(by.xpath('//page-waiting-room//button[@id = "continue-button"]'));
+  const continueButton = getElement(by.xpath('//communication//button[@id = "continue-button"]'));
   clickElement(continueButton);
   enterPasscode();
 });

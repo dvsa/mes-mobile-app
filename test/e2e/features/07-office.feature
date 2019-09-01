@@ -3,10 +3,10 @@ Feature: Office page
    Scenario: Office page validation for pass
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page
@@ -39,10 +39,10 @@ Feature: Office page
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Jane Doe" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page with automatic transmission
