@@ -29,6 +29,8 @@ import { DateTime } from '../../../shared/helpers/date-time';
 import { PopulateExaminer } from '../examiner/examiner.actions';
 import journalSlotsDataMock from '../../../pages/journal/__mocks__/journal-slots-data.mock';
 import { journalReducer } from '../../../pages/journal/journal.reducer';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 
 describe('Tests Effects', () => {
 
@@ -53,6 +55,7 @@ describe('Tests Effects', () => {
         { provide: TestPersistenceProvider, useClass: TestPersistenceProviderMock },
         { provide: TestSubmissionProvider, useClass: TestSubmissionProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
+        { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         Store,
       ],
     });
