@@ -79,6 +79,10 @@ Then(/^there (?:is|are) \"(.+)\" driver faults? listed for \"(.+)\"$/, (faultCou
   return expect(driverFault.isPresent()).to.eventually.be.true;
 });
 
+When('I complete the rekey', () => {
+  completeRekey();
+});
+
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);
@@ -88,6 +92,23 @@ const uploadTest = () => {
   clickUploadButton();
 
   const uploadConfirmationButton = getElement(by.xpath('//ion-alert//button/span[text() = "Upload"]'));
+  clickElement(uploadConfirmationButton);
+};
+
+const completeRekey = () => {
+  const continueButton = getElement(by.xpath('//page-office//button//h3[text()="Continue"]'));
+  clickElement(continueButton);
+
+  const iPadIssueCheckbox = getElement(by.id('ipadIssue'));
+  clickElement(iPadIssueCheckbox);
+
+  const iPadIssueLost = getElement(by.id('ipadIssueLost'));
+  clickElement(iPadIssueLost);
+
+  const uploadButton = getElement(by.xpath('//page-rekey-reason//button//h3[text()="Upload rekeyed test"]'));
+  clickElement(uploadButton);
+
+  const uploadConfirmationButton = getElement(by.xpath('//upload-rekey-modal//button/span[text() = "Upload"]'));
   clickElement(uploadConfirmationButton);
 };
 
