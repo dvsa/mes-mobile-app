@@ -35,12 +35,14 @@ describe('Rekey Search Reducer', () => {
         },
       },
     };
-    const action = new rekeySearchActions.SearchBookedTestSuccess(testSlot);
+    const staffNumber = '654321';
+    const action = new rekeySearchActions.SearchBookedTestSuccess(testSlot, staffNumber);
     const result = rekeySearchReducer(state, action);
     expect(result).toEqual({
       ...initialState,
       isLoading: false,
       hasSearched: true,
+      staffNumber: '654321',
       bookedTestSlot: {
         ...testSlot,
       },

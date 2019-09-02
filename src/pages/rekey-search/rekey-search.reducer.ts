@@ -6,6 +6,7 @@ import { TestSlot } from '@dvsa/mes-journal-schema';
 export type RekeySearchModel = {
   isLoading: boolean,
   hasSearched: boolean,
+  staffNumber: string,
   bookedTestSlot: TestSlot,
   err: {
     message: string,
@@ -15,6 +16,7 @@ export type RekeySearchModel = {
 export const initialState: RekeySearchModel = {
   isLoading: false,
   hasSearched: false,
+  staffNumber: '',
   bookedTestSlot: {},
   err: {
     message: '',
@@ -31,7 +33,8 @@ export function rekeySearchReducer(state = initialState, action: rekeySearchActi
     case rekeySearchActions.SEARCH_BOOKED_TEST_SUCCESS:
       return {
         ...state,
-        bookedTestSlot: action.payload,
+        bookedTestSlot: action.testSlot,
+        staffNumber: action.staffNumber,
         isLoading: false,
         hasSearched: true,
       };

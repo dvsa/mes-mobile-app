@@ -5,6 +5,8 @@ export const getIsLoading = (rekeySearch: RekeySearchModel) => rekeySearch.isLoa
 
 export const getHasSearched = (rekeySearch: RekeySearchModel) => rekeySearch.hasSearched;
 
+export const getStaffNumber = (rekeySearch: RekeySearchModel) => rekeySearch.staffNumber;
+
 export const getBookedTestSlot = (rekeySearch: RekeySearchModel) => {
 
   // The reason why we are null checking in a selector is that
