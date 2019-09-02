@@ -207,8 +207,7 @@ export const logInToApplication = (username, password) => {
       browser.driver.selectContext(getParentContext(webviewContext));
 
       // Wait for dashboard page to load
-      const employeeId = element(
-        by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
+      const employeeId = element(by.xpath('//span[@class="employee-id"]'));
       browser.wait(ExpectedConditions.presenceOf(employeeId));
     });
   });
