@@ -99,16 +99,13 @@ export const getOldestUnsubmittedTest = (tests: TestsModel): StandardCarTestCATB
 
   unsubmitedTestsKeys.forEach((slotId: string) => {
     if (!oldestTest) {
-      console.log('setting oldest for first time', slotId);
       oldestTest = tests.startedTests[slotId];
       return;
     }
 
     const oldestStartDate: DateTime = new DateTime(oldestTest.journalData.testSlotAttributes.start);
     const currentStartDate: DateTime = new DateTime(tests.startedTests[slotId].journalData.testSlotAttributes.start);
-    // console.log('comparing', oldestStartDate, currentStartDate);
     if (currentStartDate.isBefore(oldestStartDate)) {
-      console.log('setting', slotId);
       oldestTest = tests.startedTests[slotId];
     }
   });

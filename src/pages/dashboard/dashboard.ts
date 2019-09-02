@@ -18,11 +18,15 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { getUnsubmittedTestsCount } from '../../modules/tests/tests.selector';
+import { getUnsubmittedTestsCount, getOldestUnsubmittedTest } from '../../modules/tests/tests.selector';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { DateTime } from '../../shared/helpers/date-time';
+import { get } from 'lodash';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
   unsubmittedTestsCount$: Observable<number>;
+  oldestUnsubmittedTestDate$: Observable<string>;
 }
 
 @IonicPage()
@@ -93,6 +97,12 @@ export class DashboardPage extends BasePageComponent {
       unsubmittedTestsCount$: this.store$.pipe(
         select(getTests),
         select(getUnsubmittedTestsCount),
+      ),
+      oldestUnsubmittedTestDate$: this.store$.pipe(
+        select(getTests),
+        select(getOldestUnsubmittedTest),
+        map((test: StandardCarTestCATBSchema) =>
+          new DateTime(get(test, 'journalData.testSlotAttributes.start', '')).format('YYYY-MM-DD')),
       ),
     };
   }

@@ -33,4 +33,5 @@
   <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode()"></practice-test-report-card>
   <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode()"></practice-end-to-end-card>
   <div>Unsub count {{pageState.unsubmittedTestsCount$ | async}}</div>
+  <div>Unsub date {{pageState.oldestUnsubmittedTestDate$ | async}}</div>
 </ion-content>
