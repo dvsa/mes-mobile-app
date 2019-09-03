@@ -219,8 +219,8 @@ export class TestsEffects {
       const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
         slotId !== testReportPracticeSlotId &&
         !startsWith(slotId, end2endPracticeSlotId) &&
-        tests.testStatus[slotId] === TestStatus.Completed) &&
-        !tests.startedTests[slotId].rekey,
+        [TestStatus.Completed, TestStatus.WriteUp].includes(tests.testStatus[slotId]) &&
+        !tests.startedTests[slotId].rekey),
       );
 
       const completedTests: TestToSubmit[] = completedTestKeys.map((slotId: string, index: number) => ({
