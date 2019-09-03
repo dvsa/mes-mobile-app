@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { DashboardViewDidEnter } from './dashboard.actions';
@@ -17,6 +16,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
+import { BasePageComponent } from '../../shared/classes/base-page';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -27,7 +27,7 @@ interface DashboardPageState {
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',
 })
-export class DashboardPage extends PracticeableBasePageComponent {
+export class DashboardPage extends BasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -40,7 +40,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
   todaysDate: string;
 
   constructor(
-    store$: Store<StoreModel>,
+    public store$: Store<StoreModel>,
     public navController: NavController,
     public navParams: NavParams,
     public platform: Platform,
@@ -52,7 +52,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
   ) {
-    super(platform, navController, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
     this.name = this.authenticationProvider.getEmployeeName() || 'Unknown Name';
     this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
@@ -91,6 +91,7 @@ export class DashboardPage extends PracticeableBasePageComponent {
   }
 
   ionViewWillEnter(): boolean {
+    super.ionViewWillEnter();
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
@@ -99,7 +100,6 @@ export class DashboardPage extends PracticeableBasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    super.ionViewDidLeave();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
