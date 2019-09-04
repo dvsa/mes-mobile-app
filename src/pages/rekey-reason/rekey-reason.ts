@@ -25,6 +25,7 @@ import {
   IpadIssueBrokenSelected,
   OtherSelected,
   OtherReasonUpdated,
+  TransferSelected,
 } from '../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { REKEY_UPLOAD_OUTCOME_PAGE, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
@@ -46,6 +47,10 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
 import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
+
+import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
+import { FindUserProvider } from '../../providers/find-user/find-user';
+import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
 
 interface RekeyReasonPageState {
@@ -81,6 +86,9 @@ export class RekeyReasonPage extends BasePageComponent {
 
   reasonCharsRemaining: number = null;
 
+  transferStaffExists: boolean = false;
+  checkingStaffExists: boolean = false;
+
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -89,6 +97,7 @@ export class RekeyReasonPage extends BasePageComponent {
     private modalController: ModalController,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    private findUserProvider: FindUserProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.formGroup = new FormGroup({
@@ -98,6 +107,7 @@ export class RekeyReasonPage extends BasePageComponent {
       ipadIssueStolen: new FormControl(false),
       ipadIssueBroken: new FormControl(false),
       transferSelected: new FormControl(false),
+      transferStaffNumber: new FormControl('', [Validators.minLength(1), Validators.required]),
       otherSelected: new FormControl(false),
       otherReasonUpdated: new FormControl('', [Validators.minLength(1), Validators.required]),
     });
@@ -195,18 +205,24 @@ export class RekeyReasonPage extends BasePageComponent {
 
   formIsValid() {
     const rekeyReasonProvided = this.formGroup.get('ipadIssue').value ||
-      (this.formGroup.get('otherSelected').value);
+      (this.formGroup.get('otherSelected').value || this.formGroup.get('transferStaffNumber').value);
 
     const reasonForRekeyIsValid = !this.formGroup.get('otherSelected').value ||
       (this.formGroup.get('otherSelected').value
         && this.formGroup.get('otherReasonUpdated').valid);
 
-    if (rekeyReasonProvided && reasonForRekeyIsValid) {
+    const transferStaffValid = (!this.transferFilledIn() || this.transferFilledIn() && this.transferStaffExists);
+
+    if (rekeyReasonProvided && reasonForRekeyIsValid
+      && transferStaffValid) {
       return true;
     }
 
     if (!rekeyReasonProvided) {
       this.createToast('Provide at least one reason for rekey');
+    }
+    if (!transferStaffValid) {
+      this.createToast('Transfer staff number is invalid');
     }
     this.toast.present();
   }
@@ -252,8 +268,27 @@ export class RekeyReasonPage extends BasePageComponent {
     this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
   }
 
+  transferSelected(checked: boolean) {
+    this.formGroup.controls['transferStaffNumber'].setValue('');
+    this.transferStaffExists = false;
+    this.store$.dispatch(new TransferSelected(checked));
+  }
+
+  transferStaffNumberChanged() {
+    this.transferStaffExists = false;
+    this.store$.dispatch(new SetExaminerConducted(this.transferValue()));
+  }
+
   reasonValue(): string {
     return this.formGroup.controls['otherReasonUpdated'].value;
+  }
+
+  transferValue(): number {
+    return parseInt(this.formGroup.controls['transferStaffNumber'].value, 10);
+  }
+
+  transferFilledIn(): boolean {
+    return this.formGroup.controls['transferStaffNumber'].value.length > 0;
   }
 
   characterCountChanged(charactersRemaining: number) {
@@ -303,6 +338,25 @@ export class RekeyReasonPage extends BasePageComponent {
         this.exitRekey();
         break;
     }
+  }
+
+  checkUserExists() {
+    this.checkingStaffExists = true;
+    this.findUserProvider.userExists(this.transferValue().toString()).subscribe(
+      () => {
+        this.transferStaffExists = true;
+        this.checkingStaffExists = false;
+      },
+      (error) => {
+        if (error.status === HttpStatusCodes.NOT_FOUND) {
+          this.transferStaffExists = false;
+        } else {
+          // Show error screen here
+          console.log('an error has happened');
+        }
+        this.checkingStaffExists = false;
+      },
+    );
   }
 
 }

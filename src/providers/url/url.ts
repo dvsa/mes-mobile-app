@@ -31,4 +31,9 @@ export class UrlProvider {
     return urlTemplate.replace('{staffNumber}', isNil(staffNumber) ? '00000000' : staffNumber);
   }
 
+  getRekeyFindUserUrl(staffNumber: string): string {
+    const urlTemplate = this.appConfigProvider.getAppConfig().user.findUser;
+    return urlTemplate.replace('{staffNumber}', isNil(staffNumber) ? '00000000' : staffNumber);
+  }
+
 }

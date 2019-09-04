@@ -6,5 +6,4 @@ export const getReasonForRekey = (test: StandardCarTestCATBSchema) => {
 
 export const getRekeyIpadIssue = (rekeyReason: RekeyReason): IpadIssue => rekeyReason.ipadIssue;
 export const getRekeyTransfer = (rekeyReason: RekeyReason): Transfer => rekeyReason.transfer;
-// TODO add selector for transfer staff number
 export const getRekeyOther = (rekeyReason: RekeyReason): Other => rekeyReason.other;

@@ -50,5 +50,8 @@ export const environment: LocalEnvironmentFile = {
     url: 'https://dev.mes.dev-dvsacloud.uk/v1/logs/dev',
     autoSendInterval: 1000 * 60,
   },
+  user: {
+    findUser: 'dummy/users/search/url',
+  },
   requestTimeout: 20000,
 };

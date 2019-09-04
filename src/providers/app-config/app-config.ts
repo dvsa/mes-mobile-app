@@ -206,6 +206,9 @@ export class AppConfigProvider {
         url: data.logs.url,
         autoSendInterval: data.logs.autoSendInterval,
       },
+      user: {
+        findUser: data.user.findUser,
+      },
       requestTimeout: data.requestTimeout,
     } as AppConfig)
 }

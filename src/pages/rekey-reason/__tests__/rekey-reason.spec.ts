@@ -22,8 +22,14 @@ import {
   IpadIssueSelected,
   OtherSelected,
   OtherReasonUpdated,
+  TransferSelected,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
 import { By } from '@angular/platform-browser';
+import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
+import { MockComponent } from 'ng-mocks';
+import { TickIndicatorComponent } from '../../../components/common/tick-indicator/tick-indicator';
+import { FindUserProvider } from '../../../providers/find-user/find-user';
+import { FindUserProviderMock } from '../../../providers/find-user/__mocks__/find-user.mock';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -37,6 +43,7 @@ describe('RekeyReasonPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         RekeyReasonPage,
+        MockComponent(TickIndicatorComponent),
       ],
       imports: [
         IonicModule,
@@ -53,6 +60,7 @@ describe('RekeyReasonPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
+        { provide: FindUserProvider, useClass: FindUserProviderMock },
         Store,
       ],
     })
@@ -159,11 +167,31 @@ describe('RekeyReasonPage', () => {
       expect(fixture.debugElement.query(By.css('#ipadIssue'))).toBeDefined();
     });
 
+    it('clicking transfer emits transfer selected event', () => {
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new TransferSelected(true));
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('#transferSelected'))).toBeDefined();
+    });
+
     it('clicking other reason emits other selected event', () => {
       store$.dispatch(new StartTest(103, true));
       store$.dispatch(new OtherSelected(true));
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#otherSelected'))).toBeDefined();
+    });
+
+    it('entering transfer staff emits the set examiner conducted event', () => {
+      store$.dispatch(new StartTest(103, true));
+      store$.dispatch(new TransferSelected(true));
+      fixture.detectChanges();
+      spyOn(store$, 'dispatch');
+      const compiled = fixture.debugElement.nativeElement;
+      const elem = compiled.querySelector('#transferStaffNumber');
+      elem.value = '12345';
+      elem.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(SetExaminerConducted));
     });
 
     it('entering other reason emits the reason updated event', () => {

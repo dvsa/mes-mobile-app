@@ -40,6 +40,35 @@
             </div>
           </ion-col>
         </ion-row>
+
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <input id="transferSelected" type="checkbox" class="gds-checkbox" formControlName="transferSelected"
+              (change)="transferSelected($event.target.checked)">
+            <label for="transferSelected">
+              Transfer
+            </label>
+          </ion-col>
+          <ion-col col-56>
+            <div class="selected-border" [class.ng-invalid]="!transferStaffExists" id="transferSection" *ngIf="(pageState.transfer$ | async).selected">
+              <ion-row>
+                <div class="transferInfo">
+                  Enter staff number of examiner who conducted the test
+                </div>
+              </ion-row>
+              <ion-row>
+                <ion-input placeholder="Staff Number" type="number" id="transferStaffNumber" class="staffNumber"
+                  formControlName="transferStaffNumber" clearInput (change)="transferStaffNumberChanged()"></ion-input>
+                <button (click)="checkUserExists()" id="find-user" class="mes-return-button" ion-button>
+                  Submit
+                  <ion-spinner class="search-spinner" name="bubbles" *ngIf="checkingStaffExists"></ion-spinner>
+                </button>
+                <tick-indicator *ngIf="transferStaffExists" [ticked]="transferStaffExists"></tick-indicator>
+              </ion-row>
+            </div>
+          </ion-col>
+        </ion-row>
+
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <input id="otherSelected" type="checkbox" class="gds-checkbox" formControlName="otherSelected" (change)="otherSelected($event.target.checked)">

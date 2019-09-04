@@ -6,6 +6,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { rekeyReasonReducer } from './rekey-reason.reducer';
 import { DirectivesModule } from '../../directives/directives.module';
+import { FindUserProvider } from '../../providers/find-user/find-user';
+import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,10 @@ import { DirectivesModule } from '../../directives/directives.module';
       RekeyReasonAnalyticsEffects,
     ]),
     DirectivesModule,
+    ComponentsModule,
+  ],
+  providers: [
+    FindUserProvider,
   ],
 })
 export class RekeyReasonPageModule { }
