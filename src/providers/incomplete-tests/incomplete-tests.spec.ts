@@ -13,6 +13,7 @@ describe('Incomplete Tests Provider', () => {
 
   const catBTest: SlotItem = {
     hasSlotChanged: false,
+    hasSeenCandidateDetails: false,
     slotData: {
       booking: {
         application: {
@@ -34,6 +35,7 @@ describe('Incomplete Tests Provider', () => {
 
   const catBETest: SlotItem = {
     hasSlotChanged: false,
+    hasSeenCandidateDetails: false,
     slotData: {
       booking: {
         application: {
@@ -79,6 +81,7 @@ describe('Incomplete Tests Provider', () => {
         vehicleTypeCode: '',
       },
       hasSlotChanged: false,
+      hasSeenCandidateDetails: false,
     },
     {
       slotData: {
@@ -97,6 +100,7 @@ describe('Incomplete Tests Provider', () => {
         vehicleTypeCode: '',
       },
       hasSlotChanged: false,
+      hasSeenCandidateDetails: false,
     },
     {
       slotData: {
@@ -115,6 +119,7 @@ describe('Incomplete Tests Provider', () => {
         vehicleTypeCode: '',
       },
       hasSlotChanged: false,
+      hasSeenCandidateDetails: false,
     },
     {
       slotData: {
@@ -133,6 +138,7 @@ describe('Incomplete Tests Provider', () => {
         vehicleTypeCode: '',
       },
       hasSlotChanged: false,
+      hasSeenCandidateDetails: false,
     },
     {
       slotData: {
@@ -151,6 +157,7 @@ describe('Incomplete Tests Provider', () => {
         vehicleTypeCode: '',
       },
       hasSlotChanged: false,
+      hasSeenCandidateDetails: false,
     }];
 
   beforeEach(() => {

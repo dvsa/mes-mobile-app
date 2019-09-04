@@ -58,7 +58,8 @@
     </div>
 
     <p class="results-message" *ngIf="!isBookedTestSlotEmpty(pageState.bookedTestSlot$ | async)">
-      <test-slot [slot]="(pageState.bookedTestSlot$ | async)" [hasSlotChanged]="false" [showLocation]="false"></test-slot>
+      <test-slot [slot]="(pageState.bookedTestSlot$ | async)" [hasSlotChanged]="false"
+      [hasSeenCandidateDetails]="true" [showLocation]="false"></test-slot>
     </p>
 
   </div>

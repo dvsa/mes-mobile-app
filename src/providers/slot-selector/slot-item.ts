@@ -6,6 +6,7 @@ export class SlotItem {
   constructor(
     public slotData: TestSlot | NonTestActivity,
     public hasSlotChanged: boolean,
+    public hasSeenCandidateDetails: boolean,
     public component?: Type<SlotComponent>,
     public activityCode?: string,
     public personalCommitment?: PersonalCommitment[],

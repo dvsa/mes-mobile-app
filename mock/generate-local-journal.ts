@@ -17,6 +17,18 @@ const localJournal: ExaminerWorkSchedule = {
     individualId: 9000000,
   },
   nonTestActivities: [],
+  personalCommitments: [
+    {
+      commitmentId: 123400,
+      startDate: today,
+      startTime: '10:00:00',
+      endDate: today,
+      endTime: '11:00:00',
+      activityCode: '104',
+      activityDescription: 'Medical appointment',
+      slotId: 1001,
+    },
+  ],
   testSlots: [
     {
       booking: {

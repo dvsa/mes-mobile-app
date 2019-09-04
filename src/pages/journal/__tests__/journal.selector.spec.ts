@@ -2,7 +2,7 @@ import { JournalModel } from '../journal.model';
 import {
   getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
   getError, getLastRefreshedTime,
-  canNavigateToNextDay, canNavigateToPreviousDay, getCheckComplete,
+  canNavigateToNextDay, canNavigateToPreviousDay,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
@@ -16,6 +16,7 @@ describe('JournalSelector', () => {
       '2019-01-17': [
         {
           hasSlotChanged: false,
+          hasSeenCandidateDetails: false,
           slotData: {},
         },
       ],
@@ -27,7 +28,6 @@ describe('JournalSelector', () => {
     },
     selectedDate: '2019-01-17',
     examiner: { staffNumber: '123', individualId: 456 },
-    checkComplete: [],
   };
 
   describe('getIsLoading', () => {
@@ -82,19 +82,20 @@ describe('JournalSelector', () => {
           '2019-01-29': [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
           '2019-01-30': [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
         },
         selectedDate: '2019-01-29',
         examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
       };
 
       const result = canNavigateToNextDay(journal);
@@ -110,19 +111,20 @@ describe('JournalSelector', () => {
           '2019-01-28': [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
           '2019-01-29': [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
         },
         selectedDate: '2019-01-28',
         examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
       };
 
       const result = canNavigateToNextDay(journal);
@@ -138,19 +140,20 @@ describe('JournalSelector', () => {
           '2019-01-28': [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
           '2019-01-29': [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
         },
         selectedDate: '2019-02-04',
         examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
       };
 
       const result = canNavigateToNextDay(journal);
@@ -168,13 +171,13 @@ describe('JournalSelector', () => {
           ['2019-01-01']: [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
         },
         selectedDate: '2019-01-01',
         examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
       };
 
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-15'));
@@ -190,45 +193,26 @@ describe('JournalSelector', () => {
           ['2019-01-13']: [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
           ['2019-01-14']: [
             {
               hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
               slotData: {},
             },
           ],
         },
         selectedDate: '2019-01-14',
         examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
       };
 
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
 
       expect(result).toBe(true);
     });
-  });
-
-  describe('getCheckComplete', () => {
-    it('returns all the checkComplete data', () => {
-      const journal: JournalModel = {
-        isLoading: true,
-        lastRefreshed: new Date(0),
-        slots: {},
-        selectedDate: '2019-01-01',
-        examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [{
-          slotId: 1234,
-        }],
-      };
-
-      const result = getCheckComplete(journal, 1234);
-
-      expect(result).toBe(true);
-    });
-
   });
 
 });

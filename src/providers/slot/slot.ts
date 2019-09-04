@@ -35,8 +35,10 @@ export class SlotProvider {
       const replacedJournalSlot = oldJournalSlots.find(oldSlot => oldSlot.slotData.slotDetail.slotId === newSlotId);
 
       let differenceFound = false;
+      let hasSeenCandidateDetails = false;
       if (replacedJournalSlot) {
         differenceFound = replacedJournalSlot.hasSlotChanged;
+        hasSeenCandidateDetails = replacedJournalSlot.hasSeenCandidateDetails;
         const differenceToSlot = DeepDiff(replacedJournalSlot.slotData, newSlot);
         if (Array.isArray(differenceToSlot) && differenceToSlot.some(change => change.kind === 'E')) {
           this.store$.dispatch(new SlotHasChanged(newSlotId));
@@ -52,7 +54,7 @@ export class SlotProvider {
 
       // add personalCommitment information to SlotItem, component and activityCode set to null
       // as they are not constructed at this stage.
-      return new SlotItem(newSlot, differenceFound, null, null, personalCommitment);
+      return new SlotItem(newSlot, differenceFound, hasSeenCandidateDetails, null, null, personalCommitment);
     });
   }
 

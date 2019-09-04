@@ -41,6 +41,7 @@ describe('Journal Reducer', () => {
         slotItemsByDate: {
           ['2019-01-13']: [{
             hasSlotChanged: false,
+            hasSeenCandidateDetails: false,
             slotData: {},
           },
           ],
@@ -68,6 +69,7 @@ describe('Journal Reducer', () => {
         slots: {
           ['2019-01-13']: [{
             hasSlotChanged: false,
+            hasSeenCandidateDetails: false,
             slotData: {},
           },
           ],
@@ -79,7 +81,7 @@ describe('Journal Reducer', () => {
 
   describe('[JournalPage] Unload Journal', () => {
     it('should clear the journal slots', () => {
-      const stateWithJournals = { ...initialState, slots: { ['2019-01-13']: [new SlotItem({}, false)] } };
+      const stateWithJournals = { ...initialState, slots: { ['2019-01-13']: [new SlotItem({}, false, false)] } };
       const action = new UnloadJournal();
       const result = journalReducer(stateWithJournals, action);
       expect(result.slots).toEqual({});
@@ -89,7 +91,7 @@ describe('Journal Reducer', () => {
         isLoading: true,
         lastRefreshed: new Date(),
         selectedDate: 'dummy',
-        slots: { ['2019-01-13']: [new SlotItem({}, false)] },
+        slots: { ['2019-01-13']: [new SlotItem({}, false, false)] },
         examiner: { staffNumber: '123', individualId: 456 },
         checkComplete: [],
       };
@@ -118,7 +120,7 @@ describe('Journal Reducer', () => {
         ...initialState,
         selectedDate: slotDate,
         slots: {
-          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true)],
+          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true, false)],
         },
       };
       const action = new ClearChangedSlot(1234);
@@ -128,21 +130,20 @@ describe('Journal Reducer', () => {
     });
   });
 
-  describe('[JournalPage] Check Complete', () => {
-    it('Candidate details was checked', () => {
+  describe('[JournalPage] Candidate Details Seen', () => {
+    it('should record that has seen candidate details for a specific slot', () => {
       const slotDate = '2019-01-13';
       const stateWithChangedSlot = {
         ...initialState,
         selectedDate: slotDate,
-        checkComplete: [],
+        slots: {
+          [`${slotDate}`]: [new SlotItem({ slotDetail: { slotId: 1234 } }, true, false)],
+        },
       };
       const action = new CandidateDetailsSeen(1234);
       const result = journalReducer(stateWithChangedSlot, action);
 
-      expect(result.checkComplete.length).toEqual(1);
-      expect(result.checkComplete[0]).toEqual({
-        slotId: 1234,
-      });
+      expect(result.slots[slotDate][0].hasSeenCandidateDetails).toEqual(true);
 
     });
   });

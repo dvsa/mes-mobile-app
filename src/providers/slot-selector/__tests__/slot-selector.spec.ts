@@ -27,7 +27,7 @@ describe('Slot Selector', () => {
       activityCode: code,
     };
     const journalSlots = [
-      new SlotItem(travelSlot, false),
+      new SlotItem(travelSlot, false, false),
     ];
     return journalSlots;
   };
@@ -50,7 +50,7 @@ describe('Slot Selector', () => {
       },
     };
     const journalSlots = [
-      new SlotItem(slot, false),
+      new SlotItem(slot, false, false),
     ];
     return journalSlots;
   };
@@ -109,7 +109,7 @@ describe('Slot Selector', () => {
       it('should provide the EmptySlotComponent for slots that have no booking or activity code', () => {
         const slot = {};
         const journalSlots = [
-          new SlotItem(slot, false),
+          new SlotItem(slot, false, false),
         ];
         const response = slotSelector.getSlotTypes(journalSlots);
 

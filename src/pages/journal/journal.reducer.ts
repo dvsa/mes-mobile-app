@@ -2,7 +2,7 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import * as journalActions from './journal.actions';
 import { JournalModel } from './journal.model';
-import { has } from 'lodash';
+import { get } from 'lodash';
 import { ConnectionStatus } from '../../providers/network-state/network-state';
 
 export const initialState: JournalModel = {
@@ -11,7 +11,6 @@ export const initialState: JournalModel = {
   slots: {},
   selectedDate: '',
   examiner: null,
-  checkComplete: [],
 };
 
 export function journalReducer(state = initialState, action: journalActions.JournalActionTypes): JournalModel {
@@ -23,15 +22,20 @@ export function journalReducer(state = initialState, action: journalActions.Jour
         error: { message: '', status: 0, statusText: '' },
       };
     case journalActions.CANDIDATE_DETAILS_SEEN:
-      if (state.checkComplete.findIndex(checkComplete => checkComplete.slotId === action.slotId) !== -1) {
-        return state;
-      }
       return {
         ...state,
-        checkComplete: [
-          ...state.checkComplete,
-          { slotId: action.slotId },
-        ],
+        slots: {
+          ...state.slots,
+          [state.selectedDate]: state.slots[state.selectedDate].map((slot) => {
+            if (get(slot, 'slotData.slotDetail.slotId') === action.slotId) {
+              return {
+                ...slot,
+                hasSeenCandidateDetails: true,
+              };
+            }
+            return slot;
+          }),
+        },
       };
     case journalActions.LOAD_JOURNAL_SUCCESS:
       return {
@@ -62,9 +66,7 @@ export function journalReducer(state = initialState, action: journalActions.Jour
 
       // TODO: This should be moved out to an effect
       const slots = state.slots[state.selectedDate].map((slot) => {
-        if (has(slot.slotData, 'slotDetail') &&
-          has(slot.slotData.slotDetail, 'slotId') &&
-          slot.slotData.slotDetail.slotId === action.slotId) {
+        if (get(slot, 'slotData.slotDetail.slotId') === action.slotId) {
           return {
             ...slot,
             hasSlotChanged: false,
