@@ -3,25 +3,25 @@ import { NavigationStateProvider } from '../navigation-state';
 import { App } from 'ionic-angular';
 import { REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../../../pages/page-names.constants';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
-import { NavigationHelper } from '../navigation-helper';
-import { NavigationHelperMock } from '../__mocks__/navigation-helper.mock';
+import { NavigationProvider } from '../../navigation/navigation';
+import { NavigationProviderMock } from '../../navigation/__mocks__/navigation.mock';
 
 describe('NavigationStateProvider', () => {
   describe('isRekeySearch', () => {
     let navigationStateProvider: NavigationStateProvider;
-    let navigation: NavigationHelper;
+    let navigation: NavigationProvider;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
           NavigationStateProvider,
           { provide: App, useClass: MockAppComponent },
-          { provide: NavigationHelper, useClass: NavigationHelperMock },
+          { provide: NavigationProvider, useClass: NavigationProviderMock },
         ],
       });
 
       navigationStateProvider = TestBed.get(NavigationStateProvider);
-      navigation = TestBed.get(NavigationHelper);
+      navigation = TestBed.get(NavigationProvider);
     });
 
     it('should return true if this is the rekey search page', () => {

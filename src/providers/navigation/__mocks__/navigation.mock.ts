@@ -1,4 +1,4 @@
-export class NavigationHelperMock {
+export class NavigationProviderMock {
 
   constructor() {}
 

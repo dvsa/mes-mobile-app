@@ -5,11 +5,11 @@ import { App, NavController } from 'ionic-angular';
  * Ionic will not allow the navigation controller to be injected at the root
  * level, so this alternative approach gets the nav from the app.
  *
- * This helper allows the navigation controller to be mocked during testing.
+ * This provider allows the navigation controller to be mocked during testing.
  */
 
 @Injectable()
-export class NavigationHelper {
+export class NavigationProvider {
 
   constructor(private app: App) {}
 
