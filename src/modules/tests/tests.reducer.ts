@@ -31,6 +31,7 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
+import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -117,6 +118,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             testSummary: testSummaryReducer,
             communicationPreferences: communicationPreferencesReducer,
             rekey: rekeyReducer,
+            rekeyDate: rekeyDateReducer,
             rekeyReason: rekeyReasonReducer,
             examinerBooked: examinerBookedReducer,
             examinerConducted: examinerConductedReducer,
