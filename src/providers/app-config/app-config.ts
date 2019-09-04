@@ -138,9 +138,14 @@ export class AppConfigProvider {
             (error) => {
               this.store$.dispatch(new SaveLog(this.logHelper
                 .createLog(LogType.ERROR, 'Getting remote config failed, using cached data', error)));
-              this.getCachedRemoteConfig()
-                .then(data => resolve(data))
-                .catch(error => reject(error));
+              reject(error);
+              if (error !== AuthenticationError.USER_NOT_AUTHORISED) {
+                this.getCachedRemoteConfig()
+                  .then(data => resolve(data))
+                  .catch(error => reject(error));
+              } else {
+                reject(error);
+              }
             },
           );
       } else {
