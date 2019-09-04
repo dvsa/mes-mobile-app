@@ -36,6 +36,9 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   hasSlotChanged: boolean;
 
   @Input()
+  hasSeenCandidateDetails: boolean;
+
+  @Input()
   showLocation: boolean;
 
   componentState: TestSlotComponentState;

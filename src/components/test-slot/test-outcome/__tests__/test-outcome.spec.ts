@@ -33,11 +33,6 @@ describe('Test Outcome', () => {
     slots: {},
     selectedDate: 'dummy',
     examiner: { staffNumber: '123', individualId: 456 },
-    checkComplete: [
-      {
-        slotId: 123456,
-      },
-    ],
   };
 
   beforeEach(async(() => {
@@ -280,6 +275,7 @@ describe('Test Outcome', () => {
           component.specialRequirements = true;
           component.slotDetail = testSlotDetail;
           component.testStatus = TestStatus.Booked;
+          component.hasSeenCandidateDetails = false;
           spyOn(component, 'displayForceCheckModal');
           fixture.detectChanges();
 
@@ -296,6 +292,7 @@ describe('Test Outcome', () => {
           component.slotDetail = testSlotDetail;
           component.testStatus = TestStatus.Booked;
           component.slotDetail.slotId = 123456;
+          component.hasSeenCandidateDetails = true;
           spyOn(component, 'displayForceCheckModal');
           fixture.detectChanges();
 

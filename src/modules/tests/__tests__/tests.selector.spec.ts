@@ -63,7 +63,6 @@ describe('testsSelector', () => {
         slots: {},
         selectedDate: 'dummy',
         examiner: { staffNumber: '123', individualId: 456 },
-        checkComplete: [],
       };
       const appInfo: AppInfoModel = { versionNumber: '0.0.0' };
       const logs: LogsModel = [];

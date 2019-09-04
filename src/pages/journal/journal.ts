@@ -35,6 +35,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-commitment';
+import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slot';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -226,14 +227,21 @@ export class JournalPage extends BasePageComponent implements OnInit {
     for (const slot of slots) {
       const factory = this.resolver.resolveComponentFactory(slot.component);
       const componentRef = this.slotContainer.createComponent(factory);
+
       (<SlotComponent>componentRef.instance).slot = slot.slotData;
       (<SlotComponent>componentRef.instance).hasSlotChanged = slot.hasSlotChanged;
       (<SlotComponent>componentRef.instance).showLocation = (slot.slotData.testCentre.centreName !== lastLocation);
       lastLocation = slot.slotData.testCentre.centreName;
 
-      // if this is a personal commitment assign it to the component
-      (<PersonalCommitmentSlotComponent>componentRef.instance).personalCommitments =
-        slot.personalCommitment;
+      if (componentRef.instance instanceof PersonalCommitmentSlotComponent) {
+        // if this is a personal commitment assign it to the component
+        (<PersonalCommitmentSlotComponent>componentRef.instance).personalCommitments = slot.personalCommitment;
+      }
+
+      if (componentRef.instance instanceof TestSlotComponent) {
+        // if this is a test slot assign hasSeenCandidateDetails separately
+        (<TestSlotComponent>componentRef.instance).hasSeenCandidateDetails = slot.hasSeenCandidateDetails;
+      }
     }
   }
 
@@ -244,10 +252,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   public refreshJournal = () => {
     this.loadJournalManually();
-  }
-
-  gotoWaitingRoom($event) {
-    console.log('going to waiting room with ', $event);
   }
 
   logout() {

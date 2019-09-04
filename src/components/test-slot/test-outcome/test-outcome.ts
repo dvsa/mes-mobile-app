@@ -19,8 +19,6 @@ import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-r
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
-import { getCheckComplete } from '../../../pages/journal/journal.selector';
-import { getJournalState } from '../../../pages/journal/journal.reducer';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -50,6 +48,9 @@ export class TestOutcomeComponent implements OnInit {
   @Input()
   specialRequirements: boolean;
 
+  @Input()
+  hasSeenCandidateDetails: boolean;
+
   modal: Modal;
   isRekey: boolean = false;
   isTestSlotOnRekeySearch: boolean = false;
@@ -65,20 +66,12 @@ export class TestOutcomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const seenCandidateDetails$ = this.store$.pipe(
-      select(getJournalState),
-      map(journalData => getCheckComplete(journalData, this.slotDetail.slotId)),
-    );
-
     const bookedTestSlot$ = this.store$.pipe(
       select(getRekeySearchState),
       map(getBookedTestSlot),
     );
 
     const merged$ = merge(
-      seenCandidateDetails$.pipe(
-        map(candidateDetails => this.candidateDetailsViewed = candidateDetails),
-      ),
       bookedTestSlot$.pipe(
         map((testSlot: TestSlot) => {
           if (isEmpty(testSlot)) {
@@ -196,7 +189,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   clickStartOrResumeTest() {
-    if (this.specialRequirements && !this.candidateDetailsViewed) {
+    if (this.specialRequirements && !this.hasSeenCandidateDetails) {
       this.displayForceCheckModal();
       return;
     }

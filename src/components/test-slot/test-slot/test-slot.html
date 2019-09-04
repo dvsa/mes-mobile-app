@@ -44,7 +44,8 @@
         </ion-col>
         <ion-col class="test-outcome-col" no-padding padding-right>
           <test-outcome [slotDetail]="slot.slotDetail" [canStartTest]="canStartTest()" [testStatus]="componentState.testStatus$ | async"
-            [activityCode]="componentState.testActivityCode$ | async" [specialRequirements]="isIndicatorNeededForSlot()"></test-outcome>
+            [activityCode]="componentState.testActivityCode$ | async" [specialRequirements]="isIndicatorNeededForSlot()"
+            [hasSeenCandidateDetails]="hasSeenCandidateDetails"></test-outcome>
         </ion-col>
       </ion-row>
       <ion-row class="slot-footer" [ngClass]="{'vehicle-details-displayed': showVehicleDetails()}" align-items-center>
