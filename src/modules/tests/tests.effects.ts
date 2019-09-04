@@ -38,10 +38,12 @@ import { SetExaminerBooked } from './examiner-booked/examiner-booked.actions';
 import { SetExaminerConducted } from './examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
-import { getRekeySearchState } from '../../pages/rekey-search/rekey-search.reducer';
+import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
 import { Examiner } from '@dvsa/mes-test-schema/categories/B';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
+import { JournalModel } from '../../pages/journal/journal.model';
 
 @Injectable()
 export class TestsEffects {
@@ -53,6 +55,7 @@ export class TestsEffects {
     private networkStateProvider: NetworkStateProvider,
     private store$: Store<StoreModel>,
     public authenticationProvider: AuthenticationProvider,
+    private navigationStateProvider: NavigationStateProvider,
   ) {}
 
   @Effect({ dispatch: false })
@@ -129,25 +132,30 @@ export class TestsEffects {
         ),
       ),
     )),
-    switchMap(([action, journal, rekeySearch]) => {
-      const employeeId = this.authenticationProvider.getEmployeeId();
+    switchMap(([action, journal, rekeySearch]: [testActions.StartTest, JournalModel, RekeySearchModel]) => {
       const startTestAction = action as testActions.StartTest;
+      const isRekeySearch = this.navigationStateProvider.isRekeySearch();
+      const employeeId = this.authenticationProvider.getEmployeeId();
+
       let slot: TestSlot;
       let examiner: Examiner;
+
       let examinerBooked: string;
       const examinerConducted: string = employeeId;
       const examinerKeyed: string = employeeId;
 
-      if (!startTestAction.rekey) {
+      if (isRekeySearch) {
+        examinerBooked = getStaffNumber(rekeySearch);
+        examiner = {
+          staffNumber: examinerBooked,
+        };
+        slot = getBookedTestSlot(rekeySearch);
+      } else {
         examinerBooked = journal.examiner.staffNumber;
         examiner = journal.examiner;
         const slots = getSlotsOnSelectedDate(journal);
         const slotData = slots.map(slot => slot.slotData);
         slot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId && has(data, 'booking'));
-      } else {
-        examinerBooked = getStaffNumber(rekeySearch);
-        examiner.staffNumber = examinerBooked;
-        slot = getBookedTestSlot(rekeySearch);
       }
 
       const arrayOfActions: Action[] = [

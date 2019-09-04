@@ -31,6 +31,15 @@ import journalSlotsDataMock from '../../../pages/journal/__mocks__/journal-slots
 import { journalReducer } from '../../../pages/journal/journal.reducer';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import * as rekeySearchActions from '../../../pages/rekey-search/rekey-search.actions';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { rekeySearchReducer } from '../../../pages/rekey-search/rekey-search.reducer';
+import { SetExaminerBooked } from '../examiner-booked/examiner-booked.actions';
+import { bufferCount } from 'rxjs/operators';
+import { SetExaminerConducted } from '../examiner-conducted/examiner-conducted.actions';
+import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
 
 describe('Tests Effects', () => {
 
@@ -38,6 +47,8 @@ describe('Tests Effects', () => {
   let actions$: any;
   let testPersistenceProviderMock;
   let store$: Store<StoreModel>;
+  let navigationStateProviderMock: NavigationStateProviderMock;
+  let authenticationProviderMock: AuthenticationProviderMock;
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -46,6 +57,7 @@ describe('Tests Effects', () => {
         StoreModule.forRoot({
           journal: journalReducer,
           tests: testsReducer,
+          rekeySearch: rekeySearchReducer,
         }),
       ],
       providers: [
@@ -56,11 +68,14 @@ describe('Tests Effects', () => {
         { provide: TestSubmissionProvider, useClass: TestSubmissionProviderMock },
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         Store,
       ],
     });
     effects = TestBed.get(TestsEffects);
     testPersistenceProviderMock = TestBed.get(TestPersistenceProvider);
+    navigationStateProviderMock = TestBed.get(NavigationStateProvider);
+    authenticationProviderMock = TestBed.get(AuthenticationProvider);
     store$ = TestBed.get(Store);
   });
 
@@ -192,11 +207,85 @@ describe('Tests Effects', () => {
       // ACT
       actions$.next(new testsActions.StartTest(1001));
       // ASSERT
-      effects.startTestEffect$.subscribe((result) => {
-        if (result instanceof PopulateExaminer) {
-          expect(result.payload).toEqual(examiner);
-          done();
-        }
+      effects.startTestEffect$
+      .pipe(
+        bufferCount(10),
+      )
+      .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10]) => {
+        expect(res1).toEqual(new PopulateExaminer(examiner)),
+        expect(res8).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
+        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        done();
+      });
+    });
+
+    it('should mark the test as a rekey when this is a rekey', (done) => {
+      const selectedDate: string = new DateTime().format('YYYY-MM-DD');
+      const examiner = { staffNumber: '123', individualId: 456 };
+      store$.dispatch(new journalActions.SetSelectedDate(selectedDate));
+      store$.dispatch(
+        new journalActions.LoadJournalSuccess(
+          { examiner, slotItemsByDate: journalSlotsDataMock },
+          ConnectionStatus.ONLINE,
+          false,
+          new Date(),
+        ),
+      ); // Load in mock journal state
+      // ACT
+      actions$.next(new testsActions.StartTest(1001, true));
+      // ASSERT
+      effects.startTestEffect$
+      .pipe(
+        bufferCount(11),
+      )
+      .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11]) => {
+        expect(res1).toEqual(new PopulateExaminer(examiner)),
+        expect(res8).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
+        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res11).toEqual(new rekeyActions.MarkAsRekey()),
+        done();
+      });
+    });
+
+    it('should get the slot from booked slots when this is a rekey test started from the rekey search', (done) => {
+      spyOn(navigationStateProviderMock, 'isRekeySearch').and.returnValue(true);
+      const testSlot: TestSlot = {
+        slotDetail: {
+          slotId: 4363463,
+        },
+        testCentre: {
+          centreId: 54321,
+          centreName: 'Example Test Centre',
+          costCode: 'EXTC1',
+        },
+        booking: {
+          application: {
+            applicationId: 12345,
+            bookingSequence: 11,
+            checkDigit: 1,
+          },
+        },
+      };
+      const staffNumber = '654321';
+      store$.dispatch(new rekeySearchActions.SearchBookedTestSuccess(testSlot, staffNumber));
+      // ACT
+      actions$.next(new testsActions.StartTest(1001, true));
+      // ASSERT
+      effects.startTestEffect$
+      .pipe(
+        bufferCount(11),
+      )
+      .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11]) => {
+        expect(res1).toEqual(new PopulateExaminer({ staffNumber })),
+        expect(res2).toEqual(new PopulateApplicationReference(testSlot.booking.application)),
+        expect(res3).toEqual(new PopulateCandidateDetails(testSlot.booking.candidate)),
+        expect(res8).toEqual(new SetExaminerBooked(parseInt(staffNumber, 10))),
+        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res11).toEqual(new rekeyActions.MarkAsRekey()),
+        done();
       });
     });
   });
