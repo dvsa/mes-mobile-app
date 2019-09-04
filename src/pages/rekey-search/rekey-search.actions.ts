@@ -19,7 +19,7 @@ export class SearchBookedTest implements Action {
 
 export class SearchBookedTestSuccess implements Action {
   readonly type = SEARCH_BOOKED_TEST_SUCCESS;
-  constructor(public payload: TestSlot) {}
+  constructor(public testSlot: TestSlot, public staffNumber: string) {}
 }
 
 export class SearchBookedTestFailure implements Action {

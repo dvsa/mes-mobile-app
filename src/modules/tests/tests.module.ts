@@ -7,6 +7,8 @@ import { TestSubmissionProvider } from '../../providers/test-submission/test-sub
 import { TestsAnalyticsEffects } from './tests.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { TestDataEffects } from './test-data/test-data.effects';
+import { NavigationProvider } from '../../providers/navigation/navigation';
+import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 
 @NgModule({
   imports: [
@@ -20,6 +22,8 @@ import { TestDataEffects } from './test-data/test-data.effects';
   providers:[
     TestSubmissionProvider,
     AnalyticsProvider,
+    NavigationProvider,
+    NavigationStateProvider,
   ],
 })
 export class TestsModule {}
