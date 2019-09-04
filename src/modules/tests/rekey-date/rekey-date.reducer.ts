@@ -7,7 +7,7 @@ export const initialState: string = null;
 export const rekeyDateReducer = (state = initialState, action: rekeyDateActions.Types) => {
   switch (action.type) {
     case rekeyDateActions.SET_REKEY_DATE:
-      return new DateTime().format('YYYY-MM-DDTHH:mm:ss');
+      return state ? state : new DateTime().format('YYYY-MM-DDTHH:mm:ss');
     default:
       return state;
   }
