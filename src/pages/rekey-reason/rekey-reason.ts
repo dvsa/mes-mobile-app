@@ -14,7 +14,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
+import { RekeyReasonViewDidEnter, RekeyReasonFindUser, RekeyReasonFindUserFailure } from './rekey-reason.actions';
 import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -33,8 +33,8 @@ import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
-import { RekeyReasonUploadModel } from './rekey-reason.model';
-import { getUploadStatus } from './rekey-reason.selector';
+import { RekeyReasonUploadModel, RekeyReasonFindUserModel } from './rekey-reason.model';
+import { getUploadStatus, getFindUserStatus } from './rekey-reason.selector';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   getReasonForRekey,
@@ -49,6 +49,8 @@ import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
 import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
 
 import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
+
+import { getExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.reducer';
 import { FindUserProvider } from '../../providers/find-user/find-user';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
@@ -59,6 +61,7 @@ interface RekeyReasonPageState {
   transfer$: Observable<Transfer>;
   // TODO: Add transfer staff number into the page state
   other$: Observable<Other>;
+  findUser$: Observable<RekeyReasonFindUserModel>;
 }
 
 @IonicPage()
@@ -87,7 +90,8 @@ export class RekeyReasonPage extends BasePageComponent {
   reasonCharsRemaining: number = null;
 
   transferStaffExists: boolean = false;
-  checkingStaffExists: boolean = false;
+
+  initialExaminerConducted: number = null;
 
   constructor(
     public navController: NavController,
@@ -97,7 +101,6 @@ export class RekeyReasonPage extends BasePageComponent {
     private modalController: ModalController,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private findUserProvider: FindUserProvider,
   ) {
     super(platform, navController, authenticationProvider);
     this.formGroup = new FormGroup({
@@ -120,6 +123,29 @@ export class RekeyReasonPage extends BasePageComponent {
       select(getReasonForRekey),
     );
 
+    this.store$.pipe(
+      select(getRekeyReasonState),
+      select(getFindUserStatus),
+    ).subscribe(
+      (findUser) => {
+        this.transferStaffExists = findUser.isValid;
+      },
+    );
+
+
+    this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+      select(getExaminerConducted),
+    ).subscribe(
+      (existingExaminerConducted) => {
+        if (this.initialExaminerConducted === null) {
+          this.initialExaminerConducted = existingExaminerConducted;
+        }
+      },
+    );
+
+
     this.pageState = {
       uploadStatus$: this.store$.pipe(
         select(getRekeyReasonState),
@@ -133,6 +159,10 @@ export class RekeyReasonPage extends BasePageComponent {
       ),
       other$: currentReasonForRekey$.pipe(
         select(getRekeyOther),
+      ),
+      findUser$: this.store$.pipe(
+        select(getRekeyReasonState),
+        select(getFindUserStatus),
       ),
     };
 
@@ -211,7 +241,7 @@ export class RekeyReasonPage extends BasePageComponent {
       (this.formGroup.get('otherSelected').value
         && this.formGroup.get('otherReasonUpdated').valid);
 
-    const transferStaffValid = (!this.transferFilledIn() || this.transferFilledIn() && this.transferStaffExists);
+    const transferStaffValid = (!this.isTransferSelected() || this.isTransferSelected() && this.transferStaffExists);
 
     if (rekeyReasonProvided && reasonForRekeyIsValid
       && transferStaffValid) {
@@ -270,12 +300,15 @@ export class RekeyReasonPage extends BasePageComponent {
 
   transferSelected(checked: boolean) {
     this.formGroup.controls['transferStaffNumber'].setValue('');
-    this.transferStaffExists = false;
+    // To invalidate the input
+    this.store$.dispatch(new RekeyReasonFindUserFailure());
     this.store$.dispatch(new TransferSelected(checked));
+    this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
   }
 
   transferStaffNumberChanged() {
-    this.transferStaffExists = false;
+    // To invalidate the input
+    this.store$.dispatch(new RekeyReasonFindUserFailure());
     this.store$.dispatch(new SetExaminerConducted(this.transferValue()));
   }
 
@@ -287,8 +320,8 @@ export class RekeyReasonPage extends BasePageComponent {
     return parseInt(this.formGroup.controls['transferStaffNumber'].value, 10);
   }
 
-  transferFilledIn(): boolean {
-    return this.formGroup.controls['transferStaffNumber'].value.length > 0;
+  isTransferSelected(): boolean {
+    return this.formGroup.get('transferSelected').value;
   }
 
   characterCountChanged(charactersRemaining: number) {
@@ -341,22 +374,7 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   checkUserExists() {
-    this.checkingStaffExists = true;
-    this.findUserProvider.userExists(this.transferValue().toString()).subscribe(
-      () => {
-        this.transferStaffExists = true;
-        this.checkingStaffExists = false;
-      },
-      (error) => {
-        if (error.status === HttpStatusCodes.NOT_FOUND) {
-          this.transferStaffExists = false;
-        } else {
-          // Show error screen here
-          console.log('an error has happened');
-        }
-        this.checkingStaffExists = false;
-      },
-    );
+    this.store$.dispatch(new RekeyReasonFindUser(this.transferValue().toString()));
   }
 
 }

@@ -51,7 +51,7 @@ export const environment: LocalEnvironmentFile = {
     autoSendInterval: 1000 * 60,
   },
   user: {
-    findUser: 'dummy/users/search/url',
+    findUser: 'https://dev.mes.dev-dvsacloud.uk/v1/users/{staffNumber}',
   },
   requestTimeout: 20000,
 };

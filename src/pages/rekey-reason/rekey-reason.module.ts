@@ -8,6 +8,7 @@ import { rekeyReasonReducer } from './rekey-reason.reducer';
 import { DirectivesModule } from '../../directives/directives.module';
 import { FindUserProvider } from '../../providers/find-user/find-user';
 import { ComponentsModule } from '../../components/common/common-components.module';
+import { RekeyReasonEffects } from './rekey-reason.effects';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ComponentsModule } from '../../components/common/common-components.modu
     StoreModule.forFeature('rekeyReason', rekeyReasonReducer),
     EffectsModule.forFeature([
       RekeyReasonAnalyticsEffects,
+      RekeyReasonEffects,
     ]),
     DirectivesModule,
     ComponentsModule,

@@ -12,6 +12,11 @@ page-rekey-reason {
     min-width: 40%;
   }
 
+  .staffNumberRow {
+    height: 70px;
+    max-height: 70px;
+  }
+
   ion-spinner {
     margin-left: 6px;
     * {
@@ -130,6 +135,10 @@ page-rekey-reason {
     word-wrap: break-word;
   }
 
+  .scroll-content {
+    padding: 0;
+  }
+  
   .card-content-ios{
     padding: 0;
   }

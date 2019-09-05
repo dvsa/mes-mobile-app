@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content no-bounce padding>
+<ion-content no-bounce>
   <ion-card>
     <ion-card-header>
       <h4>Reason for use</h4>
@@ -50,20 +50,26 @@
             </label>
           </ion-col>
           <ion-col col-56>
-            <div class="selected-border" [class.ng-invalid]="!transferStaffExists" id="transferSection" *ngIf="(pageState.transfer$ | async).selected">
+            <div class="selected-border" [class.ng-invalid]="!(pageState.findUser$ | async).isValid" id="transferSection"
+              *ngIf="(pageState.transfer$ | async).selected">
               <ion-row>
                 <div class="transferInfo">
                   Enter staff number of examiner who conducted the test
                 </div>
               </ion-row>
-              <ion-row>
-                <ion-input placeholder="Staff Number" type="number" id="transferStaffNumber" class="staffNumber"
+              <ion-row class="staffNumberRow">
+                <ion-input placeholder="Staff Number" type="number" numbersOnly id="transferStaffNumber" class="staffNumber"
                   formControlName="transferStaffNumber" clearInput (change)="transferStaffNumberChanged()"></ion-input>
                 <button (click)="checkUserExists()" id="find-user" class="mes-return-button" ion-button>
                   Submit
-                  <ion-spinner class="search-spinner" name="bubbles" *ngIf="checkingStaffExists"></ion-spinner>
+                  <ion-spinner class="search-spinner" name="bubbles" *ngIf="(pageState.findUser$ | async).isLoading"></ion-spinner>
                 </button>
-                <tick-indicator *ngIf="transferStaffExists" [ticked]="transferStaffExists"></tick-indicator>
+                <tick-indicator *ngIf="(pageState.findUser$ | async).isValid" [ticked]="(pageState.findUser$ | async).isValid"></tick-indicator>
+              </ion-row>
+              <ion-row class="validation-message-row" align-items-center>
+                <div [class.ng-invalid]="true" *ngIf="!(pageState.findUser$ | async).isValid" class="validation-text">
+                  Transfer staff number is invalid
+                </div>
               </ion-row>
             </div>
           </ion-col>
@@ -77,7 +83,8 @@
             </label>
           </ion-col>
           <ion-col col-56>
-            <div class="selected-border" id="reasonSection" *ngIf="(pageState.other$ | async).selected">
+            <div class="selected-border" [class.ng-invalid]="!this.formGroup.get('otherReasonUpdated').valid" id="reasonSection"
+              *ngIf="(pageState.other$ | async).selected">
               <textarea id="otherReasonUpdated" formControlName="otherReasonUpdated" charLimit="200" charCount
                 (onCharacterCountChanged)="characterCountChanged($event)" [class.ng-invalid]="invalid" (change)="otherReasonUpdatedChanged()">
                 </textarea>
