@@ -6,6 +6,8 @@ export const COMMUNICATION_VIEW_CHOSE_EMAIL_PROVIDED_AT_BOOKING =
 export const COMMUNICATION_VIEW_CHOSE_NEW_EMAIL =
   '[CommunicationPage] Communication page chose new email';
 export const COMMUNICATION_VIEW_ADDED_NEW_CANDIDATE_EMAIL = '[CommunicationPage] Added new candidate email';
+export const COMMUNICATION_SUBMIT_INFO = '[CommunicationPage] Submit Waiting Room Info';
+export const COMMUNICATION_SUBMIT_INFO_ERROR = '[CommunicationPage] Submit Waiting Room Info Error';
 export const COMMUNICATION_VALIDATION_ERROR = '[CommunicationPage] Communication page validation error';
 
 export class CommunicationViewDidEnter implements Action {
@@ -25,6 +27,15 @@ export class CommunicationViewInputNewEmail implements Action {
   constructor(public payload: string) {}
 }
 
+export class CommunicationSubmitInfo implements Action {
+  readonly type = COMMUNICATION_SUBMIT_INFO;
+}
+
+export class CommunicationSubmitInfoError implements Action {
+  readonly type = COMMUNICATION_SUBMIT_INFO_ERROR;
+  constructor(public errorMessage: string) { }
+}
+
 export class CommunicationValidationError implements Action {
   readonly type = COMMUNICATION_VALIDATION_ERROR;
   constructor(public errorMessage: string) { }
@@ -34,4 +45,7 @@ export type Types =
   | CommunicationViewDidEnter
   | CommunicationViewChoseEmailProvidedAtBooking
   | CommunicationViewChoseNewEmail
-  | CommunicationViewInputNewEmail;
+  | CommunicationViewInputNewEmail
+  | CommunicationSubmitInfo
+  | CommunicationSubmitInfoError
+  | CommunicationValidationError;

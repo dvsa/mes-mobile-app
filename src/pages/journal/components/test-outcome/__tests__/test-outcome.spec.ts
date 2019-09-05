@@ -9,7 +9,7 @@ import { AnalyticsProviderMock } from '../../../../../providers/analytics/__mock
 import { AnalyticsProvider } from '../../../../../providers/analytics/analytics';
 import { StartTest, ActivateTest } from '../../../journal.actions';
 import { TestStatus } from '../../../../../modules/tests/test-status/test-status.model';
-import { OFFICE_PAGE, COMMUNICATION_PAGE } from '../../../../page-names.constants';
+import { OFFICE_PAGE, WAITING_ROOM_PAGE } from '../../../../page-names.constants';
 import { DateTime, Duration } from '../../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../../shared/models/activity-codes';
@@ -105,7 +105,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(COMMUNICATION_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(WAITING_ROOM_PAGE);
       });
     });
   });

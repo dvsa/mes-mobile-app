@@ -24,7 +24,7 @@ import {
 } from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { SubmitWaitingRoomInfo, WaitingRoomValidationError } from '../waiting-room.actions';
+import { WaitingRoomValidationError } from '../waiting-room.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
@@ -121,9 +121,9 @@ describe('WaitingRoomPage', () => {
   });
 
   describe('clickBack', () => {
-    it('should should not trigger the lock screen', () => {
+    it('should should trigger the lock screen', () => {
       component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).not.toHaveBeenCalled();
+      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
     });
 
     describe('Declaration Validation', () => {
@@ -164,15 +164,6 @@ describe('WaitingRoomPage', () => {
     });
   });
   describe('onSubmit', () => {
-    it('should dispatch the SubmitWaitingRoomInfo action', fakeAsync(() => {
-      const form = component.form;
-      form.get('insuranceCheckboxCtrl').setValue(true);
-      form.get('residencyCheckboxCtrl').setValue(true);
-      form.get('signatureAreaCtrl').setValue('sig');
-      component.onSubmit();
-      tick();
-      expect(store$.dispatch).toHaveBeenCalledWith(new SubmitWaitingRoomInfo());
-    }));
     it('should dispatch the WaitingRoomValidationError action', fakeAsync(() => {
       const form = component.form;
       form.get('insuranceCheckboxCtrl').setValue(false);

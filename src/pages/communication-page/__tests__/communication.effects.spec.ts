@@ -1,15 +1,15 @@
-import { WaitingRoomEffects } from '../waiting-room.effects';
+import { CommunicationEffects } from '../communication.effects';
 import { TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as waitingRoomActions from '../waiting-room.actions';
+import * as communicationActions from '../communication.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 
-describe('Waiting Room Effects', () => {
+describe('Communication Effects', () => {
 
-  let effects: WaitingRoomEffects;
+  let effects: CommunicationEffects;
   let actions$: any;
 
   const currentSlotId = '1234';
@@ -29,20 +29,20 @@ describe('Waiting Room Effects', () => {
         }),
       ],
       providers: [
-        WaitingRoomEffects,
+        CommunicationEffects,
         provideMockActions(() => actions$),
         Store,
       ],
     });
-    effects = TestBed.get(WaitingRoomEffects);
+    effects = TestBed.get(CommunicationEffects);
   });
 
-  describe('submitWaitingRoomInfoEffect', () => {
+  describe('submitCommunicationInfoEffect', () => {
 
     it('should return SET_STATUS_DECIDED & PERSIST_TESTS actions', (done) => {
-      actions$.next(new waitingRoomActions.SubmitWaitingRoomInfo());
+      actions$.next(new communicationActions.CommunicationSubmitInfo());
 
-      effects.submitWaitingRoomInfoEffect$.subscribe((result) => {
+      effects.communicationSubmitInfoEffect$.subscribe((result) => {
         if (result instanceof testStatusActions.SetTestStatusStarted) {
           expect(result).toEqual(new testStatusActions.SetTestStatusStarted(currentSlotId));
         }
