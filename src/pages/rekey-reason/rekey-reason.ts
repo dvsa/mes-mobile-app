@@ -46,6 +46,7 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
 import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
+import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
@@ -158,6 +159,7 @@ export class RekeyReasonPage extends BasePageComponent {
   onUploadRekeyModalDismiss = (event: UploadRekeyModalEvent): void => {
     switch (event) {
       case UploadRekeyModalEvent.UPLOAD:
+        this.store$.dispatch(new SetRekeyDate());
         this.store$.dispatch(new SendCurrentTest());
         break;
     }
