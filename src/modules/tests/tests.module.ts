@@ -9,6 +9,8 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { TestDataEffects } from './test-data/test-data.effects';
 import { NavigationProvider } from '../../providers/navigation/navigation';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
+import { ExaminerBookedEffects } from './examiner-booked/examiner-booked.effects';
+import { ExaminerConductedEffects } from './examiner-conducted/examiner-conducted.effects';
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import { NavigationStateProvider } from '../../providers/navigation-state/naviga
       TestsEffects,
       TestsAnalyticsEffects,
       TestDataEffects,
+      ExaminerBookedEffects,
+      ExaminerConductedEffects,
     ]),
   ],
   providers:[
