@@ -62,6 +62,7 @@ interface RekeyReasonPageState {
   // TODO: Add transfer staff number into the page state
   other$: Observable<Other>;
   findUser$: Observable<RekeyReasonFindUserModel>;
+  examinerConducted$: Observable<number>;
 }
 
 @IonicPage()
@@ -92,6 +93,12 @@ export class RekeyReasonPage extends BasePageComponent {
   transferStaffExists: boolean = false;
 
   initialExaminerConducted: number = null;
+
+  ipadIssueUpdate;
+
+  initialIpadIssue = true;
+  initialTransfer = true;
+  initialOther = true;
 
   constructor(
     public navController: NavController,
@@ -132,19 +139,19 @@ export class RekeyReasonPage extends BasePageComponent {
       },
     );
 
-
     this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getExaminerConducted),
     ).subscribe(
       (existingExaminerConducted) => {
-        if (this.initialExaminerConducted === null) {
+        if (this.initialExaminerConducted === null && !this.formGroup.get('transferSelected').value) {
           this.initialExaminerConducted = existingExaminerConducted;
+          // this.store$.dispatch(new SetExaminerConducted(null));
+          // this.formGroup.controls['transferStaffNumber'].setValue(existingExaminerConducted);
         }
       },
     );
-
 
     this.pageState = {
       uploadStatus$: this.store$.pipe(
@@ -164,7 +171,40 @@ export class RekeyReasonPage extends BasePageComponent {
         select(getRekeyReasonState),
         select(getFindUserStatus),
       ),
+      examinerConducted$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getExaminerConducted),
+      ),
     };
+
+
+    this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
+      (ipadIssue) => {
+        this.formGroup.get('ipadIssue').setValue(ipadIssue.selected);
+        if (ipadIssue.selected) {
+          this.formGroup.get('ipadIssueTechFault').setValue(ipadIssue.technicalFault);
+          this.formGroup.get('ipadIssueLost').setValue(ipadIssue.lost);
+          this.formGroup.get('ipadIssueStolen').setValue(ipadIssue.stolen);
+          this.formGroup.get('ipadIssueBroken').setValue(ipadIssue.broken);
+        }
+      },
+    );
+
+    this.pageState.transfer$.subscribe(
+      (transfer) => {
+        this.formGroup.get('transferSelected').setValue(transfer.selected);
+      },
+    );
+
+    this.pageState.other$.subscribe(
+      (other) => {
+        this.formGroup.get('otherSelected').setValue(other.selected);
+        if (other.selected) {
+          this.formGroup.get('otherReasonUpdated').setValue(other.reason);
+        }
+      },
+    );
 
     const { uploadStatus$ } = this.pageState;
 
@@ -184,6 +224,7 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   onUploadPressed = (): void => {
+    console.log(this.formGroup.value);
     if (this.formIsValid()) {
       this.onShowUploadRekeyModal();
     }
@@ -303,7 +344,13 @@ export class RekeyReasonPage extends BasePageComponent {
     // To invalidate the input
     this.store$.dispatch(new RekeyReasonFindUserFailure());
     this.store$.dispatch(new TransferSelected(checked));
-    this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
+
+    if (!checked) {
+      this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
+    } else {
+      this.store$.dispatch(new SetExaminerConducted(null));
+      this.formGroup.controls['transferStaffNumber'].setValue('');
+    }
   }
 
   transferStaffNumberChanged() {

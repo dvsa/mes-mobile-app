@@ -14,7 +14,6 @@ import { FindUserProvider } from '../../providers/find-user/find-user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators/map';
 
-
 @Injectable()
 export class RekeyReasonEffects {
   constructor(

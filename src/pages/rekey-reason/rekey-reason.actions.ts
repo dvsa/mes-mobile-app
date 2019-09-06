@@ -5,7 +5,6 @@ export const REKEY_REASON_FIND_USER = '[RekeyReasonPage] Rekey Reason find user 
 export const REKEY_REASON_FIND_USER_SUCCESS = '[RekeyReasonPage] Rekey Reason find user is success';
 export const REKEY_REASON_FIND_USER_FAILURE = '[RekeyReasonPage] Rekey Reason find user is failure';
 
-
 export class RekeyReasonViewDidEnter implements Action {
   readonly type = REKEY_REASON_VIEW_DID_ENTER;
 }
