@@ -51,8 +51,6 @@ import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-mo
 import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
 
 import { getExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.reducer';
-import { FindUserProvider } from '../../providers/find-user/find-user';
-import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
 
 interface RekeyReasonPageState {
