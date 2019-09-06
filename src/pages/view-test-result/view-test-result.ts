@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
+import { RekeyDetailsModel } from './components/rekey-details-card/rekey-details-card.model';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
 import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
@@ -331,6 +332,24 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   getEyesightTestSeriousFault(eyesightTest: EyesightTest) {
     return getEyesightTestSeriousFaultAndComment(eyesightTest).map(this.parseResult);
+  }
+
+  getRekeyDetails(): RekeyDetailsModel {
+    if (!this.testResult) {
+      return null;
+    }
+
+    const testDate: DateTime = new DateTime(this.testResult.journalData.testSlotAttributes.start);
+    const rekeyDate: DateTime = new DateTime(this.testResult.rekeyDate);
+
+    return {
+
+      scheduledStaffNumber: this.testResult.examinerBooked,
+      conductedStaffNumber: this.testResult.examinerConducted,
+      testDate: testDate.format('dddd Do MMMM YYYY'),
+      rekeyedStaffNumber: this.testResult.examinerKeyed,
+      rekeyDate: rekeyDate.format('dddd Do MMMM YYYY'),
+    };
   }
 
   parseResult(result: CommentedCompetency) {
