@@ -2,7 +2,7 @@ import { JournalModel } from '../journal.model';
 import {
   getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
   getError, getLastRefreshedTime,
-  canNavigateToNextDay, canNavigateToPreviousDay,
+  canNavigateToNextDay, canNavigateToPreviousDay, getSlotIdsBeforeToday,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
@@ -212,6 +212,57 @@ describe('JournalSelector', () => {
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
 
       expect(result).toBe(true);
+    });
+  });
+
+  fdescribe('getSlotIdsBeforeToday', () => {
+    it('should select the test slots from the state', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          ['2019-01-12']: [
+            {
+              hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
+              slotData: {
+                slotDetail: {
+                  slotId: 1001,
+                },
+              },
+            },
+          ],
+          ['2019-01-13']: [
+            {
+              hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
+              slotData: {
+                slotDetail: {
+                  slotId: 2001,
+                },
+              },
+            },
+          ],
+          ['2019-01-14']: [
+            {
+              hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
+              slotData: {
+                slotDetail: {
+                  slotId: 3001,
+                },
+              },
+            },
+          ],
+        },
+        selectedDate: '2019-01-14',
+        examiner: { staffNumber: '123', individualId: 456 },
+      };
+
+      const slotIds = getSlotIdsBeforeToday(journal, DateTime.at('2019-01-14'));
+
+      expect(slotIds.length).toBe(2);
+      expect(slotIds).toEqual([1001, 2001]);
     });
   });
 
