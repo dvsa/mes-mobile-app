@@ -81,23 +81,35 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
   return null;
 };
 
-export const getUnsubmittedTests = (tests: TestsModel): StandardCarTestCATBSchema[] => {
-  const unsubmitedTestsKeys: string[] = Object.keys(tests.testStatus).filter(slotId =>
-    tests.testStatus[slotId] === TestStatus.Decided);
-
-  return unsubmitedTestsKeys.map((slotId: string) => tests.startedTests[slotId]);
+const getIncompleteTestsKeys = (tests: TestsModel): string[] => {
+  return Object.keys(tests.testStatus).filter(slotId =>
+    isTestBeforeToday(tests.startedTests[slotId])
+    && tests.testStatus[slotId] !== TestStatus.Submitted
+    && tests.testStatus[slotId] !== TestStatus.Completed);
 };
 
-export const getUnsubmittedTestsCount = (tests: TestsModel): number =>
-  Object.keys(tests.testStatus).filter(slotId => tests.testStatus[slotId] === TestStatus.Decided).length;
+const isTestBeforeToday = (test: StandardCarTestCATBSchema): boolean => {
+  const testDate = new DateTime(test.journalData.testSlotAttributes.start);
+  const today = new DateTime();
+  return today.daysDiff(new Date(testDate.format('YYYY-MM-DD'))) < 0;
+};
 
-export const getOldestUnsubmittedTest = (tests: TestsModel): StandardCarTestCATBSchema => {
-  const unsubmitedTestsKeys: string[] = Object.keys(tests.testStatus).filter(slotId =>
-    tests.testStatus[slotId] === TestStatus.Decided);
+export const getIncompleteTests = (tests: TestsModel): StandardCarTestCATBSchema[] => {
+  const incompleteTestsKeys: string[] = getIncompleteTestsKeys(tests);
+  return incompleteTestsKeys.map((slotId: string) => tests.startedTests[slotId]);
+};
+
+export const getIncompleteTestsCount = (tests: TestsModel): number => {
+  const incompleteTestsKeys: string[] = getIncompleteTestsKeys(tests);
+  return incompleteTestsKeys.length;
+};
+
+export const getOldestIncompleteTest = (tests: TestsModel): StandardCarTestCATBSchema => {
+  const incompleteTestsKeys: string[] = getIncompleteTestsKeys(tests);
 
   let oldestTest: StandardCarTestCATBSchema;
 
-  unsubmitedTestsKeys.forEach((slotId: string) => {
+  incompleteTestsKeys.forEach((slotId: string) => {
     if (!oldestTest) {
       oldestTest = tests.startedTests[slotId];
       return;

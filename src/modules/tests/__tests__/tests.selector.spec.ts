@@ -7,9 +7,9 @@ import {
   isTestReportPracticeTest,
   isEndToEndPracticeTest,
   getActivityCodeBySlotId,
-  getUnsubmittedTests,
-  getUnsubmittedTestsCount,
-  getOldestUnsubmittedTest,
+  getIncompleteTests,
+  getIncompleteTestsCount,
+  getOldestIncompleteTest,
 } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -463,33 +463,33 @@ describe('testsSelector', () => {
         3002: TestStatus.Submitted,
       },
     };
-    describe('getUnsubmittedTests', () => {
+    describe('getIncompleteTests', () => {
       it('should return the unsubmitted tests', () => {
-        const result = getUnsubmittedTests(testState);
+        const result = getIncompleteTests(testState);
         expect(result.length).toEqual(3);
       });
       it('should return no unsubmitted tests', () => {
-        const result = getUnsubmittedTests(initialState);
+        const result = getIncompleteTests(initialState);
         expect(result.length).toEqual(0);
       });
     });
-    describe('getUnsubmittedTestsCount', () => {
+    describe('getIncompleteTestsCount', () => {
       it('should return the correct number of unsubmitted tests', () => {
-        const result = getUnsubmittedTestsCount(testState);
+        const result = getIncompleteTestsCount(testState);
         expect(result).toEqual(3);
       });
       it('should return the correct number of unsubmitted tests', () => {
-        const result = getUnsubmittedTestsCount(initialState);
+        const result = getIncompleteTestsCount(initialState);
         expect(result).toEqual(0);
       });
     });
-    describe('getOldestUnsubmittedTest', () => {
+    describe('getOldestIncompleteTest', () => {
       it('should return the oldest unsubmitted test', () => {
-        const result = getOldestUnsubmittedTest(testState);
+        const result = getOldestIncompleteTest(testState);
         expect(result.journalData.testSlotAttributes.slotId).toEqual(2008);
       });
       it('should return null for the oldest unsubmitted test', () => {
-        const result = getOldestUnsubmittedTest(initialState);
+        const result = getOldestIncompleteTest(initialState);
         expect(result).toBeUndefined();
       });
     });
