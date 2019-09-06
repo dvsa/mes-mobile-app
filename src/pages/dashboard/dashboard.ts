@@ -34,7 +34,7 @@ export class DashboardPage extends BasePageComponent {
   @ViewChild(Navbar) navBar: Navbar;
 
   @ViewChild(IncompleteTestsBanner)
-  signatureArea: IncompleteTestsBanner;
+  incompleteTestsBanner: IncompleteTestsBanner;
 
   pageState: DashboardPageState;
   subscription: Subscription;
