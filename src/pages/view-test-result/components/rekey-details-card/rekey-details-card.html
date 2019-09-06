@@ -1,0 +1,49 @@
+<ion-card>
+    <ion-card-header>
+      <h4>Rekey details</h4>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>Scheduled for</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.scheduledStaffNumber }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>Conducted by</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.conductedStaffNumber }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>Date of test</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.testDate }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>Rekeyed by</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.rekeyedStaffNumber }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col col-40>
+            <label>Date of rekey</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.rekeyDate }}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
