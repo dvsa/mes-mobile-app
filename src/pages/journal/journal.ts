@@ -27,7 +27,6 @@ import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
-import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 import { ERROR_PAGE } from '../page-names.constants';
 import { App } from './../../app/app.component';
 import { ErrorTypes } from '../../shared/models/error-message';
@@ -36,6 +35,7 @@ import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
 import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-commitment';
 import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slot';
+import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -44,7 +44,6 @@ interface JournalPageState {
   isLoading$: Observable<boolean>;
   lastRefreshedTime$: Observable<string>;
   appVersion$: Observable<string>;
-  incompleteTestCounter$: Observable<number>;
 }
 
 @IonicPage()
@@ -56,6 +55,9 @@ interface JournalPageState {
 export class JournalPage extends BasePageComponent implements OnInit {
 
   @ViewChild('slotContainer', { read: ViewContainerRef }) slotContainer;
+
+  @ViewChild(IncompleteTestsBanner)
+  incompleteTestsBanner: IncompleteTestsBanner;
 
   pageState: JournalPageState;
   selectedDate: string;
@@ -80,7 +82,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
     public analytics: AnalyticsProvider,
     public dateTimeProvider: DateTimeProvider,
     public appConfigProvider: AppConfigProvider,
-    public incompleteTestsProvider: IncompleteTestsProvider,
     private app: App,
     private deviceProvider: DeviceProvider,
     public screenOrientation: ScreenOrientation,
@@ -121,10 +122,9 @@ export class JournalPage extends BasePageComponent implements OnInit {
         select(getAppInfoState),
         map(getVersionNumber),
       ),
-      incompleteTestCounter$: this.incompleteTestsProvider.calculateIncompleteTests(),
     };
 
-    const { selectedDate$, slots$, error$, isLoading$, incompleteTestCounter$ } = this.pageState;
+    const { selectedDate$, slots$, error$, isLoading$ } = this.pageState;
 
     // Merge observables into one
     this.merged$ = merge(
@@ -135,7 +135,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
       // Run any transformations necessary here
       error$.pipe(map(this.showError)),
       isLoading$.pipe(map(this.handleLoadingUI)),
-      incompleteTestCounter$,
     );
 
   }

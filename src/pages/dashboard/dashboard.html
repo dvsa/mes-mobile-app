@@ -13,6 +13,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-bounce>
+  <incomplete-tests-banner></incomplete-tests-banner>
   <profile-header [employeeId]="employeeId" [name]="name" [role]="role"></profile-header>
   <hr/>
   <h4 class="date">{{todaysDate}}</h4>
@@ -32,6 +33,4 @@
   <hr *ngIf="showEndToEndPracticeMode() || showTestReportPracticeMode()" />
   <practice-test-report-card id="testReportPracticeMode" *ngIf="showTestReportPracticeMode()"></practice-test-report-card>
   <practice-end-to-end-card id="endToendPracticeMode" *ngIf="showEndToEndPracticeMode()"></practice-end-to-end-card>
-  <div>Unsub count {{pageState.unsubmittedTestsCount$ | async}}</div>
-  <div>Unsub date {{pageState.oldestUnsubmittedTestDate$ | async}}</div>
 </ion-content>

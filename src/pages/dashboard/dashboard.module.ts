@@ -7,6 +7,7 @@ import { DashboardAnalyticsEffects } from './dashboard.analytics.effects';
 import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/common/common-components.module';
 import { TranslateModule } from 'ng2-translate';
+import { JournalPageModule } from '../journal/journal.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TranslateModule } from 'ng2-translate';
     ]),
     ComponentsModule,
     TranslateModule,
+    JournalPageModule,
   ],
   providers: [
     AnalyticsProvider,

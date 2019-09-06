@@ -17,16 +17,11 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 import { BasePageComponent } from '../../shared/classes/base-page';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getUnsubmittedTestsCount, getOldestUnsubmittedTest } from '../../modules/tests/tests.selector';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
-import { DateTime } from '../../shared/helpers/date-time';
-import { get } from 'lodash';
+import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
+import * as journalActions from './../journal/journal.actions';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
-  unsubmittedTestsCount$: Observable<number>;
-  oldestUnsubmittedTestDate$: Observable<string>;
 }
 
 @IonicPage()
@@ -37,6 +32,9 @@ interface DashboardPageState {
 export class DashboardPage extends BasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
+
+  @ViewChild(IncompleteTestsBanner)
+  signatureArea: IncompleteTestsBanner;
 
   pageState: DashboardPageState;
   subscription: Subscription;
@@ -76,6 +74,7 @@ export class DashboardPage extends BasePageComponent {
       this.insomnia.allowSleepAgain();
       this.deviceProvider.disableSingleAppMode();
     }
+    this.store$.dispatch(new journalActions.LoadJournalSilent());
   }
 
   clickBack(): void {
@@ -93,16 +92,6 @@ export class DashboardPage extends BasePageComponent {
       appVersion$: this.store$.pipe(
         select(getAppInfoState),
         map(getVersionNumber),
-      ),
-      unsubmittedTestsCount$: this.store$.pipe(
-        select(getTests),
-        select(getUnsubmittedTestsCount),
-      ),
-      oldestUnsubmittedTestDate$: this.store$.pipe(
-        select(getTests),
-        select(getOldestUnsubmittedTest),
-        map((test: StandardCarTestCATBSchema) =>
-          new DateTime(get(test, 'journalData.testSlotAttributes.start', '')).format('YYYY-MM-DD')),
       ),
     };
   }
