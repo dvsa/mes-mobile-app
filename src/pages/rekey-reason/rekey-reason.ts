@@ -145,7 +145,7 @@ export class RekeyReasonPage extends BasePageComponent {
       select(getExaminerConducted),
     ).subscribe(
       (existingExaminerConducted) => {
-        if (this.initialExaminerConducted === null && !this.formGroup.get('transferSelected').value) {
+        if (this.initialExaminerConducted === null) {
           this.initialExaminerConducted = existingExaminerConducted;
           // this.store$.dispatch(new SetExaminerConducted(null));
           // this.formGroup.controls['transferStaffNumber'].setValue(existingExaminerConducted);
@@ -217,14 +217,15 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   ionViewDidLeave(): void {
+    this.store$.dispatch(new TransferSelected(false));
+    this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   onUploadPressed = (): void => {
-    console.log(this.formGroup.value);
-    if (this.formIsValid()) {
+    if (this.formIsValid(true)) {
       this.onShowUploadRekeyModal();
     }
   }
@@ -273,7 +274,7 @@ export class RekeyReasonPage extends BasePageComponent {
     }
   }
 
-  formIsValid() {
+  formIsValid(showToast: boolean) {
     const rekeyReasonProvided = this.formGroup.get('ipadIssue').value ||
       (this.formGroup.get('otherSelected').value || this.formGroup.get('transferStaffNumber').value);
 
@@ -288,13 +289,15 @@ export class RekeyReasonPage extends BasePageComponent {
       return true;
     }
 
-    if (!rekeyReasonProvided) {
-      this.createToast('Provide at least one reason for rekey');
+    if (showToast) {
+      if (!rekeyReasonProvided) {
+        this.createToast('Provide at least one reason for rekey');
+      }
+      if (!transferStaffValid) {
+        this.createToast('Transfer staff number is invalid');
+      }
+      this.toast.present();
     }
-    if (!transferStaffValid) {
-      this.createToast('Transfer staff number is invalid');
-    }
-    this.toast.present();
   }
 
   private createToast = (errorMessage: string) => {
