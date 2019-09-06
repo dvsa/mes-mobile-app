@@ -4,6 +4,7 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   category: 'B',
   activityCode: '2',
   rekey: false,
+  rekeyDate: '2019-08-05T09:00:00',
   changeMarker: false,
   examinerBooked: 1,
   examinerConducted: 1,
