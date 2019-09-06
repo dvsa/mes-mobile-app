@@ -178,7 +178,6 @@ export class RekeyReasonPage extends BasePageComponent {
       ),
     };
 
-
     this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
       (ipadIssue) => {
         this.formGroup.get('ipadIssue').setValue(ipadIssue.selected);
