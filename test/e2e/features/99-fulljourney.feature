@@ -3,10 +3,10 @@ Feature: Full end to end journey
    Scenario: Examiner completes a passed test with no faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page
@@ -31,10 +31,10 @@ Feature: Full end to end journey
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Jane Doe" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page with a tell me driver fault
@@ -152,8 +152,6 @@ Feature: Full end to end journey
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
       When I check candidate details for "Mr Ali Campbell"
       And I start the test for "Mr Ali Campbell"
-      And the candidate requests to receive results by post
-      And the candidate confirms their communication preference
       Then I should see the "Declaration - Ali Campbell" page
       And I terminate the test
       Then I should see the Debrief page with outcome "Terminated"
@@ -175,10 +173,10 @@ Feature: Full end to end journey
       Given I am logged in as "mobexaminer1" and I have a test for "Mr James Brown"
       When I check candidate details for "Mr James Brown"
       And I start the test for "Mr James Brown"
-      And the candidate requests to receive results by post
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - James Brown" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - James Brown" page
+      And the candidate requests to receive results by post
       And I proceed to the car
       Then I should see the "James Brown" page
       And I fail the eye sight test
@@ -200,10 +198,10 @@ Feature: Full end to end journey
    Scenario: Candidate fails a test with 16 driver faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page

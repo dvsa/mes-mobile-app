@@ -3,10 +3,10 @@ Feature: Debrief including Health Declaration
    Scenario: On a pass test debrief the correct candidate details are displayed and validation is enforced
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Florence Pearson" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Florence Pearson" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Florence Pearson" page
       And I complete the waiting room to car page
@@ -32,10 +32,10 @@ Feature: Debrief including Health Declaration
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
       And I start the test for "Mrs Jane Doe"
-      And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      Then I should see the "Declaration - Jane Doe" page
       And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Jane Doe" page
+      And the candidate enters a new email address
       And I proceed to the car
       Then I should see the "Jane Doe" page
       And I complete the waiting room to car page with automatic transmission
@@ -51,10 +51,11 @@ Feature: Debrief including Health Declaration
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
       When I check candidate details for "Mr Ali Campbell"
       And I start the test for "Mr Ali Campbell"
+      And the candidate completes the declaration page
+      And the candidate confirms their declaration
+      Then I should see the "Declaration - Ali Campbell" page
       And the candidate requests to receive results by post
       And the candidate confirms their communication preference
-      Then I should see the "Declaration - Ali Campbell" page
-      And the candidate completes the declaration page
       And I proceed to the car
       Then I should see the "Ali Campbell" page
       And I complete the waiting room to car page

@@ -5,10 +5,10 @@ Feature: Waiting Room to Car
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
       When I check candidate details for "Miss Theresa Shaw"
       And I start the test for "Miss Theresa Shaw"
+      And the candidate completes the declaration page
+      And the candidate confirms their declaration
       Then I should see the "Declaration - Theresa Shaw" page
       And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      And the candidate completes the declaration page
       And I proceed to the car
       Then I should see the "Theresa Shaw" page
       And validation item "waiting-room-to-car-eyesight-validation-text" should not be visible
@@ -32,10 +32,10 @@ Feature: Waiting Room to Car
    Scenario: Adding a Tell me question fault carries through to test
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
+      And the candidate completes the declaration page
+      And the candidate confirms their declaration
       Then I should see the "Declaration - Florence Pearson" page
       And the candidate enters a new email address
-      And the candidate confirms their communication preference
-      And the candidate completes the declaration page
       And I proceed to the car
       Then I should see the "Florence Pearson" page
       When I complete the waiting room to car page with a tell me driver fault
