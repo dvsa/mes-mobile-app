@@ -215,7 +215,7 @@ describe('JournalSelector', () => {
     });
   });
 
-  fdescribe('getSlotIdsBeforeToday', () => {
+  describe('getSlotIdsBeforeToday', () => {
     it('should select the test slots from the state', () => {
       const journal: JournalModel = {
         isLoading: true,
