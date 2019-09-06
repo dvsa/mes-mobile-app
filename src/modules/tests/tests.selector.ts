@@ -81,7 +81,7 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
   return null;
 };
 
-const getIncompleteTestsKeys = (tests: TestsModel): string[] => {
+export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
   return Object.keys(tests.testStatus).filter(slotId =>
     isTestBeforeToday(tests.startedTests[slotId])
     && tests.testStatus[slotId] !== TestStatus.Submitted
@@ -95,21 +95,21 @@ const isTestBeforeToday = (test: StandardCarTestCATBSchema): boolean => {
 };
 
 export const getIncompleteTests = (tests: TestsModel): StandardCarTestCATBSchema[] => {
-  const incompleteTestsKeys: string[] = getIncompleteTestsKeys(tests);
-  return incompleteTestsKeys.map((slotId: string) => tests.startedTests[slotId]);
+  const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
+  return incompleteTestsSlotIds.map((slotId: string) => tests.startedTests[slotId]);
 };
 
 export const getIncompleteTestsCount = (tests: TestsModel): number => {
-  const incompleteTestsKeys: string[] = getIncompleteTestsKeys(tests);
-  return incompleteTestsKeys.length;
+  const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
+  return incompleteTestsSlotIds.length;
 };
 
 export const getOldestIncompleteTest = (tests: TestsModel): StandardCarTestCATBSchema => {
-  const incompleteTestsKeys: string[] = getIncompleteTestsKeys(tests);
+  const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
 
   let oldestTest: StandardCarTestCATBSchema;
 
-  incompleteTestsKeys.forEach((slotId: string) => {
+  incompleteTestsSlotIds.forEach((slotId: string) => {
     if (!oldestTest) {
       oldestTest = tests.startedTests[slotId];
       return;

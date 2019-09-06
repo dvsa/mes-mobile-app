@@ -4,10 +4,17 @@ import { getSlotIdsBeforeToday } from '../../../pages/journal/journal.selector';
 import { DateTime } from '../../../shared/helpers/date-time';
 
 export const getIncompleteTestsCount = (store: StoreModel, today: DateTime): number => {
-  // includes tests with status of Started, Decided and WriteUp, but not unstarted rekeys
-  const countOfInProgressTests = testsSelectors.getIncompleteTestsCount(store.tests);
-
   const slotIdsBeforeToday = getSlotIdsBeforeToday(store.journal, today);
+
+  // includes tests with status of Started, Decided and WriteUp, but not unstarted rekeys
+  const slotIdsOfInProgressTests = testsSelectors.getIncompleteTestsSlotIds(store.tests);
+
+  const countOfInProgressTests = slotIdsBeforeToday.reduce((inProgressCount, slotId) => {
+    if (slotIdsOfInProgressTests.includes(slotId.toString())) {
+      return inProgressCount + 1;
+    }
+    return inProgressCount;
+  }, 0);
 
   const unstartedRekeysCount = slotIdsBeforeToday.reduce((rekeyCount, slotId) => {
     if (Object.keys(store.tests.testStatus).includes(slotId.toString())) {
