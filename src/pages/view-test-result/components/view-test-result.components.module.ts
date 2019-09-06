@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { TestDetailsCardComponent } from './test-details-card/test-details-card';
+import { RekeyDetailsCardComponent } from './rekey-details-card/rekey-details';
 import { ExaminerDetailsCardComponent } from './examiner-details-card/examiner-details';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
 import { TestSummaryCardComponent } from './test-summary-card/test-summary-card';
@@ -12,6 +13,7 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 @NgModule({
   declarations: [
     TestDetailsCardComponent,
+    RekeyDetailsCardComponent,
     ExaminerDetailsCardComponent,
     VehicleDetailsCardComponent,
     TestSummaryCardComponent,
@@ -25,6 +27,7 @@ import { ComponentsModule } from '../../../components/common/common-components.m
   ],
   exports: [
     TestDetailsCardComponent,
+    RekeyDetailsCardComponent,
     ExaminerDetailsCardComponent,
     VehicleDetailsCardComponent,
     TestSummaryCardComponent,
