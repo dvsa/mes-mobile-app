@@ -456,7 +456,6 @@ describe('testsSelector', () => {
         },
       },
       testStatus: {
-        1234: TestStatus.Booked,
         1001: TestStatus.Decided,
         2008: TestStatus.Decided,
         2027: TestStatus.Decided,

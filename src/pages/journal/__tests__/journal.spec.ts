@@ -39,6 +39,8 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { ComponentsModule } from '../../../components/common/common-components.module';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -58,8 +60,10 @@ describe('JournalPage', () => {
         AppModule,
         StoreModule.forRoot({
           journal: journalReducer,
+          tests: testsReducer,
         }),
         MockedJournalModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
