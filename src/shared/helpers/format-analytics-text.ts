@@ -1,5 +1,5 @@
 import { TestsModel } from '../../modules/tests/tests.model';
-import { isEndToEndPracticeTest, isTestReportPracticeTest } from '../../modules/tests/tests.selector';
+import { isEndToEndPracticeTest, isTestReportPracticeTest, getCurrentTest } from '../../modules/tests/tests.selector';
 import { AnalyticsEventCategories } from '../../providers/analytics/analytics.model';
 
 export function formatAnalyticsText(eventText: string, tests: TestsModel): string {
@@ -8,6 +8,9 @@ export function formatAnalyticsText(eventText: string, tests: TestsModel): strin
   }
   if (isTestReportPracticeTest(tests)) {
     return `${AnalyticsEventCategories.PRACTICE_TEST} - ${eventText}`;
+  }
+  if (getCurrentTest(tests).rekey) {
+    return `${AnalyticsEventCategories.REKEY} - ${eventText}`;
   }
   return eventText;
 }

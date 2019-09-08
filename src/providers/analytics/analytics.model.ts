@@ -54,6 +54,7 @@ export enum AnalyticsEventCategories {
   PRACTICE_MODE = 'practice mode',
   TEST_RESULTS_SEARCH = 'test results search',
   REKEY_SEARCH = 'rekey search',
+  REKEY = 'rekey',
 }
 
 export enum AnalyticsEvents {
