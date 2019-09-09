@@ -22,6 +22,8 @@ import { MockComponent } from 'ng-mocks';
 import { TestDetailsCardComponent } from '../components/test-details-card/test-details-card';
 import { RekeyDetailsCardComponent } from '../components/rekey-details-card/rekey-details';
 import { RekeyDetailsModel } from '../components/rekey-details-card/rekey-details-card.model';
+import { RekeyReasonCardComponent } from '../components/rekey-reason-card/rekey-reason';
+import { RekeyReasonModel } from '../components/rekey-reason-card/rekey-reason-card.model';
 import { ExaminerDetailsCardComponent } from '../components/examiner-details-card/examiner-details';
 import { By } from '@angular/platform-browser';
 import { ExaminerDetailsModel } from '../components/examiner-details-card/examiner-details-card.model';
@@ -42,7 +44,7 @@ import { DebriefCardModel } from '../components/debrief-card/debrief-card.model'
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 
-describe('ViewTestResultPage', () => {
+fdescribe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
   let component: ViewTestResultPage;
   let loadingController: LoadingController;
@@ -53,6 +55,7 @@ describe('ViewTestResultPage', () => {
         ViewTestResultPage,
         MockComponent(TestDetailsCardComponent),
         MockComponent(RekeyDetailsCardComponent),
+        MockComponent(RekeyReasonCardComponent),
         MockComponent(ExaminerDetailsCardComponent),
         MockComponent(VehicleDetailsCardComponent),
         MockComponent(TestSummaryCardComponent),
@@ -136,6 +139,21 @@ describe('ViewTestResultPage', () => {
         expect(result.testDate).toBe('Friday 5th July 2019');
         expect(result.rekeyedStaffNumber).toBe(1);
         expect(result.rekeyDate).toBe('Monday 5th August 2019');
+      });
+      it('should return null when there is no test result', () => {
+        const result: RekeyDetailsModel = component.getRekeyDetails();
+        expect(result).toBeNull();
+      });
+    });
+    describe('getRekeyReason', () => {
+      it('should correctly generate the data', () => {
+        component.testResult = categoryBTestResultMock;
+
+        const result: RekeyReasonModel = component.getRekeyReason();
+
+        expect(result.ipadIssue).toBe('Lost');
+        expect(result.transfer).toBe('No');
+        expect(result.other).toBe('mock reason');
       });
       it('should return null when there is no test result', () => {
         const result: RekeyDetailsModel = component.getRekeyDetails();
@@ -397,6 +415,9 @@ describe('ViewTestResultPage', () => {
         fixture.debugElement.query(By.css('rekey-details-card')),
       ).toBeNull();
       expect(
+        fixture.debugElement.query(By.css('rekey-reason-card')),
+      ).toBeNull();
+      expect(
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).toBeNull();
       expect(
@@ -420,6 +441,9 @@ describe('ViewTestResultPage', () => {
       ).toBeNull();
       expect(
         fixture.debugElement.query(By.css('rekey-details-card')),
+      ).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('rekey-reason-card')),
       ).toBeNull();
       expect(
         fixture.debugElement.query(By.css('examiner-details-card')),
@@ -451,6 +475,9 @@ describe('ViewTestResultPage', () => {
         fixture.debugElement.query(By.css('rekey-details-card')),
       ).toBeNull();
       expect(
+        fixture.debugElement.query(By.css('rekey-reason-card')),
+      ).toBeNull();
+      expect(
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
       expect(
@@ -472,6 +499,9 @@ describe('ViewTestResultPage', () => {
 
     expect(
       fixture.debugElement.query(By.css('rekey-details-card')),
+    ).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('rekey-reason-card')),
     ).not.toBeNull();
   });
 });
