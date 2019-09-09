@@ -30,7 +30,7 @@ export function testStatusReducer(state = initialState, action: testStatusAction
       return {
         ...state,
         [action.slotId]: TestStatus.Autosave,
-      }
+      };
     case testStatusActions.SET_TEST_STATUS_COMPLETED:
       return {
         ...state,
