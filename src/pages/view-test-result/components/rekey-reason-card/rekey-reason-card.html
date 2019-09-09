@@ -1,0 +1,33 @@
+<ion-card>
+    <ion-card-header>
+      <h4>Reason for rekey</h4>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>IPad issue</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.ipadIssue }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>Transfer</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.transfer }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col col-40>
+            <label>Other (specify reason)</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ data.other }}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
