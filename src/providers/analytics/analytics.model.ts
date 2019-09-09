@@ -53,6 +53,8 @@ export enum AnalyticsEventCategories {
   PRACTICE_TEST = 'practice test',
   PRACTICE_MODE = 'practice mode',
   TEST_RESULTS_SEARCH = 'test results search',
+  REKEY_SEARCH = 'rekey search',
+  REKEY = 'rekey',
 }
 
 export enum AnalyticsEvents {
@@ -87,6 +89,7 @@ export enum AnalyticsEvents {
   LDTM_SEARCH = 'perform ldtm search',
   TOGGLE_LEGAL_REQUIREMENT = 'toggle legal requirement',
   TEST_OUTCOME_CHANGED = 'test outcome changed',
+  TEST_BOOKING_SEARCH = 'perform test booking search',
 }
 
 export enum AnalyticsLabels {

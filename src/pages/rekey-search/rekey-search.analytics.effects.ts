@@ -7,9 +7,11 @@ import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import {
   REKEY_SEARCH_VIEW_DID_ENTER,
   RekeySearchViewDidEnter,
+  SEARCH_BOOKED_TEST,
+  SearchBookedTest,
 } from './rekey-search.actions';
 import {
-  AnalyticsScreenNames,
+  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents,
 } from '../../providers/analytics/analytics.model';
 
 @Injectable()
@@ -31,4 +33,15 @@ export class RekeySearchAnalyticsEffects {
     }),
   );
 
+  @Effect()
+  rekeySearchPerformed$ = this.actions$.pipe(
+    ofType(SEARCH_BOOKED_TEST),
+    switchMap((action: SearchBookedTest) => {
+      this.analytics.logEvent(
+        AnalyticsEventCategories.REKEY_SEARCH,
+        AnalyticsEvents.TEST_BOOKING_SEARCH,
+      );
+      return of(new AnalyticRecorded());
+    }),
+  );
 }

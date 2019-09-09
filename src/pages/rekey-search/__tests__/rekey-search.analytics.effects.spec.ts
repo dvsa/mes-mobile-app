@@ -4,7 +4,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import {
-  AnalyticsScreenNames,
+  AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents,
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { RekeySearchAnalyticsEffects } from '../rekey-search.analytics.effects';
@@ -29,6 +29,7 @@ describe('Rekey Search Analytics Effects', () => {
     effects = TestBed.get(RekeySearchAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
+    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
   });
 
   describe('rekeySearchViewDidEnter', () => {
@@ -39,6 +40,21 @@ describe('Rekey Search Analytics Effects', () => {
       effects.rekeySearchViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.setCurrentPage).toHaveBeenCalledWith(screenName);
+        done();
+      });
+    });
+  });
+  describe('rekeySearchPerformed', () => {
+    it('should log an event with the correct values', (done) => {
+      // ACT
+      actions$.next(new rekeySearchActions.SearchBookedTest('', ''));
+      // ASSERT
+      effects.rekeySearchPerformed$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent).toHaveBeenCalledWith(
+          AnalyticsEventCategories.REKEY_SEARCH,
+          AnalyticsEvents.TEST_BOOKING_SEARCH,
+        );
         done();
       });
     });

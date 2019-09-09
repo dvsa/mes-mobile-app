@@ -17,11 +17,14 @@ import {
   SendCompletedTestsFailure,
   TEST_OUTCOME_CHANGED,
   TestOutcomeChanged,
+  START_TEST,
+  StartTest,
 } from './tests.actions';
 import { of } from 'rxjs/observable/of';
 import { TestsModel } from './tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
+import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -29,6 +32,7 @@ export class TestsAnalyticsEffects {
     private analytics: AnalyticsProvider,
     private actions$: Actions,
     private store$: Store<StoreModel>,
+    private navigationStateProvider: NavigationStateProvider,
   ) {
     this.analytics.initialiseAnalytics()
       .then(() => {})
@@ -107,6 +111,20 @@ export class TestsAnalyticsEffects {
       this.analytics.addCustomDimension(
         AnalyticsDimensionIndices.CANDIDATE_ID, journalDataOfTest.candidate.candidateId.toString());
 
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  startTestAnalyticsEffect$ = this.actions$.pipe(
+    ofType(START_TEST),
+    switchMap((action: StartTest) => {
+      if (this.navigationStateProvider.isRekeySearch()) {
+        this.analytics.logEvent(
+          AnalyticsEventCategories.REKEY_SEARCH,
+          AnalyticsEvents.START_TEST,
+        );
+      }
       return of(new AnalyticRecorded());
     }),
   );
