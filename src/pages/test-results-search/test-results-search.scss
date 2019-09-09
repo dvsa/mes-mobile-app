@@ -58,21 +58,20 @@ page-test-results-search {
 
   .search-inputs {
     position: absolute;
-    width: 800px;
+    width: 810px;
     z-index: 100;
-    margin-top: -16px;
+    padding: 16px 12px;
+    width: 100%;
   }
 
   @media screen and (min-width: 900px) {
     .search-inputs {
-      position: absolute;
-      width: 1080px;
-      z-index: 100;
-      margin-top: -16px;
+      width: 1088px;
     }
   }
 
   .test-results-list {
+    margin: 12px 10px 12px 12px; // allow room for box shadow on right hand side
 
     .list-header {
       height: 442px;

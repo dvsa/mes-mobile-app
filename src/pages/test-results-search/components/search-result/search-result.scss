@@ -1,7 +1,7 @@
 search-result {
   .card-ios {
     margin: 12px 0 8px;
-    width: 100%;
+    width: calc(100% - 2px); // allow room for box shadow on right hand side
     border-left: 8px solid #9b9b9b;
   }
   .grid {
