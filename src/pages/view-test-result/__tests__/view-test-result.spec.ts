@@ -44,7 +44,7 @@ import { DebriefCardModel } from '../components/debrief-card/debrief-card.model'
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
 
-describe('ViewTestResultPage', () => {
+fdescribe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
   let component: ViewTestResultPage;
   let loadingController: LoadingController;
