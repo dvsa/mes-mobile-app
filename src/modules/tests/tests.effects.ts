@@ -93,8 +93,7 @@ export class TestsEffects {
   getSaveableTestsObject(tests: TestsModel): TestsModel {
     const testsNotToSave = Object.keys(tests.startedTests).filter((key) => {
       return startsWith(key, testReportPracticeSlotId) ||
-        startsWith(key, end2endPracticeSlotId) ||
-        tests.startedTests[key].rekey;
+        startsWith(key, end2endPracticeSlotId);
     });
 
     return {

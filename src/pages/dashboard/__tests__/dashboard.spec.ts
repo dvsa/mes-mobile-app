@@ -14,7 +14,7 @@ import { AppModule } from '../../../app/app.module';
 import { DashboardPage } from '../dashboard';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
@@ -24,6 +24,10 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { ComponentsModule } from '../../../components/common/common-components.module';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { journalReducer } from '../../journal/journal.reducer';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('DashboardPage', () => {
   let fixture: ComponentFixture<DashboardPage>;
@@ -35,8 +39,13 @@ describe('DashboardPage', () => {
       declarations: [DashboardPage],
       imports: [
         DashboardComponentsModule,
+        ComponentsModule,
         IonicModule,
         AppModule,
+        StoreModule.forRoot({
+          journal: journalReducer,
+          tests: testsReducer,
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -50,6 +59,7 @@ describe('DashboardPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },
+        { provide: SlotProvider, useClass: SlotProvider },
       ],
     })
       .compileComponents()

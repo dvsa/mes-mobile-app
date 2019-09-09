@@ -4,7 +4,7 @@ import { flatten, times, isEmpty } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { SlotItem } from '../slot-selector/slot-item';
-import { ExaminerWorkSchedule, PersonalCommitment } from '@dvsa/mes-journal-schema';
+import { ExaminerWorkSchedule, PersonalCommitment, TestSlot } from '@dvsa/mes-journal-schema';
 import { AppConfigProvider } from '../app-config/app-config';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotHasChanged } from './slot.actions';
@@ -94,5 +94,35 @@ export class SlotProvider {
   }
 
   getSlotDate = (slot: SlotItem): string => DateTime.at(slot.slotData.slotDetail.start).format('YYYY-MM-DD');
+
+  canStartTest(testSlot: TestSlot): boolean {
+    const { testPermissionPeriods } = this.appConfigProvider.getAppConfig().journal;
+    const { testCategory } = testSlot.booking.application;
+    const startDate = new DateTime(testSlot.slotDetail.start);
+
+    if (startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
+      return false;
+    }
+
+    const periodsPermittingStart = testPermissionPeriods.filter((period) => {
+      const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startDate, period.from);
+      const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startDate, period.to);
+      return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
+    });
+    return periodsPermittingStart.length > 0;
+  }
+
+  private hasPeriodStartCriteria(slotDate: DateTime, periodFrom: string) {
+    const periodStartDate = new DateTime(periodFrom);
+    return slotDate.daysDiff(periodStartDate) <= 0;
+  }
+
+  private hasPeriodEndCritiera(slotDate: DateTime, periodTo: string) {
+    if (periodTo === null) {
+      return true;
+    }
+    const periodEndDate = new DateTime(periodTo);
+    return slotDate.daysDiff(periodEndDate) >= 0;
+  }
 
 }

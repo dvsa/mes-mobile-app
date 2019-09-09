@@ -17,6 +17,8 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 import { BasePageComponent } from '../../shared/classes/base-page';
+import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
+import * as journalActions from './../journal/journal.actions';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -30,6 +32,9 @@ interface DashboardPageState {
 export class DashboardPage extends BasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
+
+  @ViewChild(IncompleteTestsBanner)
+  incompleteTestsBanner: IncompleteTestsBanner;
 
   pageState: DashboardPageState;
   subscription: Subscription;
@@ -69,6 +74,7 @@ export class DashboardPage extends BasePageComponent {
       this.insomnia.allowSleepAgain();
       this.deviceProvider.disableSingleAppMode();
     }
+    this.store$.dispatch(new journalActions.LoadJournalSilent());
   }
 
   clickBack(): void {

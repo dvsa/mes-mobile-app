@@ -7,6 +7,9 @@ import {
   isTestReportPracticeTest,
   isEndToEndPracticeTest,
   getActivityCodeBySlotId,
+  getIncompleteTests,
+  getIncompleteTestsCount,
+  getOldestIncompleteTest,
 } from '../tests.selector';
 import { JournalModel } from '../../../pages/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
@@ -311,6 +314,183 @@ describe('testsSelector', () => {
       };
       const result = getActivityCodeBySlotId(testState, 1234);
       expect(result).toBeNull();
+    });
+  });
+
+  describe('unsubmitted tests', () => {
+    const initialState: TestsModel = {
+      currentTest: { slotId: null },
+      startedTests: {},
+      testStatus: {},
+    };
+    const testState: TestsModel = {
+      currentTest: { slotId: null },
+      startedTests: {
+        1001: {
+          category: 'B',
+          activityCode: ActivityCodes.PASS,
+          journalData: {
+            testSlotAttributes: {
+              welshTest: false,
+              slotId: 1001,
+              start: '2019-08-28T14:30:00',
+              vehicleTypeCode: 'C',
+              extendedTest: false,
+              specialNeeds: false,
+            },
+            examiner: {
+              staffNumber: '',
+            },
+            testCentre: {
+              centreId: 1,
+              costCode: '',
+            },
+            candidate: {},
+            applicationReference: {
+              applicationId: 999,
+              bookingSequence: 3,
+              checkDigit: 5,
+            },
+          },
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        2008: {
+          category: 'B',
+          activityCode: ActivityCodes.CANDIDATE_REFUSED_TO_SIGN_RESIDENCY_DECLARATION,
+          journalData: {
+            testSlotAttributes: {
+              welshTest: false,
+              slotId: 2008,
+              start: '2019-08-23T15:14:00',
+              vehicleTypeCode: 'C',
+              extendedTest: false,
+              specialNeeds: false,
+            },
+            examiner: {
+              staffNumber: '',
+            },
+            testCentre: {
+              centreId: 1,
+              costCode: '',
+            },
+            candidate: {},
+            applicationReference: {
+              applicationId: 999,
+              bookingSequence: 3,
+              checkDigit: 5,
+            },
+          },
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        2027: {
+          category: 'B',
+          activityCode: ActivityCodes.ACCIDENT,
+          journalData: {
+            testSlotAttributes: {
+              welshTest: false,
+              slotId: 2027,
+              start: '2019-08-30T09:14:00',
+              vehicleTypeCode: 'C',
+              extendedTest: false,
+              specialNeeds: false,
+            },
+            examiner: {
+              staffNumber: '',
+            },
+            testCentre: {
+              centreId: 1,
+              costCode: '',
+            },
+            candidate: {},
+            applicationReference: {
+              applicationId: 999,
+              bookingSequence: 3,
+              checkDigit: 5,
+            },
+          },
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        3002: {
+          category: 'B',
+          activityCode: ActivityCodes.PASS,
+          journalData: {
+            testSlotAttributes: {
+              welshTest: false,
+              slotId: 3002,
+              start: '2019-08-30T10:14:00',
+              vehicleTypeCode: 'C',
+              extendedTest: false,
+              specialNeeds: false,
+            },
+            examiner: {
+              staffNumber: '',
+            },
+            testCentre: {
+              centreId: 1,
+              costCode: '',
+            },
+            candidate: {},
+            applicationReference: {
+              applicationId: 999,
+              bookingSequence: 3,
+              checkDigit: 5,
+            },
+          },
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+      },
+      testStatus: {
+        1001: TestStatus.Decided,
+        2008: TestStatus.Decided,
+        2027: TestStatus.Decided,
+        3002: TestStatus.Submitted,
+      },
+    };
+    describe('getIncompleteTests', () => {
+      it('should return the unsubmitted tests', () => {
+        const result = getIncompleteTests(testState);
+        expect(result.length).toEqual(3);
+      });
+      it('should return no unsubmitted tests', () => {
+        const result = getIncompleteTests(initialState);
+        expect(result.length).toEqual(0);
+      });
+    });
+    describe('getIncompleteTestsCount', () => {
+      it('should return the correct number of unsubmitted tests', () => {
+        const result = getIncompleteTestsCount(testState);
+        expect(result).toEqual(3);
+      });
+      it('should return the correct number of unsubmitted tests', () => {
+        const result = getIncompleteTestsCount(initialState);
+        expect(result).toEqual(0);
+      });
+    });
+    describe('getOldestIncompleteTest', () => {
+      it('should return the oldest unsubmitted test', () => {
+        const result = getOldestIncompleteTest(testState);
+        expect(result.journalData.testSlotAttributes.slotId).toEqual(2008);
+      });
+      it('should return null for the oldest unsubmitted test', () => {
+        const result = getOldestIncompleteTest(initialState);
+        expect(result).toBeUndefined();
+      });
     });
   });
 

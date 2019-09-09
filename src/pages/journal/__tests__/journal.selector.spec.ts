@@ -2,12 +2,38 @@ import { JournalModel } from '../journal.model';
 import {
   getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
   getError, getLastRefreshedTime,
-  canNavigateToNextDay, canNavigateToPreviousDay,
+  canNavigateToNextDay, canNavigateToPreviousDay, getPermittedSlotIdsBeforeToday,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
+import { SlotProvider } from '../../../providers/slot/slot';
+import { TestBed } from '@angular/core/testing';
+import { AppConfigProvider } from '../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { Store } from '@ngrx/store';
+
+class MockStore { }
 
 describe('JournalSelector', () => {
+  let slotProvider: SlotProvider;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        SlotProvider,
+        { provide: SlotProvider, useClass: SlotProvider },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: Store, useClass: MockStore },
+      ],
+    });
+  });
+
+  beforeEach(() => {
+    slotProvider = TestBed.get(SlotProvider);
+  });
 
   const state: JournalModel = {
     isLoading: true,
@@ -212,6 +238,114 @@ describe('JournalSelector', () => {
       const result = canNavigateToPreviousDay(journal, DateTime.at('2019-01-13'));
 
       expect(result).toBe(true);
+    });
+  });
+
+  describe('getPermittedSlotIdsBeforeToday', () => {
+    it('should select the startable test slots from the state', () => {
+      const journal: JournalModel = {
+        isLoading: true,
+        lastRefreshed: new Date(0),
+        slots: {
+          ['2019-01-12']: [
+            {
+              hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
+              slotData: {
+                slotDetail: {
+                  slotId: 1001,
+                  start: '2019-01-12T09:14:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234561,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
+                },
+              },
+            },
+          ],
+          ['2019-01-13']: [
+            {
+              hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
+              slotData: {
+                slotDetail: {
+                  slotId: 2001,
+                  start: '2019-01-13T09:14:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234561,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
+                },
+              },
+            },
+          ],
+          ['2019-01-14']: [
+            {
+              hasSlotChanged: false,
+              hasSeenCandidateDetails: false,
+              slotData: {
+                slotDetail: {
+                  slotId: 3001,
+                  start: '2019-01-14T09:14:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234561,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
+                },
+              },
+            },
+          ],
+        },
+        selectedDate: '2019-01-14',
+        examiner: { staffNumber: '123', individualId: 456 },
+      };
+
+      const slotIds = getPermittedSlotIdsBeforeToday(journal, DateTime.at('2019-01-14'), slotProvider);
+
+      expect(slotIds.length).toBe(2);
+      expect(slotIds).toEqual([1001, 2001]);
     });
   });
 

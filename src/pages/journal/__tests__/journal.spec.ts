@@ -32,9 +32,6 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
-import { IncompleteTestsProvider } from '../../../providers/incomplete-tests/incomplete-tests';
-import { IncompleteTestsMock } from '../../../providers/incomplete-tests/__mocks__/incomplete-tests.mock';
-import { of } from 'rxjs/observable/of';
 import { TestSlotComponentsModule } from '../../../components/test-slot/test-slot-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
@@ -42,6 +39,9 @@ import { DeviceProvider } from '../../../providers/device/device';
 import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { ComponentsModule } from '../../../components/common/common-components.module';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -61,8 +61,10 @@ describe('JournalPage', () => {
         AppModule,
         StoreModule.forRoot({
           journal: journalReducer,
+          tests: testsReducer,
         }),
         MockedJournalModule,
+        ComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -76,11 +78,11 @@ describe('JournalPage', () => {
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-        { provide: IncompleteTestsProvider, useClass: IncompleteTestsMock },
         { provide: App, useClass: MockAppComponent },
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: SlotProvider, useClass: SlotProvider },
       ],
     })
       .compileComponents()
@@ -140,13 +142,6 @@ describe('JournalPage', () => {
           new Date(),
         ),
       );
-    });
-
-    it('should display the countIncompleteTests indicator if incomplete tests', () => {
-      fixture.detectChanges();
-      component.pageState.incompleteTestCounter$ = of(3);
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#incomplete-tests-indicator'))).not.toBeNull();
     });
 
     // TODO - Come back and look at this test

@@ -47,6 +47,11 @@ export class DateTime {
     return date.moment.startOf(Duration.DAY).diff(today, Duration.DAY);
   }
 
+  isBefore(targetDate: DateTime | string | Date): boolean {
+    const date = new DateTime(targetDate);
+    return date.moment.diff(this.moment, Duration.SECOND) > 0;
+  }
+
   static today(): Date {
     return moment().toDate();
   }

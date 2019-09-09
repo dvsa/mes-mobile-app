@@ -16,8 +16,8 @@ import { JournalLogsEffects } from './journal.logs.effects';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { JournalComponentsModule } from './components/journal-components.module';
 import { TestsEffects } from '../../modules/tests/tests.effects';
-import { IncompleteTestsProvider } from '../../providers/incomplete-tests/incomplete-tests';
 import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-components.module';
+import { ComponentsModule } from '../../components/common/common-components.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-c
       JournalLogsEffects,
       TestsEffects,
     ]),
+    ComponentsModule,
   ],
   entryComponents: [
     ActivitySlotComponent,
@@ -45,7 +46,6 @@ import { TestSlotComponentsModule } from '../../components/test-slot/test-slot-c
     SlotSelectorProvider,
     AnalyticsProvider,
     DateTimeProvider,
-    IncompleteTestsProvider,
   ],
 })
 export class JournalPageModule {}
