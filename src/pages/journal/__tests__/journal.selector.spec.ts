@@ -2,7 +2,7 @@ import { JournalModel } from '../journal.model';
 import {
   getSlotsOnSelectedDate, getLastRefreshed, getIsLoading,
   getError, getLastRefreshedTime,
-  canNavigateToNextDay, canNavigateToPreviousDay, getStartableSlotIdsBeforeToday,
+  canNavigateToNextDay, canNavigateToPreviousDay, getPermittedSlotIdsBeforeToday,
 } from '../journal.selector';
 import { MesError } from '../../../shared/models/mes-error.model';
 import { DateTime } from '../../../shared/helpers/date-time';
@@ -241,7 +241,7 @@ describe('JournalSelector', () => {
     });
   });
 
-  describe('getStartableSlotIdsBeforeToday', () => {
+  describe('getPermittedSlotIdsBeforeToday', () => {
     it('should select the startable test slots from the state', () => {
       const journal: JournalModel = {
         isLoading: true,
@@ -342,7 +342,7 @@ describe('JournalSelector', () => {
         examiner: { staffNumber: '123', individualId: 456 },
       };
 
-      const slotIds = getStartableSlotIdsBeforeToday(journal, DateTime.at('2019-01-14'), slotProvider);
+      const slotIds = getPermittedSlotIdsBeforeToday(journal, DateTime.at('2019-01-14'), slotProvider);
 
       expect(slotIds.length).toBe(2);
       expect(slotIds).toEqual([1001, 2001]);

@@ -53,7 +53,7 @@ export const getAllSlots = (journal: JournalModel): SlotItem[] => {
   return slotArray;
 };
 
-export const getStartableSlotIdsBeforeToday = (
+export const getPermittedSlotIdsBeforeToday = (
   journal: JournalModel, today: DateTime, slotProvider: SlotProvider): number[] => {
   const slots = getSlots(journal);
   const arrayOfDateStrings = Object.keys(slots).filter((date: string) => {
