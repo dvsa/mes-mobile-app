@@ -35,6 +35,17 @@ describe('formatAnalyticsText', () => {
     expect(result).toBe(`${AnalyticsEventCategories.PRACTICE_TEST} - ${eventString}`);
   });
 
+  it('should prefix rekey tests with the correct text', () => {
+    const state = { ...initialState };
+    const action = new testsActions.StartTest(12345);
+    const tests: TestsModel = testsReducer(state, action);
+    tests.startedTests[tests.currentTest.slotId].rekey = true;
+
+    const result = formatAnalyticsText(eventString, tests);
+
+    expect(result).toBe(`${AnalyticsEventCategories.REKEY} - ${eventString}`);
+  });
+
   it('should not prefix regular tests with any additional text', () => {
     const state = { ...initialState };
     const action = new testsActions.StartTest(slotId);
