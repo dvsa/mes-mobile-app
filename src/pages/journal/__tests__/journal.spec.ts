@@ -41,6 +41,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('JournalPage', () => {
   let fixture: ComponentFixture<JournalPage>;
@@ -81,6 +82,7 @@ describe('JournalPage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: SlotProvider, useClass: SlotProvider },
       ],
     })
       .compileComponents()

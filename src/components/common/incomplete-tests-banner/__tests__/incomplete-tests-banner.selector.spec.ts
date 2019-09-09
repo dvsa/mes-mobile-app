@@ -4,8 +4,33 @@ import { getIncompleteTestsCount } from '../incomplete-tests-banner.selector';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { JournalModel } from '../../../../pages/journal/journal.model';
+import { SlotProvider } from '../../../../providers/slot/slot';
+import { TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
+import { AppConfigProvider } from '../../../../providers/app-config/app-config';
+import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+
+class MockStore { }
 
 describe('IncompleteTestsBannerSelector', () => {
+  let slotProvider: SlotProvider;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: SlotProvider, useClass: SlotProvider },
+        { provide: Store, useClass: MockStore },
+        { provide: AppConfigProvider, useClass: AppConfigProviderMock },
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+      ],
+    });
+  });
+
+  beforeEach(() => {
+    slotProvider = TestBed.get(SlotProvider);
+  });
 
   describe('getIncompleteTestsCount', () => {
     it('should get a count of incomplete tests', () => {
@@ -25,6 +50,25 @@ describe('IncompleteTestsBannerSelector', () => {
               slotData: {
                 slotDetail: {
                   slotId: 1001,
+                  start: '2019-01-12T09:14:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234561,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
                 },
               },
             },
@@ -34,6 +78,25 @@ describe('IncompleteTestsBannerSelector', () => {
               slotData: {
                 slotDetail: {
                   slotId: 1003,
+                  start: '2019-01-12T10:11:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234562,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
                 },
               },
             },
@@ -45,6 +108,25 @@ describe('IncompleteTestsBannerSelector', () => {
               slotData: {
                 slotDetail: {
                   slotId: 2001,
+                  start: '2019-01-13T09:14:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234563,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
                 },
               },
             },
@@ -56,6 +138,25 @@ describe('IncompleteTestsBannerSelector', () => {
               slotData: {
                 slotDetail: {
                   slotId: 3001,
+                  start: '2019-01-14T09:14:00',
+                },
+                booking: {
+                  application: {
+                    applicationId: 1234564,
+                    bookingSequence: 1,
+                    checkDigit: 4,
+                    welshTest: false,
+                    extendedTest: false,
+                    meetingPlace: '',
+                    progressiveAccess: false,
+                    specialNeeds: '',
+                    entitlementCheck: false,
+                    testCategory: 'B',
+                    vehicleGearbox: 'Manual',
+                  },
+                  candidate: null,
+                  previousCancellation: null,
+                  business:null,
                 },
               },
             },
@@ -152,7 +253,7 @@ describe('IncompleteTestsBannerSelector', () => {
       };
       const store: StoreModel = { tests, journal, appInfo, logs };
 
-      const count = getIncompleteTestsCount(store, DateTime.at('2019-01-14'));
+      const count = getIncompleteTestsCount(store, DateTime.at('2019-01-14'), slotProvider);
 
       expect(count).toBe(3);
     });

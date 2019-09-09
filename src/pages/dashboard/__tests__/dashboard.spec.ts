@@ -27,6 +27,7 @@ import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/a
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { journalReducer } from '../../journal/journal.reducer';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('DashboardPage', () => {
   let fixture: ComponentFixture<DashboardPage>;
@@ -58,6 +59,7 @@ describe('DashboardPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },
+        { provide: SlotProvider, useClass: SlotProvider },
       ],
     })
       .compileComponents()

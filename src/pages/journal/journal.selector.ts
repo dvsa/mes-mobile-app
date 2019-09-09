@@ -3,6 +3,7 @@ import { JournalModel } from './journal.model';
 import { isNil, flatten } from 'lodash';
 import { DateTime, Duration } from '../../shared/helpers/date-time';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
+import { SlotProvider } from '../../providers/slot/slot';
 
 export const getSlots = (journal: JournalModel) => journal.slots;
 
@@ -52,11 +53,13 @@ export const getAllSlots = (journal: JournalModel): SlotItem[] => {
   return slotArray;
 };
 
-export const getSlotIdsBeforeToday = (journal: JournalModel, today: DateTime): number[] => {
+export const getStartableSlotIdsBeforeToday = (
+  journal: JournalModel, today: DateTime, slotProvider: SlotProvider): number[] => {
   const slots = getSlots(journal);
   const arrayOfDateStrings = Object.keys(slots).filter((date: string) => {
     const thisDate = new DateTime(date);
     return thisDate.isBefore(today.format('YYYY-MM-DD'));
   });
-  return flatten(arrayOfDateStrings.map(date => slots[date].map(slot => slot.slotData.slotDetail.slotId)));
+  return flatten((arrayOfDateStrings.map(date => slots[date].filter(slot => slotProvider.canStartTest(slot.slotData))
+    .map(slot => slot.slotData.slotDetail.slotId))));
 };

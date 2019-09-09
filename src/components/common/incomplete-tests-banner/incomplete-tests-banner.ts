@@ -4,6 +4,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { Observable } from 'rxjs/Observable';
 import { getIncompleteTestsCount } from './incomplete-tests-banner.selector';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 interface IncompleteTestsBannerComponentState {
   count$: Observable<number>;
@@ -21,13 +22,14 @@ export class IncompleteTestsBanner implements OnInit {
   constructor(
     private store$: Store<StoreModel>,
     private dateTimeProvider: DateTimeProvider,
+    private slotProvider: SlotProvider,
   ) {}
 
   ngOnInit() {
     const today = this.dateTimeProvider.now();
     this.componentState = {
       count$: this.store$.pipe(
-        select(store => getIncompleteTestsCount(store, today)),
+        select(store => getIncompleteTestsCount(store, today, this.slotProvider)),
       ),
     };
   }
