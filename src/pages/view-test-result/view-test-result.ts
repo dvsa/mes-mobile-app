@@ -19,6 +19,7 @@ import { DateTime } from '../../shared/helpers/date-time';
 import { ExaminerDetailsModel } from './components/examiner-details-card/examiner-details-card.model';
 import { VehicleDetailsModel } from './components/vehicle-details-card/vehicle-details-card.model';
 import { RekeyDetailsModel } from './components/rekey-details-card/rekey-details-card.model';
+import { RekeyReasonModel } from './components/rekey-reason-card/rekey-reason-card.model';
 import { CompressionProvider } from '../../providers/compression/compression';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
 import { TestSummaryCardModel } from './components/test-summary-card/test-summary-card-model';
@@ -343,12 +344,46 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     const rekeyDate: DateTime = new DateTime(this.testResult.rekeyDate);
 
     return {
-
       scheduledStaffNumber: this.testResult.examinerBooked,
       conductedStaffNumber: this.testResult.examinerConducted,
       testDate: testDate.format('dddd Do MMMM YYYY'),
       rekeyedStaffNumber: this.testResult.examinerKeyed,
       rekeyDate: rekeyDate.format('dddd Do MMMM YYYY'),
+    };
+  }
+
+  getRekeyReason(): RekeyReasonModel {
+    if (!this.testResult) {
+      return null;
+    }
+
+    const getIpadIssueDisplayText = (reasonType): string => {
+
+      const ipadIssueText = {
+        broken: 'Broken',
+        lost: 'Lost',
+        technicalFault: 'Technical fault',
+        stolen: 'Stolen',
+      };
+
+      let value = '';
+
+      for (const prop in reasonType) {
+        if (reasonType[prop] && prop !== 'selected') {
+          value = ipadIssueText[prop];
+        }
+      }
+      return value;
+    };
+
+    const getIpadIssue = reasonType => reasonType.selected ? getIpadIssueDisplayText(reasonType) : 'None';
+    const getTransferStatus = reasonType => reasonType.selected ? 'Yes' : 'No';
+    const getOtherReason = reasonType => reasonType.selected ? reasonType.reason : 'N/A';
+
+    return {
+      ipadIssue: getIpadIssue(this.testResult.rekeyReason.ipadIssue),
+      transfer: getTransferStatus(this.testResult.rekeyReason.transfer),
+      other: getOtherReason(this.testResult.rekeyReason.other),
     };
   }
 
