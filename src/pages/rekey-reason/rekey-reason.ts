@@ -57,10 +57,11 @@ interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
   ipadIssue$: Observable<IpadIssue>;
   transfer$: Observable<Transfer>;
-  // TODO: Add transfer staff number into the page state
   other$: Observable<Other>;
   findUser$: Observable<RekeyReasonFindUserModel>;
   examinerConducted$: Observable<number>;
+  findUserObservable$: Observable<RekeyReasonFindUserModel>;
+  initialExaminerConducted$: Observable<number>;
 }
 
 @IonicPage()
@@ -128,29 +129,6 @@ export class RekeyReasonPage extends BasePageComponent {
       select(getReasonForRekey),
     );
 
-    this.store$.pipe(
-      select(getRekeyReasonState),
-      select(getFindUserStatus),
-    ).subscribe(
-      (findUser) => {
-        this.transferStaffExists = findUser.isValid;
-      },
-    );
-
-    this.store$.pipe(
-      select(getTests),
-      select(getCurrentTest),
-      select(getExaminerConducted),
-    ).subscribe(
-      (existingExaminerConducted) => {
-        if (this.initialExaminerConducted === null) {
-          this.initialExaminerConducted = existingExaminerConducted;
-          // this.store$.dispatch(new SetExaminerConducted(null));
-          // this.formGroup.controls['transferStaffNumber'].setValue(existingExaminerConducted);
-        }
-      },
-    );
-
     this.pageState = {
       uploadStatus$: this.store$.pipe(
         select(getRekeyReasonState),
@@ -174,10 +152,19 @@ export class RekeyReasonPage extends BasePageComponent {
         select(getCurrentTest),
         select(getExaminerConducted),
       ),
+      findUserObservable$: this.store$.pipe(
+        select(getRekeyReasonState),
+        select(getFindUserStatus),
+      ),
+      initialExaminerConducted$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getExaminerConducted),
+      ),
     };
 
     this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
-      (ipadIssue) => {
+      (ipadIssue: IpadIssue) => {
         this.formGroup.get('ipadIssue').setValue(ipadIssue.selected);
         if (ipadIssue.selected) {
           this.formGroup.get('ipadIssueTechFault').setValue(ipadIssue.technicalFault);
@@ -189,13 +176,13 @@ export class RekeyReasonPage extends BasePageComponent {
     );
 
     this.pageState.transfer$.subscribe(
-      (transfer) => {
+      (transfer: Transfer) => {
         this.formGroup.get('transferSelected').setValue(transfer.selected);
       },
     );
 
     this.pageState.other$.subscribe(
-      (other) => {
+      (other: Other) => {
         this.formGroup.get('otherSelected').setValue(other.selected);
         if (other.selected) {
           this.formGroup.get('otherReasonUpdated').setValue(other.reason);
@@ -203,10 +190,12 @@ export class RekeyReasonPage extends BasePageComponent {
       },
     );
 
-    const { uploadStatus$ } = this.pageState;
+    const { uploadStatus$, findUserObservable$, initialExaminerConducted$ } = this.pageState;
 
     this.subscription = merge(
       uploadStatus$.pipe(map(this.handleUploadOutcome)),
+      findUserObservable$.pipe(map(this.handleFindUserResponse)),
+      initialExaminerConducted$.pipe(map(this.handleExistingExaminerConducted)),
     ).subscribe();
   }
 
@@ -254,6 +243,16 @@ export class RekeyReasonPage extends BasePageComponent {
     }
     if (uploadStatus.hasUploadFailed) {
       this.onShowUploadRekeyModal(true);
+    }
+  }
+
+  handleFindUserResponse = (findUser: RekeyReasonFindUserModel): void => {
+    this.transferStaffExists = findUser.isValid;
+  }
+
+  handleExistingExaminerConducted = (existingExaminerConducted: number): void => {
+    if (this.initialExaminerConducted === null) {
+      this.initialExaminerConducted = existingExaminerConducted;
     }
   }
 
@@ -390,7 +389,6 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   exitRekey = (): void => {
-    // TODO - modal confirmation
     const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     if (rekeySearchPage) {

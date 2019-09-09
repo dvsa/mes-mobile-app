@@ -11,7 +11,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getCurrentTestSlotId } from '../../modules/tests/tests.selector';
 import { of } from 'rxjs/observable/of';
 import { FindUserProvider } from '../../providers/find-user/find-user';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators/map';
 
 @Injectable()
@@ -46,7 +46,7 @@ export class RekeyReasonEffects {
     switchMap((action: rekeyActions.RekeyReasonFindUser) => {
       return this.findUserProvider.userExists(action.staffNumber)
         .pipe(
-          map((response: any) => {
+          map((response: HttpResponse<any>) => {
             return new rekeyActions.RekeyReasonFindUserSuccess();
           }),
           catchError((error: HttpErrorResponse) => {
