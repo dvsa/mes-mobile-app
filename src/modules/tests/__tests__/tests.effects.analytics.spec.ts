@@ -22,11 +22,14 @@ import * as applicationReferenceActions from '../application-reference/applicati
 import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { Application } from '@dvsa/mes-journal-schema';
+import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 
 describe('Tests Analytics Effects', () => {
 
   let effects: TestsAnalyticsEffects;
   let analyticsProviderMock;
+  let navigationStateProviderMock;
   let actions$: any;
   let store$: Store<StoreModel>;
   const mockCandidate: Candidate = {
@@ -49,16 +52,19 @@ describe('Tests Analytics Effects', () => {
       providers: [
         TestsAnalyticsEffects,
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         provideMockActions(() => actions$),
         Store,
       ],
     });
     effects = TestBed.get(TestsAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
+    navigationStateProviderMock = TestBed.get(NavigationStateProvider);
     store$ = TestBed.get(Store);
     spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
     spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
     spyOn(analyticsProviderMock, 'logError').and.callThrough();
+    spyOn(navigationStateProviderMock, 'isRekeySearch').and.returnValue(true);
   });
 
   describe('setTestStatusSubmittedEffect', () => {
@@ -153,6 +159,22 @@ describe('Tests Analytics Effects', () => {
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
+        done();
+      });
+    });
+  });
+  describe('startTestAnalyticsEffect', () => {
+    it('should log an event', (done) => {
+      // ACT
+      actions$.next(new testsActions.StartTest(12345));
+      // ASSERT
+      effects.startTestAnalyticsEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.REKEY_SEARCH,
+            AnalyticsEvents.START_TEST,
+          );
         done();
       });
     });
