@@ -212,7 +212,7 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   onUploadPressed = (): void => {
-    if (this.formIsValid(true)) {
+    if (this.formIsValid()) {
       this.onShowUploadRekeyModal();
     }
   }
@@ -271,7 +271,7 @@ export class RekeyReasonPage extends BasePageComponent {
     }
   }
 
-  formIsValid(showToast: boolean) {
+  formIsValid() {
     const rekeyReasonProvided = this.formGroup.get('ipadIssue').value ||
       (this.formGroup.get('otherSelected').value || this.formGroup.get('transferStaffNumber').value);
 
@@ -281,20 +281,24 @@ export class RekeyReasonPage extends BasePageComponent {
 
     const transferStaffValid = (!this.isTransferSelected() || this.isTransferSelected() && this.transferStaffExists);
 
+    const otherReasonForRekeyValid =
+      (!this.isOtherReasonSelected() || this.isOtherReasonSelected() && this.reasonValue().length);
+
     if (rekeyReasonProvided && reasonForRekeyIsValid
       && transferStaffValid) {
       return true;
     }
 
-    if (showToast) {
-      if (!rekeyReasonProvided) {
-        this.createToast('Provide at least one reason for rekey');
-      }
-      if (!transferStaffValid) {
-        this.createToast('Transfer staff number is invalid');
-      }
-      this.toast.present();
+    if (!rekeyReasonProvided) {
+      this.createToast('Provide at least one reason for rekey');
     }
+    if (!transferStaffValid) {
+      this.createToast('Transfer staff number is invalid');
+    }
+    if (!otherReasonForRekeyValid) {
+      this.createToast('Other reason for rekey must be entered');
+    }
+    this.toast.present();
   }
 
   private createToast = (errorMessage: string) => {
@@ -368,6 +372,10 @@ export class RekeyReasonPage extends BasePageComponent {
 
   isTransferSelected(): boolean {
     return this.formGroup.get('transferSelected').value;
+  }
+
+  isOtherReasonSelected(): boolean {
+    return this.formGroup.get('otherSelected').value;
   }
 
   characterCountChanged(charactersRemaining: number) {

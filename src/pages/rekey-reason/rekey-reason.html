@@ -57,7 +57,7 @@
                   Enter staff number of examiner who conducted the test
                 </div>
               </ion-row>
-              <ion-row class="staffNumberRow">
+              <ion-row>
                 <ion-input placeholder="Staff Number" type="number" numbersOnly id="transferStaffNumber" class="staffNumber"
                   formControlName="transferStaffNumber" [value]="(pageState.examinerConducted$ | async)" clearInput
                   (change)="transferStaffNumberChanged()"></ion-input>
@@ -111,7 +111,7 @@
 </ion-content>
 <ion-footer>
   <ion-row class="mes-full-width-card box-shadow">
-    <button [disabled]="!this.formIsValid(false)" type="submit" class="mes-primary-button" ion-button (click)="onUploadPressed()">
+    <button type="submit" class="mes-primary-button" ion-button (click)="onUploadPressed()">
       <h3>Upload rekeyed test</h3>
     </button>
   </ion-row>

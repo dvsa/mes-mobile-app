@@ -12,21 +12,16 @@ page-rekey-reason {
     min-width: 40%;
   }
 
-  .staffNumberRow {
-    height: 70px;
-    max-height: 70px;
-  }
-
   ion-spinner {
     margin-left: 6px;
     * {
-      stroke: black;
+      stroke: map-get($colors-gds, gds-black);;
     }
 
     &.spinner-circles circle,
     &.spinner-bubbles circle,
     &.spinner-dots circle {
-      fill: black;
+      fill: map-get($colors-gds, gds-black);
     }
   }
 
@@ -35,7 +30,7 @@ page-rekey-reason {
     margin-left: 5px;
     div {
       width: 40px;
-      height: 40px;
+      min-height: 40px;
       min-width: 22px;
       .tick-background {
         background-color: map-get($colors-gds, 'gds-grey-3');
@@ -86,12 +81,11 @@ page-rekey-reason {
 
   .mes-return-button {
     @extend .mes-primary-button;
-    margin-bottom: 36px;
+    margin-bottom: 10px;
     width: 40%;
     background: map-get($colors-gds, gds-grey-2);
     box-shadow: inset 0 -2px 0 0 map-get($colors-gds, gds-grey-1);
-    font-size: 20px;
-    color: black;
+    color: map-get($colors-gds, gds-black);;
     &.activated {
       background: map-get($colors-gds, gds-grey-1);
     }
@@ -99,7 +93,7 @@ page-rekey-reason {
       color: map-get($colors-gds, gds-black);
     }
     margin-top: 9px;
-    height: 50px;
+    min-height: 50px;
   }
 
   .selected-border{
@@ -120,11 +114,6 @@ page-rekey-reason {
       font-weight: 600;
       letter-spacing: -0.49px;
     }
-  }
-
-  .tickwrapper {
-    height: 50px;
-    width: 50px;
   }
 
   .radio-label{
