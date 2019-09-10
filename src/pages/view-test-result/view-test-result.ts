@@ -359,20 +359,24 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
     const getIpadIssueDisplayText = (reasonType): string => {
 
-      const ipadIssueText = {
-        broken: 'Broken',
-        lost: 'Lost',
-        technicalFault: 'Technical fault',
-        stolen: 'Stolen',
-      };
-
       let value = '';
 
-      for (const prop in reasonType) {
-        if (reasonType[prop] && prop !== 'selected') {
-          value = ipadIssueText[prop];
-        }
+      if (reasonType.broken) {
+        value = 'Broken';
       }
+
+      if (reasonType.lost) {
+        value = 'Lost';
+      }
+
+      if (reasonType.technicalFault) {
+        value = 'Technical fault';
+      }
+
+      if (reasonType.stolen) {
+        value = 'Stolen';
+      }
+
       return value;
     };
 
