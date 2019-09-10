@@ -25,7 +25,6 @@ export class DebriefAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

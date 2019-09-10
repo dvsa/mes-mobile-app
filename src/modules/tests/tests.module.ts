@@ -5,7 +5,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { TestsEffects } from './tests.effects';
 import { TestSubmissionProvider } from '../../providers/test-submission/test-submission';
 import { TestsAnalyticsEffects } from './tests.analytics.effects';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { TestDataEffects } from './test-data/test-data.effects';
 import { NavigationProvider } from '../../providers/navigation/navigation';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
@@ -25,7 +24,6 @@ import { ExaminerConductedEffects } from './examiner-conducted/examiner-conducte
   ],
   providers:[
     TestSubmissionProvider,
-    AnalyticsProvider,
     NavigationProvider,
     NavigationStateProvider,
   ],

@@ -5,8 +5,6 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
-import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
-import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
 import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { OFFICE_PAGE, WAITING_ROOM_PAGE } from '../../../../pages/page-names.constants';
@@ -59,7 +57,6 @@ describe('Test Outcome', () => {
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
-        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
       ],
     })
       .compileComponents()

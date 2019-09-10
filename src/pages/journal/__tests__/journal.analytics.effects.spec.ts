@@ -41,10 +41,6 @@ describe('Journal Analytics Effects', () => {
     });
     effects = TestBed.get(JournalAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
-    spyOn(analyticsProviderMock, 'logError').and.callThrough();
   });
 
   describe('journalView', () => {

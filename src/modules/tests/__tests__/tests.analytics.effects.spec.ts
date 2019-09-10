@@ -61,9 +61,6 @@ describe('Tests Analytics Effects', () => {
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     navigationStateProviderMock = TestBed.get(NavigationStateProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
-    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
-    spyOn(analyticsProviderMock, 'logError').and.callThrough();
     spyOn(navigationStateProviderMock, 'isRekeySearch').and.returnValue(true);
   });
 

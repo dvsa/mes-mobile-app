@@ -34,12 +34,6 @@ export class TestsAnalyticsEffects {
     private store$: Store<StoreModel>,
     private navigationStateProvider: NavigationStateProvider,
   ) {
-    this.analytics.initialiseAnalytics()
-      .then(() => {})
-      .catch(() => {
-        console.log('error initialising analytics');
-      },
-    );
   }
 
   @Effect()

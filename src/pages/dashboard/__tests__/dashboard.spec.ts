@@ -18,8 +18,6 @@ import { Store, StoreModule } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { StoreModel } from '../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
-import { AnalyticsProvider } from '../../../providers/analytics/analytics';
-import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { AppConfigProvider } from '../../../providers/app-config/app-config';
@@ -55,7 +53,6 @@ describe('DashboardPage', () => {
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
-        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },

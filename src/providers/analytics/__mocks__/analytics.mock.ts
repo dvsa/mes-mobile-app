@@ -4,26 +4,23 @@ export class AnalyticsProviderMock implements IAnalyticsProvider {
 
   googleAnalyticsKey: string = 'UA-12345678';
 
-  setCurrentPage(name: string):void {}
+  setCurrentPage = jasmine.createSpy('setCurrentPage');
 
-  initialiseAnalytics = (): Promise<any> =>
-    new Promise((resolve) => {
-      resolve();
-    })
+  initialiseAnalytics = jasmine.createSpy('initialiseAnalytics').and.returnValue(Promise.resolve());
 
-  logEvent(category: string, event: string, label?: string, value?: number) {}
+  logEvent = jasmine.createSpy('logEvent');
 
-  addCustomDimension(key: number, value: string) {}
+  addCustomDimension = jasmine.createSpy('addCustomDimension');
 
-  logError(message: string) {}
+  logError = jasmine.createSpy('logError');
 
-  logException(message: string, fatal: boolean) {}
+  logException = jasmine.createSpy('logException');
 
-  setUserId(userId: string) {}
+  setUserId = jasmine.createSpy('setUserId');
 
-  setDeviceId(deviceId: string) {}
+  setDeviceId = jasmine.createSpy('setDeviceId');
 
-  getDescriptiveDate(userDate: string) { return 'Tomorrow'; }
+  getDescriptiveDate = jasmine.createSpy('getDescriptiveDate').and.returnValue('Tomorrow');
 
-  getDiffDays(userDate: string) { return '4'; }
+  getDiffDays = jasmine.createSpy('getDiffDays').and.returnValue(4);
 }

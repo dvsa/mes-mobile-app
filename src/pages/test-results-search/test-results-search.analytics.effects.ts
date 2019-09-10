@@ -28,7 +28,6 @@ export class TestResultsSearchAnalyticsEffects {
     public analytics: AnalyticsProvider,
     private actions$: Actions,
     ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

@@ -22,7 +22,6 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { SlotComponent } from '../../components/test-slot/slot/slot';
 import { merge } from 'rxjs/observable/merge';
 import { SlotItem } from '../../providers/slot-selector/slot-item';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
 import { getVersionNumber } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
@@ -81,7 +80,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
     private store$: Store<StoreModel>,
     private slotSelector: SlotSelectorProvider,
     private resolver: ComponentFactoryResolver,
-    public analytics: AnalyticsProvider,
     public dateTimeProvider: DateTimeProvider,
     public appConfigProvider: AppConfigProvider,
     private app: App,
@@ -91,7 +89,6 @@ export class JournalPage extends BasePageComponent implements OnInit {
 
   ) {
     super(platform, navController, authenticationProvider);
-    this.analytics.initialiseAnalytics().then(() => console.log('journal analytics initialised'));
     this.employeeId = this.authenticationProvider.getEmployeeId();
     this.isUnauthenticated = this.authenticationProvider.isInUnAuthenticatedMode();
     this.store$.dispatch(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));

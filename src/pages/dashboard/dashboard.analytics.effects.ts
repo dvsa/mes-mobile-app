@@ -19,7 +19,6 @@ export class DashboardAnalyticsEffects {
     public analytics: AnalyticsProvider,
     private actions$: Actions,
   ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

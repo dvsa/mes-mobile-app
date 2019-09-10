@@ -9,7 +9,6 @@ import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selecto
 import { ActivitySlotComponent } from './components/activity-slot/activity-slot';
 import { EmptySlotComponent } from './components/empty-slot/empty-slot';
 import { JournalProvider } from '../../providers/journal/journal';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { SlotProvider } from '../../providers/slot/slot';
 import { JournalAnalyticsEffects } from './journal.analytics.effects';
 import { JournalLogsEffects } from './journal.logs.effects';
@@ -44,7 +43,6 @@ import { ComponentsModule } from '../../components/common/common-components.modu
     JournalProvider,
     SlotProvider,
     SlotSelectorProvider,
-    AnalyticsProvider,
     DateTimeProvider,
   ],
 })

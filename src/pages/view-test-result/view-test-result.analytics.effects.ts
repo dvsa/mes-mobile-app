@@ -14,7 +14,6 @@ export class ViewTestResultAnalyticsEffects {
     public analytics: AnalyticsProvider,
     private actions$: Actions,
     ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()
