@@ -13,10 +13,10 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-bounce>
-  <incomplete-tests-banner></incomplete-tests-banner>
+  <incomplete-tests-banner [todaysDate]="todaysDate"></incomplete-tests-banner>
   <profile-header [employeeId]="employeeId" [name]="name" [role]="role"></profile-header>
   <hr/>
-  <h4 class="date">{{todaysDate}}</h4>
+  <h4 class="date">{{todaysDateFormatted}}</h4>
   <ion-grid no-padding>
     <ion-row>
       <ion-col no-padding col-96 col-lg-32>

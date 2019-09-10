@@ -19,6 +19,7 @@ import { ExaminerRoleDescription } from '../../providers/app-config/constants/ex
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
 import * as journalActions from './../journal/journal.actions';
+import { DateTime } from '../../shared/helpers/date-time';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
@@ -42,7 +43,8 @@ export class DashboardPage extends BasePageComponent {
   employeeId: string;
   name: string;
   role: string;
-  todaysDate: string;
+  todaysDate: DateTime;
+  todaysDateFormatted: string;
 
   constructor(
     public store$: Store<StoreModel>,
@@ -61,7 +63,8 @@ export class DashboardPage extends BasePageComponent {
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
     this.name = this.authenticationProvider.getEmployeeName() || 'Unknown Name';
     this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
-    this.todaysDate = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
+    this.todaysDate = this.dateTimeProvider.now();
+    this.todaysDateFormatted = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
   }
 
   ionViewDidEnter(): void {
@@ -101,6 +104,8 @@ export class DashboardPage extends BasePageComponent {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
+    this.todaysDate = this.dateTimeProvider.now();
+    this.todaysDateFormatted = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
 
     return true;
   }

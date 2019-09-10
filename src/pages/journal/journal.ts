@@ -36,6 +36,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { PersonalCommitmentSlotComponent } from './personal-commitment/personal-commitment';
 import { TestSlotComponent } from '../../components/test-slot/test-slot/test-slot';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
+import { DateTime } from '../../shared/helpers/date-time';
 
 interface JournalPageState {
   selectedDate$: Observable<string>;
@@ -68,6 +69,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
   employeeId: string;
   start = '2018-12-10T08:10:00+00:00';
   merged$: Observable<void | number>;
+  todaysDate: DateTime;
 
   constructor(
     public modalController: ModalController,
@@ -93,6 +95,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     this.employeeId = this.authenticationProvider.getEmployeeId();
     this.isUnauthenticated = this.authenticationProvider.isInUnAuthenticatedMode();
     this.store$.dispatch(new journalActions.SetSelectedDate(this.dateTimeProvider.now().format('YYYY-MM-DD')));
+    this.todaysDate = this.dateTimeProvider.now();
   }
 
   ngOnInit(): void {
@@ -154,6 +157,7 @@ export class JournalPage extends BasePageComponent implements OnInit {
     if (this.merged$) {
       this.subscription = this.merged$.subscribe();
     }
+    this.todaysDate = this.dateTimeProvider.now();
 
     return true;
   }
