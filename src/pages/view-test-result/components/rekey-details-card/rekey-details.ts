@@ -8,7 +8,7 @@ import { RekeyDetailsModel } from './rekey-details-card.model';
 export class RekeyDetailsCardComponent {
 
   @Input()
-  data: RekeyDetailsModel;
+  rekeyDetails: RekeyDetailsModel;
 
   constructor() {}
 

@@ -16,8 +16,8 @@
     <view-test-header [data]="getHeaderDetails()"></view-test-header>
     <test-details-card [data]="getTestDetails()"></test-details-card>
     <div *ngIf="testResult.rekey">
-      <rekey-details-card [data]='getRekeyDetails()'></rekey-details-card>
-      <rekey-reason-card [data]='getRekeyReason()'></rekey-reason-card>
+      <rekey-details-card [rekeyDetails]='getRekeyDetails()'></rekey-details-card>
+      <rekey-reason-card [rekeyReason]='getRekeyReason()'></rekey-reason-card>
     </div>
     <examiner-details-card [data]='getExaminerDetails()'></examiner-details-card>
     <vehicle-details-card [data]='getVehicleDetails()'></vehicle-details-card>
