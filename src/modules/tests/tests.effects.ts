@@ -22,8 +22,6 @@ import { find, startsWith, omit, has } from 'lodash';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
-import { getRekeyIndicator } from './rekey/rekey.reducer';
-import { isRekey } from './rekey/rekey.selector';
 import { TestsModel } from './tests.model';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { getJournalState } from '../../pages/journal/journal.reducer';
@@ -70,15 +68,9 @@ export class TestsEffects {
           select(getTests),
           select(isPracticeMode),
         ),
-        this.store$.pipe(
-          select(getTests),
-          select(getCurrentTest),
-          select(getRekeyIndicator),
-          map(isRekey),
-        ),
       ),
     )),
-    filter(([action, tests, isPracticeMode, isRekey]) => !isPracticeMode && !isRekey),
+    filter(([action, tests, isPracticeMode]) => !isPracticeMode),
     switchMap(([action, tests]) => {
       return this.testPersistenceProvider.persistTests(
         this.getSaveableTestsObject(tests),
@@ -332,26 +324,6 @@ export class TestsEffects {
       ),
     )),
     switchMap(([action, slotId]: [testActions.SendCurrentTestSuccess, string]) => {
-      return [
-        new testStatusActions.SetTestStatusSubmitted(slotId),
-        new testActions.PersistTests(),
-      ];
-    }),
-  );
-
-  @Effect()
-  sendCurrentTestFailureEffect$ = this.actions$.pipe(
-    ofType(testActions.SEND_CURRENT_TEST_FAILURE),
-    concatMap(action => of(action).pipe(
-      withLatestFrom(
-        this.store$.pipe(
-          select(getTests),
-          select(getCurrentTestSlotId),
-        ),
-      ),
-    )),
-    filter(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => action.isDuplicateUpload),
-    switchMap(([action, slotId]: [testActions.SendCurrentTestFailure, string]) => {
       return [
         new testStatusActions.SetTestStatusSubmitted(slotId),
         new testActions.PersistTests(),
