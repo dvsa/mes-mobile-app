@@ -3,6 +3,7 @@ export enum TestStatus {
   Started = 'Started',
   Decided = 'Decided',
   WriteUp = 'WriteUp',
+  Autosaved = 'Autosaved',
   Completed = 'Completed',
   Submitted = 'Submitted',
 }

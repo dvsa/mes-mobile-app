@@ -26,6 +26,11 @@ export function testStatusReducer(state = initialState, action: testStatusAction
         ...state,
         [action.slotId]: TestStatus.WriteUp,
       };
+    case testStatusActions.SET_TEST_STATUS_AUTOSAVED:
+      return {
+        ...state,
+        [action.slotId]: TestStatus.Autosaved,
+      };
     case testStatusActions.SET_TEST_STATUS_COMPLETED:
       return {
         ...state,
