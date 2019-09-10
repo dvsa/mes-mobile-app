@@ -8,7 +8,6 @@ export const IPAD_ISSUE_LOST = '[RekeyReasonPage] Rekey Reason Ipad Issue Lost S
 export const IPAD_ISSUE_STOLEN = '[RekeyReasonPage] Rekey Reason Ipad Issue Stolen Selected';
 export const IPAD_ISSUE_BROKEN = '[RekeyReasonPage] Rekey Reason Ipad Issue Broken Selected';
 export const TRANSFER_SELECTED = '[RekeyReasonPage] Rekey Reason Transfer Selected';
-export const TRANSFER_STAFF_UPDATED = '[RekeyReasonPage] Rekey Reason Transfer Staff Number Updated';
 export const OTHER_SELECTED = '[RekeyReasonPage] Rekey Reason Other Selected';
 export const OTHER_REASON_UPDATED = '[RekeyReasonPage] Rekey Reason Other Reason Updated';
 
@@ -45,11 +44,6 @@ export class TransferSelected implements Action {
   constructor(public selectedValue: boolean) { }
 }
 
-export class TransferStaffNumber implements Action {
-  readonly type = TRANSFER_STAFF_UPDATED;
-  constructor(public staffNumber: number) { }
-}
-
 export class OtherSelected implements Action {
   readonly type = OTHER_SELECTED;
   constructor(public selectedValue: boolean) { }
@@ -69,6 +63,5 @@ export type Types =
   | IpadIssueStolenSelected
   | IpadIssueBrokenSelected
   | TransferSelected
-  | TransferStaffNumber
   | OtherSelected
   | OtherReasonUpdated;

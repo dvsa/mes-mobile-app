@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UrlProvider } from '../url/url';
+import { Observable } from 'rxjs/Observable';
+import { timeout } from 'rxjs/operators';
+import { AppConfigProvider } from '../app-config/app-config';
+
+@Injectable()
+export class FindUserProvider {
+
+  constructor(
+    private httpClient: HttpClient,
+    private urlProvider: UrlProvider,
+    private appConfig: AppConfigProvider,
+  ) { }
+
+  userExists(staffNumber: string): Observable<Object> {
+    return this.httpClient.get(
+      this.urlProvider.getRekeyFindUserUrl(staffNumber))
+      .pipe(timeout(this.appConfig.getAppConfig().requestTimeout));
+  }
+
+}

@@ -40,6 +40,9 @@ export type AppConfig = {
     url: string,
     autoSendInterval: number,
   },
+  user: {
+    findUser: string,
+  }
   requestTimeout: number
 };
 

@@ -14,7 +14,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
+import { RekeyReasonViewDidEnter, RekeyReasonFindUser, RekeyReasonFindUserFailure } from './rekey-reason.actions';
 import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -25,6 +25,7 @@ import {
   IpadIssueBrokenSelected,
   OtherSelected,
   OtherReasonUpdated,
+  TransferSelected,
 } from '../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
 import { REKEY_UPLOAD_OUTCOME_PAGE, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
@@ -32,8 +33,8 @@ import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
-import { RekeyReasonUploadModel } from './rekey-reason.model';
-import { getUploadStatus } from './rekey-reason.selector';
+import { RekeyReasonUploadModel, RekeyReasonFindUserModel } from './rekey-reason.model';
+import { getUploadStatus, getFindUserStatus } from './rekey-reason.selector';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   getReasonForRekey,
@@ -46,14 +47,21 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
 import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
+
+import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
+
+import { getExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.reducer';
 import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
   ipadIssue$: Observable<IpadIssue>;
   transfer$: Observable<Transfer>;
-  // TODO: Add transfer staff number into the page state
   other$: Observable<Other>;
+  findUser$: Observable<RekeyReasonFindUserModel>;
+  examinerConducted$: Observable<number>;
+  findUserObservable$: Observable<RekeyReasonFindUserModel>;
+  initialExaminerConducted$: Observable<number>;
 }
 
 @IonicPage()
@@ -81,6 +89,16 @@ export class RekeyReasonPage extends BasePageComponent {
 
   reasonCharsRemaining: number = null;
 
+  transferStaffExists: boolean = false;
+
+  initialExaminerConducted: number = null;
+
+  ipadIssueUpdate;
+
+  initialIpadIssue = true;
+  initialTransfer = true;
+  initialOther = true;
+
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -98,6 +116,7 @@ export class RekeyReasonPage extends BasePageComponent {
       ipadIssueStolen: new FormControl(false),
       ipadIssueBroken: new FormControl(false),
       transferSelected: new FormControl(false),
+      transferStaffNumber: new FormControl('', [Validators.minLength(1), Validators.required]),
       otherSelected: new FormControl(false),
       otherReasonUpdated: new FormControl('', [Validators.minLength(1), Validators.required]),
     });
@@ -124,12 +143,59 @@ export class RekeyReasonPage extends BasePageComponent {
       other$: currentReasonForRekey$.pipe(
         select(getRekeyOther),
       ),
+      findUser$: this.store$.pipe(
+        select(getRekeyReasonState),
+        select(getFindUserStatus),
+      ),
+      examinerConducted$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getExaminerConducted),
+      ),
+      findUserObservable$: this.store$.pipe(
+        select(getRekeyReasonState),
+        select(getFindUserStatus),
+      ),
+      initialExaminerConducted$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getExaminerConducted),
+      ),
     };
 
-    const { uploadStatus$ } = this.pageState;
+    this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
+      (ipadIssue: IpadIssue) => {
+        this.formGroup.get('ipadIssue').setValue(ipadIssue.selected);
+        if (ipadIssue.selected) {
+          this.formGroup.get('ipadIssueTechFault').setValue(ipadIssue.technicalFault);
+          this.formGroup.get('ipadIssueLost').setValue(ipadIssue.lost);
+          this.formGroup.get('ipadIssueStolen').setValue(ipadIssue.stolen);
+          this.formGroup.get('ipadIssueBroken').setValue(ipadIssue.broken);
+        }
+      },
+    );
+
+    this.pageState.transfer$.subscribe(
+      (transfer: Transfer) => {
+        this.formGroup.get('transferSelected').setValue(transfer.selected);
+      },
+    );
+
+    this.pageState.other$.subscribe(
+      (other: Other) => {
+        this.formGroup.get('otherSelected').setValue(other.selected);
+        if (other.selected) {
+          this.formGroup.get('otherReasonUpdated').setValue(other.reason);
+        }
+      },
+    );
+
+    const { uploadStatus$, findUserObservable$, initialExaminerConducted$ } = this.pageState;
 
     this.subscription = merge(
       uploadStatus$.pipe(map(this.handleUploadOutcome)),
+      findUserObservable$.pipe(map(this.handleFindUserResponse)),
+      initialExaminerConducted$.pipe(map(this.handleExistingExaminerConducted)),
     ).subscribe();
   }
 
@@ -138,6 +204,8 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   ionViewDidLeave(): void {
+    this.store$.dispatch(new TransferSelected(false));
+    this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -178,6 +246,16 @@ export class RekeyReasonPage extends BasePageComponent {
     }
   }
 
+  handleFindUserResponse = (findUser: RekeyReasonFindUserModel): void => {
+    this.transferStaffExists = findUser.isValid;
+  }
+
+  handleExistingExaminerConducted = (existingExaminerConducted: number): void => {
+    if (this.initialExaminerConducted === null) {
+      this.initialExaminerConducted = existingExaminerConducted;
+    }
+  }
+
   handleLoadingUI = (isLoading: boolean): void => {
     if (isLoading) {
       this.loadingSpinner = this.loadingController.create({
@@ -195,18 +273,30 @@ export class RekeyReasonPage extends BasePageComponent {
 
   formIsValid() {
     const rekeyReasonProvided = this.formGroup.get('ipadIssue').value ||
-      (this.formGroup.get('otherSelected').value);
+      (this.formGroup.get('otherSelected').value || this.formGroup.get('transferStaffNumber').value);
 
     const reasonForRekeyIsValid = !this.formGroup.get('otherSelected').value ||
       (this.formGroup.get('otherSelected').value
         && this.formGroup.get('otherReasonUpdated').valid);
 
-    if (rekeyReasonProvided && reasonForRekeyIsValid) {
+    const transferStaffValid = (!this.isTransferSelected() || this.isTransferSelected() && this.transferStaffExists);
+
+    const otherReasonForRekeyValid =
+      (!this.isOtherReasonSelected() || this.isOtherReasonSelected() && this.reasonValue().length);
+
+    if (rekeyReasonProvided && reasonForRekeyIsValid
+      && transferStaffValid) {
       return true;
     }
 
     if (!rekeyReasonProvided) {
       this.createToast('Provide at least one reason for rekey');
+    }
+    if (!transferStaffValid) {
+      this.createToast('Transfer staff number is invalid');
+    }
+    if (!otherReasonForRekeyValid) {
+      this.createToast('Other reason for rekey must be entered');
     }
     this.toast.present();
   }
@@ -252,8 +342,40 @@ export class RekeyReasonPage extends BasePageComponent {
     this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
   }
 
+  transferSelected(checked: boolean) {
+    this.formGroup.controls['transferStaffNumber'].setValue('');
+    // To invalidate the input
+    this.store$.dispatch(new RekeyReasonFindUserFailure());
+    this.store$.dispatch(new TransferSelected(checked));
+
+    if (!checked) {
+      this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
+    } else {
+      this.store$.dispatch(new SetExaminerConducted(null));
+      this.formGroup.controls['transferStaffNumber'].setValue('');
+    }
+  }
+
+  transferStaffNumberChanged() {
+    // To invalidate the input
+    this.store$.dispatch(new RekeyReasonFindUserFailure());
+    this.store$.dispatch(new SetExaminerConducted(this.transferValue()));
+  }
+
   reasonValue(): string {
     return this.formGroup.controls['otherReasonUpdated'].value;
+  }
+
+  transferValue(): number {
+    return parseInt(this.formGroup.controls['transferStaffNumber'].value, 10);
+  }
+
+  isTransferSelected(): boolean {
+    return this.formGroup.get('transferSelected').value;
+  }
+
+  isOtherReasonSelected(): boolean {
+    return this.formGroup.get('otherSelected').value;
   }
 
   characterCountChanged(charactersRemaining: number) {
@@ -275,7 +397,6 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   exitRekey = (): void => {
-    // TODO - modal confirmation
     const rekeySearchPage = this.navController.getViews().find(view => view.id === REKEY_SEARCH_PAGE);
     const journalPage = this.navController.getViews().find(view => view.id === JOURNAL_PAGE);
     if (rekeySearchPage) {
@@ -303,6 +424,10 @@ export class RekeyReasonPage extends BasePageComponent {
         this.exitRekey();
         break;
     }
+  }
+
+  checkUserExists() {
+    this.store$.dispatch(new RekeyReasonFindUser(this.transferValue().toString()));
   }
 
 }

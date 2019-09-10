@@ -70,5 +70,8 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     url: 'https://www.example.com/api/v1/logs',
     autoSendInterval: 1000 * 60,
   },
+  user: {
+    findUser: 'https://www.example.com/api/v1/users/{staffNumber}',
+  },
   requestTimeout: 20000,
 };

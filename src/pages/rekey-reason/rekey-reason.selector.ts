@@ -1,3 +1,4 @@
-import { RekeyReasonModel } from './rekey-reason.model';
+import { RekeyReasonModel, RekeyReasonFindUserModel, RekeyReasonUploadModel } from './rekey-reason.model';
 
-export const getUploadStatus = (rekeyReason: RekeyReasonModel) => rekeyReason.uploadStatus;
+export const getUploadStatus = (rekeyReason: RekeyReasonModel): RekeyReasonUploadModel => rekeyReason.uploadStatus;
+export const getFindUserStatus = (rekeyReason: RekeyReasonModel): RekeyReasonFindUserModel => rekeyReason.findUser;

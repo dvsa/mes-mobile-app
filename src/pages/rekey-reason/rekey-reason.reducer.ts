@@ -1,5 +1,6 @@
 import * as testActions from './../../modules/tests/tests.actions';
 import * as rekeyActions from './../../modules/tests/rekey/rekey.actions';
+import * as rekeyReasonActions from './rekey-reason.actions';
 import { createFeatureSelector } from '@ngrx/store';
 import { RekeyReasonModel } from './rekey-reason.model';
 
@@ -10,9 +11,14 @@ export const initialState: RekeyReasonModel = {
     hasUploadFailed: false,
     isDuplicate: false,
   },
+  findUser: {
+    isLoading: false,
+    isValid: false,
+  },
 };
 
-export function rekeyReasonReducer(state = initialState, action: testActions.Types | rekeyActions.Types) {
+export function rekeyReasonReducer(state = initialState, action:
+  testActions.Types | rekeyActions.Types | rekeyReasonActions.Types) {
   switch (action.type) {
     case rekeyActions.END_REKEY:
       return {
@@ -41,6 +47,30 @@ export function rekeyReasonReducer(state = initialState, action: testActions.Typ
           ...initialState.uploadStatus,
           hasUploadFailed: true,
           isDuplicate: action.isDuplicateUpload,
+        },
+      };
+    case rekeyReasonActions.REKEY_REASON_FIND_USER:
+      return {
+        ...state,
+        findUser: {
+          ...state.findUser,
+          isLoading: true,
+        },
+      };
+    case rekeyReasonActions.REKEY_REASON_FIND_USER_SUCCESS:
+      return {
+        ...state,
+        findUser: {
+          isLoading: false,
+          isValid: true,
+        },
+      };
+    case rekeyReasonActions.REKEY_REASON_FIND_USER_FAILURE:
+      return {
+        ...state,
+        findUser: {
+          isLoading: false,
+          isValid: false,
         },
       };
     default:

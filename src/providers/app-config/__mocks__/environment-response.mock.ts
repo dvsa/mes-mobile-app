@@ -19,4 +19,7 @@ export const environmentResponseMock = {
     url: 'https://example.com/api/v1/logs',
     autoSendInterval: 60000,
   },
+  user: {
+    findUser: 'https://www.example.com/api/v1/users/12345',
+  },
 };

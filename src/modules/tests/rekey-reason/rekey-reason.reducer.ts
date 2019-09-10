@@ -7,7 +7,6 @@ import {
   IPAD_ISSUE_STOLEN,
   IPAD_ISSUE_BROKEN,
   TRANSFER_SELECTED,
-  TRANSFER_STAFF_UPDATED,
   OTHER_SELECTED,
   OTHER_REASON_UPDATED,
 } from './rekey-reason.actions';
@@ -85,15 +84,6 @@ export function rekeyReasonReducer(state = initialState, action: Types): RekeyRe
         transfer: {
           ...initialState.transfer,
           selected: action.selectedValue,
-        },
-      };
-    case TRANSFER_STAFF_UPDATED:
-      return {
-        ...state,
-        transfer: {
-          ...initialState.transfer,
-          selected: true,
-          // TODO: Add Staff Number here as transfer staff number
         },
       };
     case OTHER_SELECTED:
