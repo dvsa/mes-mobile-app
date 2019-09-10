@@ -10,12 +10,76 @@ import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/an
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { DateTimeProvider } from '../../date-time/date-time';
+import { SpecialNeedsCode } from '../../../shared/helpers/get-slot-type';
+import { TestSlot } from '@dvsa/mes-journal-schema';
+import { DateTime, Duration } from '../../../shared/helpers/date-time';
+import { DateTimeProviderMock } from '../../date-time/__mocks__/date-time.mock';
 
 const journalSlotsMissingDays = require('../__mocks__/journal-slots-missing-days-mock.json');
 
 describe('SlotProvider', () => {
   let slotProvider;
+  let appConfigProvider;
   let store$: Store<StoreModel>;
+
+  const startTime = '2019-02-01T11:22:33+00:00';
+  const mockSlot: TestSlot = {
+    slotDetail: {
+      slotId: 1001,
+      start: startTime,
+      duration: 57,
+    },
+    vehicleSlotTypeCode: 57,
+    testCentre: {
+      centreId: 54321,
+      centreName: 'Example Test Centre',
+      costCode: 'EXTC1',
+    },
+    booking: {
+      candidate: {
+        candidateId: 101,
+        candidateName: {
+          title: 'Miss',
+          firstName: 'Florence',
+          lastName: 'Pearson',
+        },
+        driverNumber: 'PEARS015220A99HC',
+        gender: 'F',
+        candidateAddress: {
+          addressLine1: '1 Station Street',
+          addressLine2: 'Someplace',
+          addressLine3: 'Sometown',
+          addressLine4: '',
+          addressLine5: '',
+          postcode: 'AB12 3CD',
+        },
+        primaryTelephone: '01234 567890',
+        secondaryTelephone: '04321 098765',
+        mobileTelephone: '07654 123456',
+      },
+      application: {
+        applicationId: 1234567,
+        bookingSequence: 3,
+        checkDigit: 1,
+        welshTest: false,
+        extendedTest: false,
+        meetingPlace: '',
+        progressiveAccess: false,
+        specialNeeds: 'Candidate has dyslexia',
+        specialNeedsCode: SpecialNeedsCode.NONE,
+        entitlementCheck: false,
+        vehicleSeats: 5,
+        vehicleHeight: 4,
+        vehicleWidth: 3,
+        vehicleLength: 2,
+        testCategory: 'B',
+        vehicleGearbox: 'Manual',
+      },
+      previousCancellation: [
+        'Act of nature',
+      ],
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,13 +89,14 @@ describe('SlotProvider', () => {
       providers: [
         { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
-        DateTimeProvider,
+        { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         SlotProvider,
       ],
     });
 
     store$ = TestBed.get(Store);
     slotProvider = TestBed.get(SlotProvider);
+    appConfigProvider = TestBed.get(AppConfigProvider);
     spyOn(store$, 'dispatch');
   });
 
@@ -269,6 +334,113 @@ describe('SlotProvider', () => {
 
   describe('getRelevantSlots', () => {
 
+  });
+
+  describe('canStartTest', () => {
+    let getAppConfigSpy;
+    beforeEach(() => {
+      getAppConfigSpy = jasmine.createSpy('getAppConfig');
+      appConfigProvider.getAppConfig = getAppConfigSpy;
+    });
+    it('should disallow the test when there are no permissions', () => {
+      getAppConfigSpy.and.returnValue({ journal: { testPermissionPeriods: [] } });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(false);
+    });
+    it('should disallow the test when there are only permissions for other test categories', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'C', from: '2019-01-01', to: null },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(false);
+    });
+    it('should disallow the test when there are permissions for the category which have expired', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-01-01', to: '2019-01-20' },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(false);
+    });
+    it('should allow the test when there are multiple expired ranges and a subsequent valid range', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2018-01-01', to: '2018-03-01' },
+            { testCategory: 'B', from: '2018-05-01', to: '2018-07-01' },
+            { testCategory: 'B', from: '2019-01-01', to: '2019-02-01' },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(true);
+    });
+    it('should allow the test when there is a permission range including the slot date', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-01-01', to: '2019-02-02' },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(true);
+    });
+    it('should allow the test when there is a permission range starting on the slot date', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-02-01', to: '2019-02-20' },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(true);
+    });
+    it('should allow the test when there is a permission range ending on the slot date', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-01-20', to: '2019-02-01' },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(true);
+    });
+    it('should allow the test when there is a permission range for the slot date only', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-02-01', to: '2019-02-01' },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(true);
+    });
+    it('should allow the test when there is a non-date bounded permission range', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-02-01', to: null },
+          ],
+        },
+      });
+      expect(slotProvider.canStartTest(mockSlot)).toBe(true);
+    });
+    it('should disallow starting of tests that arent today', () => {
+      getAppConfigSpy.and.returnValue({
+        journal: {
+          testPermissionPeriods: [
+            { testCategory: 'B', from: '2019-01-01', to: null },
+          ],
+        },
+      });
+      const futureSlot = cloneDeep(mockSlot);
+      futureSlot.slotDetail.start =
+        DateTime.at(startTime).add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
+      expect(slotProvider.canStartTest(futureSlot)).toEqual(false);
+    });
   });
 
 });

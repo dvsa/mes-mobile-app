@@ -16,8 +16,8 @@ import { SlotTypes } from '../../../shared/models/slot-types';
 import { map } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
-import { DateTime } from '../../../shared/helpers/date-time';
 import { getSlotType } from '../../../shared/helpers/get-slot-type';
+import { SlotProvider } from '../../../providers/slot/slot';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
@@ -48,6 +48,7 @@ export class TestSlotComponent implements SlotComponent, OnInit {
     public appConfig: AppConfigProvider,
     public dateTimeProvider: DateTimeProvider,
     public store$: Store<StoreModel>,
+    private slotProvider: SlotProvider,
   ) { }
 
   ngOnInit(): void {
@@ -87,32 +88,6 @@ export class TestSlotComponent implements SlotComponent, OnInit {
   }
 
   canStartTest(): boolean {
-    const { testPermissionPeriods } = this.appConfig.getAppConfig().journal;
-    const { testCategory } = this.slot.booking.application;
-    const startDate = new DateTime(this.slot.slotDetail.start);
-
-    if (startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
-      return false;
-    }
-
-    const periodsPermittingStart = testPermissionPeriods.filter((period) => {
-      const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startDate, period.from);
-      const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startDate, period.to);
-      return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
-    });
-    return periodsPermittingStart.length > 0;
-  }
-
-  private hasPeriodStartCriteria(slotDate: DateTime, periodFrom: string) {
-    const periodStartDate = new DateTime(periodFrom);
-    return slotDate.daysDiff(periodStartDate) <= 0;
-  }
-
-  private hasPeriodEndCritiera(slotDate: DateTime, periodTo: string) {
-    if (periodTo === null) {
-      return true;
-    }
-    const periodEndDate = new DateTime(periodTo);
-    return slotDate.daysDiff(periodEndDate) >= 0;
+    return this.slotProvider.canStartTest(this.slot);
   }
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { Observable } from 'rxjs/Observable';
 import { getIncompleteTestsCount } from './incomplete-tests-banner.selector';
 import { SlotProvider } from '../../../providers/slot/slot';
+import { DateTime } from '../../../shared/helpers/date-time';
 
 interface IncompleteTestsBannerComponentState {
   count$: Observable<number>;
@@ -17,19 +17,20 @@ interface IncompleteTestsBannerComponentState {
 
 export class IncompleteTestsBanner implements OnInit {
 
+  @Input()
+  public todaysDate: DateTime;
+
   componentState: IncompleteTestsBannerComponentState;
 
   constructor(
     private store$: Store<StoreModel>,
-    private dateTimeProvider: DateTimeProvider,
     private slotProvider: SlotProvider,
   ) {}
 
   ngOnInit() {
-    const today = this.dateTimeProvider.now();
     this.componentState = {
       count$: this.store$.pipe(
-        select(store => getIncompleteTestsCount(store, today, this.slotProvider)),
+        select(store => getIncompleteTestsCount(store, this.todaysDate, this.slotProvider)),
       ),
     };
   }

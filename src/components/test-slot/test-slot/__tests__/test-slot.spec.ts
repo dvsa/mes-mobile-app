@@ -29,9 +29,9 @@ import { SubmissionStatusComponent } from '../../submission-status/submission-st
 import { ProgressiveAccessComponent } from '../../progressive-access/progressive-access';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { TestSlot } from '@dvsa/mes-journal-schema';
-import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SpecialNeedsCode } from '../../../../shared/helpers/get-slot-type';
 import { LocationComponent } from '../../location/location';
+import { SlotProvider } from '../../../../providers/slot/slot';
 
 describe('TestSlotComponent', () => {
   let fixture: ComponentFixture<TestSlotComponent>;
@@ -122,6 +122,7 @@ describe('TestSlotComponent', () => {
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: SlotProvider, useClass: SlotProvider },
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(TestSlotComponent);
@@ -221,112 +222,6 @@ describe('TestSlotComponent', () => {
         expect(component.isPortrait()).toEqual(false);
         component.screenOrientation.type = component.screenOrientation.ORIENTATIONS.LANDSCAPE;
         expect(component.isPortrait()).toEqual(false);
-      });
-    });
-
-    describe('canStartTest', () => {
-      let getAppConfigSpy;
-      beforeEach(() => {
-        getAppConfigSpy = jasmine.createSpy('getAppConfig');
-        component.appConfig.getAppConfig = getAppConfigSpy;
-      });
-      it('should disallow the test when there are no permissions', () => {
-        getAppConfigSpy.and.returnValue({ journal: { testPermissionPeriods: [] } });
-        expect(component.canStartTest()).toBe(false);
-      });
-      it('should disallow the test when there are only permissions for other test categories', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'C', from: '2019-01-01', to: null },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(false);
-      });
-      it('should disallow the test when there are permissions for the category which have expired', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-01-01', to: '2019-01-20' },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(false);
-      });
-      it('should allow the test when there are multiple expired ranges and a subsequent valid range', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2018-01-01', to: '2018-03-01' },
-              { testCategory: 'B', from: '2018-05-01', to: '2018-07-01' },
-              { testCategory: 'B', from: '2019-01-01', to: '2019-02-01' },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(true);
-      });
-      it('should allow the test when there is a permission range including the slot date', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-01-01', to: '2019-02-02' },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(true);
-      });
-      it('should allow the test when there is a permission range starting on the slot date', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-02-01', to: '2019-02-20' },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(true);
-      });
-      it('should allow the test when there is a permission range ending on the slot date', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-01-20', to: '2019-02-01' },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(true);
-      });
-      it('should allow the test when there is a permission range for the slot date only', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-02-01', to: '2019-02-01' },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(true);
-      });
-      it('should allow the test when there is a non-date bounded permission range', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-02-01', to: null },
-            ],
-          },
-        });
-        expect(component.canStartTest()).toBe(true);
-      });
-      it('should disallow starting of tests that arent today', () => {
-        getAppConfigSpy.and.returnValue({
-          journal: {
-            testPermissionPeriods: [
-              { testCategory: 'B', from: '2019-01-01', to: null },
-            ],
-          },
-        });
-        component.slot.slotDetail.start =
-          DateTime.at(startTime).add(1, Duration.DAY).format('YYYY-MM-DDTHH:mm:ss+00:00');
-        expect(component.canStartTest()).toEqual(false);
       });
     });
 

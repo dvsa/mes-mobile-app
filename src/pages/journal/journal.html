@@ -18,7 +18,7 @@
     <label id="unauth-text">You are offline. Some features may be unavailable.</label>
   </div>
 
-  <incomplete-tests-banner></incomplete-tests-banner>
+  <incomplete-tests-banner [todaysDate]="todaysDate"></incomplete-tests-banner>
 
   <ion-refresher (ionRefresh)="pullRefreshJournal($event)">
     <ion-refresher-content
