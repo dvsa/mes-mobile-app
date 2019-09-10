@@ -67,17 +67,17 @@ page-rekey-search {
 
   .search-inputs {
     position: absolute;
-    width: 800px;
     z-index: 100;
-    margin-top: -16px;
+    width: 100%;
+    tabs > div {
+      margin: 16px 12px 0px;
+      width: 810px;
+    }
   }
 
   @media screen and (min-width: 900px) {
-    .search-inputs {
-      position: absolute;
-      width: 1080px;
-      z-index: 100;
-      margin-top: -16px;
+    .search-inputs tabs > div {
+      width: 1088px;
     }
   }
 
