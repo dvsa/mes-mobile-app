@@ -8,7 +8,7 @@ import { RekeyReason } from '@dvsa/mes-test-schema/categories/B';
 export class RekeyReasonCardComponent {
 
   @Input()
-  data: RekeyReason;
+  rekeyReason: RekeyReason;
 
   constructor() {}
 
