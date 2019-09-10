@@ -59,9 +59,6 @@ describe('Back To Office Analytics Effects', () => {
     effects = TestBed.get(BackToOfficeAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
   });
 
   describe('backToOfficeViewDidEnter', () => {

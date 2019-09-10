@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { DebriefPage } from './debrief';
 import { EffectsModule } from '@ngrx/effects';
 import { DebriefAnalyticsEffects } from './debrief.analytics.effects';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { ComponentsModule } from '../../components/common/common-components.module';
 import { DebriefComponentsModule } from './components/debrief-components.module';
 import { TranslateModule } from 'ng2-translate';
@@ -22,9 +21,6 @@ import { DebriefEffects } from './debrief.effects';
     ]),
     ComponentsModule,
     TranslateModule,
-  ],
-  providers: [
-    AnalyticsProvider,
   ],
 })
 export class DebriefPageModule { }

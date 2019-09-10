@@ -5,8 +5,6 @@ import { SlotProvider } from '../slot';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { TestSlotComponent } from '../../../components/test-slot/test-slot/test-slot';
-import { AnalyticsProvider } from '../../../providers/analytics/analytics';
-import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
 import { DateTimeProvider } from '../../date-time/date-time';
@@ -87,7 +85,6 @@ describe('SlotProvider', () => {
         StoreModule.forRoot({}),
       ],
       providers: [
-        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         SlotProvider,

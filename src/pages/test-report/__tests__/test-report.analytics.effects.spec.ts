@@ -57,13 +57,10 @@ describe('Test Report Analytics Effects', () => {
     effects = TestBed.get(TestReportAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
   });
 
   describe('testReportViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
-      // ARRANGE
-      spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
       // ACT
       actions$.next(new testReportActions.TestReportViewDidEnter());
       // ASSERT

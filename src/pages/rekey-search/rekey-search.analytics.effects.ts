@@ -21,7 +21,6 @@ export class RekeySearchAnalyticsEffects {
     public analytics: AnalyticsProvider,
     private actions$: Actions,
     ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

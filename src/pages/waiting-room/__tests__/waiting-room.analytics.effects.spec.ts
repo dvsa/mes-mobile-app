@@ -58,9 +58,6 @@ describe('Waiting Room Analytics Effects', () => {
     effects = TestBed.get(WaitingRoomAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logError').and.callThrough();
   });
 
   describe('waitingRoomViewDidEnter', () => {

@@ -58,9 +58,6 @@ describe('Communication Analytics Effects', () => {
     effects = TestBed.get(CommunicationAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logError').and.callThrough();
   });
 
   describe('communicationViewDidEnter', () => {

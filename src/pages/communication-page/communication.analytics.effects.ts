@@ -32,7 +32,6 @@ export class CommunicationAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

@@ -30,12 +30,6 @@ export class CandidateDetailsAnalyticsEffects {
     public analytics: AnalyticsProvider,
     private actions$: Actions,
   ) {
-    this.analytics.initialiseAnalytics()
-          .then(() => {})
-          .catch(() => {
-            console.log('error initialising analytics');
-          },
-    );
   }
 
   @Effect()

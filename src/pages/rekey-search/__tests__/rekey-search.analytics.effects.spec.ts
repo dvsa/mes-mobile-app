@@ -28,8 +28,6 @@ describe('Rekey Search Analytics Effects', () => {
     });
     effects = TestBed.get(RekeySearchAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
   });
 
   describe('rekeySearchViewDidEnter', () => {

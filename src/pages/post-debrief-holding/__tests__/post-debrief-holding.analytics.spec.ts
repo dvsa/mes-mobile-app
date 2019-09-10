@@ -46,7 +46,6 @@ describe('Post Debrief Holding Analytics Effects', () => {
     effects = TestBed.get(PostDebriefHoldingAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
   });
 
   describe('backToOfficeViewDidEnter', () => {

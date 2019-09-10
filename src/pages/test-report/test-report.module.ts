@@ -5,7 +5,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { TestReportAnalyticsEffects } from './test-report.analytics.effects';
-import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { testReportReducer } from './test-report.reducer';
 import { ComponentsModule } from '../../components/common/common-components.module';
 import { TestReportComponentsModule } from './components/test-report-components.module';
@@ -28,7 +27,6 @@ import { TestResultProvider } from '../../providers/test-result/test-result';
     ComponentsModule,
   ],
   providers: [
-    AnalyticsProvider,
     TestReportValidatorProvider,
     TestResultProvider,
   ],

@@ -47,7 +47,6 @@ describe('Debrief Analytics Effects', () => {
     effects = TestBed.get(DebriefAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
   });
 
   describe('debriefViewDidEnter', () => {

@@ -20,7 +20,6 @@ export class PostDebriefHoldingAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

@@ -45,7 +45,6 @@ describe('Rekey Reason Analytics Effects', () => {
     effects = TestBed.get(RekeyReasonAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     store$ = TestBed.get(Store);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
   });
 
   describe('rekeyReasonViewDidEnter', () => {

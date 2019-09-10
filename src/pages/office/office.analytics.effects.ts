@@ -37,7 +37,6 @@ export class OfficeAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

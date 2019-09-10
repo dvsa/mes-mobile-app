@@ -26,8 +26,6 @@ describe('View Test Results Analytics Effects', () => {
     });
     effects = TestBed.get(ViewTestResultAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
   });
 
   describe('viewTestResultViewDidEnter', () => {

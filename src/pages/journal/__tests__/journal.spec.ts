@@ -25,8 +25,6 @@ import { BasePageComponent } from '../../../shared/classes/base-page';
 import { StoreModel } from '../../../shared/models/store.model';
 import journalSlotsDataMock from '../__mocks__/journal-slots-data.mock';
 import { By } from '@angular/platform-browser';
-import { AnalyticsProvider } from '../../../providers/analytics/analytics';
-import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
 import { ConnectionStatus } from '../../../providers/network-state/network-state';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
@@ -75,7 +73,6 @@ describe('JournalPage', () => {
         { provide: Config, useFactory: () => ConfigMock.instance() },
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: SlotSelectorProvider, useClass: SlotSelectorProvider },
-        { provide: AnalyticsProvider, useClass: AnalyticsProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProviderMock },
         { provide: App, useClass: MockAppComponent },

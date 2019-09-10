@@ -30,9 +30,6 @@ describe('Test Results Search Analytics Effects', () => {
     });
     effects = TestBed.get(TestResultsSearchAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
-    spyOn(analyticsProviderMock, 'logEvent').and.callThrough();
-    spyOn(analyticsProviderMock, 'addCustomDimension').and.callThrough();
   });
 
   describe('testResultSearchViewDidEnter', () => {

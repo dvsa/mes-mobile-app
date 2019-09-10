@@ -36,7 +36,6 @@ export class WaitingRoomAnalyticsEffects {
     private actions$: Actions,
     private store$: Store<StoreModel>,
   ) {
-    this.analytics.initialiseAnalytics();
   }
 
   @Effect()

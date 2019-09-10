@@ -26,7 +26,6 @@ describe('Dashboard Analytics Effects', () => {
     });
     effects = TestBed.get(DashboardAnalyticsEffects);
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
-    spyOn(analyticsProviderMock, 'setCurrentPage').and.callThrough();
   });
 
   describe('dashboardViewDidEnter', () => {
