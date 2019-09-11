@@ -36,7 +36,8 @@ export class AnalyticsProvider implements IAnalyticsProvider {
 
   enableExceptionReporting(): void {
     this.platform.ready().then(() => {
-      this.ga
+      if (this.platform.is('ios')) {
+        this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
           this.ga.enableUncaughtExceptionReporting(true)
@@ -44,12 +45,14 @@ export class AnalyticsProvider implements IAnalyticsProvider {
             .catch(uncaughtError => console.log('Error enabling uncaught exceptions', uncaughtError));
         })
         .catch(error => console.log(`enableExceptionReporting: ${this.analyticsStartupError}`, error));
+      }
     });
   }
 
   setCurrentPage(name: string): void {
     this.platform.ready().then(() => {
-      this.ga
+      if (this.platform.is('ios')) {
+        this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
           this.ga.trackView(name)
@@ -57,12 +60,14 @@ export class AnalyticsProvider implements IAnalyticsProvider {
             .catch(pageError => console.log('Error setting page', pageError));
         })
         .catch(error => console.log('Error starting Google Analytics', error));
+      }
     });
   }
 
-  logEvent(category: string, event: string, label?: string, value?: number): void {
+  logEvent(category: string, event: string, label ?: string, value? : number): void {
     this.platform.ready().then(() => {
-      this.ga
+      if (this.platform.is('ios')) {
+        this.ga
         .startTrackerWithId(this.googleAnalyticsKey)
         .then(() => {
           this.ga.trackEvent(category, event, label, value)
@@ -70,11 +75,13 @@ export class AnalyticsProvider implements IAnalyticsProvider {
             .catch(eventError => console.log('Error tracking event', eventError));
         })
         .catch(error => console.log(`logEvent: ${this.analyticsStartupError}`, error));
+      }
     });
   }
 
   addCustomDimension(key: number, value: string): void {
-    this.ga
+    if (this.platform.is('ios')) {
+      this.ga
       .startTrackerWithId(this.googleAnalyticsKey)
       .then(() => {
         this.ga.addCustomDimension(key, value)
@@ -82,6 +89,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
           .catch(dimError => console.log('Error adding custom dimension ', dimError));
       })
       .catch(error => console.log(`addCustomDimension: ${this.analyticsStartupError}`, error));
+    }
   }
 
   logError(type: string, message: string): void {
@@ -89,7 +97,8 @@ export class AnalyticsProvider implements IAnalyticsProvider {
   }
 
   logException(message: string, fatal: boolean): void {
-    this.ga
+    if (this.platform.is('ios')) {
+      this.ga
       .startTrackerWithId(this.googleAnalyticsKey)
       .then(() => {
         this.ga.trackException(message, fatal)
@@ -97,11 +106,13 @@ export class AnalyticsProvider implements IAnalyticsProvider {
           .catch(trackingError => console.log('Error logging exception in Google Analytics', trackingError));
       })
       .catch(error => console.log(`logException: ${this.analyticsStartupError}`, error));
+    }
   }
 
   setUserId(userId: string): void {
-    this.uniqueUserId = createHash('sha256').update(userId || 'unavailable').digest('hex');
-    this.ga
+    if (this.platform.is('ios')) {
+      this.uniqueUserId = createHash('sha256').update(userId || 'unavailable').digest('hex');
+      this.ga
       .startTrackerWithId(this.googleAnalyticsKey)
       .then(() => {
         this.addCustomDimension(AnalyticsDimensionIndices.USER_ID, this.uniqueUserId);
@@ -110,6 +121,7 @@ export class AnalyticsProvider implements IAnalyticsProvider {
           .catch(idError => console.log(`Error setting userid ${this.uniqueUserId}`, idError));
       })
       .catch(error => console.log(`setUserId: ${this.analyticsStartupError}`, error));
+    }
   }
 
   setDeviceId(deviceId: string): void {
@@ -117,12 +129,12 @@ export class AnalyticsProvider implements IAnalyticsProvider {
     this.addCustomDimension(AnalyticsDimensionIndices.DEVICE_ID, this.uniqueDeviceId);
   }
 
-  getDiffDays(userDate: string): number {
+  getDiffDays(userDate: string) : number {
     const today = new DateTime();
     return today.daysDiff(userDate);
   }
 
-  getDescriptiveDate(userDate: string): string {
+  getDescriptiveDate(userDate: string) : string {
     let ret: string;
 
     const daysDiff = this.getDiffDays(userDate);
