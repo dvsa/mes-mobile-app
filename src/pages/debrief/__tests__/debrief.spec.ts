@@ -35,6 +35,7 @@ import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-att
 import { EndDebrief } from '../debrief.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
 import { PASS_FINALISATION_PAGE, POST_DEBRIEF_HOLDING_PAGE } from '../../page-names.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -390,8 +391,7 @@ describe('DebriefPage', () => {
         store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
         store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
         fixture.detectChanges();
-        component.isBookedInWelsh = true;
-        component.configureI18N(true);
+        component.configureI18N(Language.CYMRAEG);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;

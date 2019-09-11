@@ -19,7 +19,7 @@ import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -33,6 +33,11 @@ import {
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
 import { COMMUNICATION_PAGE } from '../page-names.constants';
+import {
+  CandidateChoseToProceedWithTestInWelsh,
+  CandidateChoseToProceedWithTestInEnglish,
+} from '../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -52,8 +57,6 @@ interface WaitingRoomPageState {
 })
 export class WaitingRoomPage extends PracticeableBasePageComponent implements OnInit {
 
-  static readonly welshLanguage: string = 'Cymraeg';
-
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
 
@@ -64,11 +67,6 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   form: FormGroup;
 
   subscription: Subscription;
-
-  isBookedInWelsh: boolean;
-
-  conductedLanguage: string;
-
   inputSubscriptions: Subscription[] = [];
 
   merged$: Observable<boolean | string>;
@@ -156,11 +154,9 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
 
     const { welshTest$, conductedLanguage$ } = this.pageState;
     this.merged$ = merge(
-      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
-      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
+      welshTest$,
+      conductedLanguage$.pipe(tap(this.configureI18N)),
     );
-
-    this.configureI18N(this.conductedLanguage === WaitingRoomPage.welshLanguage);
   }
 
   ionViewWillEnter(): boolean {
@@ -203,9 +199,11 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
     );
   }
 
-  configureI18N(isWelsh: boolean): void {
-    if (this.isBookedInWelsh && isWelsh) {
+  configureI18N = (language: Language): void => {
+    if (language === Language.CYMRAEG) {
       this.translate.use('cy');
+    } else {
+      this.translate.use('en');
     }
   }
 
@@ -239,5 +237,13 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
   isCtrlDirtyAndInvalid(controlName: string): boolean {
     return !this.form.value[controlName] && this.form.get(controlName).dirty;
+  }
+
+  dispatchCandidateChoseToProceedInWelsh() {
+    this.store$.dispatch(new CandidateChoseToProceedWithTestInWelsh(Language.CYMRAEG));
+  }
+
+  dispatchCandidateChoseToProceedInEnglish() {
+    this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH));
   }
 }

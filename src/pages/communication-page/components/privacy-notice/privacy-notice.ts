@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TranslateService } from 'ng2-translate';
+import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 
 @Component({
   selector: 'privacy-notice',
@@ -8,13 +9,15 @@ import { TranslateService } from 'ng2-translate';
 export class PrivacyNoticeComponent {
 
   @Input()
-  isWelsh: boolean;
+  language: Language;
 
   constructor(private translate: TranslateService) {}
 
-  configureI18N(isWelsh: boolean): void {
-    if (this.isWelsh) {
+  configureI18N(language: Language): void {
+    if (language === Language.CYMRAEG) {
       this.translate.use('cy');
+    } else {
+      this.translate.use('en');
     }
   }
 }
