@@ -195,6 +195,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new ToggleETA(ExaminerActions.physical));
               fixture.detectChanges();
@@ -212,6 +213,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Verbal');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new ToggleETA(ExaminerActions.verbal));
               fixture.detectChanges();
@@ -231,6 +233,7 @@ describe('DebriefPage', () => {
           expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical and Verbal');
         });
         it('should display in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
           translate.use('cy').subscribe(() => {
             store$.dispatch(new ToggleETA(ExaminerActions.verbal));
             store$.dispatch(new ToggleETA(ExaminerActions.physical));
@@ -262,6 +265,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe('Planning');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new TogglePlanningEco());
               fixture.detectChanges();
@@ -279,6 +283,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe('Control');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new ToggleControlEco());
               fixture.detectChanges();
@@ -299,6 +304,7 @@ describe('DebriefPage', () => {
             .toBe('Control and Planning');
         });
         it('should display in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
           translate.use('cy').subscribe(() => {
             store$.dispatch(new TogglePlanningEco());
             store$.dispatch(new ToggleControlEco());
