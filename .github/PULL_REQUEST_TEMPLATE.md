@@ -1,25 +1,12 @@
-## Description and relevant Jira numbers
+## Description
 
-## Pull Request checklist:
+## Checklist
 
-- [ ] [WIP] tag removed from PR title
-- [ ] PR has an understandable description
-
-## Git feature branch checklist:
-
-- [ ] branch name comply with our branching strategy
-- [ ] git branch contains relevant JIRA ticket number
-- [ ] branch rebased against the latest develop
-- [ ] commits are squashed
-
-## Sign off process checklist:
-
+- [ ] PR title includes the JIRA ticket number
+- [ ] Branch is rebased against the latest develop
 - [ ] Code has been tested manually
-- [ ] Tests are passing
-- [ ] PR link added to JIRA
-- [ ] Reviewers selected in Github
-- [ ] Any new reusable component/widget added to component library on Confluence
+- [ ] PR link added to JIRA ticket
+- [ ] One review from each scrum team
+- [ ] Squashed commit contains the JIRA ticket number
 
-- [ ] Screenshot(s) captured on the physical device (if applicable)
-- [ ] Tested by QA
-- [ ] PO's approval
+## Screenshots (optional)
