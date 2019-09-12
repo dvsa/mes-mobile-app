@@ -88,6 +88,10 @@ export class LoginPage extends BasePageComponent {
       await this.platform.ready();
       await this.initialiseAppConfig();
 
+      this.store$.dispatch(new StartSendingLogs());
+
+      this.appInitializedLog();
+
       this.initialiseAuthentication();
 
       await this.authenticationProvider.login();
@@ -99,13 +103,11 @@ export class LoginPage extends BasePageComponent {
       await this.appConfigProvider.loadRemoteConfig();
 
       this.analytics.initialiseAnalytics();
-      this.store$.dispatch(new StartSendingLogs());
 
       this.store$.dispatch(new StartSendingCompletedTests());
 
       this.handleLoadingUI(false);
       this.validateDeviceType();
-
     } catch (error) {
 
       this.handleLoadingUI(false);
@@ -136,6 +138,16 @@ export class LoginPage extends BasePageComponent {
   dispatchLog(message: string) {
     this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, 'User login', message)));
     this.store$.dispatch(new SendLogs());
+  }
+
+  appInitializedLog() {
+    this.store$.dispatch(new SaveLog(
+      this.logHelper.createLog(
+        LogType.INFO,
+        'App has MDM provided config and is ready to proceed with authentication',
+        'App has initialised',
+      ),
+    ));
   }
 
   async initialisePersistentStorage(): Promise<void> {
