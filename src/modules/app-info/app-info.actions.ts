@@ -4,6 +4,11 @@ export const LOAD_APP_INFO = '[AppComponent] Load App Info';
 export const LOAD_APP_INFO_SUCCESS = '[AppInfoEffects] Load App Info Success';
 export const LOAD_APP_INFO_FAILURE = '[AppInfoEffects] Load App Info Failure';
 export const LOAD_EMPLOYEE_ID = '[LoginComponent] Load employee ID';
+export const LOAD_CONFIG_SUCCESS = '[AppInfoEffects] Load Config Success';
+export const SET_DATE_CONFIG_LOADED = '[AppInfoEffects] Set Date Config Loaded';
+export const APP_SUSPENDED = '[AppInfoEffects] App Suspended';
+export const APP_RESUMED = '[AppInfoEffects] App Resumed';
+export const RESTART_APP = '[AppInfoEffects] Restart App';
 
 export class LoadAppInfo implements Action {
   readonly type = LOAD_APP_INFO;
@@ -24,8 +29,34 @@ export class LoadEmployeeId implements Action {
   constructor(public employeeId: string) {}
 }
 
+export class LoadConfigSuccess implements Action {
+  readonly type = LOAD_CONFIG_SUCCESS;
+}
+
+export class SetDateConfigLoaded implements Action {
+  readonly type = SET_DATE_CONFIG_LOADED;
+  constructor(public refreshDate: string) {}
+}
+
+export class AppSuspended implements Action {
+  readonly type = APP_SUSPENDED;
+}
+
+export class AppResumed implements Action {
+  readonly type = APP_RESUMED;
+}
+
+export class RestartApp implements Action {
+  readonly type = RESTART_APP;
+}
+
 export type Types =
   LoadAppInfo |
   LoadAppInfoSuccess |
   LoadAppInfoFailure |
-  LoadEmployeeId;
+  LoadEmployeeId |
+  LoadConfigSuccess |
+  SetDateConfigLoaded |
+  AppSuspended |
+  AppResumed |
+  RestartApp;

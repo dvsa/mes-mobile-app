@@ -4,9 +4,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Store } from '@ngrx/store';
 
 import { StoreModel } from '../shared/models/store.model';
-import { LoadAppInfo } from '../modules/app-info/app-info.actions';
+import { LoadAppInfo, AppSuspended, AppResumed } from '../modules/app-info/app-info.actions';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { LOGIN_PAGE } from '../pages/page-names.constants';
+import { Subscription } from 'rxjs/Subscription';
+import { map } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
 
 declare let window: any;
 
@@ -18,19 +21,28 @@ export class App {
   textZoom: number = 100;
   increasedContrast: Boolean = false;
 
+  private subscription: Subscription;
+
   constructor(
     private store$: Store<StoreModel>,
     private statusBar: StatusBar,
     private platform: Platform,
     private translate: TranslateService,
   ) {
-    platform.ready()
+    this.platform.ready()
       .then(() => {
         this.configureLocale();
         this.configureStatusBar();
         this.configureAccessibility();
         this.loadAppInfo();
+        this.configurePlatformSubscriptions();
       });
+  }
+
+  ionViewWillUnload() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   configureLocale() {
@@ -45,6 +57,14 @@ export class App {
 
   loadAppInfo() {
     this.store$.dispatch(new LoadAppInfo());
+  }
+
+  configurePlatformSubscriptions() {
+    const merged$ = merge(
+      this.platform.resume.pipe(map(() => this.store$.dispatch(new AppResumed()))),
+      this.platform.pause.pipe(map(() => this.store$.dispatch(new AppSuspended()))),
+    );
+    this.subscription = merged$.subscribe();
   }
 
   configureAccessibility() {
