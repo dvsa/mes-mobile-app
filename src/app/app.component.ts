@@ -37,7 +37,7 @@ export class App {
         this.loadAppInfo();
         if (this.platform.is('ios')) {
           this.configureAccessibility();
-          this.createPlatformSubscriptions();
+          this.configurePlatformSubscriptions();
         }
       });
   }
@@ -65,7 +65,7 @@ export class App {
     this.store$.dispatch(new LoadAppInfo());
   }
 
-  createPlatformSubscriptions() {
+  configurePlatformSubscriptions() {
     const merged$ = merge(
       this.platform.resume.pipe(map(this.onAppResumed)),
       this.platform.pause.pipe(map(this.onAppSuspended)),
