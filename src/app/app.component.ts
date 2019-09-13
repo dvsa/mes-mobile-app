@@ -21,6 +21,7 @@ export class App {
   textZoom: number = 100;
   increasedContrast: Boolean = false;
 
+  private platformSubscription: Subscription;
   private subscription: Subscription;
 
   constructor(
@@ -33,13 +34,18 @@ export class App {
       .then(() => {
         this.configureLocale();
         this.configureStatusBar();
-        this.configureAccessibility();
         this.loadAppInfo();
-        this.configurePlatformSubscriptions();
+        if (this.platform.is('ios')) {
+          this.configureAccessibility();
+          this.createPlatformSubscriptions();
+        }
       });
   }
 
   ionViewWillUnload() {
+    if (this.platformSubscription) {
+      this.platformSubscription.unsubscribe();
+    }
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -59,27 +65,29 @@ export class App {
     this.store$.dispatch(new LoadAppInfo());
   }
 
-  configurePlatformSubscriptions() {
+  createPlatformSubscriptions() {
     const merged$ = merge(
-      this.platform.resume.pipe(map(() => this.store$.dispatch(new AppResumed()))),
-      this.platform.pause.pipe(map(() => this.store$.dispatch(new AppSuspended()))),
+      this.platform.resume.pipe(map(this.onAppResumed)),
+      this.platform.pause.pipe(map(this.onAppSuspended)),
     );
-    this.subscription = merged$.subscribe();
+    this.platformSubscription = merged$.subscribe();
   }
 
-  configureAccessibility() {
-    if (this.platform.is('ios') && window && window.MobileAccessibility) {
-      window.MobileAccessibility.updateTextZoom();
-      window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
-      window.MobileAccessibility.isDarkerSystemColorsEnabled(
-        (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
-    }
-    if (typeof this.platform.resume.subscribe === 'function') {
-      this.platform.resume.subscribe(() => {
-        window.MobileAccessibility.usePreferredTextZoom(true);
-        window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
-      });
-    }
+  onAppResumed = () => {
+    this.store$.dispatch(new AppResumed());
+    window.MobileAccessibility.usePreferredTextZoom(true);
+    window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+  }
+
+  onAppSuspended = () => {
+    this.store$.dispatch(new AppSuspended());
+  }
+
+  configureAccessibility = () => {
+    window.MobileAccessibility.updateTextZoom();
+    window.MobileAccessibility.getTextZoom(this.getTextZoomCallback);
+    window.MobileAccessibility.isDarkerSystemColorsEnabled(
+      (increasedContrast: boolean) => this.increasedContrast = increasedContrast);
   }
 
   getTextZoomCallback = (zoomLevel: number) => {
