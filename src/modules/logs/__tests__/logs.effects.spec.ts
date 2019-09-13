@@ -81,7 +81,13 @@ describe('Logs Effects', () => {
 
   it('should dispatch the persist logs action when an individual log is added', (done) => {
     // ARRANGE
-    const log: Log = { ['test']: 'xyz', type: LogType.DEBUG, message: 'test', timestamp: 1234567 };
+    const log: Log = {
+      ['test']: 'xyz',
+      type: LogType.DEBUG,
+      message: 'test',
+      timestamp: 1234567,
+      drivingExaminerId: '1234567',
+    };
     // ACT
     actions$.next(new logsActions.SaveLog(log));
     // ASSERT
@@ -125,7 +131,13 @@ describe('Logs Effects', () => {
 
   describe('getAndConvertPersistedLogs', () => {
     it('should empty cached data if cache is too old', (done) => {
-      const log: Log = { ['test']: 'xyz', type: LogType.DEBUG, message: 'test', timestamp: 1234567 };
+      const log: Log = {
+        ['test']: 'xyz',
+        type: LogType.DEBUG,
+        message: 'test',
+        timestamp: 1234567,
+        drivingExaminerId: '1234567',
+      };
 
       const agedCache = {
         dateStored: new DateTime().add(-(cacheDays + 1), Duration.DAY).format('YYYY/MM/DD'),
@@ -147,7 +159,13 @@ describe('Logs Effects', () => {
     });
 
     it('should return data without emptying cache if data is not too old', (done) => {
-      const log: Log = { ['test']: 'xyz', type: LogType.DEBUG, message: 'test', timestamp: 1234567 };
+      const log: Log = {
+        ['test']: 'xyz',
+        type: LogType.DEBUG,
+        message: 'test',
+        timestamp: 1234567,
+        drivingExaminerId: '1234567',
+      };
       const dataWthinWindowCache = {
         dateStored: new DateTime().add(cacheDays, Duration.DAY).format('YYYY/MM/DD'),
         data: log,

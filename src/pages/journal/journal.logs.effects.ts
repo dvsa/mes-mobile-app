@@ -35,10 +35,12 @@ export class JournalLogsEffects {
   );
 
   private createLog(logType: LogType, actionType: string): Log {
+    const employeeId: string = this.authenticationProvider.getEmployeeId();
     return {
       type: logType,
-      message: `DE with id: ${this.authenticationProvider.getEmployeeId()} - ${actionType}`,
+      message: `DE with id: ${employeeId} - ${actionType}`,
       timestamp: Date.now(),
+      drivingExaminerId: employeeId,
     };
   }
 

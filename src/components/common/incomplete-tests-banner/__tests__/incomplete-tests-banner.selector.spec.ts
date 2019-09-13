@@ -37,6 +37,7 @@ describe('IncompleteTestsBannerSelector', () => {
       const appInfo = {
         versionNumber: 'VERSION_NOT_LOADED',
         error: 'cordova_not_available',
+        employeeId: '1234567',
       };
       const logs = [];
       const journal: JournalModel = {

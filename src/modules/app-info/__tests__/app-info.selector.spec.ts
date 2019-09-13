@@ -6,6 +6,7 @@ describe('AppInfoSelector', () => {
 
   const state: AppInfoModel = {
     versionNumber: '1.0.0',
+    employeeId: '1234567',
   };
 
   describe('getVersionNumber', () => {

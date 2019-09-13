@@ -43,6 +43,7 @@ import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { LoadLog, StartSendingLogs } from '../../../modules/logs/logs.actions';
 import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions';
 import { DASHBOARD_PAGE } from '../../page-names.constants';
+import { LoadEmployeeId } from '../../../modules/app-info/app-info.actions';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -220,6 +221,7 @@ describe('LoginPage', () => {
       expect(store$.dispatch).toHaveBeenCalledWith(new LoadLog());
       expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
       expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingCompletedTests());
+      expect(store$.dispatch).toHaveBeenCalledWith(new LoadEmployeeId('12345678'));
     }));
   });
 
