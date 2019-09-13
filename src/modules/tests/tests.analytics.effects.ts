@@ -19,6 +19,8 @@ import {
   TestOutcomeChanged,
   START_TEST,
   StartTest,
+  SEND_PARTIAL_TESTS_FAILURE,
+  SendPartialTestsFailure,
 } from './tests.actions';
 import { of } from 'rxjs/observable/of';
 import { TestsModel } from './tests.model';
@@ -80,6 +82,15 @@ export class TestsAnalyticsEffects {
     ofType(SEND_COMPLETED_TESTS_FAILURE),
     switchMap((action: SendCompletedTestsFailure) => {
       this.analytics.logError('Error connecting to microservice (test submission)', 'No message');
+      return of(new AnalyticRecorded());
+    }),
+  );
+
+  @Effect()
+  sendPartialTestsFailureEffect$ = this.actions$.pipe(
+    ofType(SEND_PARTIAL_TESTS_FAILURE),
+    switchMap((action: SendPartialTestsFailure) => {
+      this.analytics.logError('Error connecting to microservice (partial test submission)', 'No message');
       return of(new AnalyticRecorded());
     }),
   );

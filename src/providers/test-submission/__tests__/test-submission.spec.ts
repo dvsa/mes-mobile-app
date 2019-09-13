@@ -12,6 +12,7 @@ import { DeviceMock } from '@ionic-native-mocks/device';
 import { Device } from '@ionic-native/device';
 import { AppConfigProvider } from '../../app-config/app-config';
 import { AppConfigProviderMock } from '../../app-config/__mocks__/app-config.mock';
+import { TestStatus } from '../../../modules/tests/test-status/test-status.model';
 
 describe('TestSubmissionProvider', () => {
 
@@ -57,6 +58,7 @@ describe('TestSubmissionProvider', () => {
         index: 0,
         slotId: '',
         payload: {},
+        status: TestStatus.Completed,
       }] as TestToSubmit[]).subscribe();
 
       httpMock.expectOne('https://www.example.com/api/v1/test-result');

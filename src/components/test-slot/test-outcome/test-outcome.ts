@@ -112,7 +112,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showWriteUpButton(): boolean {
-    return this.testStatus === TestStatus.WriteUp;
+    return this.testStatus === TestStatus.WriteUp || this.testStatus === TestStatus.Autosaved;
   }
 
   writeUpTest() {
@@ -140,7 +140,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   needsWriteUp(): boolean {
-    return this.testStatus === TestStatus.WriteUp;
+    return this.testStatus === TestStatus.WriteUp || this.testStatus === TestStatus.Autosaved;
   }
 
   startTest() {

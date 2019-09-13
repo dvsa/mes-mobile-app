@@ -14,11 +14,13 @@ import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogType } from '../../shared/models/log.model';
 import { LogHelper } from '../logs/logsHelper';
 import { AppConfigProvider } from '../app-config/app-config';
+import { TestStatus } from '../../modules/tests/test-status/test-status.model';
 
 export interface TestToSubmit {
   index: number;
   slotId: string;
   payload: StandardCarTestCATBSchema;
+  status: TestStatus;
 }
 
 @Injectable()
@@ -37,10 +39,16 @@ export class TestSubmissionProvider {
     return forkJoin(requests);
   }
 
-  submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any> | HttpErrorResponse> =>
-    this.httpClient.post(
-      this.urlProvider.getTestResultServiceUrl(),
-      this.compressData(this.removeNullFieldsDeep(cloneDeep(testToSubmit.payload))),
+  submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any> | HttpErrorResponse> => {
+    const deepClonedData = cloneDeep(testToSubmit.payload);
+    const cleanData = this.removeNullFieldsDeep(
+      testToSubmit.status === TestStatus.WriteUp
+        ? this.removeFieldsForPartialData(deepClonedData)
+        : deepClonedData);
+
+    return this.httpClient.post(
+      this.buildUrl(testToSubmit.status),
+      this.compressData(cleanData),
       // Using cloneDeep() to prevent the initialState of the reducers from being modified
       { observe: 'response' },
     )
@@ -53,13 +61,17 @@ export class TestSubmissionProvider {
             .createLog(LogType.ERROR, `Submitting test with slot ID ${testToSubmit.slotId}`, err.message)));
           return of(err);
         }),
-      )
+      );
+  }
+
+  buildUrl = (testStatus: TestStatus): string =>
+  `${this.urlProvider.getTestResultServiceUrl()}?partial=${testStatus === TestStatus.WriteUp}`
 
   compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
 
-  removeNullFieldsDeep = (data: StandardCarTestCATBSchema): Partial<StandardCarTestCATBSchema> => {
-    const removeNullFields = (object) => {
+  removeNullFieldsDeep = (data: Partial<StandardCarTestCATBSchema>): Partial<StandardCarTestCATBSchema> => {
+    const removeNullFields = (object: Partial<StandardCarTestCATBSchema>) => {
       Object.keys(object).forEach((key) => {
         const value = object[key];
         if (isNull(value)) unset(object, key);
@@ -69,5 +81,8 @@ export class TestSubmissionProvider {
     };
     return removeNullFields(data);
   }
-
+  removeFieldsForPartialData = (data: StandardCarTestCATBSchema): Partial<StandardCarTestCATBSchema> => {
+    data.testSummary = null;
+    return data;
+  }
 }
