@@ -20,6 +20,7 @@ describe('App Info Reducer', () => {
 
       expect(result).toEqual({
         versionNumber,
+        employeeId: null,
       });
     });
   });
@@ -33,6 +34,19 @@ describe('App Info Reducer', () => {
       expect(result).toEqual({
         ...initialState,
         error,
+      });
+    });
+  });
+
+  describe('[LoginComponent] Load employee ID', () => {
+    it('should save employeeId to state', () => {
+      const employeeId = '6543632';
+      const action = new appInfoActions.LoadEmployeeId(employeeId);
+      const result = appInfoReducer(initialState, action);
+
+      expect(result).toEqual({
+        versionNumber: 'VERSION_NOT_LOADED',
+        employeeId: '6543632',
       });
     });
   });

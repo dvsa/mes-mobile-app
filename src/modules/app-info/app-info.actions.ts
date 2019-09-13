@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 export const LOAD_APP_INFO = '[AppComponent] Load App Info';
 export const LOAD_APP_INFO_SUCCESS = '[AppInfoEffects] Load App Info Success';
 export const LOAD_APP_INFO_FAILURE = '[AppInfoEffects] Load App Info Failure';
-export const LOAD_EMPLOYEE_ID = '[LoginComponent] ';
+export const LOAD_EMPLOYEE_ID = '[LoginComponent] Load employee ID';
 
 export class LoadAppInfo implements Action {
   readonly type = LOAD_APP_INFO;
