@@ -221,7 +221,7 @@ describe('LoginPage', () => {
       expect(store$.dispatch).toHaveBeenCalledWith(new LoadLog());
       expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
       expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingCompletedTests());
-      expect(store$.dispatch).toHaveBeenCalledWith(new LoadEmployeeId(null));
+      expect(store$.dispatch).toHaveBeenCalledWith(new LoadEmployeeId('12345678'));
     }));
   });
 
