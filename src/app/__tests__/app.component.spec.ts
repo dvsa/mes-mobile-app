@@ -46,6 +46,7 @@ describe('App', () => {
       store$ = TestBed.get(Store);
 
       spyOn(store$, 'dispatch');
+      spyOn(component, 'configureAccessibility');
       spyOn(component, 'configurePlatformSubscriptions');
     });
   }));
