@@ -61,10 +61,10 @@ describe('TestSubmissionProvider', () => {
         status: TestStatus.Completed,
       }] as TestToSubmit[]).subscribe();
 
-      httpMock.expectOne('https://www.example.com/api/v1/test-result');
+      httpMock.expectOne('https://www.example.com/api/v1/test-result?partial=false');
 
       expect(httpClient.post).toHaveBeenCalledWith(
-        'https://www.example.com/api/v1/test-result',
+        'https://www.example.com/api/v1/test-result?partial=false',
         // Compressed and base64 encoded string of and empty object
         'H4sIAAAAAAAAA6uuBQBDv6ajAgAAAA==',
         { observe: 'response' },
