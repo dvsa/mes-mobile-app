@@ -83,7 +83,7 @@ export class SendCompletedTestsFailure implements Action {
 
 export class SendPartialTestSuccess implements Action {
   readonly type = SEND_PARTIAL_TEST_SUCCESS;
-  constructor(public testId: string) {}
+  constructor(public slotId: string) {}
 }
 
 export class SendPartialTestsFailure implements Action {

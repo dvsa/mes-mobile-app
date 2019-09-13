@@ -267,11 +267,11 @@ export class TestsEffects {
   );
 
   @Effect()
-  sendPartialTestsSuccessEffect$ = this.actions$.pipe(
+sendPartialTestSuccessEffect$ = this.actions$.pipe(
     ofType(testActions.SEND_PARTIAL_TEST_SUCCESS),
     switchMap((action: testActions.SendPartialTestSuccess) => {
       return [
-        new testStatusActions.SetTestStatusAutosaved(action.testId),
+        new testStatusActions.SetTestStatusAutosaved(action.slotId),
         new testActions.PersistTests(),
       ];
     }),

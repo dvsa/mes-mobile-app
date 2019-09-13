@@ -40,6 +40,7 @@ export class TestSubmissionProvider {
   }
 
   submitTest = (testToSubmit: TestToSubmit): Observable<HttpResponse<any> | HttpErrorResponse> => {
+    // Using cloneDeep() to prevent the initialState of the reducers from being modified
     const deepClonedData = cloneDeep(testToSubmit.payload);
     const cleanData = this.removeNullFieldsDeep(
       testToSubmit.status === TestStatus.WriteUp
@@ -49,7 +50,6 @@ export class TestSubmissionProvider {
     return this.httpClient.post(
       this.buildUrl(testToSubmit.status),
       this.compressData(cleanData),
-      // Using cloneDeep() to prevent the initialState of the reducers from being modified
       { observe: 'response' },
     )
       // Note: Catching failures here (the inner observable) is what allows us to coordinate
@@ -65,7 +65,7 @@ export class TestSubmissionProvider {
   }
 
   buildUrl = (testStatus: TestStatus): string =>
-  `${this.urlProvider.getTestResultServiceUrl()}?partial=${testStatus === TestStatus.WriteUp}`
+  `${this.urlProvider.getTestResultServiceUrl()}${testStatus === TestStatus.WriteUp ? '?partial=true': ''}`
 
   compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
@@ -82,7 +82,13 @@ export class TestSubmissionProvider {
     return removeNullFields(data);
   }
   removeFieldsForPartialData = (data: StandardCarTestCATBSchema): Partial<StandardCarTestCATBSchema> => {
-    data.testSummary = null;
+    data.testSummary.additionalInformation = null;
+    data.testSummary.candidateDescription = null;
+    data.testSummary.identification = null;
+    data.testSummary.independentDriving = null;
+    data.testSummary.routeNumber = null;
+    data.testSummary.weatherConditions = null;
+
     return data;
   }
 }
