@@ -6,6 +6,10 @@ module.exports = function(config) {
 
     frameworks: ['parallel', 'jasmine'],
 
+    jasmineNodeOpts: {
+      defaultTimeoutInterval: 10000
+    },
+
     files: [
       {
         pattern: './test-config/karma-test-shim.js',
