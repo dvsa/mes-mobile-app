@@ -62,7 +62,7 @@ export class AuthenticationProvider {
   }
 
   public getEmployeeId = (): string => {
-    return this.employeeId;
+    return this.employeeId || null;
   }
 
   public getEmployeeName = (): string => {

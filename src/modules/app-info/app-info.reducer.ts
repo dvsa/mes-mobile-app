@@ -5,6 +5,7 @@ import * as appInfoActions from './app-info.actions';
 
 export const initialState: AppInfoModel = {
   versionNumber: 'VERSION_NOT_LOADED',
+  employeeId: null,
 };
 
 export function appInfoReducer(state = initialState, action: appInfoActions.Types) {
@@ -18,6 +19,11 @@ export function appInfoReducer(state = initialState, action: appInfoActions.Type
       return {
         ...state,
         error: action.error,
+      };
+    case appInfoActions.LOAD_EMPLOYEE_ID:
+      return {
+        ...state,
+        employeeId: action.employeeId,
       };
     default:
       return state;

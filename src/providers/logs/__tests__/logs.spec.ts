@@ -44,6 +44,7 @@ describe('LogsProvider', () => {
         type: LogType.DEBUG,
         message: 'Successfully logged multiple',
         timestamp: new Date().getTime(),
+        drivingExaminerId: '1234567',
       }]).subscribe();
 
       httpMock.expectOne(LOGS_SERVICE_URL);

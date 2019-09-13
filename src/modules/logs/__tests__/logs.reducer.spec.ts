@@ -19,6 +19,7 @@ describe('Logs Reducer', () => {
         type: LogType.INFO,
         message: 'DE with id: 12345678 - [JournalEffects] Load Journal Success',
         timestamp: Date.now(),
+        drivingExaminerId: '1234567',
       };
       const action = new logsActions.SaveLog(log);
 
@@ -34,6 +35,7 @@ describe('Logs Reducer', () => {
       type: LogType.WARNING,
       message: 'DE with id: 12345678 - [JournalEffects] Load Journal Silent Failure',
       timestamp: timestamps[2],
+      drivingExaminerId: '1234567',
     };
 
     const logs = [
@@ -41,11 +43,13 @@ describe('Logs Reducer', () => {
         type: LogType.INFO,
         message: 'DE with id: 12345678 - [JournalEffects] Load Journal Success',
         timestamp: timestamps[0],
+        drivingExaminerId: '1234567',
       },
       {
         type: LogType.ERROR,
         message: 'DE with id: 12345678 - [JournalEffects] Load Journal Failure',
         timestamp: timestamps[1],
+        drivingExaminerId: '1234567',
       },
       lastLog,
     ];
