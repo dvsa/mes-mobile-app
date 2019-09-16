@@ -7,55 +7,8 @@ page-rekey-reason {
   }
 
   .staffNumber {
-    max-width: 40%;
-    width: 40%;
-    min-width: 40%;
+    max-width: 50%;
   }
-
-  ion-spinner {
-    margin-left: 6px;
-    * {
-      stroke: map-get($colors-gds, gds-black);;
-    }
-
-    &.spinner-circles circle,
-    &.spinner-bubbles circle,
-    &.spinner-dots circle {
-      fill: map-get($colors-gds, gds-black);
-    }
-  }
-
-  tick-indicator {
-    margin-top: 12px;
-    margin-left: 5px;
-    div {
-      width: 40px;
-      min-height: 40px;
-      min-width: 22px;
-      .tick-background {
-        background-color: map-get($colors-gds, 'gds-grey-3');
-        color: map-get($colors, mes-white);
-        border-radius: 30px;
-        &.ticked{
-          background-color: map-get($colors-gds, 'gds-green');
-        }
-        span {
-          display: flex;
-          justify-content: center;
-          height: 100%;
-          .tick-icon {
-            &.icon-ios {
-              margin: 2px 0 0 2px;
-            }
-            font-size: 40px;
-            font-weight: 700;
-            align-self: center; 
-          }
-        }
-      }
-    }
-  }
-  
 
   ion-footer {
     background-color: map-get($colors, "mes-white");
@@ -100,7 +53,7 @@ page-rekey-reason {
     border-width: 0 0 0 4px;
     border-style: solid;
     padding: 0 0 0 16px;
-    border-color: map-get($colors-gds, 'gds-grey-2');
+    border-color: map-get($colors-gds, 'gds-grey-3');
     &.ng-invalid {
       border-color: map-get($colors, 'mes-validation-error');
     }
@@ -117,28 +70,27 @@ page-rekey-reason {
   }
 
   .radio-label{
-    margin: 20px 0 20px 0;
+    margin: 16px 0;
+  }
+  .radio-label:first-of-type {
+    margin-top: 0px;
+  }
+  .radio-label:last-of-type {
+    margin-bottom: 0px;
   }
 
   textarea#otherReasonUpdated {
     word-wrap: break-word;
   }
 
-  .scroll-content {
-    padding: 0;
-  }
-  
-  .card-content-ios{
-    padding: 0;
-  }
-  .grid{
-    padding: 0;
-  }
-  .mes-data-row{
-    padding: 22px 13px;
-  }
-  h2{
-    padding: 0 28px;
+  .grid {
+    .mes-data-row-with-separator.row {
+      padding: 0;
+      // min-height: 120px;
+      > .col {
+        padding: 36px 28px 36px 20px;
+      }
+    }
   }
   
 }

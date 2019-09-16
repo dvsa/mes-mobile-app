@@ -7,14 +7,12 @@ import {
   ModalController,
   LoadingController,
   Loading,
-  ToastController,
-  Toast,
 } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter, RekeyReasonFindUser, RekeyReasonFindUserFailure } from './rekey-reason.actions';
+import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
 import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -35,7 +33,7 @@ import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
 import { RekeyReasonUploadModel, RekeyReasonFindUserModel } from './rekey-reason.model';
 import { getUploadStatus, getFindUserStatus } from './rekey-reason.selector';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import {
   getReasonForRekey,
   getRekeyIpadIssue,
@@ -73,12 +71,8 @@ export class RekeyReasonPage extends BasePageComponent {
 
   formGroup: FormGroup;
 
-  ipadIssueBoolean: boolean;
-
   pageState: RekeyReasonPageState;
   subscription: Subscription = Subscription.EMPTY;
-
-  toast: Toast;
 
   isUploading: boolean = false;
   hasUploaded: boolean = false;
@@ -93,12 +87,6 @@ export class RekeyReasonPage extends BasePageComponent {
 
   initialExaminerConducted: number = null;
 
-  ipadIssueUpdate;
-
-  initialIpadIssue = true;
-  initialTransfer = true;
-  initialOther = true;
-
   constructor(
     public navController: NavController,
     public platform: Platform,
@@ -106,20 +94,9 @@ export class RekeyReasonPage extends BasePageComponent {
     public store$: Store<StoreModel>,
     private modalController: ModalController,
     public loadingController: LoadingController,
-    public toastController: ToastController,
   ) {
     super(platform, navController, authenticationProvider);
-    this.formGroup = new FormGroup({
-      ipadIssue: new FormControl(false),
-      ipadIssueTechFault: new FormControl(false),
-      ipadIssueLost: new FormControl(false),
-      ipadIssueStolen: new FormControl(false),
-      ipadIssueBroken: new FormControl(false),
-      transferSelected: new FormControl(false),
-      transferStaffNumber: new FormControl('', [Validators.minLength(1), Validators.required]),
-      otherSelected: new FormControl(false),
-      otherReasonUpdated: new FormControl('', [Validators.minLength(1), Validators.required]),
-    });
+    this.formGroup = new FormGroup({});
   }
 
   ngOnInit(): void {
@@ -163,32 +140,32 @@ export class RekeyReasonPage extends BasePageComponent {
       ),
     };
 
-    this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
-      (ipadIssue: IpadIssue) => {
-        this.formGroup.get('ipadIssue').setValue(ipadIssue.selected);
-        if (ipadIssue.selected) {
-          this.formGroup.get('ipadIssueTechFault').setValue(ipadIssue.technicalFault);
-          this.formGroup.get('ipadIssueLost').setValue(ipadIssue.lost);
-          this.formGroup.get('ipadIssueStolen').setValue(ipadIssue.stolen);
-          this.formGroup.get('ipadIssueBroken').setValue(ipadIssue.broken);
-        }
-      },
-    );
+    // this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
+    //   (ipadIssue: IpadIssue) => {
+    //     this.formGroup.get('ipadIssueSelected').setValue(ipadIssue.selected);
+    //     if (ipadIssue.selected) {
+    //       this.formGroup.get('ipadIssueTechnicalFault').setValue(ipadIssue.technicalFault);
+    //       this.formGroup.get('ipadIssueLost').setValue(ipadIssue.lost);
+    //       this.formGroup.get('ipadIssueStolen').setValue(ipadIssue.stolen);
+    //       this.formGroup.get('ipadIssueBroken').setValue(ipadIssue.broken);
+    //     }
+    //   },
+    // );
 
-    this.pageState.transfer$.subscribe(
-      (transfer: Transfer) => {
-        this.formGroup.get('transferSelected').setValue(transfer.selected);
-      },
-    );
+    // this.pageState.transfer$.subscribe(
+    //   (transfer: Transfer) => {
+    //     this.formGroup.get('transferSelected').setValue(transfer.selected);
+    //   },
+    // );
 
-    this.pageState.other$.subscribe(
-      (other: Other) => {
-        this.formGroup.get('otherSelected').setValue(other.selected);
-        if (other.selected) {
-          this.formGroup.get('otherReasonUpdated').setValue(other.reason);
-        }
-      },
-    );
+    // this.pageState.other$.subscribe(
+    //   (other: Other) => {
+    //     this.formGroup.get('otherSelected').setValue(other.selected);
+    //     if (other.selected) {
+    //       this.formGroup.get('reason').setValue(other.reason);
+    //     }
+    //   },
+    // );
 
     const { uploadStatus$, findUserObservable$, initialExaminerConducted$ } = this.pageState;
 
@@ -212,7 +189,7 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   onUploadPressed = (): void => {
-    if (this.formIsValid()) {
+    if (this.isFormValid()) {
       this.onShowUploadRekeyModal();
     }
   }
@@ -271,129 +248,57 @@ export class RekeyReasonPage extends BasePageComponent {
     }
   }
 
-  formIsValid() {
-    const rekeyReasonProvided = this.formGroup.get('ipadIssue').value ||
-      (this.formGroup.get('otherSelected').value || this.formGroup.get('transferStaffNumber').value);
-
-    const reasonForRekeyIsValid = !this.formGroup.get('otherSelected').value ||
-      (this.formGroup.get('otherSelected').value
-        && this.formGroup.get('otherReasonUpdated').valid);
-
-    const transferStaffValid = (!this.isTransferSelected() || this.isTransferSelected() && this.transferStaffExists);
-
-    const otherReasonForRekeyValid =
-      (!this.isOtherReasonSelected() || this.isOtherReasonSelected() && this.reasonValue().length);
-
-    if (rekeyReasonProvided && reasonForRekeyIsValid
-      && transferStaffValid) {
+  isFormValid() {
+    if (this.formGroup.valid) {
       return true;
     }
-
-    if (!rekeyReasonProvided) {
-      this.createToast('Provide at least one reason for rekey');
-    }
-    if (!transferStaffValid) {
-      this.createToast('Transfer staff number is invalid');
-    }
-    if (!otherReasonForRekeyValid) {
-      this.createToast('Other reason for rekey must be entered');
-    }
-    this.toast.present();
-  }
-
-  private createToast = (errorMessage: string) => {
-    this.toast = this.toastController.create({
-      message: errorMessage,
-      position: 'top',
-      dismissOnPageChange: true,
-      cssClass: 'mes-toast-message-error',
-      duration: 5000,
-      showCloseButton: true,
-      closeButtonText: 'X',
+    Object.keys(this.formGroup.controls).forEach((controlName) => {
+      if (this.formGroup.controls[controlName].invalid) {
+        this.formGroup.controls[controlName].markAsDirty();
+      }
     });
+    return false;
   }
 
   ipadIssueSelected(checked: boolean) {
     this.store$.dispatch(new IpadIssueSelected(checked));
   }
 
-  ipadIssueTechFaultChanged() {
+  ipadIssueTechnicalFaultChanged(selected: boolean) {
     this.store$.dispatch(new IpadIssueTechFaultSelected());
   }
 
-  ipadIssueLostChanged() {
+  ipadIssueLostChanged(selected: boolean) {
     this.store$.dispatch(new IpadIssueLostSelected());
   }
 
-  ipadIssueStolenChanged() {
+  ipadIssueStolenChanged(selected: boolean) {
     this.store$.dispatch(new IpadIssueStolenSelected());
   }
 
-  ipadIssueBrokenChanged() {
+  ipadIssueBrokenChanged(selected: boolean) {
     this.store$.dispatch(new IpadIssueBrokenSelected());
   }
 
   otherSelected(checked: boolean) {
-    this.formGroup.controls['otherReasonUpdated'].setValue('');
     this.store$.dispatch(new OtherSelected(checked));
   }
 
-  otherReasonUpdatedChanged() {
-    this.store$.dispatch(new OtherReasonUpdated(this.reasonValue()));
+  otherReasonChanged(reason: string) {
+    this.store$.dispatch(new OtherReasonUpdated(reason));
   }
 
-  transferSelected(checked: boolean) {
-    this.formGroup.controls['transferStaffNumber'].setValue('');
-    // To invalidate the input
-    this.store$.dispatch(new RekeyReasonFindUserFailure());
-    this.store$.dispatch(new TransferSelected(checked));
-
-    if (!checked) {
-      this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
-    } else {
+  transferSelected(isChecked: boolean) {
+    this.store$.dispatch(new TransferSelected(isChecked));
+    if (isChecked) {
       this.store$.dispatch(new SetExaminerConducted(null));
-      this.formGroup.controls['transferStaffNumber'].setValue('');
+    } else {
+      this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
     }
   }
 
-  transferStaffNumberChanged() {
-    // To invalidate the input
-    this.store$.dispatch(new RekeyReasonFindUserFailure());
-    this.store$.dispatch(new SetExaminerConducted(this.transferValue()));
-  }
-
-  reasonValue(): string {
-    return this.formGroup.controls['otherReasonUpdated'].value;
-  }
-
-  transferValue(): number {
-    return parseInt(this.formGroup.controls['transferStaffNumber'].value, 10);
-  }
-
-  isTransferSelected(): boolean {
-    return this.formGroup.get('transferSelected').value;
-  }
-
-  isOtherReasonSelected(): boolean {
-    return this.formGroup.get('otherSelected').value;
-  }
-
-  characterCountChanged(charactersRemaining: number) {
-    this.reasonCharsRemaining = charactersRemaining;
-  }
-
-  getCharacterCountText() {
-    const characterString = Math.abs(this.reasonCharsRemaining) === 1 ? 'character' : 'characters';
-    const endString = this.reasonCharsRemaining < 0 ? 'too many' : 'remaining';
-    return `You have ${Math.abs(this.reasonCharsRemaining)} ${characterString} ${endString}`;
-  }
-
-  charactersExceeded(): boolean {
-    return this.reasonCharsRemaining < 0;
-  }
-
-  invalidReason(): boolean {
-    return !this.formGroup.controls['otherReasonUpdated'].valid;
+  staffNumberChanged(staffNumber: string) {
+    this.store$.dispatch(new SetExaminerConducted(parseInt(staffNumber, 10)));
   }
 
   exitRekey = (): void => {
@@ -426,8 +331,8 @@ export class RekeyReasonPage extends BasePageComponent {
     }
   }
 
-  checkUserExists() {
-    this.store$.dispatch(new RekeyReasonFindUser(this.transferValue().toString()));
-  }
+  // checkUserExists() {
+  //   this.store$.dispatch(new RekeyReasonFindUser(this.transferValue().toString()));
+  // }
 
 }
