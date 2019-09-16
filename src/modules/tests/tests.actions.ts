@@ -11,6 +11,9 @@ export const SEND_CURRENT_TEST = '[TestsEffects] Send Current Test';
 export const SEND_CURRENT_TEST_SUCCESS = '[Tests] Send Test Success';
 export const SEND_CURRENT_TEST_FAILURE = '[Tests] Send Test Failure';
 
+export const SEND_PARTIAL_TEST_SUCCESS = '[TestsEffects] Send Partial Tests Success';
+export const SEND_PARTIAL_TESTS_FAILURE = '[TestsEffects] Send Partial Tests Failure';
+
 export const PERSIST_TESTS = '[Tests] Persist';
 export const LOAD_PERSISTED_TESTS = '[Tests] Load persisted';
 export const LOAD_PERSISTED_TESTS_SUCCESS = '[Tests] Load persisted success';
@@ -78,6 +81,15 @@ export class SendCompletedTestsFailure implements Action {
   readonly type = SEND_COMPLETED_TESTS_FAILURE;
 }
 
+export class SendPartialTestSuccess implements Action {
+  readonly type = SEND_PARTIAL_TEST_SUCCESS;
+  constructor(public slotId: string) {}
+}
+
+export class SendPartialTestsFailure implements Action {
+  readonly type = SEND_PARTIAL_TESTS_FAILURE;
+}
+
 export class SendCurrentTest implements Action {
   readonly type = SEND_CURRENT_TEST;
 }
@@ -106,4 +118,6 @@ export type Types =
   | SendCompletedTestsFailure
   | SendCurrentTest
   | SendCurrentTestSuccess
-  | SendCurrentTestFailure;
+  | SendCurrentTestFailure
+  | SendPartialTestSuccess
+  | SendPartialTestsFailure;

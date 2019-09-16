@@ -13,7 +13,7 @@ import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mo
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select, Action } from '@ngrx/store';
 import { getTests } from './tests.reducer';
-import { getCurrentTest, isPracticeMode, getCurrentTestSlotId } from './tests.selector';
+import { getCurrentTest, isPracticeMode, getCurrentTestSlotId, getCurrentTestStatus } from './tests.selector';
 import { TestSubmissionProvider, TestToSubmit } from '../../providers/test-submission/test-submission';
 import { interval } from 'rxjs/observable/interval';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
@@ -221,10 +221,10 @@ export class TestsEffects {
     filter(() => this.networkStateProvider.getNetworkState() === ConnectionStatus.ONLINE),
     switchMap(([action, tests]) => {
 
-      const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) => (
+      const completedTestKeys = Object.keys(tests.testStatus).filter((slotId: string) =>
         slotId !== testReportPracticeSlotId &&
         !startsWith(slotId, end2endPracticeSlotId) &&
-        tests.testStatus[slotId] === TestStatus.Completed) &&
+        (tests.testStatus[slotId] === TestStatus.Completed || tests.testStatus[slotId] === TestStatus.WriteUp) &&
         !tests.startedTests[slotId].rekey,
       );
 
@@ -232,6 +232,7 @@ export class TestsEffects {
         index,
         slotId,
         payload: tests.startedTests[slotId],
+        status: tests.testStatus[slotId],
       }));
 
       if (completedTests.length === 0) {
@@ -244,12 +245,27 @@ export class TestsEffects {
             return responses.map((response, index) => {
               const matchedTests = find(completedTests, ['index', index]);
               if (response.status === HttpStatusCodes.CREATED) {
-                return new testActions.SendCompletedTestSuccess(matchedTests.slotId);
+                return matchedTests.status === TestStatus.WriteUp
+                  ? new testActions.SendPartialTestSuccess(matchedTests.slotId)
+                  : new testActions.SendCompletedTestSuccess(matchedTests.slotId);
               }
-              return new testActions.SendCompletedTestsFailure();
+              return matchedTests.status === TestStatus.WriteUp
+                ? new testActions.SendPartialTestsFailure()
+                : new testActions.SendCompletedTestsFailure();
             });
           }),
         );
+    }),
+  );
+
+  @Effect()
+sendPartialTestSuccessEffect$ = this.actions$.pipe(
+    ofType(testActions.SEND_PARTIAL_TEST_SUCCESS),
+    switchMap((action: testActions.SendPartialTestSuccess) => {
+      return [
+        new testStatusActions.SetTestStatusAutosaved(action.slotId),
+        new testActions.PersistTests(),
+      ];
     }),
   );
 
@@ -293,11 +309,13 @@ export class TestsEffects {
     switchMap(([action, tests]: [testActions.SendCurrentTest, TestsModel]) => {
       const slotId = getCurrentTestSlotId(tests);
       const test = getCurrentTest(tests);
+      const testStatus = getCurrentTestStatus(tests);
 
       const testToSubmit: TestToSubmit = {
         slotId,
         index: 0,
         payload: test,
+        status: testStatus,
       };
 
       return this.testSubmissionProvider.submitTest(testToSubmit)

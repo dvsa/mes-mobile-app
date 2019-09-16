@@ -15,6 +15,11 @@ export const getCurrentTest = (tests: TestsModel): StandardCarTestCATBSchema => 
   return tests.startedTests[currentTestSlotId];
 };
 
+export const getCurrentTestStatus = (tests: TestsModel): TestStatus => {
+  const currentTestSlotId = tests.currentTest.slotId;
+  return tests.testStatus[currentTestSlotId];
+};
+
 export const getTestById = (tests: TestsModel, slotId: string): StandardCarTestCATBSchema => {
   return tests.startedTests[slotId];
 };
