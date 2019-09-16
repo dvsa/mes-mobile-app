@@ -10,7 +10,7 @@ import {
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
-import { StandardCarTestCATBSchema, TestData, EyesightTest } from '@dvsa/mes-test-schema/categories/B';
+import { StandardCarTestCATBSchema, TestData, EyesightTest, IpadIssue } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
@@ -182,6 +182,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     if (!this.testResult) {
       return null;
     }
+
     const accompaniedBy: string[] = [];
 
     if (get(this.testResult, 'accompaniment.ADI')) {
@@ -336,7 +337,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   }
 
   getRekeyDetails(): RekeyDetailsModel {
-    if (!this.testResult) {
+    if (!this.testResult || !this.testResult.rekey) {
       return null;
     }
 
@@ -353,11 +354,15 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   }
 
   getRekeyReason(): RekeyReasonModel {
-    if (!this.testResult) {
+    if (!this.testResult || !this.testResult.rekey) {
       return null;
     }
 
-    const getIpadIssueDisplayText = (reasonType): string => {
+    const isIpadIssueSelected:boolean = get(this.testResult, 'rekeyReason.ipadIssue.selected', false);
+    const isTransferSelected: boolean = get(this.testResult, 'rekeyReason.transfer.selected', false);
+    const isOtherSelected: boolean = get(this.testResult, 'rekeyReason.other.selected', false);
+
+    const getIpadIssueDisplayText = (reasonType: IpadIssue): string => {
 
       let value = '';
 
@@ -380,14 +385,10 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       return value;
     };
 
-    const getIpadIssue = reasonType => reasonType.selected ? getIpadIssueDisplayText(reasonType) : 'None';
-    const getTransferStatus = reasonType => reasonType.selected ? 'Yes' : 'No';
-    const getOtherReason = reasonType => reasonType.selected ? reasonType.reason : 'N/A';
-
     return {
-      ipadIssue: getIpadIssue(this.testResult.rekeyReason.ipadIssue),
-      transfer: getTransferStatus(this.testResult.rekeyReason.transfer),
-      other: getOtherReason(this.testResult.rekeyReason.other),
+      ipadIssue: isIpadIssueSelected ? getIpadIssueDisplayText(get(this.testResult, 'rekeyReason.ipadIssue')) : 'None',
+      transfer: isTransferSelected ? 'Yes' : 'No',
+      other: isOtherSelected ? get(this.testResult, 'rekeyReason.other.reason') : 'N/A',
     };
   }
 
