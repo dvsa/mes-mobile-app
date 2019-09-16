@@ -107,4 +107,4 @@ export function rekeyReasonReducer(state = initialState, action: Types): RekeyRe
       return state;
   }
 }
-export const getTestSummary = createFeatureSelector<RekeyReason>('rekeyReason');
+export const getRekeyReason = createFeatureSelector<RekeyReason>('rekeyReason');

@@ -11,10 +11,6 @@ export const initialState: RekeyReasonModel = {
     hasUploadFailed: false,
     isDuplicate: false,
   },
-  findUser: {
-    isLoading: false,
-    isValid: false,
-  },
 };
 
 export function rekeyReasonReducer(state = initialState, action:
@@ -47,30 +43,6 @@ export function rekeyReasonReducer(state = initialState, action:
           ...initialState.uploadStatus,
           hasUploadFailed: true,
           isDuplicate: action.isDuplicateUpload,
-        },
-      };
-    case rekeyReasonActions.REKEY_REASON_FIND_USER:
-      return {
-        ...state,
-        findUser: {
-          ...state.findUser,
-          isLoading: true,
-        },
-      };
-    case rekeyReasonActions.REKEY_REASON_FIND_USER_SUCCESS:
-      return {
-        ...state,
-        findUser: {
-          isLoading: false,
-          isValid: true,
-        },
-      };
-    case rekeyReasonActions.REKEY_REASON_FIND_USER_FAILURE:
-      return {
-        ...state,
-        findUser: {
-          isLoading: false,
-          isValid: false,
         },
       };
     default:

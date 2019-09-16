@@ -12,7 +12,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter } from './rekey-reason.actions';
+import { RekeyReasonViewDidEnter, RekeyReasonValidateTransfer } from './rekey-reason.actions';
 import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -31,8 +31,8 @@ import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { SendCurrentTest } from '../../modules/tests/tests.actions';
-import { RekeyReasonUploadModel, RekeyReasonFindUserModel } from './rekey-reason.model';
-import { getUploadStatus, getFindUserStatus } from './rekey-reason.selector';
+import { RekeyReasonUploadModel } from './rekey-reason.model';
+import { getUploadStatus } from './rekey-reason.selector';
 import { FormGroup } from '@angular/forms';
 import {
   getReasonForRekey,
@@ -45,21 +45,18 @@ import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
 import { EndRekey } from '../../modules/tests/rekey/rekey.actions';
 import { ExitRekeyModalEvent } from './components/exit-rekey-modal/exit-rekey-modal.constants';
-
 import { SetExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.actions';
-
-import { getExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.reducer';
 import { SetRekeyDate } from '../../modules/tests/rekey-date/rekey-date.actions';
+import { getExaminerKeyed } from '../../modules/tests/examiner-keyed/examiner-keyed.reducer';
+import { getExaminerConducted } from '../../modules/tests/examiner-conducted/examiner-conducted.reducer';
 
 interface RekeyReasonPageState {
   uploadStatus$: Observable<RekeyReasonUploadModel>;
   ipadIssue$: Observable<IpadIssue>;
   transfer$: Observable<Transfer>;
   other$: Observable<Other>;
-  findUser$: Observable<RekeyReasonFindUserModel>;
   examinerConducted$: Observable<number>;
-  findUserObservable$: Observable<RekeyReasonFindUserModel>;
-  initialExaminerConducted$: Observable<number>;
+  examinerKeyed$: Observable<number>;
 }
 
 @IonicPage()
@@ -83,9 +80,8 @@ export class RekeyReasonPage extends BasePageComponent {
 
   reasonCharsRemaining: number = null;
 
-  transferStaffExists: boolean = false;
-
-  initialExaminerConducted: number = null;
+  examinerConducted: number = null;
+  examinerKeyed: number = null;
 
   constructor(
     public navController: NavController,
@@ -100,10 +96,9 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   ngOnInit(): void {
-    const currentReasonForRekey$ = this.store$.pipe(
+    const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
-      select(getReasonForRekey),
     );
 
     this.pageState = {
@@ -111,68 +106,31 @@ export class RekeyReasonPage extends BasePageComponent {
         select(getRekeyReasonState),
         select(getUploadStatus),
       ),
-      ipadIssue$: currentReasonForRekey$.pipe(
+      ipadIssue$: currentTest$.pipe(
+        select(getReasonForRekey),
         select(getRekeyIpadIssue),
       ),
-      transfer$: currentReasonForRekey$.pipe(
+      transfer$: currentTest$.pipe(
+        select(getReasonForRekey),
         select(getRekeyTransfer),
       ),
-      other$: currentReasonForRekey$.pipe(
+      other$: currentTest$.pipe(
+        select(getReasonForRekey),
         select(getRekeyOther),
       ),
-      findUser$: this.store$.pipe(
-        select(getRekeyReasonState),
-        select(getFindUserStatus),
-      ),
-      examinerConducted$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      examinerConducted$: currentTest$.pipe(
         select(getExaminerConducted),
       ),
-      findUserObservable$: this.store$.pipe(
-        select(getRekeyReasonState),
-        select(getFindUserStatus),
-      ),
-      initialExaminerConducted$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getExaminerConducted),
+      examinerKeyed$: currentTest$.pipe(
+        select(getExaminerKeyed),
       ),
     };
 
-    // this.ipadIssueUpdate = this.pageState.ipadIssue$.subscribe(
-    //   (ipadIssue: IpadIssue) => {
-    //     this.formGroup.get('ipadIssueSelected').setValue(ipadIssue.selected);
-    //     if (ipadIssue.selected) {
-    //       this.formGroup.get('ipadIssueTechnicalFault').setValue(ipadIssue.technicalFault);
-    //       this.formGroup.get('ipadIssueLost').setValue(ipadIssue.lost);
-    //       this.formGroup.get('ipadIssueStolen').setValue(ipadIssue.stolen);
-    //       this.formGroup.get('ipadIssueBroken').setValue(ipadIssue.broken);
-    //     }
-    //   },
-    // );
-
-    // this.pageState.transfer$.subscribe(
-    //   (transfer: Transfer) => {
-    //     this.formGroup.get('transferSelected').setValue(transfer.selected);
-    //   },
-    // );
-
-    // this.pageState.other$.subscribe(
-    //   (other: Other) => {
-    //     this.formGroup.get('otherSelected').setValue(other.selected);
-    //     if (other.selected) {
-    //       this.formGroup.get('reason').setValue(other.reason);
-    //     }
-    //   },
-    // );
-
-    const { uploadStatus$, findUserObservable$, initialExaminerConducted$ } = this.pageState;
+    const { examinerConducted$, examinerKeyed$ } = this.pageState;
 
     this.subscription = merge(
-      uploadStatus$.pipe(map(this.handleUploadOutcome)),
-      findUserObservable$.pipe(map(this.handleFindUserResponse)),
-      initialExaminerConducted$.pipe(map(this.handleExistingExaminerConducted)),
+      examinerConducted$.pipe(map(val => this.examinerConducted = val)),
+      examinerKeyed$.pipe(map(val => this.examinerKeyed = val)),
     ).subscribe();
   }
 
@@ -181,8 +139,6 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   ionViewDidLeave(): void {
-    this.store$.dispatch(new TransferSelected(false));
-    this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -205,7 +161,11 @@ export class RekeyReasonPage extends BasePageComponent {
     switch (event) {
       case UploadRekeyModalEvent.UPLOAD:
         this.store$.dispatch(new SetRekeyDate());
-        this.store$.dispatch(new SendCurrentTest());
+        if (this.transferSelected) {
+          this.store$.dispatch(new RekeyReasonValidateTransfer());
+        } else {
+          this.store$.dispatch(new SendCurrentTest());
+        }
         break;
     }
   }
@@ -220,16 +180,6 @@ export class RekeyReasonPage extends BasePageComponent {
     }
     if (uploadStatus.hasUploadFailed) {
       this.onShowUploadRekeyModal(true);
-    }
-  }
-
-  handleFindUserResponse = (findUser: RekeyReasonFindUserModel): void => {
-    this.transferStaffExists = findUser.isValid;
-  }
-
-  handleExistingExaminerConducted = (existingExaminerConducted: number): void => {
-    if (this.initialExaminerConducted === null) {
-      this.initialExaminerConducted = existingExaminerConducted;
     }
   }
 
@@ -293,12 +243,12 @@ export class RekeyReasonPage extends BasePageComponent {
     if (isChecked) {
       this.store$.dispatch(new SetExaminerConducted(null));
     } else {
-      this.store$.dispatch(new SetExaminerConducted(this.initialExaminerConducted));
+      this.store$.dispatch(new SetExaminerConducted(this.examinerKeyed)); // reset to current user
     }
   }
 
-  staffNumberChanged(staffNumber: string) {
-    this.store$.dispatch(new SetExaminerConducted(parseInt(staffNumber, 10)));
+  staffNumberChanged(staffNumber: number) {
+    this.store$.dispatch(new SetExaminerConducted(staffNumber));
   }
 
   exitRekey = (): void => {
@@ -330,9 +280,5 @@ export class RekeyReasonPage extends BasePageComponent {
         break;
     }
   }
-
-  // checkUserExists() {
-  //   this.store$.dispatch(new RekeyReasonFindUser(this.transferValue().toString()));
-  // }
 
 }

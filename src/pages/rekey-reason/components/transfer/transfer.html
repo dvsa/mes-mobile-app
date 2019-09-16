@@ -22,7 +22,7 @@
           </ion-input>
         </ion-item>
       </ion-row>
-      <ion-row class="validation-message-row" *ngIf="empty">
+      <ion-row class="validation-message-row" *ngIf="empty && invalid">
         <div class="validation-text" [class.ng-invalid]="invalid">
           Staff number is required
         </div>

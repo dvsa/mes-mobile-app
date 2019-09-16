@@ -14,7 +14,7 @@ export class TransferComponent implements OnChanges {
   selected: boolean;
 
   @Input()
-  staffNumber: string;
+  staffNumber: number;
 
   @Input()
   formGroup: FormGroup;
@@ -23,7 +23,7 @@ export class TransferComponent implements OnChanges {
   selectedChange = new EventEmitter<boolean>();
 
   @Output()
-  staffNumberChange = new EventEmitter<string>();
+  staffNumberChange = new EventEmitter<number>();
 
   private checkBoxFormControl: FormControl;
   private formControl: FormControl;
@@ -57,7 +57,9 @@ export class TransferComponent implements OnChanges {
   }
 
   staffNumberValueChanged(staffNumber: string): void {
-    this.staffNumberChange.emit(staffNumber);
+    if (parseInt(staffNumber, 10)) {
+      this.staffNumberChange.emit(parseInt(staffNumber, 10));
+    }
   }
 
   get invalid(): boolean {

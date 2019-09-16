@@ -28,7 +28,7 @@
           (stolenChange)="ipadIssueStolenChanged($event)"
           (brokenChange)="ipadIssueBrokenChanged($event)"></ipad-issue>
 
-        <transfer [selected]="(pageState.transfer$ | async).selected" [staffNumber]="(pageState.transfer$ | async).reason"
+        <transfer [selected]="(pageState.transfer$ | async).selected" [staffNumber]="examinerConducted"
           [formGroup]="formGroup" (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
 
         <other-reason [selected]="(pageState.other$ | async).selected" [reason]="(pageState.other$ | async).reason"
