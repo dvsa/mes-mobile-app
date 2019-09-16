@@ -3,7 +3,7 @@ import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   category: 'B',
   activityCode: '2',
-  rekey: false,
+  rekey: true,
   rekeyDate: '2019-08-05T09:00:00',
   rekeyReason: {
     ipadIssue: {
