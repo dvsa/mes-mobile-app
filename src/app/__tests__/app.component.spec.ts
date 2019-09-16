@@ -38,16 +38,17 @@ describe('App', () => {
         { provide: TranslateService, useValue: translateServiceMock },
       ],
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(App);
-        component = fixture.componentInstance;
-      });
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(App);
+      component = fixture.componentInstance;
+      statusBar = TestBed.get(StatusBar);
+      store$ = TestBed.get(Store);
 
-    statusBar = TestBed.get(StatusBar);
-
-    store$ = TestBed.get(Store);
-    spyOn(store$, 'dispatch');
+      spyOn(store$, 'dispatch');
+      spyOn(component, 'configureAccessibility');
+      spyOn(component, 'configurePlatformSubscriptions');
+    });
   }));
 
   describe('Class', () => {

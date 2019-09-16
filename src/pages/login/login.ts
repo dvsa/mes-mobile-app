@@ -30,6 +30,7 @@ import { LogsProvider } from '../../providers/logs/logs';
 import { LogType } from '../../shared/models/log.model';
 import { DASHBOARD_PAGE } from '../page-names.constants';
 import { LogHelper } from '../../providers/logs/logsHelper';
+import { LoadConfigSuccess } from '../../modules/app-info/app-info.actions';
 
 @IonicPage()
 @Component({
@@ -104,6 +105,7 @@ export class LoginPage extends BasePageComponent {
       await this.initialisePersistentStorage();
 
       await this.appConfigProvider.loadRemoteConfig();
+      this.store$.dispatch(new LoadConfigSuccess());
 
       this.analytics.initialiseAnalytics();
 

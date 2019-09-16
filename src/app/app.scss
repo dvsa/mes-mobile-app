@@ -48,3 +48,7 @@ img {
   height: 100% !important;
   width: 100% !important;
 }
+
+body {
+  -webkit-text-size-adjust: 100% !important; // prevents the iOS text size config from adjusting webview zoom level
+}

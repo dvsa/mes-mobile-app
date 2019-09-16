@@ -6,4 +6,5 @@ export type AppInfoModel = {
   versionNumber: string,
   employeeId: string | null,
   error?: any,
+  dateConfigLoaded?: string,
 };

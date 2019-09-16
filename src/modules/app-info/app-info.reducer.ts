@@ -25,6 +25,11 @@ export function appInfoReducer(state = initialState, action: appInfoActions.Type
         ...state,
         employeeId: action.employeeId,
       };
+    case appInfoActions.SET_DATE_CONFIG_LOADED:
+      return {
+        ...state,
+        dateConfigLoaded: action.refreshDate,
+      };
     default:
       return state;
   }
