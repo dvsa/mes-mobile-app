@@ -13,4 +13,4 @@ import { ExitRekeyModal } from './exit-rekey-modal';
     ExitRekeyModal,
   ],
 })
-export class RekeyReasonComponentsModule { }
+export class ExitRekeyModalModule { }
