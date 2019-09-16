@@ -358,7 +358,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       return null;
     }
 
-    const isIPadIssueSeclected:boolean = get(this.testResult, 'rekeyReason.ipadIssue.selected', false);
+    const isIpadIssueSelected:boolean = get(this.testResult, 'rekeyReason.ipadIssue.selected', false);
     const isTransferSelected: boolean = get(this.testResult, 'rekeyReason.transfer.selected', false);
     const isOtherSelected: boolean = get(this.testResult, 'rekeyReason.other.selected', false);
 
@@ -386,7 +386,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     };
 
     return {
-      ipadIssue: isIPadIssueSeclected ? getIpadIssueDisplayText(get(this.testResult, 'rekeyReason.ipadIssue')) : 'None',
+      ipadIssue: isIpadIssueSelected ? getIpadIssueDisplayText(get(this.testResult, 'rekeyReason.ipadIssue')) : 'None',
       transfer: isTransferSelected ? 'Yes' : 'No',
       other: isOtherSelected ? get(this.testResult, 'rekeyReason.other.reason') : 'N/A',
     };
