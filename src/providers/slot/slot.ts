@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DeepDiff } from 'deep-diff';
-import { flatten, times, isEmpty } from 'lodash';
+import { flatten, times, isEmpty, get } from 'lodash';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { SlotItem } from '../slot-selector/slot-item';
@@ -97,10 +97,10 @@ export class SlotProvider {
 
   canStartTest(testSlot: TestSlot): boolean {
     const { testPermissionPeriods } = this.appConfigProvider.getAppConfig().journal;
-    const { testCategory } = testSlot.booking.application;
+    const testCategory = get(testSlot, 'booking.application.testCategory');
     const startDate = new DateTime(testSlot.slotDetail.start);
 
-    if (startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
+    if (!testCategory || startDate.daysDiff(this.dateTimeProvider.now()) < 0) {
       return false;
     }
 
