@@ -65,7 +65,7 @@ export class TestSubmissionProvider {
   }
 
   buildUrl = (testStatus: TestStatus): string =>
-  `${this.urlProvider.getTestResultServiceUrl()}${testStatus === TestStatus.WriteUp ? '?partial=true': ''}`
+  `${this.urlProvider.getTestResultServiceUrl()}${testStatus === TestStatus.WriteUp ? '?partial=true' : ''}`
 
   compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')

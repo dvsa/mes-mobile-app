@@ -346,6 +346,12 @@ export const onJournalPageAs = (username) => {
         // If not logged in as the right user logout and log in as the correct user
       logout();
       logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
+
+      // Refresh application
+      loadApplication().then(() => {
+      // Small wait to make sure the action has initiated
+        browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
+      });
     }
   });
 
