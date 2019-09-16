@@ -4,6 +4,23 @@ export const categoryBTestResultMock : StandardCarTestCATBSchema = {
   category: 'B',
   activityCode: '2',
   rekey: false,
+  rekeyDate: '2019-08-05T09:00:00',
+  rekeyReason: {
+    ipadIssue: {
+      selected: true,
+      broken: false,
+      lost: true,
+      technicalFault: false,
+      stolen: false,
+    },
+    transfer: {
+      selected: false,
+    },
+    other: {
+      selected: true,
+      reason: 'mock reason',
+    },
+  },
   changeMarker: false,
   examinerBooked: 1,
   examinerConducted: 1,
