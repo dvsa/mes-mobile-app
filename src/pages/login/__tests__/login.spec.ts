@@ -45,7 +45,7 @@ import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions
 import { DASHBOARD_PAGE } from '../../page-names.constants';
 import { LoadEmployeeId, LoadConfigSuccess } from '../../../modules/app-info/app-info.actions';
 
-fdescribe('LoginPage', () => {
+describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
   let component: LoginPage;
   let navController: NavController;
