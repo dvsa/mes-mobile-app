@@ -43,7 +43,7 @@ import { SecureStorageMock } from '@ionic-native-mocks/secure-storage';
 import { LoadLog, StartSendingLogs } from '../../../modules/logs/logs.actions';
 import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions';
 import { DASHBOARD_PAGE } from '../../page-names.constants';
-import { LoadEmployeeId } from '../../../modules/app-info/app-info.actions';
+import { LoadEmployeeId, LoadConfigSuccess } from '../../../modules/app-info/app-info.actions';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -214,15 +214,23 @@ describe('LoginPage', () => {
       expect(component.isUserNotAuthorised()).toEqual(true);
     });
 
-    it('should dispatch LOAD_LOG, START_SENDING_LOGS, START_SENDING_COMPLETED_LOGS action', fakeAsync(() => {
-      component.login();
-      tick();
+    it(`
+      should dispatch LOAD_LOG,
+      START_SENDING_LOGS,
+      START_SENDING_COMPLETED_LOGS,
+      LOAD_EMPLOYEE_ID and
+      LOAD_CONFIG_SUCCESS actions
+      `,
+      fakeAsync(() => {
+        component.login();
+        tick();
 
-      expect(store$.dispatch).toHaveBeenCalledWith(new LoadLog());
-      expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
-      expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingCompletedTests());
-      expect(store$.dispatch).toHaveBeenCalledWith(new LoadEmployeeId('12345678'));
-    }));
+        expect(store$.dispatch).toHaveBeenCalledWith(new LoadLog());
+        expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingLogs());
+        expect(store$.dispatch).toHaveBeenCalledWith(new StartSendingCompletedTests());
+        expect(store$.dispatch).toHaveBeenCalledWith(new LoadEmployeeId('12345678'));
+        expect(store$.dispatch).toHaveBeenCalledWith(new LoadConfigSuccess());
+      }));
   });
 
   describe('Async order of events in the login() method', () => {
