@@ -18,7 +18,7 @@
         <ion-item no-padding no-lines>
           <ion-input placeholder="Staff Number" type="number" numbersOnly id="staffNumber" class="staffNumber"
             formControlName="staffNumber" [value]="staffNumber" clearInput
-            (change)="staffNumberValueChanged()">
+            (change)="staffNumberValueChanged($event.target.value)">
           </ion-input>
         </ion-item>
       </ion-row>

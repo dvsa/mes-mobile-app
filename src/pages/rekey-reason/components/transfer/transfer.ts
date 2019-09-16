@@ -23,13 +23,12 @@ export class TransferComponent implements OnChanges {
   selectedChange = new EventEmitter<boolean>();
 
   @Output()
-  staffNumberChanged = new EventEmitter<string>();
+  staffNumberChange = new EventEmitter<string>();
 
   private checkBoxFormControl: FormControl;
   private formControl: FormControl;
 
   ngOnChanges(): void {
-    console.log('ngOnChanges');
     if (!this.checkBoxFormControl) {
       this.checkBoxFormControl = new FormControl(null);
       this.formGroup.addControl(TransferComponent.checkBoxCtrl, this.checkBoxFormControl);
@@ -39,7 +38,6 @@ export class TransferComponent implements OnChanges {
       this.formControl = new FormControl(null);
       this.formGroup.addControl(TransferComponent.fieldName, this.formControl);
     }
-
     if (this.selected) {
       this.formGroup.get(TransferComponent.fieldName).setValidators([
         Validators.required]);
@@ -58,8 +56,8 @@ export class TransferComponent implements OnChanges {
     this.selectedChange.emit(selected);
   }
 
-  staffNumberValueChanged(reason: string): void {
-    this.staffNumberChanged.emit(reason);
+  staffNumberValueChanged(staffNumber: string): void {
+    this.staffNumberChange.emit(staffNumber);
   }
 
   get invalid(): boolean {

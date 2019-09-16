@@ -31,7 +31,6 @@ export class OtherReasonComponent implements OnChanges {
   public reasonDescriptionCharsRemaining: number = null;
 
   ngOnChanges(): void {
-    console.log('ngOnChanges');
     if (!this.checkBoxFormControl) {
       this.checkBoxFormControl = new FormControl(null);
       this.formGroup.addControl(OtherReasonComponent.checkBoxCtrl, this.checkBoxFormControl);

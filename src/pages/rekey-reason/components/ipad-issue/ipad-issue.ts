@@ -53,7 +53,6 @@ export class IpadIssueComponent implements OnChanges {
   private brokenFormControl: FormControl;
 
   ngOnChanges(): void {
-    console.log('ngOnChanges');
     if (!this.checkBoxFormControl) {
       this.checkBoxFormControl = new FormControl(null);
       this.formGroup.addControl(IpadIssueComponent.checkBoxCtrl, this.checkBoxFormControl);
