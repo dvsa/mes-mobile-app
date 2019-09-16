@@ -473,10 +473,10 @@ describe('ViewTestResultPage', () => {
       ).not.toBeNull();
       expect(
         fixture.debugElement.query(By.css('rekey-details-card')),
-      ).toBeNull();
+      ).not.toBeNull();
       expect(
         fixture.debugElement.query(By.css('rekey-reason-card')),
-      ).toBeNull();
+      ).not.toBeNull();
       expect(
         fixture.debugElement.query(By.css('examiner-details-card')),
       ).not.toBeNull();
@@ -493,7 +493,6 @@ describe('ViewTestResultPage', () => {
   it('should show rekey cards only when rekey is true', () => {
     component.isLoading = false;
     component.testResult = categoryBTestResultMock;
-    component.testResult.rekey = true;
 
     fixture.detectChanges();
 
