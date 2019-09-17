@@ -14,8 +14,8 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   RekeyReasonViewDidEnter,
-  RekeyReasonValidateTransfer,
-  RekeyReasonResetStaffNumberError,
+  ValidateTransferRekey,
+  ResetStaffNumberValidationError,
 } from './rekey-reason.actions';
 import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
@@ -79,6 +79,7 @@ export class RekeyReasonPage extends BasePageComponent {
   hasUploaded: boolean = false;
   hasTriedUploading: boolean = false;
   isStaffNumberInvalid: boolean = false;
+  isTransferSelected: boolean = false;
 
   modal: Modal;
   loadingSpinner: Loading;
@@ -131,12 +132,13 @@ export class RekeyReasonPage extends BasePageComponent {
       ),
     };
 
-    const { uploadStatus$, examinerConducted$, examinerKeyed$ } = this.pageState;
+    const { uploadStatus$, examinerConducted$, examinerKeyed$, transfer$ } = this.pageState;
 
     this.subscription = merge(
       uploadStatus$.pipe(map(this.handleUploadOutcome)),
       examinerConducted$.pipe(map(val => this.examinerConducted = val)),
       examinerKeyed$.pipe(map(val => this.examinerKeyed = val)),
+      transfer$.pipe(map(transfer => this.isTransferSelected = transfer.selected)),
     ).subscribe();
   }
 
@@ -167,8 +169,8 @@ export class RekeyReasonPage extends BasePageComponent {
     switch (event) {
       case UploadRekeyModalEvent.UPLOAD:
         this.store$.dispatch(new SetRekeyDate());
-        if (this.transferSelected) {
-          this.store$.dispatch(new RekeyReasonValidateTransfer());
+        if (this.isTransferSelected) {
+          this.store$.dispatch(new ValidateTransferRekey());
         } else {
           this.store$.dispatch(new SendCurrentTest());
         }
@@ -179,7 +181,7 @@ export class RekeyReasonPage extends BasePageComponent {
   handleUploadOutcome = (uploadStatus: RekeyReasonUploadModel): void => {
 
     this.handleLoadingUI(uploadStatus.isUploading);
-    this.isStaffNumberInvalid = uploadStatus.isStaffNumberInvalid;
+    this.isStaffNumberInvalid = uploadStatus.hasStaffNumberFailedValidation;
 
     if (uploadStatus.hasUploadSucceeded || uploadStatus.isDuplicate) {
       this.navController.push(REKEY_UPLOAD_OUTCOME_PAGE);
@@ -251,12 +253,13 @@ export class RekeyReasonPage extends BasePageComponent {
       this.store$.dispatch(new SetExaminerConducted(null));
     } else {
       this.store$.dispatch(new SetExaminerConducted(this.examinerKeyed)); // reset to current user
+      this.store$.dispatch(new ResetStaffNumberValidationError());
     }
   }
 
   staffNumberChanged(staffNumber: number) {
     if (this.isStaffNumberInvalid) {
-      this.store$.dispatch(new RekeyReasonResetStaffNumberError());
+      this.store$.dispatch(new ResetStaffNumberValidationError());
     }
     this.store$.dispatch(new SetExaminerConducted(staffNumber));
   }

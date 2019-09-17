@@ -24,7 +24,7 @@ export class RekeyReasonEffects {
 
   @Effect()
   rekeyReasonValidateTransferEffect$ = this.actions$.pipe(
-    ofType(rekeyActions.REKEY_REASON_VALIDATE_TRANSFER),
+    ofType(rekeyActions.VALIDATE_TRANSFER_REKEY),
     concatMap(action => of(action).pipe(
       withLatestFrom(
         this.store$.pipe(
@@ -33,7 +33,7 @@ export class RekeyReasonEffects {
         ),
       ),
     )),
-    switchMap(([action, test]: [rekeyActions.RekeyReasonValidateTransfer, StandardCarTestCATBSchema]) => {
+    switchMap(([action, test]: [rekeyActions.ValidateTransferRekey, StandardCarTestCATBSchema]) => {
       if (test.examinerBooked === test.examinerConducted) {
         return of(new testActions.SendCurrentTest());
       }
@@ -44,7 +44,7 @@ export class RekeyReasonEffects {
             return of(new testActions.SendCurrentTest());
           }),
           catchError((error: HttpErrorResponse) => {
-            return of(new rekeyActions.RekeyReasonValidateTransferFailed(error.status === HttpStatusCodes.NOT_FOUND));
+            return of(new rekeyActions.ValidateTransferRekeyFailed(error.status === HttpStatusCodes.NOT_FOUND));
           }),
         );
     }),

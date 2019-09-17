@@ -10,7 +10,7 @@ export const initialState: RekeyReasonModel = {
     hasUploadSucceeded: false,
     hasUploadFailed: false,
     isDuplicate: false,
-    isStaffNumberInvalid: false,
+    hasStaffNumberFailedValidation: false,
   },
 };
 
@@ -53,7 +53,7 @@ export function rekeyReasonReducer(state = initialState, action:
           ...initialState.uploadStatus,
         },
       };
-    case rekeyReasonActions.REKEY_REASON_VALIDATE_TRANSFER:
+    case rekeyReasonActions.VALIDATE_TRANSFER_REKEY:
       return {
         ...state,
         uploadStatus: {
@@ -61,20 +61,21 @@ export function rekeyReasonReducer(state = initialState, action:
           isUploading: true,
         },
       };
-    case rekeyReasonActions.REKEY_REASON_VALIDATE_TRANSFER_FAILED:
+    case rekeyReasonActions.VALIDATE_TRANSFER_REKEY_FAILED:
       return {
         ...state,
         uploadStatus: {
           ...initialState.uploadStatus,
-          isStaffNumberInvalid: action.staffNumberNotFound,
+          hasUploadFailed: !action.staffNumberNotFound,
+          hasStaffNumberFailedValidation: action.staffNumberNotFound,
         },
       };
-    case rekeyReasonActions.REKEY_REASON_RESET_STAFF_NUMBER_ERROR:
+    case rekeyReasonActions.RESET_STAFF_NUMBER_VALIDATION_ERROR:
       return {
         ...state,
         uploadStatus: {
           ...state.uploadStatus,
-          isStaffNumberInvalid: false,
+          hasStaffNumberFailedValidation: false,
         },
       };
     default:

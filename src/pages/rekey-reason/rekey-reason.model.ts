@@ -7,5 +7,5 @@ export type RekeyReasonUploadModel = {
   hasUploadSucceeded: boolean,
   hasUploadFailed: boolean,
   isDuplicate: boolean,
-  isStaffNumberInvalid: boolean,
+  hasStaffNumberFailedValidation: boolean,
 };
