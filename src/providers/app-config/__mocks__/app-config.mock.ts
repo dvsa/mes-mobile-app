@@ -49,10 +49,6 @@ export class AppConfigProviderMock {
         testSubmissionUrl: localEnvironmentMock.tests.testSubmissionUrl,
         autoSendInterval: localEnvironmentMock.tests.autoSendInterval,
       },
-      logs: {
-        url: localEnvironmentMock.logsApiUrl,
-        autoSendInterval: localEnvironmentMock.logsAutoSendInterval,
-      },
       user: {
         findUserUrl: localEnvironmentMock.user.findUserUrl,
       },
