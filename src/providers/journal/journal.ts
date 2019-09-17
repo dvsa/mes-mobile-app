@@ -105,7 +105,7 @@ export class JournalProvider {
    */
 
   isCacheTooOld = (dateStored: DateTime, now: DateTime): boolean => {
-    return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().daysToCacheJournalData;
+    return dateStored.daysDiff(now) > this.appConfigProvider.getAppConfig().journal.daysToCacheJournalData;
   }
 
   /**

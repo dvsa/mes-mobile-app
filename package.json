@@ -108,6 +108,7 @@
   "devDependencies": {
     "@angular/cli": "1.4.8",
     "@angular/compiler-cli": "^5.2.11",
+    "@dvsa/mes-config-schema": "^1.0.1",
     "@dvsa/mes-journal-schema": "1.1.0",
     "@dvsa/mes-search-schema": "1.0.3",
     "@dvsa/mes-test-schema": "2.0.2",

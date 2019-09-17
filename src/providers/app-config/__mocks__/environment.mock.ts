@@ -4,7 +4,6 @@ import { ExaminerRole } from '../constants/examiner-role.constants';
 export const remoteEnvironmentMock: EnvironmentFile = {
   isRemote: true,
   configUrl: 'remote-url',
-  daysToCacheJournalData: 14,
   daysToCacheLogs: 14,
   enableDevTools: false,
   logsPostApiKey: '',
@@ -23,7 +22,6 @@ export const remoteEnvironmentMock: EnvironmentFile = {
 export const localEnvironmentMock: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://www.example.com/api/v1/config/dev',
-  daysToCacheJournalData: 14,
   daysToCacheLogs: 14,
   enableDevTools: false,
   googleAnalyticsId: 'local-ga-id',
@@ -49,6 +47,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     searchBookingUrl: 'https://www.example.com/api/v1/journals/{staffNumber}/search',
     autoRefreshInterval: 1000 * 60 * 15,
     numberOfDaysToView: 7,
+    daysToCacheJournalData: 14,
     allowTests: true,
     allowedTestCategories: ['B'],
     enableTestReportPracticeMode: true,
@@ -56,7 +55,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     enableLogoutButton: true,
     testPermissionPeriods: [
       {
-        testCategory: 'B',
+        category: 'B',
         from: '2019-01-01',
         to: null,
       },
@@ -66,12 +65,8 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
     testSubmissionUrl: 'https://www.example.com/api/v1/test-result',
     autoSendInterval: 900000,
   },
-  logs: {
-    url: 'https://www.example.com/api/v1/logs',
-    autoSendInterval: 1000 * 60,
-  },
   user: {
-    findUser: 'https://www.example.com/api/v1/users/{staffNumber}',
+    findUserUrl: 'https://www.example.com/api/v1/users/{staffNumber}',
   },
   requestTimeout: 20000,
 };

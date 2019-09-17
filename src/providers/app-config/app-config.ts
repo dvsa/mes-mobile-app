@@ -164,7 +164,6 @@ export class AppConfigProvider {
   private mapInAppConfig = (data: EnvironmentFile) =>
     this.appConfig = merge({}, this.appConfig, {
       configUrl: data.configUrl,
-      daysToCacheJournalData: data.daysToCacheJournalData,
       daysToCacheLogs: data.daysToCacheLogs,
       logoutClearsTestPersistence: data.logoutClearsTestPersistence,
       logsPostApiKey: data.logsPostApiKey,
@@ -191,6 +190,7 @@ export class AppConfigProvider {
         searchBookingUrl: data.journal.searchBookingUrl,
         autoRefreshInterval: data.journal.autoRefreshInterval || 15000,
         numberOfDaysToView: data.journal.numberOfDaysToView,
+        daysToCacheJournalData: data.daysToCacheJournalData,
         allowTests: data.journal.allowTests,
         allowedTestCategories: data.journal.allowedTestCategories,
         enableTestReportPracticeMode: data.journal.enableTestReportPracticeMode,
@@ -207,7 +207,7 @@ export class AppConfigProvider {
         autoSendInterval: data.logs.autoSendInterval,
       },
       user: {
-        findUser: data.user.findUser,
+        findUserUrl: data.user.findUser,
       },
       requestTimeout: data.requestTimeout,
     } as AppConfig)
