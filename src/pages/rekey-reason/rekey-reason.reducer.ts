@@ -53,12 +53,20 @@ export function rekeyReasonReducer(state = initialState, action:
           ...initialState.uploadStatus,
         },
       };
+    case rekeyReasonActions.REKEY_REASON_VALIDATE_TRANSFER:
+      return {
+        ...state,
+        uploadStatus: {
+          ...initialState.uploadStatus,
+          isUploading: true,
+        },
+      };
     case rekeyReasonActions.REKEY_REASON_VALIDATE_TRANSFER_FAILED:
       return {
         ...state,
         uploadStatus: {
           ...initialState.uploadStatus,
-          isStaffNumberInvalid: action.staffNumberNotFound === true,
+          isStaffNumberInvalid: action.staffNumberNotFound,
         },
       };
     case rekeyReasonActions.REKEY_REASON_RESET_STAFF_NUMBER_ERROR:
