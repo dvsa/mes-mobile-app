@@ -214,9 +214,9 @@ export class TestsEffects {
   );
 
   @Effect()
-  sendPartialTest$ = this.actions$.pipe(
+  sendPartialTest = this.actions$.pipe(
     ofType(testStatusActions.SET_TEST_STATUS_WRITE_UP),
-    map(() => new testActions.SendCompletedTests()),
+    map(() =>  of(new testActions.SendCompletedTests()))
   );
 
   @Effect()
