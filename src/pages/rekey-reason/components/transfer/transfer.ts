@@ -17,6 +17,9 @@ export class TransferComponent implements OnChanges {
   staffNumber: number;
 
   @Input()
+  staffNumberInvalid: boolean;
+
+  @Input()
   formGroup: FormGroup;
 
   @Output()
@@ -57,13 +60,11 @@ export class TransferComponent implements OnChanges {
   }
 
   staffNumberValueChanged(staffNumber: string): void {
-    if (parseInt(staffNumber, 10)) {
-      this.staffNumberChange.emit(parseInt(staffNumber, 10));
-    }
+    this.staffNumberChange.emit(parseInt(staffNumber, 10) ? parseInt(staffNumber, 10) : null);
   }
 
   get invalid(): boolean {
-    return !this.formControl.valid && this.formControl.dirty;
+    return (!this.formControl.valid || this.staffNumberInvalid) && this.formControl.dirty;
   }
 
   get empty(): boolean {

@@ -28,11 +28,12 @@
           (stolenChange)="ipadIssueStolenChanged($event)"
           (brokenChange)="ipadIssueBrokenChanged($event)"></ipad-issue>
 
-        <transfer [selected]="(pageState.transfer$ | async).selected" [staffNumber]="examinerConducted"
-          [formGroup]="formGroup" (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
+        <transfer [formGroup]="formGroup" [selected]="(pageState.transfer$ | async).selected"
+          [staffNumber]="examinerConducted" [staffNumberInvalid]="isStaffNumberInvalid" 
+          (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
 
-        <other-reason [selected]="(pageState.other$ | async).selected" [reason]="(pageState.other$ | async).reason"
-          [formGroup]="formGroup" (selectedChange)="otherSelected($event)" (reasonChange)="otherReasonChanged($event)"></other-reason>
+        <other-reason [formGroup]="formGroup" [selected]="(pageState.other$ | async).selected" [reason]="(pageState.other$ | async).reason"
+          (selectedChange)="otherSelected($event)" (reasonChange)="otherReasonChanged($event)"></other-reason>
 
       </ion-grid>
     </div>

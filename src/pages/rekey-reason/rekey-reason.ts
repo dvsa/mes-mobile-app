@@ -12,7 +12,11 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
-import { RekeyReasonViewDidEnter, RekeyReasonValidateTransfer } from './rekey-reason.actions';
+import {
+  RekeyReasonViewDidEnter,
+  RekeyReasonValidateTransfer,
+  RekeyReasonResetStaffNumberError,
+} from './rekey-reason.actions';
 import { UploadRekeyModalEvent } from './components/upload-rekey-modal/upload-rekey-modal.constants';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -74,6 +78,7 @@ export class RekeyReasonPage extends BasePageComponent {
   isUploading: boolean = false;
   hasUploaded: boolean = false;
   hasTriedUploading: boolean = false;
+  isStaffNumberInvalid: boolean = false;
 
   modal: Modal;
   loadingSpinner: Loading;
@@ -126,9 +131,10 @@ export class RekeyReasonPage extends BasePageComponent {
       ),
     };
 
-    const { examinerConducted$, examinerKeyed$ } = this.pageState;
+    const { uploadStatus$, examinerConducted$, examinerKeyed$ } = this.pageState;
 
     this.subscription = merge(
+      uploadStatus$.pipe(map(this.handleUploadOutcome)),
       examinerConducted$.pipe(map(val => this.examinerConducted = val)),
       examinerKeyed$.pipe(map(val => this.examinerKeyed = val)),
     ).subscribe();
@@ -173,6 +179,7 @@ export class RekeyReasonPage extends BasePageComponent {
   handleUploadOutcome = (uploadStatus: RekeyReasonUploadModel): void => {
 
     this.handleLoadingUI(uploadStatus.isUploading);
+    this.isStaffNumberInvalid = uploadStatus.isStaffNumberInvalid;
 
     if (uploadStatus.hasUploadSucceeded || uploadStatus.isDuplicate) {
       this.navController.push(REKEY_UPLOAD_OUTCOME_PAGE);
@@ -248,6 +255,9 @@ export class RekeyReasonPage extends BasePageComponent {
   }
 
   staffNumberChanged(staffNumber: number) {
+    if (this.isStaffNumberInvalid) {
+      this.store$.dispatch(new RekeyReasonResetStaffNumberError());
+    }
     this.store$.dispatch(new SetExaminerConducted(staffNumber));
   }
 

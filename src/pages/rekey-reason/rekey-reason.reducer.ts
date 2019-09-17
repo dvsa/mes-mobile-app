@@ -10,6 +10,7 @@ export const initialState: RekeyReasonModel = {
     hasUploadSucceeded: false,
     hasUploadFailed: false,
     isDuplicate: false,
+    isStaffNumberInvalid: false,
   },
 };
 
@@ -43,6 +44,29 @@ export function rekeyReasonReducer(state = initialState, action:
           ...initialState.uploadStatus,
           hasUploadFailed: true,
           isDuplicate: action.isDuplicateUpload,
+        },
+      };
+    case rekeyReasonActions.REKEY_REASON_VIEW_DID_ENTER:
+      return {
+        ...state,
+        uploadStatus: {
+          ...initialState.uploadStatus,
+        },
+      };
+    case rekeyReasonActions.REKEY_REASON_VALIDATE_TRANSFER_FAILED:
+      return {
+        ...state,
+        uploadStatus: {
+          ...initialState.uploadStatus,
+          isStaffNumberInvalid: action.staffNumberNotFound === true,
+        },
+      };
+    case rekeyReasonActions.REKEY_REASON_RESET_STAFF_NUMBER_ERROR:
+      return {
+        ...state,
+        uploadStatus: {
+          ...state.uploadStatus,
+          isStaffNumberInvalid: false,
         },
       };
     default:

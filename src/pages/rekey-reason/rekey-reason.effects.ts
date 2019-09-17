@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { catchError, concatMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, concatMap, withLatestFrom, switchMap } from 'rxjs/operators';
 
 import * as rekeyActions from './rekey-reason.actions';
 import { of } from 'rxjs/observable/of';
 import { FindUserProvider } from '../../providers/find-user/find-user';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators/map';
 import * as testActions from '../../modules/tests/tests.actions';
 import { select, Store } from '@ngrx/store';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 
 @Injectable()
 export class RekeyReasonEffects {
@@ -33,18 +33,18 @@ export class RekeyReasonEffects {
         ),
       ),
     )),
-    map(([action, test]: [rekeyActions.RekeyReasonValidateTransfer, StandardCarTestCATBSchema]) => {
+    switchMap(([action, test]: [rekeyActions.RekeyReasonValidateTransfer, StandardCarTestCATBSchema]) => {
       if (test.examinerBooked === test.examinerConducted) {
         return of(new testActions.SendCurrentTest());
       }
 
       return this.findUserProvider.userExists(test.examinerConducted)
         .pipe(
-          map((response: HttpResponse<any>) => {
-            return new testActions.SendCurrentTest();
+          switchMap((response: HttpResponse<any>) => {
+            return of(new testActions.SendCurrentTest());
           }),
           catchError((error: HttpErrorResponse) => {
-            return of(new rekeyActions.RekeyReasonValidateTransferFailed());
+            return of(new rekeyActions.RekeyReasonValidateTransferFailed(error.status === HttpStatusCodes.NOT_FOUND));
           }),
         );
     }),
