@@ -20,7 +20,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs, LoadLog, SaveLog, SendLogs } from '../../modules/logs/logs.actions';
-import { LoadEmployeeId } from '../../modules/app-info/app-info.actions';
+import { LoadEmployeeId, LoadConfigSuccess } from '../../modules/app-info/app-info.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
@@ -30,7 +30,6 @@ import { LogsProvider } from '../../providers/logs/logs';
 import { LogType } from '../../shared/models/log.model';
 import { DASHBOARD_PAGE } from '../page-names.constants';
 import { LogHelper } from '../../providers/logs/logsHelper';
-import { LoadConfigSuccess } from '../../modules/app-info/app-info.actions';
 
 @IonicPage()
 @Component({
