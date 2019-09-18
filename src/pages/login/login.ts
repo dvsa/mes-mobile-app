@@ -103,12 +103,8 @@ export class LoginPage extends BasePageComponent {
 
       await this.initialisePersistentStorage();
 
-      console.log('login - before load remote config');
-
       await this.appConfigProvider.loadRemoteConfig();
       this.store$.dispatch(new LoadConfigSuccess());
-
-      console.log('login - after load remote config');
 
       this.store$.dispatch(new LoadPersistedTests());
 

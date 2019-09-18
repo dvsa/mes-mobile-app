@@ -1,5 +1,3 @@
-// import { ExaminerRole } from './constants/examiner-role.constants';
-
 import { ExaminerRole, TestPermissionPeriod } from '@dvsa/mes-config-schema/remote-config';
 
 export type AppConfig = {

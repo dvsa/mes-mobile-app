@@ -136,7 +136,6 @@ export class AppConfigProvider {
               resolve(data);
             },
             (error) => {
-              console.log('Here we are where the getRemoteData fails', JSON.stringify(error));
               this.store$.dispatch(new SaveLog(this.logHelper
                 .createLog(LogType.ERROR, 'Getting remote config failed, using cached data', error)));
               reject(error);
@@ -180,8 +179,7 @@ export class AppConfigProvider {
       },
     } as AppConfig)
 
-  private mapRemoteConfig = (data: any) => {
-    console.log('data', JSON.stringify(data));
+  private mapRemoteConfig = (data: any) =>
     this.appConfig = merge({}, this.appConfig, {
       googleAnalyticsId: data.googleAnalyticsId,
       approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
@@ -208,7 +206,5 @@ export class AppConfigProvider {
         findUserUrl: data.user.findUserUrl,
       },
       requestTimeout: data.requestTimeout,
-    } as AppConfig);
-    console.log('this.appConfig', this.appConfig);
-  }
+    } as AppConfig)
 }
