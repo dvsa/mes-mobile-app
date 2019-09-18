@@ -43,7 +43,7 @@ export class TestSubmissionProvider {
     // Using cloneDeep() to prevent the initialState of the reducers from being modified
     const deepClonedData = cloneDeep(testToSubmit.payload);
     const cleanData = this.removeNullFieldsDeep(
-      testToSubmit.status === TestStatus.WriteUp
+      this.isPartialSubmission(testToSubmit)
         ? this.removeFieldsForPartialData(deepClonedData)
         : deepClonedData);
 
@@ -69,6 +69,10 @@ export class TestSubmissionProvider {
 
   compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
+
+  isPartialSubmission(testToSubmit: TestToSubmit) : boolean {
+    return testToSubmit.status === TestStatus.WriteUp && !testToSubmit.payload.rekey;
+  }
 
   removeNullFieldsDeep = (data: Partial<StandardCarTestCATBSchema>): Partial<StandardCarTestCATBSchema> => {
     const removeNullFields = (object: Partial<StandardCarTestCATBSchema>) => {

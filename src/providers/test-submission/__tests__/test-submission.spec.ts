@@ -127,4 +127,86 @@ describe('TestSubmissionProvider', () => {
       expect(result).toEqual(expected);
     });
   });
+  describe('isPartialSubmission', () => {
+    it('should be a partial submission when the test status is WRITE_UP and test is not a rekey', () => {
+      const result = testSubmissionProvider.isPartialSubmission({
+        index: 0,
+        slotId: '',
+        payload: {
+          category: 'B',
+          rekey: false,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.WriteUp,
+      });
+
+      // ASSERT
+      expect(result).toEqual(true);
+    });
+    it('should not be a partial submission when the test status is WRITE_UP and test is a rekey', () => {
+      const result = testSubmissionProvider.isPartialSubmission({
+        index: 0,
+        slotId: '',
+        payload: {
+          category: 'B',
+          rekey: true,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.WriteUp,
+      });
+
+      // ASSERT
+      expect(result).toEqual(false);
+    });
+    it('should not be a partial submission when the test status is not WRITE_UP and test is not a rekey', () => {
+      const result = testSubmissionProvider.isPartialSubmission({
+        index: 0,
+        slotId: '',
+        payload: {
+          category: 'B',
+          rekey: false,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.Completed,
+      });
+
+      // ASSERT
+      expect(result).toEqual(false);
+    });
+    it('should not be a partial submission when the test status is not WRITE_UP and test is a rekey', () => {
+      const result = testSubmissionProvider.isPartialSubmission({
+        index: 0,
+        slotId: '',
+        payload: {
+          category: 'B',
+          rekey: false,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.Completed,
+      });
+
+      // ASSERT
+      expect(result).toEqual(false);
+    });
+  });
 });
