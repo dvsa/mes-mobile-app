@@ -2,7 +2,7 @@ import { MdmConfig } from '@dvsa/mes-config-schema/mdm-config';
 
 export const environment: MdmConfig = {
   isRemote: true,
-  configUrl: 'https://tom.mes.dev-dvsacloud.uk/v1/configuration/dev',
+  configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   daysToCacheLogs: 7,
   enableDevTools: false,
   logoutClearsTestPersistence: true,

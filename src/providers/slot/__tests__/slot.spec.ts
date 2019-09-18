@@ -367,9 +367,9 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2018-01-01', to: '2018-03-01' },
-            { category: 'B', from: '2018-05-01', to: '2018-07-01' },
-            { category: 'B', from: '2019-01-01', to: '2019-02-01' },
+            { testCategory: 'B', from: '2018-01-01', to: '2018-03-01' },
+            { testCategory: 'B', from: '2018-05-01', to: '2018-07-01' },
+            { testCategory: 'B', from: '2019-01-01', to: '2019-02-01' },
           ],
         },
       });
@@ -379,7 +379,7 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2019-01-01', to: '2019-02-02' },
+            { testCategory: 'B', from: '2019-01-01', to: '2019-02-02' },
           ],
         },
       });
@@ -389,7 +389,7 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2019-02-01', to: '2019-02-20' },
+            { testCategory: 'B', from: '2019-02-01', to: '2019-02-20' },
           ],
         },
       });
@@ -399,7 +399,7 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2019-01-20', to: '2019-02-01' },
+            { testCategory: 'B', from: '2019-01-20', to: '2019-02-01' },
           ],
         },
       });
@@ -409,7 +409,7 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2019-02-01', to: '2019-02-01' },
+            { testCategory: 'B', from: '2019-02-01', to: '2019-02-01' },
           ],
         },
       });
@@ -419,7 +419,7 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2019-02-01', to: null },
+            { testCategory: 'B', from: '2019-02-01', to: null },
           ],
         },
       });
@@ -429,7 +429,7 @@ describe('SlotProvider', () => {
       getAppConfigSpy.and.returnValue({
         journal: {
           testPermissionPeriods: [
-            { category: 'B', from: '2019-01-01', to: null },
+            { testCategory: 'B', from: '2019-01-01', to: null },
           ],
         },
       });

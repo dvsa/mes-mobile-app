@@ -107,7 +107,7 @@ export class SlotProvider {
     const periodsPermittingStart = testPermissionPeriods.filter((period) => {
       const slotHasPeriodStartCriteria = this.hasPeriodStartCriteria(startDate, period.from);
       const slotHasPeriodEndCriteria = this.hasPeriodEndCritiera(startDate, period.to);
-      return period.category === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
+      return period.testCategory === testCategory && slotHasPeriodStartCriteria && slotHasPeriodEndCriteria;
     });
     return periodsPermittingStart.length > 0;
   }
