@@ -1,0 +1,24 @@
+<ion-row class="mes-data-row-with-separator" [formGroup]="formGroup">
+  <div class="validation-bar"></div>
+  <ion-col col-40>
+    <input id="ipadIssueSelected" value="true" [checked]="selected" type="checkbox" type="checkbox" class="gds-checkbox"
+      formControlName="ipadIssueSelected" (change)="selectedValueChanged($event.target.checked)">
+    <label for="ipadIssueSelected">iPad Issue</label>
+  </ion-col>
+  <ion-col>
+    <div class="selected-border" id="ipadIssueSection" *ngIf="selected">
+      <input id="ipadIssueTechnicalFault" type="radio" class="gds-radio-button" name="ipadIssueTechnicalFault" formControlName="ipadIssueTechnicalFault" 
+        [checked]="technicalFault" value="true" (change)="technicalFaultSelected()">
+      <label for="ipadIssueTechnicalFault" class="radio-label">Tech Fault</label>
+      <input id="ipadIssueLost" type="radio" class="gds-radio-button" name="ipadIssueLost" formControlName="ipadIssueLost"
+        [checked]="lost" value="true" (change)="lostSelected()">
+      <label for="ipadIssueLost" class="radio-label">Lost</label>
+      <input id="ipadIssueStolen" type="radio" class="gds-radio-button" name="ipadIssueStolen" formControlName="ipadIssueStolen"
+        [checked]="stolen" value="true" (change)="stolenSelected()">
+      <label for="ipadIssueStolen" class="radio-label">Stolen</label>
+      <input id="ipadIssueBroken" type="radio" class="gds-radio-button" name="ipadIssueBroken" formControlName="ipadIssueBroken"
+        [checked]="broken" value="true" (change)="brokenSelected()">
+      <label for="ipadIssueBroken" class="radio-label">Broken</label>
+    </div>
+  </ion-col>
+</ion-row>
