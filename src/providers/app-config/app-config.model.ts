@@ -1,9 +1,8 @@
-import { ExaminerRole } from './constants/examiner-role.constants';
+import { ExaminerRole, TestPermissionPeriod } from '@dvsa/mes-config-schema/remote-config';
 
 export type AppConfig = {
   configUrl: string
   googleAnalyticsId: string,
-  daysToCacheJournalData: number,
   daysToCacheLogs: number,
   logoutClearsTestPersistence?: boolean;
   logsPostApiKey: string;
@@ -25,6 +24,7 @@ export type AppConfig = {
     searchBookingUrl: string,
     autoRefreshInterval: number
     numberOfDaysToView: number,
+    daysToCacheJournalData: number,
     allowTests: boolean,
     allowedTestCategories: string[],
     enableTestReportPracticeMode: boolean,
@@ -36,18 +36,8 @@ export type AppConfig = {
     testSubmissionUrl: string,
     autoSendInterval: number,
   },
-  logs: {
-    url: string,
-    autoSendInterval: number,
-  },
   user: {
-    findUser: string,
+    findUserUrl: string,
   }
   requestTimeout: number
 };
-
-export interface TestPermissionPeriod {
-  testCategory: string;
-  from: string;
-  to: string | null;
-}
