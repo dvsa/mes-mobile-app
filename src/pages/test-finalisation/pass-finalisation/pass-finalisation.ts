@@ -236,7 +236,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
       provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
       passCertificateNumberCtrl: new FormControl(null,
         {
-          validators: Validators.compose([Validators.maxLength(8), Validators.minLength(8)]),
+          validators: Validators.compose([Validators.maxLength(8), Validators.minLength(8), Validators.required]),
           updateOn: 'blur',
         },
       ),
