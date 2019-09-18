@@ -4,7 +4,6 @@ import { ExaminerRole } from '../providers/app-config/constants/examiner-role.co
 export const environment: LocalEnvironmentFile = {
   isRemote: false,
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
-  daysToCacheJournalData: 14,
   daysToCacheLogs: 7,
   enableDevTools: true,
   googleAnalyticsId: 'UA-129489007-3',
@@ -29,6 +28,7 @@ export const environment: LocalEnvironmentFile = {
     searchBookingUrl: 'dummy/search/booking/url',
     autoRefreshInterval: 1000 * 60 * 10,
     numberOfDaysToView: 7,
+    daysToCacheJournalData: 14,
     allowTests: true,
     allowedTestCategories: ['B'],
     enableTestReportPracticeMode: true,
@@ -46,12 +46,8 @@ export const environment: LocalEnvironmentFile = {
     testSubmissionUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/test-results',
     autoSendInterval: 900000,
   },
-  logs: {
-    url: 'https://dev.mes.dev-dvsacloud.uk/v1/logs/dev',
-    autoSendInterval: 1000 * 60,
-  },
   user: {
-    findUser: 'https://dev.mes.dev-dvsacloud.uk/v1/users/{staffNumber}',
+    findUserUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/users/{staffNumber}',
   },
   requestTimeout: 20000,
 };

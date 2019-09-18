@@ -54,7 +54,7 @@ describe('JournalProvider', () => {
     urlProviderMock = TestBed.get(UrlProvider);
     dataStoreMock = TestBed.get(DataStoreProvider);
     appConfigProviderMock = TestBed.get(AppConfigProvider);
-    cacheDays = appConfigProviderMock.getAppConfig().daysToCacheJournalData;
+    cacheDays = appConfigProviderMock.getAppConfig().journal.daysToCacheJournalData;
 
   });
 

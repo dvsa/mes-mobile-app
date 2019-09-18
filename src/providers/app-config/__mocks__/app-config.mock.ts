@@ -16,7 +16,6 @@ export class AppConfigProviderMock {
     return {
       configUrl: localEnvironmentMock.configUrl,
       googleAnalyticsId: localEnvironmentMock.googleAnalyticsId,
-      daysToCacheJournalData: localEnvironmentMock.daysToCacheJournalData,
       daysToCacheLogs: localEnvironmentMock.daysToCacheLogs,
       logoutClearsTestPersistence: localEnvironmentMock.logoutClearsTestPersistence,
       logsPostApiKey: localEnvironmentMock.logsPostApiKey,
@@ -38,6 +37,7 @@ export class AppConfigProviderMock {
         searchBookingUrl: localEnvironmentMock.journal.searchBookingUrl,
         autoRefreshInterval: localEnvironmentMock.journal.autoRefreshInterval,
         numberOfDaysToView: localEnvironmentMock.journal.numberOfDaysToView,
+        daysToCacheJournalData: localEnvironmentMock.journal.daysToCacheJournalData,
         allowTests: localEnvironmentMock.journal.allowTests,
         allowedTestCategories: localEnvironmentMock.journal.allowedTestCategories,
         enableTestReportPracticeMode: localEnvironmentMock.journal.enableTestReportPracticeMode,
@@ -49,12 +49,8 @@ export class AppConfigProviderMock {
         testSubmissionUrl: localEnvironmentMock.tests.testSubmissionUrl,
         autoSendInterval: localEnvironmentMock.tests.autoSendInterval,
       },
-      logs: {
-        url: localEnvironmentMock.logs.url,
-        autoSendInterval: localEnvironmentMock.logs.autoSendInterval,
-      },
       user: {
-        findUser: localEnvironmentMock.user.findUser,
+        findUserUrl: localEnvironmentMock.user.findUserUrl,
       },
       requestTimeout: localEnvironmentMock.requestTimeout,
     };

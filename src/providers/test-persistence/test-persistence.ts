@@ -59,7 +59,7 @@ export class TestPersistenceProvider {
   getTestsToDelete(tests: TestsModel): string[] {
     return  Object.keys(tests.startedTests).filter((key) => {
       const startDate: DateTime = new DateTime(tests.startedTests[key].journalData.testSlotAttributes.start);
-      return startDate.daysDiff(new DateTime()) > this.appConfigProvider.getAppConfig().daysToCacheJournalData;
+      return startDate.daysDiff(new DateTime()) > this.appConfigProvider.getAppConfig().journal.daysToCacheJournalData;
     });
   }
 

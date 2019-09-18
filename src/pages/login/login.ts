@@ -106,6 +106,8 @@ export class LoginPage extends BasePageComponent {
       await this.appConfigProvider.loadRemoteConfig();
       this.store$.dispatch(new LoadConfigSuccess());
 
+      this.store$.dispatch(new LoadPersistedTests());
+
       this.analytics.initialiseAnalytics();
 
       this.store$.dispatch(new StartSendingCompletedTests());
@@ -160,7 +162,6 @@ export class LoginPage extends BasePageComponent {
         const storage = await this.secureStorage.create('MES');
         this.dataStore.setSecureContainer(storage);
 
-        this.store$.dispatch(new LoadPersistedTests());
         return Promise.resolve();
       } catch (err) {
         return Promise.reject(err);

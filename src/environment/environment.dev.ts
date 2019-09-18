@@ -1,9 +1,8 @@
-import { EnvironmentFile } from './models/environment.model';
+import { MdmConfig } from '@dvsa/mes-config-schema/mdm-config';
 
-export const environment: EnvironmentFile = {
+export const environment: MdmConfig = {
   isRemote: true,
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
-  daysToCacheJournalData: 14,
   daysToCacheLogs: 7,
   enableDevTools: false,
   logoutClearsTestPersistence: true,
