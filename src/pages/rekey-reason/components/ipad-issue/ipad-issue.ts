@@ -17,16 +17,16 @@ export class IpadIssueComponent implements OnChanges {
   selected: boolean;
 
   @Input()
-  technicalFault: string;
+  technicalFault: boolean;
 
   @Input()
-  lost: string;
+  lost: boolean;
 
   @Input()
-  stolen: string;
+  stolen: boolean;
 
   @Input()
-  broken: string;
+  broken: boolean;
 
   @Input()
   formGroup: FormGroup;

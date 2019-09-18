@@ -9,7 +9,7 @@
   </ion-col>
   <ion-col>
     <div class="selected-border" id="reasonSection" *ngIf="selected">
-      <textarea id="otherReasonUpdated" formControlName="reason" charLimit="200" charCount
+      <textarea id="otherReason" formControlName="reason" charLimit="200" charCount
         (onCharacterCountChanged)="characterCountChanged($event)" [value]="reason"
         [class.ng-invalid]="invalid" (change)="reasonTextChanged($event.target.value)">
         </textarea>
