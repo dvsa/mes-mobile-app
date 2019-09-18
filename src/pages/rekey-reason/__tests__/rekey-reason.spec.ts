@@ -23,13 +23,16 @@ import {
   OtherSelected,
   OtherReasonUpdated,
   TransferSelected,
+  IpadIssueLostSelected,
 } from '../../../modules/tests/rekey-reason/rekey-reason.actions';
 import { By } from '@angular/platform-browser';
 import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
 import { MockComponent } from 'ng-mocks';
-import { TickIndicatorComponent } from '../../../components/common/tick-indicator/tick-indicator';
 import { FindUserProvider } from '../../../providers/find-user/find-user';
 import { FindUserProviderMock } from '../../../providers/find-user/__mocks__/find-user.mock';
+import { IpadIssueComponent } from '../components/ipad-issue/ipad-issue';
+import { TransferComponent } from '../components/transfer/transfer';
+import { OtherReasonComponent } from '../components/other-reason/other-reason';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -43,7 +46,9 @@ describe('RekeyReasonPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         RekeyReasonPage,
-        MockComponent(TickIndicatorComponent),
+        MockComponent(IpadIssueComponent),
+        MockComponent(TransferComponent),
+        MockComponent(OtherReasonComponent),
       ],
       imports: [
         IonicModule,
@@ -159,52 +164,36 @@ describe('RekeyReasonPage', () => {
     });
   });
 
-  describe('Selecting issue emits the correct event', () => {
-    it('emiting ipadIssueSelected shows the ipadIssue section', () => {
-      store$.dispatch(new StartTest(103, true));
+  describe('DOM', () => {
+    it('should pass the ipad issue values to the ipad issue subcomponent', () => {
+      store$.dispatch(new StartTest(123));
       store$.dispatch(new IpadIssueSelected(true));
+      store$.dispatch(new IpadIssueLostSelected());
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#ipadIssue'))).toBeDefined();
+      const ipadIssueElement = fixture.debugElement.query(By.css('ipad-issue'))
+        .componentInstance as IpadIssueComponent;
+      expect(ipadIssueElement.selected).toEqual(true);
+      expect(ipadIssueElement.lost).toEqual(true);
     });
-
-    it('clicking transfer emits transfer selected event', () => {
-      store$.dispatch(new StartTest(103, true));
+    it('should pass the transfer values to the transfer subcomponent', () => {
+      store$.dispatch(new StartTest(123));
       store$.dispatch(new TransferSelected(true));
+      store$.dispatch(new SetExaminerConducted(123));
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#transferSelected'))).toBeDefined();
+      const transferElement = fixture.debugElement.query(By.css('transfer'))
+        .componentInstance as TransferComponent;
+      expect(transferElement.selected).toEqual(true);
+      expect(transferElement.staffNumber).toEqual(123);
     });
-
-    it('clicking other reason emits other selected event', () => {
-      store$.dispatch(new StartTest(103, true));
+    it('should pass the other reason values to the reason subcomponent', () => {
+      store$.dispatch(new StartTest(123));
       store$.dispatch(new OtherSelected(true));
+      store$.dispatch(new OtherReasonUpdated('Reason text'));
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('#otherSelected'))).toBeDefined();
-    });
-
-    it('entering transfer staff emits the set examiner conducted event', () => {
-      store$.dispatch(new StartTest(103, true));
-      store$.dispatch(new TransferSelected(true));
-      fixture.detectChanges();
-      spyOn(store$, 'dispatch');
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#transferStaffNumber');
-      elem.value = '12345';
-      elem.dispatchEvent(new Event('change'));
-      fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(SetExaminerConducted));
-    });
-
-    it('entering other reason emits the reason updated event', () => {
-      store$.dispatch(new StartTest(103, true));
-      store$.dispatch(new OtherSelected(true));
-      fixture.detectChanges();
-      spyOn(store$, 'dispatch');
-      const compiled = fixture.debugElement.nativeElement;
-      const elem = compiled.querySelector('#otherReasonUpdated');
-      elem.value = 'some random value';
-      elem.dispatchEvent(new Event('change'));
-      fixture.detectChanges();
-      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.any(OtherReasonUpdated));
+      const otherReasonElement = fixture.debugElement.query(By.css('other-reason'))
+        .componentInstance as OtherReasonComponent;
+      expect(otherReasonElement.selected).toEqual(true);
+      expect(otherReasonElement.reason).toEqual('Reason text');
     });
   });
 });
