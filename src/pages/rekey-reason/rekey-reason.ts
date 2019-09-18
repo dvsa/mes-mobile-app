@@ -194,11 +194,13 @@ export class RekeyReasonPage extends BasePageComponent {
 
   handleLoadingUI = (isLoading: boolean): void => {
     if (isLoading) {
-      this.loadingSpinner = this.loadingController.create({
-        spinner: 'circles',
-        content: 'Uploading...',
-      });
-      this.loadingSpinner.present();
+      if (!this.loadingSpinner) {
+        this.loadingSpinner = this.loadingController.create({
+          spinner: 'circles',
+          content: 'Uploading...',
+        });
+        this.loadingSpinner.present();
+      }
       return;
     }
     if (this.loadingSpinner) {
