@@ -12,6 +12,8 @@ import { NonPassFinalisationPage } from '../non-pass-finalisation';
 import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.actions';
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
 import { TestFinalisationComponentsModule } from '../../components/test-finalisation.module';
+import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
+import * as testActions from '../../../../modules/tests/tests.actions';
 
 describe('NonPassFinalisationPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationPage>;
@@ -52,6 +54,20 @@ describe('NonPassFinalisationPage', () => {
         component.ionViewDidEnter();
         expect(store$.dispatch).toHaveBeenCalledWith(new NonPassFinalisationViewDidEnter());
       });
+    });
+  });
+
+  describe('OnContinue', () => {
+    it('should dispatch a change test state to WriteUp action', () => {
+      // Arrange
+      store$.dispatch(new testActions.StartTest(123));
+      component.slotId = '123';
+
+      // Act
+      component.continue();
+
+      // Assert
+      expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'))
     });
   });
 });
