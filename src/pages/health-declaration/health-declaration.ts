@@ -23,7 +23,7 @@ import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../modules/tests/candidate/candidate.selector';
 import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
@@ -32,8 +32,6 @@ import { getPassCompletion } from '../../modules/tests/pass-completion/pass-comp
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
-import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { ProvisionalLicenseNotReceived } from '../../modules/tests/pass-completion/pass-completion.actions';
 import {
   getCommunicationPreference,
@@ -47,6 +45,7 @@ import {
   BACK_TO_OFFICE_PAGE,
 } from '../page-names.constants';
 import { includes } from 'lodash';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -57,7 +56,6 @@ interface HealthDeclarationPageState {
   candidateDriverNumber$: Observable<string>;
   passCertificateNumber$: Observable<string>;
   licenseProvided$: Observable<boolean>;
-  welshTest$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
 }
 @IonicPage()
@@ -66,8 +64,6 @@ interface HealthDeclarationPageState {
   templateUrl: 'health-declaration.html',
 })
 export class HealthDeclarationPage extends PracticeableBasePageComponent {
-
-  static readonly welshLanguage: string = 'Cymraeg';
 
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
@@ -80,8 +76,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
   healthDeclarationAccepted: boolean;
   subscription: Subscription;
   inputSubscriptions: Subscription[] = [];
-  isBookedInWelsh: boolean;
-  conductedLanguage: string;
   merged$: Observable<boolean | string>;
 
   constructor(
@@ -177,11 +171,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         select(getPassCompletion),
         map(isProvisionalLicenseProvided),
       ),
-      welshTest$: currentTest$.pipe(
-        select(getJournalData),
-        select(getTestSlotAttributes),
-        select(isWelshTest),
-      ),
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
@@ -189,16 +178,13 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     };
     this.rehydrateFields();
 
-    const { welshTest$, licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
+    const { licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
 
     this.merged$ = merge(
-      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       licenseProvided$.pipe(map(val => this.licenseProvided = val)),
       healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
-      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
+      conductedLanguage$.pipe(tap(this.configureI18N)),
     );
-
-    this.configureI18N(this.conductedLanguage === HealthDeclarationPage.welshLanguage);
 
   }
 
@@ -231,9 +217,11 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     );
   }
 
-  configureI18N(isWelsh: boolean): void {
-    if (this.isBookedInWelsh && isWelsh) {
+  configureI18N = (language: Language): void => {
+    if (language === Language.CYMRAEG) {
       this.translate.use('cy');
+    } else {
+      this.translate.use('en');
     }
   }
 

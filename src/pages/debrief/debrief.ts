@@ -3,7 +3,7 @@ import { PracticeableBasePageComponent } from '../../shared/classes/practiceable
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -13,7 +13,7 @@ import {
   getEco,
   getDrivingFaultSummaryCount,
 } from '../../modules/tests/test-data/test-data.selector';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
@@ -37,8 +37,6 @@ import {
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
-import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
 import {
   getCommunicationPreference,
@@ -51,6 +49,7 @@ import {
   POST_DEBRIEF_HOLDING_PAGE,
   DASHBOARD_PAGE,
 } from '../page-names.constants';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -60,7 +59,6 @@ interface DebriefPageState {
   etaFaults$: Observable<ETA>;
   ecoFaults$: Observable<Eco>;
   testResult$: Observable<string>;
-  welshTest$: Observable<boolean>;
   conductedLanguage$: Observable<string>;
 }
 
@@ -72,12 +70,8 @@ interface DebriefPageState {
 
 export class DebriefPage extends PracticeableBasePageComponent {
 
-  static readonly welshLanguage: string = 'Cymraeg';
-
   pageState: DebriefPageState;
   subscription: Subscription;
-  conductedLanguage: string;
-  isBookedInWelsh: boolean;
   isPassed: boolean;
 
   // Used for now to test displaying pass/fail/terminated messages
@@ -177,22 +171,16 @@ export class DebriefPage extends PracticeableBasePageComponent {
       testResult$: currentTest$.pipe(
         select(getTestOutcome),
       ),
-      welshTest$: currentTest$.pipe(
-        select(getJournalData),
-        select(getTestSlotAttributes),
-        select(isWelshTest),
-      ),
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
       ),
     };
 
-    const { testResult$, welshTest$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
+    const { testResult$, etaFaults$, ecoFaults$, conductedLanguage$ } = this.pageState;
 
     this.subscription = merge(
       testResult$.pipe(map(result => this.outcome = result)),
-      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
       etaFaults$.pipe(
         map((eta) => {
           this.hasPhysicalEta = eta.physical;
@@ -205,15 +193,15 @@ export class DebriefPage extends PracticeableBasePageComponent {
           this.adviceGivenPlanning = eco.adviceGivenPlanning;
         }),
       ),
-      conductedLanguage$.pipe(map(language => this.conductedLanguage = language)),
+      conductedLanguage$.pipe(tap(this.configureI18N)),
     ).subscribe();
-
-    this.configureI18N(this.conductedLanguage === DebriefPage.welshLanguage);
   }
 
-  configureI18N(isWelsh: boolean): void {
-    if (this.isBookedInWelsh && isWelsh) {
+  configureI18N = (language: Language): void => {
+    if (language === Language.CYMRAEG) {
       this.translate.use('cy');
+    } else {
+      this.translate.use('en');
     }
   }
 

@@ -38,10 +38,12 @@ import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
 import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
-import { Examiner } from '@dvsa/mes-test-schema/categories/B';
+import { Examiner, TestSlotAttributes, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { JournalModel } from '../../pages/journal/journal.model';
+import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
+import { Language } from './communication-preferences/communication-preferences.model';
 
 @Injectable()
 export class TestsEffects {
@@ -148,18 +150,21 @@ export class TestsEffects {
         const slotData = slots.map(slot => slot.slotData);
         slot = slotData.find(data => data.slotDetail.slotId === startTestAction.slotId && has(data, 'booking'));
       }
+      const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
+      const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
       const arrayOfActions: Action[] = [
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         new PopulateCandidateDetails(slot.booking.candidate),
-        new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),
+        new PopulateTestSlotAttributes(testSlotAttributes),
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
         new PopulateTestCategory(slot.booking.application.testCategory),
         new SetExaminerBooked(parseInt(examinerBooked, 10)),
         new SetExaminerConducted(parseInt(examinerConducted, 10)),
         new SetExaminerKeyed(parseInt(examinerKeyed, 10)),
+        new PopulateConductedLanguage(conductedLanguage),
       ];
 
       if (startTestAction.rekey) {

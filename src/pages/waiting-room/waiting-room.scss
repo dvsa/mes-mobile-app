@@ -34,5 +34,9 @@ page-waiting-room {
     .signature-validation-row {
       height: 300px;
     }
+    
+    conducted-language > ion-row {
+      margin-bottom: -36px;
+    }
   }
 }
