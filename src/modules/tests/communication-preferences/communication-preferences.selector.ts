@@ -8,5 +8,4 @@ export const getCommunicationPreferenceType
   = (communicationPreferences: CommunicationPreferences) => get(communicationPreferences, 'communicationMethod', '');
 
 export const getConductedLanguage
-  = (communicationPreferences: CommunicationPreferences) =>
-  communicationPreferences.conductedLanguage ? communicationPreferences.conductedLanguage : '';
+  = (communicationPreferences: CommunicationPreferences) => communicationPreferences.conductedLanguage;

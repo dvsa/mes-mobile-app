@@ -28,6 +28,9 @@ import { WaitingRoomValidationError } from '../waiting-room.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
+import * as communicationPreferenceActions
+  from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -118,6 +121,24 @@ describe('WaitingRoomPage', () => {
         expect(store$.dispatch).toHaveBeenCalledWith(new ToggleInsuranceDeclaration());
       });
     });
+
+    describe('Welsh text selected', () => {
+      it('it should dispatch CandidateChoseToProceedWithTestInWelsh action', () => {
+        component.dispatchCandidateChoseToProceedInWelsh();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInWelsh(
+            Language.CYMRAEG));
+      });
+    });
+
+    describe('English text selected', () => {
+      it('it should dispatch CandidateChoseToProceedWithTestInEnglish action', () => {
+        component.dispatchCandidateChoseToProceedInEnglish();
+        expect(store$.dispatch)
+          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInEnglish(
+            Language.ENGLISH));
+      });
+    });
   });
 
   describe('clickBack', () => {
@@ -143,24 +164,20 @@ describe('WaitingRoomPage', () => {
 
   describe('DOM', () => {
     describe('Declaration checkboxes', () => {
-      it('should call residency change handler when residency declaration is (un)checked', fakeAsync(() => {
+      it('should call residency change handler when residency declaration is (un)checked', () => {
         fixture.detectChanges();
         spyOn(component, 'residencyDeclarationChanged');
         const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
         residencyCb.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
         expect(component.residencyDeclarationChanged).toHaveBeenCalled();
-      }));
-      it('should call insurance change handler when insurance declaration is (un)checked', fakeAsync(() => {
+      });
+      it('should call insurance change handler when insurance declaration is (un)checked', () => {
         fixture.detectChanges();
         spyOn(component, 'insuranceDeclarationChanged');
         const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
         insuranceCb.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
         expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
-      }));
+      });
     });
   });
   describe('onSubmit', () => {

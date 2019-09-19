@@ -36,6 +36,7 @@ import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-att
 import * as welshTranslations from '../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../components/privacy-notice/privacy-notice';
 import { CommunicationSubmitInfo } from '../communication.actions';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationPage>;
@@ -227,24 +228,6 @@ describe('CommunicationPage', () => {
       });
     });
 
-    describe('Welsh text selected', () => {
-      it('it should dispatch CandidateChoseToProceedWithTestInWelsh action', () => {
-        component.dispatchCandidateChoseToProceedInWelsh();
-        expect(store$.dispatch)
-          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInWelsh(
-            CommunicationPage.welshLanguage));
-      });
-    });
-
-    describe('English text selected', () => {
-      it('it should dispatch CandidateChoseToProceedWithTestInEnglish action', () => {
-        component.dispatchCandidateChoseToProceedInEnglish();
-        expect(store$.dispatch)
-          .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInEnglish(
-            CommunicationPage.englishLanguage));
-      });
-    });
-
     describe('Communication class level funcitons', () => {
       it('should set setCommunicationType', () => {
         component.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
@@ -317,8 +300,7 @@ describe('CommunicationPage', () => {
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
         fixture.detectChanges();
-        component.isBookedInWelsh = true;
-        component.configureI18N(true);
+        component.configureI18N(Language.CYMRAEG);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)

@@ -24,7 +24,7 @@ import {
 import {
   CommunicationViewDidEnter, CommunicationValidationError, CommunicationSubmitInfo, CommunicationSubmitInfoError,
 } from './communication.actions';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
@@ -37,13 +37,10 @@ import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
-  CandidateChoseToProceedWithTestInWelsh,
-  CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
-import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import { TranslateService } from 'ng2-translate';
 import { WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE, COMMUNICATION_PAGE } from '../page-names.constants';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -53,7 +50,7 @@ interface CommunicationPageState {
   communicationEmail$: Observable<string>;
   communicationType$: Observable<string>;
   candidateAddress$: Observable<Address>;
-  welshTest$: Observable<boolean>;
+
   conductedLanguage$: Observable<string>;
 }
 @IonicPage()
@@ -83,8 +80,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   communicationType: CommunicationMethod;
   selectProvidedEmail: boolean;
   selectNewEmail: boolean;
-  conductedLanguage: ConductedLanguage;
-  isBookedInWelsh: boolean;
   merged$: Observable<string | boolean>;
 
   constructor(
@@ -168,11 +163,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
         select(getCandidate),
         select(getPostalAddress),
       ),
-      welshTest$: currentTest$.pipe(
-        select(getJournalData),
-        select(getTestSlotAttributes),
-        select(isWelshTest),
-      ),
       conductedLanguage$: currentTest$.pipe(
         select(getCommunicationPreference),
         select(getConductedLanguage),
@@ -183,7 +173,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
       candidateProvidedEmail$,
       communicationEmail$,
       communicationType$,
-      welshTest$,
       conductedLanguage$,
     } = this.pageState;
 
@@ -191,8 +180,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value as CommunicationMethod)),
-      welshTest$.pipe(map(isWelsh => this.isBookedInWelsh = isWelsh)),
-      conductedLanguage$.pipe(map(value => this.conductedLanguage = value as ConductedLanguage)),
+      conductedLanguage$.pipe(tap(this.configureI18N)),
     );
 
     this.subscription = this.merged$.subscribe();
@@ -201,7 +189,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
       this.initialiseDefaultSelections();
     }
 
-    this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
     this.restoreRadiosFromState();
     this.restoreRadioValidators();
   }
@@ -221,8 +208,8 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     }
   }
 
-  configureI18N(isWelsh: boolean): void {
-    if (this.isBookedInWelsh && isWelsh) {
+  configureI18N = (language: Language): void => {
+    if (language === Language.CYMRAEG) {
       this.translate.use('cy');
     } else {
       this.translate.use('en');
@@ -371,12 +358,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
     }
-
-    if (this.isBookedInWelsh && this.conductedLanguage !== CommunicationPage.englishLanguage) {
-      this.dispatchCandidateChoseToProceedInWelsh();
-    } else {
-      this.dispatchCandidateChoseToProceedInEnglish();
-    }
   }
 
   verifyNewEmailFormControl(communicationChoice: string) {
@@ -416,15 +397,5 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
 
   getNewEmailAddressValue() {
     return this.candidateProvidedEmail === this.communicationEmail ? '' : this.communicationEmail;
-  }
-
-  dispatchCandidateChoseToProceedInWelsh() {
-    this.store$.dispatch(new CandidateChoseToProceedWithTestInWelsh(CommunicationPage.welshLanguage));
-    this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
-  }
-
-  dispatchCandidateChoseToProceedInEnglish() {
-    this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(CommunicationPage.englishLanguage));
-    this.configureI18N(this.conductedLanguage === CommunicationPage.welshLanguage);
   }
 }
