@@ -1,29 +1,29 @@
 import { Action } from '@ngrx/store';
 
 export const REKEY_REASON_VIEW_DID_ENTER = '[RekeyReasonPage] Rekey Reason view did enter';
-export const REKEY_REASON_FIND_USER = '[RekeyReasonPage] Rekey Reason find user exists';
-export const REKEY_REASON_FIND_USER_SUCCESS = '[RekeyReasonPage] Rekey Reason find user is success';
-export const REKEY_REASON_FIND_USER_FAILURE = '[RekeyReasonPage] Rekey Reason find user is failure';
+export const VALIDATE_TRANSFER_REKEY = '[RekeyReasonPage] Validate transfer rekey';
+export const VALIDATE_TRANSFER_REKEY_FAILED = '[RekeyReasonPage] Validate transfer rekey failed';
+export const RESET_STAFF_NUMBER_VALIDATION_ERROR = '[RekeyReasonPage] Reset staff number validation error';
 
 export class RekeyReasonViewDidEnter implements Action {
   readonly type = REKEY_REASON_VIEW_DID_ENTER;
 }
 
-export class RekeyReasonFindUser implements Action {
-  readonly type = REKEY_REASON_FIND_USER;
-  constructor(public staffNumber: string) { }
+export class ValidateTransferRekey implements Action {
+  readonly type = VALIDATE_TRANSFER_REKEY;
 }
 
-export class RekeyReasonFindUserSuccess implements Action {
-  readonly type = REKEY_REASON_FIND_USER_SUCCESS;
+export class ValidateTransferRekeyFailed implements Action {
+  readonly type = VALIDATE_TRANSFER_REKEY_FAILED;
+  constructor(public staffNumberNotFound: boolean) { }
 }
 
-export class RekeyReasonFindUserFailure implements Action {
-  readonly type = REKEY_REASON_FIND_USER_FAILURE;
+export class ResetStaffNumberValidationError implements Action {
+  readonly type = RESET_STAFF_NUMBER_VALIDATION_ERROR;
 }
 
 export type Types =
   RekeyReasonViewDidEnter |
-  RekeyReasonFindUser |
-  RekeyReasonFindUserSuccess |
-  RekeyReasonFindUserFailure;
+  ValidateTransferRekey |
+  ValidateTransferRekeyFailed |
+  ResetStaffNumberValidationError;

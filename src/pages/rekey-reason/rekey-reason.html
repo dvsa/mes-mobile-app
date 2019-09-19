@@ -10,100 +10,30 @@
 </ion-header>
 
 <ion-content no-bounce>
-  <ion-card>
+  <ion-card no-padding>
     <ion-card-header>
       <h4>Reason for use</h4>
     </ion-card-header>
     <div [formGroup]="formGroup">
-      <ion-grid>
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <input id="ipadIssue" value="true" [checked]="(pageState.ipadIssue$ | async).selected" type="checkbox" type="checkbox"
-              class="gds-checkbox" formControlName="ipadIssue" (change)="ipadIssueSelected($event.target.checked)">
-            <label for="ipadIssue">iPad Issue</label>
-          </ion-col>
-          <ion-col col-56>
-            <div class="selected-border" id="ipadIssueSection" *ngIf="(pageState.ipadIssue$ | async).selected">
-              <input id="ipadIssueTechFault" type="radio" class="gds-radio-button" name="ipadIssueTechFault"
-                formControlName="ipadIssueTechFault" value="true" [checked]="(pageState.ipadIssue$ | async).technicalFault"
-                (change)="ipadIssueTechFaultChanged()">
-              <label for="ipadIssueTechFault" class="radio-label">Tech Fault</label>
-              <input id="ipadIssueLost" type="radio" class="gds-radio-button" name="ipadIssueLost" formControlName="ipadIssueLost"
-                [checked]="(pageState.ipadIssue$ | async).lost" value="true" (change)="ipadIssueLostChanged()">
-              <label for="ipadIssueLost" class="radio-label">Lost</label>
-              <input id="ipadIssueStolen" type="radio" class="gds-radio-button" name="ipadIssueStolen" formControlName="ipadIssueStolen"
-                [checked]="(pageState.ipadIssue$ | async).stolen" value="true" (change)="ipadIssueStolenChanged()">
-              <label for="ipadIssueStolen" class="radio-label">Stolen</label>
-              <input id="ipadIssueBroken" type="radio" class="gds-radio-button" name="ipadIssueBroken" formControlName="ipadIssueBroken"
-                [checked]="(pageState.ipadIssue$ | async).broken" value="true" (change)="ipadIssueBrokenChanged()">
-              <label for="ipadIssueBroken" class="radio-label">Broken</label>
-            </div>
-          </ion-col>
-        </ion-row>
+      <ion-grid no-padding>
+        
+        <ipad-issue [formGroup]="formGroup" [selected]="(pageState.ipadIssue$ | async).selected" 
+          [technicalFault]="(pageState.ipadIssue$ | async).technicalFault"
+          [lost]="(pageState.ipadIssue$ | async).lost"
+          [stolen]="(pageState.ipadIssue$ | async).stolen"
+          [broken]="(pageState.ipadIssue$ | async).broken"
+          (selectedChange)="ipadIssueSelected($event)"
+          (technicalFaultChange)="ipadIssueTechnicalFaultChanged($event)"
+          (lostChange)="ipadIssueLostChanged($event)"
+          (stolenChange)="ipadIssueStolenChanged($event)"
+          (brokenChange)="ipadIssueBrokenChanged($event)"></ipad-issue>
 
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <input id="transferSelected" [checked]="(pageState.transfer$ | async).selected" type="checkbox" class="gds-checkbox"
-              formControlName="transferSelected" (change)="transferSelected($event.target.checked)">
-            <label for="transferSelected">
-              Transfer
-            </label>
-          </ion-col>
-          <ion-col col-56>
-            <div class="selected-border" [class.ng-invalid]="(!(pageState.findUser$ | async).isValid) && this.formGroup.get('transferStaffNumber').dirty"
-              id="transferSection" *ngIf="(pageState.transfer$ | async).selected">
-              <ion-row>
-                <div class="transferInfo">
-                  Enter staff number of examiner who conducted the test
-                </div>
-              </ion-row>
-              <ion-row>
-                <ion-input placeholder="Staff Number" type="number" numbersOnly id="transferStaffNumber" class="staffNumber"
-                  formControlName="transferStaffNumber" [value]="(pageState.examinerConducted$ | async)" clearInput
-                  (change)="transferStaffNumberChanged()"></ion-input>
-                <button (click)="checkUserExists()" id="find-user" class="mes-return-button" ion-button>
-                  Submit
-                  <ion-spinner class="search-spinner" name="bubbles" *ngIf="(pageState.findUser$ | async).isLoading"></ion-spinner>
-                </button>
-                <tick-indicator *ngIf="(pageState.findUser$ | async).isValid" [ticked]="(pageState.findUser$ | async).isValid"></tick-indicator>
-              </ion-row>
-              <ion-row class="validation-message-row" align-items-center>
-                <div [class.ng-invalid]="true" *ngIf="(!(pageState.findUser$ | async).isValid) && this.formGroup.get('transferStaffNumber').dirty"
-                  class="validation-text">
-                  Transfer staff number is invalid
-                </div>
-              </ion-row>
-            </div>
-          </ion-col>
-        </ion-row>
+        <transfer [formGroup]="formGroup" [selected]="(pageState.transfer$ | async).selected"
+          [staffNumber]="examinerConducted" [isStaffNumberInvalid]="isStaffNumberInvalid" 
+          (selectedChange)="transferSelected($event)" (staffNumberChange)="staffNumberChanged($event)"></transfer>
 
-        <ion-row class="mes-data-row-with-separator">
-          <ion-col col-40>
-            <input id="otherSelected" [checked]="(pageState.other$ | async).selected" type="checkbox" class="gds-checkbox"
-              formControlName="otherSelected" (change)="otherSelected($event.target.checked)">
-            <label for="otherSelected">
-              Other (specify reason)
-            </label>
-          </ion-col>
-          <ion-col col-56>
-            <div class="selected-border" [class.ng-invalid]="!this.formGroup.get('otherReasonUpdated').valid && this.formGroup.get('otherReasonUpdated').dirty"
-              id="reasonSection" *ngIf="(pageState.other$ | async).selected">
-              <textarea id="otherReasonUpdated" formControlName="otherReasonUpdated" charLimit="200" charCount
-                (onCharacterCountChanged)="characterCountChanged($event)" [value]="(pageState.other$ | async).reason"
-                [class.ng-invalid]="invalid" (change)="otherReasonUpdatedChanged()">
-                </textarea>
-              <div class="character-count validation-text" [ngClass]="{'ng-invalid': charactersExceeded()}">
-                {{getCharacterCountText()}}
-              </div>
-              <ion-row class="validation-message-row" align-items-center>
-                <div [class.ng-invalid]="true" *ngIf="!this.formGroup.get('otherReasonUpdated').valid && this.formGroup.get('otherReasonUpdated').dirty"
-                  class="validation-text">
-                  Please fill in a reason for rekey
-                </div>
-              </ion-row>
-            </div>
-          </ion-col>
-        </ion-row>
+        <other-reason [formGroup]="formGroup" [selected]="(pageState.other$ | async).selected" [reason]="(pageState.other$ | async).reason"
+          (selectedChange)="otherSelected($event)" (reasonChange)="otherReasonChanged($event)"></other-reason>
 
       </ion-grid>
     </div>

@@ -10,10 +10,7 @@ export const initialState: RekeyReasonModel = {
     hasUploadSucceeded: false,
     hasUploadFailed: false,
     isDuplicate: false,
-  },
-  findUser: {
-    isLoading: false,
-    isValid: false,
+    hasStaffNumberFailedValidation: false,
   },
 };
 
@@ -49,28 +46,36 @@ export function rekeyReasonReducer(state = initialState, action:
           isDuplicate: action.isDuplicateUpload,
         },
       };
-    case rekeyReasonActions.REKEY_REASON_FIND_USER:
+    case rekeyReasonActions.REKEY_REASON_VIEW_DID_ENTER:
       return {
         ...state,
-        findUser: {
-          ...state.findUser,
-          isLoading: true,
+        uploadStatus: {
+          ...initialState.uploadStatus,
         },
       };
-    case rekeyReasonActions.REKEY_REASON_FIND_USER_SUCCESS:
+    case rekeyReasonActions.VALIDATE_TRANSFER_REKEY:
       return {
         ...state,
-        findUser: {
-          isLoading: false,
-          isValid: true,
+        uploadStatus: {
+          ...initialState.uploadStatus,
+          isUploading: true,
         },
       };
-    case rekeyReasonActions.REKEY_REASON_FIND_USER_FAILURE:
+    case rekeyReasonActions.VALIDATE_TRANSFER_REKEY_FAILED:
       return {
         ...state,
-        findUser: {
-          isLoading: false,
-          isValid: false,
+        uploadStatus: {
+          ...initialState.uploadStatus,
+          hasUploadFailed: !action.staffNumberNotFound,
+          hasStaffNumberFailedValidation: action.staffNumberNotFound,
+        },
+      };
+    case rekeyReasonActions.RESET_STAFF_NUMBER_VALIDATION_ERROR:
+      return {
+        ...state,
+        uploadStatus: {
+          ...state.uploadStatus,
+          hasStaffNumberFailedValidation: false,
         },
       };
     default:
