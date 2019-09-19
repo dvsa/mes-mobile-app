@@ -52,4 +52,18 @@ describe('App Info Reducer', () => {
       });
     });
   });
+
+  describe('[LoginComponent] Load employee name success', () => {
+    it('should save employeeNmae to state', () => {
+      const employeeName = 'Fake Name';
+      const action = new appInfoActions.LoadEmployeeNameSuccess(employeeName);
+      const result = appInfoReducer(initialState, action);
+
+      expect(result).toEqual({
+        versionNumber: 'VERSION_NOT_LOADED',
+        employeeId: null,
+        employeeName: 'Fake Name',
+      });
+    });
+  });
 });
