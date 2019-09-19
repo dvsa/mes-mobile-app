@@ -11,7 +11,7 @@ import { OFFICE_PAGE, WAITING_ROOM_PAGE } from '../../../../pages/page-names.con
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
-import { JournalModel } from '../../../../pages/journal/journal.model';
+import { JournalModel } from '../../../../modules/journal/journal.model';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;

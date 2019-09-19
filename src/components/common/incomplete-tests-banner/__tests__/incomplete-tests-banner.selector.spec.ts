@@ -3,7 +3,7 @@ import { TestsModel } from '../../../../modules/tests/tests.model';
 import { getIncompleteTestsCount } from '../incomplete-tests-banner.selector';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { JournalModel } from '../../../../pages/journal/journal.model';
+import { JournalModel } from '../../../../modules/journal/journal.model';
 import { SlotProvider } from '../../../../providers/slot/slot';
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';

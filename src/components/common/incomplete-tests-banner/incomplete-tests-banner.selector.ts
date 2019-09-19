@@ -1,6 +1,6 @@
 import { StoreModel } from '../../../shared/models/store.model';
 import * as testsSelectors from '../../../modules/tests/tests.selector';
-import { getPermittedSlotIdsBeforeToday } from '../../../pages/journal/journal.selector';
+import { getPermittedSlotIdsBeforeToday } from '../../../modules/journal/journal.selector';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { SlotProvider } from '../../../providers/slot/slot';
 

@@ -6,7 +6,7 @@ import * as testActions  from '../../../modules/tests/tests.actions';
 import * as rekeyReasonActions from '../rekey-reason.actions';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { journalReducer } from '../../journal/journal.reducer';
+import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { rekeySearchReducer } from '../../rekey-search/rekey-search.reducer';
 import { FindUserProvider } from '../../../providers/find-user/find-user';

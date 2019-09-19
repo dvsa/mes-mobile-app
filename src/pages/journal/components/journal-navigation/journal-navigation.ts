@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { getJournalState } from '../../journal.reducer';
+import { getJournalState } from '../../../../modules/journal/journal.reducer';
 import { map } from 'rxjs/operators';
-import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay } from '../../journal.selector';
+import { getSelectedDate, canNavigateToPreviousDay, canNavigateToNextDay }
+  from '../../../../modules/journal/journal.selector';
 import { Observable } from 'rxjs/Observable';
 
-import { SelectPreviousDay, SelectNextDay } from '../../journal.actions';
+import { SelectPreviousDay, SelectNextDay } from '../../../../modules/journal/journal.actions';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 
 interface JournalNavigationPageState {

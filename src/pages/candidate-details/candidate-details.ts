@@ -9,7 +9,7 @@ import { Details } from './candidate-details.model';
 import {
   ClearChangedSlot,
   CandidateDetailsSeen,
-} from '../journal/journal.actions';
+} from '../../modules/journal/journal.actions';
 import {
   getCandidateName,
   getTime,

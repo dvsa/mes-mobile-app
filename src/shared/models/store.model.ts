@@ -1,4 +1,4 @@
-import { JournalModel } from '../../pages/journal/journal.model';
+import { JournalModel } from '../../modules/journal/journal.model';
 import { AppInfoModel } from '../../modules/app-info/app-info.model';
 import { LogsModel } from '../../modules/logs/logs.model';
 import { TestsModel } from '../../modules/tests/tests.model';

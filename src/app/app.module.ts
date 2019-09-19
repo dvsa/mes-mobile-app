@@ -42,6 +42,7 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 import { LogHelper } from '../providers/logs/logsHelper';
 import { environment } from '../environment/environment';
 import { AnalyticsProvider } from '../providers/analytics/analytics';
+import { JournalModule } from '../modules/journal/journal.module';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -60,6 +61,7 @@ const enableDevTools = environment && environment.enableDevTools;
     AppInfoModule,
     LogsModule,
     TestsModule,
+    JournalModule,
     HttpClientModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,

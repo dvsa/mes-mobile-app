@@ -10,13 +10,13 @@ import { map } from 'rxjs/operators';
 
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import * as journalActions from './journal.actions';
+import * as journalActions from './../../modules/journal/journal.actions';
 import { StoreModel } from '../../shared/models/store.model';
 import {
   getError, getIsLoading, getSelectedDate, getLastRefreshed,
   getLastRefreshedTime, getSlotsOnSelectedDate,
-} from './journal.selector';
-import { getJournalState } from './journal.reducer';
+} from './../../modules/journal/journal.selector';
+import { getJournalState } from './../../modules/journal/journal.reducer';
 import { MesError } from '../../shared/models/mes-error.model';
 import { SlotSelectorProvider } from '../../providers/slot-selector/slot-selector';
 import { SlotComponent } from '../../components/test-slot/slot/slot';

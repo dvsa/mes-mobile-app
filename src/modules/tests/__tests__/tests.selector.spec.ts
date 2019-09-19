@@ -11,7 +11,7 @@ import {
   getIncompleteTestsCount,
   getOldestIncompleteTest,
 } from '../tests.selector';
-import { JournalModel } from '../../../pages/journal/journal.model';
+import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
 import { LogsModel } from '../../logs/logs.model';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';

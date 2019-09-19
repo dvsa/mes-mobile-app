@@ -12,9 +12,9 @@ import {
 } from '../../../providers/analytics/analytics.model';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { JournalAnalyticsEffects } from '../journal.analytics.effects';
-import * as journalActions from '../journal.actions';
+import * as journalActions from '../../../modules/journal/journal.actions';
 import { Store, StoreModule } from '@ngrx/store';
-import { journalReducer } from '../journal.reducer';
+import { journalReducer } from '../../../modules/journal/journal.reducer';
 import * as slotActions from '../../../providers/slot/slot.actions';
 
 describe('Journal Analytics Effects', () => {

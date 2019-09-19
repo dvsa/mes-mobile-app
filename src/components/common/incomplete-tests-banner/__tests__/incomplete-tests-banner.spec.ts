@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { testsReducer } from '../../../../modules/tests/tests.reducer';
-import { journalReducer } from '../../../../pages/journal/journal.reducer';
+import { journalReducer } from '../../../../modules/journal/journal.reducer';
 import { SlotProvider } from '../../../../providers/slot/slot';
 import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../../providers/app-config/__mocks__/app-config.mock';

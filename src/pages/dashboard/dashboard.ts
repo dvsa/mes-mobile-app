@@ -18,7 +18,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ExaminerRoleDescription } from '../../providers/app-config/constants/examiner-role.constants';
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { IncompleteTestsBanner } from '../../components/common/incomplete-tests-banner/incomplete-tests-banner';
-import * as journalActions from './../journal/journal.actions';
+import * as journalActions from './../../modules/journal/journal.actions';
 import { DateTime } from '../../shared/helpers/date-time';
 
 interface DashboardPageState {

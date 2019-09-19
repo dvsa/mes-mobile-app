@@ -5,7 +5,7 @@ import { SlotItem } from '../slot-item';
 import { ActivitySlotComponent } from '../../../pages/journal/components/activity-slot/activity-slot';
 import { EmptySlotComponent } from '../../../pages/journal/components/empty-slot/empty-slot';
 import { TestSlot, NonTestActivity } from '@dvsa/mes-journal-schema';
-import { Slot } from '../../../pages/journal/journal.model';
+import { Slot } from '../../../modules/journal/journal.model';
 
 describe('Slot Selector', () => {
   let slotSelector: SlotSelectorProvider;
