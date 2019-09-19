@@ -100,7 +100,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showRekeyButton(): boolean {
-    return this.isTestIncomplete() && this.isDateInPast() || this.isTestSlotOnRekeySearch;
+    return this.isTestIncomplete() && (this.isDateInPast() || this.isTestSlotOnRekeySearch);
   }
 
   showStartTestButton(): boolean {
