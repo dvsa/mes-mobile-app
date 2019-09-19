@@ -21,6 +21,7 @@ describe('App Info Reducer', () => {
       expect(result).toEqual({
         versionNumber,
         employeeId: null,
+        employeeName: 'Unknown Name',
       });
     });
   });
@@ -47,6 +48,7 @@ describe('App Info Reducer', () => {
       expect(result).toEqual({
         versionNumber: 'VERSION_NOT_LOADED',
         employeeId: '6543632',
+        employeeName: 'Unknown Name',
       });
     });
   });
