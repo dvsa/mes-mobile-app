@@ -29,7 +29,7 @@ describe('FindUserProvider', () => {
 
   describe('userExists', () => {
     it('should call the find user URL with the staff number', () => {
-      const staffNumber = '1234567';
+      const staffNumber = 1234567;
 
       findUserProvider.userExists(staffNumber).subscribe();
       httpMock.expectOne(`https://www.example.com/api/v1/users/search/1234567`);

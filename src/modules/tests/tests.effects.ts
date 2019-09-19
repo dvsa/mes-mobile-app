@@ -161,9 +161,9 @@ export class TestsEffects {
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
         new PopulateTestCategory(slot.booking.application.testCategory),
-        new SetExaminerBooked(parseInt(examinerBooked, 10)),
-        new SetExaminerConducted(parseInt(examinerConducted, 10)),
-        new SetExaminerKeyed(parseInt(examinerKeyed, 10)),
+        new SetExaminerBooked(parseInt(examinerBooked, 10) ? parseInt(examinerBooked, 10) : null),
+        new SetExaminerConducted(parseInt(examinerConducted, 10) ? parseInt(examinerConducted, 10) : null),
+        new SetExaminerKeyed(parseInt(examinerKeyed, 10) ? parseInt(examinerKeyed, 10) : null),
         new PopulateConductedLanguage(conductedLanguage),
       ];
 
