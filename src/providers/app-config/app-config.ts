@@ -17,6 +17,7 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 import { LogHelper } from '../logs/logsHelper';
 import { AppInfoProvider } from '../app-info/app-info';
+import { SchemaValidatorProvider } from '../schema-validator/schema-validator';
 
 declare let cordova: any;
 
@@ -65,6 +66,7 @@ export class AppConfigProvider {
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
     private appInfoProvider: AppInfoProvider,
+    private schemaValidatorProvider: SchemaValidatorProvider,
   ) { }
 
   public initialiseAppConfig = async (): Promise<void> => {
@@ -88,6 +90,11 @@ export class AppConfigProvider {
 
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
+      .then((data: any) => {
+        const result = this.schemaValidatorProvider.validateRemoteConfig(data);
+        console.log('result after schema validation', JSON.stringify(result));
+        return data;
+      })
       .then(data => this.mapRemoteConfig(data))
       .catch((error: HttpErrorResponse) => {
         this.store$.dispatch(new SaveLog(
