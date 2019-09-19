@@ -13,6 +13,7 @@ import { getAppInfoState } from './app-info.reducer';
 import { getDateConfigLoaded } from './app-info.selector';
 import { LOGIN_PAGE } from '../../pages/page-names.constants';
 import { NavigationProvider } from '../../providers/navigation/navigation';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 @Injectable()
 export class AppInfoEffects {
@@ -22,6 +23,7 @@ export class AppInfoEffects {
     private dateTimeProvider: DateTimeProvider,
     private store$: Store<StoreModel>,
     private navigationProvider: NavigationProvider,
+    private authenticationProvider: AuthenticationProvider,
   ) {}
 
   @Effect()
@@ -62,6 +64,15 @@ export class AppInfoEffects {
       console.log('App resumed after being suspended. Config was not loaded today... app will refresh');
       this.navigationProvider.getNav().setRoot(LOGIN_PAGE);
       return of(new appInfoActions.RestartApp());
+    }),
+  );
+
+  @Effect()
+  loadEmployeeName$ = this.actions$.pipe(
+    ofType(appInfoActions.LOAD_EMPLOYEE_NAME),
+    switchMap(async () => {
+      const result = await this.authenticationProvider.loadEmployeeName();
+      return new appInfoActions.LoadEmployeeNameSuccess(result);
     }),
   );
 }

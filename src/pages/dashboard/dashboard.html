@@ -14,7 +14,7 @@
 </ion-header>
 <ion-content no-bounce>
   <incomplete-tests-banner [todaysDate]="todaysDate"></incomplete-tests-banner>
-  <profile-header [employeeId]="employeeId" [name]="name" [role]="role"></profile-header>
+  <profile-header [employeeId]="employeeId" [name]="pageState.employeeName$ | async" [role]="role"></profile-header>
   <hr/>
   <h4 class="date">{{todaysDateFormatted}}</h4>
   <ion-grid no-padding>

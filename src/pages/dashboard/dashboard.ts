@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { map } from 'rxjs/operators';
 import { getAppInfoState } from '../../modules/app-info/app-info.reducer';
-import { getVersionNumber } from '../../modules/app-info/app-info.selector';
+import { getVersionNumber, getEmployeeName } from '../../modules/app-info/app-info.selector';
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { DeviceProvider } from '../../providers/device/device';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -23,6 +23,7 @@ import { DateTime } from '../../shared/helpers/date-time';
 
 interface DashboardPageState {
   appVersion$: Observable<string>;
+  employeeName$: Observable<string>;
 }
 
 @IonicPage()
@@ -61,10 +62,10 @@ export class DashboardPage extends BasePageComponent {
   ) {
     super(platform, navController, authenticationProvider);
     this.employeeId = this.authenticationProvider.getEmployeeId() || 'NOT_KNOWN';
-    this.name = this.authenticationProvider.getEmployeeName() || 'Unknown Name';
     this.role = ExaminerRoleDescription[this.appConfigProvider.getAppConfig().role] || 'Unknown Role';
     this.todaysDate = this.dateTimeProvider.now();
     this.todaysDateFormatted = this.dateTimeProvider.now().format('dddd Do MMMM YYYY');
+
   }
 
   ionViewDidEnter(): void {
@@ -95,6 +96,10 @@ export class DashboardPage extends BasePageComponent {
       appVersion$: this.store$.pipe(
         select(getAppInfoState),
         map(getVersionNumber),
+      ),
+      employeeName$: this.store$.pipe(
+        select(getAppInfoState),
+        map(getEmployeeName),
       ),
     };
   }
