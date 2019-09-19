@@ -45,6 +45,7 @@ import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -70,6 +71,7 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
   pageState: NonPassFinalisationPageState;
   form: FormGroup;
   activityCodeOptions: ActivityCodeModel[];
+  slotId: string;
 
   constructor(
     store$: Store<StoreModel>,
@@ -85,6 +87,11 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
   }
 
   ngOnInit() {
+    this.store$.pipe(
+      select(getTests),
+      map(tests => tests.currentTest.slotId),
+    ).subscribe(slotId => this.slotId = slotId);
+
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -152,6 +159,7 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
   continue() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
+      this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
       this.navController.push(BACK_TO_OFFICE_PAGE);
     }
