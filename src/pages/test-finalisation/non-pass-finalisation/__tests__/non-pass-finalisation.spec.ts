@@ -67,7 +67,7 @@ describe('NonPassFinalisationPage', () => {
       component.continue();
 
       // Assert
-      expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'))
+      expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
     });
   });
 });
