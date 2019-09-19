@@ -28,7 +28,9 @@ export function rekeySearchReducer(state = initialState, action: rekeySearchActi
     case rekeySearchActions.SEARCH_BOOKED_TEST:
       return {
         ...state,
+        bookedTestSlot: {},
         isLoading: true,
+        hasSearched: false,
       };
     case rekeySearchActions.SEARCH_BOOKED_TEST_SUCCESS:
       return {

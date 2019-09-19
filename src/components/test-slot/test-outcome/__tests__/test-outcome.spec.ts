@@ -100,6 +100,60 @@ describe('Test Outcome', () => {
         expect(calls.argsFor(0)[0]).toBe(WAITING_ROOM_PAGE);
       });
     });
+
+    describe('showRekeyButton', () => {
+      it('should return true for a booked test if date is in past', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Booked;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(true);
+      });
+      it('should return true for a resumed test if date is in past', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Started;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(true);
+      });
+      it('should return true for a booked test on the rekey search page', () => {
+        component.slotDetail = testSlotDetail;
+        component.testStatus = TestStatus.Booked;
+        component.isTestSlotOnRekeySearch = true;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(true);
+      });
+      it('should return false for a booked test if date is today', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Booked;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(false);
+      });
+      it('should return false for a resumed test if date is today', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Started;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(false);
+      });
+    });
   });
 
   describe('DOM', () => {
@@ -178,61 +232,26 @@ describe('Test Outcome', () => {
       });
     });
 
-    describe('show rekey button', () => {
-      it('should show rekey button for a booked test if date is in past', () => {
-        component.slotDetail = testSlotDetail;
-
-        const dateTime = new DateTime();
-        dateTime.subtract(1, Duration.DAY);
-
-        component.slotDetail.start = dateTime.toString();
-        component.testStatus = TestStatus.Booked;
+    describe('rekey button', () => {
+      it('should show rekey button', () => {
+        spyOn(component, 'showRekeyButton').and.returnValue(true);
         fixture.detectChanges();
 
         const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
 
         expect(rekeyButton).not.toBeNull();
       });
-      it('should show rekey button for a resumed test if date is in past', () => {
-        component.slotDetail = testSlotDetail;
-
-        const dateTime = new DateTime();
-        dateTime.subtract(1, Duration.DAY);
-
-        component.slotDetail.start = dateTime.toString();
-        component.testStatus = TestStatus.Started;
-        fixture.detectChanges();
-
-        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
-
-        expect(rekeyButton).not.toBeNull();
-      });
-      it('should hide rekey button for a booked test if date is today', () => {
-        component.slotDetail = testSlotDetail;
-
-        const dateTime = new DateTime();
-
-        component.slotDetail.start = dateTime.toString();
-        component.testStatus = TestStatus.Booked;
+      it('should hide rekey button', () => {
+        spyOn(component, 'showRekeyButton').and.returnValue(false);
         fixture.detectChanges();
 
         const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
 
         expect(rekeyButton).toBeNull();
       });
-      it('should hide rekey button for a resumed test if date is today', () => {
-        component.slotDetail = testSlotDetail;
+    });
 
-        const dateTime = new DateTime();
-
-        component.slotDetail.start = dateTime.toString();
-        component.testStatus = TestStatus.Started;
-        fixture.detectChanges();
-
-        const rekeyButton = fixture.debugElement.query(By.css('.mes-rekey-button'));
-
-        expect(rekeyButton).toBeNull();
-      });
+    describe('rekey modal', () => {
       it('should display the rekey modal for a test today that has ended', () => {
         component.slotDetail = testSlotDetail;
 
