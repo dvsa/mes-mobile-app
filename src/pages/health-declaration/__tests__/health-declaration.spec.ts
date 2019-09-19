@@ -26,6 +26,7 @@ import { By } from '@angular/platform-browser';
 import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 const mockCandidate = {
   driverNumber: '123',
@@ -218,8 +219,7 @@ describe('HealthDeclarationPage', () => {
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
         fixture.detectChanges();
-        component.isBookedInWelsh = true;
-        component.configureI18N(true);
+        component.configureI18N(Language.CYMRAEG);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const declarationIntent = fixture.debugElement.query(By.css('h4')).nativeElement;

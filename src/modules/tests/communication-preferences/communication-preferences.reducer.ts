@@ -34,6 +34,13 @@ export const communicationPreferencesReducer = (
         ...state,
         conductedLanguage: action.conductedLanguage,
       };
+    case communicationPrefActions.POPULATE_CONDUCTED_LANGUAGE:
+      return {
+        ...state,
+        conductedLanguage: state.conductedLanguage === initialState.conductedLanguage
+          ? action.conductedLanguage
+          : state.conductedLanguage,
+      };
     default:
       return state;
   }
