@@ -302,4 +302,17 @@ describe('Tests Effects', () => {
     });
   });
 
+  describe('sendPartialTest', () => {
+    it('should call the ', (done) => {
+      // Act
+      actions$.next(new testStatusActions.SetTestStatusWriteUp('123'));
+
+      // Assert
+      effects.sendPartialTest$.subscribe((result) => {
+        expect(result instanceof testsActions.SendCompletedTests).toBeTruthy();
+        done();
+      });
+    });
+  });
+
 });
