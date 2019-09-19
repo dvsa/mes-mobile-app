@@ -29,6 +29,7 @@ export const localEnvironmentMock: LocalEnvironmentFile = {
   logsPostApiKey: '',
   logsApiUrl: 'https://www.example.com/api/v1/logs',
   logsAutoSendInterval: 6000,
+  employeeNameKey: 'local-employee-name-key',
   authentication: {
     context: 'local-authentication-context',
     resourceUrl: 'local-authentication-resource-url',

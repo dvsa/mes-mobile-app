@@ -185,6 +185,9 @@ export class AppConfigProvider {
       approvedDeviceIdentifiers: data.approvedDeviceIdentifiers,
       timeTravelDate: data.timeTravelDate,
       role: data.role,
+      authentication: {
+        employeeNameKey: data.employeeNameKey,
+      },
       journal: {
         journalUrl: data.journal.journalUrl,
         searchBookingUrl: data.journal.searchBookingUrl,

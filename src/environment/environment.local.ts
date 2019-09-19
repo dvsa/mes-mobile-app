@@ -10,6 +10,7 @@ export const environment: LocalEnvironmentFile = {
   logsPostApiKey: '',
   logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',
   logsAutoSendInterval: 6000,
+  employeeNameKey: 'name',
   authentication: {
     context: 'https://login.windows.net/common',
     resourceUrl: '09fdd68c-4f2f-45c2-be55-dd98104d4f74',
