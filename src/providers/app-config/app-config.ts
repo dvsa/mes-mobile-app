@@ -92,11 +92,12 @@ export class AppConfigProvider {
     this.getRemoteData()
       .then((data: any) => {
         const result = this.schemaValidatorProvider.validateRemoteConfig(data);
-        console.log('result after schema validation', JSON.stringify(result));
+        console.log('### result after schema validation', JSON.stringify(result));
         return data;
       })
       .then(data => this.mapRemoteConfig(data))
       .catch((error: HttpErrorResponse) => {
+        console.log('### ammars custom error ', JSON.stringify(error));
         this.store$.dispatch(new SaveLog(
           this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error.message)),
         );

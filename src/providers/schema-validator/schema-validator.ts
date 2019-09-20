@@ -9,8 +9,18 @@ import * as enjoi from 'enjoi-browser';
 export class SchemaValidatorProvider {
 
   validateRemoteConfig = (data: any): ValidationResult<any> => {
-    const joiSchema: Schema = enjoi.schema(remoteConfigSchema);
-    return joi.validate(data, joiSchema);
+    console.log('### validateRemoteConfig running');
+    try {
+      const joiSchema: Schema = enjoi.schema(remoteConfigSchema);
+      console.log(typeof remoteConfigSchema);
+      console.log('### validateRemoteConfig data');
+      console.log(data);
+      console.log('### ValidationResult');
+      return joi.validate(data, joiSchema);
+    } catch (err) {
+      console.log('### error in validating config');
+      console.log(JSON.stringify(err));
+    }
   }
 
 }
