@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { merge } from 'lodash';
+import { merge, get } from 'lodash';
 
 import { AppConfig } from './app-config.model';
 import { environment } from '../../environment/environment';
@@ -76,7 +76,7 @@ export class AppConfigProvider {
       }
       return Promise.resolve();
     } catch (err) {
-      return Promise.reject(AppConfigError.MDM_ERROR);
+      return Promise.reject(err);
     }
   }
 
@@ -97,7 +97,7 @@ export class AppConfigProvider {
 
   public loadManagedConfig = (): void => {
 
-    if (cordova && cordova.plugins.AppConfig) {
+    if (get(cordova, 'plugins.AppConfig', false)) {
       const appConfigPlugin = cordova.plugins.AppConfig;
 
       const newEnvFile = {
@@ -119,9 +119,11 @@ export class AppConfigProvider {
       } as EnvironmentFile;
 
       // Check to see if we have any config
-      if (newEnvFile.configUrl) {
-        this.environmentFile = newEnvFile;
+      if (!newEnvFile.configUrl) {
+        throw AppConfigError.MISSING_REMOTE_CONFIG_URL_ERROR;
       }
+
+      this.environmentFile = newEnvFile;
     }
   }
 
