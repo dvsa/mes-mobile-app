@@ -15,6 +15,7 @@ export type AppConfig = {
     redirectUrl: string,
     logoutUrl: string,
     employeeIdKey: string,
+    employeeNameKey: string,
   },
   approvedDeviceIdentifiers: string[],
   timeTravelDate?: string,

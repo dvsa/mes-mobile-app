@@ -6,6 +6,7 @@ import * as appInfoActions from './app-info.actions';
 export const initialState: AppInfoModel = {
   versionNumber: 'VERSION_NOT_LOADED',
   employeeId: null,
+  employeeName: 'Unknown Name',
 };
 
 export function appInfoReducer(state = initialState, action: appInfoActions.Types) {
@@ -29,6 +30,11 @@ export function appInfoReducer(state = initialState, action: appInfoActions.Type
       return {
         ...state,
         dateConfigLoaded: action.refreshDate,
+      };
+    case appInfoActions.LOAD_EMPLOYEE_NAME_SUCCESS:
+      return  {
+        ...state,
+        employeeName: action.employeeName,
       };
     default:
       return state;

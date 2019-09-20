@@ -20,7 +20,7 @@ import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import { AppConfigProvider } from '../../providers/app-config/app-config';
 import { StoreModel } from '../../shared/models/store.model';
 import { StartSendingLogs, LoadLog, SaveLog, SendLogs } from '../../modules/logs/logs.actions';
-import { LoadEmployeeId, LoadConfigSuccess } from '../../modules/app-info/app-info.actions';
+import { LoadEmployeeId, LoadConfigSuccess, LoadEmployeeName } from '../../modules/app-info/app-info.actions';
 import { NetworkStateProvider } from '../../providers/network-state/network-state';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { DataStoreProvider } from '../../providers/data-store/data-store';
@@ -107,6 +107,7 @@ export class LoginPage extends BasePageComponent {
       this.store$.dispatch(new LoadConfigSuccess());
 
       this.store$.dispatch(new LoadPersistedTests());
+      this.store$.dispatch(new LoadEmployeeName());
 
       this.analytics.initialiseAnalytics();
 

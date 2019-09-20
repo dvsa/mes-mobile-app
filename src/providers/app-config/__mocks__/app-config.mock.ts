@@ -28,6 +28,7 @@ export class AppConfigProviderMock {
         resourceUrl: localEnvironmentMock.authentication.resourceUrl,
         logoutUrl: localEnvironmentMock.authentication.logoutUrl,
         employeeIdKey: localEnvironmentMock.authentication.employeeIdKey,
+        employeeNameKey: localEnvironmentMock.employeeNameKey,
       },
       approvedDeviceIdentifiers: localEnvironmentMock.approvedDeviceIdentifiers,
       timeTravelDate: localEnvironmentMock.timeTravelDate,

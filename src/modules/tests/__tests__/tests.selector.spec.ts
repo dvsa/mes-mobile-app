@@ -67,7 +67,7 @@ describe('testsSelector', () => {
         selectedDate: 'dummy',
         examiner: { staffNumber: '123', individualId: 456 },
       };
-      const appInfo: AppInfoModel = { versionNumber: '0.0.0', employeeId: '1234567' };
+      const appInfo: AppInfoModel = { versionNumber: '0.0.0', employeeId: '1234567', employeeName: 'Fake Name' };
       const logs: LogsModel = [];
       const state = {
         journal,
