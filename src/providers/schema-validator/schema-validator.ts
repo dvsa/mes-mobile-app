@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import * as remoteConfigSchema from '@dvsa/mes-config-schema/remote-config.json';
 import * as joi from 'joi-browser';
 import { ValidationResult, Schema } from '@hapi/joi';
-import * as enjoi from 'enjoi-browser';
+// The enjoi-browser package doesn't suport ES6 imports
+const enjoi = require('../../../node_modules/enjoi-browser/lib/enjoi.js');
 
 @Injectable()
 export class SchemaValidatorProvider {
@@ -11,7 +12,7 @@ export class SchemaValidatorProvider {
   validateRemoteConfig = (data: any): ValidationResult<any> => {
     console.log('### validateRemoteConfig running');
     try {
-      const joiSchema: Schema = enjoi.schema(remoteConfigSchema);
+      const joiSchema: Schema = enjoi(remoteConfigSchema);
       console.log(typeof remoteConfigSchema);
       console.log('### validateRemoteConfig data');
       console.log(data);
