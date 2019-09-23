@@ -123,10 +123,11 @@ export class AppConfigProvider {
       // Check to see if we have any config
       if (newEnvFile.configUrl) {
         this.environmentFile = newEnvFile;
-      } else {
-        if (!this.isDebugMode) {
-          throw AppConfigError.MISSING_REMOTE_CONFIG_URL_ERROR;
-        }
+        return;
+      }
+
+      if (!this.isDebugMode) {
+        throw AppConfigError.MISSING_REMOTE_CONFIG_URL_ERROR;
       }
     }
   }
