@@ -15,6 +15,8 @@ import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
 import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../logs/__mocks__/logsHelper.mock';
+import { AppInfoProvider } from '../../app-info/app-info';
+import { AppInfoProviderMock } from '../../app-info/__mocks__/app-info.mock';
 
 describe('App Config Provider', () => {
 
@@ -37,6 +39,7 @@ describe('App Config Provider', () => {
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: AppInfoProvider, useClass: AppInfoProviderMock },
         Store,
         { provide: LogHelper, useClass: LogHelperMock },
         Device,

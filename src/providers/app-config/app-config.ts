@@ -16,6 +16,7 @@ import { LogType } from '../../shared/models/log.model';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 import { LogHelper } from '../logs/logsHelper';
+import { AppInfoProvider } from '../app-info/app-info';
 
 declare let cordova: any;
 
@@ -63,6 +64,7 @@ export class AppConfigProvider {
     public platform: Platform,
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
+    private appInfoProvider: AppInfoProvider,
   ) { }
 
   public initialiseAppConfig = async (): Promise<void> => {
@@ -93,6 +95,9 @@ export class AppConfigProvider {
         );
         if (error && error.status === 403) {
           return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
+        }
+        if (error && error.error === AppConfigError.INVALID_APP_VERSION) {
+          return Promise.reject(AppConfigError.INVALID_APP_VERSION);
         }
         return Promise.reject(AppConfigError.UNKNOWN_ERROR);
       })
@@ -135,32 +140,42 @@ export class AppConfigProvider {
   private getRemoteData = (): Promise<any> =>
     new Promise((resolve, reject) => {
       if (this.networkState.getNetworkState() === ConnectionStatus.ONLINE) {
-        this.httpClient.get<any>(this.environmentFile.configUrl)
-          .pipe(timeout(30000))
-          .subscribe(
-            (data) => {
-              this.dataStore.setItem('CONFIG', JSON.stringify(data));
-              resolve(data);
-            },
-            (error) => {
-              this.store$.dispatch(new SaveLog(this.logHelper
-                .createLog(LogType.ERROR, 'Getting remote config failed, using cached data', error)));
-              reject(error);
-              if (error !== AuthenticationError.USER_NOT_AUTHORISED) {
-                this.getCachedRemoteConfig()
-                  .then(data => resolve(data))
-                  .catch(error => reject(error));
-              } else {
-                reject(error);
-              }
-            },
+        this.appInfoProvider.getMajorAndMinorVersionNumber()
+        .then((version:string) => {
+          const url = `${this.environmentFile.configUrl}?app_version=${version}`;
+          this.httpClient.get<any>(url)
+            .pipe(timeout(30000))
+            .subscribe(
+              (data) => {
+                this.dataStore.setItem('CONFIG', JSON.stringify(data));
+                resolve(data);
+              },
+              (error: HttpErrorResponse) => {
+                if (this.shouldGetCachedConfig(error.error)) {
+                  this.logError('Getting remote config failed, using cached data', error.error);
+                  this.getCachedRemoteConfig()
+                    .then(data => resolve(data))
+                    .catch(error => reject(error));
+                } else {
+                  this.logError('Getting remote config failed, not using cached data', error.error);
+                  reject(error);
+                }
+              },
           );
+        });
       } else {
         this.getCachedRemoteConfig()
           .then(data => resolve(data))
           .catch(error => reject(error));
       }
     })
+
+  private shouldGetCachedConfig = (errorMessage: string): boolean =>
+    errorMessage  !== AuthenticationError.USER_NOT_AUTHORISED &&
+    errorMessage !== AppConfigError.INVALID_APP_VERSION
+
+  private logError = (description: string, error: string): void =>
+    this.store$.dispatch(new SaveLog(this.logHelper.createLog(LogType.ERROR, description, error)))
 
   private getCachedRemoteConfig = (): Promise<any> => {
     return this.dataStore.getItem('CONFIG')
