@@ -29,6 +29,7 @@ describe('testsSelector', () => {
   describe('getCurrentTest', () => {
     it('should return whichever test is the current one', () => {
       const currentTest: StandardCarTestCATBSchema = {
+        version: '0.0.1',
         category: 'B',
         journalData: {
           testSlotAttributes: {
@@ -111,6 +112,7 @@ describe('testsSelector', () => {
   describe('getTestOutcomeText', () => {
     const testState: StandardCarTestCATBSchema = {
       activityCode: ActivityCodes.PASS,
+      version: '0.0.1',
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
@@ -156,6 +158,7 @@ describe('testsSelector', () => {
   describe('getTestOutcomeClass', () => {
     const testState: StandardCarTestCATBSchema = {
       activityCode: ActivityCodes.PASS,
+      version: '0.0.1',
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
@@ -201,6 +204,7 @@ describe('testsSelector', () => {
     const testState: StandardCarTestCATBSchema = {
       // DVSA_RADIO_FAILURE = '25'
       activityCode: ActivityCodes.DVSA_RADIO_FAILURE,
+      version: '0.0.1',
       category: 'x',
       journalData: {
         examiner: { staffNumber: '12345' },
@@ -289,6 +293,7 @@ describe('testsSelector', () => {
         currentTest: { slotId: null },
         startedTests: {
           1234: {
+            version: '0.0.1',
             category: 'B',
             activityCode: ActivityCodes.ACCIDENT,
             journalData: null,
@@ -327,6 +332,7 @@ describe('testsSelector', () => {
       currentTest: { slotId: null },
       startedTests: {
         1001: {
+          version: '0.0.1',
           category: 'B',
           activityCode: ActivityCodes.PASS,
           journalData: {
@@ -359,6 +365,7 @@ describe('testsSelector', () => {
           examinerKeyed: 1,
         },
         2008: {
+          version: '0.0.1',
           category: 'B',
           activityCode: ActivityCodes.CANDIDATE_REFUSED_TO_SIGN_RESIDENCY_DECLARATION,
           journalData: {
@@ -391,6 +398,7 @@ describe('testsSelector', () => {
           examinerKeyed: 1,
         },
         2027: {
+          version: '0.0.1',
           category: 'B',
           activityCode: ActivityCodes.ACCIDENT,
           journalData: {
@@ -423,6 +431,7 @@ describe('testsSelector', () => {
           examinerKeyed: 1,
         },
         3002: {
+          version: '0.0.1',
           category: 'B',
           activityCode: ActivityCodes.PASS,
           journalData: {

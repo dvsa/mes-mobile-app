@@ -1,6 +1,7 @@
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
 export const categoryBTestResultMock : StandardCarTestCATBSchema = {
+  version: '0.0.1',
   category: 'B',
   activityCode: '2',
   rekey: true,
