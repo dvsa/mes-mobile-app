@@ -173,6 +173,7 @@ describe('IncompleteTestsBannerSelector', () => {
         },
         startedTests: {
           1003: {
+            version: '0.0.1',
             category: 'B',
             changeMarker: false,
             examinerBooked: 123,

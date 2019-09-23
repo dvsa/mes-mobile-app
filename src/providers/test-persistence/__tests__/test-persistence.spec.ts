@@ -25,6 +25,7 @@ describe('TestPersistenceProvider', () => {
           examinerBooked: 1,
           examinerConducted: 1,
           examinerKeyed: 1,
+          version: '0.0.1',
           category: 'B',
           activityCode: '1',
           journalData: {
@@ -57,6 +58,7 @@ describe('TestPersistenceProvider', () => {
           examinerBooked: 1,
           examinerConducted: 1,
           examinerKeyed: 1,
+          version: '0.0.1',
           category: 'B',
           activityCode: '1',
           journalData: {
