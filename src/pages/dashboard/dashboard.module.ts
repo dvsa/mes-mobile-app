@@ -6,7 +6,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { DashboardAnalyticsEffects } from './dashboard.analytics.effects';
 import { ComponentsModule } from '../../components/common/common-components.module';
 import { TranslateModule } from 'ng2-translate';
-import { JournalPageModule } from '../journal/journal.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { JournalPageModule } from '../journal/journal.module';
     ]),
     ComponentsModule,
     TranslateModule,
-    JournalPageModule,
   ],
 })
 export class DashboardPageModule { }

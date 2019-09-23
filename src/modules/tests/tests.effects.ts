@@ -24,8 +24,8 @@ import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 import { TestStatus } from './test-status/test-status.model';
 import { TestsModel } from './tests.model';
 import { TestSlot } from '@dvsa/mes-journal-schema';
-import { getJournalState } from '../../pages/journal/journal.reducer';
-import { getSlotsOnSelectedDate } from '../../pages/journal/journal.selector';
+import { getJournalState } from '../journal/journal.reducer';
+import { getSlotsOnSelectedDate } from '../journal/journal.selector';
 import { PopulateExaminer } from './examiner/examiner.actions';
 import { PopulateTestSlotAttributes } from './test-slot-attributes/test-slot-attributes.actions';
 import { extractTestSlotAttributes } from './test-slot-attributes/test-slot-attributes.selector';
@@ -41,7 +41,7 @@ import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/reke
 import { Examiner, TestSlotAttributes, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
-import { JournalModel } from '../../pages/journal/journal.model';
+import { JournalModel } from '../journal/journal.model';
 import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
 

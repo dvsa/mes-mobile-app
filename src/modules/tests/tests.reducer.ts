@@ -1,4 +1,4 @@
-import * as journalActions from '../../pages/journal/journal.actions';
+import * as journalActions from '../../modules/journal/journal.actions';
 import * as testsActions from './tests.actions';
 
 import { TestsModel } from './tests.model';

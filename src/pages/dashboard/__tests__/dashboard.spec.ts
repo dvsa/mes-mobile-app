@@ -24,7 +24,7 @@ import { AppConfigProvider } from '../../../providers/app-config/app-config';
 import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/app-config.mock';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
-import { journalReducer } from '../../journal/journal.reducer';
+import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { SlotProvider } from '../../../providers/slot/slot';
 
 describe('DashboardPage', () => {

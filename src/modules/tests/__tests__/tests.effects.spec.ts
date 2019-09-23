@@ -7,7 +7,7 @@ import { TestPersistenceProviderMock } from '../../../providers/test-persistence
 import * as testsActions from '../tests.actions';
 import * as testStatusActions from '../test-status/test-status.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
-import * as journalActions from '../../../pages/journal/journal.actions';
+import * as journalActions from '../../../modules/journal/journal.actions';
 import { TestsModel } from '../tests.model';
 import { PopulateApplicationReference } from '../application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../candidate/candidate.actions';
@@ -27,8 +27,8 @@ import { AppConfigProviderMock } from '../../../providers/app-config/__mocks__/a
 import { StoreModel } from '../../../shared/models/store.model';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { PopulateExaminer } from '../examiner/examiner.actions';
-import journalSlotsDataMock from '../../../pages/journal/__mocks__/journal-slots-data.mock';
-import { journalReducer } from '../../../pages/journal/journal.reducer';
+import journalSlotsDataMock from '../../../modules/journal/__mocks__/journal-slots-data.mock';
+import { journalReducer } from '../../../modules/journal/journal.reducer';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import * as rekeySearchActions from '../../../pages/rekey-search/rekey-search.actions';

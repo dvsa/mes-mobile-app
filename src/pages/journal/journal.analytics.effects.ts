@@ -13,7 +13,7 @@ import {
   JournalRefreshError,
   RESUMING_WRITE_UP,
   ResumingWriteUp,
-} from '../../pages/journal/journal.actions';
+} from '../../modules/journal/journal.actions';
 import {
     AnalyticsDimensionIndices,
     AnalyticsScreenNames,
