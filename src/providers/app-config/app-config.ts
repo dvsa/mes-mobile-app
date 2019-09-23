@@ -18,6 +18,7 @@ import { Store } from '@ngrx/store';
 import { LogHelper } from '../logs/logsHelper';
 import { AppInfoProvider } from '../app-info/app-info';
 import { SchemaValidatorProvider } from '../schema-validator/schema-validator';
+import { ValidationResult, ValidationError } from '@hapi/joi';
 
 declare let cordova: any;
 
@@ -91,23 +92,33 @@ export class AppConfigProvider {
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
       .then((data: any) => {
-        const result = this.schemaValidatorProvider.validateRemoteConfig(data);
-        console.log('### result after schema validation', JSON.stringify(result));
-        return data;
+        const result: ValidationResult<any> = this.schemaValidatorProvider.validateRemoteConfig(data);
+
+        if (result.error === null) {
+          return data;
+        }
+
+        return Promise.reject(result.error);
       })
       .then(data => this.mapRemoteConfig(data))
-      .catch((error: HttpErrorResponse) => {
-        console.log('### ammars custom error ', JSON.stringify(error));
+      .catch((error: HttpErrorResponse | ValidationError) => {
+        if (error instanceof HttpErrorResponse) {
+          this.store$.dispatch(new SaveLog(
+            this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error.message)),
+          );
+          if (error && error.status === 403) {
+            return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
+          }
+          if (error && error.error === AppConfigError.INVALID_APP_VERSION) {
+            return Promise.reject(AppConfigError.INVALID_APP_VERSION);
+          }
+          return Promise.reject(AppConfigError.UNKNOWN_ERROR);
+        }
+
         this.store$.dispatch(new SaveLog(
-          this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error.message)),
+          this.logHelper.createLog(LogType.ERROR, 'Validating remote config', error.details[0].message)),
         );
-        if (error && error.status === 403) {
-          return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
-        }
-        if (error && error.error === AppConfigError.INVALID_APP_VERSION) {
-          return Promise.reject(AppConfigError.INVALID_APP_VERSION);
-        }
-        return Promise.reject(AppConfigError.UNKNOWN_ERROR);
+        return Promise.reject(AppConfigError.VALIDATION_ERROR);
       })
 
   public loadManagedConfig = (): void => {

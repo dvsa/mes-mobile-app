@@ -17,6 +17,8 @@ import { Device } from '@ionic-native/device';
 import { LogHelperMock } from '../../logs/__mocks__/logsHelper.mock';
 import { AppInfoProvider } from '../../app-info/app-info';
 import { AppInfoProviderMock } from '../../app-info/__mocks__/app-info.mock';
+import { SchemaValidatorProvider } from '../../schema-validator/schema-validator';
+import { SchemaValidatorProviderMock } from '../../schema-validator/__mocks__/schema-validator.mock';
 
 describe('App Config Provider', () => {
 
@@ -37,6 +39,7 @@ describe('App Config Provider', () => {
       providers: [
         { provide: NetworkStateProvider, useClass: NetworkStateProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
+        { provide: SchemaValidatorProvider, useClass: SchemaValidatorProviderMock },
         { provide: AppConfigProvider, useClass: AppConfigProvider, environmentFile: remoteEnvironmentMock },
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: AppInfoProvider, useClass: AppInfoProviderMock },
