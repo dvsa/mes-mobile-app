@@ -46,6 +46,8 @@ describe('App Config Provider', () => {
     appConfig = TestBed.get(AppConfigProvider);
     httpMock = TestBed.get(HttpTestingController);
     platform = TestBed.get(Platform);
+    appConfig.isDebugMode = true;
+    spyOn(appConfig, 'getDebugMode').and.returnValue(Promise.resolve());
   });
 
   afterEach(() => {
@@ -53,22 +55,24 @@ describe('App Config Provider', () => {
   });
 
   describe('initialiseAppConfig', () => {
-    it('should run loadMangedConfig() when platform is Ios', () => {
+    it('should run loadMangedConfig() when platform is Ios', fakeAsync(() => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(true);
       appConfig.loadManagedConfig = jasmine.createSpy('appConfig.loadManagedConfig');
 
       appConfig.initialiseAppConfig();
+      tick();
 
       expect(appConfig.loadManagedConfig).toHaveBeenCalled();
-    });
-    it('should not run loadMangedConfig() when platform is not ios', () => {
+    }));
+    it('should not run loadMangedConfig() when platform is not ios', fakeAsync(() => {
       platform.is = jasmine.createSpy('platform.is').and.returnValue(false);
       appConfig.loadManagedConfig = jasmine.createSpy('appConfig.loadManagedConfig');
 
       appConfig.initialiseAppConfig();
+      tick();
 
       expect(appConfig.loadManagedConfig).toHaveBeenCalledTimes(0);
-    });
+    }));
   });
 
   describe('loadRemoteConfig', () => {
