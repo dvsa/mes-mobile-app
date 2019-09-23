@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { merge } from 'lodash';
+import { merge, get } from 'lodash';
 
 import { AppConfig } from './app-config.model';
 import { environment } from '../../environment/environment';
@@ -52,6 +52,7 @@ declare let cordova: any;
 export class AppConfigProvider {
 
   environmentFile: EnvironmentFile = environment;
+  isDebugMode: boolean = false;
 
   private appConfig: AppConfig;
 
@@ -64,9 +65,10 @@ export class AppConfigProvider {
     private logHelper: LogHelper,
   ) { }
 
-  public initialiseAppConfig = (): Promise<void> => {
+  public initialiseAppConfig = async (): Promise<void> => {
     try {
       if (this.platform.is('ios')) {
+        await this.getDebugMode();
         this.loadManagedConfig();
       }
       this.mapInAppConfig(this.environmentFile);
@@ -97,7 +99,7 @@ export class AppConfigProvider {
 
   public loadManagedConfig = (): void => {
 
-    if (cordova && cordova.plugins.AppConfig) {
+    if (get(cordova, 'plugins.AppConfig', false)) {
       const appConfigPlugin = cordova.plugins.AppConfig;
 
       const newEnvFile = {
@@ -121,6 +123,10 @@ export class AppConfigProvider {
       // Check to see if we have any config
       if (newEnvFile.configUrl) {
         this.environmentFile = newEnvFile;
+      } else {
+        if (!this.isDebugMode) {
+          throw AppConfigError.MISSING_REMOTE_CONFIG_URL_ERROR;
+        }
       }
     }
   }
@@ -210,4 +216,20 @@ export class AppConfigProvider {
       },
       requestTimeout: data.requestTimeout,
     } as AppConfig)
+
+  getDebugMode = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (get(cordova, 'plugins.IsDebug', false)) {
+        cordova.plugins.IsDebug.getIsDebug((isDebug: boolean) => {
+          this.isDebugMode = isDebug;
+          console.log('Detected that app is running in debug mode');
+          resolve();
+        }, (err: any) => {
+          reject();
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
 }
