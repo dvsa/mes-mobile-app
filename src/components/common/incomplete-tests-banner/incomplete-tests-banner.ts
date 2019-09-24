@@ -5,6 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { getIncompleteTestsCount } from './incomplete-tests-banner.selector';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { DateTime } from '../../../shared/helpers/date-time';
+import { getJournalState } from '../../../modules/journal/journal.reducer';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 interface IncompleteTestsBannerComponentState {
   count$: Observable<number>;
@@ -30,7 +33,12 @@ export class IncompleteTestsBanner implements OnInit {
   ngOnInit() {
     this.componentState = {
       count$: this.store$.pipe(
-        select(store => getIncompleteTestsCount(store, this.todaysDate, this.slotProvider)),
+        select(getJournalState),
+        withLatestFrom(this.store$.pipe(
+          select(getTests),
+        )),
+        map(([journal, tests]) =>
+          getIncompleteTestsCount(journal, tests, this.todaysDate, this.slotProvider)),
       ),
     };
   }
