@@ -25,7 +25,7 @@ Feature: Debrief including Health Declaration
       When I try to confirm the pass certificate details
       Then validation item "pass-finalisation-licence-received-validation-text" should be "Select a response"
       And validation item "pass-finalisation-licence-received-validation-text" should be visible
-      And validation item "pass-finalisation-certificate-number-validation-text" should be "Enter a valid certificate number (max 8 characters)"
+      And validation item "pass-finalisation-certificate-number-validation-text" should be "Enter a valid certificate number (8 characters)"
       And validation item "pass-finalisation-certificate-number-validation-text" should be visible
 
    Scenario: The transmission value from the WRTC is carried through to the pass test debrief
