@@ -1,7 +1,6 @@
 import { DateTime } from '../../../../shared/helpers/date-time';
 import { TestsModel } from '../../../../modules/tests/tests.model';
 import { getIncompleteTestsCount } from '../incomplete-tests-banner.selector';
-import { StoreModel } from '../../../../shared/models/store.model';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { JournalModel } from '../../../../modules/journal/journal.model';
 import { SlotProvider } from '../../../../providers/slot/slot';
@@ -34,13 +33,6 @@ describe('IncompleteTestsBannerSelector', () => {
 
   describe('getIncompleteTestsCount', () => {
     it('should get a count of incomplete tests', () => {
-      const appInfo = {
-        versionNumber: 'VERSION_NOT_LOADED',
-        error: 'cordova_not_available',
-        employeeId: '1234567',
-        employeeName: 'Fake Name',
-      };
-      const logs = [];
       const journal: JournalModel = {
         isLoading: true,
         lastRefreshed: new Date(0),
@@ -253,9 +245,8 @@ describe('IncompleteTestsBannerSelector', () => {
           1003: TestStatus.WriteUp,
         },
       };
-      const store: StoreModel = { tests, journal, appInfo, logs };
 
-      const count = getIncompleteTestsCount(store, DateTime.at('2019-01-14'), slotProvider);
+      const count = getIncompleteTestsCount(journal, tests, DateTime.at('2019-01-14'), slotProvider);
 
       expect(count).toBe(3);
     });
