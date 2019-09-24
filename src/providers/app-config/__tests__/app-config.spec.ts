@@ -85,7 +85,7 @@ describe('App Config Provider', () => {
       appConfig.loadRemoteConfig();
       tick();
 
-      const request = httpMock.expectOne(remoteEnvironmentMock.configUrl);
+      const request = httpMock.expectOne(`${remoteEnvironmentMock.configUrl}?app_version=1`);
       expect(request.request.method).toBe('GET');
       request.flush(environmentResponseMock);
     }));
