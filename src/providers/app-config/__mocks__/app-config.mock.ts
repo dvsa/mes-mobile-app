@@ -56,4 +56,9 @@ export class AppConfigProviderMock {
       requestTimeout: localEnvironmentMock.requestTimeout,
     };
   }
+
+  public getDebugMode = jasmine.createSpy('getDebugMode')
+  .and
+  .returnValue(Promise.resolve());
+
 }
