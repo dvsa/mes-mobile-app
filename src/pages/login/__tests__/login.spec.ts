@@ -44,6 +44,7 @@ import { LoadLog, StartSendingLogs } from '../../../modules/logs/logs.actions';
 import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions';
 import { DASHBOARD_PAGE } from '../../page-names.constants';
 import { LoadEmployeeId, LoadConfigSuccess } from '../../../modules/app-info/app-info.actions';
+import { AppConfigError } from '../../../providers/app-config/app-config.constants';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -214,6 +215,13 @@ describe('LoginPage', () => {
       expect(component.isUserNotAuthorised()).toEqual(true);
     });
 
+    it('should return true for isInvalidAppVersionError when criteria is met', () => {
+      component.appInitError = AppConfigError.INVALID_APP_VERSION;
+      component.hasUserLoggedOut = false;
+
+      expect(component.isInvalidAppVersionError()).toEqual(true);
+    });
+
     it(`
       should dispatch LOAD_LOG,
       START_SENDING_LOGS,
@@ -375,6 +383,16 @@ describe('LoginPage', () => {
       const tags = fixture.debugElement.queryAll(By.css('h2'));
       expect(tags.length).toBe(1);
       expect((tags[0].nativeElement as HTMLElement).textContent).toContain('not authorised to use this app');
+    });
+
+    it('should show the correct div if user has an old version of the app', () => {
+      component.hasUserLoggedOut = false;
+      component.appInitError = AppConfigError.INVALID_APP_VERSION;
+      fixture.detectChanges();
+
+      const tags = fixture.debugElement.queryAll(By.css('h2'));
+      expect(tags.length).toBe(1);
+      expect((tags[0].nativeElement as HTMLElement).textContent).toContain('Unsupported application version');
     });
 
   });

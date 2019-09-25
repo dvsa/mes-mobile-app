@@ -203,11 +203,17 @@ export class LoginPage extends BasePageComponent {
       this.appInitError &&
       this.appInitError.valueOf() !== AuthenticationError.USER_CANCELLED &&
       this.appInitError.valueOf() !== AuthenticationError.NO_INTERNET &&
-      this.appInitError.valueOf() !== AuthenticationError.USER_NOT_AUTHORISED;
+      this.appInitError.valueOf() !== AuthenticationError.USER_NOT_AUTHORISED &&
+      this.appInitError.valueOf() !== AppConfigError.INVALID_APP_VERSION;
   }
 
   isUserNotAuthorised = (): boolean => {
     return !this.hasUserLoggedOut && this.appInitError === AuthenticationError.USER_NOT_AUTHORISED;
+  }
+
+  isInvalidAppVersionError = (): boolean => {
+    return !this.hasUserLoggedOut && this.appInitError === AppConfigError.INVALID_APP_VERSION;
+
   }
 
   showErrorDetails() {

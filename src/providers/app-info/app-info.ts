@@ -12,4 +12,11 @@ export class AppInfoProvider {
     return fromPromise(this.appVersion.getVersionNumber());
   }
 
+  public async getMajorAndMinorVersionNumber (): Promise<string> {
+    const versionNumber =  await this.appVersion.getVersionNumber();
+    const majorVersion = versionNumber.split('.')[0];
+    const minorVersion = versionNumber.split('.')[1];
+    return `${majorVersion}.${minorVersion}`;
+  }
+
 }

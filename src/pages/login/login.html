@@ -30,5 +30,9 @@
       <h3>Speak to your line manager if you want to use this app.</h3>
       <h3>If you think you’re already authorised,<br/> you can try to <span class="link" (click)="login()">sign in</span> again.</h3>
     </div>
+    <div *ngIf="isInvalidAppVersionError()">
+      <h2>Unsupported application version</h2>
+      <h3>Please update the app and try again.</h3>
+    </div>
   </div>
 </ion-content>
