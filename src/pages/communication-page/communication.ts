@@ -6,9 +6,6 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { DeviceProvider } from '../../providers/device/device';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Insomnia } from '@ionic-native/insomnia';
 import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
 import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
 import { getTests } from '../../modules/tests/tests.reducer';
@@ -87,10 +84,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
-    private deviceProvider: DeviceProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
-    private screenOrientation: ScreenOrientation,
-    private insomnia: Insomnia,
     private translate: TranslateService,
   ) {
     super(platform, navController, authenticationProvider, store$);
@@ -99,15 +93,6 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new CommunicationViewDidEnter());
-
-    if (super.isIos()) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      this.insomnia.keepAwake();
-
-      if (!this.isPracticeMode) {
-        this.deviceProvider.enableSingleAppMode();
-      }
-    }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.clickBack();
