@@ -6,22 +6,21 @@ import { AppVersionMock } from '../__mocks__/app-version.mock';
 export const APP_VERSION_NUMBER = '1.1.9';
 
 describe('AppInfoProvider', () => {
-  describe('getVersionNumber', () => {
-    let appInfoProvider: AppInfoProvider;
-    let appVersionMock: AppVersionMock;
+  let appInfoProvider: AppInfoProvider;
+  let appVersionMock: AppVersionMock;
 
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [
-          AppInfoProvider,
-          { provide: AppVersion, useClass: AppVersionMock },
-        ],
-      });
-
-      appInfoProvider = TestBed.get(AppInfoProvider);
-      appVersionMock = TestBed.get(AppVersion);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        AppInfoProvider,
+        { provide: AppVersion, useClass: AppVersionMock },
+      ],
     });
 
+    appInfoProvider = TestBed.get(AppInfoProvider);
+    appVersionMock = TestBed.get(AppVersion);
+  });
+  describe('getVersionNumber', () => {
     it('should obtain the version number from app version native plugin', () => {
       appInfoProvider.getVersionNumber().subscribe();
 
@@ -33,6 +32,12 @@ describe('AppInfoProvider', () => {
         expect(versionNumber).toBe(APP_VERSION_NUMBER);
         done();
       });
+    });
+  });
+  describe('getMajorAndMinorVersionNumber', () => {
+    it('should successfully extract the app version in the correct format', async() => {
+      const result = await appInfoProvider.getMajorAndMinorVersionNumber();
+      expect(result).toEqual('1.1');
     });
   });
 });
