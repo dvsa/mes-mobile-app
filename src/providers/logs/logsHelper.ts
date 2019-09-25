@@ -34,6 +34,7 @@ export class LogHelper {
       description: desc,
       appVersion: this.appVersion,
       iosVersion: this.device.version,
+      deviceId: this.device.uuid,
     };
   }
 }

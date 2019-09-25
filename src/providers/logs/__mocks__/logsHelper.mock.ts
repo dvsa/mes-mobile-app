@@ -11,6 +11,7 @@ export class LogHelperMock {
     description: 'Description',
     appVersion: '1.1.0',
     iosVersion: '1.0.0',
+    deviceId: 'fb455c20-c025-4d6b-bbf2-aab80af6efb8',
   });
 
 }
