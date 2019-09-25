@@ -38,6 +38,9 @@ import {
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
 import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+import { Insomnia } from '@ionic-native/insomnia';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { DeviceProvider } from '../../providers/device/device';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -78,6 +81,9 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
+    private deviceProvider: DeviceProvider,
+    private screenOrientation: ScreenOrientation,
+    private insomnia: Insomnia,
     private translate: TranslateService,
   ) {
     super(platform, navController, authenticationProvider, store$);
@@ -85,6 +91,15 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
   }
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
+
+    if (super.isIos()) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      this.insomnia.keepAwake();
+
+      if (!this.isPracticeMode) {
+        this.deviceProvider.enableSingleAppMode();
+      }
+    }
 
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.clickBack();

@@ -31,12 +31,22 @@ import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
   from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { Insomnia } from '@ionic-native/insomnia';
+import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
+  let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
+  let screenOrientation: ScreenOrientation;
+  let insomnia: Insomnia;
+
   let translate: TranslateService;
 
   const mockCandidate = {
@@ -93,12 +103,18 @@ describe('WaitingRoomPage', () => {
         { provide: AuthenticationProvider, useClass: AuthenticationProviderMock },
         { provide: DeviceAuthenticationProvider, useClass: DeviceAuthenticationProviderMock },
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: ScreenOrientation, useClass: ScreenOrientationMock },
+        { provide: Insomnia, useClass: InsomniaMock },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(WaitingRoomPage);
         component = fixture.componentInstance;
+        deviceProvider = TestBed.get(DeviceProvider);
+        screenOrientation = TestBed.get(ScreenOrientation);
+        insomnia = TestBed.get(Insomnia);
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
@@ -138,6 +154,32 @@ describe('WaitingRoomPage', () => {
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseToProceedWithTestInEnglish(
             Language.ENGLISH));
       });
+    });
+
+    describe('ionViewDidEnter', () => {
+      it('should enable single app mode if on ios and not in practice mode', () => {
+        component.isPracticeMode = false;
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).toHaveBeenCalled();
+      });
+
+      it('should note enable single app mode if on ios and in practice mode', () => {
+        component.isPracticeMode = true;
+        component.ionViewDidEnter();
+        expect(deviceProvider.enableSingleAppMode).not.toHaveBeenCalled();
+      });
+
+      it('should lock the screen orientation to Portrait Primary', () => {
+        component.ionViewDidEnter();
+        expect(screenOrientation.lock)
+          .toHaveBeenCalledWith(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      });
+
+      it('should keep the device awake', () => {
+        component.ionViewDidEnter();
+        expect(insomnia.keepAwake).toHaveBeenCalled();
+      });
+
     });
   });
 
