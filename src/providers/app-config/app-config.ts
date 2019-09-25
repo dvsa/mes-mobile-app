@@ -94,11 +94,11 @@ export class AppConfigProvider {
       .then((data: any) => {
         const result: ValidationResult<any> = this.schemaValidatorProvider.validateRemoteConfig(data);
 
-        if (result.error === null) {
-          return data;
+        if (result.error !== null) {
+          return Promise.reject(result.error);
         }
 
-        return Promise.reject(result.error);
+        return data;
       })
       .then(data => this.mapRemoteConfig(data))
       .catch((error: HttpErrorResponse | ValidationError) => {
