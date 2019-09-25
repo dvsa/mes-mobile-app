@@ -17,6 +17,8 @@ import { StoreModel } from '../../shared/models/store.model';
 import { Store } from '@ngrx/store';
 import { LogHelper } from '../logs/logsHelper';
 import { AppInfoProvider } from '../app-info/app-info';
+import { SchemaValidatorProvider } from '../schema-validator/schema-validator';
+import { ValidationResult, ValidationError } from '@hapi/joi';
 
 declare let cordova: any;
 
@@ -65,6 +67,7 @@ export class AppConfigProvider {
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
     private appInfoProvider: AppInfoProvider,
+    private schemaValidatorProvider: SchemaValidatorProvider,
   ) { }
 
   public initialiseAppConfig = async (): Promise<void> => {
@@ -88,18 +91,34 @@ export class AppConfigProvider {
 
   public loadRemoteConfig = (): Promise<any> =>
     this.getRemoteData()
+      .then((data: any) => {
+        const result: ValidationResult<any> = this.schemaValidatorProvider.validateRemoteConfig(data);
+
+        if (result.error !== null) {
+          return Promise.reject(result.error);
+        }
+
+        return data;
+      })
       .then(data => this.mapRemoteConfig(data))
-      .catch((error: HttpErrorResponse) => {
+      .catch((error: HttpErrorResponse | ValidationError) => {
+        if (error instanceof HttpErrorResponse) {
+          this.store$.dispatch(new SaveLog(
+            this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error.message)),
+          );
+          if (error && error.status === 403) {
+            return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
+          }
+          if (error && error.error === AppConfigError.INVALID_APP_VERSION) {
+            return Promise.reject(AppConfigError.INVALID_APP_VERSION);
+          }
+          return Promise.reject(AppConfigError.UNKNOWN_ERROR);
+        }
+
         this.store$.dispatch(new SaveLog(
-          this.logHelper.createLog(LogType.ERROR, 'Loading remote config', error.message)),
+          this.logHelper.createLog(LogType.ERROR, 'Validating remote config', error.details[0].message)),
         );
-        if (error && error.status === 403) {
-          return Promise.reject(AuthenticationError.USER_NOT_AUTHORISED);
-        }
-        if (error && error.error === AppConfigError.INVALID_APP_VERSION) {
-          return Promise.reject(AppConfigError.INVALID_APP_VERSION);
-        }
-        return Promise.reject(AppConfigError.UNKNOWN_ERROR);
+        return Promise.reject(AppConfigError.VALIDATION_ERROR);
       })
 
   public loadManagedConfig = (): void => {
