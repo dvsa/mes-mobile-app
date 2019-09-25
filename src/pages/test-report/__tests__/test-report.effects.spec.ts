@@ -16,7 +16,12 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { of } from 'rxjs/observable/of';
-import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
+import {
+  ExaminerActions,
+  Competencies,
+  ManoeuvreCompetencies,
+  ManoeuvreTypes,
+} from '../../../modules/tests/test-data/test-data.constants';
 
 export class TestActions extends Actions {
   constructor() {
@@ -109,7 +114,6 @@ describe('Test Report Effects', () => {
         done();
       });
     });
-
     it('should dispatch a failure action when the effect is triggered and the test is not valid', (done) => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
@@ -118,6 +122,172 @@ describe('Test Report Effects', () => {
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an ADD_DANGEROUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.AddDangerousFault(Competencies.ancillaryControls));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an ADD_SERIOUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.AddSeriousFault(Competencies.ancillaryControls));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an REMOVE_DANGEROUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.RemoveDangerousFault(Competencies.ancillaryControls));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an REMOVE_SERIOUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.RemoveSeriousFault(Competencies.ancillaryControls));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an TOGGLE_ETA fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an ADD_MANOEUVRE_SERIOUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.AddManoeuvreSeriousFault(
+        {
+          competency: ManoeuvreCompetencies.controlFault,
+          manoeuvre: ManoeuvreTypes.forwardPark,
+        }));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an ADD_MANOEUVRE_DANGEROUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.AddManoeuvreDangerousFault(
+        {
+          competency: ManoeuvreCompetencies.controlFault,
+          manoeuvre: ManoeuvreTypes.forwardPark,
+        }));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an REMOVE_MANOEUVRE_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.RemoveManoeuvreFault(
+        {
+          competency: ManoeuvreCompetencies.controlFault,
+          manoeuvre: ManoeuvreTypes.forwardPark,
+        }));
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an SHOW_ME_QUESTION_SERIOUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an SHOW_ME_QUESTION_DANGEROUS_FAULT fault is dispatched', (done) => {
+      // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      // ACT
+      actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
+      // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an SHOW_ME_QUESTION_PASSED fault is dispatched', (done) => {
+          // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+          // ACT
+      actions$.next(new testDataActions.ShowMeQuestionPassed());
+          // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an CONTROLLED_STOP_ADD_SERIOUS_FAULT fault is dispatched', (done) => {
+            // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+            // ACT
+      actions$.next(new testDataActions.ControlledStopAddSeriousFault());
+            // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an CONTROLLED_STOP_ADD_DANGEROUS_FAULT fault is dispatched', (done) => {
+            // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+            // ACT
+      actions$.next(new testDataActions.ControlledStopAddDangerousFault());
+            // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
+        expect(result).toEqual(new testReportActions.ValidateEta(false));
+        done();
+      });
+    });
+    it('should trigger when an CONTROLLED_STOP_REMOVE_FAULT fault is dispatched', (done) => {
+            // ARRANGE
+      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+            // ACT
+      actions$.next(new testDataActions.ControlledStopRemoveFault());
+            // ASSERT
+      effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
         done();
       });
