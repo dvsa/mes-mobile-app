@@ -101,6 +101,7 @@
     "ionicons": "3.0.0",
     "joi-browser": "^13.4.0",
     "jwt-decode": "^2.2.0",
+    "lodash": "4.17.12",
     "moment": "^2.23.0",
     "nested-combine-reducers": "^1.0.1",
     "ng2-translate": "^5.0.0",
