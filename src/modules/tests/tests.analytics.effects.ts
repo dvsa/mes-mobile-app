@@ -27,6 +27,7 @@ import { TestsModel } from './tests.model';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -104,8 +105,8 @@ export class TestsAnalyticsEffects {
       const journalDataOfTest = test.journalData;
 
       this.analytics.logEvent(
-        AnalyticsEventCategories.TEST_REPORT,
-        AnalyticsEvents.TEST_OUTCOME_CHANGED,
+        formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
+        formatAnalyticsText(AnalyticsEvents.TEST_OUTCOME_CHANGED, tests),
         action.payload,
       );
 
