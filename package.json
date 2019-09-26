@@ -8,6 +8,7 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "bootstrap": "json2ts schema/schemaExaminerSchedule.json > src/shared/models/DJournal.ts",
+    "schema-version": "buildScripts/generate-test-schema-version.js",
     "build": "ionic-app-scripts build",
     "compile-no-emit": "tsc --noEmit -p .",
     "device": "ionic cordova run ios --device --development --buildConfig buildScripts/build.json",
@@ -51,6 +52,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@dvsa/mes-test-schema": "^3.0.0",
     "@ionic-native-mocks/network": "^2.0.12",
     "@ionic-native/app-version": "^4.20.0",
     "@ionic-native/core": "~4.17.0",
@@ -116,7 +118,6 @@
     "@dvsa/mes-config-schema": "1.0.5",
     "@dvsa/mes-journal-schema": "1.1.0",
     "@dvsa/mes-search-schema": "1.0.3",
-    "@dvsa/mes-test-schema": "3.0.0",
     "@hapi/joi": "^15.1.0",
     "@ionic-native-mocks/device": "^2.0.12",
     "@ionic-native-mocks/secure-storage": "^2.0.12",
