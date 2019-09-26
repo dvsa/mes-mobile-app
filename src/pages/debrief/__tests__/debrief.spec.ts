@@ -35,6 +35,7 @@ import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-att
 import { EndDebrief } from '../debrief.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
 import { PASS_FINALISATION_PAGE, BACK_TO_OFFICE_PAGE } from '../../page-names.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 describe('DebriefPage', () => {
   let fixture: ComponentFixture<DebriefPage>;
@@ -194,6 +195,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new ToggleETA(ExaminerActions.physical));
               fixture.detectChanges();
@@ -211,6 +213,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Verbal');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new ToggleETA(ExaminerActions.verbal));
               fixture.detectChanges();
@@ -230,6 +233,7 @@ describe('DebriefPage', () => {
           expect(fixture.debugElement.query(By.css('#etaFaults')).nativeElement.innerHTML).toBe('Physical and Verbal');
         });
         it('should display in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
           translate.use('cy').subscribe(() => {
             store$.dispatch(new ToggleETA(ExaminerActions.verbal));
             store$.dispatch(new ToggleETA(ExaminerActions.physical));
@@ -261,6 +265,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe('Planning');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new TogglePlanningEco());
               fixture.detectChanges();
@@ -278,6 +283,7 @@ describe('DebriefPage', () => {
             expect(fixture.debugElement.query(By.css('#ecoFaults')).nativeElement.innerHTML.trim()).toBe('Control');
           });
           it('should display in Welsh for a Welsh test', (done) => {
+            fixture.detectChanges();
             translate.use('cy').subscribe(() => {
               store$.dispatch(new ToggleControlEco());
               fixture.detectChanges();
@@ -298,6 +304,7 @@ describe('DebriefPage', () => {
             .toBe('Control and Planning');
         });
         it('should display in Welsh for a Welsh test', (done) => {
+          fixture.detectChanges();
           translate.use('cy').subscribe(() => {
             store$.dispatch(new TogglePlanningEco());
             store$.dispatch(new ToggleControlEco());
@@ -390,8 +397,7 @@ describe('DebriefPage', () => {
         store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
         store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
         fixture.detectChanges();
-        component.isBookedInWelsh = true;
-        component.configureI18N(true);
+        component.configureI18N(Language.CYMRAEG);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;

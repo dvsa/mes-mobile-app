@@ -2,13 +2,14 @@ import { Action } from '@ngrx/store';
 import { CommunicationMethod, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
 
 export const CANDIDATE_CONFIRMED_COMMUNICATION_PREFERENCE_AS_EMAIL
-  = '[Communication page] Candidate confirmed communication preferences as email';
+  = '[Communication Preferences] Candidate confirmed communication preferences as email';
 export const CANDIDATE_CONFIRMED_COMMUNICATION_PREFERENCE_AS_POST
-  = '[Communication page] Candidate confirmed communication preferences as post';
+  = '[Communication Preferences] Candidate confirmed communication preferences as post';
 export const CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_ENGLISH
-  = '[Communication page] Candidate chose to proceed with test in English';
+  = '[Communication Preferences] Candidate chose to proceed with test in English';
 export const CANDIDATE_CHOSE_TO_PROCEED_WITH_TEST_IN_WELSH
-  = '[Communication page] Candidate chose to proceed with test in Welsh';
+  = '[Communication Preferences] Candidate chose to proceed with test in Welsh';
+export const POPULATE_CONDUCTED_LANGUAGE = '[Communication Preferences] Populate Conducted Language';
 
 export class CandidateChoseEmailAsCommunicationPreference implements Action {
   readonly type = CANDIDATE_CONFIRMED_COMMUNICATION_PREFERENCE_AS_EMAIL;
@@ -30,8 +31,14 @@ export class CandidateChoseToProceedWithTestInWelsh implements Action {
   constructor(public conductedLanguage: ConductedLanguage) { }
 }
 
+export class PopulateConductedLanguage implements Action {
+  readonly type = POPULATE_CONDUCTED_LANGUAGE;
+  constructor(public conductedLanguage: ConductedLanguage) {}
+}
+
 export type Types =
   | CandidateChoseEmailAsCommunicationPreference
   | CandidateChosePostAsCommunicationPreference
   | CandidateChoseToProceedWithTestInEnglish
-  | CandidateChoseToProceedWithTestInWelsh;
+  | CandidateChoseToProceedWithTestInWelsh
+  | PopulateConductedLanguage;

@@ -29,7 +29,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { DateTimeProvider } from '../../providers/date-time/date-time';
 import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
 import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
-import { TestCentre, Examiner } from '@dvsa/mes-test-schema/categories/B';
+import { TestCentre, Examiner, ConductedLanguage, TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import {
   PopulateTestSlotAttributes,
 } from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
@@ -46,6 +46,10 @@ import { LogHelper } from '../../providers/logs/logsHelper';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
+import {
+  PopulateConductedLanguage,
+} from '../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 @Injectable()
 export class JournalEffects {
@@ -215,6 +219,9 @@ export class JournalEffects {
         has(data, 'booking'));
       const { staffNumber, individualId } = examiner;
 
+      const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
+      const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
+
       const arrayOfActions: Action[] = [
         new PopulateExaminer({ staffNumber, individualId }),
         new PopulateApplicationReference(slot.booking.application),
@@ -223,6 +230,7 @@ export class JournalEffects {
         new PopulateTestCentre(this.extractTestCentre(slot)),
         new SetTestStatusBooked(startTestAction.slotId.toString()),
         new PopulateTestCategory(slot.booking.application.testCategory),
+        new PopulateConductedLanguage(conductedLanguage),
       ];
 
       if (startTestAction.rekey) {
