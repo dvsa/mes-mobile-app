@@ -67,6 +67,15 @@ export class TestReportEffects {
       testDataActions.REMOVE_DANGEROUS_FAULT,
       testDataActions.REMOVE_SERIOUS_FAULT,
       testDataActions.TOGGLE_ETA,
+      testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT,
+      testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
+      testDataActions.REMOVE_MANOEUVRE_FAULT,
+      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+      testDataActions.SHOW_ME_QUESTION_PASSED,
+      testDataActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
+      testDataActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
+      testDataActions.CONTROLLED_STOP_REMOVE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
