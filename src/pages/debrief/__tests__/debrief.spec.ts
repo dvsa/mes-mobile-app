@@ -404,9 +404,14 @@ describe('DebriefPage', () => {
           const seriousLabel = fixture.debugElement.query(By.css('#serious-fault .counter-label')).nativeElement;
           const dangerousLabel = fixture.debugElement.query(By.css('#dangerous-fault .counter-label')).nativeElement;
 
-          expect(drivingFaultLabel.innerHTML).toBe(`[CY] ${fullCompetencyLabels.moveOffSafety}`);
-          expect(seriousLabel.innerHTML).toBe(`[CY] ${fullCompetencyLabels.useOfMirrorsSignalling}`);
-          expect(dangerousLabel.innerHTML).toBe(`[CY] ${fullCompetencyLabels.useOfMirrorsChangeDirection}`);
+          const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
+          const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
+          const expectedDangerousFaultTranslation =
+          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+
+          expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
+          expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);
+          expect(dangerousLabel.innerHTML).toBe(expectedDangerousFaultTranslation);
           done();
         });
         store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
