@@ -1,24 +1,14 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { WaitingRoomPage } from './waiting-room';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from './waiting-room.analytics.effects';
-import { ComponentsModule } from '../../components/common/common-components.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from 'ng2-translate';
+import { CatBWaitingRoomPageModule } from './cat-b/cat-b-waiting-room.module';
 
 @NgModule({
-  declarations: [
-    WaitingRoomPage,
-  ],
   imports: [
-    IonicPageModule.forChild(WaitingRoomPage),
     EffectsModule.forFeature([
       WaitingRoomAnalyticsEffects,
     ]),
-    ComponentsModule,
-    ReactiveFormsModule,
-    TranslateModule,
+    CatBWaitingRoomPageModule,
   ],
 })
 export class WaitingRoomPageModule { }
