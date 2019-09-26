@@ -91,7 +91,8 @@ describe('Test Outcome', () => {
     });
 
     describe('resumeTest', () => {
-      it('should dispatch an ActivateTest action and navigate to the Office page', () => {
+      it('should dispatch an ActivateTest action and navigate to the Waiting Room page', () => {
+        component.testStatus = TestStatus.Started;
         component.slotDetail = testSlotDetail;
         component.resumeTest();
 
@@ -113,7 +114,7 @@ describe('Test Outcome', () => {
 
         expect(component.showRekeyButton()).toEqual(true);
       });
-      it('should return true for a resumed test if date is in past', () => {
+      it('should return false for a resumed test if date is in past', () => {
         component.slotDetail = testSlotDetail;
         const dateTime = new DateTime();
         dateTime.subtract(1, Duration.DAY);
@@ -122,7 +123,7 @@ describe('Test Outcome', () => {
 
         component.showRekeyButton();
 
-        expect(component.showRekeyButton()).toEqual(true);
+        expect(component.showRekeyButton()).toEqual(false);
       });
       it('should return true for a booked test on the rekey search page', () => {
         component.slotDetail = testSlotDetail;
@@ -191,16 +192,16 @@ describe('Test Outcome', () => {
     });
 
     describe('debrief a test', () => {
-      it('should call the debriefTest method when `Resume` is clicked', () => {
+      it('should call the resumeTest method when `Resume` is clicked', () => {
         component.slotDetail = testSlotDetail;
         component.testStatus = TestStatus.Decided;
         fixture.detectChanges();
-        spyOn(component, 'debriefTest');
+        spyOn(component, 'resumeTest');
 
         const debriefButton = fixture.debugElement.query(By.css('.mes-secondary-button'));
         debriefButton.triggerEventHandler('click', null);
 
-        expect(component.debriefTest).toHaveBeenCalled();
+        expect(component.resumeTest).toHaveBeenCalled();
       });
     });
 

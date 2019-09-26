@@ -11,17 +11,20 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
-import { getTestStatus, getActivityCodeBySlotId } from '../../../modules/tests/tests.selector';
+import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../modules/tests/tests.selector';
 import { SlotTypes } from '../../../shared/models/slot-types';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { getSlotType } from '../../../shared/helpers/get-slot-type';
 import { SlotProvider } from '../../../providers/slot/slot';
+import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
+import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
 
 interface TestSlotComponentState {
   testStatus$: Observable<TestStatus>;
   testActivityCode$: Observable<ActivityCode>;
+  isRekey$: Observable<boolean>;
 }
 
 @Component({
@@ -61,6 +64,13 @@ export class TestSlotComponent implements SlotComponent, OnInit {
       testActivityCode$: this.store$.pipe(
         select(getTests),
         map(tests => getActivityCodeBySlotId(tests, this.slot.slotDetail.slotId)),
+      ),
+      isRekey$: this.store$.pipe(
+        select(getTests),
+        map(tests => getTestById(tests, this.slot.slotDetail.slotId.toString())),
+        filter(test => test !== undefined),
+        select(getRekeyIndicator),
+        select(isRekey),
       ),
     };
   }

@@ -51,8 +51,11 @@ export class TestOutcomeComponent implements OnInit {
   @Input()
   hasSeenCandidateDetails: boolean;
 
+  @Input()
+  isRekey: boolean;
+
   modal: Modal;
-  isRekey: boolean = false;
+  startTestAsRekey: boolean = false;
   isTestSlotOnRekeySearch: boolean = false;
 
   candidateDetailsViewed: boolean;
@@ -100,15 +103,32 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   showRekeyButton(): boolean {
-    return this.isTestIncomplete() && (this.isDateInPast() || this.isTestSlotOnRekeySearch);
+    if (this.testStatus === TestStatus.Completed || this.testStatus === TestStatus.Submitted) {
+      return false; // because the test is complete
+    }
+
+    if (this.isTestSlotOnRekeySearch) {
+      return true; // because the test is incomplete AND this is the rekey search
+    }
+
+    if (this.isRekey && this.isDateInPast()) {
+      return true; // because the test is incomplete AND this is not the rekey search...
+      // ...AND it was started as a rekey AND the test date is in the past
+    }
+
+    // the test is incomplete AND this is not the rekey search AND it was not started as a rekey
+    if (this.isDateInPast() && (this.testStatus === null || this.testStatus === TestStatus.Booked)) {
+      return true; // because the test date is in the past AND it has never been seen OR started
+    }
+    return false;
   }
 
   showStartTestButton(): boolean {
     return this.testStatus === TestStatus.Booked;
   }
 
-  showResumeTestButton(): boolean {
-    return this.testStatus === TestStatus.Started;
+  showResumeButton(): boolean {
+    return this.testStatus === TestStatus.Started || this.testStatus === TestStatus.Decided;
   }
 
   showWriteUpButton(): boolean {
@@ -121,41 +141,33 @@ export class TestOutcomeComponent implements OnInit {
     this.navController.push(OFFICE_PAGE);
   }
 
-  debriefTest() {
+  resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
-    if (this.activityCode === ActivityCodes.PASS) {
+    if (this.testStatus === TestStatus.Started) {
+      this.navController.push(WAITING_ROOM_PAGE);
+    } else if (this.activityCode === ActivityCodes.PASS) {
       this.navController.push(PASS_FINALISATION_PAGE);
     } else {
       this.navController.push(NON_PASS_FINALISATION_PAGE);
     }
   }
 
-  resumeTest() {
-    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
-    this.navController.push(WAITING_ROOM_PAGE);
-  }
-
-  needsDebrief(): boolean {
-    return this.testStatus === TestStatus.Decided;
-  }
-
-  needsWriteUp(): boolean {
-    return this.testStatus === TestStatus.WriteUp || this.testStatus === TestStatus.Autosaved;
-  }
-
   startTest() {
     if (this.isE2EPracticeMode() && this.testStatus === TestStatus.Booked) {
       this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
     } else {
-      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.isRekey));
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.startTestAsRekey || this.isRekey));
     }
     this.navController.push(WAITING_ROOM_PAGE);
   }
 
   rekeyTest() {
-    this.isRekey = true;
-    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.isRekey));
-    this.startOrResumeTestDependingOnStatus();
+    if (this.testStatus === null || this.testStatus === TestStatus.Booked) {
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, true));
+    } else {
+      this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, true));
+    }
+    this.navController.push(WAITING_ROOM_PAGE);
   }
 
   displayRekeyModal = (): void => {
@@ -175,10 +187,11 @@ export class TestOutcomeComponent implements OnInit {
   onModalDismiss = (event: ModalEvent): void => {
     switch (event) {
       case ModalEvent.START:
+        this.startTestAsRekey = false;
         this.startOrResumeTestDependingOnStatus();
         break;
       case ModalEvent.REKEY:
-        this.isRekey = true;
+        this.startTestAsRekey = true;
         this.startOrResumeTestDependingOnStatus();
         break;
     }
@@ -224,7 +237,7 @@ export class TestOutcomeComponent implements OnInit {
   startOrResumeTestDependingOnStatus() {
     if (this.testStatus === TestStatus.Booked) {
       this.startTest();
-    } else if (this.testStatus === TestStatus.Started) {
+    } else {
       this.resumeTest();
     }
   }
