@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-buttons start>
       <button ion-button (click)="logout()" *ngIf="isLogoutEnabled()">
-        <span>Logout</span>
+        <span>Sign Out</span>
         <h6 class="version-number">Version {{pageState.appVersion$ | async}}</h6>
       </button>
       <h6 *ngIf="!isLogoutEnabled()" class="version-number">Version {{pageState.appVersion$

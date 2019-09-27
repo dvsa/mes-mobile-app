@@ -3,7 +3,7 @@
   <ion-navbar>
     <ion-title>{{ 'healthDeclaration.title' | translate }} - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
-      <button ion-button (click)="logout()">Logout</button>
+      <button ion-button (click)="logout()">Sign out</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
