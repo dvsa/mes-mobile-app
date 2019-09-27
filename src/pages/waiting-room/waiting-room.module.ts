@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CatBWaitingRoomPageModule } from './cat-b/cat-b-waiting-room.module';
+import { WaitingRoomBPageModule } from './category/b/waiting-room-b.module';
 
 @NgModule({
   imports: [
-    CatBWaitingRoomPageModule,
+    WaitingRoomBPageModule,
   ],
 })
 export class WaitingRoomPageModule { }
