@@ -1,23 +1,13 @@
-
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/__tests__/waiting-room.cat-b.page.spec.ts
 import { WaitingRoomCatBPage } from '../waiting-room.cat-b.page';
-=======
-import { CatBWaitingRoomPage } from '../cat-b-waiting-room';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/__tests__/cat-b-waiting-room.spec.ts
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/__tests__/waiting-room.cat-b.page.spec.ts
-=======
-import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../../components/common/common-components.module';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/__tests__/cat-b-waiting-room.spec.ts
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
@@ -32,10 +22,6 @@ import {
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { WaitingRoomValidationError } from '../../waiting-room.actions';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/__tests__/waiting-room.cat-b.page.spec.ts
-=======
-import { of } from 'rxjs/observable/of';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/__tests__/cat-b-waiting-room.spec.ts
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
@@ -47,7 +33,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/__tests__/waiting-room.cat-b.page.spec.ts
 import { MockComponent } from 'ng-mocks';
 import { ConductedLanguageComponent } from '../../components/conducted-language/conducted-language';
 import { InsuranceDeclarationComponent } from '../../components/insurance-declaration/insurance-declaration';
@@ -63,12 +48,6 @@ import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 describe('WaitingRoomCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatBPage>;
   let component: WaitingRoomCatBPage;
-=======
-
-describe('CatBWaitingRoomPage', () => {
-  let fixture: ComponentFixture<CatBWaitingRoomPage>;
-  let component: CatBWaitingRoomPage;
->>>>>>> First Move About:src/pages/waiting-room/cat-b/__tests__/cat-b-waiting-room.spec.ts
   let store$: Store<StoreModel>;
   let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
@@ -80,7 +59,6 @@ describe('CatBWaitingRoomPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/__tests__/waiting-room.cat-b.page.spec.ts
         WaitingRoomCatBPage,
         MockComponent(PracticeModeBanner),
         MockComponent(EndTestLinkComponent),
@@ -90,9 +68,6 @@ describe('CatBWaitingRoomPage', () => {
         MockComponent(InsuranceDeclarationComponent),
         MockComponent(ResidencyDeclarationComponent),
         MockComponent(SignatureComponent),
-=======
-        CatBWaitingRoomPage,
->>>>>>> First Move About:src/pages/waiting-room/cat-b/__tests__/cat-b-waiting-room.spec.ts
       ],
       imports: [
         IonicModule,
@@ -141,11 +116,7 @@ describe('CatBWaitingRoomPage', () => {
     })
       .compileComponents()
       .then(() => {
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/__tests__/waiting-room.cat-b.page.spec.ts
         fixture = TestBed.createComponent(WaitingRoomCatBPage);
-=======
-        fixture = TestBed.createComponent(CatBWaitingRoomPage);
->>>>>>> First Move About:src/pages/waiting-room/cat-b/__tests__/cat-b-waiting-room.spec.ts
         component = fixture.componentInstance;
         deviceProvider = TestBed.get(DeviceProvider);
         screenOrientation = TestBed.get(ScreenOrientation);
