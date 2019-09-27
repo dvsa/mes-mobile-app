@@ -1,7 +1,9 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons ion-buttons start navPop>
-      <button ion-button center class="nav-close"><ion-icon name="md-close"></ion-icon>Close</button>
+      <button ion-button center class="nav-close">
+        <ion-icon name="md-close"></ion-icon>Close
+      </button>
     </ion-buttons>
     <ion-title>
       Test details - {{ pageState.name }}
@@ -42,8 +44,7 @@
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Slot type</label>
-            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-              class="exclamation-indicator"
+            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png" class="exclamation-indicator"
               *ngIf="pageState.details.slotType !== 'Standard Test'" />
           </ion-col>
           <ion-col col-56>
@@ -77,8 +78,7 @@
         <ion-row class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Special requirements</label>
-            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-              class="exclamation-indicator"
+            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png" class="exclamation-indicator"
               *ngIf="specialNeedsIsPopulated(pageState.details.specialNeeds)" />
           </ion-col>
           <ion-col col-56>
@@ -94,8 +94,7 @@
         <ion-row *ngIf="pageState.details.entitlementCheck.show" class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Entitlement check</label>
-            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png"
-              class="exclamation-indicator" />
+            <img alt="Exclamation Indicator" src="assets/imgs/journal/exclamation-indicator.png" class="exclamation-indicator" />
           </ion-col>
           <ion-col col-56>
             <div class="mes-data">Entitlement check is required.</div>
@@ -112,8 +111,7 @@
             <div *ngIf="!pageState.details.candidateComments.isSectionEmpty">
               <div *ngIf="pageState.details.candidateComments.previousCancellations?.length > 0">
                 <div class="mes-data">Previous cancellations</div>
-                <div
-                  *ngFor="let previousCancellation of pageState.details.candidateComments.previousCancellations"
+                <div *ngFor="let previousCancellation of pageState.details.candidateComments.previousCancellations"
                   class="mes-data">
                   - {{previousCancellation}}
                 </div>
@@ -161,6 +159,14 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
+        <ion-row *ngIf="pageState.business.businessName" class="mes-data-row-with-separator">
+          <ion-col col-40>
+            <label>Business name</label>
+          </ion-col>
+          <ion-col col-56>
+            <span class="mes-data">{{ pageState.business.businessName }}</span>
+          </ion-col>
+        </ion-row>
         <ion-row *ngIf="pageState.business.telephone" class="mes-data-row-with-separator">
           <ion-col col-40>
             <label>Phone number</label>
