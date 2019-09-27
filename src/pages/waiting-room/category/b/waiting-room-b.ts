@@ -61,7 +61,7 @@ interface WaitingRoomPageState {
   selector: 'page-waiting-room-b',
   templateUrl: 'waiting-room-b.html',
 })
-export class WaitingRoomB extends PracticeableBasePageComponent implements OnInit {
+export class WaitingRoomPageB extends PracticeableBasePageComponent implements OnInit {
 
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;

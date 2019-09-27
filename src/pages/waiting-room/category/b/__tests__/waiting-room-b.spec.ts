@@ -4,7 +4,7 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../../app/app.module';
-import { WaitingRoomB } from '../waiting-room-b';
+import { WaitingRoomPageB } from '../waiting-room-b';
 import { AuthenticationProvider } from '../../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
@@ -38,9 +38,9 @@ import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orient
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../../shared/mocks/insomnia.mock';
 
-describe('WaitingRoomB', () => {
-  let fixture: ComponentFixture<WaitingRoomB>;
-  let component: WaitingRoomB;
+describe('WaitingRoomPageB', () => {
+  let fixture: ComponentFixture<WaitingRoomPageB>;
+  let component: WaitingRoomPageB;
   let store$: Store<StoreModel>;
   let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
@@ -60,7 +60,7 @@ describe('WaitingRoomB', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WaitingRoomB,
+        WaitingRoomPageB,
       ],
       imports: [
         IonicModule,
@@ -110,7 +110,7 @@ describe('WaitingRoomB', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomB);
+        fixture = TestBed.createComponent(WaitingRoomPageB);
         component = fixture.componentInstance;
         deviceProvider = TestBed.get(DeviceProvider);
         screenOrientation = TestBed.get(ScreenOrientation);
