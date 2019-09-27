@@ -14,7 +14,7 @@ fs.readFile(path, 'utf8', (err, data) => {
     const { version } = packageObj;
     const output = `export const version = \"${version}\";\n`;
 
-    fs.writeFile('test-schema-version.js', output, 'utf8', (err) => {
+    fs.writeFile('src/environment/test-schema-version.ts', output, 'utf8', (err) => {
         if (err) {
             return console.error(err);
         }

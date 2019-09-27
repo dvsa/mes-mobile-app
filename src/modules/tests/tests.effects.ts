@@ -45,7 +45,7 @@ import { NavigationStateProvider } from '../../providers/navigation-state/naviga
 import { JournalModel } from '../journal/journal.model';
 import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
-import { testSchemaVersion } from '../../../test-schema-version';
+import { version } from '../../environment/test-schema-version';
 
 @Injectable()
 export class TestsEffects {
@@ -163,7 +163,7 @@ export class TestsEffects {
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
         new PopulateTestCategory(slot.booking.application.testCategory),
-        new PopulateTestSchemaVersion(testSchemaVersion),
+        new PopulateTestSchemaVersion(version),
         new SetExaminerBooked(parseInt(examinerBooked, 10) ? parseInt(examinerBooked, 10) : null),
         new SetExaminerConducted(parseInt(examinerConducted, 10) ? parseInt(examinerConducted, 10) : null),
         new SetExaminerKeyed(parseInt(examinerKeyed, 10) ? parseInt(examinerKeyed, 10) : null),
