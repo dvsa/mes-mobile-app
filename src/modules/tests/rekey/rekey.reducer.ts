@@ -10,6 +10,8 @@ export const rekeyReducer = (
   switch (action.type) {
     case rekeyActions.MARK_AS_REKEY:
       return true;
+    case rekeyActions.MARK_AS_NON_REKEY:
+      return false;
     default:
       return state;
   }

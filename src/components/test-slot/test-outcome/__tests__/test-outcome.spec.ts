@@ -7,7 +7,11 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { OFFICE_PAGE, WAITING_ROOM_PAGE } from '../../../../pages/page-names.constants';
+import {
+  OFFICE_PAGE, WAITING_ROOM_PAGE,
+  PASS_FINALISATION_PAGE,
+  NON_PASS_FINALISATION_PAGE,
+} from '../../../../pages/page-names.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
@@ -100,9 +104,89 @@ describe('Test Outcome', () => {
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(WAITING_ROOM_PAGE);
       });
+      it('should dispatch an ActivateTest action and navigate to the Pass Finalisation page', () => {
+        component.testStatus = TestStatus.Decided;
+        component.slotDetail = testSlotDetail;
+        this.activityCode === ActivityCodes.PASS;
+        component.resumeTest();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(PASS_FINALISATION_PAGE);
+      });
+      it('should dispatch an ActivateTest action and navigate to the Non Pass Finalisation page', () => {
+        component.testStatus = TestStatus.Decided;
+        component.slotDetail = testSlotDetail;
+        this.activityCode === ActivityCodes.FAIL;
+        component.resumeTest();
+
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
+        const { calls } = navController.push as jasmine.Spy;
+        expect(calls.argsFor(0)[0]).toBe(NON_PASS_FINALISATION_PAGE);
+      });
     });
 
     describe('showRekeyButton', () => {
+      it('should return false for a completed test', () => {
+        component.slotDetail = testSlotDetail;
+        component.testStatus = TestStatus.Completed;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(false);
+      });
+      it('should return true for a booked test on the rekey search page', () => {
+        component.slotDetail = testSlotDetail;
+        component.testStatus = TestStatus.Booked;
+        component.isTestSlotOnRekeySearch = true;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(true);
+      });
+      it('should return false for a completed test on the rekey search page', () => {
+        component.slotDetail = testSlotDetail;
+        component.testStatus = TestStatus.Completed;
+        component.isTestSlotOnRekeySearch = true;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(false);
+      });
+      it('should return true for a test that was started as a rekey and the date is in the past', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Started;
+        component.isRekey = true;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(true);
+      });
+      it('should return false for test that was started as a rekey and the date is today', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = TestStatus.Started;
+        component.isRekey = true;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(false);
+      });
+      it('should return true for a new test if date is in past', () => {
+        component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
+        component.slotDetail.start = dateTime.toString();
+        component.testStatus = null;
+
+        component.showRekeyButton();
+
+        expect(component.showRekeyButton()).toEqual(true);
+      });
       it('should return true for a booked test if date is in past', () => {
         component.slotDetail = testSlotDetail;
         const dateTime = new DateTime();
@@ -125,10 +209,12 @@ describe('Test Outcome', () => {
 
         expect(component.showRekeyButton()).toEqual(false);
       });
-      it('should return true for a booked test on the rekey search page', () => {
+      it('should return true for a booked test if date is in the past', () => {
         component.slotDetail = testSlotDetail;
+        const dateTime = new DateTime();
+        dateTime.subtract(1, Duration.DAY);
+        component.slotDetail.start = dateTime.toString();
         component.testStatus = TestStatus.Booked;
-        component.isTestSlotOnRekeySearch = true;
 
         component.showRekeyButton();
 

@@ -26,6 +26,7 @@ import { getRekeySearchState } from '../../../pages/rekey-search/rekey-search.re
 import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.selector';
 import { merge } from 'rxjs/observable/merge';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { MarkAsNonRekey } from '../../../modules/tests/rekey/rekey.actions';
 
 @Component({
   selector: 'test-outcome',
@@ -153,7 +154,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   startTest() {
-    if (this.isE2EPracticeMode() && this.testStatus === TestStatus.Booked) {
+    if (this.isE2EPracticeMode()) {
       this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
     } else {
       this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.startTestAsRekey || this.isRekey));
@@ -188,6 +189,10 @@ export class TestOutcomeComponent implements OnInit {
     switch (event) {
       case ModalEvent.START:
         this.startTestAsRekey = false;
+        this.isRekey = false;
+        if (this.testStatus !== null) {
+          this.store$.dispatch(new MarkAsNonRekey());
+        }
         this.startOrResumeTestDependingOnStatus();
         break;
       case ModalEvent.REKEY:
