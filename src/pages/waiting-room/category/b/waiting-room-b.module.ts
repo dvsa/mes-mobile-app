@@ -5,14 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from '../../waiting-room.analytics.effects';
-import { WaitingRoomB } from './waiting-room-b';
+import { WaitingRoomPageB } from './waiting-room-b';
 
 @NgModule({
   declarations: [
-    WaitingRoomB,
+    WaitingRoomPageB,
   ],
   imports: [
-    IonicPageModule.forChild(WaitingRoomB),
+    IonicPageModule.forChild(WaitingRoomPageB),
     EffectsModule.forFeature([
       WaitingRoomAnalyticsEffects,
     ]),
@@ -21,4 +21,4 @@ import { WaitingRoomB } from './waiting-room-b';
     TranslateModule,
   ],
 })
-export class WaitingRoomBPageModule { }
+export class WaitingRoomPageBModule { }
