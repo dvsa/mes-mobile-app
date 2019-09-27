@@ -107,7 +107,7 @@ describe('Test Outcome', () => {
       it('should dispatch an ActivateTest action and navigate to the Pass Finalisation page', () => {
         component.testStatus = TestStatus.Decided;
         component.slotDetail = testSlotDetail;
-        this.activityCode === ActivityCodes.PASS;
+        component.activityCode === ActivityCodes.PASS;
         component.resumeTest();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
@@ -117,7 +117,7 @@ describe('Test Outcome', () => {
       it('should dispatch an ActivateTest action and navigate to the Non Pass Finalisation page', () => {
         component.testStatus = TestStatus.Decided;
         component.slotDetail = testSlotDetail;
-        this.activityCode === ActivityCodes.FAIL;
+        component.activityCode === ActivityCodes.FAIL;
         component.resumeTest();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
