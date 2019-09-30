@@ -3,7 +3,7 @@
   <ion-navbar>
     <ion-title>{{ 'debrief.title' | translate }}</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
-      <button ion-button (click)="logout()">Logout</button>
+      <button ion-button (click)="logout()">Sign Out</button>
     </ion-buttons>
   </ion-navbar>
   <div id="test-outcome-background" [ngSwitch]="outcome">
