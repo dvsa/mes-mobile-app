@@ -11,7 +11,7 @@
             Continue to write up
         </button>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="!(pageState.isRekey$ | async)">
         <button ion-button class="mes-neutral-button office-button bottom-button" (click)="goToJournal()">
             Return to journal
         </button>
