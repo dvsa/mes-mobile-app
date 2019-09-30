@@ -12,7 +12,7 @@ fs.readFile(path, 'utf8', (err, data) => {
 
     const packageObj = JSON.parse(data);
     const { version } = packageObj;
-    const output = `export const version = \"${version}\";\n`;
+    const output = `export const version = \'${version}\';\n`;
 
     fs.writeFile('src/environment/test-schema-version.ts', output, 'utf8', (err) => {
         if (err) {
