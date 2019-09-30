@@ -12,7 +12,7 @@ describe('instructor details reducer factory', () => {
 
   it('should return undefined for cat B+E instructor details reducer', () => {
     const reducer = instructorDetailsReducerFactory(TestCategories.BE);
-    expect(reducer.name).toBe(undefined);
+    expect(reducer).toBe(undefined);
   });
 
   it('should create a default (cat B) instructor details reducer', () => {
