@@ -8,9 +8,8 @@ import { nestedCombineReducers } from 'nested-combine-reducers';
 
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
 import { testDataReducerFactory } from './test-data/test-data-reducer-factory';
-import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { vehicleDetailsReducerFactory } from './vehicle-details/vehicle-details-reducer-factory';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
@@ -34,6 +33,7 @@ import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { get } from 'lodash';
+import { instructorDetailsReducerFactory } from './instructor-details/instructor-details-reducer-factory';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -113,8 +113,8 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             },
             preTestDeclarations: preTestDeclarationsReducer,
             accompaniment: accompanimentReducer,
-            vehicleDetails: vehicleDetailsReducer,
-            instructorDetails: instructorDetailsReducer,
+            vehicleDetails: vehicleDetailsReducerFactory(get(state.startedTests[slotId], 'category')),
+            instructorDetails: instructorDetailsReducerFactory(get(state.startedTests[slotId], 'category')),
             testData: testDataReducerFactory(get(state.startedTests[slotId], 'category')),
             passCompletion: passCompletionReducer,
             postTestDeclarations: postTestDeclarationsReducer,

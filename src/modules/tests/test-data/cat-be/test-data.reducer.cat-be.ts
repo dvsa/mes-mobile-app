@@ -20,7 +20,7 @@ export const initialState: TestData = {
   },
 };
 
-export function testDataReducer(
+export function testDataReducerCatBE(
   state = initialState,
   action: testDataActions.Types,
 ): TestData {

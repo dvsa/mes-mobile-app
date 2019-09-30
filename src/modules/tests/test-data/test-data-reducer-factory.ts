@@ -1,6 +1,6 @@
 
 import { testDataReducer } from './test-data.reducer';
-import { testDataReducer as testDataReducerCatBE } from './cat-be/test-data.reducer';
+import { testDataReducerCatBE } from './cat-be/test-data.reducer.cat-be';
 
 import { TestCategories } from '../../../shared/constants/test-categories';
 
