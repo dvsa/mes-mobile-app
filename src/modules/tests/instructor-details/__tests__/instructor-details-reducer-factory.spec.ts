@@ -4,7 +4,7 @@ import { instructorDetailsReducerFactory } from '../instructor-details-reducer-f
 import { instructorDetailsReducer } from '../instructor-details.reducer';
 import { TestCategories } from '../../../../shared/constants/test-categories';
 
-fdescribe('instructor details reducer factory', () => {
+describe('instructor details reducer factory', () => {
   it('should create a cat B instructor details reducer', () => {
     const reducer = instructorDetailsReducerFactory(TestCategories.B);
     expect(reducer.name).toEqual(instructorDetailsReducer.name);

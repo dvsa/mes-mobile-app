@@ -37,7 +37,7 @@ import { CompetencyOutcome } from '../../../../../shared/models/competency-outco
 import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
 import { ShowMeQuestion } from '../../../../../providers/question/show-me-question.model';
 
-fdescribe('TestDataReducer reducer', () => {
+describe('TestDataReducer reducer', () => {
   describe('ADD_DRIVING_FAULT', () => {
     it('should add a driving fault when no driving faults exist', () => {
       const result = testDataReducerCatBE(initialState, new AddDrivingFault({
