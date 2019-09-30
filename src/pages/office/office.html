@@ -3,7 +3,7 @@
   <ion-navbar hideBackButton>
     <ion-title>Office</ion-title>
     <ion-buttons end *ngIf="authenticationProvider.logoutEnabled()">
-      <button ion-button (click)="logout()">Logout</button>
+      <button ion-button (click)="logout()">Sign Out</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -16,7 +16,7 @@
     </ion-col>
     <ion-col col-36 class="align-col-right">
       <h2>{{pageState.startTime$ | async}}</h2>
-      <h3>test outcome: 
+      <h3>Test outcome: 
         <div id="test-outcome-text" class="inline-mode" [ngSwitch]="(pageState.testOutcomeText$ | async)">
           <span class="pass" *ngSwitchCase="'Passed'">
             {{pageState.testOutcomeText$ | async}}
@@ -36,7 +36,7 @@
 
     <ion-card>
       <ion-card-header>
-        <h4>Test Summary</h4>
+        <h4>Test summary</h4>
       </ion-card-header>
 
       <ion-card-content class="card-content-ios" no-bounce>
