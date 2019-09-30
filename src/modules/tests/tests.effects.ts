@@ -32,6 +32,7 @@ import { extractTestSlotAttributes } from './test-slot-attributes/test-slot-attr
 import { PopulateTestCentre } from './test-centre/test-centre.actions';
 import { extractTestCentre } from './test-centre/test-centre.selector';
 import { PopulateTestCategory } from './category/category.actions';
+import { PopulateTestSchemaVersion } from './schema-version/schema-version.actions';
 import { SetExaminerBooked } from './examiner-booked/examiner-booked.actions';
 import { SetExaminerConducted } from './examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
@@ -44,6 +45,7 @@ import { NavigationStateProvider } from '../../providers/navigation-state/naviga
 import { JournalModel } from '../journal/journal.model';
 import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
+import { version } from '../../environment/test-schema-version';
 
 @Injectable()
 export class TestsEffects {
@@ -165,6 +167,7 @@ export class TestsEffects {
         new SetExaminerConducted(parseInt(examinerConducted, 10) ? parseInt(examinerConducted, 10) : null),
         new SetExaminerKeyed(parseInt(examinerKeyed, 10) ? parseInt(examinerKeyed, 10) : null),
         new PopulateConductedLanguage(conductedLanguage),
+        new PopulateTestSchemaVersion(version),
       ];
 
       if (startTestAction.rekey) {

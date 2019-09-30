@@ -32,6 +32,7 @@ import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
+import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -100,6 +101,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
         // slotId to the relevant sub-reducer
         ...nestedCombineReducers(
           {
+            version: schemaVersionReducer,
             category: categoryReducer,
             journalData: {
               examiner: examinerReducer,

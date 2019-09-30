@@ -8,16 +8,19 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 
 - Node (v 10.13.0)
 - npm (v 6.4.1)
-- Ionic CLI + Cordova: `npm install -g cordova ionic`
+- Ionic CLI + Cordova: `npm install -g ionic`
+- Cordova (v 8.1.12) `npm install -g cordova@8.1.12`
 - Security
   - [Git secrets](https://github.com/awslabs/git-secrets)
   - [ScanRepo](https://github.com/UKHomeOffice/repo-security-scanner)
 
 ### Get started
 
-- `npm install`
+- `npm ci`
 - `npm run config:dev` (if using the dev config)
+- `npm run schema-version`
 - `ionic serve`
+
 
 #### Serve with local data
 - `npm run serve:local` (This will take the files in `/mock/` and serve them. You can edit them in `src/assets/mock` after running the command, this will live reload the UI with the new updated mock data. To point the app to different mock data, edit the `environment/environment.local.ts` file)
@@ -112,3 +115,17 @@ bin/fetch-logs-api-key.sh <env>
 ```
 
 If successful, you should see the `logsPostApiKey` key populated in `environment.ts`.
+
+### Xcode 11 Issue
+There is currently an issue building the app in Xcode 11. The following workaround can be used to get past this
+
+- Run `ionic cordova build ios`
+- Open `platforms/ios/cordova/lib/list-emulator-build-targets`
+- Change the following code:
+FROM:
+    `if (device.name === deviceType.name.replace(/\-inch/g, ' inch') && device.availability.toLowerCase().indexOf('unavailable') < 0) {`
+TO:
+    `if (device.name === deviceType.name.replace(/\-inch/g, ' inch') && device.isAvailable) {`
+- Run `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0"`
+- Successful Build
+- Any additional builds will succeed if you run `ionic cordova build ios -- --buildFlag="-UseModernBuildSystem=0"` and haven't deleted the platforms folder

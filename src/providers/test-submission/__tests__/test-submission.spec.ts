@@ -133,6 +133,7 @@ describe('TestSubmissionProvider', () => {
         index: 0,
         slotId: '',
         payload: {
+          version: '0.0.1',
           category: 'B',
           rekey: false,
           journalData: null,
@@ -153,6 +154,7 @@ describe('TestSubmissionProvider', () => {
         index: 0,
         slotId: '',
         payload: {
+          version: '0.0.1',
           category: 'B',
           rekey: true,
           journalData: null,
@@ -173,6 +175,7 @@ describe('TestSubmissionProvider', () => {
         index: 0,
         slotId: '',
         payload: {
+          version: '0.0.1',
           category: 'B',
           rekey: false,
           journalData: null,
@@ -193,6 +196,7 @@ describe('TestSubmissionProvider', () => {
         index: 0,
         slotId: '',
         payload: {
+          version: '0.0.1',
           category: 'B',
           rekey: false,
           journalData: null,
