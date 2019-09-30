@@ -30,7 +30,7 @@ const localJournal: ExaminerWorkSchedule = {
           specialNeeds: 'Candidate has dyslexia',
           specialNeedsCode: 'NONE',
           specialNeedsExtendedTest: false,
-          testCategory: 'A1',
+          testCategory: 'B+E',
           vehicleGearbox: 'Automatic',
           welshTest: false,
           meetingPlace: 'At the pub',

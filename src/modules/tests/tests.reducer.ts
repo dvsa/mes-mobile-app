@@ -7,7 +7,7 @@ import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { nestedCombineReducers } from 'nested-combine-reducers';
 
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
-import { testDataReducer } from './test-data/test-data.reducer';
+import { testDataReducerFactory } from './test-data/test-data-reducer-factory';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
 import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
@@ -33,6 +33,7 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
+import { get } from 'lodash';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -114,7 +115,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             accompaniment: accompanimentReducer,
             vehicleDetails: vehicleDetailsReducer,
             instructorDetails: instructorDetailsReducer,
-            testData: testDataReducer,
+            testData: testDataReducerFactory(get(state.startedTests[slotId], 'category')),
             passCompletion: passCompletionReducer,
             postTestDeclarations: postTestDeclarationsReducer,
             testSummary: testSummaryReducer,

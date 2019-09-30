@@ -1,8 +1,8 @@
 import { TestData } from '@dvsa/mes-test-schema/categories/B';
-import * as testDataActions from './test-data.actions';
+import * as testDataActions from '../test-data.actions';
 import { createFeatureSelector } from '@ngrx/store';
-import { Competencies } from './test-data.constants';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
+import { Competencies } from '../test-data.constants';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
 export const initialState: TestData = {
   dangerousFaults: {},
@@ -24,7 +24,7 @@ export function testDataReducer(
   state = initialState,
   action: testDataActions.Types,
 ): TestData {
-  console.log('this is the CatB reducer');
+  console.log('this is the CatBE reducer');
   switch (action.type) {
     case testDataActions.RECORD_MANOEUVRES_SELECTION:
       return {
