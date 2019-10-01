@@ -3,44 +3,44 @@ import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../../../app/app.module';
-import { WaitingRoomPageB } from '../waiting-room-b';
-import { AuthenticationProvider } from '../../../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../../../providers/authentication/__mocks__/authentication.mock';
+import { AppModule } from '../../../../app/app.module';
+import { WaitingRoomCatBPage } from '../waiting-room.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../../../components/common/common-components.module';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
-} from '../../../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
-import { DeviceAuthenticationProvider } from '../../../../../providers/device-authentication/device-authentication';
+} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,
-} from '../../../../../providers/device-authentication/__mocks__/device-authentication.mock';
-import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
-import { WaitingRoomValidationError } from '../../../waiting-room.actions';
+} from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+import { WaitingRoomValidationError } from '../../waiting-room.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
-  from '../../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { Language } from '../../../../../modules/tests/communication-preferences/communication-preferences.model';
-import { DeviceProvider } from '../../../../../providers/device/device';
-import { DeviceProviderMock } from '../../../../../providers/device/__mocks__/device.mock';
+  from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+import { DeviceProvider } from '../../../../providers/device/device';
+import { DeviceProviderMock } from '../../../../providers/device/__mocks__/device.mock';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ScreenOrientationMock } from '../../../../../shared/mocks/screen-orientation.mock';
+import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
-import { InsomniaMock } from '../../../../../shared/mocks/insomnia.mock';
+import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 
-describe('WaitingRoomPageB', () => {
-  let fixture: ComponentFixture<WaitingRoomPageB>;
-  let component: WaitingRoomPageB;
+describe('WaitingRoomCatBPage', () => {
+  let fixture: ComponentFixture<WaitingRoomCatBPage>;
+  let component: WaitingRoomCatBPage;
   let store$: Store<StoreModel>;
   let deviceProvider: DeviceProvider;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
@@ -60,7 +60,7 @@ describe('WaitingRoomPageB', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WaitingRoomPageB,
+        WaitingRoomCatBPage,
       ],
       imports: [
         IonicModule,
@@ -110,7 +110,7 @@ describe('WaitingRoomPageB', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomPageB);
+        fixture = TestBed.createComponent(WaitingRoomCatBPage);
         component = fixture.componentInstance;
         deviceProvider = TestBed.get(DeviceProvider);
         screenOrientation = TestBed.get(ScreenOrientation);

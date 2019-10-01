@@ -1,49 +1,49 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../../../shared/models/store.model';
-import * as waitingRoomActions from '../../waiting-room.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { SignatureAreaComponent } from '../../../../components/common/signature-area/signature-area';
-import { getPreTestDeclarations } from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+import { SignatureAreaComponent } from '../../../components/common/signature-area/signature-area';
+import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions
-  from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
+  from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
 import {
   getInsuranceDeclarationStatus,
   getResidencyDeclarationStatus,
   getSignatureStatus,
-} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
-import { getCandidate } from '../../../../modules/tests/candidate/candidate.reducer';
+} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
+import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../../modules/tests/candidate/candidate.selector';
+} from '../../../modules/tests/candidate/candidate.selector';
 import { map, tap } from 'rxjs/operators';
-import { getCurrentTest, getJournalData } from '../../../../modules/tests/tests.selector';
-import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
-import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+import { getTests } from '../../../modules/tests/tests.reducer';
 import { TranslateService } from 'ng2-translate';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-import { getTestSlotAttributes } from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import { getTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import {
   getCommunicationPreference,
-} from '../../../../modules/tests/communication-preferences/communication-preferences.reducer';
+} from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
   getConductedLanguage,
-} from '../../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { COMMUNICATION_PAGE } from '../../../page-names.constants';
+} from '../../../modules/tests/communication-preferences/communication-preferences.selector';
+import { COMMUNICATION_PAGE } from '../../page-names.constants';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
-} from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { DeviceProvider } from '../../../../providers/device/device';
+import { DeviceProvider } from '../../../providers/device/device';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -58,10 +58,10 @@ interface WaitingRoomPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-waiting-room-b',
-  templateUrl: 'waiting-room-b.html',
+  selector: 'waiting-room-cat-b-page',
+  templateUrl: 'waiting-room.cat-b.page.html',
 })
-export class WaitingRoomPageB extends PracticeableBasePageComponent implements OnInit {
+export class WaitingRoomCatBPage extends PracticeableBasePageComponent implements OnInit {
 
   @ViewChild(SignatureAreaComponent)
   signatureArea: SignatureAreaComponent;
