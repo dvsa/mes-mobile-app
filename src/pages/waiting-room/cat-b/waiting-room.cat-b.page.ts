@@ -7,10 +7,6 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/waiting-room.cat-b.page.ts
-=======
-import { SignatureAreaComponent } from '../../../components/common/signature-area/signature-area';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.ts
 import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions
   from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
@@ -19,17 +15,10 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/waiting-room.cat-b.page.ts
 import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
 } from '../../../modules/tests/journal-data/candidate/candidate.selector';
-=======
-import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
-import {
-  getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/candidate/candidate.selector';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.ts
 import { map, tap } from 'rxjs/operators';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
@@ -37,26 +26,17 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { TranslateService } from 'ng2-translate';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/waiting-room.cat-b.page.ts
 import {
   getTestSlotAttributes,
 } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
 import { isWelshTest } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
-=======
-import { getTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.ts
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/waiting-room.cat-b.page.ts
 import { CAT_B } from '../../page-names.constants';
-=======
-import { COMMUNICATION_PAGE } from '../../page-names.constants';
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.ts
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
@@ -65,10 +45,7 @@ import { Language } from '../../../modules/tests/communication-preferences/commu
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/waiting-room.cat-b.page.ts
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
-=======
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.ts
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -83,20 +60,10 @@ interface WaitingRoomPageState {
 
 @IonicPage()
 @Component({
-<<<<<<< HEAD:src/pages/waiting-room/cat-b/waiting-room.cat-b.page.ts
   selector: 'waiting-room-cat-b-page',
   templateUrl: 'waiting-room.cat-b.page.html',
 })
 export class WaitingRoomCatBPage extends PracticeableBasePageComponent implements OnInit {
-=======
-  selector: 'page-cat-b-waiting-room',
-  templateUrl: 'cat-b-waiting-room.html',
-})
-export class CatBWaitingRoomPage extends PracticeableBasePageComponent implements OnInit {
-
-  @ViewChild(SignatureAreaComponent)
-  signatureArea: SignatureAreaComponent;
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.ts
 
   @ViewChild(Navbar) navBar: Navbar;
 
