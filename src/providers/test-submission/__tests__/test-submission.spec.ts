@@ -213,4 +213,73 @@ describe('TestSubmissionProvider', () => {
       expect(result).toEqual(false);
     });
   });
+
+  describe('buildUrl', () => {
+    it('build url should set partial query string as true if not a rekey and test status is write up', () => {
+      const result = testSubmissionProvider.buildUrl({
+        index: 0,
+        slotId: '',
+        payload: {
+          version: '0.0.1',
+          category: 'B',
+          rekey: false,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.WriteUp,
+      });
+
+      // ASSERT
+      expect(result).toEqual('https://www.example.com/api/v1/test-result?partial=true');
+    });
+
+    it('url should not set partial query string as if its a rekey', () => {
+      const result = testSubmissionProvider.buildUrl({
+        index: 0,
+        slotId: '',
+        payload: {
+          version: '0.0.1',
+          category: 'B',
+          rekey: true,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.WriteUp,
+      });
+
+      // ASSERT
+      expect(result).toEqual('https://www.example.com/api/v1/test-result');
+    });
+
+    it('should not have partial query string if its not rekey and test status is not writeup', () => {
+      const result = testSubmissionProvider.buildUrl({
+        index: 0,
+        slotId: '',
+        payload: {
+          version: '0.0.1',
+          category: 'B',
+          rekey: false,
+          journalData: null,
+          activityCode: '1',
+          changeMarker: false,
+          examinerBooked: 1,
+          examinerConducted: 1,
+          examinerKeyed: 1,
+        },
+        status: TestStatus.Completed,
+      });
+
+      // ASSERT
+      expect(result).toEqual('https://www.example.com/api/v1/test-result');
+    });
+  });
+
 });

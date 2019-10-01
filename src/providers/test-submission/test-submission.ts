@@ -48,7 +48,7 @@ export class TestSubmissionProvider {
         : deepClonedData);
 
     return this.httpClient.post(
-      this.buildUrl(testToSubmit.status),
+      this.buildUrl(testToSubmit),
       this.compressData(cleanData),
       { observe: 'response' },
     )
@@ -64,13 +64,13 @@ export class TestSubmissionProvider {
       );
   }
 
-  buildUrl = (testStatus: TestStatus): string =>
-  `${this.urlProvider.getTestResultServiceUrl()}${testStatus === TestStatus.WriteUp ? '?partial=true' : ''}`
+  buildUrl = (testToSubmit: TestToSubmit): string =>
+    `${this.urlProvider.getTestResultServiceUrl()}${this.isPartialSubmission(testToSubmit) ? '?partial=true' : ''}`
 
   compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
 
-  isPartialSubmission(testToSubmit: TestToSubmit) : boolean {
+  isPartialSubmission(testToSubmit: TestToSubmit): boolean {
     return testToSubmit.status === TestStatus.WriteUp && !testToSubmit.payload.rekey;
   }
 
