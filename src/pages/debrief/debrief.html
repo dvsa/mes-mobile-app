@@ -53,14 +53,14 @@
       <ion-grid>
         <ion-row align-items-center *ngFor="let dangerousFault of (pageState.dangerousFaults$ | async)"
           class="mes-data">
-          <ion-col col-32></ion-col>
-          <ion-col col-2>
+          <ion-col col-32 no-padding></ion-col>
+          <ion-col col-2 no-padding align-self-start>
             <div class="counter-icon">
               <dangerous-fault-badge [showBadge]="true"></dangerous-fault-badge>
             </div>
           </ion-col>
-          <ion-col col-3></ion-col>
-          <ion-col>
+          <ion-col col-3 no-padding></ion-col>
+          <ion-col no-padding>
             <div class="counter-label">{{ 'debrief.competencies.' + dangerousFault | translate }}</div>
           </ion-col>
         </ion-row>
@@ -78,14 +78,14 @@
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-center *ngFor="let seriousFault of (pageState.seriousFaults$ | async)" class="mes-data">
-          <ion-col col-32></ion-col>
-          <ion-col col-2>
+          <ion-col col-32 no-padding></ion-col>
+          <ion-col col-2 no-padding align-self-start>
             <div class="counter-icon">
               <serious-fault-badge [showBadge]="true"></serious-fault-badge>
             </div>
           </ion-col>
-          <ion-col col-3></ion-col>
-          <ion-col>
+          <ion-col col-3 no-padding></ion-col>
+          <ion-col no-padding>
             <div class="counter-label">{{ 'debrief.competencies.' + seriousFault | translate }}</div>
           </ion-col>
         </ion-row>
@@ -104,15 +104,15 @@
     <ion-card-content>
       <ion-grid>
         <ion-row align-items-center *ngFor="let drivingFault of (pageState.drivingFaults$ | async)" class="mes-data">
-          <ion-col col-32></ion-col>
-          <ion-col col-2>
+          <ion-col col-32 no-padding></ion-col>
+          <ion-col col-2 no-padding align-self-start>
             <div class="counter-icon">
               <driving-faults-badge class="counter driving-faults" [count]="drivingFault.faultCount">
               </driving-faults-badge>
             </div>
           </ion-col>
-          <ion-col col-3></ion-col>
-          <ion-col>
+          <ion-col col-3 no-padding></ion-col>
+          <ion-col no-padding>
             <div class="counter-label">{{'debrief.competencies.' + drivingFault.competencyIdentifier | translate}}</div>
           </ion-col>
         </ion-row>
