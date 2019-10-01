@@ -14,29 +14,8 @@ waiting-room-cat-b-page {
       }
     }
 
-    .declaration-checkbox-row {
-      margin: 0 28px;
-    }
-
-    .declaration-signature-row {
-      height: 250px;
-
-      .declaration-signature-col {
-        height: inherit;
-        margin: 0 28px;
-        margin-bottom: -50px;
-      }
-    }
-
     .signature-area-padding {
       height: 18px;
-    }
-    .signature-validation-row {
-      height: 300px;
-    }
-
-    conducted-language > ion-row {
-      margin-bottom: -36px;
     }
   }
 }
