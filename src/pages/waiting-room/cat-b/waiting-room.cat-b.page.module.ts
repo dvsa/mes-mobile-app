@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ComponentsModule } from '../../../../components/common/common-components.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
-import { WaitingRoomAnalyticsEffects } from '../../waiting-room.analytics.effects';
-import { WaitingRoomPageB } from './waiting-room-b';
+import { WaitingRoomAnalyticsEffects } from '../waiting-room.analytics.effects';
+import { WaitingRoomCatBPage } from './waiting-room.cat-b.page';
 
 @NgModule({
   declarations: [
-    WaitingRoomPageB,
+    WaitingRoomCatBPage,
   ],
   imports: [
-    IonicPageModule.forChild(WaitingRoomPageB),
+    IonicPageModule.forChild(WaitingRoomCatBPage),
     EffectsModule.forFeature([
       WaitingRoomAnalyticsEffects,
     ]),
@@ -21,4 +21,4 @@ import { WaitingRoomPageB } from './waiting-room-b';
     TranslateModule,
   ],
 })
-export class WaitingRoomPageBModule { }
+export class WaitingRoomCatBPageModule { }
