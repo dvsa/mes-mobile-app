@@ -7,8 +7,8 @@ export function instructorDetailsReducerFactory(category: string | null) {
     case TestCategories.B:
       return instructorDetailsReducer;
     case TestCategories.BE:
-      console.log('this is instructorDetailsReducer for B+E');
-      return undefined;
+      // There is no intructor details in cat b+e
+      return () => undefined;
     default:
       return instructorDetailsReducer;
   }

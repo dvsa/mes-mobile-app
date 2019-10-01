@@ -2,7 +2,7 @@
 import { testDataReducerFactory } from '../test-data-reducer-factory';
 
 import { testDataReducer } from '../test-data.reducer';
-import { testDataReducerCatBE } from '../cat-be/test-data.reducer.cat-be';
+import { testDataReducerCatBE } from '../test-data.reducer.cat-be';
 import { TestCategories } from '../../../../shared/constants/test-categories';
 
 describe('test data reducer factory', () => {

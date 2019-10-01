@@ -1,30 +1,48 @@
 import { testDataReducer, initialState } from '../test-data.reducer';
 import {
   AddDrivingFault,
-  AddSeriousFault,
-  RecordManoeuvresSelection,
-  AddDangerousFault,
-  ToggleControlEco,
-  TogglePlanningEco,
-  ToggleControlledStop,
-  ToggleLegalRequirement,
-  ToggleETA,
-  AddManoeuvreDrivingFault,
   RemoveDrivingFault,
+} from '../driving-faults/driving-faults.actions';
+import {
+  AddSeriousFault,
   RemoveSeriousFault,
-  RemoveDangerousFault,
+} from '../serious-faults/serious-faults.actions';
+import {
+  RecordManoeuvresSelection,
+  AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
+} from '../manoeuvres/manoeuvres.actions';
+import {
+  AddDangerousFault,
+  RemoveDangerousFault,
+} from '../dangerous-faults/dangerous-faults.actions';
+import {
   ToggleEco,
+  ToggleControlEco,
+  TogglePlanningEco,
+} from '../eco/eco.actions';
+import {
+  ToggleControlledStop,
+} from '../controlled-stop/controlled-stop.actions';
+import {
+  ToggleLegalRequirement,
+} from '../test-requirements/test-requirements.actions';
+import {
+  ToggleETA,
+} from '../eta/eta.actions';
+import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   ShowMeQuestionSelected,
+} from '../vehicle-checks/vehicle-checks.actions';
+import {
   EyesightTestPassed,
   EyesightTestFailed,
   EyesightTestReset,
   EyesightTestAddComment,
-} from '../test-data.actions';
+} from '../eyesight-test/eyesight-test.actions';
 import {
   Competencies,
   LegalRequirements,

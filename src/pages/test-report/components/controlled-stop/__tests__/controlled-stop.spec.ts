@@ -19,7 +19,7 @@ import { StartTest } from '../../../../../modules/tests/tests.actions';
 import {
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../../modules/tests/test-data/test-data.actions';
+} from '../../../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
 describe('ControlledStopComponent', () => {

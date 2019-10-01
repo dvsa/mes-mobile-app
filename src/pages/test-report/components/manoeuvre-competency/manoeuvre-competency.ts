@@ -6,7 +6,7 @@ import {
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
   RemoveManoeuvreFault,
-} from '../../../../modules/tests/test-data/test-data.actions';
+} from '../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
 import { getTests } from '../../../../modules/tests/tests.reducer';

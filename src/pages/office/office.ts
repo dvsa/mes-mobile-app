@@ -90,16 +90,16 @@ import {
   Identification,
   IndependentDriving,
 } from '@dvsa/mes-test-schema/categories/B';
+import { AddDangerousFaultComment } from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFaultComment } from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { AddDrivingFaultComment } from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import {
-  AddDangerousFaultComment,
-  AddSeriousFaultComment,
-  AddDrivingFaultComment,
   ShowMeQuestionSelected,
-  AddControlledStopComment,
-  AddManoeuvreComment,
   AddShowMeTellMeComment,
-  EyesightTestAddComment,
-} from '../../modules/tests/test-data/test-data.actions';
+} from '../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { AddControlledStopComment } from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import { AddManoeuvreComment } from '../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import { EyesightTestAddComment } from '../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { withLatestFrom, concatMap, switchMap, throttleTime } from 'rxjs/operators';
-import * as testDataActions from './../test-data/test-data.actions';
+import * as drivingFaultsActions from './driving-faults/driving-faults.actions';
+import * as ecoActions from './eco/eco.actions';
 import { of } from 'rxjs/observable/of';
 import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -21,18 +22,18 @@ export class TestDataEffects {
   @Effect()
   throttleAddDrivingFaultEffect$ = this.actions$.pipe(
     ofType(
-      testDataActions.THROTTLE_ADD_DRIVING_FAULT,
+      drivingFaultsActions.THROTTLE_ADD_DRIVING_FAULT,
     ),
     throttleTime(250),
-    concatMap((action: testDataActions.ThrottleAddDrivingFault) => {
-      return of(new testDataActions.AddDrivingFault(action.payload));
+    concatMap((action: drivingFaultsActions.ThrottleAddDrivingFault) => {
+      return of(new drivingFaultsActions.AddDrivingFault(action.payload));
     }),
   );
 
   @Effect()
   setEcoControlCompletedEffect$ = this.actions$.pipe(
     ofType(
-      testDataActions.TOGGLE_CONTROL_ECO,
+      ecoActions.TOGGLE_CONTROL_ECO,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -44,9 +45,9 @@ export class TestDataEffects {
         ),
       ),
     )),
-    switchMap(([action, eco]: [testDataActions.ToggleControlEco, Eco]) => {
+    switchMap(([action, eco]: [ecoActions.ToggleControlEco, Eco]) => {
       if (eco.adviceGivenControl && !eco.completed) {
-        return of(new testDataActions.ToggleEco());
+        return of(new ecoActions.ToggleEco());
       }
       return of();
     }),
@@ -55,7 +56,7 @@ export class TestDataEffects {
   @Effect()
   setEcoPlanningCompletedEffect$ = this.actions$.pipe(
     ofType(
-      testDataActions.TOGGLE_PLANNING_ECO,
+      ecoActions.TOGGLE_PLANNING_ECO,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -67,9 +68,9 @@ export class TestDataEffects {
         ),
       ),
     )),
-    switchMap(([action, eco]: [testDataActions.TogglePlanningEco, Eco]) => {
+    switchMap(([action, eco]: [ecoActions.TogglePlanningEco, Eco]) => {
       if (eco.adviceGivenPlanning && !eco.completed) {
-        return of(new testDataActions.ToggleEco());
+        return of(new ecoActions.ToggleEco());
       }
       return of();
     }),

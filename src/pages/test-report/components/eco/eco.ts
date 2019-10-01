@@ -10,7 +10,7 @@ import {
   ToggleEco,
   ToggleControlEco,
   TogglePlanningEco,
-} from '../../../../modules/tests/test-data/test-data.actions';
+} from '../../../../modules/tests/test-data/eco/eco.actions';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
