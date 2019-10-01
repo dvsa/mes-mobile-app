@@ -18,6 +18,8 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs/observable/of';
 
 describe('BackToOfficePage', () => {
   let fixture: ComponentFixture<BackToOfficePage>;
@@ -37,7 +39,50 @@ describe('BackToOfficePage', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({}),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    },
+                  },
+                  eyesightTest: {},
+                },
+                activityCode: '28',
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                    driverNumber: '123',
+                  },
+                },
+                rekey: false,
+              },
+            },
+          }),
+        }),
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -91,6 +136,19 @@ describe('BackToOfficePage', () => {
       component.isPracticeMode = true;
       component.goToJournal();
       expect(navController.popTo).toHaveBeenCalled();
+    });
+  });
+
+  describe('DOM', () => {
+    it('should show the return to journal button when not a rekey', () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('.bottom-button'))).toBeDefined();
+    });
+    it('should hide the return to journal button when this is a rekey', () => {
+      fixture.detectChanges();
+      component.pageState.isRekey$ = of(true);
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('.bottom-button'))).toBeNull();
     });
   });
 });
