@@ -12,12 +12,10 @@ import {
   SendCurrentTest,
   SendCurrentTestSuccess,
   SendCurrentTestFailure,
-  StartTest,
 } from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
 import { REKEY_UPLOAD_OUTCOME_PAGE } from '../../page-names.constants';
 import { AppInfoModel } from '../../../modules/app-info/app-info.model';
-import { testsReducer } from '../../../modules/tests/tests.reducer';
 import {
   IpadIssueSelected,
   OtherSelected,
@@ -33,6 +31,8 @@ import { FindUserProviderMock } from '../../../providers/find-user/__mocks__/fin
 import { IpadIssueComponent } from '../components/ipad-issue/ipad-issue';
 import { TransferComponent } from '../components/transfer/transfer';
 import { OtherReasonComponent } from '../components/other-reason/other-reason';
+import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('RekeyReasonPage', () => {
   let fixture: ComponentFixture<RekeyReasonPage>;
@@ -53,7 +53,57 @@ describe('RekeyReasonPage', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({
-          tests: testsReducer,
+          journal: () => ({
+            isLoading: false,
+            lastRefreshed: null,
+            slots: {},
+            selectedDate: '',
+            examiner: {
+              staffNumber: '1234567',
+            },
+          }),
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    },
+                  },
+                  eyesightTest: {},
+                },
+                activityCode: '28',
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                    driverNumber: '123',
+                  },
+                },
+                rekey: false,
+              },
+            },
+          }),
           rekeyReason: rekeyReasonReducer,
         }),
         AppModule,
@@ -66,6 +116,7 @@ describe('RekeyReasonPage', () => {
         { provide: LoadingController, useFactory: () => LoadingControllerMock.instance() },
         { provide: ModalController, useFactory: () => ModalControllerMock.instance() },
         { provide: FindUserProvider, useClass: FindUserProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
         Store,
       ],
     })
@@ -163,10 +214,9 @@ describe('RekeyReasonPage', () => {
       });
     });
   });
-
   describe('DOM', () => {
+
     it('should pass the ipad issue values to the ipad issue subcomponent', () => {
-      store$.dispatch(new StartTest(123));
       store$.dispatch(new IpadIssueSelected(true));
       store$.dispatch(new IpadIssueLostSelected());
       fixture.detectChanges();
@@ -176,7 +226,6 @@ describe('RekeyReasonPage', () => {
       expect(ipadIssueElement.lost).toEqual(true);
     });
     it('should pass the transfer values to the transfer subcomponent', () => {
-      store$.dispatch(new StartTest(123));
       store$.dispatch(new TransferSelected(true));
       store$.dispatch(new SetExaminerConducted(123));
       fixture.detectChanges();
@@ -186,7 +235,6 @@ describe('RekeyReasonPage', () => {
       expect(transferElement.staffNumber).toEqual(123);
     });
     it('should pass the other reason values to the reason subcomponent', () => {
-      store$.dispatch(new StartTest(123));
       store$.dispatch(new OtherSelected(true));
       store$.dispatch(new OtherReasonUpdated('Reason text'));
       fixture.detectChanges();

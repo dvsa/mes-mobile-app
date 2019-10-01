@@ -18,19 +18,16 @@ const cordova = {
   plugins: {
     ASAM: {
       toggle: (flag, cb) => {
-        console.log('Calling ASAM plugin mock');
         cb(true);
       },
     },
     DeviceAuthentication: {
       runAuthentication: (prompt, successCB, failedCB) => {
-        console.log('Calling Device Auth plugin mock');
         successCB(true);
       },
     },
     AppConfig: {
       getValue: (key) => {
-        console.log('Calling App Config plugin mock')
         return 'AppConfigMock';
       }
     }

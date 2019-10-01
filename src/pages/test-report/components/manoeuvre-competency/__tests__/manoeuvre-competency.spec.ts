@@ -10,9 +10,7 @@ import { SeriousFaultBadgeComponent } from '../../../../../components/common/ser
 import {
   DangerousFaultBadgeComponent,
 } from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { ManoeuvreCompetencyComponent } from '../manoeuvre-competency';
 import {
   AddManoeuvreDrivingFault,
@@ -27,6 +25,8 @@ import { StoreModule, Store } from '@ngrx/store';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { ToggleDangerousFaultMode, ToggleSeriousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('ManoeuvreCompetencyComponent', () => {
   let fixture: ComponentFixture<ManoeuvreCompetencyComponent>;
@@ -44,10 +44,64 @@ describe('ManoeuvreCompetencyComponent', () => {
       imports: [
         AppModule,
         IonicModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport : testReportReducer }),
+        StoreModule.forRoot({
+          journal: () => ({
+            isLoading: false,
+            lastRefreshed: null,
+            slots: {},
+            selectedDate: '',
+            examiner: {
+              staffNumber: '1234567',
+            },
+          }),
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    },
+                  },
+                  eyesightTest: {},
+                },
+                activityCode: '28',
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                    driverNumber: '123',
+                  },
+                },
+                rekey: false,
+              },
+            },
+          }),
+          testReport : testReportReducer,
+        }),
       ],
       providers: [
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
@@ -55,8 +109,6 @@ describe('ManoeuvreCompetencyComponent', () => {
         fixture = TestBed.createComponent(ManoeuvreCompetencyComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-
-        store$.dispatch(new StartTest(103));
       });
   }));
 

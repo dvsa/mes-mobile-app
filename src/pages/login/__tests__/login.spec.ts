@@ -45,6 +45,8 @@ import { StartSendingCompletedTests } from '../../../modules/tests/tests.actions
 import { DASHBOARD_PAGE } from '../../page-names.constants';
 import { LoadEmployeeId, LoadConfigSuccess } from '../../../modules/app-info/app-info.actions';
 import { AppConfigError } from '../../../providers/app-config/app-config.constants';
+import { LogHelper } from '../../../providers/logs/logsHelper';
+import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 
 describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
@@ -79,6 +81,7 @@ describe('LoginPage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: DataStoreProvider, useClass: DataStoreProviderMock },
         { provide: SecureStorage, useClass: SecureStorageMock },
+        { provide: LogHelper, useClass: LogHelperMock },
       ],
     })
       .compileComponents()

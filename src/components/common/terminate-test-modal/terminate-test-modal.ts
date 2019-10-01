@@ -9,16 +9,17 @@ import { DeviceAuthenticationProvider } from '../../../providers/device-authenti
 })
 export class TerminateTestModal {
 
-  onCancel: Function;
-
-  onTerminate: Function;
-
   constructor(
     private navParams: NavParams,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
-  ) {
-    this.onCancel = this.navParams.get('onCancel');
-    this.onTerminate = this.navParams.get('onTerminate');
+  ) {}
+
+  onCancel() {
+    return this.navParams.get('onCancel');
+  }
+
+  onTerminate() {
+    return this.navParams.get('onTerminate');
   }
 
   /**

@@ -6,7 +6,9 @@ export class DateTime {
   constructor(sourceDateTime?: DateTime | string | Date) {
     if (sourceDateTime === undefined) {
       this.moment = moment();
-    } else if (typeof sourceDateTime === 'string' || sourceDateTime instanceof Date) {
+    } else if (typeof sourceDateTime === 'string') {
+      this.moment = moment(new Date(sourceDateTime));
+    } else if (sourceDateTime instanceof Date) {
       this.moment = moment(sourceDateTime);
     } else {
       this.moment = moment(sourceDateTime.moment);
