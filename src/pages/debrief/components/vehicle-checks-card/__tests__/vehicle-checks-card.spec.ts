@@ -109,7 +109,10 @@ describe('VehicleChecksCardComponent', () => {
           translate.use('cy').subscribe(() => {
             fixture.detectChanges();
             const tellMeQuestionText = fixture.debugElement.query(By.css('#tell-me-question')).nativeElement;
-            expect(tellMeQuestionText.innerHTML.trim()).toBe('[CY] Tell me question - [CY] Driving fault');
+            const questionText = (<any>welshTranslations).debrief.tellMeQuestion;
+            const drvingFaultText = (<any>welshTranslations).debrief.drivingFault;
+            expect(tellMeQuestionText.innerHTML.trim())
+              .toBe(`${questionText} - ${drvingFaultText}`);
             done();
           });
         });

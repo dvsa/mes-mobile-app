@@ -27,6 +27,7 @@ import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-att
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import * as welshTranslations from '../../../assets/i18n/cy.json';
 
 const mockCandidate = {
   driverNumber: '123',
@@ -223,7 +224,10 @@ describe('HealthDeclarationPage', () => {
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const declarationIntent = fixture.debugElement.query(By.css('h4')).nativeElement;
-          expect(declarationIntent.innerHTML).toBe('[CY] I declare that:');
+          expect(declarationIntent.innerHTML)
+            .toBe(`${(<any>welshTranslations).healthDeclaration.declarationIntent}:`);
+          done();
+
           done();
         });
         store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
