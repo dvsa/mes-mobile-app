@@ -9,8 +9,6 @@ import { AuthenticationProvider } from '../../../../providers/authentication/aut
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../../components/common/common-components.module';
 import {
   ToggleResidencyDeclaration,
   ToggleInsuranceDeclaration,
@@ -25,7 +23,6 @@ import {
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { WaitingRoomValidationError } from '../../waiting-room.actions';
-import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
@@ -37,6 +34,17 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
+import { MockComponent } from 'ng-mocks';
+import { ConductedLanguageComponent } from '../../components/conducted-language/conducted-language';
+import { InsuranceDeclarationComponent } from '../../components/insurance-declaration/insurance-declaration';
+import { ResidencyDeclarationComponent } from '../../components/residency-declaration/residency-declaration';
+import { SignatureComponent } from '../../components/signature/signature';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
+import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
+import { LockScreenIndicator } from '../../../../components/common/screen-lock-indicator/lock-screen-indicator';
+import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
+import { candidateMock } from '../../../../shared/mocks/candidate.mock';
+import { FormControl, Validators } from '@angular/forms';
 
 describe('WaitingRoomCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatBPage>;
@@ -46,26 +54,26 @@ describe('WaitingRoomCatBPage', () => {
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
-
   let translate: TranslateService;
-
-  const mockCandidate = {
-    driverNumber: '123',
-    candidateName: {
-      firstName: 'Joe',
-      lastName: 'Bloggs',
-    },
-  };
+  let navController: NavController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         WaitingRoomCatBPage,
+        MockComponent(PracticeModeBanner),
+        MockComponent(EndTestLinkComponent),
+        MockComponent(LockScreenIndicator),
+        MockComponent(CandidateSectionComponent),
+        MockComponent(ConductedLanguageComponent),
+        MockComponent(InsuranceDeclarationComponent),
+        MockComponent(ResidencyDeclarationComponent),
+        MockComponent(SignatureComponent),
       ],
       imports: [
         IonicModule,
         AppModule,
-        ComponentsModule,
+        TranslateModule,
         StoreModule.forFeature('tests', () => ({
           currentTest: {
             slotId: '123',
@@ -80,7 +88,7 @@ describe('WaitingRoomCatBPage', () => {
                 postTestSignature: '',
               },
               journalData: {
-                candidate: mockCandidate,
+                candidate: candidateMock,
                 testSlotAttributes: {
                   welshTest: false,
                 },
@@ -93,7 +101,6 @@ describe('WaitingRoomCatBPage', () => {
             },
           },
         })),
-        TranslateModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -121,16 +128,20 @@ describe('WaitingRoomCatBPage', () => {
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
         component.subscription = new Subscription();
+        navController = TestBed.get(NavController);
       });
   }));
 
   describe('Class', () => {
-    describe('declaration status', () => {
+    describe('residencyDeclarationChanged', () => {
       it('should emit a residency declaration toggle action when changed', () => {
         component.residencyDeclarationChanged();
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ToggleResidencyDeclaration());
       });
+    });
+
+    describe('insuranceDeclarationChanged', () => {
       it('should emit an insurance declaration toggle action when changed', () => {
         component.insuranceDeclarationChanged();
 
@@ -138,7 +149,7 @@ describe('WaitingRoomCatBPage', () => {
       });
     });
 
-    describe('Welsh text selected', () => {
+    describe('dispatchCandidateChoseToProceedInWelsh', () => {
       it('it should dispatch CandidateChoseToProceedWithTestInWelsh action', () => {
         component.dispatchCandidateChoseToProceedInWelsh();
         expect(store$.dispatch)
@@ -147,7 +158,7 @@ describe('WaitingRoomCatBPage', () => {
       });
     });
 
-    describe('English text selected', () => {
+    describe('dispatchCandidateChoseToProceedInEnglish', () => {
       it('it should dispatch CandidateChoseToProceedWithTestInEnglish action', () => {
         component.dispatchCandidateChoseToProceedInEnglish();
         expect(store$.dispatch)
@@ -181,80 +192,30 @@ describe('WaitingRoomCatBPage', () => {
       });
 
     });
-  });
 
-  describe('clickBack', () => {
-    it('should should trigger the lock screen', () => {
-      component.clickBack();
-      expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
-    });
-
-    describe('Declaration Validation', () => {
-      it('form should only be valid when all fields are set', () => {
-        const form = component.form;
-        form.get('insuranceCheckboxCtrl').setValue(true);
-        expect(form.get('insuranceCheckboxCtrl').status).toEqual('VALID');
-        form.get('residencyCheckboxCtrl').setValue(true);
-        expect(form.get('residencyCheckboxCtrl').status).toEqual('VALID');
-        expect(form.valid).toEqual(false);
-        form.get('signatureAreaCtrl').setValue('any date you like.');
-        expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
-        expect(form.valid).toEqual(true);
+    describe('clickBack', () => {
+      it('should should trigger the lock screen', () => {
+        component.clickBack();
+        expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
     });
-  });
 
-  describe('DOM', () => {
-    describe('Declaration checkboxes', () => {
-      it('should call residency change handler when residency declaration is (un)checked', () => {
-        fixture.detectChanges();
-        spyOn(component, 'residencyDeclarationChanged');
-        const residencyCb = fixture.debugElement.query(By.css('#residency-declaration-checkbox'));
-        residencyCb.triggerEventHandler('click', null);
-        expect(component.residencyDeclarationChanged).toHaveBeenCalled();
+    describe('onSubmit', () => {
+      it('should navigate to the COMMUNICATION_PAGE if the form is valid', () => {
+        const formGroup = component.formGroup;
+        formGroup.addControl('insuranceCheckbox', new FormControl('', [Validators.requiredTrue]));
+        formGroup.get('insuranceCheckbox').setValue(true);
+        component.onSubmit();
+        expect(navController.push).toHaveBeenCalled();
       });
-      it('should call insurance change handler when insurance declaration is (un)checked', () => {
-        fixture.detectChanges();
-        spyOn(component, 'insuranceDeclarationChanged');
-        const insuranceCb = fixture.debugElement.query(By.css('#insurance-declaration-checkbox'));
-        insuranceCb.triggerEventHandler('click', null);
-        expect(component.insuranceDeclarationChanged).toHaveBeenCalled();
-      });
-    });
-  });
-  describe('onSubmit', () => {
-    it('should dispatch the WaitingRoomValidationError action', fakeAsync(() => {
-      const form = component.form;
-      form.get('insuranceCheckboxCtrl').setValue(false);
-      form.get('residencyCheckboxCtrl').setValue(false);
-      form.get('signatureAreaCtrl').setValue(null);
-      component.onSubmit();
-      tick();
-      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('insuranceCheckboxCtrl is blank'));
-      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('residencyCheckboxCtrl is blank'));
-      expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('signatureAreaCtrl is blank'));
-    }));
-  });
-  describe('rehydrateFields', () => {
-    it('should set the field values from the page state', () => {
-      const form = component.form;
-
-      form.get('insuranceCheckboxCtrl').setValue(null);
-      form.get('residencyCheckboxCtrl').setValue(null);
-      form.get('signatureAreaCtrl').setValue(null);
-
-      fixture.detectChanges();
-
-      component.pageState.insuranceDeclarationAccepted$ = of(true);
-      component.pageState.residencyDeclarationAccepted$ = of(true);
-      component.pageState.signature$ = of('abc123');
-
-      component.rehydrateFields();
-      fixture.detectChanges();
-
-      expect(form.get('insuranceCheckboxCtrl').value).toEqual(true);
-      expect(form.get('residencyCheckboxCtrl').value).toEqual(true);
-      expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
+      it('should dispatch the WaitingRoomValidationError action if a field is not valid', fakeAsync(() => {
+        const formGroup = component.formGroup;
+        formGroup.addControl('insuranceCheckbox', new FormControl('', [Validators.requiredTrue]));
+        formGroup.get('insuranceCheckbox').setValue(false);
+        component.onSubmit();
+        tick();
+        expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('insuranceCheckbox is blank'));
+      }));
     });
   });
 });

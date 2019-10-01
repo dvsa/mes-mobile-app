@@ -6,6 +6,7 @@ import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from '../waiting-room.analytics.effects';
 import { WaitingRoomCatBPage } from './waiting-room.cat-b.page';
+import { WaitingRoomComponentsModule } from '../components/waiting-room.components.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { WaitingRoomCatBPage } from './waiting-room.cat-b.page';
     EffectsModule.forFeature([
       WaitingRoomAnalyticsEffects,
     ]),
+    WaitingRoomComponentsModule,
     ComponentsModule,
     ReactiveFormsModule,
     TranslateModule,
