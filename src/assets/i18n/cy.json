@@ -1,6 +1,6 @@
 {
   "common": {
-    "continue": "parhau",
+    "continue": "Parhau",
     "screenLocked": "Dyfais wedi'i chloi"
   },
   "communication": {
@@ -49,11 +49,11 @@
       "useOfSpeed": "Defnyddio cyflymder",
       "progressAppropriateSpeed": "Symud ymlaen - cyflymder addas",
       "progressUndueHesitation": "Symud ymlaen - petruso gormodol",
-      "responseToSignsTrafficSigns": "Ymateb I arwyddion ffyrdd/ signalau - arwyddion traffig",
-      "responseToSignsRoadMarkings": "Ymateb I arwyddion ffyrdd/ signalau - marciau ar y ffordd",
-      "responseToSignsTrafficLights": "Ymateb I arwyddion ffyrdd/ signalau - goleuadau traffig",
-      "responseToSignsTrafficControllers": "Ymateb I arwyddion ffyrdd/ signalau - rheolwyr traffig",
-      "responseToSignsOtherRoadUsers": "Ymateb I arwyddion ffyrdd/ signalau - defnyddwyr ffordd eraill",
+      "responseToSignsTrafficSigns": "Ymateb I arwyddion ffyrdd / signalau - arwyddion traffig",
+      "responseToSignsRoadMarkings": "Ymateb I arwyddion ffyrdd / signalau - marciau ar y ffordd",
+      "responseToSignsTrafficLights": "Ymateb I arwyddion ffyrdd / signalau - goleuadau traffig",
+      "responseToSignsTrafficControllers": "Ymateb I arwyddion ffyrdd / signalau - rheolwyr traffig",
+      "responseToSignsOtherRoadUsers": "Ymateb I arwyddion ffyrdd / signalau - defnyddwyr ffordd eraill",
       "pedestrianCrossings": "Croesfannau cerddwyr",
       "positionNormalStops": "Lleoli / stopio arferol",
       "awarenessPlanning": "Ymwybyddiaeth / cynllunio",
