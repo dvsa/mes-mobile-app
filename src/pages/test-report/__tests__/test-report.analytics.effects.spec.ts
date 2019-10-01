@@ -61,6 +61,8 @@ describe('Test Report Analytics Effects', () => {
 
   describe('testReportViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
+      // ARRANGE
+      store$.dispatch(new testsActions.StartTest(123456));
       // ACT
       actions$.next(new testReportActions.TestReportViewDidEnter());
       // ASSERT

@@ -39,8 +39,15 @@ export class TestReportAnalyticsEffects {
   @Effect()
   testReportViewDidEnter$ = this.actions$.pipe(
     ofType(testReportActions.TEST_REPORT_VIEW_DID_ENTER),
-    switchMap((action: testReportActions.TestReportViewDidEnter) => {
-      this.analytics.setCurrentPage(AnalyticsScreenNames.TEST);
+    concatMap(action => of(action).pipe(
+      withLatestFrom(
+        this.store$.pipe(
+          select(getTests),
+        ),
+      ),
+    )),
+    concatMap(([action, tests]: [testReportActions.TestReportViewDidEnter, TestsModel]) => {
+      this.analytics.setCurrentPage(formatAnalyticsText(AnalyticsScreenNames.TEST, tests));
       return of(new AnalyticRecorded());
     }),
   );
