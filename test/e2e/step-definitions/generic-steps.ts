@@ -231,7 +231,7 @@ export const logout = () => {
     browser.driver.selectContext(getParentContext(webviewContext));
     browser.wait(ExpectedConditions.presenceOf(element(by.xpath('//ion-app'))));
     browser.wait(ExpectedConditions.stalenessOf(element(by.className('click-block-active'))));
-    const logout = element(by.xpath('//button/span/span[contains(text(), "Logout")]'));
+    const logout = element(by.xpath('//button/span/span[contains(text(), "Sign Out")]'));
     logout.isPresent().then((result) => {
       if (result) {
         browser.wait(ExpectedConditions.elementToBeClickable(logout));

@@ -99,7 +99,6 @@ const viewCandidateDetails = (candidateName) => {
 };
 
 const closeCandidateDetailsDialog = () => {
-  const closeCandidateDetailDialog = element(
-    by.xpath('//page-candidate-details//button/span[normalize-space(text()) = "Close"]'));
+  const closeCandidateDetailDialog = element(by.id('closeCandidateDetails'));
   clickElement(closeCandidateDetailDialog);
 };
