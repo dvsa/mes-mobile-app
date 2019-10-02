@@ -34,7 +34,7 @@ import { PrivacyNoticeComponent } from '../components/privacy-notice/privacy-not
 import { CommunicationSubmitInfo } from '../../communication.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 
-describe('CommunicationPage', () => {
+describe('CommunicationCatBPage', () => {
   let fixture: ComponentFixture<CommunicationCatBPage>;
   let component: CommunicationCatBPage;
   let store$: Store<StoreModel>;
