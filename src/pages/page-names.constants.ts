@@ -1,6 +1,6 @@
 export const BACK_TO_OFFICE_PAGE = 'BackToOfficePage';
 export const CANDIDATE_DETAILS_PAGE = 'CandidateDetailsPage';
-export const COMMUNICATION_PAGE = 'CommunicationPage';
+export const COMMUNICATION_PAGE = 'CommunicationCatBPage';
 export const DEBRIEF_PAGE = 'DebriefPage';
 export const FAKE_CANDIDATE_DETAILS_PAGE = 'FakeCandidateDetailsPage';
 export const FAKE_JOURNAL_PAGE = 'FakeJournalPage';

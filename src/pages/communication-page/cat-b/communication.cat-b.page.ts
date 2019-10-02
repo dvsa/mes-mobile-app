@@ -1,15 +1,15 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Observable } from 'rxjs/Observable';
-import { StoreModel } from '../../shared/models/store.model';
+import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName,
   getUntitledCandidateName,
@@ -17,27 +17,27 @@ import {
   formatDriverNumber,
   getCandidateEmailAddress,
   getPostalAddress,
-} from '../../modules/tests/candidate/candidate.selector';
+} from '../../../modules/tests/candidate/candidate.selector';
 import {
   CommunicationViewDidEnter, CommunicationValidationError, CommunicationSubmitInfo, CommunicationSubmitInfoError,
-} from './communication.actions';
+} from '../communication.actions';
 import { map, take, tap } from 'rxjs/operators';
 import {
   getCommunicationPreference,
-} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
+} from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
   getCommunicationPreferenceUpdatedEmail, getCommunicationPreferenceType, getConductedLanguage,
-} from '../../modules/tests/communication-preferences/communication-preferences.selector';
+} from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { merge } from 'rxjs/observable/merge';
 import { CommunicationMethod, Address, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import {
   CandidateChoseEmailAsCommunicationPreference,
   CandidateChosePostAsCommunicationPreference,
-} from '../../modules/tests/communication-preferences/communication-preferences.actions';
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TranslateService } from 'ng2-translate';
-import { WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE, COMMUNICATION_PAGE } from '../page-names.constants';
-import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+import { WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE, COMMUNICATION_PAGE } from '../../page-names.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -52,10 +52,10 @@ interface CommunicationPageState {
 }
 @IonicPage()
 @Component({
-  selector: 'communication',
-  templateUrl: 'communication.html',
+  selector: 'communication-cat-b-page',
+  templateUrl: 'communication.cat-b.page.html',
 })
-export class CommunicationPage extends PracticeableBasePageComponent implements OnInit {
+export class CommunicationCatBPage extends PracticeableBasePageComponent implements OnInit {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
@@ -232,17 +232,17 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   }
 
   dispatchCandidateChoseProvidedEmail() {
-    this.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
+    this.setCommunicationType(CommunicationCatBPage.email, CommunicationCatBPage.providedEmail);
     this.store$.dispatch(
       new CandidateChoseEmailAsCommunicationPreference(
-        this.candidateProvidedEmail, CommunicationPage.email),
+        this.candidateProvidedEmail, CommunicationCatBPage.email),
     );
   }
 
   dispatchCandidateChoseNewEmail(communicationEmail: string): void {
     this.store$.dispatch(
       new CandidateChoseEmailAsCommunicationPreference(
-        communicationEmail, CommunicationPage.email),
+        communicationEmail, CommunicationCatBPage.email),
     );
   }
 
@@ -253,21 +253,23 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   }
 
   isProvidedEmailSelected() {
-    return this.communicationType === CommunicationPage.email && this.emailType === CommunicationPage.providedEmail;
+    return (this.communicationType === CommunicationCatBPage.email
+     && this.emailType === CommunicationCatBPage.providedEmail);
   }
 
   isNewEmailSelected() {
-    return this.communicationType === CommunicationPage.email && this.emailType === CommunicationPage.updatedEmail;
+    return (this.communicationType === CommunicationCatBPage.email
+      && this.emailType === CommunicationCatBPage.updatedEmail);
   }
 
   isPostSelected() {
-    return this.communicationType === CommunicationPage.post;
+    return this.communicationType === CommunicationCatBPage.post;
   }
 
   dispatchCandidateChosePost(): void {
-    this.setCommunicationType(CommunicationPage.post);
+    this.setCommunicationType(CommunicationCatBPage.post);
     this.store$.dispatch(
-      new CandidateChosePostAsCommunicationPreference(CommunicationPage.post),
+      new CandidateChosePostAsCommunicationPreference(CommunicationCatBPage.post),
     );
   }
 
@@ -283,7 +285,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
    * No current schema properties allow for the capture of radio selection for emails on the communication page.
    */
   restoreRadiosFromState() {
-    if (this.communicationType === CommunicationPage.email) {
+    if (this.communicationType === CommunicationCatBPage.email) {
       this.assertEmailType();
     }
   }
@@ -303,13 +305,13 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
     if (this.candidateProvidedEmail !== '' && this.candidateProvidedEmail === this.communicationEmail) {
       this.selectProvidedEmail = true;
       this.selectNewEmail = false;
-      this.emailType = CommunicationPage.providedEmail;
+      this.emailType = CommunicationCatBPage.providedEmail;
     }
 
     if (this.candidateProvidedEmail !== this.communicationEmail) {
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
-      this.emailType = CommunicationPage.updatedEmail;
+      this.emailType = CommunicationCatBPage.updatedEmail;
     }
   }
 
@@ -329,16 +331,16 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
    *
    */
   initialiseDefaultSelections() {
-    this.communicationType = CommunicationPage.email;
+    this.communicationType = CommunicationCatBPage.email;
     if (this.candidateProvidedEmail) {
-      this.emailType = CommunicationPage.providedEmail;
+      this.emailType = CommunicationCatBPage.providedEmail;
       this.selectProvidedEmail = true;
       this.form.controls['radioCtrl'].setValue(true);
       this.dispatchCandidateChoseProvidedEmail();
     }
 
     if (!this.candidateProvidedEmail) {
-      this.emailType = CommunicationPage.updatedEmail;
+      this.emailType = CommunicationCatBPage.updatedEmail;
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
@@ -348,8 +350,8 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   verifyNewEmailFormControl(communicationChoice: string) {
     const newEmailCtrl = this.form.get('newEmailCtrl');
     if (newEmailCtrl !== null) {
-      if (communicationChoice !== CommunicationPage.email
-        || this.emailType === CommunicationPage.providedEmail) {
+      if (communicationChoice !== CommunicationCatBPage.email
+        || this.emailType === CommunicationCatBPage.providedEmail) {
         newEmailCtrl.clearValidators();
       } else {
         newEmailCtrl.setValidators(Validators.email);
@@ -359,7 +361,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
   }
 
   shouldPreselectADefaultValue(): boolean {
-    return this.communicationType === CommunicationPage.notProvided;
+    return this.communicationType === CommunicationCatBPage.notProvided;
   }
 
   /**
@@ -373,7 +375,7 @@ export class CommunicationPage extends PracticeableBasePageComponent implements 
    * (CandidateChoseEmailAsCommunicationPreference) would not be dispatched.
    */
   conditionalDispatchCandidateChoseNewEmail() {
-    this.setCommunicationType(CommunicationPage.email, CommunicationPage.updatedEmail);
+    this.setCommunicationType(CommunicationCatBPage.email, CommunicationCatBPage.updatedEmail);
 
     if (this.isNewEmailSelected() && this.communicationEmail !== '') {
       this.dispatchCandidateChoseNewEmail(this.communicationEmail);

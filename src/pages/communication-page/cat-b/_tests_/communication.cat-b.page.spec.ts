@@ -1,41 +1,42 @@
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { CommunicationPage } from '../communication';
+import { CommunicationCatBPage } from '../communication.cat-b.page';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
-import { AppModule } from '../../../app/app.module';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
+import { AppModule } from '../../../../app/app.module';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { ComponentsModule } from '../../../components/common/common-components.module';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import {
   DeviceAuthenticationProviderMock,
-} from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+} from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { ProvidedEmailComponent } from '../components/provided-email/provided-email';
 import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
-  from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+  from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PostalAddressComponent } from '../components/postal-address/postal-address';
 import { MockComponent } from 'ng-mocks';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { TranslateService, TranslateModule } from 'ng2-translate';
-import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
-import * as welshTranslations from '../../../assets/i18n/cy.json';
+import { PopulateTestSlotAttributes }
+  from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../components/privacy-notice/privacy-notice';
-import { CommunicationSubmitInfo } from '../communication.actions';
-import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { CommunicationSubmitInfo } from '../../communication.actions';
+import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 
-describe('CommunicationPage', () => {
-  let fixture: ComponentFixture<CommunicationPage>;
-  let component: CommunicationPage;
+describe('CommunicationCatBPage', () => {
+  let fixture: ComponentFixture<CommunicationCatBPage>;
+  let component: CommunicationCatBPage;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
@@ -62,7 +63,7 @@ describe('CommunicationPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CommunicationPage,
+        CommunicationCatBPage,
         ProvidedEmailComponent,
         NewEmailComponent,
         MockComponent(PostalAddressComponent),
@@ -113,7 +114,7 @@ describe('CommunicationPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(CommunicationPage);
+        fixture = TestBed.createComponent(CommunicationCatBPage);
         component = fixture.componentInstance;
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         store$ = TestBed.get(Store);
@@ -163,7 +164,7 @@ describe('CommunicationPage', () => {
         component.dispatchCandidateChoseProvidedEmail();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, CommunicationPage.email,
+            mockCandidate.emailAddress, CommunicationCatBPage.email,
           ));
       });
     });
@@ -173,7 +174,7 @@ describe('CommunicationPage', () => {
         component.dispatchCandidateChoseNewEmail(mockCandidate.emailAddress);
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, CommunicationPage.email,
+            mockCandidate.emailAddress, CommunicationCatBPage.email,
           ));
       });
     });
@@ -183,21 +184,21 @@ describe('CommunicationPage', () => {
         component.dispatchCandidateChosePost();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChosePostAsCommunicationPreference(
-            CommunicationPage.post,
+            CommunicationCatBPage.post,
           ));
       });
     });
 
     describe('Communication class level funcitons', () => {
       it('should set setCommunicationType', () => {
-        component.setCommunicationType(CommunicationPage.email, CommunicationPage.providedEmail);
-        expect(component.communicationType).toEqual(CommunicationPage.email);
-        expect(component.emailType).toEqual(CommunicationPage.providedEmail);
+        component.setCommunicationType(CommunicationCatBPage.email, CommunicationCatBPage.providedEmail);
+        expect(component.communicationType).toEqual(CommunicationCatBPage.email);
+        expect(component.emailType).toEqual(CommunicationCatBPage.providedEmail);
       });
 
       it('should return true for isProvidedEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = CommunicationPage.email;
-        component.emailType = CommunicationPage.providedEmail;
+        component.communicationType = CommunicationCatBPage.email;
+        component.emailType = CommunicationCatBPage.providedEmail;
         const returnValue = component.isProvidedEmailSelected();
         expect(returnValue).toBe(true);
       });
@@ -210,8 +211,8 @@ describe('CommunicationPage', () => {
       });
 
       it('should return true for isNewEmailSelected() if appropriate properties are defined', () => {
-        component.communicationType = CommunicationPage.email;
-        component.emailType = CommunicationPage.updatedEmail;
+        component.communicationType = CommunicationCatBPage.email;
+        component.emailType = CommunicationCatBPage.updatedEmail;
         const returnValue = component.isNewEmailSelected();
         expect(returnValue).toBe(true);
       });
@@ -224,7 +225,7 @@ describe('CommunicationPage', () => {
       });
 
       it('should return false for shouldPreselectADefaultValue() if communication type is defined', () => {
-        component.communicationType = CommunicationPage.email;
+        component.communicationType = CommunicationCatBPage.email;
         const returnValue = component.shouldPreselectADefaultValue();
         expect(returnValue).toBe(false);
       });

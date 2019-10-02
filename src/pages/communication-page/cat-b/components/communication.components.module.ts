@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { ComponentsModule } from '../../../components/common/common-components.module';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { ProvidedEmailComponent } from './provided-email/provided-email';
 import { NewEmailComponent } from './new-email/new-email';
 import { PostalAddressComponent } from './postal-address/postal-address';
