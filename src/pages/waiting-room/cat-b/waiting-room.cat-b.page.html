@@ -29,9 +29,6 @@
       <insurance-declaration [formGroup]="formGroup" [selected]="pageState.insuranceDeclarationAccepted$ | async"
         (insuranceDeclarationChange)="insuranceDeclarationChanged()">
       </insurance-declaration>
-      <ion-row>
-        <ion-col></ion-col>
-      </ion-row>
       <residency-declaration [formGroup]="formGroup" [selected]="pageState.residencyDeclarationAccepted$ | async"
         (residencyDeclarationChange)="residencyDeclarationChanged()">
       </residency-declaration>
