@@ -7,7 +7,7 @@ import { TellMeQuestionDrivingFault, TellMeQuestionCorrect }
   from '../../../../modules/tests/test-data/test-data.actions';
 import { ModalEvent } from '../practice-test-modal/practice-test-modal.constants';
 import { testReportPracticeModeSlot } from '../../../../modules/tests/__mocks__/tests.mock';
-import { TEST_REPORT_PAGE } from '../../../page-names.constants';
+import { CAT_B } from '../../../page-names.constants';
 
 @Component({
   selector: 'practice-test-report-card',
@@ -38,12 +38,12 @@ export class PracticeTestReportCardComponent {
       case ModalEvent.FAULT:
         this.store$.dispatch(new StartTestReportPracticeTest(this.slotId));
         this.store$.dispatch(new TellMeQuestionDrivingFault());
-        this.navController.push(TEST_REPORT_PAGE);
+        this.navController.push(CAT_B.TEST_REPORT_PAGE);
         break;
       case ModalEvent.NO_FAULT:
         this.store$.dispatch(new StartTestReportPracticeTest(this.slotId));
         this.store$.dispatch(new TellMeQuestionCorrect());
-        this.navController.push(TEST_REPORT_PAGE);
+        this.navController.push(CAT_B.TEST_REPORT_PAGE);
         break;
       case ModalEvent.CANCEL:
         break;

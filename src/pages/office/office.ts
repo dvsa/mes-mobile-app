@@ -112,7 +112,7 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
-import { REKEY_REASON_PAGE, JOURNAL_PAGE } from '../page-names.constants';
+import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -606,7 +606,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   goToReasonForRekey() {
     if (this.isFormValid()) {
-      this.navController.push(REKEY_REASON_PAGE);
+      this.navController.push(CAT_B.REKEY_REASON_PAGE);
     }
   }
 

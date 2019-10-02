@@ -15,7 +15,7 @@ import {
   StartTest,
 } from '../../../modules/tests/tests.actions';
 import { rekeyReasonReducer } from '../rekey-reason.reducer';
-import { REKEY_UPLOAD_OUTCOME_PAGE } from '../../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 import { AppInfoModel } from '../../../modules/app-info/app-info.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import {
@@ -146,7 +146,7 @@ describe('RekeyReasonPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(CAT_B.REKEY_UPLOAD_OUTCOME_PAGE);
         expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
 
       });
@@ -158,7 +158,7 @@ describe('RekeyReasonPage', () => {
         component.handleUploadOutcome(uploadStatus);
 
         expect(component.handleLoadingUI).toHaveBeenCalledWith(false);
-        expect(navContoller.push).toHaveBeenCalledWith(REKEY_UPLOAD_OUTCOME_PAGE);
+        expect(navContoller.push).toHaveBeenCalledWith(CAT_B.REKEY_UPLOAD_OUTCOME_PAGE);
         expect(component.onShowUploadRekeyModal).not.toHaveBeenCalled();
       });
     });

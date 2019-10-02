@@ -4,7 +4,7 @@ import { PracticeableBasePageComponent } from '../../../shared/classes/practicea
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import { BACK_TO_OFFICE_PAGE } from '../../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import {
@@ -161,7 +161,7 @@ export class NonPassFinalisationPage extends PracticeableBasePageComponent {
     if (this.form.valid) {
       this.store$.dispatch(new SetTestStatusWriteUp(this.slotId));
       this.store$.dispatch(new PersistTests());
-      this.navController.push(BACK_TO_OFFICE_PAGE);
+      this.navController.push(CAT_B.BACK_TO_OFFICE_PAGE);
     }
   }
 

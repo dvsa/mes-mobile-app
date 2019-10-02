@@ -43,7 +43,7 @@ import {
 } from '../../../modules/tests/vehicle-details/vehicle-details.selector';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
-import { HEALTH_DECLARATION_PAGE } from '../../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
 import { getTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
@@ -227,7 +227,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
       this.store$.dispatch(new PersistTests());
-      this.navController.push(HEALTH_DECLARATION_PAGE);
+      this.navController.push(CAT_B.HEALTH_DECLARATION_PAGE);
     }
   }
 

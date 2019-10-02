@@ -67,7 +67,7 @@ import {
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
-import { WAITING_ROOM_TO_CAR_PAGE, TEST_REPORT_PAGE } from '../page-names.constants';
+import { CAT_B } from '../page-names.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -264,9 +264,9 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   onSubmit() {
     Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
     if (this.form.valid) {
-      this.navController.push(TEST_REPORT_PAGE).then(() => {
+      this.navController.push(CAT_B.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
-        const view = this.navController.getViews().find(view => view.id === WAITING_ROOM_TO_CAR_PAGE);
+        const view = this.navController.getViews().find(view => view.id === CAT_B.WAITING_ROOM_TO_CAR_PAGE);
         if (view) {
           this.navController.removeView(view);
         }

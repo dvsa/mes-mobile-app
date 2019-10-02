@@ -45,7 +45,7 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { StatusBar } from '@ionic-native/status-bar';
-import { DEBRIEF_PAGE } from '../../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -131,7 +131,7 @@ describe('TestReportPage', () => {
       it('should navigate to debrief page when passed a CONTINUE event', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(DEBRIEF_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
       });
     });
 

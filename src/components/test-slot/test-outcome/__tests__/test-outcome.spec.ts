@@ -7,11 +7,7 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import {
-  OFFICE_PAGE, WAITING_ROOM_PAGE,
-  PASS_FINALISATION_PAGE,
-  NON_PASS_FINALISATION_PAGE,
-} from '../../../../pages/page-names.constants';
+import { CAT_B } from '../../../../pages/page-names.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
@@ -90,7 +86,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(OFFICE_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.OFFICE_PAGE);
       });
     });
 
@@ -102,7 +98,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(WAITING_ROOM_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.WAITING_ROOM_PAGE);
       });
       it('should dispatch an ActivateTest action and navigate to the Pass Finalisation page', () => {
         component.testStatus = TestStatus.Decided;
@@ -112,7 +108,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(PASS_FINALISATION_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.PASS_FINALISATION_PAGE);
       });
       it('should dispatch an ActivateTest action and navigate to the Non Pass Finalisation page', () => {
         component.testStatus = TestStatus.Decided;
@@ -122,7 +118,7 @@ describe('Test Outcome', () => {
 
         expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(NON_PASS_FINALISATION_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.NON_PASS_FINALISATION_PAGE);
       });
     });
 

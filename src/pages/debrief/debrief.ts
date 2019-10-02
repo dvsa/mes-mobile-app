@@ -42,13 +42,7 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
-import {
-  PASS_FINALISATION_PAGE,
-  TEST_REPORT_PAGE,
-  DEBRIEF_PAGE,
-  POST_DEBRIEF_HOLDING_PAGE,
-  DASHBOARD_PAGE,
-} from '../page-names.constants';
+import { CAT_B, DASHBOARD_PAGE } from '../page-names.constants';
 import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface DebriefPageState {
@@ -232,15 +226,15 @@ export class DebriefPage extends PracticeableBasePageComponent {
     }
     this.store$.dispatch(new EndDebrief());
     if (this.outcome === 'Pass') {
-      this.navController.push(PASS_FINALISATION_PAGE);
+      this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
       return;
     }
-    this.navController.push(POST_DEBRIEF_HOLDING_PAGE).then(() => {
-      const testReportPage = this.navController.getViews().find(view => view.id === TEST_REPORT_PAGE);
+    this.navController.push(CAT_B.POST_DEBRIEF_HOLDING_PAGE).then(() => {
+      const testReportPage = this.navController.getViews().find(view => view.id === CAT_B.TEST_REPORT_PAGE);
       if (testReportPage) {
         this.navController.removeView(testReportPage);
       }
-      const debriefPage = this.navController.getViews().find(view => view.id === DEBRIEF_PAGE);
+      const debriefPage = this.navController.getViews().find(view => view.id === CAT_B.DEBRIEF_PAGE);
       if (debriefPage) {
         this.navController.removeView(debriefPage);
       }
