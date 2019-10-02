@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -7,7 +7,6 @@ import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as waitingRoomActions from '../waiting-room.actions';
 import { Observable } from 'rxjs/Observable';
-import { SignatureAreaComponent } from '../../../components/common/signature-area/signature-area';
 import { getPreTestDeclarations } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import * as preTestDeclarationsActions
   from '../../../modules/tests/pre-test-declarations/pre-test-declarations.actions';
@@ -44,6 +43,7 @@ import { Language } from '../../../modules/tests/communication-preferences/commu
 import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
+import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -63,17 +63,13 @@ interface WaitingRoomPageState {
 })
 export class WaitingRoomCatBPage extends PracticeableBasePageComponent implements OnInit {
 
-  @ViewChild(SignatureAreaComponent)
-  signatureArea: SignatureAreaComponent;
-
   @ViewChild(Navbar) navBar: Navbar;
 
   pageState: WaitingRoomPageState;
 
-  form: FormGroup;
+  formGroup: FormGroup;
 
   subscription: Subscription;
-  inputSubscriptions: Subscription[] = [];
 
   merged$: Observable<boolean | string>;
 
@@ -90,8 +86,9 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
     private translate: TranslateService,
   ) {
     super(platform, navController, authenticationProvider, store$);
-    this.form = new FormGroup(this.getFormValidation());
+    this.formGroup = new FormGroup({});
   }
+
   ionViewDidEnter(): void {
     this.store$.dispatch(new waitingRoomActions.WaitingRoomViewDidEnter());
 
@@ -121,8 +118,6 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.signatureArea.drawCompleteAction = preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
-    this.signatureArea.clearAction = preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
@@ -168,12 +163,10 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
         select(getConductedLanguage),
       ),
     };
-    this.rehydrateFields();
-
     const { welshTest$, conductedLanguage$ } = this.pageState;
     this.merged$ = merge(
       welshTest$,
-      conductedLanguage$.pipe(tap(this.configureI18N)),
+      conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     );
   }
 
@@ -190,39 +183,14 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-
-    if (this.inputSubscriptions) {
-      this.inputSubscriptions.forEach(sub => sub.unsubscribe());
-    }
   }
 
-  rehydrateFields(): void {
-    this.inputSubscriptions.push(
-      this.pageState.insuranceDeclarationAccepted$
-        .subscribe((val) => {
-          this.form.controls['insuranceCheckboxCtrl'].setValue(val);
-        }),
-    );
-    this.inputSubscriptions.push(
-      this.pageState.residencyDeclarationAccepted$
-        .subscribe((val) => {
-          this.form.controls['residencyCheckboxCtrl'].setValue(val);
-        }),
-    );
-    this.inputSubscriptions.push(
-      this.pageState.signature$
-        .subscribe((val) => {
-          this.form.controls['signatureAreaCtrl'].setValue(val);
-        }),
-    );
+  getSignatureDrawCompleteAction() : string {
+    return preTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
   }
 
-  configureI18N = (language: Language): void => {
-    if (language === Language.CYMRAEG) {
-      this.translate.use('cy');
-    } else {
-      this.translate.use('en');
-    }
+  getSignatureClearAction(): string {
+    return preTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
   }
 
   insuranceDeclarationChanged(): void {
@@ -233,35 +201,24 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
     this.store$.dispatch(new preTestDeclarationsActions.ToggleResidencyDeclaration());
   }
 
-  onSubmit() {
-    Object.keys(this.form.controls).forEach(controlName => this.form.controls[controlName].markAsDirty());
-    if (this.form.valid) {
-      this.navController.push(COMMUNICATION_PAGE);
-    } else {
-      Object.keys(this.form.controls).forEach((controlName) => {
-        if (this.form.controls[controlName].invalid) {
-          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is blank`));
-        }
-      });
-    }
-  }
-
-  getFormValidation(): { [key: string]: FormControl } {
-    return {
-      insuranceCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
-      residencyCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
-      signatureAreaCtrl: new FormControl(null, [Validators.required]),
-    };
-  }
-  isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName] && this.form.get(controlName).dirty;
-  }
-
   dispatchCandidateChoseToProceedInWelsh() {
     this.store$.dispatch(new CandidateChoseToProceedWithTestInWelsh(Language.CYMRAEG));
   }
 
   dispatchCandidateChoseToProceedInEnglish() {
     this.store$.dispatch(new CandidateChoseToProceedWithTestInEnglish(Language.ENGLISH));
+  }
+
+  onSubmit() {
+    Object.keys(this.formGroup.controls).forEach(controlName => this.formGroup.controls[controlName].markAsDirty());
+    if (this.formGroup.valid) {
+      this.navController.push(COMMUNICATION_PAGE);
+    } else {
+      Object.keys(this.formGroup.controls).forEach((controlName) => {
+        if (this.formGroup.controls[controlName].invalid) {
+          this.store$.dispatch(new waitingRoomActions.WaitingRoomValidationError(`${controlName} is blank`));
+        }
+      });
+    }
   }
 }
