@@ -34,7 +34,7 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { COMMUNICATION_PAGE } from '../../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
@@ -212,7 +212,7 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
   onSubmit() {
     Object.keys(this.formGroup.controls).forEach(controlName => this.formGroup.controls[controlName].markAsDirty());
     if (this.formGroup.valid) {
-      this.navController.push(COMMUNICATION_PAGE);
+      this.navController.push(CAT_B.COMMUNICATION_PAGE);
     } else {
       Object.keys(this.formGroup.controls).forEach((controlName) => {
         if (this.formGroup.controls[controlName].invalid) {
