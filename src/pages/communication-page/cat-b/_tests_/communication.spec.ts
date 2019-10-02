@@ -1,37 +1,38 @@
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { CommunicationCatBPage } from '../cat-b/communication.cat-b.page';
+import { CommunicationCatBPage } from '../communication.cat-b.page';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
-import { AppModule } from '../../../app/app.module';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
+import { AppModule } from '../../../../app/app.module';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { ComponentsModule } from '../../../components/common/common-components.module';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import {
   DeviceAuthenticationProviderMock,
-} from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+} from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+import { ProvidedEmailComponent } from '../components/provided-email/provided-email';
+import { NewEmailComponent } from '../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
-  from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+  from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { PostalAddressComponent } from '../components/postal-address/postal-address';
 import { MockComponent } from 'ng-mocks';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { TranslateService, TranslateModule } from 'ng2-translate';
-import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { PopulateTestSlotAttributes }
+  from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
-import { CommunicationSubmitInfo } from '../communication.actions';
-import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
-import { NewEmailComponent } from '../cat-b/components/new-email/new-email';
-import { ProvidedEmailComponent } from '../cat-b/components/provided-email/provided-email';
-import { PostalAddressComponent } from '../cat-b/components/postal-address/postal-address';
-import { PrivacyNoticeComponent } from '../cat-b/components/privacy-notice/privacy-notice';
+import { PrivacyNoticeComponent } from '../components/privacy-notice/privacy-notice';
+import { CommunicationSubmitInfo } from '../../communication.actions';
+import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 
 describe('CommunicationPage', () => {
   let fixture: ComponentFixture<CommunicationCatBPage>;
