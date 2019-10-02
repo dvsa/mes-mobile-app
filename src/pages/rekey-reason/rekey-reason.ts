@@ -30,7 +30,7 @@ import {
   TransferSelected,
 } from '../../modules/tests/rekey-reason/rekey-reason.actions';
 import { Subscription } from 'rxjs/Subscription';
-import { REKEY_UPLOAD_OUTCOME_PAGE, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
+import { CAT_B, REKEY_SEARCH_PAGE, JOURNAL_PAGE } from '../page-names.constants';
 import { getRekeyReasonState } from './rekey-reason.reducer';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -184,7 +184,7 @@ export class RekeyReasonPage extends BasePageComponent {
     this.isStaffNumberInvalid = uploadStatus.hasStaffNumberFailedValidation;
 
     if (uploadStatus.hasUploadSucceeded || uploadStatus.isDuplicate) {
-      this.navController.push(REKEY_UPLOAD_OUTCOME_PAGE);
+      this.navController.push(CAT_B.REKEY_UPLOAD_OUTCOME_PAGE);
       return;
     }
     if (uploadStatus.hasUploadFailed) {

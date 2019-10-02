@@ -36,8 +36,8 @@ import {
   CandidateChosePostAsCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TranslateService } from 'ng2-translate';
-import { WAITING_ROOM_PAGE, WAITING_ROOM_TO_CAR_PAGE, COMMUNICATION_PAGE } from '../../page-names.constants';
-import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { CAT_B } from '../page-names.constants';
+import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -207,13 +207,14 @@ export class CommunicationCatBPage extends PracticeableBasePageComponent impleme
       this.deviceAuthenticationProvider.triggerLockScreen()
         .then(() => {
           this.store$.dispatch(new CommunicationSubmitInfo());
-          this.navController.push(WAITING_ROOM_TO_CAR_PAGE)
+          this.navController.push(CAT_B.WAITING_ROOM_TO_CAR_PAGE)
             .then(() => {
-              const waitingRoomPage = this.navController.getViews().find(view => view.id === WAITING_ROOM_PAGE);
+              const waitingRoomPage = this.navController.getViews().find(view => view.id === CAT_B.WAITING_ROOM_PAGE);
               if (waitingRoomPage) {
                 this.navController.removeView(waitingRoomPage);
               }
-              const communicationPage = this.navController.getViews().find(view => view.id === COMMUNICATION_PAGE);
+              const communicationPage =
+                this.navController.getViews().find(view => view.id === CAT_B.COMMUNICATION_PAGE);
               if (communicationPage) {
                 this.navController.removeView(communicationPage);
               }

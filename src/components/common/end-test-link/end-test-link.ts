@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, Modal, NavController } from 'ionic-angular';
-import { DEBRIEF_PAGE } from '../../../pages/page-names.constants';
+import { CAT_B } from '../../../pages/page-names.constants';
 
 @Component({
   selector: 'end-test-link',
@@ -28,6 +28,6 @@ export class EndTestLinkComponent {
 
   onTerminate = () => {
     this.terminateTestModal.dismiss();
-    this.navController.push(DEBRIEF_PAGE);
+    this.navController.push(CAT_B.DEBRIEF_PAGE);
   }
 }
