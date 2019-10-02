@@ -2,10 +2,10 @@ import { NewEmailComponent } from '../new-email';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import * as welshTranslations from '../../../../../assets/i18n/cy.json';
+import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
 import { TranslateModule, TranslateService, TranslateLoader } from 'ng2-translate';
 import { FormGroup, FormControl } from '@angular/forms';
-import { createTranslateLoader } from '../../../../../app/app.module';
+import { createTranslateLoader } from '../../../../../../app/app.module';
 import { Http } from '@angular/http';
 
 describe('NewEmailComponent', () => {
