@@ -5,8 +5,8 @@ import { CommunicationCatBPage } from './communication.cat-b.page';
 import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { CommunicationAnalyticsEffects } from '../communication.analytics.effects';
-import { CommunicationComponentsModule } from './components/communication.components.module';
 import { CommunicationEffects } from '../communication.effects';
+import { CommunicationComponentsModule } from '../components/communication.components.module';
 
 @NgModule({
   declarations: [
