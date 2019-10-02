@@ -4,7 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translate';
-import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
+import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { Http } from '@angular/http';
 

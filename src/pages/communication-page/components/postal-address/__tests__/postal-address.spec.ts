@@ -16,7 +16,7 @@ import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks
 import { By } from '@angular/platform-browser';
 import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
 import { Http } from '@angular/http';
-import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
+import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 
 describe('PostalAddressComponent', () => {
   let fixture: ComponentFixture<PostalAddressComponent>;

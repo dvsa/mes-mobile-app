@@ -1,12 +1,12 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
-import * as welshTranslations from '../../../../assets/i18n/cy.json';
+import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 import { TranslateModule, TranslateService, TranslateLoader } from 'ng2-translate';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Http } from '@angular/http';
 import { createTranslateLoader } from '../../../../../app/app.module';
-import { NewEmailComponent } from '../new-email.js';
+import { NewEmailComponent } from '../new-email';
 
 describe('NewEmailComponent', () => {
   let fixture: ComponentFixture<NewEmailComponent>;
