@@ -26,10 +26,10 @@ import { IonicModule } from 'ionic-angular';
 import {
   DangerousFaultBadgeComponent,
 } from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { testReportReducer } from '../../../test-report.reducer';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('CompetencyComponent', () => {
   let fixture: ComponentFixture<CompetencyComponent>;
@@ -48,10 +48,64 @@ describe('CompetencyComponent', () => {
       imports: [
         AppModule,
         IonicModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport : testReportReducer }),
+        StoreModule.forRoot({
+          journal: () => ({
+            isLoading: false,
+            lastRefreshed: null,
+            slots: {},
+            selectedDate: '',
+            examiner: {
+              staffNumber: '1234567',
+            },
+          }),
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                vehicleDetails: {},
+                accompaniment: {},
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    },
+                  },
+                  eyesightTest: {},
+                },
+                activityCode: '28',
+                journalData: {
+                  candidate: {
+                    candidateName: 'Joe Bloggs',
+                    driverNumber: '123',
+                  },
+                },
+                rekey: false,
+              },
+            },
+          }),
+          testReport : testReportReducer,
+        }),
       ],
       providers: [
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
@@ -59,8 +113,6 @@ describe('CompetencyComponent', () => {
         fixture = TestBed.createComponent(CompetencyComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-
-        store$.dispatch(new StartTest(103));
       });
   }));
 

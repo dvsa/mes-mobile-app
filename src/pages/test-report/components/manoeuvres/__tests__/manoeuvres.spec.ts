@@ -14,10 +14,10 @@ import { SeriousFaultBadgeComponent } from '../../../../../components/common/ser
 import {
   DangerousFaultBadgeComponent,
 } from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
+import { StoreModule } from '@ngrx/store';
 import { testReportReducer } from '../../../test-report.reducer';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('ManoeuvresComponent', () => {
   let fixture: ComponentFixture<ManoeuvresComponent>;
@@ -35,19 +35,62 @@ describe('ManoeuvresComponent', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({ tests: testsReducer, testReport: testReportReducer }),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    },
+                  },
+                  eyesightTest: {},
+                },
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                journalData: {},
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Not provided',
+                  conductedLanguage: 'Not provided',
+                },
+              },
+            },
+          }),
+          testReport: testReportReducer,
+        }),
       ],
       providers: [
         { provide: DateTimeProvider, useCalss: DateTimeProviderMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(ManoeuvresComponent);
         component = fixture.componentInstance;
-        const store$ = TestBed.get(Store);
-
-        store$.dispatch(new StartTest(103));
       });
   }));
 

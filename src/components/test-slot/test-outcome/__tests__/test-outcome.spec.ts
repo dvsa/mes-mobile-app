@@ -16,6 +16,8 @@ import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { JournalModel } from '../../../../modules/journal/journal.model';
+import { LogHelper } from '../../../../providers/logs/logsHelper';
+import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -61,6 +63,7 @@ describe('Test Outcome', () => {
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: LogHelper, useClass: LogHelperMock },
       ],
     })
       .compileComponents()

@@ -3,6 +3,8 @@ import { TimeComponent } from '../time';
 import { IonicModule } from 'ionic-angular';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { LogHelper } from '../../../../providers/logs/logsHelper';
+import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
 
 describe('TimeComponent', () => {
   let component: TimeComponent;
@@ -12,6 +14,9 @@ describe('TimeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TimeComponent],
       imports: [IonicModule],
+      providers: [
+        { provide: LogHelper, useClass: LogHelperMock },
+      ],
     })
       .compileComponents()
       .then(() => {

@@ -1,6 +1,6 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule, NavController } from 'ionic-angular';
 import { CompetencyComponent } from '../../competency/competency';
 import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
 import { AppModule } from '../../../../../app/app.module';
@@ -12,12 +12,13 @@ import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
 import {
   DrivingFaultsBadgeComponent,
 } from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import { NavControllerMock } from 'ionic-mocks';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;
@@ -35,7 +36,55 @@ describe('ManoeuvresPopoverComponent', () => {
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({ tests: testsReducer }),
+        StoreModule.forRoot({
+          tests: () => ({
+            currentTest: {
+              slotId: '123',
+            },
+            testStatus: {},
+            startedTests: {
+              123: {
+                testData: {
+                  dangerousFaults: {},
+                  drivingFaults: {},
+                  manoeuvres: {},
+                  seriousFaults: {},
+                  testRequirements: {},
+                  ETA: {},
+                  eco: {},
+                  vehicleChecks: {
+                    showMeQuestion: {
+                      code: 'S3',
+                      description: '',
+                      outcome: '',
+                    },
+                    tellMeQuestion: {
+                      code: '',
+                      description: '',
+                      outcome: '',
+                    },
+                  },
+                  eyesightTest: {},
+                },
+                postTestDeclarations: {
+                  healthDeclarationAccepted: false,
+                  passCertificateNumberReceived: false,
+                  postTestSignature: '',
+                },
+                journalData: {},
+                communicationPreferences: {
+                  updatedEmail: '',
+                  communicationMethod: 'Not provided',
+                  conductedLanguage: 'Not provided',
+                },
+              },
+            },
+          }),
+        }),
+      ],
+      providers: [
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
@@ -45,7 +94,6 @@ describe('ManoeuvresPopoverComponent', () => {
         fixture.detectChanges();
       });
     store$ = TestBed.get(Store);
-    store$.dispatch(new StartTest(1003));
     spyOn(store$, 'dispatch').and.callThrough();
   }));
 

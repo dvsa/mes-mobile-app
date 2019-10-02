@@ -5,6 +5,10 @@ import { IonicModule, NavParams, ViewController } from 'ionic-angular';
 import { NavParamsMock, ViewControllerMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../components/common/common-components.module';
+import { DeviceProvider } from '../../../providers/device/device';
+import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
+import { LogHelper } from '../../../providers/logs/logsHelper';
+import { LogHelperMock } from '../../../providers/logs/__mocks__/logsHelper.mock';
 
 describe('JournalRekeyModal', () => {
   let fixture: ComponentFixture<JournalRekeyModal>;
@@ -23,6 +27,8 @@ describe('JournalRekeyModal', () => {
       providers: [
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
         { provide: ViewController, useFactory: () => ViewControllerMock.instance() },
+        { provide: DeviceProvider, useClass: DeviceProviderMock },
+        { provide: LogHelper, useClass: LogHelperMock },
       ],
     })
       .compileComponents()

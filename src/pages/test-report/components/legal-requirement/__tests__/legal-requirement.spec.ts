@@ -9,6 +9,8 @@ import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { ToggleLegalRequirement } from '../../../../../modules/tests/test-data/test-data.actions';
 import { LegalRequirements } from '../../../../../modules/tests/test-data/test-data.constants';
+import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('LegalRequirementComponent', () => {
   let fixture: ComponentFixture<LegalRequirementComponent>;
@@ -26,6 +28,9 @@ describe('LegalRequirementComponent', () => {
       imports: [
         IonicModule,
         StoreModule.forRoot({ tests: testsReducer }),
+      ],
+      providers: [
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()

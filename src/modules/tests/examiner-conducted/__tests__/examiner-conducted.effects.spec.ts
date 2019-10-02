@@ -9,6 +9,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerBooked } from '../../examiner-booked/examiner-booked.actions';
+import { journalReducer } from '../../../journal/journal.reducer';
 
 describe('Examiner Conducted Effects', () => {
 
@@ -22,6 +23,7 @@ describe('Examiner Conducted Effects', () => {
       imports: [
         StoreModule.forRoot({
           tests: testsReducer,
+          journal: journalReducer,
         }),
       ],
       providers: [

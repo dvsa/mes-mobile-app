@@ -64,6 +64,8 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { CompleteTest, ValidationError } from '../office.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
+import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -142,6 +144,7 @@ describe('OfficePage', () => {
         { provide: DateTimeProvider, useClass: DateTimeProviderMock },
         { provide: AlertController, useClass: AlertControllerMock },
         { provide: ToastController, useClass: ToastControllerMock },
+        { provide: NavigationStateProvider, useClass: NavigationStateProviderMock },
       ],
     })
       .compileComponents()
