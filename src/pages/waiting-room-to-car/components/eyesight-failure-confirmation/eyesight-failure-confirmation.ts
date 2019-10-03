@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { SetActivityCode } from '../../../../modules/tests/tests.actions';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
-import { CAT_B } from '../../../page-names.constants';
 
 @Component({
   selector: 'eyesight-failure-confirmation',
@@ -19,12 +18,15 @@ export class EyesightFailureConfirmationComponent {
   @Input()
   cancelFn: Function;
 
+  @Input()
+  nextPageOnFail: string;
+
   onCancel(): void {
     this.cancelFn();
   }
 
   onContinue(): void {
-    this.navController.push(CAT_B.DEBRIEF_PAGE);
+    this.navController.push(this.nextPageOnFail);
     this.store$.dispatch(new SetActivityCode(ActivityCodes.FAIL_EYESIGHT));
   }
 }

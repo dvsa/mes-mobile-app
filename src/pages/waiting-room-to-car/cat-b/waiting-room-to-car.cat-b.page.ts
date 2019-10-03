@@ -322,4 +322,8 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(action);
   }
 
+  getDebriefPage() {
+    return CAT_B.DEBRIEF_PAGE;
+  }
+
 }

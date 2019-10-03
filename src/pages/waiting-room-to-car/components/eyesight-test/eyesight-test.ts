@@ -23,12 +23,11 @@ export class EyesightTestComponent implements OnChanges {
 
   @Output()
   eyesightTestResultChange = new EventEmitter<boolean>();
-
   formControl: FormControl;
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl  = new FormControl('', [Validators.required]);
+      this.formControl = new FormControl('', [Validators.required]);
       this.formGroup.addControl('eyesightCtrl', this.formControl);
     }
     this.formControl.patchValue(this.eyesightPassRadioChecked);

@@ -51,6 +51,7 @@ describe('eyesight failure confirmation component', () => {
     });
     it('should navigate to debrief when continue is pressed', () => {
       const confirmButton = fixture.debugElement.query(By.css('#confirm-eyesight-failure'));
+      component.nextPageOnFail = CAT_B.DEBRIEF_PAGE;
       confirmButton.triggerEventHandler('click', null);
       const { calls } = navController.push as jasmine.Spy;
       expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
