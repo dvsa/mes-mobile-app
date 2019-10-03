@@ -36,8 +36,8 @@ import {
   CandidateChosePostAsCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { TranslateService } from 'ng2-translate';
-import { CAT_B } from '../page-names.constants';
-import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+import { CAT_B } from '../../page-names.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
