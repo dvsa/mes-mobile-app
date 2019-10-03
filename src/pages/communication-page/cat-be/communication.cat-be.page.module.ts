@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ComponentsModule } from '../../../components/common/common-components.module';
-import { CommunicationCatBPage } from './communication.cat-b.page';
+import { CommunicationCatBePage } from './communication.cat-be.page';
 import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { CommunicationAnalyticsEffects } from '../communication.analytics.effects';
@@ -10,10 +10,10 @@ import { CommunicationComponentsModule } from '../components/communication.compo
 
 @NgModule({
   declarations: [
-    CommunicationCatBPage,
+    CommunicationCatBePage,
   ],
   imports: [
-    IonicPageModule.forChild(CommunicationCatBPage),
+    IonicPageModule.forChild(CommunicationCatBePage),
     EffectsModule.forFeature([
       CommunicationEffects,
       CommunicationAnalyticsEffects,
@@ -23,4 +23,4 @@ import { CommunicationComponentsModule } from '../components/communication.compo
     CommunicationComponentsModule,
   ],
 })
-export class CommunicationCatBPageModule { }
+export class CommunicationCatBePageModule { }

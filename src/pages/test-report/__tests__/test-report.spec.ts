@@ -45,9 +45,9 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { StatusBar } from '@ionic-native/status-bar';
+import { CAT_B } from '../../page-names.constants';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
-import { CAT_B } from '../../page-names.constants';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
