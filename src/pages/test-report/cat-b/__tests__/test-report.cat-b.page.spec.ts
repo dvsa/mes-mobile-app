@@ -45,10 +45,16 @@ import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { StatusBar } from '@ionic-native/status-bar';
+<<<<<<< HEAD:src/pages/test-report/cat-b/__tests__/test-report.cat-b.page.spec.ts
 import { CAT_B } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+=======
+import { CAT_B } from '../../page-names.constants';
+import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+>>>>>>> Mes 3643 communication page extract common components add cat b e (#819):src/pages/test-report/__tests__/test-report.spec.ts
 
 describe('TestReportCatBPage', () => {
   let fixture: ComponentFixture<TestReportCatBPage>;
