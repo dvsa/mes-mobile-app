@@ -66,10 +66,10 @@ import {
   getTellMeQuestion,
   hasEyesightTestBeenCompleted,
   hasEyesightTestGotSeriousFault,
-} from '../../modules/tests/test-data/test-data.selector';
-import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
-import { CAT_B } from '../page-names.constants';
+} from '../../../modules/tests/test-data/test-data.selector';
+import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { PersistTests } from '../../../modules/tests/tests.actions';
+import { CAT_B } from '../../page-names.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
