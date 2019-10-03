@@ -2,51 +2,51 @@ import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../app/app.module';
-import { WaitingRoomToCarPage } from '../waiting-room-to-car';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { AppModule } from '../../../../app/app.module';
+import { WaitingRoomToCarCatBPage } from '../waiting-room-to-car.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { StoreModule, Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng-mocks';
 import {
   EyesightFailureConfirmationComponent,
-} from '../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
+} from '../../components/eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { of } from 'rxjs/observable/of';
-import { QuestionProvider } from '../../../providers/question/question';
-import { QuestionProviderMock } from '../../../providers/question/__mocks__/question.mock';
-import { EndTestLinkComponent } from '../../../components/common/end-test-link/end-test-link';
-import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { PersistTests } from '../../../modules/tests/tests.actions';
-import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
-import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';
-import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
-import { VehicleRegistrationComponent } from '../components/vehicle-registration/vehicle-registration';
-import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
-import { TransmissionComponent } from '../components/transmission/transmission';
-import { VehicleDetailsCardComponent } from '../components/vehicle-details-card/vehicle-details-card';
-import { VehicleDetailsComponent } from '../components/vehicle-details/vehicle-details';
-import { AccompanimentCardComponent } from '../components/accompaniment-card/accompaniment-card';
-import { AccompanimentComponent } from '../components/accompaniment/accompaniment';
-import { EyesightTestComponent } from '../components/eyesight-test/eyesight-test';
-import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
-import { TellMeQuestionSelected, EyesightTestReset } from '../../../modules/tests/test-data/test-data.actions';
-import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
-import { WaitingRoomToCarValidationError } from '../waiting-room-to-car.actions';
+import { QuestionProvider } from '../../../../providers/question/question';
+import { QuestionProviderMock } from '../../../../providers/question/__mocks__/question.mock';
+import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
+import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { PersistTests } from '../../../../modules/tests/tests.actions';
+import { TellMeQuestionCardComponent } from '../../components/tell-me-question-card/tell-me-question-card';
+import { TellMeQuestionComponent } from '../../components/tell-me-question/tell-me-question';
+import { TellMeQuestionOutcomeComponent } from '../../components/tell-me-question-outcome/tell-me-question-outcome';
+import { VehicleRegistrationComponent } from '../../components/vehicle-registration/vehicle-registration';
+import { InstructorRegistrationComponent } from '../../components/instructor-registration/instructor-registration';
+import { TransmissionComponent } from '../../components/transmission/transmission';
+import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
+import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicle-details';
+import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
+import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
+import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
+import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
+import { TellMeQuestionSelected, EyesightTestReset } from '../../../../modules/tests/test-data/test-data.actions';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
+import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-describe('WaitingRoomToCarPage', () => {
-  let fixture: ComponentFixture<WaitingRoomToCarPage>;
-  let component: WaitingRoomToCarPage;
+describe('WaitingRoomToCarCatBPage', () => {
+  let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;
+  let component: WaitingRoomToCarCatBPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WaitingRoomToCarPage,
+        WaitingRoomToCarCatBPage,
         MockComponent(EyesightTestComponent),
         MockComponent(EyesightFailureConfirmationComponent),
         MockComponent(EndTestLinkComponent),
@@ -108,7 +108,7 @@ describe('WaitingRoomToCarPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarPage);
+        fixture = TestBed.createComponent(WaitingRoomToCarCatBPage);
         component = fixture.componentInstance;
       });
     store$ = TestBed.get(Store);
