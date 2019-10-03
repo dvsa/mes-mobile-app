@@ -95,10 +95,10 @@ interface WaitingRoomToCarPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-waiting-room-to-car',
-  templateUrl: 'waiting-room-to-car.html',
+  selector: 'waiting-room-to-car-cat-b-page',
+  templateUrl: 'waiting-room-to-car.cat-b.page.html',
 })
-export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
+export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 

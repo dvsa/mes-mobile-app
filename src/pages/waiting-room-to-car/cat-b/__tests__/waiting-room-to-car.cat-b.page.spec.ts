@@ -3,7 +3,7 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
-import { WaitingRoomToCarPage } from '../waiting-room-to-car';
+import { WaitingRoomToCarCatBPage } from '../waiting-room-to-car.cat-b.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -39,14 +39,14 @@ import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actio
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 describe('WaitingRoomToCarPage', () => {
-  let fixture: ComponentFixture<WaitingRoomToCarPage>;
-  let component: WaitingRoomToCarPage;
+  let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;
+  let component: WaitingRoomToCarCatBPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WaitingRoomToCarPage,
+        WaitingRoomToCarCatBPage,
         MockComponent(EyesightTestComponent),
         MockComponent(EyesightFailureConfirmationComponent),
         MockComponent(EndTestLinkComponent),
@@ -108,7 +108,7 @@ describe('WaitingRoomToCarPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarPage);
+        fixture = TestBed.createComponent(WaitingRoomToCarCatBPage);
         component = fixture.componentInstance;
       });
     store$ = TestBed.get(Store);
