@@ -38,7 +38,7 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-describe('WaitingRoomToCarPage', () => {
+describe('WaitingRoomToCarCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;
   let component: WaitingRoomToCarCatBPage;
   let store$: Store<StoreModel>;
