@@ -1,29 +1,31 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import * as waitingRoomToCarActions from './waiting-room-to-car.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import * as waitingRoomToCarActions from '../waiting-room-to-car.actions';
 import { Observable } from 'rxjs/Observable';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
+import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import {
   SchoolCarToggled,
   DualControlsToggled,
   GearboxCategoryChanged,
   VehicleRegistrationChanged,
-} from '../../modules/tests/vehicle-details/vehicle-details.actions';
+} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { map } from 'rxjs/operators';
 import {
   InstructorAccompanimentToggled,
   OtherAccompanimentToggled,
   SupervisorAccompanimentToggled,
   InterpreterAccompanimentToggled,
-} from '../../modules/tests/accompaniment/accompaniment.actions';
-import { getVehicleDetails } from '../../modules/tests/vehicle-details/vehicle-details.reducer';
-import { getAccompaniment } from '../../modules/tests/accompaniment/accompaniment.reducer';
-import { InstructorRegistrationNumberChanged } from '../../modules/tests/instructor-details/instructor-details.actions';
+} from '../../../modules/tests/accompaniment/accompaniment.actions';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getAccompaniment } from '../../../modules/tests/accompaniment/accompaniment.reducer';
+import {
+  InstructorRegistrationNumberChanged,
+} from '../../../modules/tests/instructor-details/instructor-details.actions';
 import {
   getRegistrationNumber,
   getGearboxCategory,
@@ -31,21 +33,21 @@ import {
   getDualControls,
   isAutomatic,
   isManual,
-} from '../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,
   getOtherAccompaniment,
   getInterpreterAccompaniment,
-} from '../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../modules/tests/candidate/candidate.selector';
-import { getTests } from '../../modules/tests/tests.reducer';
+} from '../../../modules/tests/accompaniment/accompaniment.selector';
+import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/candidate/candidate.selector';
+import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
-import { QuestionProvider } from '../../providers/question/question';
-import { getInstructorDetails } from '../../modules/tests/instructor-details/instructor-details.reducer';
-import { getInstructorRegistrationNumber } from '../../modules/tests/instructor-details/instructor-details.selector';
+import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
+import { QuestionProvider } from '../../../providers/question/question';
+import { getInstructorDetails } from '../../../modules/tests/instructor-details/instructor-details.reducer';
+import { getInstructorRegistrationNumber } from '../../../modules/tests/instructor-details/instructor-details.selector';
 import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
@@ -54,7 +56,7 @@ import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
-} from '../../modules/tests/test-data/test-data.actions';
+} from '../../../modules/tests/test-data/test-data.actions';
 import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,
@@ -64,10 +66,10 @@ import {
   getTellMeQuestion,
   hasEyesightTestBeenCompleted,
   hasEyesightTestGotSeriousFault,
-} from '../../modules/tests/test-data/test-data.selector';
-import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests } from '../../modules/tests/tests.actions';
-import { CAT_B } from '../page-names.constants';
+} from '../../../modules/tests/test-data/test-data.selector';
+import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { PersistTests } from '../../../modules/tests/tests.actions';
+import { CAT_B } from '../../page-names.constants';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -93,10 +95,10 @@ interface WaitingRoomToCarPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-waiting-room-to-car',
-  templateUrl: 'waiting-room-to-car.html',
+  selector: 'waiting-room-to-car-cat-b-page',
+  templateUrl: 'waiting-room-to-car.cat-b.page.html',
 })
-export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
+export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
