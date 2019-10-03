@@ -1,22 +1,22 @@
 import { PostalAddressComponent } from '../postal-address';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../../../../shared/models/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
-import { AppModule, createTranslateLoader } from '../../../../../../app/app.module';
-import { ComponentsModule } from '../../../../../../components/common/common-components.module';
+import { AppModule, createTranslateLoader } from '../../../../../app/app.module';
+import { ComponentsModule } from '../../../../../components/common/common-components.module';
 import {
   initialState as preTestDeclarationInitialState,
-} from '../../../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
+} from '../../../../../modules/tests/pre-test-declarations/pre-test-declarations.reducer';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
-import { AuthenticationProvider } from '../../../../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../../../../providers/date-time/__mocks__/date-time.mock';
+import { AuthenticationProvider } from '../../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
 import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
 import { Http } from '@angular/http';
-import * as welshTranslations from '../../../../../../assets/i18n/cy.json';
+import * as welshTranslations from '../../../../../assets/i18n/cy.json';
 
 describe('PostalAddressComponent', () => {
   let fixture: ComponentFixture<PostalAddressComponent>;
