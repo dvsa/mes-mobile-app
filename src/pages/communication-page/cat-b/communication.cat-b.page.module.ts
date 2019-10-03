@@ -6,7 +6,7 @@ import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { CommunicationAnalyticsEffects } from '../communication.analytics.effects';
 import { CommunicationEffects } from '../communication.effects';
-import { CommunicationComponentsModule } from '../common/communication.components.module';
+import { CommunicationComponentsModule } from '../components/communication.components.module';
 
 @NgModule({
   declarations: [

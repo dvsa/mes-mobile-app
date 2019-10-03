@@ -17,20 +17,20 @@ import {
 } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
-import { ProvidedEmailComponent } from '../../common/provided-email/provided-email';
-import { NewEmailComponent } from '../../common/new-email/new-email';
+import { ProvidedEmailComponent } from '../../components/provided-email/provided-email';
+import { NewEmailComponent } from '../../components/new-email/new-email';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import * as communicationPreferenceActions
   from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { PostalAddressComponent } from '../../common/postal-address/postal-address';
+import { PostalAddressComponent } from '../../components/postal-address/postal-address';
 import { MockComponent } from 'ng-mocks';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { TranslateService, TranslateModule } from 'ng2-translate';
 import { PopulateTestSlotAttributes }
   from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
-import { PrivacyNoticeComponent } from '../../common/privacy-notice/privacy-notice';
+import { PrivacyNoticeComponent } from '../../components/privacy-notice/privacy-notice';
 import { CommunicationSubmitInfo } from '../../communication.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 
