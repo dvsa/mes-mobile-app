@@ -52,8 +52,8 @@ interface CommunicationPageState {
 }
 @IonicPage()
 @Component({
-  selector: 'communication-cat-b-page',
-  templateUrl: 'communication.cat-b.page.html',
+  selector: 'communication-cat-be-page',
+  templateUrl: 'communication.cat-be.page.html',
 })
 export class CommunicationCatBEPage extends PracticeableBasePageComponent implements OnInit {
 
