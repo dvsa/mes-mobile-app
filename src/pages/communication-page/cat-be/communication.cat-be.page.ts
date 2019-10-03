@@ -1,6 +1,5 @@
 import { IonicPage, Navbar, Platform, NavController } from 'ionic-angular';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Observable } from 'rxjs/Observable';
@@ -38,6 +37,7 @@ import {
 import { TranslateService } from 'ng2-translate';
 import { CAT_BE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { BasePageComponent } from '../../../shared/classes/base-page';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -55,7 +55,7 @@ interface CommunicationPageState {
   selector: 'communication-cat-be-page',
   templateUrl: 'communication.cat-be.page.html',
 })
-export class CommunicationCatBePage extends PracticeableBasePageComponent implements OnInit {
+export class CommunicationCatBePage extends BasePageComponent implements OnInit {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
@@ -80,14 +80,14 @@ export class CommunicationCatBePage extends PracticeableBasePageComponent implem
   merged$: Observable<string | boolean>;
 
   constructor(
-    store$: Store<StoreModel>,
+    public store$: Store<StoreModel>,
     public navController: NavController,
     public platform: Platform,
     public authenticationProvider: AuthenticationProvider,
     private deviceAuthenticationProvider: DeviceAuthenticationProvider,
     private translate: TranslateService,
   ) {
-    super(platform, navController, authenticationProvider, store$);
+    super(platform, navController, authenticationProvider);
     this.form = new FormGroup(this.getFormValidation());
   }
 
@@ -104,7 +104,6 @@ export class CommunicationCatBePage extends PracticeableBasePageComponent implem
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
@@ -187,7 +186,6 @@ export class CommunicationCatBePage extends PracticeableBasePageComponent implem
   }
 
   ionViewDidLeave(): void {
-    super.ionViewDidLeave();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
