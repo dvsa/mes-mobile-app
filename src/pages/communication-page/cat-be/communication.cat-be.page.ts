@@ -55,7 +55,7 @@ interface CommunicationPageState {
   selector: 'communication-cat-be-page',
   templateUrl: 'communication.cat-be.page.html',
 })
-export class CommunicationCatBEPage extends PracticeableBasePageComponent implements OnInit {
+export class CommunicationCatBePage extends PracticeableBasePageComponent implements OnInit {
 
   static readonly providedEmail: string = 'Provided';
   static readonly updatedEmail: string = 'Updated';
@@ -233,17 +233,17 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
   }
 
   dispatchCandidateChoseProvidedEmail() {
-    this.setCommunicationType(CommunicationCatBEPage.email, CommunicationCatBEPage.providedEmail);
+    this.setCommunicationType(CommunicationCatBePage.email, CommunicationCatBePage.providedEmail);
     this.store$.dispatch(
       new CandidateChoseEmailAsCommunicationPreference(
-        this.candidateProvidedEmail, CommunicationCatBEPage.email),
+        this.candidateProvidedEmail, CommunicationCatBePage.email),
     );
   }
 
   dispatchCandidateChoseNewEmail(communicationEmail: string): void {
     this.store$.dispatch(
       new CandidateChoseEmailAsCommunicationPreference(
-        communicationEmail, CommunicationCatBEPage.email),
+        communicationEmail, CommunicationCatBePage.email),
     );
   }
 
@@ -254,23 +254,23 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
   }
 
   isProvidedEmailSelected() {
-    return (this.communicationType === CommunicationCatBEPage.email
-     && this.emailType === CommunicationCatBEPage.providedEmail);
+    return (this.communicationType === CommunicationCatBePage.email
+     && this.emailType === CommunicationCatBePage.providedEmail);
   }
 
   isNewEmailSelected() {
-    return (this.communicationType === CommunicationCatBEPage.email
-      && this.emailType === CommunicationCatBEPage.updatedEmail);
+    return (this.communicationType === CommunicationCatBePage.email
+      && this.emailType === CommunicationCatBePage.updatedEmail);
   }
 
   isPostSelected() {
-    return this.communicationType === CommunicationCatBEPage.post;
+    return this.communicationType === CommunicationCatBePage.post;
   }
 
   dispatchCandidateChosePost(): void {
-    this.setCommunicationType(CommunicationCatBEPage.post);
+    this.setCommunicationType(CommunicationCatBePage.post);
     this.store$.dispatch(
-      new CandidateChosePostAsCommunicationPreference(CommunicationCatBEPage.post),
+      new CandidateChosePostAsCommunicationPreference(CommunicationCatBePage.post),
     );
   }
 
@@ -286,7 +286,7 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
    * No current schema properties allow for the capture of radio selection for emails on the communication page.
    */
   restoreRadiosFromState() {
-    if (this.communicationType === CommunicationCatBEPage.email) {
+    if (this.communicationType === CommunicationCatBePage.email) {
       this.assertEmailType();
     }
   }
@@ -306,13 +306,13 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
     if (this.candidateProvidedEmail !== '' && this.candidateProvidedEmail === this.communicationEmail) {
       this.selectProvidedEmail = true;
       this.selectNewEmail = false;
-      this.emailType = CommunicationCatBEPage.providedEmail;
+      this.emailType = CommunicationCatBePage.providedEmail;
     }
 
     if (this.candidateProvidedEmail !== this.communicationEmail) {
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
-      this.emailType = CommunicationCatBEPage.updatedEmail;
+      this.emailType = CommunicationCatBePage.updatedEmail;
     }
   }
 
@@ -332,16 +332,16 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
    *
    */
   initialiseDefaultSelections() {
-    this.communicationType = CommunicationCatBEPage.email;
+    this.communicationType = CommunicationCatBePage.email;
     if (this.candidateProvidedEmail) {
-      this.emailType = CommunicationCatBEPage.providedEmail;
+      this.emailType = CommunicationCatBePage.providedEmail;
       this.selectProvidedEmail = true;
       this.form.controls['radioCtrl'].setValue(true);
       this.dispatchCandidateChoseProvidedEmail();
     }
 
     if (!this.candidateProvidedEmail) {
-      this.emailType = CommunicationCatBEPage.updatedEmail;
+      this.emailType = CommunicationCatBePage.updatedEmail;
       this.selectNewEmail = true;
       this.selectProvidedEmail = false;
       this.form.controls['radioCtrl'].setValue(true);
@@ -351,8 +351,8 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
   verifyNewEmailFormControl(communicationChoice: string) {
     const newEmailCtrl = this.form.get('newEmailCtrl');
     if (newEmailCtrl !== null) {
-      if (communicationChoice !== CommunicationCatBEPage.email
-        || this.emailType === CommunicationCatBEPage.providedEmail) {
+      if (communicationChoice !== CommunicationCatBePage.email
+        || this.emailType === CommunicationCatBePage.providedEmail) {
         newEmailCtrl.clearValidators();
       } else {
         newEmailCtrl.setValidators(Validators.email);
@@ -362,7 +362,7 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
   }
 
   shouldPreselectADefaultValue(): boolean {
-    return this.communicationType === CommunicationCatBEPage.notProvided;
+    return this.communicationType === CommunicationCatBePage.notProvided;
   }
 
   /**
@@ -376,7 +376,7 @@ export class CommunicationCatBEPage extends PracticeableBasePageComponent implem
    * (CandidateChoseEmailAsCommunicationPreference) would not be dispatched.
    */
   conditionalDispatchCandidateChoseNewEmail() {
-    this.setCommunicationType(CommunicationCatBEPage.email, CommunicationCatBEPage.updatedEmail);
+    this.setCommunicationType(CommunicationCatBePage.email, CommunicationCatBePage.updatedEmail);
 
     if (this.isNewEmailSelected() && this.communicationEmail !== '') {
       this.dispatchCandidateChoseNewEmail(this.communicationEmail);
