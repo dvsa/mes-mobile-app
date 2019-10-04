@@ -1,0 +1,44 @@
+page-help {
+  .nav-close ion-icon {
+    margin: -1px 0 0;
+    display: inherit;
+    min-width: 28px;
+    font-size: 3.4rem;
+  }
+
+  .start-recording-button,
+  .stop-recording-button {
+    @extend .mes-primary-button;
+    // min-width: 30%;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .stop-recording-button {
+    background: map-get($colors-gds, gds-bright-red);
+    &.activated {
+      background: darken(map-get($colors-gds, gds-bright-red), 10);
+    }
+  }
+
+  .col {
+    padding: 0;
+  }
+
+  .button-ios {
+    padding: 0 1.5em;
+  }
+
+  .mes-data-row{
+    padding: 0 0 20px;
+  }
+
+  button.link-button {
+    background: transparent;
+    padding: 0;
+    color: #3572b0;
+    text-decoration: underline;
+    text-underline-position: under;
+    font-weight: 500;
+  }
+  
+}

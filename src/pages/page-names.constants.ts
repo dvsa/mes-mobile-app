@@ -22,3 +22,4 @@ export const REKEY_REASON_PAGE = 'RekeyReasonPage';
 export const REKEY_UPLOAD_OUTCOME_PAGE = 'RekeyUploadOutcomePage';
 export const NON_PASS_FINALISATION_PAGE = 'NonPassFinalisationPage';
 export const DASHBOARD_PAGE = 'DashboardPage';
+export const HELP_PAGE = 'HelpPage';

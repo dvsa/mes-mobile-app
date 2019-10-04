@@ -1,0 +1,13 @@
+help-link {
+  .help-link-button {
+    background: transparent;
+    &.activated {
+      background: transparent
+    }
+  }
+  ion-icon {
+    font-size: 3.4rem;
+    color: map-get($colors-gds, gds-bright-red);
+    font-weight: bold;
+  }
+}

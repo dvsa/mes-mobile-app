@@ -1,0 +1,152 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons ion-buttons start navPop>
+      <button ion-button center class="nav-close" id="closeHelp">
+        <ion-icon name="md-close"></ion-icon>Close
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Help
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <h4>Emergency</h4>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid no-padding>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div>If you're feeling concerned for your safety, <strong>dial 999</strong> on your phone and ask for <strong>Police</strong>.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div>To let your colleagues know that you need assistance, send a silent emergency alert. This will also share your current location.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div>Your current location is <strong>{{(getLocation())}}</strong>.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <button ion-button id="emergency-alert-button" class="mes-danger-button" (click)="emergencyAlert()">
+              <!-- <ion-icon ios="md-help-buoy"></ion-icon> -->
+              <h3>Send emergency alert</h3>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <h4>Audio recording</h4>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid no-padding>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div>Record audio using the microphone on the iPad. Saved recordings are available <button class="link-button" (click)=showSavedRecordings()><span>here</span></button>.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <button ion-button id="audio-recording-button" (click)="toggleRecording()"
+              [ngClass]="{
+                'start-recording-button': !(pageState.isRecording$ | async),
+                'stop-recording-button': pageState.isRecording$ | async
+              }">
+              <!-- <ion-icon ios="md-help-buoy"></ion-icon> -->
+              <h3>{{(pageState.isRecording$ | async) ? 'Stop' : 'Start'}} recording</h3>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div><button class="link-button" (click)=showPreviousRecordings()>
+              <span>{{(pageState.isRecordingHistoryVisible$ | async) ? 'Hide' : 'Show'}} recordings</span>
+            </button></div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row" *ngIf="pageState.isRecordingHistoryVisible$ | async">
+          <ion-col>
+            <div *ngIf="recordings.length === 0">No previous recordings</div>
+            <div *ngIf="recordings.length > 0">
+              <ion-row *ngFor="let recording of recordings">
+                {{recording}}
+              </ion-row>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card [formGroup]="formGroup">
+    <ion-card-header>
+      <h4>Messages</h4>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid no-padding>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div>Send a message to your colleages at the test centre to alert them of exceptional circumstances. Select a message from the templates and customise or write your own.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col col-40>
+            <ion-select
+              placeholder="Select a message"
+              id="message-input"
+              name="messageType"
+              formControlName="messageType"
+              okText="Select" cancelText="Cancel"
+              class="message mes-data"
+              [selectOptions]="{cssClass:'mes-select'}"
+              (ionChange)="messageTypeChanged($event)">
+              <ion-option *ngFor="let message of messageTypeOptions" [value]="message.code" >
+                {{message.shortMessage}}
+              </ion-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <textarea id="message" class="message mes-data"
+            [value]="message"
+            (change)="messageChanged($event.target.value)">
+          </textarea>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <button ion-button id="send-message-button" class="mes-primary-button" (click)="sendMessage()">
+              <!-- <ion-icon ios="md-help-buoy"></ion-icon> -->
+              <h3>Send message</h3>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row">
+          <ion-col>
+            <div><button class="link-button" (click)=showPreviousMessages()>
+              <span>{{(pageState.isMessageHistoryVisible$ | async) ? 'Hide' : 'Show'}} previous messages</span>
+            </button></div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mes-data-row" *ngIf="pageState.isMessageHistoryVisible$ | async">
+          <ion-col>
+            <div *ngIf="sentMessages.length === 0">No previous messages</div>
+            <div *ngIf="sentMessages.length > 0">
+              <ion-row *ngFor="let message of sentMessages">
+                {{(getFormattedMessageDate(message.date))}} - {{message.body}}
+              </ion-row>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

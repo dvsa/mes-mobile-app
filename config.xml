@@ -21,6 +21,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="KeyboardResize" value="false" />
+    <preference name="iosPersistentFileLocation" value="Library" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -96,7 +97,16 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-device-authentication" spec="https://github.com/dvsa/cordova-plugin-device-authentication" />
     <plugin name="cordova-plugin-appconfig" spec="1.1.4" />
-    <hook src="scripts/editPlist.js" type="before_build" />
     <plugin name="cordova-plugin-is-debug" spec="1.0.0" />
-    <engine name="ios" spec="^4.5.5" />
+    <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <plugin name="cordova-plugin-media" spec="~5.0.3" />
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <string>Your location is only required when requesting emergency assistance</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
+        <string>Microphone access is needed when recording audio in emergency situations</string>
+    </edit-config>
+    <hook src="scripts/editPlist.js" type="before_build" />
+    <engine name="ios" spec="4.5.5" />
 </widget>
