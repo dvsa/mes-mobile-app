@@ -26,6 +26,7 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Subscription } from 'rxjs/Subscription';
 import { AudioRecorderProvider } from '../../providers/audio-recorder/audio-recorder';
 import { DateTime } from '../../shared/helpers/date-time';
+// import { DeviceProvider } from '../../providers/device/device';
 
 interface HelpPageState {
   isRecording$: Observable<boolean>;
@@ -46,6 +47,7 @@ export class HelpPage extends BasePageComponent implements OnInit {
   messageType: MessageType;
   message: string = '';
   sentMessages: MessageModel[] = [];
+  disableASAM: boolean = false;
 
   location$: Observable<Geoposition>;
   position: Geoposition;
@@ -63,8 +65,10 @@ export class HelpPage extends BasePageComponent implements OnInit {
     private geolocation: Geolocation,
     private audioRecorder: AudioRecorderProvider,
     private alertController: AlertController,
+    // private deviceProvider: DeviceProvider,
   ) {
     super(platform, navController, authenticationProvider);
+    this.disableASAM = navParams.get('disableASAM');
     this.formGroup = new FormGroup({});
   }
 
@@ -105,11 +109,19 @@ export class HelpPage extends BasePageComponent implements OnInit {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new HelpViewDidEnter());
+    if (this.disableASAM) {
+      console.log('need to disable ASAM to allow examiner to leave app and use camera');
+      // this.deviceProvider.disableSingleAppMode();
+    }
   }
 
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.disableASAM) {
+      console.log('need to re-enable ASAM');
+      // this.deviceProvider.enableSingleAppMode();
     }
   }
 

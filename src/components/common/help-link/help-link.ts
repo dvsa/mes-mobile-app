@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { App } from '../../../app/app.component';
 import { HELP_PAGE } from '../../../pages/page-names.constants';
@@ -9,6 +9,8 @@ import { HELP_PAGE } from '../../../pages/page-names.constants';
 })
 export class HelpLinkComponent {
 
+  @Input() disableASAM: boolean = false;
+
   constructor(public modalController: ModalController, private app: App) {}
 
   openHelpPageModal() {
@@ -17,7 +19,7 @@ export class HelpLinkComponent {
     const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
     const modal = this.modalController.create(
       HELP_PAGE,
-      { },
+      { disableASAM: this.disableASAM },
       { cssClass: zoomClass });
     modal.present();
   }

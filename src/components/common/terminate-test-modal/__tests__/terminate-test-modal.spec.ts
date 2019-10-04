@@ -13,7 +13,7 @@ import { DeviceAuthenticationProvider } from '../../../../providers/device-authe
 // tslint:disable-next-line:max-line-length
 import { DeviceAuthenticationProviderMock } from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
 
-describe('TerminateTestModal', () => {
+fdescribe('TerminateTestModal', () => {
   let fixture: ComponentFixture<TerminateTestModal>;
   let component: TerminateTestModal;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;

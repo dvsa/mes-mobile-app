@@ -3,7 +3,7 @@
   <ion-navbar hideBackButton>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
-      <help-link></help-link>
+      <help-link [disableASAM]="true"></help-link>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>
     </ion-buttons>
   </ion-navbar>
