@@ -2,28 +2,28 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../app/app.module';
-import { BackToOfficePage } from '../back-to-office';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { AppModule } from '../../../../app/app.module';
+import { BackToOfficeCatBPage } from '../back-to-office.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { StoreModule, Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { DeviceProvider } from '../../../providers/device/device';
-import { DeviceProviderMock } from '../../../providers/device/__mocks__/device.mock';
-import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { DeviceProvider } from '../../../../providers/device/device';
+import { DeviceProviderMock } from '../../../../providers/device/__mocks__/device.mock';
+import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
+import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs/observable/of';
 
 describe('BackToOfficePage', () => {
-  let fixture: ComponentFixture<BackToOfficePage>;
-  let component: BackToOfficePage;
+  let fixture: ComponentFixture<BackToOfficeCatBPage>;
+  let component: BackToOfficeCatBPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
   let screenOrientation: ScreenOrientation;
@@ -33,7 +33,7 @@ describe('BackToOfficePage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        BackToOfficePage,
+        BackToOfficeCatBPage,
         MockComponent(PracticeModeBanner),
       ],
       imports: [
@@ -98,7 +98,7 @@ describe('BackToOfficePage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(BackToOfficePage);
+        fixture = TestBed.createComponent(BackToOfficeCatBPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         screenOrientation = TestBed.get(ScreenOrientation);

@@ -11,7 +11,7 @@ export const TEST_RESULTS_SEARCH_PAGE = 'TestResultsSearchPage';
 export const VIEW_TEST_RESULT_PAGE = 'ViewTestResultPage';
 
 export const CAT_B = {
-  BACK_TO_OFFICE_PAGE: 'BackToOfficePage',
+  BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
   DEBRIEF_PAGE:'DebriefPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
