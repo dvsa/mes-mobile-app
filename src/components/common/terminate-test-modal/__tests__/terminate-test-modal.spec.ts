@@ -37,12 +37,13 @@ describe('TerminateTestModal', () => {
         fixture = TestBed.createComponent(TerminateTestModal);
         component = fixture.componentInstance;
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
+        component.onTerminate = jasmine.createSpy('onTerminate');
+        component.onCancel = jasmine.createSpy('onCancel');
       });
   }));
 
   describe('DOM', () => {
     it('should call the provided onCancel function when returning to the test', () => {
-      component.onCancel = jasmine.createSpy('onCancel');
       const returnButton = fixture.debugElement.query(By.css('.return-button'));
       returnButton.triggerEventHandler('click', null);
       expect(component.onCancel).toHaveBeenCalled();
@@ -62,14 +63,12 @@ describe('TerminateTestModal', () => {
         expect(deviceAuthenticationProvider.triggerLockScreen).toHaveBeenCalled();
       });
       it('should not call the onTerminate callback when the lock screen Promise rejects', async () => {
-        component.onTerminate = jasmine.createSpy('onTerminate');
         const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen').and.returnValue(Promise.reject('n'));
         deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
         await component.terminationWrapper();
         expect(component.onTerminate).not.toHaveBeenCalled();
       });
       it('should call the onTerminate callback when the lock screen Promise resolves', async () => {
-        component.onTerminate = jasmine.createSpy('onTerminate');
         const lockScreenRejectionSpy = jasmine.createSpy('triggerLockScreen').and.returnValue(Promise.resolve('y'));
         deviceAuthenticationProvider.triggerLockScreen = lockScreenRejectionSpy;
         await component.terminationWrapper();
