@@ -27,8 +27,7 @@ import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicl
 import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
-import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
-import { TellMeQuestionSelected, EyesightTestReset } from '../../../../modules/tests/test-data/test-data.actions';
+import { EyesightTestReset } from '../../../../modules/tests/test-data/test-data.actions';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -104,24 +103,6 @@ describe('WaitingRoomToCarCatBEPage', () => {
     store$ = TestBed.get(Store);
     spyOn(store$, 'dispatch');
   }));
-
-  describe('Class', () => {
-    it('should get tell me question from the question provider', () => {
-      expect(component.tellMeQuestions.length).toBe(2);
-    });
-
-    describe('selecting a tell me question', () => {
-      it('should dispatch an action when the tell me question change handler is called', () => {
-        const question: TellMeQuestion = {
-          code: 'T1',
-          description: 'desc',
-          shortName: 'name',
-        };
-        component.tellMeQuestionChanged(question);
-        expect(store$.dispatch).toHaveBeenCalledWith(new TellMeQuestionSelected(question));
-      });
-    });
-  });
 
   describe('DOM', () => {
 
