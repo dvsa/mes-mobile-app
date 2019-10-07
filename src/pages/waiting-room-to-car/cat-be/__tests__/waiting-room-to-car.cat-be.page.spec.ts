@@ -3,7 +3,7 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
-import { WaitingRoomToCarCatBEPage } from '../waiting-room-to-car.cat-be.page';
+import { WaitingRoomToCarCatBePage } from '../waiting-room-to-car.cat-be.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -32,15 +32,15 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-describe('WaitingRoomToCarCatBEPage', () => {
-  let fixture: ComponentFixture<WaitingRoomToCarCatBEPage>;
-  let component: WaitingRoomToCarCatBEPage;
+describe('WaitingRoomToCarCatBePage', () => {
+  let fixture: ComponentFixture<WaitingRoomToCarCatBePage>;
+  let component: WaitingRoomToCarCatBePage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WaitingRoomToCarCatBEPage,
+        WaitingRoomToCarCatBePage,
         MockComponent(EyesightTestComponent),
         MockComponent(EyesightFailureConfirmationComponent),
         MockComponent(EndTestLinkComponent),
@@ -97,7 +97,7 @@ describe('WaitingRoomToCarCatBEPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomToCarCatBEPage);
+        fixture = TestBed.createComponent(WaitingRoomToCarCatBePage);
         component = fixture.componentInstance;
       });
     store$ = TestBed.get(Store);

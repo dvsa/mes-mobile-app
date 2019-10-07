@@ -68,7 +68,7 @@ import {
 } from '../../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
-import { CAT_B, CAT_BE } from '../../page-names.constants';
+import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 
 interface WaitingRoomToCarPageState {
@@ -98,7 +98,7 @@ interface WaitingRoomToCarPageState {
   selector: 'waiting-room-to-car-cat-be-page',
   templateUrl: 'waiting-room-to-car.cat-be.page.html',
 })
-export class WaitingRoomToCarCatBEPage extends BasePageComponent {
+export class WaitingRoomToCarCatBePage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 
@@ -267,7 +267,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     if (this.form.valid) {
       this.navController.push(CAT_BE.TEST_REPORT_PAGE).then(() => {
         // remove Waiting Room To Car Page
-        const view = this.navController.getViews().find(view => view.id === CAT_B.WAITING_ROOM_TO_CAR_PAGE);
+        const view = this.navController.getViews().find(view => view.id === CAT_BE.WAITING_ROOM_TO_CAR_PAGE);
         if (view) {
           this.navController.removeView(view);
         }
@@ -322,7 +322,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   }
 
   getDebriefPage() {
-    return CAT_B.DEBRIEF_PAGE;
+    return CAT_BE.DEBRIEF_PAGE;
   }
 
 }
