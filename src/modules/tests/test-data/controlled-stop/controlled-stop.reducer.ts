@@ -34,7 +34,6 @@ export function controlledStopReducer(
       };
     case controlledStopActions.CONTROLLED_STOP_REMOVE_FAULT:
       return {
-        ...state,
         selected: state.selected,
       };
     case controlledStopActions.ADD_CONTROLLED_STOP_COMMENT:

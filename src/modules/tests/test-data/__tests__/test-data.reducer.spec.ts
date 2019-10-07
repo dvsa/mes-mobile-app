@@ -14,17 +14,10 @@ import {
   AddManoeuvreDangerousFault,
 } from '../manoeuvres/manoeuvres.actions';
 import {
-  AddDangerousFault,
-  RemoveDangerousFault,
-} from '../dangerous-faults/dangerous-faults.actions';
-import {
   ToggleEco,
   ToggleControlEco,
   TogglePlanningEco,
 } from '../eco/eco.actions';
-import {
-  ToggleControlledStop,
-} from '../controlled-stop/controlled-stop.actions';
 import {
   ToggleLegalRequirement,
 } from '../test-requirements/test-requirements.actions';
@@ -228,35 +221,6 @@ describe('TestDataReducer reducer', () => {
       });
     });
   });
-  describe('ADD_DANGEROUS_FAULT', () => {
-    it('should add a dangerous fault when none exists', () => {
-      const result = testDataReducer(initialState, new AddDangerousFault(Competencies.followingDistance));
-      expect(result.dangerousFaults.followingDistance).toEqual(true);
-    });
-
-    it('should update dangerous fault which already exists', () => {
-      const state: TestData = {
-        dangerousFaults: {
-          followingDistance: true,
-        },
-      };
-
-      const result = testDataReducer(state, new AddDangerousFault(Competencies.followingDistance));
-      expect(result.dangerousFaults.followingDistance).toEqual(true);
-    });
-
-    it('should not remove an existing dangerous fault when a new one is added', () => {
-      const state: TestData = {
-        dangerousFaults: {
-          followingDistance: true,
-        },
-      };
-
-      const result = testDataReducer(state, new AddDangerousFault(Competencies.judgementCrossing));
-      expect(result.dangerousFaults.followingDistance).toEqual(true);
-      expect(result.dangerousFaults.judgementCrossing).toEqual(true);
-    });
-  });
 
   describe('TOGGLE NORMAL START 1', () => {
     it('should toggle normal start 1 to complete (true) when dispatched first time', () => {
@@ -406,26 +370,6 @@ describe('TestDataReducer reducer', () => {
       expect(result.eco.adviceGivenPlanning).toEqual(false);
     });
   });
-  describe('TOGGLE_CONTROLLED_STOP', () => {
-    it('should toggle the controlled stop (true when dispatched first time)', () => {
-      const state: TestData = {
-        controlledStop: {},
-      };
-      const result = testDataReducer(state, new ToggleControlledStop());
-      expect(result.controlledStop.selected).toEqual(true);
-    });
-
-    it('should remove the controlled stop property when dispatched second time', () => {
-      const state: TestData = {
-        controlledStop: {},
-      };
-      const modifiedState = testDataReducer(state, new ToggleControlledStop());
-      const result = testDataReducer(modifiedState, new ToggleControlledStop());
-
-      expect(result.controlledStop.selected).toBe(false);
-
-    });
-  });
 
   describe('TOGGLE ETA VERBAL', () => {
     it('should toggle ETA verbal to true when dispatched first time', () => {
@@ -516,20 +460,6 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(state, new RemoveSeriousFault(Competencies.controlsGears));
 
       expect(result.seriousFaults.controlsGears).toBeUndefined();
-    });
-  });
-
-  describe(('REMOVE_DANGEROUS_FAULT'), () => {
-    it('should remove the competency from the state when a fault is removed', () => {
-      const state: TestData = {
-        dangerousFaults: {
-          controlsGears: true,
-        },
-      };
-
-      const result = testDataReducer(state, new RemoveDangerousFault(Competencies.controlsGears));
-
-      expect(result.dangerousFaults.controlsGears).toBeUndefined();
     });
   });
 
