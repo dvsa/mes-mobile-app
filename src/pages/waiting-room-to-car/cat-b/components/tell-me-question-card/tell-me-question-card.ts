@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
+import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
 
 @Component({
   selector: 'tell-me-question-card',
   templateUrl: 'tell-me-question-card.html',
 })
-export class TellMeQuestionCardComponent  {
+export class TellMeQuestionCardComponent {
 
   @Input()
   formGroup: FormGroup;

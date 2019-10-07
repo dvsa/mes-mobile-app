@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { StringType } from '../../../../shared/helpers/string-type';
+import { StringType } from '../../../../../shared/helpers/string-type';
 
 @Component({
   selector: 'instructor-registration',
@@ -25,7 +25,7 @@ export class InstructorRegistrationComponent implements OnChanges {
       this.formGroup.addControl('instructorRegistration', this.formControl);
     }
     this.formGroup.get('instructorRegistration')
-    .setValidators([Validators.min(1), Validators.max(9999999), Validators.pattern(/^[0-9]*$/)]);
+      .setValidators([Validators.min(1), Validators.max(9999999), Validators.pattern(/^[0-9]*$/)]);
     this.formControl.patchValue(this.instructorRegistration);
   }
 
