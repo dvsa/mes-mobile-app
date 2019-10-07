@@ -6,6 +6,8 @@ import {
   AddManoeuvreDrivingFault,
   AddManoeuvreSeriousFault,
   AddManoeuvreDangerousFault,
+  AddManoeuvreComment,
+  RemoveManoeuvreFault,
 } from '../manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
@@ -48,54 +50,84 @@ describe('Manoeuvres Reducer', () => {
       expect(result[ManoeuvreTypes.reverseParkRoad].selected).toEqual(true);
       expect(result[ManoeuvreTypes.reverseParkCarpark]).toBeUndefined();
     });
+  });
 
-    describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
-      it('should add a "DF" outcome to the selected manoeuvre', () => {
-        const state: Manoeuvres = {
-          reverseParkRoad: { selected: true },
-        };
-        const result = manoeuvresReducer(
+  describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
+    it('should add a "DF" outcome to the selected manoeuvre', () => {
+      const state: Manoeuvres = {
+        reverseParkRoad: { selected: true },
+      };
+      const result = manoeuvresReducer(
           state,
           new AddManoeuvreDrivingFault({
             manoeuvre: ManoeuvreTypes.reverseParkRoad,
             competency: ManoeuvreCompetencies.controlFault,
           }),
         );
-        expect(result.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.DF);
-      });
+      expect(result.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.DF);
     });
+  });
 
-    describe('ADD_MANOEUVRE_SERIOUS_FAULT', () => {
-      it('should add a "S" outcome to the selected manoeuvre', () => {
-        const state: Manoeuvres = {
-          reverseParkRoad: { selected: true },
-        };
-        const result = manoeuvresReducer(
+  describe('ADD_MANOEUVRE_SERIOUS_FAULT', () => {
+    it('should add a "S" outcome to the selected manoeuvre', () => {
+      const state: Manoeuvres = {
+        reverseParkRoad: { selected: true },
+      };
+      const result = manoeuvresReducer(
           state,
           new AddManoeuvreSeriousFault({
             manoeuvre: ManoeuvreTypes.reverseParkRoad,
             competency: ManoeuvreCompetencies.controlFault,
           }),
         );
-        expect(result.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.S);
-      });
+      expect(result.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.S);
     });
+  });
 
-    describe('ADD_MANOEUVRE_DANGEROUS_FAULT', () => {
-      it('should add a "D" outcome to the selected manoeuvre', () => {
-        const state: Manoeuvres = {
-          reverseParkRoad: { selected: true },
-        };
-        const result = manoeuvresReducer(
+  describe('ADD_MANOEUVRE_DANGEROUS_FAULT', () => {
+    it('should add a "D" outcome to the selected manoeuvre', () => {
+      const state: Manoeuvres = {
+        reverseParkRoad: { selected: true },
+      };
+      const result = manoeuvresReducer(
           state,
           new AddManoeuvreDangerousFault({
             manoeuvre: ManoeuvreTypes.reverseParkRoad,
             competency: ManoeuvreCompetencies.controlFault,
           }),
         );
-        expect(result.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.D);
-      });
+      expect(result.reverseParkRoad.controlFault).toEqual(CompetencyOutcome.D);
     });
   });
 
+  describe('ADD_MANOEUVRE_COMMENT', () => {
+    it('should add a comment to the selected Manoeuvre', () => {
+      const state: Manoeuvres = {
+        reverseParkRoad: { selected: true },
+      };
+      const result = manoeuvresReducer(
+        state,
+        new AddManoeuvreComment(
+          ManoeuvreTypes.reverseParkRoad,
+          CompetencyOutcome.S,
+          'control',
+          'comments',
+        ),
+      );
+      expect(result.reverseParkRoad.controlFaultComments).toEqual('comments');
+    });
+  });
+
+  describe('REMOVE_MANOEUVRE_FAULT', () => {
+    it('should remove the fault from a manoeuvre', () => {
+      const state: Manoeuvres = {
+        reverseParkRoad: { selected: true , controlFault: CompetencyOutcome.DF },
+      };
+      const result = manoeuvresReducer(state, new RemoveManoeuvreFault({
+        competency: ManoeuvreCompetencies.controlFault,
+        manoeuvre: ManoeuvreTypes.reverseParkRoad,
+      }));
+      expect(result.reverseParkRoad.controlFault).toBeUndefined();
+    });
+  });
 });
