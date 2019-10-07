@@ -10,7 +10,7 @@ import {
 } from '../controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 
-fdescribe('Controlled Stop Reducer' , () => {
+describe('Controlled Stop Reducer' , () => {
 
   describe('TOGGLE_CONTROLLED_STOP', () => {
     it('should toggle the controlled stop (true when dispatched first time)', () => {

@@ -18,8 +18,7 @@ export function dangerousFaultsReducer(
       const dangerousCompetency = action.payload as Competencies;
       const { [dangerousCompetency]: removedDangerousFault, ...updatedDangerousFaults } = state;
       return {
-        ...state,
-        dangerousFaults: updatedDangerousFaults,
+        ...updatedDangerousFaults,
       };
     case dangerousFaultsActions.ADD_DANGEROUS_FAULT_COMMENT:
       return {
