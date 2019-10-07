@@ -21,12 +21,7 @@ import { QuestionProviderMock } from '../../../../providers/question/__mocks__/q
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
-import { TellMeQuestionCardComponent } from '../../components/tell-me-question-card/tell-me-question-card';
-import { TellMeQuestionComponent } from '../../components/tell-me-question/tell-me-question';
-import { TellMeQuestionOutcomeComponent } from '../../components/tell-me-question-outcome/tell-me-question-outcome';
 import { VehicleRegistrationComponent } from '../../components/vehicle-registration/vehicle-registration';
-import { InstructorRegistrationComponent } from '../../components/instructor-registration/instructor-registration';
-import { TransmissionComponent } from '../../components/transmission/transmission';
 import { VehicleDetailsCardComponent } from '../../components/vehicle-details-card/vehicle-details-card';
 import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicle-details';
 import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
@@ -37,6 +32,11 @@ import { TellMeQuestionSelected, EyesightTestReset } from '../../../../modules/t
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
+import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';
+import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
+import { TransmissionComponent } from '../components/transmission/transmission';
+import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
 
 describe('WaitingRoomToCarCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;

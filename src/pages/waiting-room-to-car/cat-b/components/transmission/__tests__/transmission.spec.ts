@@ -2,9 +2,9 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { TransmissionComponent } from '../transmission';
 import { IonicModule } from 'ionic-angular';
-import { AppModule } from '../../../../../app/app.module';
 import { By } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
+import { AppModule } from '../../../../../../app/app.module';
 
 describe('TransmissionComponent', () => {
   let fixture: ComponentFixture<TransmissionComponent>;
