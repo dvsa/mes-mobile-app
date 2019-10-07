@@ -10,16 +10,8 @@ import {
   AddManoeuvreDangerousFault,
 } from '../manoeuvres/manoeuvres.actions';
 import {
-  ToggleEco,
-  ToggleControlEco,
-  TogglePlanningEco,
-} from '../eco/eco.actions';
-import {
   ToggleLegalRequirement,
 } from '../test-requirements/test-requirements.actions';
-import {
-  ToggleETA,
-} from '../eta/eta.actions';
 import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
@@ -35,7 +27,6 @@ import {
 import {
   Competencies,
   LegalRequirements,
-  ExaminerActions,
   ManoeuvreCompetencies,
   ManoeuvreTypes,
 } from '../test-data.constants';
@@ -272,108 +263,6 @@ describe('TestDataReducer reducer', () => {
 
       expect(result.testRequirements.hillStart).toEqual(false);
 
-    });
-  });
-
-  describe('TOGGLE_ECO', () => {
-    it('should toggle eco (true when dispatched first time)', () => {
-      const state: TestData = {
-        eco: {},
-      };
-      const result = testDataReducer(state, new ToggleEco());
-      expect(result.eco.completed).toEqual(true);
-    });
-
-    it('should toggle eco (false when dispatched second time)', () => {
-      const state: TestData = {
-        eco: {},
-      };
-      const modifiedState = testDataReducer(state, new ToggleEco());
-      const result = testDataReducer(modifiedState, new ToggleEco());
-      expect(result.eco.completed).toEqual(false);
-    });
-  });
-  describe('TOGGLE_CONTROL_ECO', () => {
-    it('should toggle control eco fault (true when dispatched first time)', () => {
-      const state: TestData = {
-        eco: {},
-      };
-      const result = testDataReducer(state, new ToggleControlEco());
-      expect(result.eco.adviceGivenControl).toEqual(true);
-    });
-
-    it('should toggle control eco fault (false when dispatched second time)', () => {
-      const state: TestData = {
-        eco: {},
-      };
-      const modifiedState = testDataReducer(state, new ToggleControlEco());
-      const result = testDataReducer(modifiedState, new ToggleControlEco());
-      expect(result.eco.adviceGivenControl).toEqual(false);
-    });
-  });
-
-  describe('TOGGLE_PLANNING_ECO', () => {
-    it('should toggle the planning eco fault (true when dispatched first time)', () => {
-      const state: TestData = {
-        eco: {},
-      };
-      const result = testDataReducer(state, new TogglePlanningEco());
-      expect(result.eco.adviceGivenPlanning).toEqual(true);
-    });
-
-    it('should toggle planning eco fault (false when dispatched second time)', () => {
-      const state: TestData = {
-        eco: {},
-      };
-      const modifiedState = testDataReducer(state, new TogglePlanningEco());
-      const result = testDataReducer(modifiedState, new TogglePlanningEco());
-      expect(result.eco.adviceGivenPlanning).toEqual(false);
-    });
-  });
-
-  describe('TOGGLE ETA VERBAL', () => {
-    it('should toggle ETA verbal to true when dispatched first time', () => {
-      const state: TestData = {
-        ETA: {},
-      };
-
-      const result = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
-
-      expect(result.ETA.verbal).toEqual(true);
-    });
-
-    it('should toggle ETA verbal to false when dispatched second time', () => {
-      const state: TestData = {
-        ETA: {},
-      };
-
-      const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.verbal));
-      const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.verbal));
-
-      expect(result.ETA.verbal).toEqual(false);
-    });
-  });
-
-  describe('TOGGLE ETA PHYSICAL', () => {
-    it('should toggle ETA physical to true when dispatched first time', () => {
-      const state: TestData = {
-        ETA: {},
-      };
-
-      const result = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
-
-      expect(result.ETA.physical).toBe(true);
-    });
-
-    it('should toggle ETA physical to false when dispatched second time', () => {
-      const state: TestData = {
-        ETA: {},
-      };
-
-      const modifiedState = testDataReducer(state, new ToggleETA(ExaminerActions.physical));
-      const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.physical));
-
-      expect(result.ETA.physical).toEqual(false);
     });
   });
 
