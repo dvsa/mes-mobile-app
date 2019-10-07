@@ -30,5 +30,4 @@ export function testDataCatBeReducer(
   })(state as Required<TestData>, action);
 }
 
-// TODO - do we need this in every test data reducer or can we just have this once?
 export const getTestData = createFeatureSelector<TestData>('testData');

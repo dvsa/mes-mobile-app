@@ -31,8 +31,6 @@ export function testDataReducer(
   state = initialState,
   action: Action,
 ): TestData {
-  console.log('this is the CatB reducer');
-
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,

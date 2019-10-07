@@ -12,9 +12,6 @@ export function vehicleChecksReducer(
   state = initialState,
   action: vehicleChecksActions.Types,
 ): VehicleChecks | null {
-
-  console.log('vehicle checks cat b');
-
   switch (action.type) {
     case vehicleChecksActions.TELL_ME_QUESTION_SELECTED:
       return {
