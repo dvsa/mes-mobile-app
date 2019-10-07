@@ -12,12 +12,10 @@ import { manoeuvresReducer } from './manoeuvres/manoeuvres.reducer';
 import { seriousFaultsReducer } from './serious-faults/serious-faults.reducer';
 import { testRequirementsReducer } from './test-requirements/test-requirements.reducer';
 
-export function testDataReducerCatBE(
+export function testDataCatBeReducer(
   state: TestData,
   action: Action,
 ): TestData {
-  console.log('this is the CatBE reducer');
-
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
@@ -32,4 +30,5 @@ export function testDataReducerCatBE(
   })(state as Required<TestData>, action);
 }
 
+// TODO - do we need this in every test data reducer or can we just have this once?
 export const getTestData = createFeatureSelector<TestData>('testData');
