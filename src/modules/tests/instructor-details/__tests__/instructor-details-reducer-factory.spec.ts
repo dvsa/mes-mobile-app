@@ -2,17 +2,17 @@
 import { instructorDetailsReducerFactory } from '../instructor-details-reducer-factory';
 
 import { instructorDetailsReducer } from '../instructor-details.reducer';
-import { TestCategories } from '../../../../shared/constants/test-categories';
 import { nullReducer } from '../../../../shared/classes/null.reducer';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('instructor details reducer factory', () => {
   it('should create a cat B instructor details reducer', () => {
-    const reducer = instructorDetailsReducerFactory(TestCategories.B);
+    const reducer = instructorDetailsReducerFactory(TestCategory.B);
     expect(reducer.name).toEqual(instructorDetailsReducer.name);
   });
 
   it('should return undefined for cat B+E instructor details reducer', () => {
-    const reducer = instructorDetailsReducerFactory(TestCategories.BE);
+    const reducer = instructorDetailsReducerFactory(TestCategory.BE);
     expect(reducer.name).toBe(nullReducer.name);
   });
 
