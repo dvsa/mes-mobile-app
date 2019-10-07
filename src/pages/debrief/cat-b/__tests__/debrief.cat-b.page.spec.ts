@@ -2,15 +2,15 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../app/app.module';
-import { DebriefPage } from '../debrief';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
+import { AppModule } from '../../../../app/app.module';
+import { DebriefCatBPage } from '../debrief.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
 import { By } from '@angular/platform-browser';
-import { ComponentsModule } from '../../../components/common/common-components.module';
-import { StoreModel } from '../../../shared/models/store.model';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { StoreModule, Store } from '@ngrx/store';
 import {
   AddDangerousFault,
@@ -21,25 +21,26 @@ import {
   ToggleControlEco,
   EyesightTestFailed,
   EyesightTestPassed,
-} from '../../../modules/tests/test-data/test-data.actions';
-import { Competencies, ExaminerActions } from '../../../modules/tests/test-data/test-data.constants';
-import { DebriefComponentsModule } from '../components/debrief-components.module';
+} from '../../../../modules/tests/test-data/test-data.actions';
+import { Competencies, ExaminerActions } from '../../../../modules/tests/test-data/test-data.constants';
+import { DebriefComponentsModule } from '../../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
+import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
+import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
 import { TranslateModule, TranslateService } from 'ng2-translate';
-import { fullCompetencyLabels } from '../../../shared/constants/competencies/catb-competencies';
+import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
-import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
-import { EndDebrief } from '../debrief.actions';
-import * as welshTranslations from '../../../assets/i18n/cy.json';
-import { CAT_B } from '../../page-names.constants';
-import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { PopulateTestSlotAttributes }
+  from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+import { EndDebrief } from '../../debrief.actions';
+import * as welshTranslations from '../../../../assets/i18n/cy.json';
+import { CAT_B } from '../../../page-names.constants';
+import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 
-describe('DebriefPage', () => {
-  let fixture: ComponentFixture<DebriefPage>;
-  let component: DebriefPage;
+describe('DebriefCatBPage', () => {
+  let fixture: ComponentFixture<DebriefCatBPage>;
+  let component: DebriefCatBPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
   let screenOrientation: ScreenOrientation;
@@ -57,7 +58,7 @@ describe('DebriefPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefPage],
+      declarations: [DebriefCatBPage],
       imports: [
         IonicModule,
         AppModule,
@@ -118,7 +119,7 @@ describe('DebriefPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(DebriefPage);
+        fixture = TestBed.createComponent(DebriefCatBPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);
@@ -407,7 +408,7 @@ describe('DebriefPage', () => {
           const expectedDrivingFaultTranslation = (<any>welshTranslations).debrief.competencies.moveOffSafety;
           const expectedSeriousFaultTranslation = (<any>welshTranslations).debrief.competencies.useOfMirrorsSignalling;
           const expectedDangerousFaultTranslation =
-          (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
+            (<any>welshTranslations).debrief.competencies.useOfMirrorsChangeDirection;
 
           expect(drivingFaultLabel.innerHTML).toBe(expectedDrivingFaultTranslation);
           expect(seriousLabel.innerHTML).toBe(expectedSeriousFaultTranslation);

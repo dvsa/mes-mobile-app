@@ -1,18 +1,18 @@
 import { NavController, NavParams, Platform, IonicPage } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { DebriefViewDidEnter, EndDebrief } from '../../pages/debrief/debrief.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { getCurrentTest } from '../../../modules/tests/tests.selector';
+import { DebriefViewDidEnter, EndDebrief } from '../debrief.actions';
 import { Observable } from 'rxjs/Observable';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
 import {
   getETA,
   getEco,
   getDrivingFaultSummaryCount,
-} from '../../modules/tests/test-data/test-data.selector';
+} from '../../../modules/tests/test-data/test-data.selector';
 import { map, tap } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -28,22 +28,23 @@ import {
   getVehicleCheckDrivingFaults,
   getControlledStopFaultAndComment,
   getEyesightTestSeriousFault,
-} from './debrief.selector';
-import { CompetencyOutcome } from '../../shared/models/competency-outcome';
+} from '../debrief.selector';
+import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
-} from '../../shared/models/fault-marking.model';
+} from '../../../shared/models/fault-marking.model';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
 import { ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
 import {
   getCommunicationPreference,
-} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
-import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_B, DASHBOARD_PAGE } from '../page-names.constants';
-import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+} from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+import { getConductedLanguage } from
+  '../../../modules/tests/communication-preferences/communication-preferences.selector';
+import { CAT_B, DASHBOARD_PAGE } from '../../page-names.constants';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -58,11 +59,11 @@ interface DebriefPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-debrief',
-  templateUrl: 'debrief.html',
+  selector: 'debrief-cat-b-page',
+  templateUrl: 'debrief.cat-b.page.html',
 })
 
-export class DebriefPage extends PracticeableBasePageComponent {
+export class DebriefCatBPage extends PracticeableBasePageComponent {
 
   pageState: DebriefPageState;
   subscription: Subscription;
