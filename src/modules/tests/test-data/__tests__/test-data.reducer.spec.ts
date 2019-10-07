@@ -1,9 +1,5 @@
 import { testDataReducer, initialState } from '../test-data.reducer';
 import {
-  AddDrivingFault,
-  RemoveDrivingFault,
-} from '../driving-faults/driving-faults.actions';
-import {
   AddSeriousFault,
   RemoveSeriousFault,
 } from '../serious-faults/serious-faults.actions';
@@ -49,42 +45,6 @@ import { TellMeQuestion } from '../../../../providers/question/tell-me-question.
 import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
 
 describe('TestDataReducer reducer', () => {
-  describe('ADD_DRIVING_FAULT', () => {
-    it('should add a driving fault when no driving faults exist', () => {
-      const result = testDataReducer(initialState, new AddDrivingFault({
-        competency: Competencies.controlsGears,
-        newFaultCount: 1,
-      }));
-      expect(result.drivingFaults.controlsGears).toBe(1);
-    });
-    it('should update a driving fault when it already exists', () => {
-      const state: TestData = {
-        drivingFaults: {
-          controlsGears: 1,
-        },
-      };
-
-      const result = testDataReducer(state, new AddDrivingFault({
-        competency: Competencies.controlsGears,
-        newFaultCount: 2,
-      }));
-      expect(result.drivingFaults.controlsGears).toBe(2);
-    });
-    it('should not remove an existing driving fault when a new one is added', () => {
-      const state: TestData = {
-        drivingFaults: {
-          controlsParkingBrake: 1,
-        },
-      };
-
-      const result = testDataReducer(state, new AddDrivingFault({
-        competency: Competencies.controlsGears,
-        newFaultCount: 1,
-      }));
-      expect(result.drivingFaults.controlsGears).toBe(1);
-      expect(result.drivingFaults.controlsParkingBrake).toBe(1);
-    });
-  });
 
   describe('ADD SERIOUS FAULT', () => {
     it('should add a serious fault when none exist', () => {
@@ -414,38 +374,6 @@ describe('TestDataReducer reducer', () => {
       const result = testDataReducer(modifiedState, new ToggleETA(ExaminerActions.physical));
 
       expect(result.ETA.physical).toEqual(false);
-    });
-  });
-
-  describe(('REMOVE_DRIVING_FAULT'), () => {
-    it('should remove a fault if the fault count is higher then 0', () => {
-      const state: TestData = {
-        drivingFaults: {
-          awarenessPlanning: 2,
-        },
-      };
-
-      const result = testDataReducer(state, new RemoveDrivingFault({
-        competency: Competencies.awarenessPlanning,
-        newFaultCount: 1,
-      }));
-
-      expect(result.drivingFaults.awarenessPlanning).toBe(1);
-    });
-
-    it('should remove the competency from the state if the fault count is 0', () => {
-      const state: TestData = {
-        drivingFaults: {
-          awarenessPlanning: 1,
-        },
-      };
-
-      const result = testDataReducer(state, new RemoveDrivingFault({
-        competency: Competencies.awarenessPlanning,
-        newFaultCount: 0,
-      }));
-
-      expect(result.drivingFaults.awarenessPlanning).toBeUndefined();
     });
   });
 
