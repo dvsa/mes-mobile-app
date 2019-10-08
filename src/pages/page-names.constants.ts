@@ -13,7 +13,7 @@ export const VIEW_TEST_RESULT_PAGE = 'ViewTestResultPage';
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficePage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
-  DEBRIEF_PAGE: 'DebriefPage',
+  DEBRIEF_PAGE: 'DebriefCatBPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
   OFFICE_PAGE: 'OfficePage',
   PASS_FINALISATION_PAGE: 'PassFinalisationPage',
