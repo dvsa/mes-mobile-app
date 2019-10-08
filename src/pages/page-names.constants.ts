@@ -13,7 +13,7 @@ export const VIEW_TEST_RESULT_PAGE = 'ViewTestResultPage';
 export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficePage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
-  DEBRIEF_PAGE: 'DebriefPage',
+  DEBRIEF_PAGE: 'DebriefCatBPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
   OFFICE_PAGE: 'OfficePage',
   PASS_FINALISATION_PAGE: 'PassFinalisationPage',
@@ -33,7 +33,7 @@ export const CAT_BE = {
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
   OFFICE_PAGE: 'OfficePage',
   PASS_FINALISATION_PAGE: 'PassFinalisationPage',
-  TEST_REPORT_PAGE:'TestReportPage',
+  TEST_REPORT_PAGE: 'TestReportPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatBePage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarPage',
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingPage',
