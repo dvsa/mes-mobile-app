@@ -71,7 +71,53 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string, ca
     startedTests: {
       ...state.startedTests,
       [slotId]: {
+<<<<<<< HEAD
         ...testsReducerFactory(category, action, state.startedTests[slotId]),
+=======
+        ...state.startedTests[slotId],
+        // Each sub-reducer deals with state scoped to a specific test and has no knowledge of
+        // the context of which test contains it that state.
+        // Here, combineReducers delegates management of the sub-state navigated here for a given
+        // slotId to the relevant sub-reducer
+        ...nestedCombineReducers(
+          {
+            version: schemaVersionReducer,
+            category: categoryReducer,
+            journalData: {
+              examiner: examinerReducer,
+              testCentre: testCentreReducer,
+              testSlotAttributes: testSlotsAttributesReducer,
+              candidate: candidateReducer,
+              applicationReference: applicationReferenceReducer,
+            },
+            preTestDeclarations: preTestDeclarationsReducer,
+            accompaniment: accompanimentReducer,
+            vehicleDetails: vehicleDetailsReducer,
+            instructorDetails: instructorDetailsReducerFactory(get(state.startedTests[slotId], 'category')),
+            testData: testDataReducerFactory(get(state.startedTests[slotId], 'category')),
+            passCompletion: passCompletionReducer,
+            postTestDeclarations: postTestDeclarationsReducer,
+            testSummary: testSummaryReducer,
+            communicationPreferences: communicationPreferencesReducer,
+            rekey: rekeyReducer,
+            rekeyDate: rekeyDateReducer,
+            rekeyReason: rekeyReasonReducer,
+            examinerBooked: examinerBookedReducer,
+            examinerConducted: examinerConductedReducer,
+            examinerKeyed: examinerKeyedReducer,
+            changeMarker: changeMarkerReducer,
+          }, combineReducers,
+        )(
+          // The redux pattern necessitates that the state tree be initialised
+          // with all its properties declared. This conflicts with the
+          // 'StandardCarTestCATBSchema' TS interface as many of its properties are optional (?).
+          // In order to reconcile the TS interface and the redux reducer pattern we use
+          // the TS 'Required' mapped type which The 'Required' type which strips ? modifiers
+          // from all properties of 'StandardCarTestCATBSchema', thus making all properties required.
+          state.startedTests[slotId] as Required<StandardCarTestCATBSchema>,
+          action,
+        ),
+>>>>>>> MES-3636: Handling Different Categories in NGRX Store (#803)
       },
     },
     currentTest: {

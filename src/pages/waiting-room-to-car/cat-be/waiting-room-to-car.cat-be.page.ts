@@ -48,6 +48,11 @@ import {
   EyesightTestFailed,
 } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
+  EyesightTestReset,
+  EyesightTestPassed,
+  EyesightTestFailed,
+} from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
