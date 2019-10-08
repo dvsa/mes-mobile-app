@@ -33,9 +33,15 @@ export const CAT_BE = {
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
   OFFICE_PAGE: 'OfficePage',
   PASS_FINALISATION_PAGE: 'PassFinalisationPage',
+<<<<<<< HEAD
   TEST_REPORT_PAGE: 'TestReportCatBEPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatBEPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBEPage',
+=======
+  TEST_REPORT_PAGE: 'TestReportPage',
+  WAITING_ROOM_PAGE: 'WaitingRoomCatBePage',
+  WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBePage',
+>>>>>>> Mes 3651 adding cat be to WRTC page (#826)
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingPage',
   REKEY_REASON_PAGE: 'RekeyReasonPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
