@@ -3,7 +3,11 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
+<<<<<<< HEAD:src/pages/debrief/cat-be/__tests__/debrief.cat-be.page.spec.ts
 import { DebriefCatBEPage } from '../debrief.cat-be.page';
+=======
+import { DebriefCatBPage } from '../debrief.cat-b.page';
+>>>>>>> Mes 3659 restructure folders for cat b debrief page (#828):src/pages/debrief/cat-b/__tests__/debrief.cat-b.page.spec.ts
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -20,7 +24,11 @@ import { TogglePlanningEco, ToggleControlEco } from '../../../../modules/tests/t
 import {
   EyesightTestFailed,
   EyesightTestPassed,
+<<<<<<< HEAD:src/pages/debrief/cat-be/__tests__/debrief.cat-be.page.spec.ts
 } from '../../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+=======
+} from '../../../../modules/tests/test-data/test-data.actions';
+>>>>>>> Mes 3659 restructure folders for cat b debrief page (#828):src/pages/debrief/cat-b/__tests__/debrief.cat-b.page.spec.ts
 import { Competencies, ExaminerActions } from '../../../../modules/tests/test-data/test-data.constants';
 import { DebriefComponentsModule } from '../../components/debrief-components.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -31,16 +39,27 @@ import { TranslateModule, TranslateService } from 'ng2-translate';
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes }
+<<<<<<< HEAD:src/pages/debrief/cat-be/__tests__/debrief.cat-be.page.spec.ts
   from '../../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
+=======
+  from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+>>>>>>> Mes 3659 restructure folders for cat b debrief page (#828):src/pages/debrief/cat-b/__tests__/debrief.cat-b.page.spec.ts
 import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { CAT_B } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+<<<<<<< HEAD:src/pages/debrief/cat-be/__tests__/debrief.cat-be.page.spec.ts
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
   let component: DebriefCatBEPage;
+=======
+
+describe('DebriefCatBPage', () => {
+  let fixture: ComponentFixture<DebriefCatBPage>;
+  let component: DebriefCatBPage;
+>>>>>>> Mes 3659 restructure folders for cat b debrief page (#828):src/pages/debrief/cat-b/__tests__/debrief.cat-b.page.spec.ts
   let navController: NavController;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
@@ -56,7 +75,11 @@ describe('DebriefCatBEPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+<<<<<<< HEAD:src/pages/debrief/cat-be/__tests__/debrief.cat-be.page.spec.ts
       declarations: [DebriefCatBEPage],
+=======
+      declarations: [DebriefCatBPage],
+>>>>>>> Mes 3659 restructure folders for cat b debrief page (#828):src/pages/debrief/cat-b/__tests__/debrief.cat-b.page.spec.ts
       imports: [
         IonicModule,
         AppModule,
@@ -117,7 +140,11 @@ describe('DebriefCatBEPage', () => {
     })
       .compileComponents()
       .then(() => {
+<<<<<<< HEAD:src/pages/debrief/cat-be/__tests__/debrief.cat-be.page.spec.ts
         fixture = TestBed.createComponent(DebriefCatBEPage);
+=======
+        fixture = TestBed.createComponent(DebriefCatBPage);
+>>>>>>> Mes 3659 restructure folders for cat b debrief page (#828):src/pages/debrief/cat-b/__tests__/debrief.cat-b.page.spec.ts
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);
