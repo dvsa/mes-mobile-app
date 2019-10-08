@@ -27,13 +27,12 @@ import { PostalAddressComponent } from '../../components/postal-address/postal-a
 import { MockComponent } from 'ng-mocks';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { TranslateService, TranslateModule } from 'ng2-translate';
-import { PopulateTestSlotAttributes }
-  from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../../components/privacy-notice/privacy-notice';
 import { CommunicationSubmitInfo } from '../../communication.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 
 describe('CommunicationCatBePage', () => {
   let fixture: ComponentFixture<CommunicationCatBePage>;
@@ -251,15 +250,14 @@ describe('CommunicationCatBePage', () => {
         expect(debugElement.query(By.css('h4')).nativeElement.innerHTML).toBe('Select how to receive the test results');
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
+        configureI18N(Language.CYMRAEG, translate);
         fixture.detectChanges();
-        component.configureI18N(Language.CYMRAEG);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           expect(fixture.debugElement.query(By.css('h4')).nativeElement.innerHTML)
             .toBe((<any>welshTranslations).communication.instructionHeader);
           done();
         });
-        store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
       });
     });
   });

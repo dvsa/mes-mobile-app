@@ -36,6 +36,7 @@ import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { CAT_B } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 
 describe('DebriefCatBPage', () => {
   let fixture: ComponentFixture<DebriefCatBPage>;
@@ -397,7 +398,7 @@ describe('DebriefCatBPage', () => {
         store$.dispatch(new AddSeriousFault(Competencies.useOfMirrorsSignalling));
         store$.dispatch(new AddDangerousFault(Competencies.useOfMirrorsChangeDirection));
         fixture.detectChanges();
-        component.configureI18N(Language.CYMRAEG);
+        configureI18N(Language.CYMRAEG, translate);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const drivingFaultLabel = fixture.debugElement.query(By.css('#driving-fault .counter-label')).nativeElement;
