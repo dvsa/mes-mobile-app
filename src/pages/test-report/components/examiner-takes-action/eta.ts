@@ -5,7 +5,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
-import { ToggleETA } from '../../../../modules/tests/test-data/test-data.actions';
+import { ToggleETA } from '../../../../modules/tests/test-data/eta/eta.actions';
 import { getETA, hasExaminerTakenAction } from '../../../../modules/tests/test-data/test-data.selector';
 import { ExaminerActions } from '../../../../modules/tests/test-data/test-data.constants';
 import { etaLabels } from './eta.constants';

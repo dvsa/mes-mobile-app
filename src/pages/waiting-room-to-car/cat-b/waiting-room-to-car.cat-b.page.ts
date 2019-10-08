@@ -53,10 +53,12 @@ import {
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
+} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import {
   EyesightTestReset,
   EyesightTestPassed,
   EyesightTestFailed,
-} from '../../../modules/tests/test-data/test-data.actions';
+} from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,

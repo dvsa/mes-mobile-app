@@ -28,9 +28,10 @@ import { AccompanimentCardComponent } from '../../components/accompaniment-card/
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
 import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
-import { TellMeQuestionSelected, EyesightTestReset } from '../../../../modules/tests/test-data/test-data.actions';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
+import { TellMeQuestionSelected } from '../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { EyesightTestReset } from '../../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TellMeQuestionCardComponent } from '../components/tell-me-question-card/tell-me-question-card';
 import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-question';

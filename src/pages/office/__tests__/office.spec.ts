@@ -25,14 +25,12 @@ import { DateTimeProvider } from '../../../providers/date-time/date-time';
 import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
-import {
-  ToggleETA,
-  TogglePlanningEco,
-  AddDangerousFault,
-  AddSeriousFault,
-  ShowMeQuestionSelected,
-  EyesightTestFailed,
-} from '../../../modules/tests/test-data/test-data.actions';
+import { ToggleETA } from '../../../modules/tests/test-data/eta/eta.actions';
+import { TogglePlanningEco } from '../../../modules/tests/test-data/eco/eco.actions';
+import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { ShowMeQuestionSelected } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { EyesightTestFailed } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
 import { PersistTests, SetActivityCode } from '../../../modules/tests/tests.actions';

@@ -7,13 +7,17 @@ import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import {
   AddDrivingFault,
-  AddSeriousFault,
-  AddDangerousFault,
   RemoveDrivingFault,
-  RemoveDangerousFault,
-  RemoveSeriousFault,
   ThrottleAddDrivingFault,
-} from '../../../../../modules/tests/test-data/test-data.actions';
+} from '../../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import {
+  AddSeriousFault,
+  RemoveSeriousFault,
+} from '../../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import {
+  AddDangerousFault,
+  RemoveDangerousFault,
+} from '../../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import { MockComponent } from 'ng-mocks';
 import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
 import {
