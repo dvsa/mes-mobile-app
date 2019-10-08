@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { BackToOfficeViewDidEnter, DeferWriteUp } from './back-to-office.actions';
-import { DeviceProvider } from '../../providers/device/device';
+import { StoreModel } from '../../../shared/models/store.model';
+import { BackToOfficeViewDidEnter, DeferWriteUp } from '../back-to-office.actions';
+import { DeviceProvider } from '../../../providers/device/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { JOURNAL_PAGE } from '../page-names.constants';
+import { JOURNAL_PAGE } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../modules/tests/tests.selector';
-import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
-import { isRekey } from '../../modules/tests/rekey/rekey.selector';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../modules/tests/tests.selector';
+import { getRekeyIndicator } from '../../../modules/tests/rekey/rekey.reducer';
+import { isRekey } from '../../../modules/tests/rekey/rekey.selector';
 
 interface BackToOfficePageState {
   isRekey$: Observable<boolean>;
@@ -21,10 +21,10 @@ interface BackToOfficePageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-back-to-office',
-  templateUrl: 'back-to-office.html',
+  selector: 'back-to-office-cat-b-page',
+  templateUrl: 'back-to-office.cat-b.page.html',
 })
-export class BackToOfficePage extends PracticeableBasePageComponent {
+export class BackToOfficeCatBPage extends PracticeableBasePageComponent {
   pageState: BackToOfficePageState;
 
   constructor(
