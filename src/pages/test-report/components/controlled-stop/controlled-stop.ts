@@ -18,7 +18,7 @@ import {
   ControlledStopAddSeriousFault,
   ControlledStopAddDrivingFault,
   ControlledStopRemoveFault,
-} from '../../../../modules/tests/test-data/test-data.actions';
+} from '../../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import { getTestReportState } from '../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../test-report.selector';
 import { ToggleRemoveFaultMode, ToggleSeriousFaultMode, ToggleDangerousFaultMode } from '../../test-report.actions';

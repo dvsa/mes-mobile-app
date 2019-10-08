@@ -8,12 +8,16 @@ import { map, tap } from 'rxjs/operators';
 import { StoreModel } from '../../../../shared/models/store.model';
 import {
   ThrottleAddDrivingFault,
-  AddSeriousFault,
-  AddDangerousFault,
   RemoveDrivingFault,
+} from '../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import {
+  AddSeriousFault,
   RemoveSeriousFault,
+} from '../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import {
+  AddDangerousFault,
   RemoveDangerousFault,
-} from '../../../../modules/tests/test-data/test-data.actions';
+} from '../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import { competencyLabels } from './competency.constants';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';

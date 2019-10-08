@@ -7,7 +7,9 @@ import { IonicModule } from 'ionic-angular';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { ToggleLegalRequirement } from '../../../../../modules/tests/test-data/test-data.actions';
+import {
+  ToggleLegalRequirement,
+} from '../../../../../modules/tests/test-data/test-requirements/test-requirements.actions';
 import { LegalRequirements } from '../../../../../modules/tests/test-data/test-data.constants';
 import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';

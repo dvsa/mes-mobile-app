@@ -48,14 +48,16 @@ import { QuestionProvider } from '../../../providers/question/question';
 import { getInstructorDetails } from '../../../modules/tests/instructor-details/instructor-details.reducer';
 import { getInstructorRegistrationNumber } from '../../../modules/tests/instructor-details/instructor-details.selector';
 import {
+  EyesightTestReset,
+  EyesightTestPassed,
+  EyesightTestFailed,
+} from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
+import {
   TellMeQuestionSelected,
   TellMeQuestionCorrect,
   TellMeQuestionDrivingFault,
   QuestionOutcomes,
-  EyesightTestReset,
-  EyesightTestPassed,
-  EyesightTestFailed,
-} from '../../../modules/tests/test-data/test-data.actions';
+} from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
 import {
   isTellMeQuestionSelected,
   isTellMeQuestionDrivingFault,

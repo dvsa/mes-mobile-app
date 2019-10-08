@@ -9,7 +9,14 @@ import {
   AnalyticsScreenNames, AnalyticsEventCategories, AnalyticsEvents, AnalyticsLabels,
 } from '../../providers/analytics/analytics.model';
 import * as testReportActions from '../../pages/test-report/test-report.actions';
-import * as testDataActions from '../../modules/tests/test-data/test-data.actions';
+import * as controlledStopActions from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import * as dangerousFaultsActions from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import * as drivingFaultsActions from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import * as seriousFaultsActions from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import * as manoeuvresActions from '../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import * as vehicleChecksActions from '../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import * as testRequirementsActions from '../../modules/tests/test-data/test-requirements/test-requirements.actions';
+import * as ecoActions from '../../modules/tests/test-data/eco/eco.actions';
 import { getTests } from '../../modules/tests/tests.reducer';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import {
@@ -112,7 +119,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   addDrivingFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_DRIVING_FAULT,
+      drivingFaultsActions.ADD_DRIVING_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -121,7 +128,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.AddDrivingFault, TestsModel]) => {
+    concatMap(([action, tests]: [drivingFaultsActions.AddDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
@@ -135,7 +142,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   addSeriousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_SERIOUS_FAULT,
+      seriousFaultsActions.ADD_SERIOUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -144,7 +151,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.AddSeriousFault, TestsModel]) => {
+    concatMap(([action, tests]: [seriousFaultsActions.AddSeriousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
@@ -158,7 +165,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   addDangerousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_DANGEROUS_FAULT,
+      dangerousFaultsActions.ADD_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -167,7 +174,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.AddDangerousFault, TestsModel]) => {
+    concatMap(([action, tests]: [dangerousFaultsActions.AddDangerousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
@@ -181,7 +188,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   addManoeuvreDrivingFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_MANOEUVRE_DRIVING_FAULT,
+      manoeuvresActions.ADD_MANOEUVRE_DRIVING_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -190,7 +197,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.AddManoeuvreDrivingFault, TestsModel]) => {
+    concatMap(([action, tests]: [manoeuvresActions.AddManoeuvreDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
           formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
@@ -204,7 +211,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   addManoeuvreSeriousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT,
+      manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -213,7 +220,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.AddManoeuvreSeriousFault, TestsModel]) => {
+    concatMap(([action, tests]: [manoeuvresActions.AddManoeuvreSeriousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
@@ -227,7 +234,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   addManoeuvreDangerousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
+      manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -236,7 +243,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.AddManoeuvreDangerousFault, TestsModel]) => {
+    concatMap(([action, tests]: [manoeuvresActions.AddManoeuvreDangerousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
@@ -250,7 +257,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   controlledStopAddDrivingFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.CONTROLLED_STOP_ADD_DRIVING_FAULT,
+      controlledStopActions.CONTROLLED_STOP_ADD_DRIVING_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -259,7 +266,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ControlledStopAddDrivingFault, TestsModel]) => {
+    concatMap(([action, tests]: [controlledStopActions.ControlledStopAddDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
@@ -273,7 +280,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   controlledStopAddSeriousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
+      controlledStopActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -282,7 +289,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ControlledStopAddSeriousFault, TestsModel]) => {
+    concatMap(([action, tests]: [controlledStopActions.ControlledStopAddSeriousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
@@ -296,7 +303,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   controlledStopAddDangerousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
+      controlledStopActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -305,7 +312,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ControlledStopAddDangerousFault, TestsModel]) => {
+    concatMap(([action, tests]: [controlledStopActions.ControlledStopAddDangerousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
@@ -319,7 +326,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   showMeQuestionDrivingFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DRIVING_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -328,7 +335,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ShowMeQuestionDrivingFault, TestsModel]) => {
+    concatMap(([action, tests]: [vehicleChecksActions.ShowMeQuestionDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DRIVING_FAULT, tests),
@@ -342,7 +349,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   showMeQuestionSeriousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -351,7 +358,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ShowMeQuestionSeriousFault, TestsModel]) => {
+    concatMap(([action, tests]: [vehicleChecksActions.ShowMeQuestionSeriousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_SERIOUS_FAULT, tests),
@@ -365,7 +372,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   showMeQuestionDangerousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -374,7 +381,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ShowMeQuestionDangerousFault, TestsModel]) => {
+    concatMap(([action, tests]: [vehicleChecksActions.ShowMeQuestionDangerousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.ADD_DANGEROUS_FAULT, tests),
@@ -388,7 +395,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   removeDrivingFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.REMOVE_DRIVING_FAULT,
+      drivingFaultsActions.REMOVE_DRIVING_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -397,7 +404,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.RemoveDrivingFault, TestsModel]) => {
+    concatMap(([action, tests]: [drivingFaultsActions.RemoveDrivingFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_DRIVING_FAULT, tests),
@@ -411,7 +418,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   removeSeriousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.REMOVE_SERIOUS_FAULT,
+      seriousFaultsActions.REMOVE_SERIOUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -420,7 +427,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.RemoveSeriousFault, TestsModel]) => {
+    concatMap(([action, tests]: [seriousFaultsActions.RemoveSeriousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_SERIOUS_FAULT, tests),
@@ -434,7 +441,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   removeDangerousFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.REMOVE_DANGEROUS_FAULT,
+      dangerousFaultsActions.REMOVE_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -443,7 +450,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.RemoveDangerousFault, TestsModel]) => {
+    concatMap(([action, tests]: [dangerousFaultsActions.RemoveDangerousFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_DANGEROUS_FAULT, tests),
@@ -457,7 +464,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   removeManoeuvreFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.REMOVE_MANOEUVRE_FAULT,
+      manoeuvresActions.REMOVE_MANOEUVRE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -466,7 +473,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.RemoveManoeuvreFault, TestsModel]) => {
+    concatMap(([action, tests]: [manoeuvresActions.RemoveManoeuvreFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_DRIVING_FAULT, tests),
@@ -479,7 +486,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   controlledStopRemoveFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.CONTROLLED_STOP_REMOVE_FAULT,
+      controlledStopActions.CONTROLLED_STOP_REMOVE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -488,7 +495,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ControlledStopRemoveFault, TestsModel]) => {
+    concatMap(([action, tests]: [controlledStopActions.ControlledStopRemoveFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_FAULT, tests),
@@ -501,7 +508,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   showMeQuestionRemoveFault$ = this.actions$.pipe(
     ofType(
-      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_REMOVE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -510,7 +517,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.ShowMeQuestionRemoveFault, TestsModel]) => {
+    concatMap(([action, tests]: [vehicleChecksActions.ShowMeQuestionRemoveFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.REMOVE_FAULT, tests),
@@ -545,7 +552,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   toggleLegalRequirement$ = this.actions$.pipe(
     ofType(
-      testDataActions.TOGGLE_LEGAL_REQUIREMENT,
+      testRequirementsActions.TOGGLE_LEGAL_REQUIREMENT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -561,7 +568,8 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(
-      ([action, tests, testRequirements]: [testDataActions.ToggleLegalRequirement, TestsModel, TestRequirements]) => {
+      ([action, tests,
+        testRequirements]: [testRequirementsActions.ToggleLegalRequirement, TestsModel, TestRequirements]) => {
         const toggleValue = testRequirements[action.payload]
           ? legalRequirementToggleValues.completed
           : legalRequirementToggleValues.uncompleted;
@@ -578,7 +586,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   toggleEco$ = this.actions$.pipe(
     ofType(
-      testDataActions.TOGGLE_ECO,
+      ecoActions.TOGGLE_ECO,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -593,7 +601,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests, eco]: [testDataActions.ToggleEco, TestsModel, Eco]) => {
+    concatMap(([action, tests, eco]: [ecoActions.ToggleEco, TestsModel, Eco]) => {
       const toggleValue = eco.completed
         ? legalRequirementToggleValues.completed
         : legalRequirementToggleValues.uncompleted;
@@ -609,7 +617,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   manoeuvreCompletedEffect$ = this.actions$.pipe(
     ofType(
-      testDataActions.RECORD_MANOEUVRES_SELECTION,
+      manoeuvresActions.RECORD_MANOEUVRES_SELECTION,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -618,7 +626,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    switchMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+    switchMap(([action, tests]: [manoeuvresActions.RecordManoeuvresSelection, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
@@ -631,10 +639,10 @@ export class TestReportAnalyticsEffects {
   @Effect()
   showMeQuestionCompletedEffect$ = this.actions$.pipe(
     ofType(
-      testDataActions.SHOW_ME_QUESTION_PASSED,
-      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
-      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_PASSED,
+      vehicleChecksActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -643,7 +651,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+    concatMap(([action, tests]: [vehicleChecksActions.Types, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),
@@ -656,7 +664,7 @@ export class TestReportAnalyticsEffects {
   @Effect()
   showMeQuestionUncompletedEffect$ = this.actions$.pipe(
     ofType(
-      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_REMOVE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -665,7 +673,7 @@ export class TestReportAnalyticsEffects {
         ),
       ),
     )),
-    concatMap(([action, tests]: [testDataActions.TogglePlanningEco, TestsModel]) => {
+    concatMap(([action, tests]: [vehicleChecksActions.ShowMeQuestionRemoveFault, TestsModel]) => {
       this.analytics.logEvent(
         formatAnalyticsText(AnalyticsEventCategories.TEST_REPORT, tests),
         formatAnalyticsText(AnalyticsEvents.TOGGLE_LEGAL_REQUIREMENT, tests),

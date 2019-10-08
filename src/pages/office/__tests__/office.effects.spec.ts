@@ -3,7 +3,9 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as testSummaryActions from '../../../modules/tests/test-summary/test-summary.actions';
-import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
+import { AddDrivingFaultComment } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import { AddSeriousFaultComment } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { AddDangerousFaultComment } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import * as testActions  from '../../../modules/tests/tests.actions';
 import * as testStatusActions from '../../../modules/tests/test-status/test-status.actions';
 import * as officeActions from '../office.actions';
@@ -177,7 +179,7 @@ describe('Test Office Data Effects', () => {
   describe('AddDangerousFaultComment effect', () => {
     it('should invoke the PersistTest action', (done) => {
         // ACT
-      actions$.next(new testDataActions.AddDangerousFaultComment(Competencies.controlsParkingBrake, 'xyz'));
+      actions$.next(new AddDangerousFaultComment(Competencies.controlsParkingBrake, 'xyz'));
         // ASSERT
       effects.persistOfficeDataEffect$.subscribe((result) => {
         expect(result instanceof testActions.PersistTests).toBe(true);
@@ -189,7 +191,7 @@ describe('Test Office Data Effects', () => {
   describe('AddSeriousFaultComment effect', () => {
     it('should invoke the PersistTest action', (done) => {
         // ACT
-      actions$.next(new testDataActions.AddSeriousFaultComment(Competencies.controlsParkingBrake, 'abc'));
+      actions$.next(new AddSeriousFaultComment(Competencies.controlsParkingBrake, 'abc'));
         // ASSERT
       effects.persistOfficeDataEffect$.subscribe((result) => {
         expect(result instanceof testActions.PersistTests).toBe(true);
@@ -201,7 +203,7 @@ describe('Test Office Data Effects', () => {
   describe('AddDrivingFaultComment effect', () => {
     it('should invoke the PersistTest action', (done) => {
         // ACT
-      actions$.next(new testDataActions.AddDrivingFaultComment(Competencies.controlsParkingBrake, 'def'));
+      actions$.next(new AddDrivingFaultComment(Competencies.controlsParkingBrake, 'def'));
         // ASSERT
       effects.persistOfficeDataEffect$.subscribe((result) => {
         expect(result instanceof testActions.PersistTests).toBe(true);
