@@ -12,11 +12,11 @@ import { By } from '@angular/platform-browser';
 import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { StoreModule, Store } from '@ngrx/store';
-import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
-import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
-import { AddDrivingFault } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
-import { ToggleETA } from '../../../modules/tests/test-data/eta/eta.actions';
-import { TogglePlanningEco, ToggleControlEco } from '../../../modules/tests/test-data/eco/eco.actions';
+import { AddDangerousFault } from '../../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFault } from '../../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { AddDrivingFault } from '../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import { ToggleETA } from '../../../../modules/tests/test-data/eta/eta.actions';
+import { TogglePlanningEco, ToggleControlEco } from '../../../../modules/tests/test-data/eco/eco.actions';
 import {
   EyesightTestFailed,
   EyesightTestPassed,
