@@ -3,11 +3,9 @@ import { PassFinalisationCatBPageModule } from './cat-b/pass-finalisation.module
 
 
 @NgModule({
-
   imports: [
-    PassFinalisationCatBPageModule
+    PassFinalisationCatBPageModule,
   ],
 })
 
 export class PassFinalisationPageModule {}
-
