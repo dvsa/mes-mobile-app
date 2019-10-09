@@ -115,7 +115,7 @@
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>
 
-        <language-preferences [formGroup]="form" [isWelsh]="pageState.isWelshTest$ | async"
+        <language-preferences [formGroup]="form" [isWelsh]="(pageState.conductedLanguage$ | async) === 'Cymraeg'"
           (welshChanged)="isWelshChanged($event)"></language-preferences>
 
         <debrief-witnessed [display]=true [formGroup]="form" [debriefWitnessed]="pageState.debriefWitnessed$ | async"
