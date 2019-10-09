@@ -1,46 +1,44 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
-} from './pass-finalisation.actions';
+} from './../pass-finalisation.actions';
 import {
   PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
-} from '../../../modules/tests/pass-completion/pass-completion.actions';
-import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
+} from '../../../../modules/tests/pass-completion/pass-completion.actions';
+import { getPassCompletion } from '../../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
   isProvisionalLicenseNotProvided,
-} from '../../../modules/tests/pass-completion/pass-completion.selector';
+} from '../../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../../../modules/tests/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/candidate/candidate.selector';
-import { getApplicationReference } from '../../../modules/tests/application-reference/application-reference.reducer';
+} from '../../../../modules/tests/candidate/candidate.selector';
+import { getApplicationReference } from '../../../../modules/tests/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../../modules/tests/application-reference/application-reference.selector';
-import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
+} from '../../../../modules/tests/application-reference/application-reference.selector';
+import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../../modules/tests/tests.selector';
 import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/Observable/fromEvent';
-import { getTests } from '../../../modules/tests/tests.reducer';
-import { PersistTests } from '../../../modules/tests/tests.actions';
-import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { getTests } from '../../../../modules/tests/tests.reducer';
+import { PersistTests } from '../../../../modules/tests/tests.actions';
+import { getVehicleDetails } from '../../../../modules/tests/vehicle-details/vehicle-details.reducer';
 import {
   getGearboxCategory,
   isAutomatic,
   isManual,
-} from '../../../modules/tests/vehicle-details/vehicle-details.selector';
+} from '../../../../modules/tests/vehicle-details/vehicle-details.selector';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { CAT_B } from '../../page-names.constants';
@@ -51,20 +49,22 @@ import {
   D255No,
   DebriefWitnessed,
   DebriefUnwitnessed,
-} from '../../../modules/tests/test-summary/test-summary.actions';
-import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../../office/office-behaviour-map';
-import { ActivityCodes } from '../../../shared/models/activity-codes';
+} from '../../../../modules/tests/test-summary/test-summary.actions';
+import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from '../../../office/office-behaviour-map';
+import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
-} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+} from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import {
   getCommunicationPreference,
-} from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+} from '../../../../modules/tests/communication-preferences/communication-preferences.reducer';
 import {
   getConductedLanguage,
-} from '../../../modules/tests/communication-preferences/communication-preferences.selector';
+} from '../../../../modules/tests/communication-preferences/communication-preferences.selector';
+import { PracticeableBasePageComponent } from '../../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -88,7 +88,7 @@ interface PassFinalisationPageState {
   selector: 'page-pass-finalisation',
   templateUrl: 'pass-finalisation.html',
 })
-export class PassFinalisationPage extends PracticeableBasePageComponent {
+export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
   passCertificateCtrl: string = 'passCertificateNumberCtrl';
   @ViewChild('passCertificateNumberInput')
