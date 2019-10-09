@@ -38,6 +38,7 @@ import { TranslateService } from 'ng2-translate';
 import { CAT_BE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
 interface CommunicationPageState {
   candidateName$: Observable<string>;
@@ -164,7 +165,7 @@ export class CommunicationCatBePage extends BasePageComponent implements OnInit 
       candidateProvidedEmail$.pipe(map(value => this.candidateProvidedEmail = value)),
       communicationEmail$.pipe(map(value => this.communicationEmail = value)),
       communicationType$.pipe(map(value => this.communicationType = value as CommunicationMethod)),
-      conductedLanguage$.pipe(tap(this.configureI18N)),
+      conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     );
 
     this.subscription = this.merged$.subscribe();
@@ -188,14 +189,6 @@ export class CommunicationCatBePage extends BasePageComponent implements OnInit 
   ionViewDidLeave(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
-    }
-  }
-
-  configureI18N = (language: Language): void => {
-    if (language === Language.CYMRAEG) {
-      this.translate.use('cy');
-    } else {
-      this.translate.use('en');
     }
   }
 

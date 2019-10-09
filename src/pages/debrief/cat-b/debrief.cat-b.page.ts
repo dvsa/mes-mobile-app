@@ -45,6 +45,7 @@ import { getConductedLanguage } from
   '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { CAT_B, DASHBOARD_PAGE } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -188,16 +189,8 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
           this.adviceGivenPlanning = eco.adviceGivenPlanning;
         }),
       ),
-      conductedLanguage$.pipe(tap(this.configureI18N)),
+      conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     ).subscribe();
-  }
-
-  configureI18N = (language: Language): void => {
-    if (language === Language.CYMRAEG) {
-      this.translate.use('cy');
-    } else {
-      this.translate.use('en');
-    }
   }
 
   ionViewDidEnter(): void {
