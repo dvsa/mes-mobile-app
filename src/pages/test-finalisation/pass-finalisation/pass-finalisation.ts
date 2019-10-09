@@ -46,8 +46,6 @@ import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/v
 import { HEALTH_DECLARATION_PAGE } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
-import { getTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
 import {
   D255Yes,
   D255No,
@@ -61,6 +59,12 @@ import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import {
+  getCommunicationPreference,
+} from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+import {
+  getConductedLanguage,
+} from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -76,7 +80,7 @@ interface PassFinalisationPageState {
   transmissionManualRadioChecked$: Observable<boolean>;
   d255$: Observable<boolean>;
   debriefWitnessed$: Observable<boolean>;
-  isWelshTest$: Observable<boolean>;
+  conductedLanguage$: Observable<string>;
 }
 
 @IonicPage()
@@ -183,10 +187,9 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
         select(getTestSummary),
         select(getD255),
       ),
-      isWelshTest$: currentTest$.pipe(
-        select(getJournalData),
-        select(getTestSlotAttributes),
-        select(isWelshTest),
+      conductedLanguage$: currentTest$.pipe(
+        select(getCommunicationPreference),
+        select(getConductedLanguage),
       ),
     };
     this.store$.dispatch(new PopulatePassCompletion());
