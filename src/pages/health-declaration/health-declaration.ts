@@ -40,6 +40,7 @@ import { getConductedLanguage } from '../../modules/tests/communication-preferen
 import { CAT_B } from '../page-names.constants';
 import { includes } from 'lodash';
 import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../shared/helpers/translation.helpers';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -177,7 +178,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     this.merged$ = merge(
       licenseProvided$.pipe(map(val => this.licenseProvided = val)),
       healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
-      conductedLanguage$.pipe(tap(this.configureI18N)),
+      conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     );
 
   }
@@ -209,14 +210,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
           this.form.controls['signatureAreaCtrl'].setValue(val);
         }),
     );
-  }
-
-  configureI18N = (language: Language): void => {
-    if (language === Language.CYMRAEG) {
-      this.translate.use('cy');
-    } else {
-      this.translate.use('en');
-    }
   }
 
   healthDeclarationChanged(): void {
