@@ -33,6 +33,7 @@ import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { PrivacyNoticeComponent } from '../../components/privacy-notice/privacy-notice';
 import { CommunicationSubmitInfo } from '../../communication.actions';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 
 describe('CommunicationCatBPage', () => {
   let fixture: ComponentFixture<CommunicationCatBPage>;
@@ -40,16 +41,6 @@ describe('CommunicationCatBPage', () => {
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
-
-  const mockCandidate = {
-    driverNumber: '123',
-    candidateName: {
-      firstName: 'Joe',
-      lastName: 'Blogs',
-    },
-    emailAddress: 'testemail@mes',
-    candidateAddress: null,
-  };
 
   const testSlotAttributes: TestSlotAttributes = {
     welshTest: false,
@@ -89,7 +80,7 @@ describe('CommunicationCatBPage', () => {
                 },
                 journalData: {
                   testSlotAttributes,
-                  candidate: mockCandidate,
+                  candidate: candidateMock,
                 },
                 communicationPreferences: {
                   updatedEmail: '',
@@ -160,21 +151,21 @@ describe('CommunicationCatBPage', () => {
 
     describe('Provided email selected', () => {
       it('should dispatch a CandidateChoseEmailAsCommunicationPreference action', () => {
-        component.candidateProvidedEmail = mockCandidate.emailAddress;
+        component.candidateProvidedEmail = candidateMock.emailAddress;
         component.dispatchCandidateChoseProvidedEmail();
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, CommunicationCatBPage.email,
+            candidateMock.emailAddress, CommunicationCatBPage.email,
           ));
       });
     });
 
     describe('New email selected', () => {
       it('should dispatch a CandidateChoseEmailAsCommunicationPreference action', () => {
-        component.dispatchCandidateChoseNewEmail(mockCandidate.emailAddress);
+        component.dispatchCandidateChoseNewEmail(candidateMock.emailAddress);
         expect(store$.dispatch)
           .toHaveBeenCalledWith(new communicationPreferenceActions.CandidateChoseEmailAsCommunicationPreference(
-            mockCandidate.emailAddress, CommunicationCatBPage.email,
+            candidateMock.emailAddress, CommunicationCatBPage.email,
           ));
       });
     });

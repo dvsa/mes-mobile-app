@@ -16,8 +16,8 @@ import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
-import { Candidate } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Health Declaration Analytics Effects', () => {
 
@@ -28,9 +28,6 @@ describe('Health Declaration Analytics Effects', () => {
   const screenName = AnalyticsScreenNames.HEALTH_DECLARATION;
   // tslint:disable-next-line:max-line-length
   const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.HEALTH_DECLARATION}`;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -56,7 +53,7 @@ describe('Health Declaration Analytics Effects', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new healthDeclarationActions.HealthDeclarationViewDidEnter());
       // ASSERT
@@ -70,7 +67,7 @@ describe('Health Declaration Analytics Effects', () => {
     it('should call setCurrentPage with practice mode prefix', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new healthDeclarationActions.HealthDeclarationViewDidEnter());
       // ASSERT

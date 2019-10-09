@@ -19,11 +19,11 @@ import * as candidateActions from '../candidate/candidate.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
 import * as applicationReferenceActions from '../application-reference/application-reference.actions';
 
-import { Candidate } from '@dvsa/mes-test-schema/categories/B';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { Application } from '@dvsa/mes-journal-schema';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
+import { candidateMock } from '../__mocks__/tests.mock';
 
 describe('Tests Analytics Effects', () => {
 
@@ -32,9 +32,6 @@ describe('Tests Analytics Effects', () => {
   let navigationStateProviderMock;
   let actions$: any;
   let store$: Store<StoreModel>;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
   const mockApplication: Application = {
     applicationId: 123456,
     bookingSequence: 78,
@@ -68,7 +65,7 @@ describe('Tests Analytics Effects', () => {
     it('should set an action saying the test has been submitted if it is not a rekey', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(12345));
-      store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -83,7 +80,7 @@ describe('Tests Analytics Effects', () => {
             'pass',
           );
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         done();
@@ -92,10 +89,10 @@ describe('Tests Analytics Effects', () => {
     it('should set an action saying the test has been submitted if it is a rekey', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(12345));
-      store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
-      store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new rekeyActions.MarkAsRekey());
       // ACT
       actions$.next(new testStatusActions.SetTestStatusSubmitted('12345'));
@@ -109,7 +106,7 @@ describe('Tests Analytics Effects', () => {
             'fail',
           );
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         done();
@@ -138,7 +135,7 @@ describe('Tests Analytics Effects', () => {
     it('should log an event', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(12345));
-      store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       const eventLabel = 'fail to pass';
       // ACT
@@ -153,7 +150,7 @@ describe('Tests Analytics Effects', () => {
             eventLabel,
           );
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         done();

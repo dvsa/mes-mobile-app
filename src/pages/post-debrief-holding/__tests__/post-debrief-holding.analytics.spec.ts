@@ -11,10 +11,10 @@ import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
-import { Candidate } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { PostDebriefHoldingAnalyticsEffects } from '../post-debrief-holding.analytics.effects';
 import * as postDebriefHoldingActions from '../post-debrief-holding.actions';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Post Debrief Holding Analytics Effects', () => {
 
@@ -24,9 +24,6 @@ describe('Post Debrief Holding Analytics Effects', () => {
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.POST_DEBRIEF_HOLDING;
   const practiceScreenName = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.POST_DEBRIEF_HOLDING}`;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -52,7 +49,7 @@ describe('Post Debrief Holding Analytics Effects', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new postDebriefHoldingActions.PostDebriefHoldingViewDidEnter());
       // ASSERT
@@ -66,7 +63,7 @@ describe('Post Debrief Holding Analytics Effects', () => {
     it('should call setCurrentPage with practice mode prefix', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new postDebriefHoldingActions.PostDebriefHoldingViewDidEnter());
       // ASSERT
