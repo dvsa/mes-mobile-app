@@ -11,10 +11,10 @@ import * as testsActions from '../../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../../fake-journal/fake-journal.actions';
 import { testsReducer } from '../../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../../modules/tests/candidate/candidate.actions';
-import { Candidate } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
 import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.analytics.effects';
 import * as nonPassFinalisationActions from '../non-pass-finalisation.actions';
+import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 
 describe('Non Pass Finalisation Analytics Effects', () => {
 
@@ -25,9 +25,6 @@ describe('Non Pass Finalisation Analytics Effects', () => {
   const screenName = AnalyticsScreenNames.NON_PASS_FINALISATION;
   // tslint:disable-next-line:max-line-length
   const practiceScreenName = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.NON_PASS_FINALISATION}`;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -53,7 +50,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new nonPassFinalisationActions.NonPassFinalisationViewDidEnter());
       // ASSERT
@@ -67,7 +64,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
     it('should call setCurrentPage with practice mode prefix', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new nonPassFinalisationActions.NonPassFinalisationViewDidEnter());
       // ASSERT

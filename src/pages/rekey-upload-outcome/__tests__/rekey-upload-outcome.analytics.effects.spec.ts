@@ -14,7 +14,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
-import { Candidate } from '@dvsa/mes-journal-schema';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Rekey Uploaded Analytics Effects', () => {
 
@@ -23,9 +23,6 @@ describe('Rekey Uploaded Analytics Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.REKEY_UPLOADED;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -51,7 +48,7 @@ describe('Rekey Uploaded Analytics Effects', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new rekeyUploadedActions.RekeyUploadOutcomeViewDidEnter());
       // ASSERT

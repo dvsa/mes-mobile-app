@@ -28,14 +28,7 @@ import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
-
-const mockCandidate = {
-  driverNumber: '123',
-  candidateName: {
-    firstName: 'Joe',
-    lastName: 'Bloggs',
-  },
-};
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('HealthDeclarationPage', () => {
   let fixture: ComponentFixture<HealthDeclarationPage>;
@@ -75,7 +68,7 @@ describe('HealthDeclarationPage', () => {
                 },
                 journalData: {
                   testSlotAttributes,
-                  candidate: mockCandidate,
+                  candidate: candidateMock,
                 },
               },
             },

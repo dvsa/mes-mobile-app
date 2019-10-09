@@ -11,13 +11,13 @@ import {
   AnalyticsEventCategories,
 } from '../../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { Candidate } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../../modules/tests/tests.reducer';
 import * as testsActions from '../../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../../fake-journal/fake-journal.actions';
 import { PopulateCandidateDetails } from '../../../../modules/tests/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
+import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 
 describe('Pass Finalisation Analytics Effects', () => {
 
@@ -28,9 +28,6 @@ describe('Pass Finalisation Analytics Effects', () => {
   const screenName = AnalyticsScreenNames.PASS_FINALISATION;
   // tslint:disable-next-line:max-line-length
   const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.PASS_FINALISATION}`;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -56,7 +53,7 @@ describe('Pass Finalisation Analytics Effects', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new passFinalisationActions.PassFinalisationViewDidEnter());
       // ASSERT
@@ -70,7 +67,7 @@ describe('Pass Finalisation Analytics Effects', () => {
     it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new passFinalisationActions.PassFinalisationViewDidEnter());
       // ASSERT

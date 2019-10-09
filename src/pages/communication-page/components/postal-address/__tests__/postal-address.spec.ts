@@ -17,6 +17,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
+import { candidateMock } from '../../../../../modules/tests/__mocks__/tests.mock';
 
 describe('PostalAddressComponent', () => {
   let fixture: ComponentFixture<PostalAddressComponent>;
@@ -31,16 +32,6 @@ describe('PostalAddressComponent', () => {
     addressLine4: '4 Somecity',
     addressLine5: '5 Somecountry',
     postcode: 'AB12 3CD',
-  };
-
-  const mockCandidate = {
-    driverNumber: '123',
-    candidateName: {
-      firstName: 'Joe',
-      lastName: 'Blogs',
-    },
-    emailAddress: 'testemail@mes',
-    candidateAddress: mockAddress,
   };
 
   beforeEach(async(() => {
@@ -66,7 +57,7 @@ describe('PostalAddressComponent', () => {
                 postTestSignature: '',
               },
               journalData: {
-                candidate: mockCandidate,
+                candidate: candidateMock,
               },
               communicationPreferences: {
                 updatedEmail: '',
