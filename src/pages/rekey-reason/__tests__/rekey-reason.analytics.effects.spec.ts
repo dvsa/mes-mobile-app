@@ -14,7 +14,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../shared/models/store.model';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as candidateActions from '../../../modules/tests/candidate/candidate.actions';
-import { Candidate } from '../../../shared/models/DJournal';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Rekey Reason Analytics Effects', () => {
 
@@ -23,9 +23,6 @@ describe('Rekey Reason Analytics Effects', () => {
   let actions$: any;
   const screenName = AnalyticsScreenNames.REKEY_REASON;
   let store$: Store<StoreModel>;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -51,7 +48,7 @@ describe('Rekey Reason Analytics Effects', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new candidateActions.PopulateCandidateDetails(mockCandidate));
+      store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new rekeyReasonActions.RekeyReasonViewDidEnter());
       // ASSERT

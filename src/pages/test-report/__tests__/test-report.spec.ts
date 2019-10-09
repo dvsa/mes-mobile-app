@@ -48,6 +48,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { CAT_B } from '../../page-names.constants';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -56,14 +57,6 @@ describe('TestReportPage', () => {
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
   let statusBar: StatusBar;
-
-  const mockCandidate = {
-    driverNumber: '123',
-    candidateName: {
-      firstName: 'Joe',
-      lastName: 'Bloggs',
-    },
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -96,7 +89,7 @@ describe('TestReportPage', () => {
               123: {
                 testData: initialState,
                 journalData: {
-                  candidate: mockCandidate,
+                  candidate: candidateMock,
                 },
               },
             },

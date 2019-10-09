@@ -41,8 +41,8 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { EndTestLinkComponent } from '../../../../components/common/end-test-link/end-test-link';
 import { LockScreenIndicator } from '../../../../components/common/screen-lock-indicator/lock-screen-indicator';
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
-import { candidateMock } from '../../../../shared/mocks/candidate.mock';
 import { FormControl, Validators } from '@angular/forms';
+import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 
 describe('WaitingRoomCatBePage', () => {
   let fixture: ComponentFixture<WaitingRoomCatBePage>;
