@@ -32,7 +32,7 @@ export const CAT_BE = {
   DEBRIEF_PAGE: 'DebriefPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
   OFFICE_PAGE: 'OfficePage',
-  PASS_FINALISATION_PAGE: 'PassFinalisationCatPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationPage',
   TEST_REPORT_PAGE: 'TestReportPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatBePage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBePage',
