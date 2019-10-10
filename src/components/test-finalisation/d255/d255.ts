@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
-} from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+} from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 
 enum ValidD255Values {
   YES = 'Yes',

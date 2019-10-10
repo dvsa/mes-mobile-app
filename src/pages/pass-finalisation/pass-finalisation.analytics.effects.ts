@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { switchMap, concatMap, withLatestFrom } from 'rxjs/operators';
-import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProvider } from '../../providers/analytics/analytics';
 import {
   AnalyticsScreenNames,
-} from '../../../providers/analytics/analytics.model';
+} from '../../providers/analytics/analytics.model';
 import {
   PASS_FINALISTATION_VIEW_DID_ENTER,
   PassFinalisationViewDidEnter,
 } from './pass-finalisation.actions';
-import { TestsModel } from '../../../modules/tests/tests.model';
-import { StoreModel } from '../../../shared/models/store.model';
+import { TestsModel } from '../../modules/tests/tests.model';
+import { StoreModel } from '../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { getTests } from '../../../modules/tests/tests.reducer';
-import { formatAnalyticsText } from '../../../shared/helpers/format-analytics-text';
-import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { getTests } from '../../modules/tests/tests.reducer';
+import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 
 @Injectable()
 export class PassFinalisationAnalyticsEffects {

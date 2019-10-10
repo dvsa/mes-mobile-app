@@ -4,20 +4,17 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as passFinalisationActions from '../pass-finalisation.actions';
-import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
-import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
-import {
-  AnalyticsScreenNames,
-  AnalyticsEventCategories,
-} from '../../../../providers/analytics/analytics.model';
-import { StoreModel } from '../../../../shared/models/store.model';
-import { testsReducer } from '../../../../modules/tests/tests.reducer';
-import * as testsActions from '../../../../modules/tests/tests.actions';
-import * as fakeJournalActions from '../../../fake-journal/fake-journal.actions';
-import { PopulateCandidateDetails } from '../../../../modules/tests/candidate/candidate.actions';
-import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
-import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
-import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import * as testsActions from '../../../modules/tests/tests.actions';
+import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import { AnalyticsScreenNames, AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
+import { StoreModel } from '../../../shared/models/store.model';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
+import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 
 describe('Pass Finalisation Analytics Effects', () => {
 
