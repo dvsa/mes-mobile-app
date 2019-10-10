@@ -7,5 +7,4 @@ import { PassFinalisationCatBPageModule } from './cat-b/pass-finalisation.module
   ],
 })
 
-export class PassFinalisationPageModule {
-}
+export class PassFinalisationPageModule { }

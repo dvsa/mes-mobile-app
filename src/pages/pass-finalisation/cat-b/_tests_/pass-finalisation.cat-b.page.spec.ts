@@ -12,7 +12,8 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
-import { TestFinalisationComponentsModule } from '../../../../components/test-finalisation/test-finalisation-component.module';
+import { TestFinalisationComponentsModule } from
+'../../../../components/test-finalisation/test-finalisation-component.module';
 
 describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
