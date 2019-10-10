@@ -13,7 +13,7 @@ import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.action
 import { ActivityCodeComponent } from '../../office/components/activity-code/activity-code';
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../modules/tests/tests.actions';
-import { TestFinalisationComponentsModule } from 
+import { TestFinalisationComponentsModule } from
 '../../../components/test-finalisation/test-finalisation-component.module';
 
 describe('NonPassFinalisationPage', () => {
