@@ -2,19 +2,19 @@ import { TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { AnalyticsProvider } from '../../../../providers/analytics/analytics';
-import { AnalyticsProviderMock } from '../../../../providers/analytics/__mocks__/analytics.mock';
-import { AnalyticsScreenNames, AnalyticsEventCategories } from '../../../../providers/analytics/analytics.model';
-import { AnalyticRecorded } from '../../../../providers/analytics/analytics.actions';
-import { StoreModel } from '../../../../shared/models/store.model';
-import * as testsActions from '../../../../modules/tests/tests.actions';
-import * as fakeJournalActions from '../../../fake-journal/fake-journal.actions';
-import { testsReducer } from '../../../../modules/tests/tests.reducer';
-import { PopulateCandidateDetails } from '../../../../modules/tests/candidate/candidate.actions';
-import { end2endPracticeSlotId } from '../../../../shared/mocks/test-slot-ids.mock';
+import { AnalyticsProvider } from '../../../providers/analytics/analytics';
+import { AnalyticsProviderMock } from '../../../providers/analytics/__mocks__/analytics.mock';
+import { AnalyticsScreenNames, AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
+import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import * as testsActions from '../../../modules/tests/tests.actions';
+import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
+import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
+import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.analytics.effects';
 import * as nonPassFinalisationActions from '../non-pass-finalisation.actions';
-import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Non Pass Finalisation Analytics Effects', () => {
 

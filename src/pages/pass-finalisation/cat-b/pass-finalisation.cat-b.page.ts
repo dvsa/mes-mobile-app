@@ -1,13 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
   PassFinalisationViewDidEnter,
-} from './pass-finalisation.actions';
+} from './../pass-finalisation.actions';
 import {
   PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
@@ -65,6 +63,8 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -85,10 +85,10 @@ interface PassFinalisationPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-pass-finalisation',
-  templateUrl: 'pass-finalisation.html',
+  selector: 'page-pass-finalisation-cat-b-page',
+  templateUrl: 'pass-finalisation.cat-b.page.html',
 })
-export class PassFinalisationPage extends PracticeableBasePageComponent {
+export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   pageState: PassFinalisationPageState;
   passCertificateCtrl: string = 'passCertificateNumberCtrl';
   @ViewChild('passCertificateNumberInput')

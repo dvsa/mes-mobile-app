@@ -1,7 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { LanguagePreferencesComponent } from '../language-preferences';
 import { IonicModule } from 'ionic-angular';
-import { AppModule } from '../../../../../app/app.module';
+import { AppModule } from '../../../../app/app.module';
 import { FormGroup } from '@angular/forms';
 
 describe('LanguagePreferencesComponent', () => {

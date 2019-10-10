@@ -1,9 +1,8 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
-
 import { AppModule } from '../../../../app/app.module';
-import { PassFinalisationPage } from '../pass-finalisation';
+import { PassFinalisationCatBPage } from '../pass-finalisation.cat-b.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -13,17 +12,18 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
-import { TestFinalisationComponentsModule } from '../../components/test-finalisation.module';
+import { TestFinalisationComponentsModule } from
+'../../../../components/test-finalisation/test-finalisation-component.module';
 
 describe('PassFinalisationPage', () => {
-  let fixture: ComponentFixture<PassFinalisationPage>;
-  let component: PassFinalisationPage;
+  let fixture: ComponentFixture<PassFinalisationCatBPage>;
+  let component: PassFinalisationCatBPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PassFinalisationPage,
+        PassFinalisationCatBPage,
         MockComponent(PracticeModeBanner),
       ],
       imports: [IonicModule, AppModule, TestFinalisationComponentsModule],
@@ -38,7 +38,7 @@ describe('PassFinalisationPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationPage);
+        fixture = TestBed.createComponent(PassFinalisationCatBPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
