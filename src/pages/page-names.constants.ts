@@ -28,11 +28,11 @@ export const CAT_B = {
 
 export const CAT_BE = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficePage',
-  COMMUNICATION_PAGE: 'CommunicationCatBPage',
+  COMMUNICATION_PAGE: 'CommunicationCatBePage',
   DEBRIEF_PAGE: 'DebriefPage',
   HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
   OFFICE_PAGE: 'OfficePage',
-  PASS_FINALISATION_PAGE: 'PassFinalisationPage',
+  PASS_FINALISATION_PAGE: 'PassFinalisationCatPage',
   TEST_REPORT_PAGE: 'TestReportPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatBePage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBePage',
