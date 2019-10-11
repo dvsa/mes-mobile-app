@@ -27,6 +27,7 @@ import { getTests } from '../../modules/tests/tests.reducer';
 import { getTestById, isPassed } from '../../modules/tests/tests.selector';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class JournalAnalyticsEffects {
@@ -119,7 +120,7 @@ export class JournalAnalyticsEffects {
     switchMap(([action, tests]) => {
       const setTestStatusSubmittedAction = action as ResumingWriteUp;
       const test = getTestById(tests, setTestStatusSubmittedAction.slotId);
-      const isTestPassed = isPassed(test);
+      const isTestPassed = isPassed(test as StandardCarTestCATBSchema); // TODO - type workaround
       const journalDataOfTest = test.journalData;
 
       this.analytics.logEvent(

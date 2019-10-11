@@ -7,10 +7,14 @@ import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 import { DateTime } from '../../shared/helpers/date-time';
+import { StandardTrailerTestCATBESchema } from '@dvsa/mes-test-schema/categories/BE';
+
+// TODO - temp fix for types
+type unionType = StandardCarTestCATBSchema | StandardTrailerTestCATBESchema;
 
 export const getCurrentTestSlotId = (tests: TestsModel): string => tests.currentTest.slotId;
 
-export const getCurrentTest = (tests: TestsModel): StandardCarTestCATBSchema => {
+export const getCurrentTest = (tests: TestsModel): unionType => {
   const currentTestSlotId = tests.currentTest.slotId;
   return tests.startedTests[currentTestSlotId];
 };
@@ -20,7 +24,7 @@ export const getCurrentTestStatus = (tests: TestsModel): TestStatus => {
   return tests.testStatus[currentTestSlotId];
 };
 
-export const getTestById = (tests: TestsModel, slotId: string): StandardCarTestCATBSchema => {
+export const getTestById = (tests: TestsModel, slotId: string): unionType => {
   return tests.startedTests[slotId];
 };
 
@@ -88,7 +92,7 @@ export const getActivityCodeBySlotId = (testsModel: TestsModel, id: number): Act
 
 export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
   return Object.keys(tests.testStatus).filter(slotId =>
-    isTestBeforeToday(tests.startedTests[slotId])
+    isTestBeforeToday(tests.startedTests[slotId] as StandardCarTestCATBSchema) // TODO - Type issue fix
     && tests.testStatus[slotId] !== TestStatus.Submitted
     && tests.testStatus[slotId] !== TestStatus.Completed);
 };
@@ -99,7 +103,7 @@ const isTestBeforeToday = (test: StandardCarTestCATBSchema): boolean => {
   return today.daysDiff(new Date(testDate.format('YYYY-MM-DD'))) < 0;
 };
 
-export const getIncompleteTests = (tests: TestsModel): StandardCarTestCATBSchema[] => {
+export const getIncompleteTests = (tests: TestsModel): unionType[] => {
   const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
   return incompleteTestsSlotIds.map((slotId: string) => tests.startedTests[slotId]);
 };
@@ -109,21 +113,23 @@ export const getIncompleteTestsCount = (tests: TestsModel): number => {
   return incompleteTestsSlotIds.length;
 };
 
-export const getOldestIncompleteTest = (tests: TestsModel): StandardCarTestCATBSchema => {
+export const getOldestIncompleteTest = (tests: TestsModel): unionType => {
   const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
 
   let oldestTest: StandardCarTestCATBSchema;
 
   incompleteTestsSlotIds.forEach((slotId: string) => {
     if (!oldestTest) {
-      oldestTest = tests.startedTests[slotId];
+      // TODO - type issue workaround FIX
+      oldestTest = tests.startedTests[slotId] as StandardCarTestCATBSchema;
       return;
     }
 
     const oldestStartDate: DateTime = new DateTime(oldestTest.journalData.testSlotAttributes.start);
     const currentStartDate: DateTime = new DateTime(tests.startedTests[slotId].journalData.testSlotAttributes.start);
     if (currentStartDate.isBefore(oldestStartDate)) {
-      oldestTest = tests.startedTests[slotId];
+      // TODO - type issue workaround FIX
+      oldestTest = tests.startedTests[slotId] as StandardCarTestCATBSchema;
     }
   });
   return oldestTest;

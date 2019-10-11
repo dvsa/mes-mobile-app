@@ -39,7 +39,12 @@ import { SetExaminerKeyed } from './examiner-keyed/examiner-keyed.actions';
 import { MarkAsRekey } from './rekey/rekey.actions';
 import { getRekeySearchState, RekeySearchModel } from '../../pages/rekey-search/rekey-search.reducer';
 import { getBookedTestSlot, getStaffNumber } from '../../pages/rekey-search/rekey-search.selector';
-import { Examiner, TestSlotAttributes, ConductedLanguage } from '@dvsa/mes-test-schema/categories/B';
+import {
+  Examiner,
+  TestSlotAttributes,
+  ConductedLanguage,
+  StandardCarTestCATBSchema,
+} from '@dvsa/mes-test-schema/categories/B';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { JournalModel } from '../journal/journal.model';
@@ -245,7 +250,7 @@ export class TestsEffects {
       const completedTests: TestToSubmit[] = completedTestKeys.map((slotId: string, index: number) => ({
         index,
         slotId,
-        payload: tests.startedTests[slotId],
+        payload: tests.startedTests[slotId] as StandardCarTestCATBSchema, // TODO - type workaround
         status: tests.testStatus[slotId],
       }));
 
@@ -328,7 +333,7 @@ sendPartialTestSuccessEffect$ = this.actions$.pipe(
       const testToSubmit: TestToSubmit = {
         slotId,
         index: 0,
-        payload: test,
+        payload: test as StandardCarTestCATBSchema, // TODO - type workaround
         status: testStatus,
       };
 

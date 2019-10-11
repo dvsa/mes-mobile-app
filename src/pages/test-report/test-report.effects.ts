@@ -20,7 +20,7 @@ import * as seriousFaultsActions from '../../modules/tests/test-data/serious-fau
 import * as drivingFaultsActions from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import * as controlledStopActions from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode, TestData } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
 import { isEmpty } from 'lodash';
 
@@ -116,7 +116,7 @@ export class TestReportEffects {
       ),
     )),
     switchMap(([action, currentTest]) => {
-      return this.testResultProvider.calculateCatBTestResult(currentTest.testData)
+      return this.testResultProvider.calculateCatBTestResult(currentTest.testData as TestData) // TODO - type workaround
         .pipe(
           switchMap((result: ActivityCode) => {
 

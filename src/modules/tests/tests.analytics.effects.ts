@@ -28,6 +28,7 @@ import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { formatApplicationReference } from '../../shared/helpers/formatters';
 import { NavigationStateProvider } from '../../providers/navigation-state/navigation-state';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';
+import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class TestsAnalyticsEffects {
@@ -51,7 +52,8 @@ export class TestsAnalyticsEffects {
     )),
     concatMap(([action, tests]: [SetTestStatusSubmitted, TestsModel]) => {
       const test = getTestById(tests, action.slotId);
-      const isTestPassed = isPassed(test);
+      // TODO - Type workaround
+      const isTestPassed = isPassed(test as StandardCarTestCATBSchema);
       const isRekey: boolean = test.rekey;
       const journalDataOfTest = test.journalData;
 
