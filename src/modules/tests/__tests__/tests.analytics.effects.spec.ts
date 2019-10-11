@@ -14,6 +14,7 @@ import { testsReducer } from '../tests.reducer';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { TestsAnalyticsEffects } from '../tests.analytics.effects';
 import * as testsActions from '../tests.actions';
+import * as activityCodeActions from '../activity-code/activity-code.actions';
 import * as testStatusActions from '../test-status/test-status.actions';
 import * as candidateActions from '../candidate/candidate.actions';
 import * as rekeyActions from '../rekey/rekey.actions';
@@ -66,7 +67,7 @@ describe('Tests Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(12345));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new testStatusActions.SetTestStatusSubmitted('12345'));
@@ -90,7 +91,7 @@ describe('Tests Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(12345));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new rekeyActions.MarkAsRekey());

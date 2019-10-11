@@ -23,6 +23,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import * as applicationReferenceActions
   from '../../../modules/tests/application-reference/application-reference.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Back To Office Analytics Effects', () => {
@@ -96,7 +97,7 @@ describe('Back To Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new backToOfficeActions.DeferWriteUp());
@@ -120,7 +121,7 @@ describe('Back To Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new backToOfficeActions.DeferWriteUp());
@@ -144,7 +145,7 @@ describe('Back To Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new backToOfficeActions.DeferWriteUp());
@@ -168,7 +169,7 @@ describe('Back To Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new backToOfficeActions.DeferWriteUp());

@@ -16,6 +16,7 @@ import * as vehicleChecksActions from '../../../modules/tests/test-data/vehicle-
 import * as controlledStopActions from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as testReportActions from '../test-report.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
@@ -313,7 +314,7 @@ describe('Test Report Effects', () => {
        // ASSERT
       effects.calculateTestResult$.subscribe((result) => {
         expect(testResultProvider.calculateCatBTestResult).toHaveBeenCalled();
-        expect(result).toEqual(new testsActions.SetActivityCode(ActivityCodes.PASS));
+        expect(result).toEqual(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
         done();
       });
     });
@@ -352,7 +353,7 @@ describe('Test Report Effects', () => {
       actions$.next(new testReportActions.TerminateTestFromTestReport());
       // ASSERT
       effects.terminateTestFromTestReport$.subscribe((result) => {
-        expect(result).toEqual(new testsActions.SetActivityCode(null));
+        expect(result).toEqual(new activityCodeActions.SetActivityCode(null));
         done();
       });
     });

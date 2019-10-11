@@ -34,6 +34,7 @@ import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { get } from 'lodash';
 import { instructorDetailsReducerFactory } from './instructor-details/instructor-details-reducer-factory';
 import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { activityCodeReducer } from './activity-code/activity-code.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -55,17 +56,6 @@ export function testsReducer(
   switch (action.type) {
     case testsActions.LOAD_PERSISTED_TESTS_SUCCESS:
       return (<testsActions.LoadPersistedTestsSuccess>action).tests;
-    case testsActions.SET_ACTIVITY_CODE:
-      return {
-        ...state,
-        startedTests: {
-          ...state.startedTests,
-          [slotId]: {
-            ...state.startedTests[slotId],
-            activityCode: action.payload,
-          },
-        },
-      };
     case testsActions.START_TEST_REPORT_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
@@ -127,6 +117,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             examinerConducted: examinerConductedReducer,
             examinerKeyed: examinerKeyedReducer,
             changeMarker: changeMarkerReducer,
+            activityCode: activityCodeReducer,
           }, combineReducers,
         )(
           // The redux pattern necessitates that the state tree be initialised
