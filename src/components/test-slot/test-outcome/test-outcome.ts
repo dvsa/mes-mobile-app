@@ -235,7 +235,7 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   hasTestTimeFinished(): boolean {
-    const cutOffTime = new DateTime(this.slotDetail.start).add(this.slotDetail.duration, Duration.MINUTE);
+    const cutOffTime = new DateTime(this.slotDetail.start).add(10, Duration.MINUTE);
     return new DateTime() > cutOffTime;
   }
 
