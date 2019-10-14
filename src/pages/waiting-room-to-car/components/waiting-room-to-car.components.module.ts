@@ -5,11 +5,6 @@ import { ComponentsModule } from '../../../components/common/common-components.m
 import { EyesightTestComponent } from './eyesight-test/eyesight-test';
 import { EyesightFailureConfirmationComponent } from './eyesight-failure-confirmation/eyesight-failure-confirmation';
 import { VehicleRegistrationComponent } from './vehicle-registration/vehicle-registration';
-import { InstructorRegistrationComponent } from './instructor-registration/instructor-registration';
-import { TransmissionComponent } from './transmission/transmission';
-import { TellMeQuestionCardComponent } from './tell-me-question-card/tell-me-question-card';
-import { TellMeQuestionComponent } from './tell-me-question/tell-me-question';
-import { TellMeQuestionOutcomeComponent } from './tell-me-question-outcome/tell-me-question-outcome';
 import { AccompanimentCardComponent } from './accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from './accompaniment/accompaniment';
 import { VehicleDetailsCardComponent } from './vehicle-details-card/vehicle-details-card';
@@ -21,11 +16,6 @@ import { DirectivesModule } from '../../../directives/directives.module';
     EyesightTestComponent,
     EyesightFailureConfirmationComponent,
     VehicleRegistrationComponent,
-    InstructorRegistrationComponent,
-    TransmissionComponent,
-    TellMeQuestionCardComponent,
-    TellMeQuestionComponent,
-    TellMeQuestionOutcomeComponent,
     AccompanimentCardComponent,
     AccompanimentComponent,
     VehicleDetailsCardComponent,
@@ -41,11 +31,6 @@ import { DirectivesModule } from '../../../directives/directives.module';
     EyesightTestComponent,
     EyesightFailureConfirmationComponent,
     VehicleRegistrationComponent,
-    InstructorRegistrationComponent,
-    TransmissionComponent,
-    TellMeQuestionCardComponent,
-    TellMeQuestionComponent,
-    TellMeQuestionOutcomeComponent,
     AccompanimentCardComponent,
     AccompanimentComponent,
     VehicleDetailsCardComponent,

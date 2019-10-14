@@ -45,9 +45,10 @@ import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
 import { StatusBar } from '@ionic-native/status-bar';
-import { DEBRIEF_PAGE } from '../../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('TestReportPage', () => {
   let fixture: ComponentFixture<TestReportPage>;
@@ -56,14 +57,6 @@ describe('TestReportPage', () => {
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
   let statusBar: StatusBar;
-
-  const mockCandidate = {
-    driverNumber: '123',
-    candidateName: {
-      firstName: 'Joe',
-      lastName: 'Bloggs',
-    },
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -96,7 +89,7 @@ describe('TestReportPage', () => {
               123: {
                 testData: initialState,
                 journalData: {
-                  candidate: mockCandidate,
+                  candidate: candidateMock,
                 },
               },
             },
@@ -134,7 +127,7 @@ describe('TestReportPage', () => {
       it('should navigate to debrief page when passed a CONTINUE event', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(DEBRIEF_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
       });
     });
 

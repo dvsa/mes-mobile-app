@@ -10,7 +10,16 @@ import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getCatBLegalRequirements } from '../../modules/tests/test-data/test-data.selector';
 import * as testReportActions from './test-report.actions';
 import * as testsActions from '../../modules/tests/tests.actions';
-import * as  testDataActions from '../../modules/tests/test-data/test-data.actions';
+import * as testRequirementsActions from '../../modules/tests/test-data/test-requirements/test-requirements.actions';
+import * as manoeuvresActions from '../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import * as vehicleChecksActions from '../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import * as ecoActions from '../../modules/tests/test-data/eco/eco.actions';
+import * as etaActions from '../../modules/tests/test-data/eta/eta.actions';
+import * as dangerousFaultsActions from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import * as seriousFaultsActions from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import * as drivingFaultsActions from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import * as controlledStopActions from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
@@ -30,16 +39,16 @@ export class TestReportEffects {
   validateCatBLegalRequirements$ = this.actions$.pipe(
     ofType(
       testReportActions.TEST_REPORT_VIEW_DID_ENTER,
-      testDataActions.TOGGLE_LEGAL_REQUIREMENT,
-      testDataActions.RECORD_MANOEUVRES_SELECTION,
-      testDataActions.TOGGLE_ECO,
-      testDataActions.TOGGLE_PLANNING_ECO,
-      testDataActions.TOGGLE_CONTROL_ECO,
-      testDataActions.SHOW_ME_QUESTION_PASSED,
-      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
-      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+      testRequirementsActions.TOGGLE_LEGAL_REQUIREMENT,
+      manoeuvresActions.RECORD_MANOEUVRES_SELECTION,
+      ecoActions.TOGGLE_ECO,
+      ecoActions.TOGGLE_PLANNING_ECO,
+      ecoActions.TOGGLE_CONTROL_ECO,
+      vehicleChecksActions.SHOW_ME_QUESTION_PASSED,
+      vehicleChecksActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -62,20 +71,20 @@ export class TestReportEffects {
   @Effect()
   validateCatBTestEta$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_DANGEROUS_FAULT,
-      testDataActions.ADD_SERIOUS_FAULT,
-      testDataActions.REMOVE_DANGEROUS_FAULT,
-      testDataActions.REMOVE_SERIOUS_FAULT,
-      testDataActions.TOGGLE_ETA,
-      testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT,
-      testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
-      testDataActions.REMOVE_MANOEUVRE_FAULT,
-      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_PASSED,
-      testDataActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
-      testDataActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
-      testDataActions.CONTROLLED_STOP_REMOVE_FAULT,
+      dangerousFaultsActions.ADD_DANGEROUS_FAULT,
+      dangerousFaultsActions.REMOVE_DANGEROUS_FAULT,
+      seriousFaultsActions.ADD_SERIOUS_FAULT,
+      seriousFaultsActions.REMOVE_SERIOUS_FAULT,
+      etaActions.TOGGLE_ETA,
+      manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT,
+      manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
+      manoeuvresActions.REMOVE_MANOEUVRE_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_PASSED,
+      controlledStopActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
+      controlledStopActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
+      controlledStopActions.CONTROLLED_STOP_REMOVE_FAULT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -112,7 +121,7 @@ export class TestReportEffects {
         .pipe(
           switchMap((result: ActivityCode) => {
 
-            const actions: Action[] = [new testsActions.SetActivityCode(result)];
+            const actions: Action[] = [new activityCodeActions.SetActivityCode(result)];
             if (!isEmpty(currentTest.activityCode) && currentTest.activityCode !== result) {
               const label = result === '1' ? 'fail to pass' : 'pass to fail';
               actions.push(new testsActions.TestOutcomeChanged(label));
@@ -127,32 +136,32 @@ export class TestReportEffects {
   @Effect()
   persistTestReport$ = this.actions$.pipe(
     ofType(
-      testDataActions.ADD_DRIVING_FAULT,
-      testDataActions.ADD_DANGEROUS_FAULT,
-      testDataActions.ADD_SERIOUS_FAULT,
-      testDataActions.REMOVE_DRIVING_FAULT,
-      testDataActions.REMOVE_SERIOUS_FAULT,
-      testDataActions.REMOVE_DANGEROUS_FAULT,
-      testDataActions.RECORD_MANOEUVRES_SELECTION,
-      testDataActions.ADD_MANOEUVRE_DRIVING_FAULT,
-      testDataActions.ADD_MANOEUVRE_SERIOUS_FAULT,
-      testDataActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
-      testDataActions.REMOVE_MANOEUVRE_FAULT,
-      testDataActions.TOGGLE_CONTROLLED_STOP,
-      testDataActions.CONTROLLED_STOP_ADD_DRIVING_FAULT,
-      testDataActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
-      testDataActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
-      testDataActions.CONTROLLED_STOP_REMOVE_FAULT,
-      testDataActions.SHOW_ME_QUESTION_PASSED,
-      testDataActions.SHOW_ME_QUESTION_DRIVING_FAULT,
-      testDataActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
-      testDataActions.SHOW_ME_QUESTION_REMOVE_FAULT,
-      testDataActions.TOGGLE_ECO,
-      testDataActions.TOGGLE_CONTROL_ECO,
-      testDataActions.TOGGLE_PLANNING_ECO,
-      testDataActions.TOGGLE_ETA,
-      testDataActions.TOGGLE_LEGAL_REQUIREMENT,
+      drivingFaultsActions.ADD_DRIVING_FAULT,
+      drivingFaultsActions.REMOVE_DRIVING_FAULT,
+      seriousFaultsActions.REMOVE_SERIOUS_FAULT,
+      seriousFaultsActions.ADD_SERIOUS_FAULT,
+      dangerousFaultsActions.ADD_DANGEROUS_FAULT,
+      dangerousFaultsActions.REMOVE_DANGEROUS_FAULT,
+      manoeuvresActions.RECORD_MANOEUVRES_SELECTION,
+      manoeuvresActions.ADD_MANOEUVRE_DRIVING_FAULT,
+      manoeuvresActions.ADD_MANOEUVRE_SERIOUS_FAULT,
+      manoeuvresActions.ADD_MANOEUVRE_DANGEROUS_FAULT,
+      manoeuvresActions.REMOVE_MANOEUVRE_FAULT,
+      controlledStopActions.TOGGLE_CONTROLLED_STOP,
+      controlledStopActions.CONTROLLED_STOP_ADD_DRIVING_FAULT,
+      controlledStopActions.CONTROLLED_STOP_ADD_SERIOUS_FAULT,
+      controlledStopActions.CONTROLLED_STOP_ADD_DANGEROUS_FAULT,
+      controlledStopActions.CONTROLLED_STOP_REMOVE_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_PASSED,
+      vehicleChecksActions.SHOW_ME_QUESTION_DRIVING_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_SERIOUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_DANGEROUS_FAULT,
+      vehicleChecksActions.SHOW_ME_QUESTION_REMOVE_FAULT,
+      ecoActions.TOGGLE_ECO,
+      ecoActions.TOGGLE_CONTROL_ECO,
+      ecoActions.TOGGLE_PLANNING_ECO,
+      etaActions.TOGGLE_ETA,
+      testRequirementsActions.TOGGLE_LEGAL_REQUIREMENT,
     ),
     concatMap(action => of(action).pipe(
       withLatestFrom(
@@ -172,6 +181,6 @@ export class TestReportEffects {
     ofType(
       testReportActions.TERMINATE_TEST_FROM_TEST_REPORT,
     ),
-    map(() => new testsActions.SetActivityCode(null)),
+    map(() => new activityCodeActions.SetActivityCode(null)),
   );
 }

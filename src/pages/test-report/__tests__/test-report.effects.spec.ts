@@ -7,9 +7,16 @@ import { empty } from 'rxjs/observable/empty';
 import { StoreModule, Store } from '@ngrx/store';
 import { TestReportEffects } from '../test-report.effects';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
-import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
+import * as ecoActions from '../../../modules/tests/test-data/eco/eco.actions';
+import * as etaActions from '../../../modules/tests/test-data/eta/eta.actions';
+import * as dangerousFaultsActions from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import * as seriousFaultsActions from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import * as manoeuvresActions from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import * as vehicleChecksActions from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import * as controlledStopActions from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as testReportActions from '../test-report.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
@@ -72,7 +79,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBLegalRequirements').and.returnValue(of(true));
       // ACT
-      actions$.next(new testDataActions.ToggleEco());
+      actions$.next(new ecoActions.ToggleEco());
       // ASSERT
       effects.validateCatBLegalRequirements$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBLegalRequirements).toHaveBeenCalled();
@@ -85,7 +92,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBLegalRequirements').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.ToggleEco());
+      actions$.next(new ecoActions.ToggleEco());
       // ASSERT
       effects.validateCatBLegalRequirements$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBLegalRequirements).toHaveBeenCalled();
@@ -104,8 +111,8 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(true));
       // ACT
-      actions$.next(new testDataActions.AddDangerousFault(Competencies.moveOffSafety));
-      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.moveOffSafety));
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
@@ -117,7 +124,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
@@ -129,7 +136,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.AddDangerousFault(Competencies.ancillaryControls));
+      actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.ancillaryControls));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -140,7 +147,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.AddSeriousFault(Competencies.ancillaryControls));
+      actions$.next(new seriousFaultsActions.AddSeriousFault(Competencies.ancillaryControls));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -151,7 +158,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.RemoveDangerousFault(Competencies.ancillaryControls));
+      actions$.next(new dangerousFaultsActions.RemoveDangerousFault(Competencies.ancillaryControls));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -162,7 +169,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.RemoveSeriousFault(Competencies.ancillaryControls));
+      actions$.next(new seriousFaultsActions.RemoveSeriousFault(Competencies.ancillaryControls));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -173,7 +180,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -184,7 +191,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreSeriousFault(
+      actions$.next(new manoeuvresActions.AddManoeuvreSeriousFault(
         {
           competency: ManoeuvreCompetencies.controlFault,
           manoeuvre: ManoeuvreTypes.forwardPark,
@@ -199,7 +206,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreDangerousFault(
+      actions$.next(new manoeuvresActions.AddManoeuvreDangerousFault(
         {
           competency: ManoeuvreCompetencies.controlFault,
           manoeuvre: ManoeuvreTypes.forwardPark,
@@ -214,7 +221,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.RemoveManoeuvreFault(
+      actions$.next(new manoeuvresActions.RemoveManoeuvreFault(
         {
           competency: ManoeuvreCompetencies.controlFault,
           manoeuvre: ManoeuvreTypes.forwardPark,
@@ -229,7 +236,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -240,7 +247,7 @@ describe('Test Report Effects', () => {
       // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -251,7 +258,7 @@ describe('Test Report Effects', () => {
           // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
           // ACT
-      actions$.next(new testDataActions.ShowMeQuestionPassed());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionPassed());
           // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -262,7 +269,7 @@ describe('Test Report Effects', () => {
             // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
             // ACT
-      actions$.next(new testDataActions.ControlledStopAddSeriousFault());
+      actions$.next(new controlledStopActions.ControlledStopAddSeriousFault());
             // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -273,7 +280,7 @@ describe('Test Report Effects', () => {
             // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
             // ACT
-      actions$.next(new testDataActions.ControlledStopAddDangerousFault());
+      actions$.next(new controlledStopActions.ControlledStopAddDangerousFault());
             // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -284,7 +291,7 @@ describe('Test Report Effects', () => {
             // ARRANGE
       spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
             // ACT
-      actions$.next(new testDataActions.ControlledStopRemoveFault());
+      actions$.next(new controlledStopActions.ControlledStopRemoveFault());
             // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
         expect(result).toEqual(new testReportActions.ValidateEta(false));
@@ -307,7 +314,7 @@ describe('Test Report Effects', () => {
        // ASSERT
       effects.calculateTestResult$.subscribe((result) => {
         expect(testResultProvider.calculateCatBTestResult).toHaveBeenCalled();
-        expect(result).toEqual(new testsActions.SetActivityCode(ActivityCodes.PASS));
+        expect(result).toEqual(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
         done();
       });
     });
@@ -321,7 +328,7 @@ describe('Test Report Effects', () => {
 
     it('should dispatch an action requesting the test data to be saved when triggered', (done) => {
       // ACT
-      actions$.next(new testDataActions.ToggleETA(ExaminerActions.physical));
+      actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
       effects.persistTestReport$.subscribe((result) => {
         expect(result).toEqual(new testsActions.PersistTests());
@@ -346,7 +353,7 @@ describe('Test Report Effects', () => {
       actions$.next(new testReportActions.TerminateTestFromTestReport());
       // ASSERT
       effects.terminateTestFromTestReport$.subscribe((result) => {
-        expect(result).toEqual(new testsActions.SetActivityCode(null));
+        expect(result).toEqual(new activityCodeActions.SetActivityCode(null));
         done();
       });
     });

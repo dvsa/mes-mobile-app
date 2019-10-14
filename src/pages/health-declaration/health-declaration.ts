@@ -37,15 +37,10 @@ import {
   getCommunicationPreference,
 } from '../../modules/tests/communication-preferences/communication-preferences.reducer';
 import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
-import {
-  TEST_REPORT_PAGE,
-  DEBRIEF_PAGE,
-  PASS_FINALISATION_PAGE,
-  HEALTH_DECLARATION_PAGE,
-  BACK_TO_OFFICE_PAGE,
-} from '../page-names.constants';
+import { CAT_B } from '../page-names.constants';
 import { includes } from 'lodash';
 import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../shared/helpers/translation.helpers';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
@@ -183,7 +178,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     this.merged$ = merge(
       licenseProvided$.pipe(map(val => this.licenseProvided = val)),
       healthDeclarationAccepted$.pipe(map(val => this.healthDeclarationAccepted = val)),
-      conductedLanguage$.pipe(tap(this.configureI18N)),
+      conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     );
 
   }
@@ -215,14 +210,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
           this.form.controls['signatureAreaCtrl'].setValue(val);
         }),
     );
-  }
-
-  configureI18N = (language: Language): void => {
-    if (language === Language.CYMRAEG) {
-      this.translate.use('cy');
-    } else {
-      this.translate.use('en');
-    }
   }
 
   healthDeclarationChanged(): void {
@@ -275,9 +262,14 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
           this.store$.dispatch(new ProvisionalLicenseNotReceived());
         }
         this.store$.dispatch(new ContinueFromDeclaration());
-        this.navController.push(BACK_TO_OFFICE_PAGE).then(() => {
+        this.navController.push(CAT_B.BACK_TO_OFFICE_PAGE).then(() => {
           this.navController.getViews().forEach((view) => {
-            if (includes([TEST_REPORT_PAGE, DEBRIEF_PAGE, PASS_FINALISATION_PAGE, HEALTH_DECLARATION_PAGE],
+            if (includes([
+              CAT_B.TEST_REPORT_PAGE,
+              CAT_B.DEBRIEF_PAGE,
+              CAT_B.PASS_FINALISATION_PAGE,
+              CAT_B.HEALTH_DECLARATION_PAGE,
+            ],
               view.id)) {
               this.navController.removeView(view);
             }

@@ -70,7 +70,7 @@ import {
   getDrivingFaultSummaryCount,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests, SetActivityCode } from '../../modules/tests/tests.actions';
+import { PersistTests } from '../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
   displayDrivingFaultComments,
@@ -90,16 +90,16 @@ import {
   Identification,
   IndependentDriving,
 } from '@dvsa/mes-test-schema/categories/B';
+import { AddDangerousFaultComment } from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import { AddSeriousFaultComment } from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { AddDrivingFaultComment } from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import {
-  AddDangerousFaultComment,
-  AddSeriousFaultComment,
-  AddDrivingFaultComment,
   ShowMeQuestionSelected,
-  AddControlledStopComment,
-  AddManoeuvreComment,
   AddShowMeTellMeComment,
-  EyesightTestAddComment,
-} from '../../modules/tests/test-data/test-data.actions';
+} from '../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { AddControlledStopComment } from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import { AddManoeuvreComment } from '../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import { EyesightTestAddComment } from '../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import {
   MultiFaultAssignableCompetency,
   CommentedCompetency,
@@ -112,7 +112,8 @@ import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
-import { REKEY_REASON_PAGE, JOURNAL_PAGE } from '../page-names.constants';
+import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
+import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -606,7 +607,7 @@ export class OfficePage extends PracticeableBasePageComponent {
 
   goToReasonForRekey() {
     if (this.isFormValid()) {
-      this.navController.push(REKEY_REASON_PAGE);
+      this.navController.push(CAT_B.REKEY_REASON_PAGE);
     }
   }
 

@@ -10,7 +10,9 @@ import {
   getTestRequirements,
   hasLegalRequirementBeenCompleted,
 } from '../../../../modules/tests/test-data/test-data.selector';
-import { ToggleLegalRequirement } from '../../../../modules/tests/test-data/test-data.actions';
+import {
+  ToggleLegalRequirement,
+} from '../../../../modules/tests/test-data/test-requirements/test-requirements.actions';
 import { LegalRequirements } from '../../../../modules/tests/test-data/test-data.constants';
 import { legalRequirementLabels } from './legal-requirement.constants';
 

@@ -52,7 +52,7 @@ import { ModalEvent } from './test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
-import { DEBRIEF_PAGE } from '../page-names.constants';
+import { CAT_B } from '../page-names.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -248,11 +248,11 @@ export class TestReportPage extends PracticeableBasePageComponent {
     switch (event) {
       case ModalEvent.CONTINUE:
         this.store$.dispatch(new CalculateTestResult());
-        this.navController.push(DEBRIEF_PAGE);
+        this.navController.push(CAT_B.DEBRIEF_PAGE);
         break;
       case ModalEvent.TERMINATE:
         this.store$.dispatch(new TerminateTestFromTestReport());
-        this.navController.push(DEBRIEF_PAGE);
+        this.navController.push(CAT_B.DEBRIEF_PAGE);
         break;
     }
   }
@@ -262,11 +262,11 @@ export class TestReportPage extends PracticeableBasePageComponent {
   }
 
   onContinue = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(CAT_B.DEBRIEF_PAGE));
   }
 
   onTerminate = (): void => {
-    this.modal.dismiss().then(() => this.navController.push(DEBRIEF_PAGE));
+    this.modal.dismiss().then(() => this.navController.push(CAT_B.DEBRIEF_PAGE));
   }
 }
 

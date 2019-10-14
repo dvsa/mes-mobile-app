@@ -6,8 +6,8 @@ import { ConfigMock, NavControllerMock } from 'ionic-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { SetActivityCode } from '../../../../../modules/tests/tests.actions';
-import { DEBRIEF_PAGE } from '../../../../page-names.constants';
+import { CAT_B } from '../../../../page-names.constants';
+import { SetActivityCode } from '../../../../../modules/tests/activity-code/activity-code.actions';
 
 describe('eyesight failure confirmation component', () => {
   let fixture: ComponentFixture<EyesightFailureConfirmationComponent>;
@@ -51,9 +51,10 @@ describe('eyesight failure confirmation component', () => {
     });
     it('should navigate to debrief when continue is pressed', () => {
       const confirmButton = fixture.debugElement.query(By.css('#confirm-eyesight-failure'));
+      component.nextPageOnFail = CAT_B.DEBRIEF_PAGE;
       confirmButton.triggerEventHandler('click', null);
       const { calls } = navController.push as jasmine.Spy;
-      expect(calls.argsFor(0)[0]).toBe(DEBRIEF_PAGE);
+      expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
     });
   });
 

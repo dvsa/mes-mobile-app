@@ -4,7 +4,14 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { TestReportAnalyticsEffects } from '../test-report.analytics.effects';
 import * as testsActions from '../../../modules/tests/tests.actions';
-import * as testDataActions from '../../../modules/tests/test-data/test-data.actions';
+import * as controlledStopActions from '../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import * as dangerousFaultsActions from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
+import * as drivingFaultsActions from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import * as seriousFaultsActions from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import * as manoeuvresActions from '../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import * as vehicleChecksActions from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import * as testRequirementsActions from '../../../modules/tests/test-data/test-requirements/test-requirements.actions';
+import * as ecoActions from '../../../modules/tests/test-data/eco/eco.actions';
 import * as testReportActions from '../test-report.actions';
 import { StoreModel } from '../../../shared/models/store.model';
 import {
@@ -185,7 +192,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.AddDrivingFault({
+      actions$.next(new drivingFaultsActions.AddDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 1,
       }));
@@ -206,7 +213,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.AddDrivingFault({
+      actions$.next(new drivingFaultsActions.AddDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 1,
       }));
@@ -230,7 +237,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
+      actions$.next(new seriousFaultsActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -248,7 +255,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.AddSeriousFault(Competencies.controlsGears));
+      actions$.next(new seriousFaultsActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.addSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -269,7 +276,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
+      actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -287,7 +294,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.AddDangerousFault(Competencies.controlsGears));
+      actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.addDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -308,7 +315,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreDrivingFault({
+      actions$.next(new manoeuvresActions.AddManoeuvreDrivingFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -330,7 +337,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreDrivingFault({
+      actions$.next(new manoeuvresActions.AddManoeuvreDrivingFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -355,7 +362,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreSeriousFault({
+      actions$.next(new manoeuvresActions.AddManoeuvreSeriousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -377,7 +384,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreSeriousFault({
+      actions$.next(new manoeuvresActions.AddManoeuvreSeriousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -402,7 +409,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreDangerousFault({
+      actions$.next(new manoeuvresActions.AddManoeuvreDangerousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -424,7 +431,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.AddManoeuvreDangerousFault({
+      actions$.next(new manoeuvresActions.AddManoeuvreDangerousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -449,7 +456,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ControlledStopAddDrivingFault());
+      actions$.next(new controlledStopActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -467,7 +474,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ControlledStopAddDrivingFault());
+      actions$.next(new controlledStopActions.ControlledStopAddDrivingFault());
       // ASSERT
       effects.controlledStopAddDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -488,7 +495,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ControlledStopAddSeriousFault());
+      actions$.next(new controlledStopActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -506,7 +513,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ControlledStopAddSeriousFault());
+      actions$.next(new controlledStopActions.ControlledStopAddSeriousFault());
       // ASSERT
       effects.controlledStopAddSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -527,7 +534,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ControlledStopAddDangerousFault());
+      actions$.next(new controlledStopActions.ControlledStopAddDangerousFault());
       // ASSERT
       effects.controlledStopAddDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -545,7 +552,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ControlledStopAddDangerousFault());
+      actions$.next(new controlledStopActions.ControlledStopAddDangerousFault());
       // ASSERT
       effects.controlledStopAddDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -566,7 +573,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -584,7 +591,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionDrivingFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionDrivingFault());
       // ASSERT
       effects.showMeQuestionDrivingFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -605,7 +612,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -623,7 +630,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionSeriousFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionSeriousFault());
       // ASSERT
       effects.showMeQuestionSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -644,7 +651,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -662,7 +669,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionDangerousFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionDangerousFault());
       // ASSERT
       effects.showMeQuestionDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -683,7 +690,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.RemoveDrivingFault({
+      actions$.next(new drivingFaultsActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 0,
       }));
@@ -704,7 +711,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.RemoveDrivingFault({
+      actions$.next(new drivingFaultsActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
         newFaultCount: 0,
       }));
@@ -728,7 +735,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
+      actions$.next(new seriousFaultsActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -746,7 +753,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.RemoveSeriousFault(Competencies.controlsGears));
+      actions$.next(new seriousFaultsActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeSeriousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -767,7 +774,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
+      actions$.next(new dangerousFaultsActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -785,7 +792,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.RemoveDangerousFault(Competencies.controlsGears));
+      actions$.next(new dangerousFaultsActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
       effects.removeDangerousFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -806,7 +813,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.RemoveManoeuvreFault({
+      actions$.next(new manoeuvresActions.RemoveManoeuvreFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -827,7 +834,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.RemoveManoeuvreFault({
+      actions$.next(new manoeuvresActions.RemoveManoeuvreFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
         competency: ManoeuvreCompetencies.controlFault,
       }));
@@ -851,7 +858,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ControlledStopRemoveFault());
+      actions$.next(new controlledStopActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -868,7 +875,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ControlledStopRemoveFault());
+      actions$.next(new controlledStopActions.ControlledStopRemoveFault());
       // ASSERT
       effects.controlledStopRemoveFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -888,7 +895,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -905,7 +912,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       // ACT
-      actions$.next(new testDataActions.ShowMeQuestionRemoveFault());
+      actions$.next(new vehicleChecksActions.ShowMeQuestionRemoveFault());
       // ASSERT
       effects.showMeQuestionRemoveFault$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -961,9 +968,9 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for normal start completed', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
-      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
-      actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      actions$.next(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ASSERT
       effects.toggleLegalRequirement$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -979,10 +986,10 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for normal start uncompleted', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
-      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
-      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
-      actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      actions$.next(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ASSERT
       effects.toggleLegalRequirement$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -998,9 +1005,9 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for eco completed', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
-      store$.dispatch(new testDataActions.ToggleEco());
+      store$.dispatch(new ecoActions.ToggleEco());
       // ACT
-      actions$.next(new testDataActions.ToggleEco());
+      actions$.next(new ecoActions.ToggleEco());
       // ASSERT
       effects.toggleEco$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -1016,10 +1023,10 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for eco uncompleted', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
-      store$.dispatch(new testDataActions.ToggleEco());
-      store$.dispatch(new testDataActions.ToggleEco());
+      store$.dispatch(new ecoActions.ToggleEco());
+      store$.dispatch(new ecoActions.ToggleEco());
       // ACT
-      actions$.next(new testDataActions.ToggleEco());
+      actions$.next(new ecoActions.ToggleEco());
       // ASSERT
       effects.toggleEco$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -1036,7 +1043,7 @@ describe('Test Report Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
       // ACT
-      actions$.next(new testDataActions.RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad));
+      actions$.next(new manoeuvresActions.RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad));
       // ASSERT
       effects.manoeuvreCompletedEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -1053,9 +1060,9 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for normal start, prefixed with practice test', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
-      store$.dispatch(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
-      actions$.next(new testDataActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
+      actions$.next(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ASSERT
       effects.toggleLegalRequirement$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -1071,9 +1078,9 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for eco, prefixed with practice test', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
-      store$.dispatch(new testDataActions.ToggleEco());
+      store$.dispatch(new ecoActions.ToggleEco());
       // ACT
-      actions$.next(new testDataActions.ToggleEco());
+      actions$.next(new ecoActions.ToggleEco());
       // ASSERT
       effects.toggleEco$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
@@ -1090,7 +1097,7 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for show me / tell me completed', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
-      const showMeQuestionPassedAction = new testDataActions.ShowMeQuestionPassed();
+      const showMeQuestionPassedAction = new vehicleChecksActions.ShowMeQuestionPassed();
       store$.dispatch(showMeQuestionPassedAction);
       // ACT
       actions$.next(showMeQuestionPassedAction);
@@ -1110,8 +1117,8 @@ describe('Test Report Analytics Effects', () => {
     it('should call logEvent for show me / tell me uncompleted', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123456));
-      store$.dispatch(new testDataActions.ShowMeQuestionPassed());
-      const showMeQuestionRemoveFaultAction = new testDataActions.ShowMeQuestionRemoveFault();
+      store$.dispatch(new vehicleChecksActions.ShowMeQuestionPassed());
+      const showMeQuestionRemoveFaultAction = new vehicleChecksActions.ShowMeQuestionRemoveFault();
       store$.dispatch(showMeQuestionRemoveFaultAction);
       // ACT
       actions$.next(showMeQuestionRemoveFaultAction);

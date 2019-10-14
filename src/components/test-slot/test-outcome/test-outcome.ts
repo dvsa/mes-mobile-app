@@ -8,13 +8,7 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import {
-  WAITING_ROOM_PAGE,
-  OFFICE_PAGE,
-  PASS_FINALISATION_PAGE,
-  JOURNAL_FORCE_CHECK_MODAL,
-  NON_PASS_FINALISATION_PAGE,
-} from '../../../pages/page-names.constants';
+import { JOURNAL_FORCE_CHECK_MODAL, CAT_B } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
@@ -139,17 +133,17 @@ export class TestOutcomeComponent implements OnInit {
   writeUpTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
     this.store$.dispatch(new ResumingWriteUp(this.slotDetail.slotId.toString()));
-    this.navController.push(OFFICE_PAGE);
+    this.navController.push(CAT_B.OFFICE_PAGE);
   }
 
   resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
     if (this.testStatus === TestStatus.Started) {
-      this.navController.push(WAITING_ROOM_PAGE);
+      this.navController.push(CAT_B.WAITING_ROOM_PAGE);
     } else if (this.activityCode === ActivityCodes.PASS) {
-      this.navController.push(PASS_FINALISATION_PAGE);
+      this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
     } else {
-      this.navController.push(NON_PASS_FINALISATION_PAGE);
+      this.navController.push(CAT_B.NON_PASS_FINALISATION_PAGE);
     }
   }
 
@@ -159,7 +153,7 @@ export class TestOutcomeComponent implements OnInit {
     } else {
       this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.startTestAsRekey || this.isRekey));
     }
-    this.navController.push(WAITING_ROOM_PAGE);
+    this.navController.push(CAT_B.WAITING_ROOM_PAGE);
   }
 
   rekeyTest() {
@@ -168,7 +162,7 @@ export class TestOutcomeComponent implements OnInit {
     } else {
       this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, true));
     }
-    this.navController.push(WAITING_ROOM_PAGE);
+    this.navController.push(CAT_B.WAITING_ROOM_PAGE);
   }
 
   displayRekeyModal = (): void => {

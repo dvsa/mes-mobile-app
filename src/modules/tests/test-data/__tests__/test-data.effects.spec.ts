@@ -2,7 +2,8 @@ import { TestDataEffects } from '../test-data.effects';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as testDataActions from '../test-data.actions';
+import * as drivingFaultsActions from '../driving-faults/driving-faults.actions';
+import * as ecoActions from '../eco/eco.actions';
 import * as testsActions from '../../tests.actions';
 import { testsReducer } from '../../tests.reducer';
 import { Store, StoreModule } from '@ngrx/store';
@@ -40,7 +41,7 @@ describe('Test Data Effects', () => {
         competency: Competencies.ancillaryControls,
         newFaultCount: 1,
       };
-      const throttleAddDrivingFault = new testDataActions.ThrottleAddDrivingFault(faultPayload);
+      const throttleAddDrivingFault = new drivingFaultsActions.ThrottleAddDrivingFault(faultPayload);
       // ARRANGE - setup the store
       store$.dispatch(new testsActions.StartTest(123456));
       store$.dispatch(throttleAddDrivingFault);
@@ -48,7 +49,7 @@ describe('Test Data Effects', () => {
       actions$.next(throttleAddDrivingFault);
       // ASSERT
       effects.throttleAddDrivingFaultEffect$.subscribe((result) => {
-        expect(result).toEqual(new testDataActions.AddDrivingFault(faultPayload));
+        expect(result).toEqual(new drivingFaultsActions.AddDrivingFault(faultPayload));
         done();
       });
     });
@@ -56,7 +57,7 @@ describe('Test Data Effects', () => {
 
   describe('setEcoControlCompletedEffect', () => {
     it('should dispatch an action to toggle eco to be completed', (done) => {
-      const toggleControlEcoAction = new testDataActions.ToggleControlEco();
+      const toggleControlEcoAction = new ecoActions.ToggleControlEco();
       // ARRANGE - setup the store
       store$.dispatch(new testsActions.StartTest(123456));
       store$.dispatch(toggleControlEcoAction);
@@ -64,7 +65,7 @@ describe('Test Data Effects', () => {
       actions$.next(toggleControlEcoAction);
       // ASSERT
       effects.setEcoControlCompletedEffect$.subscribe((result) => {
-        expect(result).toEqual(new testDataActions.ToggleEco());
+        expect(result).toEqual(new ecoActions.ToggleEco());
         done();
       });
     });
@@ -72,7 +73,7 @@ describe('Test Data Effects', () => {
 
   describe('setEcoPlanningCompletedEffect', () => {
     it('should dispatch an action to toggle eco to be completed', (done) => {
-      const togglePlanningEcoAction = new testDataActions.TogglePlanningEco();
+      const togglePlanningEcoAction = new ecoActions.TogglePlanningEco();
       // ARRANGE - setup the store
       store$.dispatch(new testsActions.StartTest(123456));
       store$.dispatch(togglePlanningEcoAction);
@@ -80,7 +81,7 @@ describe('Test Data Effects', () => {
       actions$.next(togglePlanningEcoAction);
       // ASSERT
       effects.setEcoPlanningCompletedEffect$.subscribe((result) => {
-        expect(result).toEqual(new testDataActions.ToggleEco());
+        expect(result).toEqual(new ecoActions.ToggleEco());
         done();
       });
     });

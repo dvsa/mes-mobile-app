@@ -14,7 +14,7 @@ import {
   AnalyticsErrorTypes,
 } from '../../../providers/analytics/analytics.model';
 import { StoreModel } from '../../../shared/models/store.model';
-import { Candidate, Application } from '@dvsa/mes-journal-schema';
+import { Application } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
@@ -25,6 +25,8 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 import * as applicationReferenceActions
   from '../../../modules/tests/application-reference/application-reference.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Office Analytics Effects', () => {
 
@@ -38,9 +40,6 @@ describe('Office Analytics Effects', () => {
   const screenNamePracticeModePass = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.PASS_TEST_SUMMARY}`;
   // tslint:disable-next-line:max-line-length
   const screenNamePracticeModeFail = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.FAIL_TEST_SUMMARY}`;
-  const mockCandidate: Candidate = {
-    candidateId: 1001,
-  };
   const mockApplication: Application = {
     applicationId: 123456,
     bookingSequence: 78,
@@ -71,8 +70,8 @@ describe('Office Analytics Effects', () => {
     it('should call setCurrentPage with pass page and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -80,7 +79,7 @@ describe('Office Analytics Effects', () => {
       effects.officeViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.setCurrentPage)
@@ -91,8 +90,8 @@ describe('Office Analytics Effects', () => {
     it('should call setCurrentPage with fail page and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -100,7 +99,7 @@ describe('Office Analytics Effects', () => {
       effects.officeViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.setCurrentPage)
@@ -111,8 +110,8 @@ describe('Office Analytics Effects', () => {
     it('should call setCurrentPage with pass page, practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -120,7 +119,7 @@ describe('Office Analytics Effects', () => {
       effects.officeViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.setCurrentPage)
@@ -131,8 +130,8 @@ describe('Office Analytics Effects', () => {
     it('should call setCurrentPage with fail page, practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -140,7 +139,7 @@ describe('Office Analytics Effects', () => {
       effects.officeViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.setCurrentPage)
@@ -155,8 +154,8 @@ describe('Office Analytics Effects', () => {
     it('should call logEvent with pass page and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -164,7 +163,7 @@ describe('Office Analytics Effects', () => {
       effects.savingWriteUpForLaterEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.logEvent)
@@ -179,8 +178,8 @@ describe('Office Analytics Effects', () => {
     it('should call logEvent with fail page and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -188,7 +187,7 @@ describe('Office Analytics Effects', () => {
       effects.savingWriteUpForLaterEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.logEvent)
@@ -203,8 +202,8 @@ describe('Office Analytics Effects', () => {
     it('should call logEvent with pass page, practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -212,7 +211,7 @@ describe('Office Analytics Effects', () => {
       effects.savingWriteUpForLaterEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.logEvent)
@@ -227,8 +226,8 @@ describe('Office Analytics Effects', () => {
     it('should call logEvent with fail page, practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -236,7 +235,7 @@ describe('Office Analytics Effects', () => {
       effects.savingWriteUpForLaterEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         expect(analyticsProviderMock.logEvent)
@@ -254,8 +253,8 @@ describe('Office Analytics Effects', () => {
     it('should call logError with pass', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -270,8 +269,8 @@ describe('Office Analytics Effects', () => {
     it('should call logError with fail', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -286,8 +285,8 @@ describe('Office Analytics Effects', () => {
     it('should call logError with pass, prefixed with practice mode', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -302,8 +301,8 @@ describe('Office Analytics Effects', () => {
     it('should call logError with fail, prefixed with practice mode', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -321,8 +320,8 @@ describe('Office Analytics Effects', () => {
     it('should log an event COMPLETE_TEST event when the test is not a rekey', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.CompleteTest());
@@ -336,7 +335,7 @@ describe('Office Analytics Effects', () => {
             'pass',
           );
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         done();
@@ -345,8 +344,8 @@ describe('Office Analytics Effects', () => {
     it('should log an event COMPLETE_REKEY_TEST event when the test is a rekey', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(mockCandidate));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new PopulateCandidateDetails(candidateMock));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new rekeyActions.MarkAsRekey());
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -361,7 +360,7 @@ describe('Office Analytics Effects', () => {
             'pass',
           );
         expect(analyticsProviderMock.addCustomDimension)
-          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1001');
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
         done();

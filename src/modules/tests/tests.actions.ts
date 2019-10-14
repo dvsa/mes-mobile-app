@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
@@ -23,7 +22,6 @@ export const START_TEST = '[Tests] Start Test';
 // Differs from START_TEST in that it won't trigger the journal -> test state copy effect
 export const ACTIVATE_TEST = '[Tests] Activate Test';
 
-export const SET_ACTIVITY_CODE = '[Tests] Set activity code';
 export const TEST_OUTCOME_CHANGED = '[TestReportEffects] Test outcome changed';
 
 export class PersistTests implements Action {
@@ -37,11 +35,6 @@ export class LoadPersistedTests implements Action {
 export class LoadPersistedTestsSuccess implements Action {
   readonly type = LOAD_PERSISTED_TESTS_SUCCESS;
   constructor(public tests: TestsModel) {}
-}
-
-export class SetActivityCode implements Action {
-  readonly type = SET_ACTIVITY_CODE;
-  constructor(public payload: ActivityCode) {}
 }
 
 export class TestOutcomeChanged implements Action {
@@ -107,7 +100,6 @@ export type Types =
   | PersistTests
   | LoadPersistedTests
   | LoadPersistedTestsSuccess
-  | SetActivityCode
   | TestOutcomeChanged
   | StartTest
   | ActivateTest

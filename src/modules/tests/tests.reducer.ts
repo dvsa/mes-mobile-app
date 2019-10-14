@@ -7,10 +7,8 @@ import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
 import { nestedCombineReducers } from 'nested-combine-reducers';
 
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
-import { testDataReducer } from './test-data/test-data.reducer';
-import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { testDataReducerFactory } from './test-data/test-data-reducer-factory';
 import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { instructorDetailsReducer } from './instructor-details/instructor-details.reducer';
 import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
 import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
 import { testSummaryReducer } from './test-summary/test-summary.reducer';
@@ -33,6 +31,10 @@ import { changeMarkerReducer } from './change-marker/change-marker';
 import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
 import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
+import { get } from 'lodash';
+import { instructorDetailsReducerFactory } from './instructor-details/instructor-details-reducer-factory';
+import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
+import { activityCodeReducer } from './activity-code/activity-code.reducer';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -54,17 +56,6 @@ export function testsReducer(
   switch (action.type) {
     case testsActions.LOAD_PERSISTED_TESTS_SUCCESS:
       return (<testsActions.LoadPersistedTestsSuccess>action).tests;
-    case testsActions.SET_ACTIVITY_CODE:
-      return {
-        ...state,
-        startedTests: {
-          ...state.startedTests,
-          [slotId]: {
-            ...state.startedTests[slotId],
-            activityCode: action.payload,
-          },
-        },
-      };
     case testsActions.START_TEST_REPORT_PRACTICE_TEST:
       return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
@@ -113,8 +104,8 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             preTestDeclarations: preTestDeclarationsReducer,
             accompaniment: accompanimentReducer,
             vehicleDetails: vehicleDetailsReducer,
-            instructorDetails: instructorDetailsReducer,
-            testData: testDataReducer,
+            instructorDetails: instructorDetailsReducerFactory(get(state.startedTests[slotId], 'category')),
+            testData: testDataReducerFactory(get(state.startedTests[slotId], 'category')),
             passCompletion: passCompletionReducer,
             postTestDeclarations: postTestDeclarationsReducer,
             testSummary: testSummaryReducer,
@@ -126,6 +117,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
             examinerConducted: examinerConductedReducer,
             examinerKeyed: examinerKeyedReducer,
             changeMarker: changeMarkerReducer,
+            activityCode: activityCodeReducer,
           }, combineReducers,
         )(
           // The redux pattern necessitates that the state tree be initialised

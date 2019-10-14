@@ -3,7 +3,7 @@ import { EndTestLinkComponent } from '../end-test-link';
 import { IonicModule, ModalController, NavController } from 'ionic-angular';
 import { ModalControllerMock, NavControllerMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
-import { DEBRIEF_PAGE } from '../../../../pages/page-names.constants';
+import { CAT_B } from '../../../../pages/page-names.constants';
 
 describe('EndTestLinkComponent', () => {
   let fixture: ComponentFixture<EndTestLinkComponent>;
@@ -55,7 +55,7 @@ describe('EndTestLinkComponent', () => {
         component.onTerminate();
         expect(component.terminateTestModal.dismiss).toHaveBeenCalled();
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(DEBRIEF_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
       });
     });
   });

@@ -23,19 +23,12 @@ import * as passCompletionActions
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';
-import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { Subscription } from 'rxjs/Subscription';
-import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import * as welshTranslations from '../../../assets/i18n/cy.json';
-
-const mockCandidate = {
-  driverNumber: '123',
-  candidateName: {
-    firstName: 'Joe',
-    lastName: 'Bloggs',
-  },
-};
+import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
 describe('HealthDeclarationPage', () => {
   let fixture: ComponentFixture<HealthDeclarationPage>;
@@ -75,7 +68,7 @@ describe('HealthDeclarationPage', () => {
                 },
                 journalData: {
                   testSlotAttributes,
-                  candidate: mockCandidate,
+                  candidate: candidateMock,
                 },
               },
             },
@@ -219,18 +212,14 @@ describe('HealthDeclarationPage', () => {
         expect(declarationIntent.innerHTML).toBe('I declare that:');
       });
       it('should render the page in Welsh for a Welsh test', (done) => {
-        fixture.detectChanges();
-        component.configureI18N(Language.CYMRAEG);
+        configureI18N(Language.CYMRAEG, translate);
         translate.onLangChange.subscribe(() => {
           fixture.detectChanges();
           const declarationIntent = fixture.debugElement.query(By.css('h4')).nativeElement;
           expect(declarationIntent.innerHTML)
             .toBe(`${(<any>welshTranslations).healthDeclaration.declarationIntent}:`);
           done();
-
-          done();
         });
-        store$.dispatch(new PopulateTestSlotAttributes({ ...testSlotAttributes, welshTest: true }));
       });
     });
   });

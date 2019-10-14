@@ -11,7 +11,6 @@ import { EndTestLinkComponent } from './end-test-link/end-test-link';
 import { TerminateTestModalModule } from './terminate-test-modal/terminate-test-modal.module';
 import { CandidateSectionComponent } from './candidate-section/candidate-section';
 import { TranslateModule } from 'ng2-translate';
-import { ConductedLanguageComponent } from './conducted-language/conducted-language';
 import { DisplayAddressComponent } from './display-address/display-address';
 import { PracticeModeBanner } from './practice-mode-banner/practice-mode-banner';
 import { TickIndicatorComponent } from './tick-indicator/tick-indicator';
@@ -32,7 +31,6 @@ import { IncompleteTestsBanner } from './incomplete-tests-banner/incomplete-test
     DangerousFaultBadgeComponent,
     EndTestLinkComponent,
     CandidateSectionComponent,
-    ConductedLanguageComponent,
     DisplayAddressComponent,
     PracticeModeBanner,
     TickIndicatorComponent,
@@ -59,7 +57,6 @@ import { IncompleteTestsBanner } from './incomplete-tests-banner/incomplete-test
     DangerousFaultBadgeComponent,
     EndTestLinkComponent,
     CandidateSectionComponent,
-    ConductedLanguageComponent,
     DisplayAddressComponent,
     PracticeModeBanner,
     TickIndicatorComponent,
