@@ -1,0 +1,20 @@
+<ion-card id="ETA" *ngIf="hasPhysicalEta || hasVerbalEta">
+  <ion-card-content>
+    <ion-grid>
+      <ion-row align-items-start class="mes-data">
+        <ion-col col-3></ion-col>
+        <ion-col col-34>
+          <h4 class="fault-heading">{{ 'debrief.etaHeader' | translate }}</h4>
+        </ion-col>
+        <ion-col align-self-start>
+          <span id="etaFaults" class="hasPhysicalEta" *ngIf="hasPhysicalEta && !hasVerbalEta">{{ 'debrief.etaPhysical'
+            | translate }}</span>
+          <span id="etaFaults" class="hasVerbalEta" *ngIf="!hasPhysicalEta && hasVerbalEta">{{ 'debrief.etaVerbal' |
+            translate }}</span>
+          <span id="etaFaults" class="hasVerbalAndPhysicalEta" *ngIf="hasPhysicalEta && hasVerbalEta">{{
+            'debrief.etaBoth' | translate }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
