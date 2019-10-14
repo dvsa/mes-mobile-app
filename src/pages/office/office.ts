@@ -70,7 +70,7 @@ import {
   getDrivingFaultSummaryCount,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { PersistTests, SetActivityCode } from '../../modules/tests/tests.actions';
+import { PersistTests } from '../../modules/tests/tests.actions';
 import {
   getDrivingFaults,
   displayDrivingFaultComments,
@@ -113,6 +113,7 @@ import { startsWith } from 'lodash';
 import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
+import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;

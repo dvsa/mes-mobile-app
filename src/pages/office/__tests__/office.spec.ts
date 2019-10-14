@@ -33,7 +33,7 @@ import { ShowMeQuestionSelected } from '../../../modules/tests/test-data/vehicle
 import { EyesightTestFailed } from '../../../modules/tests/test-data/eyesight-test/eyesight-test.actions';
 import { ExaminerActions, Competencies } from '../../../modules/tests/test-data/test-data.constants';
 import { By } from '@angular/platform-browser';
-import { PersistTests, SetActivityCode } from '../../../modules/tests/tests.actions';
+import { PersistTests } from '../../../modules/tests/tests.actions';
 import {
   WeatherConditionsChanged,
 } from '../../../modules/tests/test-summary/test-summary.actions';
@@ -64,6 +64,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;

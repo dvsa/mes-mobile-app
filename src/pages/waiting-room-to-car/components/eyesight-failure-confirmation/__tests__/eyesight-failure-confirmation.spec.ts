@@ -6,8 +6,8 @@ import { ConfigMock, NavControllerMock } from 'ionic-mocks';
 import { StoreModule, Store } from '@ngrx/store';
 import { testsReducer } from '../../../../../modules/tests/tests.reducer';
 import { StoreModel } from '../../../../../shared/models/store.model';
-import { SetActivityCode } from '../../../../../modules/tests/tests.actions';
 import { CAT_B } from '../../../../page-names.constants';
+import { SetActivityCode } from '../../../../../modules/tests/activity-code/activity-code.actions';
 
 describe('eyesight failure confirmation component', () => {
   let fixture: ComponentFixture<EyesightFailureConfirmationComponent>;

@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
-import { SetActivityCode } from '../../../../modules/tests/tests.actions';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
+import { SetActivityCode } from '../../../../modules/tests/activity-code/activity-code.actions';
 
 @Component({
   selector: 'eyesight-failure-confirmation',

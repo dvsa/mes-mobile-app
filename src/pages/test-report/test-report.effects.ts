@@ -19,6 +19,7 @@ import * as dangerousFaultsActions from '../../modules/tests/test-data/dangerous
 import * as seriousFaultsActions from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
 import * as drivingFaultsActions from '../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import * as controlledStopActions from '../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
+import * as activityCodeActions from '../../modules/tests/activity-code/activity-code.actions';
 import { TestResultProvider } from '../../providers/test-result/test-result';
 import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
 import { of } from 'rxjs/observable/of';
@@ -120,7 +121,7 @@ export class TestReportEffects {
         .pipe(
           switchMap((result: ActivityCode) => {
 
-            const actions: Action[] = [new testsActions.SetActivityCode(result)];
+            const actions: Action[] = [new activityCodeActions.SetActivityCode(result)];
             if (!isEmpty(currentTest.activityCode) && currentTest.activityCode !== result) {
               const label = result === '1' ? 'fail to pass' : 'pass to fail';
               actions.push(new testsActions.TestOutcomeChanged(label));
@@ -180,6 +181,6 @@ export class TestReportEffects {
     ofType(
       testReportActions.TERMINATE_TEST_FROM_TEST_REPORT,
     ),
-    map(() => new testsActions.SetActivityCode(null)),
+    map(() => new activityCodeActions.SetActivityCode(null)),
   );
 }

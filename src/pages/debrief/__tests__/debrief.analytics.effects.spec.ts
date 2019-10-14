@@ -14,6 +14,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
 import * as testsActions from '../../../modules/tests/tests.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
@@ -53,7 +54,7 @@ describe('Debrief Analytics Effects', () => {
     it('should call setCurrentPage with pass page', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
       // ASSERT
@@ -67,7 +68,7 @@ describe('Debrief Analytics Effects', () => {
     it('should call setCurrentPage with fail page', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
       // ASSERT
@@ -81,7 +82,7 @@ describe('Debrief Analytics Effects', () => {
     it('should call setCurrentPage with pass and practice mode prefix', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
       // ASSERT
@@ -95,7 +96,7 @@ describe('Debrief Analytics Effects', () => {
     it('should call setCurrentPage with fail and practice mode prefix', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
       // ASSERT

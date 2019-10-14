@@ -32,7 +32,7 @@ import {
   activityCodeModelList,
 } from '../office/components/activity-code/activity-code.constants';
 import { FormGroup } from '@angular/forms';
-import { SetActivityCode, PersistTests } from '../../modules/tests/tests.actions';
+import { PersistTests } from '../../modules/tests/tests.actions';
 import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../office/office-behaviour-map';
 import {
@@ -46,6 +46,7 @@ import {
   CandidateChoseToProceedWithTestInEnglish,
 } from '../../modules/tests/communication-preferences/communication-preferences.actions';
 import { SetTestStatusWriteUp } from '../../modules/tests/test-status/test-status.actions';
+import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;

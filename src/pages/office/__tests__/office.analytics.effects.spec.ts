@@ -25,6 +25,7 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import * as rekeyActions from '../../../modules/tests/rekey/rekey.actions';
 import * as applicationReferenceActions
   from '../../../modules/tests/application-reference/application-reference.actions';
+import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Office Analytics Effects', () => {
@@ -70,7 +71,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -90,7 +91,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -110,7 +111,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -130,7 +131,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -154,7 +155,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -178,7 +179,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -202,7 +203,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -226,7 +227,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -253,7 +254,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -269,7 +270,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -285,7 +286,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -301,7 +302,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -320,7 +321,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.CompleteTest());
@@ -344,7 +345,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
+      store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new rekeyActions.MarkAsRekey());
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
