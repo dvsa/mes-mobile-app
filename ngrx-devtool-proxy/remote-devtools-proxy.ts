@@ -1,10 +1,10 @@
 import {
   ReduxDevtoolsExtension,
   ReduxDevtoolsExtensionConnection,
-  ReduxDevtoolsExtensionConfig
+  ReduxDevtoolsExtensionConfig,
 } from '@ngrx/store-devtools/src/extension';
-import {RemoteDevToolsConnectionProxy} from './remote-devtools-connection-proxy';
-import {connect} from 'remotedev/lib/devTools';
+import { RemoteDevToolsConnectionProxy } from './remote-devtools-connection-proxy';
+import { connect } from 'remotedev/lib/devTools';
 
 export class RemoteDevToolsProxy implements ReduxDevtoolsExtension {
   remotedev: any = null;
