@@ -4,14 +4,18 @@ import { switchMap } from 'rxjs/operators';
 import * as fakeJournalActions from './fake-journal.actions';
 import * as testStatusActions from '../../modules/tests/test-status/test-status.actions';
 import { fakeJournalTestSlots } from './__mocks__/fake-journal.mock';
-import { PopulateApplicationReference } from '../../modules/tests/application-reference/application-reference.actions';
-import { PopulateCandidateDetails } from '../../modules/tests/candidate/candidate.actions';
+import {
+  PopulateApplicationReference,
+} from '../../modules/tests/journal-data/application-reference/application-reference.actions';
+import { PopulateCandidateDetails } from '../../modules/tests/journal-data/candidate/candidate.actions';
 import {
   PopulateTestSlotAttributes,
-} from '../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
-import { PopulateTestCentre } from '../../modules/tests/test-centre/test-centre.actions';
+} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
+import { PopulateTestCentre } from '../../modules/tests/journal-data/test-centre/test-centre.actions';
 import { Application } from '@dvsa/mes-journal-schema';
-import { extractTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import {
+  extractTestSlotAttributes,
+} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 
 @Injectable()
 export class FakeJournalEffects {

@@ -8,11 +8,13 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { provideMockActions } from '@ngrx/effects/testing';
 import {
   PopulateApplicationReference,
-} from '../../../modules/tests/application-reference/application-reference.actions';
+} from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { fakeJournalTestSlots } from '../__mocks__/fake-journal.mock';
-import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
-import { PopulateTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
-import { PopulateTestCentre } from '../../../modules/tests/test-centre/test-centre.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
+import {
+  PopulateTestSlotAttributes,
+} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
+import { PopulateTestCentre } from '../../../modules/tests/journal-data/test-centre/test-centre.actions';
 import { SetTestStatusBooked } from '../../../modules/tests/test-status/test-status.actions';
 import { Application } from '@dvsa/mes-journal-schema';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';

@@ -15,18 +15,20 @@ import {
   isTestOutcomeSet,
   getTestOutcomeText,
 } from '../../modules/tests/tests.selector';
-import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../modules/tests/candidate/candidate.selector';
+} from '../../modules/tests/journal-data/candidate/candidate.selector';
 import { NonPassFinalisationViewDidEnter } from './non-pass-finalisation.actions';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../modules/tests/test-summary/test-summary.selector';
-import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import {
+  getTestSlotAttributes,
+} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import {
   ActivityCodeModel,
   activityCodeModelList,

@@ -17,11 +17,11 @@ import { Application } from '@dvsa/mes-journal-schema';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as fakeJournalActions from '../../fake-journal/fake-journal.actions';
-import { PopulateCandidateDetails } from '../../../modules/tests/candidate/candidate.actions';
+import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import * as applicationReferenceActions
-  from '../../../modules/tests/application-reference/application-reference.actions';
+  from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 
 describe('Waiting Room To Car Analytics Effects', () => {

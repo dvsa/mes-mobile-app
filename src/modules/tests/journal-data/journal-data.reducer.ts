@@ -1,10 +1,10 @@
-import { , JournalData } from '@dvsa/mes-test-schema/categories/B';
+import { JournalData } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
-import { examinerReducer } from '../examiner/examiner.reducer';
-import { testCentreReducer } from '../test-centre/test-centre.reducer';
-import { testSlotsAttributesReducer } from '../test-slot-attributes/test-slot-attributes.reducer';
-import { candidateReducer } from '../candidate/candidate.reducer';
-import { applicationReferenceReducer } from '../application-reference/application-reference.reducer';
+import { examinerReducer } from './examiner/examiner.reducer';
+import { testCentreReducer } from './test-centre/test-centre.reducer';
+import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
+import { candidateReducer } from './candidate/candidate.reducer';
+import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 
 export const initialState: JournalData = {
   applicationReference: {

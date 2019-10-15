@@ -1,7 +1,6 @@
 
 import { Action, combineReducers } from '@ngrx/store';
 import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
-import { nestedCombineReducers } from 'nested-combine-reducers';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
@@ -25,32 +24,30 @@ import { journalDataReducer } from './journal-data/journal-data.reducer';
 
 export function testsCatBReducer(
   action: Action, state: StandardCarTestCATBSchema): Required<StandardCarTestCATBSchema> {
-  return {
-    ...nestedCombineReducers(
-      {
-        version: schemaVersionReducer,
-        category: categoryReducer,
-        activityCode: activityCodeReducer,
-        journalData: journalDataReducer,
-        preTestDeclarations: preTestDeclarationsReducer,
-        accompaniment: accompanimentReducer,
-        vehicleDetails: vehicleDetailsReducer,
-        instructorDetails: instructorDetailsReducer,
-        testData: testDataReducer,
-        passCompletion: passCompletionReducer,
-        postTestDeclarations: postTestDeclarationsReducer,
-        testSummary: testSummaryReducer,
-        communicationPreferences: communicationPreferencesReducer,
-        rekey: rekeyReducer,
-        rekeyDate: rekeyDateReducer,
-        rekeyReason: rekeyReasonReducer,
-        examinerBooked: examinerBookedReducer,
-        examinerConducted: examinerConductedReducer,
-        examinerKeyed: examinerKeyedReducer,
-        changeMarker: changeMarkerReducer,
-      }, combineReducers)(
+  return combineReducers(
+    {
+      version: schemaVersionReducer,
+      category: categoryReducer,
+      activityCode: activityCodeReducer,
+      journalData: journalDataReducer,
+      preTestDeclarations: preTestDeclarationsReducer,
+      accompaniment: accompanimentReducer,
+      vehicleDetails: vehicleDetailsReducer,
+      instructorDetails: instructorDetailsReducer,
+      testData: testDataReducer,
+      passCompletion: passCompletionReducer,
+      postTestDeclarations: postTestDeclarationsReducer,
+      testSummary: testSummaryReducer,
+      communicationPreferences: communicationPreferencesReducer,
+      rekey: rekeyReducer,
+      rekeyDate: rekeyDateReducer,
+      rekeyReason: rekeyReasonReducer,
+      examinerBooked: examinerBookedReducer,
+      examinerConducted: examinerConductedReducer,
+      examinerKeyed: examinerKeyedReducer,
+      changeMarker: changeMarkerReducer,
+    })(
       state as Required<StandardCarTestCATBSchema>,
       action,
-    ),
-  };
+    );
 }
