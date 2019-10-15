@@ -4,7 +4,7 @@ export const environment: MdmConfig = {
   isRemote: true,
   configUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/configuration/dev',
   daysToCacheLogs: 7,
-  enableDevTools: false,
+  enableDevTools: true,
   logoutClearsTestPersistence: true,
   logsPostApiKey: '',
   logsApiUrl: 'https://dev.mes.dev-dvsacloud.uk/v1/logs',

@@ -41,7 +41,8 @@
     "copy-mock-data": "cp -r mock/ src/assets/mock/",
     "update-mock-data": "npm run update-mock-data:journal && npm run update-mock-data:nta",
     "update-mock-data:journal": "ts-node -P tsconfig.scripts.json mock/generate-local-journal.ts",
-    "update-mock-data:nta": "ts-node -P tsconfig.scripts.json mock/generate-local-journal-non-test-activities.ts"
+    "update-mock-data:nta": "ts-node -P tsconfig.scripts.json mock/generate-local-journal-non-test-activities.ts",
+    "livereload": "ionic cordova emulate ios --address=localhost --l --c -- --buildFlag='-UseModernBuildSystem=0' -lc --target='iPad-Pro--10-5-inch-,com.apple.CoreSimulator.SimRuntime.iOS-12-4'"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -161,6 +162,7 @@
     "null-loader": "^0.1.1",
     "protractor": "^5.4.1",
     "protractor-cucumber-framework": "^6.1.1",
+    "remotedev": "^0.2.9",
     "request": "^2.88.0",
     "rxjs-tslint-rules": "^4.14.3",
     "semver": "^6.3.0",
