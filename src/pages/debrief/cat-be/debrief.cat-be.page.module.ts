@@ -23,4 +23,4 @@ import { DebriefEffects } from '../debrief.effects';
     TranslateModule,
   ],
 })
-export class DebriefCatBPageModule { }
+export class DebriefCatBePageModule { }
