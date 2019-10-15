@@ -1,0 +1,23 @@
+<ion-card id="eco" *ngIf="adviceGivenControl || adviceGivenPlanning">
+  <ion-card-content>
+    <ion-grid>
+      <ion-row align-items-start class="mes-data">
+        <ion-col col-3></ion-col>
+        <ion-col col-34>
+          <h4 class="fault-heading">{{ 'debrief.ecoHeader' | translate }}</h4>
+        </ion-col>
+        <ion-col align-self-start>
+          <div id="ecoFaults" id="adviceGivenControl" *ngIf="adviceGivenControl && !adviceGivenPlanning">
+            {{ 'debrief.ecoControl' | translate }}
+          </div>
+          <div id="ecoFaults" id="adviceGivenPlanning" *ngIf="!adviceGivenControl && adviceGivenPlanning">
+            {{ 'debrief.ecoPlanning' | translate }}
+          </div>
+          <div id="ecoFaults" id="adviceGivenControlAndadviceGivenPlanning" *ngIf="adviceGivenControl && adviceGivenPlanning">
+            {{ 'debrief.ecoBoth' | translate }}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
