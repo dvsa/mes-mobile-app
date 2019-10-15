@@ -372,13 +372,13 @@ export const onJournalPageAs = (username) => {
 const getPageType = (pageName : string) => {
   switch (pageName) {
     case 'communication page':
-      return 'communication';
+      return 'communication-cat-b-page';
     case 'debrief':
-      return 'page-pass-finalisation';
+      return 'page-pass-finalisation-cat-b-page';
     case 'health declaration':
       return 'page-health-declaration';
     default:
-      return 'page-waiting-room';
+      return 'waiting-room-cat-b-page';
   }
 };
 
