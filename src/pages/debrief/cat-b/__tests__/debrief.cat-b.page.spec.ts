@@ -175,7 +175,6 @@ describe('DebriefCatBPage', () => {
       expect(fixture.debugElement.query(By.css('.failed'))).toBeNull();
     });
 
-
     it('should not display dangerous faults container if there are no dangerous faults', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#dangerous-fault'))).toBeNull();
