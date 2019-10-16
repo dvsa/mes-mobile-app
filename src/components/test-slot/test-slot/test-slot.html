@@ -32,9 +32,8 @@
           <ion-grid no-padding>
             <ion-row align-items-center>
               <ion-col col-64>
-                <candidate-link [slot]="slot" [slotChanged]="hasSlotChanged" [name]="slot.booking.candidate.candidateName"
-                  [isPortrait]="isPortrait()">
-                </candidate-link>
+                <ng-content *ngIf="slot.booking.candidate; then candidateLink else unknownCandidate">
+                </ng-content>
               </ion-col>
               <ion-col col-32 text-end>
                 <test-category [category]="slot.booking.application.testCategory"></test-category>
@@ -64,3 +63,13 @@
     </ion-grid>
   </ion-row>
 </ion-card>
+<ng-template #candidateLink>
+  <candidate-link [slot]="slot" [slotChanged]="hasSlotChanged" [name]="slot.booking.candidate.candidateName"
+    [isPortrait]="isPortrait()">
+  </candidate-link>
+</ng-template>
+<ng-template #unknownCandidate>
+  <button class="mes-transparent-button" ion-button disabled>
+    <h3 class="candidate-name">Unknown candidate</h3>
+  </button>
+</ng-template>
