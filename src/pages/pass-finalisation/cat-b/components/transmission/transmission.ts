@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'transmission',
-  templateUrl: 'transmission.html'
+  templateUrl: 'transmission.html',
 })
 export class TransmissionComponent {
 

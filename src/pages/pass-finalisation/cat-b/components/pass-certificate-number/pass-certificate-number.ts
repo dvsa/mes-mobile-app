@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'pass-certificate-number',
-  templateUrl: 'pass-certificate-number.html'
+  templateUrl: 'pass-certificate-number.html',
 })
 export class PassCertificateNumberComponent {
 

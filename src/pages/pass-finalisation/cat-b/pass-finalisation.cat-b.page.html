@@ -23,10 +23,7 @@
           </ion-col>
         </ion-row>
 
-        <license-provided [formGroup]="form" [provisionalLisenceProvidedRadioChecked]="(pageState.provisionalLicenseReceived$ | async) 
-        && !(pageState.provisionalLisenceNotRecieved$ | aysnc"
-        [provisionalLisenceNotProvidedRadioCheck]="pageState.provisionalLisenceNotRecieved$ | async" (provisionalLisenceRecievedChange)=
-        "provisionalLisenceRecievedChanged($event)"></license-provided>
+        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()" (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
         <ion-row class="mes-validated-row mes-row-separator" id="transmission-card">
           <div class="validation-bar" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionCtrl')">
@@ -41,7 +38,7 @@
                 <input type="radio" id="transmission-manual" formControlName="transmissionCtrl" name="transmissionCtrl"
                   class="gds-radio-button" [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionCtrl')"
                   (click)="transmissionChanged($event.target.value)" value='Manual'
-                  [checked]="pageState.transmissionManualRadioChecked$ | async">
+                  [checked]="transmissionManualRadioChecked">
                 <label for="transmission-manual" class="radio-label">Manual</label>
               </ion-col>
               <ion-col>
@@ -49,7 +46,7 @@
                   name="transmissionCtrl" class="gds-radio-button"
                   [class.ng-invalid]="isCtrlDirtyAndInvalid('transmissionCtrl')"
                   (click)="transmissionChanged($event.target.value)" value='Automatic'
-                  [checked]="pageState.transmissionAutomaticRadioChecked$ | async">
+                  [checked]="transmissionAutomaticRadioChecked">
                 <label for="transmission-automatic" class="radio-label">Automatic</label>
               </ion-col>
             </ion-row>

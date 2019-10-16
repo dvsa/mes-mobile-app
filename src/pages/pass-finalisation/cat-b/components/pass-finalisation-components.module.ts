@@ -8,21 +8,21 @@ import { ComponentsModule } from '../../../../components/common/common-component
 import { DirectivesModule } from '../../../../directives/directives.module';
 
 @NgModule({
-	declarations: [
+    declarations: [
         LicenseProvidedComponent,
         PassCertificateNumberComponent,
-        TransmissionComponent
+        TransmissionComponent,
     ],
-	imports: [
+    imports: [
         CommonModule,
         ComponentsModule,
         IonicModule,
-        DirectivesModule
+        DirectivesModule,
     ],
-	exports: [
+    exports: [
         LicenseProvidedComponent,
         PassCertificateNumberComponent,
-        TransmissionComponent
+        TransmissionComponent,
     ],
 })
 export class PassFinalisationCatBComponentsModule { }

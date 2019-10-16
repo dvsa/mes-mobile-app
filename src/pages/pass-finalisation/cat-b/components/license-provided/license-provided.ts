@@ -1,49 +1,51 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from
+'../../../../../modules/tests/pass-completion/pass-completion.actions';
 
 @Component({
   selector: 'license-provided',
-  templateUrl: 'license-provided.html'
+  templateUrl: 'license-provided.html',
 })
 
-export class LicenseProvidedComponent implements OnChanges{
-
-  @Input()
-  lisenceRecievedRadioChecked: boolean;
-
-  @Input()
-  lisenceNotRecievedRadioChecked: boolean;
-
-  @Input()
-  formGroup: FormGroup;
+export class LicenseProvidedComponent implements OnChanges {
 
   @Output()
-  provisionalLisenceRecievedChange = new EventEmitter<boolean>();
+  licenseReceived = new EventEmitter<ProvisionalLicenseReceived>();
+
+  @Output()
+  licenseNotReceived = new EventEmitter<ProvisionalLicenseNotReceived>();
+
+  @Input()
+  form: FormGroup;
+
+  @Output()
   formControl: any;
 
   ngOnChanges(): void {
-    if(!this.formControl) {
+    if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
-      this.formGroup.addControl('provisionalLicenseProvidedCtrl', this.formControl);
-    }
-    this.formControl.patchValue(this.lisenceRecievedRadioChecked);
-    }
-
-    provisionalLicenseReceivedChanged(): void {
-      if(this.formControl.valid) {
-        this.provisionalLisenceRecievedChange.emit();
-      }
-    }
-
-    get invalid(): boolean {
-      return !this.formControl.valid && this.formControl.dirty;
-    }
-
-    get lisenceRecieved(): boolean {
-      return this.lisenceRecievedRadioChecked;
-    }
-
-    get lisenceNotRecieved(): boolean {
-      return this.lisenceNotRecievedRadioChecked;
+      this.form.addControl('provisionalLicenseProvidedCtrl', this.formControl);
     }
   }
+
+  isInvalid(): boolean {
+    return !this.formControl.valid && this.formControl.dirty;
+  }
+
+  provisionalLicenseReceived(): void {
+    this.licenseReceived.emit();
+  }
+
+  provisionalLicenseNotReceived(): void {
+    this.licenseNotReceived.emit();
+  }
+
+  // get provisionalLicenseReceived(): boolean {
+  //   return this.provisionalLicenseProvidedRadioChecked;
+  // }
+
+  // get provisionalLicenseNotReceived(): boolean {
+  //   return this.provisionalLicenseNotProvidedRadioChecked;
+  // }
+}

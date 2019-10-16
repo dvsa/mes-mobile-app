@@ -6,6 +6,7 @@ import { PassFinalisationAnalyticsEffects } from '../pass-finalisation.analytics
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { TestFinalisationComponentsModule } from
 '../../../components/test-finalisation/test-finalisation-component.module';
+import { PassFinalisationCatBComponentsModule } from './components/pass-finalisation-components.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { TestFinalisationComponentsModule } from
     EffectsModule.forFeature([PassFinalisationAnalyticsEffects]),
     ComponentsModule,
     TestFinalisationComponentsModule,
+    PassFinalisationCatBComponentsModule,
   ],
 })
 export class PassFinalisationCatBPageModule {}

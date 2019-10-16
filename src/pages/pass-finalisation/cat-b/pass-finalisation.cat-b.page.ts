@@ -238,7 +238,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
 
   getFormValidation(): { [key: string]: FormControl } {
     return {
-      provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
       passCertificateNumberCtrl: new FormControl(null,
         {
           validators: Validators.compose([Validators.maxLength(8), Validators.minLength(8), Validators.required]),

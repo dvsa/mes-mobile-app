@@ -14,7 +14,7 @@ describe('PostTestDeclarations reducer', () => {
     expect(result.healthDeclarationAccepted).toBe(true);
   });
 
-  it('should toggle the certificate recieved status when the toggle action is received', () => {
+  it('should toggle the certificate received status when the toggle action is received', () => {
     const result = postTestDeclarationsReducer(initialState, new ToggleReceiptDeclaration);
     expect(result.passCertificateNumberReceived).toBe(true);
   });
