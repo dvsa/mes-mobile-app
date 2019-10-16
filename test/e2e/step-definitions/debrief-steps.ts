@@ -32,12 +32,12 @@ When('I try to confirm the pass certificate details', () => {
 
 Then('I should see {string} transmission is selected', (transmissionType) => {
   const transmissionRadio = getElement(
-    by.xpath(`//page-pass-finalisation//input[@id='transmission-${transmissionType}']`));
+    by.xpath(`//page-pass-finalisation-cat-b-page//input[@id='transmission-${transmissionType}']`));
   return expect(transmissionRadio.isSelected()).to.eventually.be.true;
 });
 
 Then('I should see the Debrief page with outcome {string}', (outcome) => {
-  const testOutcome = getElement(by.xpath('//page-debrief//div[@id = "test-outcome-background"]/div/h1'));
+  const testOutcome = getElement(by.xpath('//debrief-cat-b-page//div[@id = "test-outcome-background"]/div/h1'));
   return expect(testOutcome.getText()).to.eventually.equal(outcome);
 });
 
@@ -53,6 +53,7 @@ Then('I should see the application reference {string}', (applicationRef) => {
 });
 
 const continuePassFinalisation = () => {
-  const continueButton = getElement(by.xpath('//page-pass-finalisation//button[span[h3[text() = "Continue"]]]'));
+  const continueButton = getElement(
+    by.xpath('//page-pass-finalisation-cat-b-page//button[span[h3[text() = "Continue"]]]'));
   clickElement(continueButton);
 };
