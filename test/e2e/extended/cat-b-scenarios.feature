@@ -292,7 +292,9 @@ Feature: Extended category B test scenarios
       And there is "1" driver fault listed for "Ancillary Controls"
       And there is "1" driver fault listed for "Controls - Gears"
       When I complete the office write up
-      And I upload the test
+      And I complete the rekey
+      Then the rekey is successfully uploaded
+      And I return to the journal
       Then I should see the "Journal" page
       And the test result for "Miss Doris Pearson" is "1"
 
@@ -333,6 +335,8 @@ Feature: Extended category B test scenarios
       And there is "1" driver fault listed for "Show Me/Tell Me"
       And I complete the office write up
       And I enter a comment for "serious" fault "Junctions - Cutting corners"
-      And I upload the test
+      When I complete the rekey
+      Then the rekey is successfully uploaded
+      And I return to the journal
       Then I should see the "Journal" page
       And the test result for "Mrs Carly Doe" is "2"
