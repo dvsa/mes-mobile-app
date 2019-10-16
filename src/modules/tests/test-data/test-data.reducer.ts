@@ -30,7 +30,7 @@ export const initialState: TestData = {
 export function testDataReducer(
   state = initialState,
   action: Action,
-): TestData {
+): Required<TestData> {
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
@@ -42,8 +42,9 @@ export function testDataReducer(
     eyesightTest: eyesightTestReducer,
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsReducer,
+    // TODO - what do i do with my fault summary
+    faultSummary: () => null,
   })(state as Required<TestData>, action);
-
 }
 
 export const getTestData = createFeatureSelector<TestData>('testData');

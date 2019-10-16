@@ -29,7 +29,7 @@ import { TranslateModule, TranslateService } from 'ng2-translate';
 import { fullCompetencyLabels } from '../../../../shared/constants/competencies/catb-competencies';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/B';
 import { PopulateTestSlotAttributes }
-  from '../../../../modules/tests/test-slot-attributes/test-slot-attributes.actions';
+  from '../../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.actions';
 import { EndDebrief } from '../../debrief.actions';
 import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { CAT_B } from '../../../page-names.constants';

@@ -19,14 +19,16 @@ import {
   isProvisionalLicenseNotProvided,
 } from '../../../modules/tests/pass-completion/pass-completion.selector';
 import { Observable } from 'rxjs/Observable';
-import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/candidate/candidate.selector';
-import { getApplicationReference } from '../../../modules/tests/application-reference/application-reference.reducer';
+} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import {
+  getApplicationReference,
+} from '../../../modules/tests/journal-data/application-reference/application-reference.reducer';
 import {
   getApplicationNumber,
-} from '../../../modules/tests/application-reference/application-reference.selector';
+} from '../../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
 import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';

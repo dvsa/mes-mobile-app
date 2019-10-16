@@ -14,10 +14,10 @@ import {
   getResidencyDeclarationStatus,
   getSignatureStatus,
 } from '../../../modules/tests/pre-test-declarations/pre-test-declarations.selector';
-import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../../modules/tests/candidate/candidate.selector';
+} from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { map, tap } from 'rxjs/operators';
 import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
 import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
@@ -25,8 +25,10 @@ import { getTests } from '../../../modules/tests/tests.reducer';
 import { TranslateService } from 'ng2-translate';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-import { getTestSlotAttributes } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import {
+  getTestSlotAttributes,
+} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';

@@ -47,16 +47,18 @@ import {
   WeatherConditionsChanged,
   AdditionalInformationChanged,
 } from '../../modules/tests/test-summary/test-summary.actions';
-import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../modules/tests/candidate/candidate.selector';
+} from '../../modules/tests/journal-data/candidate/candidate.selector';
 import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
-import { getTestSlotAttributes } from '../../modules/tests/test-slot-attributes/test-slot-attributes.reducer';
-import { getTestTime } from '../../modules/tests/test-slot-attributes/test-slot-attributes.selector';
+import {
+  getTestSlotAttributes,
+} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
+import { getTestTime } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import {
   getETA,
   getETAFaultText,

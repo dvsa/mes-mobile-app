@@ -1,40 +1,13 @@
 import * as journalActions from '../../modules/journal/journal.actions';
 import * as testsActions from './tests.actions';
-
 import { TestsModel } from './tests.model';
 import * as testStatusActions from './test-status/test-status.actions';
-import { combineReducers, Action, createFeatureSelector } from '@ngrx/store';
-import { nestedCombineReducers } from 'nested-combine-reducers';
-
-import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
-import { testDataReducerFactory } from './test-data/test-data-reducer-factory';
-import { accompanimentReducer } from './accompaniment/accompaniment.reducer';
-import { passCompletionReducer } from './pass-completion/pass-completion.reducer';
-import { postTestDeclarationsReducer } from './post-test-declarations/post-test-declarations.reducer';
-import { testSummaryReducer } from './test-summary/test-summary.reducer';
+import { Action, createFeatureSelector } from '@ngrx/store';
 import { testStatusReducer } from './test-status/test-status.reducer';
-import { communicationPreferencesReducer } from './communication-preferences/communication-preferences.reducer';
-import { examinerReducer } from './examiner/examiner.reducer';
-import { testCentreReducer } from './test-centre/test-centre.reducer';
-import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
-import { candidateReducer } from './candidate/candidate.reducer';
-import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actions';
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
-import { categoryReducer } from './category/category.reducer';
-import { rekeyReducer } from './rekey/rekey.reducer';
-import { examinerBookedReducer } from './examiner-booked/examiner-booked.reducer';
-import { examinerConductedReducer } from './examiner-conducted/examiner-conducted.reducer';
-import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
-import { changeMarkerReducer } from './change-marker/change-marker';
-import { rekeyReasonReducer } from './rekey-reason/rekey-reason.reducer';
-import { rekeyDateReducer } from './rekey-date/rekey-date.reducer';
-import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { get } from 'lodash';
-import { instructorDetailsReducerFactory } from './instructor-details/instructor-details-reducer-factory';
-import { vehicleDetailsReducer } from './vehicle-details/vehicle-details.reducer';
-import { activityCodeReducer } from './activity-code/activity-code.reducer';
+import { testsReducerFactory } from './tests-reducer-factory';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -86,49 +59,8 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
       ...state.startedTests,
       [slotId]: {
         ...state.startedTests[slotId],
-        // Each sub-reducer deals with state scoped to a specific test and has no knowledge of
-        // the context of which test contains it that state.
-        // Here, combineReducers delegates management of the sub-state navigated here for a given
-        // slotId to the relevant sub-reducer
-        ...nestedCombineReducers(
-          {
-            version: schemaVersionReducer,
-            category: categoryReducer,
-            journalData: {
-              examiner: examinerReducer,
-              testCentre: testCentreReducer,
-              testSlotAttributes: testSlotsAttributesReducer,
-              candidate: candidateReducer,
-              applicationReference: applicationReferenceReducer,
-            },
-            preTestDeclarations: preTestDeclarationsReducer,
-            accompaniment: accompanimentReducer,
-            vehicleDetails: vehicleDetailsReducer,
-            instructorDetails: instructorDetailsReducerFactory(get(state.startedTests[slotId], 'category')),
-            testData: testDataReducerFactory(get(state.startedTests[slotId], 'category')),
-            passCompletion: passCompletionReducer,
-            postTestDeclarations: postTestDeclarationsReducer,
-            testSummary: testSummaryReducer,
-            communicationPreferences: communicationPreferencesReducer,
-            rekey: rekeyReducer,
-            rekeyDate: rekeyDateReducer,
-            rekeyReason: rekeyReasonReducer,
-            examinerBooked: examinerBookedReducer,
-            examinerConducted: examinerConductedReducer,
-            examinerKeyed: examinerKeyedReducer,
-            changeMarker: changeMarkerReducer,
-            activityCode: activityCodeReducer,
-          }, combineReducers,
-        )(
-          // The redux pattern necessitates that the state tree be initialised
-          // with all its properties declared. This conflicts with the
-          // 'StandardCarTestCATBSchema' TS interface as many of its properties are optional (?).
-          // In order to reconcile the TS interface and the redux reducer pattern we use
-          // the TS 'Required' mapped type which The 'Required' type which strips ? modifiers
-          // from all properties of 'StandardCarTestCATBSchema', thus making all properties required.
-          state.startedTests[slotId] as Required<StandardCarTestCATBSchema>,
-          action,
-        ),
+        // TODO - Need to get category from somehwere else as at start of test it's null
+        ...testsReducerFactory(get(state.startedTests[slotId], 'category'), action, state.startedTests[slotId]),
       },
     },
     currentTest: {

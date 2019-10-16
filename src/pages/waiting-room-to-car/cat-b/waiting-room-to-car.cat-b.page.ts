@@ -40,8 +40,8 @@ import {
   getOtherAccompaniment,
   getInterpreterAccompaniment,
 } from '../../../modules/tests/accompaniment/accompaniment.selector';
-import { getCandidate } from '../../../modules/tests/candidate/candidate.reducer';
-import { getUntitledCandidateName } from '../../../modules/tests/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';

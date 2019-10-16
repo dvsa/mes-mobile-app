@@ -21,8 +21,8 @@ import {
 } from '../../modules/tests/post-test-declarations/post-test-declarations.selector';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../modules/tests/candidate/candidate.selector';
-import { getCandidate } from '../../modules/tests/candidate/candidate.reducer';
+} from '../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
 import { map, tap } from 'rxjs/operators';
 import {
   getPassCertificateNumber,
