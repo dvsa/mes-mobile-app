@@ -83,6 +83,16 @@ When('I complete the rekey', () => {
   completeRekey();
 });
 
+Then('the rekey is successfully uploaded', () => {
+  const uploadRekeyMessage = getElement(by.className('modal-alert-header'));
+  return expect(uploadRekeyMessage.getText()).to.eventually.equal('Rekeyed test uploaded successfully');
+});
+
+When('I return to the journal', () => {
+  const returnToJournalButton = getElement(by.xpath('//button/span/h3[text() = "Return to journal"]'));
+  clickElement(returnToJournalButton);
+});
+
 const clickUploadButton = () => {
   const submitTestButton = getElement(by.xpath('//button[span[h3[text() = "Upload"]]]'));
   clickElement(submitTestButton);
@@ -99,16 +109,16 @@ const completeRekey = () => {
   const continueButton = getElement(by.xpath('//page-office//button//h3[text()="Continue"]'));
   clickElement(continueButton);
 
-  const iPadIssueCheckbox = getElement(by.id('ipadIssue'));
+  const iPadIssueCheckbox = getElement(by.id('ipadIssueSelected'));
   clickElement(iPadIssueCheckbox);
 
-  const iPadIssueLost = getElement(by.id('ipadIssueLost'));
-  clickElement(iPadIssueLost);
+  const ipadIssueTechnicalFault = getElement(by.id('ipadIssueTechnicalFault'));
+  clickElement(ipadIssueTechnicalFault);
 
-  const uploadButton = getElement(by.xpath('//page-rekey-reason//button//h3[text()="Upload rekeyed test"]'));
+  const uploadButton = getElement(by.xpath('//button/span/h3[text() = "Upload rekeyed test"]'));
   clickElement(uploadButton);
 
-  const uploadConfirmationButton = getElement(by.xpath('//upload-rekey-modal//button/span[text() = "Upload"]'));
+  const uploadConfirmationButton = getElement(by.xpath('//button/span[text() = "Upload"]'));
   clickElement(uploadConfirmationButton);
 };
 

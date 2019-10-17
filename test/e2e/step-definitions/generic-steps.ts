@@ -101,6 +101,18 @@ Then('I should see the Microsoft login page', () => {
   });
 });
 
+Given('I am on the landing page as {string}', (username) => {
+  onLandingPageAs(username);
+});
+
+When(/^I start marking a practice test (with|without) a driving fault$/, (drivingFault) => {
+  const practiceMarking = getElement(by.xpath('//button/span/h3[text() = "Practice marking a test (cat B)"]'));
+  clickElement(practiceMarking);
+
+  const withDriverFault = getElement(by.xpath(`//button/span/h3[text() = "Start ${drivingFault} a driving fault"]`));
+  clickElement(withDriverFault);
+});
+
 When('I log in to the application as {string}', (username) => {
   logInToApplication(TEST_CONFIG.users[username].username, TEST_CONFIG.users[username].password);
 
@@ -335,7 +347,7 @@ export const logPageSource = (fileName: string) => {
   });
 };
 
-export const onJournalPageAs = (username) => {
+const onLandingPageAs = (username) => {
   loadApplication().then(() => {
     // Small wait to make sure the action has initiated
     browser.driver.sleep(TEST_CONFIG.ACTION_WAIT);
@@ -359,6 +371,11 @@ export const onJournalPageAs = (username) => {
   const employeeId = element(
     by.xpath(`//span[@class="employee-id" and text()="${TEST_CONFIG.users[username].employeeId}"]`));
   browser.wait(ExpectedConditions.presenceOf(employeeId));
+};
+
+export const onJournalPageAs = (username) => {
+  // Load the landing page
+  onLandingPageAs(username);
 
   // Navigate to journal page
   const goToJournalButton = getElement(by.xpath('//go-to-journal-card/button'));
