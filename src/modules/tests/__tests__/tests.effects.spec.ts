@@ -43,7 +43,7 @@ import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
 import { TestCategory } from '../../../shared/models/test-category';
 import { PopulateTestCategory } from '../category/category.actions';
 
-fdescribe('Tests Effects', () => {
+describe('Tests Effects', () => {
 
   let effects: TestsEffects;
   let actions$: any;
