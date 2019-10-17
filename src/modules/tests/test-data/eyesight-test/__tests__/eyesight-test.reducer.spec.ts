@@ -1,5 +1,5 @@
 import { EyesightTest } from '@dvsa/mes-test-schema/categories/B';
-import { eyesightTestReducer, initialState} from '../eyesight-test.reducer';
+import { eyesightTestReducer, initialState } from '../eyesight-test.reducer';
 import {
   EyesightTestPassed,
   EyesightTestFailed,
