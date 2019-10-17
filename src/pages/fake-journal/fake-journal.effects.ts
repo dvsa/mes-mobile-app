@@ -16,6 +16,7 @@ import { Application } from '@dvsa/mes-journal-schema';
 import {
   extractTestSlotAttributes,
 } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
 
 @Injectable()
 export class FakeJournalEffects {
@@ -31,6 +32,7 @@ export class FakeJournalEffects {
       const slot = fakeJournalTestSlots.find(s => s.slotDetail.slotId === startTestAction.slotId);
 
       return [
+        new PopulateTestCategory(slot.booking.application.testCategory),
         new PopulateApplicationReference(slot.booking.application as Application),
         new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestSlotAttributes(extractTestSlotAttributes(slot)),

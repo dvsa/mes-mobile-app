@@ -28,6 +28,7 @@ import {
   ManoeuvreCompetencies,
   ManoeuvreTypes,
 } from '../../../modules/tests/test-data/test-data.constants';
+import { TestCategory } from '../../../shared/models/test-category';
 
 export class TestActions extends Actions {
   constructor() {
@@ -72,7 +73,7 @@ describe('Test Report Effects', () => {
   describe('validateCatBLegalRequirements', () => {
 
     beforeEach(() => {
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
     });
 
     it('should dispatch a success action when the effect is triggered and test is valid', (done) => {
@@ -104,7 +105,7 @@ describe('Test Report Effects', () => {
 
   describe('validateCatBTestEta', () => {
     beforeEach(() => {
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
     });
 
     it('should dispatch a success action when the effect is triggered and the eta is valid', (done) => {
@@ -303,7 +304,7 @@ describe('Test Report Effects', () => {
   describe('calculateTestResult', () => {
 
     beforeEach(() => {
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
     });
 
     it('should dispatch an action containing the correct result for a test', (done) => {
@@ -323,7 +324,7 @@ describe('Test Report Effects', () => {
   describe('persistTestReport', () => {
 
     beforeEach(() => {
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
     });
 
     it('should dispatch an action requesting the test data to be saved when triggered', (done) => {
@@ -345,7 +346,7 @@ describe('Test Report Effects', () => {
 
   describe('terminateTestReport', () => {
     beforeEach(() => {
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
     });
 
     it('should dispatch an action terminating the test', (done) => {

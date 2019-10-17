@@ -9,6 +9,7 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerConducted } from '../../examiner-conducted/examiner-conducted.actions';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('Examiner Booked Effects', () => {
 
@@ -37,7 +38,7 @@ describe('Examiner Booked Effects', () => {
   describe('setExaminerBookedEffect', () => {
     it('should set the change marker to true when the examiner booked is different to the conducted', (done) => {
       // ARRANGE
-      store$.dispatch(new StartTest(12345));
+      store$.dispatch(new StartTest(12345, TestCategory.B));
       store$.dispatch(new SetExaminerConducted(123456));
       // ACT
       actions$.next(new SetExaminerBooked(100001));
@@ -49,7 +50,7 @@ describe('Examiner Booked Effects', () => {
     });
     it('should set the change marker to false when the examiner booked is the same as the conducted', (done) => {
       // ARRANGE
-      store$.dispatch(new StartTest(12345));
+      store$.dispatch(new StartTest(12345, TestCategory.B));
       store$.dispatch(new SetExaminerConducted(123456));
       // ACT
       actions$.next(new SetExaminerBooked(123456));

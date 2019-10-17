@@ -49,6 +49,9 @@ export class TestOutcomeComponent implements OnInit {
   @Input()
   isRekey: boolean;
 
+  @Input()
+  category: string;
+
   modal: Modal;
   startTestAsRekey: boolean = false;
   isTestSlotOnRekeySearch: boolean = false;
@@ -131,13 +134,13 @@ export class TestOutcomeComponent implements OnInit {
   }
 
   writeUpTest() {
-    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category));
     this.store$.dispatch(new ResumingWriteUp(this.slotDetail.slotId.toString()));
     this.navController.push(CAT_B.OFFICE_PAGE);
   }
 
   resumeTest() {
-    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId));
+    this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category));
     if (this.testStatus === TestStatus.Started) {
       this.navController.push(CAT_B.WAITING_ROOM_PAGE);
     } else if (this.activityCode === ActivityCodes.PASS) {
@@ -151,16 +154,16 @@ export class TestOutcomeComponent implements OnInit {
     if (this.isE2EPracticeMode()) {
       this.store$.dispatch(new StartE2EPracticeTest(this.slotDetail.slotId.toString()));
     } else {
-      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.startTestAsRekey || this.isRekey));
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, this.startTestAsRekey || this.isRekey));
     }
     this.navController.push(CAT_B.WAITING_ROOM_PAGE);
   }
 
   rekeyTest() {
     if (this.testStatus === null || this.testStatus === TestStatus.Booked) {
-      this.store$.dispatch(new StartTest(this.slotDetail.slotId, true));
+      this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, true));
     } else {
-      this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, true));
+      this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category, true));
     }
     this.navController.push(CAT_B.WAITING_ROOM_PAGE);
   }

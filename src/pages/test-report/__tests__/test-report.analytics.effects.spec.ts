@@ -38,6 +38,7 @@ import {
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/catb-legal-requirements';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Test Report Analytics Effects', () => {
 
@@ -69,7 +70,7 @@ describe('Test Report Analytics Effects', () => {
   describe('testReportViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.TestReportViewDidEnter());
       // ASSERT
@@ -85,7 +86,7 @@ describe('Test Report Analytics Effects', () => {
   describe('toggleRemoveFaultMode', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.ToggleRemoveFaultMode());
       // ASSERT
@@ -120,7 +121,7 @@ describe('Test Report Analytics Effects', () => {
   describe('toggleSeriousFaultMode', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.ToggleSeriousFaultMode());
       // ASSERT
@@ -155,7 +156,7 @@ describe('Test Report Analytics Effects', () => {
   describe('toggleDangerousFaultMode', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.ToggleDangerousFaultMode());
       // ASSERT
@@ -190,7 +191,7 @@ describe('Test Report Analytics Effects', () => {
   describe('addDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new drivingFaultsActions.AddDrivingFault({
         competency: Competencies.controlsGears,
@@ -235,7 +236,7 @@ describe('Test Report Analytics Effects', () => {
   describe('addSeriousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new seriousFaultsActions.AddSeriousFault(Competencies.controlsGears));
       // ASSERT
@@ -274,7 +275,7 @@ describe('Test Report Analytics Effects', () => {
   describe('addDangerousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.controlsGears));
       // ASSERT
@@ -313,7 +314,7 @@ describe('Test Report Analytics Effects', () => {
   describe('addManoeuvreDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreDrivingFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -360,7 +361,7 @@ describe('Test Report Analytics Effects', () => {
   describe('addManoeuvreSeriousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreSeriousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -407,7 +408,7 @@ describe('Test Report Analytics Effects', () => {
   describe('addManoeuvreDangerousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreDangerousFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -454,7 +455,7 @@ describe('Test Report Analytics Effects', () => {
   describe('controlledStopAddDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopAddDrivingFault());
       // ASSERT
@@ -493,7 +494,7 @@ describe('Test Report Analytics Effects', () => {
   describe('controlledStopAddSeriousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopAddSeriousFault());
       // ASSERT
@@ -532,7 +533,7 @@ describe('Test Report Analytics Effects', () => {
   describe('controlledStopAddDangerousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopAddDangerousFault());
       // ASSERT
@@ -571,7 +572,7 @@ describe('Test Report Analytics Effects', () => {
   describe('showMeQuestionDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionDrivingFault());
       // ASSERT
@@ -610,7 +611,7 @@ describe('Test Report Analytics Effects', () => {
   describe('showMeQuestionSeriousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionSeriousFault());
       // ASSERT
@@ -649,7 +650,7 @@ describe('Test Report Analytics Effects', () => {
   describe('showMeQuestionDangerousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionDangerousFault());
       // ASSERT
@@ -688,7 +689,7 @@ describe('Test Report Analytics Effects', () => {
   describe('removeDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new drivingFaultsActions.RemoveDrivingFault({
         competency: Competencies.controlsGears,
@@ -733,7 +734,7 @@ describe('Test Report Analytics Effects', () => {
   describe('removeSeriousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new seriousFaultsActions.RemoveSeriousFault(Competencies.controlsGears));
       // ASSERT
@@ -772,7 +773,7 @@ describe('Test Report Analytics Effects', () => {
   describe('removeDangerousFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new dangerousFaultsActions.RemoveDangerousFault(Competencies.controlsGears));
       // ASSERT
@@ -811,7 +812,7 @@ describe('Test Report Analytics Effects', () => {
   describe('removeManoeuvreDrivingFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.RemoveManoeuvreFault({
         manoeuvre: ManoeuvreTypes.reverseRight,
@@ -856,7 +857,7 @@ describe('Test Report Analytics Effects', () => {
   describe('controlledStopRemoveFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new controlledStopActions.ControlledStopRemoveFault());
       // ASSERT
@@ -893,7 +894,7 @@ describe('Test Report Analytics Effects', () => {
   describe('showMeQuestionRemoveFault', () => {
     it('should call logEvent for this competency', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionRemoveFault());
       // ASSERT
@@ -930,7 +931,7 @@ describe('Test Report Analytics Effects', () => {
   describe('testTermination', () => {
     it('should call logEvent for termination event', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new testReportActions.TerminateTestFromTestReport());
       // ASSERT
@@ -967,7 +968,7 @@ describe('Test Report Analytics Effects', () => {
   describe('toggleLegalRequirement', () => {
     it('should call logEvent for normal start completed', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
       actions$.next(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
@@ -985,7 +986,7 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for normal start uncompleted', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       store$.dispatch(new testRequirementsActions.ToggleLegalRequirement(LegalRequirements.normalStart1));
       // ACT
@@ -1004,7 +1005,7 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for eco completed', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(new ecoActions.ToggleEco());
       // ACT
       actions$.next(new ecoActions.ToggleEco());
@@ -1022,7 +1023,7 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for eco uncompleted', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(new ecoActions.ToggleEco());
       store$.dispatch(new ecoActions.ToggleEco());
       // ACT
@@ -1041,7 +1042,7 @@ describe('Test Report Analytics Effects', () => {
     });
     it('should call logEvent for selected manoeuvre', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       // ACT
       actions$.next(new manoeuvresActions.RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad));
       // ASSERT
@@ -1096,7 +1097,7 @@ describe('Test Report Analytics Effects', () => {
 
     it('should call logEvent for show me / tell me completed', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       const showMeQuestionPassedAction = new vehicleChecksActions.ShowMeQuestionPassed();
       store$.dispatch(showMeQuestionPassedAction);
       // ACT
@@ -1116,7 +1117,7 @@ describe('Test Report Analytics Effects', () => {
 
     it('should call logEvent for show me / tell me uncompleted', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(new vehicleChecksActions.ShowMeQuestionPassed());
       const showMeQuestionRemoveFaultAction = new vehicleChecksActions.ShowMeQuestionRemoveFault();
       store$.dispatch(showMeQuestionRemoveFaultAction);

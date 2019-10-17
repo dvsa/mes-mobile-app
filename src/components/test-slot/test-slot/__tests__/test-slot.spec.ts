@@ -294,7 +294,7 @@ describe('TestSlotComponent', () => {
 
       it('should pass test status decided to the test-outcome component when the outcome observable changes', () => {
         fixture.detectChanges();
-        store$.dispatch(new StartTest(mockSlot.slotDetail.slotId));
+        store$.dispatch(new StartTest(mockSlot.slotDetail.slotId, mockSlot.booking.application.testCategory));
         store$.dispatch(new SetTestStatusDecided(mockSlot.slotDetail.slotId.toString()));
         fixture.detectChanges();
 

@@ -14,6 +14,7 @@ import { ActivityCodes } from '../../../../shared/models/activity-codes';
 import { JournalModel } from '../../../../modules/journal/journal.model';
 import { LogHelper } from '../../../../providers/logs/logsHelper';
 import { LogHelperMock } from '../../../../providers/logs/__mocks__/logsHelper.mock';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('Test Outcome', () => {
   let fixture: ComponentFixture<TestOutcomeComponent>;
@@ -76,18 +77,20 @@ describe('Test Outcome', () => {
     describe('startTest', () => {
       it('should dispatch a start test action with the slot', () => {
         component.slotDetail = testSlotDetail;
+        component.category = TestCategory.B;
         component.startTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotDetail.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new StartTest(component.slotDetail.slotId, component.category));
       });
     });
 
     describe('writeUpTest', () => {
       it('should dispatch an ActivateTest action and navigate to the Office page', () => {
         component.slotDetail = testSlotDetail;
+        component.category = TestCategory.B;
         component.writeUpTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_B.OFFICE_PAGE);
       });
@@ -97,9 +100,10 @@ describe('Test Outcome', () => {
       it('should dispatch an ActivateTest action and navigate to the Waiting Room page', () => {
         component.testStatus = TestStatus.Started;
         component.slotDetail = testSlotDetail;
+        component.category = TestCategory.B;
         component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_B.WAITING_ROOM_PAGE);
       });
@@ -107,9 +111,10 @@ describe('Test Outcome', () => {
         component.testStatus = TestStatus.Decided;
         component.slotDetail = testSlotDetail;
         component.activityCode = ActivityCodes.PASS;
+        component.category = TestCategory.B;
         component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_B.PASS_FINALISATION_PAGE);
       });
@@ -117,9 +122,10 @@ describe('Test Outcome', () => {
         component.testStatus = TestStatus.Decided;
         component.slotDetail = testSlotDetail;
         component.activityCode = ActivityCodes.FAIL;
+        component.category = TestCategory.B;
         component.resumeTest();
 
-        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId));
+        expect(store$.dispatch).toHaveBeenCalledWith(new ActivateTest(component.slotDetail.slotId, component.category));
         const { calls } = navController.push as jasmine.Spy;
         expect(calls.argsFor(0)[0]).toBe(CAT_B.NON_PASS_FINALISATION_PAGE);
       });

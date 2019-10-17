@@ -156,13 +156,13 @@ export class TestsEffects {
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
       const arrayOfActions: Action[] = [
+        new PopulateTestCategory(slot.booking.application.testCategory),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         new PopulateCandidateDetails(slot.booking.candidate),
         new PopulateTestSlotAttributes(testSlotAttributes),
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
-        new PopulateTestCategory(slot.booking.application.testCategory),
         new SetExaminerBooked(parseInt(examinerBooked, 10) ? parseInt(examinerBooked, 10) : null),
         new SetExaminerConducted(parseInt(examinerConducted, 10) ? parseInt(examinerConducted, 10) : null),
         new SetExaminerKeyed(parseInt(examinerKeyed, 10) ? parseInt(examinerKeyed, 10) : null),
@@ -199,6 +199,7 @@ export class TestsEffects {
       };
 
       return [
+        new PopulateTestCategory(slotData.booking.application.testCategory),
         new PopulateApplicationReference(slotData.booking.application),
         new PopulateCandidateDetails(slotData.booking.candidate),
       ];

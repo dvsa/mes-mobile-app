@@ -15,6 +15,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import * as testsActions from '../../../modules/tests/tests.actions';
 import * as candidateActions from '../../../modules/tests/journal-data/candidate/candidate.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Rekey Reason Analytics Effects', () => {
 
@@ -47,7 +48,7 @@ describe('Rekey Reason Analytics Effects', () => {
   describe('rekeyReasonViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new rekeyReasonActions.RekeyReasonViewDidEnter());

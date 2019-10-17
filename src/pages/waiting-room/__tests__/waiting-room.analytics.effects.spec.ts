@@ -23,6 +23,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import * as applicationReferenceActions
   from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Waiting Room Analytics Effects', () => {
 
@@ -61,7 +62,7 @@ describe('Waiting Room Analytics Effects', () => {
   describe('waitingRoomViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -103,7 +104,7 @@ describe('Waiting Room Analytics Effects', () => {
   describe('submitWaitingRoomInfoError', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomActions.SubmitWaitingRoomInfoError('error 123'));
@@ -137,7 +138,7 @@ describe('Waiting Room Analytics Effects', () => {
   describe('submitWaitingRoomInfoErrorValidation', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomActions.WaitingRoomValidationError('formControl1'));

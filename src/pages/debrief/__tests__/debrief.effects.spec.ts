@@ -10,6 +10,7 @@ import * as activityCodeActions from '../../../modules/tests/activity-code/activ
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { StoreModel } from '../../../shared/models/store.model';
 import { testsReducer } from '../../../modules/tests/tests.reducer';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Debrief Effects', () => {
 
@@ -41,7 +42,7 @@ describe('Debrief Effects', () => {
 
     it('should return SET_TEST_STATUS_DECIDED & PERSIST_TESTS actions when passed test', (done) => {
       // Set activity code as passed
-      store$.dispatch(new testsActions.StartTest(1234));
+      store$.dispatch(new testsActions.StartTest(1234, TestCategory.B));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
 
       actions$.next(new debriefActions.EndDebrief());
@@ -60,7 +61,7 @@ describe('Debrief Effects', () => {
 
     it('should return SET_TEST_STATUS_DECIDED & PERSIST_TESTS actions when failed test', (done) => {
       // Set activity code as failed
-      store$.dispatch(new testsActions.StartTest(1234));
+      store$.dispatch(new testsActions.StartTest(1234, TestCategory.B));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
 
       actions$.next(new debriefActions.EndDebrief());

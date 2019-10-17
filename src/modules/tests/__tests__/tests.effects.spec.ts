@@ -40,8 +40,10 @@ import { SetExaminerBooked } from '../examiner-booked/examiner-booked.actions';
 import { bufferCount } from 'rxjs/operators';
 import { SetExaminerConducted } from '../examiner-conducted/examiner-conducted.actions';
 import { SetExaminerKeyed } from '../examiner-keyed/examiner-keyed.actions';
+import { TestCategory } from '../../../shared/models/test-category';
+import { PopulateTestCategory } from '../category/category.actions';
 
-describe('Tests Effects', () => {
+fdescribe('Tests Effects', () => {
 
   let effects: TestsEffects;
   let actions$: any;
@@ -82,7 +84,7 @@ describe('Tests Effects', () => {
   describe('persistTestsEffect', () => {
     it('should respond to a PERSIST_TESTS action and delegate to the persistence provider', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.B));
       testPersistenceProviderMock.persistTests.and.returnValue(Promise.resolve());
       // ACT
       actions$.next(new testsActions.PersistTests());
@@ -143,11 +145,11 @@ describe('Tests Effects', () => {
       const currentTestSlotId2 = '1234567'; // Mocked as a 500 http error response
       store$.dispatch(new testsActions.StartTestReportPracticeTest(testReportPracticeModeSlot.slotDetail.slotId));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(testReportPracticeModeSlot.slotDetail.slotId));
-      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId)));
+      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId), TestCategory.B));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId));
-      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId1)));
+      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId1), TestCategory.B));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId1));
-      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId2)));
+      store$.dispatch(new testsActions.StartTest(Number(currentTestSlotId2), TestCategory.B));
       store$.dispatch(new testStatusActions.SetTestStatusCompleted(currentTestSlotId2));
       // ACT
       actions$.next(new testsActions.SendCompletedTests());
@@ -175,7 +177,7 @@ describe('Tests Effects', () => {
   describe('sendCurrentTestSuccessEffect', () => {
     it('should dispatch the TestStatusSubmitted action', (done) => {
       const currentTestSlotId = '12345';
-      store$.dispatch(new testsActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.B));
       // ACT
       actions$.next(new testsActions.SendCurrentTestSuccess());
       // ASSERT
@@ -205,17 +207,17 @@ describe('Tests Effects', () => {
         ),
       ); // Load in mock journal state
       // ACT
-      actions$.next(new testsActions.StartTest(1001));
+      actions$.next(new testsActions.StartTest(1001, TestCategory.B));
       // ASSERT
       effects.startTestEffect$
       .pipe(
         bufferCount(10),
       )
-      .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10]) => {
+      .subscribe(([res0, res1, res2, res3, res4, res5, res6, res7, res8, res9]) => {
         expect(res1).toEqual(new PopulateExaminer(examiner)),
-        expect(res8).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
-        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
-        expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res7).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
+        expect(res8).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res9).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
         done();
       });
     });
@@ -233,18 +235,18 @@ describe('Tests Effects', () => {
         ),
       ); // Load in mock journal state
       // ACT
-      actions$.next(new testsActions.StartTest(1001, true));
+      actions$.next(new testsActions.StartTest(1001, TestCategory.B, true));
       // ASSERT
       effects.startTestEffect$
       .pipe(
         bufferCount(13),
       )
-      .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13]) => {
+      .subscribe(([res0, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12]) => {
         expect(res1).toEqual(new PopulateExaminer(examiner)),
-        expect(res8).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
-        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
-        expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
-        expect(res13).toEqual(new rekeyActions.MarkAsRekey()),
+        expect(res7).toEqual(new SetExaminerBooked(parseInt(examiner.staffNumber, 10))),
+        expect(res8).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res9).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res12).toEqual(new rekeyActions.MarkAsRekey()),
         done();
       });
     });
@@ -265,26 +267,28 @@ describe('Tests Effects', () => {
             applicationId: 12345,
             bookingSequence: 11,
             checkDigit: 1,
+            testCategory: TestCategory.B,
           },
         },
       };
       const staffNumber = '654321';
       store$.dispatch(new rekeySearchActions.SearchBookedTestSuccess(testSlot, staffNumber));
       // ACT
-      actions$.next(new testsActions.StartTest(1001, true));
+      actions$.next(new testsActions.StartTest(1001, testSlot.booking.application.testCategory, true));
       // ASSERT
       effects.startTestEffect$
       .pipe(
         bufferCount(13),
       )
-      .subscribe(([res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13]) => {
+      .subscribe(([res0, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12]) => {
+        expect(res0).toEqual(new PopulateTestCategory(testSlot.booking.application.testCategory));
         expect(res1).toEqual(new PopulateExaminer({ staffNumber })),
         expect(res2).toEqual(new PopulateApplicationReference(testSlot.booking.application)),
         expect(res3).toEqual(new PopulateCandidateDetails(testSlot.booking.candidate)),
-        expect(res8).toEqual(new SetExaminerBooked(parseInt(staffNumber, 10))),
-        expect(res9).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
-        expect(res10).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
-        expect(res13).toEqual(new rekeyActions.MarkAsRekey()),
+        expect(res7).toEqual(new SetExaminerBooked(parseInt(staffNumber, 10))),
+        expect(res8).toEqual(new SetExaminerConducted(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res9).toEqual(new SetExaminerKeyed(parseInt(authenticationProviderMock.getEmployeeId(), 10))),
+        expect(res12).toEqual(new rekeyActions.MarkAsRekey()),
         done();
       });
     });
@@ -293,7 +297,7 @@ describe('Tests Effects', () => {
   describe('activateTestEffect', () => {
     it('should call theMarkAsRekey action', (done) => {
       // ACT
-      actions$.next(new testsActions.ActivateTest(1234, true));
+      actions$.next(new testsActions.ActivateTest(1234, TestCategory.B, true));
       // ASSERT
       effects.activateTestEffect$.subscribe((result) => {
         expect(result instanceof rekeyActions.MarkAsRekey).toBe(true);

@@ -18,6 +18,7 @@ import * as activityCodeActions from '../../../modules/tests/activity-code/activ
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Debrief Analytics Effects', () => {
 
@@ -53,7 +54,7 @@ describe('Debrief Analytics Effects', () => {
   describe('debriefViewDidEnter', () => {
     it('should call setCurrentPage with pass page', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());
@@ -67,7 +68,7 @@ describe('Debrief Analytics Effects', () => {
     });
     it('should call setCurrentPage with fail page', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
       actions$.next(new debriefActions.DebriefViewDidEnter());

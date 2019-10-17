@@ -15,6 +15,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import { PostDebriefHoldingAnalyticsEffects } from '../post-debrief-holding.analytics.effects';
 import * as postDebriefHoldingActions from '../post-debrief-holding.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Post Debrief Holding Analytics Effects', () => {
 
@@ -48,7 +49,7 @@ describe('Post Debrief Holding Analytics Effects', () => {
   describe('backToOfficeViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new postDebriefHoldingActions.PostDebriefHoldingViewDidEnter());

@@ -6,6 +6,7 @@ import { TestsModel } from '../tests.model';
 import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { testReportPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('testsReducer', () => {
   const newCandidate = { candidate: { candidateId: 456 } };
@@ -23,7 +24,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
     const slotId = 123;
-    const action = new testsActions.StartTest(slotId);
+    const action = new testsActions.StartTest(slotId, TestCategory.B);
 
     const output = testsReducer(state, action);
 
@@ -155,7 +156,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
 
-    const result = testsReducer(state, new testsActions.StartTest(123));
+    const result = testsReducer(state, new testsActions.StartTest(123, TestCategory.B));
 
     expect(candidateReducer.candidateReducer).toHaveBeenCalled();
     expect(preTestDeclarationsReducer.preTestDeclarationsReducer).toHaveBeenCalled();
@@ -170,7 +171,7 @@ describe('testsReducer', () => {
       testStatus: {},
     };
 
-    const result = testsReducer(state, new testsActions.ActivateTest(456));
+    const result = testsReducer(state, new testsActions.ActivateTest(456, TestCategory.B));
 
     expect(result.currentTest.slotId).toBe('456');
   });
