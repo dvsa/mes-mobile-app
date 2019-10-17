@@ -19,10 +19,7 @@ export function eyesightTestReducer(
         seriousFault: true,
       };
     case eyesightTestActions.EYESIGHT_TEST_RESET:
-      return {
-        complete: false,
-        seriousFault: false,
-      };
+      return initialState;
     case eyesightTestActions.EYESIGHT_TEST_ADD_COMMENT:
       return {
         ...state,
