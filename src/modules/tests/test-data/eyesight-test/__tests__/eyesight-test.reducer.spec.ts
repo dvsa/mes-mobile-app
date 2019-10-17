@@ -46,16 +46,6 @@ describe('Eyesight Test Reducer', () => {
       const result = eyesightTestReducer(state, new EyesightTestReset());
       expect(result).toBe(initialState);
     });
-
-    it('removes an eyesight test serious fault', () => {
-      const state: EyesightTest = {
-        complete: true,
-        seriousFault: true,
-      };
-      const result = eyesightTestReducer(state, new EyesightTestReset());
-      expect(result.complete).toBe(false);
-      expect(result.seriousFault).toBe(false);
-    });
   });
 
   describe('EYESIGHT_TEST_ADD_COMMENT', () => {
