@@ -226,10 +226,7 @@ export function testDataReducer(
     case testDataActions.EYESIGHT_TEST_RESET:
       return {
         ...state,
-        eyesightTest: {
-          complete: false,
-          seriousFault: false,
-        },
+        eyesightTest: initialState.eyesightTest,
       };
     case testDataActions.EYESIGHT_TEST_ADD_COMMENT:
       return {

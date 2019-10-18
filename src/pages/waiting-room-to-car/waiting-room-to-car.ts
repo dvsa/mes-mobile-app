@@ -296,7 +296,7 @@ export class WaitingRoomToCarPage extends PracticeableBasePageComponent {
   }
 
   eyesightFailCancelled = () => {
-    this.updateForm('eyesightCtrl', null);
+    this.form.get('eyesightCtrl') && this.form.get('eyesightCtrl').reset();
     this.store$.dispatch(new EyesightTestReset());
   }
 

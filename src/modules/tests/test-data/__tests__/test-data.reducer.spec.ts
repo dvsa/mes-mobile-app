@@ -623,26 +623,14 @@ describe('TestDataReducer reducer', () => {
   });
 
   describe('EYESIGHT_TEST_RESET', () => {
-    it('updates the complete status to false', () => {
+    it('updates the eyesight test data to initial state', () => {
       const state: TestData = {
         eyesightTest: {
           complete: true,
         },
       };
       const result = testDataReducer(state, new EyesightTestReset());
-      expect(result.eyesightTest.complete).toBe(false);
-    });
-
-    it('removes an eyesight test serious fault', () => {
-      const state: TestData = {
-        eyesightTest: {
-          complete: true,
-          seriousFault: true,
-        },
-      };
-      const result = testDataReducer(state, new EyesightTestReset());
-      expect(result.eyesightTest.complete).toBe(false);
-      expect(result.eyesightTest.seriousFault).toBe(false);
+      expect(result.eyesightTest).toBe(initialState.eyesightTest);
     });
   });
 
