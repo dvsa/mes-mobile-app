@@ -21,6 +21,7 @@ import {
   ControlledStopRemoveFault,
 } from '../../../../../modules/tests/test-data/controlled-stop/controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 describe('ControlledStopComponent', () => {
   let fixture: ComponentFixture<ControlledStopComponent>;
@@ -47,7 +48,7 @@ describe('ControlledStopComponent', () => {
         fixture = TestBed.createComponent(ControlledStopComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105));
+        store$.dispatch(new StartTest(105, TestCategory.B));
       });
   }));
 

@@ -10,6 +10,7 @@ import { SetChangeMarker } from '../../change-marker/change-marker.actions';
 import { StartTest } from '../../tests.actions';
 import { SetExaminerBooked } from '../../examiner-booked/examiner-booked.actions';
 import { journalReducer } from '../../../journal/journal.reducer';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('Examiner Conducted Effects', () => {
 
@@ -39,7 +40,7 @@ describe('Examiner Conducted Effects', () => {
   describe('setExaminerConductedEffect', () => {
     it('should set the change marker to true when the examiner conducted is different to the booked', (done) => {
       // ARRANGE
-      store$.dispatch(new StartTest(12345));
+      store$.dispatch(new StartTest(12345, TestCategory.B));
       store$.dispatch(new SetExaminerBooked(123456));
       // ACT
       actions$.next(new SetExaminerConducted(100001));
@@ -51,7 +52,7 @@ describe('Examiner Conducted Effects', () => {
     });
     it('should set the change marker to false when the examiner conducted is the same as the booked', (done) => {
       // ARRANGE
-      store$.dispatch(new StartTest(12345));
+      store$.dispatch(new StartTest(12345, TestCategory.B));
       store$.dispatch(new SetExaminerBooked(123456));
       // ACT
       actions$.next(new SetExaminerConducted(123456));

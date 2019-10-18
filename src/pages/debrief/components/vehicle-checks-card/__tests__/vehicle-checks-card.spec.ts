@@ -19,6 +19,7 @@ import { TranslateService, TranslateModule, TranslateLoader } from 'ng2-translat
 import { createTranslateLoader } from '../../../../../app/app.module';
 import { Http } from '@angular/http';
 import * as welshTranslations from '../../../../../assets/i18n/cy.json';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 describe('VehicleChecksCardComponent', () => {
   let fixture: ComponentFixture<VehicleChecksCardComponent>;
@@ -47,7 +48,7 @@ describe('VehicleChecksCardComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(VehicleChecksCardComponent);
         store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105));
+        store$.dispatch(new StartTest(105, TestCategory.B));
         translate = TestBed.get(TranslateService);
         translate.setDefaultLang('en');
       });

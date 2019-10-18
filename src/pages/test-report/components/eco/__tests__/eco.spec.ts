@@ -15,6 +15,7 @@ import {
   ToggleControlEco,
 }
 from '../../../../../modules/tests/test-data/eco/eco.actions';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 describe('Eco component', () => {
   let fixture: ComponentFixture<EcoComponent>;
@@ -39,7 +40,7 @@ describe('Eco component', () => {
         fixture = TestBed.createComponent(EcoComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105));
+        store$.dispatch(new StartTest(105, TestCategory.B));
         storeDispatchSpy = spyOn(store$, 'dispatch');
       });
   }));

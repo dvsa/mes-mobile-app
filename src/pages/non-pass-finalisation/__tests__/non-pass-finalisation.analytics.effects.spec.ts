@@ -15,6 +15,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import { NonPassFinalisationAnalyticsEffects } from '../non-pass-finalisation.analytics.effects';
 import * as nonPassFinalisationActions from '../non-pass-finalisation.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Non Pass Finalisation Analytics Effects', () => {
 
@@ -49,7 +50,7 @@ describe('Non Pass Finalisation Analytics Effects', () => {
   describe('nonPassFinalisationViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new nonPassFinalisationActions.NonPassFinalisationViewDidEnter());

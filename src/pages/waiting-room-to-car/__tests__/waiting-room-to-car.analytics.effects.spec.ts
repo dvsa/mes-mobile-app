@@ -23,6 +23,7 @@ import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock'
 import * as applicationReferenceActions
   from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
@@ -62,7 +63,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
   describe('waitingRoomToCarViewDidEnter', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -104,7 +105,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
   describe('waitingRoomToCarError', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
@@ -139,7 +140,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
   describe('waitingRoomToCarValidationError', () => {
     it('should call logError', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));

@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { TestsModel } from './tests.model';
+import { TestCategory } from '../../shared/models/test-category';
 
 export const START_SENDING_COMPLETED_TESTS = '[TestsEffects] Start Sending Completed Test';
 export const SEND_COMPLETED_TESTS = '[TestsEffects] Send Completed Tests';
@@ -44,17 +45,17 @@ export class TestOutcomeChanged implements Action {
 
 export class StartTest implements Action {
   readonly type = START_TEST;
-  constructor(public slotId: number, public rekey: boolean = false) { }
+  constructor(public slotId: number, public category: string, public rekey: boolean = false) { }
 }
 
 export class ActivateTest implements Action {
   readonly type = ACTIVATE_TEST;
-  constructor(public slotId: number, public rekey: boolean = false) { }
+  constructor(public slotId: number, public category: string, public rekey: boolean = false) { }
 }
 
 export class StartTestReportPracticeTest implements Action {
   readonly type = START_TEST_REPORT_PRACTICE_TEST;
-  constructor(public slotId: string) { }
+  constructor(public slotId: string, public category: string = TestCategory.B) { }
 }
 
 export class StartSendingCompletedTests implements Action {

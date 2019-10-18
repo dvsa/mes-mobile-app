@@ -15,6 +15,7 @@ import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-st
 import * as testActions from '../../../modules/tests/tests.actions';
 import { TestFinalisationComponentsModule } from
 '../../../components/test-finalisation/test-finalisation-component.module';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('NonPassFinalisationPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationPage>;
@@ -61,7 +62,7 @@ describe('NonPassFinalisationPage', () => {
   describe('OnContinue', () => {
     it('should dispatch a change test state to WriteUp action', () => {
       // Arrange
-      store$.dispatch(new testActions.StartTest(123));
+      store$.dispatch(new testActions.StartTest(123, TestCategory.B));
       component.slotId = '123';
 
       // Act

@@ -5,6 +5,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { formatAnalyticsText } from '../format-analytics-text';
 import { AnalyticsEventCategories } from '../../../providers/analytics/analytics.model';
+import { TestCategory } from '../../models/test-category';
 
 describe('formatAnalyticsText', () => {
   const initialState = {
@@ -37,7 +38,7 @@ describe('formatAnalyticsText', () => {
 
   it('should prefix rekey tests with the correct text', () => {
     const state = { ...initialState };
-    const action = new testsActions.StartTest(12345);
+    const action = new testsActions.StartTest(12345, TestCategory.B);
     const tests: TestsModel = testsReducer(state, action);
     tests.startedTests[tests.currentTest.slotId].rekey = true;
 
@@ -48,7 +49,7 @@ describe('formatAnalyticsText', () => {
 
   it('should not prefix regular tests with any additional text', () => {
     const state = { ...initialState };
-    const action = new testsActions.StartTest(slotId);
+    const action = new testsActions.StartTest(slotId, TestCategory.B);
     const tests: TestsModel = testsReducer(state, action);
 
     const result = formatAnalyticsText(eventString, tests);

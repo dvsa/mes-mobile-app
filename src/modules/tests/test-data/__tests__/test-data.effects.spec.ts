@@ -10,6 +10,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Competencies } from '../test-data.constants';
 import { FaultPayload } from '../test-data.models';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('Test Data Effects', () => {
 
@@ -43,7 +44,7 @@ describe('Test Data Effects', () => {
       };
       const throttleAddDrivingFault = new drivingFaultsActions.ThrottleAddDrivingFault(faultPayload);
       // ARRANGE - setup the store
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(throttleAddDrivingFault);
       // ACT - replay the action for the effect
       actions$.next(throttleAddDrivingFault);
@@ -59,7 +60,7 @@ describe('Test Data Effects', () => {
     it('should dispatch an action to toggle eco to be completed', (done) => {
       const toggleControlEcoAction = new ecoActions.ToggleControlEco();
       // ARRANGE - setup the store
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(toggleControlEcoAction);
       // ACT - replay the action for the effect
       actions$.next(toggleControlEcoAction);
@@ -75,7 +76,7 @@ describe('Test Data Effects', () => {
     it('should dispatch an action to toggle eco to be completed', (done) => {
       const togglePlanningEcoAction = new ecoActions.TogglePlanningEco();
       // ARRANGE - setup the store
-      store$.dispatch(new testsActions.StartTest(123456));
+      store$.dispatch(new testsActions.StartTest(123456, TestCategory.B));
       store$.dispatch(togglePlanningEcoAction);
       // ACT - replay the action for the effect
       actions$.next(togglePlanningEcoAction);

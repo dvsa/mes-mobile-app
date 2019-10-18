@@ -27,6 +27,7 @@ import * as applicationReferenceActions
   from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import * as activityCodeActions from '../../../modules/tests/activity-code/activity-code.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Office Analytics Effects', () => {
 
@@ -69,7 +70,7 @@ describe('Office Analytics Effects', () => {
   describe('officeViewDidEnter', () => {
     it('should call setCurrentPage with pass page and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -89,7 +90,7 @@ describe('Office Analytics Effects', () => {
     });
     it('should call setCurrentPage with fail page and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -153,7 +154,7 @@ describe('Office Analytics Effects', () => {
   describe('savingWriteUpForLaterEffect', () => {
     it('should call logEvent with pass page and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -177,7 +178,7 @@ describe('Office Analytics Effects', () => {
     });
     it('should call logEvent with fail page and addCustomDimension', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -252,7 +253,7 @@ describe('Office Analytics Effects', () => {
   describe('validationErrorEffect', () => {
     it('should call logError with pass', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       // ACT
@@ -268,7 +269,7 @@ describe('Office Analytics Effects', () => {
     });
     it('should call logError with fail', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       // ACT
@@ -319,7 +320,7 @@ describe('Office Analytics Effects', () => {
   describe('completeTest', () => {
     it('should log an event COMPLETE_TEST event when the test is not a rekey', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -343,7 +344,7 @@ describe('Office Analytics Effects', () => {
     });
     it('should log an event COMPLETE_REKEY_TEST event when the test is a rekey', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new rekeyActions.MarkAsRekey());

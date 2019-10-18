@@ -26,15 +26,16 @@ export function testsReducer(
   action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types) {
 
   const slotId = deriveSlotId(state, action);
+  const category = deriveCategory(state, action, slotId);
   switch (action.type) {
     case testsActions.LOAD_PERSISTED_TESTS_SUCCESS:
       return (<testsActions.LoadPersistedTestsSuccess>action).tests;
     case testsActions.START_TEST_REPORT_PRACTICE_TEST:
-      return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
+      return slotId ? createStateObject(removeTest(state, slotId), action, slotId, category) : state;
     case fakeJournalActions.START_E2E_PRACTICE_TEST:
-      return slotId ? createStateObject(removeTest(state, slotId), action, slotId) : state;
+      return slotId ? createStateObject(removeTest(state, slotId), action, slotId, category) : state;
     default:
-      return slotId ? createStateObject(state, action, slotId) : state;
+      return slotId ? createStateObject(state, action, slotId, category) : state;
   }
 }
 
@@ -52,7 +53,18 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };
 
-const createStateObject = (state: TestsModel, action: Action, slotId: string) => {
+const deriveCategory = (state: TestsModel, action: Action, slotId: string | null): string => {
+  if (action instanceof testsActions.StartTest
+      || action instanceof testsActions.ActivateTest
+      || action instanceof testsActions.StartTestReportPracticeTest
+      || action instanceof fakeJournalActions.StartE2EPracticeTest) {
+    return action.category;
+  }
+
+  return get(state.startedTests[slotId], 'category', null);
+};
+
+const createStateObject = (state: TestsModel, action: Action, slotId: string, category: string) => {
   return {
     ...state,
     startedTests: {
@@ -60,7 +72,7 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string) =>
       [slotId]: {
         ...state.startedTests[slotId],
         // TODO - Need to get category from somehwere else as at start of test it's null
-        ...testsReducerFactory(get(state.startedTests[slotId], 'category'), action, state.startedTests[slotId]),
+        ...testsReducerFactory(category, action, state.startedTests[slotId]),
       },
     },
     currentTest: {

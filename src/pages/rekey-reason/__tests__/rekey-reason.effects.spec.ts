@@ -15,6 +15,7 @@ import { SetExaminerBooked } from '../../../modules/tests/examiner-booked/examin
 import { SetExaminerConducted } from '../../../modules/tests/examiner-conducted/examiner-conducted.actions';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { defer } from 'rxjs/observable/defer';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Rekey Reason Effects', () => {
   let effects: RekeyReasonEffects;
@@ -48,7 +49,7 @@ describe('Rekey Reason Effects', () => {
     describe('not a transfer', () => {
       it('should send the current test and not call the find user provider', (done) => {
         // ARRANGE
-        store$.dispatch(new testActions.StartTest(12345));
+        store$.dispatch(new testActions.StartTest(12345, TestCategory.B));
         store$.dispatch(new SetExaminerBooked(333));
         store$.dispatch(new SetExaminerConducted(333));
         spyOn(findUserProvider, 'userExists');
@@ -65,7 +66,7 @@ describe('Rekey Reason Effects', () => {
     describe('transfer', () => {
       it('should send the current test when the staff number is valid', (done) => {
         // ARRANGE
-        store$.dispatch(new testActions.StartTest(12345));
+        store$.dispatch(new testActions.StartTest(12345, TestCategory.B));
         store$.dispatch(new SetExaminerBooked(333));
         store$.dispatch(new SetExaminerConducted(789));
         spyOn(findUserProvider, 'userExists').and.returnValue(asyncSuccess(new HttpResponse({
@@ -83,7 +84,7 @@ describe('Rekey Reason Effects', () => {
       });
       it('should return a failure action with a true payload when the staff number is not valid', (done) => {
         // ARRANGE
-        store$.dispatch(new testActions.StartTest(12345));
+        store$.dispatch(new testActions.StartTest(12345, TestCategory.B));
         store$.dispatch(new SetExaminerBooked(333));
         store$.dispatch(new SetExaminerConducted(57463524));
         spyOn(findUserProvider, 'userExists').and.returnValue(asyncError(new HttpErrorResponse({
@@ -107,7 +108,7 @@ describe('Rekey Reason Effects', () => {
           status: 401,
           statusText: 'OK',
         })));
-        store$.dispatch(new testActions.StartTest(12345));
+        store$.dispatch(new testActions.StartTest(12345, TestCategory.B));
         store$.dispatch(new SetExaminerBooked(333));
         store$.dispatch(new SetExaminerConducted(789));
         // ACT

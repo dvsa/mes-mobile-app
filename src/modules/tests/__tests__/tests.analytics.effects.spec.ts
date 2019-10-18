@@ -25,6 +25,7 @@ import { Application } from '@dvsa/mes-journal-schema';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { candidateMock } from '../__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Tests Analytics Effects', () => {
 
@@ -65,7 +66,7 @@ describe('Tests Analytics Effects', () => {
   describe('setTestStatusSubmittedEffect', () => {
     it('should set an action saying the test has been submitted if it is not a rekey', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.B));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -89,7 +90,7 @@ describe('Tests Analytics Effects', () => {
     });
     it('should set an action saying the test has been submitted if it is a rekey', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.B));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
@@ -135,7 +136,7 @@ describe('Tests Analytics Effects', () => {
   describe('testOutcomeChangedEffect', () => {
     it('should log an event', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(12345));
+      store$.dispatch(new testsActions.StartTest(12345, TestCategory.B));
       store$.dispatch(new candidateActions.PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       const eventLabel = 'fail to pass';
@@ -161,7 +162,7 @@ describe('Tests Analytics Effects', () => {
   describe('startTestAnalyticsEffect', () => {
     it('should log an event', (done) => {
       // ACT
-      actions$.next(new testsActions.StartTest(12345));
+      actions$.next(new testsActions.StartTest(12345, TestCategory.B));
       // ASSERT
       effects.startTestAnalyticsEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);

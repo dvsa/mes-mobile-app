@@ -27,6 +27,7 @@ import {
   ShowMeQuestionRemoveFault,
 } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 describe('VehicleCheckComponent', () => {
 
@@ -54,7 +55,7 @@ describe('VehicleCheckComponent', () => {
         fixture = TestBed.createComponent(VehicleCheckComponent);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
-        store$.dispatch(new StartTest(105));
+        store$.dispatch(new StartTest(105, TestCategory.B));
       });
   }));
 

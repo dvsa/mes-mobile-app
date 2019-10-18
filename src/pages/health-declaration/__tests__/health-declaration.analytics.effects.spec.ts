@@ -18,6 +18,7 @@ import { testsReducer } from '../../../modules/tests/tests.reducer';
 import { PopulateCandidateDetails } from '../../../modules/tests/journal-data/candidate/candidate.actions';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('Health Declaration Analytics Effects', () => {
 
@@ -52,7 +53,7 @@ describe('Health Declaration Analytics Effects', () => {
   describe('healthDeclarationViewDidEnter', () => {
     it('should call setCurrentPage', (done) => {
       // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123));
+      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new healthDeclarationActions.HealthDeclarationViewDidEnter());
