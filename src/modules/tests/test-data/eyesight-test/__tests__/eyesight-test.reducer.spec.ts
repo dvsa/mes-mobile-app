@@ -1,5 +1,5 @@
 import { EyesightTest } from '@dvsa/mes-test-schema/categories/B';
-import { eyesightTestReducer } from '../eyesight-test.reducer';
+import { eyesightTestReducer, initialState } from '../eyesight-test.reducer';
 import {
   EyesightTestPassed,
   EyesightTestFailed,
@@ -39,22 +39,12 @@ describe('Eyesight Test Reducer', () => {
   });
 
   describe('EYESIGHT_TEST_RESET', () => {
-    it('updates the complete status to false', () => {
+    it('sets the state to the initial state', () => {
       const state: EyesightTest = {
         complete: true,
       };
       const result = eyesightTestReducer(state, new EyesightTestReset());
-      expect(result.complete).toBe(false);
-    });
-
-    it('removes an eyesight test serious fault', () => {
-      const state: EyesightTest = {
-        complete: true,
-        seriousFault: true,
-      };
-      const result = eyesightTestReducer(state, new EyesightTestReset());
-      expect(result.complete).toBe(false);
-      expect(result.seriousFault).toBe(false);
+      expect(result).toBe(initialState);
     });
   });
 
