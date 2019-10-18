@@ -15,11 +15,12 @@ import { LogType } from '../../shared/models/log.model';
 import { LogHelper } from '../logs/logsHelper';
 import { AppConfigProvider } from '../app-config/app-config';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
+import { StandardTrailerTestCATBESchema } from '@dvsa/mes-test-schema/categories/BE';
 
 export interface TestToSubmit {
   index: number;
   slotId: string;
-  payload: StandardCarTestCATBSchema;
+  payload: StandardCarTestCATBSchema | StandardTrailerTestCATBESchema;
   status: TestStatus;
 }
 

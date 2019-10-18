@@ -1,18 +1,17 @@
-import { TestData } from '@dvsa/mes-test-schema/categories/B';
+import { TestData } from '@dvsa/mes-test-schema/categories/BE';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 
-import { controlledStopReducer } from './controlled-stop/controlled-stop.reducer';
 import { dangerousFaultsReducer } from './dangerous-faults/dangerous-faults.reducer';
 import { drivingFaultsReducer } from './driving-faults/driving-faults.reducer';
 import { ecoReducer } from './eco/eco.reducer';
 import { etaReducer } from './eta/eta.reducer';
 import { eyesightTestReducer } from './eyesight-test/eyesight-test.reducer';
-import { manoeuvresReducer } from './manoeuvres/manoeuvres.reducer';
+import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
 import { seriousFaultsReducer } from './serious-faults/serious-faults.reducer';
 import { testRequirementsReducer } from './test-requirements/test-requirements.reducer';
-import { vehicleChecksReducer } from './vehicle-checks/vehicle-checks.reducer';
+import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
 
-export function testDataCatBeReducer(
+export function testDataCatBEReducer(
   state: TestData,
   action: Action,
 ): TestData {
@@ -20,12 +19,11 @@ export function testDataCatBeReducer(
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
-    vehicleChecks: vehicleChecksReducer,
-    controlledStop: controlledStopReducer,
+    vehicleChecks: vehicleChecksCatBEReducer,
     eco: ecoReducer,
     ETA: etaReducer,
     eyesightTest: eyesightTestReducer,
-    manoeuvres: manoeuvresReducer,
+    manoeuvres: manoeuvresCatBEReducer,
     testRequirements: testRequirementsReducer,
   })(state as Required<TestData>, action);
 }
