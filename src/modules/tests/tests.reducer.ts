@@ -71,7 +71,6 @@ const createStateObject = (state: TestsModel, action: Action, slotId: string, ca
     startedTests: {
       ...state.startedTests,
       [slotId]: {
-        // TODO - Need to get category from somehwere else as at start of test it's null
         ...testsReducerFactory(category, action, state.startedTests[slotId]),
       },
     },
