@@ -23,4 +23,4 @@ import { WaitingRoomCatBePage } from './waiting-room.cat-be.page';
     TranslateModule,
   ],
 })
-export class WaitingRoomCatBEPageModule { }
+export class WaitingRoomCatBePageModule { }

@@ -7,7 +7,7 @@ export const initialState: VehicleChecks = {
   showMeQuestion: [],
 };
 
-export function vehicleChecksCatBEReducer(
+export function vehicleChecksCatBeReducer(
   state: VehicleChecks = initialState, action: Action) : VehicleChecks {
   switch (action.type) {
     default:

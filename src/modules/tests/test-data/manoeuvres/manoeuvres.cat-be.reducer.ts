@@ -5,7 +5,7 @@ export const initialState: Manoeuvres = {
   reverseLeft: {},
 };
 
-export function manoeuvresCatBEReducer(state: Manoeuvres = initialState, action: Action) {
+export function manoeuvresCatBeReducer(state: Manoeuvres = initialState, action: Action) {
   switch (action.type) {
     default:
       return state;

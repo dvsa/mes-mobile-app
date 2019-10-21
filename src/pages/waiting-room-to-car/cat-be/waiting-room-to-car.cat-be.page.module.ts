@@ -17,4 +17,4 @@ import { WaitingRoomToCarComponentsModule } from '../components/waiting-room-to-
     WaitingRoomToCarComponentsModule,
   ],
 })
-export class WaitingRoomToCarCatBEPageModule { }
+export class WaitingRoomToCarCatBePageModule { }

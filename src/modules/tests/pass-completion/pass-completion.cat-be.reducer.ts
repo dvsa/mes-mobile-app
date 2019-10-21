@@ -8,7 +8,7 @@ export const initialState: PassCompletion = {
   code78Present: false,
 };
 
-export function passCompletionCatBEReducer(state: PassCompletion = initialState, action: Action) {
+export function passCompletionCatBeReducer(state: PassCompletion = initialState, action: Action) {
   switch (action.type) {
     default:
       return state;
