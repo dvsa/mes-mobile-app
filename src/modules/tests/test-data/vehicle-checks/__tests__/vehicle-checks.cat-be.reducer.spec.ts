@@ -4,11 +4,9 @@ import {
   vehicleChecksCatBEReducer,
 } from '../vehicle-checks.cat-be.reducer';
 
-import * as vehicleChecksCatBE from '../vehicle-checks.cat-be.actions';
-
 describe('Vehicle Checks CatBE Reducer', () => {
   it('should return the initial state', () => {
-    const result = vehicleChecksCatBEReducer(initialState, new vehicleChecksCatBE.AddShowMeQuestion());
+    const result = vehicleChecksCatBEReducer(initialState, { type: 'some-type' });
     expect(result).toBe(initialState);
   });
 });
