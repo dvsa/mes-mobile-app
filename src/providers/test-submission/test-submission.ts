@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { UrlProvider } from '../url/url';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { gzipSync } from 'zlib';
@@ -15,12 +14,12 @@ import { LogType } from '../../shared/models/log.model';
 import { LogHelper } from '../logs/logsHelper';
 import { AppConfigProvider } from '../app-config/app-config';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
-import { StandardTrailerTestCATBESchema } from '@dvsa/mes-test-schema/categories/BE';
+import { TestResultUnionType } from '../../modules/tests/tests.model';
 
 export interface TestToSubmit {
   index: number;
   slotId: string;
-  payload: StandardCarTestCATBSchema | StandardTrailerTestCATBESchema;
+  payload: TestResultUnionType;
   status: TestStatus;
 }
 
@@ -68,15 +67,15 @@ export class TestSubmissionProvider {
   buildUrl = (testToSubmit: TestToSubmit): string =>
     `${this.urlProvider.getTestResultServiceUrl()}${this.isPartialSubmission(testToSubmit) ? '?partial=true' : ''}`
 
-  compressData = (data: Partial<StandardCarTestCATBSchema>): string =>
+  compressData = (data: Partial<TestResultUnionType>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
 
   isPartialSubmission(testToSubmit: TestToSubmit): boolean {
     return testToSubmit.status === TestStatus.WriteUp && !testToSubmit.payload.rekey;
   }
 
-  removeNullFieldsDeep = (data: Partial<StandardCarTestCATBSchema>): Partial<StandardCarTestCATBSchema> => {
-    const removeNullFields = (object: Partial<StandardCarTestCATBSchema>) => {
+  removeNullFieldsDeep = (data: Partial<TestResultUnionType>): Partial<TestResultUnionType> => {
+    const removeNullFields = (object: Partial<TestResultUnionType>) => {
       Object.keys(object).forEach((key) => {
         const value = object[key];
         if (isNull(value)) unset(object, key);
@@ -86,7 +85,7 @@ export class TestSubmissionProvider {
     };
     return removeNullFields(data);
   }
-  removeFieldsForPartialData = (data: StandardCarTestCATBSchema): Partial<StandardCarTestCATBSchema> => {
+  removeFieldsForPartialData = (data: TestResultUnionType): Partial<TestResultUnionType> => {
     data.testSummary.additionalInformation = null;
     data.testSummary.candidateDescription = null;
     data.testSummary.identification = null;
