@@ -1,7 +1,7 @@
 import { testsReducer } from '../tests.reducer';
 import * as candidateReducer from '../journal-data/candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
+import { PreTestDeclarations, VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from '../tests.model';
 import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -120,19 +120,22 @@ describe('testsReducer', () => {
     const slotId = testReportPracticeSlotId;
     const action = new testsActions.StartTestReportPracticeTest(slotId);
 
-    const output = testsReducer(state, action);
+    const output = testsReducer(state, { ...action, category: 'B' });
 
     expect(output.startedTests[testReportPracticeSlotId].testData.seriousFaults.positioningNormalDriving)
       .toBeUndefined();
     expect(output.startedTests[testReportPracticeSlotId].testData.drivingFaults.moveOffSafety)
       .toBeUndefined();
-    expect(output.startedTests[testReportPracticeSlotId].testData.vehicleChecks.tellMeQuestion.outcome)
+    expect(
+      (output.startedTests[testReportPracticeSlotId].testData.vehicleChecks as VehicleChecks).tellMeQuestion.outcome)
       .toBeUndefined();
 
     expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toEqual(true);
     expect(output.startedTests[1].testData.drivingFaults.clearance).toEqual(1);
-    expect(output.startedTests[1].testData.vehicleChecks.tellMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
-    expect(output.startedTests[1].testData.vehicleChecks.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
+    expect((output.startedTests[1].testData.vehicleChecks as VehicleChecks).tellMeQuestion.outcome)
+      .toEqual(CompetencyOutcome.DF);
+    expect((output.startedTests[1].testData.vehicleChecks as VehicleChecks).showMeQuestion.outcome)
+      .toEqual(CompetencyOutcome.S);
   });
 
   it('should ensure that all slot ids for test report practice tests are test_report_practice ', () => {

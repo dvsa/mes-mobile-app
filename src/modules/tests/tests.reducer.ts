@@ -23,7 +23,8 @@ export const initialState: TestsModel = {
  */
 export function testsReducer(
   state = initialState,
-  action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types) {
+  action: testsActions.Types | journalActions.JournalActionTypes | fakeJournalActions.Types,
+  ): TestsModel {
 
   const slotId = deriveSlotId(state, action);
   const category = deriveCategory(state, action, slotId);
@@ -64,14 +65,12 @@ const deriveCategory = (state: TestsModel, action: Action, slotId: string | null
   return get(state.startedTests[slotId], 'category', null);
 };
 
-const createStateObject = (state: TestsModel, action: Action, slotId: string, category: string) => {
+const createStateObject = (state: TestsModel, action: Action, slotId: string, category: string): TestsModel => {
   return {
     ...state,
     startedTests: {
       ...state.startedTests,
       [slotId]: {
-        ...state.startedTests[slotId],
-        // TODO - Need to get category from somehwere else as at start of test it's null
         ...testsReducerFactory(category, action, state.startedTests[slotId]),
       },
     },

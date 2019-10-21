@@ -17,7 +17,7 @@ describe('formatAnalyticsText', () => {
   const slotId = 123;
 
   it('should prefix end to end practice tests with the correct text', () => {
-    const state = { ...initialState };
+    const state: TestsModel = { ...initialState };
     const action = new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId);
     const tests: TestsModel = testsReducer(state, action);
 
@@ -39,7 +39,7 @@ describe('formatAnalyticsText', () => {
   it('should prefix rekey tests with the correct text', () => {
     const state = { ...initialState };
     const action = new testsActions.StartTest(12345, TestCategory.B);
-    const tests: TestsModel = testsReducer(state, action);
+    const tests = testsReducer(state, action);
     tests.startedTests[tests.currentTest.slotId].rekey = true;
 
     const result = formatAnalyticsText(eventString, tests);
