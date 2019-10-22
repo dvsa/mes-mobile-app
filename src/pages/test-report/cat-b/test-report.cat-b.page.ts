@@ -13,46 +13,46 @@ import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { StoreModel } from '../../shared/models/store.model';
-import { getUntitledCandidateName } from '../../modules/tests/journal-data/candidate/candidate.selector';
-import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { StoreModel } from '../../../shared/models/store.model';
+import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   TestReportViewDidEnter,
   CalculateTestResult,
   TerminateTestFromTestReport,
-} from './test-report.actions';
+} from '../test-report.actions';
 import {
   getCurrentTest,
   getJournalData,
-} from '../../modules/tests/tests.selector';
+} from '../../../modules/tests/tests.selector';
 import {
   Competencies,
   LegalRequirements,
   ExaminerActions,
-} from '../../modules/tests/test-data/test-data.constants';
-import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getTestReportState } from './test-report.reducer';
+} from '../../../modules/tests/test-data/test-data.constants';
+import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { getTestReportState } from '../test-report.reducer';
 import {
   isRemoveFaultMode,
   isSeriousMode,
   isDangerousMode,
   isLegalRequirementsValid,
   isEtaValid,
-} from './test-report.selector';
-import { TestReportValidatorProvider } from '../../providers/test-report-validator/test-report-validator';
-import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.models';
+} from '../test-report.selector';
+import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
+import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
 import {
   getCatBLegalRequirements,
   hasManoeuvreBeenCompleted,
-} from '../../modules/tests/test-data/test-data.selector';
-import { ModalEvent } from './test-report.constants';
+} from '../../../modules/tests/test-data/test-data.selector';
+import { ModalEvent } from '../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
-import { CAT_B } from '../page-names.constants';
+import { CAT_B } from '../../page-names.constants';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -67,10 +67,10 @@ interface TestReportPageState {
 
 @IonicPage()
 @Component({
-  selector: 'page-test-report',
-  templateUrl: 'test-report.html',
+  selector: 'test-report-cat-b-page',
+  templateUrl: 'test-report.cat-b.page.html',
 })
-export class TestReportPage extends PracticeableBasePageComponent {
+export class TestReportCatBPage extends PracticeableBasePageComponent {
   pageState: TestReportPageState;
   subscription: Subscription;
   competencies = Competencies;

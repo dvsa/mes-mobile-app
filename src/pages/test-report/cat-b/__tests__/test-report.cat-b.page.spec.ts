@@ -1,6 +1,6 @@
 
-import { ManoeuvresComponent } from './../components/manoeuvres/manoeuvres';
-import { ManoeuvresPopoverComponent } from './../components/manoeuvres-popover/manoeuvres-popover';
+import { ManoeuvresComponent } from '../../components/manoeuvres/manoeuvres';
+import { ManoeuvresPopoverComponent } from '../../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
 import {
@@ -13,46 +13,46 @@ import {
 } from 'ionic-mocks';
 import { MockComponent } from 'ng-mocks';
 
-import { AppModule } from '../../../app/app.module';
-import { TestReportPage } from '../test-report';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { CompetencyComponent } from '../components/competency/competency';
-import { CompetencyButtonComponent } from '../components/competency-button/competency-button';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { DrivingFaultSummaryComponent } from '../components/driving-fault-summary/driving-fault-summary';
-import { TickIndicatorComponent } from '../../../components/common/tick-indicator/tick-indicator';
-import { ToolbarComponent } from '../components/toolbar/toolbar';
+import { AppModule } from '../../../../app/app.module';
+import { TestReportCatBPage } from '../test-report.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { CompetencyComponent } from '../../components/competency/competency';
+import { CompetencyButtonComponent } from '../../components/competency-button/competency-button';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+import { DrivingFaultSummaryComponent } from '../../components/driving-fault-summary/driving-fault-summary';
+import { TickIndicatorComponent } from '../../../../components/common/tick-indicator/tick-indicator';
+import { ToolbarComponent } from '../../components/toolbar/toolbar';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { testReportReducer } from '../test-report.reducer';
-import { LegalRequirementComponent } from '../components/legal-requirement/legal-requirement';
-import { EtaComponent } from '../components/examiner-takes-action/eta';
-import { initialState } from '../../../modules/tests/test-data/test-data.reducer';
-import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
-import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
-import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
-import { EcoComponent } from '../components/eco/eco';
-import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
+import { testReportReducer } from '../../test-report.reducer';
+import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
+import { EtaComponent } from '../../components/examiner-takes-action/eta';
+import { initialState } from '../../../../modules/tests/test-data/test-data.reducer';
+import { ControlledStopComponent } from '../../components/controlled-stop/controlled-stop';
+import { ManoeuvreCompetencyComponent } from '../../components/manoeuvre-competency/manoeuvre-competency';
+import { VehicleCheckComponent } from '../../components/vehicle-check/vehicle-check';
+import { EcoComponent } from '../../components/eco/eco';
+import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
   TestReportValidatorProviderMock,
-} from '../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
-import { ModalEvent } from '../test-report.constants';
+} from '../../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
+import { ModalEvent } from '../../test-report.constants';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
-import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
-import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
-import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
+import { InsomniaMock } from '../../../../shared/mocks/insomnia.mock';
+import { ScreenOrientationMock } from '../../../../shared/mocks/screen-orientation.mock';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { StatusBar } from '@ionic-native/status-bar';
-import { CAT_B } from '../../page-names.constants';
-import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
-import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
-import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
+import { CAT_B } from '../../../page-names.constants';
+import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
+import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 
-describe('TestReportPage', () => {
-  let fixture: ComponentFixture<TestReportPage>;
-  let component: TestReportPage;
+describe('TestReportCatBPage', () => {
+  let fixture: ComponentFixture<TestReportCatBPage>;
+  let component: TestReportCatBPage;
   let navController: NavController;
   let screenOrientation: ScreenOrientation;
   let insomnia: Insomnia;
@@ -60,7 +60,7 @@ describe('TestReportPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestReportPage,
+      declarations: [TestReportCatBPage,
         MockComponent(ManoeuvresPopoverComponent),
         MockComponent(ManoeuvresComponent),
         MockComponent(TickIndicatorComponent),
@@ -113,7 +113,7 @@ describe('TestReportPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(TestReportPage);
+        fixture = TestBed.createComponent(TestReportCatBPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         screenOrientation = TestBed.get(ScreenOrientation);
