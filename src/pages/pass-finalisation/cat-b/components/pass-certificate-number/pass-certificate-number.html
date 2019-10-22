@@ -7,7 +7,7 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row [formGroup]="form">
       <ion-col>
-        <input #passCertificateNumberInput formControlName="passCertificateNumberCtrl" [class.ng-invalid]="isInvalid()" type="text" value="passCertificateNumber"
+        <input #passCertificateNumberInput formControlName="passCertificateNumberCtrl" [class.ng-invalid]="isInvalid() || passCertificateValidation()" type="text" value="passCertificateNumber"
           id="pass-certificate-number" class="pass-cert-input" maxlength="8">
       </ion-col>
     </ion-row>
