@@ -1,22 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 
-/**
- * Generated class for the TransmissionComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'transmission',
   templateUrl: 'transmission.html',
 })
 export class TransmissionComponent {
 
-  text: string;
+  @Input()
+  form: FormGroup;
 
-  constructor() {
-    console.log('Hello TransmissionComponent Component');
-    this.text = 'Hello World';
+  @Output()
+  formControl: any;
+
+  @Output()
+  gearBoxCategoryChange = new EventEmitter<GearboxCategory>();
+
+
+  ngOnChanges(): void {
+    if (!this.formControl) {
+      this.formControl = new FormControl('', [Validators.required]);
+      this.form.addControl('transmissionCtrl', this.formControl);
+    }
+  }
+  
+  isInvalid(): boolean {
+    return !this.formControl.valid && this.formControl.dirty;
+  }
+
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.gearBoxCategoryChange.emit(transmission);
   }
 
 }

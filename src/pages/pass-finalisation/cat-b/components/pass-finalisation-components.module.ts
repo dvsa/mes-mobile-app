@@ -21,6 +21,7 @@ import { DirectivesModule } from '../../../../directives/directives.module';
     ],
     exports: [
         LicenseProvidedComponent,
+        TransmissionComponent,
         PassCertificateNumberComponent,
         TransmissionComponent,
     ],

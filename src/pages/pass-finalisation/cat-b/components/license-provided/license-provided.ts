@@ -40,12 +40,4 @@ export class LicenseProvidedComponent implements OnChanges {
   provisionalLicenseNotReceived(): void {
     this.licenseNotReceived.emit();
   }
-
-  // get provisionalLicenseReceived(): boolean {
-  //   return this.provisionalLicenseProvidedRadioChecked;
-  // }
-
-  // get provisionalLicenseNotReceived(): boolean {
-  //   return this.provisionalLicenseNotProvidedRadioChecked;
-  // }
 }
