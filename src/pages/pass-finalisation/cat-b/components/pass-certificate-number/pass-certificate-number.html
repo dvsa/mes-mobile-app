@@ -1,4 +1,20 @@
-<!-- Generated template for the PassCertificateNumberComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-row class="mes-validated-row mes-row-separator" id="provisional-license-card">
+  <div class="validation-bar" [class.ng-invalid]="isInvalid() || passCertificateValidation()"></div>
+  <ion-col class="component-label" col-32 align-self-center>
+    <label>Pass certificate number</label>
+  </ion-col>
+  <ion-col align-self-center padding-left>
+    <ion-row class="spacing-row"></ion-row>
+    <ion-row [formGroup]="form">
+      <ion-col>
+        <input #passCertificateNumberInput formControlName="passCertificateNumberCtrl" [class.ng-invalid]="isInvalid()" type="text" value="passCertificateNumber"
+          id="pass-certificate-number" class="pass-cert-input" maxlength="8">
+      </ion-col>
+    </ion-row>
+    <ion-row class="validation-message-row" align-items-center>
+      <div class="validation-text" [class.ng-invalid]="isInvalid() || passCertificateValidation()" id="pass-finalisation-certificate-number-validation-text">
+        Enter a valid certificate number (8 characters)
+      </div>
+    </ion-row>
+  </ion-col>
+</ion-row>

@@ -7,7 +7,6 @@ import {
   PassFinalisationViewDidEnter,
 } from './../pass-finalisation.actions';
 import {
-  PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
@@ -197,13 +196,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
-  ionViewWillEnter(): boolean {
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
-    ];
-
-    return true;
-  }
 
   ionViewDidLeave(): void {
     super.ionViewDidLeave();
