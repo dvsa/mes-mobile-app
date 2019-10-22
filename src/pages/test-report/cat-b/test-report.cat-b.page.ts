@@ -53,6 +53,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { StatusBar } from '@ionic-native/status-bar';
 import { CAT_B } from '../../page-names.constants';
+import { OverlayCallback } from '../test-report.model';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -268,8 +269,4 @@ export class TestReportCatBPage extends PracticeableBasePageComponent {
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_B.DEBRIEF_PAGE));
   }
-}
-
-export interface OverlayCallback {
-  callbackMethod: () => void;
 }

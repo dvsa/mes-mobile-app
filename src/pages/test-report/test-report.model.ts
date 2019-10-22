@@ -5,3 +5,7 @@ export type TestReportModel = {
   isLegalRequirementsValid: boolean,
   isEtaValid: boolean,
 };
+
+export interface OverlayCallback {
+  callbackMethod: () => void;
+}
