@@ -1,5 +1,6 @@
 Feature: Full end to end journey
 
+   @smoke
    Scenario: Examiner completes a passed test with no faults
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Florence Pearson"
       When I start the test for "Miss Florence Pearson"
@@ -27,6 +28,7 @@ Feature: Full end to end journey
       Then I should see the "Journal" page
       And the test result for "Miss Florence Pearson" is "1"
 
+   @smoke
    Scenario: Examiner completes a failed test with various faults
       Given I am logged in as "mobexaminer1" and I have a test for "Mrs Jane Doe"
       When I check candidate details for "Mrs Jane Doe"
@@ -135,6 +137,7 @@ Feature: Full end to end journey
       Then I should see the "Journal" page
       And the test result for "Mrs Jane Doe" is "2"
 
+   @smoke
    Scenario: Examiner terminates test as candidate failed to attend (No mandatory office fields)
       Given I am logged in as "mobexaminer1" and I have a test for "Miss Theresa Shaw"
       When I check candidate details for "Miss Theresa Shaw"
