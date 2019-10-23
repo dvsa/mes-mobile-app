@@ -1,3 +1,4 @@
+@smoke
 Feature: Journal
 
    Scenario: Examiner views candidate details
@@ -10,7 +11,6 @@ Feature: Journal
       And I should see the "Additional information" contains "- DSA"
       And I should see the "Additional information" contains "- Act of nature"
 
-   @smoke
    Scenario: Examiner is informed of a special needs slot
     Given I am on the journal page as "mobexaminer1"
      Then I have a special needs slot for "Miss Theresa Shaw"
@@ -49,7 +49,6 @@ Feature: Journal
      When I view candidate details for "Miss Florence Pearson"
      Then I should see the "Meeting place" contains "Can we meet in the pub over the road from the corner shop on High Street."
 
-   @smoke
    Scenario: Examiner cannot start a test that isn't today
     Given I am on the journal page as "mobexaminer1"
     When I navigate to next day
