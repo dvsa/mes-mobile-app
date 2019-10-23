@@ -29,7 +29,7 @@ import { getTestOutcomeText } from '../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
 import {
   manoeuvreTypeLabels,
-} from '../test-report/cat-b/components/manoeuvre-competency/manoeuvre-competency.constants';
+} from '../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
 import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import showMeQuestionConstants from '../../providers/question/show-me-question.constants';

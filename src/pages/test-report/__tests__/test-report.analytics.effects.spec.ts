@@ -34,7 +34,7 @@ import { testReportPracticeModeSlot } from '../../../modules/tests/__mocks__/tes
 import {
   manoeuvreTypeLabels,
   manoeuvreCompetencyLabels,
-} from '../cat-b/components/manoeuvre-competency/manoeuvre-competency.constants';
+} from '../../../shared/constants/competencies/catb-manoeuvres';
 import { AnalyticRecorded } from '../../../providers/analytics/analytics.actions';
 import { legalRequirementsLabels, legalRequirementToggleValues }
   from '../../../shared/constants/legal-requirements/catb-legal-requirements';

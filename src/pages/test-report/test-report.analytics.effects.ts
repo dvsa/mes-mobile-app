@@ -22,7 +22,7 @@ import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-c
 import {
   manoeuvreCompetencyLabels,
   manoeuvreTypeLabels,
-} from './cat-b/components/manoeuvre-competency/manoeuvre-competency.constants';
+} from '../../shared/constants/competencies/catb-manoeuvres';
 import { AnalyticRecorded } from '../../providers/analytics/analytics.actions';
 import { TestsModel } from '../../modules/tests/tests.model';
 import { formatAnalyticsText } from '../../shared/helpers/format-analytics-text';

@@ -13,7 +13,7 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getManoeuvres } from '../../../../../modules/tests/test-data/test-data.selector';
 import { getTestReportState } from '../../../test-report.reducer';
 import { isRemoveFaultMode, isSeriousMode, isDangerousMode } from '../../../test-report.selector';
-import { manoeuvreCompetencyLabels } from './manoeuvre-competency.constants';
+import { manoeuvreCompetencyLabels } from '../../../../../shared/constants/competencies/catb-manoeuvres';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
