@@ -9,7 +9,7 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 - Node (v 10.13.0)
 - npm (v 6.4.1)
 - Ionic CLI + Cordova: `npm install -g ionic`
-- Cordova (v 8.1.12) `npm install -g cordova@8.1.12`
+- Cordova (v 8.1.2) `npm install -g cordova@8.1.2`
 - Security
   - [Git secrets](https://github.com/awslabs/git-secrets)
   - [ScanRepo](https://github.com/UKHomeOffice/repo-security-scanner)
