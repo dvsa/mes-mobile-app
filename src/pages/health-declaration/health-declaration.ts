@@ -248,7 +248,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     const shortMessage = 'Remind the candidate to contact DVLA';
     const extendedMessage =
       // tslint:disable-next-line:max-line-length
-      `You need to give the provisional license back to the candidate.<br/>The field 'Driver license received' will be automatically changed to 'no'.<br/>${shortMessage}`;
+      `You need to give the provisional licence back to the candidate.<br/>The field 'Driver licence received' will be automatically changed to 'no'.<br/>${shortMessage}`;
     const alert = this.alertController.create({
       title: 'The candidate has not confirmed the health declaration',
       message: this.licenseProvided ? extendedMessage : shortMessage,
