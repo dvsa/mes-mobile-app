@@ -20,6 +20,10 @@ setDefaultTimeout(TEST_CONFIG.DEFAULT_TIMEOUT);
 browser.ignoreSynchronization = true;
 
 Given('I am not logged in', () => {
+
+  // Wait for app to be ready
+  browser.waitForAngular();
+
   // Log out if we are logged in
   logout();
 
