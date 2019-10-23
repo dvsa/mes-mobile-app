@@ -1,24 +1,26 @@
 
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from 'ionic-angular';
-import { CompetencyComponent } from '../../competency/competency';
+import { CompetencyComponent } from '../../../../components/competency/competency';
 import { ManoeuvresPopoverComponent } from '../manoeuvres-popover';
-import { AppModule } from '../../../../../app/app.module';
+import { AppModule } from '../../../../../../app/app.module';
 import {
   RecordManoeuvresSelection, AddManoeuvreDrivingFault, AddManoeuvreSeriousFault, AddManoeuvreDangerousFault,
-} from '../../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
-import { StoreModel } from '../../../../../shared/models/store.model';
+} from '../../../../../../modules/tests/test-data/manoeuvres/manoeuvres.actions';
+import { StoreModel } from '../../../../../../shared/models/store.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { By } from '@angular/platform-browser';
 import { ManoeuvreCompetencyComponent } from '../../manoeuvre-competency/manoeuvre-competency';
-import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../modules/tests/test-data/test-data.constants';
+import { ManoeuvreCompetencies, ManoeuvreTypes } from '../../../../../../modules/tests/test-data/test-data.constants';
 import {
   DrivingFaultsBadgeComponent,
-} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
+} from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
 import { NavControllerMock } from 'ionic-mocks';
-import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
-import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
+import {
+  NavigationStateProviderMock,
+} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('ManoeuvresPopoverComponent', () => {
   let fixture: ComponentFixture<ManoeuvresPopoverComponent>;

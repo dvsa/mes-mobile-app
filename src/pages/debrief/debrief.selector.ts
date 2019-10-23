@@ -13,7 +13,7 @@ import {
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import { manoeuvreTypeLabels, manoeuvreCompetencyLabels }
-  from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+  from '../test-report/cat-b/components/manoeuvre-competency/manoeuvre-competency.constants';
 import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constants';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {

@@ -11,12 +11,14 @@ import { TestReportValidatorProvider } from '../../../providers/test-report-vali
 import { TestReportEffects } from '../test-report.effects';
 import { TestResultProvider } from '../../../providers/test-result/test-result';
 import { TestReportCatBPage } from './test-report.cat-b.page';
+import { TestReportCatBComponentsModule } from './components/test-report.cat-b.components.module';
 
 @NgModule({
   declarations: [
     TestReportCatBPage,
   ],
   imports: [
+    TestReportCatBComponentsModule,
     TestReportComponentsModule,
     IonicPageModule.forChild(TestReportCatBPage),
     StoreModule.forFeature('testReport', testReportReducer),

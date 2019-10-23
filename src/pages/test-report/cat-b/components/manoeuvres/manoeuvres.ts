@@ -1,15 +1,15 @@
 import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { StoreModel } from '../../../../shared/models/store.model';
+import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
-import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
-import { getManoeuvres, sumManoeuvreFaults } from '../../../../modules/tests/test-data/test-data.selector';
-import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTests } from '../../../../modules/tests/tests.reducer';
+import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
+import { getManoeuvres, sumManoeuvreFaults } from '../../../../../modules/tests/test-data/test-data.selector';
+import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { OverlayCallback } from '../../test-report.model';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
+import { OverlayCallback } from '../../../test-report.model';
 
 @Component({
   selector: 'manoeuvres',

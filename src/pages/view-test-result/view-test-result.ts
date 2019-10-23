@@ -27,7 +27,9 @@ import { ViewTestHeaderModel } from './components/view-test-header/view-test-hea
 import { getCandidateName } from '../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTestOutcomeText } from '../../modules/tests/tests.selector';
 import { DebriefCardModel } from './components/debrief-card/debrief-card.model';
-import { manoeuvreTypeLabels } from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+import {
+  manoeuvreTypeLabels,
+} from '../test-report/cat-b/components/manoeuvre-competency/manoeuvre-competency.constants';
 import { get } from 'lodash';
 import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import showMeQuestionConstants from '../../providers/question/show-me-question.constants';

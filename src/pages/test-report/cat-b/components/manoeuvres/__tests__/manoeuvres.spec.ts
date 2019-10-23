@@ -1,23 +1,27 @@
-import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
+import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { By } from '@angular/platform-browser';
 import { ManoeuvresComponent } from '../manoeuvres';
-import { AppModule } from '../../../../../app/app.module';
+import { AppModule } from '../../../../../../app/app.module';
 import { MockComponent } from 'ng-mocks';
 import {
   DrivingFaultsBadgeComponent,
-} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { DateTimeProvider } from '../../../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../../../providers/date-time/__mocks__/date-time.mock';
-import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+} from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import { DateTimeProvider } from '../../../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../../../providers/date-time/__mocks__/date-time.mock';
+import {
+  SeriousFaultBadgeComponent,
+} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
 import { StoreModule } from '@ngrx/store';
-import { testReportReducer } from '../../../test-report.reducer';
-import { NavigationStateProvider } from '../../../../../providers/navigation-state/navigation-state';
-import { NavigationStateProviderMock } from '../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
+import { testReportReducer } from '../../../../test-report.reducer';
+import { NavigationStateProvider } from '../../../../../../providers/navigation-state/navigation-state';
+import {
+  NavigationStateProviderMock,
+} from '../../../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 
 describe('ManoeuvresComponent', () => {
   let fixture: ComponentFixture<ManoeuvresComponent>;
