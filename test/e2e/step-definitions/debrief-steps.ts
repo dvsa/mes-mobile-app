@@ -23,17 +23,13 @@ When('I complete the pass details', () => {
   clickElement(englishPrefRadio);
   const debreifWitnessedRadio = getElement(by.id('debrief-witnessed-yes'));
   clickElement(debreifWitnessedRadio);
+  const transmissionRadio = getElement(by.id('transmission-manual'));
+  clickElement(transmissionRadio);
   continuePassFinalisation();
 });
 
 When('I try to confirm the pass certificate details', () => {
   continuePassFinalisation();
-});
-
-Then('I should see {string} transmission is selected', (transmissionType) => {
-  const transmissionRadio = getElement(
-    by.xpath(`//page-pass-finalisation//input[@id='transmission-${transmissionType}']`));
-  return expect(transmissionRadio.isSelected()).to.eventually.be.true;
 });
 
 Then('I should see the Debrief page with outcome {string}', (outcome) => {
