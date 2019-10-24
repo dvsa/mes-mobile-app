@@ -23,7 +23,6 @@ import { DirectivesModule } from '../../../../directives/directives.module';
         LicenseProvidedComponent,
         TransmissionComponent,
         PassCertificateNumberComponent,
-        TransmissionComponent,
     ],
 })
 export class PassFinalisationCatBComponentsModule { }

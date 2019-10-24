@@ -12,10 +12,20 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
-import { TestFinalisationComponentsModule } from
-'../../../../components/test-finalisation/test-finalisation-component.module';
+import { PassCertificateNumberComponent } from '../components/pass-certificate-number/pass-certificate-number';
+import { LicenseProvidedComponent } from '../components/license-provided/license-provided';
+import { D255Component } from '../../../../components/test-finalisation/d255/d255';
+import { DebriefWitnessedComponent } from '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
+import { LanguagePreferencesComponent } from '../../../../components/test-finalisation/language-preference/language-preferences';
+import { FinalisationHeaderComponent } from '../../../../components/test-finalisation/finalisation-header/finalisation-header';
+import { TransmissionComponent } from '../components/transmission/transmission';
+import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
+import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from '../../../../modules/tests/pass-completion/pass-completion.actions';
+import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
+import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from '../../../../modules/tests/test-summary/test-summary.actions';
+import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 
-describe('PassFinalisationPage', () => {
+fdescribe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
   let component: PassFinalisationCatBPage;
   let store$: Store<StoreModel>;
@@ -25,8 +35,15 @@ describe('PassFinalisationPage', () => {
       declarations: [
         PassFinalisationCatBPage,
         MockComponent(PracticeModeBanner),
+        MockComponent(PassCertificateNumberComponent),
+        MockComponent(LicenseProvidedComponent),
+        MockComponent(TransmissionComponent),
+        MockComponent(D255Component),
+        MockComponent(DebriefWitnessedComponent),
+        MockComponent(FinalisationHeaderComponent),
+        MockComponent(LanguagePreferencesComponent),
       ],
-      imports: [IonicModule, AppModule, TestFinalisationComponentsModule],
+      imports: [IonicModule, AppModule],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
         { provide: NavParams, useFactory: () => NavParamsMock.instance() },
@@ -45,39 +62,77 @@ describe('PassFinalisationPage', () => {
       });
   }));
 
-  describe('onSubmit', () => {
-    // Unit tests for the components TypeScript class
-    it('should dispatch the PersistTests action', () => {
-      const form = component.form;
-      form.get('provisionalLicenseProvidedCtrl').setValue(true);
-      form.get('passCertificateNumberCtrl').setValue('A123456*');
-      form.get('transmissionCtrl').setValue('Manual');
-      component.onSubmit();
-      expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+  describe('Class', () => {
+    describe('ionViewDidEnter', () => {
+      it('should dispatch the VIEW_DID_ENTER action when the function is run', () => {
+        component.ionViewDidEnter();
+        expect(store$.dispatch).toHaveBeenCalledWith(new PassFinalisationViewDidEnter());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
     });
-  });
-  describe('formControls', () => {
-    it('should contain a maxlength validation error when passCertificateNumberCtrl fails to meet maxlength', () => {
-      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-      formCtrl.setValue('A123456B1');
-      expect(formCtrl.hasError('maxlength')).toBe(true);
+    describe('provisionalLicenseReceived', () => {
+      it('should dispatch the correct action when called', () => {
+        component.provisionalLicenseReceived();
+        expect(store$.dispatch).toHaveBeenCalledWith(new ProvisionalLicenseReceived());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
     });
-    it('should contain no validation errors when passCertificateNumberCtrl ends with digit', () => {
-      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-      formCtrl.setValue('A1234567');
-      expect(formCtrl.hasError('maxlength')).toBe(false);
+    describe('provisionalLicenseNotReceived', () => {
+      it('should dispatch the correct action when called', () => {
+        component.provisionalLicenseNotReceived();
+        expect(store$.dispatch).toHaveBeenCalledWith(new ProvisionalLicenseNotReceived());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
     });
-    it('should contain no validation errors when passCertificateNumberCtrl ends with underscore', () => {
-      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-      formCtrl.setValue('A123456_');
-      expect(formCtrl.hasError('pattern')).toBe(false);
-      expect(formCtrl.hasError('maxlength')).toBe(false);
+    describe('transmissionChanged', () => {
+      it('should dispatch the correct action when called', () => {
+        component.transmissionChanged('Manual');
+        expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
     });
-    it('should contain no validation errors when passCertificateNumberCtrl ends with letter', () => {
-      const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-      formCtrl.setValue('A123456B');
-      expect(formCtrl.hasError('pattern')).toBe(false);
-      expect(formCtrl.hasError('maxlength')).toBe(false);
+    describe('d255Changed', () => {
+      it('should dispatch the correct action if the inputted value is true', () => {
+        component.d255Changed(true);
+        expect(store$.dispatch).toHaveBeenCalledWith(new D255Yes());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+      it('should dispatch the correct action if the inputted value is false', () => {
+        component.d255Changed(false);
+        expect(store$.dispatch).toHaveBeenCalledWith(new D255No());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('debriefWitnessedChanged', () => {
+      it('should dispatch the correct action if the inputted value is true', () => {
+        component.debriefWitnessedChanged(true);
+        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefWitnessed());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+      it('should dispatch the correct action if the inputted value is false', () => {
+        component.debriefWitnessedChanged(false);
+        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefUnwitnessed());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('isWelshChanged', () => {
+      it('should dispatch the correct action if the isWelsh flag is true', () => {
+        component.isWelshChanged(true);
+        expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInWelsh('Cymraeg'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+      it('should dispatch the correct action if the isWelsh flag is false', () => {
+        component.isWelshChanged(false);
+        expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInEnglish('English'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('onSubmit', () => {
+      // Unit tests for the components TypeScript class
+      it('should dispatch the PersistTests action', () => {
+        component.onSubmit();
+        expect(store$.dispatch).toHaveBeenCalledWith(new PersistTests());
+      });
     });
   });
 });

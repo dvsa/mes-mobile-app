@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
 
@@ -6,13 +6,14 @@ import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
   selector: 'transmission',
   templateUrl: 'transmission.html',
 })
-export class TransmissionComponent {
+
+export class TransmissionComponent implements OnChanges {
 
   @Input()
   form: FormGroup;
 
-  @Output()
-  formControl: any;
+  formControl: FormControl;
+  static readonly fieldName: string = 'transmissionCtrl';
 
   @Output()
   gearBoxCategoryChange = new EventEmitter<GearboxCategory>();
@@ -21,10 +22,10 @@ export class TransmissionComponent {
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
-      this.form.addControl('transmissionCtrl', this.formControl);
+      this.form.addControl(TransmissionComponent.fieldName, this.formControl);
     }
   }
-  
+
   isInvalid(): boolean {
     return !this.formControl.valid && this.formControl.dirty;
   }

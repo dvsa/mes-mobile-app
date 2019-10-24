@@ -23,11 +23,12 @@
           </ion-col>
         </ion-row>
 
-        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()" (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
+        <license-provided [form]="form" (licenseReceived)="provisionalLicenseReceived()"
+          (licenseNotReceived)="provisionalLicenseNotReceived()"> </license-provided>
 
         <transmission [form]="form" (transmissionChanged)="transmissionChanged(transmission)"></transmission>
 
-        <pass-certificate-number [form]="form"></pass-certificate-number>
+        <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
           (d255Change)="d255Changed($event)"></d255>

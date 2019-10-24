@@ -19,13 +19,13 @@ export class LicenseProvidedComponent implements OnChanges {
   @Input()
   form: FormGroup;
 
-  @Output()
-  formControl: any;
+  formControl: FormControl;
+  static readonly fieldName: string = 'provisionalLicenseProvidedCtrl';
 
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);
-      this.form.addControl('provisionalLicenseProvidedCtrl', this.formControl);
+      this.form.addControl(LicenseProvidedComponent.fieldName, this.formControl);
     }
   }
 
