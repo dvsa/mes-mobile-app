@@ -1,4 +1,4 @@
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ManoeuvreTypes, ManoeuvreCompetencies } from '../../test-data.constants';
 import { manoeuvresReducer } from '../manoeuvres.reducer';
 import {
@@ -15,7 +15,7 @@ describe('Manoeuvres Reducer', () => {
 
   describe('RECORD_MANOEUVRES_SELECTION', () => {
     it('should add selected manoeuvre', () => {
-      const state: Manoeuvres = {};
+      const state: CatBUniqueTypes.Manoeuvres = {};
       const result = manoeuvresReducer(
         state,
         new RecordManoeuvresSelection(ManoeuvreTypes.reverseParkRoad),
@@ -23,7 +23,7 @@ describe('Manoeuvres Reducer', () => {
       expect(result[ManoeuvreTypes.reverseParkRoad]).toEqual({ selected: true });
     });
     it('should replace current with selected manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkCarpark: {
           selected: true,
         },
@@ -36,7 +36,7 @@ describe('Manoeuvres Reducer', () => {
       expect(result.reverseParkCarpark).toBeUndefined();
     });
     it('should wipe any outcome data from other manoeuvres when changing selected manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkCarpark: {
           selected: true,
           controlFault: 'S',
@@ -54,7 +54,7 @@ describe('Manoeuvres Reducer', () => {
 
   describe('ADD_MANOEUVRE_DRIVING_FAULT', () => {
     it('should add a "DF" outcome to the selected manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkRoad: { selected: true },
       };
       const result = manoeuvresReducer(
@@ -70,7 +70,7 @@ describe('Manoeuvres Reducer', () => {
 
   describe('ADD_MANOEUVRE_SERIOUS_FAULT', () => {
     it('should add a "S" outcome to the selected manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkRoad: { selected: true },
       };
       const result = manoeuvresReducer(
@@ -86,7 +86,7 @@ describe('Manoeuvres Reducer', () => {
 
   describe('ADD_MANOEUVRE_DANGEROUS_FAULT', () => {
     it('should add a "D" outcome to the selected manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkRoad: { selected: true },
       };
       const result = manoeuvresReducer(
@@ -102,7 +102,7 @@ describe('Manoeuvres Reducer', () => {
 
   describe('ADD_MANOEUVRE_COMMENT', () => {
     it('should add a comment to the selected Manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkRoad: { selected: true },
       };
       const result = manoeuvresReducer(
@@ -120,7 +120,7 @@ describe('Manoeuvres Reducer', () => {
 
   describe('REMOVE_MANOEUVRE_FAULT', () => {
     it('should remove the fault from a manoeuvre', () => {
-      const state: Manoeuvres = {
+      const state: CatBUniqueTypes.Manoeuvres = {
         reverseParkRoad: { selected: true , controlFault: CompetencyOutcome.DF },
       };
       const result = manoeuvresReducer(state, new RemoveManoeuvreFault({

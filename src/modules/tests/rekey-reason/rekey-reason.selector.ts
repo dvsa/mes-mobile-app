@@ -1,6 +1,6 @@
-import { RekeyReason, StandardCarTestCATBSchema, IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
+import { RekeyReason, CatBUniqueTypes.TestResult, IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/Common';
 
-export const getReasonForRekey = (test: StandardCarTestCATBSchema) => {
+export const getReasonForRekey = (test: CatBUniqueTypes.TestResult) => {
   return test.rekeyReason;
 };
 

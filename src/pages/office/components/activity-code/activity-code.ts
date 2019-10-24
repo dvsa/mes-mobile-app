@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivityCodeModel } from './activity-code.constants';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
 
 @Component({
   selector: 'activity-code',

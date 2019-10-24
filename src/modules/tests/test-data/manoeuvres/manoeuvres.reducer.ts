@@ -1,13 +1,13 @@
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import * as manoeuvresActions from './manoeuvres.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
-export const initialState: Manoeuvres = {};
+export const initialState: CatBUniqueTypes.Manoeuvres = {};
 
 export function manoeuvresReducer(
   state = initialState,
   action: manoeuvresActions.Types,
-): Manoeuvres {
+): CatBUniqueTypes.Manoeuvres {
   switch (action.type) {
     case manoeuvresActions.RECORD_MANOEUVRES_SELECTION:
       return {

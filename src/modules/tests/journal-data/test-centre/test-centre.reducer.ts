@@ -1,4 +1,4 @@
-import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
+import { TestCentre } from '@dvsa/mes-test-schema/categories/Common';
 import { createFeatureSelector } from '@ngrx/store';
 import * as testCentreActions from './test-centre.actions';
 

@@ -1,4 +1,5 @@
-import { TestData, VehicleChecks, QuestionOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import {
   getDrivingFaultCount,
   hasSeriousFault,
@@ -29,7 +30,7 @@ import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behav
 import { behaviourMap } from '../../../../pages/office/office-behaviour-map';
 
 describe('TestDataSelectors', () => {
-  const state: TestData = {
+  const state: CatBUniqueTypes.TestData = {
     drivingFaults: {
       controlsGears: 1,
     },
@@ -82,14 +83,14 @@ describe('TestDataSelectors', () => {
     });
 
     it('should return false if the eyesight test is not complete', () => {
-      const newState: TestData = { ...state, eyesightTest: { complete: false } };
+      const newState: CatBUniqueTypes.TestData = { ...state, eyesightTest: { complete: false } };
       expect(hasEyesightTestBeenCompleted(newState)).toBe(false);
     });
   });
 
   describe('hasEyesightTestGotSeriousFault', () => {
     it('should return true if the eyesight test has a serious fault', () => {
-      const newState: TestData = { ...state, eyesightTest: { seriousFault: true } };
+      const newState: CatBUniqueTypes.TestData = { ...state, eyesightTest: { seriousFault: true } };
       expect(hasEyesightTestGotSeriousFault(newState)).toBe(true);
     });
 
@@ -153,7 +154,7 @@ describe('TestDataSelectors', () => {
       expect(getSeriousFaultSummaryCount(state)).toBe(1);
     });
     it('should return the correct count of serious faults', () => {
-      const failedState: TestData = {
+      const failedState: CatBUniqueTypes.TestData = {
         ...state,
         manoeuvres: {
           forwardPark: {
@@ -187,7 +188,7 @@ describe('TestDataSelectors', () => {
       expect(getDangerousFaultSummaryCount(state)).toBe(1);
     });
     it('should return the correct number of dangerous faults', () => {
-      const failedState: TestData = {
+      const failedState: CatBUniqueTypes.TestData = {
         ...state,
         manoeuvres: {
           forwardPark: {
@@ -300,13 +301,13 @@ describe('TestDataSelectors', () => {
 
   describe('hasManoeuvreBeenCompleted', () => {
     it('should return false when no manoeuvres have been completed', () => {
-      const state: TestData = {
+      const state: CatBUniqueTypes.TestData = {
         manoeuvres: {},
       };
       expect(hasManoeuvreBeenCompleted(state)).toBeFalsy();
     });
     it('should return true when a manoeuvre has been completed', () => {
-      const state: TestData = {
+      const state: CatBUniqueTypes.TestData = {
         manoeuvres: {
           forwardPark: { selected: true },
         },
@@ -387,7 +388,7 @@ describe('TestDataSelectors', () => {
               outcome: CompetencyOutcome.P,
             },
           },
-        } as TestData;
+        } as CatBUniqueTypes.TestData;
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
@@ -401,7 +402,7 @@ describe('TestDataSelectors', () => {
               outcome: CompetencyOutcome.DF,
             },
           },
-        } as TestData;
+        } as CatBUniqueTypes.TestData;
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
@@ -415,7 +416,7 @@ describe('TestDataSelectors', () => {
               outcome: CompetencyOutcome.S,
             },
           },
-        } as TestData;
+        } as CatBUniqueTypes.TestData;
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
@@ -429,7 +430,7 @@ describe('TestDataSelectors', () => {
               outcome: CompetencyOutcome.D,
             },
           },
-        } as TestData;
+        } as CatBUniqueTypes.TestData;
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(true);
       });
@@ -442,7 +443,7 @@ describe('TestDataSelectors', () => {
               outcome: CompetencyOutcome.DF,
             },
           },
-        } as TestData;
+        } as CatBUniqueTypes.TestData;
 
         expect(hasVehicleChecksBeenCompleted(state)).toEqual(false);
       });
@@ -472,7 +473,7 @@ describe('TestDataSelectors', () => {
               outcome: CompetencyOutcome.P,
             },
           },
-        } as TestData;
+        } as CatBUniqueTypes.TestData;
 
         expect(getCatBLegalRequirements(state)).toEqual({
           normalStart1: true,

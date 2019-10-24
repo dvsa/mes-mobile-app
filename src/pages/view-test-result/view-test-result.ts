@@ -10,7 +10,8 @@ import {
 import { BasePageComponent } from '../../shared/classes/base-page';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { SearchProvider } from '../../providers/search/search';
-import { StandardCarTestCATBSchema, TestData, EyesightTest, IpadIssue } from '@dvsa/mes-test-schema/categories/B';
+import { EyesightTest, IpadIssue } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { tap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { TestDetailsModel } from './components/test-details-card/test-details-card.model';
@@ -66,7 +67,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
 
-  testResult: StandardCarTestCATBSchema;
+  testResult: CatBUniqueTypes.TestResult;
 
   isLoading: boolean;
   loadingSpinner: Loading;
@@ -296,7 +297,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   }
 
   getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const testData: TestData = get(this.testResult, 'testData');
+    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return [
       ...getDangerousFaults(testData.dangerousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.D),
@@ -306,7 +307,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   }
 
   getSeriousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const testData: TestData = get(this.testResult, 'testData');
+    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return [
       ...getSeriousFaults(testData.seriousFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.S),
@@ -317,7 +318,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
   }
 
   getDrivingFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const testData: TestData = get(this.testResult, 'testData');
+    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
     return [
       ...getDrivingFaults(testData.drivingFaults),
       ...getManoeuvreFaults(testData.manoeuvres, CompetencyOutcome.DF),
@@ -328,7 +329,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   getControlledStopFault(competencyOutcome: CompetencyOutcome):
     (CommentedCompetency & MultiFaultAssignableCompetency)[] {
-    const testData: TestData = get(this.testResult, 'testData');
+    const testData: CatBUniqueTypes.TestData = get(this.testResult, 'testData');
 
     return getControlledStopFaultAndComment(testData.controlledStop, competencyOutcome)
       .map(this.parseResult);

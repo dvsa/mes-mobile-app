@@ -91,7 +91,7 @@ import {
   WeatherConditions,
   Identification,
   IndependentDriving,
-} from '@dvsa/mes-test-schema/categories/B';
+} from '@dvsa/mes-test-schema/categories/Common';
 import { AddDangerousFaultComment } from '../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 import { AddSeriousFaultComment } from '../../modules/tests/test-data/serious-faults/serious-faults.actions';
 import { AddDrivingFaultComment } from '../../modules/tests/test-data/driving-faults/driving-faults.actions';

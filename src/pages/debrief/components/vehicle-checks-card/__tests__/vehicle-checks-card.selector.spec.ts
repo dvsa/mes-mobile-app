@@ -4,7 +4,7 @@ import {
   hasVehicleChecksFault,
 } from '../vehicle-checks-card.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
 
 describe('vehicleChecksCardSelector', () => {
 

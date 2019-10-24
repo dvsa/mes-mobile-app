@@ -1,4 +1,4 @@
-import { DangerousFaults } from '@dvsa/mes-test-schema/categories/B';
+import { DangerousFaults } from '@dvsa/mes-test-schema/categories/Common';
 import * as dangerousFaultsActions from './dangerous-faults.actions';
 import { Competencies } from '../test-data.constants';
 

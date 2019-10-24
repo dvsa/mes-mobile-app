@@ -1,6 +1,6 @@
 
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
 
 export interface ActivityCodeModel {
   activityCode: ActivityCode;

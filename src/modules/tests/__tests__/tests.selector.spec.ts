@@ -14,7 +14,7 @@ import {
 import { JournalModel } from '../../../modules/journal/journal.model';
 import { AppInfoModel } from '../../app-info/app-info.model';
 import { LogsModel } from '../../logs/logs.model';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { TestStatus } from '../test-status/test-status.model';
 import { DateTime } from '../../../shared/helpers/date-time';
 import { TestsModel } from '../tests.model';
@@ -28,7 +28,7 @@ import { TestOutcome } from '../tests.constants';
 describe('testsSelector', () => {
   describe('getCurrentTest', () => {
     it('should return whichever test is the current one', () => {
-      const currentTest: StandardCarTestCATBSchema = {
+      const currentTest: CatBUniqueTypes.TestResult = {
         version: '0.0.1',
         category: 'B',
         journalData: {
@@ -110,7 +110,7 @@ describe('testsSelector', () => {
   });
 
   describe('getTestOutcomeText', () => {
-    const testState: StandardCarTestCATBSchema = {
+    const testState: CatBUniqueTypes.TestResult = {
       activityCode: ActivityCodes.PASS,
       version: '0.0.1',
       category: 'x',
@@ -156,7 +156,7 @@ describe('testsSelector', () => {
   });
 
   describe('getTestOutcomeClass', () => {
-    const testState: StandardCarTestCATBSchema = {
+    const testState: CatBUniqueTypes.TestResult = {
       activityCode: ActivityCodes.PASS,
       version: '0.0.1',
       category: 'x',
@@ -201,7 +201,7 @@ describe('testsSelector', () => {
   });
 
   describe('getActivityCode', () => {
-    const testState: StandardCarTestCATBSchema = {
+    const testState: CatBUniqueTypes.TestResult = {
       // DVSA_RADIO_FAILURE = '25'
       activityCode: ActivityCodes.DVSA_RADIO_FAILURE,
       version: '0.0.1',

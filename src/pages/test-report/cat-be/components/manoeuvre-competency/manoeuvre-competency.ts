@@ -20,7 +20,7 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
-import { ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/Common';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 
 interface ManoeuvreCompetencyComponentState {

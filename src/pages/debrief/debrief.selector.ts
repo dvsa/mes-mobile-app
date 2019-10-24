@@ -3,13 +3,13 @@ import {
   SeriousFaults,
   DrivingFaults,
   DangerousFaults,
-  TestData,
-  Manoeuvres,
-  StandardCarTestCATBSchema,
+  CatBUniqueTypes.Manoeuvres,
+  CatBUniqueTypes.TestResult,
   VehicleChecks,
-  ControlledStop,
+  CatBUniqueTypes.ControlledStop,
   EyesightTest,
-} from '@dvsa/mes-test-schema/categories/B';
+} from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
 import {
@@ -41,7 +41,7 @@ export const getSeriousOrDangerousFaults = (faults: SeriousFaults | DangerousFau
 };
 
 export const getManoeuvreFaults = (
-  manoeuvres: Manoeuvres,
+  manoeuvres: CatBUniqueTypes.Manoeuvres,
   faultType: CompetencyOutcome,
 ): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
   const faultsEncountered: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
@@ -70,7 +70,7 @@ export const getManoeuvreFaults = (
 };
 
 export const getManoeuvreFaultsCount = (
-  manoeuvres: Manoeuvres,
+  manoeuvres: CatBUniqueTypes.Manoeuvres,
   faultType: CompetencyOutcome,
 ): number => {
   let faultCount = 0;
@@ -150,7 +150,7 @@ export const getVehicleCheckDrivingFaults =
     return result;
   };
 
-export const getControlledStopFault = (controlledStop: ControlledStop, faultType: CompetencyOutcome): string[] => {
+export const getControlledStopFault = (controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];
   if (!controlledStop) {
     return result;
@@ -161,7 +161,7 @@ export const getControlledStopFault = (controlledStop: ControlledStop, faultType
 };
 
 export const getControlledStopFaultAndComment =
-  (controlledStop: ControlledStop, faultType: CompetencyOutcome): CommentedCompetency[] => {
+  (controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome): CommentedCompetency[] => {
     const returnCompetencies = [];
     if (!controlledStop || controlledStop.fault !== faultType) {
       return returnCompetencies;
@@ -193,7 +193,7 @@ export const getEyesightTestSeriousFaultAndComment =
     }];
   };
 
-export const anySeriousFaults = (data: TestData): boolean => {
+export const anySeriousFaults = (data: CatBUniqueTypes.TestData): boolean => {
   const seriousFaults = getSeriousOrDangerousFaults(data.seriousFaults);
   if (seriousFaults.length > 0) {
     return true;
@@ -209,7 +209,7 @@ export const anySeriousFaults = (data: TestData): boolean => {
   return false;
 };
 
-export const anyDangerousFaults = (data: TestData): boolean => {
+export const anyDangerousFaults = (data: CatBUniqueTypes.TestData): boolean => {
   const dangerousFaults = getSeriousOrDangerousFaults(data.dangerousFaults);
   if (dangerousFaults.length > 0) {
     return true;
@@ -225,7 +225,7 @@ export const anyDangerousFaults = (data: TestData): boolean => {
   return false;
 };
 
-export const displayDrivingFaultComments = (data: TestData): boolean => {
+export const displayDrivingFaultComments = (data: CatBUniqueTypes.TestData): boolean => {
   if (anySeriousFaults(data) || anyDangerousFaults(data)) {
     return false;
   }
@@ -331,7 +331,7 @@ export const getDrivingFaultComment = (
   return faults[competency] || '';
 };
 
-export const getTestOutcome = (test: StandardCarTestCATBSchema): string => {
+export const getTestOutcome = (test: CatBUniqueTypes.TestResult): string => {
   switch (test.activityCode) {
     case ActivityCodes.PASS:
       return 'Pass';

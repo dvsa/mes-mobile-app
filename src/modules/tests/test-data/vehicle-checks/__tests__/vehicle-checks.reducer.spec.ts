@@ -1,5 +1,5 @@
 import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { vehicleChecksReducer } from '../vehicle-checks.reducer';
 import {

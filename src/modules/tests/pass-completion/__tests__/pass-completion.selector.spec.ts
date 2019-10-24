@@ -1,4 +1,4 @@
-import { PassCompletion } from '@dvsa/mes-test-schema/categories/B';
+import { PassCompletion } from '@dvsa/mes-test-schema/categories/Common';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,

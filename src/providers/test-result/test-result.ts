@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TestData, ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 import { getDrivingFaultSummaryCount, getSeriousFaultSummaryCount, getDangerousFaultSummaryCount }
   from '../../modules/tests/test-data/test-data.selector';
@@ -9,7 +10,7 @@ import { of } from 'rxjs/observable/of';
 @Injectable()
 export class TestResultProvider {
 
-  calculateCatBTestResult = (testData: TestData): Observable<ActivityCode> => {
+  calculateCatBTestResult = (testData: CatBUniqueTypes.TestData): Observable<ActivityCode> => {
 
     if (getDangerousFaultSummaryCount(testData) > 0) {
       return of(ActivityCodes.FAIL);

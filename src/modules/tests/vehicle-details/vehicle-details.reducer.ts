@@ -1,5 +1,5 @@
 import * as vehicleDetailsActions from './vehicle-details.actions';
-import { VehicleDetails } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleDetails } from '@dvsa/mes-test-schema/categories/Common';
 import { createFeatureSelector } from '@ngrx/store';
 
 const initialState: VehicleDetails = {

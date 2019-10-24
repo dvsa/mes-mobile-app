@@ -1,5 +1,6 @@
 
-import { TestData, TestRequirements, ETA, Eco, Manoeuvres, VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { ETA, Eco } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
 import { pickBy, sumBy, endsWith, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -10,9 +11,10 @@ import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviou
 import { CatBLegalRequirements } from './test-data.models';
 import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 
-export const getDrivingFaultCount = (data: TestData, competency: Competencies) => data.drivingFaults[competency];
+export const getDrivingFaultCount = (
+  data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
 
-export const getDrivingFaultSummaryCount = (data: TestData): number => {
+export const getDrivingFaultSummaryCount = (data: CatBUniqueTypes.TestData): number => {
 
   // The way how we store the driving faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
@@ -32,7 +34,7 @@ export const getDrivingFaultSummaryCount = (data: TestData): number => {
   return result;
 };
 
-export const getSeriousFaultSummaryCount = (data: TestData): number => {
+export const getSeriousFaultSummaryCount = (data: CatBUniqueTypes.TestData): number => {
 
   // The way how we store serious faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
@@ -53,7 +55,7 @@ export const getSeriousFaultSummaryCount = (data: TestData): number => {
   return result;
 };
 
-export const getDangerousFaultSummaryCount = (data: TestData): number => {
+export const getDangerousFaultSummaryCount = (data: CatBUniqueTypes.TestData): number => {
 
   // The way how we store serious faults differs for certain competencies
   // Because of this we need to pay extra attention on summing up all of them
@@ -86,7 +88,7 @@ export const sumVehicleCheckFaults = (vehicleChecks: VehicleChecks): number => {
   return 0;
 };
 
-export const sumManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: CompetencyOutcome): number => {
+export const sumManoeuvreFaults = (manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome): number => {
   const manoeuvresCollection = Object.values(manoeuvres);
   return sumBy(manoeuvresCollection, (manoeuvre) => {
     if (manoeuvre.selected) {
@@ -96,13 +98,13 @@ export const sumManoeuvreFaults = (manoeuvres: Manoeuvres, faultType: Competency
   });
 };
 
-export const hasSeriousFault = (data: TestData, competency: Competencies) => data.seriousFaults[competency];
+export const hasSeriousFault = (data: CatBUniqueTypes.TestData, competency: Competencies) => data.seriousFaults[competency];
 
-export const hasDangerousFault = (data: TestData, competency: Competencies) => data.dangerousFaults[competency];
+export const hasDangerousFault = (data: CatBUniqueTypes.TestData, competency: Competencies) => data.dangerousFaults[competency];
 
-export const getTestRequirements = (data: TestData) => data.testRequirements;
+export const getTestRequirements = (data: CatBUniqueTypes.TestData) => data.testRequirements;
 
-export const getETA = (data: TestData) => data.ETA;
+export const getETA = (data: CatBUniqueTypes.TestData) => data.ETA;
 
 export const getETAFaultText = (data: ETA) => {
   if (!data) return;
@@ -116,7 +118,7 @@ export const hasExaminerTakenAction = (data: ETA, action: ExaminerActions) => {
   return data[action];
 };
 
-export const getEco = (data: TestData) => data.eco;
+export const getEco = (data: CatBUniqueTypes.TestData) => data.eco;
 
 export const getEcoFaultText = (data: Eco) => {
   if (!data) return;
@@ -126,9 +128,9 @@ export const getEcoFaultText = (data: Eco) => {
   return;
 };
 
-export const getManoeuvres = (data: TestData): Manoeuvres => data.manoeuvres;
+export const getManoeuvres = (data: CatBUniqueTypes.TestData): CatBUniqueTypes.Manoeuvres => data.manoeuvres;
 
-export const hasManoeuvreBeenCompleted = (data: TestData) => {
+export const hasManoeuvreBeenCompleted = (data: CatBUniqueTypes.TestData) => {
   return (
     get(data.manoeuvres, 'forwardPark.selected') ||
     get(data.manoeuvres, 'reverseParkCarpark.selected') ||
@@ -137,17 +139,17 @@ export const hasManoeuvreBeenCompleted = (data: TestData) => {
   );
 };
 
-export const hasControlledStopBeenCompleted = (data: TestData) => data.controlledStop.selected;
+export const hasControlledStopBeenCompleted = (data: CatBUniqueTypes.TestData) => data.controlledStop.selected;
 
-export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
+export const hasEyesightTestBeenCompleted = (data: CatBUniqueTypes.TestData) => data.eyesightTest.complete;
 
-export const hasEyesightTestGotSeriousFault = (data: TestData) => data.eyesightTest.seriousFault;
+export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
-export const hasLegalRequirementBeenCompleted = (data: TestRequirements, legalRequirement: LegalRequirements) => {
+export const hasLegalRequirementBeenCompleted = (data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
   return data[legalRequirement];
 };
 
-export const getVehicleChecks = (state: TestData): VehicleChecks => state.vehicleChecks;
+export const getVehicleChecks = (state: CatBUniqueTypes.TestData): VehicleChecks => state.vehicleChecks;
 
 export const getTellMeQuestion = (state: VehicleChecks): TellMeQuestion =>
   tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
@@ -188,7 +190,7 @@ export const getShowMeQuestionOptions = (
   return filteredQuestions;
 };
 
-export const hasVehicleChecksBeenCompleted = (data: TestData): boolean => {
+export const hasVehicleChecksBeenCompleted = (data: CatBUniqueTypes.TestData): boolean => {
   const showMeQuestionOutcome = data.vehicleChecks.showMeQuestion.outcome;
   const tellMeQuestionOutcome = data.vehicleChecks.tellMeQuestion.outcome;
 
@@ -205,7 +207,7 @@ export const hasVehicleChecksBeenCompleted = (data: TestData): boolean => {
     );
 };
 
-export const getCatBLegalRequirements = (data: TestData): CatBLegalRequirements => {
+export const getCatBLegalRequirements = (data: CatBUniqueTypes.TestData): CatBLegalRequirements => {
   return {
     normalStart1: data.testRequirements.normalStart1 || false,
     normalStart2: data.testRequirements.normalStart2 || false,

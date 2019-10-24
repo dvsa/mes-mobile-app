@@ -1,4 +1,4 @@
-import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
+import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
 import * as postTestDeclarationActions from './post-test-declarations.actions';
 import { createFeatureSelector } from '@ngrx/store';
 

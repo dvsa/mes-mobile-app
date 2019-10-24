@@ -1,4 +1,4 @@
-import { EyesightTest } from '@dvsa/mes-test-schema/categories/B';
+import { EyesightTest } from '@dvsa/mes-test-schema/categories/Common';
 import * as eyesightTestActions from './eyesight-test.actions';
 
 export const initialState: EyesightTest = {};

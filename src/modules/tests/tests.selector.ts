@@ -1,5 +1,5 @@
 import { TestStatus } from './test-status/test-status.model';
-import { StandardCarTestCATBSchema, JournalData, ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes.TestResult, JournalData, ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
 import { TestsModel, TestResultUnionType } from './tests.model';
 import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
@@ -24,13 +24,13 @@ export const getTestById = (tests: TestsModel, slotId: string): TestResultUnionT
   return tests.startedTests[slotId];
 };
 
-export const getJournalData = (test: StandardCarTestCATBSchema): JournalData => test.journalData;
+export const getJournalData = (test: CatBUniqueTypes.TestResult): JournalData => test.journalData;
 
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testStatus[slotId] || TestStatus.Booked;
 
-export const getTestOutcome = (test: StandardCarTestCATBSchema) => test.activityCode;
+export const getTestOutcome = (test: CatBUniqueTypes.TestResult) => test.activityCode;
 
-export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
+export const getTestOutcomeText = (test: CatBUniqueTypes.TestResult) => {
   if (test.activityCode === ActivityCodes.PASS) {
     return TestOutcome.Passed;
   }
@@ -47,7 +47,7 @@ export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
   return TestOutcome.Terminated;
 };
 
-export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
+export const isTestOutcomeSet = (test: CatBUniqueTypes.TestResult) => {
   if (test.activityCode) {
     return true;
   }
@@ -58,7 +58,7 @@ export const isPassed = (test: TestResultUnionType): boolean => {
   return test.activityCode === ActivityCodes.PASS;
 };
 
-export const getActivityCode = (test: StandardCarTestCATBSchema) => {
+export const getActivityCode = (test: CatBUniqueTypes.TestResult) => {
 
   const activityCodeIndex = activityCodeModelList.findIndex(
     activityCode => test.activityCode === activityCode.activityCode);

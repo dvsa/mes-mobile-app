@@ -5,7 +5,7 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/test-data.selector';
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
 import {

@@ -31,7 +31,8 @@ import { legalRequirementsLabels, legalRequirementToggleValues }
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { getEco, getTestRequirements } from '../../modules/tests/test-data/test-data.selector';
-import { Eco, TestRequirements } from '@dvsa/mes-test-schema/categories/B';
+import { Eco } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 @Injectable()
 export class TestReportAnalyticsEffects {
@@ -569,7 +570,7 @@ export class TestReportAnalyticsEffects {
     )),
     concatMap(
       ([action, tests,
-        testRequirements]: [testRequirementsActions.ToggleLegalRequirement, TestsModel, TestRequirements]) => {
+        testRequirements]: [testRequirementsActions.ToggleLegalRequirement, TestsModel, CatBUniqueTypes.TestRequirements]) => {
         const toggleValue = testRequirements[action.payload]
           ? legalRequirementToggleValues.completed
           : legalRequirementToggleValues.uncompleted;

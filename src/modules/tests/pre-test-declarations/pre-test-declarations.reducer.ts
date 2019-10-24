@@ -1,4 +1,4 @@
-import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
 import * as preTestDeclarationActions from './pre-test-declarations.actions';
 import { createFeatureSelector } from '@ngrx/store';
 

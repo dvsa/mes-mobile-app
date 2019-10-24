@@ -1,7 +1,7 @@
 import { testsReducer } from '../tests.reducer';
 import * as candidateReducer from '../journal-data/candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
-import { PreTestDeclarations, VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { PreTestDeclarations, VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
 import { TestsModel } from '../tests.model';
 import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';

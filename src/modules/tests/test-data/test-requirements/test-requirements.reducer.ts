@@ -1,12 +1,12 @@
-import { TestRequirements } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import * as testRequirementsActions from './test-requirements.actions';
 
-export const initialState: TestRequirements = {};
+export const initialState: CatBUniqueTypes.TestRequirements = {};
 
 export function testRequirementsReducer(
   state = initialState,
   action: testRequirementsActions.Types,
-): TestRequirements {
+): CatBUniqueTypes.TestRequirements {
   switch (action.type) {
     case testRequirementsActions.TOGGLE_LEGAL_REQUIREMENT:
       return {

@@ -1,4 +1,4 @@
-import { Eco } from '@dvsa/mes-test-schema/categories/B';
+import { Eco } from '@dvsa/mes-test-schema/categories/Common';
 import { ecoReducer } from '../eco.reducer';
 import { ToggleEco, ToggleControlEco, TogglePlanningEco } from '../eco.actions';
 

@@ -12,7 +12,7 @@ import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE } from '../../../pages/page-na
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { StoreModel } from '../../../shared/models/store.model';

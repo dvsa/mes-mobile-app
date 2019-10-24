@@ -1,4 +1,4 @@
-import { DrivingFaults } from '@dvsa/mes-test-schema/categories/B';
+import { DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import * as drivingFaultsActions from './driving-faults.actions';
 
 export const initialState: DrivingFaults = {};

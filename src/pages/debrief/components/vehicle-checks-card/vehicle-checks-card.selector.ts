@@ -1,5 +1,5 @@
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
-import { VehicleChecks, QuestionOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleChecks, QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
 
 export const getShowMeQuestionOutcome = (vehicleChecks: VehicleChecks): QuestionOutcome => {
   return vehicleChecks.showMeQuestion.outcome;

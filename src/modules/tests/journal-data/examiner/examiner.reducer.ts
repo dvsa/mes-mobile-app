@@ -1,4 +1,4 @@
-import { Examiner } from '@dvsa/mes-test-schema/categories/B';
+import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
 import { createFeatureSelector } from '@ngrx/store';
 import * as examinerActions from './examiner.actions';
 

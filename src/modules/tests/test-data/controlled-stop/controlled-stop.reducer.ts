@@ -1,13 +1,13 @@
-import { ControlledStop } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import * as controlledStopActions from './controlled-stop.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
-export const initialState: ControlledStop = {};
+export const initialState: CatBUniqueTypes.ControlledStop = {};
 
 export function controlledStopReducer(
   state = initialState,
   action: controlledStopActions.Types,
-): ControlledStop {
+): CatBUniqueTypes.ControlledStop {
   switch (action.type) {
     case controlledStopActions.TOGGLE_CONTROLLED_STOP:
       return {

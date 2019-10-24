@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
+import { IndependentDriving } from '@dvsa/mes-test-schema/categories/Common';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,

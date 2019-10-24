@@ -1,4 +1,4 @@
-import { TestRequirements } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { testRequirementsReducer } from '../test-requirements.reducer';
 import { LegalRequirements } from '../../test-data.constants';
 import { ToggleLegalRequirement } from '../test-requirements.actions';
@@ -7,7 +7,7 @@ describe('Test Requirements Reducer', () => {
 
   describe('TOGGLE_LEGAL_REQUIREMENT', () => {
     it('should toggle normal start 1 to complete (true) when dispatched first time', () => {
-      const state: TestRequirements = {};
+      const state: CatBUniqueTypes.TestRequirements = {};
       const result = testRequirementsReducer(
         state,
         new ToggleLegalRequirement(LegalRequirements.normalStart1),
@@ -15,7 +15,7 @@ describe('Test Requirements Reducer', () => {
       expect(result.normalStart1).toEqual(true);
     });
     it('should toggle normal start 1 to incomplete (false) when dispatched second time', () => {
-      const state: TestRequirements = {};
+      const state: CatBUniqueTypes.TestRequirements = {};
       const modifiedState = testRequirementsReducer(state, new ToggleLegalRequirement(LegalRequirements.normalStart1));
       const result = testRequirementsReducer(modifiedState, new ToggleLegalRequirement(LegalRequirements.normalStart1));
       expect(result.normalStart1).toEqual(false);

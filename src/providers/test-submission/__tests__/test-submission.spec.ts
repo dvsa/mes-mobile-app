@@ -4,7 +4,7 @@ import { UrlProvider } from '../../url/url';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UrlProviderMock } from '../../url/__mocks__/url.mock';
 import { gunzipSync } from 'zlib';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { HttpClient } from '@angular/common/http';
 import { StoreModule, Store } from '@ngrx/store';
 import { LogHelper } from '../../logs/logsHelper';
@@ -79,7 +79,7 @@ describe('TestSubmissionProvider', () => {
     it('should successfully compress the provided data', () => {
 
       // ARRANGE
-      const mockData: Partial<StandardCarTestCATBSchema> = {
+      const mockData: Partial<CatBUniqueTypes.TestResult> = {
         category: 'B',
         communicationPreferences: {
           updatedEmail: 'test@test.com',
@@ -100,7 +100,7 @@ describe('TestSubmissionProvider', () => {
     it('should successfully remove null props from the provided data', () => {
 
       // ARRANGE
-      const mockData: Partial<StandardCarTestCATBSchema> = {
+      const mockData: Partial<CatBUniqueTypes.TestResult> = {
         category: 'B',
         activityCode: null,
         communicationPreferences: {
@@ -122,7 +122,7 @@ describe('TestSubmissionProvider', () => {
         instructorDetails: {},
       };
       // ACT
-      const result = testSubmissionProvider.removeNullFieldsDeep(mockData as StandardCarTestCATBSchema);
+      const result = testSubmissionProvider.removeNullFieldsDeep(mockData as CatBUniqueTypes.TestResult);
       // ASSERT
       expect(result).toEqual(expected);
     });

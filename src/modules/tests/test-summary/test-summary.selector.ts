@@ -1,4 +1,4 @@
-import { TestSummary, WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/B';
+import { TestSummary, WeatherConditions, Identification, IndependentDriving } from '@dvsa/mes-test-schema/categories/Common';
 
 export const getRouteNumber = (ts: TestSummary): number => ts.routeNumber;
 export const getCandidateDescription = (ts: TestSummary): string => ts.candidateDescription;

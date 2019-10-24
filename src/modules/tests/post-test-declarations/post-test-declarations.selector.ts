@@ -1,4 +1,4 @@
-import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/B';
+import { PostTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
 
 export const getHealthDeclarationStatus = (decs: PostTestDeclarations) => decs.healthDeclarationAccepted;
 export const getReceiptDeclarationStatus = (decs: PostTestDeclarations) => decs.passCertificateNumberReceived;

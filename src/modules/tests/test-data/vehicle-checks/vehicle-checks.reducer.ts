@@ -1,5 +1,5 @@
 
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
 import * as vehicleChecksActions from './vehicle-checks.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
