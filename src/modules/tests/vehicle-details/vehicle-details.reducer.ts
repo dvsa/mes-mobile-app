@@ -28,6 +28,11 @@ export const vehicleDetailsReducer = (state = initialState, action: vehicleDetai
         ...state,
         gearboxCategory: action.gearboxCategory,
       };
+    case vehicleDetailsActions.CLEAR_GEARBOX_CATEGORY:
+      return {
+        ...state,
+        gearboxCategory: null,
+      };
     default:
       return state;
   }
