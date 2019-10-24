@@ -1,9 +1,9 @@
 
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import * as vehicleChecksActions from './vehicle-checks.actions';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 
-export const initialState: VehicleChecks = {
+export const initialState: CatBUniqueTypes.VehicleChecks = {
   tellMeQuestion: {},
   showMeQuestion: {},
 };
@@ -11,7 +11,7 @@ export const initialState: VehicleChecks = {
 export function vehicleChecksReducer(
   state = initialState,
   action: vehicleChecksActions.Types,
-): VehicleChecks | null {
+): CatBUniqueTypes.VehicleChecks | null {
   switch (action.type) {
     case vehicleChecksActions.TELL_ME_QUESTION_SELECTED:
       return {

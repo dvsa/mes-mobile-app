@@ -74,7 +74,7 @@ export const getDangerousFaultSummaryCount = (data: CatBUniqueTypes.TestData): n
   return result;
 };
 
-export const sumVehicleCheckFaults = (vehicleChecks: VehicleChecks): number => {
+export const sumVehicleCheckFaults = (vehicleChecks: CatBUniqueTypes.VehicleChecks): number => {
   const { showMeQuestion, tellMeQuestion } = vehicleChecks;
 
   if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
@@ -98,9 +98,11 @@ export const sumManoeuvreFaults = (manoeuvres: CatBUniqueTypes.Manoeuvres, fault
   });
 };
 
-export const hasSeriousFault = (data: CatBUniqueTypes.TestData, competency: Competencies) => data.seriousFaults[competency];
+export const hasSeriousFault = (
+  data: CatBUniqueTypes.TestData, competency: Competencies) => data.seriousFaults[competency];
 
-export const hasDangerousFault = (data: CatBUniqueTypes.TestData, competency: Competencies) => data.dangerousFaults[competency];
+export const hasDangerousFault = (
+  data: CatBUniqueTypes.TestData, competency: Competencies) => data.dangerousFaults[competency];
 
 export const getTestRequirements = (data: CatBUniqueTypes.TestData) => data.testRequirements;
 
@@ -145,26 +147,28 @@ export const hasEyesightTestBeenCompleted = (data: CatBUniqueTypes.TestData) => 
 
 export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
-export const hasLegalRequirementBeenCompleted = (data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
+export const hasLegalRequirementBeenCompleted = (
+  data: CatBUniqueTypes.TestRequirements, legalRequirement: LegalRequirements) => {
   return data[legalRequirement];
 };
 
-export const getVehicleChecks = (state: CatBUniqueTypes.TestData): VehicleChecks => state.vehicleChecks;
+export const getVehicleChecks = (state: CatBUniqueTypes.TestData): CatBUniqueTypes.VehicleChecks => state.vehicleChecks;
 
-export const getTellMeQuestion = (state: VehicleChecks): TellMeQuestion =>
+export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): TellMeQuestion =>
   tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
 
-export const isTellMeQuestionSelected = (state: VehicleChecks) => get(state, 'tellMeQuestion.code') !== undefined;
+export const isTellMeQuestionSelected = (
+  state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.code') !== undefined;
 
 export const isTellMeQuestionCorrect =
-  (state: VehicleChecks) => get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.P;
+  (state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.P;
 
-export const isTellMeQuestionDrivingFault = (state: VehicleChecks) =>
+export const isTellMeQuestionDrivingFault = (state: CatBUniqueTypes.VehicleChecks) =>
   get(state, 'tellMeQuestion.outcome') === CompetencyOutcome.DF;
 
-export const tellMeQuestionOutcome = (state: VehicleChecks) => get(state, 'tellMeQuestion.outcome');
+export const tellMeQuestionOutcome = (state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.outcome');
 
-export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
+export const getSelectedTellMeQuestionText = (state: CatBUniqueTypes.VehicleChecks) => {
   const tellMeQuestionText =
     tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
   if (!tellMeQuestionText) {
@@ -173,7 +177,7 @@ export const getSelectedTellMeQuestionText = (state: VehicleChecks) => {
   return `${get(state, 'tellMeQuestion.code')} - ${tellMeQuestionText.shortName}`;
 };
 
-export const getShowMeQuestion = (state: VehicleChecks) =>
+export const getShowMeQuestion = (state: CatBUniqueTypes.VehicleChecks) =>
   showMeQuestions.find(question => question.code === get(state, 'showMeQuestion.code'));
 
 export const getShowMeQuestionOptions = (

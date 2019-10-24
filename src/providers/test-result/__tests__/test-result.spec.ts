@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { TestResultProvider } from '../test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { CatBUniqueTypes.TestData, DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
+import { DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 describe('TestResultCalculatorProvider', () => {
 

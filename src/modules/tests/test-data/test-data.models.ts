@@ -5,6 +5,7 @@ export type FaultPayload = {
   newFaultCount: number,
 };
 
+// This type is used for test report validation
 export type CatBLegalRequirements = {
   normalStart1: boolean,
   normalStart2: boolean,

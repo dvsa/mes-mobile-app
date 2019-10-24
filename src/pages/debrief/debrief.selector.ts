@@ -3,10 +3,6 @@ import {
   SeriousFaults,
   DrivingFaults,
   DangerousFaults,
-  CatBUniqueTypes.Manoeuvres,
-  CatBUniqueTypes.TestResult,
-  VehicleChecks,
-  CatBUniqueTypes.ControlledStop,
   EyesightTest,
 } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
@@ -87,7 +83,7 @@ export const getManoeuvreFaultsCount = (
 };
 
 export const getVehicleCheckDangerousFaults =
-  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  (vehicleChecks: CatBUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
     if (!vehicleChecks) {
@@ -107,7 +103,7 @@ export const getVehicleCheckDangerousFaults =
   };
 
 export const getVehicleCheckSeriousFaults =
-  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  (vehicleChecks: CatBUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
 
     if (!vehicleChecks) {
@@ -126,7 +122,7 @@ export const getVehicleCheckSeriousFaults =
   };
 
 export const getVehicleCheckDrivingFaults =
-  (vehicleChecks: VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
+  (vehicleChecks: CatBUniqueTypes.VehicleChecks): (CommentedCompetency & MultiFaultAssignableCompetency)[] => {
     const result: (CommentedCompetency & MultiFaultAssignableCompetency)[] = [];
     if (!vehicleChecks || !vehicleChecks.showMeQuestion || !vehicleChecks.tellMeQuestion) {
       return result;
@@ -150,7 +146,8 @@ export const getVehicleCheckDrivingFaults =
     return result;
   };
 
-export const getControlledStopFault = (controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome): string[] => {
+export const getControlledStopFault = (
+  controlledStop: CatBUniqueTypes.ControlledStop, faultType: CompetencyOutcome): string[] => {
   const result: string[] = [];
   if (!controlledStop) {
     return result;

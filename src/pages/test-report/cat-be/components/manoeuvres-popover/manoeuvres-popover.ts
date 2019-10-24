@@ -1,4 +1,4 @@
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
@@ -26,7 +26,7 @@ interface ManoeuvresFaultState {
 export class ManoeuvresPopoverComponent {
 
   manoeuvreTypes = ManoeuvreTypes;
-  manoeuvres$: Observable<Manoeuvres>;
+  manoeuvres$: Observable<CatBEUniqueTypes.Manoeuvres>;
   competencies = ManoeuvreCompetencies;
   manoeuvresWithFaults$: Observable<ManoeuvresFaultState>;
 
@@ -40,7 +40,7 @@ export class ManoeuvresPopoverComponent {
       select(getManoeuvres),
     );
     this.manoeuvresWithFaults$ = this.manoeuvres$.pipe(
-      map((manoeuvres: Manoeuvres) => ({
+      map((manoeuvres: CatBEUniqueTypes.Manoeuvres) => ({
         reverseRight: this.manoeuvreHasFaults(manoeuvres.reverseRight),
         reverseParkRoad: this.manoeuvreHasFaults(manoeuvres.reverseParkRoad),
         reverseParkCarpark: this.manoeuvreHasFaults(manoeuvres.reverseParkCarpark),

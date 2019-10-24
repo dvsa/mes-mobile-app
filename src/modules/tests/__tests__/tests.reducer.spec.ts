@@ -1,7 +1,8 @@
 import { testsReducer } from '../tests.reducer';
 import * as candidateReducer from '../journal-data/candidate/candidate.reducer';
 import * as preTestDeclarationsReducer from '../pre-test-declarations/pre-test-declarations.reducer';
-import { PreTestDeclarations, VehicleChecks } from '@dvsa/mes-test-schema/categories/Common';
+import { PreTestDeclarations } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { TestsModel } from '../tests.model';
 import * as testsActions from './../tests.actions';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
@@ -127,14 +128,15 @@ describe('testsReducer', () => {
     expect(output.startedTests[testReportPracticeSlotId].testData.drivingFaults.moveOffSafety)
       .toBeUndefined();
     expect(
-      (output.startedTests[testReportPracticeSlotId].testData.vehicleChecks as VehicleChecks).tellMeQuestion.outcome)
+      (output.startedTests[testReportPracticeSlotId].testData.vehicleChecks as CatBUniqueTypes.VehicleChecks)
+        .tellMeQuestion.outcome)
       .toBeUndefined();
 
     expect(output.startedTests[1].testData.seriousFaults.signalsTimed).toEqual(true);
     expect(output.startedTests[1].testData.drivingFaults.clearance).toEqual(1);
-    expect((output.startedTests[1].testData.vehicleChecks as VehicleChecks).tellMeQuestion.outcome)
+    expect((output.startedTests[1].testData.vehicleChecks as CatBUniqueTypes.VehicleChecks).tellMeQuestion.outcome)
       .toEqual(CompetencyOutcome.DF);
-    expect((output.startedTests[1].testData.vehicleChecks as VehicleChecks).showMeQuestion.outcome)
+    expect((output.startedTests[1].testData.vehicleChecks as CatBUniqueTypes.VehicleChecks).showMeQuestion.outcome)
       .toEqual(CompetencyOutcome.S);
   });
 

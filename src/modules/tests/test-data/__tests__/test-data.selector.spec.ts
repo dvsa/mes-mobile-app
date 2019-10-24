@@ -319,7 +319,7 @@ describe('TestDataSelectors', () => {
   describe('vehicle checks selector', () => {
     describe('isTellMeQuestionSelected', () => {
       it('should return true if there is a tell me question selected', () => {
-        const state: VehicleChecks = {
+        const state: CatBUniqueTypes.VehicleChecks = {
           tellMeQuestion: {
             code: 'T1',
             description: 'desc',
@@ -333,7 +333,7 @@ describe('TestDataSelectors', () => {
       });
     });
     describe('isTellMeQuestionCorrect', () => {
-      const passedState: VehicleChecks = {
+      const passedState: CatBUniqueTypes.VehicleChecks = {
         tellMeQuestion: {
           code: 'T1',
           description: 'desc',
@@ -355,7 +355,7 @@ describe('TestDataSelectors', () => {
       });
     });
     describe('isTellMeQuestionDrivingFault', () => {
-      const faultState: VehicleChecks = {
+      const faultState: CatBUniqueTypes.VehicleChecks = {
         tellMeQuestion: {
           code: 'T1',
           description: 'desc',
