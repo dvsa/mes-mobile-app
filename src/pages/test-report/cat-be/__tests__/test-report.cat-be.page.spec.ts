@@ -38,7 +38,7 @@ import {
   TestReportValidatorProviderMock,
 } from '../../../../providers/test-report-validator/__mocks__/test-report-validator.mock';
 import { ModalEvent } from '../../test-report.constants';
-import { CAT_B } from '../../../page-names.constants';
+import { CAT_BE } from '../../../page-names.constants';
 import { NavigationStateProvider } from '../../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
@@ -110,7 +110,7 @@ describe('TestReportCatBEPage', () => {
       it('should navigate to debrief page when passed a CONTINUE event', () => {
         component.onModalDismiss(ModalEvent.CONTINUE);
         const { calls } = navController.push as jasmine.Spy;
-        expect(calls.argsFor(0)[0]).toBe(CAT_B.DEBRIEF_PAGE);
+        expect(calls.argsFor(0)[0]).toBe(CAT_BE.DEBRIEF_PAGE);
       });
     });
 
