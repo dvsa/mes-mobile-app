@@ -1,4 +1,4 @@
-non-pass-finalisation {
+non-pass-finalisation-cat-b-page {
   ion-content.content-ios {
     background-color: map-get($colors, "mes-white");
   }
@@ -36,6 +36,6 @@ non-pass-finalisation {
 
   #test-outcome {
     color: map-get($colors, "mes-red") !important;
-    
+
   }
 }

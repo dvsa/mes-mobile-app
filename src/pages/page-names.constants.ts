@@ -23,7 +23,7 @@ export const CAT_B = {
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingPage',
   REKEY_REASON_PAGE: 'RekeyReasonPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationPage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBPage',
 };
 
 export const CAT_BE = {
@@ -39,5 +39,5 @@ export const CAT_BE = {
   POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingPage',
   REKEY_REASON_PAGE: 'RekeyReasonPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
-  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationPage',
+  NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBEPage',
 };

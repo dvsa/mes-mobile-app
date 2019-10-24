@@ -1,31 +1,31 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, Platform } from 'ionic-angular';
 import { NavControllerMock, PlatformMock } from 'ionic-mocks';
-import { AppModule } from '../../../app/app.module';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { AppModule } from '../../../../app/app.module';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule, Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
-import { NonPassFinalisationPage } from '../non-pass-finalisation';
-import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.actions';
-import { ActivityCodeComponent } from '../../office/components/activity-code/activity-code';
-import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
-import * as testActions from '../../../modules/tests/tests.actions';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
+import { NonPassFinalisationCatBPage } from '../non-pass-finalisation.cat-b.page';
+import { NonPassFinalisationViewDidEnter } from '../../non-pass-finalisation.actions';
+import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
+import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
+import * as testActions from '../../../../modules/tests/tests.actions';
 import { TestFinalisationComponentsModule } from
-'../../../components/test-finalisation/test-finalisation-component.module';
-import { TestCategory } from '../../../shared/models/test-category';
+'../../../../components/test-finalisation/test-finalisation-component.module';
+import { TestCategory } from '../../../../shared/models/test-category';
 
-describe('NonPassFinalisationPage', () => {
-  let fixture: ComponentFixture<NonPassFinalisationPage>;
-  let component: NonPassFinalisationPage;
+describe('NonPassFinalisationCatBPage', () => {
+  let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
+  let component: NonPassFinalisationCatBPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        NonPassFinalisationPage,
+        NonPassFinalisationCatBPage,
         MockComponent(PracticeModeBanner),
         MockComponent(ActivityCodeComponent),
       ],
@@ -43,7 +43,7 @@ describe('NonPassFinalisationPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(NonPassFinalisationPage);
+        fixture = TestBed.createComponent(NonPassFinalisationCatBPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
