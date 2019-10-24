@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import { NavControllerMock } from 'ionic-mocks';
 import { StartTest, ActivateTest } from '../../../../modules/tests/tests.actions';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
-import { CAT_B } from '../../../../pages/page-names.constants';
+import { CAT_B, CAT_BE } from '../../../../pages/page-names.constants';
 import { DateTime, Duration } from '../../../../shared/helpers/date-time';
 import { SlotDetail } from '@dvsa/mes-journal-schema/Journal';
 import { ActivityCodes } from '../../../../shared/models/activity-codes';
@@ -244,6 +244,16 @@ describe('Test Outcome', () => {
         component.showRekeyButton();
 
         expect(component.showRekeyButton()).toEqual(false);
+      });
+    });
+    describe('getTestStartingPage', () => {
+      it('should return the correct value for a Category B Test', () => {
+        component.category = TestCategory.B;
+        expect(component.getTestStartingPage()).toEqual(CAT_B.WAITING_ROOM_PAGE);
+      });
+      it('should return the correct value for a Category B+E Test', () => {
+        component.category = TestCategory.BE;
+        expect(component.getTestStartingPage()).toEqual(CAT_BE.WAITING_ROOM_PAGE);
       });
     });
   });
