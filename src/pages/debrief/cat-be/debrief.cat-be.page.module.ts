@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { DebriefCatBePage } from './debrief.cat-be.page';
+import { DebriefCatBEPage } from './debrief.cat-be.page';
 import { EffectsModule } from '@ngrx/effects';
 import { DebriefAnalyticsEffects } from '../debrief.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
@@ -10,11 +10,11 @@ import { DebriefEffects } from '../debrief.effects';
 
 @NgModule({
   declarations: [
-    DebriefCatBePage,
+    DebriefCatBEPage,
   ],
   imports: [
     DebriefComponentsModule,
-    IonicPageModule.forChild(DebriefCatBePage),
+    IonicPageModule.forChild(DebriefCatBEPage),
     EffectsModule.forFeature([
       DebriefEffects,
       DebriefAnalyticsEffects,
@@ -23,4 +23,4 @@ import { DebriefEffects } from '../debrief.effects';
     TranslateModule,
   ],
 })
-export class DebriefCatBePageModule { }
+export class DebriefCatBEPageModule { }

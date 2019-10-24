@@ -4,7 +4,7 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
-import { WaitingRoomCatBePage } from '../waiting-room.cat-be.page';
+import { WaitingRoomCatBEPage } from '../waiting-room.cat-be.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { Store, StoreModule } from '@ngrx/store';
@@ -44,9 +44,9 @@ import { CandidateSectionComponent } from '../../../../components/common/candida
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
 
-describe('WaitingRoomCatBePage', () => {
-  let fixture: ComponentFixture<WaitingRoomCatBePage>;
-  let component: WaitingRoomCatBePage;
+describe('WaitingRoomCatBEPage', () => {
+  let fixture: ComponentFixture<WaitingRoomCatBEPage>;
+  let component: WaitingRoomCatBEPage;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let screenOrientation: ScreenOrientation;
@@ -57,7 +57,7 @@ describe('WaitingRoomCatBePage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WaitingRoomCatBePage,
+        WaitingRoomCatBEPage,
         MockComponent(PracticeModeBanner),
         MockComponent(EndTestLinkComponent),
         MockComponent(LockScreenIndicator),
@@ -113,7 +113,7 @@ describe('WaitingRoomCatBePage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(WaitingRoomCatBePage);
+        fixture = TestBed.createComponent(WaitingRoomCatBEPage);
         component = fixture.componentInstance;
         screenOrientation = TestBed.get(ScreenOrientation);
         insomnia = TestBed.get(Insomnia);

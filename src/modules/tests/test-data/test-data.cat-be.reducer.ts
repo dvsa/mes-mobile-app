@@ -6,12 +6,12 @@ import { drivingFaultsReducer } from './driving-faults/driving-faults.reducer';
 import { ecoReducer } from './eco/eco.reducer';
 import { etaReducer } from './eta/eta.reducer';
 import { eyesightTestReducer } from './eyesight-test/eyesight-test.reducer';
-import { manoeuvresCatBeReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
+import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
 import { seriousFaultsReducer } from './serious-faults/serious-faults.reducer';
 import { testRequirementsReducer } from './test-requirements/test-requirements.reducer';
-import { vehicleChecksCatBeReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
+import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
 
-export function testDataCatBeReducer(
+export function testDataCatBEReducer(
   state: TestData,
   action: Action,
 ): TestData {
@@ -19,11 +19,11 @@ export function testDataCatBeReducer(
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
     seriousFaults: seriousFaultsReducer,
-    vehicleChecks: vehicleChecksCatBeReducer,
+    vehicleChecks: vehicleChecksCatBEReducer,
     eco: ecoReducer,
     ETA: etaReducer,
     eyesightTest: eyesightTestReducer,
-    manoeuvres: manoeuvresCatBeReducer,
+    manoeuvres: manoeuvresCatBEReducer,
     testRequirements: testRequirementsReducer,
   })(state as Required<TestData>, action);
 }

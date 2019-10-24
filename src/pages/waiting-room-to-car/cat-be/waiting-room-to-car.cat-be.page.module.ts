@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { WaitingRoomToCarCatBePage } from './waiting-room-to-car.cat-be.page';
+import { WaitingRoomToCarCatBEPage } from './waiting-room-to-car.cat-be.page';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomToCarAnalyticsEffects } from '../waiting-room-to-car.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
@@ -8,13 +8,13 @@ import { WaitingRoomToCarComponentsModule } from '../components/waiting-room-to-
 
 @NgModule({
   declarations: [
-    WaitingRoomToCarCatBePage,
+    WaitingRoomToCarCatBEPage,
   ],
   imports: [
-    IonicPageModule.forChild(WaitingRoomToCarCatBePage),
+    IonicPageModule.forChild(WaitingRoomToCarCatBEPage),
     EffectsModule.forFeature([WaitingRoomToCarAnalyticsEffects]),
     ComponentsModule,
     WaitingRoomToCarComponentsModule,
   ],
 })
-export class WaitingRoomToCarCatBePageModule { }
+export class WaitingRoomToCarCatBEPageModule { }

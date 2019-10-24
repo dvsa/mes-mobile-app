@@ -64,7 +64,7 @@ interface DebriefPageState {
   templateUrl: 'debrief.cat-be.page.html',
 })
 
-export class DebriefCatBePage extends BasePageComponent {
+export class DebriefCatBEPage extends BasePageComponent {
 
   pageState: DebriefPageState;
   subscription: Subscription;
