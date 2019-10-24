@@ -62,7 +62,7 @@ interface WaitingRoomPageState {
   selector: 'waiting-room-cat-be-page',
   templateUrl: 'waiting-room.cat-be.page.html',
 })
-export class WaitingRoomCatBePage extends BasePageComponent implements OnInit {
+export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
 
   @ViewChild(Navbar) navBar: Navbar;
 

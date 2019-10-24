@@ -6,14 +6,14 @@ import { TranslateModule } from 'ng2-translate';
 import { EffectsModule } from '@ngrx/effects';
 import { WaitingRoomAnalyticsEffects } from '../waiting-room.analytics.effects';
 import { WaitingRoomComponentsModule } from '../components/waiting-room.components.module';
-import { WaitingRoomCatBePage } from './waiting-room.cat-be.page';
+import { WaitingRoomCatBEPage } from './waiting-room.cat-be.page';
 
 @NgModule({
   declarations: [
-    WaitingRoomCatBePage,
+    WaitingRoomCatBEPage,
   ],
   imports: [
-    IonicPageModule.forChild(WaitingRoomCatBePage),
+    IonicPageModule.forChild(WaitingRoomCatBEPage),
     EffectsModule.forFeature([
       WaitingRoomAnalyticsEffects,
     ]),
@@ -23,4 +23,4 @@ import { WaitingRoomCatBePage } from './waiting-room.cat-be.page';
     TranslateModule,
   ],
 })
-export class WaitingRoomCatBePageModule { }
+export class WaitingRoomCatBEPageModule { }

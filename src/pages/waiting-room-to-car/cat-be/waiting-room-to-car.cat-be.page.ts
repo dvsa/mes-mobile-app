@@ -94,7 +94,7 @@ interface WaitingRoomToCarPageState {
   selector: 'waiting-room-to-car-cat-be-page',
   templateUrl: 'waiting-room-to-car.cat-be.page.html',
 })
-export class WaitingRoomToCarCatBePage extends BasePageComponent {
+export class WaitingRoomToCarCatBEPage extends BasePageComponent {
   pageState: WaitingRoomToCarPageState;
   form: FormGroup;
 

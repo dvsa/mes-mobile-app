@@ -3,7 +3,7 @@ import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-a
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 
 import { AppModule } from '../../../../app/app.module';
-import { DebriefCatBePage } from '../debrief.cat-be.page';
+import { DebriefCatBEPage } from '../debrief.cat-be.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -38,9 +38,9 @@ import { CAT_B } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 
-describe('DebriefCatBePage', () => {
-  let fixture: ComponentFixture<DebriefCatBePage>;
-  let component: DebriefCatBePage;
+describe('DebriefCatBEPage', () => {
+  let fixture: ComponentFixture<DebriefCatBEPage>;
+  let component: DebriefCatBEPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
   let translate: TranslateService;
@@ -56,7 +56,7 @@ describe('DebriefCatBePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DebriefCatBePage],
+      declarations: [DebriefCatBEPage],
       imports: [
         IonicModule,
         AppModule,
@@ -117,7 +117,7 @@ describe('DebriefCatBePage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(DebriefCatBePage);
+        fixture = TestBed.createComponent(DebriefCatBEPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
         store$ = TestBed.get(Store);

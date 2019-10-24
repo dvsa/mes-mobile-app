@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 
 export const initialState: PassCompletion = null;
 
-export function passCompletionCatBeReducer(state: PassCompletion = initialState, action: Action) {
+export function passCompletionCatBEReducer(state: PassCompletion = initialState, action: Action) {
   switch (action.type) {
     default:
       return state;
