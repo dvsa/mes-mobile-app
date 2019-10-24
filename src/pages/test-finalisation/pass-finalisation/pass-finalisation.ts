@@ -42,7 +42,10 @@ import {
   isManual,
 } from '../../../modules/tests/vehicle-details/vehicle-details.selector';
 import { GearboxCategory } from '@dvsa/mes-test-schema/categories/B';
-import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
+import {
+  GearboxCategoryChanged,
+  ClearGearboxCategory,
+} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { HEALTH_DECLARATION_PAGE } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
@@ -200,6 +203,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
       this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
     ];
 
+    this.store$.dispatch(new ClearGearboxCategory);
     return true;
   }
 
@@ -212,6 +216,7 @@ export class PassFinalisationPage extends PracticeableBasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
+    this.form.get('transmissionCtrl').reset();
   }
 
   provisionalLicenseReceived(): void {
