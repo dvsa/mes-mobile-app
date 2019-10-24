@@ -2,20 +2,22 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { VehicleCheckComponent } from '../vehicle-check';
 import { IonicModule } from 'ionic-angular';
 import { StoreModule, Store } from '@ngrx/store';
-import { testsReducer } from '../../../../../modules/tests/tests.reducer';
-import { testReportReducer } from '../../../test-report.reducer';
-import { StoreModel } from '../../../../../shared/models/store.model';
+import { testsReducer } from '../../../../../../modules/tests/tests.reducer';
+import { testReportReducer } from '../../../../test-report.reducer';
+import { StoreModel } from '../../../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { CompetencyButtonComponent } from '../../../components/competency-button/competency-button';
-import { TickIndicatorComponent } from '../../../../../components/common/tick-indicator/tick-indicator';
+import { CompetencyButtonComponent } from '../../../../components/competency-button/competency-button';
+import { TickIndicatorComponent } from '../../../../../../components/common/tick-indicator/tick-indicator';
 import {
   DrivingFaultsBadgeComponent,
-} from '../../../../../components/common/driving-faults-badge/driving-faults-badge';
-import { SeriousFaultBadgeComponent } from '../../../../../components/common/serious-fault-badge/serious-fault-badge';
+} from '../../../../../../components/common/driving-faults-badge/driving-faults-badge';
+import {
+  SeriousFaultBadgeComponent,
+} from '../../../../../../components/common/serious-fault-badge/serious-fault-badge';
 import {
   DangerousFaultBadgeComponent,
-} from '../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
-import { StartTest } from '../../../../../modules/tests/tests.actions';
+} from '../../../../../../components/common/dangerous-fault-badge/dangerous-fault-badge';
+import { StartTest } from '../../../../../../modules/tests/tests.actions';
 import { By } from '@angular/platform-browser';
 import {
   TellMeQuestionCorrect,
@@ -25,9 +27,9 @@ import {
   ShowMeQuestionDrivingFault,
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
-} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { TestCategory } from '../../../../../shared/models/test-category';
+} from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { CompetencyOutcome } from '../../../../../../shared/models/competency-outcome';
+import { TestCategory } from '../../../../../../shared/models/test-category';
 
 describe('VehicleCheckComponent', () => {
 

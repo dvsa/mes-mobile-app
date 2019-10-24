@@ -12,8 +12,10 @@ import {
 } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
 import { fullCompetencyLabels } from '../../shared/constants/competencies/catb-competencies';
-import { manoeuvreTypeLabels, manoeuvreCompetencyLabels }
-  from '../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+import {
+  manoeuvreTypeLabels,
+  manoeuvreCompetencyLabels,
+} from '../../shared/constants/competencies/catb-manoeuvres';
 import { ManoeuvreTypes } from '../../modules/tests/test-data/test-data.constants';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import {

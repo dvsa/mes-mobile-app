@@ -39,7 +39,7 @@ import { ViewTestHeaderComponent } from '../components/view-test-header/view-tes
 import { ViewTestHeaderModel } from '../components/view-test-header/view-test-header.model';
 import { TestOutcome } from '../../../modules/tests/tests.constants';
 import { DebriefCardComponent } from '../components/debrief-card/debrief-card';
-import { manoeuvreTypeLabels } from '../../test-report/components/manoeuvre-competency/manoeuvre-competency.constants';
+import { manoeuvreTypeLabels } from '../../../shared/constants/competencies/catb-manoeuvres';
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';

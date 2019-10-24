@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../../../shared/models/store.model';
-import { getTests } from '../../../../modules/tests/tests.reducer';
-import { getCurrentTest } from '../../../../modules/tests/tests.selector';
-import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
-import { getVehicleChecks } from '../../../../modules/tests/test-data/test-data.selector';
+import { StoreModel } from '../../../../../shared/models/store.model';
+import { getTests } from '../../../../../modules/tests/tests.reducer';
+import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
+import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
+import { getVehicleChecks } from '../../../../../modules/tests/test-data/test-data.selector';
 import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
-import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
+import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
 import {
   ShowMeQuestionSeriousFault,
@@ -14,10 +14,10 @@ import {
   ShowMeQuestionDrivingFault,
   ShowMeQuestionPassed,
   ShowMeQuestionRemoveFault,
-} from '../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
-import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../test-report.actions';
-import { getTestReportState } from '../../test-report.reducer';
-import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../test-report.selector';
+} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
+import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
+import { getTestReportState } from '../../../test-report.reducer';
+import { isSeriousMode, isDangerousMode, isRemoveFaultMode } from '../../../test-report.selector';
 import { map } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { isEmpty } from 'lodash';
