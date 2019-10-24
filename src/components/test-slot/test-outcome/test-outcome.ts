@@ -8,7 +8,7 @@ import { TestStatus } from '../../../modules/tests/test-status/test-status.model
 import { StartE2EPracticeTest } from '../../../pages/fake-journal/fake-journal.actions';
 import { startsWith, isEmpty } from 'lodash';
 import { end2endPracticeSlotId } from '../../../shared/mocks/test-slot-ids.mock';
-import { JOURNAL_FORCE_CHECK_MODAL, CAT_B } from '../../../pages/page-names.constants';
+import { JOURNAL_FORCE_CHECK_MODAL, CAT_B, CAT_BE } from '../../../pages/page-names.constants';
 import { ModalEvent } from '../../../pages/journal/journal-rekey-modal/journal-rekey-modal.constants';
 import { DateTime, Duration } from '../../../shared/helpers/date-time';
 import { SlotDetail, TestSlot } from '@dvsa/mes-journal-schema';
@@ -21,6 +21,7 @@ import { getBookedTestSlot } from '../../../pages/rekey-search/rekey-search.sele
 import { merge } from 'rxjs/observable/merge';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { MarkAsNonRekey } from '../../../modules/tests/rekey/rekey.actions';
+import { TestCategory } from '../../../shared/models/test-category';
 
 @Component({
   selector: 'test-outcome',
@@ -156,7 +157,7 @@ export class TestOutcomeComponent implements OnInit {
     } else {
       this.store$.dispatch(new StartTest(this.slotDetail.slotId, this.category, this.startTestAsRekey || this.isRekey));
     }
-    this.navController.push(CAT_B.WAITING_ROOM_PAGE);
+    this.navController.push(this.getTestStartingPage());
   }
 
   rekeyTest() {
@@ -241,6 +242,15 @@ export class TestOutcomeComponent implements OnInit {
       this.startTest();
     } else {
       this.resumeTest();
+    }
+  }
+
+  getTestStartingPage(): string {
+    switch (this.category as TestCategory) {
+      case TestCategory.B:
+        return CAT_B.WAITING_ROOM_PAGE;
+      case TestCategory.BE:
+        return CAT_BE.WAITING_ROOM_PAGE;
     }
   }
 }
