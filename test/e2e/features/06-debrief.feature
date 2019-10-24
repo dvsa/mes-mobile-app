@@ -18,7 +18,6 @@ Feature: Debrief including Health Declaration
       Then I should see the "Test debrief - Florence Pearson" page
       And the debrief candidate name should be "Miss Florence Pearson"
       And the debrief candidate driver number should be "PEARS 015220 A99HC"
-      And I should see "manual" transmission is selected
       And I should see the application reference "1234567031"
       And validation item "pass-finalisation-licence-received-validation-text" should not be visible
       And validation item "pass-finalisation-certificate-number-validation-text" should not be visible
@@ -45,7 +44,6 @@ Feature: Debrief including Health Declaration
       Then I should see the Debrief page with outcome "Passed"
       When I end the debrief
       Then I should see the "Test debrief - Jane Doe" page
-      And I should see "automatic" transmission is selected
 
    Scenario: For a pass the health declaration shows the correct information and validation is enforced
       Given I am logged in as "mobexaminer1" and I have a test for "Mr Ali Campbell"
