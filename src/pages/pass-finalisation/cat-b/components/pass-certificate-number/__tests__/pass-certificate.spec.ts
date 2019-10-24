@@ -40,6 +40,24 @@ fdescribe('passCertificateNumberComponent', () => {
                 expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber)
             });
         });
+
+        describe('isInvalid', () => {
+            it('should validate the field when it is valid', () => {
+                component.ngOnChanges();
+                component.form.get(PassCertificateNumberComponent.fieldName).setValue('12345678');
+                fixture.detectChanges();
+                const result: boolean = component.isInvalid();
+                expect(result).toEqual(false);
+            });
+
+            it('should not validate the field when it is dirty', () => {
+                component.ngOnChanges();
+                component.formControl.markAsDirty();
+                fixture.detectChanges();
+                const result: boolean = component.isInvalid();
+                expect(result).toEqual(true);
+            });
+        });
     });
     
     // describe('formControls', () => {
