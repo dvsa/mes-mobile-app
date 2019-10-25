@@ -25,7 +25,7 @@ import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-detail
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 
-fdescribe('PassFinalisationPage', () => {
+describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
   let component: PassFinalisationCatBPage;
   let store$: Store<StoreModel>;
