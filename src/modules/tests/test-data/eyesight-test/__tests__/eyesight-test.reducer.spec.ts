@@ -44,21 +44,7 @@ describe('Eyesight Test Reducer', () => {
         complete: true,
       };
       const result = eyesightTestReducer(state, new EyesightTestReset());
-<<<<<<< HEAD
       expect(result).toBe(initialState);
-=======
-      expect(result.complete).toBe(false);
-    });
-
-    it('removes an eyesight test serious fault', () => {
-      const state: EyesightTest = {
-        complete: true,
-        seriousFault: true,
-      };
-      const result = eyesightTestReducer(state, new EyesightTestReset());
-      expect(result.complete).toBe(false);
-      expect(result.seriousFault).toBe(false);
->>>>>>> MES-3636: Handling Different Categories in NGRX Store (#803)
     });
   });
 

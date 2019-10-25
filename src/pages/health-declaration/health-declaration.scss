@@ -1,9 +1,4 @@
-<<<<<<< HEAD:src/pages/health-declaration/health-declaration.scss
 page-health-declaration {
-=======
-page-cat-b-waiting-room {
-
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.scss
   ion-content > div {
     background-color: map-get($colors, "mes-white");
 
@@ -33,13 +28,6 @@ page-cat-b-waiting-room {
     .signature-validation-row {
       height: 300px;
     }
-<<<<<<< HEAD:src/pages/health-declaration/health-declaration.scss
-=======
-
-    conducted-language > ion-row {
-      margin-bottom: -36px;
-    }
->>>>>>> First Move About:src/pages/waiting-room/cat-b/cat-b-waiting-room.scss
   }
 }
 .confirm-declaration-modal {
