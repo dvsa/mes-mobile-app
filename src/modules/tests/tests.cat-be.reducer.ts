@@ -18,7 +18,7 @@ import { examinerConductedReducer } from './examiner-conducted/examiner-conducte
 import { examinerKeyedReducer } from './examiner-keyed/examiner-keyed.reducer';
 import { changeMarkerReducer } from './change-marker/change-marker';
 import { activityCodeReducer } from './activity-code/activity-code.reducer';
-import { journalDataReducer } from './journal-data/journal-data.reducer';
+import { journalDataCatBEReducer } from './journal-data/journal-data.cat-be.reducer';
 import { testDataCatBEReducer } from './test-data/test-data.cat-be.reducer';
 
 export function testsCatBEReducer(
@@ -28,7 +28,7 @@ export function testsCatBEReducer(
       version: schemaVersionReducer,
       category: categoryReducer,
       activityCode: activityCodeReducer,
-      journalData: journalDataReducer,
+      journalData: journalDataCatBEReducer,
       preTestDeclarations: preTestDeclarationsReducer,
       accompaniment: accompanimentReducer,
       vehicleDetails: vehicleDetailsReducer,

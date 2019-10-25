@@ -14,12 +14,12 @@ import { LogType } from '../../shared/models/log.model';
 import { LogHelper } from '../logs/logsHelper';
 import { AppConfigProvider } from '../app-config/app-config';
 import { TestStatus } from '../../modules/tests/test-status/test-status.model';
-import { TestResultUnionType } from '../../modules/tests/tests.model';
+import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 
 export interface TestToSubmit {
   index: number;
   slotId: string;
-  payload: TestResultUnionType;
+  payload: TestResultSchemasUnion;
   status: TestStatus;
 }
 
@@ -67,15 +67,15 @@ export class TestSubmissionProvider {
   buildUrl = (testToSubmit: TestToSubmit): string =>
     `${this.urlProvider.getTestResultServiceUrl()}${this.isPartialSubmission(testToSubmit) ? '?partial=true' : ''}`
 
-  compressData = (data: Partial<TestResultUnionType>): string =>
+  compressData = (data: Partial<TestResultSchemasUnion>): string =>
     gzipSync(JSON.stringify(data)).toString('base64')
 
   isPartialSubmission(testToSubmit: TestToSubmit): boolean {
     return testToSubmit.status === TestStatus.WriteUp && !testToSubmit.payload.rekey;
   }
 
-  removeNullFieldsDeep = (data: Partial<TestResultUnionType>): Partial<TestResultUnionType> => {
-    const removeNullFields = (object: Partial<TestResultUnionType>) => {
+  removeNullFieldsDeep = (data: Partial<TestResultSchemasUnion>): Partial<TestResultSchemasUnion> => {
+    const removeNullFields = (object: Partial<TestResultSchemasUnion>) => {
       Object.keys(object).forEach((key) => {
         const value = object[key];
         if (isNull(value)) unset(object, key);
@@ -85,7 +85,7 @@ export class TestSubmissionProvider {
     };
     return removeNullFields(data);
   }
-  removeFieldsForPartialData = (data: TestResultUnionType): Partial<TestResultUnionType> => {
+  removeFieldsForPartialData = (data: TestResultSchemasUnion): Partial<TestResultSchemasUnion> => {
     data.testSummary.additionalInformation = null;
     data.testSummary.candidateDescription = null;
     data.testSummary.identification = null;

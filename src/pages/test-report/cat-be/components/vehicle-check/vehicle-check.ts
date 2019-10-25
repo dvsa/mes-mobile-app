@@ -5,7 +5,7 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/test-data.selector';
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';
 import {
@@ -69,7 +69,7 @@ export class VehicleCheckComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = merge(
-      vehicleChecks$.pipe(map((vehicleChecks: CatBEUniqueTypes.VehicleChecks) => {
+      vehicleChecks$.pipe(map((vehicleChecks: CatBUniqueTypes.VehicleChecks) => {
         this.tellMeQuestionFault = vehicleChecks.tellMeQuestion.outcome;
         this.showMeQuestionFault = vehicleChecks.showMeQuestion.outcome;
 

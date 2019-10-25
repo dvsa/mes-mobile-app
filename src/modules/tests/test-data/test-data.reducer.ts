@@ -42,8 +42,6 @@ export function testDataReducer(
     eyesightTest: eyesightTestReducer,
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsReducer,
-    // TODO - what do i do with my fault summary
-    faultSummary: () => null,
   })(state as Required<CatBUniqueTypes.TestData>, action);
 }
 

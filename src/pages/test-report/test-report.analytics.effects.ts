@@ -569,8 +569,8 @@ export class TestReportAnalyticsEffects {
       ),
     )),
     concatMap(
-      ([action, tests,
-        testRequirements]: [testRequirementsActions.ToggleLegalRequirement, TestsModel, CatBUniqueTypes.TestRequirements]) => {
+      ([action, tests, testRequirements]:
+        [testRequirementsActions.ToggleLegalRequirement, TestsModel, CatBUniqueTypes.TestRequirements]) => {
         const toggleValue = testRequirements[action.payload]
           ? legalRequirementToggleValues.completed
           : legalRequirementToggleValues.uncompleted;
