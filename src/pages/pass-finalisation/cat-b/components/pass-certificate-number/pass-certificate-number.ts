@@ -21,7 +21,7 @@ export class PassCertificateNumberComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.maxLength(8), Validators.minLength(8), Validators.required]);
+      this.formControl = new FormControl(null, [Validators.maxLength(8), Validators.minLength(8), Validators.required]);
       this.form.addControl(PassCertificateNumberComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.passCertificateNumberInput);
@@ -32,6 +32,6 @@ export class PassCertificateNumberComponent implements OnChanges {
   }
 
   isInvalid(): boolean {
-    return !this.form.get(PassCertificateNumberComponent.fieldName).valid && this.form.get(PassCertificateNumberComponent.fieldName).dirty;
+    return !this.formControl.valid && this.formControl.dirty;
   }
 }

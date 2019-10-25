@@ -42,60 +42,75 @@ describe('passCertificateNumberComponent', () => {
         });
 
         describe('isInvalid', () => {
-            it('should validate the field when it is valid', () => {
+            it('should return false when the field is valid and not dirty', () => {
+                // SETUP
                 component.ngOnChanges();
-                component.form.get(PassCertificateNumberComponent.fieldName).setValue('12345678');
-                fixture.detectChanges();
+                component.formControl.setValue('12345678');
+                // ACT
                 const result: boolean = component.isInvalid();
+                // ASSET
+                expect(component.formControl.dirty).toEqual(false);
+                expect(!component.formControl.valid).toEqual(false);
                 expect(result).toEqual(false);
             });
-
-            it('should not validate the field when it is dirty', () => {
+            it('should return false when the field is not valid and is not dirty', () => {
+                // SETUP
+                component.ngOnChanges();
+                component.formControl.setValue('1');
+                // ACT
+                const result: boolean = component.isInvalid();
+                // ASSET
+                expect(component.formControl.dirty).toEqual(false);
+                expect(!component.formControl.valid).toEqual(true);
+                expect(result).toEqual(false);
+            });
+            it('should return false when the field is valid and is dirty', () => {
+                // SETUP
+                component.ngOnChanges();
+                component.formControl.setValue('12345678');
+                component.formControl.markAsDirty();
+                // ACT
+                const result: boolean = component.isInvalid();
+                // ASSET
+                expect(component.formControl.dirty).toEqual(true);
+                expect(!component.formControl.valid).toEqual(false);
+                expect(result).toEqual(false);
+            });
+            it('should return true if the field is empty and is marked as dirty', () => {
+                // SETUP
                 component.ngOnChanges();
                 component.formControl.markAsDirty();
-                fixture.detectChanges();
+                // ACT
                 const result: boolean = component.isInvalid();
+                // ASSERT
+                expect(component.formControl.dirty).toEqual(true);
+                expect(!component.formControl.valid).toEqual(true);
+                expect(result).toEqual(true);
+            });
+            it('should return true if the field has less then 8 characters and is marked as dirty', () => {
+                // SETUP
+                component.ngOnChanges();
+                component.formControl.setValue('1');
+                component.formControl.markAsDirty();
+                // ACT
+                const result: boolean = component.isInvalid();
+                // ASSERT
+                expect(component.formControl.dirty).toEqual(true);
+                expect(!component.formControl.valid).toEqual(true);
+                expect(result).toEqual(true);
+            });
+            it('should return true if the field has more then 8 characters and is marked as dirty', () => {
+                // SETUP
+                component.ngOnChanges();
+                component.formControl.setValue('12345678910');
+                component.formControl.markAsDirty();
+                // ACT
+                const result: boolean = component.isInvalid();
+                // ASSERT
+                expect(component.formControl.dirty).toEqual(true);
+                expect(!component.formControl.valid).toEqual(true);
                 expect(result).toEqual(true);
             });
         });
     });
-    
-    // describe('formControls', () => {
-    //     it('should contain a maxlength validation error when passCertificateNumberCtrl fails to meet maxlength', () => {
-    //         component.passCertificateNumberInput = '123456789';
-    //         component.ngOnChanges();
-    //         fixture.detectChanges();
-    //         console.log("test 100", component.passCertificateNumberInput);
-    //         const result: boolean = component.isInvalid();
-    //         expect(result).toEqual(true);
-    //     });
-    //     it('should contain no validation errors when passCertificateNumberCtrl ends with digit', () => {
-    //         const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-    //         const form = component.form;
-    //         form.get('passCertificateNumberCtrl').setValue('A1234567');
-    //         expect(formCtrl.hasError('maxlength')).toBe(false);
-    //     });
-    //     it('should contain no validation errors when passCertificateNumberCtrl ends with underscore', () => {
-    //         const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-    //         formCtrl.setValue('A123456_');
-    //         expect(formCtrl.hasError('pattern')).toBe(false);
-    //         expect(formCtrl.hasError('maxlength')).toBe(false);
-    //     });
-    //     it('should contain no validation errors when passCertificateNumberCtrl ends with letter', () => {
-    //         const formCtrl = component.form.controls['passCertificateNumberCtrl'];
-    //         formCtrl.setValue('A123456B');
-    //         expect(formCtrl.hasError('pattern')).toBe(false);
-    //         expect(formCtrl.hasError('maxlength')).toBe(false);
-    //     });
-    //     it('should contain be required', () => {
-    //         component.passCertificateNumberInput = '123456789';
-    //         component.ngOnChanges();
-    //         const field = component.form.get(PassCertificateNumberComponent.fieldName);
-    //         expect(field).not.toBeNull();
-    //         expect(field.validator).not.toBeNull();
-    //         expect(field.value).toEqual('123456789');
-    //         fixture.detectChanges();
-    //         console.log(component.formControl.errors);
-    //     });
-    // });
 });
