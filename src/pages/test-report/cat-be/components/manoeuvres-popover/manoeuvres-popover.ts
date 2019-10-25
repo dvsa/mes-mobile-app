@@ -1,4 +1,4 @@
-// TODO: This needs to be CatBE
+// TODO: This needs to be CatBE as soon as the CatBE test report is implemented
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';

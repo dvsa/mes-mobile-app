@@ -5,6 +5,8 @@ import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
 import { getVehicleChecks } from '../../../../../modules/tests/test-data/test-data.selector';
+
+// TODO: This needs to be CatBE as soon as the CatBE test report is implemented
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { Subscription } from 'rxjs/Subscription';

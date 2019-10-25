@@ -1,3 +1,4 @@
+// TODO: This needs to be CatBE as soon as the CatBE test report is implemented
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
