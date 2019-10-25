@@ -97,7 +97,7 @@ export class TestReportEffects {
       ),
     )),
     concatMap(([action, testData]) => {
-      return this.testReportValidator.validateCatBEta(testData)
+      return this.testReportValidator.validateETACatB(testData)
         .pipe(
           map((result: boolean) => new testReportActions.ValidateEta(result)),
         );

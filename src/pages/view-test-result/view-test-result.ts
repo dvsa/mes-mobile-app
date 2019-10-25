@@ -66,7 +66,9 @@ import { LogHelper } from '../../providers/logs/logsHelper';
 export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   applicationReference: string = '';
-
+  // TODO: currently this page is tightly couple to category B,
+  // when we introduce B+E we will need to refactor this to
+  // use the TestResultCommonSchema interface
   testResult: CatBUniqueTypes.TestResult;
 
   isLoading: boolean;
@@ -98,7 +100,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     this.subscription = this.searchProvider
       .getTestResult(this.applicationReference, this.authenticationProvider.getEmployeeId())
       .pipe(
-        map(data => this.testResult = this.compressionProvider.extractCatBTestResult(data)),
+        map(data => this.testResult = this.compressionProvider.extractTestResult(data)),
         tap(() => this.handleLoadingUI(false)),
         catchError((err) => {
           this.store$.dispatch(new SaveLog(this.logHelper

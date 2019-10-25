@@ -8,8 +8,8 @@ import { etaReducer } from './eta/eta.reducer';
 import { eyesightTestReducer } from './eyesight-test/eyesight-test.reducer';
 import { manoeuvresCatBEReducer } from './manoeuvres/manoeuvres.cat-be.reducer';
 import { seriousFaultsReducer } from './serious-faults/serious-faults.reducer';
-import { testRequirementsReducer } from './test-requirements/test-requirements.reducer';
 import { vehicleChecksCatBEReducer } from './vehicle-checks/vehicle-checks.cat-be.reducer';
+import { testRequirementsCatBEReducer } from './test-requirements/test-requirements.cat-be.reducer';
 
 export function testDataCatBEReducer(
   state: CatBEUniqueTypes.TestData,
@@ -24,7 +24,7 @@ export function testDataCatBEReducer(
     ETA: etaReducer,
     eyesightTest: eyesightTestReducer,
     manoeuvres: manoeuvresCatBEReducer,
-    testRequirements: testRequirementsReducer,
+    testRequirements: testRequirementsCatBEReducer,
   })(state as Required<CatBEUniqueTypes.TestData>, action);
 }
 
