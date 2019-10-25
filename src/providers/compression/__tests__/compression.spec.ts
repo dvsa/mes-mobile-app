@@ -17,10 +17,10 @@ describe('Compression Provider', () => {
     compressionProvider = TestBed.get(CompressionProvider);
   });
 
-  describe('extractCatBTestResult', () => {
+  describe('extractTestResult', () => {
     it('should correctly decompress a cat b test result', () => {
       const compressedData = gzipSync(JSON.stringify(categoryBTestResultMock)).toString('base64');
-      const result = compressionProvider.extractCatBTestResult(compressedData);
+      const result = compressionProvider.extractTestResult(compressedData);
       expect(result).toEqual(categoryBTestResultMock);
     });
   });

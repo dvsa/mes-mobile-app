@@ -4,6 +4,8 @@ import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
+// TODO: This test has tight coupling with category B
+// We will need to adjust it when we introduce new categories
 describe('TestResultCalculatorProvider', () => {
 
   let testResultProvider: TestResultProvider;

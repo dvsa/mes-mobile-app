@@ -4,6 +4,7 @@ import {
   DrivingFaults,
   DangerousFaults,
   EyesightTest,
+  TestResultCommonSchema,
 } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { competencyLabels } from '../test-report/components/competency/competency.constants';
@@ -328,7 +329,7 @@ export const getDrivingFaultComment = (
   return faults[competency] || '';
 };
 
-export const getTestOutcome = (test: CatBUniqueTypes.TestResult): string => {
+export const getTestOutcome = (test: TestResultCommonSchema): string => {
   switch (test.activityCode) {
     case ActivityCodes.PASS:
       return 'Pass';

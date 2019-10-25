@@ -1,7 +1,6 @@
 import * as testRequirementsActions from './test-requirements.actions';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
-
 export const initialState: CatBEUniqueTypes.TestRequirements = {};
 
 export function testRequirementsCatBEReducer(

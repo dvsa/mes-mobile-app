@@ -9,6 +9,8 @@ import {
 } from '../../modules/tests/test-data/test-data.selector';
 
 @Injectable()
+// TODO: This provider has tight coupling to category B
+// When introducing B+E functionality this will need to adjust its typing
 export class TestReportValidatorProvider {
 
   constructor() { }
@@ -23,7 +25,7 @@ export class TestReportValidatorProvider {
       results.eco)
 
   /** Validate a dangerous or serious fault is marked when an ETA fault is marked. */
-  validateCatBEta = (testData: CatBUniqueTypes.TestData): Observable<boolean> => {
+  validateETACatB = (testData: CatBUniqueTypes.TestData): Observable<boolean> => {
     const noEtaFaults = !(testData.ETA.verbal || testData.ETA.physical);
 
     return of(
