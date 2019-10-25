@@ -5,17 +5,17 @@ import * as candidateActions from './candidate.actions';
 export const initialState: Candidate = {
   candidateId: null,
   candidateName: {},
-  driverNumber: '',
-  dateOfBirth: '',
+  driverNumber: null,
+  dateOfBirth: null,
   gender: null,
   candidateAddress: {},
-  primaryTelephone: '',
-  secondaryTelephone: '',
-  mobileTelephone: '',
-  emailAddress: '',
+  primaryTelephone: null,
+  secondaryTelephone: null,
+  mobileTelephone: null,
+  emailAddress: null,
   prn: null,
   previousADITests: null,
-  ethnicityCode: '',
+  ethnicityCode: null,
 };
 
 export function candidateReducer(
