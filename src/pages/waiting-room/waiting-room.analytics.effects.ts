@@ -31,6 +31,7 @@ import {
 import {
   getApplicationNumber,
 } from '../../modules/tests/journal-data/application-reference/application-reference.selector';
+import { getTestCategory } from '../../modules/tests/category/category.reducer';
 
 @Injectable()
 export class WaitingRoomAnalyticsEffects {
@@ -64,12 +65,18 @@ export class WaitingRoomAnalyticsEffects {
           select(getCandidate),
           select(getCandidateId),
           ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
       ),
     )),
     switchMap((
-      [action, tests, applicationReference, candidateId]:
-      [WaitingRoomViewDidEnter, TestsModel, string, number],
+      [action, tests, applicationReference, candidateId, category]:
+      [WaitingRoomViewDidEnter, TestsModel, string, number, string],
     ) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
       this.analytics.setCurrentPage(
@@ -87,10 +94,16 @@ export class WaitingRoomAnalyticsEffects {
         this.store$.pipe(
           select(getTests),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
       ),
     )),
-    switchMap(([action, tests]: [SubmitWaitingRoomInfoError, TestsModel]) => {
+    switchMap(([action, tests, category]: [SubmitWaitingRoomInfoError, TestsModel, string]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
         action.errorMessage);
       return of(new AnalyticRecorded());
@@ -105,10 +118,16 @@ export class WaitingRoomAnalyticsEffects {
         this.store$.pipe(
           select(getTests),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
       ),
     )),
-    switchMap(([action, tests]: [WaitingRoomValidationError, TestsModel]) => {
+    switchMap(([action, tests, category]: [WaitingRoomValidationError, TestsModel, string]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
         action.errorMessage);
       return of(new AnalyticRecorded());
