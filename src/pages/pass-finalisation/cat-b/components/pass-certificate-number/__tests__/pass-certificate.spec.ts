@@ -4,7 +4,7 @@ import { IonicModule } from "ionic-angular";
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from "ng2-translate";
 import { FormGroup } from "@angular/forms";
 
-fdescribe('passCertificateNumberComponent', () => {
+describe('passCertificateNumberComponent', () => {
     let fixture: ComponentFixture<PassCertificateNumberComponent>;
     let component: PassCertificateNumberComponent;
 

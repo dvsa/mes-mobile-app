@@ -4,7 +4,7 @@ import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } f
 import { FormGroup } from "@angular/forms";
 import { LicenseProvidedComponent } from "../license-provided";
 
-fdescribe('licenseProvidedComponent', () => {
+describe('licenseProvidedComponent', () => {
     let fixture: ComponentFixture<LicenseProvidedComponent>;
     let component: LicenseProvidedComponent;
 
@@ -54,7 +54,7 @@ fdescribe('licenseProvidedComponent', () => {
                 const result: boolean = component.isInvalid();
                 expect(result).toEqual(false);
             });
-            
+
             it('should not validate the field when it is dirty', () => {
                 component.ngOnChanges();
                 component.formControl.markAsDirty();

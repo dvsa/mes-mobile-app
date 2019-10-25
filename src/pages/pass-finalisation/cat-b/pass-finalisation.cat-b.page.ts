@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -30,7 +30,7 @@ import {
   getApplicationNumber,
 } from '../../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { map,tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
@@ -229,7 +229,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
   }
 
   passCertificateNumberChanged(passCertificateNumber: string): void {
-    console.log("test 1", passCertificateNumber);
     this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
   }
 
@@ -248,5 +247,4 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
   }
-
 }

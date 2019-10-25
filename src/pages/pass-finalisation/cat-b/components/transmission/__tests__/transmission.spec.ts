@@ -4,7 +4,7 @@ import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } f
 import { FormGroup } from "@angular/forms";
 import { TransmissionComponent } from "../transmission";
 
-fdescribe('transmissionComponent', () => {
+describe('transmissionComponent', () => {
     let fixture: ComponentFixture<TransmissionComponent>;
     let component: TransmissionComponent;
 
