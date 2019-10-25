@@ -1,6 +1,5 @@
 import { TestStatus } from './test-status/test-status.model';
-import { JournalData, ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
-import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/Common';
 import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
 import { TestsModel } from './tests.model';
 import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
@@ -26,13 +25,13 @@ export const getTestById = (tests: TestsModel, slotId: string): TestResultSchema
   return tests.startedTests[slotId];
 };
 
-export const getJournalData = (test: CatBUniqueTypes.TestResult): JournalData => test.journalData;
+export const getJournalData = (test: TestResultCommonSchema): JournalData => test.journalData;
 
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testStatus[slotId] || TestStatus.Booked;
 
-export const getTestOutcome = (test: CatBUniqueTypes.TestResult) => test.activityCode;
+export const getTestOutcome = (test: TestResultCommonSchema) => test.activityCode;
 
-export const getTestOutcomeText = (test: CatBUniqueTypes.TestResult) => {
+export const getTestOutcomeText = (test: TestResultCommonSchema) => {
   if (test.activityCode === ActivityCodes.PASS) {
     return TestOutcome.Passed;
   }
@@ -49,18 +48,18 @@ export const getTestOutcomeText = (test: CatBUniqueTypes.TestResult) => {
   return TestOutcome.Terminated;
 };
 
-export const isTestOutcomeSet = (test: CatBUniqueTypes.TestResult) => {
+export const isTestOutcomeSet = (test: TestResultCommonSchema) => {
   if (test.activityCode) {
     return true;
   }
   return false;
 };
 
-export const isPassed = (test: TestResultSchemasUnion): boolean => {
+export const isPassed = (test: TestResultCommonSchema): boolean => {
   return test.activityCode === ActivityCodes.PASS;
 };
 
-export const getActivityCode = (test: CatBUniqueTypes.TestResult) => {
+export const getActivityCode = (test: TestResultCommonSchema) => {
 
   const activityCodeIndex = activityCodeModelList.findIndex(
     activityCode => test.activityCode === activityCode.activityCode);
@@ -95,7 +94,7 @@ export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
     && tests.testStatus[slotId] !== TestStatus.Completed);
 };
 
-const isTestBeforeToday = (test: TestResultSchemasUnion): boolean => {
+const isTestBeforeToday = (test: TestResultCommonSchema): boolean => {
   const testDate = new DateTime(test.journalData.testSlotAttributes.start);
   const today = new DateTime();
   return today.daysDiff(new Date(testDate.format('YYYY-MM-DD'))) < 0;

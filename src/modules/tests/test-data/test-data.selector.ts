@@ -1,5 +1,5 @@
 
-import { ETA, Eco } from '@dvsa/mes-test-schema/categories/Common';
+import { ETA, Eco, TestData } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
 import { pickBy, sumBy, endsWith, get } from 'lodash';
@@ -99,14 +99,14 @@ export const sumManoeuvreFaults = (manoeuvres: CatBUniqueTypes.Manoeuvres, fault
 };
 
 export const hasSeriousFault = (
-  data: CatBUniqueTypes.TestData, competency: Competencies) => data.seriousFaults[competency];
+  data: TestData, competency: Competencies) => data.seriousFaults[competency];
 
 export const hasDangerousFault = (
-  data: CatBUniqueTypes.TestData, competency: Competencies) => data.dangerousFaults[competency];
+  data: TestData, competency: Competencies) => data.dangerousFaults[competency];
 
-export const getTestRequirements = (data: CatBUniqueTypes.TestData) => data.testRequirements;
+export const getTestRequirements = (data: TestData) => data.testRequirements;
 
-export const getETA = (data: CatBUniqueTypes.TestData) => data.ETA;
+export const getETA = (data: TestData) => data.ETA;
 
 export const getETAFaultText = (data: ETA) => {
   if (!data) return;
@@ -120,7 +120,7 @@ export const hasExaminerTakenAction = (data: ETA, action: ExaminerActions) => {
   return data[action];
 };
 
-export const getEco = (data: CatBUniqueTypes.TestData) => data.eco;
+export const getEco = (data: TestData) => data.eco;
 
 export const getEcoFaultText = (data: Eco) => {
   if (!data) return;
@@ -143,7 +143,7 @@ export const hasManoeuvreBeenCompleted = (data: CatBUniqueTypes.TestData) => {
 
 export const hasControlledStopBeenCompleted = (data: CatBUniqueTypes.TestData) => data.controlledStop.selected;
 
-export const hasEyesightTestBeenCompleted = (data: CatBUniqueTypes.TestData) => data.eyesightTest.complete;
+export const hasEyesightTestBeenCompleted = (data: TestData) => data.eyesightTest.complete;
 
 export const hasEyesightTestGotSeriousFault = (data: CatBUniqueTypes.TestData) => data.eyesightTest.seriousFault;
 
