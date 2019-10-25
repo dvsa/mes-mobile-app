@@ -103,7 +103,7 @@ export enum AnalyticsDimensionIndices {
   CANDIDATE_WITH_CHECK = 4,
   CANDIDATE_ID = 5,
   APPLICATION_REFERENCE = 6,
-  METHOD = 10,
+  TEST_CATEGORY = 7,
   USER_ID = 11,
 }
 

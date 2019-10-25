@@ -125,12 +125,17 @@ export class TestsAnalyticsEffects {
   startTestAnalyticsEffect$ = this.actions$.pipe(
     ofType(START_TEST),
     switchMap((action: StartTest) => {
-      if (this.navigationStateProvider.isRekeySearch()) {
-        this.analytics.logEvent(
-          AnalyticsEventCategories.REKEY_SEARCH,
-          AnalyticsEvents.START_TEST,
-        );
-      }
+
+      const category: AnalyticsEventCategories = this.navigationStateProvider.isRekeySearch() ?
+        AnalyticsEventCategories.REKEY_SEARCH :
+        AnalyticsEventCategories.JOURNAL;
+
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, action.category);
+      this.analytics.logEvent(
+        category,
+        AnalyticsEvents.START_TEST,
+      );
+
       return of(new AnalyticRecorded());
     }),
   );

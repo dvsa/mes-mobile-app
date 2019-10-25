@@ -60,7 +60,6 @@ describe('Tests Analytics Effects', () => {
     analyticsProviderMock = TestBed.get(AnalyticsProvider);
     navigationStateProviderMock = TestBed.get(NavigationStateProvider);
     store$ = TestBed.get(Store);
-    spyOn(navigationStateProviderMock, 'isRekeySearch').and.returnValue(true);
   });
 
   describe('setTestStatusSubmittedEffect', () => {
@@ -160,12 +159,38 @@ describe('Tests Analytics Effects', () => {
     });
   });
   describe('startTestAnalyticsEffect', () => {
-    it('should log an event', (done) => {
+    it('should log the correct event if it triggered from the journal page', (done) => {
+      // ARRANGE
+      spyOn(navigationStateProviderMock, 'isRekeySearch').and.returnValue(false);
+      // ACT
+      actions$.next(new testsActions.StartTest(12345, TestCategory.BE));
+      // ASSERT
+      effects.startTestAnalyticsEffect$.subscribe((result) => {
+        expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+          AnalyticsDimensionIndices.TEST_CATEGORY,
+          TestCategory.BE,
+        );
+        expect(analyticsProviderMock.logEvent)
+          .toHaveBeenCalledWith(
+            AnalyticsEventCategories.JOURNAL,
+            AnalyticsEvents.START_TEST,
+          );
+        done();
+      });
+    });
+    it('should log the correct event if it is triggered from the Rekey Search page', (done) => {
+      // ARRANGE
+      spyOn(navigationStateProviderMock, 'isRekeySearch').and.returnValue(true);
       // ACT
       actions$.next(new testsActions.StartTest(12345, TestCategory.B));
       // ASSERT
       effects.startTestAnalyticsEffect$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension).toHaveBeenCalledWith(
+          AnalyticsDimensionIndices.TEST_CATEGORY,
+          TestCategory.B,
+        );
         expect(analyticsProviderMock.logEvent)
           .toHaveBeenCalledWith(
             AnalyticsEventCategories.REKEY_SEARCH,
