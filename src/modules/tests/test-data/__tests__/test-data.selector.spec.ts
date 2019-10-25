@@ -233,7 +233,7 @@ describe('TestDataSelectors', () => {
 
   describe('getTestRequirements', () => {
     it('should return all the properties of testRequirements', () => {
-      const result = getTestRequirements(state);
+      const result = getTestRequirements(state) as CatBUniqueTypes.TestRequirements;
 
       expect(result.normalStart1).toEqual(true);
       expect(result.normalStart2).toEqual(true);
