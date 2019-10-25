@@ -108,47 +108,7 @@ describe('Waiting Room Analytics Effects', () => {
 
   });
 
-  describe('submitWaitingRoomInfoError', () => {
-    it('should call logError', (done) => {
-      // ARRANGE
-      store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new PopulateTestCategory(TestCategory.B));
-      // ACT
-      actions$.next(new waitingRoomActions.SubmitWaitingRoomInfoError('error 123'));
-      // ASSERT
-      effects.submitWaitingRoomInfoError$.subscribe((result) => {
-        expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.addCustomDimension)
-        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
-        expect(analyticsProviderMock.logError)
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
-          'error 123');
-        done();
-      });
-    });
-    it('should call logError, prefixed with practice mode', (done) => {
-      // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new PopulateTestCategory(TestCategory.B));
-      // ACT
-      actions$.next(new waitingRoomActions.SubmitWaitingRoomInfoError('error 123'));
-      // ASSERT
-      effects.submitWaitingRoomInfoError$.subscribe((result) => {
-        expect(result instanceof AnalyticRecorded).toBe(true);
-        expect(analyticsProviderMock.addCustomDimension)
-        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
-        expect(analyticsProviderMock.logError)
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeMode})`,
-          'error 123');
-        done();
-      });
-    });
-
-  });
-
-  describe('submitWaitingRoomInfoErrorValidation', () => {
+  describe('waitingRoomValidationError', () => {
     it('should call logError', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
@@ -157,7 +117,7 @@ describe('Waiting Room Analytics Effects', () => {
       // ACT
       actions$.next(new waitingRoomActions.WaitingRoomValidationError('formControl1'));
       // ASSERT
-      effects.submitWaitingRoomInfoErrorValidation$.subscribe((result) => {
+      effects.waitingRoomValidationError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
         .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
@@ -175,7 +135,7 @@ describe('Waiting Room Analytics Effects', () => {
       // ACT
       actions$.next(new waitingRoomActions.WaitingRoomValidationError('formControl1'));
       // ASSERT
-      effects.submitWaitingRoomInfoErrorValidation$.subscribe((result) => {
+      effects.waitingRoomValidationError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.addCustomDimension)
         .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');

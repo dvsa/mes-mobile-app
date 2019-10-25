@@ -11,8 +11,6 @@ import {
 import {
   WAITING_ROOM_VIEW_DID_ENTER,
   WaitingRoomViewDidEnter,
-  SUBMIT_WAITING_ROOM_INFO_ERROR,
-  SubmitWaitingRoomInfoError,
   WAITING_ROOM_VALIDATION_ERROR,
   WaitingRoomValidationError,
 } from '../../pages/waiting-room/waiting-room.actions';
@@ -87,31 +85,7 @@ export class WaitingRoomAnalyticsEffects {
   );
 
   @Effect()
-  submitWaitingRoomInfoError$ = this.actions$.pipe(
-    ofType(SUBMIT_WAITING_ROOM_INFO_ERROR),
-    concatMap(action => of(action).pipe(
-      withLatestFrom(
-        this.store$.pipe(
-          select(getTests),
-        ),
-        this.store$.pipe(
-          select(getTests),
-          select(getCurrentTest),
-          select(getTestCategory),
-        ),
-      ),
-    )),
-    switchMap(([action, tests, category]: [SubmitWaitingRoomInfoError, TestsModel, string]) => {
-      const screenName = formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM, tests);
-      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
-      this.analytics.logError(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
-        action.errorMessage);
-      return of(new AnalyticRecorded());
-    }),
-  );
-
-  @Effect()
-  submitWaitingRoomInfoErrorValidation$ = this.actions$.pipe(
+  waitingRoomValidationError$ = this.actions$.pipe(
     ofType(WAITING_ROOM_VALIDATION_ERROR),
     concatMap(action => of(action).pipe(
       withLatestFrom(
