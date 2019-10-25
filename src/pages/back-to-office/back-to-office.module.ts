@@ -5,10 +5,7 @@ import { BackToOfficeCatBEPageModule } from './cat-be/back-to-office.cat-be.page
 @NgModule({
   imports: [
     BackToOfficeCatBPageModule,
-<<<<<<< HEAD
     BackToOfficeCatBEPageModule,
-=======
->>>>>>> MES-607: Refactor of back to office module for category separation (#823)
   ],
 })
 export class BackToOfficePageModule {}

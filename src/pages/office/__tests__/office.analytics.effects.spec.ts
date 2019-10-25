@@ -70,15 +70,9 @@ describe('Office Analytics Effects', () => {
   describe('officeViewDidEnter', () => {
     it('should call setCurrentPage with pass page and addCustomDimension', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -96,15 +90,9 @@ describe('Office Analytics Effects', () => {
     });
     it('should call setCurrentPage with fail page and addCustomDimension', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -124,11 +112,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-<<<<<<< HEAD
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -148,11 +132,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-<<<<<<< HEAD
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
-=======
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.OfficeViewDidEnter());
@@ -174,15 +154,9 @@ describe('Office Analytics Effects', () => {
   describe('savingWriteUpForLaterEffect', () => {
     it('should call logEvent with pass page and addCustomDimension', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -204,15 +178,9 @@ describe('Office Analytics Effects', () => {
     });
     it('should call logEvent with fail page and addCustomDimension', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -236,11 +204,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-<<<<<<< HEAD
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -264,11 +228,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-<<<<<<< HEAD
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
-=======
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.SavingWriteUpForLater());
@@ -293,15 +253,9 @@ describe('Office Analytics Effects', () => {
   describe('validationErrorEffect', () => {
     it('should call logError with pass', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -315,15 +269,9 @@ describe('Office Analytics Effects', () => {
     });
     it('should call logError with fail', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
->>>>>>> refactor (#830)
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -339,11 +287,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-<<<<<<< HEAD
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -359,11 +303,7 @@ describe('Office Analytics Effects', () => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
-<<<<<<< HEAD
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.FAIL));
-=======
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.FAIL));
->>>>>>> refactor (#830)
       // ACT
       actions$.next(new officeActions.ValidationError('error message'));
       // ASSERT
@@ -380,15 +320,9 @@ describe('Office Analytics Effects', () => {
   describe('completeTest', () => {
     it('should log an event COMPLETE_TEST event when the test is not a rekey', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
       actions$.next(new officeActions.CompleteTest());
@@ -410,15 +344,9 @@ describe('Office Analytics Effects', () => {
     });
     it('should log an event COMPLETE_REKEY_TEST event when the test is a rekey', (done) => {
       // ARRANGE
-<<<<<<< HEAD
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new activityCodeActions.SetActivityCode(ActivityCodes.PASS));
-=======
-      store$.dispatch(new testsActions.StartTest(123));
-      store$.dispatch(new PopulateCandidateDetails(candidateMock));
-      store$.dispatch(new testsActions.SetActivityCode(ActivityCodes.PASS));
->>>>>>> refactor (#830)
       store$.dispatch(new rekeyActions.MarkAsRekey());
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
