@@ -1,8 +1,8 @@
-import { ComponentFixture, async, TestBed } from "@angular/core/testing";
-import { IonicModule } from "ionic-angular";
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from "ng2-translate";
-import { FormGroup } from "@angular/forms";
-import { LicenseProvidedComponent } from "../license-provided";
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { IonicModule } from 'ionic-angular';
+import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
+import { FormGroup } from '@angular/forms';
+import { LicenseProvidedComponent } from '../license-provided';
 
 describe('licenseProvidedComponent', () => {
     let fixture: ComponentFixture<LicenseProvidedComponent>;

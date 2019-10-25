@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Output, EventEmitter} from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({

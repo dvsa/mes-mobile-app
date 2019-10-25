@@ -168,7 +168,6 @@ describe('TestReportCatBPage', () => {
         expect(fixture.debugElement.query(By.css('.dangerous-mode'))).toBeDefined();
       });
     });
-
   });
 
   describe('End Test Button', () => {
@@ -179,5 +178,4 @@ describe('TestReportCatBPage', () => {
       expect(component.onEndTestClick).toHaveBeenCalled();
     });
   });
-
 });

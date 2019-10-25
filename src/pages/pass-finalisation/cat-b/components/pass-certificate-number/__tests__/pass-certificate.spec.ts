@@ -1,8 +1,8 @@
-import { PassCertificateNumberComponent } from "../pass-certificate-number";
-import { ComponentFixture, async, TestBed } from "@angular/core/testing";
-import { IonicModule } from "ionic-angular";
+import { PassCertificateNumberComponent } from '../pass-certificate-number';
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
+import { IonicModule } from 'ionic-angular';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from "ng2-translate";
-import { FormGroup } from "@angular/forms";
+import { FormGroup } from '@angular/forms';
 
 describe('passCertificateNumberComponent', () => {
     let fixture: ComponentFixture<PassCertificateNumberComponent>;
@@ -37,7 +37,7 @@ describe('passCertificateNumberComponent', () => {
                 spyOn(component.passCertificateNumberChange, 'emit');
                 const passCertificateNumber = '12345678';
                 component.passCertificateNumberChanged(passCertificateNumber);
-                expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber)
+                expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber);
             });
         });
 

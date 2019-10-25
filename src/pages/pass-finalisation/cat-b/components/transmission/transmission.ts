@@ -18,7 +18,6 @@ export class TransmissionComponent implements OnChanges {
   @Output()
   gearBoxCategoryChange = new EventEmitter<GearboxCategory>();
 
-
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl('', [Validators.required]);

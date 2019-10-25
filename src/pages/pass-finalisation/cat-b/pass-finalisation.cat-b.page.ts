@@ -196,7 +196,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
-
   ionViewDidLeave(): void {
     super.ionViewDidLeave();
     if (this.inputSubscriptions) {
