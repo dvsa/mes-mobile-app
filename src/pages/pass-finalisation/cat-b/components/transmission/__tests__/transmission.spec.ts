@@ -1,6 +1,5 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
 import { FormGroup } from '@angular/forms';
 import { TransmissionComponent } from '../transmission';
 
@@ -15,12 +14,8 @@ describe('transmissionComponent', () => {
             ],
             imports: [
                 IonicModule,
-                TranslateModule,
             ],
             providers: [
-                TranslateService,
-                TranslateLoader,
-                TranslateParser,
             ],
         })
             .compileComponents()
@@ -40,7 +35,7 @@ describe('transmissionComponent', () => {
                 expect(component.gearBoxCategoryChange.emit).toHaveBeenCalledWith(transmission);
             });
 
-            it('should emit manual if manual transmission selected', () => {
+            it('should emit automatic if automatic transmission selected', () => {
                 spyOn(component.gearBoxCategoryChange, 'emit');
                 const transmission = 'Automatic';
                 component.transmissionChanged(transmission);

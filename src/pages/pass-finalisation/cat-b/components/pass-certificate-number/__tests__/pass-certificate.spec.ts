@@ -1,7 +1,6 @@
 import { PassCertificateNumberComponent } from '../pass-certificate-number';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from "ng2-translate";
 import { FormGroup } from '@angular/forms';
 
 describe('passCertificateNumberComponent', () => {
@@ -15,12 +14,8 @@ describe('passCertificateNumberComponent', () => {
             ],
             imports: [
                 IonicModule,
-                TranslateModule,
             ],
             providers: [
-                TranslateService,
-                TranslateLoader,
-                TranslateParser,
             ],
         })
             .compileComponents()

@@ -1,6 +1,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
+
 import { AppModule } from '../../../../app/app.module';
 import { DebriefCatBPage } from '../debrief.cat-b.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';

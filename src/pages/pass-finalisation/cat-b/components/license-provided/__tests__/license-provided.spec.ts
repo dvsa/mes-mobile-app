@@ -1,6 +1,5 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateParser } from 'ng2-translate';
 import { FormGroup } from '@angular/forms';
 import { LicenseProvidedComponent } from '../license-provided';
 
@@ -15,12 +14,8 @@ describe('licenseProvidedComponent', () => {
             ],
             imports: [
                 IonicModule,
-                TranslateModule,
             ],
             providers: [
-                TranslateService,
-                TranslateLoader,
-                TranslateParser,
             ],
         })
             .compileComponents()
@@ -38,7 +33,9 @@ describe('licenseProvidedComponent', () => {
                 component.provisionalLicenseReceived();
                 expect(component.licenseReceived.emit).toHaveBeenCalled();
             });
-            
+        });
+        
+        describe('ProvisionalLicneseNotReceived', () => {
             it('should emit license not received if license not received is selected', () => {
                 spyOn(component.licenseNotReceived, 'emit');
                 component.provisionalLicenseNotReceived();
