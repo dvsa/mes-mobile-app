@@ -15,21 +15,21 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { PassCertificateNumberComponent } from '../components/pass-certificate-number/pass-certificate-number';
 import { LicenseProvidedComponent } from '../components/license-provided/license-provided';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
-import { DebriefWitnessedComponent } from 
-'../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
-import { LanguagePreferencesComponent } from 
-'../../../../components/test-finalisation/language-preference/language-preferences';
-import { FinalisationHeaderComponent } from 
-'../../../../components/test-finalisation/finalisation-header/finalisation-header';
+import { DebriefWitnessedComponent } from
+  '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
+import { LanguagePreferencesComponent } from
+  '../../../../components/test-finalisation/language-preference/language-preferences';
+import { FinalisationHeaderComponent } from
+  '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { TransmissionComponent } from '../components/transmission/transmission';
 import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
-import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from 
-'../../../../modules/tests/pass-completion/pass-completion.actions';
+import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from
+  '../../../../modules/tests/pass-completion/pass-completion.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
-import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from 
-'../../../../modules/tests/test-summary/test-summary.actions';
-import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from 
-'../../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
+  '../../../../modules/tests/test-summary/test-summary.actions';
+import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
+  '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 
 describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
@@ -94,6 +94,13 @@ describe('PassFinalisationPage', () => {
       it('should dispatch the correct action when called', () => {
         component.transmissionChanged('Manual');
         expect(store$.dispatch).toHaveBeenCalledWith(new GearboxCategoryChanged('Manual'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('passCertificateNumberChanged', () => {
+      it('should dispatch the correct action when called', () => {
+        component.passCertificateNumberChanged('1e3f5y64');
+        expect(store$.dispatch).toHaveBeenCalledWith(new String("1e3f5y64"));
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
