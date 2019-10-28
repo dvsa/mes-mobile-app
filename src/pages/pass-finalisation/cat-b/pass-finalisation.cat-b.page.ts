@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Store, select } from '@ngrx/store';
 import { StoreModel } from '../../../shared/models/store.model';
@@ -7,10 +7,10 @@ import {
   PassFinalisationViewDidEnter,
 } from './../pass-finalisation.actions';
 import {
-  PassCertificateNumberChanged,
   ProvisionalLicenseReceived,
   ProvisionalLicenseNotReceived,
   PopulatePassCompletion,
+  PassCertificateNumberChanged,
 } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import {
@@ -30,9 +30,8 @@ import {
   getApplicationNumber,
 } from '../../../modules/tests/journal-data/application-reference/application-reference.selector';
 import { getCurrentTest, getJournalData, getTestOutcomeText } from '../../../modules/tests/tests.selector';
-import { map, distinctUntilChanged, debounceTime, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
@@ -41,11 +40,7 @@ import {
   isAutomatic,
   isManual,
 } from '../../../modules/tests/vehicle-details/vehicle-details.selector';
-import {
-  GearboxCategoryChanged,
-  ClearGearboxCategory,
-} from '../../../modules/tests/vehicle-details/vehicle-details.actions';
-import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { CAT_B } from '../../page-names.constants';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
@@ -70,6 +65,7 @@ import {
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/common';
 
 interface PassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -111,7 +107,7 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
-    this.form = new FormGroup(this.getFormValidation());
+    this.form = new FormGroup({});
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
   }
 
@@ -200,15 +196,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new PopulatePassCompletion());
   }
 
-  ionViewWillEnter(): boolean {
-    this.inputSubscriptions = [
-      this.inputChangeSubscriptionDispatchingAction(this.passCertificateNumberInput, PassCertificateNumberChanged),
-    ];
-
-    this.store$.dispatch(new ClearGearboxCategory);
-    return true;
-  }
-
   ionViewDidLeave(): void {
     super.ionViewDidLeave();
     if (this.inputSubscriptions) {
@@ -218,7 +205,6 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
 
   ionViewDidEnter(): void {
     this.store$.dispatch(new PassFinalisationViewDidEnter());
-    this.form.get('transmissionCtrl').reset();
   }
 
   provisionalLicenseReceived(): void {
@@ -241,42 +227,8 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
     }
   }
 
-  getFormValidation(): { [key: string]: FormControl } {
-    return {
-      provisionalLicenseProvidedCtrl: new FormControl(null, [Validators.required]),
-      passCertificateNumberCtrl: new FormControl(null,
-        {
-          validators: Validators.compose([Validators.maxLength(8), Validators.minLength(8), Validators.required]),
-          updateOn: 'blur',
-        },
-      ),
-      transmissionCtrl: new FormControl(null, [Validators.required]),
-    };
-  }
-  isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.value[controlName] && this.form.get(controlName).dirty;
-  }
-
-  passCertificateValidation() {
-    const ctrlHasErrors = this.form.get(this.passCertificateCtrl).errors ? true : false;
-    return ctrlHasErrors && this.form.get(this.passCertificateCtrl).dirty;
-  }
-
-  /**
-   * Returns a subscription to the debounced changes of a particular input fields.
-   * Dispatches the provided action type to the store when a new value is yielded.
-   * @param inputRef The input to listen for changes on.
-   * @param actionType The the type of action to dispatch, should accept an argument for the input value.
-   */
-  inputChangeSubscriptionDispatchingAction(inputRef: ElementRef, actionType: any): Subscription {
-    const changeStream$ = fromEvent(inputRef.nativeElement, 'keyup').pipe(
-      map((event: any) => event.target.value),
-      debounceTime(1000),
-      distinctUntilChanged(),
-    );
-    const subscription = changeStream$
-      .subscribe((newVal: string) => this.store$.dispatch(new actionType(newVal)));
-    return subscription;
+  passCertificateNumberChanged(passCertificateNumber: string): void {
+    this.store$.dispatch(new PassCertificateNumberChanged(passCertificateNumber));
   }
 
   d255Changed(d255: boolean): void {
@@ -294,5 +246,4 @@ export class PassFinalisationCatBPage extends PracticeableBasePageComponent {
         : new CandidateChoseToProceedWithTestInEnglish('English'),
     );
   }
-
 }
