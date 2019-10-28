@@ -4,8 +4,8 @@ import { PassCertificateNumberComponent } from './pass-certificate-number/pass-c
 import { TransmissionComponent } from './transmission/transmission';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { ComponentsModule } from '../../../../components/common/common-components.module';
-import { DirectivesModule } from '../../../../directives/directives.module';
+import { ComponentsModule } from '../../../components/common/common-components.module';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -25,4 +25,4 @@ import { DirectivesModule } from '../../../../directives/directives.module';
     PassCertificateNumberComponent,
   ],
 })
-export class PassFinalisationCatBComponentsModule { }
+export class PassFinalisationComponentsModule { }
