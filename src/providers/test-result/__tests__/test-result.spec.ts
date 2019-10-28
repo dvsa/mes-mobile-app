@@ -1,13 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { TestResultProvider } from '../test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
-import { TestData, DrivingFaults } from '@dvsa/mes-test-schema/categories/B';
+import { DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
+// TODO: This test has tight coupling with category B
+// We will need to adjust it when we introduce new categories
 describe('TestResultCalculatorProvider', () => {
 
   let testResultProvider: TestResultProvider;
 
-  const initialTestData: TestData = {
+  const initialTestData: CatBUniqueTypes.TestData = {
     dangerousFaults: {},
     drivingFaults: {},
     manoeuvres: {},
@@ -59,7 +62,7 @@ describe('TestResultCalculatorProvider', () => {
   describe('calculateCatBTestResult', () => {
     it('should return a Fail when a dangerous fault exists', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         dangerousFaults: {
           positioningNormalDriving: true,
@@ -73,7 +76,7 @@ describe('TestResultCalculatorProvider', () => {
     });
     it('should return a Fail when a serious fault exists', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         seriousFaults: {
           positioningNormalDriving: true,
@@ -87,7 +90,7 @@ describe('TestResultCalculatorProvider', () => {
     });
     it('should return a Fail when there are 16 driving faults', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         drivingFaults: {
           ...drivingFaults,
@@ -103,7 +106,7 @@ describe('TestResultCalculatorProvider', () => {
 
     it('should return a Fail when there are 16 driving faults and a dangerous fault', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         dangerousFaults: {
           positioningNormalDriving: true,
@@ -121,7 +124,7 @@ describe('TestResultCalculatorProvider', () => {
     });
     it('should return a Fail when there are 16 driving faults and a serious fault', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         seriousFaults: {
           positioningNormalDriving: true,
@@ -139,7 +142,7 @@ describe('TestResultCalculatorProvider', () => {
     });
     it('should return a Fail when there are 15 driving faults and a dangerous fault', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         drivingFaults,
         dangerousFaults: {
@@ -154,7 +157,7 @@ describe('TestResultCalculatorProvider', () => {
     });
     it('should return a Fail when there are 15 driving faults and a serious fault', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         drivingFaults,
         seriousFaults: {
@@ -170,7 +173,7 @@ describe('TestResultCalculatorProvider', () => {
 
     it('should return a Pass when there are 15 driving faults', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
         drivingFaults,
       };
@@ -182,7 +185,7 @@ describe('TestResultCalculatorProvider', () => {
     });
     it('should return a Pass when there are no driving faults', (done) => {
       // ARRANGE
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         ...initialTestData,
       };
       // ASSERT

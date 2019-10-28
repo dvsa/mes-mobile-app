@@ -1,4 +1,4 @@
-import { IndependentDriving, WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { IndependentDriving, WeatherConditions } from '@dvsa/mes-test-schema/categories/Common';
 
 export interface TestSummaryCardModel {
   accompaniment?: string[];

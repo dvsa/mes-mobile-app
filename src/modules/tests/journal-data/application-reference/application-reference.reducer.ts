@@ -1,4 +1,4 @@
-import { ApplicationReference } from '@dvsa/mes-test-schema/categories/B';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/Common';
 import { createFeatureSelector } from '@ngrx/store';
 import * as applicationReferenceActions from './application-reference.actions';
 

@@ -1,5 +1,5 @@
 import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { vehicleChecksReducer } from '../vehicle-checks.reducer';
 import {
@@ -25,7 +25,7 @@ describe('Vehicle Checks Reducer', () => {
         description: 'desc',
         shortName: 'name',
       };
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
 
       const result = vehicleChecksReducer(state, new TellMeQuestionSelected(newQuestionPayload));
       expect(result.tellMeQuestion.code).toEqual('S1');
@@ -37,7 +37,7 @@ describe('Vehicle Checks Reducer', () => {
         description: 'desc',
         shortName: 'name',
       };
-      const state: VehicleChecks = {
+      const state: CatBUniqueTypes.VehicleChecks = {
         tellMeQuestion: {
           code: 'T2',
           description: 'desc2',
@@ -53,7 +53,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('TELL_ME_QUESTION_CORRECT', () => {
     it('should mark tell me question as pass when the action is received', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new TellMeQuestionCorrect());
       expect(result.tellMeQuestion.outcome).toEqual(CompetencyOutcome.P);
     });
@@ -61,7 +61,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('TELL_ME_QUESTION_DRIVING_FAULT', () => {
     it('should mark tell me question as driving fault when the action is received', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new TellMeQuestionDrivingFault());
       expect(result.tellMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
     });
@@ -69,7 +69,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('ADD_SHOW_ME_TELL_ME_COMMENT', () => {
     it('should add a comment', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new AddShowMeTellMeComment('Test'));
       expect(result.showMeTellMeComments).toEqual('Test');
     });
@@ -82,7 +82,7 @@ describe('Vehicle Checks Reducer', () => {
         description: 'desc',
         shortName: 'name',
       };
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
 
       const result = vehicleChecksReducer(state, new ShowMeQuestionSelected(newQuestionPayload));
       expect(result.showMeQuestion.code).toEqual('S1');
@@ -94,7 +94,7 @@ describe('Vehicle Checks Reducer', () => {
         description: 'desc',
         shortName: 'name',
       };
-      const state: VehicleChecks = {
+      const state: CatBUniqueTypes.VehicleChecks = {
         showMeQuestion: {
           outcome: 'S',
           code: 'S2',
@@ -110,7 +110,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('SHOW_ME_QUESTION_PASSED', () => {
     it('should mark show me question as a pass', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new ShowMeQuestionPassed());
       expect(result.showMeQuestion.outcome).toEqual(CompetencyOutcome.P);
     });
@@ -118,7 +118,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('SHOW_ME_QUESTION_DRIVING_FAULT', () => {
     it('should mark show me question as driving fault when the action is received', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new ShowMeQuestionDrivingFault());
       expect(result.showMeQuestion.outcome).toEqual(CompetencyOutcome.DF);
     });
@@ -126,7 +126,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('SHOW_ME_QUESTION_SERIOUS_FAULT', () => {
     it('should mark show me question as serious fault when the action is received', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new ShowMeQuestionSeriousFault());
       expect(result.showMeQuestion.outcome).toEqual(CompetencyOutcome.S);
     });
@@ -134,7 +134,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('SHOW_ME_QUESTION_DANGEROUS_FAULT', () => {
     it('should mark show me question as dangerous fault when the action is received', () => {
-      const state: VehicleChecks = {};
+      const state: CatBUniqueTypes.VehicleChecks = {};
       const result = vehicleChecksReducer(state, new ShowMeQuestionDangerousFault());
       expect(result.showMeQuestion.outcome).toEqual(CompetencyOutcome.D);
     });
@@ -142,7 +142,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('SHOW_ME_QUESTION_REMOVE_FAULT', () => {
     it('should remove the show me question fault the action is received', () => {
-      const state: VehicleChecks = {
+      const state: CatBUniqueTypes.VehicleChecks = {
         showMeQuestion: {
           code: '1',
           description: '2',

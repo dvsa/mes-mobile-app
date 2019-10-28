@@ -1,4 +1,4 @@
-import { SeriousFaults } from '@dvsa/mes-test-schema/categories/B';
+import { SeriousFaults } from '@dvsa/mes-test-schema/categories/Common';
 import * as seriousFaultsActions from './serious-faults.actions';
 import { Competencies } from '../test-data.constants';
 

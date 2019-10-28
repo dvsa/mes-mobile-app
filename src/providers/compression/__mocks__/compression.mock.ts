@@ -5,8 +5,8 @@ export class CompressionProviderMock {
 
   constructor() {}
 
-  extractCatBTestResult =
-    jasmine.createSpy('extractCatBTestResult').and.returnValue(categoryBTestResultMock);
+  extractTestResult =
+    jasmine.createSpy('extractTestResult').and.returnValue(categoryBTestResultMock);
 
   extractTestSlotResult() {
     return bookedTestSlotMock;

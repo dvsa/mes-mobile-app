@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
+import { TestCentre } from '@dvsa/mes-test-schema/categories/Common';
 
 export const POPULATE_TEST_CENTRE = '[TestCentreEffects] Populate test centre';
 

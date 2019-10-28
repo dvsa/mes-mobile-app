@@ -1,6 +1,7 @@
 import { TestStatus } from './test-status/test-status.model';
-import { StandardCarTestCATBSchema, JournalData, ActivityCode } from '@dvsa/mes-test-schema/categories/B';
-import { TestsModel, TestResultUnionType } from './tests.model';
+import { JournalData, ActivityCode, TestResultCommonSchema } from '@dvsa/mes-test-schema/categories/Common';
+import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories/index';
+import { TestsModel } from './tests.model';
 import { activityCodeModelList } from '../../pages/office/components/activity-code/activity-code.constants';
 import { testReportPracticeSlotId, end2endPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { startsWith } from 'lodash';
@@ -10,7 +11,7 @@ import { DateTime } from '../../shared/helpers/date-time';
 
 export const getCurrentTestSlotId = (tests: TestsModel): string => tests.currentTest.slotId;
 
-export const getCurrentTest = (tests: TestsModel): TestResultUnionType => {
+export const getCurrentTest = (tests: TestsModel): TestResultSchemasUnion => {
   const currentTestSlotId = tests.currentTest.slotId;
   return tests.startedTests[currentTestSlotId];
 };
@@ -20,17 +21,17 @@ export const getCurrentTestStatus = (tests: TestsModel): TestStatus => {
   return tests.testStatus[currentTestSlotId];
 };
 
-export const getTestById = (tests: TestsModel, slotId: string): TestResultUnionType => {
+export const getTestById = (tests: TestsModel, slotId: string): TestResultSchemasUnion => {
   return tests.startedTests[slotId];
 };
 
-export const getJournalData = (test: StandardCarTestCATBSchema): JournalData => test.journalData;
+export const getJournalData = (test: TestResultCommonSchema): JournalData => test.journalData;
 
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testStatus[slotId] || TestStatus.Booked;
 
-export const getTestOutcome = (test: StandardCarTestCATBSchema) => test.activityCode;
+export const getTestOutcome = (test: TestResultCommonSchema) => test.activityCode;
 
-export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
+export const getTestOutcomeText = (test: TestResultCommonSchema) => {
   if (test.activityCode === ActivityCodes.PASS) {
     return TestOutcome.Passed;
   }
@@ -47,18 +48,18 @@ export const getTestOutcomeText = (test: StandardCarTestCATBSchema) => {
   return TestOutcome.Terminated;
 };
 
-export const isTestOutcomeSet = (test: StandardCarTestCATBSchema) => {
+export const isTestOutcomeSet = (test: TestResultCommonSchema) => {
   if (test.activityCode) {
     return true;
   }
   return false;
 };
 
-export const isPassed = (test: TestResultUnionType): boolean => {
+export const isPassed = (test: TestResultCommonSchema): boolean => {
   return test.activityCode === ActivityCodes.PASS;
 };
 
-export const getActivityCode = (test: StandardCarTestCATBSchema) => {
+export const getActivityCode = (test: TestResultCommonSchema) => {
 
   const activityCodeIndex = activityCodeModelList.findIndex(
     activityCode => test.activityCode === activityCode.activityCode);
@@ -93,13 +94,13 @@ export const getIncompleteTestsSlotIds = (tests: TestsModel): string[] => {
     && tests.testStatus[slotId] !== TestStatus.Completed);
 };
 
-const isTestBeforeToday = (test: TestResultUnionType): boolean => {
+const isTestBeforeToday = (test: TestResultCommonSchema): boolean => {
   const testDate = new DateTime(test.journalData.testSlotAttributes.start);
   const today = new DateTime();
   return today.daysDiff(new Date(testDate.format('YYYY-MM-DD'))) < 0;
 };
 
-export const getIncompleteTests = (tests: TestsModel): TestResultUnionType[] => {
+export const getIncompleteTests = (tests: TestsModel): TestResultSchemasUnion[] => {
   const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
   return incompleteTestsSlotIds.map((slotId: string) => tests.startedTests[slotId]);
 };
@@ -109,10 +110,10 @@ export const getIncompleteTestsCount = (tests: TestsModel): number => {
   return incompleteTestsSlotIds.length;
 };
 
-export const getOldestIncompleteTest = (tests: TestsModel): TestResultUnionType => {
+export const getOldestIncompleteTest = (tests: TestsModel): TestResultSchemasUnion => {
   const incompleteTestsSlotIds: string[] = getIncompleteTestsSlotIds(tests);
 
-  let oldestTest: TestResultUnionType;
+  let oldestTest: TestResultSchemasUnion;
 
   incompleteTestsSlotIds.forEach((slotId: string) => {
     if (!oldestTest) {

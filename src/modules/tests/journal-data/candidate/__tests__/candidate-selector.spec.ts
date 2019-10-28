@@ -6,7 +6,7 @@ import {
   getPostalAddress,
   getCandidateId,
 } from '../candidate.selector';
-import { Candidate } from '@dvsa/mes-test-schema/categories/B';
+import { Candidate } from '@dvsa/mes-test-schema/categories/Common';
 
 describe('candidate selector', () => {
   const candidate: Candidate = {

@@ -1,6 +1,6 @@
 
 import { Action, combineReducers } from '@ngrx/store';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { schemaVersionReducer } from './schema-version/schema-version.reducer';
 import { categoryReducer } from './category/category.reducer';
 import { preTestDeclarationsReducer } from './pre-test-declarations/pre-test-declarations.reducer';
@@ -23,7 +23,7 @@ import { testDataReducer } from './test-data/test-data.reducer';
 import { journalDataReducer } from './journal-data/journal-data.reducer';
 
 export function testsCatBReducer(
-  action: Action, state: StandardCarTestCATBSchema): Required<StandardCarTestCATBSchema> {
+  action: Action, state: CatBUniqueTypes.TestResult): Required<CatBUniqueTypes.TestResult> {
   return combineReducers(
     {
       version: schemaVersionReducer,
@@ -47,7 +47,7 @@ export function testsCatBReducer(
       examinerKeyed: examinerKeyedReducer,
       changeMarker: changeMarkerReducer,
     })(
-      state as Required<StandardCarTestCATBSchema>,
+      state as Required<CatBUniqueTypes.TestResult>,
       action,
     );
 }

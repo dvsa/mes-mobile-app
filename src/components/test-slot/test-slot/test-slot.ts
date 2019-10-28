@@ -15,7 +15,7 @@ import { getTestStatus, getActivityCodeBySlotId, getTestById } from '../../../mo
 import { SlotTypes } from '../../../shared/models/slot-types';
 import { map, filter } from 'rxjs/operators';
 import { TestSlot } from '@dvsa/mes-journal-schema';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
 import { getSlotType } from '../../../shared/helpers/get-slot-type';
 import { SlotProvider } from '../../../providers/slot/slot';
 import { isRekey } from '../../../modules/tests/rekey/rekey.selector';

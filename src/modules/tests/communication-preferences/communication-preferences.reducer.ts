@@ -1,4 +1,4 @@
-import { CommunicationPreferences } from '@dvsa/mes-test-schema/categories/B';
+import { CommunicationPreferences } from '@dvsa/mes-test-schema/categories/Common';
 import * as communicationPrefActions from './communication-preferences.actions';
 import { createFeatureSelector } from '@ngrx/store';
 

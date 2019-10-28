@@ -5,7 +5,7 @@ import { AppConfigProvider } from '../../../../providers/app-config/app-config';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
 import { TestStatus } from '../../../../modules/tests/test-status/test-status.model';
 import { SlotTypes } from '../../../../shared/models/slot-types';
-import { ActivityCode } from '@dvsa/mes-test-schema/categories/B';
+import { ActivityCode } from '@dvsa/mes-test-schema/categories/Common';
 import { getSlotType } from '../../../../shared/helpers/get-slot-type';
 
 @Component({

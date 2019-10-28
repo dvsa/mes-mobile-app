@@ -1,4 +1,4 @@
-import { Accompaniment } from '@dvsa/mes-test-schema/categories/B';
+import { Accompaniment } from '@dvsa/mes-test-schema/categories/Common';
 import {
   getInstructorAccompaniment,
   getSupervisorAccompaniment,

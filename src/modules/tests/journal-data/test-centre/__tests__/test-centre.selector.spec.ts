@@ -1,5 +1,5 @@
 import { getCostCentre } from '../test-centre.selector';
-import { TestCentre } from '@dvsa/mes-test-schema/categories/B';
+import { TestCentre } from '@dvsa/mes-test-schema/categories/Common';
 
 describe('testCentre selector', () => {
   const testCentre: TestCentre = {

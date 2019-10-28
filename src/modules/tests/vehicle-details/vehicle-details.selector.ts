@@ -1,4 +1,4 @@
-import { VehicleDetails } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleDetails } from '@dvsa/mes-test-schema/categories/Common';
 
 export const getRegistrationNumber = (vehicleDetails: VehicleDetails) => vehicleDetails.registrationNumber;
 export const getGearboxCategory = (vehicleDetails: VehicleDetails) => vehicleDetails.gearboxCategory;

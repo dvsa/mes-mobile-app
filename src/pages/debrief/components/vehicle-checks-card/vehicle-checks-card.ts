@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { VehicleChecks, QuestionOutcome } from '@dvsa/mes-test-schema/categories/B';
+import { QuestionOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { getCurrentTest } from '../../../../modules/tests/tests.selector';
 import { getTestData } from '../../../../modules/tests/test-data/test-data.reducer';
@@ -38,7 +39,7 @@ export class VehicleChecksCardComponent implements OnInit, OnDestroy {
   constructor(private store$: Store<StoreModel>) { }
 
   ngOnInit(): void {
-    const vehicleChecks$: Observable<VehicleChecks> = this.store$.pipe(
+    const vehicleChecks$: Observable<CatBUniqueTypes.VehicleChecks> = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
       select(getTestData),

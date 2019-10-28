@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Examiner } from '@dvsa/mes-test-schema/categories/B';
+import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
 
 export const POPULATE_EXAMINER = '[ExaminerlEffects] Populate Examiner';
 

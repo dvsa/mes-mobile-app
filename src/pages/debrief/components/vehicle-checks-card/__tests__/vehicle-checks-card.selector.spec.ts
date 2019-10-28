@@ -4,13 +4,13 @@ import {
   hasVehicleChecksFault,
 } from '../vehicle-checks-card.selector';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
-import { VehicleChecks } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 
 describe('vehicleChecksCardSelector', () => {
 
   describe('getShowMeQuestionOutcome', () => {
     it('should return the show me question outcome', () => {
-      let vehicleChecks: VehicleChecks = {
+      let vehicleChecks: CatBUniqueTypes.VehicleChecks = {
         showMeQuestion: {
           outcome: CompetencyOutcome.D,
         },

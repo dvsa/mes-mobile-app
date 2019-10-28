@@ -1,4 +1,5 @@
-import { Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+// TODO: This needs to be CatBE as soon as the CatBE test report is implemented
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
@@ -32,7 +33,7 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   displayPopover: boolean;
-  manoeuvres$: Observable<Manoeuvres>;
+  manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
 
   constructor(private store$: Store<StoreModel>) {
     this.displayPopover = false;
@@ -46,7 +47,7 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
       select(getManoeuvres),
     );
 
-    this.subscription = this.manoeuvres$.subscribe((manoeuvres: Manoeuvres) => {
+    this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
       this.drivingFaults = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
       this.hasSeriousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
       this.hasDangerousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;

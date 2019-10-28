@@ -36,7 +36,7 @@ import {
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Insomnia } from '@ionic-native/insomnia';
 import { TranslateService } from 'ng2-translate';
-import { ETA, Eco } from '@dvsa/mes-test-schema/categories/B';
+import { ETA, Eco } from '@dvsa/mes-test-schema/categories/Common';
 import {
   getCommunicationPreference,
 } from '../../../modules/tests/communication-preferences/communication-preferences.reducer';

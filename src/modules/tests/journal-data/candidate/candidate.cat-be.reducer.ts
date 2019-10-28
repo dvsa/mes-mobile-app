@@ -1,8 +1,8 @@
-import { Candidate } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { createFeatureSelector } from '@ngrx/store';
 import * as candidateActions from './candidate.actions';
 
-export const initialState: Candidate = {
+export const initialState: CatBEUniqueTypes.Candidate = {
   candidateId: null,
   candidateName: {},
   driverNumber: null,
@@ -16,12 +16,15 @@ export const initialState: Candidate = {
   prn: null,
   previousADITests: null,
   ethnicityCode: null,
+  businessAddress: {},
+  businessName: null,
+  businessTelephone: null,
 };
 
-export function candidateReducer(
+export function candidateCatBEReducer(
   state = initialState,
   action: candidateActions.Types,
-): Candidate {
+): CatBEUniqueTypes.Candidate {
   switch (action.type) {
     case candidateActions.POPULATE_CANDIDATE_DETAILS:
       return action.payload;
@@ -29,4 +32,4 @@ export function candidateReducer(
   return state;
 }
 
-export const getCandidate = createFeatureSelector<Candidate>('candidate');
+export const getCandidate = createFeatureSelector<CatBEUniqueTypes.Candidate>('candidate');

@@ -1,4 +1,4 @@
-import { VehicleDetails } from '@dvsa/mes-test-schema/categories/B';
+import { VehicleDetails } from '@dvsa/mes-test-schema/categories/Common';
 import { getRegistrationNumber, getGearboxCategory, getSchoolCar, getDualControls } from '../vehicle-details.selector';
 
 describe('vehicle details selector', () => {

@@ -110,32 +110,32 @@ describe('Test Report Effects', () => {
 
     it('should dispatch a success action when the effect is triggered and the eta is valid', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(true));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(true));
       // ACT
       actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.moveOffSafety));
       actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
-        expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
+        expect(testReportValidatorProvider.validateETACatB).toHaveBeenCalled();
         expect(result).toEqual(new testReportActions.ValidateEta(true));
         done();
       });
     });
     it('should dispatch a failure action when the effect is triggered and the test is not valid', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
       effects.validateCatBTestEta$.subscribe((result) => {
-        expect(testReportValidatorProvider.validateCatBEta).toHaveBeenCalled();
+        expect(testReportValidatorProvider.validateETACatB).toHaveBeenCalled();
         expect(result).toEqual(new testReportActions.ValidateEta(false));
         done();
       });
     });
     it('should trigger when an ADD_DANGEROUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new dangerousFaultsActions.AddDangerousFault(Competencies.ancillaryControls));
       // ASSERT
@@ -146,7 +146,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an ADD_SERIOUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new seriousFaultsActions.AddSeriousFault(Competencies.ancillaryControls));
       // ASSERT
@@ -157,7 +157,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an REMOVE_DANGEROUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new dangerousFaultsActions.RemoveDangerousFault(Competencies.ancillaryControls));
       // ASSERT
@@ -168,7 +168,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an REMOVE_SERIOUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new seriousFaultsActions.RemoveSeriousFault(Competencies.ancillaryControls));
       // ASSERT
@@ -179,7 +179,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an TOGGLE_ETA fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new etaActions.ToggleETA(ExaminerActions.physical));
       // ASSERT
@@ -190,7 +190,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an ADD_MANOEUVRE_SERIOUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreSeriousFault(
         {
@@ -205,7 +205,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an ADD_MANOEUVRE_DANGEROUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new manoeuvresActions.AddManoeuvreDangerousFault(
         {
@@ -220,7 +220,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an REMOVE_MANOEUVRE_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new manoeuvresActions.RemoveManoeuvreFault(
         {
@@ -235,7 +235,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an SHOW_ME_QUESTION_SERIOUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionSeriousFault());
       // ASSERT
@@ -246,7 +246,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an SHOW_ME_QUESTION_DANGEROUS_FAULT fault is dispatched', (done) => {
       // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
       // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionDangerousFault());
       // ASSERT
@@ -257,7 +257,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an SHOW_ME_QUESTION_PASSED fault is dispatched', (done) => {
           // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
           // ACT
       actions$.next(new vehicleChecksActions.ShowMeQuestionPassed());
           // ASSERT
@@ -268,7 +268,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an CONTROLLED_STOP_ADD_SERIOUS_FAULT fault is dispatched', (done) => {
             // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
             // ACT
       actions$.next(new controlledStopActions.ControlledStopAddSeriousFault());
             // ASSERT
@@ -279,7 +279,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an CONTROLLED_STOP_ADD_DANGEROUS_FAULT fault is dispatched', (done) => {
             // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
             // ACT
       actions$.next(new controlledStopActions.ControlledStopAddDangerousFault());
             // ASSERT
@@ -290,7 +290,7 @@ describe('Test Report Effects', () => {
     });
     it('should trigger when an CONTROLLED_STOP_REMOVE_FAULT fault is dispatched', (done) => {
             // ARRANGE
-      spyOn(testReportValidatorProvider, 'validateCatBEta').and.returnValue(of(false));
+      spyOn(testReportValidatorProvider, 'validateETACatB').and.returnValue(of(false));
             // ACT
       actions$.next(new controlledStopActions.ControlledStopRemoveFault());
             // ASSERT

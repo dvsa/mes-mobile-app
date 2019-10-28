@@ -1,4 +1,4 @@
-import { Address } from '@dvsa/mes-test-schema/categories/B';
+import { Address } from '@dvsa/mes-test-schema/categories/Common';
 
 export type Details = {
   testCategory: string,

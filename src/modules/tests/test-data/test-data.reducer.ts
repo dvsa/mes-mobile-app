@@ -1,4 +1,4 @@
-import { TestData } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 import { drivingFaultsReducer } from './driving-faults/driving-faults.reducer';
 import { dangerousFaultsReducer } from './dangerous-faults/dangerous-faults.reducer';
@@ -11,7 +11,7 @@ import { eyesightTestReducer } from './eyesight-test/eyesight-test.reducer';
 import { manoeuvresReducer } from './manoeuvres/manoeuvres.reducer';
 import { testRequirementsReducer } from './test-requirements/test-requirements.reducer';
 
-export const initialState: TestData = {
+export const initialState: CatBUniqueTypes.TestData = {
   dangerousFaults: {},
   drivingFaults: {},
   manoeuvres: {},
@@ -30,7 +30,7 @@ export const initialState: TestData = {
 export function testDataReducer(
   state = initialState,
   action: Action,
-): Required<TestData> {
+): Required<CatBUniqueTypes.TestData> {
   return combineReducers({
     drivingFaults: drivingFaultsReducer,
     dangerousFaults: dangerousFaultsReducer,
@@ -42,9 +42,7 @@ export function testDataReducer(
     eyesightTest: eyesightTestReducer,
     manoeuvres: manoeuvresReducer,
     testRequirements: testRequirementsReducer,
-    // TODO - what do i do with my fault summary
-    faultSummary: () => null,
-  })(state as Required<TestData>, action);
+  })(state as Required<CatBUniqueTypes.TestData>, action);
 }
 
-export const getTestData = createFeatureSelector<TestData>('testData');
+export const getTestData = createFeatureSelector<CatBUniqueTypes.TestData>('testData');

@@ -1,6 +1,12 @@
-import { RekeyReason, StandardCarTestCATBSchema, IpadIssue, Transfer, Other } from '@dvsa/mes-test-schema/categories/B';
+import {
+  RekeyReason,
+  IpadIssue,
+  Transfer,
+  Other,
+  TestResultCommonSchema,
+} from '@dvsa/mes-test-schema/categories/Common';
 
-export const getReasonForRekey = (test: StandardCarTestCATBSchema) => {
+export const getReasonForRekey = (test: TestResultCommonSchema) => {
   return test.rekeyReason;
 };
 

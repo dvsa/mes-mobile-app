@@ -6,9 +6,9 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './../tests.reducer';
 import { getCurrentTest } from './../tests.selector';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
 import { SetChangeMarker } from '../change-marker/change-marker.actions';
 import { SetExaminerConducted, SET_EXAMINER_CONDUCTED } from './examiner-conducted.actions';
+import { TestResultSchemasUnion } from '@dvsa/mes-test-schema/categories';
 
 @Injectable()
 export class ExaminerConductedEffects {
@@ -28,7 +28,7 @@ export class ExaminerConductedEffects {
         ),
       ),
     )),
-    map(([action, test]: [SetExaminerConducted, StandardCarTestCATBSchema]) =>
+    map(([action, test]: [SetExaminerConducted, TestResultSchemasUnion]) =>
       new SetChangeMarker(action.examinerConducted !== test.examinerBooked)),
   );
 

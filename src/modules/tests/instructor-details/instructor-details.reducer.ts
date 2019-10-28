@@ -1,8 +1,8 @@
 import * as instructorDetailsActions from './instructor-details.actions';
-import { InstructorDetails } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { createFeatureSelector } from '@ngrx/store';
 
-const initialState: InstructorDetails = {};
+const initialState: CatBUniqueTypes.InstructorDetails = {};
 
 export const instructorDetailsReducer = (state = initialState, action: instructorDetailsActions.Types) => {
   switch (action.type) {
@@ -16,4 +16,4 @@ export const instructorDetailsReducer = (state = initialState, action: instructo
   }
 };
 
-export const getInstructorDetails = createFeatureSelector<InstructorDetails>('instructorDetails');
+export const getInstructorDetails = createFeatureSelector<CatBUniqueTypes.InstructorDetails>('instructorDetails');

@@ -20,7 +20,8 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { map } from 'rxjs/operators';
-import { ManoeuvreOutcome, Manoeuvres } from '@dvsa/mes-test-schema/categories/B';
+import { ManoeuvreOutcome } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { ToggleSeriousFaultMode, ToggleDangerousFaultMode, ToggleRemoveFaultMode } from '../../../test-report.actions';
 
 interface ManoeuvreCompetencyComponentState {
@@ -82,7 +83,7 @@ export class ManoeuvreCompetencyComponent implements OnInit, OnDestroy {
       manoeuvreCompetencyOutcome$: currentTest$.pipe(
         select(getTestData),
         select(getManoeuvres),
-        select((manoeuvres: Manoeuvres) => {
+        select((manoeuvres: CatBEUniqueTypes.Manoeuvres) => {
           const manoeuvre = manoeuvres[this.manoeuvre];
           if (typeof manoeuvre !== 'undefined') {
             return manoeuvre[this.competency];

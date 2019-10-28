@@ -8,7 +8,7 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTests } from './../tests.reducer';
 import { getCurrentTest } from './../tests.selector';
-import { Eco } from '@dvsa/mes-test-schema/categories/B';
+import { Eco } from '@dvsa/mes-test-schema/categories/Common';
 import { getTestData } from './test-data.reducer';
 import { getEco } from './test-data.selector';
 

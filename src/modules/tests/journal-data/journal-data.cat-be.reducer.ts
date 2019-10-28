@@ -1,12 +1,12 @@
-import { JournalData } from '@dvsa/mes-test-schema/categories/Common';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { createFeatureSelector, combineReducers, Action } from '@ngrx/store';
 import { examinerReducer } from './examiner/examiner.reducer';
 import { testCentreReducer } from './test-centre/test-centre.reducer';
 import { testSlotsAttributesReducer } from './test-slot-attributes/test-slot-attributes.reducer';
-import { candidateReducer } from './candidate/candidate.reducer';
+import { candidateCatBEReducer } from './candidate/candidate.cat-be.reducer';
 import { applicationReferenceReducer } from './application-reference/application-reference.reducer';
 
-export const initialState: JournalData = {
+export const initialState: CatBEUniqueTypes.JournalData = {
   applicationReference: {
     applicationId: null,
     bookingSequence: null,
@@ -40,17 +40,17 @@ export const initialState: JournalData = {
   },
 };
 
-export function journalDataReducer(
+export function journalDataCatBEReducer(
   state = initialState,
   action: Action,
-): Required<JournalData> {
+): Required<CatBEUniqueTypes.JournalData> {
   return combineReducers({
     examiner: examinerReducer,
     testCentre: testCentreReducer,
     testSlotAttributes: testSlotsAttributesReducer,
-    candidate: candidateReducer,
+    candidate: candidateCatBEReducer,
     applicationReference: applicationReferenceReducer,
-  })(state as Required<JournalData>, action);
+  })(state as Required<CatBEUniqueTypes.JournalData>, action);
 }
 
-export const getJournalData = createFeatureSelector<JournalData>('journalData');
+export const getJournalData = createFeatureSelector<CatBEUniqueTypes.JournalData>('journalData');

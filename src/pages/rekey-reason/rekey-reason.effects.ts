@@ -11,7 +11,7 @@ import { select, Store } from '@ngrx/store';
 import { getCurrentTest } from '../../modules/tests/tests.selector';
 import { StoreModel } from '../../shared/models/store.model';
 import { getTests } from '../../modules/tests/tests.reducer';
-import { StandardCarTestCATBSchema } from '@dvsa/mes-test-schema/categories/B';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { HttpStatusCodes } from '../../shared/models/http-status-codes';
 
 @Injectable()
@@ -33,7 +33,7 @@ export class RekeyReasonEffects {
         ),
       ),
     )),
-    switchMap(([action, test]: [rekeyActions.ValidateTransferRekey, StandardCarTestCATBSchema]) => {
+    switchMap(([action, test]: [rekeyActions.ValidateTransferRekey, CatBUniqueTypes.TestResult]) => {
       if (test.examinerBooked === test.examinerConducted) {
         return of(new testActions.SendCurrentTest());
       }

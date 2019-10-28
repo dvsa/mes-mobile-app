@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Address } from '@dvsa/mes-test-schema/categories/B';
+import { Address } from '@dvsa/mes-test-schema/categories/Common';
 import { FormGroup } from '@angular/forms';
 
 @Component({

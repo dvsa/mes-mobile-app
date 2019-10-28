@@ -2,9 +2,8 @@ import {
   SeriousFaults,
   DangerousFaults,
   DrivingFaults,
-  TestData,
-  Manoeuvres,
-} from '@dvsa/mes-test-schema/categories/B';
+} from '@dvsa/mes-test-schema/categories/Common';
+import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import {
   getSeriousOrDangerousFaults,
   getDrivingFaults,
@@ -19,7 +18,7 @@ describe('debriefSelector', () => {
   const dangerousFaults: DangerousFaults = {};
   const seriousFaults: SeriousFaults = {};
   const drivingFaults: DrivingFaults = {};
-  const manoeuvres: Manoeuvres = {};
+  const manoeuvres: CatBUniqueTypes.Manoeuvres = {};
 
   describe('getSeriousOrDangerousFaults', () => {
     it('should return an empty array if there are no serious faults', () => {
@@ -81,7 +80,7 @@ describe('debriefSelector', () => {
       localDangerousFaults = {};
       localSeriousFaults = {};
       localDrivingFaults.ancillaryControls = 1;
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         dangerousFaults: localDangerousFaults,
         seriousFaults: localSeriousFaults,
         drivingFaults: localDrivingFaults,
@@ -100,7 +99,7 @@ describe('debriefSelector', () => {
         controlsSteering: 2,
         precautions: 1,
       };
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         dangerousFaults: localDangerousFaults,
         seriousFaults: localSeriousFaults,
         drivingFaults: localDrivingFaults,
@@ -122,7 +121,7 @@ describe('debriefSelector', () => {
       };
       localSeriousFaults.useOfSpeed = true;
       localSeriousFaults.controlsSteering = true;
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         dangerousFaults: localDangerousFaults,
         seriousFaults: localSeriousFaults,
         drivingFaults: localDrivingFaults,
@@ -144,7 +143,7 @@ describe('debriefSelector', () => {
       };
       localDangerousFaults.useOfSpeed = true;
       localDangerousFaults.controlsSteering = true;
-      const testData: TestData = {
+      const testData: CatBUniqueTypes.TestData = {
         dangerousFaults: localDangerousFaults,
         seriousFaults: localSeriousFaults,
         drivingFaults: localDrivingFaults,

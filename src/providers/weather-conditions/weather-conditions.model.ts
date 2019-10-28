@@ -1,4 +1,4 @@
-import { WeatherConditions } from '@dvsa/mes-test-schema/categories/B';
+import { WeatherConditions } from '@dvsa/mes-test-schema/categories/Common';
 
 export interface WeatherConditionSelection {
   weatherConditionNumber: number;

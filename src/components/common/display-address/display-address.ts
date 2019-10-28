@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Address } from '@dvsa/mes-test-schema/categories/B';
+import { Address } from '@dvsa/mes-test-schema/categories/Common';
 
 @Component({
   selector: 'display-address',
