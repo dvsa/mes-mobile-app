@@ -5,6 +5,7 @@ export const VEHICLE_REGISTRATION_CHANGED = '[Vehicle Details] Registration chan
 export const SCHOOL_CAR_TOGGLED = '[Vehicle Details] School car toggled';
 export const DUAL_CONTROLS_TOGGLED = '[Vehicle Details] Dual controls toggled';
 export const GEARBOX_CATEGORY_CHANGED = '[Vehicle Details] Gearbox category changed';
+export const CLEAR_GEARBOX_CATEGORY = '[Vehicle Details] Clear gearbox category';
 
 export class VehicleRegistrationChanged implements Action {
   readonly type = VEHICLE_REGISTRATION_CHANGED;
@@ -24,8 +25,13 @@ export class GearboxCategoryChanged implements Action {
   constructor(public gearboxCategory: GearboxCategory) {}
 }
 
+export class ClearGearboxCategory implements Action {
+  readonly type = CLEAR_GEARBOX_CATEGORY;
+}
+
 export type Types =
   | VehicleRegistrationChanged
   | SchoolCarToggled
   | DualControlsToggled
-  | GearboxCategoryChanged;
+  | GearboxCategoryChanged
+  | ClearGearboxCategory;
