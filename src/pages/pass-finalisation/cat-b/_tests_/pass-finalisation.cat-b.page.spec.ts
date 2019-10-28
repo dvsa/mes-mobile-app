@@ -23,7 +23,7 @@ import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { TransmissionComponent } from '../components/transmission/transmission';
 import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
-import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived } from
+import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
 import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
@@ -100,7 +100,7 @@ describe('PassFinalisationPage', () => {
     describe('passCertificateNumberChanged', () => {
       it('should dispatch the correct action when called', () => {
         component.passCertificateNumberChanged('1e3f5y64');
-        expect(store$.dispatch).toHaveBeenCalledWith('1e3f5y64');
+        expect(store$.dispatch).toHaveBeenCalledWith(new PassCertificateNumberChanged('1e3f5y64'));
         expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
