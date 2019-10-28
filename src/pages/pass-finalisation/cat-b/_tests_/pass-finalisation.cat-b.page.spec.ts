@@ -31,7 +31,7 @@ import { PassCertificateNumberComponent } from '../../components/pass-certificat
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { TransmissionComponent } from '../../components/transmission/transmission';
 
-describe('PassFinalisationPage', () => {
+describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;
   let component: PassFinalisationCatBPage;
   let store$: Store<StoreModel>;

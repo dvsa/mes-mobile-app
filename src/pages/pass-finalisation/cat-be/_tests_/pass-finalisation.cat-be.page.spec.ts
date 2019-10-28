@@ -31,7 +31,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
 
-describe('PassFinalisationPage', () => {
+describe('PassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBEPage>;
   let component: PassFinalisationCatBEPage;
   let store$: Store<StoreModel>;
