@@ -66,7 +66,6 @@ if (!window['devToolsExtension'] && !window['__REDUX_DEVTOOLS_EXTENSION__'] && e
   // support both the legacy and new keys, for now
   window['devToolsExtension'] = remoteDevToolsProxy;
   window['__REDUX_DEVTOOLS_EXTENSION__'] = remoteDevToolsProxy;
-  console.log(`window: `, window);
 }
 
 @NgModule({
