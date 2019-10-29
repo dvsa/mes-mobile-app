@@ -32,23 +32,6 @@ page-rekey-reason {
     font-size: 3.4rem;
   }
 
-  .mes-return-button {
-    @extend .mes-primary-button;
-    margin-bottom: 10px;
-    width: 40%;
-    background: map-get($colors-gds, gds-grey-2);
-    box-shadow: inset 0 -2px 0 0 map-get($colors-gds, gds-grey-1);
-    color: map-get($colors-gds, gds-black);;
-    &.activated {
-      background: map-get($colors-gds, gds-grey-1);
-    }
-    h3 {
-      color: map-get($colors-gds, gds-black);
-    }
-    margin-top: 9px;
-    min-height: 50px;
-  }
-
   .selected-border{
     border-width: 0 0 0 4px;
     border-style: solid;
@@ -92,5 +75,5 @@ page-rekey-reason {
       }
     }
   }
-  
+
 }

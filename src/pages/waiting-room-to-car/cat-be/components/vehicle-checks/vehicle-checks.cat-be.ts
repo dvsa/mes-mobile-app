@@ -5,4 +5,13 @@ import { Component } from '@angular/core';
 })
 export class VehicleChecksCatBEComponent {
 
+  isInvalid(): boolean {
+    // TODO - need to implment validation + unit test
+    return false;
+  }
+
+  openVehicleChecksModal(): void {
+    // TODO
+    console.log('Here');
+  }
 }
