@@ -11,7 +11,7 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { PostDebriefHoldingViewDidEnter } from '../../post-debrief-holding.actions';
 import { PostDebriefHoldingCatBEPage } from '../post-debrief-holding.cat-be.page';
 
-describe('PostDebriefHoldingCatBPage', () => {
+describe('PostDebriefHoldingCatBEPage', () => {
   let fixture: ComponentFixture<PostDebriefHoldingCatBEPage>;
   let component: PostDebriefHoldingCatBEPage;
   let store$: Store<StoreModel>;
