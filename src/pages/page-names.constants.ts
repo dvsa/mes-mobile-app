@@ -14,7 +14,7 @@ export const CAT_B = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBPage',
   COMMUNICATION_PAGE: 'CommunicationCatBPage',
   DEBRIEF_PAGE: 'DebriefCatBPage',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBPage',
   OFFICE_PAGE: 'OfficePage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatBPage',
   TEST_REPORT_PAGE: 'TestReportCatBPage',

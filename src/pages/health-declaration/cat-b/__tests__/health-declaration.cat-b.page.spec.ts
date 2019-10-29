@@ -2,37 +2,41 @@ import { ComponentFixture, async, TestBed, fakeAsync } from '@angular/core/testi
 import { IonicModule, NavController, NavParams, Config, Platform, AlertController } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock, AlertControllerMock } from 'ionic-mocks';
 
-import { AppModule } from '../../../app/app.module';
-import { HealthDeclarationPage } from '../health-declaration';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
-import { DateTimeProvider } from '../../../providers/date-time/date-time';
-import { DateTimeProviderMock } from '../../../providers/date-time/__mocks__/date-time.mock';
-import { ComponentsModule } from '../../../components/common/common-components.module';
+import { AppModule } from '../../../../app/app.module';
+import { HealthDeclarationCatBPage } from '../health-declaration.cat-b.page';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
+import { DateTimeProvider } from '../../../../providers/date-time/date-time';
+import { DateTimeProviderMock } from '../../../../providers/date-time/__mocks__/date-time.mock';
+import { ComponentsModule } from '../../../../components/common/common-components.module';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
-import { HealthDeclarationViewDidEnter } from '../health-declaration.actions';
-import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
+import { StoreModel } from '../../../../shared/models/store.model';
+import { HealthDeclarationViewDidEnter } from '../../health-declaration.actions';
+import { DeviceAuthenticationProvider } from '../../../../providers/device-authentication/device-authentication';
 import {
   DeviceAuthenticationProviderMock,
-} from '../../../providers/device-authentication/__mocks__/device-authentication.mock';
+} from '../../../../providers/device-authentication/__mocks__/device-authentication.mock';
 import * as postTestDeclarationsActions
-  from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
+  from '../../../../modules/tests/post-test-declarations/post-test-declarations.actions';
 import * as passCompletionActions
-  from '../../../modules/tests/pass-completion/pass-completion.actions';
+  from '../../../../modules/tests/pass-completion/pass-completion.actions';
 import { of } from 'rxjs/observable/of';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { By } from '@angular/platform-browser';
 import { TestSlotAttributes } from '@dvsa/mes-test-schema/categories/Common';
 import { Subscription } from 'rxjs/Subscription';
-import * as welshTranslations from '../../../assets/i18n/cy.json';
-import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
-import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
-import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import * as welshTranslations from '../../../../assets/i18n/cy.json';
+import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { MockComponent } from 'ng-mocks';
+import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../../../shared/helpers/translation.helpers';
+import { SignatureComponent } from '../../components/signature/signature';
+import { HealthDeclarationComponent } from '../../components/health-declaration/health-declaration';
+import { ReceiptDeclarationComponent } from '../../components/receipt-declaration/receipt-declaration';
 
-describe('HealthDeclarationPage', () => {
-  let fixture: ComponentFixture<HealthDeclarationPage>;
-  let component: HealthDeclarationPage;
+describe('HealthDeclarationCatBPage', () => {
+  let fixture: ComponentFixture<HealthDeclarationCatBPage>;
+  let component: HealthDeclarationCatBPage;
   let store$: Store<StoreModel>;
   let deviceAuthenticationProvider: DeviceAuthenticationProvider;
   let translate: TranslateService;
@@ -48,7 +52,12 @@ describe('HealthDeclarationPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HealthDeclarationPage],
+      declarations: [
+        HealthDeclarationCatBPage,
+        MockComponent(SignatureComponent),
+        MockComponent(HealthDeclarationComponent),
+        MockComponent(ReceiptDeclarationComponent),
+      ],
       imports: [
         IonicModule,
         AppModule,
@@ -89,7 +98,7 @@ describe('HealthDeclarationPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(HealthDeclarationPage);
+        fixture = TestBed.createComponent(HealthDeclarationCatBPage);
         component = fixture.componentInstance;
         deviceAuthenticationProvider = TestBed.get(DeviceAuthenticationProvider);
         store$ = TestBed.get(Store);
@@ -115,19 +124,6 @@ describe('HealthDeclarationPage', () => {
         });
       });
 
-      describe('Declaration Validation', () => {
-        it('form should only be valid when all fields are set', () => {
-          const form = component.form;
-          form.get('healthCheckboxCtrl').setValue(true);
-          expect(form.get('healthCheckboxCtrl').status).toEqual('VALID');
-          form.get('receiptCheckboxCtrl').setValue(true);
-          expect(form.get('receiptCheckboxCtrl').status).toEqual('VALID');
-          expect(form.valid).toEqual(false);
-          form.get('signatureAreaCtrl').setValue('any date you like.');
-          expect(form.get('signatureAreaCtrl').status).toEqual('VALID');
-          expect(form.valid).toEqual(true);
-        });
-      });
       describe('healthDeclarationChanged', () => {
         it('should dispatch a ToggleHealthDeclaration action', () => {
           component.healthDeclarationChanged();
@@ -155,9 +151,8 @@ describe('HealthDeclarationPage', () => {
         const form = component.form;
         fixture.detectChanges();
         component.pageState.healthDeclarationAccepted$ = of(true);
-        component.pageState.passCertificateNumberReceived$ = of(true);
+        component.pageState.receiptDeclarationAccepted$ = of(true);
         component.pageState.signature$ = of('sig');
-        component.rehydrateFields();
         component.healthDeclarationAccepted = true;
         component.onSubmit();
         fixture.detectChanges();
@@ -170,37 +165,14 @@ describe('HealthDeclarationPage', () => {
         const form = component.form;
         fixture.detectChanges();
         component.pageState.healthDeclarationAccepted$ = of(false);
-        component.pageState.passCertificateNumberReceived$ = of(true);
+        component.pageState.receiptDeclarationAccepted$ = of(true);
         component.pageState.signature$ = of('sig');
-        component.rehydrateFields();
         component.onSubmit();
         fixture.detectChanges();
         expect(form.valid).toEqual(true);
         expect(component.showConfirmHealthDeclarationModal).toHaveBeenCalled();
       }));
 
-    });
-    describe('rehydrateFields', () => {
-      it('should set the field values from the page state', () => {
-        const form = component.form;
-
-        form.get('healthCheckboxCtrl').setValue(null);
-        form.get('receiptCheckboxCtrl').setValue(null);
-        form.get('signatureAreaCtrl').setValue(null);
-
-        fixture.detectChanges();
-
-        component.pageState.healthDeclarationAccepted$ = of(true);
-        component.pageState.passCertificateNumberReceived$ = of(true);
-        component.pageState.signature$ = of('abc123');
-
-        component.rehydrateFields();
-        fixture.detectChanges();
-
-        expect(form.get('healthCheckboxCtrl').value).toEqual(true);
-        expect(form.get('receiptCheckboxCtrl').value).toEqual(true);
-        expect(form.get('signatureAreaCtrl').value).toEqual('abc123');
-      });
     });
   });
 
