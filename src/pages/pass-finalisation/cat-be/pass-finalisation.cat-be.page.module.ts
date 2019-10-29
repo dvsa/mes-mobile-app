@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PassFinalisationCatBPage } from './pass-finalisation.cat-b.page';
+import { PassFinalisationCatBEPage } from './pass-finalisation.cat-be.page';
 import { EffectsModule } from '@ngrx/effects';
 import { PassFinalisationAnalyticsEffects } from '../pass-finalisation.analytics.effects';
 import { ComponentsModule } from '../../../components/common/common-components.module';
@@ -10,14 +10,14 @@ import { PassFinalisationComponentsModule } from '../components/pass-finalisatio
 
 @NgModule({
   declarations: [
-    PassFinalisationCatBPage,
+    PassFinalisationCatBEPage,
   ],
   imports: [
-    IonicPageModule.forChild(PassFinalisationCatBPage),
+    IonicPageModule.forChild(PassFinalisationCatBEPage),
     EffectsModule.forFeature([PassFinalisationAnalyticsEffects]),
     ComponentsModule,
     TestFinalisationComponentsModule,
     PassFinalisationComponentsModule,
   ],
 })
-export class PassFinalisationCatBPageModule {}
+export class PassFinalisationCatBEPageModule {}

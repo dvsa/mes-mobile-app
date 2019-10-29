@@ -2,7 +2,6 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform } from 'ionic-angular';
 import { NavControllerMock, NavParamsMock, ConfigMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
-import { PassFinalisationCatBPage } from '../pass-finalisation.cat-b.page';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../../providers/date-time/date-time';
@@ -12,6 +11,8 @@ import { StoreModel } from '../../../../shared/models/store.model';
 import { PersistTests } from '../../../../modules/tests/tests.actions';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
+import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
+import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { DebriefWitnessedComponent } from
   '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
@@ -19,6 +20,7 @@ import { LanguagePreferencesComponent } from
   '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
+import { TransmissionComponent } from '../../components/transmission/transmission';
 import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
@@ -27,19 +29,17 @@ import { D255Yes, D255No, DebriefWitnessed, DebriefUnwitnessed } from
   '../../../../modules/tests/test-summary/test-summary.actions';
 import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
-import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
-import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
-import { TransmissionComponent } from '../../components/transmission/transmission';
+import { PassFinalisationCatBEPage } from '../pass-finalisation.cat-be.page';
 
-describe('PassFinalisationCatBPage', () => {
-  let fixture: ComponentFixture<PassFinalisationCatBPage>;
-  let component: PassFinalisationCatBPage;
+describe('PassFinalisationCatBEPage', () => {
+  let fixture: ComponentFixture<PassFinalisationCatBEPage>;
+  let component: PassFinalisationCatBEPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PassFinalisationCatBPage,
+        PassFinalisationCatBEPage,
         MockComponent(PracticeModeBanner),
         MockComponent(PassCertificateNumberComponent),
         MockComponent(LicenseProvidedComponent),
@@ -61,7 +61,7 @@ describe('PassFinalisationCatBPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PassFinalisationCatBPage);
+        fixture = TestBed.createComponent(PassFinalisationCatBEPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
