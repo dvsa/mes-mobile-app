@@ -31,6 +31,7 @@ import {
 import {
   getApplicationNumber,
 } from '../../modules/tests/journal-data/application-reference/application-reference.selector';
+import { getTestCategory } from '../../modules/tests/category/category.reducer';
 
 @Injectable()
 export class WaitingRoomToCarAnalyticsEffects {
@@ -63,15 +64,21 @@ export class WaitingRoomToCarAnalyticsEffects {
           select(getJournalData),
           select(getCandidate),
           select(getCandidateId),
-          ),
+        ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
       ),
     )),
     switchMap((
-      [action, tests, applicationReference, candidateId]:
-      [WaitingRoomToCarViewDidEnter, TestsModel, string, number],
+      [action, tests, applicationReference, candidateId, category]:
+        [WaitingRoomToCarViewDidEnter, TestsModel, string, number, string],
     ) => {
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.setCurrentPage(
         formatAnalyticsText(AnalyticsScreenNames.WAITING_ROOM_TO_CAR, tests),
       );
