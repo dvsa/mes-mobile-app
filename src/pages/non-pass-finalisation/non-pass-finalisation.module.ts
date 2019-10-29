@@ -1,18 +1,11 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { NonPassFinalisationPage } from './non-pass-finalisation';
-import { ComponentsModule } from '../../components/common/common-components.module';
-import { TestFinalisationComponentsModule } from
-'../../components/test-finalisation/test-finalisation-component.module';
+import { NonPassFinalisationCatBPageModule } from './cat-b/non-pass-finalisation.cat-b.page.module';
+import { NonPassFinalisationCatBEPageModule } from './cat-be/non-pass-finalisation.cat-be.page.module';
 
 @NgModule({
-  declarations: [
-    NonPassFinalisationPage,
-  ],
   imports: [
-    IonicPageModule.forChild(NonPassFinalisationPage),
-    ComponentsModule,
-    TestFinalisationComponentsModule,
+    NonPassFinalisationCatBPageModule,
+    NonPassFinalisationCatBEPageModule,
   ],
 })
 export class NonPassFinalisationPageModule { }

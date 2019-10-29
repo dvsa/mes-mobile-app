@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { CAT_B } from '../page-names.constants';
+import { StoreModel } from '../../../shared/models/store.model';
+import { CAT_B } from '../../page-names.constants';
 import { Observable } from 'rxjs/Observable';
-import { getTests } from '../../modules/tests/tests.reducer';
+import { getTests } from '../../../modules/tests/tests.reducer';
 import {
   getCurrentTest,
   getJournalData,
@@ -14,41 +14,41 @@ import {
   getTestOutcome,
   isTestOutcomeSet,
   getTestOutcomeText,
-} from '../../modules/tests/tests.selector';
-import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
+} from '../../../modules/tests/tests.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
   getUntitledCandidateName,
   getCandidateDriverNumber,
   formatDriverNumber,
-} from '../../modules/tests/journal-data/candidate/candidate.selector';
-import { NonPassFinalisationViewDidEnter } from './non-pass-finalisation.actions';
+} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.actions';
 import { map, withLatestFrom } from 'rxjs/operators';
-import { getTestSummary } from '../../modules/tests/test-summary/test-summary.reducer';
-import { isDebriefWitnessed, getD255 } from '../../modules/tests/test-summary/test-summary.selector';
+import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
+import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
 import {
   getTestSlotAttributes,
-} from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
-import { isWelshTest } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
+} from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.reducer';
+import { isWelshTest } from '../../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import {
   ActivityCodeModel,
   activityCodeModelList,
-} from '../office/components/activity-code/activity-code.constants';
+} from '../../office/components/activity-code/activity-code.constants';
 import { FormGroup } from '@angular/forms';
-import { PersistTests } from '../../modules/tests/tests.actions';
-import { OutcomeBehaviourMapProvider } from '../../providers/outcome-behaviour-map/outcome-behaviour-map';
-import { behaviourMap } from '../office/office-behaviour-map';
+import { PersistTests } from '../../../modules/tests/tests.actions';
+import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { behaviourMap } from '../../office/office-behaviour-map';
 import {
   DebriefWitnessed,
   DebriefUnwitnessed,
   D255Yes,
   D255No,
-} from '../../modules/tests/test-summary/test-summary.actions';
+} from '../../../modules/tests/test-summary/test-summary.actions';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
-} from '../../modules/tests/communication-preferences/communication-preferences.actions';
-import { SetTestStatusWriteUp } from '../../modules/tests/test-status/test-status.actions';
-import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
+} from '../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
+import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -66,10 +66,10 @@ interface NonPassFinalisationPageState {
 
 @IonicPage()
 @Component({
-  selector: 'non-pass-finalisation',
-  templateUrl: 'non-pass-finalisation.html',
+  selector: 'non-pass-finalisation-cat-b-page',
+  templateUrl: 'non-pass-finalisation.cat-b.page.html',
 })
-export class NonPassFinalisationPage extends PracticeableBasePageComponent {
+export class NonPassFinalisationCatBPage extends PracticeableBasePageComponent {
 
   pageState: NonPassFinalisationPageState;
   form: FormGroup;
