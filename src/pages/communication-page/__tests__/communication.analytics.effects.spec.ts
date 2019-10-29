@@ -24,6 +24,7 @@ import * as applicationReferenceActions
   from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 
 describe('Communication Analytics Effects', () => {
 
@@ -63,6 +64,7 @@ describe('Communication Analytics Effects', () => {
     it('should call setCurrentPage and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -70,6 +72,8 @@ describe('Communication Analytics Effects', () => {
       // ASSERT
       effects.communicationViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension)
+        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
@@ -82,6 +86,7 @@ describe('Communication Analytics Effects', () => {
     it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -89,6 +94,8 @@ describe('Communication Analytics Effects', () => {
       // ASSERT
       effects.communicationViewDidEnter$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension)
+        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
@@ -105,12 +112,15 @@ describe('Communication Analytics Effects', () => {
     it('should call logError', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new communicationActions.CommunicationValidationError('formControl1'));
       // ASSERT
       effects.communicationValidationError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
+        expect(analyticsProviderMock.addCustomDimension)
+        .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
           'formControl1');
