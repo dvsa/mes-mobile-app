@@ -27,6 +27,7 @@ import {
 import {
    getApplicationNumber,
 } from '../../modules/tests/journal-data/application-reference/application-reference.selector';
+import { getTestCategory } from '../../modules/tests/category/category.reducer';
 
 @Injectable()
 export class CommunicationAnalyticsEffects {
@@ -60,12 +61,18 @@ export class CommunicationAnalyticsEffects {
           select(getCandidate),
           select(getCandidateId),
           ),
+          this.store$.pipe(
+            select(getTests),
+            select(getCurrentTest),
+            select(getTestCategory),
+          ),
       ),
     )),
     switchMap((
-      [action, tests, applicationReference, candidateId]:
-      [CommunicationViewDidEnter, TestsModel, string, number],
+      [action, tests, applicationReference, candidateId, category]:
+      [CommunicationViewDidEnter, TestsModel, string, number, string],
     ) => {
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.CANDIDATE_ID, `${candidateId}`);
       this.analytics.addCustomDimension(AnalyticsDimensionIndices.APPLICATION_REFERENCE, applicationReference);
       this.analytics.setCurrentPage(
@@ -83,10 +90,16 @@ export class CommunicationAnalyticsEffects {
         this.store$.pipe(
           select(getTests),
         ),
+        this.store$.pipe(
+          select(getTests),
+          select(getCurrentTest),
+          select(getTestCategory),
+        ),
       ),
     )),
-    switchMap(([action, tests]: [CommunicationValidationError, TestsModel]) => {
+    switchMap(([action, tests, category]: [CommunicationValidationError, TestsModel, string]) => {
       const screenName = formatAnalyticsText(AnalyticsScreenNames.COMMUNICATION, tests);
+      this.analytics.addCustomDimension(AnalyticsDimensionIndices.TEST_CATEGORY, category);
       this.analytics.logError(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
         action.errorMessage);
       return of(new AnalyticRecorded());
