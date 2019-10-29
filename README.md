@@ -6,7 +6,7 @@ DVSA Mobile Examiner Services (GDS Beta phase)
 
 ### Pre-requisites
 
-- Node (v 10.13.0)
+- Node (v 10.16.0)
 - npm (v 6.4.1)
 - Ionic CLI + Cordova: `npm install -g ionic`
 - Cordova (v 8.1.2) `npm install -g cordova@8.1.2`
