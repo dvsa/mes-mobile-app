@@ -20,7 +20,7 @@ export const CAT_B = {
   TEST_REPORT_PAGE: 'TestReportCatBPage',
   WAITING_ROOM_PAGE: 'WaitingRoomCatBPage',
   WAITING_ROOM_TO_CAR_PAGE: 'WaitingRoomToCarCatBPage',
-  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingPage',
+  POST_DEBRIEF_HOLDING_PAGE: 'PostDebriefHoldingCatBPage',
   REKEY_REASON_PAGE: 'RekeyReasonPage',
   REKEY_UPLOAD_OUTCOME_PAGE: 'RekeyUploadOutcomePage',
   NON_PASS_FINALISATION_PAGE: 'NonPassFinalisationCatBPage',
