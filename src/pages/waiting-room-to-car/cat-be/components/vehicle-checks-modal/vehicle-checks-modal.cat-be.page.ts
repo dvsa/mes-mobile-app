@@ -21,8 +21,7 @@ export class VehicleChecksCatBEModal {
 
   pageState: VehicleChecksModalCatBEState;
 
-  constructor(
-    public store$: Store<StoreModel>) {}
+  constructor(public store$: Store<StoreModel>) {}
 
   ngOnInit(): void {
     this.pageState = {
