@@ -24,6 +24,7 @@ import * as applicationReferenceActions
   from '../../../modules/tests/journal-data/application-reference/application-reference.actions';
 import { candidateMock } from '../../../modules/tests/__mocks__/tests.mock';
 import { TestCategory } from '../../../shared/models/test-category';
+import { PopulateTestCategory } from '../../../modules/tests/category/category.actions';
 
 describe('Waiting Room To Car Analytics Effects', () => {
 
@@ -32,8 +33,8 @@ describe('Waiting Room To Car Analytics Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.WAITING_ROOM_TO_CAR;
-  // tslint:disable-next-line:max-line-length
-  const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
+  const screenNamePracticeMode =
+    `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
   const mockApplication: Application = {
     applicationId: 123456,
     bookingSequence: 78,
@@ -61,9 +62,10 @@ describe('Waiting Room To Car Analytics Effects', () => {
   });
 
   describe('waitingRoomToCarViewDidEnter', () => {
-    it('should call setCurrentPage and addCustomDimension', (done) => {
+    it('should call setCurrentPage, addCustomDimension and category', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -75,14 +77,17 @@ describe('Waiting Room To Car Analytics Effects', () => {
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenName);
         done();
       });
     });
-    it('should call setCurrentPage with practice mode prefix and addCustomDimension', (done) => {
+    it('should call setCurrentPage with practice mode prefix, addCustomDimension and test category', (done) => {
       // ARRANGE
-      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       store$.dispatch(new applicationReferenceActions.PopulateApplicationReference(mockApplication));
       // ACT
@@ -94,6 +99,8 @@ describe('Waiting Room To Car Analytics Effects', () => {
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.CANDIDATE_ID, '1');
         expect(analyticsProviderMock.addCustomDimension)
           .toHaveBeenCalledWith(AnalyticsDimensionIndices.APPLICATION_REFERENCE, '123456789');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         expect(analyticsProviderMock.setCurrentPage)
           .toHaveBeenCalledWith(screenNamePracticeMode);
         done();
@@ -106,6 +113,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     it('should call logError', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
@@ -113,15 +121,19 @@ describe('Waiting Room To Car Analytics Effects', () => {
       effects.waitingRoomToCarError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-        // tslint:disable-next-line:max-line-length
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
-          'error 123');
+          .toHaveBeenCalledWith(
+            `${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
+            'error 123',
+          );
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
@@ -130,7 +142,9 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeMode})`,
-          'error 123');
+            'error 123');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
@@ -141,6 +155,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     it('should call logError', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
@@ -149,13 +164,16 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
-          'formControl1');
+            'formControl1');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
@@ -164,7 +182,9 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeMode})`,
-          'formControl1');
+            'formControl1');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
