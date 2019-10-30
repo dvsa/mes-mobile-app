@@ -113,6 +113,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     it('should call logError', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
@@ -124,12 +125,15 @@ describe('Waiting Room To Car Analytics Effects', () => {
             `${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
             'error 123',
           );
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarError('error 123'));
@@ -139,6 +143,8 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenNamePracticeMode})`,
             'error 123');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
@@ -149,6 +155,7 @@ describe('Waiting Room To Car Analytics Effects', () => {
     it('should call logError', (done) => {
       // ARRANGE
       store$.dispatch(new testsActions.StartTest(123, TestCategory.B));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
@@ -158,12 +165,15 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenName})`,
             'formControl1');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
     it('should call logError, prefixed with practice mode', (done) => {
       // ARRANGE
       store$.dispatch(new fakeJournalActions.StartE2EPracticeTest(end2endPracticeSlotId));
+      store$.dispatch(new PopulateTestCategory(TestCategory.B));
       store$.dispatch(new PopulateCandidateDetails(candidateMock));
       // ACT
       actions$.next(new waitingRoomToCarActions.WaitingRoomToCarValidationError('formControl1'));
@@ -173,6 +183,8 @@ describe('Waiting Room To Car Analytics Effects', () => {
         expect(analyticsProviderMock.logError)
           .toHaveBeenCalledWith(`${AnalyticsErrorTypes.VALIDATION_ERROR} (${screenNamePracticeMode})`,
             'formControl1');
+        expect(analyticsProviderMock.addCustomDimension)
+          .toHaveBeenCalledWith(AnalyticsDimensionIndices.TEST_CATEGORY, 'B');
         done();
       });
     });
