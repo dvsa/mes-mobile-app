@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { PostDebriefHoldingPage } from './post-debrief-holding';
-import { ComponentsModule } from '../../components/common/common-components.module';
+import { PostDebriefHoldingCatBPageModule } from './cat-b/post-debrief-holding.cat-b.page.module';
+import { PostDebriefHoldingCatBEPageModule } from './cat-be/post-debrief-holding.cat-be.page.module';
 
 @NgModule({
-  declarations: [
-    PostDebriefHoldingPage,
-  ],
   imports: [
-    IonicPageModule.forChild(PostDebriefHoldingPage),
-    ComponentsModule,
+    PostDebriefHoldingCatBPageModule,
+    PostDebriefHoldingCatBEPageModule,
   ],
 })
 export class PostDebriefHoldingPageModule { }

@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { PostDebriefHoldingViewDidEnter } from './post-debrief-holding.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import { PostDebriefHoldingViewDidEnter } from '../post-debrief-holding.actions';
 
 @IonicPage()
 @Component({
-  selector: 'post-debrief-holding',
-  templateUrl: 'post-debrief-holding.html',
+  selector: 'post-debrief-holding-cat-b-page',
+  templateUrl: 'post-debrief-holding.cat-b.page.html',
 })
-export class PostDebriefHoldingPage extends PracticeableBasePageComponent {
+export class PostDebriefHoldingCatBPage extends PracticeableBasePageComponent {
 
   constructor(
     store$: Store<StoreModel>,

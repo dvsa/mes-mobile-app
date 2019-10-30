@@ -1,25 +1,25 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, Platform } from 'ionic-angular';
 import { NavControllerMock, PlatformMock } from 'ionic-mocks';
-import { AppModule } from '../../../app/app.module';
-import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
+import { AppModule } from '../../../../app/app.module';
+import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
+import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
 import { StoreModule, Store } from '@ngrx/store';
-import { StoreModel } from '../../../shared/models/store.model';
+import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
-import { PracticeModeBanner } from '../../../components/common/practice-mode-banner/practice-mode-banner';
-import { PostDebriefHoldingPage } from '../post-debrief-holding';
-import { PostDebriefHoldingViewDidEnter } from '../post-debrief-holding.actions';
+import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
+import { PostDebriefHoldingViewDidEnter } from '../../post-debrief-holding.actions';
+import { PostDebriefHoldingCatBEPage } from '../post-debrief-holding.cat-be.page';
 
-describe('PostDebriefHoldingPage', () => {
-  let fixture: ComponentFixture<PostDebriefHoldingPage>;
-  let component: PostDebriefHoldingPage;
+describe('PostDebriefHoldingCatBEPage', () => {
+  let fixture: ComponentFixture<PostDebriefHoldingCatBEPage>;
+  let component: PostDebriefHoldingCatBEPage;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PostDebriefHoldingPage,
+        PostDebriefHoldingCatBEPage,
         MockComponent(PracticeModeBanner),
       ],
       imports: [
@@ -35,7 +35,7 @@ describe('PostDebriefHoldingPage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(PostDebriefHoldingPage);
+        fixture = TestBed.createComponent(PostDebriefHoldingCatBEPage);
         component = fixture.componentInstance;
         store$ = TestBed.get(Store);
         spyOn(store$, 'dispatch');
