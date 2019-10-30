@@ -31,6 +31,7 @@ import { EyesightTestReset } from '../../../../modules/tests/test-data/eyesight-
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { VehicleChecksCatBEComponent } from '../components/vehicle-checks/vehicle-checks.cat-be';
 
 describe('WaitingRoomToCarCatBEPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBEPage>;
@@ -50,6 +51,7 @@ describe('WaitingRoomToCarCatBEPage', () => {
         MockComponent(AccompanimentCardComponent),
         MockComponent(AccompanimentComponent),
         MockComponent(PracticeModeBanner),
+        MockComponent(VehicleChecksCatBEComponent),
       ],
       imports: [
         IonicModule,

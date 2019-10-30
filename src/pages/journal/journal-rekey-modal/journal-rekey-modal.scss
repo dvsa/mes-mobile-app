@@ -9,22 +9,6 @@ journal-rekey-modal {
     margin-bottom: 25px;
   }
 
-  .mes-return-button {
-    @extend .mes-primary-button;
-    margin-bottom: 36px;
-    width: 100%;
-    height: 56px;
-    background: map-get($colors-gds, gds-grey-3);
-    box-shadow: inset 0 -2px 0 0 map-get($colors-gds, gds-grey-1);
-    font-size: 20px;
-    &.activated {
-      background: map-get($colors-gds, gds-grey-2);
-    }
-    h3 {
-      color: map-get($colors-gds, gds-black);
-    }
-  }
-
   .cancel-button {
     color: map-get($colors-gds, gds-black);
   }
