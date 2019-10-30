@@ -1,50 +1,51 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Navbar, AlertController } from 'ionic-angular';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { PracticeableBasePageComponent } from '../../shared/classes/practiceable-base-page';
-import { SignatureAreaComponent } from '../../components/common/signature-area/signature-area';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
+import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { Store, select } from '@ngrx/store';
-import { StoreModel } from '../../shared/models/store.model';
-import { HealthDeclarationViewDidEnter, ContinueFromDeclaration } from './health-declaration.actions';
+import { StoreModel } from '../../../shared/models/store.model';
+import { HealthDeclarationViewDidEnter, ContinueFromDeclaration } from '../health-declaration.actions';
 import { Observable } from 'rxjs/Observable';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { DeviceAuthenticationProvider } from '../../providers/device-authentication/device-authentication';
+import { FormGroup } from '@angular/forms';
+import { DeviceAuthenticationProvider } from '../../../providers/device-authentication/device-authentication';
 import * as postTestDeclarationsActions
-  from '../../modules/tests/post-test-declarations/post-test-declarations.actions';
-import { getTests } from '../../modules/tests/tests.reducer';
-import { getCurrentTest, getJournalData } from '../../modules/tests/tests.selector';
-import { getPostTestDeclarations } from '../../modules/tests/post-test-declarations/post-test-declarations.reducer';
+  from '../../../modules/tests/post-test-declarations/post-test-declarations.actions';
+import { getTests } from '../../../modules/tests/tests.reducer';
+import { getCurrentTest, getJournalData } from '../../../modules/tests/tests.selector';
+import { getPostTestDeclarations } from '../../../modules/tests/post-test-declarations/post-test-declarations.reducer';
 import {
   getHealthDeclarationStatus,
   getReceiptDeclarationStatus,
   getSignatureStatus,
-} from '../../modules/tests/post-test-declarations/post-test-declarations.selector';
+} from '../../../modules/tests/post-test-declarations/post-test-declarations.selector';
 import {
   getCandidateName, getCandidateDriverNumber, formatDriverNumber, getUntitledCandidateName,
-} from '../../modules/tests/journal-data/candidate/candidate.selector';
-import { getCandidate } from '../../modules/tests/journal-data/candidate/candidate.reducer';
+} from '../../../modules/tests/journal-data/candidate/candidate.selector';
+import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import { map, tap } from 'rxjs/operators';
 import {
   getPassCertificateNumber,
   isProvisionalLicenseProvided,
-} from '../../modules/tests/pass-completion/pass-completion.selector';
-import { getPassCompletion } from '../../modules/tests/pass-completion/pass-completion.reducer';
+} from '../../../modules/tests/pass-completion/pass-completion.selector';
+import { getPassCompletion } from '../../../modules/tests/pass-completion/pass-completion.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
 import { TranslateService } from 'ng2-translate';
-import { ProvisionalLicenseNotReceived } from '../../modules/tests/pass-completion/pass-completion.actions';
+import { ProvisionalLicenseNotReceived } from '../../../modules/tests/pass-completion/pass-completion.actions';
 import {
   getCommunicationPreference,
-} from '../../modules/tests/communication-preferences/communication-preferences.reducer';
-import { getConductedLanguage } from '../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_B } from '../page-names.constants';
+} from '../../../modules/tests/communication-preferences/communication-preferences.reducer';
+import {
+  getConductedLanguage,
+} from '../../../modules/tests/communication-preferences/communication-preferences.selector';
+import { CAT_B } from '../../page-names.constants';
 import { includes } from 'lodash';
-import { Language } from '../../modules/tests/communication-preferences/communication-preferences.model';
-import { configureI18N } from '../../shared/helpers/translation.helpers';
+import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
+import { configureI18N } from '../../../shared/helpers/translation.helpers';
 
 interface HealthDeclarationPageState {
   healthDeclarationAccepted$: Observable<boolean>;
-  passCertificateNumberReceived$: Observable<boolean>;
+  receiptDeclarationAccepted$: Observable<boolean>;
   signature$: Observable<string>;
   candidateName$: Observable<string>;
   candidateUntitledName$: Observable<string>;
@@ -55,13 +56,10 @@ interface HealthDeclarationPageState {
 }
 @IonicPage()
 @Component({
-  selector: 'page-health-declaration',
-  templateUrl: 'health-declaration.html',
+  selector: 'health-declaration-cat-b-page',
+  templateUrl: 'health-declaration.cat-b.page.html',
 })
-export class HealthDeclarationPage extends PracticeableBasePageComponent {
-
-  @ViewChild(SignatureAreaComponent)
-  signatureArea: SignatureAreaComponent;
+export class HealthDeclarationCatBPage extends PracticeableBasePageComponent {
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -85,7 +83,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
 
   ) {
     super(platform, navController, authenticationProvider, store$);
-    this.form = new FormGroup(this.getFormValidation());
+    this.form = new FormGroup({});
   }
 
   ionViewDidEnter(): void {
@@ -105,18 +103,8 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
       });
   }
 
-  getFormValidation(): { [key: string]: FormControl } {
-    return {
-      healthCheckboxCtrl: new FormControl(''),
-      receiptCheckboxCtrl: new FormControl('', [Validators.requiredTrue]),
-      signatureAreaCtrl: new FormControl(null, [Validators.required]),
-    };
-  }
-
   ngOnInit(): void {
     super.ngOnInit();
-    this.signatureArea.drawCompleteAction = postTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
-    this.signatureArea.clearAction = postTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
 
     const currentTest$ = this.store$.pipe(
       select(getTests),
@@ -128,7 +116,7 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         select(getPostTestDeclarations),
         select(getHealthDeclarationStatus),
       ),
-      passCertificateNumberReceived$: currentTest$.pipe(
+      receiptDeclarationAccepted$: currentTest$.pipe(
         select(getPostTestDeclarations),
         select(getReceiptDeclarationStatus),
       ),
@@ -171,7 +159,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
         select(getConductedLanguage),
       ),
     };
-    this.rehydrateFields();
 
     const { licenseProvided$, healthDeclarationAccepted$, conductedLanguage$ } = this.pageState;
 
@@ -191,25 +178,12 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
     return true;
   }
 
-  rehydrateFields(): void {
-    this.inputSubscriptions.push(
-      this.pageState.healthDeclarationAccepted$
-        .subscribe((val) => {
-          this.form.controls['healthCheckboxCtrl'].setValue(val);
-        }),
-    );
-    this.inputSubscriptions.push(
-      this.pageState.passCertificateNumberReceived$
-        .subscribe((val) => {
-          this.form.controls['receiptCheckboxCtrl'].setValue(val);
-        }),
-    );
-    this.inputSubscriptions.push(
-      this.pageState.signature$
-        .subscribe((val) => {
-          this.form.controls['signatureAreaCtrl'].setValue(val);
-        }),
-    );
+  getSignatureDrawCompleteAction() : string {
+    return postTestDeclarationsActions.SIGNATURE_DATA_CHANGED;
+  }
+
+  getSignatureClearAction(): string {
+    return postTestDeclarationsActions.SIGNATURE_DATA_CLEARED;
   }
 
   healthDeclarationChanged(): void {
@@ -279,10 +253,6 @@ export class HealthDeclarationPage extends PracticeableBasePageComponent {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  isCtrlDirtyAndInvalid(controlName: string): boolean {
-    return !this.form.get(controlName).valid && this.form.get(controlName).dirty;
   }
 
   ionViewDidLeave(): void {
