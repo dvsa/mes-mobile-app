@@ -33,8 +33,8 @@ describe('Waiting Room To Car Analytics Effects', () => {
   let actions$: any;
   let store$: Store<StoreModel>;
   const screenName = AnalyticsScreenNames.WAITING_ROOM_TO_CAR;
-  // tslint:disable-next-line:max-line-length
-  const screenNamePracticeMode = `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
+  const screenNamePracticeMode =
+    `${AnalyticsEventCategories.PRACTICE_MODE} - ${AnalyticsScreenNames.WAITING_ROOM_TO_CAR}`;
   const mockApplication: Application = {
     applicationId: 123456,
     bookingSequence: 78,
@@ -120,9 +120,10 @@ describe('Waiting Room To Car Analytics Effects', () => {
       effects.waitingRoomToCarError$.subscribe((result) => {
         expect(result instanceof AnalyticRecorded).toBe(true);
         expect(analyticsProviderMock.logError)
-          // tslint:disable-next-line:max-line-length
-          .toHaveBeenCalledWith(`${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
-            'error 123');
+          .toHaveBeenCalledWith(
+            `${AnalyticsErrorTypes.SUBMIT_FORM_ERROR} (${screenName})`,
+            'error 123',
+          );
         done();
       });
     });
