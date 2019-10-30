@@ -1,6 +1,4 @@
 
-import { ManoeuvresComponent } from '../components/manoeuvres/manoeuvres';
-import { ManoeuvresPopoverComponent } from '../components/manoeuvres-popover/manoeuvres-popover';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController, NavParams, Config, Platform, ModalController } from 'ionic-angular';
 import {
@@ -29,9 +27,6 @@ import { testReportReducer } from '../../test-report.reducer';
 import { LegalRequirementComponent } from '../../components/legal-requirement/legal-requirement';
 import { EtaComponent } from '../../components/examiner-takes-action/eta';
 import { initialState } from '../../../../modules/tests/test-data/test-data.reducer';
-import { ControlledStopComponent } from '../components/controlled-stop/controlled-stop';
-import { ManoeuvreCompetencyComponent } from '../components/manoeuvre-competency/manoeuvre-competency';
-import { VehicleCheckComponent } from '../components/vehicle-check/vehicle-check';
 import { EcoComponent } from '../../components/eco/eco';
 import { TestReportValidatorProvider } from '../../../../providers/test-report-validator/test-report-validator';
 import {
@@ -51,8 +46,6 @@ describe('TestReportCatBEPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TestReportCatBEPage,
-        MockComponent(ManoeuvresPopoverComponent),
-        MockComponent(ManoeuvresComponent),
         MockComponent(TickIndicatorComponent),
         MockComponent(CompetencyComponent),
         MockComponent(CompetencyButtonComponent),
@@ -60,9 +53,6 @@ describe('TestReportCatBEPage', () => {
         MockComponent(EtaComponent),
         MockComponent(DrivingFaultSummaryComponent),
         MockComponent(ToolbarComponent),
-        MockComponent(ControlledStopComponent),
-        MockComponent(ManoeuvreCompetencyComponent),
-        MockComponent(VehicleCheckComponent),
         MockComponent(EcoComponent),
       ],
       imports: [

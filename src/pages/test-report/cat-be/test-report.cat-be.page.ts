@@ -17,7 +17,6 @@ import { StoreModel } from '../../../shared/models/store.model';
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getCandidate } from '../../../modules/tests/journal-data/candidate/candidate.reducer';
 import {
-  TestReportViewDidEnter,
   CalculateTestResult,
   TerminateTestFromTestReport,
 } from '../test-report.actions';
@@ -37,13 +36,11 @@ import {
   isRemoveFaultMode,
   isSeriousMode,
   isDangerousMode,
-  isLegalRequirementsValid,
   isEtaValid,
 } from '../test-report.selector';
 import { TestReportValidatorProvider } from '../../../providers/test-report-validator/test-report-validator';
 import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
 import {
-  getCatBLegalRequirements,
   hasManoeuvreBeenCompleted,
 } from '../../../modules/tests/test-data/test-data.selector';
 import { ModalEvent } from '../test-report.constants';
@@ -57,9 +54,9 @@ interface TestReportPageState {
   isSeriousMode$: Observable<boolean>;
   isDangerousMode$: Observable<boolean>;
   manoeuvres$: Observable<boolean>;
-  isLegalRequirementsValid$: Observable<boolean>;
+  // isLegalRequirementsValid$: Observable<boolean>;
   isEtaValid$: Observable<boolean>;
-  catBLegalRequirements$: Observable<CatBLegalRequirements>;
+  // catBLegalRequirements$: Observable<CatBLegalRequirements>;
 }
 
 @IonicPage()
@@ -132,20 +129,20 @@ export class TestReportCatBEPage extends BasePageComponent {
         select(getTestData),
         select(hasManoeuvreBeenCompleted),
       ),
-      isLegalRequirementsValid$: this.store$.pipe(
-        select(getTestReportState),
-        select(isLegalRequirementsValid),
-      ),
+      // isLegalRequirementsValid$: this.store$.pipe(
+      //   select(getTestReportState),
+      //   select(isLegalRequirementsValid),
+      // ),
       isEtaValid$: this.store$.pipe(
         select(getTestReportState),
         select(isEtaValid),
       ),
-      catBLegalRequirements$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
-        select(getTestData),
-        select(getCatBLegalRequirements),
-      ),
+      // catBLegalRequirements$: this.store$.pipe(
+      //   select(getTests),
+      //   select(getCurrentTest),
+      //   select(getTestData),
+      //   select(getCatBLegalRequirements),
+      // ),
     };
     this.setupSubscription();
 
@@ -157,7 +154,7 @@ export class TestReportCatBEPage extends BasePageComponent {
     if (!this.subscription || this.subscription.closed) {
       this.setupSubscription();
     }
-    this.store$.dispatch(new TestReportViewDidEnter());
+    // this.store$.dispatch(new TestReportViewDidEnter());
   }
 
   toggleReportOverlay(): void {
@@ -176,9 +173,9 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$,
       isDangerousMode$,
       manoeuvres$,
-      isLegalRequirementsValid$,
+      // isLegalRequirementsValid$,
       isEtaValid$,
-      catBLegalRequirements$,
+      // catBLegalRequirements$,
     } = this.pageState;
 
     this.subscription = merge(
@@ -187,13 +184,13 @@ export class TestReportCatBEPage extends BasePageComponent {
       isSeriousMode$.pipe(map(result => (this.isSeriousMode = result))),
       isDangerousMode$.pipe(map(result => (this.isDangerousMode = result))),
       manoeuvres$.pipe(map(result => (this.manoeuvresCompleted = result))),
-      isLegalRequirementsValid$.pipe(
-        map(result => (this.isLegalRequirementsValid = result)),
-      ),
+      // isLegalRequirementsValid$.pipe(
+      //   map(result => (this.isLegalRequirementsValid = result)),
+      // ),
       isEtaValid$.pipe(map(result => (this.isEtaValid = result))),
-      catBLegalRequirements$.pipe(
-        map(result => (this.catBLegalRequirements = result)),
-      ),
+      // catBLegalRequirements$.pipe(
+      //   map(result => (this.catBLegalRequirements = result)),
+      // ),
     ).subscribe();
   }
 
