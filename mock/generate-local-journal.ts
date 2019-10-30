@@ -59,6 +59,16 @@ const localJournal: ExaminerWorkSchedule = {
           dateOfBirth: '1983-09-27',
           ethnicityCode: 'A',
         },
+        business: {
+          businessAddress: {
+            addressLine1: '1 Business Street',
+            addressLine2: 'Businessplace',
+            addressLine3: 'Businesstown',
+            postcode: 'BUSI N ESS',
+          },
+          businessName: 'Business Name',
+          telephone: '0234 234433',
+        },
         previousCancellation: [
           'Act of nature',
         ],

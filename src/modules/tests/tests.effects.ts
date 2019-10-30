@@ -46,6 +46,7 @@ import { JournalModel } from '../journal/journal.model';
 import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
+import { createPopulateCandidateDetailsAction } from './journal-data/candidate/candidate.action-creator';
 
 @Injectable()
 export class TestsEffects {
@@ -159,7 +160,7 @@ export class TestsEffects {
         new PopulateTestCategory(slot.booking.application.testCategory),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
-        new PopulateCandidateDetails(slot.booking.candidate),
+        createPopulateCandidateDetailsAction(slot.booking.application.testCategory, slot.booking),
         new PopulateTestSlotAttributes(testSlotAttributes),
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
