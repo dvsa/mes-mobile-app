@@ -8,11 +8,8 @@
 </ion-header>
 
 <ion-content no-padding no-bounce>
-  <toolbar></toolbar>
-  <ion-grid
-    no-padding
-    class="grid-layout"
-    [ngClass]="{
+  <!-- <toolbar></toolbar> -->
+  <ion-grid no-padding class="grid-layout" [ngClass]="{
       'remove-mode': isRemoveFaultMode,
       'add-mode': !isRemoveFaultMode,
       'fault-mode': !isSeriousMode && !isDangerousMode,
@@ -29,22 +26,22 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.normalStart1">
-            </legal-requirement>
+            <!-- <legal-requirement [legalRequirement]="legalRequirements.normalStart1">
+            </legal-requirement> -->
           </ion-col>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.normalStart2">
-            </legal-requirement>
+            <!-- <legal-requirement [legalRequirement]="legalRequirements.normalStart2">
+            </legal-requirement> -->
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.angledStart">
-            </legal-requirement>
+            <!-- <legal-requirement [legalRequirement]="legalRequirements.angledStart">
+            </legal-requirement> -->
           </ion-col>
           <ion-col>
-            <legal-requirement [legalRequirement]="legalRequirements.hillStart">
-            </legal-requirement>
+            <!-- <legal-requirement [legalRequirement]="legalRequirements.hillStart">
+            </legal-requirement> -->
           </ion-col>
         </ion-row>
         <ion-row>
@@ -54,10 +51,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <manoeuvres [completed]="manoeuvresCompleted" [controlLabel]="'Manoeuvres'"
-              [clickCallback]="getCallback()">
-              <manoeuvres-popover></manoeuvres-popover>
-            </manoeuvres>
+            <!-- Manoeuvres was here -->
           </ion-col>
         </ion-row>
         <ion-row>
@@ -77,7 +71,8 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <vehicle-check></vehicle-check>
+            <!-- TODO: This used to be where vehicleChecks was -->
+            <competency [competency]="competencies.controlsAccelerator"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -87,7 +82,8 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <controlled-stop></controlled-stop>
+            <!-- TODO: This used to be where controlledStop was -->
+            <competency [competency]="competencies.controlsAccelerator"></competency>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -394,8 +390,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="displayOverlay"
-  [class.hide-overlay]="!displayOverlay"></div>
-  <div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode" [class.show-overlay]="isRemoveFaultMode"
-  [class.hide-overlay]="!isRemoveFaultMode"></div>
+  <div class="report-overlay report-overlay-modal" [class.contract]="isSeriousMode || isDangerousMode"
+    [class.show-overlay]="displayOverlay" [class.hide-overlay]="!displayOverlay"></div>
+  <div class="report-overlay report-overlay-remove" [class.contract]="isSeriousMode || isDangerousMode"
+    [class.show-overlay]="isRemoveFaultMode" [class.hide-overlay]="!isRemoveFaultMode"></div>
 </ion-content>
