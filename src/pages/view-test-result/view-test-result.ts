@@ -176,10 +176,22 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     if (!this.testResult) {
       return null;
     }
+
+    const vehicleInfomation: string[] = [];
+
+    if (get(this.testResult, 'vehicleDetails.dualControls')) {
+      vehicleInfomation.push('Dual controls');
+    }
+
+    if (get(this.testResult, 'vehicleDetails.schoolCar')) {
+      vehicleInfomation.push('School car');
+    }
+
     return {
       transmission: get(this.testResult, 'vehicleDetails.gearboxCategory'),
       registrationNumber: get(this.testResult, 'vehicleDetails.registrationNumber'),
       instructorRegistrationNumber: get(this.testResult, 'instructorDetails.registrationNumber'),
+      vehicleDetails: vehicleInfomation,
     };
   }
 

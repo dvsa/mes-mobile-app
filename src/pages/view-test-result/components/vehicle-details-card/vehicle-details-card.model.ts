@@ -4,4 +4,5 @@ export interface VehicleDetailsModel {
   transmission?: GearboxCategory;
   registrationNumber?: string;
   instructorRegistrationNumber?: number;
+  vehicleDetails?: string[];
 }
