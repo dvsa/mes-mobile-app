@@ -143,7 +143,7 @@ export class TestOutcomeComponent implements OnInit {
   resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category));
     if (this.testStatus === TestStatus.Started) {
-      this.navController.push(CAT_B.WAITING_ROOM_PAGE);
+      this.navController.push(this.getTestStartingPage());
     } else if (this.activityCode === ActivityCodes.PASS) {
       this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
     } else {
