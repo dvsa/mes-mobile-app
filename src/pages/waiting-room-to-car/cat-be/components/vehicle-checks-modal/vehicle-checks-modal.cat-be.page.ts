@@ -7,6 +7,9 @@ import { getCurrentTest, getJournalData } from '../../../../../modules/tests/tes
 import { getCandidate } from '../../../../../modules/tests/journal-data/candidate/candidate.reducer';
 import { getUntitledCandidateName } from '../../../../../modules/tests/journal-data/candidate/candidate.selector';
 import { Observable } from 'rxjs/Observable';
+import { FormGroup } from '@angular/forms';
+import { ShowMeQuestion } from '../../../../../providers/question/show-me-question.model';
+import { QuestionProvider } from '../../../../../providers/question/question';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -20,8 +23,18 @@ interface VehicleChecksModalCatBEState {
 export class VehicleChecksCatBEModal {
 
   pageState: VehicleChecksModalCatBEState;
+  formGroup: FormGroup;
+  vehicleChecksQuestion: ShowMeQuestion;
+  vehicleChecksQuestions: ShowMeQuestion[];
 
-  constructor(public store$: Store<StoreModel>) {}
+  constructor(
+    public store$: Store<StoreModel>,
+    questionProvider: QuestionProvider,
+  ) {
+    this.formGroup = new FormGroup({});
+    this.vehicleChecksQuestion = null;
+    this.vehicleChecksQuestions = questionProvider.getShowMeQuestions();
+  }
 
   ngOnInit(): void {
     this.pageState = {
@@ -33,5 +46,10 @@ export class VehicleChecksCatBEModal {
         select(getUntitledCandidateName),
       ),
     };
+  }
+
+  // tslint:disable-next-line: variable-name
+  vehicleChecksQuestionChanged(_vehicleChecksQuestion: ShowMeQuestion): void {
+    console.log('EMIT');
   }
 }

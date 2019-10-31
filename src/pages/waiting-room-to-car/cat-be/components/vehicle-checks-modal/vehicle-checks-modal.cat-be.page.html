@@ -17,7 +17,11 @@
       <ion-card-title>Show me questions</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Some show me stuff!!</p>
+      <vehicle-checks-question [formGroup]="formGroup"
+        [vehicleChecksQuestionModel]="vehicleChecksQuestion"
+        [vehicleChecksQuestionOptions]="vehicleChecksQuestions"
+        (vehicleChecksQuestionChange)="vehicleChecksQuestionChanged($event)">
+      </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
   <ion-card>
