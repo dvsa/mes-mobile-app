@@ -159,10 +159,10 @@ export class TestsEffects {
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
       const arrayOfActions: Action[] = [
-        new PopulateTestCategory(slot.booking.application.testCategory),
+        new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
-        createPopulateCandidateDetailsAction(slot.booking.application.testCategory, slot.booking),
+        createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),
         new PopulateTestSlotAttributes(testSlotAttributes),
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
@@ -173,8 +173,7 @@ export class TestsEffects {
         new PopulateTestSchemaVersion(version),
       ];
 
-      if (slot.booking.application.testCategory === TestCategory.BE) {
-        console.log('this is theresdgsdg populate vehicle dimensions');
+      if (startTestAction.category === TestCategory.BE) {
         arrayOfActions.push(new PopulateVehicleDimensions(
           slot.booking.application.vehicleWidth,
           slot.booking.application.vehicleLength,
