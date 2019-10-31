@@ -1,16 +1,31 @@
 <ion-header>
-    <ion-navbar>
-      <ion-buttons ion-buttons start navPop>
-        <button ion-button center class="nav-close" id="closeVehicleChecksModalCatBE">
-          <ion-icon name="md-close"></ion-icon>Close
-        </button>
-      </ion-buttons>
-      <ion-title>
-        Vehicle checks - {{ pageState.candidateName$ | async }}
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <ion-buttons ion-buttons start navPop>
+      <button ion-button center class="nav-close" id="closeVehicleChecksModalCatBE">
+        <ion-icon name="md-close"></ion-icon>Close
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Vehicle checks - {{ pageState.candidateName$ | async }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding>
-  <p>I love vehicle checks</p>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Show me questions</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Some show me stuff!!</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tell me questions</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Some tell me stuff!!</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
