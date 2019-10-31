@@ -1,7 +1,7 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { TestCategory } from '../../../../shared/models/test-category';
 import { PopulateCandidateDetails } from './candidate.actions';
-import { PopulateCandidateDetailsCatBE } from './cat-be/candidate.cat-be.actions';
+import { PopulateCandidateDetailsCatBE } from './candidate.cat-be.actions';
 import { Booking } from '@dvsa/mes-journal-schema';
 import { get } from 'lodash';
 
@@ -18,7 +18,6 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
       };
       return new PopulateCandidateDetailsCatBE(candidate);
     default:
-      // Should throw exception
-      return new PopulateCandidateDetails(booking.candidate);
+      throw new Error('No testCategory has been defined');
   }
 };
