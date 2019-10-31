@@ -30,7 +30,7 @@ export const CAT_BE = {
   BACK_TO_OFFICE_PAGE: 'BackToOfficeCatBEPage',
   COMMUNICATION_PAGE: 'CommunicationCatBEPage',
   DEBRIEF_PAGE: 'DebriefCatBEPage',
-  HEALTH_DECLARATION_PAGE: 'HealthDeclarationPage',
+  HEALTH_DECLARATION_PAGE: 'HealthDeclarationCatBEPage',
   OFFICE_PAGE: 'OfficePage',
   PASS_FINALISATION_PAGE: 'PassFinalisationCatBEPage',
   TEST_REPORT_PAGE: 'TestReportCatBEPage',
