@@ -6,6 +6,7 @@ export const SCHOOL_CAR_TOGGLED = '[Vehicle Details] School car toggled';
 export const DUAL_CONTROLS_TOGGLED = '[Vehicle Details] Dual controls toggled';
 export const GEARBOX_CATEGORY_CHANGED = '[Vehicle Details] Gearbox category changed';
 export const CLEAR_GEARBOX_CATEGORY = '[Vehicle Details] Clear gearbox category';
+export const POPULATE_VEHICLE_DIMENSIONS = '[Vehicle Details] Populate Vehicle Dimensions';
 
 export class VehicleRegistrationChanged implements Action {
   readonly type = VEHICLE_REGISTRATION_CHANGED;
@@ -29,9 +30,15 @@ export class ClearGearboxCategory implements Action {
   readonly type = CLEAR_GEARBOX_CATEGORY;
 }
 
+export class PopulateVehicleDimensions implements Action {
+  readonly type = POPULATE_VEHICLE_DIMENSIONS;
+  constructor(public vehicleWidth: number, public vehicleLength: number) {}
+}
+
 export type Types =
   | VehicleRegistrationChanged
   | SchoolCarToggled
   | DualControlsToggled
   | GearboxCategoryChanged
-  | ClearGearboxCategory;
+  | ClearGearboxCategory
+  | PopulateVehicleDimensions;

@@ -47,6 +47,8 @@ import { PopulateConductedLanguage } from './communication-preferences/communica
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
 import { createPopulateCandidateDetailsAction } from './journal-data/candidate/candidate.action-creator';
+import { TestCategory } from '../../shared/models/test-category';
+import { PopulateVehicleDimensions } from './vehicle-details/vehicle-details.actions';
 
 @Injectable()
 export class TestsEffects {
@@ -170,6 +172,14 @@ export class TestsEffects {
         new PopulateConductedLanguage(conductedLanguage),
         new PopulateTestSchemaVersion(version),
       ];
+
+      if (slot.booking.application.testCategory === TestCategory.BE) {
+        console.log('this is theresdgsdg populate vehicle dimensions');
+        arrayOfActions.push(new PopulateVehicleDimensions(
+          slot.booking.application.vehicleWidth,
+          slot.booking.application.vehicleLength,
+        ));
+      }
 
       if (startTestAction.rekey) {
         arrayOfActions.push(new MarkAsRekey());

@@ -10,7 +10,6 @@ export const createPopulateCandidateDetailsAction = (testCategory: string, booki
     case TestCategory.B:
       return new PopulateCandidateDetails(booking.candidate);
     case TestCategory.BE:
-      console.log('wer aresgdsbg here sgsdg');
       const candidate: CatBEUniqueTypes.Candidate = {
         ...booking.candidate,
         businessAddress: get(booking, 'business.businessAddress'),
