@@ -256,6 +256,26 @@ describe('Test Outcome', () => {
         expect(component.getTestStartingPage()).toEqual(CAT_BE.WAITING_ROOM_PAGE);
       });
     });
+    describe('getPassFinalisationPage', () => {
+      it('should return the correct value for a Category B Test', () => {
+        component.category = TestCategory.B;
+        expect(component.getPassFinalisationPage()).toEqual(CAT_B.PASS_FINALISATION_PAGE);
+      });
+      it('should return the correct value for a Category B+E Test', () => {
+        component.category = TestCategory.BE;
+        expect(component.getPassFinalisationPage()).toEqual(CAT_BE.PASS_FINALISATION_PAGE);
+      });
+    });
+    describe('getPassFinalisationPage', () => {
+      it('should return the correct value for a Category B Test', () => {
+        component.category = TestCategory.B;
+        expect(component.getNonPassFinalisationPage()).toEqual(CAT_B.NON_PASS_FINALISATION_PAGE);
+      });
+      it('should return the correct value for a Category B+E Test', () => {
+        component.category = TestCategory.BE;
+        expect(component.getNonPassFinalisationPage()).toEqual(CAT_BE.NON_PASS_FINALISATION_PAGE);
+      });
+    });
   });
 
   describe('DOM', () => {

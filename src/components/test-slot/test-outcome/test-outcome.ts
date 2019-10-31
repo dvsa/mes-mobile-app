@@ -143,11 +143,11 @@ export class TestOutcomeComponent implements OnInit {
   resumeTest() {
     this.store$.dispatch(new ActivateTest(this.slotDetail.slotId, this.category));
     if (this.testStatus === TestStatus.Started) {
-      this.navController.push(CAT_B.WAITING_ROOM_PAGE);
+      this.navController.push(this.getTestStartingPage());
     } else if (this.activityCode === ActivityCodes.PASS) {
-      this.navController.push(CAT_B.PASS_FINALISATION_PAGE);
+      this.navController.push(this.getPassFinalisationPage());
     } else {
-      this.navController.push(CAT_B.NON_PASS_FINALISATION_PAGE);
+      this.navController.push(this.getNonPassFinalisationPage());
     }
   }
 
@@ -251,6 +251,24 @@ export class TestOutcomeComponent implements OnInit {
         return CAT_B.WAITING_ROOM_PAGE;
       case TestCategory.BE:
         return CAT_BE.WAITING_ROOM_PAGE;
+    }
+  }
+
+  getPassFinalisationPage(): string {
+    switch (this.category as TestCategory) {
+      case TestCategory.B:
+        return CAT_B.PASS_FINALISATION_PAGE;
+      case TestCategory.BE:
+        return CAT_BE.PASS_FINALISATION_PAGE;
+    }
+  }
+
+  getNonPassFinalisationPage(): string {
+    switch (this.category as TestCategory) {
+      case TestCategory.B:
+        return CAT_B.NON_PASS_FINALISATION_PAGE;
+      case TestCategory.BE:
+        return CAT_BE.NON_PASS_FINALISATION_PAGE;
     }
   }
 }

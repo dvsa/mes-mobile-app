@@ -246,7 +246,7 @@ export class CommunicationCatBEPage extends BasePageComponent implements OnInit 
 
   isProvidedEmailSelected() {
     return (this.communicationType === CommunicationCatBEPage.email
-     && this.emailType === CommunicationCatBEPage.providedEmail);
+      && this.emailType === CommunicationCatBEPage.providedEmail);
   }
 
   isNewEmailSelected() {
