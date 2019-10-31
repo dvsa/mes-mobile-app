@@ -32,6 +32,7 @@ import { PracticeModeBanner } from '../../../../components/common/practice-mode-
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { VehicleChecksCatBEComponent } from '../components/vehicle-checks/vehicle-checks.cat-be';
+import { WarningBannerComponent } from '../../../../components/common/warning-banner/warning-banner';
 
 describe('WaitingRoomToCarCatBEPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBEPage>;
@@ -52,6 +53,7 @@ describe('WaitingRoomToCarCatBEPage', () => {
         MockComponent(AccompanimentComponent),
         MockComponent(PracticeModeBanner),
         MockComponent(VehicleChecksCatBEComponent),
+        MockComponent(WarningBannerComponent),
       ],
       imports: [
         IonicModule,
@@ -134,6 +136,11 @@ describe('WaitingRoomToCarCatBEPage', () => {
       it('should dispatch an EyesightResultReset action when the when the method is called', () => {
         component.eyesightFailCancelled();
         expect(store$.dispatch).toHaveBeenCalledWith(new EyesightTestReset());
+      });
+      it('should show the is load secure warning banner', () => {
+        fixture.detectChanges();
+        const warningBanner = fixture.debugElement.query(By.css('warning-banner'));
+        expect(warningBanner).not.toBeNull();
       });
     });
 
