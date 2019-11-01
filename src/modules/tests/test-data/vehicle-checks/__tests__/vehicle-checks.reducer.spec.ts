@@ -1,4 +1,3 @@
-import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { vehicleChecksReducer } from '../vehicle-checks.reducer';
@@ -14,13 +13,13 @@ import {
   ShowMeQuestionDangerousFault,
   ShowMeQuestionRemoveFault,
 } from '../vehicle-checks.actions';
-import { ShowMeQuestion } from '../../../../../providers/question/show-me-question.model';
+import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 describe('Vehicle Checks Reducer', () => {
 
   describe('TELL_ME_QUESTION_SELECTED', () => {
     it('should set the tell me question details', () => {
-      const newQuestionPayload: TellMeQuestion = {
+      const newQuestionPayload: VehicleChecksQuestion = {
         code: 'S1',
         description: 'desc',
         shortName: 'name',
@@ -32,7 +31,7 @@ describe('Vehicle Checks Reducer', () => {
       expect(result.tellMeQuestion.description).toEqual('name');
     });
     it('should set the question details and reset outcome when a tell me question is selected', () => {
-      const newQuestionPayload: TellMeQuestion = {
+      const newQuestionPayload: VehicleChecksQuestion = {
         code: 'T1',
         description: 'desc',
         shortName: 'name',
@@ -77,7 +76,7 @@ describe('Vehicle Checks Reducer', () => {
 
   describe('SHOW_ME_QUESTION_SELECTED', () => {
     it('should set the show me question details', () => {
-      const newQuestionPayload: ShowMeQuestion = {
+      const newQuestionPayload: VehicleChecksQuestion = {
         code: 'S1',
         description: 'desc',
         shortName: 'name',
@@ -89,7 +88,7 @@ describe('Vehicle Checks Reducer', () => {
       expect(result.showMeQuestion.description).toEqual('name');
     });
     it('should update the show me question details', () => {
-      const newQuestionPayload: ShowMeQuestion = {
+      const newQuestionPayload: VehicleChecksQuestion = {
         code: 'S1',
         description: 'desc',
         shortName: 'name',

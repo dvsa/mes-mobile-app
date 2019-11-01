@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { ShowMeQuestion } from './show-me-question.model';
+import { VehicleChecksQuestion } from './vehicle-checks-question.model';
 
 export default [
   {
@@ -46,4 +46,4 @@ export default [
     shortName: 'Not applicable',
   },
 
-] as ShowMeQuestion[];
+] as VehicleChecksQuestion[];

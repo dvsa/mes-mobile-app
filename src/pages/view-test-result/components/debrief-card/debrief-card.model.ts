@@ -1,8 +1,6 @@
 import { TestRequirements } from '@dvsa/mes-test-schema/categories/Common';
-
-import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
-import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../../../shared/models/fault-marking.model';
+import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 export interface DebriefCardModel {
   legalRequirements?: TestRequirements;
@@ -11,8 +9,8 @@ export interface DebriefCardModel {
   ecoControl?: boolean;
   ecoPlanning?: boolean;
   eta?: string[];
-  showMeQuestion?: ShowMeQuestion;
-  tellMeQuestion?: TellMeQuestion;
+  showMeQuestion?: VehicleChecksQuestion;
+  tellMeQuestion?: VehicleChecksQuestion;
   dangerousFaults?: (CommentedCompetency & MultiFaultAssignableCompetency)[];
   seriousFaults?: (CommentedCompetency & MultiFaultAssignableCompetency)[];
   drivingFaults?: (CommentedCompetency & MultiFaultAssignableCompetency)[];

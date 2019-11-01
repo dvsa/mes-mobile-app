@@ -53,7 +53,6 @@ import {
   getCandidateDriverNumber,
   formatDriverNumber,
 } from '../../modules/tests/journal-data/candidate/candidate.selector';
-import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import {
   getTestSlotAttributes,
@@ -116,6 +115,7 @@ import { getRekeyIndicator } from '../../modules/tests/rekey/rekey.reducer';
 import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
+import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -144,8 +144,8 @@ interface OfficePageState {
   independentDriving$: Observable<IndependentDriving>;
   candidateDescription$: Observable<string>;
   additionalInformation$: Observable<string>;
-  showMeQuestion$: Observable<ShowMeQuestion>;
-  showMeQuestionOptions$: Observable<ShowMeQuestion[]>;
+  showMeQuestion$: Observable<VehicleChecksQuestion>;
+  showMeQuestionOptions$: Observable<VehicleChecksQuestion[]>;
   tellMeQuestionText$: Observable<string>;
   etaFaults$: Observable<string>;
   ecoFaults$: Observable<string>;
@@ -172,7 +172,7 @@ export class OfficePage extends PracticeableBasePageComponent {
   dangerousFaultCtrl: String = 'dangerousFaultCtrl';
 
   weatherConditions: WeatherConditionSelection[];
-  showMeQuestions: ShowMeQuestion[];
+  showMeQuestions: VehicleChecksQuestion[];
   activityCodeOptions: ActivityCodeModel[];
 
   constructor(
@@ -462,7 +462,7 @@ export class OfficePage extends PracticeableBasePageComponent {
     }
   }
 
-  showMeQuestionChanged(showMeQuestion: ShowMeQuestion): void {
+  showMeQuestionChanged(showMeQuestion: VehicleChecksQuestion): void {
     this.store$.dispatch(new ShowMeQuestionSelected(showMeQuestion));
   }
 

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
+import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 @Component({
   selector: 'tell-me-question',
@@ -9,16 +9,16 @@ import { TellMeQuestion } from '../../../../../providers/question/tell-me-questi
 export class TellMeQuestionComponent implements OnChanges {
 
   @Input()
-  tellMeQuestion: TellMeQuestion;
+  tellMeQuestion: VehicleChecksQuestion;
 
   @Input()
-  tellMeQuestions: TellMeQuestion[];
+  tellMeQuestions: VehicleChecksQuestion[];
 
   @Input()
   formGroup: FormGroup;
 
   @Output()
-  tellMeQuestionChange = new EventEmitter<TellMeQuestion>();
+  tellMeQuestionChange = new EventEmitter<VehicleChecksQuestion>();
 
   private formControl: FormControl;
 
@@ -30,7 +30,7 @@ export class TellMeQuestionComponent implements OnChanges {
     this.formControl.patchValue(this.tellMeQuestion);
   }
 
-  tellMeQuestionChanged(tellMeQuestion: TellMeQuestion): void {
+  tellMeQuestionChanged(tellMeQuestion: VehicleChecksQuestion): void {
     if (this.formControl.valid) {
       this.tellMeQuestionChange.emit(tellMeQuestion);
     }

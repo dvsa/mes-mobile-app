@@ -32,9 +32,7 @@ import {
   manoeuvreTypeLabels,
 } from '../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
-import { ShowMeQuestion } from '../../providers/question/show-me-question.model';
 import showMeQuestionConstants from '../../providers/question/show-me-question.constants';
-import { TellMeQuestion } from '../../providers/question/tell-me-question.model';
 import tellMeQuestionConstants from '../../providers/question/tell-me-question.constants';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import {
@@ -57,6 +55,7 @@ import { ViewTestResultViewDidEnter } from './view-test-result.actions';
 import { LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
+import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 
 @IonicPage()
 @Component({
@@ -300,12 +299,12 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     return eta;
   }
 
-  getShowMeQuestion(): ShowMeQuestion {
+  getShowMeQuestion(): VehicleChecksQuestion {
     const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
     return showMeQuestionConstants.find(question => question.code === showMeQuestionCode);
   }
 
-  getTellMeQuestion(): TellMeQuestion {
+  getTellMeQuestion(): VehicleChecksQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
     return tellMeQuestionConstants.find(question => question.code === tellMeQuestionCode);
   }

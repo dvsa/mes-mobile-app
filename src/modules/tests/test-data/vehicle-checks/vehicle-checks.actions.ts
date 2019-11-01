@@ -1,8 +1,7 @@
 
 import { Action } from '@ngrx/store';
 
-import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
-import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
+import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 export const TELL_ME_QUESTION_SELECTED = '[Vehicle Checks] Tell me question selected';
 export const TELL_ME_QUESTION_CORRECT = '[Vehicle Checks] Tell me question correct';
@@ -23,7 +22,7 @@ export enum QuestionOutcomes {
 }
 
 export class TellMeQuestionSelected implements Action {
-  constructor(public tellMeQuestion: TellMeQuestion) { }
+  constructor(public tellMeQuestion: VehicleChecksQuestion) { }
   readonly type = TELL_ME_QUESTION_SELECTED;
 }
 
@@ -36,7 +35,7 @@ export class TellMeQuestionDrivingFault implements Action {
 }
 
 export class ShowMeQuestionSelected implements Action {
-  constructor(public showMeQuestion: ShowMeQuestion) { }
+  constructor(public showMeQuestion: VehicleChecksQuestion) { }
   readonly type = SHOW_ME_QUESTION_SELECTED;
 }
 

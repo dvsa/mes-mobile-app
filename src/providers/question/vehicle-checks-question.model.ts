@@ -1,4 +1,4 @@
-export type ShowMeQuestion = {
+export type VehicleChecksQuestion = {
   code: string,
   description: string,
   shortName: string,

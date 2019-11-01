@@ -1,6 +1,6 @@
-/* tslint:disable */
-import { TellMeQuestion } from './tell-me-question.model';
+import { VehicleChecksQuestion } from './vehicle-checks-question.model';
 
+/* tslint:disable */
 export default [
   {
     code: 'T1',
@@ -72,4 +72,4 @@ export default [
     description: 'Open the bonnet and tell me how you would check that you have a safe level of hydraulic brake fluid.',
     shortName: 'Brake fluid',
   },
-] as TellMeQuestion[];
+] as VehicleChecksQuestion[];
