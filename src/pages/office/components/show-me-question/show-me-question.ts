@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
 import {
   OutcomeBehaviourMapProvider,
   VisibilityType,
 } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
+import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 @Component({
   selector: 'show-me-question',
@@ -18,16 +18,16 @@ export class ShowMeQuestionComponent implements OnChanges {
   outcome: string;
 
   @Input()
-  showMeQuestion: ShowMeQuestion;
+  showMeQuestion: VehicleChecksQuestion;
 
   @Input()
-  showMeQuestionOptions: ShowMeQuestion[];
+  showMeQuestionOptions: VehicleChecksQuestion[];
 
   @Input()
   formGroup: FormGroup;
 
   @Output()
-  showMeQuestionChange = new EventEmitter<ShowMeQuestion>();
+  showMeQuestionChange = new EventEmitter<VehicleChecksQuestion>();
 
   private formControl: FormControl;
   static readonly fieldName: string = 'showMeQuestion';
@@ -50,7 +50,7 @@ export class ShowMeQuestionComponent implements OnChanges {
     this.formControl.patchValue(this.showMeQuestion);
   }
 
-  showMeQuestionChanged(showMeQuestion: ShowMeQuestion): void {
+  showMeQuestionChanged(showMeQuestion: VehicleChecksQuestion): void {
     if (this.formControl.valid) {
       this.showMeQuestionChange.emit(showMeQuestion);
     }

@@ -27,7 +27,6 @@ import { VehicleDetailsComponent } from '../../components/vehicle-details/vehicl
 import { AccompanimentCardComponent } from '../../components/accompaniment-card/accompaniment-card';
 import { AccompanimentComponent } from '../../components/accompaniment/accompaniment';
 import { EyesightTestComponent } from '../../components/eyesight-test/eyesight-test';
-import { TellMeQuestion } from '../../../../providers/question/tell-me-question.model';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { WaitingRoomToCarValidationError } from '../../waiting-room-to-car.actions';
 import { TellMeQuestionSelected } from '../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.actions';
@@ -38,6 +37,7 @@ import { TellMeQuestionComponent } from '../components/tell-me-question/tell-me-
 import { TellMeQuestionOutcomeComponent } from '../components/tell-me-question-outcome/tell-me-question-outcome';
 import { TransmissionComponent } from '../components/transmission/transmission';
 import { InstructorRegistrationComponent } from '../components/instructor-registration/instructor-registration';
+import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 describe('WaitingRoomToCarCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomToCarCatBPage>;
@@ -123,7 +123,7 @@ describe('WaitingRoomToCarCatBPage', () => {
 
     describe('selecting a tell me question', () => {
       it('should dispatch an action when the tell me question change handler is called', () => {
-        const question: TellMeQuestion = {
+        const question: VehicleChecksQuestion = {
           code: 'T1',
           description: 'desc',
           shortName: 'name',

@@ -1,4 +1,3 @@
-import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { ComponentFixture, async, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
   IonicModule,
@@ -65,6 +64,7 @@ import { ToastControllerMock } from '../__mocks__/toast-controller-mock';
 import { NavigationStateProvider } from '../../../providers/navigation-state/navigation-state';
 import { NavigationStateProviderMock } from '../../../providers/navigation-state/__mocks__/navigation-state.mock';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 describe('OfficePage', () => {
   let fixture: ComponentFixture<OfficePage>;
@@ -167,7 +167,7 @@ describe('OfficePage', () => {
     });
     describe('selecting a show me question', () => {
       it('should dispatch an action when show me question change handler is called', () => {
-        const question: ShowMeQuestion = {
+        const question: VehicleChecksQuestion = {
           code: 'S1',
           description: 'desc',
           shortName: 'name',

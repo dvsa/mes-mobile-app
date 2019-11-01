@@ -44,7 +44,6 @@ import { getCandidate } from '../../../modules/tests/journal-data/candidate/cand
 import { getUntitledCandidateName } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { getTests } from '../../../modules/tests/tests.reducer';
 import { FormGroup } from '@angular/forms';
-import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
 import { QuestionProvider } from '../../../providers/question/question';
 import { getInstructorDetails } from '../../../modules/tests/instructor-details/instructor-details.reducer';
 import { getInstructorRegistrationNumber } from '../../../modules/tests/instructor-details/instructor-details.selector';
@@ -72,6 +71,7 @@ import {
 import { getTestData } from '../../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -92,7 +92,7 @@ interface WaitingRoomToCarPageState {
   tellMeQuestionCorrect$: Observable<boolean>;
   tellMeQuestionDrivingFault$: Observable<boolean>;
   tellMeQuestionOutcome$: Observable<string>;
-  tellMeQuestion$: Observable<TellMeQuestion>;
+  tellMeQuestion$: Observable<VehicleChecksQuestion>;
 }
 
 @IonicPage()
@@ -112,7 +112,7 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
 
   showEyesightFailureConfirmation: boolean = false;
 
-  tellMeQuestions: TellMeQuestion[];
+  tellMeQuestions: VehicleChecksQuestion[];
 
   constructor(
     store$: Store<StoreModel>,
@@ -304,7 +304,7 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
     this.store$.dispatch(new EyesightTestReset());
   }
 
-  tellMeQuestionChanged(newTellMeQuestion: TellMeQuestion): void {
+  tellMeQuestionChanged(newTellMeQuestion: VehicleChecksQuestion): void {
     this.store$.dispatch(new TellMeQuestionSelected(newTellMeQuestion));
     if (this.form.controls['tellMeQuestionOutcome']) {
       this.form.controls['tellMeQuestionOutcome'].setValue('');

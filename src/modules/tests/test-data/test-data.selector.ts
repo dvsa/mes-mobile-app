@@ -6,10 +6,9 @@ import { pickBy, sumBy, endsWith, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { default as tellMeQuestions } from '../../../providers/question/tell-me-question.constants';
 import { default as showMeQuestions } from '../../../providers/question/show-me-question.constants';
-import { ShowMeQuestion } from '../../../providers/question/show-me-question.model';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { CatBLegalRequirements } from './test-data.models';
-import { TellMeQuestion } from '../../../providers/question/tell-me-question.model';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 export const getDrivingFaultCount = (
   data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
@@ -154,7 +153,7 @@ export const hasLegalRequirementBeenCompleted = (
 
 export const getVehicleChecks = (state: CatBUniqueTypes.TestData): CatBUniqueTypes.VehicleChecks => state.vehicleChecks;
 
-export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): TellMeQuestion =>
+export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): VehicleChecksQuestion =>
   tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
 
 export const isTellMeQuestionSelected = (
@@ -181,10 +180,10 @@ export const getShowMeQuestion = (state: CatBUniqueTypes.VehicleChecks) =>
   showMeQuestions.find(question => question.code === get(state, 'showMeQuestion.code'));
 
 export const getShowMeQuestionOptions = (
-  questions: ShowMeQuestion[],
+  questions: VehicleChecksQuestion[],
   outcome: string,
   provider: OutcomeBehaviourMapProvider) => {
-  const filteredQuestions: ShowMeQuestion[] = [];
+  const filteredQuestions: VehicleChecksQuestion[] = [];
   const showNotApplicable = provider.showNotApplicable(outcome, 'showMeQuestion');
   questions.forEach((value) => {
     if (value.code !== 'N/A' || (value.code === 'N/A' && showNotApplicable)) {

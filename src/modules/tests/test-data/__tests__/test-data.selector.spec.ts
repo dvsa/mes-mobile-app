@@ -25,9 +25,9 @@ import { Competencies } from '../test-data.constants';
 import { CompetencyOutcome } from '../../../../shared/models/competency-outcome';
 import { CatBLegalRequirements } from '../test-data.models';
 import { initialState } from '../test-data.reducer';
-import { ShowMeQuestion } from '../../../../providers/question/show-me-question.model';
 import { OutcomeBehaviourMapProvider } from '../../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { behaviourMap } from '../../../../pages/office/office-behaviour-map';
+import { VehicleChecksQuestion } from '../../../../providers/question/vehicle-checks-question.model';
 
 describe('TestDataSelectors', () => {
   const state: CatBUniqueTypes.TestData = {
@@ -103,7 +103,7 @@ describe('TestDataSelectors', () => {
     const outcomeBehaviourMapProvider = new OutcomeBehaviourMapProvider();
     outcomeBehaviourMapProvider.setBehaviourMap(behaviourMap);
 
-    const showMeQuestions: ShowMeQuestion[] = [
+    const showMeQuestions: VehicleChecksQuestion[] = [
       {
         code: 'S1',
         description: 'S1 Desc',

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TellMeQuestion } from '../../../../../providers/question/tell-me-question.model';
+import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 @Component({
   selector: 'tell-me-question-card',
@@ -12,10 +12,10 @@ export class TellMeQuestionCardComponent {
   formGroup: FormGroup;
 
   @Input()
-  tellMeQuestion: TellMeQuestion;
+  tellMeQuestion: VehicleChecksQuestion;
 
   @Input()
-  tellMeQuestions: TellMeQuestion[];
+  tellMeQuestions: VehicleChecksQuestion[];
 
   @Input()
   tellMeQuestionOutcome: string;
@@ -24,7 +24,7 @@ export class TellMeQuestionCardComponent {
   tellMeQuestionSelected: boolean;
 
   @Output()
-  tellMeQuestionChange = new EventEmitter<TellMeQuestion>();
+  tellMeQuestionChange = new EventEmitter<VehicleChecksQuestion>();
 
   @Output()
   tellMeQuestionOutcomeChange = new EventEmitter<string>();
@@ -50,7 +50,7 @@ export class TellMeQuestionCardComponent {
     return !outcome.valid && outcome.dirty;
   }
 
-  tellMeQuestionChanged(tellMeQuestion: TellMeQuestion) {
+  tellMeQuestionChanged(tellMeQuestion: VehicleChecksQuestion) {
     this.tellMeQuestionChange.emit(tellMeQuestion);
   }
   tellMeQuestionOutcomeChanged(outcome: string) {
