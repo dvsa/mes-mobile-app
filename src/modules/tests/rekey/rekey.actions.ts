@@ -7,6 +7,7 @@ export const END_REKEY = '[Rekey Actions] End rekey';
 export class MarkAsRekey implements Action {
   readonly type = MARK_AS_REKEY;
 }
+
 export class MarkAsNonRekey implements Action {
   readonly type = MARK_AS_NON_REKEY;
 }

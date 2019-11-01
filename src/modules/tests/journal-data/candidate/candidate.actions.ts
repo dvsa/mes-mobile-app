@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Candidate } from '@dvsa/mes-journal-schema';
+import { Candidate } from '@dvsa/mes-test-schema/categories/common';
 
 export const POPULATE_CANDIDATE_DETAILS = '[JournalEffects] Populate Candidate Details';
 

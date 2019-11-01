@@ -46,6 +46,9 @@ import { JournalModel } from '../journal/journal.model';
 import { PopulateConductedLanguage } from './communication-preferences/communication-preferences.actions';
 import { Language } from './communication-preferences/communication-preferences.model';
 import { version } from '../../environment/test-schema-version';
+import { createPopulateCandidateDetailsAction } from './journal-data/candidate/candidate.action-creator';
+import { TestCategory } from '../../shared/models/test-category';
+import { PopulateVehicleDimensions } from './vehicle-details/vehicle-details.actions';
 
 @Injectable()
 export class TestsEffects {
@@ -156,10 +159,10 @@ export class TestsEffects {
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
       const arrayOfActions: Action[] = [
-        new PopulateTestCategory(slot.booking.application.testCategory),
+        new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
-        new PopulateCandidateDetails(slot.booking.candidate),
+        createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),
         new PopulateTestSlotAttributes(testSlotAttributes),
         new PopulateTestCentre(extractTestCentre(slot)),
         new testStatusActions.SetTestStatusBooked(startTestAction.slotId.toString()),
@@ -169,6 +172,13 @@ export class TestsEffects {
         new PopulateConductedLanguage(conductedLanguage),
         new PopulateTestSchemaVersion(version),
       ];
+
+      if (startTestAction.category === TestCategory.BE) {
+        arrayOfActions.push(new PopulateVehicleDimensions(
+          slot.booking.application.vehicleWidth,
+          slot.booking.application.vehicleLength,
+        ));
+      }
 
       if (startTestAction.rekey) {
         arrayOfActions.push(new MarkAsRekey());

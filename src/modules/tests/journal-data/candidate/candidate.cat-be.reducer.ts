@@ -1,6 +1,6 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import { createFeatureSelector } from '@ngrx/store';
-import * as candidateActions from './candidate.actions';
+import * as candidateActions from './candidate.cat-be.actions';
 
 export const initialState: CatBEUniqueTypes.Candidate = {
   candidateId: null,
@@ -26,7 +26,7 @@ export function candidateCatBEReducer(
   action: candidateActions.Types,
 ): CatBEUniqueTypes.Candidate {
   switch (action.type) {
-    case candidateActions.POPULATE_CANDIDATE_DETAILS:
+    case candidateActions.POPULATE_CANDIDATE_DETAILS_CAT_BE:
       return action.payload;
   }
   return state;
