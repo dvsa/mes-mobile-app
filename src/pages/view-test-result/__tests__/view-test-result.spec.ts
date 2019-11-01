@@ -43,6 +43,7 @@ import { manoeuvreTypeLabels } from '../../../shared/constants/competencies/catb
 import { DebriefCardModel } from '../components/debrief-card/debrief-card.model';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { ErrorMessageComponent } from '../../../components/common/error-message/error-message';
+import { TestCategory } from '../../../shared/models/test-category';
 
 describe('ViewTestResultPage', () => {
   let fixture: ComponentFixture<ViewTestResultPage>;
@@ -270,6 +271,7 @@ describe('ViewTestResultPage', () => {
     });
     describe('getShowMeQuestion', () => {
       it('should return undefined if there is no show me question', () => {
+        component.testResult.category = TestCategory.B;
         expect(component.getShowMeQuestion()).toBeUndefined();
       });
       it('should return the correct value for a show me question', () => {
@@ -286,6 +288,7 @@ describe('ViewTestResultPage', () => {
     });
     describe('getTellMeQuestion', () => {
       it('should return undefined if there is no tell me question', () => {
+        component.testResult.category = TestCategory.B;
         expect(component.getTellMeQuestion()).toBeUndefined();
       });
       it('should return the correct value for the tell me question', () => {
