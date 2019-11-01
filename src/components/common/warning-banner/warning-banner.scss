@@ -4,7 +4,7 @@ warning-banner {
     align-items: center;
     justify-content: left;
     padding-left: 28px;
-    background: map-get($colors-gds, gds-light-yellow);
+    background: map-get($colors-gds, gds-yellow);
     height: 80px;
     border-left: 10px solid map-get($colors-gds, gds-yellow);
     span {

@@ -2,9 +2,6 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { IonicModule, Config } from 'ionic-angular';
 import { ConfigMock } from 'ionic-mocks';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
-import { testsReducer } from '../../../../modules/tests/tests.reducer';
-import { journalReducer } from '../../../../modules/journal/journal.reducer';
 import { WarningBannerComponent } from '../warning-banner';
 
 describe('WarningBanner', () => {
@@ -16,10 +13,6 @@ describe('WarningBanner', () => {
       declarations: [WarningBannerComponent],
       imports: [
         IonicModule,
-        StoreModule.forRoot({
-          tests: testsReducer,
-          journal: journalReducer,
-        }),
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
@@ -34,7 +27,6 @@ describe('WarningBanner', () => {
 
   describe('DOM', () => {
     it('should display the warning message', () => {
-      fixture.detectChanges();
       const warningText = 'This is the warning text';
       component.warningText = warningText;
 
