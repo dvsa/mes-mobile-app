@@ -271,7 +271,17 @@ describe('ViewTestResultPage', () => {
     });
     describe('getShowMeQuestion', () => {
       it('should return undefined if there is no show me question', () => {
-        component.testResult.category = TestCategory.B;
+        component.testResult = {
+          category: TestCategory.B,
+          journalData: null,
+          activityCode: null,
+          version: null,
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: null,
+          examinerConducted: null,
+          examinerKeyed: null,
+        };
         expect(component.getShowMeQuestion()).toBeUndefined();
       });
       it('should return the correct value for a show me question', () => {
@@ -288,7 +298,17 @@ describe('ViewTestResultPage', () => {
     });
     describe('getTellMeQuestion', () => {
       it('should return undefined if there is no tell me question', () => {
-        component.testResult.category = TestCategory.B;
+        component.testResult = {
+          category: TestCategory.B,
+          journalData: null,
+          activityCode: null,
+          version: null,
+          rekey: false,
+          changeMarker: false,
+          examinerBooked: null,
+          examinerConducted: null,
+          examinerKeyed: null,
+        };
         expect(component.getTellMeQuestion()).toBeUndefined();
       });
       it('should return the correct value for the tell me question', () => {
