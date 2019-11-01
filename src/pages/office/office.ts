@@ -116,6 +116,7 @@ import { isRekey } from '../../modules/tests/rekey/rekey.selector';
 import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
+import { TestCategory } from '../../shared/models/test-category';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -191,7 +192,7 @@ export class OfficePage extends PracticeableBasePageComponent {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
     this.weatherConditions = this.weatherConditionProvider.getWeatherConditions();
-    this.showMeQuestions = questionProvider.getShowMeQuestions();
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.B);
     this.outcomeBehaviourProvider.setBehaviourMap(behaviourMap);
     this.activityCodeOptions = activityCodeModelList;
   }

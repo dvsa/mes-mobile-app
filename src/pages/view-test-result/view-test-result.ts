@@ -32,8 +32,6 @@ import {
   manoeuvreTypeLabels,
 } from '../../shared/constants/competencies/catb-manoeuvres';
 import { get } from 'lodash';
-import showMeQuestionConstants from '../../providers/question/show-me-question.constants';
-import tellMeQuestionConstants from '../../providers/question/tell-me-question.constants';
 import { CommentedCompetency, MultiFaultAssignableCompetency } from '../../shared/models/fault-marking.model';
 import {
   getManoeuvreFaults,
@@ -56,6 +54,8 @@ import { LogType } from '../../shared/models/log.model';
 import { SaveLog } from '../../modules/logs/logs.actions';
 import { LogHelper } from '../../providers/logs/logsHelper';
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
+import { QuestionProvider } from '../../providers/question/question';
+import { TestCategory } from '../../shared/models/test-category';
 
 @IonicPage()
 @Component({
@@ -87,6 +87,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     public compressionProvider: CompressionProvider,
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
+    public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -301,12 +302,16 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
 
   getShowMeQuestion(): VehicleChecksQuestion {
     const showMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.showMeQuestion.code');
-    return showMeQuestionConstants.find(question => question.code === showMeQuestionCode);
+    return this.questionProvider
+      .getShowMeQuestions(this.testResult.category as TestCategory)
+      .find(question => question.code === showMeQuestionCode);
   }
 
   getTellMeQuestion(): VehicleChecksQuestion {
     const tellMeQuestionCode = get(this.testResult, 'testData.vehicleChecks.tellMeQuestion.code');
-    return tellMeQuestionConstants.find(question => question.code === tellMeQuestionCode);
+    return this.questionProvider
+    .getTellMeQuestions(this.testResult.category as TestCategory)
+    .find(question => question.code === tellMeQuestionCode);
   }
 
   getDangerousFaults(): (CommentedCompetency & MultiFaultAssignableCompetency)[] {

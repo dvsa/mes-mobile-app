@@ -67,6 +67,7 @@ import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { TestCategory } from '../../../shared/models/test-category';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -117,7 +118,7 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions();
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.form = new FormGroup({});
   }
 

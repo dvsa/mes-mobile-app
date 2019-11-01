@@ -72,6 +72,7 @@ import { getTestData } from '../../../modules/tests/test-data/test-data.reducer'
 import { PersistTests } from '../../../modules/tests/tests.actions';
 import { CAT_B } from '../../page-names.constants';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { TestCategory } from '../../../shared/models/test-category';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -123,7 +124,7 @@ export class WaitingRoomToCarCatBPage extends PracticeableBasePageComponent {
     public questionProvider: QuestionProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
-    this.tellMeQuestions = questionProvider.getTellMeQuestions();
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.B);
     this.form = new FormGroup({});
   }
 

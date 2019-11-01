@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { VehicleChecksQuestion } from './vehicle-checks-question.model';
+import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
 export default [
   {
