@@ -10,6 +10,8 @@ import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -24,17 +26,29 @@ export class VehicleChecksCatBEModal {
 
   pageState: VehicleChecksModalCatBEState;
   formGroup: FormGroup;
-  // Type to the one from the schema
-  vehicleChecksQuestion: any;
-  vehicleChecksQuestions: VehicleChecksQuestion[];
+  vehicleChecksQuestionResults: QuestionResult;
+  showMeQuestions: VehicleChecksQuestion[];
+  questionsToDisable: VehicleChecksQuestion[];
 
   constructor(
     public store$: Store<StoreModel>,
     questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
-    this.vehicleChecksQuestion = null;
-    this.vehicleChecksQuestions = questionProvider.getShowMeQuestions();
+    // TODO - This needs to be gotten from the store
+    this.vehicleChecksQuestionResults =   {
+      code: 'S02',
+      description: 'Doors secure',
+    },
+    // TODO this needs to be calculated
+    this.questionsToDisable = [
+      {
+        code: 'S04',
+        description: 'Show me how you would check the parking brake for excessive wear.',
+        shortName: 'Parking brake',
+      },
+    ];
+    this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
   }
 
   ngOnInit(): void {
@@ -49,9 +63,8 @@ export class VehicleChecksCatBEModal {
     };
   }
 
-  // TODO - Fix typing when we have thing from schema
-  vehicleChecksQuestionChanged(vehicleChecksQuestion: any): void {
+  vehicleChecksQuestionChanged(result: QuestionResult): void {
     // TODO - Send the result to the store
-    console.log('vehicleChecksQuestionChanged', JSON.stringify(vehicleChecksQuestion));
+    console.log('vehicleChecksQuestionChanged', JSON.stringify(result));
   }
 }

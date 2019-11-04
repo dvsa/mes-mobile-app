@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 
 export const initialState: CatBEUniqueTypes.VehicleChecks = {
   tellMeQuestions: [],
-  showMeQuestion: [],
+  showMeQuestions: [],
 };
 
 export function vehicleChecksCatBEReducer(

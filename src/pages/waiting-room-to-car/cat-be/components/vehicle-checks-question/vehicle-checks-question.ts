@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -8,12 +9,14 @@ import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle
 })
 export class VehicleChecksQuestionComponent implements OnChanges {
 
-  // TODO - need to type from VehicleTypes API Definitions
   @Input()
-  selectedQuestion: any;
+  questionResult: QuestionResult;
 
   @Input()
   questions: VehicleChecksQuestion[];
+
+  @Input()
+  questionsToDisable: VehicleChecksQuestion[];
 
   @Input()
   formGroup: FormGroup;
@@ -22,7 +25,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   disabled: boolean;
 
   @Output()
-  vehicleChecksQuestionChange = new EventEmitter<any>();
+  vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
 
   private formControl: FormControl;
   static readonly fieldName: string = 'vehicleChecksQuestion';
@@ -32,12 +35,27 @@ export class VehicleChecksQuestionComponent implements OnChanges {
       this.formControl = new FormControl({ disabled: true });
       this.formGroup.addControl(VehicleChecksQuestionComponent.fieldName, this.formControl);
     }
-    // TODO - fix once type is in from api definitions
-    this.formControl.patchValue(this.selectedQuestion);
+
+    if (this.questionResult) {
+      this.formControl.patchValue(
+      this.questions.find(question => question.code === this.questionResult.code),
+    );
+    }
   }
 
-    // TODO - need to type from VehicleTypes API Definitions
-  vehicleChecksQuestionChanged(vehicleChecksQuestion: any): void {
-    this.vehicleChecksQuestionChange.emit(vehicleChecksQuestion);
+  isOptionDisabled(question: VehicleChecksQuestion): boolean {
+    const doesQuestionExist: VehicleChecksQuestion =
+      this.questionsToDisable.find(questionToDisable => questionToDisable.code === question.code);
+    return doesQuestionExist !== undefined;
+  }
+
+  vehicleChecksQuestionChanged(vehicleChecksQuestion: VehicleChecksQuestion): void {
+
+    const result: QuestionResult = {
+      code: vehicleChecksQuestion.code,
+      description: vehicleChecksQuestion.shortName,
+    };
+
+    this.vehicleChecksQuestionChange.emit(result);
   }
 }

@@ -10,7 +10,7 @@
       (ionChange)="vehicleChecksQuestionChanged($event)"
       [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}"
     >
-      <ion-option [value]="selectedQuestion" *ngFor="let question of questions">
+      <ion-option *ngFor="let question of questions" [value]="question" [disabled]="isOptionDisabled(question)">
         {{question.code}} - {{question.shortName}}
       </ion-option>
     </ion-select>
