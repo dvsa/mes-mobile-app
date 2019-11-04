@@ -4,11 +4,11 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { Competencies, LegalRequirements, ExaminerActions } from './test-data.constants';
 import { pickBy, sumBy, endsWith, get } from 'lodash';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
-import { default as tellMeQuestions } from '../../../providers/question/tell-me-question.constants';
-import { default as showMeQuestions } from '../../../providers/question/show-me-question.constants';
 import { OutcomeBehaviourMapProvider } from '../../../providers/outcome-behaviour-map/outcome-behaviour-map';
 import { CatBLegalRequirements } from './test-data.models';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
+import { QuestionProvider } from '../../../providers/question/question';
+import { TestCategory } from '../../../shared/models/test-category';
 
 export const getDrivingFaultCount = (
   data: CatBUniqueTypes.TestData, competency: Competencies) => data.drivingFaults[competency];
@@ -153,8 +153,12 @@ export const hasLegalRequirementBeenCompleted = (
 
 export const getVehicleChecks = (state: CatBUniqueTypes.TestData): CatBUniqueTypes.VehicleChecks => state.vehicleChecks;
 
-export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): VehicleChecksQuestion =>
-  tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
+export const getTellMeQuestion = (state: CatBUniqueTypes.VehicleChecks): VehicleChecksQuestion => {
+  const questionProvider: QuestionProvider =  new QuestionProvider();
+  return questionProvider
+    .getTellMeQuestions(TestCategory.B)
+    .find(question => question.code === get(state, 'tellMeQuestion.code'));
+};
 
 export const isTellMeQuestionSelected = (
   state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.code') !== undefined;
@@ -168,16 +172,24 @@ export const isTellMeQuestionDrivingFault = (state: CatBUniqueTypes.VehicleCheck
 export const tellMeQuestionOutcome = (state: CatBUniqueTypes.VehicleChecks) => get(state, 'tellMeQuestion.outcome');
 
 export const getSelectedTellMeQuestionText = (state: CatBUniqueTypes.VehicleChecks) => {
-  const tellMeQuestionText =
-    tellMeQuestions.find(question => question.code === get(state, 'tellMeQuestion.code'));
+  const questionProvider: QuestionProvider = new QuestionProvider();
+
+  const tellMeQuestionText = questionProvider
+    .getTellMeQuestions(TestCategory.B)
+    .find(question => question.code === get(state, 'tellMeQuestion.code'));
+
   if (!tellMeQuestionText) {
     return '';
   }
   return `${get(state, 'tellMeQuestion.code')} - ${tellMeQuestionText.shortName}`;
 };
 
-export const getShowMeQuestion = (state: CatBUniqueTypes.VehicleChecks) =>
-  showMeQuestions.find(question => question.code === get(state, 'showMeQuestion.code'));
+export const getShowMeQuestion = (state: CatBUniqueTypes.VehicleChecks) => {
+  const questionProvider: QuestionProvider = new QuestionProvider();
+  return questionProvider
+    .getShowMeQuestions(TestCategory.B)
+    .find(question => question.code === get(state, 'showMeQuestion.code'));
+};
 
 export const getShowMeQuestionOptions = (
   questions: VehicleChecksQuestion[],
