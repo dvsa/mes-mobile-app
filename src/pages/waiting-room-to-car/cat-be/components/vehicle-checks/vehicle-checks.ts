@@ -5,7 +5,7 @@ import { App } from '../../../../../app/app.component';
 
 @Component({
   selector: 'vehicle-checks-cat-be',
-  templateUrl: 'vehicle-checks.cat-be.html',
+  templateUrl: 'vehicle-checks.html',
 })
 export class VehicleChecksCatBEComponent {
 
