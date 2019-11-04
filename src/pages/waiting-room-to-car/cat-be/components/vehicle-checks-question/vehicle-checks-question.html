@@ -1,0 +1,19 @@
+<ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks-question-row" [formGroup]="formGroup" nowrap>
+  <ion-col col-37>
+    <ion-row>
+      <ion-select id="vehicle-checks-question-selector" placeholder="Select a question" okText="Submit"
+        cancelText="Cancel" formControlName="vehicleChecksQuestion" (ionChange)="vehicleChecksQuestionChanged($event)"
+        [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}">
+        <ion-option *ngFor="let question of questions" [value]="question" [disabled]="isOptionDisabled(question)">
+          {{question.code}} - {{question.shortName}}
+        </ion-option>
+      </ion-select>
+    </ion-row>
+  </ion-col>
+  <ion-col col-31>
+    <ion-row>Radio Button 1</ion-row>
+  </ion-col>
+  <ion-col col-31>
+    <ion-row>Radio Button 2</ion-row>
+  </ion-col>
+</ion-row>

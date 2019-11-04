@@ -5,6 +5,8 @@ import { VehicleChecksCatBEModal } from '../vehicle-checks-modal.cat-be.page';
 import { StoreModule } from '@ngrx/store';
 import { ConfigMock } from 'ionic-mocks';
 import { AppModule } from '../../../../../../app/app.module';
+import { MockComponent } from 'ng-mocks';
+import { VehicleChecksQuestionComponent } from '../../vehicle-checks-question/vehicle-checks-question';
 
 describe('VehicleChecksCatBEModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatBEModal>;
@@ -14,6 +16,7 @@ describe('VehicleChecksCatBEModal', () => {
     TestBed.configureTestingModule({
       declarations: [
         VehicleChecksCatBEModal,
+        MockComponent(VehicleChecksQuestionComponent),
       ],
       imports: [
         IonicModule,
