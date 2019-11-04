@@ -31,7 +31,7 @@ describe('WarningBanner', () => {
       component.warningText = warningText;
 
       fixture.detectChanges();
-      const rendered = fixture.debugElement.query(By.css('span')).nativeElement.innerHTML;
+      const rendered = fixture.debugElement.query(By.css('span#warning_text')).nativeElement.innerHTML;
       expect(rendered).toBe(warningText);
     });
   });
