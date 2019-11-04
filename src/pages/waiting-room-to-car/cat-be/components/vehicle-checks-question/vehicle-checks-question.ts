@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ShowMeQuestion } from '../../../../../providers/question/show-me-question.model';
+import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -8,11 +8,12 @@ import { ShowMeQuestion } from '../../../../../providers/question/show-me-questi
 })
 export class VehicleChecksQuestionComponent implements OnChanges {
 
+  // TODO - need to type from VehicleTypes API Definitions
   @Input()
-  vehicleChecksQuestionModel: ShowMeQuestion;
+  selectedQuestion: any;
 
   @Input()
-  vehicleChecksQuestionOptions: ShowMeQuestion[];
+  questions: VehicleChecksQuestion[];
 
   @Input()
   formGroup: FormGroup;
@@ -21,7 +22,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   disabled: boolean;
 
   @Output()
-  vehicleChecksQuestionChange = new EventEmitter<ShowMeQuestion>();
+  vehicleChecksQuestionChange = new EventEmitter<any>();
 
   private formControl: FormControl;
   static readonly fieldName: string = 'vehicleChecksQuestion';
@@ -31,15 +32,12 @@ export class VehicleChecksQuestionComponent implements OnChanges {
       this.formControl = new FormControl({ disabled: true });
       this.formGroup.addControl(VehicleChecksQuestionComponent.fieldName, this.formControl);
     }
-    this.formControl.patchValue(this.vehicleChecksQuestionModel);
+    // TODO - fix once type is in from api definitions
+    this.formControl.patchValue(this.selectedQuestion);
   }
 
-  vehicleChecksQuestionChanged(vehicleChecksQuestion: ShowMeQuestion): void {
+    // TODO - need to type from VehicleTypes API Definitions
+  vehicleChecksQuestionChanged(vehicleChecksQuestion: any): void {
     this.vehicleChecksQuestionChange.emit(vehicleChecksQuestion);
-  }
-
-  // tslint:disable-next-line: variable-name
-  isOptionDisabled(_vehicleChecksQuestion: ShowMeQuestion): boolean {
-    return false;
   }
 }

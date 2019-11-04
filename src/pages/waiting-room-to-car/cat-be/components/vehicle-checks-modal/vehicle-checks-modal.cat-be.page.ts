@@ -8,8 +8,8 @@ import { getCandidate } from '../../../../../modules/tests/journal-data/candidat
 import { getUntitledCandidateName } from '../../../../../modules/tests/journal-data/candidate/candidate.selector';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
-import { ShowMeQuestion } from '../../../../../providers/question/show-me-question.model';
 import { QuestionProvider } from '../../../../../providers/question/question';
+import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -24,8 +24,9 @@ export class VehicleChecksCatBEModal {
 
   pageState: VehicleChecksModalCatBEState;
   formGroup: FormGroup;
-  vehicleChecksQuestion: ShowMeQuestion;
-  vehicleChecksQuestions: ShowMeQuestion[];
+  // Type to the one from the schema
+  vehicleChecksQuestion: any;
+  vehicleChecksQuestions: VehicleChecksQuestion[];
 
   constructor(
     public store$: Store<StoreModel>,
@@ -48,8 +49,9 @@ export class VehicleChecksCatBEModal {
     };
   }
 
-  // tslint:disable-next-line: variable-name
-  vehicleChecksQuestionChanged(_vehicleChecksQuestion: ShowMeQuestion): void {
-    console.log('EMIT');
+  // TODO - Fix typing when we have thing from schema
+  vehicleChecksQuestionChanged(vehicleChecksQuestion: any): void {
+    // TODO - Send the result to the store
+    console.log('vehicleChecksQuestionChanged', JSON.stringify(vehicleChecksQuestion));
   }
 }

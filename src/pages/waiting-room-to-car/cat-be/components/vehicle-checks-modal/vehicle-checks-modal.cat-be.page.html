@@ -18,8 +18,8 @@
     </ion-card-header>
     <ion-card-content>
       <vehicle-checks-question [formGroup]="formGroup"
-        [vehicleChecksQuestionModel]="vehicleChecksQuestion"
-        [vehicleChecksQuestionOptions]="vehicleChecksQuestions"
+        [selectedQuestion]="vehicleChecksQuestion"
+        [questions]="vehicleChecksQuestions"
         (vehicleChecksQuestionChange)="vehicleChecksQuestionChanged($event)">
       </vehicle-checks-question>
     </ion-card-content>
