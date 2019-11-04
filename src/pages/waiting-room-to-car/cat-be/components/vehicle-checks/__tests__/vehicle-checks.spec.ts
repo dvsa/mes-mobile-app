@@ -2,7 +2,7 @@
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule, ModalController, Config } from 'ionic-angular';
 import { ModalControllerMock, ConfigMock } from 'ionic-mocks';
-import { VehicleChecksCatBEComponent } from '../vehicle-checks.cat-be';
+import { VehicleChecksCatBEComponent } from '../vehicle-checks';
 import { CAT_BE } from '../../../../../page-names.constants';
 import { App } from '../../../../../../app/app.component';
 import { Store } from '@ngrx/store';
