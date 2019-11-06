@@ -241,7 +241,6 @@ export class TestReportCatBEPage extends BasePageComponent {
     this.modal.dismiss().then(() => this.navController.push(CAT_BE.DEBRIEF_PAGE));
   }
 
-
   onFailTest = (): void => {
     this.store$.dispatch(new AddDrivingFault(
       {
