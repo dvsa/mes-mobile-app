@@ -20,7 +20,7 @@ import { LanguagePreferencesComponent } from
   '../../../../components/test-finalisation/language-preference/language-preferences';
 import { FinalisationHeaderComponent } from
   '../../../../components/test-finalisation/finalisation-header/finalisation-header';
-import { TransmissionComponent } from '../../components/transmission/transmission';
+import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
 import { PassFinalisationViewDidEnter } from '../../pass-finalisation.actions';
 import { ProvisionalLicenseReceived, ProvisionalLicenseNotReceived, PassCertificateNumberChanged } from
   '../../../../modules/tests/pass-completion/pass-completion.actions';
