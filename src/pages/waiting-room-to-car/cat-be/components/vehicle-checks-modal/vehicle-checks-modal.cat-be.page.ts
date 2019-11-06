@@ -35,20 +35,8 @@ export class VehicleChecksCatBEModal {
     questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
-    // TODO - This needs to be gotten from the store
-    this.vehicleChecksQuestionResults =   {
-      code: 'S02',
-      description: 'Doors secure',
-    },
-    // TODO this needs to be calculated
-    this.questionsToDisable = [
-      {
-        code: 'S04',
-        description: 'Show me how you would check the parking brake for excessive wear.',
-        shortName: 'Parking brake',
-      },
-    ];
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
+    // TODO - Get tellMeQuestions
   }
 
   ngOnInit(): void {
@@ -61,10 +49,35 @@ export class VehicleChecksCatBEModal {
         select(getUntitledCandidateName),
       ),
     };
+
+    // TODO We need to get the data from the store for vehicle checks. It will return an array so we need to update
+    // the components and send one question into each componenet;
+    this.vehicleChecksQuestionResults = {
+      code: 'S02',
+      description: 'Doors secure',
+      outcome: 'DF',
+    } as QuestionResult;
   }
 
   vehicleChecksQuestionChanged(result: QuestionResult): void {
-    // TODO - Send the result to the store
+    // TODO - Send the result to the store - What happens if we change a question (how do we know the original question)
     console.log('vehicleChecksQuestionChanged', JSON.stringify(result));
+  }
+
+  vehicleChecksQuestionOutcomeChanged(result: QuestionResult): void {
+    // TODO - Send the result to the store
+    console.log('vehicleChecksQuestionOutcomeChanged', JSON.stringify(result));
+  }
+
+  caculateQuestionsToDisable() {
+    // TODO - we need to calculate what to disable, and it needs to update based on changes to the selected questions
+    // this could be in the questionProvider potentially?
+    this.questionsToDisable = [
+      {
+        code: 'S04',
+        description: 'Show me how you would check the parking brake for excessive wear.',
+        shortName: 'Parking brake',
+      },
+    ];
   }
 }

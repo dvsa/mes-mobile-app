@@ -21,7 +21,8 @@
         [questionResult]="vehicleChecksQuestionResults"
         [questions]="showMeQuestions"
         [questionsToDisable]="questionsToDisable"
-        (vehicleChecksQuestionChange)="vehicleChecksQuestionChanged($event)">
+        (vehicleChecksQuestionChange)="vehicleChecksQuestionChanged($event)"
+        (vehicleChecksQuestionOutcomeChange)="vehicleChecksQuestionOutcomeChanged($event)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>

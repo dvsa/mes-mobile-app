@@ -10,10 +10,22 @@
       </ion-select>
     </ion-row>
   </ion-col>
-  <ion-col col-31>
-    <ion-row>Radio Button 1</ion-row>
+  <ion-col col-31 *ngIf="shouldShowOutcomeFields()">
+    <ion-row>
+        <input type="radio" id="vehicleChecksCorrect" class="gds-radio-button" value="P"
+        formControlName="vehicleChecksQuestionOutcome"
+        (change)="vehicleChecksPassSelected()"
+        >
+      <label for="vehicleChecksCorrect" class="radio-label">Correct</label>
+    </ion-row>
   </ion-col>
-  <ion-col col-31>
-    <ion-row>Radio Button 2</ion-row>
+  <ion-col col-31 *ngIf="shouldShowOutcomeFields()">
+    <ion-row>
+        <input type="radio" id="vehicleChecksFault" class="gds-radio-button" value="DF"
+        formControlName="vehicleChecksQuestionOutcome"
+        (change)="vehicleChecksDrivingFaultSelected()"
+        >
+      <label for="vehicleChecksFault" class="radio-label">1 Driving fault</label>
+    </ion-row>
   </ion-col>
 </ion-row>

@@ -27,19 +27,32 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   @Output()
   vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
 
-  private formControl: FormControl;
-  static readonly fieldName: string = 'vehicleChecksQuestion';
+  @Output()
+  vehicleChecksQuestionOutcomeChange = new EventEmitter<QuestionResult>();
+
+  private questionFormControl: FormControl;
+  private questionOutcomeFormControl: FormControl;
+
+  static readonly questionFieldName: string = 'vehicleChecksQuestion';
+  static readonly questionOutcomeFieldName: string = 'vehicleChecksQuestionOutcome';
 
   ngOnChanges(): void {
-    if (!this.formControl) {
-      this.formControl = new FormControl({ disabled: true });
-      this.formGroup.addControl(VehicleChecksQuestionComponent.fieldName, this.formControl);
+    if (!this.questionFormControl) {
+      this.questionFormControl = new FormControl({ disabled: true });
+      this.formGroup.addControl(VehicleChecksQuestionComponent.questionFieldName, this.questionFormControl);
+    }
+
+    if (!this.questionOutcomeFormControl) {
+      this.questionOutcomeFormControl = new FormControl();
+      this.formGroup.addControl(
+        VehicleChecksQuestionComponent.questionOutcomeFieldName,
+        this.questionOutcomeFormControl,
+      );
     }
 
     if (this.questionResult) {
-      this.formControl.patchValue(
-      this.questions.find(question => question.code === this.questionResult.code),
-    );
+      this.questionFormControl.patchValue(this.findQuestion());
+      this.questionOutcomeFormControl.patchValue(this.questionResult.outcome);
     }
   }
 
@@ -57,5 +70,32 @@ export class VehicleChecksQuestionComponent implements OnChanges {
     };
 
     this.vehicleChecksQuestionChange.emit(result);
+  }
+
+  vehicleChecksPassSelected() {
+    const result: QuestionResult = {
+      outcome: 'P',
+    };
+
+    this.vehicleChecksQuestionOutcomeChange.emit(result);
+  }
+
+  vehicleChecksDrivingFaultSelected() {
+    const result: QuestionResult = {
+      outcome: 'DF',
+    };
+
+    this.vehicleChecksQuestionOutcomeChange.emit(result);
+  }
+
+  findQuestion(): VehicleChecksQuestion {
+    return  this.questions.find(question => question.code === this.questionResult.code);
+  }
+
+  shouldShowOutcomeFields(): boolean {
+    if (this.questionResult && this.questionResult.code && this.questionResult.description) {
+      return true;
+    }
+    return false;
   }
 }
