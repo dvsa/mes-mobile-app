@@ -1,5 +1,9 @@
 <ion-header>
   <ion-navbar hideBackButton>
+    <ion-buttons start>
+      <button ion-button (click)="onPassTest()" id="end-test-button">Pass Me</button>
+      <button ion-button (click)="onFailTest()" id="end-test-button">Fail Me</button>
+    </ion-buttons>
     <ion-title>Test report - {{pageState.candidateUntitledName$ | async}}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="onEndTestClick()" id="end-test-button">End test</button>

@@ -47,6 +47,9 @@ import { ModalEvent } from '../test-report.constants';
 import { CAT_BE } from '../../page-names.constants';
 import { OverlayCallback } from '../test-report.model';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { AddDrivingFault } from '../../../modules/tests/test-data/driving-faults/driving-faults.actions';
+import { AddSeriousFault } from '../../../modules/tests/test-data/serious-faults/serious-faults.actions';
+import { AddDangerousFault } from '../../../modules/tests/test-data/dangerous-faults/dangerous-faults.actions';
 
 interface TestReportPageState {
   candidateUntitledName$: Observable<string>;
@@ -237,4 +240,44 @@ export class TestReportCatBEPage extends BasePageComponent {
   onTerminate = (): void => {
     this.modal.dismiss().then(() => this.navController.push(CAT_BE.DEBRIEF_PAGE));
   }
+
+
+  onFailTest = (): void => {
+    this.store$.dispatch(new AddDrivingFault(
+      {
+        competency: Competencies.clearance,
+        newFaultCount: 3,
+      },
+    ));
+    this.store$.dispatch(new AddDrivingFault(
+      {
+        competency: Competencies.moveOffControl,
+        newFaultCount: 6,
+      },
+    ));
+
+    this.store$.dispatch(new AddSeriousFault(Competencies.signalsTimed));
+    this.store$.dispatch(new AddDangerousFault(Competencies.useOfSpeed));
+    this.store$.dispatch(new CalculateTestResult());
+    this.navController.push(CAT_BE.DEBRIEF_PAGE);
+  }
+
+  onPassTest = (): void => {
+    this.store$.dispatch(new AddDrivingFault(
+      {
+        competency: Competencies.clearance,
+        newFaultCount: 3,
+      },
+    ));
+    this.store$.dispatch(new AddDrivingFault(
+      {
+        competency: Competencies.moveOffControl,
+        newFaultCount: 3,
+      },
+    ));
+
+    this.store$.dispatch(new CalculateTestResult());
+    this.navController.push(CAT_BE.DEBRIEF_PAGE);
+  }
+
 }
