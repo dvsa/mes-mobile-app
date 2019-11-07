@@ -120,7 +120,6 @@ describe('VehicleChecksQuestionComponent', () => {
       it('should return false if all the question description is missing from the result object', () => {
         component.questionResult = {
           code: 'S04',
-          description: 'Test',
         } as QuestionResult;
 
         expect(component.shouldShowOutcomeFields()).toEqual(false);
