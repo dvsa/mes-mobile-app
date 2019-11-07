@@ -3,7 +3,7 @@
     <h2 class="error-message">Sorry, something went wrong</h2>
     <div>
       <div class="link error-details-link" (click)="goBack()">
-        Return to {{returnTo}}
+        Return to {{redirectLinkText}}
       </div>
       <h3 class="error-details" *ngIf="additionalText">{{additionalText}}</h3>
     </div>

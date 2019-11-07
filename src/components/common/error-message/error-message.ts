@@ -13,15 +13,30 @@ enum additionalText {
 export class ErrorMessageComponent {
 
   public additionalText: string;
-  @Input() returnTo: string;
+  public redirectLinkText: string;
 
-  @Output() exitModal = new EventEmitter<void>();
+  @Input()
+  returnTo: string;
+
+  @Output()
+  exitModal = new EventEmitter<void>();
 
   constructor() { }
 
   ngOnInit(): void {
-    this.additionalText = (this.returnTo === ErrorTypes.JOURNAL_REFRESH)
-      ? additionalText.JOURNAL : additionalText.STANDARD_TEXT;
+    switch (this.returnTo) {
+      case ErrorTypes.JOURNAL_REFRESH:
+        this.additionalText = additionalText.JOURNAL;
+        this.redirectLinkText = this.returnTo;
+        break;
+      case ErrorTypes.CANDIDATE_DATA_MISSING:
+        this.additionalText = null;
+        this.redirectLinkText = 'Dashboard';
+        break;
+      default:
+        this.additionalText = additionalText.STANDARD_TEXT;
+        this.redirectLinkText = this.returnTo;
+    }
   }
 
   goBack = (): void => {
