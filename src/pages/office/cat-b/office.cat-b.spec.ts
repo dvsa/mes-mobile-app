@@ -17,7 +17,7 @@ import {
 } from 'ionic-mocks';
 import { ComponentsModule } from '../../../components/common/common-components.module';
 import { AppModule } from '../../../app/app.module';
-import { OfficePage } from '../office';
+import { OfficeCatBPage } from './office.cat-b.page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../providers/authentication/__mocks__/authentication.mock';
 import { DateTimeProvider } from '../../../providers/date-time/date-time';
@@ -66,16 +66,16 @@ import { NavigationStateProviderMock } from '../../../providers/navigation-state
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 
-describe('OfficePage', () => {
-  let fixture: ComponentFixture<OfficePage>;
-  let component: OfficePage;
+describe('OfficePage-CatB', () => {
+  let fixture: ComponentFixture<OfficeCatBPage>;
+  let component: OfficeCatBPage;
   let navController: NavController;
   let store$: Store<StoreModel>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        OfficePage,
+        OfficeCatBPage,
         MockComponent(RouteNumberComponent),
         MockComponent(CandidateDescriptionComponent),
         MockComponent(IdentificationComponent),
@@ -148,7 +148,7 @@ describe('OfficePage', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(OfficePage);
+        fixture = TestBed.createComponent(OfficeCatBPage);
         component = fixture.componentInstance;
         navController = TestBed.get(NavController);
       });
