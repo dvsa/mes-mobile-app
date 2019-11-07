@@ -130,7 +130,7 @@ export class TestsEffects {
     switchMap(([action, journal, rekeySearch]: [testActions.StartTest, JournalModel, RekeySearchModel]) => {
       const startTestAction = action as testActions.StartTest;
       const isRekeySearch = this.navigationStateProvider.isRekeySearch();
-      const employeeId = this.authenticationProvider.getEmployeeId();
+      const employeeId = this.authenticationProvider.getEmployeeId() || journal.examiner.staffNumber;
 
       let slot: TestSlot;
       let examiner: Examiner;
