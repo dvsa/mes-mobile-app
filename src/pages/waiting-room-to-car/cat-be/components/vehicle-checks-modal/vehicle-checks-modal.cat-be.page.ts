@@ -88,7 +88,7 @@ export class VehicleChecksCatBEModal {
     this.store$.dispatch(new ShowMeQuestionSelected(result, index));
   }
 
-  showMeQuestionOutcomeChanged(result: QuestionOutcome, index: number): void {
+  showMeQuestionOutcomeChanged(result: QuestionResult, index: number): void {
     this.store$.dispatch(new ShowMeQuestionOutcomeChanged(result, index));
   }
 

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 export const SHOW_ME_QUESTION_SELECTED = '[VehicleChecksPage] [CatBE] Show Me Question Selected';
 export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] [CatBE] Show Me Question Outcome Changed';
@@ -13,7 +13,7 @@ export class ShowMeQuestionSelected implements Action {
 
 export class ShowMeQuestionOutcomeChanged implements Action {
   readonly type = SHOW_ME_QUESTION_OUTCOME_CHANGED;
-  constructor(public showMeQuestionOutcome: QuestionOutcome, public index: number) {}
+  constructor(public showMeQuestionOutcome: QuestionResult, public index: number) {}
 }
 
 export class TellMeQuestionSelected implements Action {

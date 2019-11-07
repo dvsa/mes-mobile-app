@@ -20,18 +20,13 @@ export function vehicleChecksCatBEReducer(
   switch (action.type) {
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
-        ...state,
-        showMeQuestions: state.showMeQuestions.map(
-          (item, index) => index === action.index ? action.showMeQuestion : item,
-        ),
+        ...initialState,
+        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion)
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
-        ...state,
-        showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? {
-          ...item,
-          outcome: action.showMeQuestionOutcome,
-        } : item),
+        ...initialState,
+        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome)
       };
     case vehicleChecksCatBeActionTypes.TELL_ME_QUESTION_SELECTED:
       return {
@@ -51,4 +46,9 @@ export function vehicleChecksCatBEReducer(
     default:
       return state;
   }
+}
+
+function setQuestionResult(questions: QuestionResult[], index: number, outcome: QuestionResult) {
+  questions[index] = outcome;
+  return questions;
 }
