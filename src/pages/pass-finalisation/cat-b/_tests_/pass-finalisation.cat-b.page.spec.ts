@@ -29,7 +29,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
   '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { PassCertificateNumberComponent } from '../../components/pass-certificate-number/pass-certificate-number';
 import { LicenseProvidedComponent } from '../../components/license-provided/license-provided';
-import { TransmissionComponent } from '../../components/transmission/transmission';
+import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
 
 describe('PassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<PassFinalisationCatBPage>;

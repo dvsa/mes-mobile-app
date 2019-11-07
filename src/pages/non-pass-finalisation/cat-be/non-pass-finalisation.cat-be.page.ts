@@ -21,7 +21,7 @@ import {
   formatDriverNumber,
 } from '../../../modules/tests/journal-data/candidate/candidate.selector';
 import { NonPassFinalisationViewDidEnter } from '../non-pass-finalisation.actions';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom, tap } from 'rxjs/operators';
 import { getTestSummary } from '../../../modules/tests/test-summary/test-summary.reducer';
 import { isDebriefWitnessed, getD255 } from '../../../modules/tests/test-summary/test-summary.selector';
 import {
@@ -49,6 +49,11 @@ import {
 import { SetTestStatusWriteUp } from '../../../modules/tests/test-status/test-status.actions';
 import { SetActivityCode } from '../../../modules/tests/activity-code/activity-code.actions';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { getGearboxCategory, isAutomatic, isManual } from
+'../../../modules/tests/vehicle-details/vehicle-details.selector';
+import { getVehicleDetails } from '../../../modules/tests/vehicle-details/vehicle-details.reducer';
+import { GearboxCategory } from '@dvsa/mes-test-schema/categories/Common';
+import { GearboxCategoryChanged } from '../../../modules/tests/vehicle-details/vehicle-details.actions';
 
 interface NonPassFinalisationPageState {
   candidateName$: Observable<string>;
@@ -62,6 +67,9 @@ interface NonPassFinalisationPageState {
   displayD255$: Observable<boolean>;
   d255$: Observable<boolean>;
   isWelshTest$: Observable<boolean>;
+  transmission$: Observable<GearboxCategory>;
+  transmissionAutomaticRadioChecked$: Observable<boolean>;
+  transmissionManualRadioChecked$: Observable<boolean>;
 }
 
 @IonicPage()
@@ -152,6 +160,24 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
         select(getTestSlotAttributes),
         select(isWelshTest),
       ),
+      transmission$: currentTest$.pipe(
+        select(getVehicleDetails),
+        select(getGearboxCategory),
+      ),
+      transmissionAutomaticRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isAutomatic),
+        tap((val) => {
+          if (val) this.form.controls['transmissionCtrl'].setValue('Automatic');
+        }),
+      ),
+      transmissionManualRadioChecked$: currentTest$.pipe(
+        select(getVehicleDetails),
+        map(isManual),
+        tap((val) => {
+          if (val) this.form.controls['transmissionCtrl'].setValue('Manual');
+        }),
+      ),
     };
   }
 
@@ -178,6 +204,10 @@ export class NonPassFinalisationCatBEPage extends BasePageComponent implements O
 
   d255Changed(d255: boolean): void {
     this.store$.dispatch(d255 ? new D255Yes() : new D255No());
+  }
+
+  transmissionChanged(transmission: GearboxCategory): void {
+    this.store$.dispatch(new GearboxCategoryChanged(transmission));
   }
 
   isWelshChanged(isWelsh: boolean) {

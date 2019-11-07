@@ -4,7 +4,7 @@ import { NavControllerMock, PlatformMock } from 'ionic-mocks';
 import { AppModule } from '../../../../app/app.module';
 import { AuthenticationProvider } from '../../../../providers/authentication/authentication';
 import { AuthenticationProviderMock } from '../../../../providers/authentication/__mocks__/authentication.mock';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { StoreModel } from '../../../../shared/models/store.model';
 import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
@@ -13,9 +13,18 @@ import { NonPassFinalisationViewDidEnter } from '../../non-pass-finalisation.act
 import { ActivityCodeComponent } from '../../../office/components/activity-code/activity-code';
 import { SetTestStatusWriteUp } from '../../../../modules/tests/test-status/test-status.actions';
 import * as testActions from '../../../../modules/tests/tests.actions';
-import { TestFinalisationComponentsModule } from
-'../../../../components/test-finalisation/test-finalisation-component.module';
 import { TestCategory } from '../../../../shared/models/test-category';
+import { D255Component } from '../../../../components/test-finalisation/d255/d255';
+import { LanguagePreferencesComponent } from
+'../../../../components/test-finalisation/language-preference/language-preferences';
+import { DebriefWitnessed, D255Yes, D255No, DebriefUnwitnessed } from
+'../../../../modules/tests/test-summary/test-summary.actions';
+import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTestInEnglish } from
+'../../../../modules/tests/communication-preferences/communication-preferences.actions';
+import { DebriefWitnessedComponent } from
+'../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
+import { FinalisationHeaderComponent } from
+'../../../../components/test-finalisation/finalisation-header/finalisation-header';
 
 describe('NonPassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
@@ -28,12 +37,14 @@ describe('NonPassFinalisationCatBPage', () => {
         NonPassFinalisationCatBPage,
         MockComponent(PracticeModeBanner),
         MockComponent(ActivityCodeComponent),
+        MockComponent(D255Component),
+        MockComponent(LanguagePreferencesComponent),
+        MockComponent(DebriefWitnessedComponent),
+        MockComponent(FinalisationHeaderComponent),
       ],
       imports: [
         IonicModule,
         AppModule,
-        StoreModule.forRoot({}),
-        TestFinalisationComponentsModule,
       ],
       providers: [
         { provide: NavController, useFactory: () => NavControllerMock.instance() },
@@ -55,21 +66,57 @@ describe('NonPassFinalisationCatBPage', () => {
       it('should dispatch a view did enter action', () => {
         component.ionViewDidEnter();
         expect(store$.dispatch).toHaveBeenCalledWith(new NonPassFinalisationViewDidEnter());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
       });
     });
-  });
+    describe('d255Changed', () => {
+      it('should dispatch the correct action if the inputted value is true', () => {
+        component.d255Changed(true);
+        expect(store$.dispatch).toHaveBeenCalledWith(new D255Yes());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+      it('should dispatch the correct action if the inputted value is false', () => {
+        component.d255Changed(false);
+        expect(store$.dispatch).toHaveBeenCalledWith(new D255No());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('debriefWitnessedChanged', () => {
+      it('should dispatch the correct action if the inputted value is true', () => {
+        component.debriefWitnessedChanged(true);
+        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefWitnessed());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+      it('should dispatch the correct action if the inputted value is false', () => {
+        component.debriefWitnessedChanged(false);
+        expect(store$.dispatch).toHaveBeenCalledWith(new DebriefUnwitnessed());
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('isWelshChanged', () => {
+      it('should dispatch the correct action if the isWelsh flag is true', () => {
+        component.isWelshChanged(true);
+        expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInWelsh('Cymraeg'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+      it('should dispatch the correct action if the isWelsh flag is false', () => {
+        component.isWelshChanged(false);
+        expect(store$.dispatch).toHaveBeenCalledWith(new CandidateChoseToProceedWithTestInEnglish('English'));
+        expect(store$.dispatch).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('OnContinue', () => {
+      it('should dispatch a change test state to WriteUp action', () => {
+        // Arrange
+        store$.dispatch(new testActions.StartTest(123, TestCategory.B));
+        component.slotId = '123';
 
-  describe('OnContinue', () => {
-    it('should dispatch a change test state to WriteUp action', () => {
-      // Arrange
-      store$.dispatch(new testActions.StartTest(123, TestCategory.B));
-      component.slotId = '123';
+        // Act
+        component.continue();
 
-      // Act
-      component.continue();
-
-      // Assert
-      expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
+        // Assert
+        expect(store$.dispatch).toHaveBeenCalledWith(new SetTestStatusWriteUp('123'));
+      });
     });
   });
 });
