@@ -21,8 +21,22 @@
         [questionResult]="(pageState.showMeQuestions$ | async)[0]"
         [questions]="showMeQuestions"
         [questionsToDisable]="pageState.showMeQuestions$ | async"
-        (vehicleChecksQuestionChange)="showMeQuestionChanged($event)"
-        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event)">
+        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, 0)"
+        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, 0)">
+      </vehicle-checks-question>
+      <vehicle-checks-question [formGroup]="formGroup"
+        [questionResult]="(pageState.showMeQuestions$ | async)[1]"
+        [questions]="showMeQuestions"
+        [questionsToDisable]="pageState.showMeQuestions$ | async"
+        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, 1)"
+        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, 1)">
+      </vehicle-checks-question>
+      <vehicle-checks-question [formGroup]="formGroup"
+        [questionResult]="(pageState.showMeQuestions$ | async)[2]"
+        [questions]="showMeQuestions"
+        [questionsToDisable]="pageState.showMeQuestions$ | async"
+        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, 2)"
+        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, 2)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>

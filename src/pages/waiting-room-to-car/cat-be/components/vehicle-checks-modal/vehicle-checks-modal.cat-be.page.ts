@@ -12,9 +12,15 @@ import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '../../../../../shared/models/test-category';
-import { getVehicleChecksCatBe, getSelectedShowMeQuestions } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
+import {
+  getVehicleChecksCatBe,
+  getSelectedShowMeQuestions,
+} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.cat-be.reducer';
-import { ShowMeQuestionSelected, ShowMeQuestionOutcomeChanged } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
+import {
+  ShowMeQuestionSelected,
+  ShowMeQuestionOutcomeChanged,
+} from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -41,7 +47,6 @@ export class VehicleChecksCatBEModal {
     this.formGroup = new FormGroup({});
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
     this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
-    this.caculateQuestionsToDisable();
   }
 
   ngOnInit(): void {
@@ -58,28 +63,16 @@ export class VehicleChecksCatBEModal {
         select(getCurrentTest),
         select(getTestData),
         select(getVehicleChecksCatBe),
-        select(getSelectedShowMeQuestions)
-      )
+        select(getSelectedShowMeQuestions),
+      ),
     };
   }
 
-  showMeQuestionChanged(result: QuestionResult): void {
-    this.store$.dispatch(new ShowMeQuestionSelected(result));
+  showMeQuestionChanged(result: QuestionResult, index: number): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(result, index));
   }
 
-  showMeQuestionOutcomeChanged(result: QuestionResult): void {
-    this.store$.dispatch(new ShowMeQuestionOutcomeChanged(result.outcome));
-  }
-
-  caculateQuestionsToDisable() {
-    // TODO - we need to calculate what to disable, and it needs to update based on changes to the selected questions
-    // this could be in the questionProvider potentially?
-    this.questionsToDisable = [
-      {
-        code: 'S04',
-        description: 'Show me how you would check the parking brake for excessive wear.',
-        shortName: 'Parking brake',
-      },
-    ];
+  showMeQuestionOutcomeChanged(result: QuestionResult, index: number): void {
+    this.store$.dispatch(new ShowMeQuestionOutcomeChanged(result, index));
   }
 }

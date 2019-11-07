@@ -16,13 +16,10 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   questions: VehicleChecksQuestion[];
 
   @Input()
-  questionsToDisable: VehicleChecksQuestion[];
+  questionsToDisable: QuestionResult[];
 
   @Input()
   formGroup: FormGroup;
-
-  @Input()
-  disabled: boolean;
 
   @Output()
   vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
@@ -57,7 +54,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   }
 
   isOptionDisabled(question: VehicleChecksQuestion): boolean {
-    const doesQuestionExist: VehicleChecksQuestion =
+    const doesQuestionExist: QuestionResult =
       this.questionsToDisable.find(questionToDisable => questionToDisable.code === question.code);
     return doesQuestionExist !== undefined;
   }
@@ -75,6 +72,8 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   vehicleChecksPassSelected() {
     const result: QuestionResult = {
       outcome: 'P',
+      code: this.questionResult.code,
+      description: this.questionResult.description
     };
 
     this.vehicleChecksQuestionOutcomeChange.emit(result);
@@ -83,6 +82,8 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   vehicleChecksDrivingFaultSelected() {
     const result: QuestionResult = {
       outcome: 'DF',
+      code: this.questionResult.code,
+      description: this.questionResult.description
     };
 
     this.vehicleChecksQuestionOutcomeChange.emit(result);
