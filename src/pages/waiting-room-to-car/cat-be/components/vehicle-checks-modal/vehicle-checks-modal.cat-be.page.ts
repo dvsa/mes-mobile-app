@@ -36,6 +36,7 @@ export class VehicleChecksCatBEModal {
   ) {
     this.formGroup = new FormGroup({});
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
+    this.caculateQuestionsToDisable();
     // TODO - Get tellMeQuestions
   }
 
