@@ -21,12 +21,12 @@ export function vehicleChecksCatBEReducer(
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
         ...initialState,
-        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion)
+        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion),
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
         ...initialState,
-        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome)
+        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
       };
     case vehicleChecksCatBeActionTypes.TELL_ME_QUESTION_SELECTED:
       return {
