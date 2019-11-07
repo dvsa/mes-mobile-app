@@ -73,7 +73,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
     const result: QuestionResult = {
       outcome: 'P',
       code: this.questionResult.code,
-      description: this.questionResult.description
+      description: this.questionResult.description,
     };
 
     this.vehicleChecksQuestionOutcomeChange.emit(result);
@@ -83,7 +83,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
     const result: QuestionResult = {
       outcome: 'DF',
       code: this.questionResult.code,
-      description: this.questionResult.description
+      description: this.questionResult.description,
     };
 
     this.vehicleChecksQuestionOutcomeChange.emit(result);

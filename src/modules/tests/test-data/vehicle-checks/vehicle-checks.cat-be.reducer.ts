@@ -8,7 +8,7 @@ export const initialState: CatBEUniqueTypes.VehicleChecks = {
   showMeQuestions: [
     {},
     {},
-    {}
+    {},
   ],
 };
 
@@ -17,14 +17,14 @@ export function vehicleChecksCatBEReducer(
   action: vehicleChecksCatBeActionTypes.Types): CatBEUniqueTypes.VehicleChecks {
   switch (action.type) {
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_SELECTED:
-        return {
+      return {
           ...initialState,
-          showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion)
+          showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion),
         };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
         ...initialState,
-        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome)
+        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
       };
     default:
       return state;
