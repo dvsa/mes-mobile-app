@@ -17,7 +17,8 @@ import { TestCategory } from '../../../../shared/models/test-category';
 import { D255Component } from '../../../../components/test-finalisation/d255/d255';
 import { LanguagePreferencesComponent } from
 '../../../../components/test-finalisation/language-preference/language-preferences';
-import { DebriefWitnessedComponent } from '../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
+import { DebriefWitnessedComponent } from
+'../../../../components/test-finalisation/debrief-witnessed/debrief-witnessed';
 import { FinalisationHeaderComponent } from
 '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 import { TransmissionComponent } from '../../../../components/test-finalisation/transmission/transmission';
