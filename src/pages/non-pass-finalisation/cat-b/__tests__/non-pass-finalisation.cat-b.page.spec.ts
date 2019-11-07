@@ -26,7 +26,7 @@ import { DebriefWitnessedComponent } from
 import { FinalisationHeaderComponent } from
 '../../../../components/test-finalisation/finalisation-header/finalisation-header';
 
-fdescribe('NonPassFinalisationCatBPage', () => {
+describe('NonPassFinalisationCatBPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBPage>;
   let component: NonPassFinalisationCatBPage;
   let store$: Store<StoreModel>;

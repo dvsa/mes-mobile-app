@@ -28,7 +28,7 @@ import { CandidateChoseToProceedWithTestInWelsh, CandidateChoseToProceedWithTest
 '../../../../modules/tests/communication-preferences/communication-preferences.actions';
 import { GearboxCategoryChanged } from '../../../../modules/tests/vehicle-details/vehicle-details.actions';
 
-fdescribe('NonPassFinalisationCatBEPage', () => {
+describe('NonPassFinalisationCatBEPage', () => {
   let fixture: ComponentFixture<NonPassFinalisationCatBEPage>;
   let component: NonPassFinalisationCatBEPage;
   let store$: Store<StoreModel>;
