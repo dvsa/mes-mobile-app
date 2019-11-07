@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'health-declaration',
@@ -21,7 +21,7 @@ export class HealthDeclarationComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.formControl) {
-      this.formControl = new FormControl('', [Validators.requiredTrue]),
+      this.formControl = new FormControl('', []),
 
       this.formGroup.addControl(HealthDeclarationComponent.fieldName, this.formControl);
     }

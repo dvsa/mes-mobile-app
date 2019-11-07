@@ -42,8 +42,6 @@ describe('HealthDeclarationComponent', () => {
         component.ngOnChanges();
         // ASSERT
         const field = component.formGroup.get(HealthDeclarationComponent.fieldName);
-        expect(field).not.toBeNull();
-        expect(field.validator).not.toBeNull();
         expect(field.value).toEqual('true');
       });
     });
@@ -75,19 +73,6 @@ describe('HealthDeclarationComponent', () => {
 
         // ASSERT
         expect(result).toEqual(false);
-      });
-      it('should not validate the field when it is dirty', () => {
-        // ARRANGE
-        component.formGroup = new FormGroup({});
-        component.ngOnChanges();
-        component.formControl.markAsDirty();
-        fixture.detectChanges();
-
-        // ACT
-        const result: boolean = component.isInvalid();
-
-        // ASSERT
-        expect(result).toEqual(true);
       });
     });
   });
