@@ -41,7 +41,7 @@ import { JournalData } from '@dvsa/mes-test-schema/categories/B';
 import { App } from '../../../app/app.component';
 import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 
-fdescribe('WaitingRoomPage', () => {
+describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
   let component: WaitingRoomPage;
   let store$: Store<StoreModel>;
