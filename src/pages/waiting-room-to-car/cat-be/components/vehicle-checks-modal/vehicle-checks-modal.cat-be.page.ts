@@ -12,9 +12,13 @@ import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '../../../../../shared/models/test-category';
+import { getVehicleChecksCatBe, getSelectedShowMeQuestions } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
+import { getTestData } from '../../../../../modules/tests/test-data/test-data.cat-be.reducer';
+import { ShowMeQuestionSelected, ShowMeQuestionOutcomeChanged } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
+  showMeQuestions$: Observable<QuestionResult[]>;
 }
 
 @IonicPage()
@@ -26,8 +30,8 @@ export class VehicleChecksCatBEModal {
 
   pageState: VehicleChecksModalCatBEState;
   formGroup: FormGroup;
-  vehicleChecksQuestionResults: QuestionResult;
   showMeQuestions: VehicleChecksQuestion[];
+  tellMeQuestions: VehicleChecksQuestion[];
   questionsToDisable: VehicleChecksQuestion[];
 
   constructor(
@@ -36,8 +40,8 @@ export class VehicleChecksCatBEModal {
   ) {
     this.formGroup = new FormGroup({});
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
+    this.tellMeQuestions = questionProvider.getTellMeQuestions(TestCategory.BE);
     this.caculateQuestionsToDisable();
-    // TODO - Get tellMeQuestions
   }
 
   ngOnInit(): void {
@@ -49,25 +53,22 @@ export class VehicleChecksCatBEModal {
         select(getCandidate),
         select(getUntitledCandidateName),
       ),
+      showMeQuestions$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getVehicleChecksCatBe),
+        select(getSelectedShowMeQuestions)
+      )
     };
-
-    // TODO We need to get the data from the store for vehicle checks. It will return an array so we need to update
-    // the components and send one question into each componenet;
-    this.vehicleChecksQuestionResults = {
-      code: 'S02',
-      description: 'Doors secure',
-      outcome: 'DF',
-    } as QuestionResult;
   }
 
-  vehicleChecksQuestionChanged(result: QuestionResult): void {
-    // TODO - Send the result to the store - What happens if we change a question (how do we know the original question)
-    console.log('vehicleChecksQuestionChanged', JSON.stringify(result));
+  showMeQuestionChanged(result: QuestionResult): void {
+    this.store$.dispatch(new ShowMeQuestionSelected(result));
   }
 
-  vehicleChecksQuestionOutcomeChanged(result: QuestionResult): void {
-    // TODO - Send the result to the store
-    console.log('vehicleChecksQuestionOutcomeChanged', JSON.stringify(result));
+  showMeQuestionOutcomeChanged(result: QuestionResult): void {
+    this.store$.dispatch(new ShowMeQuestionOutcomeChanged(result.outcome));
   }
 
   caculateQuestionsToDisable() {

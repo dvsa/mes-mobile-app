@@ -18,11 +18,11 @@
     </ion-card-header>
     <ion-card-content>
       <vehicle-checks-question [formGroup]="formGroup"
-        [questionResult]="vehicleChecksQuestionResults"
+        [questionResult]="(pageState.showMeQuestions$ | async)[0]"
         [questions]="showMeQuestions"
-        [questionsToDisable]="questionsToDisable"
-        (vehicleChecksQuestionChange)="vehicleChecksQuestionChanged($event)"
-        (vehicleChecksQuestionOutcomeChange)="vehicleChecksQuestionOutcomeChanged($event)">
+        [questionsToDisable]="pageState.showMeQuestions$ | async"
+        (vehicleChecksQuestionChange)="showMeQuestionChanged($event)"
+        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
