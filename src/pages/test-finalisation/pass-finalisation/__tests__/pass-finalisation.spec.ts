@@ -15,7 +15,7 @@ import { MockComponent } from 'ng-mocks';
 import { PracticeModeBanner } from '../../../../components/common/practice-mode-banner/practice-mode-banner';
 import { TestFinalisationComponentsModule } from '../../components/test-finalisation.module';
 
-fdescribe('PassFinalisationPage', () => {
+describe('PassFinalisationPage', () => {
   let fixture: ComponentFixture<PassFinalisationPage>;
   let component: PassFinalisationPage;
   let store$: Store<StoreModel>;
