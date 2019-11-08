@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { QuestionProvider } from '../../../../../providers/question/question';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 import { TestCategory } from '../../../../../shared/models/test-category';
 import {
   getVehicleChecksCatBe,
@@ -68,11 +68,11 @@ export class VehicleChecksCatBEModal {
     };
   }
 
-  showMeQuestionChanged(result: QuestionResult, index: number): void {
+  showMeQuestionChanged(result: QuestionResult, index: 0|1|2): void {
     this.store$.dispatch(new ShowMeQuestionSelected(result, index));
   }
 
-  showMeQuestionOutcomeChanged(result: QuestionResult, index: number): void {
+  showMeQuestionOutcomeChanged(result: QuestionOutcome, index: 0|1|2): void {
     this.store$.dispatch(new ShowMeQuestionOutcomeChanged(result, index));
   }
 }

@@ -12,20 +12,20 @@
   </ion-col>
   <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
     <ion-row>
-        <input type="radio" id="vehicleChecksCorrect" class="gds-radio-button" value="P"
+        <input type="radio" id="vehicleChecksCorrect_{{index}}" class="gds-radio-button" value="P"
         formControlName="vehicleChecksQuestionOutcome"
         (change)="vehicleChecksPassSelected()"
         >
-      <label for="vehicleChecksCorrect" class="radio-label">Correct</label>
+      <label for="vehicleChecksCorrect_{{index}}" class="radio-label">Correct</label>
     </ion-row>
   </ion-col>
   <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
     <ion-row>
-        <input type="radio" id="vehicleChecksFault" class="gds-radio-button" value="DF"
+        <input type="radio" id="vehicleChecksFault_{{index}}" class="gds-radio-button" value="DF"
         formControlName="vehicleChecksQuestionOutcome"
         (change)="vehicleChecksDrivingFaultSelected()"
         >
-      <label for="vehicleChecksFault" class="radio-label">1 driving fault</label>
+      <label for="vehicleChecksFault_{{index}}" class="radio-label">1 driving fault</label>
     </ion-row>
   </ion-col>
 </ion-row>

@@ -1,17 +1,17 @@
 import { Action } from '@ngrx/store';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 
 export const SHOW_ME_QUESTION_SELECTED = '[VehicleChecksPage] Show Me Question Selected';
 export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] Show Me Question Outcome Changed';
 
 export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;
-  constructor(public showMeQuestion: QuestionResult, public index: number) {}
+  constructor(public showMeQuestion: QuestionResult, public index: 0|1|2) {}
 }
 
 export class ShowMeQuestionOutcomeChanged implements Action {
   readonly type = SHOW_ME_QUESTION_OUTCOME_CHANGED;
-  constructor(public showMeQuestionOutcome: QuestionResult, public index: number) {}
+  constructor(public showMeQuestionOutcome: QuestionOutcome, public index: 0|1|2) {}
 }
 
 export type Types =
