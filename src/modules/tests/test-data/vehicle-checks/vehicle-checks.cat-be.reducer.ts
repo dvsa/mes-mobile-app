@@ -24,6 +24,7 @@ export function vehicleChecksCatBEReducer(
         showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion),
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
+<<<<<<< HEAD
       return {
         ...initialState,
         // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
@@ -43,12 +44,19 @@ export function vehicleChecksCatBEReducer(
           outcome: action.tellMeQuestionOutcome,
         } : item),
       };
+=======
+      // return {
+      //   ...initialState,
+      //   // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
+      // };
+>>>>>>> debugging
     default:
       return state;
   }
 }
 
 function setQuestionResult(questions: QuestionResult[], index: number, outcome: QuestionResult) {
+  console.log(`show me question at index[${index}] is now:- ${JSON.stringify(outcome)}`);
   questions[index] = outcome;
   return questions;
 }
