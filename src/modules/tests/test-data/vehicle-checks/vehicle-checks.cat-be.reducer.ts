@@ -26,7 +26,7 @@ export function vehicleChecksCatBEReducer(
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
         ...initialState,
-        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
+        // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
       };
     case vehicleChecksCatBeActionTypes.TELL_ME_QUESTION_SELECTED:
       return {
@@ -52,3 +52,8 @@ function setQuestionResult(questions: QuestionResult[], index: number, outcome: 
   questions[index] = outcome;
   return questions;
 }
+
+// function setQuestionOutcome(questions: QuestionResult[], index: 0|1|2, outcome: QuestionResult) {
+//   questions[index] = outcome
+//   return questions
+// }
