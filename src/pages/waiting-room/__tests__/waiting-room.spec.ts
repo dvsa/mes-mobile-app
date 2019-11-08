@@ -37,6 +37,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ScreenOrientationMock } from '../../../shared/mocks/screen-orientation.mock';
 import { Insomnia } from '@ionic-native/insomnia';
 import { InsomniaMock } from '../../../shared/mocks/insomnia.mock';
+import { JournalData } from '@dvsa/mes-test-schema/categories/B';
+import { App } from '../../../app/app.component';
+import { MockAppComponent } from '../../../app/__mocks__/app.component.mock';
 
 describe('WaitingRoomPage', () => {
   let fixture: ComponentFixture<WaitingRoomPage>;
@@ -106,6 +109,7 @@ describe('WaitingRoomPage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: App, useClass: MockAppComponent },
       ],
     })
       .compileComponents()
@@ -180,6 +184,82 @@ describe('WaitingRoomPage', () => {
         expect(insomnia.keepAwake).toHaveBeenCalled();
       });
 
+    });
+
+    describe('isJournalDataInvalid', () => {
+      const journalData: JournalData = {
+        examiner: {
+          staffNumber: 'real-staff-number',
+        },
+        testCentre: {
+          centreId: 11223344,
+          centreName: 'name',
+          costCode: 'cost code',
+        },
+        testSlotAttributes: {
+          slotId: 12123331,
+          start: '2019-11-11',
+          vehicleTypeCode: 'vehicl code',
+          welshTest: true,
+          specialNeeds: true,
+          extendedTest: false,
+        },
+        candidate: {
+          candidateName: {
+            firstName: 'fname',
+            secondName: 'sname',
+          },
+          driverNumber: 'real-driver-number',
+        },
+        applicationReference: {
+          applicationId: 11223344141414,
+          bookingSequence: 112,
+          checkDigit: 11,
+        },
+      };
+
+      it('should return ture if no examiner staffnumber', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          examiner: {
+            staffNumber: '',
+          },
+        });
+        expect(result).toBeTruthy;
+      });
+
+      it('should return ture if no candidate name & driver number', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          candidate: {
+            candidateName: {},
+            driverNumber: '',
+          },
+        });
+        expect(result).toBeTruthy;
+      });
+
+      it('should return false if it has staff number and candidate name but no driver number', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          candidate: {
+            ...journalData.candidate,
+            driverNumber: '',
+          },
+        });
+        expect(result).toBeFalsy;
+      });
+
+      it('should return false if it has staff number and driver number but no candidate name', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          candidate: {
+            ...journalData.candidate,
+            driverNumber: '',
+          },
+        });
+        expect(result).toBeFalsy;
+      });
     });
   });
 
