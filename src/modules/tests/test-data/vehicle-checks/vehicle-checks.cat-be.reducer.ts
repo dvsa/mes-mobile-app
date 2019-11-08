@@ -24,7 +24,6 @@ export function vehicleChecksCatBEReducer(
         showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion),
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
-<<<<<<< HEAD
       return {
         ...initialState,
         // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
@@ -44,12 +43,6 @@ export function vehicleChecksCatBEReducer(
           outcome: action.tellMeQuestionOutcome,
         } : item),
       };
-=======
-      // return {
-      //   ...initialState,
-      //   // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
-      // };
->>>>>>> debugging
     default:
       return state;
   }
