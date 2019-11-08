@@ -288,7 +288,7 @@ export class WaitingRoomPage extends PracticeableBasePageComponent implements On
 
     const errorModal = this.modalController.create(
       ERROR_PAGE,
-      { type: ErrorTypes.CANDIDATE_DATA_MISSING },
+      { type: ErrorTypes.JOURNAL_DATA_MISSING },
       { cssClass: zoomClass });
     errorModal.present();
     errorModal.onDidDismiss(() => this.navController.setRoot(LOGIN_PAGE));

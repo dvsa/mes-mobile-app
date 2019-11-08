@@ -14,6 +14,7 @@ export class ErrorMessageComponent {
 
   public additionalText: string;
   public redirectLinkText: string;
+  public adviceToUsePaperTest: boolean = false;
 
   @Input()
   returnTo: string;
@@ -29,9 +30,10 @@ export class ErrorMessageComponent {
         this.additionalText = additionalText.JOURNAL;
         this.redirectLinkText = this.returnTo;
         break;
-      case ErrorTypes.CANDIDATE_DATA_MISSING:
-        this.additionalText = null;
+      case ErrorTypes.JOURNAL_DATA_MISSING:
+        this.additionalText = additionalText.STANDARD_TEXT;
         this.redirectLinkText = 'Dashboard';
+        this.adviceToUsePaperTest = true;
         break;
       default:
         this.additionalText = additionalText.STANDARD_TEXT;
