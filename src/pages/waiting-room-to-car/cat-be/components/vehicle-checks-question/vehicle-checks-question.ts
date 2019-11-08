@@ -22,7 +22,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   formGroup: FormGroup;
 
   @Input()
-  index: 0|1|2;
+  index: number;
 
   @Output()
   vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
@@ -68,7 +68,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
       code: vehicleChecksQuestion.code,
       description: vehicleChecksQuestion.shortName,
     };
-
+    console.log(result);
     this.vehicleChecksQuestionChange.emit(result);
   }
 

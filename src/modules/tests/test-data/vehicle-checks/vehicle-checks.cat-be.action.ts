@@ -6,12 +6,12 @@ export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] Show Me Que
 
 export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;
-  constructor(public showMeQuestion: QuestionResult, public index: 0|1|2) {}
+  constructor(public showMeQuestion: QuestionResult, public index: number) {}
 }
 
 export class ShowMeQuestionOutcomeChanged implements Action {
   readonly type = SHOW_ME_QUESTION_OUTCOME_CHANGED;
-  constructor(public showMeQuestionOutcome: QuestionOutcome, public index: 0|1|2) {}
+  constructor(public showMeQuestionOutcome: QuestionOutcome, public index: number) {}
 }
 
 export type Types =

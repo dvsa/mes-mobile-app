@@ -17,16 +17,17 @@ export function vehicleChecksCatBEReducer(
         showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion),
         };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
-      return {
-        ...initialState,
-        // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
-      };
+      // return {
+      //   ...initialState,
+      //   // showMeQuestions: setQuestionOutcome(initialState.showMeQuestions, action.index, action.showMeQuestionOutcome),
+      // };
     default:
       return state;
   }
 }
 
 function setQuestionResult(questions: QuestionResult[], index: number, outcome: QuestionResult) {
+  console.log(`show me question at index[${index}] is now:- ${JSON.stringify(outcome)}`);
   questions[index] = outcome;
   return questions;
 }
