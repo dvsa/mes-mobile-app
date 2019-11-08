@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import {FormGroup, FormControl} from '@angular/forms';
+import {VehicleChecksQuestion} from '../../../../../providers/question/vehicle-checks-question.model';
+import {QuestionResult} from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -33,21 +33,18 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   private questionFormControl: FormControl;
   private questionOutcomeFormControl: FormControl;
 
-  static readonly questionFieldName: string = 'vehicleChecksQuestion';
-  static readonly questionOutcomeFieldName: string = 'vehicleChecksQuestionOutcome';
+  readonly questionFieldName: string = 'vehicleChecksQuestion';
+  readonly questionOutcomeFieldName: string = 'vehicleChecksQuestionOutcome';
 
   ngOnChanges(): void {
     if (!this.questionFormControl) {
-      this.questionFormControl = new FormControl({ disabled: true });
-      this.formGroup.addControl(VehicleChecksQuestionComponent.questionFieldName, this.questionFormControl);
+      this.questionFormControl = new FormControl({disabled: true});
+      this.formGroup.addControl(`${this.questionFieldName}_${this.index}`, this.questionFormControl);
     }
 
     if (!this.questionOutcomeFormControl) {
       this.questionOutcomeFormControl = new FormControl();
-      this.formGroup.addControl(
-        VehicleChecksQuestionComponent.questionOutcomeFieldName,
-        this.questionOutcomeFormControl,
-      );
+        this.formGroup.addControl(`${this.questionOutcomeFieldName}_${this.index}`, this.questionFormControl);
     }
 
     if (this.questionResult) {
@@ -93,7 +90,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   }
 
   findQuestion(): VehicleChecksQuestion {
-    return  this.questions.find(question => question.code === this.questionResult.code);
+    return this.questions.find(question => question.code === this.questionResult.code);
   }
 
   shouldShowOutcomeFields(): boolean {
