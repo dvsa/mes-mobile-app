@@ -1,4 +1,4 @@
-import {CatBEUniqueTypes} from '@dvsa/mes-test-schema/categories/BE';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import * as vehicleChecksCatBeActionTypes from './vehicle-checks.cat-be.action';
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
@@ -20,8 +20,10 @@ export function vehicleChecksCatBEReducer(
   switch (action.type) {
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
-        ...initialState,
-        showMeQuestions: setQuestionResult(initialState.showMeQuestions, action.index, action.showMeQuestion),
+        ...state,
+        showMeQuestions: state.showMeQuestions.map(
+          (item, index) => index === action.index ? action.showMeQuestion : item,
+        ),
       };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
