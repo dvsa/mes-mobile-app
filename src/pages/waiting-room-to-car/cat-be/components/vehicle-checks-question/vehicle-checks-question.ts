@@ -1,7 +1,7 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
-import {VehicleChecksQuestion} from '../../../../../providers/question/vehicle-checks-question.model';
-import {QuestionOutcome, QuestionResult} from '@dvsa/mes-test-schema/categories/common';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
+import { QuestionOutcome, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -38,13 +38,13 @@ export class VehicleChecksQuestionComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (!this.questionFormControl) {
-      this.questionFormControl = new FormControl({disabled: true});
+      this.questionFormControl = new FormControl({ disabled: true });
       this.formGroup.addControl(`${this.questionFieldName}_${this.index}`, this.questionFormControl);
     }
 
     if (!this.questionOutcomeFormControl) {
       this.questionOutcomeFormControl = new FormControl();
-        this.formGroup.addControl(`${this.questionOutcomeFieldName}_${this.index}`, this.questionOutcomeFormControl);
+      this.formGroup.addControl(`${this.questionOutcomeFieldName}_${this.index}`, this.questionOutcomeFormControl);
     }
 
     if (this.questionResult) {
