@@ -97,7 +97,6 @@
     "enjoi-browser": "^1.2.0",
     "event-stream": "3.3.4",
     "hammerjs": "^2.0.8",
-    "immer": "^5.0.0",
     "ionic-angular": "3.9.6",
     "ionic-native": "^2.9.0",
     "ionicons": "3.0.0",
