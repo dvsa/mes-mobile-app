@@ -29,6 +29,7 @@ import {
   ManoeuvreTypes,
 } from '../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '../../../shared/models/test-category';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 export class TestActions extends Actions {
   constructor() {
@@ -61,6 +62,7 @@ describe('Test Report Effects', () => {
         provideMockActions(() => actions$),
         TestReportValidatorProvider,
         TestResultProvider,
+        FaultCountProvider,
         Store,
       ],
     });
