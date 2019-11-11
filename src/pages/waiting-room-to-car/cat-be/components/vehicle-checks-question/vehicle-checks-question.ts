@@ -65,7 +65,6 @@ export class VehicleChecksQuestionComponent implements OnChanges {
       code: vehicleChecksQuestion.code,
       description: vehicleChecksQuestion.shortName,
     };
-    console.log(result);
     this.vehicleChecksQuestionChange.emit(result);
   }
 

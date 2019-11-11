@@ -1,7 +1,5 @@
 import {CatBEUniqueTypes} from '@dvsa/mes-test-schema/categories/BE';
 import * as vehicleChecksCatBeActionTypes from './vehicle-checks.cat-be.action';
-import {replaceAt} from '../../../../shared/helpers/replace-at';
-
 
 export const initialState: CatBEUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{}, {}],
@@ -15,7 +13,7 @@ export function vehicleChecksCatBEReducer(
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_SELECTED:
       return {
         ...state,
-        showMeQuestions: replaceAt(state.showMeQuestions, action.index, action.showMeQuestion),
+        showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? action.showMeQuestion : item)
         };
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
