@@ -32,7 +32,7 @@ export class DrivingFaultSummaryComponent implements OnInit {
         select(getTests),
         select(getCurrentTest),
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSummaryCount),
+        select(this.faultCountProvider.getDrivingFaultSumCount),
       ),
     };
   }

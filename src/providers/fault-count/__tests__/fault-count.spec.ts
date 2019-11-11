@@ -64,15 +64,15 @@ describe('FaultCountProvider', () => {
     },
   };
 
-  describe('getDrivingFaultSummaryCount', () => {
+  describe('getDrivingFaultSumCount', () => {
     it('should return the driving fault count correctly', () => {
-      expect(faultCountProvider.getDrivingFaultSummaryCount(state)).toBe(3);
+      expect(faultCountProvider.getDrivingFaultSumCount(state)).toBe(3);
     });
   });
 
-  describe('getSeriousFaultSummaryCount', () => {
+  describe('getSeriousFaultSumCount', () => {
     it('should return the serious faults count', () => {
-      expect(faultCountProvider.getSeriousFaultSummaryCount(state)).toBe(1);
+      expect(faultCountProvider.getSeriousFaultSumCount(state)).toBe(1);
     });
     it('should return the correct count of serious faults', () => {
       const failedState: CatBUniqueTypes.TestData = {
@@ -100,13 +100,13 @@ describe('FaultCountProvider', () => {
           seriousFault: true,
         },
       };
-      expect(faultCountProvider.getSeriousFaultSummaryCount(failedState)).toBe(5);
+      expect(faultCountProvider.getSeriousFaultSumCount(failedState)).toBe(5);
     });
   });
 
-  describe('getDangerousFaultSummaryCount', () => {
+  describe('getDangerousFaultSumCount', () => {
     it('should return the dangerous faults count', () => {
-      expect(faultCountProvider.getDangerousFaultSummaryCount(state)).toBe(1);
+      expect(faultCountProvider.getDangerousFaultSumCount(state)).toBe(1);
     });
     it('should return the correct number of dangerous faults', () => {
       const failedState: CatBUniqueTypes.TestData = {
@@ -130,7 +130,7 @@ describe('FaultCountProvider', () => {
           },
         },
       };
-      expect(faultCountProvider.getDangerousFaultSummaryCount(failedState)).toBe(4);
+      expect(faultCountProvider.getDangerousFaultSumCount(failedState)).toBe(4);
     });
   });
 

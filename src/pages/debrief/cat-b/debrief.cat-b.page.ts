@@ -155,7 +155,7 @@ export class DebriefCatBPage extends PracticeableBasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSummaryCount),
+        select(this.faultCountProvider.getDrivingFaultSumCount),
       ),
       etaFaults$: currentTest$.pipe(
         select(getTestData),

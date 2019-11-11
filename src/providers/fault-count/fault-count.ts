@@ -7,7 +7,7 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 @Injectable()
 export class FaultCountProvider {
 
-  getDrivingFaultSummaryCount = (data: CatBUniqueTypes.TestData): number => {
+  getDrivingFaultSumCount = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -27,7 +27,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  getSeriousFaultSummaryCount = (data: CatBUniqueTypes.TestData): number => {
+  getSeriousFaultSumCount = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -48,7 +48,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  getDangerousFaultSummaryCount = (data: CatBUniqueTypes.TestData): number => {
+  getDangerousFaultSumCount = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them

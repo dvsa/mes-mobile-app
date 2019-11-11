@@ -259,7 +259,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       dangerousFaults: this.getDangerousFaults(),
       seriousFaults: this.getSeriousFaults(),
       drivingFaults: this.getDrivingFaults(),
-      drivingFaultCount: this.faultCountProvider.getDrivingFaultSummaryCount(this.testResult.testData),
+      drivingFaultCount: this.faultCountProvider.getDrivingFaultSumCount(this.testResult.testData),
     };
   }
 

@@ -15,15 +15,15 @@ export class TestResultProvider {
 
   calculateCatBTestResult = (testData: CatBUniqueTypes.TestData): Observable<ActivityCode> => {
 
-    if (this.faultCountProvider.getDangerousFaultSummaryCount(testData) > 0) {
+    if (this.faultCountProvider.getDangerousFaultSumCount(testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getSeriousFaultSummaryCount(testData) > 0) {
+    if (this.faultCountProvider.getSeriousFaultSumCount(testData) > 0) {
       return of(ActivityCodes.FAIL);
     }
 
-    if (this.faultCountProvider.getDrivingFaultSummaryCount(testData) > 15) {
+    if (this.faultCountProvider.getDrivingFaultSumCount(testData) > 15) {
       return of(ActivityCodes.FAIL);
     }
 
