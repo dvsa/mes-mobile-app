@@ -406,3 +406,20 @@ const getPageType = (pageName : string) => {
 export const getParentContext = (currentContext: string) => {
   return `${currentContext.substring(0, currentContext.indexOf('.'))}.1`;
 };
+
+export const nativeTextEntry = (fieldLabel: string, fieldValue: string) => {
+  // Swtiches to native mode and enters the text
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    // Switch to NATIVE context
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      const nativeField = element(by.xpath(`//XCUIElementTypeOther[XCUIElementTypeOther[
+          @name="${fieldLabel}"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField`));
+      nativeField.sendKeys(fieldValue);
+
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
+        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+      });
+    });
+  });
+};

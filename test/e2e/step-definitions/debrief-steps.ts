@@ -1,7 +1,6 @@
 import { Then, When } from 'cucumber';
-import { getElement, clickElement, getParentContext } from './generic-steps';
-import { browser, by, element } from 'protractor';
-import { TEST_CONFIG } from '../test.config';
+import { getElement, clickElement, nativeTextEntry } from './generic-steps';
+import { by } from 'protractor';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -14,21 +13,7 @@ When('I end the debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  // Because field has some custom validation we have to go native to trigger the key events
-  browser.driver.getCurrentContext().then((webviewContext) => {
-    // Switch to NATIVE context
-    browser.driver.selectContext('NATIVE_APP').then(() => {
-      // Get the registration number field
-      const registrationField = element(by.xpath(`//XCUIElementTypeOther[XCUIElementTypeOther[
-        @name="Pass certificate number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField`));
-      registrationField.sendKeys('A123456X');
-
-      // Switch back to WEBVIEW context
-      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
-        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
-      });
-    });
-  });
+  nativeTextEntry('Pass certificate number', 'A123456X');
 
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);
