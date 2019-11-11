@@ -69,7 +69,7 @@ Feature: Debrief including Health Declaration
       Then I should see the "Test debrief - Ali Campbell" page
       And the health declaration candidate name should be "Mr Ali Campbell"
       And the health declaration candidate driver number should be "CAMPB 803120 A89HC"
-      And the pass certificate number should be "A123456&"
+      And the pass certificate number should be "A123456X"
       And validation item "pass-certificate-receipt-validation-text" should not be visible
       And validation item "waiting-room-signature-validation-text" should not be visible
       When I try to confirm the health declaration

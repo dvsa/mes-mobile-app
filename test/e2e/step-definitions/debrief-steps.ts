@@ -1,5 +1,5 @@
 import { Then, When } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
+import { getElement, clickElement, nativeTextEntry } from './generic-steps';
 import { by } from 'protractor';
 
 const chai = require('chai');
@@ -13,8 +13,8 @@ When('I end the debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  const passCertificateNumberField = getElement(by.id('pass-certificate-number'));
-  passCertificateNumberField.sendKeys('A123456&');
+  nativeTextEntry('Pass certificate number', 'A123456X');
+
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);
   const d255YesRadio = getElement(by.id('d255-yes'));
@@ -50,6 +50,6 @@ Then('I should see the application reference {string}', (applicationRef) => {
 
 const continuePassFinalisation = () => {
   const continueButton = getElement(
-    by.xpath('//page-pass-finalisation-cat-b-page//button[span[h3[text() = "Continue"]]]'));
+    by.xpath('//pass-finalisation-cat-b-page//button[span[h3[text() = "Continue"]]]'));
   clickElement(continueButton);
 };
