@@ -9,15 +9,12 @@ import {
   getEcoFaultText,
   getManoeuvres,
   hasManoeuvreBeenCompleted,
-  getDrivingFaultSummaryCount,
   isTellMeQuestionSelected,
   isTellMeQuestionCorrect,
   isTellMeQuestionDrivingFault,
   hasVehicleChecksBeenCompleted,
   getCatBLegalRequirements,
   getShowMeQuestionOptions,
-  getSeriousFaultSummaryCount,
-  getDangerousFaultSummaryCount,
   hasEyesightTestBeenCompleted,
   hasEyesightTestGotSeriousFault,
 } from '../test-data.selector';
@@ -140,76 +137,6 @@ describe('TestDataSelectors', () => {
     });
     it('should return undefined when there hasnt been any driving faults', () => {
       expect(getDrivingFaultCount(state, Competencies.controlsParkingBrake)).toBeUndefined();
-    });
-  });
-
-  describe('getDrivingFaultSummaryCount', () => {
-    it('should return the driving fault count correctly', () => {
-      expect(getDrivingFaultSummaryCount(state)).toBe(3);
-    });
-  });
-
-  describe('getSeriousFaultSummaryCount', () => {
-    it('should return the serious faults count', () => {
-      expect(getSeriousFaultSummaryCount(state)).toBe(1);
-    });
-    it('should return the correct count of serious faults', () => {
-      const failedState: CatBUniqueTypes.TestData = {
-        ...state,
-        manoeuvres: {
-          forwardPark: {
-            selected: true,
-            controlFault: CompetencyOutcome.S,
-          },
-        },
-        controlledStop: {
-          selected: true,
-          fault: CompetencyOutcome.S,
-        },
-        vehicleChecks: {
-          tellMeQuestion: {
-            outcome: CompetencyOutcome.DF,
-          },
-          showMeQuestion: {
-            outcome: CompetencyOutcome.S,
-          },
-        },
-        eyesightTest: {
-          complete: true,
-          seriousFault: true,
-        },
-      };
-      expect(getSeriousFaultSummaryCount(failedState)).toBe(5);
-    });
-  });
-
-  describe('getDangerousFaultSummaryCount', () => {
-    it('should return the dangerous faults count', () => {
-      expect(getDangerousFaultSummaryCount(state)).toBe(1);
-    });
-    it('should return the correct number of dangerous faults', () => {
-      const failedState: CatBUniqueTypes.TestData = {
-        ...state,
-        manoeuvres: {
-          forwardPark: {
-            selected: true,
-            controlFault: CompetencyOutcome.D,
-          },
-        },
-        controlledStop: {
-          selected: true,
-          fault: CompetencyOutcome.D,
-        },
-        vehicleChecks: {
-          tellMeQuestion: {
-            outcome: CompetencyOutcome.DF,
-          },
-          showMeQuestion: {
-            outcome: CompetencyOutcome.D,
-          },
-        },
-      };
-      expect(getDangerousFaultSummaryCount(failedState)).toBe(4);
     });
   });
 

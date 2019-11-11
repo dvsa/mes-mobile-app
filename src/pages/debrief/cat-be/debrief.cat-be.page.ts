@@ -10,7 +10,6 @@ import { getTestData } from '../../../modules/tests/test-data/test-data.reducer'
 import {
   getETA,
   getEco,
-  getDrivingFaultSummaryCount,
 } from '../../../modules/tests/test-data/test-data.selector';
 import { map, tap } from 'rxjs/operators';
 import { Component } from '@angular/core';
@@ -46,6 +45,7 @@ import { CAT_B } from '../../page-names.constants';
 import { Language } from '../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
+import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -88,6 +88,7 @@ export class DebriefCatBEPage extends BasePageComponent {
     public screenOrientation: ScreenOrientation,
     public insomnia: Insomnia,
     private translate: TranslateService,
+    private faultCountProvider: FaultCountProvider,
   ) {
     super(platform, navController, authenticationProvider);
   }
@@ -153,7 +154,7 @@ export class DebriefCatBEPage extends BasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(getDrivingFaultSummaryCount),
+        select(this.faultCountProvider.getDrivingFaultSummaryCount),
       ),
       etaFaults$: currentTest$.pipe(
         select(getTestData),
