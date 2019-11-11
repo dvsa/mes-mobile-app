@@ -1,8 +1,6 @@
 import {CatBEUniqueTypes} from '@dvsa/mes-test-schema/categories/BE';
 import * as vehicleChecksCatBeActionTypes from './vehicle-checks.cat-be.action';
-import { QuestionResult } from '@dvsa/mes-test-schema/categories/Common';
 import {replaceAt} from '../../../../shared/helpers/replace-at';
-import {produce} from 'immer';
 
 
 export const initialState: CatBEUniqueTypes.VehicleChecks = {
@@ -22,9 +20,10 @@ export function vehicleChecksCatBEReducer(
     case vehicleChecksCatBeActionTypes.SHOW_ME_QUESTION_OUTCOME_CHANGED:
       return {
         ...state,
-        showMeQuestions: produce(state.showMeQuestions, (draftState: QuestionResult[]) => {
-          draftState[action.index].outcome = action.showMeQuestionOutcome;
-        })
+        showMeQuestions: state.showMeQuestions.map((item, index) => index === action.index ? {
+          ...item,
+          outcome: action.showMeQuestionOutcome
+        } : item)
       };
     default:
       return state;
