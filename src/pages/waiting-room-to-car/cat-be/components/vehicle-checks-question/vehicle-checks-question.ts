@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {VehicleChecksQuestion} from '../../../../../providers/question/vehicle-checks-question.model';
-import {QuestionResult} from '@dvsa/mes-test-schema/categories/common';
+import {QuestionOutcome, QuestionResult} from '@dvsa/mes-test-schema/categories/common';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -28,7 +28,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
 
   @Output()
-  vehicleChecksQuestionOutcomeChange = new EventEmitter<QuestionResult>();
+  vehicleChecksQuestionOutcomeChange = new EventEmitter<QuestionOutcome>();
 
   private questionFormControl: FormControl;
   private questionOutcomeFormControl: FormControl;
@@ -44,7 +44,7 @@ export class VehicleChecksQuestionComponent implements OnChanges {
 
     if (!this.questionOutcomeFormControl) {
       this.questionOutcomeFormControl = new FormControl();
-        this.formGroup.addControl(`${this.questionOutcomeFieldName}_${this.index}`, this.questionFormControl);
+        this.formGroup.addControl(`${this.questionOutcomeFieldName}_${this.index}`, this.questionOutcomeFormControl);
     }
 
     if (this.questionResult) {
@@ -70,22 +70,12 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   }
 
   vehicleChecksPassSelected() {
-    const result: QuestionResult = {
-      outcome: 'P',
-      code: this.questionResult.code,
-      description: this.questionResult.description,
-    };
-
+    const result: QuestionOutcome = 'P';
     this.vehicleChecksQuestionOutcomeChange.emit(result);
   }
 
   vehicleChecksDrivingFaultSelected() {
-    const result: QuestionResult = {
-      outcome: 'DF',
-      code: this.questionResult.code,
-      description: this.questionResult.description,
-    };
-
+    const result: QuestionOutcome = 'DF';
     this.vehicleChecksQuestionOutcomeChange.emit(result);
   }
 

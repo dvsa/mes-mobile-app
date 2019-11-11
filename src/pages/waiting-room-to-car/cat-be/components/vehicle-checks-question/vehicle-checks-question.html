@@ -1,32 +1,40 @@
-<ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks-question-row" [formGroup]="formGroup" nowrap>
-  <ion-col col-40>
-    <ion-row>
-      <ion-select id="vehicle-checks-question-selector" placeholder="Select a question" okText="Submit"
-                  cancelText="Cancel" formControlName="{{questionFieldName}}_{{index}}"
-                  (ionChange)="vehicleChecksQuestionChanged($event)"
-                  [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}">
-        <ion-option *ngFor="let question of questions" [value]="question" [disabled]="isOptionDisabled(question)">
-          {{question.code}} - {{question.shortName}}
-        </ion-option>
-      </ion-select>
-    </ion-row>
-  </ion-col>
-  <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
-    <ion-row>
-      <input type="radio" id="vehicleChecksCorrect_{{index}}" class="gds-radio-button" value="P"
-             formControlName="{{questionOutcomeFieldName}}_{{index}}"
-             (change)="vehicleChecksPassSelected()"
-      >
-      <label for="vehicleChecksCorrect_{{index}}" class="radio-label">Correct</label>
-    </ion-row>
-  </ion-col>
-  <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
-    <ion-row>
-      <input type="radio" id="vehicleChecksFault_{{index}}" class="gds-radio-button" value="DF"
-             formControlName="{{questionOutcomeFieldName}}_{{index}}"
-             (change)="vehicleChecksDrivingFaultSelected()"
-      >
-      <label for="vehicleChecksFault_{{index}}" class="radio-label">1 driving fault</label>
-    </ion-row>
-  </ion-col>
-</ion-row>
+<form>
+  <ion-row class="mes-validated-row mes-row-separator" id="vehicle-checks-question-row" [formGroup]="formGroup" nowrap>
+    <ion-col col-40>
+      <ion-row>
+        <ion-select id="vehicle-checks-question-selector" placeholder="Select a question" okText="Submit"
+                    cancelText="Cancel" formControlName="{{questionFieldName}}_{{index}}"
+                    (ionChange)="vehicleChecksQuestionChanged($event)"
+                    [selectOptions]="{cssClass:'mes-select vehicle-checks-question-select', enableBackdropDismiss:false}">
+          <ion-option *ngFor="let question of questions" [value]="question" [disabled]="isOptionDisabled(question)">
+            {{question.code}} - {{question.shortName}}
+          </ion-option>
+        </ion-select>
+      </ion-row>
+    </ion-col>
+    <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
+      <ion-row>
+        <input type="radio"
+               [attr.name]="questionOutcomeFieldName+'_'+index"
+               [attr.id]="'vehicleChecksCorrect_'+index"
+               class="gds-radio-button"
+               value="P"
+               [formControlName]="questionOutcomeFieldName+'_'+index"
+               (change)="vehicleChecksPassSelected()">
+        <label [for]="'vehicleChecksCorrect_'+index" class="radio-label">Correct</label>
+      </ion-row>
+    </ion-col>
+    <ion-col col-28 *ngIf="shouldShowOutcomeFields()">
+      <ion-row>
+        <input type="radio"
+               [attr.name]="questionOutcomeFieldName+'_'+index"
+               [attr.id]="'vehicleChecksFault_'+index"
+               class="gds-radio-button"
+               value="DF"
+               [formControlName]="questionOutcomeFieldName+'_'+index"
+               (change)="vehicleChecksDrivingFaultSelected()">
+        <label [for]="'vehicleChecksFault_'+index" class="radio-label">1 driving fault</label>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</form>
