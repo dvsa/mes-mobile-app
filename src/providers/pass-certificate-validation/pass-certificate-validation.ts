@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { passCertificateLength } from './pass-certificate-validation.constants';
 
 @Injectable()
-export class PassCertificateValidatorProvider {
+export class PassCertificateValidationProvider {
 
   isPassCertificateValid(certificate: string | null): boolean {
-    if (!certificate || certificate.length !== 8) {
+    if (!certificate || certificate.length !== passCertificateLength) {
       return false;
     }
     if (!this.isLetter(certificate[0])) {
@@ -17,8 +18,7 @@ export class PassCertificateValidatorProvider {
       return false;
     }
 
-        // compare entered checkdigit with generated one
-    if (checkDigit !== certificate.toUpperCase()[7]) {
+    if (checkDigit.toUpperCase() !== certificate.toUpperCase()[7]) {
       return false;
     }
 
@@ -34,6 +34,8 @@ export class PassCertificateValidatorProvider {
     const checkDigits: string[] = Array.from(
           '%ZYXWVUT/RQP+NMLKJ-HGFEDC&A9876543210');
 
+    // attempt to convert positions 1 - 6 to numbers
+    // and return 'invalid' if any are not a number
     const digit1 = parseInt(certificate[1], 10);
     const digit2 = parseInt(certificate[2], 10);
     const digit3 = parseInt(certificate[3], 10);
@@ -46,6 +48,9 @@ export class PassCertificateValidatorProvider {
       return 'invalid';
     }
 
+    // take the 6 digits, apply the multiplier for each digit
+    // (defined in digitMultiplier above) and add them together
+    // then take the remainder of this value divided by 37.
     const position: number  = ((digit1 * digitMultipliers[0]) +
           (digit2 * digitMultipliers[1]) +
           (digit3 * digitMultipliers[2]) +
@@ -53,6 +58,8 @@ export class PassCertificateValidatorProvider {
           (digit5 * digitMultipliers[4]) +
           (digit6 * digitMultipliers[5])) % 37;
 
+    // return the check digit from the checkDigits array at the position
+    // calculated
     const checkDigit = checkDigits[position];
     return checkDigit;
   }

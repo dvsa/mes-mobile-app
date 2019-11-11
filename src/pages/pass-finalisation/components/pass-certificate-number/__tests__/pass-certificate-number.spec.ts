@@ -1,7 +1,7 @@
 import { PassCertificateNumberComponent } from '../pass-certificate-number';
 import {
-  PassCertificateValidatorProvider,
-} from '../../../../../providers/pass-certificate-validator/pass-certificate-validator';
+  PassCertificateValidationProvider,
+} from '../../../../../providers/pass-certificate-validation/pass-certificate-validation';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
@@ -19,7 +19,7 @@ describe('passCertificateNumberComponent', () => {
         IonicModule,
       ],
       providers: [
-        PassCertificateValidatorProvider,
+        PassCertificateValidationProvider,
       ],
     })
     .compileComponents()

@@ -1,8 +1,11 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
-  PassCertificateValidatorProvider,
-} from '../../../../providers/pass-certificate-validator/pass-certificate-validator';
+  PassCertificateValidationProvider,
+} from '../../../../providers/pass-certificate-validation/pass-certificate-validation';
+import {
+  passCertificateLength,
+} from '../../../../providers/pass-certificate-validation/pass-certificate-validation.constants';
 
 @Component({
   selector: 'pass-certificate-number',
@@ -10,10 +13,7 @@ import {
 })
 export class PassCertificateNumberComponent implements OnChanges {
 
-  passCertficateValidatorProvider: PassCertificateValidatorProvider;
-
-  constructor(passCertficateValidatorProvider: PassCertificateValidatorProvider) {
-    this.passCertficateValidatorProvider = passCertficateValidatorProvider;
+  constructor(private passCertficateValidationProvider: PassCertificateValidationProvider) {
   }
 
   @Input()
@@ -31,17 +31,16 @@ export class PassCertificateNumberComponent implements OnChanges {
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null, [
-        Validators.maxLength(8),
-        Validators.minLength(8),
+        Validators.maxLength(passCertificateLength),
+        Validators.minLength(passCertificateLength),
         Validators.required,
         this.validatePassCertificate.bind(this)]);
       this.form.addControl(PassCertificateNumberComponent.fieldName, this.formControl);
     }
     this.formControl.patchValue(this.passCertificateNumberInput);
   }
-    // Custom validator for FormControls
   validatePassCertificate(c: FormControl) {
-    return this.passCertficateValidatorProvider.isPassCertificateValid(c.value) ? null :
+    return this.passCertficateValidationProvider.isPassCertificateValid(c.value) ? null :
       {
         validatePassCertificate: {
           valid: false,

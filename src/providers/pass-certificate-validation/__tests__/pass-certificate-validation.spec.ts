@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { PassCertificateValidatorProvider } from '../pass-certificate-validator';
+import { PassCertificateValidationProvider } from '../pass-certificate-validation';
 
-describe('PassCertificateValidatorProvider', () => {
-  let certificateValidatorProvider: PassCertificateValidatorProvider;
+describe('PassCertificateValidationProvider', () => {
+  let certificateValidatorProvider: PassCertificateValidationProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        PassCertificateValidatorProvider,
+        PassCertificateValidationProvider,
       ],
     });
 
-    certificateValidatorProvider = TestBed.get(PassCertificateValidatorProvider);
+    certificateValidatorProvider = TestBed.get(PassCertificateValidationProvider);
   });
 
   describe('calculateMod37CheckDigit', () => {

@@ -44,7 +44,9 @@ import { environment } from '../environment/environment';
 import { AnalyticsProvider } from '../providers/analytics/analytics';
 import { JournalModule } from '../modules/journal/journal.module';
 import { SchemaValidatorProvider } from '../providers/schema-validator/schema-validator';
-import { PassCertificateValidatorProvider } from '../providers/pass-certificate-validator/pass-certificate-validator';
+import {
+  PassCertificateValidationProvider,
+} from '../providers/pass-certificate-validation/pass-certificate-validation';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -110,7 +112,7 @@ const enableDevTools = environment && environment.enableDevTools;
     LogHelper,
     AnalyticsProvider,
     SchemaValidatorProvider,
-    PassCertificateValidatorProvider,
+    PassCertificateValidationProvider,
   ],
 })
 export class AppModule { }
