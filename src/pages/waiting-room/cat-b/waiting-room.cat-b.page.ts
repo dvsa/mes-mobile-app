@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Navbar, ModalController } from 'ionic-angular';
 import { PracticeableBasePageComponent } from '../../../shared/classes/practiceable-base-page';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { Store, select } from '@ngrx/store';
@@ -36,7 +36,7 @@ import {
 import {
   getConductedLanguage,
 } from '../../../modules/tests/communication-preferences/communication-preferences.selector';
-import { CAT_B } from '../../page-names.constants';
+import { CAT_B, ERROR_PAGE, LOGIN_PAGE } from '../../page-names.constants';
 import {
   CandidateChoseToProceedWithTestInWelsh,
   CandidateChoseToProceedWithTestInEnglish,
@@ -46,6 +46,10 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DeviceProvider } from '../../../providers/device/device';
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
+import { JournalData } from '@dvsa/mes-test-schema/categories/Common';
+import { isEmpty } from 'lodash';
+import { ErrorTypes } from '../../../shared/models/error-message';
+import { App } from '../../../app/app.component';
 
 interface WaitingRoomPageState {
   insuranceDeclarationAccepted$: Observable<boolean>;
@@ -73,7 +77,7 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
 
   subscription: Subscription;
 
-  merged$: Observable<boolean | string>;
+  merged$: Observable<boolean | string | JournalData>;
 
   constructor(
     store$: Store<StoreModel>,
@@ -86,6 +90,8 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
     private screenOrientation: ScreenOrientation,
     private insomnia: Insomnia,
     private translate: TranslateService,
+    private modalController: ModalController,
+    private app: App,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.formGroup = new FormGroup({});
@@ -167,6 +173,14 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
     };
     const { welshTest$, conductedLanguage$ } = this.pageState;
     this.merged$ = merge(
+      currentTest$.pipe(
+        select(getJournalData),
+        tap((journalData: JournalData) => {
+          if (this.isJournalDataInvalid(journalData)) {
+            this.showCandidateDataMissingError();
+          }
+        }),
+      ),
       welshTest$,
       conductedLanguage$.pipe(tap(value => configureI18N(value as Language, this.translate))),
     );
@@ -185,6 +199,12 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  isJournalDataInvalid = (journalData: JournalData): boolean => {
+    return isEmpty(journalData.examiner.staffNumber)
+      || isEmpty(journalData.candidate.candidateName)
+      && isEmpty(journalData.candidate.driverNumber);
   }
 
   getSignatureDrawCompleteAction() : string {
@@ -222,5 +242,18 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
         }
       });
     }
+  }
+
+  showCandidateDataMissingError() {
+    // Modals are at the same level as the ion-nav so are not getting the zoom level class,
+    // this needs to be passed in the create options.
+    const zoomClass = `modal-fullscreen ${this.app.getTextZoomClass()}`;
+
+    const errorModal = this.modalController.create(
+      ERROR_PAGE,
+      { type: ErrorTypes.JOURNAL_DATA_MISSING },
+      { cssClass: zoomClass });
+    errorModal.present();
+    errorModal.onDidDismiss(() => this.navController.setRoot(LOGIN_PAGE));
   }
 }

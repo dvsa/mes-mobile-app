@@ -26,7 +26,7 @@ import { TestsModel } from './tests.model';
 import { TestSlot } from '@dvsa/mes-journal-schema';
 import { getJournalState } from '../journal/journal.reducer';
 import { getSlotsOnSelectedDate } from '../journal/journal.selector';
-import { PopulateExaminer } from './journal-data/examiner/examiner.actions';
+// import { PopulateExaminer } from './journal-data/examiner/examiner.actions';
 import { PopulateTestSlotAttributes } from './journal-data/test-slot-attributes/test-slot-attributes.actions';
 import { extractTestSlotAttributes } from './journal-data/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateTestCentre } from './journal-data/test-centre/test-centre.actions';
@@ -158,9 +158,11 @@ export class TestsEffects {
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
+      examiner.individualId;
+
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(startTestAction.category),
-        new PopulateExaminer(examiner),
+        // new PopulateExaminer(examiner),
         new PopulateApplicationReference(slot.booking.application),
         createPopulateCandidateDetailsAction(startTestAction.category, slot.booking),
         new PopulateTestSlotAttributes(testSlotAttributes),
