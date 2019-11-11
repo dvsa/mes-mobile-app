@@ -38,7 +38,6 @@ export class VehicleChecksCatBEModal {
   formGroup: FormGroup;
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
-  questionsToDisable: VehicleChecksQuestion[];
 
   constructor(
     public store$: Store<StoreModel>,
