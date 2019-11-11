@@ -21,6 +21,9 @@ import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
 } from '../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS,
+} from '../../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
@@ -38,6 +41,7 @@ export class VehicleChecksCatBEModal {
   formGroup: FormGroup;
   showMeQuestions: VehicleChecksQuestion[];
   tellMeQuestions: VehicleChecksQuestion[];
+  readonly showMeQuestionsNumberArray: number[] = Array(NUMBER_OF_SHOW_ME_QUESTIONS);
 
   constructor(
     public store$: Store<StoreModel>,

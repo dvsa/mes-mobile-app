@@ -17,29 +17,13 @@
       <ion-card-title>Show me questions</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <vehicle-checks-question [formGroup]="formGroup"
-        [questionResult]="(pageState.showMeQuestions$ | async)[0]"
-        [questions]="showMeQuestions"
-        [questionsToDisable]="pageState.showMeQuestions$ | async"
-        [index]="0"
-        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, 0)"
-        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, 0)">
-      </vehicle-checks-question>
-      <vehicle-checks-question [formGroup]="formGroup"
-        [questionResult]="(pageState.showMeQuestions$ | async)[1]"
-        [questions]="showMeQuestions"
-        [questionsToDisable]="pageState.showMeQuestions$ | async"
-        [index]="1"
-        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, 1)"
-        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, 1)">
-      </vehicle-checks-question>
-      <vehicle-checks-question [formGroup]="formGroup"
-        [questionResult]="(pageState.showMeQuestions$ | async)[2]"
-        [questions]="showMeQuestions"
-        [questionsToDisable]="pageState.showMeQuestions$ | async"
-        [index]="2"
-        (vehicleChecksQuestionChange)="showMeQuestionChanged($event, 2)"
-        (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, 2)">
+      <vehicle-checks-question *ngFor="let question of showMeQuestionsNumberArray; let i = index" [formGroup]="formGroup"
+                               [questionResult]="(pageState.showMeQuestions$ | async)[i]"
+                               [questions]="showMeQuestions"
+                               [questionsToDisable]="pageState.showMeQuestions$ | async"
+                               [index]="i"
+                               (vehicleChecksQuestionChange)="showMeQuestionChanged($event, i)"
+                               (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>

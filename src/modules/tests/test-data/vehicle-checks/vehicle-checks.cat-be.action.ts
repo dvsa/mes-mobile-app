@@ -1,8 +1,8 @@
 import { Action } from '@ngrx/store';
 import { QuestionResult, QuestionOutcome } from '@dvsa/mes-test-schema/categories/common';
 
-export const SHOW_ME_QUESTION_SELECTED = '[VehicleChecksPage] Show Me Question Selected';
-export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPage] Show Me Question Outcome Changed';
+export const SHOW_ME_QUESTION_SELECTED = '[VehicleChecksPageCatBE] Show Me Question Selected';
+export const SHOW_ME_QUESTION_OUTCOME_CHANGED = '[VehicleChecksPageCatBE] Show Me Question Outcome Changed';
 
 export class ShowMeQuestionSelected implements Action {
   readonly type = SHOW_ME_QUESTION_SELECTED;

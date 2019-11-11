@@ -1,5 +1,3 @@
-// import * as VehicelChecksCatBeActions from '../vehicle-checks.cat-be.action';
-
 import {
   initialState,
   vehicleChecksCatBEReducer,

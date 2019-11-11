@@ -1,9 +1,13 @@
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import * as vehicleChecksCatBeActionTypes from './vehicle-checks.cat-be.action';
+import {
+  NUMBER_OF_SHOW_ME_QUESTIONS as numberOfShowMeQuestions,
+}
+  from '../../../../shared/constants/tell-me-questions/tell-me-questions.cat-be.constants';
 
 export const initialState: CatBEUniqueTypes.VehicleChecks = {
   tellMeQuestions: [{}, {}],
-  showMeQuestions: [{}, {}, {}],
+  showMeQuestions: Array(numberOfShowMeQuestions).fill({}),
 };
 
 export function vehicleChecksCatBEReducer(
