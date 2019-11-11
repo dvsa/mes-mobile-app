@@ -1,4 +1,4 @@
-import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import {CatBEUniqueTypes} from '@dvsa/mes-test-schema/categories/BE';
 import * as vehicleChecksCatBeActionTypes from './vehicle-checks.cat-be.action';
 import {
   NUMBER_OF_TELL_ME_QUESTIONS as numberOfTellMeQuestions,
