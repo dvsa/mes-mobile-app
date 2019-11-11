@@ -22,6 +22,12 @@ error-message {
   .error-details {
     display: inline-block;
     font-size: 14px;
-    padding-top: 5px;
+    padding-top: 16px;
+  }
+
+  .additional-error-details {
+    display: inline-block;
+    font-size: 14px;
+    padding-top: 4px;
   }
 }
