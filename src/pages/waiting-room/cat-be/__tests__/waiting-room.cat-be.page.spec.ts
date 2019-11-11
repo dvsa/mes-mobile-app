@@ -228,7 +228,7 @@ describe('WaitingRoomCatBEPage', () => {
             firstName: 'fname',
             lastName: 'lname',
           },
-        },
+        } as CatBEUniqueTypes.Candidate,
         applicationReference: {
           applicationId: 11223344141414,
           bookingSequence: 112,
@@ -252,7 +252,7 @@ describe('WaitingRoomCatBEPage', () => {
           candidate: {
             candidateName: {},
             driverNumber: '',
-          },
+          } as CatBEUniqueTypes.Candidate,
         });
         expect(result).toBeTruthy;
       });
