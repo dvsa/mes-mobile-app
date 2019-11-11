@@ -1,1 +1,1 @@
-export const passCertificateLength: number = 8;
+export const PASS_CERTIFICATE_LENGTH: number = 8;

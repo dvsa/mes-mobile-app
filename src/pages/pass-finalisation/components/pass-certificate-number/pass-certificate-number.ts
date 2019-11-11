@@ -4,7 +4,7 @@ import {
   PassCertificateValidationProvider,
 } from '../../../../providers/pass-certificate-validation/pass-certificate-validation';
 import {
-  passCertificateLength,
+  PASS_CERTIFICATE_LENGTH,
 } from '../../../../providers/pass-certificate-validation/pass-certificate-validation.constants';
 
 @Component({
@@ -31,8 +31,8 @@ export class PassCertificateNumberComponent implements OnChanges {
   ngOnChanges(): void {
     if (!this.formControl) {
       this.formControl = new FormControl(null, [
-        Validators.maxLength(passCertificateLength),
-        Validators.minLength(passCertificateLength),
+        Validators.maxLength(PASS_CERTIFICATE_LENGTH),
+        Validators.minLength(PASS_CERTIFICATE_LENGTH),
         Validators.required,
         this.validatePassCertificate.bind(this)]);
       this.form.addControl(PassCertificateNumberComponent.fieldName, this.formControl);

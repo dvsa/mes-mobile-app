@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { passCertificateLength } from './pass-certificate-validation.constants';
+import { PASS_CERTIFICATE_LENGTH } from './pass-certificate-validation.constants';
 
 @Injectable()
 export class PassCertificateValidationProvider {
 
   isPassCertificateValid(certificate: string | null): boolean {
-    if (!certificate || certificate.length !== passCertificateLength) {
+    if (!certificate || certificate.length !== PASS_CERTIFICATE_LENGTH) {
       return false;
     }
     if (!this.isLetter(certificate[0])) {
