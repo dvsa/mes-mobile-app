@@ -202,9 +202,8 @@ export class WaitingRoomCatBPage extends PracticeableBasePageComponent implement
   }
 
   isJournalDataInvalid = (journalData: JournalData): boolean => {
-    return isEmpty(journalData.examiner.staffNumber)
-      || isEmpty(journalData.candidate.candidateName)
-      && isEmpty(journalData.candidate.driverNumber);
+    return isEmpty(journalData.examiner.staffNumber) ||
+      isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber);
   }
 
   getSignatureDrawCompleteAction() : string {

@@ -193,9 +193,8 @@ export class WaitingRoomCatBEPage extends BasePageComponent implements OnInit {
   }
 
   isJournalDataInvalid = (journalData: CatBEUniqueTypes.JournalData): boolean => {
-    return isEmpty(journalData.examiner.staffNumber)
-      || isEmpty(journalData.candidate.candidateName)
-      && isEmpty(journalData.candidate.driverNumber);
+    return isEmpty(journalData.examiner.staffNumber) ||
+      isEmpty(journalData.candidate.candidateName) && isEmpty(journalData.candidate.driverNumber);
   }
 
   getSignatureDrawCompleteAction() : string {

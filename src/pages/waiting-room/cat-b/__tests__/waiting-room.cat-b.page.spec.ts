@@ -254,7 +254,7 @@ describe('WaitingRoomCatBPage', () => {
         },
       };
 
-      it('should return ture if no examiner staffnumber', () => {
+      it('should return true if no examiner staffnumber', () => {
         const result = component.isJournalDataInvalid({
           ...journalData,
           examiner: {
@@ -264,7 +264,7 @@ describe('WaitingRoomCatBPage', () => {
         expect(result).toBeTruthy;
       });
 
-      it('should return ture if no candidate name & driver number', () => {
+      it('should return true if no candidate name & driver number', () => {
         const result = component.isJournalDataInvalid({
           ...journalData,
           candidate: {
