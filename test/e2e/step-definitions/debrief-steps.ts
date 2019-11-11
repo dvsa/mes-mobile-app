@@ -1,6 +1,7 @@
 import { Then, When } from 'cucumber';
-import { getElement, clickElement } from './generic-steps';
-import { by } from 'protractor';
+import { getElement, clickElement, getParentContext } from './generic-steps';
+import { browser, by, element } from 'protractor';
+import { TEST_CONFIG } from '../test.config';
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -13,8 +14,22 @@ When('I end the debrief', () => {
 });
 
 When('I complete the pass details', () => {
-  const passCertificateNumberField = getElement(by.id('pass-certificate-number'));
-  passCertificateNumberField.sendKeys('A123456&');
+  // Because field has some custom validation we have to go native to trigger the key events
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    // Switch to NATIVE context
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      // Get the registration number field
+      const registrationField = element(by.xpath(`//XCUIElementTypeOther[XCUIElementTypeOther[
+        @name="Pass certificate number"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField`));
+      registrationField.sendKeys('A123456X');
+
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
+        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+      });
+    });
+  });
+
   const licenceRecievedRadio = getElement(by.id('license-received'));
   clickElement(licenceRecievedRadio);
   const d255YesRadio = getElement(by.id('d255-yes'));
@@ -50,6 +65,6 @@ Then('I should see the application reference {string}', (applicationRef) => {
 
 const continuePassFinalisation = () => {
   const continueButton = getElement(
-    by.xpath('//page-pass-finalisation-cat-b-page//button[span[h3[text() = "Continue"]]]'));
+    by.xpath('//pass-finalisation-cat-b-page//button[span[h3[text() = "Continue"]]]'));
   clickElement(continueButton);
 };
