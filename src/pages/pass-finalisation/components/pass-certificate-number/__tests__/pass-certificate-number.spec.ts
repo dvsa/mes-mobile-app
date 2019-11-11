@@ -1,4 +1,7 @@
 import { PassCertificateNumberComponent } from '../pass-certificate-number';
+import {
+  PassCertificateValidationProvider,
+} from '../../../../../providers/pass-certificate-validation/pass-certificate-validation';
 import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { IonicModule } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
@@ -16,6 +19,7 @@ describe('passCertificateNumberComponent', () => {
         IonicModule,
       ],
       providers: [
+        PassCertificateValidationProvider,
       ],
     })
     .compileComponents()
@@ -28,9 +32,9 @@ describe('passCertificateNumberComponent', () => {
 
   describe('Class', () => {
     describe('passCertificateNumberChanged', () => {
-      it('should emit pass certificate number if 8 characters', () => {
+      it('should emit pass certificate number if 8 characters and valid', () => {
         spyOn(component.passCertificateNumberChange, 'emit');
-        const passCertificateNumber = '12345678';
+        const passCertificateNumber = 'C267548E';
         component.passCertificateNumberChanged(passCertificateNumber);
         expect(component.passCertificateNumberChange.emit).toHaveBeenCalledWith(passCertificateNumber);
       });
@@ -40,7 +44,7 @@ describe('passCertificateNumberComponent', () => {
       it('should return false when the field is valid and not dirty', () => {
         // SETUP
         component.ngOnChanges();
-        component.formControl.setValue('12345678');
+        component.formControl.setValue('C267548E');
         // ACT
         const result: boolean = component.isInvalid();
         // ASSET
@@ -62,7 +66,7 @@ describe('passCertificateNumberComponent', () => {
       it('should return false when the field is valid and is dirty', () => {
         // SETUP
         component.ngOnChanges();
-        component.formControl.setValue('12345678');
+        component.formControl.setValue('C267548E');
         component.formControl.markAsDirty();
         // ACT
         const result: boolean = component.isInvalid();
