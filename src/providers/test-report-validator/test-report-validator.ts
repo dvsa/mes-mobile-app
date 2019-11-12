@@ -27,8 +27,8 @@ export class TestReportValidatorProvider {
 
     return of(
       noEtaFaults ||
-      this.faultCountProvider.getDangerousFaultSumCount(testData) !== 0 ||
-      this.faultCountProvider.getSeriousFaultSumCount(testData) !== 0,
+      this.faultCountProvider.getDangerousFaultSumCountCatB(testData) !== 0 ||
+      this.faultCountProvider.getSeriousFaultSumCountCatB(testData) !== 0,
     );
   }
 }

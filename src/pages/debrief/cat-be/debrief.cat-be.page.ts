@@ -154,7 +154,7 @@ export class DebriefCatBEPage extends BasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSumCount),
+        select(this.faultCountProvider.getDrivingFaultSumCountCatB),
       ),
       etaFaults$: currentTest$.pipe(
         select(getTestData),

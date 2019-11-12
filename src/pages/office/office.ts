@@ -430,7 +430,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSumCount),
+        select(this.faultCountProvider.getDrivingFaultSumCountCatB),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),
