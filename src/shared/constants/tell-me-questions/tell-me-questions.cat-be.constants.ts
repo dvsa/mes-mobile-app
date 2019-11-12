@@ -33,3 +33,5 @@ export default [
     shortName: 'Head restraint'
   },
 ] as VehicleChecksQuestion[];
+
+export const NUMBER_OF_SHOW_ME_QUESTIONS = 3;
