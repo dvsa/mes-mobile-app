@@ -8,7 +8,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 @Injectable()
 export class FaultCountProvider {
 
-  public getDrivingFaultSumCountCatB(data: CatBUniqueTypes.TestData): number {
+  public getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -16,7 +16,6 @@ export class FaultCountProvider {
 
     const drivingFaultSumOfSimpleCompetencies =
       Object.values(drivingFaults).reduce((acc, numberOfFaults) => acc + numberOfFaults, 0);
-
     const controlledStopHasDrivingFault = (controlledStop && controlledStop.fault === CompetencyOutcome.DF) ? 1 : 0;
 
     const result =
@@ -28,7 +27,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getSeriousFaultSumCountCatB(data: CatBUniqueTypes.TestData): number {
+  public getSeriousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -49,7 +48,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getDangerousFaultSumCountCatB(data: CatBUniqueTypes.TestData): number {
+  public getDangerousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -68,7 +67,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  private sumVehicleCheckFaultsCatB(vehicleChecks: CatBUniqueTypes.VehicleChecks): number {
+  private sumVehicleCheckFaultsCatB = (vehicleChecks: CatBUniqueTypes.VehicleChecks): number => {
     const { showMeQuestion, tellMeQuestion } = vehicleChecks;
 
     if (showMeQuestion.outcome === CompetencyOutcome.S || showMeQuestion.outcome === CompetencyOutcome.D) {
@@ -82,12 +81,12 @@ export class FaultCountProvider {
     return 0;
   }
 
-  public sumVehicleCheckFaultsCatBE(vehicleChecks: CatBEUniqueTypes.VehicleChecks): number {
+  public sumVehicleCheckFaultsCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): number => {
     // TODO: Use the Vechicle checks scoring logic provider, to be done in MES-3737
     return 0;
   }
 
-  public getDrivingFaultSumCountCatBE(data: CatBUniqueTypes.TestData): number {
+  public getDrivingFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -104,7 +103,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getSeriousFaultSumCountCatBE(data: CatBUniqueTypes.TestData): number {
+  public getSeriousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -123,7 +122,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getDangerousFaultSumCountCatBE(data: CatBUniqueTypes.TestData): number {
+  public getDangerousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -140,7 +139,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public sumManoeuvreFaults(manoeuvres: CatBUniqueTypes.Manoeuvres, faultType: CompetencyOutcome): number {
+  public sumManoeuvreFaults(manoeuvres: Object, faultType: CompetencyOutcome): number {
     const manoeuvresCollection = Object.values(manoeuvres);
     return sumBy(manoeuvresCollection, (manoeuvre) => {
       if (manoeuvre.selected) {
