@@ -11,7 +11,7 @@ import {
   getETA,
   getEco,
 } from '../../../modules/tests/test-data/test-data.selector';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { merge } from 'rxjs/observable/merge';
@@ -46,6 +46,8 @@ import { Language } from '../../../modules/tests/communication-preferences/commu
 import { configureI18N } from '../../../shared/helpers/translation.helpers';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { FaultCountProvider } from '../../../providers/fault-count/fault-count';
+import { getTestCategory } from '../../../modules/tests/category/category.reducer';
+import { TestCategory } from '../../../shared/models/test-category';
 
 interface DebriefPageState {
   seriousFaults$: Observable<string[]>;
@@ -97,6 +99,9 @@ export class DebriefCatBEPage extends BasePageComponent {
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
+    );
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
     );
     this.pageState = {
       seriousFaults$: currentTest$.pipe(
@@ -154,7 +159,10 @@ export class DebriefCatBEPage extends BasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSumCountCatB),
+        withLatestFrom(category$),
+        map(([testData, category]) => {
+          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
+        }),
       ),
       etaFaults$: currentTest$.pipe(
         select(getTestData),
