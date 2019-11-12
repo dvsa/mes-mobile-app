@@ -6,14 +6,14 @@ import {
   ShowMeQuestionSelected,
   ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
-  TellMeQuestionOutcomeChanged}
-  from '../vehicle-checks.cat-be.action';
+  TellMeQuestionOutcomeChanged,
+} from '../vehicle-checks.cat-be.action';
 import { QuestionResult } from '@dvsa/mes-test-schema/categories/common';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 describe('Vehicle Checks Cat B+E Reducer', () => {
 
-  describe('SHOW_ME_QUESTION_SELECTED' , () => {
+  describe('SHOW_ME_QUESTION_SELECTED', () => {
     it('should add the show me question in the payload to the array at the specified index', () => {
       const newQuestionPayload: QuestionResult = {
         code: 'S1',
@@ -26,7 +26,7 @@ describe('Vehicle Checks Cat B+E Reducer', () => {
     });
   });
 
-  describe('SHOW_ME_QUESTION_OUTCOME_CHANGED' , () => {
+  describe('SHOW_ME_QUESTION_OUTCOME_CHANGED', () => {
     it('should update the outcome property for the object at the specified index', () => {
       const state: CatBEUniqueTypes.VehicleChecks = initialState;
       state.showMeQuestions[1] = {
