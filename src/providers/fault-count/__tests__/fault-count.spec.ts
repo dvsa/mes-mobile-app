@@ -2,6 +2,8 @@ import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import { FaultCountProvider } from '../fault-count';
 import { TestBed } from '@angular/core/testing';
+import { catBTestDataStateObject } from '../__mocks__/catBTestDataStateObject';
+import { catBETestDataStateObject } from '../__mocks__/catBETestDataStateObject';
 
 describe('FaultCountProvider', () => {
 
@@ -17,66 +19,25 @@ describe('FaultCountProvider', () => {
     faultCountProvider = TestBed.get(FaultCountProvider);
   });
 
-  const state: CatBUniqueTypes.TestData = {
-    drivingFaults: {
-      controlsGears: 1,
-    },
-    seriousFaults: {
-      awarenessPlanning: true,
-    },
-    dangerousFaults: {
-      useOfSpeed: true,
-    },
-    testRequirements: {
-      normalStart1: true,
-      normalStart2: true,
-      angledStart: true,
-      hillStart: true,
-    },
-    ETA: {
-      physical: false,
-      verbal: false,
-    },
-    eco: {
-      adviceGivenControl: false,
-      adviceGivenPlanning: false,
-    },
-    manoeuvres: {
-      forwardPark: {
-        selected: true,
-        controlFault: CompetencyOutcome.DF,
-      },
-    },
-    controlledStop: {
-      selected: true,
-    },
-    vehicleChecks: {
-      tellMeQuestion: {
-        outcome: CompetencyOutcome.DF,
-      },
-      showMeQuestion: {
-        outcome: CompetencyOutcome.P,
-      },
-    },
-    eyesightTest: {
-      complete: true,
-      seriousFault: false,
-    },
-  };
-
   describe('getDrivingFaultSumCountCatB', () => {
     it('should return the driving fault count correctly', () => {
-      expect(faultCountProvider.getDrivingFaultSumCountCatB(state)).toBe(3);
+      expect(faultCountProvider.getDrivingFaultSumCountCatB(catBTestDataStateObject)).toBe(3);
+    });
+  });
+
+  describe('getDrivingFaultSumCountCatBE', () => {
+    it('should return the driving fault count correctly', () => {
+      expect(faultCountProvider.getDrivingFaultSumCountCatBE(catBETestDataStateObject)).toBe(5);
     });
   });
 
   describe('getSeriousFaultSumCountCatB', () => {
     it('should return the serious faults count', () => {
-      expect(faultCountProvider.getSeriousFaultSumCountCatB(state)).toBe(1);
+      expect(faultCountProvider.getSeriousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
     });
     it('should return the correct count of serious faults', () => {
       const failedState: CatBUniqueTypes.TestData = {
-        ...state,
+        ...catBTestDataStateObject,
         manoeuvres: {
           forwardPark: {
             selected: true,
@@ -106,11 +67,11 @@ describe('FaultCountProvider', () => {
 
   describe('getDangerousFaultSumCountCatB', () => {
     it('should return the dangerous faults count', () => {
-      expect(faultCountProvider.getDangerousFaultSumCountCatB(state)).toBe(1);
+      expect(faultCountProvider.getDangerousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
     });
     it('should return the correct number of dangerous faults', () => {
       const failedState: CatBUniqueTypes.TestData = {
-        ...state,
+        ...catBTestDataStateObject,
         manoeuvres: {
           forwardPark: {
             selected: true,
