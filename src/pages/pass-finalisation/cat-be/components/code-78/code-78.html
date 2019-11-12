@@ -8,13 +8,13 @@
     <ion-row class="spacing-row"></ion-row>
     <ion-row [formGroup]="form">
       <ion-col col-48>
-        <input formControlName="code78ProvidedCtrl" type="radio" id="code-78-received" value="yes"
-          class="gds-radio-button">
+        <input formControlName="code78Ctrl" type="radio" id="code-78-received" value="yes" class="gds-radio-button"
+          [checked]="code78PresentRadioChecked" (click)="code78IsPresent()">
         <label for="code-78-received" class="radio-label">Yes</label>
       </ion-col>
       <ion-col>
-        <input formControlName="code78ProvidedCtrl" type="radio" id="code-78-not-received" value="no"
-          class="gds-radio-button">
+        <input formControlName="code78Ctrl" type="radio" id="code-78-not-received" value="no" class="gds-radio-button"
+          [checked]="code78NotPresentRadioChecked" (click)="code78IsNotPresent()">
         <label for="code-78-not-received" class="radio-label">No</label>
       </ion-col>
     </ion-row>
@@ -25,3 +25,7 @@
     </ion-row>
   </ion-col>
 </ion-row>
+<warning-banner *ngIf="shouldShowManualBanner()" [warningText]='manualMessage'>
+</warning-banner>
+<warning-banner *ngIf="shouldShowAutomaticBanner()" [warningText]='automaticMessage'>
+</warning-banner>
