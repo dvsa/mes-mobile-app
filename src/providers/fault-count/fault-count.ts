@@ -9,17 +9,17 @@ import { TestCategory } from '../../shared/models/test-category';
 @Injectable()
 export class FaultCountProvider {
 
-  public getDrivingFaultSumCount = (category: TestCategory, data: Object) => {
+  public getDrivingFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDrivingFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDrivingFaultSumCountCatBE(data);
   }
 
-  public getSeriousFaultSumCount = (category: TestCategory, data: Object) => {
+  public getSeriousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getSeriousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getSeriousFaultSumCountCatBE(data);
   }
 
-  public getDangerousFaultSumCount = (category: TestCategory, data: Object) => {
+  public getDangerousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDangerousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDangerousFaultSumCountCatBE(data);
   }
