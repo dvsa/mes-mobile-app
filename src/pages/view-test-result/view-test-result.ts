@@ -45,7 +45,6 @@ import {
   getEyesightTestSeriousFaultAndComment,
 } from '../debrief/debrief.selector';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
-import { getDrivingFaultSummaryCount } from '../../modules/tests/test-data/test-data.selector';
 import { Store } from '@ngrx/store';
 import { StoreModel } from '../../shared/models/store.model';
 import { ErrorTypes } from '../../shared/models/error-message';
@@ -56,6 +55,7 @@ import { LogHelper } from '../../providers/logs/logsHelper';
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 import { QuestionProvider } from '../../providers/question/question';
 import { TestCategory } from '../../shared/models/test-category';
+import { FaultCountProvider } from '../../providers/fault-count/fault-count';
 
 @IonicPage()
 @Component({
@@ -88,6 +88,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
     private store$: Store<StoreModel>,
     private logHelper: LogHelper,
     public questionProvider: QuestionProvider,
+    private faultCountProvider: FaultCountProvider,
   ) {
     super(platform, navController, authenticationProvider);
 
@@ -258,7 +259,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       dangerousFaults: this.getDangerousFaults(),
       seriousFaults: this.getSeriousFaults(),
       drivingFaults: this.getDrivingFaults(),
-      drivingFaultCount: getDrivingFaultSummaryCount(this.testResult.testData),
+      drivingFaultCount: this.faultCountProvider.getDrivingFaultSummaryCount(this.testResult.testData),
     };
   }
 

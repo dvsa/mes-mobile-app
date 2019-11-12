@@ -3,13 +3,14 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { StoreModel } from '../../../../../shared/models/store.model';
 import { Store, select } from '@ngrx/store';
 import { getTestData } from '../../../../../modules/tests/test-data/test-data.reducer';
-import { getManoeuvres, sumManoeuvreFaults } from '../../../../../modules/tests/test-data/test-data.selector';
+import { getManoeuvres } from '../../../../../modules/tests/test-data/test-data.selector';
 import { getCurrentTest } from '../../../../../modules/tests/tests.selector';
 import { getTests } from '../../../../../modules/tests/tests.reducer';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
+import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 
 @Component({
   selector: 'manoeuvres',
@@ -34,7 +35,10 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
   displayPopover: boolean;
   manoeuvres$: Observable<CatBUniqueTypes.Manoeuvres>;
 
-  constructor(private store$: Store<StoreModel>) {
+  constructor(
+    private store$: Store<StoreModel>,
+    private faultCountProvider: FaultCountProvider,
+  ) {
     this.displayPopover = false;
   }
 
@@ -47,9 +51,9 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
-      this.drivingFaults = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
-      this.hasSeriousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
-      this.hasDangerousFault = sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;
+      this.drivingFaults = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
+      this.hasSeriousFault = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
+      this.hasDangerousFault = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;
     });
   }
 

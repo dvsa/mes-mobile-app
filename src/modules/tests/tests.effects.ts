@@ -158,6 +158,8 @@ export class TestsEffects {
       const testSlotAttributes: TestSlotAttributes = extractTestSlotAttributes(slot);
       const conductedLanguage: ConductedLanguage = testSlotAttributes.welshTest ? Language.CYMRAEG : Language.ENGLISH;
 
+      examiner.individualId;
+
       const arrayOfActions: Action[] = [
         new PopulateTestCategory(startTestAction.category),
         new PopulateExaminer(examiner),

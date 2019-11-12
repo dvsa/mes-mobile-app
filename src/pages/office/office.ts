@@ -68,7 +68,6 @@ import {
   getVehicleChecks,
   getShowMeQuestionOptions,
   getTellMeQuestion,
-  getDrivingFaultSummaryCount,
 } from '../../modules/tests/test-data/test-data.selector';
 import { getTestData } from '../../modules/tests/test-data/test-data.reducer';
 import { PersistTests } from '../../modules/tests/tests.actions';
@@ -117,6 +116,7 @@ import { CAT_B , JOURNAL_PAGE } from '../page-names.constants';
 import { SetActivityCode } from '../../modules/tests/activity-code/activity-code.actions';
 import { VehicleChecksQuestion } from '../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../shared/models/test-category';
+import { FaultCountProvider } from '../../providers/fault-count/fault-count';
 
 interface OfficePageState {
   activityCode$: Observable<ActivityCodeModel>;
@@ -188,6 +188,7 @@ export class OfficePage extends PracticeableBasePageComponent {
     public keyboard: Keyboard,
     private outcomeBehaviourProvider: OutcomeBehaviourMapProvider,
     public alertController: AlertController,
+    private faultCountProvider: FaultCountProvider,
   ) {
     super(platform, navController, authenticationProvider, store$);
     this.form = new FormGroup({});
@@ -429,7 +430,7 @@ export class OfficePage extends PracticeableBasePageComponent {
       ),
       drivingFaultCount$: currentTest$.pipe(
         select(getTestData),
-        select(getDrivingFaultSummaryCount),
+        select(this.faultCountProvider.getDrivingFaultSummaryCount),
       ),
       displayDrivingFaultComments$: currentTest$.pipe(
         select(getTestData),

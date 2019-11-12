@@ -45,6 +45,9 @@ import { LockScreenIndicator } from '../../../../components/common/screen-lock-i
 import { CandidateSectionComponent } from '../../../../components/common/candidate-section/candidate-section';
 import { FormControl, Validators } from '@angular/forms';
 import { candidateMock } from '../../../../modules/tests/__mocks__/tests.mock';
+import { JournalData } from '@dvsa/mes-test-schema/categories/Common';
+import { App } from '../../../../app/app.component';
+import { MockAppComponent } from '../../../../app/__mocks__/app.component.mock';
 
 describe('WaitingRoomCatBPage', () => {
   let fixture: ComponentFixture<WaitingRoomCatBPage>;
@@ -113,6 +116,7 @@ describe('WaitingRoomCatBPage', () => {
         { provide: DeviceProvider, useClass: DeviceProviderMock },
         { provide: ScreenOrientation, useClass: ScreenOrientationMock },
         { provide: Insomnia, useClass: InsomniaMock },
+        { provide: App, useClass: MockAppComponent },
       ],
     })
       .compileComponents()
@@ -216,6 +220,82 @@ describe('WaitingRoomCatBPage', () => {
         tick();
         expect(store$.dispatch).toHaveBeenCalledWith(new WaitingRoomValidationError('insuranceCheckbox is blank'));
       }));
+    });
+
+    describe('isJournalDataInvalid', () => {
+      const journalData: JournalData = {
+        examiner: {
+          staffNumber: 'real-staff-number',
+        },
+        testCentre: {
+          centreId: 11223344,
+          centreName: 'name',
+          costCode: 'cost code',
+        },
+        testSlotAttributes: {
+          slotId: 12123331,
+          start: '2019-11-11',
+          vehicleTypeCode: 'vehicl code',
+          welshTest: true,
+          specialNeeds: true,
+          extendedTest: false,
+        },
+        candidate: {
+          candidateName: {
+            firstName: 'fname',
+            secondName: 'sname',
+          },
+          driverNumber: 'real-driver-number',
+        },
+        applicationReference: {
+          applicationId: 11223344141414,
+          bookingSequence: 112,
+          checkDigit: 11,
+        },
+      };
+
+      it('should return true if no examiner staffnumber', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          examiner: {
+            staffNumber: '',
+          },
+        });
+        expect(result).toBeTruthy;
+      });
+
+      it('should return true if no candidate name & driver number', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          candidate: {
+            candidateName: {},
+            driverNumber: '',
+          },
+        });
+        expect(result).toBeTruthy;
+      });
+
+      it('should return false if it has staff number and candidate name but no driver number', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          candidate: {
+            ...journalData.candidate,
+            driverNumber: '',
+          },
+        });
+        expect(result).toBeFalsy;
+      });
+
+      it('should return false if it has staff number and driver number but no candidate name', () => {
+        const result = component.isJournalDataInvalid({
+          ...journalData,
+          candidate: {
+            ...journalData.candidate,
+            driverNumber: '',
+          },
+        });
+        expect(result).toBeFalsy;
+      });
     });
   });
 });

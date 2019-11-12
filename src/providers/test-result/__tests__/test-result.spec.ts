@@ -3,6 +3,7 @@ import { TestResultProvider } from '../test-result';
 import { ActivityCodes } from '../../../shared/models/activity-codes';
 import { DrivingFaults } from '@dvsa/mes-test-schema/categories/Common';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
+import { FaultCountProvider } from '../../fault-count/fault-count';
 
 // TODO: This test has tight coupling with category B
 // We will need to adjust it when we introduce new categories
@@ -53,6 +54,7 @@ describe('TestResultCalculatorProvider', () => {
     TestBed.configureTestingModule({
       providers: [
         TestResultProvider,
+        FaultCountProvider,
       ],
     });
 

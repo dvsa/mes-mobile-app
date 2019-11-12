@@ -4,7 +4,7 @@ import { browser, by, ExpectedConditions } from 'protractor';
 
 Then('I am on the post debrief holding page', () => {
   // No page title so need to check something else exists that exists on the page
-  const postDebriefHoldingPage = getElement(by.id('post-debrief-holding-page'));
+  const postDebriefHoldingPage = getElement(by.id('post-debrief-holding-cat-b-page'));
   return browser.wait(ExpectedConditions.presenceOf(postDebriefHoldingPage));
 });
 

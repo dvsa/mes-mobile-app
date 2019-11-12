@@ -3,17 +3,14 @@ import { CatBLegalRequirements } from '../../modules/tests/test-data/test-data.m
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
-import {
-  getDangerousFaultSummaryCount,
-  getSeriousFaultSummaryCount,
-} from '../../modules/tests/test-data/test-data.selector';
+import { FaultCountProvider } from '../fault-count/fault-count';
 
 @Injectable()
 // TODO: This provider has tight coupling to category B
 // When introducing B+E functionality this will need to adjust its typing
 export class TestReportValidatorProvider {
 
-  constructor() { }
+  constructor(private faultCountProvider: FaultCountProvider) { }
 
   validateCatBLegalRequirements = (results: CatBLegalRequirements): Observable<boolean> =>
     of(results.normalStart1 &&
@@ -30,8 +27,8 @@ export class TestReportValidatorProvider {
 
     return of(
       noEtaFaults ||
-      getDangerousFaultSummaryCount(testData) !== 0 ||
-      getSeriousFaultSummaryCount(testData) !== 0,
+      this.faultCountProvider.getDangerousFaultSummaryCount(testData) !== 0 ||
+      this.faultCountProvider.getSeriousFaultSummaryCount(testData) !== 0,
     );
   }
 }

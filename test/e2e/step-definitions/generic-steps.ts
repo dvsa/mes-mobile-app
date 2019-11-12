@@ -395,9 +395,9 @@ const getPageType = (pageName : string) => {
     case 'communication page':
       return 'communication-cat-b-page';
     case 'debrief':
-      return 'page-pass-finalisation-cat-b-page';
+      return 'pass-finalisation-cat-b-page';
     case 'health declaration':
-      return 'page-health-declaration';
+      return 'health-declaration-cat-b-page';
     default:
       return 'waiting-room-cat-b-page';
   }
@@ -405,4 +405,21 @@ const getPageType = (pageName : string) => {
 
 export const getParentContext = (currentContext: string) => {
   return `${currentContext.substring(0, currentContext.indexOf('.'))}.1`;
+};
+
+export const nativeTextEntry = (fieldLabel: string, fieldValue: string) => {
+  // Swtiches to native mode and enters the text
+  browser.driver.getCurrentContext().then((webviewContext) => {
+    // Switch to NATIVE context
+    browser.driver.selectContext('NATIVE_APP').then(() => {
+      const nativeField = element(by.xpath(`//XCUIElementTypeOther[XCUIElementTypeOther[
+          @name="${fieldLabel}"]]/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeTextField`));
+      nativeField.sendKeys(fieldValue);
+
+      // Switch back to WEBVIEW context
+      browser.driver.selectContext(getParentContext(webviewContext)).then(() => {
+        browser.driver.sleep(TEST_CONFIG.PAGE_LOAD_WAIT);
+      });
+    });
+  });
 };

@@ -8,6 +8,7 @@ import { startsWith } from 'lodash';
 import { TestOutcome } from './tests.constants';
 import { ActivityCodes } from '../../shared/models/activity-codes';
 import { DateTime } from '../../shared/helpers/date-time';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 export const getCurrentTestSlotId = (tests: TestsModel): string => tests.currentTest.slotId;
 
@@ -25,7 +26,8 @@ export const getTestById = (tests: TestsModel, slotId: string): TestResultSchema
   return tests.startedTests[slotId];
 };
 
-export const getJournalData = (test: TestResultCommonSchema): JournalData => test.journalData;
+export const getJournalData =
+  (test: TestResultCommonSchema): JournalData | CatBEUniqueTypes.JournalData => test.journalData;
 
 export const getTestStatus = (tests: TestsModel, slotId: number) => tests.testStatus[slotId] || TestStatus.Booked;
 

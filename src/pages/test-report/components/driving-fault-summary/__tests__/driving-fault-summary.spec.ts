@@ -12,6 +12,7 @@ import { StartTest } from '../../../../../modules/tests/tests.actions';
 import { AddDrivingFault } from '../../../../../modules/tests/test-data/driving-faults/driving-faults.actions';
 import { Competencies } from '../../../../../modules/tests/test-data/test-data.constants';
 import { TestCategory } from '../../../../../shared/models/test-category';
+import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
 
 describe('DrivingFaultSummary', () => {
   let fixture: ComponentFixture<DrivingFaultSummaryComponent>;
@@ -29,6 +30,7 @@ describe('DrivingFaultSummary', () => {
       ],
       providers: [
         { provide: Config, useFactory: () => ConfigMock.instance() },
+        FaultCountProvider,
       ],
     }).compileComponents()
       .then(() => {

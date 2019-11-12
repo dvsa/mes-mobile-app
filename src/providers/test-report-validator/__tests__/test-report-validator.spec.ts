@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TestReportValidatorProvider } from '../test-report-validator';
 import { CatBLegalRequirements } from '../../../modules/tests/test-data/test-data.models';
+import { FaultCountProvider } from '../../fault-count/fault-count';
 
 describe('TestReportValidator', () => {
 
@@ -10,6 +11,7 @@ describe('TestReportValidator', () => {
     TestBed.configureTestingModule({
       providers: [
         TestReportValidatorProvider,
+        FaultCountProvider,
       ],
     });
 
