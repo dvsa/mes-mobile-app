@@ -51,9 +51,9 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
-      this.drivingFaults = this.faultCountProvider.sumManoeuvreFaultsCatB(manoeuvres, CompetencyOutcome.DF);
-      this.hasSeriousFault = this.faultCountProvider.sumManoeuvreFaultsCatB(manoeuvres, CompetencyOutcome.S) > 0;
-      this.hasDangerousFault = this.faultCountProvider.sumManoeuvreFaultsCatB(manoeuvres, CompetencyOutcome.D) > 0;
+      this.drivingFaults = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
+      this.hasSeriousFault = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
+      this.hasDangerousFault = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;
     });
   }
 
