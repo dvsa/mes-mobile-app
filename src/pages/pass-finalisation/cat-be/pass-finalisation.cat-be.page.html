@@ -27,6 +27,10 @@
 
         <transmission [form]="form" (transmissionChanged)="transmissionChanged(transmission)"></transmission>
 
+        <code-78-provided [form]="form"></code-78-provided>
+
+        <license-issued-banner></license-issued-banner>
+
         <pass-certificate-number [form]="form" (passCertificateNumberChange)="passCertificateNumberChanged($event)"></pass-certificate-number>
 
         <d255 [display]=true [d255]="pageState.d255$ | async" [outcome]="testOutcome" [formGroup]="form"
