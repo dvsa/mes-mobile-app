@@ -6,10 +6,21 @@
   <ion-col align-self-center padding-left>
     <ion-row class="spacing-row"></ion-row>
     <ion-row>
-      <ion-col col-32>
+      <ion-col>
         <button type="button" class="mes-return-button" (click)="openVehicleChecksModal()" ion-button>
           <h3>Select questions</h3>
         </button>
+
+      </ion-col>
+      <ion-col class="vehicle-check-score">
+        <ion-row>
+          <serious-fault-badge class="badge" [showBadge]="true"></serious-fault-badge>
+          {{ vehicleChecksScore.seriousFaults }} serious fault
+        </ion-row>
+        <ion-row>
+          <driving-faults-badge class="badge" showOnZero=true [count]='vehicleChecksScore.drivingFaults'></driving-faults-badge>
+          driving faults
+        </ion-row>
       </ion-col>
     </ion-row>
     <ion-row class="validation-message-row" align-items-center>

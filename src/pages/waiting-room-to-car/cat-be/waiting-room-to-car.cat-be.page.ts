@@ -68,6 +68,8 @@ import { CAT_BE } from '../../page-names.constants';
 import { BasePageComponent } from '../../../shared/classes/base-page';
 import { VehicleChecksQuestion } from '../../../providers/question/vehicle-checks-question.model';
 import { TestCategory } from '../../../shared/models/test-category';
+import { VehicleChecksScore } from '../../../providers/question/vehicle-checks-score.model';
+import { getVehicleChecksCatBe } from '../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.selector';
 
 interface WaitingRoomToCarPageState {
   candidateName$: Observable<string>;
@@ -88,6 +90,7 @@ interface WaitingRoomToCarPageState {
   tellMeQuestionDrivingFault$: Observable<boolean>;
   tellMeQuestionOutcome$: Observable<string>;
   tellMeQuestion$: Observable<VehicleChecksQuestion>;
+  vehicleChecksScore$: Observable<VehicleChecksScore>;
 }
 
 @IonicPage()
@@ -207,6 +210,13 @@ export class WaitingRoomToCarCatBEPage extends BasePageComponent {
         select(getTestData),
         select(getVehicleChecks),
         map(getTellMeQuestion),
+      ),
+      vehicleChecksScore$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getVehicleChecksCatBe),
+        select(this.questionProvider.calculateFaults),
       ),
     };
   }

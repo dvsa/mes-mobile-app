@@ -18,6 +18,7 @@ import {
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged,
 } from '../../../../../../modules/tests/test-data/vehicle-checks/vehicle-checks.cat-be.action';
+import { WarningBannerComponent } from '../../../../../../components/common/warning-banner/warning-banner';
 
 describe('VehicleChecksCatBEModal', () => {
   let fixture: ComponentFixture<VehicleChecksCatBEModal>;
@@ -29,6 +30,7 @@ describe('VehicleChecksCatBEModal', () => {
       declarations: [
         VehicleChecksCatBEModal,
         MockComponent(VehicleChecksQuestionComponent),
+        WarningBannerComponent,
       ],
       imports: [
         IonicModule,

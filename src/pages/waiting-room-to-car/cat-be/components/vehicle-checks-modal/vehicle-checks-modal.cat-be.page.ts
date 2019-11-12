@@ -30,11 +30,13 @@ import {
 import {
   NUMBER_OF_SHOW_ME_QUESTIONS,
 } from '../../../../../shared/constants/show-me-questions/show-me-questions.cat-be.constants';
+import { VehicleChecksScore } from '../../../../../providers/question/vehicle-checks-score.model';
 
 interface VehicleChecksModalCatBEState {
   candidateName$: Observable<string>;
   showMeQuestions$: Observable<QuestionResult[]>;
   tellMeQuestions$: Observable<QuestionResult[]>;
+  vehicleChecksScore$: Observable<VehicleChecksScore>;
 }
 
 @IonicPage()
@@ -53,7 +55,7 @@ export class VehicleChecksCatBEModal {
 
   constructor(
     public store$: Store<StoreModel>,
-    questionProvider: QuestionProvider,
+    private questionProvider: QuestionProvider,
   ) {
     this.formGroup = new FormGroup({});
     this.showMeQuestions = questionProvider.getShowMeQuestions(TestCategory.BE);
@@ -80,6 +82,13 @@ export class VehicleChecksCatBEModal {
         select(getTestData),
         select(getVehicleChecksCatBe),
         select(getSelectedTellMeQuestions),
+      ),
+      vehicleChecksScore$: this.store$.pipe(
+        select(getTests),
+        select(getCurrentTest),
+        select(getTestData),
+        select(getVehicleChecksCatBe),
+        select(this.questionProvider.calculateFaults),
       ),
     };
   }

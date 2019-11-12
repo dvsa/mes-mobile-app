@@ -40,4 +40,5 @@
       </vehicle-checks-question>
     </ion-card-content>
   </ion-card>
+  <warning-banner warningText="This will result in 4 driving faults and 1 serious fault" *ngIf="((pageState.vehicleChecksScore$ | async).drivingFaults === 4) && ((pageState.vehicleChecksScore$ | async).seriousFaults === 1)"></warning-banner>
 </ion-content>
