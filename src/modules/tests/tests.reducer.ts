@@ -8,6 +8,7 @@ import * as fakeJournalActions from '../../pages/fake-journal/fake-journal.actio
 import { testReportPracticeSlotId } from '../../shared/mocks/test-slot-ids.mock';
 import { get } from 'lodash';
 import { testsReducerFactory } from './tests-reducer-factory';
+import { TestCategory } from '../../shared/models/test-category';
 
 export const initialState: TestsModel = {
   currentTest: { slotId: null },
@@ -54,7 +55,7 @@ const deriveSlotId = (state: TestsModel, action: Action): string | null => {
   return (state.currentTest && state.currentTest.slotId) ? state.currentTest.slotId : null;
 };
 
-const deriveCategory = (state: TestsModel, action: Action, slotId: string | null): string => {
+const deriveCategory = (state: TestsModel, action: Action, slotId: string | null): TestCategory => {
   if (action instanceof testsActions.StartTest
       || action instanceof testsActions.ActivateTest
       || action instanceof testsActions.StartTestReportPracticeTest
@@ -65,7 +66,7 @@ const deriveCategory = (state: TestsModel, action: Action, slotId: string | null
   return get(state.startedTests[slotId], 'category', null);
 };
 
-const createStateObject = (state: TestsModel, action: Action, slotId: string, category: string): TestsModel => {
+const createStateObject = (state: TestsModel, action: Action, slotId: string, category: TestCategory): TestsModel => {
   return {
     ...state,
     startedTests: {

@@ -153,7 +153,7 @@ export class ViewTestResultPage extends BasePageComponent implements OnInit {
       date: startDate.format('dddd Do MMMM YYYY'),
       time: startDate.format('HH:mm'),
       applicationReference: formatApplicationReference(this.testResult.journalData.applicationReference),
-      category: this.testResult.category,
+      category: this.testResult.category as TestCategory,
       specialNeeds: this.testResult.journalData.testSlotAttributes.specialNeedsArray,
       entitlementCheck: this.testResult.journalData.testSlotAttributes.entitlementCheck,
       slotType: this.testResult.journalData.testSlotAttributes.slotType,
