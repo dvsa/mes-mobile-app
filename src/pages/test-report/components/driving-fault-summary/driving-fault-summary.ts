@@ -7,6 +7,9 @@ import { getTestData } from '../../../../modules/tests/test-data/test-data.reduc
 import { Subscription } from 'rxjs/Subscription';
 import { getTests } from '../../../../modules/tests/tests.reducer';
 import { FaultCountProvider } from '../../../../providers/fault-count/fault-count';
+import { withLatestFrom, map } from 'rxjs/operators';
+import { TestCategory } from '../../../../shared/models/test-category';
+import { getTestCategory } from '../../../../modules/tests/category/category.reducer';
 
 interface DrivingFaultSummaryState {
   count$: Observable<number>;
@@ -27,12 +30,20 @@ export class DrivingFaultSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const currentTest$ = this.store$.pipe(
+      select(getTests),
+      select(getCurrentTest),
+    );
+    const category$ = currentTest$.pipe(
+      select(getTestCategory),
+    );
     this.componentState = {
-      count$: this.store$.pipe(
-        select(getTests),
-        select(getCurrentTest),
+      count$: currentTest$.pipe(
         select(getTestData),
-        select(this.faultCountProvider.getDrivingFaultSumCountCatB),
+        withLatestFrom(category$),
+        map(([testData, category]) => {
+          return this.faultCountProvider.getDrivingFaultSumCount(category as TestCategory, testData);
+        }),
       ),
     };
   }

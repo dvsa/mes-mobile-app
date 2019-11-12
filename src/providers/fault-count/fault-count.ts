@@ -4,9 +4,25 @@ import { pickBy, endsWith, sumBy } from 'lodash';
 import { CompetencyOutcome } from '../../shared/models/competency-outcome';
 import { CatBUniqueTypes } from '@dvsa/mes-test-schema/categories/B';
 import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
+import { TestCategory } from '../../shared/models/test-category';
 
 @Injectable()
 export class FaultCountProvider {
+
+  public getDrivingFaultSumCount = (category: TestCategory, data: Object) => {
+    if (category === TestCategory.B) return this.getDrivingFaultSumCountCatB(data);
+    if (category === TestCategory.BE) return this.getDrivingFaultSumCountCatBE(data);
+  }
+
+  public getSeriousFaultSumCount = (category: TestCategory, data: Object) => {
+    if (category === TestCategory.B) return this.getSeriousFaultSumCountCatB(data);
+    if (category === TestCategory.BE) return this.getSeriousFaultSumCountCatBE(data);
+  }
+
+  public getDangerousFaultSumCount = (category: TestCategory, data: Object) => {
+    if (category === TestCategory.B) return this.getDangerousFaultSumCountCatB(data);
+    if (category === TestCategory.BE) return this.getDangerousFaultSumCountCatBE(data);
+  }
 
   public getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
