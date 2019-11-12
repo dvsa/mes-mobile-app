@@ -4,7 +4,7 @@ import { createFeatureSelector } from '@ngrx/store';
 
 export const getSelectedShowMeQuestions = (
   vehicleChecksCatBEReducer: CatBEUniqueTypes.VehicleChecks): QuestionResult[] => {
-  return vehicleChecksCatBEReducer.showMeQuestions
+  return vehicleChecksCatBEReducer.showMeQuestions;
 };
 
 export const getVehicleChecksCatBe =
