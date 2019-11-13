@@ -9,19 +9,24 @@ import { TestCategory } from '../../shared/models/test-category';
 @Injectable()
 export class FaultCountProvider {
 
+  static getFaultSumCountErrMsg: string = 'Error getting fault sum count';
+
   public getDrivingFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDrivingFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDrivingFaultSumCountCatBE(data);
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getSeriousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getSeriousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getSeriousFaultSumCountCatBE(data);
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getDangerousFaultSumCount = (category: TestCategory, data: Object): number => {
     if (category === TestCategory.B) return this.getDangerousFaultSumCountCatB(data);
     if (category === TestCategory.BE) return this.getDangerousFaultSumCountCatBE(data);
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
   public getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
