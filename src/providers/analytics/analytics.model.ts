@@ -1,9 +1,11 @@
+import { TestCategory } from '../../shared/models/test-category';
+
 export interface IAnalyticsProvider {
   setCurrentPage(name: string): void;
 
   addCustomDimension(key: number, value: string): void;
 
-  logEvent(category: string, event: string, label?: string, params?: any): void;
+  logEvent(category: TestCategory, event: string, label?: string, params?: any): void;
 
   logError(type: string, message: string): void;
 
