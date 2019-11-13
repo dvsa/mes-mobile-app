@@ -31,51 +31,51 @@ describe('FaultCountProvider', () => {
   describe('getDrivingFaultSumCount', () => {
     it('should call the category B specific method for getting the driving fault sum count', () => {
       faultCountProvider.getDrivingFaultSumCount(TestCategory.B, catBTestDataStateObject);
-      expect(faultCountProvider.getDrivingFaultSumCountCatB).toHaveBeenCalled();
+      expect((faultCountProvider as any).getDrivingFaultSumCountCatB).toHaveBeenCalled();
     });
     it('should call the category BE specific method for getting the driving fault sum count', () => {
       faultCountProvider.getDrivingFaultSumCount(TestCategory.BE, catBTestDataStateObject);
-      expect(faultCountProvider.getDrivingFaultSumCountCatBE).toHaveBeenCalled();
+      expect((faultCountProvider as any).getDrivingFaultSumCountCatBE).toHaveBeenCalled();
     });
   });
 
   describe('getSeriousFaultSumCount', () => {
     it('should call the category B specific method for getting the serious fault sum count', () => {
       faultCountProvider.getSeriousFaultSumCount(TestCategory.B, catBTestDataStateObject);
-      expect(faultCountProvider.getSeriousFaultSumCountCatB).toHaveBeenCalled();
+      expect((faultCountProvider as any).getSeriousFaultSumCountCatB).toHaveBeenCalled();
     });
     it('should call the category BE specific method for getting the serious fault sum count', () => {
       faultCountProvider.getSeriousFaultSumCount(TestCategory.BE, catBTestDataStateObject);
-      expect(faultCountProvider.getSeriousFaultSumCountCatBE).toHaveBeenCalled();
+      expect((faultCountProvider as any).getSeriousFaultSumCountCatBE).toHaveBeenCalled();
     });
   });
 
   describe('getDangerousFaultSumCount', () => {
     it('should call the category B specific method for getting the dangerous fault sum count', () => {
       faultCountProvider.getDangerousFaultSumCount(TestCategory.B, catBTestDataStateObject);
-      expect(faultCountProvider.getDangerousFaultSumCountCatB).toHaveBeenCalled();
+      expect((faultCountProvider as any).getDangerousFaultSumCountCatB).toHaveBeenCalled();
     });
     it('should call the category BE specific method for getting the dangerous fault sum count', () => {
       faultCountProvider.getDangerousFaultSumCount(TestCategory.BE, catBTestDataStateObject);
-      expect(faultCountProvider.getDangerousFaultSumCountCatBE).toHaveBeenCalled();
+      expect((faultCountProvider as any).getDangerousFaultSumCountCatBE).toHaveBeenCalled();
     });
   });
 
   describe('getDrivingFaultSumCountCatB', () => {
     it('should return the driving fault for cat B count correctly', () => {
-      expect(faultCountProvider.getDrivingFaultSumCountCatB(catBTestDataStateObject)).toBe(4);
+      expect((faultCountProvider as any).getDrivingFaultSumCountCatB(catBTestDataStateObject)).toBe(4);
     });
   });
 
   describe('getDrivingFaultSumCountCatBE', () => {
     it('should return the driving fault for cat BE count correctly', () => {
-      expect(faultCountProvider.getDrivingFaultSumCountCatBE(catBETestDataStateObject)).toBe(5);
+      expect((faultCountProvider as any).getDrivingFaultSumCountCatBE(catBETestDataStateObject)).toBe(5);
     });
   });
 
   describe('getSeriousFaultSumCountCatB', () => {
     it('should return the serious faults count', () => {
-      expect(faultCountProvider.getSeriousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
+      expect((faultCountProvider as any).getSeriousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
     });
     it('should return the correct count of serious faults', () => {
       const failedState: CatBUniqueTypes.TestData = {
@@ -103,13 +103,13 @@ describe('FaultCountProvider', () => {
           seriousFault: true,
         },
       };
-      expect(faultCountProvider.getSeriousFaultSumCountCatB(failedState)).toBe(5);
+      expect((faultCountProvider as any).getSeriousFaultSumCountCatB(failedState)).toBe(5);
     });
   });
 
   describe('getDangerousFaultSumCountCatB', () => {
     it('should return the dangerous faults count', () => {
-      expect(faultCountProvider.getDangerousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
+      expect((faultCountProvider as any).getDangerousFaultSumCountCatB(catBTestDataStateObject)).toBe(1);
     });
     it('should return the correct number of dangerous faults', () => {
       const failedState: CatBUniqueTypes.TestData = {
@@ -133,7 +133,7 @@ describe('FaultCountProvider', () => {
           },
         },
       };
-      expect(faultCountProvider.getDangerousFaultSumCountCatB(failedState)).toBe(4);
+      expect((faultCountProvider as any).getDangerousFaultSumCountCatB(failedState)).toBe(4);
     });
   });
 

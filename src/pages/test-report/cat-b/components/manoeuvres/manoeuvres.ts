@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { CompetencyOutcome } from '../../../../../shared/models/competency-outcome';
 import { OverlayCallback } from '../../../test-report.model';
 import { FaultCountProvider } from '../../../../../providers/fault-count/fault-count';
+import { TestCategory } from '../../../../../shared/models/test-category';
 
 @Component({
   selector: 'manoeuvres',
@@ -51,9 +52,12 @@ export class ManoeuvresComponent implements OnInit, OnDestroy {
     );
 
     this.subscription = this.manoeuvres$.subscribe((manoeuvres: CatBUniqueTypes.Manoeuvres) => {
-      this.drivingFaults = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.DF);
-      this.hasSeriousFault = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.S) > 0;
-      this.hasDangerousFault = this.faultCountProvider.sumManoeuvreFaults(manoeuvres, CompetencyOutcome.D) > 0;
+      this.drivingFaults =
+        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.DF);
+      this.hasSeriousFault =
+        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.S) > 0;
+      this.hasDangerousFault =
+        this.faultCountProvider.getManoeuvreFaultCount(TestCategory.B, manoeuvres, CompetencyOutcome.D) > 0;
     });
   }
 

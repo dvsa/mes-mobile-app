@@ -29,7 +29,19 @@ export class FaultCountProvider {
     throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
   }
 
-  public getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
+  public getManoeuvreFaultCount = (category: TestCategory, data: Object, faultType: CompetencyOutcome) => {
+    if (category === TestCategory.B) return this.sumManoeuvreFaults(data, faultType);
+    if (category === TestCategory.BE) return this.sumManoeuvreFaults(data, faultType);
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+  }
+
+  public getVehicleChecksFaultCount = (category: TestCategory, data: Object) => {
+    if (category === TestCategory.B) return this.sumVehicleCheckFaultsCatB(data);
+    if (category === TestCategory.BE) return this.sumVehicleCheckFaultsCatBE(data);
+    throw new Error(FaultCountProvider.getFaultSumCountErrMsg);
+  }
+
+  private getDrivingFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -48,7 +60,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getSeriousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
+  private getSeriousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -69,7 +81,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getDangerousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
+  private getDangerousFaultSumCountCatB = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -102,12 +114,12 @@ export class FaultCountProvider {
     return 0;
   }
 
-  public sumVehicleCheckFaultsCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): number => {
+  private sumVehicleCheckFaultsCatBE = (vehicleChecks: CatBEUniqueTypes.VehicleChecks): number => {
     // TODO: Use the Vechicle checks scoring logic provider, to be done in MES-3737
     return 0;
   }
 
-  public getDrivingFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
+  private getDrivingFaultSumCountCatBE = (data: CatBEUniqueTypes.TestData): number => {
 
     // The way how we store the driving faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -124,7 +136,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getSeriousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
+  private getSeriousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -143,7 +155,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public getDangerousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
+  private getDangerousFaultSumCountCatBE = (data: CatBUniqueTypes.TestData): number => {
 
     // The way how we store serious faults differs for certain competencies
     // Because of this we need to pay extra attention on summing up all of them
@@ -160,7 +172,7 @@ export class FaultCountProvider {
     return result;
   }
 
-  public sumManoeuvreFaults(manoeuvres: Object, faultType: CompetencyOutcome): number {
+  private sumManoeuvreFaults(manoeuvres: Object, faultType: CompetencyOutcome): number {
     const manoeuvresCollection = Object.values(manoeuvres);
     return sumBy(manoeuvresCollection, (manoeuvre) => {
       if (manoeuvre.selected) {
