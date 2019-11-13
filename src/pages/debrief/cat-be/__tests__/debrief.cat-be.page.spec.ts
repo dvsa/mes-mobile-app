@@ -72,7 +72,7 @@ describe('DebriefCatBEPage', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
-                category: TestCategory.B,
+                category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
