@@ -3,7 +3,7 @@ import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 import {
   manoeuvreTypeLabels,
   manoeuvreCompetencyLabels,
-} from '../../../shared/constants/competencies/catb-manoeuvres';
+} from '../../../shared/constants/competencies/catbe-manoeuvres';
 import { ManoeuvreTypes } from '../../../modules/tests/test-data/test-data.constants';
 import { CompetencyOutcome } from '../../../shared/models/competency-outcome';
 import {

@@ -38,6 +38,7 @@ import { CAT_B } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
 import { TestCategory } from '../../../../shared/models/test-category';
+import { CatBEUniqueTypes } from '@dvsa/mes-test-schema/categories/BE';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -56,6 +57,21 @@ describe('DebriefCatBEPage', () => {
   };
 
   beforeEach(async(() => {
+    const exampleTestData: CatBEUniqueTypes.TestData  = {
+      dangerousFaults: {},
+      drivingFaults: {},
+      manoeuvres: {},
+      seriousFaults: {},
+      testRequirements: {},
+      ETA: {},
+      eco: {},
+      vehicleChecks: {
+        tellMeQuestions: [{}],
+        showMeQuestions: [{}],
+      },
+      uncoupleRecouple: {},
+    };
+
     TestBed.configureTestingModule({
       declarations: [DebriefCatBEPage],
       imports: [
@@ -75,20 +91,7 @@ describe('DebriefCatBEPage', () => {
                 category: TestCategory.BE,
                 vehicleDetails: {},
                 accompaniment: {},
-                testData: {
-                  dangerousFaults: {},
-                  drivingFaults: {},
-                  manoeuvres: {},
-                  seriousFaults: {},
-                  testRequirements: {},
-                  ETA: {},
-                  eco: {},
-                  vehicleChecks: {
-                    tellMeQuestion: {},
-                    showMeQuestion: {},
-                  },
-                  controlledStop: {},
-                },
+                testData: exampleTestData,
                 journalData: {
                   candidate: {
                     candidateName: 'Joe Bloggs',

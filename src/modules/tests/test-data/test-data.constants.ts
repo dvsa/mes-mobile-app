@@ -45,6 +45,7 @@ export enum ManoeuvreTypes {
   reverseParkRoad = 'reverseParkRoad',
   reverseParkCarpark = 'reverseParkCarpark',
   forwardPark = 'forwardPark',
+  reverseLeft = 'reverseLeft',
 }
 
 export enum ManoeuvreCompetencies {
