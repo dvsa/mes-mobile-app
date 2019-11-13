@@ -37,6 +37,7 @@ import * as welshTranslations from '../../../../assets/i18n/cy.json';
 import { CAT_B } from '../../../page-names.constants';
 import { Language } from '../../../../modules/tests/communication-preferences/communication-preferences.model';
 import { configureI18N } from '../../../../shared/helpers/translation.helpers';
+import { TestCategory } from '../../../../shared/models/test-category';
 
 describe('DebriefCatBEPage', () => {
   let fixture: ComponentFixture<DebriefCatBEPage>;
@@ -71,6 +72,7 @@ describe('DebriefCatBEPage', () => {
             startedTests: {
               123: {
                 testSlotAttributes,
+                category: TestCategory.B,
                 vehicleDetails: {},
                 accompaniment: {},
                 testData: {
