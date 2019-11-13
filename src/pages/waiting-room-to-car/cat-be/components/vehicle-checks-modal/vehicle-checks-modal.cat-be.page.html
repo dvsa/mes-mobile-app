@@ -21,7 +21,6 @@
                                [questionResult]="(pageState.showMeQuestions$ | async)[i]"
                                [questions]="showMeQuestions"
                                [questionsToDisable]="pageState.showMeQuestions$ | async"
-                               [index]="i"
                                (vehicleChecksQuestionChange)="showMeQuestionChanged($event, i)"
                                (vehicleChecksQuestionOutcomeChange)="showMeQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>
@@ -36,7 +35,6 @@
                                [questionResult]="(pageState.tellMeQuestions$ | async)[i]"
                                [questions]="tellMeQuestions"
                                [questionsToDisable]="pageState.tellMeQuestions$ | async"
-                               [index]="i"
                                (vehicleChecksQuestionChange)="tellMeQuestionChanged($event, i)"
                                (vehicleChecksQuestionOutcomeChange)="tellMeQuestionOutcomeChanged($event, i)">
       </vehicle-checks-question>

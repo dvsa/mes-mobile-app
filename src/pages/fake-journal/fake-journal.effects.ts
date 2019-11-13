@@ -17,6 +17,8 @@ import {
   extractTestSlotAttributes,
 } from '../../modules/tests/journal-data/test-slot-attributes/test-slot-attributes.selector';
 import { PopulateTestCategory } from '../../modules/tests/category/category.actions';
+import { Examiner } from '@dvsa/mes-test-schema/categories/Common';
+import { PopulateExaminer } from '../../modules/tests/journal-data/examiner/examiner.actions';
 
 @Injectable()
 export class FakeJournalEffects {
@@ -31,7 +33,12 @@ export class FakeJournalEffects {
       const startTestAction = action as fakeJournalActions.StartE2EPracticeTest;
       const slot = fakeJournalTestSlots.find(s => s.slotDetail.slotId === startTestAction.slotId);
 
+      const examiner: Examiner = {
+        staffNumber: '01234567',
+      };
+
       return [
+        new PopulateExaminer(examiner),
         new PopulateTestCategory(slot.booking.application.testCategory),
         new PopulateApplicationReference(slot.booking.application as Application),
         new PopulateCandidateDetails(slot.booking.candidate),

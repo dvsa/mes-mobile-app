@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 import { FormGroup, FormControl } from '@angular/forms';
 import { VehicleChecksQuestion } from '../../../../../providers/question/vehicle-checks-question.model';
 import { QuestionOutcome, QuestionResult } from '@dvsa/mes-test-schema/categories/common';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'vehicle-checks-question',
@@ -21,9 +22,6 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   @Input()
   formGroup: FormGroup;
 
-  @Input()
-  index: number;
-
   @Output()
   vehicleChecksQuestionChange = new EventEmitter<QuestionResult>();
 
@@ -33,18 +31,19 @@ export class VehicleChecksQuestionComponent implements OnChanges {
   private questionFormControl: FormControl;
   private questionOutcomeFormControl: FormControl;
 
-  readonly questionFieldName: string = 'vehicleChecksQuestion';
-  readonly questionOutcomeFieldName: string = 'vehicleChecksQuestionOutcome';
+  readonly questionId: string = _.uniqueId();
+  readonly questionOutcomeFieldName: string = `vehicleChecksQuestionOutcome_${this.questionId}`;
+  readonly questionFieldName: string = `vehicleChecksQuestion_${this.questionId}`;
 
   ngOnChanges(): void {
     if (!this.questionFormControl) {
       this.questionFormControl = new FormControl({ disabled: true });
-      this.formGroup.addControl(`${this.questionFieldName}_${this.index}`, this.questionFormControl);
+      this.formGroup.addControl(this.questionFieldName, this.questionFormControl);
     }
 
     if (!this.questionOutcomeFormControl) {
       this.questionOutcomeFormControl = new FormControl();
-      this.formGroup.addControl(`${this.questionOutcomeFieldName}_${this.index}`, this.questionOutcomeFormControl);
+      this.formGroup.addControl(this.questionOutcomeFieldName, this.questionOutcomeFormControl);
     }
 
     if (this.questionResult) {
