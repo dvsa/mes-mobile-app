@@ -92,7 +92,6 @@ describe('VehicleChecksCatBEModal', () => {
       });
     });
 
-
     describe('tellMeQuestionOutcomeChanged()', () => {
       it('should dispatch a new TellMeQuestionOutcomeChanged action', () => {
         const tellMeQuestionOutcomePayload: QuestionOutcome = 'P';

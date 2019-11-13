@@ -64,7 +64,7 @@ export class VehicleChecksCatBEModal {
     const currentTest$ = this.store$.pipe(
       select(getTests),
       select(getCurrentTest),
-    )
+    );
     this.pageState = {
       candidateName$: currentTest$.pipe(
         select(getJournalData),
@@ -80,7 +80,7 @@ export class VehicleChecksCatBEModal {
         select(getTestData),
         select(getVehicleChecksCatBe),
         select(getSelectedTellMeQuestions),
-      )
+      ),
     };
   }
 

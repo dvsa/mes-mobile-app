@@ -54,7 +54,9 @@ export class VehicleChecksQuestionComponent implements OnChanges {
 
   isOptionDisabled(question: VehicleChecksQuestion): boolean {
     const doesQuestionExist: QuestionResult =
-      this.questionsToDisable.find(questionToDisable => questionToDisable.code === question.code && questionToDisable.code !== this.questionResult.code);
+      this.questionsToDisable.find(
+        questionToDisable => questionToDisable.code === question.code &&
+        questionToDisable.code !== this.questionResult.code);
     return doesQuestionExist !== undefined;
   }
 

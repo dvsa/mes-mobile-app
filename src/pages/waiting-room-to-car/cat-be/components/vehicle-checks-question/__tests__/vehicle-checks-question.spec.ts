@@ -36,9 +36,10 @@ describe('VehicleChecksQuestionComponent', () => {
 
   describe('Class', () => {
     describe('isOptionDisabled', () => {
-      it('should return true if the question is in the list of questions to disable and not equal to the currently selected question', 
+      it(`should return true if the question is in the list of questions to disable
+          and not equal to the currently selected question`,
       () => {
-        component.questionResult = {code: 'S03'};
+        component.questionResult = { code: 'S03' };
         component.questionsToDisable = [
           vehicleChecksQuestion,
         ];
@@ -46,18 +47,19 @@ describe('VehicleChecksQuestionComponent', () => {
         expect(result).toEqual(true);
       });
       it('should return false if the question is not in the list of questions to disable', () => {
-        component.questionResult = {code: 'S04'}
+        component.questionResult = { code: 'S04' };
         component.questionsToDisable = [];
         const result = component.isOptionDisabled({ code: 'S04', description: '', shortName: '' });
         expect(result).toEqual(false);
       });
-      it('should return false if the question is not in the list of questions to disable and is equal to the currently selected question',
+      it(`should return false if the question is not in the list of questions to disable
+          and is equal to the currently selected question`,
        () => {
-        component.questionResult = {code: 'S05'}
-        component.questionsToDisable = [{code: 'S04'}];
-        const result = component.isOptionDisabled({ code: 'S05', description: '', shortName: '' });
-        expect(result).toEqual(false);
-      });
+         component.questionResult = { code: 'S05' };
+         component.questionsToDisable = [{ code: 'S04' }];
+         const result = component.isOptionDisabled({ code: 'S05', description: '', shortName: '' });
+         expect(result).toEqual(false);
+       });
     });
     describe('vehicleChecksQuestionChanged', () => {
       it('should emit the correct event', () => {

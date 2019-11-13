@@ -4,7 +4,7 @@ import {
 } from '../vehicle-checks.cat-be.reducer';
 import {
   ShowMeQuestionSelected,
-  ShowMeQuestionOutcomeChanged, 
+  ShowMeQuestionOutcomeChanged,
   TellMeQuestionSelected,
   TellMeQuestionOutcomeChanged}
   from '../vehicle-checks.cat-be.action';
